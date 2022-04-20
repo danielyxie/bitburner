@@ -6,7 +6,7 @@ import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
-import { IMults } from "./IMults";
+import { IPersonMults } from "./IMults";
 
 // Interface that defines a generic object used to track experience/money
 // earnings for tasks
@@ -58,7 +58,7 @@ export abstract class Person {
   intelligence_exp = 0;
 
   // Multipliers
-  mults: IMults = {
+  mults: IPersonMults = {
     // Hacking multipliers
     hacking_chance: 1,
     hacking_speed: 1,
@@ -127,11 +127,12 @@ export abstract class Person {
    * Updates this object's multipliers for the given augmentation
    */
   applyAugmentation(aug: Augmentation): void {
-    for (const mult of Object.keys(aug.mults)) {
+    for (const [mult, value] of Object.entries(aug.mults)) {
+      console.log(mult, value)
       if (this.mults?.[mult] == null) {
         console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
-      } else {
-        this.mults[mult] *= aug.mults[mult];
+      } else if (typeof value === "number") {
+        this.mults[mult] *= value;
       }
     }
   }

@@ -7,85 +7,47 @@ import React from "react";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { CONSTANTS } from "../Constants";
 
-function getRandomBonus(): any {
+function getRandomBonus(): { [mult: string]: number | undefined } {
   const bonuses = [
     {
-      bonuses: {
-        hacking_chance_mult: 1.25,
-        hacking_speed_mult: 1.1,
-        hacking_money_mult: 1.25,
-        hacking_grow_mult: 1.1,
-      },
-      description:
-        "Increases the player's hacking chance by 25%.<br>" +
-        "Increases the player's hacking speed by 10%.<br>" +
-        "Increases the amount of money the player's gains from hacking by 25%.<br>" +
-        "Improves grow() by 10%.",
+      hacking_chance: 1.25,
+      hacking_speed: 1.1,
+      hacking_money: 1.25,
+      hacking_grow: 1.1,
     },
     {
-      bonuses: {
-        hacking_mult: 1.15,
-        hacking_exp_mult: 2,
-      },
-      description:
-        "Increases the player's hacking skill by 15%.<br>" +
-        "Increases the player's hacking experience gain rate by 100%.",
+      hacking: 1.15,
+      hacking_exp: 2,
     },
     {
-      bonuses: {
-        strength_mult: 1.25,
-        strength_exp_mult: 2,
-        defense_mult: 1.25,
-        defense_exp_mult: 2,
-        dexterity_mult: 1.25,
-        dexterity_exp_mult: 2,
-        agility_mult: 1.25,
-        agility_exp_mult: 2,
-      },
-      description:
-        "Increases all of the player's combat stats by 25%.<br>" +
-        "Increases all of the player's combat stat experience gain rate by 100%.",
+      strength: 1.25,
+      strength_exp: 2,
+      defense: 1.25,
+      defense_exp: 2,
+      dexterity: 1.25,
+      dexterity_exp: 2,
+      agility: 1.25,
+      agility_exp: 2,
     },
     {
-      bonuses: {
-        charisma_mult: 1.5,
-        charisma_exp_mult: 2,
-      },
-      description:
-        "This augmentation increases the player's charisma by 50%.<br>" +
-        "Increases the player's charisma experience gain rate by 100%.",
+      charisma: 1.5,
+      charisma_exp: 2,
     },
     {
-      bonuses: {
-        hacknet_node_money_mult: 1.2,
-        hacknet_node_purchase_cost_mult: 0.85,
-        hacknet_node_ram_cost_mult: 0.85,
-        hacknet_node_core_cost_mult: 0.85,
-        hacknet_node_level_cost_mult: 0.85,
-      },
-      description:
-        "Increases the amount of money produced by Hacknet Nodes by 20%.<br>" +
-        "Decreases all costs related to Hacknet Node by 15%.",
+      hacknet_node_money: 1.2,
+      hacknet_node_purchase_cost: 0.85,
+      hacknet_node_ram_cost: 0.85,
+      hacknet_node_core_cost: 0.85,
+      hacknet_node_level_cost: 0.85,
     },
     {
-      bonuses: {
-        company_rep_mult: 1.25,
-        faction_rep_mult: 1.15,
-        work_money_mult: 1.7,
-      },
-      description:
-        "Increases the amount of money the player gains from working by 70%.<br>" +
-        "Increases the amount of reputation the player gains when working for a company by 25%.<br>" +
-        "Increases the amount of reputation the player gains for a faction by 15%.",
+      company_rep: 1.25,
+      faction_rep: 1.15,
+      work_money: 1.7,
     },
     {
-      bonuses: {
-        crime_success_mult: 2,
-        crime_money_mult: 2,
-      },
-      description:
-        "Increases the player's crime success rate by 100%.<br>" +
-        "Increases the amount of money the player gains from crimes by 100%.",
+      crime_success: 2,
+      crime_money: 2,
     },
   ];
 
@@ -101,10 +63,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 4.5e7,
     repCost: 1e4,
     info: "A heart implant that greatly increases the body's ability to effectively use and pump blood.",
-    strength_mult: 1.08,
-    defense_mult: 1.08,
-    agility_mult: 1.08,
-    dexterity_mult: 1.08,
+    mults: {
+      strength: 1.08,
+      defense: 1.08,
+      agility: 1.08,
+      dexterity: 1.08,
+    },
     factions: [FactionNames.Tetrads, FactionNames.TheDarkArmy, FactionNames.TheSyndicate],
   }),
   new Augmentation({
@@ -114,7 +78,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "A cranial implant that is embedded within the inner ear structures and optic nerves. It regulates " +
       "and enhances balance and hand-eye coordination.",
-    dexterity_mult: 1.1,
+    mults: {
+      dexterity: 1.1,
+    },
     factions: [
       FactionNames.SlumSnakes,
       FactionNames.TheDarkArmy,
@@ -134,7 +100,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "This upgraded version of the 'Augmented Targeting' implant is capable of augmenting " +
       "reality by digitally displaying weaknesses and vital signs of threats.",
     prereqs: [AugmentationNames.Targeting1],
-    dexterity_mult: 1.2,
+    mults: {
+      dexterity: 1.2,
+    },
     factions: [
       FactionNames.TheDarkArmy,
       FactionNames.TheSyndicate,
@@ -150,7 +118,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     repCost: 2.75e4,
     info: "The latest version of the 'Augmented Targeting' implant adds the ability to lock-on and track threats.",
     prereqs: [AugmentationNames.Targeting2],
-    dexterity_mult: 1.3,
+    mults: {
+      dexterity: 1.3,
+    },
     factions: [
       FactionNames.TheDarkArmy,
       FactionNames.TheSyndicate,
@@ -167,8 +137,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "This advanced artificial heart, created from plasteel and graphene, is capable of pumping blood " +
       "more efficiently than an organic heart.",
-    agility_mult: 1.5,
-    strength_mult: 1.5,
+    mults: {
+      agility: 1.5,
+      strength: 1.5,
+    },
     factions: [
       FactionNames.KuaiGongInternational,
       FactionNames.FulcrumSecretTechnologies,
@@ -187,8 +159,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The myofibrils in human muscles are injected with special chemicals that react with the proteins inside " +
       "the myofibrils, altering their underlying structure. The end result is muscles that are stronger and more elastic. " +
       "Scientists have named these artificially enhanced units 'synfibrils'.",
-    strength_mult: 1.3,
-    defense_mult: 1.3,
+    mults: {
+      strength: 1.3,
+      defense: 1.3,
+    },
     factions: [
       FactionNames.KuaiGongInternational,
       FactionNames.FulcrumSecretTechnologies,
@@ -207,8 +181,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "The rib cage is augmented to continuously release boosters into the bloodstream " +
       "which increase the oxygen-carrying capacity of blood.",
-    strength_mult: 1.1,
-    defense_mult: 1.1,
+    mults: {
+      strength: 1.1,
+      defense: 1.1,
+    },
     factions: [
       FactionNames.SlumSnakes,
       FactionNames.TheDarkArmy,
@@ -228,8 +204,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "An upgraded version of the 'Combat Rib' augmentation that adds potent stimulants which " +
       "improve focus and endurance while decreasing reaction time and fatigue.",
     prereqs: [AugmentationNames.CombatRib1],
-    strength_mult: 1.14,
-    defense_mult: 1.14,
+    mults: {
+      strength: 1.14,
+      defense: 1.14,
+    },
     factions: [
       FactionNames.TheDarkArmy,
       FactionNames.TheSyndicate,
@@ -247,8 +225,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The latest version of the 'Combat Rib' augmentation releases advanced anabolic steroids that " +
       "improve muscle mass and physical performance while being safe and free of side effects.",
     prereqs: [AugmentationNames.CombatRib2],
-    strength_mult: 1.18,
-    defense_mult: 1.18,
+    mults: {
+      strength: 1.18,
+      defense: 1.18,
+    },
     factions: [
       FactionNames.TheDarkArmy,
       FactionNames.TheSyndicate,
@@ -265,8 +245,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning, " +
       "which improves its regenerative and extracellular homeostasis abilities.",
-    strength_mult: 1.2,
-    defense_mult: 1.2,
+    mults: {
+      strength: 1.2,
+      defense: 1.2,
+    },
     factions: [
       FactionNames.TheDarkArmy,
       FactionNames.TheSyndicate,
@@ -287,7 +269,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "that has ever been created. The dilatant fluid, despite being thin and light, is extremely effective " +
       "at stopping piercing blows and reducing blunt trauma. The properties of graphene allow the plating to " +
       "mitigate damage from any fire or electrical traumas.",
-    defense_mult: 2.2,
+    mults: {
+      defense: 2.2,
+    },
     factions: [
       FactionNames.TheSyndicate,
       FactionNames.FulcrumSecretTechnologies,
@@ -303,8 +287,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " +
       "supercharging the spread of neural signals and increasing reflex speed.",
-    agility_mult: 1.05,
-    dexterity_mult: 1.05,
+    mults: {
+      agility: 1.05,
+      dexterity: 1.05,
+    },
     factions: [
       FactionNames.TianDiHui,
       FactionNames.SlumSnakes,
@@ -322,8 +308,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     repCost: 1.125e6,
     moneyCost: 4.25e9,
     info: "Graphene is grafted and fused into the skeletal structure, enhancing bone density and tensile strength.",
-    strength_mult: 1.7,
-    defense_mult: 1.7,
+    mults: {
+      strength: 1.7,
+      defense: 1.7,
+    },
     factions: [FactionNames.FulcrumSecretTechnologies, FactionNames.TheCovenant],
   }),
   new Augmentation({
@@ -335,10 +323,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "It is now capable of stimulating and regulating neural signals " +
       "passing through the spinal cord, improving senses and reaction speed. " +
       "The 'Bionic Spine' also interfaces with all other 'Bionic' implants.",
-    strength_mult: 1.15,
-    defense_mult: 1.15,
-    agility_mult: 1.15,
-    dexterity_mult: 1.15,
+    mults: {
+      strength: 1.15,
+      defense: 1.15,
+      agility: 1.15,
+      dexterity: 1.15,
+    },
     factions: [
       FactionNames.SpeakersForTheDead,
       FactionNames.TheSyndicate,
@@ -355,10 +345,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "An upgrade to the 'Bionic Spine' augmentation. The spine is fused with graphene " +
       "which enhances durability and supercharges all body functions.",
     prereqs: [AugmentationNames.BionicSpine],
-    strength_mult: 1.6,
-    defense_mult: 1.6,
-    agility_mult: 1.6,
-    dexterity_mult: 1.6,
+    mults: {
+      strength: 1.6,
+      defense: 1.6,
+      agility: 1.6,
+      dexterity: 1.6,
+    },
     factions: [FactionNames.FulcrumSecretTechnologies, FactionNames.ECorp],
   }),
   new Augmentation({
@@ -366,7 +358,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     repCost: 1.5e5,
     moneyCost: 3.75e8,
     info: "Cybernetic legs, created from plasteel and carbon fibers, enhance running speed.",
-    agility_mult: 1.6,
+    mults: {
+      agility: 1.6,
+    },
     factions: [
       FactionNames.SpeakersForTheDead,
       FactionNames.TheSyndicate,
@@ -383,7 +377,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "An upgrade to the 'Bionic Legs' augmentation. The legs are fused " +
       "with graphene, greatly enhancing jumping ability.",
     prereqs: [AugmentationNames.BionicLegs],
-    agility_mult: 2.5,
+    mults: {
+      agility: 2.5,
+    },
     factions: [FactionNames.MegaCorp, FactionNames.ECorp, FactionNames.FulcrumSecretTechnologies],
   }),
   new Augmentation({
@@ -394,7 +390,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A cochlear implant with an embedded computer that analyzes incoming speech. " +
       "The embedded computer processes characteristics of incoming speech, such as tone " +
       "and inflection, to pick up on subtle cues and aid in social interactions.",
-    charisma_mult: 1.2,
+    mults: {
+      charisma: 1.2,
+    },
     factions: [
       FactionNames.TianDiHui,
       FactionNames.Chongqing,
@@ -414,8 +412,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "TITN is a series of viruses that targets and alters the sequences of human DNA in genes that " +
       "control personality. The TITN-41 strain alters these genes so that the subject becomes more " +
       "outgoing and socialable.",
-    charisma_mult: 1.15,
-    charisma_exp_mult: 1.15,
+    mults: {
+      charisma: 1.15,
+      charisma_exp: 1.15,
+    },
     factions: [FactionNames.Silhouette],
   }),
   new Augmentation({
@@ -428,8 +428,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "language, and the voice tone, and inflection to determine the best course of action during social" +
       "situations. The implant also uses deep learning software to continuously learn new behavior" +
       "patterns and how to best respond.",
-    charisma_mult: 1.6,
-    charisma_exp_mult: 1.6,
+    mults: {
+      charisma: 1.6,
+      charisma_exp: 1.6,
+    },
     factions: [
       FactionNames.BachmanAssociates,
       FactionNames.NWO,
@@ -445,7 +447,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "A small brain implant embedded in the cerebrum. This regulates and improves the brain's computing " +
       "capabilities.",
-    hacking_mult: 1.05,
+    mults: {
+      hacking: 1.05,
+    },
     factions: [FactionNames.CyberSec, FactionNames.NiteSec],
   }),
   new Augmentation({
@@ -458,9 +462,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "nanoprocessor acting similar to the way a neuron would in a neural network. However, these " +
       "nanoprocessors are programmed to perform computations much faster than organic neurons, " +
       "allowing the user to solve much more complex problems at a much faster rate.",
-    hacking_speed_mult: 1.03,
-    hacking_money_mult: 1.15,
-    hacking_mult: 1.12,
+    mults: {
+      hacking_speed: 1.03,
+      hacking_money: 1.15,
+      hacking: 1.12,
+    },
     factions: [FactionNames.BitRunners, FactionNames.FulcrumSecretTechnologies],
   }),
   new Augmentation({
@@ -470,9 +476,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "The body is injected with a chemical that artificially induces synaptic potentiation, " +
       "otherwise known as the strengthening of synapses. This results in enhanced cognitive abilities.",
-    hacking_speed_mult: 1.02,
-    hacking_chance_mult: 1.05,
-    hacking_exp_mult: 1.05,
+    mults: {
+      hacking_speed: 1.02,
+      hacking_chance: 1.05,
+      hacking_exp: 1.05,
+    },
     factions: [FactionNames.TheBlackHand, FactionNames.NiteSec],
   }),
   new Augmentation({
@@ -484,9 +492,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "This process results in the proliferation of new, synthetic myelin sheaths in the nervous " +
       "system. These myelin sheaths can propogate neuro-signals much faster than their organic " +
       "counterparts, leading to greater processing speeds and better brain function.",
-    hacking_speed_mult: 1.03,
-    hacking_exp_mult: 1.1,
-    hacking_mult: 1.08,
+    mults: {
+      hacking_speed: 1.03,
+      hacking_exp: 1.1,
+      hacking: 1.08,
+    },
     factions: [FactionNames.FulcrumSecretTechnologies, FactionNames.BitRunners, FactionNames.TheBlackHand],
   }),
   new Augmentation({
@@ -496,7 +506,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "A small cranial implant that continuously uses weak electrical signals to stimulate the brain and " +
       "induce stronger synaptic activity. This improves the user's cognitive abilities.",
-    hacking_speed_mult: 1.03,
+    mults: {
+      hacking_speed: 1.03,
+    },
     factions: [FactionNames.CyberSec, FactionNames.Aevum],
   }),
   new Augmentation({
@@ -506,7 +518,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
       "circuits, strengthening the ability to retain information.",
-    hacking_exp_mult: 1.25,
+    mults: {
+      hacking_exp: 1.25,
+    },
     factions: [FactionNames.NiteSec],
   }),
   new Augmentation({
@@ -517,7 +531,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A brain implant that provides an interface for direct, wireless communication between a computer's main " +
       "memory and the mind. This implant allows the user to not only access a computer's memory, but also alter " +
       "and delete it.",
-    hacking_money_mult: 1.25,
+    mults: {
+      hacking_money: 1.25,
+    },
     factions: [
       FactionNames.BitRunners,
       FactionNames.TheBlackHand,
@@ -536,7 +552,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "processing all of the traffic on that network. By itself, the Embedded Netburner Module does " +
       "not do much, but a variety of very powerful upgrades can be installed that allow you to fully " +
       "control the traffic on a network.",
-    hacking_mult: 1.08,
+    mults: {
+      hacking: 1.08,
+    },
     factions: [
       FactionNames.BitRunners,
       FactionNames.TheBlackHand,
@@ -556,11 +574,13 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The Core library is an implant that upgrades the firmware of the Embedded Netburner Module. " +
       "This upgrade allows the Embedded Netburner Module to generate its own data on a network.",
     prereqs: [AugmentationNames.ENM],
-    hacking_speed_mult: 1.03,
-    hacking_money_mult: 1.1,
-    hacking_chance_mult: 1.03,
-    hacking_exp_mult: 1.07,
-    hacking_mult: 1.07,
+    mults: {
+      hacking_speed: 1.03,
+      hacking_money: 1.1,
+      hacking_chance: 1.03,
+      hacking_exp: 1.07,
+      hacking: 1.07,
+    },
     factions: [
       FactionNames.BitRunners,
       FactionNames.TheBlackHand,
@@ -581,11 +601,13 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "a network by re-routing traffic, spoofing IP addresses, and altering the data inside network " +
       "packets.",
     prereqs: [AugmentationNames.ENMCore],
-    hacking_speed_mult: 1.05,
-    hacking_money_mult: 1.3,
-    hacking_chance_mult: 1.05,
-    hacking_exp_mult: 1.15,
-    hacking_mult: 1.08,
+    mults: {
+      hacking_speed: 1.05,
+      hacking_money: 1.3,
+      hacking_chance: 1.05,
+      hacking_exp: 1.15,
+      hacking: 1.08,
+    },
     factions: [
       FactionNames.BitRunners,
       FactionNames.ECorp,
@@ -606,11 +628,13 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "This upgraded firmware allows the Embedded Netburner Module to seamlessly inject code into " +
       "any device on a network.",
     prereqs: [AugmentationNames.ENMCoreV2],
-    hacking_speed_mult: 1.05,
-    hacking_money_mult: 1.4,
-    hacking_chance_mult: 1.1,
-    hacking_exp_mult: 1.25,
-    hacking_mult: 1.1,
+    mults: {
+      hacking_speed: 1.05,
+      hacking_money: 1.4,
+      hacking_chance: 1.1,
+      hacking_exp: 1.25,
+      hacking: 1.1,
+    },
     factions: [
       FactionNames.ECorp,
       FactionNames.MegaCorp,
@@ -629,7 +653,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Installs the Analyze Engine for the Embedded Netburner Module, which is a CPU cluster " +
       "that vastly outperforms the Netburner Module's native single-core processor.",
     prereqs: [AugmentationNames.ENM],
-    hacking_speed_mult: 1.1,
+    mults: {
+      hacking_speed: 1.1,
+    },
     factions: [
       FactionNames.ECorp,
       FactionNames.MegaCorp,
@@ -649,8 +675,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Embedded Netburner Module. This allows the Module to send and receive data " +
       "directly to and from the main memory of devices on a network.",
     prereqs: [AugmentationNames.ENM],
-    hacking_money_mult: 1.4,
-    hacking_chance_mult: 1.2,
+    mults: {
+      hacking_money: 1.4,
+      hacking_chance: 1.2,
+    },
     factions: [
       FactionNames.ECorp,
       FactionNames.MegaCorp,
@@ -668,9 +696,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "A cranial implant that intelligently stimulates certain areas of the brain " +
       "in order to improve cognitive functions.",
-    hacking_speed_mult: 1.02,
-    hacking_chance_mult: 1.1,
-    hacking_exp_mult: 1.12,
+    mults: {
+      hacking_speed: 1.02,
+      hacking_chance: 1.1,
+      hacking_exp: 1.12,
+    },
     factions: [
       FactionNames.TheBlackHand,
       FactionNames.Chongqing,
@@ -691,9 +721,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "A microprocessor that accelerates the processing " +
       "speed of biological neural networks. This is a cranial implant that is embedded inside the brain.",
-    hacking_mult: 1.1,
-    hacking_exp_mult: 1.15,
-    hacking_money_mult: 1.2,
+    mults: {
+      hacking: 1.1,
+      hacking_exp: 1.15,
+      hacking_money: 1.2,
+    },
     factions: [FactionNames.BitRunners],
   }),
   new Augmentation({
@@ -705,8 +737,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "are a set of specialized microprocessors that are attached to " +
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
-    hacking_speed_mult: 1.01,
-    hacking_mult: 1.05,
+    mults: {
+      hacking_speed: 1.01,
+      hacking: 1.05,
+    },
     factions: [FactionNames.CyberSec, FactionNames.NiteSec],
   }),
   new Augmentation({
@@ -719,9 +753,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
     prereqs: [AugmentationNames.CranialSignalProcessorsG1],
-    hacking_speed_mult: 1.02,
-    hacking_chance_mult: 1.05,
-    hacking_mult: 1.07,
+    mults: {
+      hacking_speed: 1.02,
+      hacking_chance: 1.05,
+      hacking: 1.07,
+    },
     factions: [FactionNames.CyberSec, FactionNames.NiteSec],
   }),
   new Augmentation({
@@ -734,9 +770,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
     prereqs: [AugmentationNames.CranialSignalProcessorsG2],
-    hacking_speed_mult: 1.02,
-    hacking_money_mult: 1.15,
-    hacking_mult: 1.09,
+    mults: {
+      hacking_speed: 1.02,
+      hacking_money: 1.15,
+      hacking: 1.09,
+    },
     factions: [FactionNames.NiteSec, FactionNames.TheBlackHand, FactionNames.BitRunners],
   }),
   new Augmentation({
@@ -749,9 +787,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
     prereqs: [AugmentationNames.CranialSignalProcessorsG3],
-    hacking_speed_mult: 1.02,
-    hacking_money_mult: 1.2,
-    hacking_grow_mult: 1.25,
+    mults: {
+      hacking_speed: 1.02,
+      hacking_money: 1.2,
+      hacking_grow: 1.25,
+    },
     factions: [FactionNames.TheBlackHand, FactionNames.BitRunners],
   }),
   new Augmentation({
@@ -764,9 +804,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
     prereqs: [AugmentationNames.CranialSignalProcessorsG4],
-    hacking_mult: 1.3,
-    hacking_money_mult: 1.25,
-    hacking_grow_mult: 1.75,
+    mults: {
+      hacking: 1.3,
+      hacking_money: 1.25,
+      hacking_grow: 1.75,
+    },
     factions: [FactionNames.BitRunners],
   }),
   new Augmentation({
@@ -777,9 +819,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The brain is surgically re-engineered to have increased neuronal density " +
       "by decreasing the neuron gap junction. Then, the body is genetically modified " +
       "to enhance the production and capabilities of its neural stem cells.",
-    hacking_mult: 1.15,
-    hacking_exp_mult: 1.1,
-    hacking_speed_mult: 1.03,
+    mults: {
+      hacking: 1.15,
+      hacking_exp: 1.1,
+      hacking_speed: 1.03,
+    },
     factions: [FactionNames.ClarkeIncorporated],
   }),
   new Augmentation({
@@ -790,7 +834,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "This torso implant automatically injects nootropic supplements into " +
       "the bloodstream to improve memory, increase focus, and provide other " +
       "cognitive enhancements.",
-    company_rep_mult: 1.2,
+    mults: {
+      company_rep: 1.2,
+    },
     factions: [
       FactionNames.TianDiHui,
       FactionNames.Volhaven,
@@ -809,8 +855,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "An advanced neural implant that improves your speaking abilities, making " +
       "you more convincing and likable in conversations and overall improving your " +
       "social interactions.",
-    company_rep_mult: 1.1,
-    charisma_mult: 1.1,
+    mults: {
+      company_rep: 1.1,
+      charisma: 1.1,
+    },
     factions: [
       FactionNames.TianDiHui,
       FactionNames.SpeakersForTheDead,
@@ -825,14 +873,16 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     repCost: 7.5e4,
     moneyCost: 9e8,
     info: "A cranial implant that stops procrastination by blocking specific neural pathways in the brain.",
-    hacking_exp_mult: 1.05,
-    strength_exp_mult: 1.05,
-    defense_exp_mult: 1.05,
-    dexterity_exp_mult: 1.05,
-    agility_exp_mult: 1.05,
-    charisma_exp_mult: 1.05,
-    company_rep_mult: 1.1,
-    work_money_mult: 1.2,
+    mults: {
+      hacking_exp: 1.05,
+      strength_exp: 1.05,
+      defense_exp: 1.05,
+      dexterity_exp: 1.05,
+      agility_exp: 1.05,
+      charisma_exp: 1.05,
+      company_rep: 1.1,
+      work_money: 1.2,
+    },
     factions: [
       FactionNames.BachmanAssociates,
       FactionNames.ClarkeIncorporated,
@@ -848,8 +898,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Installs a Direct-Neural Interface jack into your arm that is compatible with most " +
       "computers. Connecting to a computer through this jack allows you to interface with " +
       "it using the brain's electrochemical signals.",
-    company_rep_mult: 1.3,
-    hacking_mult: 1.08,
+    mults: {
+      company_rep: 1.3,
+      hacking: 1.08,
+    },
     factions: [
       FactionNames.FourSigma,
       FactionNames.OmniTekIncorporated,
@@ -866,8 +918,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "improves the performance of the interface and gives the user more control options " +
       "to a connected computer.",
     prereqs: [AugmentationNames.PCDNI],
-    company_rep_mult: 1.75,
-    hacking_mult: 1.1,
+    mults: {
+      company_rep: 1.75,
+      hacking: 1.1,
+    },
     factions: [FactionNames.FulcrumSecretTechnologies, FactionNames.ECorp, FactionNames.BladeIndustries],
   }),
   new Augmentation({
@@ -880,9 +934,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The Neural Network upgrade allows the user to use their own brain's " +
       "processing power to aid the computer in computational tasks.",
     prereqs: [AugmentationNames.PCDNI],
-    company_rep_mult: 2,
-    hacking_mult: 1.1,
-    hacking_speed_mult: 1.05,
+    mults: {
+      company_rep: 2,
+      hacking: 1.1,
+      hacking_speed: 1.05,
+    },
     factions: [FactionNames.FulcrumSecretTechnologies],
   }),
   new Augmentation({
@@ -893,8 +949,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
       "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted, " +
       "triggers feelings of admiration and approval in other people.",
-    company_rep_mult: 1.1,
-    faction_rep_mult: 1.1,
+    mults: {
+      company_rep: 1.1,
+      faction_rep: 1.1,
+    },
     factions: [
       FactionNames.TianDiHui,
       FactionNames.TheSyndicate,
@@ -911,8 +969,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The body is genetically re-engineered so that it produces the ADR-V2 pheromone, " +
       "which is similar to but more potent than ADR-V1. This pheromone, when excreted, " +
       "triggers feelings of admiration, approval, and respect in others.",
-    company_rep_mult: 1.2,
-    faction_rep_mult: 1.2,
+    mults: {
+      company_rep: 1.2,
+      faction_rep: 1.2,
+    },
     factions: [
       FactionNames.Silhouette,
       FactionNames.FourSigma,
@@ -930,8 +990,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "criminal organizations and allows the user to project and control holographic " +
       "simulacrums within a large radius. These simulacrums are commonly used for " +
       "espionage and surveillance work.",
-    company_rep_mult: 1.15,
-    faction_rep_mult: 1.15,
+    mults: {
+      company_rep: 1.15,
+      faction_rep: 1.15,
+    },
     factions: [FactionNames.TheSyndicate, FactionNames.TheDarkArmy, FactionNames.SpeakersForTheDead],
   }),
   new Augmentation({
@@ -942,8 +1004,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Uploads the architecture and design details of a Hacknet Node's CPU into " +
       "the brain. This allows the user to engineer custom hardware and software  " +
       "for the Hacknet Node that provides better performance.",
-    hacknet_node_money_mult: 1.15,
-    hacknet_node_purchase_cost_mult: 0.85,
+    mults: {
+      hacknet_node_money: 1.15,
+      hacknet_node_purchase_cost: 0.85,
+    },
     factions: [FactionNames.Netburners],
   }),
   new Augmentation({
@@ -954,8 +1018,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Uploads the architecture and design details of a Hacknet Node's main-memory cache " +
       "into the brain. This allows the user to engineer custom cache hardware for the  " +
       "Hacknet Node that offers better performance.",
-    hacknet_node_money_mult: 1.1,
-    hacknet_node_level_cost_mult: 0.85,
+    mults: {
+      hacknet_node_money: 1.1,
+      hacknet_node_level_cost: 0.85,
+    },
     factions: [FactionNames.Netburners],
   }),
   new Augmentation({
@@ -966,8 +1032,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Uploads the architecture and design details of a Hacknet Node's Network Interface Card (NIC) " +
       "into the brain. This allows the user to engineer a custom NIC for the Hacknet Node that " +
       "offers better performance.",
-    hacknet_node_money_mult: 1.1,
-    hacknet_node_purchase_cost_mult: 0.9,
+    mults: {
+      hacknet_node_money: 1.1,
+      hacknet_node_purchase_cost: 0.9,
+    },
     factions: [FactionNames.Netburners],
   }),
   new Augmentation({
@@ -978,7 +1046,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a " +
       "Hacknet Node. This lets the user access and manipulate the Node's kernel using " +
       "electrochemical signals.",
-    hacknet_node_money_mult: 1.25,
+    mults: {
+      hacknet_node_money: 1.25,
+    },
     factions: [FactionNames.Netburners],
   }),
   new Augmentation({
@@ -989,7 +1059,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Installs a Direct-Neural Interface jack into the arm that is capable of connecting " +
       "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using " +
       "electrochemical signals.",
-    hacknet_node_money_mult: 1.45,
+    mults: {
+      hacknet_node_money: 1.45,
+    },
     factions: [FactionNames.Netburners],
   }),
   new Augmentation({
@@ -1001,12 +1073,14 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "installed by releasing millions of nanobots into the human brain, each of which " +
       "attaches to a different neural pathway to enhance the brain's ability to retain " +
       "and retrieve information.",
-    hacking_exp_mult: 1.1,
-    strength_exp_mult: 1.1,
-    defense_exp_mult: 1.1,
-    dexterity_exp_mult: 1.1,
-    agility_exp_mult: 1.1,
-    charisma_exp_mult: 1.1,
+    mults: {
+      hacking_exp: 1.1,
+      strength_exp: 1.1,
+      defense_exp: 1.1,
+      dexterity_exp: 1.1,
+      agility_exp: 1.1,
+      charisma_exp: 1.1,
+    },
     factions: [FactionNames.CyberSec, FactionNames.Aevum],
   }),
   new Augmentation({
@@ -1017,12 +1091,14 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A decentralized cranial implant that improves the brain's ability to learn. This " +
       "is a more powerful version of the Neurotrainer I augmentation, but it does not " +
       "require Neurotrainer I to be installed as a prerequisite.",
-    hacking_exp_mult: 1.15,
-    strength_exp_mult: 1.15,
-    defense_exp_mult: 1.15,
-    dexterity_exp_mult: 1.15,
-    agility_exp_mult: 1.15,
-    charisma_exp_mult: 1.15,
+    mults: {
+      hacking_exp: 1.15,
+      strength_exp: 1.15,
+      defense_exp: 1.15,
+      dexterity_exp: 1.15,
+      agility_exp: 1.15,
+      charisma_exp: 1.15,
+    },
     factions: [FactionNames.BitRunners, FactionNames.NiteSec],
   }),
   new Augmentation({
@@ -1033,12 +1109,14 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A decentralized cranial implant that improves the brain's ability to learn. This " +
       "is a more powerful version of the Neurotrainer I and Neurotrainer II augmentation, " +
       "but it does not require either of them to be installed as a prerequisite.",
-    hacking_exp_mult: 1.2,
-    strength_exp_mult: 1.2,
-    defense_exp_mult: 1.2,
-    dexterity_exp_mult: 1.2,
-    agility_exp_mult: 1.2,
-    charisma_exp_mult: 1.2,
+    mults: {
+      hacking_exp: 1.2,
+      strength_exp: 1.2,
+      defense_exp: 1.2,
+      dexterity_exp: 1.2,
+      agility_exp: 1.2,
+      charisma_exp: 1.2,
+    },
     factions: [FactionNames.NWO, FactionNames.FourSigma],
   }),
   new Augmentation({
@@ -1049,9 +1127,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A bionic eye implant that grants sight capabilities far beyond those of a natural human. " +
       "Embedded circuitry within the implant provides the ability to detect heat and movement " +
       "through solid objects such as walls, thus providing 'x-ray vision'-like capabilities.",
-    dexterity_mult: 1.4,
-    hacking_speed_mult: 1.03,
-    hacking_money_mult: 1.1,
+    mults: {
+      dexterity: 1.4,
+      hacking_speed: 1.03,
+      hacking_money: 1.1,
+    },
     factions: [FactionNames.BladeIndustries, FactionNames.KuaiGongInternational],
   }),
   new Augmentation({
@@ -1062,8 +1142,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A skin implant that reinforces the skin with highly-advanced synthetic cells. These " +
       "cells, when powered, have a negative refractive index. As a result, they bend light " +
       "around the skin, making the user much harder to see to the naked eye.",
-    agility_mult: 1.05,
-    crime_money_mult: 1.1,
+    mults: {
+      agility: 1.05,
+      crime_money: 1.1,
+    },
     factions: [FactionNames.SlumSnakes, FactionNames.Tetrads],
   }),
   new Augmentation({
@@ -1076,9 +1158,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "cells, when powered, are capable of not only bending light but also of bending heat, " +
       "making the user more resilient as well as stealthy.",
     prereqs: [AugmentationNames.LuminCloaking1],
-    agility_mult: 1.1,
-    defense_mult: 1.1,
-    crime_money_mult: 1.25,
+    mults: {
+      agility: 1.1,
+      defense: 1.1,
+      crime_money: 1.25,
+    },
     factions: [FactionNames.SlumSnakes, FactionNames.Tetrads],
   }),
   new Augmentation({
@@ -1086,9 +1170,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     repCost: 2.25e4,
     moneyCost: 7.5e7,
     info: "A cochlear implant that helps the player detect and locate enemies using sound propagation.",
-    dexterity_mult: 1.1,
-    dexterity_exp_mult: 1.15,
-    crime_money_mult: 1.25,
+    mults: {
+      dexterity: 1.1,
+      dexterity_exp: 1.15,
+      crime_money: 1.25,
+    },
     factions: [FactionNames.SlumSnakes],
   }),
   new Augmentation({
@@ -1099,18 +1185,20 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The body's nerves are attached with polypyrrole nanocircuits that " +
       "are capable of capturing wasted energy, in the form of heat, " +
       "and converting it back into usable power.",
-    hacking_mult: 1.05,
-    strength_mult: 1.05,
-    defense_mult: 1.05,
-    dexterity_mult: 1.05,
-    agility_mult: 1.05,
-    charisma_mult: 1.05,
-    hacking_exp_mult: 1.1,
-    strength_exp_mult: 1.1,
-    defense_exp_mult: 1.1,
-    dexterity_exp_mult: 1.1,
-    agility_exp_mult: 1.1,
-    charisma_exp_mult: 1.1,
+    mults: {
+      hacking: 1.05,
+      strength: 1.05,
+      defense: 1.05,
+      dexterity: 1.05,
+      agility: 1.05,
+      charisma: 1.05,
+      hacking_exp: 1.1,
+      strength_exp: 1.1,
+      defense_exp: 1.1,
+      dexterity_exp: 1.1,
+      agility_exp: 1.1,
+      charisma_exp: 1.1,
+    },
     factions: [FactionNames.Tetrads, FactionNames.TheDarkArmy, FactionNames.TheSyndicate, FactionNames.NWO],
   }),
   new Augmentation({
@@ -1121,10 +1209,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       `A brain implant that wirelessly connects you to the ${FactionNames.Illuminati}'s ` +
       "quantum supercomputer, allowing you to access and use its incredible " +
       "computing power.",
-    hacking_mult: 1.75,
-    hacking_speed_mult: 2,
-    hacking_chance_mult: 2.5,
-    hacking_money_mult: 4,
+    mults: {
+      hacking: 1.75,
+      hacking_speed: 2,
+      hacking_chance: 2.5,
+      hacking_money: 4,
+    },
     factions: [FactionNames.Illuminati],
   }),
   new Augmentation({
@@ -1136,11 +1226,13 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "artificially-synthesized gene that was developed by DARPA to create " +
       "super-soldiers through genetic modification. The gene was outlawed in " +
       "2056.",
-    strength_mult: 1.75,
-    defense_mult: 1.75,
-    dexterity_mult: 1.75,
-    agility_mult: 1.75,
-    hacking_mult: 1.15,
+    mults: {
+      strength: 1.75,
+      defense: 1.75,
+      dexterity: 1.75,
+      agility: 1.75,
+      hacking: 1.15,
+    },
     factions: [FactionNames.TheCovenant],
   }),
   new Augmentation({
@@ -1151,7 +1243,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       `A brain implant developed by ${FactionNames.ECorp}. They do not reveal what ` +
       "exactly the implant does, but they promise that it will greatly " +
       "enhance your abilities.",
-    hacking_grow_mult: 3,
+    mults: {
+      hacking_grow: 3,
+    },
     stats: null,
     factions: [FactionNames.ECorp],
   }),
@@ -1172,14 +1266,16 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "to hold and sustain hydrogen plasma. The plasma is used to generate " +
       "fusion power through nuclear fusion, providing limitless amounts of clean " +
       "energy for the body.",
-    strength_mult: 1.35,
-    defense_mult: 1.35,
-    dexterity_mult: 1.35,
-    agility_mult: 1.35,
-    strength_exp_mult: 1.35,
-    defense_exp_mult: 1.35,
-    dexterity_exp_mult: 1.35,
-    agility_exp_mult: 1.35,
+    mults: {
+      strength: 1.35,
+      defense: 1.35,
+      dexterity: 1.35,
+      agility: 1.35,
+      strength_exp: 1.35,
+      defense_exp: 1.35,
+      dexterity_exp: 1.35,
+      agility_exp: 1.35,
+    },
     factions: [FactionNames.MegaCorp],
   }),
   new Augmentation({
@@ -1190,10 +1286,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A bionic jaw that contains advanced hardware and software " +
       "capable of psychoanalyzing and profiling the personality of " +
       "others using optical imaging software.",
-    charisma_mult: 1.5,
-    charisma_exp_mult: 1.5,
-    company_rep_mult: 1.25,
-    faction_rep_mult: 1.25,
+    mults: {
+      charisma: 1.5,
+      charisma_exp: 1.5,
+      company_rep: 1.25,
+      faction_rep: 1.25,
+    },
     factions: [FactionNames.BachmanAssociates],
   }),
   new Augmentation({
@@ -1205,8 +1303,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "and integumentary system. The drug permanently modifies the DNA of the " +
       "body's skin and bone cells, granting them the ability to repair " +
       "and restructure themselves.",
-    strength_mult: 1.55,
-    defense_mult: 1.55,
+    mults: {
+      strength: 1.55,
+      defense: 1.55,
+    },
     factions: [FactionNames.BladeIndustries],
   }),
   new Augmentation({
@@ -1217,18 +1317,20 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A concoction of advanced nanobots that is orally ingested into the " +
       "body. These nanobots induce physiological changes and significantly " +
       "improve the body's functioning in all aspects.",
-    hacking_mult: 1.2,
-    strength_mult: 1.2,
-    defense_mult: 1.2,
-    dexterity_mult: 1.2,
-    agility_mult: 1.2,
-    charisma_mult: 1.2,
-    hacking_exp_mult: 1.15,
-    strength_exp_mult: 1.15,
-    defense_exp_mult: 1.15,
-    dexterity_exp_mult: 1.15,
-    agility_exp_mult: 1.15,
-    charisma_exp_mult: 1.15,
+    mults: {
+      hacking: 1.2,
+      strength: 1.2,
+      defense: 1.2,
+      dexterity: 1.2,
+      agility: 1.2,
+      charisma: 1.2,
+      hacking_exp: 1.15,
+      strength_exp: 1.15,
+      defense_exp: 1.15,
+      dexterity_exp: 1.15,
+      agility_exp: 1.15,
+      charisma_exp: 1.15,
+    },
     factions: [FactionNames.NWO],
   }),
   new Augmentation({
@@ -1241,7 +1343,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Even though it contains no weapons, the advanced tungsten titanium " +
       "alloy increases the user's strength to unbelievable levels. The augmentation " +
       "gets more powerful over time for seemingly no reason.",
-    strength_mult: 2.7,
+    mults: {
+      strength: 2.7,
+    },
     factions: [FactionNames.NWO],
   }),
   new Augmentation({
@@ -1252,12 +1356,14 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The body is genetically re-engineered to maintain a state " +
       "of negligible senescence, preventing the body from " +
       "deteriorating with age.",
-    hacking_mult: 1.2,
-    strength_mult: 1.2,
-    defense_mult: 1.2,
-    dexterity_mult: 1.2,
-    agility_mult: 1.2,
-    charisma_mult: 1.2,
+    mults: {
+      hacking: 1.2,
+      strength: 1.2,
+      defense: 1.2,
+      dexterity: 1.2,
+      agility: 1.2,
+      charisma: 1.2,
+    },
     factions: [FactionNames.ClarkeIncorporated],
   }),
   new Augmentation({
@@ -1268,8 +1374,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "OmniTek's data and information repository is uploaded " +
       "into your brain, enhancing your programming and " +
       "hacking abilities.",
-    hacking_mult: 1.2,
-    hacking_exp_mult: 1.25,
+    mults: {
+      hacking: 1.2,
+      hacking_exp: 1.25,
+    },
     factions: [FactionNames.OmniTekIncorporated],
   }),
   new Augmentation({
@@ -1281,9 +1389,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "to the body using a skin graft. The result is photosynthetic " +
       "skin cells, allowing users to generate their own energy " +
       "and nutrition using solar power.",
-    strength_mult: 1.4,
-    defense_mult: 1.4,
-    agility_mult: 1.4,
+    mults: {
+      strength: 1.4,
+      defense: 1.4,
+      agility: 1.4,
+    },
     factions: [FactionNames.KuaiGongInternational],
   }),
   new Augmentation({
@@ -1294,10 +1404,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A brain implant that provides a high-bandwidth, direct neural link between your " +
       `mind and the ${FactionNames.BitRunners}' data servers, which reportedly contain ` +
       "the largest database of hacking tools and information in the world.",
-    hacking_mult: 1.15,
-    hacking_exp_mult: 1.2,
-    hacking_chance_mult: 1.1,
-    hacking_speed_mult: 1.05,
+    mults: {
+      hacking: 1.15,
+      hacking_exp: 1.2,
+      hacking_chance: 1.1,
+      hacking_speed: 1.05,
+    },
     programs: [Programs.FTPCrackProgram.name, Programs.RelaySMTPProgram.name],
     factions: [FactionNames.BitRunners],
   }),
@@ -1310,11 +1422,13 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "enhances strength and dexterity but it is also embedded " +
       "with hardware and firmware that lets the user connect to, access, and hack " +
       "devices and machines by just touching them.",
-    strength_mult: 1.15,
-    dexterity_mult: 1.15,
-    hacking_mult: 1.1,
-    hacking_speed_mult: 1.02,
-    hacking_money_mult: 1.1,
+    mults: {
+      strength: 1.15,
+      dexterity: 1.15,
+      hacking: 1.1,
+      hacking_speed: 1.02,
+      hacking_money: 1.1,
+    },
     factions: [FactionNames.TheBlackHand],
   }),
   new Augmentation({
@@ -1325,8 +1439,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The CRTX42-AA gene is injected into the genome. " +
       "The CRTX42-AA is an artificially-synthesized gene that targets the visual and prefrontal " +
       "cortex and improves cognitive abilities.",
-    hacking_mult: 1.08,
-    hacking_exp_mult: 1.15,
+    mults: {
+      hacking: 1.08,
+      hacking_exp: 1.15,
+    },
     factions: [FactionNames.NiteSec],
   }),
   new Augmentation({
@@ -1337,7 +1453,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A drug that genetically modifies the neurons in the brain " +
       "resulting in neurons that never die, continuously " +
       "regenerate, and strengthen themselves.",
-    hacking_exp_mult: 1.4,
+    mults: {
+      hacking_exp: 1.4,
+    },
     factions: [FactionNames.Chongqing],
   }),
   new Augmentation({
@@ -1363,10 +1481,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "synthesizes glucose, amino acids, and vitamins and redistributes them " +
       "across the body. The device is powered by the body's naturally wasted " +
       "energy in the form of heat.",
-    strength_exp_mult: 1.2,
-    defense_exp_mult: 1.2,
-    dexterity_exp_mult: 1.2,
-    agility_exp_mult: 1.2,
+    mults: {
+      strength_exp: 1.2,
+      defense_exp: 1.2,
+      dexterity_exp: 1.2,
+      agility_exp: 1.2,
+    },
     factions: [FactionNames.NewTokyo],
   }),
   new Augmentation({
@@ -1377,13 +1497,15 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "A 'Probability Computation Matrix' is installed in the frontal cortex. This implant " +
       "uses advanced mathematical algorithims to rapidly identify and compute statistical " +
       "outcomes of nearly every situation.",
-    charisma_mult: 1.0777,
-    charisma_exp_mult: 1.0777,
-    work_money_mult: 1.777,
-    faction_rep_mult: 1.0777,
-    company_rep_mult: 1.0777,
-    crime_success_mult: 1.0777,
-    crime_money_mult: 1.0777,
+    mults: {
+      charisma: 1.0777,
+      charisma_exp: 1.0777,
+      work_money: 1.777,
+      faction_rep: 1.0777,
+      company_rep: 1.0777,
+      crime_success: 1.0777,
+      crime_money: 1.0777,
+    },
     programs: [Programs.DeepscanV1.name, Programs.AutoLink.name],
     factions: [FactionNames.Aevum],
   }),
@@ -1392,9 +1514,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     repCost: 7.5e3,
     moneyCost: 3e7,
     info: "A tiny chip that sits behind the retinae. This implant lets the user visually detect infrared radiation.",
-    crime_success_mult: 1.25,
-    crime_money_mult: 1.1,
-    dexterity_mult: 1.1,
+    mults: {
+      crime_success: 1.25,
+      crime_money: 1.1,
+      dexterity: 1.1,
+    },
     factions: [FactionNames.Ishima],
   }),
   new Augmentation({
@@ -1405,7 +1529,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "Synthetic skin that is grafted onto the body. This skin consists of " +
       "millions of nanobots capable of projecting high-density muon beams, " +
       "creating an energy barrier around the user.",
-    defense_mult: 1.4,
+    mults: {
+      defense: 1.4,
+    },
     factions: [FactionNames.Volhaven],
   }),
   new Augmentation({
@@ -1417,10 +1543,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "the retractable blades with an advanced graphene material " +
       "making them stronger and lighter.",
     prereqs: [AugmentationNames.BrachiBlades],
-    strength_mult: 1.4,
-    defense_mult: 1.4,
-    crime_success_mult: 1.1,
-    crime_money_mult: 1.3,
+    mults: {
+      strength: 1.4,
+      defense: 1.4,
+      crime_success: 1.1,
+      crime_money: 1.3,
+    },
     factions: [FactionNames.SpeakersForTheDead],
   }),
   new Augmentation({
@@ -1432,8 +1560,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "prosthetic arms with an advanced graphene material " +
       "to make them stronger and lighter.",
     prereqs: [AugmentationNames.BionicArms],
-    strength_mult: 1.85,
-    dexterity_mult: 1.85,
+    mults: {
+      strength: 1.85,
+      dexterity: 1.85,
+    },
     factions: [FactionNames.TheDarkArmy],
   }),
   new Augmentation({
@@ -1441,10 +1571,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     repCost: 1.25e4,
     moneyCost: 9e7,
     info: "A set of retractable plasteel blades that are implanted in the arm, underneath the skin.",
-    strength_mult: 1.15,
-    defense_mult: 1.15,
-    crime_success_mult: 1.1,
-    crime_money_mult: 1.15,
+    mults: {
+      strength: 1.15,
+      defense: 1.15,
+      crime_success: 1.1,
+      crime_money: 1.15,
+    },
     factions: [FactionNames.TheSyndicate],
   }),
   new Augmentation({
@@ -1452,8 +1584,10 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     repCost: 6.25e4,
     moneyCost: 2.75e8,
     info: "Cybernetic arms created from plasteel and carbon fibers that completely replace the user's organic arms.",
-    strength_mult: 1.3,
-    dexterity_mult: 1.3,
+    mults: {
+      strength: 1.3,
+      dexterity: 1.3,
+    },
     factions: [FactionNames.Tetrads],
   }),
   new Augmentation({
@@ -1463,9 +1597,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "A cranial implant that affects the user's personality, making them better " +
       "at negotiation in social situations.",
-    work_money_mult: 1.1,
-    company_rep_mult: 1.15,
-    faction_rep_mult: 1.15,
+    mults: {
+      work_money: 1.1,
+      company_rep: 1.15,
+      faction_rep: 1.15,
+    },
     factions: [FactionNames.TianDiHui],
   }),
   new Augmentation({
@@ -1520,8 +1656,10 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "against debris, shrapnel, lasers, blinding flashes, and gas. It is also " +
       "embedded with a data processing chip that can be programmed to display an " +
       "AR HUD to assist the user in field missions.",
-    bladeburner_success_chance_mult: 1.03,
-    dexterity_mult: 1.05,
+    mults: {
+      bladeburner_success_chance: 1.03,
+      dexterity: 1.05,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1534,9 +1672,11 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "technique was originally used on Bladeburners during the Synthoid uprising " +
       "to induce wakefulness and concentration, suppress fear, reduce empathy, " +
       "improve reflexes, and improve memory among other things.",
-    bladeburner_success_chance_mult: 1.03,
-    bladeburner_analysis_mult: 1.05,
-    bladeburner_stamina_gain_mult: 1.02,
+    mults: {
+      bladeburner_success_chance: 1.03,
+      bladeburner_analysis: 1.05,
+      bladeburner_stamina_gain: 1.02,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1549,10 +1689,12 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "the ORION-MKIV shoulder enhances the strength and dexterity " +
       "of the user's right arm. It also provides protection due to its " +
       "crystallized graphene plating.",
-    defense_mult: 1.05,
-    strength_mult: 1.05,
-    dexterity_mult: 1.05,
-    bladeburner_success_chance_mult: 1.04,
+    mults: {
+      defense: 1.05,
+      strength: 1.05,
+      dexterity: 1.05,
+      bladeburner_success_chance: 1.04,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1567,7 +1709,9 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "nature of the plasma disrupts the electrical systems of Augmentations. However, " +
       "it can also be effective against non-augmented enemies due to its high temperature " +
       "and concussive force.",
-    bladeburner_success_chance_mult: 1.06,
+    mults: {
+      bladeburner_success_chance: 1.06,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1581,7 +1725,9 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "more power-efficient, more accurate, and can fire plasma bolts at a much " +
       "higher velocity than the V1 model.",
     prereqs: [AugmentationNames.HyperionV1],
-    bladeburner_success_chance_mult: 1.08,
+    mults: {
+      bladeburner_success_chance: 1.08,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1594,11 +1740,13 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "including strength, speed, immune system enhancements, and mitochondrial efficiency. The " +
       "serum was originally developed by the Chinese military in an attempt to " +
       "create super soldiers.",
-    strength_mult: 1.07,
-    defense_mult: 1.07,
-    dexterity_mult: 1.07,
-    agility_mult: 1.07,
-    bladeburner_stamina_gain_mult: 1.05,
+    mults: {
+      strength: 1.07,
+      defense: 1.07,
+      dexterity: 1.07,
+      agility: 1.07,
+      bladeburner_stamina_gain: 1.05,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1609,9 +1757,11 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
     info:
       "A synthetic symbiotic virus that is injected into human brain tissue. The Vangelis virus " +
       "heightens the senses and focus of its host, and also enhances its intuition.",
-    dexterity_exp_mult: 1.1,
-    bladeburner_analysis_mult: 1.1,
-    bladeburner_success_chance_mult: 1.04,
+    mults: {
+      dexterity_exp: 1.1,
+      bladeburner_analysis: 1.1,
+      bladeburner_success_chance: 1.04,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1625,10 +1775,12 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "virus, this also grants an accelerated healing factor and enhanced " +
       "reflexes.",
     prereqs: [AugmentationNames.VangelisVirus],
-    defense_exp_mult: 1.1,
-    dexterity_exp_mult: 1.1,
-    bladeburner_analysis_mult: 1.15,
-    bladeburner_success_chance_mult: 1.05,
+    mults: {
+      defense_exp: 1.1,
+      dexterity_exp: 1.1,
+      bladeburner_analysis: 1.15,
+      bladeburner_success_chance: 1.05,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1641,11 +1793,13 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "extracellular matrix (ECM). This improves the ECM's ability to " +
       "structurally support the body and grants heightened strength and " +
       "durability.",
-    strength_exp_mult: 1.05,
-    defense_exp_mult: 1.05,
-    dexterity_exp_mult: 1.05,
-    agility_exp_mult: 1.05,
-    bladeburner_max_stamina_mult: 1.1,
+    mults: {
+      strength_exp: 1.05,
+      defense_exp: 1.05,
+      dexterity_exp: 1.05,
+      agility_exp: 1.05,
+      bladeburner_max_stamina: 1.1,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1658,9 +1812,11 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "during the Synthoid Uprising. The organic musculature of the human foot " +
       "is enhanced with flexible carbon nanotube matrices that are controlled by " +
       "intelligent servo-motors.",
-    agility_mult: 1.05,
-    bladeburner_max_stamina_mult: 1.05,
-    bladeburner_stamina_gain_mult: 1.05,
+    mults: {
+      agility: 1.05,
+      bladeburner_max_stamina: 1.05,
+      bladeburner_stamina_gain: 1.05,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1673,12 +1829,14 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "exoskeleton is incredibly adaptable and can protect the wearer from blunt, piercing, " +
       "concussive, thermal, chemical, and electric trauma. It also enhances the user's " +
       "physical abilities.",
-    strength_mult: 1.04,
-    defense_mult: 1.04,
-    dexterity_mult: 1.04,
-    agility_mult: 1.04,
-    bladeburner_stamina_gain_mult: 1.02,
-    bladeburner_success_chance_mult: 1.03,
+    mults: {
+      strength: 1.04,
+      defense: 1.04,
+      dexterity: 1.04,
+      agility: 1.04,
+      bladeburner_stamina_gain: 1.02,
+      bladeburner_success_chance: 1.03,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1690,9 +1848,11 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "Upgrades the BLADE-51b Tesla Armor with Ion Power Cells, which are capable of " +
       "more efficiently storing and using power.",
     prereqs: [AugmentationNames.BladeArmor],
-    bladeburner_success_chance_mult: 1.05,
-    bladeburner_stamina_gain_mult: 1.02,
-    bladeburner_max_stamina_mult: 1.05,
+    mults: {
+      bladeburner_success_chance: 1.05,
+      bladeburner_stamina_gain: 1.02,
+      bladeburner_max_stamina: 1.05,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1704,8 +1864,10 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "Upgrades the BLADE-51b Tesla Armor with a plasma energy propulsion system " +
       "that is capable of projecting an energy shielding force field.",
     prereqs: [AugmentationNames.BladeArmor],
-    defense_mult: 1.05,
-    bladeburner_success_chance_mult: 1.06,
+    mults: {
+      defense: 1.05,
+      bladeburner_success_chance: 1.06,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1718,7 +1880,9 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "weapon. It's precision and accuracy makes it useful for quickly neutralizing " +
       "threats while keeping casualties to a minimum.",
     prereqs: [AugmentationNames.BladeArmor],
-    bladeburner_success_chance_mult: 1.08,
+    mults: {
+      bladeburner_success_chance: 1.08,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1732,7 +1896,9 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "modules that combine together to form a single, more powerful beam of up to " +
       "2000MW.",
     prereqs: [AugmentationNames.BladeArmorUnibeam],
-    bladeburner_success_chance_mult: 1.1,
+    mults: {
+      bladeburner_success_chance: 1.1,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1745,8 +1911,10 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
       "Unit that was specially designed to analyze Synthoid related data and " +
       "information.",
     prereqs: [AugmentationNames.BladeArmor],
-    bladeburner_analysis_mult: 1.15,
-    bladeburner_success_chance_mult: 1.02,
+    mults: {
+      bladeburner_analysis: 1.15,
+      bladeburner_success_chance: 1.02,
+    },
     isSpecial: true,
     factions: [FactionNames.Bladeburners],
   }),
@@ -1782,32 +1950,34 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
       "It allows you to overclock your entire system by carefully " +
       "changing the configuration.",
     isSpecial: true,
-    hacking_chance_mult: 0.9,
-    hacking_speed_mult: 0.9,
-    hacking_money_mult: 0.9,
-    hacking_grow_mult: 0.9,
-    hacking_mult: 0.9,
-    strength_mult: 0.9,
-    defense_mult: 0.9,
-    dexterity_mult: 0.9,
-    agility_mult: 0.9,
-    charisma_mult: 0.9,
-    hacking_exp_mult: 0.9,
-    strength_exp_mult: 0.9,
-    defense_exp_mult: 0.9,
-    dexterity_exp_mult: 0.9,
-    agility_exp_mult: 0.9,
-    charisma_exp_mult: 0.9,
-    company_rep_mult: 0.9,
-    faction_rep_mult: 0.9,
-    crime_money_mult: 0.9,
-    crime_success_mult: 0.9,
-    hacknet_node_money_mult: 0.9,
-    hacknet_node_purchase_cost_mult: 1.1,
-    hacknet_node_ram_cost_mult: 1.1,
-    hacknet_node_core_cost_mult: 1.1,
-    hacknet_node_level_cost_mult: 1.1,
-    work_money_mult: 0.9,
+    mults: {
+      hacking_chance: 0.9,
+      hacking_speed: 0.9,
+      hacking_money: 0.9,
+      hacking_grow: 0.9,
+      hacking: 0.9,
+      strength: 0.9,
+      defense: 0.9,
+      dexterity: 0.9,
+      agility: 0.9,
+      charisma: 0.9,
+      hacking_exp: 0.9,
+      strength_exp: 0.9,
+      defense_exp: 0.9,
+      dexterity_exp: 0.9,
+      agility_exp: 0.9,
+      charisma_exp: 0.9,
+      company_rep: 0.9,
+      faction_rep: 0.9,
+      crime_money: 0.9,
+      crime_success: 0.9,
+      hacknet_node_money: 0.9,
+      hacknet_node_purchase_cost: 1.1,
+      hacknet_node_ram_cost: 1.1,
+      hacknet_node_core_cost: 1.1,
+      hacknet_node_level_cost: 1.1,
+      work_money: 0.9,
+    },
     stats: <>Its unstable nature decreases all your stats by 10%</>,
     factions: [FactionNames.ChurchOfTheMachineGod],
   }),
@@ -1821,32 +1991,34 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
       "your frame granting lesser penalty of 5% to all stats.",
     prereqs: [AugmentationNames.StaneksGift1],
     isSpecial: true,
-    hacking_chance_mult: 0.95 / 0.9,
-    hacking_speed_mult: 0.95 / 0.9,
-    hacking_money_mult: 0.95 / 0.9,
-    hacking_grow_mult: 0.95 / 0.9,
-    hacking_mult: 0.95 / 0.9,
-    strength_mult: 0.95 / 0.9,
-    defense_mult: 0.95 / 0.9,
-    dexterity_mult: 0.95 / 0.9,
-    agility_mult: 0.95 / 0.9,
-    charisma_mult: 0.95 / 0.9,
-    hacking_exp_mult: 0.95 / 0.9,
-    strength_exp_mult: 0.95 / 0.9,
-    defense_exp_mult: 0.95 / 0.9,
-    dexterity_exp_mult: 0.95 / 0.9,
-    agility_exp_mult: 0.95 / 0.9,
-    charisma_exp_mult: 0.95 / 0.9,
-    company_rep_mult: 0.95 / 0.9,
-    faction_rep_mult: 0.95 / 0.9,
-    crime_money_mult: 0.95 / 0.9,
-    crime_success_mult: 0.95 / 0.9,
-    hacknet_node_money_mult: 0.95 / 0.9,
-    hacknet_node_purchase_cost_mult: 1.05 / 1.1,
-    hacknet_node_ram_cost_mult: 1.05 / 1.1,
-    hacknet_node_core_cost_mult: 1.05 / 1.1,
-    hacknet_node_level_cost_mult: 1.05 / 1.1,
-    work_money_mult: 0.95 / 0.9,
+    mults: {
+      hacking_chance: 0.95 / 0.9,
+      hacking_speed: 0.95 / 0.9,
+      hacking_money: 0.95 / 0.9,
+      hacking_grow: 0.95 / 0.9,
+      hacking: 0.95 / 0.9,
+      strength: 0.95 / 0.9,
+      defense: 0.95 / 0.9,
+      dexterity: 0.95 / 0.9,
+      agility: 0.95 / 0.9,
+      charisma: 0.95 / 0.9,
+      hacking_exp: 0.95 / 0.9,
+      strength_exp: 0.95 / 0.9,
+      defense_exp: 0.95 / 0.9,
+      dexterity_exp: 0.95 / 0.9,
+      agility_exp: 0.95 / 0.9,
+      charisma_exp: 0.95 / 0.9,
+      company_rep: 0.95 / 0.9,
+      faction_rep: 0.95 / 0.9,
+      crime_money: 0.95 / 0.9,
+      crime_success: 0.95 / 0.9,
+      hacknet_node_money: 0.95 / 0.9,
+      hacknet_node_purchase_cost: 1.05 / 1.1,
+      hacknet_node_ram_cost: 1.05 / 1.1,
+      hacknet_node_core_cost: 1.05 / 1.1,
+      hacknet_node_level_cost: 1.05 / 1.1,
+      work_money: 0.95 / 0.9,
+    },
     stats: <>The penalty for the gift is reduced to 5%</>,
     factions: [FactionNames.ChurchOfTheMachineGod],
   }),
@@ -1861,32 +2033,34 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
       "of no longer suffering a stat penalty. ",
     prereqs: [AugmentationNames.StaneksGift2],
     isSpecial: true,
-    hacking_chance_mult: 1 / 0.95,
-    hacking_speed_mult: 1 / 0.95,
-    hacking_money_mult: 1 / 0.95,
-    hacking_grow_mult: 1 / 0.95,
-    hacking_mult: 1 / 0.95,
-    strength_mult: 1 / 0.95,
-    defense_mult: 1 / 0.95,
-    dexterity_mult: 1 / 0.95,
-    agility_mult: 1 / 0.95,
-    charisma_mult: 1 / 0.95,
-    hacking_exp_mult: 1 / 0.95,
-    strength_exp_mult: 1 / 0.95,
-    defense_exp_mult: 1 / 0.95,
-    dexterity_exp_mult: 1 / 0.95,
-    agility_exp_mult: 1 / 0.95,
-    charisma_exp_mult: 1 / 0.95,
-    company_rep_mult: 1 / 0.95,
-    faction_rep_mult: 1 / 0.95,
-    crime_money_mult: 1 / 0.95,
-    crime_success_mult: 1 / 0.95,
-    hacknet_node_money_mult: 1 / 0.95,
-    hacknet_node_purchase_cost_mult: 1 / 1.05,
-    hacknet_node_ram_cost_mult: 1 / 1.05,
-    hacknet_node_core_cost_mult: 1 / 1.05,
-    hacknet_node_level_cost_mult: 1 / 1.05,
-    work_money_mult: 1 / 0.95,
+    mults: {
+      hacking_chance: 1 / 0.95,
+      hacking_speed: 1 / 0.95,
+      hacking_money: 1 / 0.95,
+      hacking_grow: 1 / 0.95,
+      hacking: 1 / 0.95,
+      strength: 1 / 0.95,
+      defense: 1 / 0.95,
+      dexterity: 1 / 0.95,
+      agility: 1 / 0.95,
+      charisma: 1 / 0.95,
+      hacking_exp: 1 / 0.95,
+      strength_exp: 1 / 0.95,
+      defense_exp: 1 / 0.95,
+      dexterity_exp: 1 / 0.95,
+      agility_exp: 1 / 0.95,
+      charisma_exp: 1 / 0.95,
+      company_rep: 1 / 0.95,
+      faction_rep: 1 / 0.95,
+      crime_money: 1 / 0.95,
+      crime_success: 1 / 0.95,
+      hacknet_node_money: 1 / 0.95,
+      hacknet_node_purchase_cost: 1 / 1.05,
+      hacknet_node_ram_cost: 1 / 1.05,
+      hacknet_node_core_cost: 1 / 1.05,
+      hacknet_node_level_cost: 1 / 1.05,
+      work_money: 1 / 0.95,
+    },
     stats: <>Stanek's Gift has no penalty.</>,
     factions: [FactionNames.ChurchOfTheMachineGod],
   }),
@@ -1910,32 +2084,34 @@ export function initNeuroFluxGovernor(): Augmentation {
         multiplicatively.
       </>
     ),
-    hacking_chance_mult: 1.01 + donationBonus,
-    hacking_speed_mult: 1.01 + donationBonus,
-    hacking_money_mult: 1.01 + donationBonus,
-    hacking_grow_mult: 1.01 + donationBonus,
-    hacking_mult: 1.01 + donationBonus,
-    strength_mult: 1.01 + donationBonus,
-    defense_mult: 1.01 + donationBonus,
-    dexterity_mult: 1.01 + donationBonus,
-    agility_mult: 1.01 + donationBonus,
-    charisma_mult: 1.01 + donationBonus,
-    hacking_exp_mult: 1.01 + donationBonus,
-    strength_exp_mult: 1.01 + donationBonus,
-    defense_exp_mult: 1.01 + donationBonus,
-    dexterity_exp_mult: 1.01 + donationBonus,
-    agility_exp_mult: 1.01 + donationBonus,
-    charisma_exp_mult: 1.01 + donationBonus,
-    company_rep_mult: 1.01 + donationBonus,
-    faction_rep_mult: 1.01 + donationBonus,
-    crime_money_mult: 1.01 + donationBonus,
-    crime_success_mult: 1.01 + donationBonus,
-    hacknet_node_money_mult: 1.01 + donationBonus,
-    hacknet_node_purchase_cost_mult: 1 / (1.01 + donationBonus),
-    hacknet_node_ram_cost_mult: 1 / (1.01 + donationBonus),
-    hacknet_node_core_cost_mult: 1 / (1.01 + donationBonus),
-    hacknet_node_level_cost_mult: 1 / (1.01 + donationBonus),
-    work_money_mult: 1.01 + donationBonus,
+    mults: {
+      hacking_chance: 1.01 + donationBonus,
+      hacking_speed: 1.01 + donationBonus,
+      hacking_money: 1.01 + donationBonus,
+      hacking_grow: 1.01 + donationBonus,
+      hacking: 1.01 + donationBonus,
+      strength: 1.01 + donationBonus,
+      defense: 1.01 + donationBonus,
+      dexterity: 1.01 + donationBonus,
+      agility: 1.01 + donationBonus,
+      charisma: 1.01 + donationBonus,
+      hacking_exp: 1.01 + donationBonus,
+      strength_exp: 1.01 + donationBonus,
+      defense_exp: 1.01 + donationBonus,
+      dexterity_exp: 1.01 + donationBonus,
+      agility_exp: 1.01 + donationBonus,
+      charisma_exp: 1.01 + donationBonus,
+      company_rep: 1.01 + donationBonus,
+      faction_rep: 1.01 + donationBonus,
+      crime_money: 1.01 + donationBonus,
+      crime_success: 1.01 + donationBonus,
+      hacknet_node_money: 1.01 + donationBonus,
+      hacknet_node_purchase_cost: 1 / (1.01 + donationBonus),
+      hacknet_node_ram_cost: 1 / (1.01 + donationBonus),
+      hacknet_node_core_cost: 1 / (1.01 + donationBonus),
+      hacknet_node_level_cost: 1 / (1.01 + donationBonus),
+      work_money: 1.01 + donationBonus,
+    },
     factions: Object.values(FactionNames),
   });
 }
@@ -1952,10 +2128,8 @@ export function initUnstableCircadianModulator(): Augmentation {
       "An experimental nanobot injection. Its unstable nature leads to " +
       "unpredictable results based on your circadian rhythm.",
     factions: [FactionNames.SpeakersForTheDead],
+    mults: { ...randomBonuses },
   };
-  Object.keys(randomBonuses.bonuses).forEach(
-    (key) => ((UnstableCircadianModulatorParams as any)[key] = randomBonuses.bonuses[key]),
-  );
 
   return new Augmentation(UnstableCircadianModulatorParams);
 }

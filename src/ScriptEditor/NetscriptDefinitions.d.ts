@@ -194,65 +194,65 @@ export interface CrimeStats {
  */
 export interface AugmentationStats {
   /** Multiplier to hacking skill */
-  hacking_mult?: number;
+  hacking?: number;
   /** Multiplier to strength skill */
-  strength_mult?: number;
+  strength?: number;
   /** Multiplier to defense skill */
-  defense_mult?: number;
+  defense?: number;
   /** Multiplier to dexterity skill */
-  dexterity_mult?: number;
+  dexterity?: number;
   /** Multiplier to agility skill */
-  agility_mult?: number;
+  agility?: number;
   /** Multiplier to charisma skill */
-  charisma_mult?: number;
+  charisma?: number;
   /** Multiplier to hacking experience gain rate */
-  hacking_exp_mult?: number;
+  hacking_exp?: number;
   /** Multiplier to strength experience gain rate */
-  strength_exp_mult?: number;
+  strength_exp?: number;
   /** Multiplier to defense experience gain rate */
-  defense_exp_mult?: number;
+  defense_exp?: number;
   /** Multiplier to dexterity experience gain rate */
-  dexterity_exp_mult?: number;
+  dexterity_exp?: number;
   /** Multiplier to agility experience gain rate */
-  agility_exp_mult?: number;
+  agility_exp?: number;
   /** Multiplier to charisma experience gain rate */
-  charisma_exp_mult?: number;
+  charisma_exp?: number;
   /** Multiplier to chance of successfully performing a hack */
-  hacking_chance_mult?: number;
+  hacking_chance?: number;
   /** Multiplier to hacking speed */
-  hacking_speed_mult?: number;
+  hacking_speed?: number;
   /** Multiplier to amount of money the player gains from hacking */
-  hacking_money_mult?: number;
+  hacking_money?: number;
   /** Multiplier to amount of money injected into servers using grow */
-  hacking_grow_mult?: number;
+  hacking_grow?: number;
   /** Multiplier to amount of reputation gained when working */
-  company_rep_mult?: number;
+  company_rep?: number;
   /** Multiplier to amount of reputation gained when working */
-  faction_rep_mult?: number;
+  faction_rep?: number;
   /** Multiplier to amount of money gained from crimes */
-  crime_money_mult?: number;
+  crime_money?: number;
   /** Multiplier to crime success rate */
-  crime_success_mult?: number;
+  crime_success?: number;
   /** Multiplier to amount of money gained from working */
-  work_money_mult?: number;
+  work_money?: number;
   /** Multiplier to amount of money produced by Hacknet Nodes */
-  hacknet_node_money_mult?: number;
+  hacknet_node_money?: number;
   /** Multiplier to cost of purchasing a Hacknet Node */
-  hacknet_node_purchase_cost_mult?: number;
+  hacknet_node_purchase_cost?: number;
   /** Multiplier to cost of ram for a Hacknet Node */
-  hacknet_node_ram_cost_mult?: number;
+  hacknet_node_ram_cost?: number;
   /** Multiplier to cost of core for a Hacknet Node */
-  hacknet_node_core_cost_mult?: number;
+  hacknet_node_core_cost?: number;
   /** Multiplier to cost of leveling up a Hacknet Node */
-  hacknet_node_level_cost_mult?: number;
+  hacknet_node_level_cost?: number;
   /** Multiplier to Bladeburner max stamina */
-  bladeburner_max_stamina_mult?: number;
+  bladeburner_max_stamina?: number;
   /** Multiplier to Bladeburner stamina gain rate */
-  bladeburner_stamina_gain_mult?: number;
+  bladeburner_stamina_gain?: number;
   /** Multiplier to effectiveness in Bladeburner Field Analysis */
-  bladeburner_analysis_mult?: number;
+  bladeburner_analysis?: number;
   /** Multiplier to success chance in Bladeburner contracts/operations */
-  bladeburner_success_chance_mult?: number;
+  bladeburner_success_chance?: number;
 }
 
 /**

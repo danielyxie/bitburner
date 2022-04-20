@@ -120,9 +120,11 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
   const augObj = Augmentations[aug.name];
 
   // Apply multipliers
-  for (const mult of Object.keys(augObj.mults)) {
-    const v = Player.getMult(mult) * augObj.mults[mult];
-    Player.setMult(mult, v);
+  for (const [mult, value] of Object.entries(augObj.mults)) {
+    if (typeof value === "number") {
+      const v = Player.getMult(mult) * value;
+      Player.setMult(mult, v);
+    }
   }
 
   // Special logic for NeuroFlux Governor

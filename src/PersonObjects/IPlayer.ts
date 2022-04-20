@@ -30,7 +30,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
-import { IMults } from "./IMults";
+import { IPersonMults } from "./IMults";
 
 export interface IPlayer {
   // Class members
@@ -93,7 +93,7 @@ export interface IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  mults: IMults;
+  mults: IPersonMults;
 
   createProgramReqLvl: number;
   factionWorkType: string;
