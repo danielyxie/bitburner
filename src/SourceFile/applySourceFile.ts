@@ -38,7 +38,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.charisma_exp *= incMult;
       Player.mults.company_rep *= incMult;
       Player.mults.faction_rep *= incMult;
-      Player.crime_money_mult *= incMult;
+      Player.mults.crime_money *= incMult;
       Player.mults.crime_success *= incMult;
       Player.mults.hacknet_node_money *= incMult;
       Player.mults.hacknet_node_purchase_cost *= decMult;
@@ -55,7 +55,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 24 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.crime_money_mult *= incMult;
+      Player.mults.crime_money *= incMult;
       Player.mults.crime_success *= incMult;
       Player.mults.charisma *= incMult;
       break;

@@ -297,7 +297,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.mults.company_rep = 1;
   this.mults.faction_rep = 1;
 
-  this.crime_money_mult = 1;
+  this.mults.crime_money = 1;
   this.mults.crime_success = 1;
 
   this.mults.hacknet_node_money = 1;
@@ -1516,7 +1516,7 @@ export function startCrime(
   this.workDexExpGained = dexExp * this.mults.dexterity_exp * BitNodeMultipliers.CrimeExpGain;
   this.workAgiExpGained = agiExp * this.mults.agility_exp * BitNodeMultipliers.CrimeExpGain;
   this.workChaExpGained = chaExp * this.mults.charisma_exp * BitNodeMultipliers.CrimeExpGain;
-  this.workMoneyGained = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
+  this.workMoneyGained = money * this.mults.crime_money * BitNodeMultipliers.CrimeMoney;
 
   this.timeNeededToCompleteWork = time;
   router.toWork();
