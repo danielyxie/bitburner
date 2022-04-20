@@ -397,7 +397,7 @@ export function CharacterStats(): React.ReactElement {
                     player.mults.strength,
                     player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
                   ],
-                  ["Strength Experience", player.strength_exp_mult],
+                  ["Strength Experience", player.mults.strength_exp],
                 ]}
                 color={Settings.theme.combat}
               />
