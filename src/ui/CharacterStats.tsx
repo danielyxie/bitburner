@@ -405,8 +405,8 @@ export function CharacterStats(): React.ReactElement {
                 rows={[
                   [
                     "Defense Level",
-                    player.defense_mult,
-                    player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+                    player.mults.defense,
+                    player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
                   ],
                   ["Defense Experience", player.defense_exp_mult],
                 ]}

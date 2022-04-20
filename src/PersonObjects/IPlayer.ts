@@ -93,7 +93,6 @@ export interface IPlayer {
   intelligence_exp: number;
 
   // Multipliers
-  defense_mult: number;
   defense_exp_mult: number;
   dexterity_mult: number;
   dexterity_exp_mult: number;

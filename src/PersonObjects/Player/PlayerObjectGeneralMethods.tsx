@@ -246,7 +246,7 @@ export function updateSkillLevels(this: IPlayer): void {
   );
   this.defense = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier)),
+    Math.floor(this.calculateSkill(this.defense_exp, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
   );
   this.dexterity = Math.max(
     1,
@@ -282,7 +282,7 @@ export function resetMultipliers(this: IPlayer): void {
 
   this.mults.hacking = 1;
   this.mults.strength = 1;
-  this.defense_mult = 1;
+  this.mults.defense = 1;
   this.dexterity_mult = 1;
   this.agility_mult = 1;
   this.charisma_mult = 1;
@@ -413,7 +413,7 @@ export function gainDefenseExp(this: IPlayer, exp: number): void {
     this.defense_exp = 0;
   }
 
-  this.defense = calculateSkillF(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
+  this.defense = calculateSkillF(this.defense_exp, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier);
   const ratio = this.hp / this.max_hp;
   this.max_hp = Math.floor(10 + this.defense / 10);
   this.hp = Math.round(this.max_hp * ratio);

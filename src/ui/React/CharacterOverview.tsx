@@ -286,7 +286,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   );
   const defenseProgress = player.calculateSkillProgress(
     player.defense_exp,
-    player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+    player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
   );
   const dexterityProgress = player.calculateSkillProgress(
     player.dexterity_exp,
