@@ -301,7 +301,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.crime_success_mult = 1;
 
   this.mults.hacknet_node_money = 1;
-  this.hacknet_node_purchase_cost_mult = 1;
+  this.mults.hacknet_node_purchase_cost = 1;
   this.hacknet_node_ram_cost_mult = 1;
   this.hacknet_node_core_cost_mult = 1;
   this.hacknet_node_level_cost_mult = 1;

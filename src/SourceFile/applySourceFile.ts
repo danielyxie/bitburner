@@ -41,7 +41,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.crime_money_mult *= incMult;
       Player.crime_success_mult *= incMult;
       Player.mults.hacknet_node_money *= incMult;
-      Player.hacknet_node_purchase_cost_mult *= decMult;
+      Player.mults.hacknet_node_purchase_cost *= decMult;
       Player.hacknet_node_ram_cost_mult *= decMult;
       Player.hacknet_node_core_cost_mult *= decMult;
       Player.hacknet_node_level_cost_mult *= decMult;
@@ -142,7 +142,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.hacknet_node_core_cost_mult *= decMult;
       Player.hacknet_node_level_cost_mult *= decMult;
       Player.mults.hacknet_node_money *= incMult;
-      Player.hacknet_node_purchase_cost_mult *= decMult;
+      Player.mults.hacknet_node_purchase_cost *= decMult;
       Player.hacknet_node_ram_cost_mult *= decMult;
       break;
     }

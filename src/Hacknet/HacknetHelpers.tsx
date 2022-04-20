@@ -80,11 +80,11 @@ export function hasMaxNumberHacknetServers(player: IPlayer): boolean {
 }
 
 export function getCostOfNextHacknetNode(player: IPlayer): number {
-  return calculateNodeCost(player.hacknetNodes.length + 1, player.hacknet_node_purchase_cost_mult);
+  return calculateNodeCost(player.hacknetNodes.length + 1, player.mults.hacknet_node_purchase_cost);
 }
 
 export function getCostOfNextHacknetServer(player: IPlayer): number {
-  return calculateServerCost(player.hacknetNodes.length + 1, player.hacknet_node_purchase_cost_mult);
+  return calculateServerCost(player.hacknetNodes.length + 1, player.mults.hacknet_node_purchase_cost);
 }
 
 // Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node's level

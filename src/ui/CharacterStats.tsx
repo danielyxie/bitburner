@@ -456,7 +456,7 @@ export function CharacterStats(): React.ReactElement {
                     player.mults.hacknet_node_money,
                     player.mults.hacknet_node_money * BitNodeMultipliers.HacknetNodeMoney,
                   ],
-                  ["Hacknet Node purchase cost", player.hacknet_node_purchase_cost_mult],
+                  ["Hacknet Node purchase cost", player.mults.hacknet_node_purchase_cost],
                   ["Hacknet Node RAM upgrade cost", player.hacknet_node_ram_cost_mult],
                   ["Hacknet Node Core purchase cost", player.hacknet_node_core_cost_mult],
                   ["Hacknet Node level upgrade cost", player.hacknet_node_level_cost_mult],
