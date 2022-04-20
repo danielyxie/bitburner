@@ -1462,7 +1462,7 @@ export class Bladeburner implements IBladeburner {
           0.04 * Math.pow(player.hacking, 0.3) +
           0.04 * Math.pow(player.intelligence, 0.9) +
           0.02 * Math.pow(player.charisma, 0.3);
-        eff *= player.bladeburner_analysis_mult;
+        eff *= player.mults.bladeburner_analysis;
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
         }
@@ -1621,7 +1621,7 @@ export class Bladeburner implements IBladeburner {
     const effAgility = player.agility * this.skillMultipliers.effAgi;
     const maxStaminaBonus = this.maxStamina / BladeburnerConstants.MaxStaminaToGainFactor;
     const gain = (BladeburnerConstants.StaminaGainPerSecond + maxStaminaBonus) * Math.pow(effAgility, 0.17);
-    return gain * (this.skillMultipliers.stamina * player.bladeburner_stamina_gain_mult);
+    return gain * (this.skillMultipliers.stamina * player.mults.bladeburner_stamina_gain);
   }
 
   calculateMaxStamina(player: IPlayer): void {
@@ -1629,7 +1629,7 @@ export class Bladeburner implements IBladeburner {
     const maxStamina =
       (Math.pow(effAgility, 0.8) + this.staminaBonus) *
       this.skillMultipliers.stamina *
-      player.bladeburner_max_stamina_mult;
+      player.mults.bladeburner_max_stamina;
     if (this.maxStamina !== maxStamina) {
       const oldMax = this.maxStamina;
       this.maxStamina = maxStamina;

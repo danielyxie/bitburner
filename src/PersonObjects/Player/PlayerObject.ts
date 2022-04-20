@@ -102,11 +102,6 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  bladeburner_max_stamina_mult: number;
-  bladeburner_stamina_gain_mult: number;
-  bladeburner_analysis_mult: number;
-  bladeburner_success_chance_mult: number;
-
   mults: {
     hacking_chance: number;
     hacking_speed: number;
@@ -495,10 +490,6 @@ export class PlayerObject implements IPlayer {
 
     //Bladeburner
     this.bladeburner = null;
-    this.bladeburner_max_stamina_mult = 1;
-    this.bladeburner_stamina_gain_mult = 1;
-    this.bladeburner_analysis_mult = 1; //Field Analysis Onl;
-    this.bladeburner_success_chance_mult = 1;
 
     // Sleeves & Re-sleeving
     this.sleeves = [];

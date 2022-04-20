@@ -308,10 +308,10 @@ export function resetMultipliers(this: IPlayer): void {
 
   this.mults.work_money = 1;
 
-  this.bladeburner_max_stamina_mult = 1;
-  this.bladeburner_stamina_gain_mult = 1;
-  this.bladeburner_analysis_mult = 1;
-  this.bladeburner_success_chance_mult = 1;
+  this.mults.bladeburner_max_stamina = 1;
+  this.mults.bladeburner_stamina_gain = 1;
+  this.mults.bladeburner_analysis = 1;
+  this.mults.bladeburner_success_chance = 1;
 }
 
 export function hasProgram(this: IPlayer, programName: string): boolean {

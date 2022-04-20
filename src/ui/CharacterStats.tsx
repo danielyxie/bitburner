@@ -485,10 +485,10 @@ export function CharacterStats(): React.ReactElement {
               {player.canAccessBladeburner() && (
                 <MultiplierTable
                   rows={[
-                    ["Bladeburner Success Chance", player.bladeburner_success_chance_mult],
-                    ["Bladeburner Max Stamina", player.bladeburner_max_stamina_mult],
-                    ["Bladeburner Stamina Gain", player.bladeburner_stamina_gain_mult],
-                    ["Bladeburner Field Analysis", player.bladeburner_analysis_mult],
+                    ["Bladeburner Success Chance", player.mults.bladeburner_success_chance],
+                    ["Bladeburner Max Stamina", player.mults.bladeburner_max_stamina],
+                    ["Bladeburner Stamina Gain", player.mults.bladeburner_stamina_gain],
+                    ["Bladeburner Field Analysis", player.mults.bladeburner_analysis],
                   ]}
                   color={Settings.theme.primary}
                   noMargin

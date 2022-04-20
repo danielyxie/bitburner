@@ -201,10 +201,10 @@ export class StaneksGift implements IStaneksGift {
           p.mults.crime_money *= power;
           break;
         case FragmentType.Bladeburner:
-          p.bladeburner_max_stamina_mult *= power;
-          p.bladeburner_stamina_gain_mult *= power;
-          p.bladeburner_analysis_mult *= power;
-          p.bladeburner_success_chance_mult *= power;
+          p.mults.bladeburner_max_stamina *= power;
+          p.mults.bladeburner_stamina_gain *= power;
+          p.mults.bladeburner_analysis *= power;
+          p.mults.bladeburner_success_chance *= power;
           break;
       }
     }

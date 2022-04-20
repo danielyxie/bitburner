@@ -115,10 +115,10 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 8 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.bladeburner_max_stamina_mult *= incMult;
-      Player.bladeburner_stamina_gain_mult *= incMult;
-      Player.bladeburner_analysis_mult *= incMult;
-      Player.bladeburner_success_chance_mult *= incMult;
+      Player.mults.bladeburner_max_stamina *= incMult;
+      Player.mults.bladeburner_stamina_gain *= incMult;
+      Player.mults.bladeburner_analysis *= incMult;
+      Player.mults.bladeburner_success_chance *= incMult;
       break;
     }
     case 8: {
