@@ -61,8 +61,13 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     }
 
     const increase =
-      calculateHashGainRate(node.level + multiplier, 0, node.maxRam, node.cores, props.player.mults.hacknet_node_money) -
-      node.hashRate;
+      calculateHashGainRate(
+        node.level + multiplier,
+        0,
+        node.maxRam,
+        node.cores,
+        props.player.mults.hacknet_node_money,
+      ) - node.hashRate;
     const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, props.player.mults.hacknet_node_level_cost);
     upgradeLevelButton = (
       <Tooltip
@@ -156,8 +161,13 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     }
 
     const increase =
-      calculateHashGainRate(node.level, 0, node.maxRam, node.cores + multiplier, props.player.mults.hacknet_node_money) -
-      node.hashRate;
+      calculateHashGainRate(
+        node.level,
+        0,
+        node.maxRam,
+        node.cores + multiplier,
+        props.player.mults.hacknet_node_money,
+      ) - node.hashRate;
     const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, props.player.mults.hacknet_node_core_cost);
     upgradeCoresButton = (
       <Tooltip

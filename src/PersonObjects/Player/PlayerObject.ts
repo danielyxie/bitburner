@@ -352,43 +352,43 @@ export class PlayerObject implements IPlayer {
       // Hacking skill and exp multipliers
       hacking: 1,
       hacking_exp: 1,
-  
+
       // Strength skill and exp multipliers
       strength: 1,
       strength_exp: 1,
-  
+
       // Defense skill and exp multipliers
       defense: 1,
       defense_exp: 1,
-  
+
       // Dexterity skill and exp multipliers
       dexterity: 1,
       dexterity_exp: 1,
-  
+
       // Agility skill and exp multipliers
       agility: 1,
       agility_exp: 1,
-  
+
       // Charisma skill and exp multipliers
       charisma: 1,
       charisma_exp: 1,
-  
+
       // Hacknet multipliers
       hacknet_node_money: 1,
       hacknet_node_purchase_cost: 1,
       hacknet_node_ram_cost: 1,
       hacknet_node_core_cost: 1,
       hacknet_node_level_cost: 1,
-  
+
       // Company/Faction rep and work money multipliers
       company_rep: 1,
       faction_rep: 1,
       work_money: 1,
-  
+
       // Crime multipliers
       crime_success: 1,
       crime_money: 1,
-  
+
       // Bladeburner multipliers
       bladeburner_max_stamina: 1,
       bladeburner_stamina_gain: 1,

@@ -242,7 +242,9 @@ export function updateSkillLevels(this: IPlayer): void {
   );
   this.strength = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.strength_exp, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier)),
+    Math.floor(
+      this.calculateSkill(this.strength_exp, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
+    ),
   );
   this.defense = Math.max(
     1,
@@ -260,7 +262,9 @@ export function updateSkillLevels(this: IPlayer): void {
   );
   this.charisma = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.charisma_exp, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier)),
+    Math.floor(
+      this.calculateSkill(this.charisma_exp, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
+    ),
   );
 
   if (this.intelligence > 0) {
