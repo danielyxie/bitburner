@@ -419,7 +419,7 @@ export function CharacterStats(): React.ReactElement {
                     player.mults.dexterity,
                     player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
                   ],
-                  ["Dexterity Experience", player.dexterity_exp_mult],
+                  ["Dexterity Experience", player.mults.dexterity_exp],
                 ]}
                 color={Settings.theme.combat}
               />

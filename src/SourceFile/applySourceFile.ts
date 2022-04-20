@@ -33,7 +33,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.hacking_exp *= incMult;
       Player.mults.strength_exp *= incMult;
       Player.mults.defense_exp *= incMult;
-      Player.dexterity_exp_mult *= incMult;
+      Player.mults.dexterity_exp *= incMult;
       Player.agility_exp_mult *= incMult;
       Player.charisma_exp_mult *= incMult;
       Player.company_rep_mult *= incMult;
@@ -100,7 +100,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       const incMult = 1 + mult / 100;
       Player.mults.strength_exp *= incMult;
       Player.mults.defense_exp *= incMult;
-      Player.dexterity_exp_mult *= incMult;
+      Player.mults.dexterity_exp *= incMult;
       Player.agility_exp_mult *= incMult;
       Player.mults.strength *= incMult;
       Player.mults.defense *= incMult;

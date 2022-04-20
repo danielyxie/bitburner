@@ -290,7 +290,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.mults.hacking_exp = 1;
   this.mults.strength_exp = 1;
   this.mults.defense_exp = 1;
-  this.dexterity_exp_mult = 1;
+  this.mults.dexterity_exp = 1;
   this.agility_exp_mult = 1;
   this.charisma_exp_mult = 1;
 
@@ -905,7 +905,7 @@ export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
   this.workHackExpGainRate = 0.1 * this.mults.hacking_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workStrExpGainRate = 0.1 * this.mults.strength_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workDefExpGainRate = 0.1 * this.mults.defense_exp * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDexExpGainRate = 0.1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workDexExpGainRate = 0.1 * this.mults.dexterity_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workAgiExpGainRate = 0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
@@ -922,7 +922,7 @@ export function startFactionSecurityWork(this: IPlayer, faction: Faction): void 
   this.workHackExpGainRate = 0.05 * this.mults.hacking_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workStrExpGainRate = 0.15 * this.mults.strength_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workDefExpGainRate = 0.15 * this.mults.defense_exp * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDexExpGainRate = 0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workDexExpGainRate = 0.15 * this.mults.dexterity_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workAgiExpGainRate = 0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workChaExpGainRate = 0.0 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
@@ -1148,7 +1148,7 @@ export function getWorkDexExpGain(this: IPlayer): number {
   return (
     companyPosition.dexterityExpGain *
     company.expMultiplier *
-    this.dexterity_exp_mult *
+    this.mults.dexterity_exp *
     BitNodeMultipliers.CompanyWorkExpGain
   );
 }
@@ -1513,7 +1513,7 @@ export function startCrime(
   this.workHackExpGained = hackExp * this.mults.hacking_exp * BitNodeMultipliers.CrimeExpGain;
   this.workStrExpGained = strExp * this.mults.strength_exp * BitNodeMultipliers.CrimeExpGain;
   this.workDefExpGained = defExp * this.mults.defense_exp * BitNodeMultipliers.CrimeExpGain;
-  this.workDexExpGained = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.CrimeExpGain;
+  this.workDexExpGained = dexExp * this.mults.dexterity_exp * BitNodeMultipliers.CrimeExpGain;
   this.workAgiExpGained = agiExp * this.agility_exp_mult * BitNodeMultipliers.CrimeExpGain;
   this.workChaExpGained = chaExp * this.charisma_exp_mult * BitNodeMultipliers.CrimeExpGain;
   this.workMoneyGained = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
