@@ -150,6 +150,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
+
         return Object.assign({}, aug.mults);
       },
     purchaseAugmentation: (_ctx: NetscriptContext) =>

@@ -16,37 +16,59 @@ interface Player {
   agility: number;
   charisma: number;
   intelligence: number;
-  hacking_chance_mult: number;
-  hacking_speed_mult: number;
-  hacking_money_mult: number;
-  hacking_grow_mult: number;
+  mults: {
+    hacking_chance: number;
+    hacking_speed: number;
+    hacking_money: number;
+    hacking_grow: number;
+
+    hacking: number;
+    hacking_exp: number;
+
+    strength: number;
+    strength_exp: number;
+
+    defense: number;
+    defense_exp: number;
+
+    dexterity: number;
+    dexterity_exp: number;
+
+    agility: number;
+    agility_exp: number;
+
+    charisma: number;
+    charisma_exp: number;
+
+    hacknet_node_money: number;
+    hacknet_node_purchase_cost: number;
+    hacknet_node_ram_cost: number;
+    hacknet_node_core_cost: number;
+    hacknet_node_level_cost: number;
+
+    company_rep: number;
+    faction_rep: number;
+    work_money: number;
+
+    crime_success: number;
+    crime_money: number;
+
+    bladeburner_max_stamina: number;
+    bladeburner_stamina_gain: number;
+    bladeburner_analysis: number;
+    bladeburner_success_chance: number;
+  };
   hacking_exp: number;
   strength_exp: number;
   defense_exp: number;
   dexterity_exp: number;
   agility_exp: number;
   charisma_exp: number;
-  hacking_mult: number;
-  strength_mult: number;
-  defense_mult: number;
-  dexterity_mult: number;
-  agility_mult: number;
-  charisma_mult: number;
-  hacking_exp_mult: number;
-  strength_exp_mult: number;
-  defense_exp_mult: number;
-  dexterity_exp_mult: number;
-  agility_exp_mult: number;
-  charisma_exp_mult: number;
-  company_rep_mult: number;
-  faction_rep_mult: number;
   numPeopleKilled: number;
   money: number;
   city: string;
   location: string;
   companyName: string;
-  crime_money_mult: number;
-  crime_success_mult: number;
   isWorking: boolean;
   workType: string;
   currentWorkFactionName: string;
@@ -72,20 +94,10 @@ interface Player {
   createProgramReqLvl: number;
   className: string;
   crimeType: string;
-  work_money_mult: number;
-  hacknet_node_money_mult: number;
-  hacknet_node_purchase_cost_mult: number;
-  hacknet_node_ram_cost_mult: number;
-  hacknet_node_core_cost_mult: number;
-  hacknet_node_level_cost_mult: number;
   hasWseAccount: boolean;
   hasTixApiAccess: boolean;
   has4SData: boolean;
   has4SDataTixApi: boolean;
-  bladeburner_max_stamina_mult: number;
-  bladeburner_stamina_gain_mult: number;
-  bladeburner_analysis_mult: number;
-  bladeburner_success_chance_mult: number;
   bitNodeN: number;
   totalPlaytime: number;
   playtimeSinceLastAug: number;
