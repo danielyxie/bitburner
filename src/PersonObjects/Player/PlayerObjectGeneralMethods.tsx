@@ -295,7 +295,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.mults.charisma_exp = 1;
 
   this.mults.company_rep = 1;
-  this.faction_rep_mult = 1;
+  this.mults.faction_rep = 1;
 
   this.crime_money_mult = 1;
   this.crime_success_mult = 1;

@@ -710,7 +710,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             defenseExp: player.mults.defense_exp,
             dexterity: player.mults.dexterity,
             dexterityExp: player.mults.dexterity_exp,
-            factionRep: player.faction_rep_mult,
+            factionRep: player.mults.faction_rep,
             hacking: player.mults.hacking,
             hackingExp: player.mults.hacking_exp,
             strength: player.mults.strength,
@@ -1136,7 +1136,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           );
           return false;
         }
-        const repGain = (amt / CONSTANTS.DonateMoneyToRepDivisor) * player.faction_rep_mult;
+        const repGain = (amt / CONSTANTS.DonateMoneyToRepDivisor) * player.mults.faction_rep;
         faction.playerReputation += repGain;
         player.loseMoney(amt, "other");
         _ctx.log(

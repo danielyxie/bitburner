@@ -468,8 +468,8 @@ export function CharacterStats(): React.ReactElement {
                   ["Company reputation gain", player.mults.company_rep],
                   [
                     "Faction reputation gain",
-                    player.faction_rep_mult,
-                    player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
+                    player.mults.faction_rep,
+                    player.mults.faction_rep * BitNodeMultipliers.FactionWorkRepGain,
                   ],
                   ["Salary", player.work_money_mult, player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
                 ]}

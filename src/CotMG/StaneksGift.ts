@@ -38,7 +38,7 @@ export class StaneksGift implements IStaneksGift {
     }
 
     const cotmg = Factions[FactionNames.ChurchOfTheMachineGod];
-    cotmg.playerReputation += (player.faction_rep_mult * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
+    cotmg.playerReputation += (player.mults.faction_rep * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 
   inBonus(): boolean {
@@ -191,7 +191,7 @@ export class StaneksGift implements IStaneksGift {
           break;
         case FragmentType.Rep:
           p.mults.company_rep *= power;
-          p.faction_rep_mult *= power;
+          p.mults.faction_rep *= power;
           break;
         case FragmentType.WorkMoney:
           p.work_money_mult *= power;

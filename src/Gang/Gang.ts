@@ -132,7 +132,7 @@ export class Gang implements IGang {
     }
     const favorMult = 1 + fac.favor / 100;
 
-    fac.playerReputation += (player.faction_rep_mult * gain * favorMult) / GangConstants.GangRespectToReputationRatio;
+    fac.playerReputation += (player.mults.faction_rep * gain * favorMult) / GangConstants.GangRespectToReputationRatio;
 
     // Keep track of respect gained per member
     for (let i = 0; i < this.members.length; ++i) {

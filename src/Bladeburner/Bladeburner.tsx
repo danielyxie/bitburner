@@ -1582,7 +1582,7 @@ export class Bladeburner implements IBladeburner {
       if (bladeburnerFac.isMember) {
         const favorBonus = 1 + bladeburnerFac.favor / 100;
         bladeburnerFac.playerReputation +=
-          BladeburnerConstants.RankToFactionRepFactor * change * player.faction_rep_mult * favorBonus;
+          BladeburnerConstants.RankToFactionRepFactor * change * player.mults.faction_rep * favorBonus;
       }
     }
 

@@ -102,7 +102,6 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  faction_rep_mult: number;
   work_money_mult: number;
   crime_success_mult: number;
   crime_money_mult: number;
@@ -350,8 +349,6 @@ export class PlayerObject implements IPlayer {
     this.agility_exp = 0;
     this.charisma_exp = 0;
     this.intelligence_exp = 0;
-
-    this.faction_rep_mult = 1;
 
     this.mults = {
       // Hacking multipliers
