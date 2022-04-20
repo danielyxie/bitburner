@@ -401,7 +401,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
           onKeyDown: onKeyDown,
         }}
       ></TextField>
-      <Popper open={possibilities.length > 0} anchorEl={terminalInput.current} placement={"top-end"}>
+      <Popper open={possibilities.length > 0} anchorEl={terminalInput.current} placement={"top-start"}>
         <Paper sx={{ m: 1, p: 2 }}>
           <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
             Possible autocomplete candidates:
