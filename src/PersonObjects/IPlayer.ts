@@ -92,7 +92,6 @@ export interface IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  company_rep_mult: number;
   faction_rep_mult: number;
   work_money_mult: number;
   crime_success_mult: number;

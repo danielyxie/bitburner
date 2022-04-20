@@ -36,7 +36,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.dexterity_exp *= incMult;
       Player.mults.agility_exp *= incMult;
       Player.mults.charisma_exp *= incMult;
-      Player.company_rep_mult *= incMult;
+      Player.mults.company_rep *= incMult;
       Player.faction_rep_mult *= incMult;
       Player.crime_money_mult *= incMult;
       Player.crime_success_mult *= incMult;
@@ -159,7 +159,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       }
       const incMult = 1 + mult / 100;
       Player.work_money_mult *= incMult;
-      Player.company_rep_mult *= incMult;
+      Player.mults.company_rep *= incMult;
       break;
     }
     case 12: // The Recursion

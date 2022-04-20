@@ -701,9 +701,9 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           mult: {
             agility: player.mults.agility,
             agilityExp: player.mults.agility_exp,
-            charisma: player.charisma,
-            charismaExp: player.charisma_exp,
-            companyRep: player.company_rep_mult,
+            charisma: player.mults.charisma,
+            charismaExp: player.mults.charisma_exp,
+            companyRep: player.mults.company_rep,
             crimeMoney: player.crime_money_mult,
             crimeSuccess: player.crime_success_mult,
             defense: player.mults.defense,

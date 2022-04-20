@@ -465,7 +465,7 @@ export function CharacterStats(): React.ReactElement {
               />
               <MultiplierTable
                 rows={[
-                  ["Company reputation gain", player.company_rep_mult],
+                  ["Company reputation gain", player.mults.company_rep],
                   [
                     "Faction reputation gain",
                     player.faction_rep_mult,

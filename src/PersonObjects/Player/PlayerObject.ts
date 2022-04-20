@@ -102,7 +102,6 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  company_rep_mult: number;
   faction_rep_mult: number;
   work_money_mult: number;
   crime_success_mult: number;
@@ -352,7 +351,6 @@ export class PlayerObject implements IPlayer {
     this.charisma_exp = 0;
     this.intelligence_exp = 0;
 
-    this.company_rep_mult = 1;
     this.faction_rep_mult = 1;
 
     this.mults = {
