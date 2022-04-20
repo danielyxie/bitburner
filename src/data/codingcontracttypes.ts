@@ -1310,10 +1310,10 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     name: "Proper 2-Coloring of a Graph",
     difficulty: 6,
     numTries: 5,
-    desc: (data: [number, number][]): string => {
-      return `test description, submit "${JSON.stringify(data)}"`;
+    desc: (data: [number, [number, number][]]): string => {
+      return `test description: "${JSON.stringify(data)}"`;
     },
-    gen: (): [number, number][] => {
+    gen: (): [number, [number, number][]] => {
       //Generate two partite sets
       const n = Math.floor(Math.random() * 5) + 3;
       const m = Math.floor(Math.random() * 5) + 3;
@@ -1331,7 +1331,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       //Add an edge at random with no regard to partite sets
       let a = Math.floor(Math.random() * (n + m));
       let b = Math.floor(Math.random() * (n + m));
-      if (a > b) [a, b] = [b, a]; //Enforce a <= b
+      if (a > b) [a, b] = [b, a]; //Enforce lower numbers come first
       if (a != b && !edges.includes([a, b])) {
         edges.push([a, b]);
       }
@@ -1346,15 +1346,44 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       //Replace instances of the original vertex names in-place
       for (let i = 0; i < edges.length; i++) {
         edges[i] = [shuffler[edges[i][0]], shuffler[edges[i][1]]];
+        if (edges[i][0] > edges[i][1]) {
+          //Enforce lower numbers come first
+          [edges[i][0], edges[i][1]] = [edges[i][1], edges[i][0]];
+        }
       }
 
-      return edges;
+      return [n + m, edges];
     },
-    solver: (data: [number, number][], ans: string): boolean => {
-      //TODO: Return false for invalid inputs.
-      //TODO: Check the no solution case.
-      //TODO: Check if the given 2-coloring is proper.
-      return JSON.stringify(data) == ans;
+    solver: (data: [number, [number, number][]], ans: string): boolean => {
+      //No solution case
+      if (ans == "[]") {
+        //TODO: Check if there is no solution
+        return true;
+      }
+
+      //Sanitize player input
+      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+      const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
+      const coloring: number[] = sanitizedPlayerAnsArr.map((val) => parseInt(val));
+
+      //Solution provided case
+      if (coloring.length == data[0]) {
+        const edges = data[1];
+        const validColors = [0, 1];
+        //Check that the provided solution is a proper 2-coloring
+        return edges.every(([a, b]) => {
+          const aColor = coloring[a];
+          const bColor = coloring[b];
+          return (
+            validColors.includes(aColor) && //Enforce the first endpoint is color 0 or 1
+            validColors.includes(bColor) && //Enforce the second endpoint is color 0 or 1
+            aColor != bColor //Enforce the endpoints are different colors
+          );
+        });
+      }
+
+      //Return false if the coloring is the wrong size
+      else return false;
     },
   },
 ];
