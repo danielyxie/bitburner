@@ -60,9 +60,9 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       multiplier = Math.min(levelsToMax, purchaseMult as number);
     }
 
-    const base_increase = calculateHashGainRate(node.level + multiplier, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult) 
+    const base_increase = calculateHashGainRate(node.level + multiplier, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult)
     - calculateHashGainRate(node.level, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult);
-    let modded_increase = base_increase * (node.maxRam - node.ramUsed) / node.maxRam;
+    const modded_increase = base_increase * (node.maxRam - node.ramUsed) / node.maxRam;
 
     const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, props.player.hacknet_node_level_cost_mult);
     upgradeLevelButton = (
@@ -125,8 +125,8 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
         node.cores,
         props.player.hacknet_node_money_mult,
       );
-      
-      let modded_increase = 
+
+      const modded_increase =
       calculateHashGainRate(
         node.level,
         node.ramUsed,
@@ -182,7 +182,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
 
     const base_increase = calculateHashGainRate(node.level, 0, node.maxRam, node.cores + multiplier, props.player.hacknet_node_money_mult)
     - calculateHashGainRate(node.level, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult);
-    let modded_increase = base_increase * (node.maxRam - node.ramUsed) / node.maxRam;
+    const modded_increase = base_increase * (node.maxRam - node.ramUsed) / node.maxRam;
 
     const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, props.player.hacknet_node_core_cost_mult);
     upgradeCoresButton = (
@@ -270,11 +270,11 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
                     <br />
                     {numeralWrapper.formatRAM(node.ramUsed)} / {numeralWrapper.formatRAM(node.maxRam)} ({Math.round(100 * node.ramUsed / node.maxRam)}%) Ram allocated to script.
                     <br />
-                    {numeralWrapper.formatRAM(node.maxRam - node.ramUsed)} / {numeralWrapper.formatRAM(node.maxRam)} ({Math.round(100 * (node.maxRam - node.ramUsed) / node.maxRam)}%) Ram allocated to hash production.                    
+                    {numeralWrapper.formatRAM(node.maxRam - node.ramUsed)} / {numeralWrapper.formatRAM(node.maxRam)} ({Math.round(100 * (node.maxRam - node.ramUsed) / node.maxRam)}%) Ram allocated to hash production.
                   </Typography>
                 }
               >
-                <Typography>    
+                <Typography>
                   <Hashes hashes={node.totalHashesGenerated} /> (<HashRate hashes={node.hashRate} />)
                 </Typography>
               </Tooltip>
