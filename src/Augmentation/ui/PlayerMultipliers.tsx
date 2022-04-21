@@ -20,7 +20,7 @@ function calculateAugmentedStats(): IAugmentedStats {
     const augObj = Augmentations[aug.name];
     for (const [mult, value] of Object.entries(augObj.mults)) {
       const v = augP[mult] ? augP[mult] : 1;
-      augP[mult] = v * (value ?? 1);
+      augP[mult] = v * (value ?? 0);
     }
   }
   return augP;
