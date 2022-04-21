@@ -104,7 +104,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   const canPurchaseSleeves = faction.name === FactionNames.TheCovenant && player.bitNodeN === 10;
 
-  // Note : For future-proofing sake, an assumption is made that player is intended to retain access to his gang if his karma were to somehow increases. 
+  // Note : For future-proofing sake, an assumption is made that player is intended to retain access to his gang if his karma were to somehow increases.
   let isManageGangVisible = GangConstants.Names.includes(faction.name) && player.isAwareOfGang();
   // karma threshold is only checked at that point, via canAccessGang(). No further check is made.
   let isManageGangClickable = player.canAccessGang();
@@ -128,20 +128,20 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
       {isManageGangVisible && (
         <>
           <Box>
-              <Paper sx={{ my: 1, p: 1 }}>
-                <Tooltip
-                  title={
-                  !isManageGangClickable ? <Typography>Unlocked when reaching -54000 karma</Typography> : ""
-                  }
-                >
-                  <span>
-                    <Button onClick={manageGang} disabled={!isManageGangClickable}>{"Manage Gang"}</Button>
-                    <Typography>{gangInfo}</Typography>
-                  </span>
+            <Paper sx={{ my: 1, p: 1 }}>
+              <Tooltip
+                title={!isManageGangClickable ? <Typography>Unlocked when reaching -54000 karma</Typography> : ""}
+              >
+                <span>
+                  <Button onClick={manageGang} disabled={!isManageGangClickable}>
+                    {"Manage Gang"}
+                  </Button>
+                  <Typography>{gangInfo}</Typography>
+                </span>
               </Tooltip>
-              </Paper>
+            </Paper>
           </Box>
-  
+
           <CreateGangModal facName={faction.name} open={gangOpen} onClose={() => setGangOpen(false)} />
         </>
       )}
