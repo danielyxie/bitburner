@@ -1315,7 +1315,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `You are given the following data, representing a graph:\n`,
         `${JSON.stringify(data)}\n`,
         `Note that "graph", as used here, refers to the field of graph theory, and has`,
-        `no relation to statistics or plotting functions.`,
+        `no relation to statistics or plotting.`,
         `The first element of the data represents the number of vertices in the graph.`,
         `Each vertex is a unique number between 0 and ${data[0] - 1}.`,
         `The next element of the data represents the edges of the graph.`,
