@@ -1311,7 +1311,25 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     difficulty: 7,
     numTries: 5,
     desc: (data: [number, [number, number][]]): string => {
-      return `test description: "${JSON.stringify(data)}"`;
+      return [
+        `You are given the following tuple, representing a simple, undirected graph:\n`,
+        `${JSON.stringify(data)}\n`,
+        `The first element of the tuple represents the number of vertices in the graph.`,
+        `Each vertex is a unique number in the range [0,${data[0]}].`,
+        `The next element of the tuple represents the edge set of the graph.`,
+        `Two vertices u,v in a graph are said to be adjacent if there exists an edge [u,v].`,
+        `Note that the graph is undirected, meaning an edge [u,v] is the same as an edge [v,u].`,
+        `You must construct a 2-coloring of the graph, meaning that you have to assign each`,
+        `vertex in the graph a "color", either 0 or 1, such that no two adjacent vertices have`,
+        `the same color. Submit your answer in the form of an array, where element i`,
+        `represents the color of vertex i. If it is impossible to construct a 2-coloring of`,
+        `the given graph, instead submit an empty array.\n\n`,
+        `Examples:\n\n`,
+        `Input: [4, [[1, 3], [1, 4], [2, 3], [2, 4]]]\n`,
+        `Output: [0, 0, 1, 1]\n\n`,
+        `Input: [3, [[1, 2], [1, 3], [2, 3]]]\n`,
+        `Output: []`,
+      ].join(" ");
     },
     gen: (): [number, [number, number][]] => {
       //Generate two partite sets
