@@ -69,6 +69,13 @@ function initAugmentations(): void {
   createAugmentations();
   updateAugmentationCosts();
   Player.reapplyAllAugmentations();
+
+  // Reapply all Sleeve Augmentations, if relevant
+  if ((Player.sleeves ?? []).length > 0) {
+    for (const sleeve of Player.sleeves) {
+      sleeve.reapplyAllAugmentations();
+    }
+  }
 }
 
 function getBaseAugmentationPriceMultiplier(): number {

@@ -7,6 +7,7 @@ import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
 import { IPersonMults } from "./IMults";
+import { Augmentations } from "../Augmentation/Augmentations";
 
 // Interface that defines a generic object used to track experience/money
 // earnings for tasks
@@ -134,6 +135,21 @@ export abstract class Person {
         this.mults[mult] *= value;
       }
     }
+  }
+
+  // Reapply all Augmentations and update stats
+  reapplyAllAugmentations(resetMultipliers = true): void {
+    if (resetMultipliers) {
+      this.resetMultipliers();
+    }
+
+    for (const playerAug of this.augmentations) {
+      const augObject = Augmentations[playerAug.name];
+
+      this.applyAugmentation(augObject);
+    }
+
+    this.updateStatLevels();
   }
 
   /**
