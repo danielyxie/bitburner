@@ -1317,7 +1317,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `Note that "graph", as used here, refers to the field of graph theory, and has`,
         `no relation to statistics or plotting functions.`,
         `The first element of the data represents the number of vertices in the graph.`,
-        `Each vertex is a unique number between 0 and ${data[0]-1}.`,
+        `Each vertex is a unique number between 0 and ${data[0] - 1}.`,
         `The next element of the data represents the edges of the graph.`,
         `Two vertices u,v in a graph are said to be adjacent if there exists an edge [u,v].`,
         `Note that an edge [u,v] is the same as an edge [v,u], as order does not matter.`,
