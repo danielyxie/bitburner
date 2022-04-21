@@ -57,7 +57,10 @@ export function MoreStatsModal(props: IProps): React.ReactElement {
           [<>Hacking Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.hacking)],
           [<>Hacking Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.hacking_exp)],
           [<>Strength Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.strength)],
-          [<>Strength Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.strength_exp)],
+          [
+            <>Strength Experience multiplier:&nbsp;</>,
+            numeralWrapper.formatPercentage(props.sleeve.mults.strength_exp),
+          ],
           [<>Defense Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.defense)],
           [<>Defense Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.defense_exp)],
           [<>Dexterity Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.dexterity)],
@@ -68,7 +71,10 @@ export function MoreStatsModal(props: IProps): React.ReactElement {
           [<>Agility Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.agility)],
           [<>Agility Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.agility_exp)],
           [<>Charisma Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.charisma)],
-          [<>Charisma Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.charisma_exp)],
+          [
+            <>Charisma Experience multiplier:&nbsp;</>,
+            numeralWrapper.formatPercentage(props.sleeve.mults.charisma_exp),
+          ],
           [
             <>Faction Reputation Gain multiplier:&nbsp;</>,
             numeralWrapper.formatPercentage(props.sleeve.mults.faction_rep),
