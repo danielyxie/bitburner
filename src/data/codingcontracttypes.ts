@@ -1336,21 +1336,27 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         edges.push([a, b]);
       }
 
-      //Randomize array in-place using Durstenfeld shuffle algorithm
-      const shuffler = Array.from(Array(n + m).keys());
-      for (let i = shuffler.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffler[i], shuffler[j]] = [shuffler[j], shuffler[i]];
+      //Randomize array in-place using Durstenfeld shuffle algorithm.
+      function shuffle(array: any[]): void {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
       }
 
       //Replace instances of the original vertex names in-place
+      const vertexShuffler = Array.from(Array(n + m).keys());
+      shuffle(vertexShuffler);
       for (let i = 0; i < edges.length; i++) {
-        edges[i] = [shuffler[edges[i][0]], shuffler[edges[i][1]]];
+        edges[i] = [vertexShuffler[edges[i][0]], vertexShuffler[edges[i][1]]];
         if (edges[i][0] > edges[i][1]) {
           //Enforce lower numbers come first
           [edges[i][0], edges[i][1]] = [edges[i][1], edges[i][0]];
         }
       }
+
+      //Shuffle the order of the edges themselves, as well
+      shuffle(edges);
 
       return [n + m, edges];
     },
