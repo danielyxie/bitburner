@@ -64,6 +64,89 @@ import { Augmentation } from "../Augmentation";
 //   );
 // }
 
+interface IPreReqsProps {
+  player: IPlayer;
+  aug: Augmentation;
+}
+
+const PreReqs = (props: IPreReqsProps): React.ReactElement => {
+  const ownedPreReqs = props.aug.prereqs.filter((aug) => props.player.hasAugmentation(aug));
+  const hasPreReqs = props.aug.prereqs.length > 0 && ownedPreReqs.length === props.aug.prereqs.length;
+
+  return (
+    <Tooltip
+      title={
+        <Typography sx={{ color: Settings.theme.money }}>
+          This Augmentation has the following pre-requisite(s):
+          {props.aug.prereqs.map((preAug) => (
+            <Requirement
+              fulfilled={props.player.hasAugmentation(preAug)}
+              value={preAug}
+              color={Settings.theme.money}
+              key={preAug}
+            />
+          ))}
+        </Typography>
+      }
+    >
+      <Typography
+        variant="body2"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          color: hasPreReqs ? Settings.theme.successlight : Settings.theme.error,
+        }}
+      >
+        {hasPreReqs ? (
+          <>
+            <CheckCircle fontSize="small" sx={{ mr: 1 }} />
+            Pre-requisites Owned
+          </>
+        ) : (
+          <>
+            <Report fontSize="small" sx={{ mr: 1 }} />
+            Missing {props.aug.prereqs.length - ownedPreReqs.length} pre-requisite(s)
+          </>
+        )}
+      </Typography>
+    </Tooltip>
+  );
+};
+
+interface IExclusiveProps {
+  player: IPlayer;
+  aug: Augmentation;
+}
+
+const Exclusive = (props: IExclusiveProps): React.ReactElement => {
+  return (
+    <Tooltip
+      title={
+        <Typography sx={{ color: Settings.theme.money }}>
+          This Augmentation can only be acquired from the following source(s):
+          <ul>
+            <li>
+              <b>{props.aug.factions[0]}</b> faction
+            </li>
+            {props.player.canAccessGang() && (
+              <li>
+                Certain <b>gangs</b>
+              </li>
+            )}
+            {props.player.canAccessGrafting() && (
+              <li>
+                <b>Grafting</b>
+              </li>
+            )}
+          </ul>
+        </Typography>
+      }
+    >
+      <Verified sx={{ ml: 1, color: Settings.theme.money }} />
+    </Tooltip>
+  );
+};
+
 interface IReqProps {
   value: string;
   color: string;
@@ -109,11 +192,8 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
           </>
         );
 
-        const ownedPreReqs = aug.prereqs.filter((aug) => props.player.hasAugmentation(aug));
-        const hasPreReqs = aug.prereqs.length > 0 && ownedPreReqs.length === aug.prereqs.length;
-
         return (
-          <Paper key={augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "3fr 1fr", gap: 1 }}>
+          <Paper key={augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "minmax(0, 3fr) 1fr", gap: 1 }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Button
                 onClick={() =>
@@ -127,55 +207,36 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
                 Buy
               </Button>
 
-              <Box>
-                <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
-                  <Tooltip title={<Typography>{description}</Typography>}>
+              <Box sx={{ maxWidth: "85%" }}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Tooltip
+                    title={
+                      <>
+                        <Typography variant="h5">
+                          {augName}
+                          {augName === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
+                        </Typography>
+                        <Typography>{description}</Typography>
+                      </>
+                    }
+                  >
                     <Info sx={{ mr: 1 }} color="info" />
                   </Tooltip>
-                  {aug.factions.length === 1 && (
-                    <Tooltip80
-                      title={
-                        <Typography sx={{ color: Settings.theme.info }}>Faction-Exclusive Augmentation</Typography>
-                      }
-                    >
-                      <Verified sx={{ mr: 1 }} color="info" />
-                    </Tooltip>
-                  )}
-                  {aug.name}
-                </Typography>
-
-                {aug.prereqs.length > 0 && (
-                  <Tooltip
-                    title={aug.prereqs.map((preAug) => (
-                      <Requirement
-                        fulfilled={props.player.hasAugmentation(preAug)}
-                        value={preAug}
-                        color={Settings.theme.money}
-                        key={preAug}
-                      />
-                    ))}
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
                   >
-                    <Typography
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        color: hasPreReqs ? Settings.theme.successlight : Settings.theme.error,
-                      }}
-                    >
-                      {hasPreReqs ? (
-                        <>
-                          <CheckCircle sx={{ mr: 1 }} />
-                          Pre-Requisites Owned
-                        </>
-                      ) : (
-                        <>
-                          <Report sx={{ mr: 1 }} />
-                          Missing Pre-Requisites
-                        </>
-                      )}
-                    </Typography>
-                  </Tooltip>
-                )}
+                    {aug.name}
+                    {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
+                  </Typography>
+                  {aug.factions.length === 1 && <Exclusive player={props.player} aug={aug} />}
+                </Box>
+
+                {aug.prereqs.length > 0 && <PreReqs player={props.player} aug={aug} />}
               </Box>
             </Box>
 
