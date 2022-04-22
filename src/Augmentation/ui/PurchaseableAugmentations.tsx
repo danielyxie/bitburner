@@ -16,7 +16,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 
-import { CheckBox, CheckBoxOutlineBlank, Verified, Info } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, Verified, Info, Report, CheckCircle } from "@mui/icons-material";
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
 import { Paper, Button, Typography, Tooltip, Box, TableRow, Container, List, ListItem } from "@mui/material";
 import { TableCell } from "../../ui/React/Table";
@@ -65,15 +65,15 @@ import { Augmentation } from "../Augmentation";
 
 interface IReqProps {
   value: string;
-  valueColor: string;
+  color: string;
   fulfilled: boolean;
 }
 
 const Requirement = (props: IReqProps): React.ReactElement => {
   return (
-    <Typography sx={{ display: "flex", alignItems: "center" }}>
+    <Typography sx={{ display: "flex", alignItems: "center", color: props.color }}>
       {props.fulfilled ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
-      <span style={{ color: props.valueColor }}>{props.value}</span>
+      {props.value}
     </Typography>
   );
 };
@@ -91,19 +91,29 @@ interface IPurchaseableAugsProps {
 export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.ReactElement => {
   return (
     <Container
-      maxWidth="lg"
+      maxWidth="md"
       disableGutters
-      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 1 }}
+      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
     >
       {props.augNames.map((augName: string) => {
         const aug = Augmentations[augName];
 
         const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
-        const description = aug.stats;
+        const description = (
+          <>
+            {info}
+            <br />
+            <br />
+            {aug.stats}
+          </>
+        );
+
+        const ownedPreReqs = aug.prereqs.filter((aug) => props.player.hasAugmentation(aug));
+        const hasPreReqs = aug.prereqs.length > 0 && ownedPreReqs.length === aug.prereqs.length;
 
         return (
-          <Paper key={augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "1fr 2fr", gap: 1 }}>
-            <Box>
+          <Paper key={augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "3fr 1fr", gap: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               <Button
                 onClick={() =>
                   props.purchaseAugmentation(props.player, aug, (_open: boolean): void => {
@@ -111,59 +121,78 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
                   })
                 }
                 disabled={!props.canPurchase(props.player, aug)}
-                sx={{ width: "100%", height: "fit-content" }}
+                sx={{ width: "48px", height: "48px", float: "left", clear: "none", mr: 1 }}
               >
-                Buy Augmentation
+                Buy
               </Button>
 
-              {aug.factions.length === 1 && (
-                <Typography sx={{ display: "flex", alignItems: "center", color: Settings.theme.info }}>
-                  <Verified sx={{ mr: 1 }} />
-                  Faction-Exclusive Augmentation
+              <Box>
+                <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
+                  <Tooltip title={<Typography>{description}</Typography>}>
+                    <Info sx={{ mr: 1 }} color="info" />
+                  </Tooltip>
+                  {aug.factions.length === 1 && (
+                    <Tooltip80
+                      title={
+                        <Typography sx={{ color: Settings.theme.info }}>Faction-Exclusive Augmentation</Typography>
+                      }
+                    >
+                      <Verified sx={{ mr: 1 }} color="info" />
+                    </Tooltip>
+                  )}
+                  {aug.name}
                 </Typography>
-              )}
 
-              <Typography>
-                <b>Cost:</b>
-              </Typography>
-              <Requirement
-                fulfilled={aug.baseCost === 0 || props.player.money > aug.baseCost}
-                value={numeralWrapper.formatMoney(aug.baseCost)}
-                valueColor={Settings.theme.money}
-              />
-              {props.rep !== undefined && (
-                <Requirement
-                  fulfilled={props.rep >= aug.baseRepRequirement}
-                  value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} reputation`}
-                  valueColor={Settings.theme.rep}
-                />
-              )}
-
-              {aug.prereqs.length > 0 && (
-                <>
-                  <Typography>
-                    <b>Pre-Requisites:</b>
-                  </Typography>
-                  {aug.prereqs.map((preAug) => (
-                    <Requirement
-                      fulfilled={props.player.hasAugmentation(preAug)}
-                      value={preAug}
-                      valueColor={Settings.theme.money}
-                      key={preAug}
-                    />
-                  ))}
-                </>
-              )}
+                {aug.prereqs.length > 0 && (
+                  <Tooltip
+                    title={aug.prereqs.map((preAug) => (
+                      <Requirement
+                        fulfilled={props.player.hasAugmentation(preAug)}
+                        value={preAug}
+                        color={Settings.theme.money}
+                        key={preAug}
+                      />
+                    ))}
+                  >
+                    <Typography
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: hasPreReqs ? Settings.theme.successlight : Settings.theme.error,
+                      }}
+                    >
+                      {hasPreReqs ? (
+                        <>
+                          <CheckCircle sx={{ mr: 1 }} />
+                          Pre-Requisites Owned
+                        </>
+                      ) : (
+                        <>
+                          <Report sx={{ mr: 1 }} />
+                          Missing Pre-Requisites
+                        </>
+                      )}
+                    </Typography>
+                  </Tooltip>
+                )}
+              </Box>
             </Box>
 
-            <Box>
-              <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
-                <Tooltip title={<Typography>{info}</Typography>}>
-                  <Info sx={{ mr: 1 }} color="info" />
-                </Tooltip>
-                {aug.name}
-              </Typography>
-              <Typography>{description}</Typography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <span>
+                <Requirement
+                  fulfilled={aug.baseCost === 0 || props.player.money > aug.baseCost}
+                  value={numeralWrapper.formatMoney(aug.baseCost)}
+                  color={Settings.theme.money}
+                />
+                {props.rep !== undefined && (
+                  <Requirement
+                    fulfilled={props.rep >= aug.baseRepRequirement}
+                    value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} reputation`}
+                    color={Settings.theme.rep}
+                  />
+                )}
+              </span>
             </Box>
           </Paper>
         );
