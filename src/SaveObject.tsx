@@ -24,6 +24,8 @@ import { SxProps } from "@mui/system";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { pushGameSaved } from "./Electron";
 import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
+import { FactionNames } from "./Faction/data/FactionNames";
+import { Faction } from "./Faction/Faction";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -397,6 +399,9 @@ function evaluateVersionCompatibility(ver: string | number): void {
     }
     if (ver < 15) {
       (Settings as any).EditorTheme = { ...defaultMonacoTheme };
+    }
+    if (ver < 16) {
+      Factions[FactionNames.ShadowsOfAnarchy] = new Faction(FactionNames.ShadowsOfAnarchy);
     }
   }
 }

@@ -3,9 +3,19 @@ import Grid from "@mui/material/Grid";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
-import { random, getArrow, rightArrowSymbol, leftArrowSymbol, upArrowSymbol, downArrowSymbol } from "../utils";
+import {
+  random,
+  getArrow,
+  getInverseArrow,
+  leftArrowSymbol,
+  rightArrowSymbol,
+  upArrowSymbol,
+  downArrowSymbol,
+} from "../utils";
 import { interpolate } from "./Difficulty";
 import Typography from "@mui/material/Typography";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
 
 interface Difficulty {
   [key: string]: number;
@@ -32,10 +42,11 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
   const timer = difficulty.timer;
   const [code] = useState(generateCode(difficulty));
   const [index, setIndex] = useState(0);
+  const hasAugment = Player.hasAugmentation(AugmentationNames.TrickeryOfHermes, true);
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    if (code[index] !== getArrow(event)) {
+    if (code[index] !== getArrow(event) && (!hasAugment || code[index] !== getInverseArrow(event))) {
       props.onFailure();
       return;
     }

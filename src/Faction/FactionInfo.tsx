@@ -3,6 +3,7 @@ import { IMap } from "../types";
 import { FactionNames } from "./data/FactionNames";
 import { use } from "../ui/Context";
 import { Option } from "./ui/Option";
+import { Typography } from "@mui/material";
 
 interface FactionInfoParams {
   infoText?: JSX.Element;
@@ -509,6 +510,19 @@ export const FactionInfos: IMap<FactionInfo> = {
           onClick={() => router.toStaneksGift()}
         />
       );
+    },
+  }),
+  [FactionNames.ShadowsOfAnarchy]: new FactionInfo({
+    infoText: (
+      <>
+        The government is ruled by the corporations that we have allowed to consume it. To release the world from its
+        shackles, the gods grant us their strength.
+      </>
+    ),
+    special: true,
+    keepOnInstall: true,
+    assignment: (): React.ReactElement => {
+      return <Typography>{FactionNames.ShadowsOfAnarchy} can only gain reputation by infiltrating.</Typography>;
     },
   }),
 };

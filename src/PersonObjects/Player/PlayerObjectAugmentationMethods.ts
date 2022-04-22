@@ -7,7 +7,7 @@ import { Augmentation } from "../../Augmentation/Augmentation";
 
 import { calculateEntropy } from "../Grafting/EntropyAccumulation";
 
-export function hasAugmentation(this: IPlayer, aug: string | Augmentation, includeQueued = false): boolean {
+export function hasAugmentation(this: IPlayer, aug: string | Augmentation, ignoreQueued = false): boolean {
   const augName: string = aug instanceof Augmentation ? aug.name : aug;
 
   for (const owned of this.augmentations) {
@@ -16,7 +16,7 @@ export function hasAugmentation(this: IPlayer, aug: string | Augmentation, inclu
     }
   }
 
-  if (!includeQueued) {
+  if (!ignoreQueued) {
     for (const owned of this.queuedAugmentations) {
       if (owned.name === augName) {
         return true;

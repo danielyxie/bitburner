@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import withStyles from "@mui/styles/withStyles";
 import { Theme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import { use } from "../../ui/Context";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 const TimerProgress = withStyles((theme: Theme) => ({
   root: {
@@ -20,14 +22,16 @@ interface IProps {
 }
 
 export function GameTimer(props: IProps): React.ReactElement {
+  const player = use.Player();
   const [v, setV] = useState(100);
+  const totalMillis = (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 1.3 : 1) * props.millis;
 
   const tick = 200;
   useEffect(() => {
     const intervalId = setInterval(() => {
       setV((old) => {
         if (old <= 0) props.onExpire();
-        return old - (tick / props.millis) * 100;
+        return old - (tick / totalMillis) * 100;
       });
     }, tick);
     return () => {

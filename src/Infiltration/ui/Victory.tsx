@@ -3,12 +3,19 @@ import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { FactionNames } from "../../Faction/data/FactionNames";
+import { formatNumber } from "../../utils/StringHelperFunctions";
+import {
+  calculateInfiltratorsRepReward,
+  calculateSellInformationCashReward,
+  calculateTradeInformationRepReward,
+} from "../formulas/victory";
+import { inviteToFaction } from "../../Faction/FactionHelpers";
 
 interface IProps {
   StartingDifficulty: number;
@@ -23,31 +30,25 @@ export function Victory(props: IProps): React.ReactElement {
   const [faction, setFaction] = useState("none");
 
   function quitInfiltration(): void {
+    handleInfiltrators();
     router.toCity();
   }
 
-  const levelBonus = props.MaxLevel * Math.pow(1.01, props.MaxLevel);
+  const soa = Factions[FactionNames.ShadowsOfAnarchy];
+  const repGain = calculateTradeInformationRepReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const moneyGain = calculateSellInformationCashReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const infiltrationRepGain = calculateInfiltratorsRepReward(player, soa, props.StartingDifficulty);
 
-  const repGain =
-    Math.pow(props.Reward + 1, 1.1) *
-    Math.pow(props.StartingDifficulty, 1.2) *
-    30 *
-    levelBonus *
-    BitNodeMultipliers.InfiltrationRep;
-
-  const moneyGain =
-    Math.pow(props.Reward + 1, 2) *
-    Math.pow(props.StartingDifficulty, 3) *
-    3e3 *
-    levelBonus *
-    BitNodeMultipliers.InfiltrationMoney;
+  const isMemberOfInfiltrators = player.factions.includes(FactionNames.ShadowsOfAnarchy);
 
   function sell(): void {
+    handleInfiltrators();
     player.gainMoney(moneyGain, "infiltration");
     quitInfiltration();
   }
 
   function trade(): void {
+    handleInfiltrators();
     if (faction === "none") return;
     Factions[faction].playerReputation += repGain;
     quitInfiltration();
@@ -55,6 +56,13 @@ export function Victory(props: IProps): React.ReactElement {
 
   function changeDropdown(event: SelectChangeEvent<string>): void {
     setFaction(event.target.value);
+  }
+
+  function handleInfiltrators(): void {
+    inviteToFaction(Factions[FactionNames.ShadowsOfAnarchy]);
+    if (isMemberOfInfiltrators) {
+      soa.playerReputation += infiltrationRepGain;
+    }
   }
 
   return (
@@ -65,7 +73,15 @@ export function Victory(props: IProps): React.ReactElement {
         </Grid>
         <Grid item xs={10}>
           <Typography variant="h5" color="primary">
-            You can trade the confidential information you found for money or reputation.
+            You{" "}
+            {isMemberOfInfiltrators ? (
+              <>
+                have gained {formatNumber(infiltrationRepGain, 2)} rep for {FactionNames.ShadowsOfAnarchy} and{" "}
+              </>
+            ) : (
+              <></>
+            )}
+            can trade the confidential information you found for money or reputation.
           </Typography>
           <Select value={faction} onChange={changeDropdown}>
             <MenuItem key={"none"} value={"none"}>
