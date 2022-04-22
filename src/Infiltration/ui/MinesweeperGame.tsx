@@ -7,6 +7,8 @@ import { interpolate } from "./Difficulty";
 import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
 import Typography from "@mui/material/Typography";
 import { KEY } from "../../utils/helpers/keyCodes";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
 
 interface Difficulty {
   [key: string]: number;
@@ -36,7 +38,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
   const [answer, setAnswer] = useState(generateEmptyField(difficulty));
   const [pos, setPos] = useState([0, 0]);
   const [memoryPhase, setMemoryPhase] = useState(true);
-
+  const hasAugment = Player.hasAugmentation(AugmentationNames.HuntOfArtemis, true);
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (memoryPhase) return;
@@ -94,6 +96,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
                 } else {
                   if (x == pos[0] && y == pos[1]) return <span key={x}>[X]&nbsp;</span>;
                   if (answer[y][x]) return <span key={x}>[.]&nbsp;</span>;
+                  if (hasAugment && minefield[y][x]) return <span key={x}>[?]&nbsp;</span>;
                   return <span key={x}>[&nbsp;]&nbsp;</span>;
                 }
               })}

@@ -1,14 +1,7 @@
 /**
  * Root React Component for displaying a faction's "Purchase Augmentations" page
  */
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { PurchaseableAugmentation, PurchaseableAugmentations } from "../../Augmentation/ui/PurchaseableAugmentations";
@@ -20,6 +13,11 @@ import { Favor } from "../../ui/React/Favor";
 import { Reputation } from "../../ui/React/Reputation";
 import { Faction } from "../Faction";
 import { getFactionAugmentationsFiltered, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
+
+import {Box, Button, Typography, Tooltip, TableBody, Table} from "@mui/material";
+
+import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
+import { FactionNames } from "../data/FactionNames";
 
 type IProps = {
   faction: Faction;
@@ -160,6 +158,14 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       </>
     );
   }
+  const multiplierComponent =
+    props.faction.name !== FactionNames.ShadowsOfAnarchy ? (
+      <Typography>
+        Price multiplier: x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
+      </Typography>
+    ) : (
+      <></>
+    );
 
   return (
     <>
@@ -181,9 +187,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>
-            Price multiplier: x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
-          </Typography>
+          {multiplierComponent}
         </Tooltip>
       </Box>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>

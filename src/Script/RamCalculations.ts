@@ -215,6 +215,9 @@ async function parseOnlyRamCalculate(
         } else if (ref in workerScript.env.vars.stanek) {
           func = workerScript.env.vars.stanek[ref];
           refDetail = `stanek.${ref}`;
+        } else if (ref in workerScript.env.vars.infiltration) {
+          func = workerScript.env.vars.infiltration[ref];
+          refDetail = `infiltration.${ref}`;
         } else if (ref in workerScript.env.vars.gang) {
           func = workerScript.env.vars.gang[ref];
           refDetail = `gang.${ref}`;

@@ -171,7 +171,6 @@ export function BitverseRoot(props: IProps): React.ReactElement {
       <>
         {Object.values(BitNodes)
           .filter((node) => {
-            console.log(node.desc);
             return node.desc !== "COMING SOON";
           })
           .map((node) => {

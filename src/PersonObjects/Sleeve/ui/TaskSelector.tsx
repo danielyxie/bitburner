@@ -56,7 +56,7 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
 
 function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
   // Array of all factions that other sleeves are working for
-  const forbiddenFactions = [FactionNames.Bladeburners as string];
+  const forbiddenFactions = [FactionNames.Bladeburners as string, FactionNames.ShadowsOfAnarchy as string];
   if (player.gang) {
     forbiddenFactions.push(player.gang.facName);
   }
