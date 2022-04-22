@@ -1,23 +1,21 @@
 /**
  * Root React Component for displaying a faction's "Purchase Augmentations" page
  */
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { PurchaseableAugmentation, PurchaseableAugmentations } from "../../Augmentation/ui/PurchaseableAugmentations";
+import { PurchaseableAugmentations } from "../../Augmentation/ui/PurchaseableAugmentations";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
 import { use } from "../../ui/Context";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Favor } from "../../ui/React/Favor";
 import { Reputation } from "../../ui/React/Reputation";
+import { FactionNames } from "../data/FactionNames";
 import { Faction } from "../Faction";
 import { getFactionAugmentationsFiltered, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
-
-import { Box, Button, Typography, Tooltip, TableBody, Table } from "@mui/material";
-
-import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
-import { FactionNames } from "../data/FactionNames";
 
 type IProps = {
   faction: Faction;
@@ -130,34 +128,8 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       aug === AugmentationNames.NeuroFluxGovernor ||
       (!player.augmentations.some((a) => a.name === aug) && !player.queuedAugmentations.some((a) => a.name === aug)),
   );
-
-  const purchaseableAugmentation = (aug: string, owned = false): React.ReactNode => {
-    return (
-      <PurchaseableAugmentation
-        augName={aug}
-        faction={props.faction}
-        key={aug}
-        p={player}
-        rerender={rerender}
-        owned={owned}
-      />
-    );
-  };
-
-  const augListElems = purchasable.map((aug) => purchaseableAugmentation(aug));
-
-  let ownedElem = <></>;
   const owned = augs.filter((aug: string) => !purchasable.includes(aug));
-  if (owned.length !== 0) {
-    ownedElem = (
-      <>
-        <br />
-        <Typography variant="h4">Purchased Augmentations</Typography>
-        <Typography>This faction also offers these augmentations but you already own them.</Typography>
-        {owned.map((aug) => purchaseableAugmentation(aug, true))}
-      </>
-    );
-  }
+
   const multiplierComponent =
     props.faction.name !== FactionNames.ShadowsOfAnarchy ? (
       <Typography>
@@ -200,6 +172,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
 
       <PurchaseableAugmentations
         augNames={purchasable}
+        ownedAugNames={owned}
         player={player}
         canPurchase={(player, aug) => {
           return (
@@ -219,13 +192,6 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         rep={props.faction.playerReputation}
         faction={props.faction}
       />
-      {/* <Table size="small" padding="none">
-        <TableBody>{augListElems}</TableBody>
-      </Table>
-
-      <Table size="small" padding="none">
-        <TableBody>{ownedElem}</TableBody>
-      </Table> */}
     </>
   );
 }

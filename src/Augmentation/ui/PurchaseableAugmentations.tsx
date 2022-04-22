@@ -2,26 +2,18 @@
  * React component for displaying a single augmentation for purchase through
  * the faction UI
  */
+import { CheckBox, CheckBoxOutlineBlank, CheckCircle, Info, NewReleases, Report } from "@mui/icons-material";
+import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-
-import { hasAugmentationPrereqs, purchaseAugmentation } from "../../Faction/FactionHelpers";
-import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
-
-import { Augmentations } from "../Augmentations";
-import { AugmentationNames } from "../data/AugmentationNames";
+import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationHelpers";
 import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { Money } from "../../ui/React/Money";
-import { Reputation } from "../../ui/React/Reputation";
-
-import { CheckBox, CheckBoxOutlineBlank, NewReleases, Info, Report, CheckCircle } from "@mui/icons-material";
-import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
-import { Paper, Button, Typography, Tooltip, Box, TableRow, Container, List, ListItem } from "@mui/material";
-import { TableCell } from "../../ui/React/Table";
-import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationHelpers";
 import { Augmentation } from "../Augmentation";
+import { Augmentations } from "../Augmentations";
+import { AugmentationNames } from "../data/AugmentationNames";
+import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 interface IPreReqsProps {
   player: IPlayer;
@@ -123,6 +115,7 @@ const Requirement = (props: IReqProps): React.ReactElement => {
 
 interface IPurchaseableAugsProps {
   augNames: string[];
+  ownedAugNames: string[];
   player: IPlayer;
 
   canPurchase: (player: IPlayer, aug: Augmentation) => boolean;
@@ -142,7 +135,10 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
       sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
     >
       {props.augNames.map((augName: string) => (
-        <PurchaseableAugmentation key={augName} parent={props} augName={augName} />
+        <PurchaseableAugmentation key={augName} parent={props} augName={augName} owned={false} />
+      ))}
+      {props.ownedAugNames.map((augName: string) => (
+        <PurchaseableAugmentation key={augName} parent={props} augName={augName} owned={true} />
       ))}
     </Container>
   );
@@ -151,6 +147,7 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
 interface IPurchaseableAugProps {
   parent: IPurchaseableAugsProps;
   augName: string;
+  owned: boolean;
 }
 
 export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.ReactElement {
@@ -170,7 +167,16 @@ export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.Re
 
   return (
     <>
-      <Paper key={props.augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "minmax(0, 3fr) 1fr", gap: 1 }}>
+      <Paper
+        key={props.augName}
+        sx={{
+          p: 1,
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 3fr) 1fr",
+          gap: 1,
+          opacity: props.owned ? 0.75 : 1,
+        }}
+      >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Button
             onClick={() =>
@@ -178,13 +184,13 @@ export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.Re
                 setOpen(open);
               })
             }
-            disabled={!props.parent.canPurchase(props.parent.player, aug)}
+            disabled={!props.parent.canPurchase(props.parent.player, aug) || props.owned}
             sx={{ width: "48px", height: "48px", float: "left", clear: "none", mr: 1 }}
           >
-            Buy
+            {props.owned ? "Owned" : "Buy"}
           </Button>
 
-          <Box sx={{ maxWidth: "85%" }}>
+          <Box sx={{ maxWidth: props.owned ? "100%" : "85%" }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Tooltip
                 title={
@@ -219,22 +225,24 @@ export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.Re
           </Box>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <span>
-            <Requirement
-              fulfilled={aug.baseCost === 0 || props.parent.player.money > aug.baseCost}
-              value={numeralWrapper.formatMoney(aug.baseCost)}
-              color={Settings.theme.money}
-            />
-            {props.parent.rep !== undefined && (
+        {props.owned || (
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <span>
               <Requirement
-                fulfilled={props.parent.rep >= aug.baseRepRequirement}
-                value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} reputation`}
-                color={Settings.theme.rep}
+                fulfilled={aug.baseCost === 0 || props.parent.player.money > aug.baseCost}
+                value={numeralWrapper.formatMoney(aug.baseCost)}
+                color={Settings.theme.money}
               />
-            )}
-          </span>
-        </Box>
+              {props.parent.rep !== undefined && (
+                <Requirement
+                  fulfilled={props.parent.rep >= aug.baseRepRequirement}
+                  value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} reputation`}
+                  color={Settings.theme.rep}
+                />
+              )}
+            </span>
+          </Box>
+        )}
       </Paper>
       <PurchaseAugmentationModal open={open} onClose={() => setOpen(false)} faction={props.parent.faction} aug={aug} />
     </>

@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { Box, Container, Paper, Tooltip, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Augmentations } from "../../../Augmentation/Augmentations";
+import { PurchaseableAugmentations } from "../../../Augmentation/ui/PurchaseableAugmentations";
+import { use } from "../../../ui/Context";
+import { Modal } from "../../../ui/React/Modal";
 import { Sleeve } from "../Sleeve";
 import { findSleevePurchasableAugs } from "../SleeveHelpers";
-import { Augmentations } from "../../../Augmentation/Augmentations";
-import { Augmentation } from "../../../Augmentation/Augmentation";
-import { PurchaseableAugmentations } from "../../../Augmentation/ui/PurchaseableAugmentations";
-import { Money } from "../../../ui/React/Money";
-import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
-import { Typography, Tooltip, Paper, Box, Container } from "@mui/material";
-import Button from "@mui/material/Button";
-import TableBody from "@mui/material/TableBody";
-import Table from "@mui/material/Table";
-import { TableCell } from "../../../ui/React/Table";
-import TableRow from "@mui/material/TableRow";
 
 interface IProps {
   open: boolean;
@@ -40,11 +33,6 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
   // and you must also have enough rep in that faction in order to purchase it.
   const availableAugs = findSleevePurchasableAugs(props.sleeve, player);
 
-  function purchaseAugmentation(aug: Augmentation): void {
-    props.sleeve.tryBuyAugmentation(player, aug);
-    rerender();
-  }
-
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Container disableGutters maxWidth="md" sx={{ mx: 0 }}>
@@ -58,6 +46,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
         </Typography>
         <PurchaseableAugmentations
           augNames={availableAugs.map((aug) => aug.name)}
+          ownedAugNames={ownedAugNames}
           player={player}
           canPurchase={(player, aug) => {
             return player.money > aug.startingCost;
@@ -69,38 +58,11 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
           skipPreReqs
           skipExclusiveIndicator
         />
-        {/* <Box component={Paper} sx={{ my: 1, p: 1 }}>
-            <Table size="small" padding="none">
-              <TableBody>
-                {availableAugs.map((aug) => {
-                  return (
-                    <TableRow key={aug.name}>
-                      <TableCell>
-                        <Button onClick={() => purchaseAugmentation(aug)} disabled={player.money < aug.startingCost}>
-                          Buy
-                        </Button>
-                      </TableCell>
-                      <TableCell>
-                        <Box display="flex">
-                          <Tooltip title={aug.stats || ""}>
-                            <Typography>{aug.name}</Typography>
-                          </Tooltip>
-                        </Box>
-                      </TableCell>
-                      <TableCell>
-                        <Money money={aug.startingCost} player={player} />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </Box> */}
 
         {ownedAugNames.length > 0 && (
           <>
-            <Typography sx={{ mx: 1 }}>Owned Augmentations:</Typography>
-            <Box display="grid" sx={{ gridTemplateColumns: "repeat(5, 1fr)", m: 1 }}>
+            <Typography>Owned Augmentations:</Typography>
+            <Box display="grid" sx={{ gridTemplateColumns: "repeat(5, 1fr)", my: 1 }}>
               {ownedAugNames.map((augName) => {
                 const aug = Augmentations[augName];
                 const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
