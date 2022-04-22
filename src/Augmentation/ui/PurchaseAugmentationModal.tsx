@@ -13,21 +13,23 @@ import Button from "@mui/material/Button";
 interface IProps {
   open: boolean;
   onClose: () => void;
-  faction: Faction;
-  aug: Augmentation;
-  rerender: () => void;
+  faction?: Faction;
+  aug?: Augmentation;
 }
 
 export function PurchaseAugmentationModal(props: IProps): React.ReactElement {
+  if (typeof props.aug === "undefined" || typeof props.faction === "undefined") {
+    return <></>;
+  }
+
   const player = use.Player();
 
   function buy(): void {
-    if (!isRepeatableAug(props.aug) && player.hasAugmentation(props.aug)) {
+    if (!isRepeatableAug(props.aug as Augmentation) && player.hasAugmentation(props.aug as Augmentation)) {
       return;
     }
 
-    purchaseAugmentation(props.aug, props.faction);
-    props.rerender();
+    purchaseAugmentation(props.aug as Augmentation, props.faction as Faction);
     props.onClose();
   }
 

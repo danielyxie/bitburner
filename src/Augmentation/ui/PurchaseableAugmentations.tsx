@@ -131,6 +131,7 @@ interface IPurchaseableAugsProps {
   rep?: number;
   skipPreReqs?: boolean;
   skipExclusiveIndicator?: boolean;
+  faction?: Faction;
 }
 
 export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.ReactElement => {
@@ -140,192 +141,102 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
       disableGutters
       sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
     >
-      {props.augNames.map((augName: string) => {
-        const aug = Augmentations[augName];
-
-        const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
-        const description = (
-          <>
-            {info}
-            <br />
-            <br />
-            {aug.stats}
-          </>
-        );
-
-        return (
-          <Paper key={augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "minmax(0, 3fr) 1fr", gap: 1 }}>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Button
-                onClick={() =>
-                  props.purchaseAugmentation(props.player, aug, (_open: boolean): void => {
-                    null;
-                  })
-                }
-                disabled={!props.canPurchase(props.player, aug)}
-                sx={{ width: "48px", height: "48px", float: "left", clear: "none", mr: 1 }}
-              >
-                Buy
-              </Button>
-
-              <Box sx={{ maxWidth: "85%" }}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Tooltip
-                    title={
-                      <>
-                        <Typography variant="h5">
-                          {augName}
-                          {augName === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
-                        </Typography>
-                        <Typography>{description}</Typography>
-                      </>
-                    }
-                  >
-                    <Info sx={{ mr: 1 }} color="info" />
-                  </Tooltip>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {aug.name}
-                    {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
-                  </Typography>
-                  {aug.factions.length === 1 && !props.skipExclusiveIndicator && (
-                    <Exclusive player={props.player} aug={aug} />
-                  )}
-                </Box>
-
-                {aug.prereqs.length > 0 && !props.skipPreReqs && <PreReqs player={props.player} aug={aug} />}
-              </Box>
-            </Box>
-
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <span>
-                <Requirement
-                  fulfilled={aug.baseCost === 0 || props.player.money > aug.baseCost}
-                  value={numeralWrapper.formatMoney(aug.baseCost)}
-                  color={Settings.theme.money}
-                />
-                {props.rep !== undefined && (
-                  <Requirement
-                    fulfilled={props.rep >= aug.baseRepRequirement}
-                    value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} reputation`}
-                    color={Settings.theme.rep}
-                  />
-                )}
-              </span>
-            </Box>
-          </Paper>
-        );
-      })}
+      {props.augNames.map((augName: string) => (
+        <PurchaseableAugmentation key={augName} parent={props} augName={augName} />
+      ))}
     </Container>
   );
 };
 
 interface IPurchaseableAugProps {
+  parent: IPurchaseableAugsProps;
   augName: string;
-  faction: Faction;
-  p: IPlayer;
-  rerender: () => void;
-  owned?: boolean;
 }
 
 export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.ReactElement {
   const [open, setOpen] = useState(false);
+
   const aug = Augmentations[props.augName];
-  if (aug == null) throw new Error(`aug ${props.augName} does not exists`);
 
-  if (aug == null) {
-    console.error(
-      `Invalid Augmentation when trying to create PurchaseableAugmentation display element: ${props.augName}`,
-    );
-    return <></>;
-  }
-
-  const moneyCost = aug.baseCost;
-  const repCost = aug.baseRepRequirement;
-  const hasReq = hasAugmentationPrereqs(aug);
-  const hasRep = props.faction.playerReputation >= repCost;
-  const hasCost = aug.baseCost === 0 || props.p.money > aug.baseCost;
-
-  // Determine UI properties
-  const color: "error" | "primary" = !hasReq || !hasRep || !hasCost ? "error" : "primary";
-
-  // Determine button txt
-  let btnTxt = aug.name;
-  if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-    btnTxt += ` - Level ${getNextNeuroFluxLevel()}`;
-  }
-
-  let tooltip = <></>;
-  if (typeof aug.info === "string") {
-    tooltip = (
-      <>
-        <span>{aug.info}</span>
-        <br />
-        <br />
-        {aug.stats}
-      </>
-    );
-  } else
-    tooltip = (
-      <>
-        {aug.info}
-        <br />
-        <br />
-        {aug.stats}
-      </>
-    );
-
-  function handleClick(): void {
-    if (color === "error") return;
-    if (!Settings.SuppressBuyAugmentationConfirmation) {
-      setOpen(true);
-    } else {
-      purchaseAugmentation(aug, props.faction);
-      props.rerender();
-    }
-  }
+  const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
+  const description = (
+    <>
+      {info}
+      <br />
+      <br />
+      {aug.stats}
+    </>
+  );
 
   return (
-    <TableRow>
-      {!props.owned && (
-        <TableCell key={0}>
-          <Button onClick={handleClick} color={color}>
+    <>
+      <Paper key={props.augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "minmax(0, 3fr) 1fr", gap: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Button
+            onClick={() =>
+              props.parent.purchaseAugmentation(props.parent.player, aug, (open): void => {
+                setOpen(open);
+              })
+            }
+            disabled={!props.parent.canPurchase(props.parent.player, aug)}
+            sx={{ width: "48px", height: "48px", float: "left", clear: "none", mr: 1 }}
+          >
             Buy
           </Button>
-          <PurchaseAugmentationModal
-            open={open}
-            onClose={() => setOpen(false)}
-            aug={aug}
-            faction={props.faction}
-            rerender={props.rerender}
-          />
-        </TableCell>
-      )}
-      <TableCell key={1}>
-        <Box display="flex">
-          <Tooltip title={<Typography>{tooltip}</Typography>} placement="top">
-            <Typography>{btnTxt}</Typography>
-          </Tooltip>
+
+          <Box sx={{ maxWidth: "85%" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Tooltip
+                title={
+                  <>
+                    <Typography variant="h5">
+                      {props.augName}
+                      {props.augName === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
+                    </Typography>
+                    <Typography>{description}</Typography>
+                  </>
+                }
+              >
+                <Info sx={{ mr: 1 }} color="info" />
+              </Tooltip>
+              <Typography
+                variant="h6"
+                sx={{
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                }}
+              >
+                {aug.name}
+                {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
+              </Typography>
+              {aug.factions.length === 1 && !props.parent.skipExclusiveIndicator && (
+                <Exclusive player={props.parent.player} aug={aug} />
+              )}
+            </Box>
+
+            {aug.prereqs.length > 0 && !props.parent.skipPreReqs && <PreReqs player={props.parent.player} aug={aug} />}
+          </Box>
         </Box>
-      </TableCell>
-      {!props.owned && (
-        <Requirements
-          key={2}
-          augName={props.augName}
-          p={props.p}
-          cost={moneyCost}
-          rep={repCost}
-          hasReq={hasReq}
-          hasRep={hasRep}
-          hasCost={hasCost}
-        />
-      )}
-    </TableRow>
+
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <span>
+            <Requirement
+              fulfilled={aug.baseCost === 0 || props.parent.player.money > aug.baseCost}
+              value={numeralWrapper.formatMoney(aug.baseCost)}
+              color={Settings.theme.money}
+            />
+            {props.parent.rep !== undefined && (
+              <Requirement
+                fulfilled={props.parent.rep >= aug.baseRepRequirement}
+                value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} reputation`}
+                color={Settings.theme.rep}
+              />
+            )}
+          </span>
+        </Box>
+      </Paper>
+      <PurchaseAugmentationModal open={open} onClose={() => setOpen(false)} faction={props.parent.faction} aug={aug} />
+    </>
   );
 }

@@ -14,7 +14,7 @@ import { Reputation } from "../../ui/React/Reputation";
 import { Faction } from "../Faction";
 import { getFactionAugmentationsFiltered, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
 
-import {Box, Button, Typography, Tooltip, TableBody, Table} from "@mui/material";
+import { Box, Button, Typography, Tooltip, TableBody, Table } from "@mui/material";
 
 import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
 import { FactionNames } from "../data/FactionNames";
@@ -217,6 +217,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
           }
         }}
         rep={props.faction.playerReputation}
+        faction={props.faction}
       />
       {/* <Table size="small" padding="none">
         <TableBody>{augListElems}</TableBody>
