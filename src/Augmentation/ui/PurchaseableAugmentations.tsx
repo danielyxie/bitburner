@@ -16,53 +16,12 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 
-import { CheckBox, CheckBoxOutlineBlank, Verified, Info, Report, CheckCircle } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, NewReleases, Info, Report, CheckCircle } from "@mui/icons-material";
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
 import { Paper, Button, Typography, Tooltip, Box, TableRow, Container, List, ListItem } from "@mui/material";
 import { TableCell } from "../../ui/React/Table";
 import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationHelpers";
 import { Augmentation } from "../Augmentation";
-
-// interface IReqProps {
-//   augName: string;
-//   p: IPlayer;
-//   hasReq: boolean;
-//   rep: number;
-//   hasRep: boolean;
-//   cost: number;
-//   hasCost: boolean;
-// }
-
-// function Requirements(props: IReqProps): React.ReactElement {
-//   const aug = Augmentations[props.augName];
-//   if (!props.hasReq) {
-//     return (
-//       <TableCell key={1} colSpan={2}>
-//         <Typography color="error">
-//           Requires{" "}
-//           {aug.prereqs.map((aug, i) => (
-//             <AugFormat key={i} name={aug} />
-//           ))}
-//         </Typography>
-//       </TableCell>
-//     );
-//   }
-
-//   return (
-//     <React.Fragment key="f">
-//       <TableCell key={1}>
-//         <Typography>
-//           <Money money={props.cost} player={props.p} />
-//         </Typography>
-//       </TableCell>
-//       <TableCell key={2}>
-//         <Typography color={props.hasRep ? "primary" : "error"}>
-//           Requires <Reputation reputation={props.rep} /> faction reputation
-//         </Typography>
-//       </TableCell>
-//     </React.Fragment>
-//   );
-// }
 
 interface IPreReqsProps {
   player: IPlayer;
@@ -142,7 +101,7 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
         </Typography>
       }
     >
-      <Verified sx={{ ml: 1, color: Settings.theme.money }} />
+      <NewReleases sx={{ ml: 1, color: Settings.theme.money, rotate: "180deg" }} />
     </Tooltip>
   );
 };
