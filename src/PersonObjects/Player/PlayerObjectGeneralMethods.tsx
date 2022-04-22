@@ -65,6 +65,7 @@ import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -1350,7 +1351,7 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
     focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
   }
 
-  let skillMult = 1 + (this.getIntelligenceBonus(3) - 1) / 3;
+  let skillMult = graftingIntBonus(this);
   skillMult *= focusBonus;
 
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;

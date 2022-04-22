@@ -15,7 +15,11 @@ export const getGraftingAvailableAugs = (player: IPlayer): string[] => {
   return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation));
 };
 
+export const graftingIntBonus = (player: IPlayer): number => {
+  return 1 + (player.getIntelligenceBonus(3) - 1) / 3;
+};
+
 export const calculateGraftingTimeWithBonus = (player: IPlayer, aug: GraftableAugmentation): number => {
   const baseTime = aug.time;
-  return baseTime / (1 + (player.getIntelligenceBonus(3) - 1) / 3);
+  return baseTime / graftingIntBonus(player);
 };
