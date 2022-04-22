@@ -280,7 +280,7 @@ Description
     In this BitNode:
 
     * Your stats are significantly decreased
-    * You cannnot purchase additional servers
+    * You cannot purchase additional servers
     * Hacking is significantly less profitable
 
 Source-File
