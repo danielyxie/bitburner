@@ -129,6 +129,8 @@ interface IPurchaseableAugsProps {
   purchaseAugmentation: (player: IPlayer, aug: Augmentation, showModal: (open: boolean) => void) => void;
 
   rep?: number;
+  skipPreReqs?: boolean;
+  skipExclusiveIndicator?: boolean;
 }
 
 export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.ReactElement => {
@@ -192,10 +194,12 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
                     {aug.name}
                     {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
                   </Typography>
-                  {aug.factions.length === 1 && <Exclusive player={props.player} aug={aug} />}
+                  {aug.factions.length === 1 && !props.skipExclusiveIndicator && (
+                    <Exclusive player={props.player} aug={aug} />
+                  )}
                 </Box>
 
-                {aug.prereqs.length > 0 && <PreReqs player={props.player} aug={aug} />}
+                {aug.prereqs.length > 0 && !props.skipPreReqs && <PreReqs player={props.player} aug={aug} />}
               </Box>
             </Box>
 

@@ -66,6 +66,8 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
             props.sleeve.tryBuyAugmentation(player, aug);
             rerender();
           }}
+          skipPreReqs
+          skipExclusiveIndicator
         />
         {/* <Box component={Paper} sx={{ my: 1, p: 1 }}>
             <Table size="small" padding="none">
