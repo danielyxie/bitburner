@@ -4,7 +4,7 @@
  */
 import React, { useState } from "react";
 
-import { getNextNeurofluxLevel, hasAugmentationPrereqs, purchaseAugmentation } from "../../Faction/FactionHelpers";
+import { hasAugmentationPrereqs, purchaseAugmentation } from "../../Faction/FactionHelpers";
 import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 import { Augmentations } from "../Augmentations";
@@ -20,6 +20,7 @@ import { CheckBox, CheckBoxOutlineBlank, Verified, Info, Report, CheckCircle } f
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
 import { Paper, Button, Typography, Tooltip, Box, TableRow, Container, List, ListItem } from "@mui/material";
 import { TableCell } from "../../ui/React/Table";
+import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationHelpers";
 import { Augmentation } from "../Augmentation";
 
 // interface IReqProps {
@@ -233,7 +234,7 @@ export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.Re
   // Determine button txt
   let btnTxt = aug.name;
   if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-    btnTxt += ` - Level ${getNextNeurofluxLevel()}`;
+    btnTxt += ` - Level ${getNextNeuroFluxLevel()}`;
   }
 
   let tooltip = <></>;
