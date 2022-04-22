@@ -128,12 +128,12 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
             <li>
               <b>{props.aug.factions[0]}</b> faction
             </li>
-            {props.player.canAccessGang() && (
+            {props.player.canAccessGang() && !props.aug.isSpecial && (
               <li>
                 Certain <b>gangs</b>
               </li>
             )}
-            {props.player.canAccessGrafting() && (
+            {props.player.canAccessGrafting() && !props.aug.isSpecial && (
               <li>
                 <b>Grafting</b>
               </li>
