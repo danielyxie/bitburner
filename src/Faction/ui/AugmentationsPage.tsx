@@ -1,29 +1,25 @@
 /**
  * Root React Component for displaying a faction's "Purchase Augmentations" page
  */
-import React, { useState } from "react";
-
-import { PurchaseableAugmentation } from "../../Augmentation/ui/PurchaseableAugmentations";
-
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Faction } from "../Faction";
-import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
-import { Settings } from "../../Settings/Settings";
-import { hasAugmentationPrereqs, getFactionAugmentationsFiltered } from "../FactionHelpers";
-
-import { use } from "../../ui/Context";
-import { Reputation } from "../../ui/React/Reputation";
-import { Favor } from "../../ui/React/Favor";
-import { numeralWrapper } from "../../ui/numeralFormat";
-
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
 import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
+import { Augmentations } from "../../Augmentation/Augmentations";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { PurchaseableAugmentation, PurchaseableAugmentations } from "../../Augmentation/ui/PurchaseableAugmentations";
+import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
+import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Favor } from "../../ui/React/Favor";
+import { Reputation } from "../../ui/React/Reputation";
+import { Faction } from "../Faction";
+import { getFactionAugmentationsFiltered, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
 
 type IProps = {
   faction: Faction;
@@ -198,13 +194,33 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       </Button>
       <br />
 
-      <Table size="small" padding="none">
+      <PurchaseableAugmentations
+        augNames={purchasable}
+        player={player}
+        canPurchase={(player, aug) => {
+          return (
+            hasAugmentationPrereqs(aug) &&
+            props.faction.playerReputation >= aug.baseRepRequirement &&
+            (aug.baseCost === 0 || player.money > aug.baseCost)
+          );
+        }}
+        purchaseAugmentation={(player, aug, showModal) => {
+          if (!Settings.SuppressBuyAugmentationConfirmation) {
+            showModal(true);
+          } else {
+            purchaseAugmentation(aug, props.faction);
+            rerender();
+          }
+        }}
+        rep={props.faction.playerReputation}
+      />
+      {/* <Table size="small" padding="none">
         <TableBody>{augListElems}</TableBody>
       </Table>
 
       <Table size="small" padding="none">
         <TableBody>{ownedElem}</TableBody>
-      </Table>
+      </Table> */}
     </>
   );
 }

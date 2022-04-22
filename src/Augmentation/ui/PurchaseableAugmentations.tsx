@@ -12,59 +12,159 @@ import { AugmentationNames } from "../data/AugmentationNames";
 import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
+import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 
+import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
+import { Paper, Button, Typography, Tooltip, Box, TableRow, Container, List, ListItem } from "@mui/material";
 import { TableCell } from "../../ui/React/Table";
-import TableRow from "@mui/material/TableRow";
+import { Augmentation } from "../Augmentation";
+
+// interface IReqProps {
+//   augName: string;
+//   p: IPlayer;
+//   hasReq: boolean;
+//   rep: number;
+//   hasRep: boolean;
+//   cost: number;
+//   hasCost: boolean;
+// }
+
+// function Requirements(props: IReqProps): React.ReactElement {
+//   const aug = Augmentations[props.augName];
+//   if (!props.hasReq) {
+//     return (
+//       <TableCell key={1} colSpan={2}>
+//         <Typography color="error">
+//           Requires{" "}
+//           {aug.prereqs.map((aug, i) => (
+//             <AugFormat key={i} name={aug} />
+//           ))}
+//         </Typography>
+//       </TableCell>
+//     );
+//   }
+
+//   return (
+//     <React.Fragment key="f">
+//       <TableCell key={1}>
+//         <Typography>
+//           <Money money={props.cost} player={props.p} />
+//         </Typography>
+//       </TableCell>
+//       <TableCell key={2}>
+//         <Typography color={props.hasRep ? "primary" : "error"}>
+//           Requires <Reputation reputation={props.rep} /> faction reputation
+//         </Typography>
+//       </TableCell>
+//     </React.Fragment>
+//   );
+// }
 
 interface IReqProps {
-  augName: string;
-  p: IPlayer;
-  hasReq: boolean;
-  rep: number;
-  hasRep: boolean;
-  cost: number;
-  hasCost: boolean;
+  value: string;
+  valueColor: string;
+  fulfilled: boolean;
 }
 
-function Requirements(props: IReqProps): React.ReactElement {
-  const aug = Augmentations[props.augName];
-  if (!props.hasReq) {
-    return (
-      <TableCell key={1} colSpan={2}>
-        <Typography color="error">
-          Requires{" "}
-          {aug.prereqs.map((aug, i) => (
-            <AugFormat key={i} name={aug} />
-          ))}
-        </Typography>
-      </TableCell>
-    );
-  }
-
+const Requirement = (props: IReqProps): React.ReactElement => {
   return (
-    <React.Fragment key="f">
-      <TableCell key={1}>
-        <Typography>
-          <Money money={props.cost} player={props.p} />
-        </Typography>
-      </TableCell>
-      <TableCell key={2}>
-        <Typography color={props.hasRep ? "primary" : "error"}>
-          Requires <Reputation reputation={props.rep} /> faction reputation
-        </Typography>
-      </TableCell>
-    </React.Fragment>
+    <Typography sx={{ display: "flex", alignItems: "center" }}>
+      {props.fulfilled ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
+      <span style={{ color: props.valueColor }}>{props.value}</span>
+    </Typography>
   );
+};
+
+interface IPurchaseableAugsProps {
+  augNames: string[];
+  player: IPlayer;
+
+  canPurchase: (player: IPlayer, aug: Augmentation) => boolean;
+  purchaseAugmentation: (player: IPlayer, aug: Augmentation, showModal: (open: boolean) => void) => void;
+
+  rep?: number;
 }
 
-interface IProps {
+export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.ReactElement => {
+  return (
+    <Container
+      maxWidth="lg"
+      disableGutters
+      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
+    >
+      {props.augNames.map((augName: string) => {
+        const aug = Augmentations[augName];
+
+        const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
+        const description = (
+          <>
+            {info}
+            <br />
+            <br />
+            {aug.stats}
+          </>
+        );
+
+        return (
+          <Paper key={augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "1fr 3fr", gap: 1 }}>
+            <Box>
+              <Button
+                onClick={() =>
+                  props.purchaseAugmentation(props.player, aug, (_open: boolean): void => {
+                    null;
+                  })
+                }
+                disabled={!props.canPurchase(props.player, aug)}
+                sx={{ width: "100%", height: "fit-content" }}
+              >
+                Buy Augmentation
+              </Button>
+              <Typography>
+                <b>Cost:</b>
+              </Typography>
+              <Requirement
+                fulfilled={aug.baseCost === 0 || props.player.money > aug.baseCost}
+                value={numeralWrapper.formatMoney(aug.baseCost)}
+                valueColor={Settings.theme.money}
+              />
+              {props.rep !== undefined && (
+                <Requirement
+                  fulfilled={props.rep >= aug.baseRepRequirement}
+                  value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} reputation`}
+                  valueColor={Settings.theme.rep}
+                />
+              )}
+              {aug.prereqs.length > 0 && (
+                <>
+                  <Typography>
+                    <b>Pre-Requisites:</b>
+                  </Typography>
+                  {aug.prereqs.map((preAug) => (
+                    <Requirement
+                      fulfilled={props.player.hasAugmentation(preAug)}
+                      value={preAug}
+                      valueColor={Settings.theme.money}
+                      key={preAug}
+                    />
+                  ))}
+                </>
+              )}
+            </Box>
+            <Box>
+              <Typography variant="h6">{aug.name}</Typography>
+              <Typography>{description}</Typography>
+            </Box>
+          </Paper>
+        );
+      })}
+    </Container>
+  );
+};
+
+interface IPurchaseableAugProps {
   augName: string;
   faction: Faction;
   p: IPlayer;
@@ -72,7 +172,7 @@ interface IProps {
   owned?: boolean;
 }
 
-export function PurchaseableAugmentation(props: IProps): React.ReactElement {
+export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.ReactElement {
   const [open, setOpen] = useState(false);
   const aug = Augmentations[props.augName];
   if (aug == null) throw new Error(`aug ${props.augName} does not exists`);
