@@ -1,5 +1,6 @@
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { GraftableAugmentation } from "./GraftableAugmentation";
 import { IPlayer } from "../IPlayer";
 
 export const getGraftingAvailableAugs = (player: IPlayer): string[] => {
@@ -12,4 +13,9 @@ export const getGraftingAvailableAugs = (player: IPlayer): string[] => {
   }
 
   return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation));
+};
+
+export const calculateGraftingTimeWithBonus = (player: IPlayer, aug: GraftableAugmentation): number => {
+  const baseTime = aug.time;
+  return baseTime / (1 + (player.getIntelligenceBonus(3) - 1) / 3);
 };
