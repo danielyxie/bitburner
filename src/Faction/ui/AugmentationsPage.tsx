@@ -3,7 +3,7 @@
  */
 import React, { useState } from "react";
 
-import { PurchaseableAugmentation } from "./PurchaseableAugmentation";
+import { PurchaseableAugmentation } from "../../Augmentation/ui/PurchaseableAugmentations";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";

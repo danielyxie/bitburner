@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Augmentation } from "../../Augmentation/Augmentation";
-import { Faction } from "../Faction";
-import { purchaseAugmentation } from "../FactionHelpers";
-import { isRepeatableAug } from "../../Augmentation/AugmentationHelpers";
+import { Augmentation } from "../Augmentation";
+import { Faction } from "../../Faction/Faction";
+import { purchaseAugmentation } from "../../Faction/FactionHelpers";
+import { isRepeatableAug } from "../AugmentationHelpers";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";
 import { use } from "../../ui/Context";

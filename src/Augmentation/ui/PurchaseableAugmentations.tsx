@@ -4,12 +4,12 @@
  */
 import React, { useState } from "react";
 
-import { getNextNeurofluxLevel, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
+import { getNextNeurofluxLevel, hasAugmentationPrereqs, purchaseAugmentation } from "../../Faction/FactionHelpers";
 import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Faction } from "../Faction";
+import { Augmentations } from "../Augmentations";
+import { AugmentationNames } from "../data/AugmentationNames";
+import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { Money } from "../../ui/React/Money";
