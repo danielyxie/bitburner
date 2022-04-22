@@ -528,7 +528,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
   const extra = NetscriptExtra(Player, workerScript, helper);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
-  const infiltration = NetscriptInfiltration(Player, workerScript, helper);
+  const infiltration = wrapAPI(helper, {}, workerScript, NetscriptInfiltration(Player), "infiltration")
+    .infiltration as unknown as IInfiltration;
   const stanek = wrapAPI(helper, {}, workerScript, NetscriptStanek(Player, workerScript, helper), "stanek")
     .stanek as unknown as IStanek;
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
