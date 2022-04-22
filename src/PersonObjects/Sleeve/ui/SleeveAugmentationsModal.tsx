@@ -1,6 +1,5 @@
-import { Box, Container, Paper, Tooltip, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Augmentations } from "../../../Augmentation/Augmentations";
 import { PurchaseableAugmentations } from "../../../Augmentation/ui/PurchaseableAugmentations";
 import { use } from "../../../ui/Context";
 import { Modal } from "../../../ui/React/Modal";
@@ -58,34 +57,6 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
           skipPreReqs
           skipExclusiveIndicator
         />
-
-        {ownedAugNames.length > 0 && (
-          <>
-            <Typography>Owned Augmentations:</Typography>
-            <Box display="grid" sx={{ gridTemplateColumns: "repeat(5, 1fr)", my: 1 }}>
-              {ownedAugNames.map((augName) => {
-                const aug = Augmentations[augName];
-                const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
-                const tooltip = (
-                  <>
-                    {info}
-                    <br />
-                    <br />
-                    {aug.stats}
-                  </>
-                );
-
-                return (
-                  <Tooltip key={augName} title={<Typography>{tooltip}</Typography>}>
-                    <Paper sx={{ p: 1 }}>
-                      <Typography>{augName}</Typography>
-                    </Paper>
-                  </Tooltip>
-                );
-              })}
-            </Box>
-          </>
-        )}
       </Container>
     </Modal>
   );
