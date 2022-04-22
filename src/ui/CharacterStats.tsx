@@ -14,7 +14,6 @@ import { Modal } from "./React/Modal";
 import { Money } from "./React/Money";
 import { StatsRow } from "./React/StatsRow";
 import { StatsTable } from "./React/StatsTable";
-import { FactionNames } from "../Faction/data/FactionNames";
 
 interface EmployersModalProps {
   open: boolean;

@@ -1,13 +1,6 @@
-import { INetscriptHelper } from "./INetscriptHelper";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { getRamCost } from "../Netscript/RamCostGenerator";
 
-import {
-  Infiltration as IInfiltration,
-  InfiltrationLocation,
-  InfiltrationReward,
-} from "../ScriptEditor/NetscriptDefinitions";
+import { Infiltration as IInfiltration, InfiltrationLocation } from "../ScriptEditor/NetscriptDefinitions";
 import { Location } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
 import { calculateDifficulty, calculateReward } from "../Infiltration/formulas/game";
