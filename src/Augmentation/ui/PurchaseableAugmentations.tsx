@@ -16,7 +16,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 
-import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, Verified, Info } from "@mui/icons-material";
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
 import { Paper, Button, Typography, Tooltip, Box, TableRow, Container, List, ListItem } from "@mui/material";
 import { TableCell } from "../../ui/React/Table";
@@ -93,23 +93,16 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
     <Container
       maxWidth="lg"
       disableGutters
-      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
+      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 1 }}
     >
       {props.augNames.map((augName: string) => {
         const aug = Augmentations[augName];
 
         const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
-        const description = (
-          <>
-            {info}
-            <br />
-            <br />
-            {aug.stats}
-          </>
-        );
+        const description = aug.stats;
 
         return (
-          <Paper key={augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "1fr 3fr", gap: 1 }}>
+          <Paper key={augName} sx={{ p: 1, display: "grid", gridTemplateColumns: "1fr 2fr", gap: 1 }}>
             <Box>
               <Button
                 onClick={() =>
@@ -122,6 +115,14 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
               >
                 Buy Augmentation
               </Button>
+
+              {aug.factions.length === 1 && (
+                <Typography sx={{ display: "flex", alignItems: "center", color: Settings.theme.info }}>
+                  <Verified sx={{ mr: 1 }} />
+                  Faction-Exclusive Augmentation
+                </Typography>
+              )}
+
               <Typography>
                 <b>Cost:</b>
               </Typography>
@@ -137,6 +138,7 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
                   valueColor={Settings.theme.rep}
                 />
               )}
+
               {aug.prereqs.length > 0 && (
                 <>
                   <Typography>
@@ -153,8 +155,14 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
                 </>
               )}
             </Box>
+
             <Box>
-              <Typography variant="h6">{aug.name}</Typography>
+              <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
+                <Tooltip title={<Typography>{info}</Typography>}>
+                  <Info sx={{ mr: 1 }} color="info" />
+                </Tooltip>
+                {aug.name}
+              </Typography>
               <Typography>{description}</Typography>
             </Box>
           </Paper>

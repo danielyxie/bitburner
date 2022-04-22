@@ -3,13 +3,11 @@ import { Sleeve } from "../Sleeve";
 import { findSleevePurchasableAugs } from "../SleeveHelpers";
 import { Augmentations } from "../../../Augmentation/Augmentations";
 import { Augmentation } from "../../../Augmentation/Augmentation";
+import { PurchaseableAugmentations } from "../../../Augmentation/ui/PurchaseableAugmentations";
 import { Money } from "../../../ui/React/Money";
 import { Modal } from "../../../ui/React/Modal";
 import { use } from "../../../ui/Context";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+import { Typography, Tooltip, Paper, Box, Container } from "@mui/material";
 import Button from "@mui/material/Button";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
@@ -49,17 +47,27 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <>
-        <Box sx={{ mx: 1 }}>
-          <Typography>
-            You can purchase Augmentations for your Duplicate Sleeves. These Augmentations have the same effect as they
-            would for you. You can only purchase Augmentations that you have unlocked through Factions.
-            <br />
-            <br />
-            When purchasing an Augmentation for a Duplicate Sleeve, they are immediately installed. This means that the
-            Duplicate Sleeve will immediately lose all of its stat experience.
-          </Typography>
-          <Box component={Paper} sx={{ my: 1, p: 1 }}>
+      <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
+        <Typography>
+          You can purchase Augmentations for your Duplicate Sleeves. These Augmentations have the same effect as they
+          would for you. You can only purchase Augmentations that you have unlocked through Factions.
+          <br />
+          <br />
+          When purchasing an Augmentation for a Duplicate Sleeve, they are immediately installed. This means that the
+          Duplicate Sleeve will immediately lose all of its stat experience.
+        </Typography>
+        <PurchaseableAugmentations
+          augNames={availableAugs.map((aug) => aug.name)}
+          player={player}
+          canPurchase={(player, aug) => {
+            return player.money > aug.startingCost;
+          }}
+          purchaseAugmentation={(player, aug, _showModal) => {
+            props.sleeve.tryBuyAugmentation(player, aug);
+            rerender();
+          }}
+        />
+        {/* <Box component={Paper} sx={{ my: 1, p: 1 }}>
             <Table size="small" padding="none">
               <TableBody>
                 {availableAugs.map((aug) => {
@@ -85,8 +93,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
                 })}
               </TableBody>
             </Table>
-          </Box>
-        </Box>
+          </Box> */}
 
         {ownedAugNames.length > 0 && (
           <>
@@ -115,7 +122,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
             </Box>
           </>
         )}
-      </>
+      </Container>
     </Modal>
   );
 }
