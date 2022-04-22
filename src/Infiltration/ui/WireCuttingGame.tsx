@@ -64,10 +64,10 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
   const [wires] = useState(generateWires(difficulty));
   const [cutWires, setCutWires] = useState(new Array(wires.length).fill(false));
   const [questions] = useState(generateQuestion(wires, difficulty));
-  const hasAugment = Player.hasAugmentation(AugmentationNames.SecurityWireContacts, true);
+  const hasAugment = Player.hasAugmentation(AugmentationNames.KnowledgeOfApollo, true);
 
   function checkWire(wireNum: number): boolean {
-    return !questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
+    return questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
   }
 
   useEffect(() => {
@@ -110,9 +110,15 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
           <Typography key={i}>{question.toString()}</Typography>
         ))}
         <Typography>
-          {new Array(wires.length).fill(0).map((_, i) => (
-            <span key={i}>&nbsp;{i + 1}&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          ))}
+          {new Array(wires.length).fill(0).map((_, i) => {
+            const isCorrectWire = checkWire(i + 1);
+            const color = hasAugment && !isCorrectWire ? Settings.theme.disabled : Settings.theme.primary;
+            return (
+              <span key={i} style={{ color: color }}>
+                &nbsp;{i + 1}&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+            );
+          })}
         </Typography>
         {new Array(8).fill(0).map((_, i) => (
           <div key={i}>

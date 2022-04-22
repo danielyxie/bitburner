@@ -32,5 +32,5 @@ export enum FactionNames {
   CyberSec = "CyberSec",
   Bladeburners = "Bladeburners",
   ChurchOfTheMachineGod = "Church of the Machine God",
-  Infiltrators = "The Infiltrators",
+  ShadowsOfAnarchy = "Shadows of Anarchy",
 }

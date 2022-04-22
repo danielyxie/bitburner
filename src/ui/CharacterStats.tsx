@@ -495,18 +495,6 @@ export function CharacterStats(): React.ReactElement {
                   noMargin
                 />
               )}
-              {player.factions.includes(FactionNames.Infiltrators) && (
-                <MultiplierTable
-                  color={Settings.theme.primary}
-                  rows={[
-                    ["Infiltrator Rep reward", player.infiltration_rep_mult],
-                    ["Infiltration sell", player.infiltration_sell_mult],
-                    ["Infiltration trade", player.infiltration_trade_mult],
-                    ["Infiltration minigame timer", player.infiltration_timer_mult],
-                    ["Infiltration minigame damage reduction", -1 * (1 - player.infiltration_damage_reduction_mult)],
-                  ]}
-                />
-              )}
             </Box>
           </Box>
         </Paper>

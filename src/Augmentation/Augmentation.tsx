@@ -348,15 +348,15 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
     desc = (
       <>
         {desc}
-        <br />+{f(mults.infiltration_base_rep_increase - 1)} Infiltration {FactionNames.Infiltrators} Reputation base
-        reward
+        <br />+{f(mults.infiltration_base_rep_increase - 1)} Infiltration {FactionNames.ShadowsOfAnarchy} Reputation
+        base reward
       </>
     );
   if (mults.infiltration_rep_mult)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.infiltration_rep_mult - 1)} Infiltration {FactionNames.Infiltrators} Reputation reward
+        <br />+{f(mults.infiltration_rep_mult - 1)} Infiltration {FactionNames.ShadowsOfAnarchy} Reputation reward
       </>
     );
   if (mults.infiltration_trade_mult)

@@ -16,7 +16,7 @@ import {
   initBladeburnerAugmentations,
   initChurchOfTheMachineGodAugmentations,
   initGeneralAugmentations,
-  initInfiltratorsAugmentations,
+  initSoAAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./data/AugmentationCreator";
@@ -51,7 +51,7 @@ function createAugmentations(): void {
     initNeuroFluxGovernor(),
     initUnstableCircadianModulator(),
     ...initGeneralAugmentations(),
-    ...initInfiltratorsAugmentations(),
+    ...initSoAAugmentations(),
     ...(factionExists(FactionNames.Bladeburners) ? initBladeburnerAugmentations() : []),
     ...(factionExists(FactionNames.ChurchOfTheMachineGod) ? initChurchOfTheMachineGodAugmentations() : []),
   ].map(resetAugmentation);
@@ -94,13 +94,15 @@ function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentatio
   }
 }
 
-function updateInfiltratorCosts(infiltratorAugmentation: Augmentation): void {
-  const infiltratorAugmentationNames = initInfiltratorsAugmentations().map((augmentation) => augmentation.name);
-  const infiltratorMultiplier =
-    infiltratorAugmentationNames.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length + 1;
-  infiltratorAugmentation.baseCost = Math.pow(infiltratorAugmentation.startingCost * 1000, infiltratorMultiplier);
-  if (infiltratorAugmentationNames.find((augmentationName) => augmentationName === infiltratorAugmentation.name)) {
-    infiltratorAugmentation.baseRepRequirement = infiltratorAugmentation.startingRepRequirement * infiltratorMultiplier;
+function updateSoACosts(soaAugmentation: Augmentation): void {
+  const soaAugmentationNames = initSoAAugmentations().map((augmentation) => augmentation.name);
+  const soaAugCount = soaAugmentationNames.filter((augmentationName) =>
+    Player.hasAugmentation(augmentationName),
+  ).length;
+  soaAugmentation.baseCost = soaAugmentation.startingCost * Math.pow(CONSTANTS.SoACostMult, soaAugCount);
+  if (soaAugmentationNames.find((augmentationName) => augmentationName === soaAugmentation.name)) {
+    soaAugmentation.baseRepRequirement =
+      soaAugmentation.startingRepRequirement * Math.pow(CONSTANTS.SoARepMult, soaAugCount);
   }
 }
 
@@ -110,8 +112,8 @@ export function updateAugmentationCosts(): void {
       const augmentationToUpdate = Augmentations[name];
       if (augmentationToUpdate.name === AugmentationNames.NeuroFluxGovernor) {
         updateNeuroFluxGovernorCosts(augmentationToUpdate);
-      } else if (augmentationToUpdate.factions.includes(FactionNames.Infiltrators)) {
-        updateInfiltratorCosts(augmentationToUpdate);
+      } else if (augmentationToUpdate.factions.includes(FactionNames.ShadowsOfAnarchy)) {
+        updateSoACosts(augmentationToUpdate);
       } else {
         augmentationToUpdate.baseCost =
           augmentationToUpdate.startingCost *

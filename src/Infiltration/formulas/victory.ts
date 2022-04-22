@@ -1,6 +1,8 @@
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { LocationsMetadata } from "../../Locations/data/LocationsMetadata";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Faction } from "../../Faction/Faction";
 
 export function calculateSellInformationCashReward(
   player: IPlayer,
@@ -15,7 +17,7 @@ export function calculateSellInformationCashReward(
     Math.pow(difficulty, 3) *
     3e3 *
     levelBonus *
-    player.infiltration_sell_mult *
+    (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 1.5 : 1) *
     BitNodeMultipliers.InfiltrationMoney
   );
 }
@@ -33,17 +35,17 @@ export function calculateTradeInformationRepReward(
     Math.pow(difficulty, 3) *
     3e3 *
     levelBonus *
-    player.infiltration_sell_mult *
+    (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 1.5 : 1) *
     BitNodeMultipliers.InfiltrationMoney
   );
 }
 
-export function calculateInfiltratorsRepReward(player: IPlayer, difficulty: number): number {
+export function calculateInfiltratorsRepReward(player: IPlayer, faction: Faction, difficulty: number): number {
   const maxStartingSecurityLevel = LocationsMetadata.reduce((acc, data): number => {
     const startingSecurityLevel = data.infiltrationData?.startingSecurityLevel || 0;
     return acc > startingSecurityLevel ? acc : startingSecurityLevel;
   }, 0);
-  const baseRepGain = (difficulty / maxStartingSecurityLevel) * 10;
+  const baseRepGain = (difficulty / maxStartingSecurityLevel) * 5000;
 
-  return (baseRepGain + player.infiltration_base_rep_increase) * player.infiltration_rep_mult;
+  return baseRepGain * (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 2 : 1) * (1 + faction.favor / 100);
 }

@@ -73,7 +73,6 @@ export interface IPlayer {
   terminalCommandHistory: string[];
   lastUpdate: number;
   totalPlaytime: number;
-  hasCompletedAnInfiltration: boolean;
 
   // Stats
   hacking: number;
@@ -124,12 +123,6 @@ export interface IPlayer {
   bladeburner_stamina_gain_mult: number;
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
-  infiltration_base_rep_increase: number;
-  infiltration_rep_mult: number;
-  infiltration_trade_mult: number;
-  infiltration_sell_mult: number;
-  infiltration_timer_mult: number;
-  infiltration_damage_reduction_mult: number;
 
   createProgramReqLvl: number;
   factionWorkType: string;

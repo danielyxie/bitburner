@@ -40,7 +40,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
   const [currentAnswerIndex, setCurrentAnswerIndex] = useState(0);
   const [pos, setPos] = useState([0, 0]);
 
-  const hasAugment = Player.hasAugmentation(AugmentationNames.CyberDecoder, true);
+  const hasAugment = Player.hasAugmentation(AugmentationNames.FloodOfPoseidon, true);
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const move = [0, 0];

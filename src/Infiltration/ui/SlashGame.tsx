@@ -40,7 +40,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
       props.onSuccess();
     }
   }
-  const hasAugment = Player.hasAugmentation(AugmentationNames.PythiasBrainStem, true);
+  const hasAugment = Player.hasAugmentation(AugmentationNames.MightOfAres, true);
   const phaseZeroTime = Math.random() * 3250 + 1500 - (250 + difficulty.window);
   const phaseOneTime = 250;
   const timeUntilAttacking = phaseZeroTime + phaseOneTime;

@@ -16,6 +16,8 @@ import {
   calculateSellInformationCashReward,
   calculateTradeInformationRepReward,
 } from "../Infiltration/formulas/victory";
+import { FactionNames } from "../Faction/data/FactionNames";
+import { Factions } from "../Faction/Factions";
 
 export function NetscriptInfiltration(
   player: IPlayer,
@@ -47,7 +49,7 @@ export function NetscriptInfiltration(
       reward: {
         tradeRep: calculateTradeInformationRepReward(player, reward, maxLevel, difficulty),
         sellCash: calculateSellInformationCashReward(player, reward, maxLevel, difficulty),
-        infiltratorRep: calculateInfiltratorsRepReward(player, difficulty),
+        infiltratorRep: calculateInfiltratorsRepReward(player, Factions[FactionNames.ShadowsOfAnarchy], difficulty),
       },
       difficulty: difficulty,
     };

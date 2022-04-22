@@ -160,7 +160,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.workChaExpGained = 0;
   this.workRepGained = 0;
   this.workMoneyGained = 0;
-  this.hasCompletedAnInfiltration = false;
 
   this.timeWorked = 0;
 
@@ -313,13 +312,6 @@ export function resetMultipliers(this: IPlayer): void {
   this.bladeburner_stamina_gain_mult = 1;
   this.bladeburner_analysis_mult = 1;
   this.bladeburner_success_chance_mult = 1;
-
-  this.infiltration_base_rep_increase = 0;
-  this.infiltration_rep_mult = 1;
-  this.infiltration_trade_mult = 1;
-  this.infiltration_sell_mult = 1;
-  this.infiltration_timer_mult = 1;
-  this.infiltration_damage_reduction_mult = 1;
 }
 
 export function hasProgram(this: IPlayer, programName: string): boolean {
@@ -2149,12 +2141,6 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   //      2. Player is employed at the company
   function checkMegacorpRequirements(companyName: string, repNeeded = CONSTANTS.CorpFactionRepRequirement): boolean {
     return allCompanies.includes(companyName) && getCompanyRep(companyName) > repNeeded;
-  }
-
-  //Infiltrators
-  const InfiltratorsFac = Factions[FactionNames.Infiltrators];
-  if (this.hasCompletedAnInfiltration && !InfiltratorsFac.isMember && !InfiltratorsFac.alreadyInvited) {
-    invitedFactions.push(InfiltratorsFac);
   }
 
   //Illuminati

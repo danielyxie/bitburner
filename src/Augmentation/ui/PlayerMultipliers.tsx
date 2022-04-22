@@ -254,41 +254,6 @@ export function PlayerMultipliers(): React.ReactElement {
     );
   }
 
-  rightColData.push(
-    ...[
-      [
-        "Infiltrator Rep reward",
-        Player.infiltration_rep_mult,
-        Player.infiltration_rep_mult * mults.infiltration_rep_mult,
-        1,
-      ],
-      [
-        "Infiltration sell",
-        Player.infiltration_sell_mult,
-        Player.infiltration_sell_mult * mults.infiltration_sell_mult,
-        1,
-      ],
-      [
-        "Infiltration trade",
-        Player.infiltration_trade_mult,
-        Player.infiltration_trade_mult * mults.infiltration_trade_mult,
-        1,
-      ],
-      [
-        "Infiltration minigame timer",
-        Player.infiltration_timer_mult,
-        Player.infiltration_timer_mult * mults.infiltration_timer_mult,
-        1,
-      ],
-      [
-        "Infiltration minigame damage reduction",
-        Player.infiltration_damage_reduction_mult,
-        -1 * (1 - Player.infiltration_damage_reduction_mult * mults.infiltration_damage_reduction_mult),
-        1,
-      ],
-    ].map((data): MultiplierListItemData => (data as any).concat([Settings.theme.primary])),
-  );
-
   const hasLeftImprovements = +!!(leftColData.filter((item) => item[2] !== 0).length > 0),
     hasRightImprovements = +!!(rightColData.filter((item) => item[2] !== 0).length > 0);
 

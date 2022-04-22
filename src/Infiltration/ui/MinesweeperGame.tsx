@@ -38,7 +38,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
   const [answer, setAnswer] = useState(generateEmptyField(difficulty));
   const [pos, setPos] = useState([0, 0]);
   const [memoryPhase, setMemoryPhase] = useState(true);
-  const hasAugment = Player.hasAugmentation(AugmentationNames.MineDetectionArmAttachment, true);
+  const hasAugment = Player.hasAugmentation(AugmentationNames.HuntOfArtemis, true);
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (memoryPhase) return;

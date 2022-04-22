@@ -166,7 +166,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     );
   }
   const multiplierComponent =
-    props.faction.name !== FactionNames.Infiltrators ? (
+    props.faction.name !== FactionNames.ShadowsOfAnarchy ? (
       <Typography>
         Price multiplier: x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
       </Typography>
