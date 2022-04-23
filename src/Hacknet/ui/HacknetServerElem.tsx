@@ -70,7 +70,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-            +<HashRate hashes={base_increase} /> (base increase, attained when no script is running) <br />
+            <span style={{ opacity: 0.50 }}> +<HashRate hashes={base_increase} /> </span> (base increase, attained when no script is running) <br />
             +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
           </Typography>
         }
@@ -136,7 +136,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-            +<HashRate hashes={base_increase} /> (base increase, attained when no script is running) <br />
+            <span style={{ opacity: 0.50 }}> +<HashRate hashes={base_increase} /> </span> (base increase, attained when no script is running) <br />
             +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
           </Typography>
         }
@@ -180,7 +180,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-            +<HashRate hashes={base_increase} /> (base increase, attained when no script is running) <br />
+            <span style={{ opacity: 0.50 }}> +<HashRate hashes={base_increase} /> </span> (base increase, attained when no script is running) <br />
             +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
           </Typography>
         }
@@ -253,19 +253,21 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
               <Tooltip
                 title={
                   <Typography>
-                    <Hashes hashes={node.totalHashesGenerated} /> hashes producted by this server since last augment
+                    <Hashes hashes={node.totalHashesGenerated} /> hashes produced by this server since last augment
                     installation.
                     <br />
                     <HashRate hashes={node.hashRate} /> current production rate.
                     <br />
-                    <HashRate hashes={(node.hashRate * node.maxRam) / (node.maxRam - node.ramUsed)} /> max production
-                    rate. (achieved when 100% Ram is allocated to it)
+                    <span style={{ opacity: 0.50 }}>
+                      <HashRate hashes={(node.hashRate * node.maxRam) / (node.maxRam - node.ramUsed)} /> 
+                    </span>
+                    {" "}max production rate. (achieved when 100% RAM is allocated to it)
                     <br />
                     {numeralWrapper.formatRAM(node.ramUsed)} / {numeralWrapper.formatRAM(node.maxRam)} (
-                    {Math.round((100 * node.ramUsed) / node.maxRam)}%) Ram allocated to script.
+                    {Math.round((100 * node.ramUsed) / node.maxRam)}%) RAM allocated to script.
                     <br />
                     {numeralWrapper.formatRAM(node.maxRam - node.ramUsed)} / {numeralWrapper.formatRAM(node.maxRam)} (
-                    {Math.round((100 * (node.maxRam - node.ramUsed)) / node.maxRam)}%) Ram allocated to hash production.
+                    {Math.round((100 * (node.maxRam - node.ramUsed)) / node.maxRam)}%) RAM allocated to hash production.
                   </Typography>
                 }
               >
