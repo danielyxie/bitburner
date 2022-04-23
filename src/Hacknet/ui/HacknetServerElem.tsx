@@ -70,7 +70,11 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-            <span style={{ opacity: 0.50 }}> +<HashRate hashes={base_increase} /> </span> (base increase, attained when no script is running) <br />
+            <span style={{ opacity: 0.5 }}>
+              {" "}
+              +<HashRate hashes={base_increase} />{" "}
+            </span>{" "}
+            (base increase, attained when no script is running) <br />
             +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
           </Typography>
         }
@@ -136,7 +140,11 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-            <span style={{ opacity: 0.50 }}> +<HashRate hashes={base_increase} /> </span> (base increase, attained when no script is running) <br />
+            <span style={{ opacity: 0.5 }}>
+              {" "}
+              +<HashRate hashes={base_increase} />{" "}
+            </span>{" "}
+            (base increase, attained when no script is running) <br />
             +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
           </Typography>
         }
@@ -180,7 +188,11 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-            <span style={{ opacity: 0.50 }}> +<HashRate hashes={base_increase} /> </span> (base increase, attained when no script is running) <br />
+            <span style={{ opacity: 0.5 }}>
+              {" "}
+              +<HashRate hashes={base_increase} />{" "}
+            </span>{" "}
+            (base increase, attained when no script is running) <br />
             +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
           </Typography>
         }
@@ -258,10 +270,10 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
                     <br />
                     <HashRate hashes={node.hashRate} /> current production rate.
                     <br />
-                    <span style={{ opacity: 0.50 }}>
-                      <HashRate hashes={(node.hashRate * node.maxRam) / (node.maxRam - node.ramUsed)} /> 
-                    </span>
-                    {" "}max production rate. (achieved when 100% RAM is allocated to it)
+                    <span style={{ opacity: 0.5 }}>
+                      <HashRate hashes={(node.hashRate * node.maxRam) / (node.maxRam - node.ramUsed)} />
+                    </span>{" "}
+                    max production rate. (achieved when 100% RAM is allocated to it)
                     <br />
                     {numeralWrapper.formatRAM(node.ramUsed)} / {numeralWrapper.formatRAM(node.maxRam)} (
                     {Math.round((100 * node.ramUsed) / node.maxRam)}%) RAM allocated to script.
