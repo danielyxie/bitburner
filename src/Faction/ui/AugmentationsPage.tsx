@@ -150,7 +150,14 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
             Augmentations are powerful upgrades that will enhance your abilities.
             <br />
           </Typography>
-          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", justifyItems: "center", my: 1 }}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${props.faction.name === FactionNames.ShadowsOfAnarchy ? "2" : "3"}, 1fr)`,
+              justifyItems: "center",
+              my: 1,
+            }}
+          >
             <Tooltip
               title={
                 <Typography>
