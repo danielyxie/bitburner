@@ -617,12 +617,14 @@ export class Augmentation {
         moneyCost *= getBaseAugmentationPriceMultiplier();
       }
     } else if (augmentationReference.factions.includes(FactionNames.ShadowsOfAnarchy)) {
-      const infiltratorAugmentationNames = initSoAAugmentations().map((augmentation) => augmentation.name);
-      const infiltratorMultiplier =
-        infiltratorAugmentationNames.filter((augmentationName) => player.hasAugmentation(augmentationName)).length + 1;
-      moneyCost = Math.pow(augmentationReference.baseCost * 1000, infiltratorMultiplier);
-      if (infiltratorAugmentationNames.find((augmentationName) => augmentationName === augmentationReference.name)) {
-        repCost = augmentationReference.baseRepRequirement * infiltratorMultiplier;
+      const soaAugmentationNames = initSoAAugmentations().map((augmentation) => augmentation.name);
+      const soaMultiplier = Math.pow(
+        CONSTANTS.SoACostMult,
+        soaAugmentationNames.filter((augmentationName) => player.hasAugmentation(augmentationName)).length,
+      );
+      moneyCost = augmentationReference.baseCost * soaMultiplier;
+      if (soaAugmentationNames.find((augmentationName) => augmentationName === augmentationReference.name)) {
+        repCost = augmentationReference.baseRepRequirement * soaMultiplier;
       }
     } else {
       moneyCost =
