@@ -1,6 +1,6 @@
 import { Container, Typography, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { PurchaseableAugmentations } from "../../../Augmentation/ui/PurchaseableAugmentations";
+import { PurchasableAugmentations } from "../../../Augmentation/ui/PurchasableAugmentations";
 import { use } from "../../../ui/Context";
 import { Modal } from "../../../ui/React/Modal";
 import { Sleeve } from "../Sleeve";
@@ -47,7 +47,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
           Augmentations will appear below as they become available.
         </Typography>
       </Container>
-      <PurchaseableAugmentations
+      <PurchasableAugmentations
         augNames={availableAugs.map((aug) => aug.name)}
         ownedAugNames={ownedAugNames}
         player={player}

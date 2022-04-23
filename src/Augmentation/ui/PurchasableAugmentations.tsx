@@ -5,7 +5,7 @@
 import { CheckBox, CheckBoxOutlineBlank, CheckCircle, Info, NewReleases, Report } from "@mui/icons-material";
 import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationHelpers";
+import { getNextNeuroFluxLevel } from "../AugmentationHelpers";
 import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
@@ -115,7 +115,7 @@ const Requirement = (props: IReqProps): React.ReactElement => {
   );
 };
 
-interface IPurchaseableAugsProps {
+interface IPurchasableAugsProps {
   augNames: string[];
   ownedAugNames: string[];
   player: IPlayer;
@@ -129,7 +129,7 @@ interface IPurchaseableAugsProps {
   faction?: Faction;
 }
 
-export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.ReactElement => {
+export const PurchasableAugmentations = (props: IPurchasableAugsProps): React.ReactElement => {
   return (
     <Container
       maxWidth="md"
@@ -137,22 +137,22 @@ export const PurchaseableAugmentations = (props: IPurchaseableAugsProps): React.
       sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
     >
       {props.augNames.map((augName: string) => (
-        <PurchaseableAugmentation key={augName} parent={props} augName={augName} owned={false} />
+        <PurchasableAugmentation key={augName} parent={props} augName={augName} owned={false} />
       ))}
       {props.ownedAugNames.map((augName: string) => (
-        <PurchaseableAugmentation key={augName} parent={props} augName={augName} owned={true} />
+        <PurchasableAugmentation key={augName} parent={props} augName={augName} owned={true} />
       ))}
     </Container>
   );
 };
 
-interface IPurchaseableAugProps {
-  parent: IPurchaseableAugsProps;
+interface IPurchasableAugProps {
+  parent: IPurchasableAugsProps;
   augName: string;
   owned: boolean;
 }
 
-export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.ReactElement {
+export function PurchasableAugmentation(props: IPurchasableAugProps): React.ReactElement {
   const [open, setOpen] = useState(false);
 
   const aug = Augmentations[props.augName];

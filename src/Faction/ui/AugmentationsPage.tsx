@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { PurchaseableAugmentations } from "../../Augmentation/ui/PurchaseableAugmentations";
+import { PurchasableAugmentations } from "../../Augmentation/ui/PurchasableAugmentations";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
 import { use } from "../../ui/Context";
@@ -183,7 +183,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         </Paper>
       </Container>
 
-      <PurchaseableAugmentations
+      <PurchasableAugmentations
         augNames={purchasable}
         ownedAugNames={owned}
         player={player}
