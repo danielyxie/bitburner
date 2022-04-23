@@ -70,8 +70,12 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-          +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)<br />
-            <span style={{ opacity: 0.5 }}>+<HashRate hashes={base_increase} /></span> (base increase, attained when no script is running)
+            +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
+            <br />
+            <span style={{ opacity: 0.5 }}>
+              +<HashRate hashes={base_increase} />
+            </span>{" "}
+            (base increase, attained when no script is running)
           </Typography>
         }
       >
@@ -136,8 +140,12 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-          +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)<br />
-            <span style={{ opacity: 0.5 }}>+<HashRate hashes={base_increase} /></span> (base increase, attained when no script is running)
+            +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
+            <br />
+            <span style={{ opacity: 0.5 }}>
+              +<HashRate hashes={base_increase} />
+            </span>{" "}
+            (base increase, attained when no script is running)
           </Typography>
         }
       >
@@ -180,8 +188,12 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-          +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)<br />
-            <span style={{ opacity: 0.5 }}>+<HashRate hashes={base_increase} /></span> (base increase, attained when no script is running)
+            +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
+            <br />
+            <span style={{ opacity: 0.5 }}>
+              +<HashRate hashes={base_increase} />
+            </span>{" "}
+            (base increase, attained when no script is running)
           </Typography>
         }
       >
