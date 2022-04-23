@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { PurchaseableAugmentations } from "../../../Augmentation/ui/PurchaseableAugmentations";
 import { use } from "../../../ui/Context";
@@ -34,7 +34,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <Container disableGutters maxWidth="md" sx={{ mx: 0 }}>
+      <Container component={Paper} disableGutters maxWidth="md" sx={{ mx: 0, mb: 1, p: 1 }}>
         <Typography>
           You can purchase Augmentations for your Duplicate Sleeves. These Augmentations have the same effect as they
           would for you. You can only purchase Augmentations that you have unlocked through Factions.
@@ -42,22 +42,25 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
           <br />
           When purchasing an Augmentation for a Duplicate Sleeve, they are immediately installed. This means that the
           Duplicate Sleeve will immediately lose all of its stat experience.
+          <br />
+          <br />
+          Augmentations will appear below as they become available.
         </Typography>
-        <PurchaseableAugmentations
-          augNames={availableAugs.map((aug) => aug.name)}
-          ownedAugNames={ownedAugNames}
-          player={player}
-          canPurchase={(player, aug) => {
-            return player.money > aug.startingCost;
-          }}
-          purchaseAugmentation={(player, aug, _showModal) => {
-            props.sleeve.tryBuyAugmentation(player, aug);
-            rerender();
-          }}
-          skipPreReqs
-          skipExclusiveIndicator
-        />
       </Container>
+      <PurchaseableAugmentations
+        augNames={availableAugs.map((aug) => aug.name)}
+        ownedAugNames={ownedAugNames}
+        player={player}
+        canPurchase={(player, aug) => {
+          return player.money > aug.startingCost;
+        }}
+        purchaseAugmentation={(player, aug, _showModal) => {
+          props.sleeve.tryBuyAugmentation(player, aug);
+          rerender();
+        }}
+        skipPreReqs
+        skipExclusiveIndicator
+      />
     </Modal>
   );
 }

@@ -1,7 +1,7 @@
 /**
  * Root React Component for displaying a faction's "Purchase Augmentations" page
  */
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Tooltip, Typography, Paper, Container } from "@mui/material";
 import React, { useState } from "react";
 import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
 import { Augmentations } from "../../Augmentation/Augmentations";
@@ -133,7 +133,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   const multiplierComponent =
     props.faction.name !== FactionNames.ShadowsOfAnarchy ? (
       <Typography>
-        Price multiplier: x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
+        <b>Price multiplier:</b> x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
       </Typography>
     ) : (
       <></>
@@ -141,34 +141,47 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Button onClick={props.routeToMainPage}>Back</Button>
-      <Typography variant="h4">Faction Augmentations</Typography>
-      <Typography>
-        These are all of the Augmentations that are available to purchase from {props.faction.name}. Augmentations are
-        powerful upgrades that will enhance your abilities.
-        <br />
-        Reputation: <Reputation reputation={props.faction.playerReputation} /> Favor:{" "}
-        <Favor favor={Math.floor(props.faction.favor)} />
-      </Typography>
-      <Box display="flex">
-        <Tooltip
-          title={
+      <Container disableGutters maxWidth="md" sx={{ mx: 0 }}>
+        <Button onClick={props.routeToMainPage}>Back</Button>
+        <Typography variant="h4">Faction Augmentations</Typography>
+        <Paper sx={{ p: 1, mb: 1 }}>
+          <Typography>
+            These are all of the Augmentations that are available to purchase from <b>{props.faction.name}</b>.
+            Augmentations are powerful upgrades that will enhance your abilities.
+            <br />
+          </Typography>
+          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", justifyItems: "center", my: 1 }}>
+            <Tooltip
+              title={
+                <Typography>
+                  The price of every Augmentation increases for every queued Augmentation and it is reset when you
+                  install them.
+                </Typography>
+              }
+            >
+              {multiplierComponent}
+            </Tooltip>
             <Typography>
-              The price of every Augmentation increases for every queued Augmentation and it is reset when you install
-              them.
+              <b>Reputation:</b> <Reputation reputation={props.faction.playerReputation} />
             </Typography>
-          }
-        >
-          {multiplierComponent}
-        </Tooltip>
-      </Box>
-      <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>
-      <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}>Sort by Reputation</Button>
-      <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}>Sort by Default Order</Button>
-      <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Purchasable)}>
-        Sort by Purchasable
-      </Button>
-      <br />
+            <Typography>
+              <b>Favor:</b> <Favor favor={Math.floor(props.faction.favor)} />
+            </Typography>
+          </Box>
+          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
+            <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>
+            <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}>
+              Sort by Reputation
+            </Button>
+            <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}>
+              Sort by Default Order
+            </Button>
+            <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Purchasable)}>
+              Sort by Purchasable
+            </Button>
+          </Box>
+        </Paper>
+      </Container>
 
       <PurchaseableAugmentations
         augNames={purchasable}
