@@ -18,10 +18,7 @@ export function canAccessGang(this: IPlayer): boolean {
 }
 
 export function isAwareOfGang(this: IPlayer): boolean {
-  if (this.bitNodeN === 2 || this.sourceFileLvl(2) >= 1) {
-    return true;
-  }
-  return false;
+  return this.bitNodeN === 2 || this.sourceFileLvl(2) >= 1;
 }
 
 export function getGangFaction(this: IPlayer): Faction {
