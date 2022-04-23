@@ -1,3 +1,4 @@
+import $ from "jquery";
 import { vsprintf, sprintf } from "sprintf-js";
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
@@ -527,7 +528,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
   const extra = NetscriptExtra(Player, workerScript, helper);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
-  const infiltration = NetscriptInfiltration(Player, workerScript, helper);
+  const infiltration = wrapAPI(helper, {}, workerScript, NetscriptInfiltration(Player), "infiltration")
+    .infiltration as unknown as IInfiltration;
   const stanek = wrapAPI(helper, {}, workerScript, NetscriptStanek(Player, workerScript, helper), "stanek")
     .stanek as unknown as IStanek;
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
@@ -2491,12 +2493,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         bladeburner_stamina_gain_mult: Player.bladeburner_stamina_gain_mult,
         bladeburner_analysis_mult: Player.bladeburner_analysis_mult,
         bladeburner_success_chance_mult: Player.bladeburner_success_chance_mult,
-        infiltration_base_rep_increase: Player.infiltration_base_rep_increase,
-        infiltration_rep_mult: Player.infiltration_rep_mult,
-        infiltration_trade_mult: Player.infiltration_trade_mult,
-        infiltration_sell_mult: Player.infiltration_sell_mult,
-        infiltration_timer_mult: Player.infiltration_timer_mult,
-        infiltration_damage_reduction_mult: Player.infiltration_damage_reduction_mult,
         bitNodeN: Player.bitNodeN,
         totalPlaytime: Player.totalPlaytime,
         playtimeSinceLastAug: Player.playtimeSinceLastAug,

@@ -15,6 +15,7 @@ import {
   calculateSellInformationCashReward,
   calculateTradeInformationRepReward,
 } from "../formulas/victory";
+import { inviteToFaction } from "../../Faction/FactionHelpers";
 
 interface IProps {
   StartingDifficulty: number;
@@ -33,12 +34,12 @@ export function Victory(props: IProps): React.ReactElement {
     router.toCity();
   }
 
+  const soa = Factions[FactionNames.ShadowsOfAnarchy];
   const repGain = calculateTradeInformationRepReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
   const moneyGain = calculateSellInformationCashReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
-  const infiltrationRepGain = calculateInfiltratorsRepReward(player, props.StartingDifficulty);
+  const infiltrationRepGain = calculateInfiltratorsRepReward(player, soa, props.StartingDifficulty);
 
-  const infiltratorFaction = Factions[FactionNames.Infiltrators];
-  const isMemberOfInfiltrators = infiltratorFaction && infiltratorFaction.isMember;
+  const isMemberOfInfiltrators = player.factions.includes(FactionNames.ShadowsOfAnarchy);
 
   function sell(): void {
     handleInfiltrators();
@@ -58,9 +59,9 @@ export function Victory(props: IProps): React.ReactElement {
   }
 
   function handleInfiltrators(): void {
-    player.hasCompletedAnInfiltration = true;
+    inviteToFaction(Factions[FactionNames.ShadowsOfAnarchy]);
     if (isMemberOfInfiltrators) {
-      infiltratorFaction.playerReputation += infiltrationRepGain;
+      soa.playerReputation += infiltrationRepGain;
     }
   }
 
@@ -75,7 +76,7 @@ export function Victory(props: IProps): React.ReactElement {
             You{" "}
             {isMemberOfInfiltrators ? (
               <>
-                have gained {formatNumber(infiltrationRepGain, 2)} rep for {FactionNames.Infiltrators} and{" "}
+                have gained {formatNumber(infiltrationRepGain, 2)} rep for {FactionNames.ShadowsOfAnarchy} and{" "}
               </>
             ) : (
               <></>

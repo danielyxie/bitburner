@@ -13,6 +13,7 @@ import { MinesweeperGame } from "./MinesweeperGame";
 import { WireCuttingGame } from "./WireCuttingGame";
 import { Victory } from "./Victory";
 import Typography from "@mui/material/Typography";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface IProps {
   StartingDifficulty: number;
@@ -93,7 +94,7 @@ export function Game(props: IProps): React.ReactElement {
     // it's clear they're not meant to
     const damage = options?.automated
       ? player.hp
-      : props.StartingDifficulty * 3 * player.infiltration_damage_reduction_mult;
+      : props.StartingDifficulty * 3 * (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 0.5 : 1);
     if (player.takeDamage(damage)) {
       router.toCity();
       return;
@@ -112,7 +113,16 @@ export function Game(props: IProps): React.ReactElement {
       stageComponent = <Countdown onFinish={() => setStage(Stage.Minigame)} />;
       break;
     case Stage.Minigame: {
-      const MiniGame = minigames[gameIds.id];
+      /**
+       *
+  BackwardGame,
+  BribeGame,
+  CheatCodeGame,
+  Cyberpunk2077Game,
+  MinesweeperGame,
+  WireCuttingGame,
+       */
+      const MiniGame = WireCuttingGame; // minigames[gameIds.id];
       stageComponent = <MiniGame onSuccess={success} onFailure={failure} difficulty={props.Difficulty + level / 50} />;
       break;
     }

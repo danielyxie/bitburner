@@ -4261,12 +4261,22 @@ interface Stanek {
    * @returns The fragment at [rootX, rootY], if any.
    */
   removeFragment(rootX: number, rootY: number): boolean;
+
+  /**
+   * Accept Stanek's Gift by joining the Church of the Machine God
+   * @remarks
+   * RAM cost: 2 GB
+   *
+   * @returns true if the player is a member of the church and has the gift installed,
+   * false otherwise.
+   */
+  acceptGift(): boolean;
 }
 
 export interface InfiltrationReward {
   tradeRep: number;
   sellCash: number;
-  infiltratorRep: number;
+  SoARep: number;
 }
 
 export interface InfiltrationLocation {
@@ -4281,39 +4291,21 @@ export interface InfiltrationLocation {
  */
 interface Infiltration {
   /**
-   * Calculate the difficulty of performing an infiltration.
-   * @remarks
-   * RAM cost: 2.5 GB
-   *
-   * @param locationName - name of the location to check.
-   * @returns the difficulty.
-   */
-  calculateDifficulty(locationName: string): number;
-  /**
-   * Calculate the rewards for trading and selling information for completing an infiltration.
-   * @remarks
-   * RAM cost: 2.5 GB
-   *
-   * @param locationName - name of the location to check.
-   * @returns the trade reputation, sell cash and infiltrators rep reward.
-   */
-  calculateRewards(locationName: string): InfiltrationReward;
-  /**
    * Get all locations that can be infiltrated.
    * @remarks
    * RAM cost: 5 GB
    *
    * @returns all locations that can be infiltrated.
    */
-  getLocations(): any[];
+  getPossibleLocations(): string[];
   /**
    * Get all infiltrations with difficulty, location and rewards.
    * @remarks
    * RAM cost: 15 GB
    *
-   * @returns all infiltrations with difficulty, location and rewards.
+   * @returns Infiltration data for given location.
    */
-  getInfiltrations(): InfiltrationLocation[];
+  getInfiltration(location: string): InfiltrationLocation;
 }
 
 /**

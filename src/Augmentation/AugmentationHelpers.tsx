@@ -16,7 +16,7 @@ import {
   initBladeburnerAugmentations,
   initChurchOfTheMachineGodAugmentations,
   initGeneralAugmentations,
-  initInfiltratorsAugmentations,
+  initSoAAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./data/AugmentationCreator";
@@ -32,7 +32,7 @@ function createAugmentations(): void {
     initNeuroFluxGovernor(),
     initUnstableCircadianModulator(),
     ...initGeneralAugmentations(),
-    ...initInfiltratorsAugmentations(),
+    ...initSoAAugmentations(),
     ...(factionExists(FactionNames.Bladeburners) ? initBladeburnerAugmentations() : []),
     ...(factionExists(FactionNames.ChurchOfTheMachineGod) ? initChurchOfTheMachineGodAugmentations() : []),
   ].map(resetAugmentation);

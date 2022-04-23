@@ -14,7 +14,6 @@ import { Modal } from "./React/Modal";
 import { Money } from "./React/Money";
 import { StatsRow } from "./React/StatsRow";
 import { StatsTable } from "./React/StatsTable";
-import { FactionNames } from "../Faction/data/FactionNames";
 
 interface EmployersModalProps {
   open: boolean;
@@ -83,13 +82,12 @@ function CurrentBitNode(): React.ReactElement {
   const player = use.Player();
   if (player.sourceFiles.length > 0) {
     const index = "BitNode" + player.bitNodeN;
-    const currentSourceFile = player.sourceFiles.find((sourceFile) => sourceFile.n == player.bitNodeN);
-    const lvl = currentSourceFile ? currentSourceFile.lvl : 0;
+    const lvl = player.sourceFileLvl(player.bitNodeN) + 1;
     return (
       <Box>
         <Paper sx={{ p: 1 }}>
           <Typography variant="h5">
-            BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {lvl + 1})
+            BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {lvl})
           </Typography>
           <Typography sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</Typography>
         </Paper>
@@ -494,18 +492,6 @@ export function CharacterStats(): React.ReactElement {
                   ]}
                   color={Settings.theme.primary}
                   noMargin
-                />
-              )}
-              {player.factions.includes(FactionNames.Infiltrators) && (
-                <MultiplierTable
-                  color={Settings.theme.primary}
-                  rows={[
-                    ["Infiltrator Rep reward", player.infiltration_rep_mult],
-                    ["Infiltration sell", player.infiltration_sell_mult],
-                    ["Infiltration trade", player.infiltration_trade_mult],
-                    ["Infiltration minigame timer", player.infiltration_timer_mult],
-                    ["Infiltration minigame damage reduction", -1 * (1 - player.infiltration_damage_reduction_mult)],
-                  ]}
                 />
               )}
             </Box>

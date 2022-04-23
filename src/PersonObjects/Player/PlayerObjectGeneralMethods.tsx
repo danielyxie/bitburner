@@ -159,7 +159,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.workChaExpGained = 0;
   this.workRepGained = 0;
   this.workMoneyGained = 0;
-  this.hasCompletedAnInfiltration = false;
 
   this.timeWorked = 0;
 
@@ -312,13 +311,6 @@ export function resetMultipliers(this: IPlayer): void {
   this.bladeburner_stamina_gain_mult = 1;
   this.bladeburner_analysis_mult = 1;
   this.bladeburner_success_chance_mult = 1;
-
-  this.infiltration_base_rep_increase = 0;
-  this.infiltration_rep_mult = 1;
-  this.infiltration_trade_mult = 1;
-  this.infiltration_sell_mult = 1;
-  this.infiltration_timer_mult = 1;
-  this.infiltration_damage_reduction_mult = 1;
 }
 
 export function hasProgram(this: IPlayer, programName: string): boolean {
@@ -1877,13 +1869,12 @@ export function getNextCompanyPosition(
 
 export function quitJob(this: IPlayer, company: string): void {
   if (this.isWorking == true && this.workType.includes("Working for Company") && this.companyName == company) {
-    this.isWorking = false;
-    this.companyName = "";
-  }
-  if (this.companyName === company) {
-    this.companyName = "";
+    this.finishWork(true);
   }
   delete this.jobs[company];
+  if (this.companyName === company) {
+    this.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
+  }
 }
 
 /**
@@ -2151,12 +2142,6 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     return allCompanies.includes(companyName) && getCompanyRep(companyName) > repNeeded;
   }
 
-  //Infiltrators
-  const InfiltratorsFac = Factions[FactionNames.Infiltrators];
-  if (this.hasCompletedAnInfiltration && !InfiltratorsFac.isMember && !InfiltratorsFac.alreadyInvited) {
-    invitedFactions.push(InfiltratorsFac);
-  }
-
   //Illuminati
   const illuminatiFac = Factions[FactionNames.Illuminati];
   if (
@@ -2180,7 +2165,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !daedalusFac.isBanned &&
     !daedalusFac.isMember &&
     !daedalusFac.alreadyInvited &&
-    numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
+    numAugmentations >= BitNodeMultipliers.DaedalusAugsRequirement &&
     this.money >= 100000000000 &&
     (this.hacking >= 2500 ||
       (this.strength >= 1500 && this.defense >= 1500 && this.dexterity >= 1500 && this.agility >= 1500))

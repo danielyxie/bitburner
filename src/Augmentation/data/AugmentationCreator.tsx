@@ -5,7 +5,6 @@ import { Programs } from "../../Programs/Programs";
 import { WHRNG } from "../../Casino/RNG";
 import React from "react";
 import { FactionNames } from "../../Faction/data/FactionNames";
-import { CityName } from "../../Locations/data/CityNames";
 import { CONSTANTS } from "../../Constants";
 
 function getRandomBonus(): any {
@@ -96,159 +95,96 @@ function getRandomBonus(): any {
   return bonuses[Math.floor(bonuses.length * randomNumber.random())];
 }
 
-export const initInfiltratorsAugmentations = (): Augmentation[] => [
+export const initSoAAugmentations = (): Augmentation[] => [
   new Augmentation({
-    name: AugmentationNames.BionicFingers,
-    repCost: 15e1,
+    name: AugmentationNames.WKSharmonizer,
+    repCost: 1e4,
     moneyCost: 1e6,
-    infiltration_base_rep_increase: 5,
     info:
-      "This state of the art augmentation removes the need for bones and tendons in your fingers, " +
-      "with this you will have the dexterity equal to the best rubik's cube player in the world. ",
-    factions: [FactionNames.Infiltrators],
+      `A copy of the WKS harmonizer from the MIA leader of the ${FactionNames.ShadowsOfAnarchy} ` +
+      "injects *Γ-based cells that provides general enhancement to the body.",
+    stats: (
+      <>
+        This augmentation makes many aspect of infiltration easier and more productive. Such as increased timer,
+        rewards, reduced damage taken, etc.
+      </>
+    ),
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
-    name: AugmentationNames.CorporationManagementImplant,
-    repCost: 25e1,
-    moneyCost: 1e6,
-    infiltration_rep_mult: 2.5,
-    info:
-      "As time went on corporations realized that managers were redundant if they could be replaced by AI chips " +
-      "implanted directly in the brain, and so the this implant was developed which could analyse the users brain " +
-      "to find the perfect tone and sounding voice to increase productivity of the user to maximum profits.",
-    factions: [FactionNames.Infiltrators],
-  }),
-  new Augmentation({
-    name: AugmentationNames.TranslationCircuit,
-    repCost: 5e2,
-    moneyCost: 1e6,
-    infiltration_trade_mult: 1.5,
-    info:
-      "A state of the art circuit module that manipulates the users voice to suit the needs of the situation, " +
-      "allowing the people listening to feel more persuaded by whats said due to the voice being auto translated " +
-      "to the listeners accent and language.",
-    factions: [FactionNames.Infiltrators],
-  }),
-  new Augmentation({
-    name: AugmentationNames.GoldenSuiteCase,
-    repCost: 5e2,
-    moneyCost: 1e6,
-    infiltration_sell_mult: 1.5,
-    info:
-      "Some say too much money is a curse, those people clearly have never owned a golden suitcase. it might be " +
-      "a bit heavier but it sure does make anything inside it look a lot more valuable.",
-    factions: [FactionNames.Infiltrators],
-  }),
-  new Augmentation({
-    name: AugmentationNames.TimeDilationInjection,
-    repCost: 5e2,
-    moneyCost: 1e6,
-    infiltration_timer_mult: 1.3,
-    info:
-      "Injected directly into the user eyes, as the serum seeps into the brain via the optic nerves perception " +
-      "of time begins to slow down allowing you to take more time to do things than the average person",
-    factions: [FactionNames.Infiltrators],
-  }),
-  new Augmentation({
-    name: AugmentationNames.BitaniumArmorAlloy,
-    repCost: 5e2,
-    moneyCost: 1e6,
-    infiltration_damage_reduction_mult: 0.7,
-    info:
-      `Deep in the mines of ${CityName.Ishima} miners found a strange new material, now known as bitanium after ` +
-      "many iterations of experimenting it was found to be exceptional at increasing ones amour at absorbing " +
-      "blunt damage when used as an alloy with almost any other metal you can think of.",
-    factions: [FactionNames.Infiltrators],
-  }),
-  new Augmentation({
-    name: AugmentationNames.PythiasBrainStem,
-    repCost: 1e2,
+    name: AugmentationNames.MightOfAres,
+    repCost: 1e4,
     moneyCost: 1e6,
     info:
-      "You found an old jar apparently containing the brain stem of one of the most famous " +
-      "fortune tellers in the world, installing this augmentation will apparently connect the synapses reactivating " +
-      "the magic this man once shared with the world ",
+      "Extra-occular neurons taken from old martial art master. Injecting the user the ability to " +
+      "predict enemy attack before they even know it themself.",
     stats: (
       <>This augmentation makes the Slash minigame easier by showing you via an indictor when the slash in coming.</>
     ),
-    factions: [FactionNames.Infiltrators],
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
-    name: AugmentationNames.IntellisenseModule,
-    repCost: 1e2,
+    name: AugmentationNames.WisdomOfAthena,
+    repCost: 1e4,
     moneyCost: 1e6,
-    info:
-      "A brain implant with AI power that focuses in auto linting and intellisense, which " +
-      "provides the ability to perform code completion better than any existing " +
-      "IDE environment on the market to date.",
+    info: "A connective brain implant to SASHA that focuses in pattern recognition and predictive templating.",
     stats: <>This augmentation makes the Bracket minigame easier by removing all '[' ']'.</>,
-    factions: [FactionNames.Infiltrators],
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
-    name: AugmentationNames.RearViewMirrorShoulderAttachment,
-    repCost: 1e2,
+    name: AugmentationNames.ChaosOfDionysus,
+    repCost: 1e4,
     moneyCost: 1e6,
-    info: "Never again will you need to turn your head to see whats behind you.",
-    stats: <>This augmentation makes the Backwards minigame easier by making the words no longer backwards.</>,
-    factions: [FactionNames.Infiltrators],
+    info: "Opto-occipito implant to process visual signal before brain interpretation.",
+    stats: <>This augmentation makes the Backwards minigame easier by flipping the words.</>,
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
-    name: AugmentationNames.KyberCrystalInjection,
-    repCost: 1e2,
+    name: AugmentationNames.BeautyOfAphrodite,
+    repCost: 1e4,
     moneyCost: 1e6,
     info:
-      "A weird looking shiny crystal which is crushed down and turned into a thick syrup, " +
-      "most people think its all homeopathic but there are a few that believe when injected people will " +
-      "believe what you say with one wave of the hand ",
+      "Pheromone extruder injected in the thoracodorsal nerve. Emits pleasing scent guaranteed to " +
+      "make conversational partners more agreeable.",
     stats: <>This augmentation makes the Bribe minigame easier by indicating the incorrect paths.</>,
-    factions: [FactionNames.Infiltrators],
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
-    name: AugmentationNames.DyslexiaModule,
-    repCost: 1e2,
+    name: AugmentationNames.TrickeryOfHermes,
+    repCost: 1e4,
     moneyCost: 1e6,
-    info:
-      "A module initially developed to reverse the disability of dyslexia, But during human trials it was found " +
-      "to actually cause dyslexia, despite the fact scientists decided to sell it anyway. Who would want " +
-      "to install something like that... i guess it has the added benefit of qualifying for a disability card",
+    info: "Penta-dynamo-neurovascular-valve inserted in the carpal ligament, enhances dexterity.",
     stats: <>This augmentation makes the Cheat Code minigame easier by allowing the opposite character.</>,
-    factions: [FactionNames.Infiltrators],
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
-    name: AugmentationNames.CyberDecoder,
-    repCost: 1e2,
+    name: AugmentationNames.FloodOfPoseidon,
+    repCost: 1e4,
     moneyCost: 1e6,
-    info:
-      "A cool looking do hickey that oddly resembles Keanu Reeves face, " +
-      "it has a usb cable that looks like it plugs into something.",
+    info: "Transtinatium VVD reticulator used in optico-sterbing recognition.",
     stats: <>This augmentation makes the Symbol matching minigame easier by indicating the correct choice.</>,
-    factions: [FactionNames.Infiltrators],
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
-    name: AugmentationNames.MineDetectionArmAttachment,
-    repCost: 1e2,
+    name: AugmentationNames.HuntOfArtemis,
+    repCost: 1e4,
     moneyCost: 1e6,
-    info:
-      "You stumble across an old mine detection arm attachment at an army surplus store, " +
-      "on the side is inscribed 'X(' i wonder what happened to the original owner, " +
-      "its a bit beaten up but looks like it should still do the job.",
+    info: "magneto-turboencabulator based on technology by Micha Eike Siemon, increases the users electro-magnetic sensitivity.",
     stats: (
       <>
         This augmentation makes the Minesweeper minigame easier by showing the location of all mines and keeping their
         position.
       </>
     ),
-    factions: [FactionNames.Infiltrators],
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
-    name: AugmentationNames.SecurityWireContacts,
-    repCost: 1e2,
+    name: AugmentationNames.KnowledgeOfApollo,
+    repCost: 1e4,
     moneyCost: 1e6,
-    info:
-      "This augment is a set of contacts for your eyes when installed allows for the user to see which" +
-      "wires are conducting security related information",
+    info: "Neodynic retention fjengeln spoofer using -φ karmions, net positive effect on implantees delta wave.",
     stats: <>This augmentation makes the Wire Cutting minigame easier by indicating the incorrect wires.</>,
-    factions: [FactionNames.Infiltrators],
+    factions: [FactionNames.ShadowsOfAnarchy],
   }),
 ];
 
@@ -2063,7 +1999,8 @@ export function initNeuroFluxGovernor(): Augmentation {
     stats: (
       <>
         This special augmentation can be leveled up infinitely. Each level of this augmentation increases MOST
-        multipliers by 1% (+{donationBonus * 100}% boosted by real life blood donations), stacking multiplicatively.
+        multipliers by 1% (+{(donationBonus * 100).toFixed(6)}% boosted by real life blood donations), stacking
+        multiplicatively.
       </>
     ),
     hacking_chance_mult: 1.01 + donationBonus,
@@ -2094,7 +2031,7 @@ export function initNeuroFluxGovernor(): Augmentation {
     work_money_mult: 1.01 + donationBonus,
     factions: Object.values(FactionNames).filter(
       (factionName) =>
-        ![FactionNames.Infiltrators, FactionNames.Bladeburners, FactionNames.ChurchOfTheMachineGod].includes(
+        ![FactionNames.ShadowsOfAnarchy, FactionNames.Bladeburners, FactionNames.ChurchOfTheMachineGod].includes(
           factionName,
         ),
     ),

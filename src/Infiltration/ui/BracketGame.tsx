@@ -33,7 +33,7 @@ const difficulties: {
 function generateLeftSide(difficulty: Difficulty): string {
   let str = "";
   const options = [KEY.OPEN_BRACKET, KEY.LESS_THAN, KEY.OPEN_PARENTHESIS, KEY.OPEN_BRACE];
-  if (Player.hasAugmentation(AugmentationNames.IntellisenseModule, true)) {
+  if (Player.hasAugmentation(AugmentationNames.WisdomOfAthena, true)) {
     options.splice(0, 1);
   }
   const length = random(difficulty.min, difficulty.max);

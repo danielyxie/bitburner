@@ -1,13 +1,6 @@
-import { INetscriptHelper } from "./INetscriptHelper";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { getRamCost } from "../Netscript/RamCostGenerator";
 
-import {
-  Infiltration as IInfiltration,
-  InfiltrationLocation,
-  InfiltrationReward,
-} from "../ScriptEditor/NetscriptDefinitions";
+import { Infiltration as IInfiltration, InfiltrationLocation } from "../ScriptEditor/NetscriptDefinitions";
 import { Location } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
 import { calculateDifficulty, calculateReward } from "../Infiltration/formulas/game";
@@ -16,28 +9,23 @@ import {
   calculateSellInformationCashReward,
   calculateTradeInformationRepReward,
 } from "../Infiltration/formulas/victory";
+import { FactionNames } from "../Faction/data/FactionNames";
+import { Factions } from "../Faction/Factions";
+import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { checkEnum } from "../utils/helpers/checkEnum";
+import { LocationName } from "../Locations/data/LocationNames";
 
-export function NetscriptInfiltration(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): IInfiltration {
+export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltration> {
   const getLocationsWithInfiltrations = Object.values(Locations).filter(
     (location: Location) => location.infiltrationData,
   );
 
-  const calculateInfiltrationData = (location: Location | undefined): InfiltrationLocation => {
-    if (location === undefined)
-      throw helper.makeRuntimeErrorMsg(
-        `infiltration.calculateReward`,
-        "The provided location does not exist or does not provide infiltrations",
-      );
-
+  const calculateInfiltrationData = (ctx: NetscriptContext, locationName: string): InfiltrationLocation => {
+    if (!checkEnum(LocationName, locationName)) throw new Error(`Location '${locationName}' does not exists.`);
+    const location = Locations[locationName];
+    if (location === undefined) throw ctx.makeRuntimeErrorMsg(`Location '${location}' does not exists.`);
     if (location.infiltrationData === undefined)
-      throw helper.makeRuntimeErrorMsg(
-        `infiltration.calculateReward`,
-        "The provided location does not exist or does not provide infiltrations",
-      );
+      throw ctx.makeRuntimeErrorMsg(`Location '${location}' does not provide infiltrations.`);
     const startingSecurityLevel = location.infiltrationData.startingSecurityLevel;
     const difficulty = calculateDifficulty(player, startingSecurityLevel);
     const reward = calculateReward(player, startingSecurityLevel);
@@ -47,29 +35,20 @@ export function NetscriptInfiltration(
       reward: {
         tradeRep: calculateTradeInformationRepReward(player, reward, maxLevel, difficulty),
         sellCash: calculateSellInformationCashReward(player, reward, maxLevel, difficulty),
-        infiltratorRep: calculateInfiltratorsRepReward(player, difficulty),
+        SoARep: calculateInfiltratorsRepReward(player, Factions[FactionNames.ShadowsOfAnarchy], difficulty),
       },
       difficulty: difficulty,
     };
   };
   return {
-    calculateDifficulty: function (locationName: string): number {
-      const location = getLocationsWithInfiltrations.find((infilLocation) => infilLocation.name === locationName);
-      helper.updateDynamicRam("calculateDifficulty", getRamCost(player, "infiltration", "calculateDifficulty"));
-      return calculateInfiltrationData(location).difficulty;
+    getPossibleLocations: () => (): string[] => {
+      return getLocationsWithInfiltrations.map((l) => l + "");
     },
-    calculateRewards: function (locationName: string): InfiltrationReward {
-      const location = getLocationsWithInfiltrations.find((infilLocation) => infilLocation.name === locationName);
-      helper.updateDynamicRam("calculateReward", getRamCost(player, "infiltration", "calculateReward"));
-      return calculateInfiltrationData(location).reward;
-    },
-    getLocations: function (): Location[] {
-      helper.updateDynamicRam("getLocations", getRamCost(player, "infiltration", "getLocations"));
-      return getLocationsWithInfiltrations;
-    },
-    getInfiltrations: function (): InfiltrationLocation[] {
-      helper.updateDynamicRam("getInfiltrations", getRamCost(player, "infiltration", "getInfiltrations"));
-      return getLocationsWithInfiltrations.map(calculateInfiltrationData);
-    },
+    getInfiltration:
+      (ctx: NetscriptContext) =>
+      (_location: unknown): InfiltrationLocation => {
+        const location = ctx.helper.string("location", _location);
+        return calculateInfiltrationData(ctx, location);
+      },
   };
 }

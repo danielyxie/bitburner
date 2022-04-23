@@ -113,7 +113,7 @@ export const achievements: IMap<Achievement> = {
   },
   THE_COVENANT: {
     ...achievementData["THE_COVENANT"],
-    Icon: FactionNames.TheCovenant.toLowerCase(),
+    Icon: FactionNames.TheCovenant.toLowerCase().replace(/ /g, ""),
     Condition: () => Player.factions.includes(FactionNames.TheCovenant),
   },
   [FactionNames.Illuminati.toUpperCase()]: {
