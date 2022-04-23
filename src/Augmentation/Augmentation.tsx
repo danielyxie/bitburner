@@ -15,7 +15,7 @@ import { CONSTANTS } from "../Constants";
 import { StaticAugmentations } from "./StaticAugmentations";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { getBaseAugmentationPriceMultiplier, getGenericAugmentationPriceMultiplier } from "./AugmentationHelpers";
-import { initInfiltratorsAugmentations } from "./data/AugmentationCreator";
+import { initSoAAugmentations } from "./data/AugmentationCreator";
 
 export interface AugmentationCosts {
   moneyCost: number;
@@ -616,8 +616,8 @@ export class Augmentation {
       for (let i = 0; i < player.queuedAugmentations.length; ++i) {
         moneyCost *= getBaseAugmentationPriceMultiplier();
       }
-    } else if (augmentationReference.factions.includes(FactionNames.Infiltrators)) {
-      const infiltratorAugmentationNames = initInfiltratorsAugmentations().map((augmentation) => augmentation.name);
+    } else if (augmentationReference.factions.includes(FactionNames.ShadowsOfAnarchy)) {
+      const infiltratorAugmentationNames = initSoAAugmentations().map((augmentation) => augmentation.name);
       const infiltratorMultiplier =
         infiltratorAugmentationNames.filter((augmentationName) => player.hasAugmentation(augmentationName)).length + 1;
       moneyCost = Math.pow(augmentationReference.baseCost * 1000, infiltratorMultiplier);
