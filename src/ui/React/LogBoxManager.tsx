@@ -290,6 +290,7 @@ function LogWindow(props: IProps): React.ReactElement {
               className={classes.logs}
               height={500}
               width={500}
+              minConstraints={[250, 30]}
               handle={
                 <span style={{ position: "absolute", right: "-10px", bottom: "-13px", cursor: "nw-resize" }}>
                   <ArrowForwardIosIcon color="primary" style={{ transform: "rotate(45deg)" }} />
