@@ -133,7 +133,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   const multiplierComponent =
     props.faction.name !== FactionNames.ShadowsOfAnarchy ? (
       <Typography>
-        <b>Price multiplier:</b> x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
+        <b>Price multiplier:</b> x {numeralWrapper.formatReallyBigNumber(getGenericAugmentationPriceMultiplier())}
       </Typography>
     ) : (
       <></>
