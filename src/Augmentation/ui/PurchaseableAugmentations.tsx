@@ -84,11 +84,13 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
                 Certain <b>gangs</b>
               </li>
             )}
-            {props.player.canAccessGrafting() && !props.aug.isSpecial && (
-              <li>
-                <b>Grafting</b>
-              </li>
-            )}
+            {props.player.canAccessGrafting() &&
+              !props.aug.isSpecial &&
+              props.aug.name !== AugmentationNames.TheRedPill && (
+                <li>
+                  <b>Grafting</b>
+                </li>
+              )}
           </ul>
         </Typography>
       }
