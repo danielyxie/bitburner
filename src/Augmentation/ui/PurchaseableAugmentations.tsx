@@ -95,7 +95,7 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
         </Typography>
       }
     >
-      <NewReleases sx={{ ml: 1, color: Settings.theme.money, rotate: "180deg" }} />
+      <NewReleases sx={{ ml: 1, color: Settings.theme.money, transform: "rotate(180deg)" }} />
     </Tooltip>
   );
 };
