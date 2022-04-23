@@ -58,8 +58,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
           props.sleeve.tryBuyAugmentation(player, aug);
           rerender();
         }}
-        skipPreReqs
-        skipExclusiveIndicator
+        sleeveAugs
       />
     </Modal>
   );

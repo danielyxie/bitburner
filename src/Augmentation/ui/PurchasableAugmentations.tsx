@@ -124,8 +124,7 @@ interface IPurchasableAugsProps {
   purchaseAugmentation: (player: IPlayer, aug: Augmentation, showModal: (open: boolean) => void) => void;
 
   rep?: number;
-  skipPreReqs?: boolean;
-  skipExclusiveIndicator?: boolean;
+  sleeveAugs?: boolean;
   faction?: Faction;
 }
 
@@ -156,6 +155,8 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
   const [open, setOpen] = useState(false);
 
   const aug = Augmentations[props.augName];
+
+  const cost = props.parent.sleeveAugs ? aug.startingCost : aug.baseCost;
 
   const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
   const description = (
@@ -218,12 +219,12 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                 {aug.name}
                 {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
               </Typography>
-              {aug.factions.length === 1 && !props.parent.skipExclusiveIndicator && (
+              {aug.factions.length === 1 && !props.parent.sleeveAugs && (
                 <Exclusive player={props.parent.player} aug={aug} />
               )}
             </Box>
 
-            {aug.prereqs.length > 0 && !props.parent.skipPreReqs && <PreReqs player={props.parent.player} aug={aug} />}
+            {aug.prereqs.length > 0 && !props.parent.sleeveAugs && <PreReqs player={props.parent.player} aug={aug} />}
           </Box>
         </Box>
 
@@ -231,8 +232,8 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <span>
               <Requirement
-                fulfilled={aug.baseCost === 0 || props.parent.player.money > aug.baseCost}
-                value={numeralWrapper.formatMoney(aug.baseCost)}
+                fulfilled={aug.baseCost === 0 || props.parent.player.money > cost}
+                value={numeralWrapper.formatMoney(cost)}
                 color={Settings.theme.money}
               />
               {props.parent.rep !== undefined && (
