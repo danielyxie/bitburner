@@ -54,36 +54,15 @@ export function joinFaction(faction: Faction): void {
 //Returns a boolean indicating whether the player has the prerequisites for the
 //specified Augmentation
 export function hasAugmentationPrereqs(aug: Augmentation): boolean {
-  let hasPrereqs = true;
-  if (aug.prereqs && aug.prereqs.length > 0) {
-    for (let i = 0; i < aug.prereqs.length; ++i) {
-      const prereqAug = Augmentations[aug.prereqs[i]];
-      if (prereqAug == null) {
-        console.error(`Invalid prereq Augmentation ${aug.prereqs[i]}`);
-        continue;
-      }
-
-      if (Player.hasAugmentation(prereqAug, true) === false) {
-        hasPrereqs = false;
-
-        // Check if the aug is purchased
-        for (let j = 0; j < Player.queuedAugmentations.length; ++j) {
-          if (Player.queuedAugmentations[j].name === prereqAug.name) {
-            hasPrereqs = true;
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  return hasPrereqs;
+  return aug.prereqs.every((aug) => Player.hasAugmentation(aug));
 }
 
 export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = false): string {
   const hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
-    const txt = `You must first purchase or install ${aug.prereqs.join(",")} before you can purchase this one.`;
+    const txt = `You must first purchase or install ${aug.prereqs
+      .filter((req) => !Player.hasAugmentation(req))
+      .join(",")} before you can purchase this one.`;
     if (sing) {
       return txt;
     } else {

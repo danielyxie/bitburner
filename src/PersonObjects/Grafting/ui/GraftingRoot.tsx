@@ -129,34 +129,36 @@ export const GraftingRoot = (): React.ReactElement => {
                   </>
                 }
               />
-              <Typography color={Settings.theme.info}>
-                <b>Time to Graft:</b>{" "}
-                {convertTimeMsToTimeElapsedString(
-                  GraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
+              <Box sx={{ maxHeight: 330, overflowY: "scroll" }}>
+                <Typography color={Settings.theme.info}>
+                  <b>Time to Graft:</b>{" "}
+                  {convertTimeMsToTimeElapsedString(
+                    GraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
+                  )}
+                  {/* Use formula so the displayed creation time is accurate to player bonus */}
+                </Typography>
+                {Augmentations[selectedAug].prereqs.length > 0 && (
+                  <AugPreReqsChecklist player={player} aug={Augmentations[selectedAug]} />
                 )}
-                {/* Use formula so the displayed creation time is accurate to player bonus */}
-              </Typography>
-              {Augmentations[selectedAug].prereqs.length > 0 && (
-                <AugPreReqsChecklist player={player} aug={Augmentations[selectedAug]} />
-              )}
 
-              <br />
-              <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
-                {(() => {
-                  const aug = Augmentations[selectedAug];
+                <br />
+                <Typography>
+                  {(() => {
+                    const aug = Augmentations[selectedAug];
 
-                  const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
-                  const tooltip = (
-                    <>
-                      {info}
-                      <br />
-                      <br />
-                      {aug.stats}
-                    </>
-                  );
-                  return tooltip;
-                })()}
-              </Typography>
+                    const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
+                    const tooltip = (
+                      <>
+                        {info}
+                        <br />
+                        <br />
+                        {aug.stats}
+                      </>
+                    );
+                    return tooltip;
+                  })()}
+                </Typography>
+              </Box>
             </Box>
           </Paper>
         ) : (

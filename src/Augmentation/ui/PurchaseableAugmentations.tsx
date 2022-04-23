@@ -236,7 +236,7 @@ export function PurchaseableAugmentation(props: IPurchaseableAugProps): React.Re
               {props.parent.rep !== undefined && (
                 <Requirement
                   fulfilled={props.parent.rep >= aug.baseRepRequirement}
-                  value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} reputation`}
+                  value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} rep`}
                   color={Settings.theme.rep}
                 />
               )}
