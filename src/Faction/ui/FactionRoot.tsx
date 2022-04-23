@@ -130,7 +130,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
           <Box>
             <Paper sx={{ my: 1, p: 1 }}>
               <Tooltip
-                title={!isManageGangClickable ? <Typography>Unlocked when reaching -54000 karma</Typography> : ""}
+                title={!isManageGangClickable ? <Typography>Unlocked when reaching {GangConstants.GangKarmaRequirement} karma</Typography> : ""}
               >
                 <span>
                   <Button onClick={manageGang} disabled={!isManageGangClickable}>
