@@ -267,12 +267,11 @@ function LogWindow(props: IProps): React.ReactElement {
                 {title()}
               </Typography>
 
-              {!workerScripts.has(script.pid) && (
+              {!workerScripts.has(script.pid) ? (
                 <Button className={classes.titleButton} onClick={run} onTouchEnd={run}>
                   Run
                 </Button>
-              )}
-              {workerScripts.has(script.pid) && (
+              ) : (
                 <Button className={classes.titleButton} onClick={kill} onTouchEnd={kill}>
                   Kill
                 </Button>
