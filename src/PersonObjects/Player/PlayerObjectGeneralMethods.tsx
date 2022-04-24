@@ -569,7 +569,7 @@ export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
 
 /* Working for Company */
 export function startWork(this: IPlayer, companyName: string): void {
-  if (this.isWorking) this.resetWorkStatus(CONSTANTS.WorkTypeCompany, companyName);
+  this.resetWorkStatus(CONSTANTS.WorkTypeCompany, companyName);
   this.isWorking = true;
   this.companyName = companyName;
   this.workType = CONSTANTS.WorkTypeCompany;
