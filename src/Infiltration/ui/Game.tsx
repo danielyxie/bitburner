@@ -1,6 +1,5 @@
 import { Button, Container, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Location } from "../../Locations/Location";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { use } from "../../ui/Context";
 import { BackwardGame } from "./BackwardGame";

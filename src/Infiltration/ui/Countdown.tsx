@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Typography, Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
 interface IProps {
   onFinish: () => void;

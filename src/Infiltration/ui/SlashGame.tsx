@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { Box, Paper, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { interpolate } from "./Difficulty";
-import { KEY } from "../../utils/helpers/keyCodes";
-import { Player } from "../../Player";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Paper, Typography, Box } from "@mui/material";
 
 interface Difficulty {
   [key: string]: number;

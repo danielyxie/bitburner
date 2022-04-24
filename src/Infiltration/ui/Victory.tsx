@@ -1,18 +1,17 @@
-import { Factions } from "../../Faction/Factions";
+import { Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { FactionNames } from "../../Faction/data/FactionNames";
+import { inviteToFaction } from "../../Faction/FactionHelpers";
+import { Factions } from "../../Faction/Factions";
+import { use } from "../../ui/Context";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
-import { use } from "../../ui/Context";
-import { FactionNames } from "../../Faction/data/FactionNames";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import {
   calculateInfiltratorsRepReward,
   calculateSellInformationCashReward,
   calculateTradeInformationRepReward,
 } from "../formulas/victory";
-import { inviteToFaction } from "../../Faction/FactionHelpers";
-import { Button, MenuItem, Select, SelectChangeEvent, Paper, Typography, Box } from "@mui/material";
-import { Location } from "../../Locations/Location";
 
 interface IProps {
   StartingDifficulty: number;

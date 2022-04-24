@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Intro } from "./Intro";
-import { Game } from "./Game";
 import { Location } from "../../Locations/Location";
 import { use } from "../../ui/Context";
 import { calculateDifficulty, calculateReward } from "../formulas/game";
+import { Game } from "./Game";
+import { Intro } from "./Intro";
 interface IProps {
   location: Location;
 }

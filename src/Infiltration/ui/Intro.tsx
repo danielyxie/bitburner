@@ -1,10 +1,9 @@
+import { Report } from "@mui/icons-material";
+import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import { Location } from "../../Locations/Location";
-import Grid from "@mui/material/Grid";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { Button, Paper, Typography, Container, Tooltip, Box } from "@mui/material";
-import { Report } from "@mui/icons-material";
 import { Settings } from "../../Settings/Settings";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 interface IProps {
   Location: Location;
