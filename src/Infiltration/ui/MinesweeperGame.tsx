@@ -5,10 +5,10 @@ import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
 import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
-import Typography from "@mui/material/Typography";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Player } from "../../Player";
+import { Paper, Typography, Box } from "@mui/material";
 
 interface Difficulty {
   [key: string]: number;
@@ -82,9 +82,9 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
   }, []);
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center" }}>
         <Typography variant="h4">{memoryPhase ? "Remember all the mines!" : "Mark all the mines!"}</Typography>
         {minefield.map((line, y) => (
           <div key={y}>
@@ -105,8 +105,8 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
           </div>
         ))}
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 
