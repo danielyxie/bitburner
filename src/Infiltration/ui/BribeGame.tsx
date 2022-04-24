@@ -4,12 +4,12 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
-import Typography from "@mui/material/Typography";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Player } from "../../Player";
 import { Settings } from "../../Settings/Settings";
 import { downArrowSymbol, upArrowSymbol } from "../utils";
+import { Paper, Typography, Box } from "@mui/material";
 
 interface Difficulty {
   [key: string]: number;
@@ -88,13 +88,11 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
   }
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
-        <Typography variant="h4">Say something nice about the guard.</Typography>
+      <Paper sx={{ display: "grid", justifyItems: "center" }}>
+        <Typography variant="h4">Say something nice about the guard</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-      <Grid item xs={6}>
         <Typography variant="h5" color={upColor}>
           {upArrowSymbol}
         </Typography>
@@ -104,8 +102,8 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
         <Typography variant="h5" color={downColor}>
           {downArrowSymbol}
         </Typography>
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 
