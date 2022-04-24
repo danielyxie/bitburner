@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
@@ -10,6 +9,7 @@ import { KEY } from "../../utils/helpers/keyCodes";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Player } from "../../Player";
 import { Settings } from "../../Settings/Settings";
+import { Paper, Typography, Box } from "@mui/material";
 
 interface Difficulty {
   [key: string]: number;
@@ -102,46 +102,53 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
   }
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
-        <Typography variant="h4">Cut the wires with the following properties! (keyboard 1 to 9)</Typography>
+      <Paper sx={{ display: "grid", justifyItems: "center", pb: 1 }}>
+        <Typography variant="h4" sx={{ width: "75%", textAlign: "center" }}>
+          Cut the wires with the following properties! (keyboard 1 to 9)
+        </Typography>
         {questions.map((question, i) => (
           <Typography key={i}>{question.toString()}</Typography>
         ))}
-        <Typography>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${wires.length}, 1fr)`,
+            columnGap: 3,
+            justifyItems: "center",
+          }}
+        >
           {new Array(wires.length).fill(0).map((_, i) => {
             const isCorrectWire = checkWire(i + 1);
             const color = hasAugment && !isCorrectWire ? Settings.theme.disabled : Settings.theme.primary;
             return (
-              <span key={i} style={{ color: color }}>
-                &nbsp;{i + 1}&nbsp;&nbsp;&nbsp;&nbsp;
-              </span>
+              <Typography key={i} style={{ color: color }}>
+                {i + 1}
+              </Typography>
             );
           })}
-        </Typography>
-        {new Array(8).fill(0).map((_, i) => (
-          <div key={i}>
-            <Typography>
+          {new Array(8).fill(0).map((_, i) => (
+            <React.Fragment key={i}>
               {wires.map((wire, j) => {
                 if ((i === 3 || i === 4) && cutWires[j]) {
-                  return <span key={j}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>;
+                  return <Typography key={j}></Typography>;
                 }
                 const isCorrectWire = checkWire(j + 1);
                 const wireColor =
                   hasAugment && !isCorrectWire ? Settings.theme.disabled : wire.colors[i % wire.colors.length];
                 return (
-                  <span key={j} style={{ color: wireColor }}>
-                    |{wire.tpe}|&nbsp;&nbsp;&nbsp;
-                  </span>
+                  <Typography key={j} style={{ color: wireColor }}>
+                    |{wire.tpe}|
+                  </Typography>
                 );
               })}
-            </Typography>
-          </div>
-        ))}
+            </React.Fragment>
+          ))}
+        </Box>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 
