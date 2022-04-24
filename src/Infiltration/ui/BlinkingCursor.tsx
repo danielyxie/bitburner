@@ -6,5 +6,5 @@ export function BlinkingCursor(): React.ReactElement {
     const i = setInterval(() => setOn((old) => !old), 1000);
     return () => clearInterval(i);
   });
-  return <>{on ? "|" : ""}</>;
+  return <>{on ? "|" : <>&nbsp;</>}</>;
 }
