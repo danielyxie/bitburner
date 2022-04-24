@@ -94,7 +94,7 @@ export function Game(props: IProps): React.ReactElement {
     // it's clear they're not meant to
     const damage = options?.automated
       ? player.hp
-      : props.StartingDifficulty * 3 * (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 0.5 : 1);
+      : props.StartingDifficulty * 3 * (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 0.5 : 1);
     if (player.takeDamage(damage)) {
       router.toCity();
       return;
