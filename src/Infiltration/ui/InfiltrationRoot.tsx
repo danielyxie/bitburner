@@ -22,24 +22,24 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
     router.toCity();
   }
 
-  if (!start) {
-    return (
-      <Intro
-        Location={props.location}
-        Difficulty={difficulty}
-        MaxLevel={props.location.infiltrationData.maxClearanceLevel}
-        start={() => setStart(true)}
-        cancel={cancel}
-      />
-    );
-  }
-
   return (
-    <Game
-      StartingDifficulty={startingSecurityLevel}
-      Difficulty={difficulty}
-      Reward={reward}
-      MaxLevel={props.location.infiltrationData.maxClearanceLevel}
-    />
+    <div style={{ display: "flex", alignItems: "center", height: "75vh" }}>
+      {start ? (
+        <Game
+          StartingDifficulty={startingSecurityLevel}
+          Difficulty={difficulty}
+          Reward={reward}
+          MaxLevel={props.location.infiltrationData.maxClearanceLevel}
+        />
+      ) : (
+        <Intro
+          Location={props.location}
+          Difficulty={difficulty}
+          MaxLevel={props.location.infiltrationData.maxClearanceLevel}
+          start={() => setStart(true)}
+          cancel={cancel}
+        />
+      )}
+    </div>
   );
 }
