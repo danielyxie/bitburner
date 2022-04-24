@@ -1775,8 +1775,8 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
     } else break;
   }
 
+  //Check if player already has the assigned job
   if (this.jobs[company.name] === pos.name) {
-    //if the player already has this job with this employer
     if (!sing) {
       const nextPos = getNextCompanyPositionHelper(pos);
       if (nextPos == null || !company.hasPosition(nextPos)) {
@@ -1790,7 +1790,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   }
 
   this.jobs[company.name] = pos.name;
-  if (!this.isWorking) this.companyName = company.name;
+  if (!this.isWorking || !this.workType.includes("Working for Company")) this.companyName = company.name;
 
   if (!sing) {
     dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
