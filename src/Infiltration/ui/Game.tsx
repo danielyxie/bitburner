@@ -1,5 +1,6 @@
 import { Button, Container, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { Location } from "../../Locations/Location";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { use } from "../../ui/Context";
 import { BackwardGame } from "./BackwardGame";
@@ -139,9 +140,11 @@ export function Game(props: IProps): React.ReactElement {
   return (
     <Container>
       <Paper sx={{ p: 1, mb: 1, display: "grid", justifyItems: "center", gap: 1 }}>
-        <Button sx={{ width: "100%" }} onClick={cancel}>
-          Cancel
-        </Button>
+        {stage !== Stage.Sell && (
+          <Button sx={{ width: "100%" }} onClick={cancel}>
+            Cancel Infiltration
+          </Button>
+        )}
         <Typography variant="h5">
           Level {level} / {props.MaxLevel}
         </Typography>

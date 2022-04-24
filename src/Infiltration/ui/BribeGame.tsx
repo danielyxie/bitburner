@@ -152,6 +152,7 @@ const positive = [
   "patient",
   "dynamic",
   "loyal",
+  "based",
 ];
 
 const negative = [
@@ -175,4 +176,5 @@ const negative = [
   "picky",
   "tactless",
   "thoughtless",
+  "cringe",
 ];

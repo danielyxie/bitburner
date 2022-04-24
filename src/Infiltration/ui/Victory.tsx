@@ -1,13 +1,8 @@
 import { Factions } from "../../Faction/Factions";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { use } from "../../ui/Context";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import {
@@ -16,6 +11,8 @@ import {
   calculateTradeInformationRepReward,
 } from "../formulas/victory";
 import { inviteToFaction } from "../../Faction/FactionHelpers";
+import { Button, MenuItem, Select, SelectChangeEvent, Paper, Typography, Box } from "@mui/material";
+import { Location } from "../../Locations/Location";
 
 interface IProps {
   StartingDifficulty: number;
@@ -66,24 +63,22 @@ export function Victory(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
-      <Grid container spacing={3}>
-        <Grid item xs={10}>
-          <Typography variant="h4">Infiltration successful!</Typography>
-        </Grid>
-        <Grid item xs={10}>
-          <Typography variant="h5" color="primary">
-            You{" "}
-            {isMemberOfInfiltrators ? (
-              <>
-                have gained {formatNumber(infiltrationRepGain, 2)} rep for {FactionNames.ShadowsOfAnarchy} and{" "}
-              </>
-            ) : (
-              <></>
-            )}
-            can trade the confidential information you found for money or reputation.
-          </Typography>
-          <Select value={faction} onChange={changeDropdown}>
+    <Paper sx={{ p: 1, textAlign: "center", display: "flex", alignItems: "center", flexDirection: "column" }}>
+      <Typography variant="h4">Infiltration successful!</Typography>
+      <Typography variant="h5" color="primary" width="75%">
+        You{" "}
+        {isMemberOfInfiltrators ? (
+          <>
+            have gained {formatNumber(infiltrationRepGain, 2)} rep for {FactionNames.ShadowsOfAnarchy} and{" "}
+          </>
+        ) : (
+          <></>
+        )}
+        can trade the confidential information you found for money or reputation.
+      </Typography>
+      <Box sx={{ width: "fit-content" }}>
+        <Box sx={{ width: "100%" }}>
+          <Select value={faction} onChange={changeDropdown} sx={{ mr: 1 }}>
             <MenuItem key={"none"} value={"none"}>
               {"none"}
             </MenuItem>
@@ -98,17 +93,15 @@ export function Victory(props: IProps): React.ReactElement {
           <Button onClick={trade}>
             Trade for <Reputation reputation={repGain} /> reputation
           </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button onClick={sell}>
-            Sell for&nbsp;
-            <Money money={moneyGain} />
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button onClick={quitInfiltration}>Quit</Button>
-        </Grid>
-      </Grid>
-    </>
+        </Box>
+        <Button onClick={sell} sx={{ width: "100%" }}>
+          Sell for&nbsp;
+          <Money money={moneyGain} />
+        </Button>
+      </Box>
+      <Button onClick={quitInfiltration} sx={{ width: "100%", mt: 1 }}>
+        Quit
+      </Button>
+    </Paper>
   );
 }
