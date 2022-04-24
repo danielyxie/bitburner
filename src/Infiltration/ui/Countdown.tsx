@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
+import { Typography, Paper } from "@mui/material";
 
-import Typography from "@mui/material/Typography";
 interface IProps {
   onFinish: () => void;
 }
@@ -13,17 +12,13 @@ export function Countdown(props: IProps): React.ReactElement {
       props.onFinish();
       return;
     }
-    setTimeout(() => setX(x - 1), 200);
+    setTimeout(() => setX(x - 1), 300);
   });
 
   return (
-    <>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography variant="h4">Get Ready!</Typography>
-          <Typography variant="h4">{x}</Typography>
-        </Grid>
-      </Grid>
-    </>
+    <Paper sx={{ p: 1, textAlign: "center" }}>
+      <Typography variant="h4">Get Ready!</Typography>
+      <Typography variant="h4">{x}</Typography>
+    </Paper>
   );
 }
