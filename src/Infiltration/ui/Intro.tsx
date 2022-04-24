@@ -1,9 +1,10 @@
 import React from "react";
 import { Location } from "../../Locations/Location";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Button, Paper, Typography, Container, Tooltip, Box } from "@mui/material";
+import { Report } from "@mui/icons-material";
+import { Settings } from "../../Settings/Settings";
 
 interface IProps {
   Location: Location;
@@ -41,9 +42,9 @@ function coloredArrow(difficulty: number): JSX.Element {
   } else {
     return (
       <>
-        {arrowPart("white", difficulty * 13)}
-        {arrowPart("orange", (difficulty - 1) * 13)}
-        {arrowPart("red", (difficulty - 2) * 13)}
+        {arrowPart(Settings.theme.primary, difficulty * 13)}
+        {arrowPart(Settings.theme.warning, (difficulty - 1) * 13)}
+        {arrowPart(Settings.theme.error, (difficulty - 2) * 13)}
       </>
     );
   }
@@ -51,65 +52,84 @@ function coloredArrow(difficulty: number): JSX.Element {
 
 export function Intro(props: IProps): React.ReactElement {
   return (
-    <>
-      <Grid container spacing={3}>
-        <Grid item xs={10}>
-          <Typography variant="h4">Infiltrating {props.Location.name}</Typography>
-        </Grid>
-        <Grid item xs={10}>
-          <Typography variant="h5" color="primary">
-            Maximum level: {props.MaxLevel}
-          </Typography>
-        </Grid>
-        <Grid item xs={10}>
-          <Typography variant="h5" color="primary">
-            Difficulty: {numeralWrapper.format(props.Difficulty * 33.3333, "0")} / 100
-          </Typography>
-        </Grid>
+    <Container sx={{ alignItems: "center" }}>
+      <Paper sx={{ p: 1, mb: 1, display: "grid", justifyItems: "center" }}>
+        <Typography variant="h4">
+          Infiltrating <b>{props.Location.name}</b>
+        </Typography>
+        <Typography variant="h6">
+          <b>Maximum Level: </b>
+          {props.MaxLevel}
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            color:
+              props.Difficulty > 2
+                ? Settings.theme.error
+                : props.Difficulty > 1
+                ? Settings.theme.warning
+                : Settings.theme.primary,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <b>Difficulty:&nbsp;</b>
+          {numeralWrapper.format(props.Difficulty * 33.3333, "0")} / 100
+          {props.Difficulty > 1.5 && (
+            <Tooltip
+              title={
+                <Typography color="error">
+                  This location is too heavily guarded for your current stats. It is recommended that you try training,
+                  or finding an easier location.
+                </Typography>
+              }
+            >
+              <Report sx={{ ml: 1 }} />
+            </Tooltip>
+          )}
+        </Typography>
 
-        {props.Difficulty > 1.5 && (
-          <Grid item xs={10}>
-            <Typography variant="h5" color="primary">
-              Warning: This location is too heavily guarded for your current stats, try training or finding an easier
-              location.
-            </Typography>
-          </Grid>
-        )}
+        <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>[{coloredArrow(props.Difficulty)}]</Typography>
+        <Typography
+          sx={{ lineHeight: "1em", whiteSpace: "pre" }}
+        >{` ^            ^            ^           ^`}</Typography>
+        <Typography
+          sx={{ lineHeight: "1em", whiteSpace: "pre" }}
+        >{` Trivial    Normal        Hard    Impossible`}</Typography>
+      </Paper>
 
-        <Grid item xs={10}>
-          <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>[{coloredArrow(props.Difficulty)}]</Typography>
-          <Typography
-            sx={{ lineHeight: "1em", whiteSpace: "pre" }}
-          >{` ^            ^            ^           ^`}</Typography>
-          <Typography
-            sx={{ lineHeight: "1em", whiteSpace: "pre" }}
-          >{` Trivial    Normal        Hard    Impossible`}</Typography>
-        </Grid>
-        <Grid item xs={10}>
+      <Paper sx={{ p: 1, textAlign: "center", display: "grid", justifyItems: "center" }}>
+        <Typography sx={{ width: "75%" }}>
+          <b>Infiltration</b> is a series of short minigames that get progressively harder. You take damage for failing
+          them. Reaching the maximum level rewards you with intel that you can trade for money or reputation.
+          <br />
+          <br />
+          <b>Gameplay:</b>
+        </Typography>
+        <ul>
           <Typography>
-            Infiltration is a series of short minigames that get progressively harder. You take damage for failing them.
-            Reaching the maximum level rewards you with intel you can trade for money or reputation.
+            <li>
+              The minigames you play are randomly selected.
+              <br />
+              It might take you few tries to get used to them.
+            </li>
+            <li>No game requires use of the mouse.</li>
+            <li>
+              <b>Spacebar</b> is the default action/confirm button.
+            </li>
+            <li>
+              The <b>arrow keys</b> and <b>WASD</b> can be used interchangeably.
+            </li>
+            <li>Sometimes the rest of the keyboard is used.</li>
           </Typography>
-          <br />
-          <Typography>
-            The minigames you play are randomly selected. It might take you few tries to get used to them.
-          </Typography>
-          <br />
-          <Typography>No game require use of the mouse.</Typography>
-          <br />
-          <Typography>Spacebar is the default action/confirm button.</Typography>
-          <br />
-          <Typography>Everything that uses arrow can also use WASD</Typography>
-          <br />
-          <Typography>Sometimes the rest of the keyboard is used.</Typography>
-        </Grid>
-        <Grid item xs={3}>
+        </ul>
+
+        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", width: "100%" }}>
           <Button onClick={props.start}>Start</Button>
-        </Grid>
-        <Grid item xs={3}>
           <Button onClick={props.cancel}>Cancel</Button>
-        </Grid>
-      </Grid>
-    </>
+        </Box>
+      </Paper>
+    </Container>
   );
 }
