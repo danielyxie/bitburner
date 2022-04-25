@@ -1678,7 +1678,7 @@ export class Bladeburner implements IBladeburner {
       player.gainStats(retValue);
       // Operation Daedalus
       const action = this.getActionObject(this.action);
-      if (action == null || !(action instanceof BlackOperation)) {
+      if (action == null) {
         throw new Error("Failed to get BlackOperation Object for: " + this.action.name);
       } else if (action.name === BlackOperationNames.OperationDaedalus && this.blackops[action.name]) {
         this.resetAction();
