@@ -306,3 +306,67 @@ The list contains the name of (i.e. the value returned by
 |                                         | | Input: [3, [[0, 1], [0, 2], [1, 2]]]                                                   |
 |                                         | | Output: []                                                                             |
 +-----------------------------------------+------------------------------------------------------------------------------------------+
+| Compression I: RLE Compression          | | Run-length encoding (RLE) is a data compression technique which encodes data as a      |
+|                                         | | series of runs of a repeated single character. Runs are encoded as a length, followed  |
+|                                         | | by the character itself. Lengths are encoded as a single ASCII digit; runs of 10       |
+|                                         | | characters or more are encoded by splitting them into multiple runs.                   |
+|                                         | |                                                                                        |
+|                                         | | You are given a string as input. Encode it using run-length encoding with the minimum  |
+|                                         | | possible output length.                                                                |
+|                                         | |                                                                                        |
+|                                         | | Examples:                                                                              |
+|                                         | |  aaaaabccc            ->  5a1b3c                                                       |
+|                                         | |  aAaAaA               ->  1a1A1a1A1a1A                                                 |
+|                                         | |  111112333            ->  511233                                                       |
+|                                         | |  zzzzzzzzzzzzzzzzzzz  ->  9z9z1z  (or 9z8z2z, etc.)                                    |
++-----------------------------------------+------------------------------------------------------------------------------------------+
+| Compression II: LZ Decompression        | | Lempel-Ziv (LZ) compression is a data compression technique which encodes data using   |
+|                                         | | references to earlier parts of the data. In this variant of LZ, data is encoded in two |
+|                                         | | types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit     |
+|                                         | | from 1 - 9, followed by the chunk data, which is either:                               |
+|                                         | |                                                                                        |
+|                                         | |  1. Exactly L characters, which are to be copied directly into the uncompressed data.  |
+|                                         | |  2. A reference to an earlier part of the uncompressed data. To do this, the length    |
+|                                         | |     is followed by a second ASCII digit X: each of the L output characters is a copy   |
+|                                         | |     of the character X places before it in the uncompressed data.                      |
+|                                         | |                                                                                        |
+|                                         | | For both chunk types, a length of 0 instead means the chunk ends immediately, and the  |
+|                                         | | next character is the start of a new chunk. The two chunk types alternate, starting    |
+|                                         | | with type 1, and the final chunk may be of either type.                                |
+|                                         | |                                                                                        |
+|                                         | | You are given an LZ-encoded string. Decode it and output the original string.          |
+|                                         | |                                                                                        |
+|                                         | | Example: decoding '5aaabc340533bca' chunk-by-chunk                                     |
+|                                         | |  5aaabc           ->  aaabc                                                            |
+|                                         | |  5aaabc34         ->  aaabcaab                                                         |
+|                                         | |  5aaabc340        ->  aaabcaab                                                         |
+|                                         | |  5aaabc34053      ->  aaabcaabaabaa                                                    |
+|                                         | |  5aaabc340533bca  ->  aaabcaabaabaabca                                                 |
++-----------------------------------------+------------------------------------------------------------------------------------------+
+| Compression III: LZ Compression         | | Lempel-Ziv (LZ) compression is a data compression technique which encodes data using   |
+|                                         | | references to earlier parts of the data. In this variant of LZ, data is encoded in two |
+|                                         | | types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit     |
+|                                         | | from 1 - 9, followed by the chunk data, which is either:                               |
+|                                         | |                                                                                        |
+|                                         | |  1. Exactly L characters, which are to be copied directly into the uncompressed data.  |
+|                                         | |  2. A reference to an earlier part of the uncompressed data. To do this, the length    |
+|                                         | |     is followed by a second ASCII digit X: each of the L output characters is a copy   |
+|                                         | |     of the character X places before it in the uncompressed data.                      |
+|                                         | |                                                                                        |
+|                                         | | For both chunk types, a length of 0 instead means the chunk ends immediately, and the  |
+|                                         | | next character is the start of a new chunk. The two chunk types alternate, starting    |
+|                                         | | with type 1, and the final chunk may be of either type.                                |
+|                                         | |                                                                                        |
+|                                         | | You are given a string as input. Encode it using Lempel-Ziv encoding with the minimum  |
+|                                         | | possible output length.                                                                |
+|                                         | |                                                                                        |
+|                                         | | Examples (some have other possible encodings of minimal length):                       |
+|                                         | |  abracadabra    ->  7abracad47                                                         |
+|                                         | |  mississippi    ->  4miss433ppi                                                        |
+|                                         | |  aAAaAAaAaAA    ->  3aAA53035                                                          |
+|                                         | |  2718281828     ->  627182844                                                          |
+|                                         | |  abcdefghijk    ->  9abcdefghi02jk                                                     |
+|                                         | |  aaaaaaaaaaa    ->  1a911a                                                             |
+|                                         | |  aaaaaaaaaaaa   ->  1a912aa                                                            |
+|                                         | |  aaaaaaaaaaaaa  ->  1a91031                                                            |
++-----------------------------------------+------------------------------------------------------------------------------------------+
