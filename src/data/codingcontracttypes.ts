@@ -1,7 +1,7 @@
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { MinHeap } from "../utils/Heap";
 
-import { comprGenChar, comprLZGenerate, comprLZEncode, comprLZDecode } from "../utils/CompressionContract";
+import { comprGenChar, comprLZGenerate, comprLZEncode, comprLZDecode } from "../utils/CompressionContracts";
 import { HammingEncode, HammingDecode } from "../utils/HammingCodeTools";
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 
