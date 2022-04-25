@@ -96,6 +96,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column-reverse",
     },
+    titleButton: {
+      padding: "1px 6px",
+    },
     success: {
       color: theme.colors.success,
     },
@@ -260,28 +263,25 @@ function LogWindow(props: IProps): React.ReactElement {
             }}
           >
             <Box className="drag" display="flex" alignItems="center" ref={draggableRef}>
-              <Typography color="primary" variant="h6" title={title(true)}>
+              <Typography color="primary" variant="h6" sx={{ marginRight: "auto" }} title={title(true)}>
                 {title()}
               </Typography>
 
-              <Box position="absolute" right={0}>
-                {!workerScripts.has(script.pid) && (
-                  <Button onClick={run} onTouchEnd={run}>
-                    Run
-                  </Button>
-                )}
-                {workerScripts.has(script.pid) && (
-                  <Button onClick={kill} onTouchEnd={kill}>
-                    Kill
-                  </Button>
-                )}
-                <Button onClick={minimize} onTouchEnd={minimize}>
-                  {minimized ? "\u{1F5D6}" : "\u{1F5D5}"}
+              {!workerScripts.has(script.pid) ? (
+                <Button className={classes.titleButton} onClick={run} onTouchEnd={run}>
+                  Run
                 </Button>
-                <Button onClick={props.onClose} onTouchEnd={props.onClose}>
-                  Close
+              ) : (
+                <Button className={classes.titleButton} onClick={kill} onTouchEnd={kill}>
+                  Kill
                 </Button>
-              </Box>
+              )}
+              <Button className={classes.titleButton} onClick={minimize} onTouchEnd={minimize}>
+                {minimized ? "\u{1F5D6}" : "\u{1F5D5}"}
+              </Button>
+              <Button className={classes.titleButton} onClick={props.onClose} onTouchEnd={props.onClose}>
+                Close
+              </Button>
             </Box>
           </Paper>
           <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-wrap" }}>
@@ -289,6 +289,7 @@ function LogWindow(props: IProps): React.ReactElement {
               className={classes.logs}
               height={500}
               width={500}
+              minConstraints={[250, 30]}
               handle={
                 <span style={{ position: "absolute", right: "-10px", bottom: "-13px", cursor: "nw-resize" }}>
                   <ArrowForwardIosIcon color="primary" style={{ transform: "rotate(45deg)" }} />
