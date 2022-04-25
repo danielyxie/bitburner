@@ -218,6 +218,7 @@ export class PlayerObject implements IPlayer {
   hasProgram: (program: string) => boolean;
   inBladeburner: () => boolean;
   inGang: () => boolean;
+  isAwareOfGang: () => boolean;
   isQualified: (company: Company, position: CompanyPosition) => boolean;
   loseMoney: (money: number, source: string) => void;
   reapplyAllAugmentations: (resetMultipliers?: boolean) => void;
@@ -604,6 +605,7 @@ export class PlayerObject implements IPlayer {
     this.hasCorporation = corporationMethods.hasCorporation;
     this.startCorporation = corporationMethods.startCorporation;
     this.canAccessGang = gangMethods.canAccessGang;
+    this.isAwareOfGang = gangMethods.isAwareOfGang;
     this.getGangFaction = gangMethods.getGangFaction;
     this.getGangName = gangMethods.getGangName;
     this.hasGangWith = gangMethods.hasGangWith;
