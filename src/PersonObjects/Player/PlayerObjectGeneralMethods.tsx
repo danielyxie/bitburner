@@ -67,7 +67,7 @@ import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { ITaskTracker } from "../ITaskTracker";
 import { IPerson } from "../IPerson";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
 export function init(this: IPlayer): void {
@@ -470,8 +470,7 @@ export function gainIntelligenceExp(this: IPerson, exp: number): void {
     console.error("ERROR: NaN passed into Player.gainIntelligenceExp()");
     return;
   }
-  const player = use.Player();
-  if (player.sourceFileLvl(5) > 0 || this.intelligence > 0) {
+  if (Player.sourceFileLvl(5) > 0 || this.intelligence > 0) {
     this.intelligence_exp += exp;
     this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp, 1));
   }

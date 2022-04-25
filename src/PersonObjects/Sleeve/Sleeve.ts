@@ -590,7 +590,7 @@ export class Sleeve extends Person {
         // for, we need to reset the sleeve's task
         if (p.gang) {
           if (fac.name === p.gang.facName) {
-            this.resetTaskStatus();
+            this.resetTaskStatus(p);
           }
         }
 
