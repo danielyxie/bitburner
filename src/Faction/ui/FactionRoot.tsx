@@ -18,8 +18,7 @@ import { Faction } from "../Faction";
 import { use } from "../../ui/Context";
 import { CreateGangModal } from "./CreateGangModal";
 
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Box, Paper, Typography, Button, Tooltip } from "@mui/material";
 import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
 import { FactionNames } from "../data/FactionNames";
 import { GangConstants } from "../../Gang/data/Constants";
@@ -105,12 +104,17 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   const canPurchaseSleeves = faction.name === FactionNames.TheCovenant && player.bitNodeN === 10;
 
-  let canAccessGang = player.canAccessGang() && GangConstants.Names.includes(faction.name);
+  // Note : For future-proofing sake, an assumption is made that player is intended to retain access to his gang if his karma were to somehow increases.
+  let isManageGangVisible = GangConstants.Names.includes(faction.name) && player.isAwareOfGang();
+  // karma threshold is only checked at that point, via canAccessGang(). No further check is made.
+  let isManageGangClickable = player.canAccessGang();
   if (player.inGang()) {
     if (player.getGangName() !== faction.name) {
-      canAccessGang = false;
+      isManageGangVisible = false;
     } else if (player.getGangName() === faction.name) {
-      canAccessGang = true;
+      isManageGangVisible = true;
+      // The following line will enable the button, without checking for karma threshold.
+      isManageGangClickable = true;
     }
   }
 
@@ -121,9 +125,23 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
         {faction.name}
       </Typography>
       <Info faction={faction} factionInfo={factionInfo} />
-      {canAccessGang && (
+      {isManageGangVisible && (
         <>
-          <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={manageGang} />
+          <Box>
+            <Paper sx={{ my: 1, p: 1 }}>
+              <Tooltip
+                title={!isManageGangClickable ? <Typography>Unlocked when reaching {GangConstants.GangKarmaRequirement} karma</Typography> : ""}
+              >
+                <span>
+                  <Button onClick={manageGang} disabled={!isManageGangClickable}>
+                    {"Manage Gang"}
+                  </Button>
+                  <Typography>{gangInfo}</Typography>
+                </span>
+              </Tooltip>
+            </Paper>
+          </Box>
+
           <CreateGangModal facName={faction.name} open={gangOpen} onClose={() => setGangOpen(false)} />
         </>
       )}
