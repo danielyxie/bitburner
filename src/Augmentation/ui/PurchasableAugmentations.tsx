@@ -27,8 +27,10 @@ const PreReqs = (props: IPreReqsProps): React.ReactElement => {
   return (
     <Tooltip
       title={
-        <Typography sx={{ color: Settings.theme.money }}>
-          This Augmentation has the following pre-requisite(s):
+        <>
+          <Typography sx={{ color: Settings.theme.money }}>
+            This Augmentation has the following pre-requisite(s):
+          </Typography>
           {props.aug.prereqs.map((preAug) => (
             <Requirement
               fulfilled={props.player.hasAugmentation(preAug)}
@@ -37,7 +39,7 @@ const PreReqs = (props: IPreReqsProps): React.ReactElement => {
               key={preAug}
             />
           ))}
-        </Typography>
+        </>
       }
     >
       <Typography
@@ -73,26 +75,30 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
   return (
     <Tooltip
       title={
-        <Typography sx={{ color: Settings.theme.money }}>
-          This Augmentation can only be acquired from the following source(s):
+        <>
+          <Typography sx={{ color: Settings.theme.money }}>
+            This Augmentation can only be acquired from the following source(s):
+          </Typography>
           <ul>
-            <li>
-              <b>{props.aug.factions[0]}</b> faction
-            </li>
-            {props.player.canAccessGang() && !props.aug.isSpecial && (
+            <Typography sx={{ color: Settings.theme.money }}>
               <li>
-                Certain <b>gangs</b>
+                <b>{props.aug.factions[0]}</b> faction
               </li>
-            )}
-            {props.player.canAccessGrafting() &&
-              !props.aug.isSpecial &&
-              props.aug.name !== AugmentationNames.TheRedPill && (
+              {props.player.canAccessGang() && !props.aug.isSpecial && (
                 <li>
-                  <b>Grafting</b>
+                  Certain <b>gangs</b>
                 </li>
               )}
+              {props.player.canAccessGrafting() &&
+                !props.aug.isSpecial &&
+                props.aug.name !== AugmentationNames.TheRedPill && (
+                  <li>
+                    <b>Grafting</b>
+                  </li>
+                )}
+            </Typography>
           </ul>
-        </Typography>
+        </>
       }
     >
       <NewReleases sx={{ ml: 1, color: Settings.theme.money, transform: "rotate(180deg)" }} />
@@ -169,17 +175,16 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
   );
 
   return (
-    <>
-      <Paper
-        key={props.augName}
-        sx={{
-          p: 1,
-          display: "grid",
-          gridTemplateColumns: "minmax(0, 4fr) 1fr",
-          gap: 1,
-          opacity: props.owned ? 0.75 : 1,
-        }}
-      >
+    <Paper
+      sx={{
+        p: 1,
+        display: "grid",
+        gridTemplateColumns: "minmax(0, 4fr) 1fr",
+        gap: 1,
+        opacity: props.owned ? 0.75 : 1,
+      }}
+    >
+      <>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Button
             onClick={() =>
@@ -244,15 +249,16 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
             )}
           </Box>
         )}
-      </Paper>
-      {Settings.SuppressBuyAugmentationConfirmation || (
-        <PurchaseAugmentationModal
-          open={open}
-          onClose={() => setOpen(false)}
-          faction={props.parent.faction}
-          aug={aug}
-        />
-      )}
-    </>
+
+        {Settings.SuppressBuyAugmentationConfirmation || (
+          <PurchaseAugmentationModal
+            open={open}
+            onClose={() => setOpen(false)}
+            faction={props.parent.faction}
+            aug={aug}
+          />
+        )}
+      </>
+    </Paper>
   );
 }
