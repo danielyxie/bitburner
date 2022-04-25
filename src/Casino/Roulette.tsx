@@ -164,9 +164,9 @@ export function Roulette(props: IProps): React.ReactElement {
       let playerWin = strategy.match(n);
       // oh yeah, the house straight up cheats. Try finding the seed now!
       if (playerWin && Math.random() > 0.9) {
-        playerWin = false;
-        while (strategy.match(n)) {
-          n = (n + 1) % 36;
+        while (playerWin) {
+          n = Math.floor(rng.random() * 37);
+          playerWin = strategy.match(n);
         }
       }
       if (playerWin) {
