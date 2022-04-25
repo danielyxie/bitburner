@@ -70,6 +70,11 @@ export const RamCostConstants: IMap<number> = {
   ScriptStanekPlace: 5,
   ScriptStanekFragmentAt: 2,
   ScriptStanekDeleteAt: 0.15,
+  ScriptInfiltrationCalculateDifficulty: 2.5,
+  ScriptInfiltrationCalculateRewards: 2.5,
+  ScriptInfiltrationGetLocations: 5,
+  ScriptInfiltrationGetInfiltrations: 15,
+  ScriptStanekAcceptGift: 2,
 };
 
 function SF4Cost(cost: number): (player: IPlayer) => number {
@@ -244,6 +249,13 @@ const bladeburner: IMap<any> = {
   getBonusTime: 0,
 };
 
+const infiltration: IMap<any> = {
+  calculateDifficulty: RamCostConstants.ScriptInfiltrationCalculateDifficulty,
+  calculateRewards: RamCostConstants.ScriptInfiltrationCalculateRewards,
+  calculateGetLocations: RamCostConstants.ScriptInfiltrationGetLocations,
+  calculateGetInfiltrations: RamCostConstants.ScriptInfiltrationGetInfiltrations,
+};
+
 // Coding Contract API
 const codingcontract: IMap<any> = {
   attempt: RamCostConstants.ScriptCodingContractBaseRamCost,
@@ -284,6 +296,7 @@ const stanek: IMap<any> = {
   placeFragment: RamCostConstants.ScriptStanekPlace,
   getFragment: RamCostConstants.ScriptStanekFragmentAt,
   removeFragment: RamCostConstants.ScriptStanekDeleteAt,
+  acceptGift: RamCostConstants.ScriptStanekAcceptGift,
 };
 
 // UI API
@@ -312,6 +325,7 @@ export const RamCosts: IMap<any> = {
   ...singularity, // singularity is in namespace & toplevel
   gang,
   bladeburner,
+  infiltration,
   codingcontract,
   sleeve,
   stanek,

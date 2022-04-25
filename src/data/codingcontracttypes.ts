@@ -1,6 +1,7 @@
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { MinHeap } from "../utils/Heap";
 
+import { comprGenChar, comprLZGenerate, comprLZEncode, comprLZDecode } from "../utils/CompressionContracts";
 import { HammingEncode, HammingDecode } from "../utils/HammingCodeTools";
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 
@@ -1304,6 +1305,307 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     solver: (data: string, ans: string): boolean => {
       return parseInt(ans, 10) === HammingDecode(data);
+    },
+  },
+  {
+    name: "Proper 2-Coloring of a Graph",
+    difficulty: 7,
+    numTries: 5,
+    desc: (data: [number, [number, number][]]): string => {
+      return [
+        `You are given the following data, representing a graph:\n`,
+        `${JSON.stringify(data)}\n`,
+        `Note that "graph", as used here, refers to the field of graph theory, and has`,
+        `no relation to statistics or plotting.`,
+        `The first element of the data represents the number of vertices in the graph.`,
+        `Each vertex is a unique number between 0 and ${data[0] - 1}.`,
+        `The next element of the data represents the edges of the graph.`,
+        `Two vertices u,v in a graph are said to be adjacent if there exists an edge [u,v].`,
+        `Note that an edge [u,v] is the same as an edge [v,u], as order does not matter.`,
+        `You must construct a 2-coloring of the graph, meaning that you have to assign each`,
+        `vertex in the graph a "color", either 0 or 1, such that no two adjacent vertices have`,
+        `the same color. Submit your answer in the form of an array, where element i`,
+        `represents the color of vertex i. If it is impossible to construct a 2-coloring of`,
+        `the given graph, instead submit an empty array.\n\n`,
+        `Examples:\n\n`,
+        `Input: [4, [[0, 2], [0, 3], [1, 2], [1, 3]]]\n`,
+        `Output: [0, 0, 1, 1]\n\n`,
+        `Input: [3, [[0, 1], [0, 2], [1, 2]]]\n`,
+        `Output: []`,
+      ].join(" ");
+    },
+    gen: (): [number, [number, number][]] => {
+      //Generate two partite sets
+      const n = Math.floor(Math.random() * 5) + 3;
+      const m = Math.floor(Math.random() * 5) + 3;
+
+      //50% chance of spawning any given valid edge in the bipartite graph
+      const edges: [number, number][] = [];
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+          if (Math.random() > 0.5) {
+            edges.push([i, n + j]);
+          }
+        }
+      }
+
+      //Add an edge at random with no regard to partite sets
+      let a = Math.floor(Math.random() * (n + m));
+      let b = Math.floor(Math.random() * (n + m));
+      if (a > b) [a, b] = [b, a]; //Enforce lower numbers come first
+      if (a != b && !edges.includes([a, b])) {
+        edges.push([a, b]);
+      }
+
+      //Randomize array in-place using Durstenfeld shuffle algorithm.
+      function shuffle(array: any[]): void {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
+      //Replace instances of the original vertex names in-place
+      const vertexShuffler = Array.from(Array(n + m).keys());
+      shuffle(vertexShuffler);
+      for (let i = 0; i < edges.length; i++) {
+        edges[i] = [vertexShuffler[edges[i][0]], vertexShuffler[edges[i][1]]];
+        if (edges[i][0] > edges[i][1]) {
+          //Enforce lower numbers come first
+          [edges[i][0], edges[i][1]] = [edges[i][1], edges[i][0]];
+        }
+      }
+
+      //Shuffle the order of the edges themselves, as well
+      shuffle(edges);
+
+      return [n + m, edges];
+    },
+    solver: (data: [number, [number, number][]], ans: string): boolean => {
+      //Case where the player believes there is no solution
+      if (ans == "[]") {
+        //Helper function to get neighbourhood of a vertex
+        function neighbourhood(vertex: number): number[] {
+          const adjLeft = data[1].filter(([a, _]) => a == vertex).map(([_, b]) => b);
+          const adjRight = data[1].filter(([_, b]) => b == vertex).map(([a, _]) => a);
+          return adjLeft.concat(adjRight);
+        }
+
+        //Verify that there is no solution by attempting to create a proper 2-coloring.
+        const coloring: (number | undefined)[] = Array(data[0]).fill(undefined);
+        while (coloring.some((val) => val === undefined)) {
+          //Color a vertex in the graph
+          const initialVertex: number = coloring.findIndex((val) => val === undefined);
+          coloring[initialVertex] = 0;
+          const frontier: number[] = [initialVertex];
+
+          //Propogate the coloring throughout the component containing v greedily
+          while (frontier.length > 0) {
+            const v: number = frontier.pop() || 0;
+            const neighbors: number[] = neighbourhood(v);
+
+            //For each vertex u adjacent to v
+            for (const id in neighbors) {
+              const u: number = neighbors[id];
+
+              //Set the color of u to the opposite of v's color if it is new,
+              //then add u to the frontier to continue the algorithm.
+              if (coloring[u] === undefined) {
+                if (coloring[v] === 0) coloring[u] = 1;
+                else coloring[u] = 0;
+
+                frontier.push(u);
+              }
+
+              //Assert u,v do not have the same color
+              else if (coloring[u] === coloring[v]) {
+                //If u,v do have the same color, no proper 2-coloring exists, meaning
+                //the player was correct to say there is no proper 2-coloring of the graph.
+                return true;
+              }
+            }
+          }
+        }
+
+        //If this code is reached, there exists a proper 2-coloring of the input
+        //graph, and thus the player was incorrect in submitting no answer.
+        return false;
+      }
+
+      //Sanitize player input
+      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+      const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
+      const coloring: number[] = sanitizedPlayerAnsArr.map((val) => parseInt(val));
+
+      //Solution provided case
+      if (coloring.length == data[0]) {
+        const edges = data[1];
+        const validColors = [0, 1];
+        //Check that the provided solution is a proper 2-coloring
+        return edges.every(([a, b]) => {
+          const aColor = coloring[a];
+          const bColor = coloring[b];
+          return (
+            validColors.includes(aColor) && //Enforce the first endpoint is color 0 or 1
+            validColors.includes(bColor) && //Enforce the second endpoint is color 0 or 1
+            aColor != bColor //Enforce the endpoints are different colors
+          );
+        });
+      }
+
+      //Return false if the coloring is the wrong size
+      else return false;
+    },
+  },
+  {
+    name: "Compression I: RLE Compression",
+    difficulty: 2,
+    numTries: 10,
+    desc: (plaintext: string): string => {
+      return [
+        "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of",
+        "a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths",
+        "are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them",
+        "into multiple runs.\n\n",
+        "You are given the following input string:\n",
+        `&nbsp; &nbsp; ${plaintext}\n`,
+        "Encode it using run-length encoding with the minimum possible output length.\n\n",
+        "Examples:\n",
+        "&nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n",
+        "&nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n",
+        "&nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n",
+        "&nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n",
+      ].join(" ");
+    },
+    gen: (): string => {
+      const length = 50 + Math.floor(25 * (Math.random() + Math.random()));
+      let plain = "";
+
+      while (plain.length < length) {
+        const r = Math.random();
+
+        let n = 1;
+        if (r < 0.3) {
+          n = 1;
+        } else if (r < 0.6) {
+          n = 2;
+        } else if (r < 0.9) {
+          n = Math.floor(10 * Math.random());
+        } else {
+          n = 10 + Math.floor(5 * Math.random());
+        }
+
+        const c = comprGenChar();
+        plain += c.repeat(n);
+      }
+
+      return plain.substring(0, length);
+    },
+    solver: (plain: string, ans: string): boolean => {
+      if (ans.length % 2 !== 0) {
+        return false;
+      }
+
+      let ans_plain = "";
+      for (let i = 0; i + 1 < ans.length; i += 2) {
+        const length = ans.charCodeAt(i) - 0x30;
+        if (length < 0 || length > 9) {
+          return false;
+        }
+
+        ans_plain += ans[i + 1].repeat(length);
+      }
+      if (ans_plain !== plain) {
+        return false;
+      }
+
+      let length = 0;
+      for (let i = 0; i < plain.length; ) {
+        let run_length = 1;
+        while (i + run_length < plain.length && plain[i + run_length] === plain[i]) {
+          ++run_length;
+        }
+        i += run_length;
+
+        while (run_length > 0) {
+          run_length -= 9;
+          length += 2;
+        }
+      }
+      return ans.length === length;
+    },
+  },
+  {
+    name: "Compression II: LZ Decompression",
+    difficulty: 4,
+    numTries: 10,
+    desc: (compressed: string): string => {
+      return [
+        "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to",
+        "earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk",
+        "begins with a length L, encoded as a single ASCII digit from 1 - 9, followed by the chunk data,",
+        "which is either:\n\n",
+        "1. Exactly L characters, which are to be copied directly into the uncompressed data.\n",
+        "2. A reference to an earlier part of the uncompressed data. To do this, the length is followed",
+        "by a second ASCII digit X: each of the L output characters is a copy of the character X",
+        "places before it in the uncompressed data.\n\n",
+        "For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character",
+        "is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final",
+        "chunk may be of either type.\n\n",
+        "You are given the following LZ-encoded string:\n",
+        `&nbsp; &nbsp; ${compressed}\n`,
+        "Decode it and output the original string.\n\n",
+        "Example: decoding '5aaabc340533bca' chunk-by-chunk\n",
+        "&nbsp; &nbsp; 5aaabc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabc\n",
+        "&nbsp; &nbsp; 5aaabc34 &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabcaab\n",
+        "&nbsp; &nbsp; 5aaabc340 &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;aaabcaab\n",
+        "&nbsp; &nbsp; 5aaabc34053 &nbsp; &nbsp; &nbsp;-> &nbsp;aaabcaabaabaa\n",
+        "&nbsp; &nbsp; 5aaabc340533bca &nbsp;-> &nbsp;aaabcaabaabaabca",
+      ].join(" ");
+    },
+    gen: (): string => {
+      return comprLZEncode(comprLZGenerate());
+    },
+    solver: (compr: string, ans: string): boolean => {
+      return ans === comprLZDecode(compr);
+    },
+  },
+  {
+    name: "Compression III: LZ Compression",
+    difficulty: 10,
+    numTries: 10,
+    desc: (plaintext: string): string => {
+      return [
+        "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to",
+        "earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk",
+        "begins with a length L, encoded as a single ASCII digit from 1 - 9, followed by the chunk data,",
+        "which is either:\n\n",
+        "1. Exactly L characters, which are to be copied directly into the uncompressed data.\n",
+        "2. A reference to an earlier part of the uncompressed data. To do this, the length is followed",
+        "by a second ASCII digit X: each of the L output characters is a copy of the character X",
+        "places before it in the uncompressed data.\n\n",
+        "For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character",
+        "is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final",
+        "chunk may be of either type.\n\n",
+        "You are given the following input string:\n",
+        `&nbsp; &nbsp; ${plaintext}\n`,
+        "Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n",
+        "Examples (some have other possible encodings of minimal length):\n",
+        "&nbsp; &nbsp; abracadabra &nbsp; &nbsp;-> &nbsp;7abracad47\n",
+        "&nbsp; &nbsp; mississippi &nbsp; &nbsp;-> &nbsp;4miss433ppi\n",
+        "&nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp;-> &nbsp;3aAA53035\n",
+        "&nbsp; &nbsp; 2718281828 &nbsp; &nbsp; -> &nbsp;627182844\n",
+        "&nbsp; &nbsp; abcdefghijk &nbsp; &nbsp;-> &nbsp;9abcdefghi02jk\n",
+        "&nbsp; &nbsp; aaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;1a911a\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaa &nbsp; -> &nbsp;1a912aa\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaaa &nbsp;-> &nbsp;1a91031",
+      ].join(" ");
+    },
+    gen: (): string => {
+      return comprLZGenerate();
+    },
+    solver: (plain: string, ans: string): boolean => {
+      return comprLZDecode(ans) === plain && ans.length === comprLZEncode(plain).length;
     },
   },
 ];

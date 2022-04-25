@@ -163,7 +163,9 @@ export function BitverseRoot(props: IProps): React.ReactElement {
       return lvl;
     }
     const max = n === 12 ? Infinity : 3;
-    return Math.min(max, lvl + 1);
+
+    // If accessed via flume, display the current BN level, else the next
+    return Math.min(max, lvl + Number(!props.flume));
   };
 
   if (Settings.DisableASCIIArt) {
@@ -171,7 +173,6 @@ export function BitverseRoot(props: IProps): React.ReactElement {
       <>
         {Object.values(BitNodes)
           .filter((node) => {
-            console.log(node.desc);
             return node.desc !== "COMING SOON";
           })
           .map((node) => {

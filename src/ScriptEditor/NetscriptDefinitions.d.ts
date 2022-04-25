@@ -2198,7 +2198,7 @@ export interface Singularity {
    * RAM cost: 5 GB * 16/4/1
    *
    *
-   * This function will automatically install your Augmentations, resetting the game as usual.
+   * This function will automatically install your Augmentations, resetting the game as usual. If you do not own uninstalled Augmentations then the game will not reset.
    *
    * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.
    */
@@ -3873,6 +3873,13 @@ interface ReputationFormulas {
    * @returns The calculated faction favor.
    */
   calculateRepToFavor(rep: number): number;
+
+  /**
+   * Calculate how much rep would be gained.
+   * @param amount - Amount of money donated
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   */
+  repFromDonation(amount: number, player: Player): number;
 }
 
 /**
@@ -4254,6 +4261,51 @@ interface Stanek {
    * @returns The fragment at [rootX, rootY], if any.
    */
   removeFragment(rootX: number, rootY: number): boolean;
+
+  /**
+   * Accept Stanek's Gift by joining the Church of the Machine God
+   * @remarks
+   * RAM cost: 2 GB
+   *
+   * @returns true if the player is a member of the church and has the gift installed,
+   * false otherwise.
+   */
+  acceptGift(): boolean;
+}
+
+export interface InfiltrationReward {
+  tradeRep: number;
+  sellCash: number;
+  SoARep: number;
+}
+
+export interface InfiltrationLocation {
+  location: any;
+  reward: InfiltrationReward;
+  difficulty: number;
+}
+
+/**
+ * Infiltration API.
+ * @public
+ */
+interface Infiltration {
+  /**
+   * Get all locations that can be infiltrated.
+   * @remarks
+   * RAM cost: 5 GB
+   *
+   * @returns all locations that can be infiltrated.
+   */
+  getPossibleLocations(): string[];
+  /**
+   * Get all infiltrations with difficulty, location and rewards.
+   * @remarks
+   * RAM cost: 15 GB
+   *
+   * @returns Infiltration data for given location.
+   */
+  getInfiltration(location: string): InfiltrationLocation;
 }
 
 /**
@@ -4405,6 +4457,11 @@ export interface NS {
    * RAM cost: 0 GB
    */
   readonly stanek: Stanek;
+  /**
+   * Namespace for infiltration functions.
+   * RAM cost: 0 GB
+   */
+  readonly infiltration: Infiltration;
   /**
    * Namespace for corporation functions.
    * RAM cost: 0 GB

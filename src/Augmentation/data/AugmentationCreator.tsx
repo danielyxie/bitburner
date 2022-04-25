@@ -1,11 +1,11 @@
-import { Augmentation, IConstructorParams } from "./Augmentation";
-import { AugmentationNames } from "./data/AugmentationNames";
-import { Player } from "../Player";
-import { Programs } from "../Programs/Programs";
-import { WHRNG } from "../Casino/RNG";
+import { Augmentation, IConstructorParams } from "../Augmentation";
+import { AugmentationNames } from "./AugmentationNames";
+import { Player } from "../../Player";
+import { Programs } from "../../Programs/Programs";
+import { WHRNG } from "../../Casino/RNG";
 import React from "react";
-import { FactionNames } from "../Faction/data/FactionNames";
-import { CONSTANTS } from "../Constants";
+import { FactionNames } from "../../Faction/data/FactionNames";
+import { CONSTANTS } from "../../Constants";
 
 function getRandomBonus(): any {
   const bonuses = [
@@ -94,6 +94,99 @@ function getRandomBonus(): any {
 
   return bonuses[Math.floor(bonuses.length * randomNumber.random())];
 }
+
+export const initSoAAugmentations = (): Augmentation[] => [
+  new Augmentation({
+    name: AugmentationNames.WKSharmonizer,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info:
+      `A copy of the WKS harmonizer from the MIA leader of the ${FactionNames.ShadowsOfAnarchy} ` +
+      "injects *Γ-based cells that provides general enhancement to the body.",
+    stats: (
+      <>
+        This augmentation makes many aspect of infiltration easier and more productive. Such as increased timer,
+        rewards, reduced damage taken, etc.
+      </>
+    ),
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.MightOfAres,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info:
+      "Extra-occular neurons taken from old martial art master. Injecting the user the ability to " +
+      "predict enemy attack before they even know it themself.",
+    stats: (
+      <>This augmentation makes the Slash minigame easier by showing you via an indictor when the slash in coming.</>
+    ),
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.WisdomOfAthena,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "A connective brain implant to SASHA that focuses in pattern recognition and predictive templating.",
+    stats: <>This augmentation makes the Bracket minigame easier by removing all '[' ']'.</>,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.ChaosOfDionysus,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "Opto-occipito implant to process visual signal before brain interpretation.",
+    stats: <>This augmentation makes the Backwards minigame easier by flipping the words.</>,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.BeautyOfAphrodite,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info:
+      "Pheromone extruder injected in the thoracodorsal nerve. Emits pleasing scent guaranteed to " +
+      "make conversational partners more agreeable.",
+    stats: <>This augmentation makes the Bribe minigame easier by indicating the incorrect paths.</>,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.TrickeryOfHermes,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "Penta-dynamo-neurovascular-valve inserted in the carpal ligament, enhances dexterity.",
+    stats: <>This augmentation makes the Cheat Code minigame easier by allowing the opposite character.</>,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.FloodOfPoseidon,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "Transtinatium VVD reticulator used in optico-sterbing recognition.",
+    stats: <>This augmentation makes the Symbol matching minigame easier by indicating the correct choice.</>,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.HuntOfArtemis,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "magneto-turboencabulator based on technology by Micha Eike Siemon, increases the users electro-magnetic sensitivity.",
+    stats: (
+      <>
+        This augmentation makes the Minesweeper minigame easier by showing the location of all mines and keeping their
+        position.
+      </>
+    ),
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.KnowledgeOfApollo,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "Neodynic retention fjengeln spoofer using -φ karmions, net positive effect on implantees delta wave.",
+    stats: <>This augmentation makes the Wire Cutting minigame easier by indicating the incorrect wires.</>,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+];
 
 export const initGeneralAugmentations = (): Augmentation[] => [
   new Augmentation({
@@ -1894,7 +1987,6 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
 
 export function initNeuroFluxGovernor(): Augmentation {
   const donationBonus = CONSTANTS.Donations / 1e6 / 100; // 1 millionth of a percent per donation
-  console.log(donationBonus * 100);
   return new Augmentation({
     name: AugmentationNames.NeuroFluxGovernor,
     repCost: 500,
@@ -1907,7 +1999,8 @@ export function initNeuroFluxGovernor(): Augmentation {
     stats: (
       <>
         This special augmentation can be leveled up infinitely. Each level of this augmentation increases MOST
-        multipliers by 1% (+{donationBonus * 100}% boosted by real life blood donations), stacking multiplicatively.
+        multipliers by 1% (+{(donationBonus * 100).toFixed(6)}% boosted by real life blood donations), stacking
+        multiplicatively.
       </>
     ),
     hacking_chance_mult: 1.01 + donationBonus,
@@ -1936,7 +2029,12 @@ export function initNeuroFluxGovernor(): Augmentation {
     hacknet_node_core_cost_mult: 1 / (1.01 + donationBonus),
     hacknet_node_level_cost_mult: 1 / (1.01 + donationBonus),
     work_money_mult: 1.01 + donationBonus,
-    factions: Object.values(FactionNames),
+    factions: Object.values(FactionNames).filter(
+      (factionName) =>
+        ![FactionNames.ShadowsOfAnarchy, FactionNames.Bladeburners, FactionNames.ChurchOfTheMachineGod].includes(
+          factionName,
+        ),
+    ),
   });
 }
 

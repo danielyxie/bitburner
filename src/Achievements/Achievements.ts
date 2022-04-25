@@ -113,7 +113,7 @@ export const achievements: IMap<Achievement> = {
   },
   THE_COVENANT: {
     ...achievementData["THE_COVENANT"],
-    Icon: FactionNames.TheCovenant.toLowerCase(),
+    Icon: FactionNames.TheCovenant.toLowerCase().replace(/ /g, ""),
     Condition: () => Player.factions.includes(FactionNames.TheCovenant),
   },
   [FactionNames.Illuminati.toUpperCase()]: {
@@ -776,6 +776,7 @@ export const achievements: IMap<Achievement> = {
 // { ID: FactionNames.Bladeburners.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Bladeburners) },
 // { ID: "DEEPSCANV1.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV1.name) },
 // { ID: "DEEPSCANV2.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV2.name) },
+// { ID: "INFILTRATORS", Condition: () => Player.factions.includes(FactionNames.Infiltrators) },
 // {
 //   ID: "SERVERPROFILER.EXE",
 //   Condition: () => Player.getHomeComputer().programs.includes(Programs.ServerProfiler.name),

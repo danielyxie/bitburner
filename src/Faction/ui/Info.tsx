@@ -58,6 +58,7 @@ export function Info(props: IProps): React.ReactElement {
   const Assignment = props.factionInfo.assignment ?? DefaultAssignment;
 
   const favorGain = props.faction.getFavorGain();
+
   return (
     <>
       <Typography classes={{ root: classes.noformat }}>{props.factionInfo.infoText}</Typography>

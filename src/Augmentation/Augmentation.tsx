@@ -8,6 +8,7 @@ import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 export interface IConstructorParams {
   info: string | JSX.Element;
@@ -49,6 +50,12 @@ export interface IConstructorParams {
   bladeburner_stamina_gain_mult?: number;
   bladeburner_analysis_mult?: number;
   bladeburner_success_chance_mult?: number;
+  infiltration_base_rep_increase?: number;
+  infiltration_rep_mult?: number;
+  infiltration_trade_mult?: number;
+  infiltration_sell_mult?: number;
+  infiltration_timer_mult?: number;
+  infiltration_damage_reduction_mult?: number;
 
   startingMoney?: number;
   programs?: string[];
@@ -337,6 +344,50 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
         <br />+{f(mults.bladeburner_success_chance_mult - 1)} Bladeburner Contracts and Operations success chance
       </>
     );
+  if (mults.infiltration_base_rep_increase)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.infiltration_base_rep_increase - 1)} Infiltration {FactionNames.ShadowsOfAnarchy} Reputation
+        base reward
+      </>
+    );
+  if (mults.infiltration_rep_mult)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.infiltration_rep_mult - 1)} Infiltration {FactionNames.ShadowsOfAnarchy} Reputation reward
+      </>
+    );
+  if (mults.infiltration_trade_mult)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.infiltration_trade_mult - 1)} Infiltration Reputation for trading information
+      </>
+    );
+  if (mults.infiltration_sell_mult)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.infiltration_sell_mult - 1)} Infiltration cash reward for selling information
+      </>
+    );
+  if (mults.infiltration_timer_mult)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.infiltration_timer_mult - 1)} Infiltration time per minigame
+      </>
+    );
+  if (mults.infiltration_damage_reduction_mult)
+    desc = (
+      <>
+        {desc}
+        <br />
+        {f(mults.infiltration_damage_reduction_mult - 1)} Infiltration health lost per failed minigame
+      </>
+    );
 
   if (startingMoney)
     desc = (
@@ -390,6 +441,9 @@ export class Augmentation {
   // Initial cost. Doesn't change when you purchase multiple Augmentation
   startingCost = 0;
 
+  // Initial rep requirement. Doesn't change when you purchase multiple Augmentation
+  startingRepRequirement = 0;
+
   // Factions that offer this aug.
   factions: string[] = [];
 
@@ -409,6 +463,7 @@ export class Augmentation {
     this.baseRepRequirement = params.repCost;
     this.baseCost = params.moneyCost;
     this.startingCost = this.baseCost;
+    this.startingRepRequirement = this.baseRepRequirement;
     this.factions = params.factions;
 
     if (params.isSpecial) {
@@ -507,6 +562,25 @@ export class Augmentation {
     }
     if (params.bladeburner_success_chance_mult) {
       this.mults.bladeburner_success_chance_mult = params.bladeburner_success_chance_mult;
+    }
+
+    if (params.infiltration_base_rep_increase) {
+      this.mults.infiltration_base_rep_increase = params.infiltration_base_rep_increase;
+    }
+    if (params.infiltration_rep_mult) {
+      this.mults.infiltration_rep_mult = params.infiltration_rep_mult;
+    }
+    if (params.infiltration_trade_mult) {
+      this.mults.infiltration_trade_mult = params.infiltration_trade_mult;
+    }
+    if (params.infiltration_sell_mult) {
+      this.mults.infiltration_sell_mult = params.infiltration_sell_mult;
+    }
+    if (params.infiltration_timer_mult) {
+      this.mults.infiltration_timer_mult = params.infiltration_timer_mult;
+    }
+    if (params.infiltration_damage_reduction_mult) {
+      this.mults.infiltration_damage_reduction_mult = params.infiltration_damage_reduction_mult;
     }
 
     if (params.stats === undefined)

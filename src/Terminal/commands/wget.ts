@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
