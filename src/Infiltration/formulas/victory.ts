@@ -17,7 +17,7 @@ export function calculateSellInformationCashReward(
     Math.pow(difficulty, 3) *
     3e3 *
     levelBonus *
-    (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 1.5 : 1) *
+    (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 1.5 : 1) *
     BitNodeMultipliers.InfiltrationMoney
   );
 }
@@ -35,7 +35,7 @@ export function calculateTradeInformationRepReward(
     Math.pow(difficulty, 3) *
     3e3 *
     levelBonus *
-    (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 1.5 : 1) *
+    (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 1.5 : 1) *
     BitNodeMultipliers.InfiltrationMoney
   );
 }
@@ -47,5 +47,7 @@ export function calculateInfiltratorsRepReward(player: IPlayer, faction: Faction
   }, 0);
   const baseRepGain = (difficulty / maxStartingSecurityLevel) * 5000;
 
-  return baseRepGain * (player.hasAugmentation(AugmentationNames.WKSharmonizer) ? 2 : 1) * (1 + faction.favor / 100);
+  return (
+    baseRepGain * (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 2 : 1) * (1 + faction.favor / 100)
+  );
 }
