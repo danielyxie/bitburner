@@ -110,6 +110,8 @@ const tasks: {
       first: factions,
       second: (s1: string) => {
         const faction = Factions[s1];
+        if (!faction) return ["------"];
+
         const facInfo = faction.getInfo();
         const options: string[] = [];
         if (facInfo.offerHackingWork) {
@@ -260,7 +262,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
     const detailsF = tasks[n];
     if (detailsF === undefined) throw new Error(`No function for task '${s0}'`);
     const details = detailsF(props.player, props.sleeve);
-    const details2 = details.second(details.first[0]);
+    const details2 = details.second(details.first[0]) ?? ["------"];
     setS2(details2[0]);
     setS1(details.first[0]);
     setS0(n);
