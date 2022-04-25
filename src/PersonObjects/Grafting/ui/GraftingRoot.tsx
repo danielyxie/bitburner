@@ -15,7 +15,7 @@ import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
 import { IPlayer } from "../../IPlayer";
-import { getGraftingAvailableAugs } from "../GraftingHelpers";
+import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../GraftingHelpers";
 import { GraftableAugmentation } from "../GraftableAugmentation";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
@@ -142,7 +142,7 @@ export const GraftingRoot = (): React.ReactElement => {
               <Typography color={Settings.theme.info}>
                 <b>Time to Graft:</b>{" "}
                 {convertTimeMsToTimeElapsedString(
-                  GraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
+                  calculateGraftingTimeWithBonus(player, GraftableAugmentations[selectedAug]),
                 )}
                 {/* Use formula so the displayed creation time is accurate to player bonus */}
               </Typography>
