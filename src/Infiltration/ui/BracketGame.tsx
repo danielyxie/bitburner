@@ -7,6 +7,8 @@ import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 import { BlinkingCursor } from "./BlinkingCursor";
 import Typography from "@mui/material/Typography";
+import { Player } from "../../Player";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { KEY } from "../../utils/helpers/keyCodes";
 
 interface Difficulty {
@@ -31,9 +33,12 @@ const difficulties: {
 function generateLeftSide(difficulty: Difficulty): string {
   let str = "";
   const options = [KEY.OPEN_BRACKET, KEY.LESS_THAN, KEY.OPEN_PARENTHESIS, KEY.OPEN_BRACE];
+  if (Player.hasAugmentation(AugmentationNames.WisdomOfAthena, true)) {
+    options.splice(0, 1);
+  }
   const length = random(difficulty.min, difficulty.max);
   for (let i = 0; i < length; i++) {
-    str += options[Math.floor(Math.random() * 4)];
+    str += options[Math.floor(Math.random() * options.length)];
   }
 
   return str;

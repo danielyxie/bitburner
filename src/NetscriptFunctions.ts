@@ -1,3 +1,4 @@
+import $ from "jquery";
 import { vsprintf, sprintf } from "sprintf-js";
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
@@ -64,6 +65,7 @@ import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
+import { NetscriptInfiltration } from "./NetscriptFunctions/Infiltration";
 import { NetscriptUserInterface } from "./NetscriptFunctions/UserInterface";
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
@@ -80,6 +82,7 @@ import {
   Gang as IGang,
   Bladeburner as IBladeburner,
   Stanek as IStanek,
+  Infiltration as IInfiltration,
   RunningScript as IRunningScript,
   RecentScript as IRecentScript,
   SourceFileLvl,
@@ -112,6 +115,7 @@ interface NS extends INS {
   gang: IGang;
   bladeburner: IBladeburner;
   stanek: IStanek;
+  infiltration: IInfiltration;
 }
 
 export function NetscriptFunctions(workerScript: WorkerScript): NS {
@@ -524,6 +528,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
   const extra = NetscriptExtra(Player, workerScript, helper);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
+  const infiltration = wrapAPI(helper, {}, workerScript, NetscriptInfiltration(Player), "infiltration")
+    .infiltration as unknown as IInfiltration;
   const stanek = wrapAPI(helper, {}, workerScript, NetscriptStanek(Player, workerScript, helper), "stanek")
     .stanek as unknown as IStanek;
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
@@ -546,6 +552,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     sleeve: sleeve,
     corporation: corporation,
     stanek: stanek,
+    infiltration: infiltration,
     ui: ui,
     formulas: formulas,
     stock: stockmarket,

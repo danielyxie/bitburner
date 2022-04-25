@@ -3,7 +3,6 @@ import { Augmentations } from "./Augmentations";
 import { PlayerOwnedAugmentation, IPlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
 import { AugmentationNames } from "./data/AugmentationNames";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
 import { Player } from "../Player";
@@ -17,9 +16,11 @@ import {
   initBladeburnerAugmentations,
   initChurchOfTheMachineGodAugmentations,
   initGeneralAugmentations,
+  initSoAAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
-} from "./AugmentationCreator";
+} from "./data/AugmentationCreator";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Router } from "../ui/GameRoot";
 
 export function AddToAugmentations(aug: Augmentation): void {
@@ -50,6 +51,7 @@ function createAugmentations(): void {
     initNeuroFluxGovernor(),
     initUnstableCircadianModulator(),
     ...initGeneralAugmentations(),
+    ...initSoAAugmentations(),
     ...(factionExists(FactionNames.Bladeburners) ? initBladeburnerAugmentations() : []),
     ...(factionExists(FactionNames.ChurchOfTheMachineGod) ? initChurchOfTheMachineGodAugmentations() : []),
   ].map(resetAugmentation);
@@ -82,11 +84,25 @@ function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentatio
   let nextLevel = getNextNeuroFluxLevel();
   --nextLevel;
   const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-  neuroFluxGovernorAugmentation.baseRepRequirement *= multiplier * BitNodeMultipliers.AugmentationRepCost;
-  neuroFluxGovernorAugmentation.baseCost *= multiplier * BitNodeMultipliers.AugmentationMoneyCost;
+  neuroFluxGovernorAugmentation.baseRepRequirement =
+    neuroFluxGovernorAugmentation.startingRepRequirement * multiplier * BitNodeMultipliers.AugmentationRepCost;
+  neuroFluxGovernorAugmentation.baseCost =
+    neuroFluxGovernorAugmentation.startingCost * multiplier * BitNodeMultipliers.AugmentationMoneyCost;
 
-  for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
+  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
     neuroFluxGovernorAugmentation.baseCost *= getBaseAugmentationPriceMultiplier();
+  }
+}
+
+function updateSoACosts(soaAugmentation: Augmentation): void {
+  const soaAugmentationNames = initSoAAugmentations().map((augmentation) => augmentation.name);
+  const soaAugCount = soaAugmentationNames.filter((augmentationName) =>
+    Player.hasAugmentation(augmentationName),
+  ).length;
+  soaAugmentation.baseCost = soaAugmentation.startingCost * Math.pow(CONSTANTS.SoACostMult, soaAugCount);
+  if (soaAugmentationNames.find((augmentationName) => augmentationName === soaAugmentation.name)) {
+    soaAugmentation.baseRepRequirement =
+      soaAugmentation.startingRepRequirement * Math.pow(CONSTANTS.SoARepMult, soaAugCount);
   }
 }
 
@@ -96,6 +112,8 @@ export function updateAugmentationCosts(): void {
       const augmentationToUpdate = Augmentations[name];
       if (augmentationToUpdate.name === AugmentationNames.NeuroFluxGovernor) {
         updateNeuroFluxGovernorCosts(augmentationToUpdate);
+      } else if (augmentationToUpdate.factions.includes(FactionNames.ShadowsOfAnarchy)) {
+        updateSoACosts(augmentationToUpdate);
       } else {
         augmentationToUpdate.baseCost =
           augmentationToUpdate.startingCost *

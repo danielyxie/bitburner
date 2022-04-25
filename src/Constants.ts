@@ -112,6 +112,8 @@ export const CONSTANTS: {
   CodingContractBaseMoneyGain: number;
   AugmentationGraftingCostMult: number;
   AugmentationGraftingTimeBase: number;
+  SoACostMult: number;
+  SoARepMult: number;
   EntropyEffect: number;
   TotalNumBitNodes: number;
   Donations: number; // number of blood/plasma/palette donation the dev have verified., boosts NFG
@@ -281,13 +283,17 @@ export const CONSTANTS: {
   AugmentationGraftingCostMult: 3,
   AugmentationGraftingTimeBase: 3600000,
 
+  // SoA mults
+  SoACostMult: 7,
+  SoARepMult: 1.3,
+
   // Value raised to the number of entropy stacks, then multiplied to player multipliers
   EntropyEffect: 0.98,
 
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,
 
-  Donations: 4,
+  Donations: 6,
 
   LatestUpdate: `
   v1.6.3 - 2022-04-01 Few stanek fixes

@@ -6,6 +6,8 @@ import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
 import Typography from "@mui/material/Typography";
 import { KEY } from "../../utils/helpers/keyCodes";
+import { Player } from "../../Player";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface Difficulty {
   [key: string]: number;
@@ -38,6 +40,10 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
       props.onSuccess();
     }
   }
+  const hasAugment = Player.hasAugmentation(AugmentationNames.MightOfAres, true);
+  const phaseZeroTime = Math.random() * 3250 + 1500 - (250 + difficulty.window);
+  const phaseOneTime = 250;
+  const timeUntilAttacking = phaseZeroTime + phaseOneTime;
 
   useEffect(() => {
     let id = window.setTimeout(() => {
@@ -45,8 +51,8 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
       id = window.setTimeout(() => {
         setPhase(2);
         id = window.setTimeout(() => setPhase(0), difficulty.window);
-      }, 250);
-    }, Math.random() * 3250 + 1500 - (250 + difficulty.window));
+      }, phaseOneTime);
+    }, phaseZeroTime);
     return () => {
       clearInterval(id);
     };
@@ -57,6 +63,14 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
       <GameTimer millis={5000} onExpire={props.onFailure} />
       <Grid item xs={12}>
         <Typography variant="h4">Slash when his guard is down!</Typography>
+        {hasAugment ? (
+          <>
+            <Typography variant="h4">Guard will drop in...</Typography>
+            <GameTimer millis={timeUntilAttacking} onExpire={props.onFailure} />
+          </>
+        ) : (
+          <></>
+        )}
         {phase === 0 && <Typography variant="h4">Guarding ...</Typography>}
         {phase === 1 && <Typography variant="h4">Preparing?</Typography>}
         {phase === 2 && <Typography variant="h4">ATTACKING!</Typography>}

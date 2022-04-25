@@ -30,6 +30,10 @@ export function cd(
         terminal.error("Invalid path. Failed to change directories");
         return;
       }
+      if (terminal.cwd().length > 1 && dir === "..") {
+        terminal.setcwd(evaledDir);
+        return;
+      }
 
       const server = player.getCurrentServer();
       if (!containsFiles(server, evaledDir)) {

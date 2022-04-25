@@ -13,6 +13,7 @@ import { MinesweeperGame } from "./MinesweeperGame";
 import { WireCuttingGame } from "./WireCuttingGame";
 import { Victory } from "./Victory";
 import Typography from "@mui/material/Typography";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface IProps {
   StartingDifficulty: number;
@@ -91,7 +92,9 @@ export function Game(props: IProps): React.ReactElement {
     pushResult(false);
     // Kill the player immediately if they use automation, so
     // it's clear they're not meant to
-    const damage = options?.automated ? player.hp : props.StartingDifficulty * 3;
+    const damage = options?.automated
+      ? player.hp
+      : props.StartingDifficulty * 3 * (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 0.5 : 1);
     if (player.takeDamage(damage)) {
       router.toCity();
       return;

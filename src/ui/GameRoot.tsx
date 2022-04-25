@@ -44,7 +44,7 @@ import { CorporationRoot } from "../Corporation/ui/CorporationRoot";
 import { InfiltrationRoot } from "../Infiltration/ui/InfiltrationRoot";
 import { GraftingRoot } from "../PersonObjects/Grafting/ui/GraftingRoot";
 import { WorkInProgressRoot } from "./WorkInProgressRoot";
-import { GameOptionsRoot } from "./React/GameOptionsRoot";
+import { GameOptionsRoot } from "../GameOptions/ui/GameOptionsRoot";
 import { SleeveRoot } from "../PersonObjects/Sleeve/ui/SleeveRoot";
 import { HacknetRoot } from "../Hacknet/ui/HacknetRoot";
 import { GenericLocation } from "../Locations/ui/GenericLocation";

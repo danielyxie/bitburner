@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { IMinigameProps } from "./IMinigameProps";
@@ -7,6 +7,9 @@ import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 import { KEY } from "../../utils/helpers/keyCodes";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { Settings } from "../../Settings/Settings";
 
 interface Difficulty {
   [key: string]: number;
@@ -61,10 +64,26 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
   const [wires] = useState(generateWires(difficulty));
   const [cutWires, setCutWires] = useState(new Array(wires.length).fill(false));
   const [questions] = useState(generateQuestion(wires, difficulty));
+  const hasAugment = Player.hasAugmentation(AugmentationNames.KnowledgeOfApollo, true);
 
   function checkWire(wireNum: number): boolean {
-    return !questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
+    return questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
   }
+
+  useEffect(() => {
+    // check if we won
+    const wiresToBeCut = [];
+    for (let j = 0; j < wires.length; j++) {
+      let shouldBeCut = false;
+      for (let i = 0; i < questions.length; i++) {
+        shouldBeCut = shouldBeCut || questions[i].shouldCut(wires[j], j);
+      }
+      wiresToBeCut.push(shouldBeCut);
+    }
+    if (wiresToBeCut.every((b, i) => b === cutWires[i])) {
+      props.onSuccess();
+    }
+  }, [cutWires]);
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
@@ -74,21 +93,8 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     setCutWires((old) => {
       const next = [...old];
       next[wireNum - 1] = true;
-      if (checkWire(wireNum)) {
+      if (!checkWire(wireNum)) {
         props.onFailure();
-      }
-
-      // check if we won
-      const wiresToBeCut = [];
-      for (let j = 0; j < wires.length; j++) {
-        let shouldBeCut = false;
-        for (let i = 0; i < questions.length; i++) {
-          shouldBeCut = shouldBeCut || questions[i].shouldCut(wires[j], j);
-        }
-        wiresToBeCut.push(shouldBeCut);
-      }
-      if (wiresToBeCut.every((b, i) => b === next[i])) {
-        props.onSuccess();
       }
 
       return next;
@@ -104,18 +110,28 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
           <Typography key={i}>{question.toString()}</Typography>
         ))}
         <Typography>
-          {new Array(wires.length).fill(0).map((_, i) => (
-            <span key={i}>&nbsp;{i + 1}&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          ))}
+          {new Array(wires.length).fill(0).map((_, i) => {
+            const isCorrectWire = checkWire(i + 1);
+            const color = hasAugment && !isCorrectWire ? Settings.theme.disabled : Settings.theme.primary;
+            return (
+              <span key={i} style={{ color: color }}>
+                &nbsp;{i + 1}&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+            );
+          })}
         </Typography>
         {new Array(8).fill(0).map((_, i) => (
           <div key={i}>
             <Typography>
               {wires.map((wire, j) => {
-                if ((i === 3 || i === 4) && cutWires[j])
+                if ((i === 3 || i === 4) && cutWires[j]) {
                   return <span key={j}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>;
+                }
+                const isCorrectWire = checkWire(j + 1);
+                const wireColor =
+                  hasAugment && !isCorrectWire ? Settings.theme.disabled : wire.colors[i % wire.colors.length];
                 return (
-                  <span key={j} style={{ color: wire.colors[i % wire.colors.length] }}>
+                  <span key={j} style={{ color: wireColor }}>
                     |{wire.tpe}|&nbsp;&nbsp;&nbsp;
                   </span>
                 );
