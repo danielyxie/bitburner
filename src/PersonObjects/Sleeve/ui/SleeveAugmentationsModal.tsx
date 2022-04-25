@@ -34,7 +34,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <Container component={Paper} disableGutters maxWidth="md" sx={{ mx: 0, mb: 1, p: 1 }}>
+      <Container component={Paper} disableGutters maxWidth="lg" sx={{ mx: 0, mb: 1, p: 1 }}>
         <Typography>
           You can purchase Augmentations for your Duplicate Sleeves. These Augmentations have the same effect as they
           would for you. You can only purchase Augmentations that you have unlocked through Factions.

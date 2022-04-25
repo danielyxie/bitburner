@@ -141,7 +141,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Container disableGutters maxWidth="md" sx={{ mx: 0 }}>
+      <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
         <Button onClick={props.routeToMainPage}>Back</Button>
         <Typography variant="h4">Faction Augmentations</Typography>
         <Paper sx={{ p: 1, mb: 1 }}>

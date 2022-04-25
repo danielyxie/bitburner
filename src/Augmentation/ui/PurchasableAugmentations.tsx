@@ -131,7 +131,7 @@ interface IPurchasableAugsProps {
 export const PurchasableAugmentations = (props: IPurchasableAugsProps): React.ReactElement => {
   return (
     <Container
-      maxWidth="md"
+      maxWidth="lg"
       disableGutters
       sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
     >
@@ -175,7 +175,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
         sx={{
           p: 1,
           display: "grid",
-          gridTemplateColumns: "minmax(0, 3fr) 1fr",
+          gridTemplateColumns: "minmax(0, 4fr) 1fr",
           gap: 1,
           opacity: props.owned ? 0.75 : 1,
         }}
@@ -229,25 +229,30 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
         </Box>
 
         {props.owned || (
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <span>
+          <Box sx={{ display: "grid", alignItems: "center", justifyItems: "left" }}>
+            <Requirement
+              fulfilled={aug.baseCost === 0 || props.parent.player.money > cost}
+              value={numeralWrapper.formatMoney(cost)}
+              color={Settings.theme.money}
+            />
+            {props.parent.rep !== undefined && (
               <Requirement
-                fulfilled={aug.baseCost === 0 || props.parent.player.money > cost}
-                value={numeralWrapper.formatMoney(cost)}
-                color={Settings.theme.money}
+                fulfilled={props.parent.rep >= aug.baseRepRequirement}
+                value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} rep`}
+                color={Settings.theme.rep}
               />
-              {props.parent.rep !== undefined && (
-                <Requirement
-                  fulfilled={props.parent.rep >= aug.baseRepRequirement}
-                  value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} rep`}
-                  color={Settings.theme.rep}
-                />
-              )}
-            </span>
+            )}
           </Box>
         )}
       </Paper>
-      <PurchaseAugmentationModal open={open} onClose={() => setOpen(false)} faction={props.parent.faction} aug={aug} />
+      {Settings.SuppressBuyAugmentationConfirmation || (
+        <PurchaseAugmentationModal
+          open={open}
+          onClose={() => setOpen(false)}
+          faction={props.parent.faction}
+          aug={aug}
+        />
+      )}
     </>
   );
 }
