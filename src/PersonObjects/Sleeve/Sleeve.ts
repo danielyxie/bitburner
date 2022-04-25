@@ -1108,6 +1108,7 @@ export class Sleeve extends Person {
         break;
       case "Infiltrate synthoids":
         time = 60000;
+        this.currentTaskLocation = "This will generate additional contracts and operations";
         break;
       case "Support main sleeve":
         p.bladeburner?.sleeveSupport(true);

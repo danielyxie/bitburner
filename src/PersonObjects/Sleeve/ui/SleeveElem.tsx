@@ -114,14 +114,16 @@ export function SleeveElem(props: IProps): React.ReactElement {
       desc = <>This sleeve is currently working out at {props.sleeve.currentTaskLocation}.</>;
       break;
     case SleeveTaskType.Bladeburner: {
-      let contract = "";
+      let message = "";
       if (props.sleeve.bbContract !== "------") {
-        contract = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
+        message = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
+      } else if (props.sleeve.currentTaskLocation !== "") {
+        message = props.sleeve.currentTaskLocation;
       }
       desc = (
         <>
           This sleeve is currently attempting to {props.sleeve.bbAction}
-          {contract}
+          {message}
         </>
       );
       break;
