@@ -2,9 +2,7 @@ import { Factions } from "../../Faction/Factions";
 import { Faction } from "../../Faction/Faction";
 import { Gang } from "../../Gang/Gang";
 import { IPlayer } from "../IPlayer";
-import { GangConstants } from "../../Gang/data/Constants"
-
-
+import { GangConstants } from "../../Gang/data/Constants";
 
 export function canAccessGang(this: IPlayer): boolean {
   if (this.bitNodeN === 2) {
