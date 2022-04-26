@@ -24,6 +24,8 @@ import { SxProps } from "@mui/system";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { pushGameSaved } from "./Electron";
 import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
+import { FactionNames } from "./Faction/data/FactionNames";
+import { Faction } from "./Faction/Faction";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -400,6 +402,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
     }
     //Fix contract names
     if (ver < 16) {
+      Factions[FactionNames.ShadowsOfAnarchy] = new Faction(FactionNames.ShadowsOfAnarchy);
       //Iterate over all contracts on all servers
       for (const server of GetAllServers()) {
         for (const contract of server.contracts) {

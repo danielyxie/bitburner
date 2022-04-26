@@ -18,11 +18,11 @@ import { Faction } from "../Faction";
 import { use } from "../../ui/Context";
 import { CreateGangModal } from "./CreateGangModal";
 
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Box, Paper, Typography, Button, Tooltip } from "@mui/material";
 import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
 import { FactionNames } from "../data/FactionNames";
 import { GangConstants } from "../../Gang/data/Constants";
+import { GangButton } from "./GangButton";
 
 type IProps = {
   faction: Faction;
@@ -62,17 +62,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   const player = use.Player();
   const router = use.Router();
   const [sleevesOpen, setSleevesOpen] = useState(false);
-  const [gangOpen, setGangOpen] = useState(false);
   const factionInfo = faction.getInfo();
-
-  function manageGang(): void {
-    // If player already has a gang, just go to the gang UI
-    if (player.inGang()) {
-      return router.toGang();
-    }
-
-    setGangOpen(true);
-  }
 
   function startWork(): void {
     player.startFocusing();
@@ -105,15 +95,6 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   const canPurchaseSleeves = faction.name === FactionNames.TheCovenant && player.bitNodeN === 10;
 
-  let canAccessGang = player.canAccessGang() && GangConstants.Names.includes(faction.name);
-  if (player.inGang()) {
-    if (player.getGangName() !== faction.name) {
-      canAccessGang = false;
-    } else if (player.getGangName() === faction.name) {
-      canAccessGang = true;
-    }
-  }
-
   return (
     <>
       <Button onClick={() => router.toFactions()}>Back</Button>
@@ -121,12 +102,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
         {faction.name}
       </Typography>
       <Info faction={faction} factionInfo={factionInfo} />
-      {canAccessGang && (
-        <>
-          <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={manageGang} />
-          <CreateGangModal facName={faction.name} open={gangOpen} onClose={() => setGangOpen(false)} />
-        </>
-      )}
+      <GangButton faction={faction} />
       {!isPlayersGang && factionInfo.offerHackingWork && (
         <Option
           buttonText={"Hacking Contracts"}
