@@ -5,7 +5,6 @@ import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 
