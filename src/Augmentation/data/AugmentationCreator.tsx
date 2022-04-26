@@ -109,6 +109,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
         rewards, reduced damage taken, etc.
       </>
     ),
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -121,6 +122,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     stats: (
       <>This augmentation makes the Slash minigame easier by showing you via an indictor when the slash in coming.</>
     ),
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -129,6 +131,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "A connective brain implant to SASHA that focuses in pattern recognition and predictive templating.",
     stats: <>This augmentation makes the Bracket minigame easier by removing all '[' ']'.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -137,6 +140,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "Opto-occipito implant to process visual signal before brain interpretation.",
     stats: <>This augmentation makes the Backwards minigame easier by flipping the words.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -147,6 +151,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
       "Pheromone extruder injected in the thoracodorsal nerve. Emits pleasing scent guaranteed to " +
       "make conversational partners more agreeable.",
     stats: <>This augmentation makes the Bribe minigame easier by indicating the incorrect paths.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -155,6 +160,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "Penta-dynamo-neurovascular-valve inserted in the carpal ligament, enhances dexterity.",
     stats: <>This augmentation makes the Cheat Code minigame easier by allowing the opposite character.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -163,6 +169,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "Transtinatium VVD reticulator used in optico-sterbing recognition.",
     stats: <>This augmentation makes the Symbol matching minigame easier by indicating the correct choice.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -176,6 +183,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
         position.
       </>
     ),
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -184,6 +192,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "Neodynic retention fjengeln spoofer using -φ karmions, net positive effect on implantees delta wave.",
     stats: <>This augmentation makes the Wire Cutting minigame easier by indicating the incorrect wires.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
 ];
@@ -1254,6 +1263,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 0,
     info: "It's time to leave the cave.",
     stats: null,
+    isSpecial: true,
     factions: [FactionNames.Daedalus],
   }),
   new Augmentation({
@@ -2003,6 +2013,7 @@ export function initNeuroFluxGovernor(): Augmentation {
         multiplicatively.
       </>
     ),
+    isSpecial: true,
     hacking_chance_mult: 1.01 + donationBonus,
     hacking_speed_mult: 1.01 + donationBonus,
     hacking_money_mult: 1.01 + donationBonus,

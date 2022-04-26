@@ -165,13 +165,11 @@ export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Factio
     let augs = Object.values(Augmentations);
 
     // Remove special augs
-    augs = augs.filter((a) => !a.isSpecial);
+    augs = augs.filter((a) => !a.isSpecial || a.name != AugmentationNames.CongruityImplant);
 
-    const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.CongruityImplant];
-
-    if (player.bitNodeN !== 2) {
+    if (player.bitNodeN === 2) {
       // TRP is not available outside of BN2 for Gangs
-      blacklist.push(AugmentationNames.TheRedPill);
+      augs.push(Augmentations[AugmentationNames.TheRedPill]);
     }
 
     const rng = SFC32RNG(`BN${player.bitNodeN}.${player.sourceFileLvl(player.bitNodeN)}`);
@@ -189,9 +187,6 @@ export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Factio
       return rng() >= 1 - BitNodeMultipliers.GangUniqueAugs;
     };
     augs = augs.filter(uniqueFilter);
-
-    // Remove blacklisted augs
-    augs = augs.filter((a) => !blacklist.includes(a.name));
 
     return augs.map((a) => a.name);
   }
