@@ -4,7 +4,7 @@ import { CityName } from "../Locations/data/CityNames";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { GraftableAugmentation } from "../PersonObjects/Grafting/GraftableAugmentation";
-import { getGraftingAvailableAugs } from "../PersonObjects/Grafting/GraftingHelpers";
+import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../PersonObjects/Grafting/GraftingHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../ui/GameRoot";
@@ -31,8 +31,8 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
         throw helper.makeRuntimeErrorMsg("grafting.getAugmentationGraftPrice", `Invalid aug: ${augName}`);
       }
-      const craftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
-      return craftableAug.cost;
+      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
+      return graftableAug.cost;
     },
 
     getAugmentationGraftTime: (_augName: string): number => {
@@ -42,8 +42,8 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
         throw helper.makeRuntimeErrorMsg("grafting.getAugmentationGraftTime", `Invalid aug: ${augName}`);
       }
-      const craftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
-      return craftableAug.time;
+      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
+      return calculateGraftingTimeWithBonus(player, graftableAug);
     },
 
     getGraftableAugmentations: (): string[] => {
