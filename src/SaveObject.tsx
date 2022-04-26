@@ -400,8 +400,19 @@ function evaluateVersionCompatibility(ver: string | number): void {
     if (ver < 15) {
       (Settings as any).EditorTheme = { ...defaultMonacoTheme };
     }
+    //Fix contract names
     if (ver < 16) {
       Factions[FactionNames.ShadowsOfAnarchy] = new Faction(FactionNames.ShadowsOfAnarchy);
+      //Iterate over all contracts on all servers
+      for (const server of GetAllServers()) {
+        for (const contract of server.contracts) {
+          //Rename old "HammingCodes: Integer to encoded Binary" contracts
+          //to "HammingCodes: Integer to Encoded Binary"
+          if (contract.type == "HammingCodes: Integer to encoded Binary") {
+            contract.type = "HammingCodes: Integer to Encoded Binary";
+          }
+        }
+      }
     }
   }
 }

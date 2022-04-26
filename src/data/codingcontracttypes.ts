@@ -1250,7 +1250,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
-    name: "HammingCodes: Integer to encoded Binary",
+    name: "HammingCodes: Integer to Encoded Binary",
     numTries: 10,
     difficulty: 5,
     desc: (n: number): string => {
