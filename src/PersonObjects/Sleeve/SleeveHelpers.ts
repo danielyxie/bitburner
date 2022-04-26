@@ -22,9 +22,6 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   // Helper function that helps filter out augs that are already owned
   // and augs that aren't allowed for sleeves
   function isAvailableForSleeve(aug: Augmentation): boolean {
-    if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-      return false;
-    }
     if (ownedAugNames.includes(aug.name)) {
       return false;
     }
