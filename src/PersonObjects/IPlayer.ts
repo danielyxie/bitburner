@@ -291,6 +291,6 @@ export interface IPlayer {
   sourceFileLvl(n: number): number;
   startGraftAugmentationWork(augmentationName: string, time: number): void;
   graftAugmentationWork(numCycles: number): boolean;
-  finishGraftAugmentationWork(cancelled: boolean): string;
+  finishGraftAugmentationWork(cancelled: boolean, singularity?: boolean): string;
   applyEntropy(stacks?: number): void;
 }
