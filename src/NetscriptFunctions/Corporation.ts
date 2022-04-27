@@ -310,7 +310,7 @@ export function NetscriptCorporation(
       upgrades: division.upgrades.slice(),
       cities: cities,
       products: division.products === undefined ? [] : Object.keys(division.products),
-      makesProducts: getDivision(division.name).makesProducts,
+      makesProducts: division.makesProducts,
     };
   }
 
