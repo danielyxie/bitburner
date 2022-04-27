@@ -140,37 +140,41 @@ export const GraftingRoot = (): React.ReactElement => {
                   </>
                 }
               />
-              <Typography color={Settings.theme.info}>
-                <b>Time to Graft:</b>{" "}
-                {convertTimeMsToTimeElapsedString(
-                  calculateGraftingTimeWithBonus(player, GraftableAugmentations[selectedAug]),
-                )}
-                {/* Use formula so the displayed creation time is accurate to player bonus */}
-              </Typography>
-              {selectedAugmentation.prereqs.length > 0 && (
-                <AugPreReqsChecklist player={player} aug={selectedAugmentation} />
-              )}
+              <Box sx={{ maxHeight: 330, overflowY: "scroll" }}>
+                <Typography color={Settings.theme.info}>
+                  <b>Time to Graft:</b>{" "}
+                  {convertTimeMsToTimeElapsedString(
+                    calculateGraftingTimeWithBonus(player, GraftableAugmentations[selectedAug]),
+                  )}
+                  {/* Use formula so the displayed creation time is accurate to player bonus */}
+                </Typography>
 
-              <br />
-              <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
-                {(() => {
-                  const info =
-                    typeof selectedAugmentation.info === "string" ? (
-                      <span>{selectedAugmentation.info}</span>
-                    ) : (
-                      selectedAugmentation.info
+                {selectedAugmentation.prereqs.length > 0 && (
+                  <AugPreReqsChecklist player={player} aug={selectedAugmentation} />
+                )}
+
+                <br />
+
+                <Typography>
+                  {(() => {
+                    const info =
+                      typeof selectedAugmentation.info === "string" ? (
+                        <span>{selectedAugmentation.info}</span>
+                      ) : (
+                        selectedAugmentation.info
+                      );
+                    const tooltip = (
+                      <>
+                        {info}
+                        <br />
+                        <br />
+                        {selectedAugmentation.stats}
+                      </>
                     );
-                  const tooltip = (
-                    <>
-                      {info}
-                      <br />
-                      <br />
-                      {selectedAugmentation.stats}
-                    </>
-                  );
-                  return tooltip;
-                })()}
-              </Typography>
+                    return tooltip;
+                  })()}
+                </Typography>
+              </Box>
             </Box>
           </Paper>
         ) : (

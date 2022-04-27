@@ -109,6 +109,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
         rewards, reduced damage taken, etc.
       </>
     ),
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -121,6 +122,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     stats: (
       <>This augmentation makes the Slash minigame easier by showing you via an indictor when the slash in coming.</>
     ),
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -129,6 +131,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "A connective brain implant to SASHA that focuses in pattern recognition and predictive templating.",
     stats: <>This augmentation makes the Bracket minigame easier by removing all '[' ']'.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -137,6 +140,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "Opto-occipito implant to process visual signal before brain interpretation.",
     stats: <>This augmentation makes the Backwards minigame easier by flipping the words.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -147,6 +151,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
       "Pheromone extruder injected in the thoracodorsal nerve. Emits pleasing scent guaranteed to " +
       "make conversational partners more agreeable.",
     stats: <>This augmentation makes the Bribe minigame easier by indicating the incorrect paths.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -155,6 +160,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "Penta-dynamo-neurovascular-valve inserted in the carpal ligament, enhances dexterity.",
     stats: <>This augmentation makes the Cheat Code minigame easier by allowing the opposite character.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -163,6 +169,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "Transtinatium VVD reticulator used in optico-sterbing recognition.",
     stats: <>This augmentation makes the Symbol matching minigame easier by indicating the correct choice.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -176,6 +183,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
         position.
       </>
     ),
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
   new Augmentation({
@@ -184,6 +192,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info: "Neodynic retention fjengeln spoofer using -φ karmions, net positive effect on implantees delta wave.",
     stats: <>This augmentation makes the Wire Cutting minigame easier by indicating the incorrect wires.</>,
+    isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
   }),
 ];
@@ -242,7 +251,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 1.15e8,
     repCost: 2.75e4,
     info: "The latest version of the 'Augmented Targeting' implant adds the ability to lock-on and track threats.",
-    prereqs: [AugmentationNames.Targeting2],
+    prereqs: [AugmentationNames.Targeting2, AugmentationNames.Targeting1],
     dexterity_mult: 1.3,
     factions: [
       FactionNames.TheDarkArmy,
@@ -339,7 +348,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "The latest version of the 'Combat Rib' augmentation releases advanced anabolic steroids that " +
       "improve muscle mass and physical performance while being safe and free of side effects.",
-    prereqs: [AugmentationNames.CombatRib2],
+    prereqs: [AugmentationNames.CombatRib2, AugmentationNames.CombatRib1],
     strength_mult: 1.18,
     defense_mult: 1.18,
     factions: [
@@ -673,7 +682,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "This upgraded firmware allows the Embedded Netburner Module to control information on " +
       "a network by re-routing traffic, spoofing IP addresses, and altering the data inside network " +
       "packets.",
-    prereqs: [AugmentationNames.ENMCore],
+    prereqs: [AugmentationNames.ENMCore, AugmentationNames.ENM],
     hacking_speed_mult: 1.05,
     hacking_money_mult: 1.3,
     hacking_chance_mult: 1.05,
@@ -698,7 +707,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The Core V3 library is an implant that upgrades the firmware of the Embedded Netburner Module. " +
       "This upgraded firmware allows the Embedded Netburner Module to seamlessly inject code into " +
       "any device on a network.",
-    prereqs: [AugmentationNames.ENMCoreV2],
+    prereqs: [AugmentationNames.ENMCoreV2, AugmentationNames.ENMCore, AugmentationNames.ENM],
     hacking_speed_mult: 1.05,
     hacking_money_mult: 1.4,
     hacking_chance_mult: 1.1,
@@ -826,7 +835,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "are a set of specialized microprocessors that are attached to " +
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
-    prereqs: [AugmentationNames.CranialSignalProcessorsG2],
+    prereqs: [AugmentationNames.CranialSignalProcessorsG2, AugmentationNames.CranialSignalProcessorsG1],
     hacking_speed_mult: 1.02,
     hacking_money_mult: 1.15,
     hacking_mult: 1.09,
@@ -841,7 +850,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "are a set of specialized microprocessors that are attached to " +
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
-    prereqs: [AugmentationNames.CranialSignalProcessorsG3],
+    prereqs: [
+      AugmentationNames.CranialSignalProcessorsG3,
+      AugmentationNames.CranialSignalProcessorsG2,
+      AugmentationNames.CranialSignalProcessorsG1,
+    ],
     hacking_speed_mult: 1.02,
     hacking_money_mult: 1.2,
     hacking_grow_mult: 1.25,
@@ -856,7 +869,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "are a set of specialized microprocessors that are attached to " +
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
-    prereqs: [AugmentationNames.CranialSignalProcessorsG4],
+    prereqs: [
+      AugmentationNames.CranialSignalProcessorsG4,
+      AugmentationNames.CranialSignalProcessorsG3,
+      AugmentationNames.CranialSignalProcessorsG2,
+      AugmentationNames.CranialSignalProcessorsG1,
+    ],
     hacking_mult: 1.3,
     hacking_money_mult: 1.25,
     hacking_grow_mult: 1.75,
@@ -1254,6 +1272,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 0,
     info: "It's time to leave the cave.",
     stats: null,
+    isSpecial: true,
     factions: [FactionNames.Daedalus],
   }),
   new Augmentation({
@@ -1952,7 +1971,7 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
       "You will become greater than the sum of our parts. As One. Embrace your gift " +
       "fully and wholly free of it's accursed toll. Serenity brings tranquility the form " +
       "of no longer suffering a stat penalty. ",
-    prereqs: [AugmentationNames.StaneksGift2],
+    prereqs: [AugmentationNames.StaneksGift2, AugmentationNames.StaneksGift1],
     isSpecial: true,
     hacking_chance_mult: 1 / 0.95,
     hacking_speed_mult: 1 / 0.95,
@@ -2003,6 +2022,7 @@ export function initNeuroFluxGovernor(): Augmentation {
         multiplicatively.
       </>
     ),
+    isSpecial: true,
     hacking_chance_mult: 1.01 + donationBonus,
     hacking_speed_mult: 1.01 + donationBonus,
     hacking_money_mult: 1.01 + donationBonus,

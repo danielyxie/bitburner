@@ -5,7 +5,6 @@
 import React, { useState } from "react";
 
 import { hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
-import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
@@ -23,6 +22,7 @@ import Box from "@mui/material/Box";
 import { TableCell } from "../../ui/React/Table";
 import TableRow from "@mui/material/TableRow";
 import { use } from "../../ui/Context";
+import { PurchaseAugmentationModal } from "../../Augmentation/ui/PurchaseAugmentationModal";
 
 interface IReqProps {
   augName: string;
@@ -139,13 +139,7 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
           <Button onClick={handleClick} color={color}>
             Buy
           </Button>
-          <PurchaseAugmentationModal
-            open={open}
-            onClose={() => setOpen(false)}
-            aug={aug}
-            faction={props.faction}
-            rerender={props.rerender}
-          />
+          <PurchaseAugmentationModal open={open} onClose={() => setOpen(false)} aug={aug} faction={props.faction} />
         </TableCell>
       )}
       <TableCell key={1}>
