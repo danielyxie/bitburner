@@ -7202,6 +7202,8 @@ interface Division {
   cities: string[];
   /** Products developed by this division */
   products: string[];
+  /** Whether the industry this division is in is capable of making products */
+  makesProducts: boolean;
 }
 
 /**
