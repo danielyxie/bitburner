@@ -336,12 +336,12 @@ The list contains the name of (i.e. the value returned by
 |                                         | |                                                                                        |
 |                                         | | You are given an LZ-encoded string. Decode it and output the original string.          |
 |                                         | |                                                                                        |
-|                                         | | Example: decoding '5aaabc340533bca' chunk-by-chunk                                     |
-|                                         | |  5aaabc           ->  aaabc                                                            |
-|                                         | |  5aaabc34         ->  aaabcaab                                                         |
-|                                         | |  5aaabc340        ->  aaabcaab                                                         |
-|                                         | |  5aaabc34053      ->  aaabcaabaabaa                                                    |
-|                                         | |  5aaabc340533bca  ->  aaabcaabaabaabca                                                 |
+|                                         | | Example: decoding '5aaabb450723abb' chunk-by-chunk                                     |
+|                                         | |  5aaabb           ->  aaabb                                                            |
+|                                         | |  5aaabb45         ->  aaabbaaab                                                        |
+|                                         | |  5aaabb450        ->  aaabbaaab                                                        |
+|                                         | |  5aaabb45072      ->  aaabbaaababababa                                                 |
+|                                         | |  5aaabb450723abb  ->  aaabbaaababababaabb                                              |
 +-----------------------------------------+------------------------------------------------------------------------------------------+
 | Compression III: LZ Compression         | | Lempel-Ziv (LZ) compression is a data compression technique which encodes data using   |
 |                                         | | references to earlier parts of the data. In this variant of LZ, data is encoded in two |
@@ -361,12 +361,12 @@ The list contains the name of (i.e. the value returned by
 |                                         | | possible output length.                                                                |
 |                                         | |                                                                                        |
 |                                         | | Examples (some have other possible encodings of minimal length):                       |
-|                                         | |  abracadabra    ->  7abracad47                                                         |
-|                                         | |  mississippi    ->  4miss433ppi                                                        |
-|                                         | |  aAAaAAaAaAA    ->  3aAA53035                                                          |
-|                                         | |  2718281828     ->  627182844                                                          |
-|                                         | |  abcdefghijk    ->  9abcdefghi02jk                                                     |
-|                                         | |  aaaaaaaaaaa    ->  1a911a                                                             |
-|                                         | |  aaaaaaaaaaaa   ->  1a912aa                                                            |
-|                                         | |  aaaaaaaaaaaaa  ->  1a91031                                                            |
+|                                         | |  abracadabra     ->  7abracad47                                                        |
+|                                         | |  mississippi     ->  4miss433ppi                                                       |
+|                                         | |  aAAaAAaAaAA     ->  3aAA53035                                                         |
+|                                         | |  2718281828      ->  627182844                                                         |
+|                                         | |  abcdefghijk     ->  9abcdefghi02jk                                                    |
+|                                         | |  aaaaaaaaaaaa    ->  3aaa91                                                            |
+|                                         | |  aaaaaaaaaaaaa   ->  1a91031                                                           |
+|                                         | |  aaaaaaaaaaaaaa  ->  1a91041                                                           |
 +-----------------------------------------+------------------------------------------------------------------------------------------+
