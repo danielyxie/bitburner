@@ -1800,7 +1800,7 @@ export interface Singularity {
    */
   workForCompany(companyName?: string, focus?: boolean): boolean;
 
-   /**
+  /**
    * Quit jobs by company.
    * @remarks
    * RAM cost: 3 GB * 16/4/1
