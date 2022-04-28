@@ -16,16 +16,16 @@ interface Employee
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [cha](./bitburner.employee.cha.md) | number |  |
-|  [cre](./bitburner.employee.cre.md) | number |  |
-|  [eff](./bitburner.employee.eff.md) | number |  |
-|  [ene](./bitburner.employee.ene.md) | number | Energy |
-|  [exp](./bitburner.employee.exp.md) | number |  |
-|  [hap](./bitburner.employee.hap.md) | number | Happiness |
-|  [int](./bitburner.employee.int.md) | number |  |
-|  [loc](./bitburner.employee.loc.md) | string | City |
-|  [mor](./bitburner.employee.mor.md) | number | Morale |
+|  [cha](./bitburner.employee.cha.md) | number | Charisma of the employee |
+|  [cre](./bitburner.employee.cre.md) | number | Creativity of the employee |
+|  [eff](./bitburner.employee.eff.md) | number | Efficiency of the employee |
+|  [ene](./bitburner.employee.ene.md) | number | Energy of the employee |
+|  [exp](./bitburner.employee.exp.md) | number | Experience of the employee |
+|  [hap](./bitburner.employee.hap.md) | number | Happiness of the employee |
+|  [int](./bitburner.employee.int.md) | number | Intelligence of the employee |
+|  [loc](./bitburner.employee.loc.md) | string | Current Location (city) |
+|  [mor](./bitburner.employee.mor.md) | number | Morale of the employee |
 |  [name](./bitburner.employee.name.md) | string | Name of the employee |
-|  [pos](./bitburner.employee.pos.md) | string | Current job |
-|  [sal](./bitburner.employee.sal.md) | number | Salary |
+|  [pos](./bitburner.employee.pos.md) | string | Current job position |
+|  [sal](./bitburner.employee.sal.md) | number | Salary of the employee |
 
