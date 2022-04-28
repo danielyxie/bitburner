@@ -947,6 +947,12 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         return res;
       },
+    quitJob: (_ctx: NetscriptContext) =>
+      function (_companyName: unknown): void {
+        _ctx.helper.checkSingularityAccess();
+        const companyName = _ctx.helper.string("companyName", _companyName);
+        player.quitJob(companyName);
+      },
     getCompanyRep: (_ctx: NetscriptContext) =>
       function (_companyName: unknown): number {
         _ctx.helper.checkSingularityAccess();
