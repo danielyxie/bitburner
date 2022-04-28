@@ -37,13 +37,20 @@ export function CodingContractModal(): React.ReactElement {
     // whatever ...
     const value = (event.target as any).value;
 
-    if (event.key === KEY.ENTER && value !== "") {
+    if (event.key === KEY.ENTER) {
       event.preventDefault();
-      props.onAttempt(answer);
-      setAnswer("");
-      close();
+      attemptSolve(value);
     }
   }
+
+  const attemptSolve = (answer: string): void => {
+    if (answer == '""' || answer == "''") {
+      answer = "";
+    }
+    props.onAttempt(answer);
+    setAnswer("");
+    close();
+  };
 
   function close(): void {
     if (props === null) return;
@@ -75,9 +82,7 @@ export function CodingContractModal(): React.ReactElement {
           endAdornment: (
             <Button
               onClick={() => {
-                props.onAttempt(answer);
-                setAnswer("");
-                close();
+                attemptSolve(answer);
               }}
             >
               Solve
