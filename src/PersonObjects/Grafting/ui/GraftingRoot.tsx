@@ -1,6 +1,6 @@
 import { Construction, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Augmentation } from "../../../Augmentation/Augmentation";
 import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
@@ -15,7 +15,7 @@ import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
 import { IPlayer } from "../../IPlayer";
-import { getGraftingAvailableAugs } from "../GraftingHelpers";
+import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../GraftingHelpers";
 import { GraftableAugmentation } from "../GraftableAugmentation";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
@@ -62,6 +62,16 @@ export const GraftingRoot = (): React.ReactElement => {
 
   const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs(player)[0]);
   const [graftOpen, setGraftOpen] = useState(false);
+
+  const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 200);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
@@ -129,34 +139,37 @@ export const GraftingRoot = (): React.ReactElement => {
                   </>
                 }
               />
-              <Typography color={Settings.theme.info}>
-                <b>Time to Graft:</b>{" "}
-                {convertTimeMsToTimeElapsedString(
-                  GraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
+              <Box sx={{ maxHeight: 330, overflowY: "scroll" }}>
+                <Typography color={Settings.theme.info}>
+                  <b>Time to Graft:</b>{" "}
+                  {convertTimeMsToTimeElapsedString(
+                    calculateGraftingTimeWithBonus(player, GraftableAugmentations[selectedAug]),
+                  )}
+                  {/* Use formula so the displayed creation time is accurate to player bonus */}
+                </Typography>
+
+                {Augmentations[selectedAug].prereqs.length > 0 && (
+                  <AugPreReqsChecklist player={player} aug={Augmentations[selectedAug]} />
                 )}
-                {/* Use formula so the displayed creation time is accurate to player bonus */}
-              </Typography>
-              {Augmentations[selectedAug].prereqs.length > 0 && (
-                <AugPreReqsChecklist player={player} aug={Augmentations[selectedAug]} />
-              )}
+                <br />
 
-              <br />
-              <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
-                {(() => {
-                  const aug = Augmentations[selectedAug];
+                <Typography>
+                  {(() => {
+                    const aug = Augmentations[selectedAug];
 
-                  const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
-                  const tooltip = (
-                    <>
-                      {info}
-                      <br />
-                      <br />
-                      {aug.stats}
-                    </>
-                  );
-                  return tooltip;
-                })()}
-              </Typography>
+                    const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
+                    const tooltip = (
+                      <>
+                        {info}
+                        <br />
+                        <br />
+                        {aug.stats}
+                      </>
+                    );
+                    return tooltip;
+                  })()}
+                </Typography>
+              </Box>
             </Box>
           </Paper>
         ) : (

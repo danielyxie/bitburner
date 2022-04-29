@@ -202,7 +202,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
 
     // We automatically define a print function() in the NetscriptJS module so that
     // accidental calls to window.print() do not bring up the "print screen" dialog
-    transformedCode += `\n\nfunction print() {throw new Error("Invalid call to window.print(). Did you mean to use Netscript's print()?");}\n//# sourceURL=${script.server}/${script.filename}`;
+    transformedCode += `\n//# sourceURL=${script.server}/${script.filename}`;
 
     const blob = URL.createObjectURL(makeScriptBlob(transformedCode));
     // Push the blob URL onto the top of the stack.

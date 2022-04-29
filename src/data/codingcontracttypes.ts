@@ -1,6 +1,7 @@
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { MinHeap } from "../utils/Heap";
 
+import { comprGenChar, comprLZGenerate, comprLZEncode, comprLZDecode } from "../utils/CompressionContracts";
 import { HammingEncode, HammingDecode } from "../utils/HammingCodeTools";
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 
@@ -1249,7 +1250,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
-    name: "HammingCodes: Integer to encoded Binary",
+    name: "HammingCodes: Integer to Encoded Binary",
     numTries: 10,
     difficulty: 5,
     desc: (n: number): string => {
@@ -1454,6 +1455,157 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
       //Return false if the coloring is the wrong size
       else return false;
+    },
+  },
+  {
+    name: "Compression I: RLE Compression",
+    difficulty: 2,
+    numTries: 10,
+    desc: (plaintext: string): string => {
+      return [
+        "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of",
+        "a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths",
+        "are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them",
+        "into multiple runs.\n\n",
+        "You are given the following input string:\n",
+        `&nbsp; &nbsp; ${plaintext}\n`,
+        "Encode it using run-length encoding with the minimum possible output length.\n\n",
+        "Examples:\n",
+        "&nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n",
+        "&nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n",
+        "&nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n",
+        "&nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n",
+      ].join(" ");
+    },
+    gen: (): string => {
+      const length = 50 + Math.floor(25 * (Math.random() + Math.random()));
+      let plain = "";
+
+      while (plain.length < length) {
+        const r = Math.random();
+
+        let n = 1;
+        if (r < 0.3) {
+          n = 1;
+        } else if (r < 0.6) {
+          n = 2;
+        } else if (r < 0.9) {
+          n = Math.floor(10 * Math.random());
+        } else {
+          n = 10 + Math.floor(5 * Math.random());
+        }
+
+        const c = comprGenChar();
+        plain += c.repeat(n);
+      }
+
+      return plain.substring(0, length);
+    },
+    solver: (plain: string, ans: string): boolean => {
+      if (ans.length % 2 !== 0) {
+        return false;
+      }
+
+      let ans_plain = "";
+      for (let i = 0; i + 1 < ans.length; i += 2) {
+        const length = ans.charCodeAt(i) - 0x30;
+        if (length < 0 || length > 9) {
+          return false;
+        }
+
+        ans_plain += ans[i + 1].repeat(length);
+      }
+      if (ans_plain !== plain) {
+        return false;
+      }
+
+      let length = 0;
+      for (let i = 0; i < plain.length; ) {
+        let run_length = 1;
+        while (i + run_length < plain.length && plain[i + run_length] === plain[i]) {
+          ++run_length;
+        }
+        i += run_length;
+
+        while (run_length > 0) {
+          run_length -= 9;
+          length += 2;
+        }
+      }
+      return ans.length === length;
+    },
+  },
+  {
+    name: "Compression II: LZ Decompression",
+    difficulty: 4,
+    numTries: 10,
+    desc: (compressed: string): string => {
+      return [
+        "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to",
+        "earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk",
+        "begins with a length L, encoded as a single ASCII digit from 1 - 9, followed by the chunk data,",
+        "which is either:\n\n",
+        "1. Exactly L characters, which are to be copied directly into the uncompressed data.\n",
+        "2. A reference to an earlier part of the uncompressed data. To do this, the length is followed",
+        "by a second ASCII digit X: each of the L output characters is a copy of the character X",
+        "places before it in the uncompressed data.\n\n",
+        "For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character",
+        "is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final",
+        "chunk may be of either type.\n\n",
+        "You are given the following LZ-encoded string:\n",
+        `&nbsp; &nbsp; ${compressed}\n`,
+        "Decode it and output the original string.\n\n",
+        "Example: decoding '5aaabc340533bca' chunk-by-chunk\n",
+        "&nbsp; &nbsp; 5aaabc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabc\n",
+        "&nbsp; &nbsp; 5aaabc34 &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabcaab\n",
+        "&nbsp; &nbsp; 5aaabc340 &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;aaabcaab\n",
+        "&nbsp; &nbsp; 5aaabc34053 &nbsp; &nbsp; &nbsp;-> &nbsp;aaabcaabaabaa\n",
+        "&nbsp; &nbsp; 5aaabc340533bca &nbsp;-> &nbsp;aaabcaabaabaabca",
+      ].join(" ");
+    },
+    gen: (): string => {
+      return comprLZEncode(comprLZGenerate());
+    },
+    solver: (compr: string, ans: string): boolean => {
+      return ans === comprLZDecode(compr);
+    },
+  },
+  {
+    name: "Compression III: LZ Compression",
+    difficulty: 10,
+    numTries: 10,
+    desc: (plaintext: string): string => {
+      return [
+        "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to",
+        "earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk",
+        "begins with a length L, encoded as a single ASCII digit from 1 - 9, followed by the chunk data,",
+        "which is either:\n\n",
+        "1. Exactly L characters, which are to be copied directly into the uncompressed data.\n",
+        "2. A reference to an earlier part of the uncompressed data. To do this, the length is followed",
+        "by a second ASCII digit X: each of the L output characters is a copy of the character X",
+        "places before it in the uncompressed data.\n\n",
+        "For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character",
+        "is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final",
+        "chunk may be of either type.\n\n",
+        "You are given the following input string:\n",
+        `&nbsp; &nbsp; ${plaintext}\n`,
+        "Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n",
+        "Examples (some have other possible encodings of minimal length):\n",
+        "&nbsp; &nbsp; abracadabra &nbsp; &nbsp;-> &nbsp;7abracad47\n",
+        "&nbsp; &nbsp; mississippi &nbsp; &nbsp;-> &nbsp;4miss433ppi\n",
+        "&nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp;-> &nbsp;3aAA53035\n",
+        "&nbsp; &nbsp; 2718281828 &nbsp; &nbsp; -> &nbsp;627182844\n",
+        "&nbsp; &nbsp; abcdefghijk &nbsp; &nbsp;-> &nbsp;9abcdefghi02jk\n",
+        "&nbsp; &nbsp; aaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;1a911a\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaa &nbsp; -> &nbsp;1a912aa\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaaa &nbsp;-> &nbsp;1a91031",
+      ].join(" ");
+    },
+    gen: (): string => {
+      return comprLZGenerate();
+    },
+    solver: (plain: string, ans: string): boolean => {
+      return comprLZDecode(ans) === plain && ans.length === comprLZEncode(plain).length;
     },
   },
 ];
