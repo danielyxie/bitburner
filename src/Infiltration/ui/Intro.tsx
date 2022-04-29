@@ -92,7 +92,7 @@ export function Intro(props: IProps): React.ReactElement {
         <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>[{coloredArrow(props.Difficulty)}]</Typography>
         <Typography
           sx={{ lineHeight: "1em", whiteSpace: "pre" }}
-        >{` ▲            ▲            ▲           ▲`}</Typography>
+        >{`▲            ▲            ▲           ▲`}</Typography>
         <Typography
           sx={{ lineHeight: "1em", whiteSpace: "pre" }}
         >{` Trivial       Normal        Hard     Impossible`}</Typography>
