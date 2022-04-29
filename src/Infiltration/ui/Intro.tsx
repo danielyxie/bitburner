@@ -111,7 +111,7 @@ export function Intro(props: IProps): React.ReactElement {
             <li>
               The minigames you play are randomly selected.
               <br />
-              It might take you few tries to get used to them.
+              It might take you a few tries to get used to them.
             </li>
             <li>No game requires use of the mouse.</li>
             <li>
