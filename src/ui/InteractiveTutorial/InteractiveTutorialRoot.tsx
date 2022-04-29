@@ -89,7 +89,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           <Typography>Bitburner has 2 types of scripts:</Typography>
           <List>
             <ListItem>
-              <Typography>NS1: Javascript from 2009, very simple. Recommended for beginner to programming.</Typography>
+              <Typography>NS1: Javascript from 2009, very simple. Recommended for beginners to programming.</Typography>
             </ListItem>
             <ListItem>
               <Typography>
