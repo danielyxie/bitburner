@@ -23,7 +23,7 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
   }
 
   return (
-    <div style={{ display: "flex", alignItems: "center", height: "100vh" }}>
+    <div style={{ display: "flex", alignItems: "center", height: "calc(100vh - 16px)" }}>
       {start ? (
         <Game
           StartingDifficulty={startingSecurityLevel}
