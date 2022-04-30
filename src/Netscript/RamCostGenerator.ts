@@ -282,6 +282,7 @@ const sleeve: IMap<any> = {
   getSleeveAugmentations: RamCostConstants.ScriptSleeveBaseRamCost,
   getSleevePurchasableAugs: RamCostConstants.ScriptSleeveBaseRamCost,
   purchaseSleeveAug: RamCostConstants.ScriptSleeveBaseRamCost,
+  setToBladeburnerAction: RamCostConstants.ScriptSleeveBaseRamCost,
 };
 
 // Stanek API

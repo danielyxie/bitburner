@@ -100,7 +100,7 @@ export interface IBladeburner {
   completeOperation(success: boolean, player: IPlayer): void;
   getActionObject(actionId: IActionIdentifier): IAction | null;
   completeContract(success: boolean, actionIdent: IActionIdentifier): void;
-  completeAction(player: IPlayer, person: IPerson, actionIdent: IActionIdentifier): ITaskTracker;
+  completeAction(player: IPlayer, person: IPerson, actionIdent: IActionIdentifier, isPlayer?: boolean): ITaskTracker;
   infiltrateSynthoidCommunities(): void;
   changeRank(player: IPlayer, change: number): void;
   processAction(router: IRouter, player: IPlayer, seconds: number): void;

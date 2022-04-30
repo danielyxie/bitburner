@@ -1264,7 +1264,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  completeAction(player: IPlayer, person: IPerson, actionIdent: IActionIdentifier): ITaskTracker {
+  completeAction(player: IPlayer, person: IPerson, actionIdent: IActionIdentifier, isPlayer = true): ITaskTracker {
     let retValue = createTaskTracker();
     switch (actionIdent.type) {
       case ActionTypes["Contract"]:
@@ -1281,10 +1281,12 @@ export class Bladeburner implements IBladeburner {
             difficulty / BladeburnerConstants.DiffMultLinearFactor;
           const rewardMultiplier = Math.pow(action.rewardFac, action.level - 1);
 
-          // Stamina loss is based on difficulty
-          this.stamina -= BladeburnerConstants.BaseStaminaLoss * difficultyMultiplier;
-          if (this.stamina < 0) {
-            this.stamina = 0;
+          if (isPlayer) {
+            // Stamina loss is based on difficulty
+            this.stamina -= BladeburnerConstants.BaseStaminaLoss * difficultyMultiplier;
+            if (this.stamina < 0) {
+              this.stamina = 0;
+            }
           }
 
           // Process Contract/Operation success/failure

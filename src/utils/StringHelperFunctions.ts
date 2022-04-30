@@ -117,6 +117,17 @@ function cyrb53(str: string, seed = 0): string {
   return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
 }
 
+function capitalizeFirstLetter(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function capitalizeEachWord(s: string): string {
+  return s
+    .split(" ")
+    .map((word) => capitalizeFirstLetter(word))
+    .join(" ");
+}
+
 export {
   convertTimeMsToTimeElapsedString,
   longestCommonStart,
@@ -124,4 +135,6 @@ export {
   formatNumber,
   generateRandomString,
   cyrb53,
+  capitalizeFirstLetter,
+  capitalizeEachWord,
 };

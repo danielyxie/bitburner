@@ -122,8 +122,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
       }
       desc = (
         <>
-          This sleeve is currently attempting to {props.sleeve.bbAction}
-          {message}
+          This sleeve is currently attempting to {props.sleeve.bbAction}. {message}
         </>
       );
       break;

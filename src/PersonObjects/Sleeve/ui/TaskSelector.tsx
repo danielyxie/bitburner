@@ -23,12 +23,12 @@ const universitySelectorOptions: string[] = [
 const gymSelectorOptions: string[] = ["Train Strength", "Train Defense", "Train Dexterity", "Train Agility"];
 
 const bladeburnerSelectorOptions: string[] = [
-  "Field Analysis",
+  "Field analysis",
   "Recruitment",
   "Diplomacy",
   "Infiltrate synthoids",
   "Support main sleeve",
-  "Take on Contracts",
+  "Take on contracts",
 ];
 
 interface IProps {
@@ -101,7 +101,7 @@ function possibleContracts(player: IPlayer, sleeve: Sleeve): string[] {
     if (sleeve === otherSleeve) {
       continue;
     }
-    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner && otherSleeve.bbAction == "Take on Contracts") {
+    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner && otherSleeve.bbAction == "Take on contracts") {
       contracts = contracts.filter((x) => x != otherSleeve.bbContract);
     }
   }
@@ -202,7 +202,7 @@ const tasks: {
     return {
       first: bladeburnerSelectorOptions,
       second: (s1: string) => {
-        if (s1 === "Take on Contracts") {
+        if (s1 === "Take on contracts") {
           return possibleContracts(player, sleeve);
         } else {
           return ["------"];

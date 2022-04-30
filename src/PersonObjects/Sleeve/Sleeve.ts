@@ -35,6 +35,8 @@ import { LocationName } from "../../Locations/data/LocationNames";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { BladeburnerConstants } from "../../Bladeburner/data/Constants";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { capitalizeFirstLetter, capitalizeEachWord } from "../../utils/StringHelperFunctions";
 
 export class Sleeve extends Person {
   /**
@@ -221,6 +223,10 @@ export class Sleeve extends Person {
         return retValue;
       }
     } else if (this.currentTask === SleeveTaskType.Bladeburner) {
+      if (this.currentTaskMaxTime === 0) {
+        this.currentTaskTime = 0;
+        return retValue;
+      }
       // For bladeburner, all experience and money is gained at the end
       const bb = p.bladeburner;
       if (bb === null) {
@@ -236,10 +242,9 @@ export class Sleeve extends Person {
           this.currentTaskTime = 0;
           return retValue;
         }
-
         let type: string;
         let name: string;
-        if (this.bbAction === "Take on Contracts") {
+        if (this.bbAction === "Take on contracts") {
           type = "Contracts";
           name = this.bbContract;
         } else {
@@ -257,7 +262,7 @@ export class Sleeve extends Person {
 
         const action = bb.getActionObject(actionIdent);
         if ((action?.count ?? 0) > 0) {
-          const bbRetValue = bb.completeAction(p, this, actionIdent);
+          const bbRetValue = bb.completeAction(p, this, actionIdent, false);
           if (bbRetValue) {
             retValue = this.gainExperience(p, bbRetValue);
             this.gainMoney(p, bbRetValue);
@@ -647,7 +652,8 @@ export class Sleeve extends Person {
     if (this.currentTask == SleeveTaskType.Class) {
       const retVal = createTaskTracker();
       retVal.int = CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.currentTaskTime / 1000);
-      this.gainExperience(p, retVal); //Wont be shared with other sleeves
+      const r = this.gainExperience(p, retVal);
+      p.sleeves.filter((s) => s != this).forEach((s) => s.gainExperience(p, r, 1, true));
     }
     this.earningsForTask = createTaskTracker();
     this.gainRatesForTask = createTaskTracker();
@@ -660,7 +666,7 @@ export class Sleeve extends Person {
     this.gymStatType = "";
     this.className = "";
     this.bbAction = "";
-    this.bbContract = "";
+    this.bbContract = "------";
   }
 
   shockRecovery(p: IPlayer): boolean {
@@ -1091,8 +1097,10 @@ export class Sleeve extends Person {
     this.currentTaskLocation = "";
 
     let time = 0;
+
+    this.bbContract = "------";
     switch (action) {
-      case "Field Analysis":
+      case "Field analysis":
         time = this.getBladeburnerActionTime(p, "General", action);
         this.gainRatesForTask.hack = 20 * this.hacking_exp_mult;
         this.gainRatesForTask.cha = 20 * this.charisma_exp_mult;
@@ -1101,7 +1109,9 @@ export class Sleeve extends Person {
         time = this.getBladeburnerActionTime(p, "General", action);
         this.gainRatesForTask.cha =
           2 * BladeburnerConstants.BaseStatGain * (p.bladeburner?.getRecruitmentTime(this) ?? 0) * 1000;
-        this.currentTaskLocation = (p.bladeburner?.getRecruitmentSuccessChance(this) ?? 0).toString() + "%";
+        this.currentTaskLocation = `(Success Rate: ${numeralWrapper.formatPercentage(
+          this.recrutmentSuccessChance(p),
+        )})`;
         break;
       case "Diplomacy":
         time = this.getBladeburnerActionTime(p, "General", action);
@@ -1114,18 +1124,22 @@ export class Sleeve extends Person {
         p.bladeburner?.sleeveSupport(true);
         time = 0;
         break;
-      case "Take on Contracts":
+      case "Take on contracts":
         time = this.getBladeburnerActionTime(p, "Contracts", contract);
         this.contractGainRates(p, "Contracts", contract);
         this.currentTaskLocation = this.contractSuccessChance(p, "Contracts", contract);
+        this.bbContract = capitalizeEachWord(contract.toLowerCase());
         break;
     }
 
-    this.bbAction = action;
-    this.bbContract = contract;
+    this.bbAction = capitalizeFirstLetter(action.toLowerCase());
     this.currentTaskMaxTime = time;
     this.currentTask = SleeveTaskType.Bladeburner;
     return true;
+  }
+
+  recrutmentSuccessChance(p: IPlayer): number {
+    return Math.max(0, Math.min(1, p.bladeburner?.getRecruitmentSuccessChance(this) ?? 0));
   }
 
   contractSuccessChance(p: IPlayer, type: string, name: string): string {
@@ -1143,7 +1157,7 @@ export class Sleeve extends Person {
     if (chances[0] >= 1) {
       return "100%";
     } else {
-      return `${chances[0] * 100}% - ${chances[1] * 100}%`;
+      return `${numeralWrapper.formatPercentage(chances[0])} - ${numeralWrapper.formatPercentage(chances[1])}`;
     }
   }
 
