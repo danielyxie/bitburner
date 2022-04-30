@@ -42,7 +42,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
   const hasAugment = Player.hasAugmentation(AugmentationNames.MightOfAres, true);
   const phaseZeroTime = Math.random() * 3250 + 1500 - (250 + difficulty.window);
   const phaseOneTime = 250;
-  const timeUntilAttacking = (phaseZeroTime + phaseOneTime) * 0.8;
+  const timeUntilAttacking = phaseZeroTime + phaseOneTime;
 
   useEffect(() => {
     let id = window.setTimeout(() => {
@@ -66,7 +66,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
         {hasAugment ? (
           <Box sx={{ my: 1 }}>
             <Typography variant="h5">Guard will drop in...</Typography>
-            <GameTimer millis={timeUntilAttacking} onExpire={props.onFailure} noPaper />
+            <GameTimer millis={timeUntilAttacking} onExpire={() => null} noPaper />
           </Box>
         ) : (
           <></>
