@@ -98,8 +98,8 @@ export function Intro(props: IProps): React.ReactElement {
         >{` Trivial       Normal        Hard     Impossible`}</Typography>
       </Paper>
 
-      <Paper sx={{ p: 1, textAlign: "center", display: "grid", justifyItems: "center" }}>
-        <Typography sx={{ width: "75%" }}>
+      <Paper sx={{ p: 1, display: "grid", justifyItems: "center" }}>
+        <Typography sx={{ width: "75%", textAlign: "center" }}>
           <b>Infiltration</b> is a series of short minigames that get progressively harder. You take damage for failing
           them. Reaching the maximum level rewards you with intel that you can trade for money or reputation.
           <br />
