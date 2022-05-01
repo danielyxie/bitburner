@@ -28,7 +28,7 @@ This function allows the player to get a list of programs available for purchase
 
 ```ts
 // NS1
-getDarkwebProgramsAvailable();
+getDarkwebPrograms();
 // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
 ```
 
@@ -37,7 +37,7 @@ getDarkwebProgramsAvailable();
 
 ```ts
 // NS2
-ns.getDarkwebProgramsAvailable();
+ns.getDarkwebPrograms();
 // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
 ```
 
