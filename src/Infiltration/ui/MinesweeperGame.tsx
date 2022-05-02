@@ -116,11 +116,23 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
           }}
         >
           {flatGrid.map((item) => {
-            const color = item.current
-              ? Settings.theme.infolight
-              : item.marked
-              ? Settings.theme.warning
-              : Settings.theme.error;
+            let color: string;
+            let icon: React.ReactElement;
+
+            if (item.marked) {
+              color = Settings.theme.warning;
+              icon = <Flag />;
+            } else if (item.current) {
+              color = Settings.theme.infolight;
+              icon = <Close />;
+            } else if (item.flagged) {
+              color = Settings.theme.error;
+              icon = <Report />;
+            } else {
+              color = Settings.theme.primary;
+              icon = <></>;
+            }
+
             return (
               <Typography
                 key={`${item}${uniqueId()}`}
@@ -134,7 +146,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
                   justifyContent: "center",
                 }}
               >
-                {item.current ? <Close /> : item.flagged ? <Report /> : item.marked ? <Flag /> : <></>}
+                {icon}
               </Typography>
             );
           })}
