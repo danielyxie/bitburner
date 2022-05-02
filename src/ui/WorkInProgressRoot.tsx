@@ -461,7 +461,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       stopText: "Stop grafting",
       stopTooltip: (
         <>
-          If you cancel, you work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned
+          If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned
         </>
       ),
     };
