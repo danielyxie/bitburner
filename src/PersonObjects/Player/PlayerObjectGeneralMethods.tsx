@@ -45,7 +45,6 @@ import { SpecialServers } from "../../Server/data/SpecialServers";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
 import { applyExploit } from "../../Exploits/applyExploits";
 import { SourceFiles } from "../../SourceFile/SourceFiles";
-import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
 import { getHospitalizationCost } from "../../Hospital/Hospital";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -62,10 +61,11 @@ import { Money } from "../../ui/React/Money";
 
 import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -106,7 +106,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.agility_exp = 0;
   this.charisma_exp = 0;
 
-  this.money = 1000;
+  this.money = 1000 + CONSTANTS.Donations;
 
   this.city = CityName.Sector12;
   this.location = LocationName.TravelAgency;
@@ -121,9 +121,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
 
   this.queuedAugmentations = [];
 
-  this.resleeves = [];
-
-  const numSleeves = Math.min(3, SourceFileFlags[10] + (this.bitNodeN === 10 ? 1 : 0)) + this.sleevesFromCovenant;
+  const numSleeves = Math.min(3, this.sourceFileLvl(10) + (this.bitNodeN === 10 ? 1 : 0)) + this.sleevesFromCovenant;
   if (this.sleeves.length > numSleeves) this.sleeves.length = numSleeves;
   for (let i = this.sleeves.length; i < numSleeves; i++) {
     this.sleeves.push(new Sleeve(this));
@@ -182,6 +180,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
 }
 
 export function prestigeSourceFile(this: IPlayer): void {
+  this.entropy = 0;
   this.prestigeAugmentation();
   this.karma = 0;
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
@@ -468,7 +467,7 @@ export function gainIntelligenceExp(this: IPlayer, exp: number): void {
     console.error("ERROR: NaN passed into Player.gainIntelligenceExp()");
     return;
   }
-  if (SourceFileFlags[5] > 0 || this.intelligence > 0) {
+  if (this.sourceFileLvl(5) > 0 || this.intelligence > 0) {
     this.intelligence_exp += exp;
     this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
   }
@@ -529,10 +528,12 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
 
   this.timeWorked = 0;
   this.timeWorkedCreateProgram = 0;
+  this.timeWorkedGraftAugmentation = 0;
 
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
+  this.graftAugmentationName = "";
   this.className = "";
   this.workType = "";
 }
@@ -608,6 +609,10 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
     } else if (this.workType == CONSTANTS.WorkTypeCompanyPartTime) {
       if (this.workPartTime(numCycles)) {
         router.toCity();
+      }
+    } else if (this.workType === CONSTANTS.WorkTypeGraftAugmentation) {
+      if (this.graftAugmentationWork(numCycles)) {
+        router.toGrafting();
       }
     } else if (this.work(numCycles)) {
       router.toCity();
@@ -1032,7 +1037,7 @@ export function getWorkMoneyGain(this: IPlayer): number {
   // If player has SF-11, calculate salary multiplier from favor
   let bn11Mult = 1;
   const company = Companies[this.companyName];
-  if (SourceFileFlags[11] > 0) {
+  if (this.sourceFileLvl(11) > 0) {
     bn11Mult = 1 + company.favor / 100;
   }
 
@@ -1310,18 +1315,19 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
 
 export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
   const programName = this.createProgramName;
-  if (cancelled === false) {
+  if (!cancelled) {
+    //Complete case
+    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
     dialogBoxCreate(`You've finished creating ${programName}!<br>The new program can be found on your home computer.`);
 
-    this.getHomeComputer().programs.push(programName);
-  } else {
+    if (!this.getHomeComputer().programs.includes(programName)) {
+      this.getHomeComputer().programs.push(programName);
+    }
+  } else if (!this.getHomeComputer().programs.includes(programName)) {
+    //Incomplete case
     const perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
     const incompleteName = programName + "-" + perc + "%-INC";
     this.getHomeComputer().programs.push(incompleteName);
-  }
-
-  if (!cancelled) {
-    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
   }
 
   this.isWorking = false;
@@ -1329,6 +1335,63 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
   this.resetWorkStatus();
   return "You've finished creating " + programName + "! The new program can be found on your home computer.";
 }
+
+export function startGraftAugmentationWork(this: IPlayer, augmentationName: string, time: number): void {
+  this.resetWorkStatus();
+  this.isWorking = true;
+  this.workType = CONSTANTS.WorkTypeGraftAugmentation;
+
+  this.timeNeededToCompleteWork = time;
+  this.graftAugmentationName = augmentationName;
+}
+
+export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean {
+  let focusBonus = 1;
+  if (!this.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  }
+
+  let skillMult = graftingIntBonus(this);
+  skillMult *= focusBonus;
+
+  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
+  this.timeWorkedGraftAugmentation += CONSTANTS._idleSpeed * numCycles * skillMult;
+
+  if (this.timeWorkedGraftAugmentation >= this.timeNeededToCompleteWork) {
+    this.finishGraftAugmentationWork(false);
+    return true;
+  }
+  return false;
+}
+
+export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): string {
+  const augName = this.graftAugmentationName;
+  if (cancelled === false) {
+    applyAugmentation(Augmentations[augName]);
+
+    if (!this.hasAugmentation(AugmentationNames.CongruityImplant)) {
+      this.entropy += 1;
+      this.applyEntropy(this.entropy);
+    }
+
+    dialogBoxCreate(
+      `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
+        (this.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."),
+    );
+  } else {
+    dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
+  }
+
+  // Intelligence gain
+  if (!cancelled) {
+    this.gainIntelligenceExp((CONSTANTS.IntelligenceGraftBaseExpGain * this.timeWorked) / 10000);
+  }
+
+  this.isWorking = false;
+  this.resetWorkStatus();
+  return `Grafting of ${augName} has ended.`;
+}
+
 /* Studying/Taking Classes */
 export function startClass(this: IPlayer, costMult: number, expMult: number, className: string): void {
   this.resetWorkStatus();
@@ -1673,7 +1736,7 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
-  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning", 2000);
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.WARNING, 2000);
 
   this.loseMoney(cost, "hospitalization");
   this.hp = this.max_hp;
@@ -1808,13 +1871,12 @@ export function getNextCompanyPosition(
 
 export function quitJob(this: IPlayer, company: string): void {
   if (this.isWorking == true && this.workType.includes("Working for Company") && this.companyName == company) {
-    this.isWorking = false;
-    this.companyName = "";
-  }
-  if (this.companyName === company) {
-    this.companyName = "";
+    this.finishWork(true);
   }
   delete this.jobs[company];
+  if (this.companyName === company) {
+    this.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
+  }
 }
 
 /**
@@ -2020,15 +2082,11 @@ export function reapplyAllAugmentations(this: IPlayer, resetMultipliers = true):
       this.augmentations[i].name = "Hacknet Node NIC Architecture Neural-Upload";
     }
 
-    const augName = this.augmentations[i].name;
-    const aug = Augmentations[augName];
-    if (aug == null) {
-      console.warn(`Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
-      continue;
-    }
-    aug.owned = true;
-    if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-      for (let j = 0; j < aug.level; ++j) {
+    const playerAug = this.augmentations[i];
+    const augName = playerAug.name;
+
+    if (augName == AugmentationNames.NeuroFluxGovernor) {
+      for (let j = 0; j < playerAug.level; ++j) {
         applyAugmentation(this.augmentations[i], true);
       }
       continue;
@@ -2109,7 +2167,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !daedalusFac.isBanned &&
     !daedalusFac.isMember &&
     !daedalusFac.alreadyInvited &&
-    numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
+    numAugmentations >= BitNodeMultipliers.DaedalusAugsRequirement &&
     this.money >= 100000000000 &&
     (this.hacking >= 2500 ||
       (this.strength >= 1500 && this.defense >= 1500 && this.dexterity >= 1500 && this.agility >= 1500))
@@ -2640,14 +2698,14 @@ export function gotoLocation(this: IPlayer, to: LocationName): boolean {
   return true;
 }
 
-export function canAccessResleeving(this: IPlayer): boolean {
-  return this.bitNodeN === 10 || SourceFileFlags[10] > 0;
+export function canAccessGrafting(this: IPlayer): boolean {
+  return this.bitNodeN === 10 || this.sourceFileLvl(10) > 0;
 }
 
 export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
-    SnackbarEvents.emit("SF -1 acquired!", "success", 2000);
+    SnackbarEvents.emit("SF -1 acquired!", ToastVariant.SUCCESS, 2000);
   }
 }
 
@@ -2656,7 +2714,7 @@ export function giveAchievement(this: IPlayer, achievementId: string): void {
   if (!achievement) return;
   if (!this.achievements.map((a) => a.ID).includes(achievementId)) {
     this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
-    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, "success", 2000);
+    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, ToastVariant.SUCCESS, 2000);
   }
 }
 
@@ -2679,7 +2737,7 @@ export function setMult(this: IPlayer, name: string, mult: number): void {
 }
 
 export function canAccessCotMG(this: IPlayer): boolean {
-  return this.bitNodeN === 13 || SourceFileFlags[13] > 0;
+  return this.bitNodeN === 13 || this.sourceFileLvl(13) > 0;
 }
 
 export function sourceFileLvl(this: IPlayer, n: number): number {

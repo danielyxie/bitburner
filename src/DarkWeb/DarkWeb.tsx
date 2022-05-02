@@ -72,17 +72,12 @@ export function buyDarkwebItem(itemName: string): void {
   // buy and push
   Player.loseMoney(item.price, "other");
 
-  const programsRef = Player.getHomeComputer().programs;
-  // Remove partially created program if there is one
-  const existingPartialExeIndex = programsRef.findIndex(
-    (program) => item?.program && program.startsWith(item?.program),
-  );
-  // findIndex returns -1 if there is no match, we only want to splice on a match
-  if (existingPartialExeIndex > -1) {
-    programsRef.splice(existingPartialExeIndex, 1);
+  Player.getHomeComputer().pushProgram(item.program);
+  // Cancel if the program is in progress of writing
+  if (Player.createProgramName === item.program) {
+    Player.isWorking = false;
+    Player.resetWorkStatus();
   }
-  // Add the newly bought, full .exe
-  Player.getHomeComputer().programs.push(item.program);
 
   Terminal.print(
     "You have purchased the " + item.program + " program. The new program can be found on your home computer.",
@@ -107,7 +102,9 @@ export function buyAllDarkwebItems(): void {
   }
 
   if (cost > Player.money) {
-    Terminal.error("Not enough money to purchase remaining programs, " + numeralWrapper.formatMoney(cost) + " required");
+    Terminal.error(
+      "Not enough money to purchase remaining programs, " + numeralWrapper.formatMoney(cost) + " required",
+    );
     return;
   }
 

@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  TableBody,
-  TableRow,
-  Typography
-} from "@mui/material";
+import { Box, Button, Container, Paper, TableBody, TableRow, Typography } from "@mui/material";
 
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Table, TableCell } from "../../ui/React/Table";
 import { IRouter } from "../../ui/Router";
 
 import { Faction } from "../Faction";
-import { joinFaction } from "../FactionHelpers";
+import { joinFaction, getFactionAugmentationsFiltered } from "../FactionHelpers";
 import { Factions } from "../Factions";
 import { FactionNames } from "../data/FactionNames";
 
@@ -60,31 +50,14 @@ export function FactionsRoot(props: IProps): React.ReactElement {
   }
 
   const getAugsLeft = (faction: Faction, player: IPlayer): number => {
-    const isPlayersGang = player.inGang() && player.getGangName() === faction.name;
-    let augs: string[] = [];
+    const augs = getFactionAugmentationsFiltered(player, faction);
 
-    if (isPlayersGang) {
-      for (const augName of Object.keys(Augmentations)) {
-        if (
-          augName === AugmentationNames.NeuroFluxGovernor ||
-          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2 ||
-          Augmentations[augName].isSpecial
-        ) continue;
-        augs.push(augName)
-      }
-    } else {
-      augs = faction.augmentations.slice();
-    }
+    return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation)).length;
+  };
 
-    return augs.filter(
-      (augmentation: string) => !player.hasAugmentation(augmentation)
-    ).length;
-  }
-
-  const allFactions = Object.values(FactionNames).map(faction => faction as string)
+  const allFactions = Object.values(FactionNames).map((faction) => faction as string);
   const allJoinedFactions = props.player.factions.slice(0);
-  allJoinedFactions.sort((a, b) =>
-    allFactions.indexOf(a) - allFactions.indexOf(b));
+  allJoinedFactions.sort((a, b) => allFactions.indexOf(a) - allFactions.indexOf(b));
 
   return (
     <Container disableGutters maxWidth="md" sx={{ mx: 0, mb: 10 }}>
@@ -116,7 +89,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
                   </TableCell>
                   <TableCell align="right">
                     <Box ml={1} mb={1}>
-                      <Button sx={{ width: '100%' }} onClick={() => openFactionAugPage(Factions[faction])}>
+                      <Button sx={{ width: "100%" }} onClick={() => openFactionAugPage(Factions[faction])}>
                         Augmentations Left: {getAugsLeft(Factions[faction], props.player)}
                       </Button>
                     </Box>

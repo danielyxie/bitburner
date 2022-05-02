@@ -4,6 +4,8 @@
 
 ## RunningScript.args property
 
+Arguments the script was called with
+
 <b>Signature:</b>
 
 ```typescript

@@ -1,11 +1,10 @@
-import { FactionNames } from '../../Faction/data/FactionNames';
+import { FactionNames } from "../../Faction/data/FactionNames";
 import { Sleeve } from "./Sleeve";
 
 import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 
@@ -22,9 +21,6 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   // Helper function that helps filter out augs that are already owned
   // and augs that aren't allowed for sleeves
   function isAvailableForSleeve(aug: Augmentation): boolean {
-    if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-      return false;
-    }
     if (ownedAugNames.includes(aug.name)) {
       return false;
     }

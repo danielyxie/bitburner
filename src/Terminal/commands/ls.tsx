@@ -8,7 +8,9 @@ import { BaseServer } from "../../Server/BaseServer";
 import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
 import { IRouter } from "../../ui/Router";
 import { ITerminal } from "../ITerminal";
-import * as libarg from "arg"
+import * as libarg from "arg";
+import { showLiterature } from "../../Literature/LiteratureHelpers";
+import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
 
 export function ls(
   terminal: ITerminal,
@@ -19,19 +21,20 @@ export function ls(
 ): void {
   let flags;
   try {
-    flags = libarg({
-      '-l': Boolean,
-      '--grep': String,
-      '-g': '--grep',
-    },
-      { argv: args }
-    )
+    flags = libarg(
+      {
+        "-l": Boolean,
+        "--grep": String,
+        "-g": "--grep",
+      },
+      { argv: args },
+    );
   } catch (e) {
     // catch passing only -g / --grep with no string to use as the search
-    incorrectUsage()
+    incorrectUsage();
     return;
   }
-  const filter = flags['--grep']
+  const filter = flags["--grep"];
 
   const numArgs = args.length;
   function incorrectUsage(): void {
@@ -49,7 +52,7 @@ export function ls(
   }
 
   // If first arg doesn't contain a - it must be the file/folder
-  const dir = (args[0] && typeof args[0] == "string" && !args[0].startsWith("-")) ? args[0] : ""
+  const dir = args[0] && typeof args[0] == "string" && !args[0].startsWith("-") ? args[0] : "";
   const newPath = evaluateDirectoryPath(dir + "", terminal.cwd());
   prefix = newPath || "";
   if (!prefix.endsWith("/")) {
@@ -120,13 +123,13 @@ export function ls(
   allMessages.sort();
   folders.sort();
 
-  interface ClickableScriptRowProps {
+  interface ClickableRowProps {
     row: string;
     prefix: string;
     hostname: string;
   }
 
-  function ClickableScriptRow({ row, prefix, hostname }: ClickableScriptRowProps): React.ReactElement {
+  function ClickableScriptRow({ row, prefix, hostname }: ClickableRowProps): React.ReactElement {
     const classes = makeStyles((theme: Theme) =>
       createStyles({
         scriptLinksWrap: {
@@ -159,20 +162,82 @@ export function ls(
     return (
       <span className={classes.scriptLinksWrap}>
         {rowSplitArray.map((rowItem) => (
-          <span>
-            <span key={rowItem[0]} className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem[0])}>
+          <span key={"script_" + rowItem[0]}>
+            <span className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem[0])}>
               {rowItem[0]}
             </span>
-            <span key={'s'+rowItem[0]}>
-              {rowItem[1]}
-            </span>
+            <span>{rowItem[1]}</span>
           </span>
         ))}
       </span>
     );
   }
 
-  function postSegments(segments: string[], flags: any, style?: any, linked?: boolean): void {
+  function ClickableMessageRow({ row, prefix, hostname }: ClickableRowProps): React.ReactElement {
+    const classes = makeStyles((theme: Theme) =>
+      createStyles({
+        linksWrap: {
+          display: "inline-flex",
+          color: theme.palette.primary.main,
+        },
+        link: {
+          cursor: "pointer",
+          textDecorationLine: "underline",
+          paddingRight: "1.15em",
+          "&:last-child": { padding: 0 },
+        },
+      }),
+    )();
+
+    const rowSplit = row.split("~");
+    let rowSplitArray = rowSplit.map((x) => [x.trim(), x.replace(x.trim(), "")]);
+    rowSplitArray = rowSplitArray.filter((x) => !!x[0]);
+
+    function onMessageLinkClick(filename: string): void {
+      if (player.getCurrentServer().hostname !== hostname) {
+        return terminal.error(`File is not on this server, connect to ${hostname} and try again`);
+      }
+      if (filename.startsWith("/")) filename = filename.slice(1);
+      const filepath = terminal.getFilepath(`${prefix}${filename}`);
+
+      if (filepath.endsWith(".lit")) {
+        showLiterature(filepath);
+      } else if (filepath.endsWith(".msg")) {
+        showMessage(filepath as MessageFilenames);
+      }
+    }
+
+    return (
+      <span className={classes.linksWrap}>
+        {rowSplitArray.map((rowItem) => (
+          <span key={"text_" + rowItem[0]}>
+            <span className={classes.link} onClick={() => onMessageLinkClick(rowItem[0])}>
+              {rowItem[0]}
+            </span>
+            <span>{rowItem[1]}</span>
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  enum FileType {
+    Folder,
+    Message,
+    TextFile,
+    Program,
+    Contract,
+    Script,
+  }
+
+  interface FileGroup {
+    type: FileType;
+    segments: string[];
+  }
+
+  function postSegments(group: FileGroup, flags: any): void {
+    const segments = group.segments;
+    const linked = group.type === FileType.Script || group.type === FileType.Message;
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
     const filesPerRow = flags["-l"] === true ? 1 : Math.ceil(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
@@ -181,31 +246,38 @@ export function ls(
         if (!(i < segments.length)) break;
         row += segments[i];
         row += " ".repeat(maxLength * (col + 1) - row.length);
-        if(linked) {
+        if (linked) {
           row += "~";
         }
         i++;
       }
       i--;
-      if (!style) {
-        terminal.print(row);
-      } else if (linked) {
-        terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
-      } else {
-        terminal.printRaw(<span style={style}>{row}</span>);
+
+      switch (group.type) {
+        case FileType.Folder:
+          terminal.printRaw(<span style={{ color: "cyan" }}>{row}</span>);
+          break;
+        case FileType.Script:
+          terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
+          break;
+        case FileType.Message:
+          terminal.printRaw(<ClickableMessageRow row={row} prefix={prefix} hostname={server.hostname} />);
+          break;
+        default:
+          terminal.print(row);
       }
     }
   }
 
-  const groups = [
-    { segments: folders, style: { color: "cyan" } },
-    { segments: allMessages },
-    { segments: allTextFiles },
-    { segments: allPrograms },
-    { segments: allContracts },
-    { segments: allScripts, style: { color: "yellow", fontStyle: "bold" }, linked: true },
+  const groups: FileGroup[] = [
+    { type: FileType.Folder, segments: folders },
+    { type: FileType.Message, segments: allMessages },
+    { type: FileType.TextFile, segments: allTextFiles },
+    { type: FileType.Program, segments: allPrograms },
+    { type: FileType.Contract, segments: allContracts },
+    { type: FileType.Script, segments: allScripts },
   ].filter((g) => g.segments.length > 0);
-  for (let i = 0; i < groups.length; i++) {
-    postSegments(groups[i].segments, flags, groups[i].style, groups[i].linked);
+  for (const group of groups) {
+    postSegments(group, flags);
   }
 }

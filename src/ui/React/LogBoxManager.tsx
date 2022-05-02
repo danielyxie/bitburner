@@ -18,7 +18,6 @@ import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
-import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 
 let layerCounter = 0;
 
@@ -97,6 +96,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column-reverse",
     },
+    titleButton: {
+      padding: "1px 6px",
+    },
     success: {
       color: theme.colors.success,
     },
@@ -119,7 +121,7 @@ export const logBoxBaseZIndex = 1500;
 
 function LogWindow(props: IProps): React.ReactElement {
   const draggableRef = useRef<HTMLDivElement>(null);
-  const rootRef = useRef<Draggable>(null)
+  const rootRef = useRef<Draggable>(null);
   const [script, setScript] = useState(props.script);
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
@@ -129,22 +131,22 @@ function LogWindow(props: IProps): React.ReactElement {
     setRerender((old) => !old);
   }
 
-  useEffect(
-    () =>
-      WorkerScriptStartStopEventEmitter.subscribe(() => {
-        setTimeout(() => {
-          const server = GetServer(script.server);
-          if (server === null) return;
-          const exisitingScript = findRunningScript(script.filename, script.args, server);
-          if (exisitingScript) {
-            exisitingScript.logs = script.logs.concat(exisitingScript.logs)
-            setScript(exisitingScript)
-          }
-          rerender();
-        }, 100)
-      }),
-    [],
-  );
+  // useEffect(
+  //   () =>
+  //     WorkerScriptStartStopEventEmitter.subscribe(() => {
+  //       setTimeout(() => {
+  //         const server = GetServer(script.server);
+  //         if (server === null) return;
+  //         const exisitingScript = findRunningScript(script.filename, script.args, server);
+  //         if (exisitingScript) {
+  //           exisitingScript.logs = script.logs.concat(exisitingScript.logs)
+  //           setScript(exisitingScript)
+  //         }
+  //         rerender();
+  //       }, 100)
+  //     }),
+  //   [],
+  // );
 
   useEffect(() => {
     updateLayer();
@@ -224,11 +226,8 @@ function LogWindow(props: IProps): React.ReactElement {
   const isOnScreen = (node: HTMLDivElement): boolean => {
     const bounds = node.getBoundingClientRect();
 
-    return !(bounds.right < 0 ||
-      bounds.bottom < 0 ||
-      bounds.left > innerWidth ||
-      bounds.top > outerWidth);
-  }
+    return !(bounds.right < 0 || bounds.bottom < 0 || bounds.left > innerWidth || bounds.top > outerWidth);
+  };
 
   const resetPosition = (): void => {
     const node = rootRef?.current;
@@ -237,14 +236,11 @@ function LogWindow(props: IProps): React.ReactElement {
     state.x = 0;
     state.y = 0;
     node.setState(state);
-  }
+  };
 
   const boundToBody = (e: any): void | false => {
-    if (e.clientX < 0 ||
-      e.clientY < 0 ||
-      e.clientX > innerWidth ||
-      e.clientY > innerHeight) return false;
-  }
+    if (e.clientX < 0 || e.clientY < 0 || e.clientX > innerWidth || e.clientY > innerHeight) return false;
+  };
 
   return (
     <Draggable handle=".drag" onDrag={boundToBody} ref={rootRef}>
@@ -267,16 +263,25 @@ function LogWindow(props: IProps): React.ReactElement {
             }}
           >
             <Box className="drag" display="flex" alignItems="center" ref={draggableRef}>
-              <Typography color="primary" variant="h6" title={title(true)}>
+              <Typography color="primary" variant="h6" sx={{ marginRight: "auto" }} title={title(true)}>
                 {title()}
               </Typography>
 
-              <Box position="absolute" right={0}>
-                {!workerScripts.has(script.pid) && <Button onClick={run}>Run</Button>}
-                {workerScripts.has(script.pid) && <Button onClick={kill}>Kill</Button>}
-                <Button onClick={minimize}>{minimized ? "\u{1F5D6}" : "\u{1F5D5}"}</Button>
-                <Button onClick={props.onClose}>Close</Button>
-              </Box>
+              {!workerScripts.has(script.pid) ? (
+                <Button className={classes.titleButton} onClick={run} onTouchEnd={run}>
+                  Run
+                </Button>
+              ) : (
+                <Button className={classes.titleButton} onClick={kill} onTouchEnd={kill}>
+                  Kill
+                </Button>
+              )}
+              <Button className={classes.titleButton} onClick={minimize} onTouchEnd={minimize}>
+                {minimized ? "\u{1F5D6}" : "\u{1F5D5}"}
+              </Button>
+              <Button className={classes.titleButton} onClick={props.onClose} onTouchEnd={props.onClose}>
+                Close
+              </Button>
             </Box>
           </Paper>
           <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-wrap" }}>
@@ -284,6 +289,7 @@ function LogWindow(props: IProps): React.ReactElement {
               className={classes.logs}
               height={500}
               width={500}
+              minConstraints={[250, 30]}
               handle={
                 <span style={{ position: "absolute", right: "-10px", bottom: "-13px", cursor: "nw-resize" }}>
                   <ArrowForwardIosIcon color="primary" style={{ transform: "rotate(45deg)" }} />

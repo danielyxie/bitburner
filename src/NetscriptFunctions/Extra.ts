@@ -3,11 +3,13 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Exploit } from "../Exploits/Exploit";
 import * as bcrypt from "bcryptjs";
 import { INetscriptHelper } from "./INetscriptHelper";
+import { Apr1Events as devMenu } from "../ui/Apr1";
 
 export interface INetscriptExtra {
   heart: {
     break(): number;
   };
+  openDevMenu(): void;
   exploit(): void;
   bypass(doc: Document): void;
   alterReality(): void;
@@ -21,6 +23,9 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript, help
       break: function (): number {
         return player.karma;
       },
+    },
+    openDevMenu: function (): void {
+      devMenu.emit();
     },
     exploit: function (): void {
       player.giveExploit(Exploit.UndocumentedFunctionCall);
@@ -54,17 +59,20 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript, help
         player.giveExploit(Exploit.RealityAlteration);
       }
     },
-    rainbow: function (guess: unknown): void {
-      async function tryGuess(): Promise<void> {
-        const verified = await bcrypt.compare(
+    rainbow: function (guess: unknown): boolean {
+      function tryGuess(): boolean {
+        // eslint-disable-next-line no-sync
+        const verified = bcrypt.compareSync(
           helper.string("rainbow", "guess", guess),
           "$2a$10$aertxDEkgor8baVtQDZsLuMwwGYmkRM/ohcA6FjmmzIHQeTCsrCcO",
         );
         if (verified) {
           player.giveExploit(Exploit.INeedARainbow);
+          return true;
         }
+        return false;
       }
-      tryGuess();
+      return tryGuess();
     },
   };
 }

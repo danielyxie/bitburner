@@ -2,7 +2,6 @@
  * Game engine. Handles the main game loop.
  */
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
-import { Augmentations } from "./Augmentation/Augmentations";
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
@@ -15,6 +14,7 @@ import { Factions, initFactions } from "./Faction/Factions";
 import { staneksGift } from "./CotMG/Helper";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
+import { Page } from "./ui/Router";
 import { SetupTextEditor } from "./ScriptEditor/ui/ScriptEditorRoot";
 
 import {
@@ -24,14 +24,13 @@ import {
 } from "./PersonObjects/formulas/reputation";
 import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelpers";
 import { iTutorialStart } from "./InteractiveTutorial";
-import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
+import { checkForMessagesToSend } from "./Message/MessageHelpers";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { saveObject, loadGame } from "./SaveObject";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { ThemeEvents } from "./Themes/ui/Theme";
-import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
@@ -48,7 +47,8 @@ import { calculateAchievements } from "./Achievements/Achievements";
 
 import React from "react";
 import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
 const Engine: {
   _lastUpdate: number;
@@ -187,7 +187,8 @@ const Engine: {
         Settings.AutosaveInterval = 60;
       }
       if (Settings.AutosaveInterval === 0) {
-        Engine.Counters.autoSaveCounter = Infinity;
+        warnAutosaveDisabled();
+        Engine.Counters.autoSaveCounter = 60 * 5; // Let's check back in a bit
       } else {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
         saveObject.saveGame(!Settings.SuppressSavedGameToast);
@@ -211,7 +212,7 @@ const Engine: {
 
     if (Engine.Counters.messages <= 0) {
       checkForMessagesToSend();
-      if (Augmentations[AugmentationNames.TheRedPill].owned) {
+      if (Player.hasAugmentation(AugmentationNames.TheRedPill)) {
         Engine.Counters.messages = 4500; // 15 minutes for Red pill message
       } else {
         Engine.Counters.messages = 150;
@@ -253,12 +254,14 @@ const Engine: {
       ThemeEvents.emit();
 
       initBitNodeMultipliers(Player);
-      updateSourceFileFlags(Player);
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
       if (Player.hasWseAccount) {
         initSymbolToStockMap();
       }
+
+      // Apply penalty for entropy accumulation
+      Player.applyEntropy(Player.entropy);
 
       // Calculate the number of cycles have elapsed while offline
       Engine._lastUpdate = new Date().getTime();
@@ -299,6 +302,8 @@ const Engine: {
           Player.commitCrime(numCyclesOffline);
         } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
           Player.workPartTime(numCyclesOffline);
+        } else if (Player.workType === CONSTANTS.WorkTypeGraftAugmentation) {
+          Player.graftAugmentationWork(numCyclesOffline);
         } else {
           Player.work(numCyclesOffline);
         }
@@ -431,8 +436,6 @@ const Engine: {
       initCompanies();
       initFactions();
       initAugmentations();
-      initMessages();
-      updateSourceFileFlags(Player);
 
       // Start interactive tutorial
       iTutorialStart();
@@ -458,5 +461,36 @@ const Engine: {
     window.requestAnimationFrame(Engine.start);
   },
 };
+
+/**
+ * Shows a toast warning that lets the player know that auto-saves are disabled, with an button to re-enable them.
+ */
+function warnAutosaveDisabled(): void {
+  // If the player has suppressed those warnings let's just exit right away.
+  if (Settings.SuppressAutosaveDisabledWarnings) return;
+
+  // We don't want this warning to show up on certain pages.
+  // When in recovery or importing we want to keep autosave disabled.
+  const ignoredPages = [Page.Recovery, Page.ImportSave];
+  if (ignoredPages.includes(Router.page())) return;
+
+  const warningToast = (
+    <>
+      Auto-saves are <strong>disabled</strong>!
+      <Button
+        sx={{ ml: 1 }}
+        color="warning"
+        size="small"
+        onClick={() => {
+          // We reset the value to a default
+          Settings.AutosaveInterval = 60;
+        }}
+      >
+        Enable
+      </Button>
+    </>
+  );
+  SnackbarEvents.emit(warningToast, ToastVariant.WARNING, 5000);
+}
 
 export { Engine };

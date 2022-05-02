@@ -41,8 +41,8 @@ export function WorkInProgressRoot(): React.ReactElement {
       return (
         <>
           <Typography variant="h4" color="primary">
-            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this time,
-            please try again if you think this should have worked
+            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this
+            time, please try again if you think this should have worked
           </Typography>
           <Button onClick={() => router.toFactions()}>Back to Factions</Button>
         </>
@@ -217,11 +217,19 @@ export function WorkInProgressRoot(): React.ReactElement {
 
   if (player.workType == CONSTANTS.WorkTypeCompany) {
     const comp = Companies[player.companyName];
-    let companyRep = 0;
     if (comp == null || !(comp instanceof Company)) {
-      throw new Error(`Could not find Company: ${player.companyName}`);
+      return (
+        <>
+          <Typography variant="h4" color="primary">
+            You cannot work for {player.companyName || "(Company not found)"} at this time, please try again if you
+            think this should have worked
+          </Typography>
+          <Button onClick={() => router.toTerminal()}>Back to Terminal</Button>
+        </>
+      );
     }
-    companyRep = comp.playerReputation;
+
+    const companyRep = comp.playerReputation;
 
     function cancel(): void {
       player.finishWork(true);
@@ -476,6 +484,42 @@ export function WorkInProgressRoot(): React.ReactElement {
         <Grid item>
           <Button sx={{ mx: 2 }} onClick={cancel}>
             Cancel work on creating program
+          </Button>
+          <Button onClick={unfocus}>Do something else simultaneously</Button>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  if (player.graftAugmentationName !== "") {
+    function cancel(): void {
+      player.finishGraftAugmentationWork(true);
+      router.toTerminal();
+    }
+    function unfocus(): void {
+      router.toTerminal();
+      player.stopFocusing();
+    }
+    return (
+      <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
+        <Grid item>
+          <Typography>
+            You are currently working on grafting {player.graftAugmentationName}.
+            <br />
+            <br />
+            You have been working for {convertTimeMsToTimeElapsedString(player.timeWorked)}
+            <br />
+            <br />
+            The augmentation is{" "}
+            {((player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}% done being
+            crafted.
+            <br />
+            If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned.
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button sx={{ mx: 2 }} onClick={cancel}>
+            Cancel work on grafting Augmentation
           </Button>
           <Button onClick={unfocus}>Do something else simultaneously</Button>
         </Grid>

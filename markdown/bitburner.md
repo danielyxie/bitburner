@@ -10,6 +10,7 @@
 |  --- | --- |
 |  [OrderTypes](./bitburner.ordertypes.md) |  |
 |  [PositionTypes](./bitburner.positiontypes.md) |  |
+|  [ToastVariant](./bitburner.toastvariant.md) |  |
 
 ## Interfaces
 
@@ -45,6 +46,7 @@
 |  [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
 |  [GangTaskStats](./bitburner.gangtaskstats.md) | Object representing data representing a gang member task. |
 |  [GangTerritory](./bitburner.gangterritory.md) |  |
+|  [Grafting](./bitburner.grafting.md) | Grafting API |
 |  [HackingFormulas](./bitburner.hackingformulas.md) | Hacking formulas |
 |  [HackingMultipliers](./bitburner.hackingmultipliers.md) | Hack related multipliers. |
 |  [Hacknet](./bitburner.hacknet.md) | Hacknet API |
@@ -58,12 +60,15 @@
 |  [NetscriptPort](./bitburner.netscriptport.md) | Object representing a port. A port is a serialized queue. |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
+|  [NSEnums](./bitburner.nsenums.md) |  |
 |  [Office](./bitburner.office.md) | Office for a division in a city. |
 |  [OfficeAPI](./bitburner.officeapi.md) | Corporation Office API |
 |  [Player](./bitburner.player.md) |  |
 |  [PlayerSkills](./bitburner.playerskills.md) | Short summary of the players skills. |
 |  [ProcessInfo](./bitburner.processinfo.md) | A single process on a server. |
 |  [Product](./bitburner.product.md) | Product in a warehouse |
+|  [RecentScript](./bitburner.recentscript.md) |  |
+|  [ReputationFormulas](./bitburner.reputationformulas.md) | Reputation formulas |
 |  [RunningScript](./bitburner.runningscript.md) |  |
 |  [Server](./bitburner.server.md) | A single server. |
 |  [Singularity](./bitburner.singularity.md) | Singularity API |
@@ -87,4 +92,5 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [FilenameOrPID](./bitburner.filenameorpid.md) |  |
+|  [ToastVariantValues](./bitburner.toastvariantvalues.md) |  |
 

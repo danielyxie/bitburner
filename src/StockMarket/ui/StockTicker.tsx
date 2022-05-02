@@ -16,7 +16,6 @@ import { OrderTypes } from "../data/OrderTypes";
 import { PositionTypes } from "../data/PositionTypes";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 
@@ -114,8 +113,8 @@ export function StockTicker(props: IProps): React.ReactElement {
         return <>You do not have this many shares in the Long position</>;
       }
     } else if (qty > stock.playerShortShares) {
-        return <>You do not have this many shares in the Short position</>;
-      }
+      return <>You do not have this many shares in the Short position</>;
+    }
 
     const cost = getSellTransactionGain(stock, qty, position);
     if (cost == null) {
@@ -288,12 +287,12 @@ export function StockTicker(props: IProps): React.ReactElement {
 
   // Whether the player has access to orders besides market orders (limit/stop)
   function hasOrderAccess(): boolean {
-    return props.p.bitNodeN === 8 || SourceFileFlags[8] >= 3;
+    return props.p.bitNodeN === 8 || props.p.sourceFileLvl(8) >= 3;
   }
 
   // Whether the player has access to shorting stocks
   function hasShortAccess(): boolean {
-    return props.p.bitNodeN === 8 || SourceFileFlags[8] >= 2;
+    return props.p.bitNodeN === 8 || props.p.sourceFileLvl(8) >= 2;
   }
 
   return (

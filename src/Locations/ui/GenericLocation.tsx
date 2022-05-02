@@ -96,8 +96,13 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
       <Typography variant="h4" sx={{ mt: 1 }}>
         {backdoorInstalled && !Settings.DisableTextEffects ? (
           <Tooltip title={`Backdoor installed on ${loc.name}.`}>
-            <span><CorruptableText content={loc.name} /></span>
-          </Tooltip>) : loc.name}
+            <span>
+              <CorruptableText content={loc.name} />
+            </span>
+          </Tooltip>
+        ) : (
+          loc.name
+        )}
       </Typography>
       {locContent}
     </>

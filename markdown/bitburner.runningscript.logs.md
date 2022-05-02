@@ -4,6 +4,8 @@
 
 ## RunningScript.logs property
 
+Script logs as an array. The newest log entries are at the bottom. Timestamps, if enabled, are placed inside `[brackets]` at the start of each line.
+
 <b>Signature:</b>
 
 ```typescript

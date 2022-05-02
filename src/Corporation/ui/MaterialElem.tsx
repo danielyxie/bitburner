@@ -5,10 +5,10 @@ import React, { useState } from "react";
 import { OfficeSpace } from "../OfficeSpace";
 import { Material } from "../Material";
 import { Warehouse } from "../Warehouse";
-import { ExportModal } from "./ExportModal";
-import { MaterialMarketTaModal } from "./MaterialMarketTaModal";
-import { SellMaterialModal } from "./SellMaterialModal";
-import { PurchaseMaterialModal } from "./PurchaseMaterialModal";
+import { ExportModal } from "./modals/ExportModal";
+import { MaterialMarketTaModal } from "./modals/MaterialMarketTaModal";
+import { SellMaterialModal } from "./modals/SellMaterialModal";
+import { PurchaseMaterialModal } from "./modals/PurchaseMaterialModal";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
@@ -21,6 +21,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { LimitMaterialProductionModal } from "./modals/LimitMaterialProductionModal";
 
 interface IMaterialProps {
   warehouse: Warehouse;
@@ -37,6 +38,8 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
   const [exportOpen, setExportOpen] = useState(false);
   const [sellMaterialOpen, setSellMaterialOpen] = useState(false);
   const [materialMarketTaOpen, setMaterialMarketTaOpen] = useState(false);
+  const [limitProductionOpen, setLimitProductionOpen] = useState(false);
+
   const warehouse = props.warehouse;
   const city = props.city;
   const mat = props.mat;
@@ -110,9 +113,15 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
     sellButtonText = <>Sell (0.000/0.000)</>;
   }
 
+  // Limit Production button
+  let limitMaterialButtonText = "Limit Material";
+  if (mat.prdman[0]) {
+    limitMaterialButtonText += " (" + numeralWrapper.format(mat.prdman[1], nf) + ")";
+  }
+
   return (
     <Paper>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', m: '5px' }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "2fr 1fr", m: "5px" }}>
         <Box>
           <Tooltip
             title={
@@ -149,17 +158,17 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
           </Tooltip>
         </Box>
 
-        <Box sx={{ "& button": { width: '100%' } }}>
+        <Box sx={{ "& button": { width: "100%" } }}>
           <Tooltip
             title={tutorial ? <Typography>Purchase your required materials to get production started!</Typography> : ""}
           >
-              <Button
-                color={tutorial ? "error" : "primary"}
-                onClick={() => setPurchaseMaterialOpen(true)}
-                disabled={props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)}
-              >
-                {purchaseButtonText}
-              </Button>
+            <Button
+              color={tutorial ? "error" : "primary"}
+              onClick={() => setPurchaseMaterialOpen(true)}
+              disabled={props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)}
+            >
+              {purchaseButtonText}
+            </Button>
           </Tooltip>
           <PurchaseMaterialModal
             mat={mat}
@@ -194,6 +203,14 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
               />
             </>
           )}
+          <Button color={tutorial ? "error" : "primary"} onClick={() => setLimitProductionOpen(true)}>
+            {limitMaterialButtonText}
+          </Button>
+          <LimitMaterialProductionModal
+            material={mat}
+            open={limitProductionOpen}
+            onClose={() => setLimitProductionOpen(false)}
+          />
         </Box>
       </Box>
     </Paper>

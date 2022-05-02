@@ -143,51 +143,66 @@ function Work(): React.ReactElement {
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
-  if (player.workType === CONSTANTS.WorkTypeCompanyPartTime || player.workType === CONSTANTS.WorkTypeCompany) {
-    details = (
-      <>
-        {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
-      </>
-    );
-    header = (
-      <>
-        Working at <strong>{player.companyName}</strong>
-      </>
-    );
-    innerText = (
-      <>
-        +<Reputation reputation={player.workRepGained} /> rep
-      </>
-    );
-  } else if (player.workType === CONSTANTS.WorkTypeFaction) {
-    details = (
-      <>
-        {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
-      </>
-    );
-    header = (
-      <>
-        Working for <strong>{player.currentWorkFactionName}</strong>
-      </>
-    );
-    innerText = (
-      <>
-        +<Reputation reputation={player.workRepGained} /> rep
-      </>
-    );
-  } else if (player.workType === CONSTANTS.WorkTypeStudyClass) {
-    details = <>{player.workType}</>;
-    header = <>You are {player.className}</>;
-    innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
-  } else if (player.workType === CONSTANTS.WorkTypeCreateProgram) {
-    details = <>Coding {player.createProgramName}</>;
-    header = <>Creating a program</>;
-    innerText = (
-      <>
-        {player.createProgramName}{" "}
-        {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
-      </>
-    );
+  switch (player.workType) {
+    case CONSTANTS.WorkTypeCompanyPartTime:
+    case CONSTANTS.WorkTypeCompany:
+      details = (
+        <>
+          {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
+        </>
+      );
+      header = (
+        <>
+          Working at <strong>{player.companyName}</strong>
+        </>
+      );
+      innerText = (
+        <>
+          +<Reputation reputation={player.workRepGained} /> rep
+        </>
+      );
+      break;
+    case CONSTANTS.WorkTypeFaction:
+      details = (
+        <>
+          {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
+        </>
+      );
+      header = (
+        <>
+          Working for <strong>{player.currentWorkFactionName}</strong>
+        </>
+      );
+      innerText = (
+        <>
+          +<Reputation reputation={player.workRepGained} /> rep
+        </>
+      );
+      break;
+    case CONSTANTS.WorkTypeStudyClass:
+      details = <>{player.workType}</>;
+      header = <>You are {player.className}</>;
+      innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
+      break;
+    case CONSTANTS.WorkTypeCreateProgram:
+      details = <>Coding {player.createProgramName}</>;
+      header = <>Creating a program</>;
+      innerText = (
+        <>
+          {player.createProgramName}{" "}
+          {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
+        </>
+      );
+      break;
+    case CONSTANTS.WorkTypeGraftAugmentation:
+      details = <>Grafting {player.graftAugmentationName}</>;
+      header = <>Grafting an Augmentation</>;
+      innerText = (
+        <>
+          <strong>{((player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}%</strong>{" "}
+          done
+        </>
+      );
   }
 
   return (
@@ -465,7 +480,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
       <Box sx={{ display: "flex", borderTop: `1px solid ${Settings.theme.welllight}` }}>
         <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
           <IconButton aria-label="save game" onClick={save}>
-            <Tooltip title="Save game">
+            <Tooltip title={Settings.AutosaveInterval !== 0 ? "Save game" : "Save game (auto-saves are disabled!)"}>
               <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
             </Tooltip>
           </IconButton>

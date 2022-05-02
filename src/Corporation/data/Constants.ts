@@ -1,4 +1,4 @@
-import { CityName } from './../../Locations/data/CityNames';
+import { CityName } from "./../../Locations/data/CityNames";
 const CyclesPerMarketCycle = 50;
 const AllCorporationStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
 export const CorporationConstants: {
@@ -28,6 +28,7 @@ export const CorporationConstants: {
   AllMaterials: string[];
   FundingRoundShares: number[];
   FundingRoundMultiplier: number[];
+  AvgProfitLength: number;
 } = {
   INITIALSHARES: 1e9, //Total number of shares you have at your company
   SHARESPERPRICEUPDATE: 1e6, //When selling large number of shares, price is dynamically updated for every batch of this amount
@@ -38,7 +39,14 @@ export const CorporationConstants: {
   CyclesPerIndustryStateCycle: CyclesPerMarketCycle / AllCorporationStates.length,
   SecsPerMarketCycle: CyclesPerMarketCycle / 5,
 
-  Cities: [CityName.Aevum, CityName.Chongqing, CityName.Sector12, CityName.NewTokyo, CityName.Ishima, CityName.Volhaven],
+  Cities: [
+    CityName.Aevum,
+    CityName.Chongqing,
+    CityName.Sector12,
+    CityName.NewTokyo,
+    CityName.Ishima,
+    CityName.Volhaven,
+  ],
 
   WarehouseInitialCost: 5e9, //Initial purchase cost of warehouse
   WarehouseInitialSize: 100,
@@ -74,16 +82,8 @@ export const CorporationConstants: {
     "AI Cores",
     "Real Estate",
   ],
-  FundingRoundShares: [
-    0.1,
-    0.35,
-    0.25,
-    0.2
-  ],
-  FundingRoundMultiplier: [
-    4,
-    3,
-    3,
-    2.5
-  ],
+  FundingRoundShares: [0.1, 0.35, 0.25, 0.2],
+  FundingRoundMultiplier: [4, 3, 3, 2.5],
+
+  AvgProfitLength: 1,
 };

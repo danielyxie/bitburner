@@ -9,7 +9,7 @@ Suspends the script for n milliseconds. Doesn't block with concurrent calls.
 <b>Signature:</b>
 
 ```typescript
-asleep(millis: number): Promise<void>;
+asleep(millis: number): Promise<true>;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ asleep(millis: number): Promise<void>;
 
 <b>Returns:</b>
 
-Promise&lt;void&gt;
+Promise&lt;true&gt;
 
 
 ## Remarks

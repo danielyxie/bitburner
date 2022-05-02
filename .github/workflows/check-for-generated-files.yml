@@ -58,7 +58,7 @@ jobs:
 
       - name: Get Comment Body
         id: get-comment-body
-        if : steps.get-warnings.outputs.has_warnings == 'true'
+        if: steps.get-warnings.outputs.has_warnings == 'true'
         run: |
           cat warnings.txt > comment.txt
           echo "" >> comment.txt
@@ -73,12 +73,12 @@ jobs:
 
           echo ::set-output name=body::$body
       - name: Add github comment on problem
-        if : steps.get-warnings.outputs.has_warnings == 'true'
+        if: steps.get-warnings.outputs.has_warnings == 'true'
         uses: peter-evans/commit-comment@v1
         with:
           body: ${{ steps.get-comment-body.outputs.body }}
       - name: Flag as error
-        if : steps.get-warnings.outputs.has_warnings == 'true'
+        if: steps.get-warnings.outputs.has_warnings == 'true'
         run: |
           COMMIT_WARNINGS=$(cat warnings.txt)
           echo "::warning:: $COMMIT_WARNINGS"

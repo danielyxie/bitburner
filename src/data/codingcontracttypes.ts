@@ -1,5 +1,8 @@
 import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { MinHeap } from "../utils/Heap";
 
+import { comprGenChar, comprLZGenerate, comprLZEncode, comprLZDecode } from "../utils/CompressionContracts";
+import { HammingEncode, HammingDecode } from "../utils/HammingCodeTools";
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 
 /* Function that generates a valid 'data' for a contract type */
@@ -122,7 +125,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "&nbsp;&nbsp;&nbsp;&nbsp;2 + 2\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;2 + 1 + 1\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;1 + 1 + 1 + 1\n\n",
-        `How many different ways can the number ${n} be written as a sum of at least`,
+        `How many different distinct ways can the number ${n} be written as a sum of at least`,
         "two positive integers?",
       ].join(" ");
     },
@@ -143,6 +146,51 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
 
       return ways[data] === parseInt(ans, 10);
+    },
+  },
+  {
+    desc: (data: [number, number[]]): string => {
+      const n: number = data[0];
+      const s: number[] = data[1];
+      return [
+        `How many different distinct ways can the number ${n} be written`,
+        "as a sum of integers contained in the set:\n\n",
+        `[${s}]?\n\n`,
+        "You may use each integer in the set zero or more times.",
+      ].join(" ");
+    },
+    difficulty: 2,
+    gen: (): [number, number[]] => {
+      const n: number = getRandomInt(12, 200);
+      const maxLen: number = getRandomInt(8, 12);
+      const s: number[] = [];
+      // Bias towards small numbers is intentional to have much bigger answers in general
+      // to force people better optimize their solutions
+      for (let i = 1; i <= n; i++) {
+        if (s.length == maxLen) {
+          break;
+        }
+        if (Math.random() < 0.6 || n - i < maxLen - s.length) {
+          s.push(i);
+        }
+      }
+      return [n, s];
+    },
+    name: "Total Ways to Sum II",
+    numTries: 10,
+    solver: (data: [number, number[]], ans: string): boolean => {
+      // https://www.geeksforgeeks.org/coin-change-dp-7/?ref=lbp
+      const n = data[0];
+      const s = data[1];
+      const ways: number[] = [1];
+      ways.length = n + 1;
+      ways.fill(0, 1);
+      for (let i = 0; i < s.length; i++) {
+        for (let j = s[i]; j <= n; j++) {
+          ways[j] += ways[j - s[i]];
+        }
+      }
+      return ways[n] === parseInt(ans, 10);
     },
   },
   {
@@ -308,6 +356,62 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
       const solution: boolean = i === n;
       return (ans === "1" && solution) || (ans === "0" && !solution);
+    },
+  },
+  {
+    desc: (arr: number[]): string => {
+      return [
+        "You are given the following array of integers:\n\n",
+        `${arr}\n\n`,
+        "Each element in the array represents your MAXIMUM jump length",
+        "at that position. This means that if you are at position i and your",
+        "maximum jump length is n, you can jump to any position from",
+        "i to i+n.",
+        "\n\nAssuming you are initially positioned",
+        "at the start of the array, determine the minimum number of",
+        "jumps to reach the end of the array.\n\n",
+        "If it's impossible to reach the end, then the answer should be 0.",
+      ].join(" ");
+    },
+    difficulty: 3,
+    gen: (): number[] => {
+      const len: number = getRandomInt(3, 25);
+      const arr: number[] = [];
+      arr.length = len;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < 10; j++) {
+          if (Math.random() <= j / 10 + 0.1) {
+            arr[i] = j;
+            break;
+          }
+        }
+      }
+
+      return arr;
+    },
+    name: "Array Jumping Game II",
+    numTries: 3,
+    solver: (data: number[], ans: string): boolean => {
+      const n: number = data.length;
+      let reach = 0;
+      let jumps = 0;
+      let lastJump = -1;
+      while (reach < n - 1) {
+        let jumpedFrom = -1;
+        for (let i = reach; i > lastJump; i--) {
+          if (i + data[i] > reach) {
+            reach = i + data[i];
+            jumpedFrom = i;
+          }
+        }
+        if (jumpedFrom === -1) {
+          jumps = 0;
+          break;
+        }
+        lastJump = jumpedFrom;
+        jumps++;
+      }
+      return jumps === parseInt(ans, 10);
     },
   },
   {
@@ -795,6 +899,140 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
+    name: "Shortest Path in a Grid",
+    desc: (data: number[][]): string => {
+      return [
+        "You are located in the top-left corner of the following grid:\n\n",
+        `&nbsp;&nbsp;[${data.map((line) => "[" + line + "]").join(",\n&nbsp;&nbsp;&nbsp;")}]\n\n`,
+        "You are trying to find the shortest path to the bottom-right corner of the grid,",
+        "but there are obstacles on the grid that you cannot move onto.",
+        "These obstacles are denoted by '1', while empty spaces are denoted by 0.\n\n",
+        "Determine the shortest path from start to finish, if one exists.",
+        "The answer should be given as a string of UDLR characters, indicating the moves along the path\n\n",
+        "NOTE: If there are multiple equally short paths, any of them is accepted as answer.",
+        "If there is no path, the answer should be an empty string.\n",
+        "NOTE: The data returned for this contract is an 2D array of numbers representing the grid.\n\n",
+        "Examples:\n\n",
+        "&nbsp;&nbsp;&nbsp;&nbsp;[[0,1,0,0,0],\n",
+        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0,0,0,1,0]]\n",
+        "\n",
+        "Answer: 'DRRURRD'\n\n",
+        "&nbsp;&nbsp;&nbsp;&nbsp;[[0,1],\n",
+        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,0]]\n",
+        "\n",
+        "Answer: ''\n\n",
+      ].join(" ");
+    },
+    difficulty: 7,
+    numTries: 10,
+    gen: (): number[][] => {
+      const height = getRandomInt(6, 12);
+      const width = getRandomInt(6, 12);
+      const dstY = height - 1;
+      const dstX = width - 1;
+      const minPathLength = dstY + dstX; // Math.abs(dstY - srcY) + Math.abs(dstX - srcX)
+
+      const grid: number[][] = new Array(height);
+      for (let y = 0; y < height; y++) grid[y] = new Array(width).fill(0);
+
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          if (y == 0 && x == 0) continue; // Don't block start
+          if (y == dstY && x == dstX) continue; // Don't block destination
+
+          // Generate more obstacles the farther a position is from start and destination.
+          // Raw distance factor peaks at 50% at half-way mark. Rescale to 40% max.
+          // Obstacle chance range of [15%, 40%] produces ~78% solvable puzzles
+          const distanceFactor = (Math.min(y + x, dstY - y + dstX - x) / minPathLength) * 0.8;
+          if (Math.random() < Math.max(0.15, distanceFactor)) grid[y][x] = 1;
+        }
+      }
+
+      return grid;
+    },
+    solver: (data: number[][], ans: string): boolean => {
+      const width = data[0].length;
+      const height = data.length;
+      const dstY = height - 1;
+      const dstX = width - 1;
+
+      const distance: [number][] = new Array(height);
+      //const prev: [[number, number] | undefined][] = new Array(height);
+      const queue = new MinHeap<[number, number]>();
+
+      for (let y = 0; y < height; y++) {
+        distance[y] = new Array(width).fill(Infinity) as [number];
+        //prev[y] = new Array(width).fill(undefined) as [undefined];
+      }
+
+      function validPosition(y: number, x: number): boolean {
+        return y >= 0 && y < height && x >= 0 && x < width && data[y][x] == 0;
+      }
+
+      // List in-bounds and passable neighbors
+      function* neighbors(y: number, x: number): Generator<[number, number]> {
+        if (validPosition(y - 1, x)) yield [y - 1, x]; // Up
+        if (validPosition(y + 1, x)) yield [y + 1, x]; // Down
+        if (validPosition(y, x - 1)) yield [y, x - 1]; // Left
+        if (validPosition(y, x + 1)) yield [y, x + 1]; // Right
+      }
+
+      // Prepare starting point
+      distance[0][0] = 0;
+      queue.push([0, 0], 0);
+
+      // Take next-nearest position and expand potential paths from there
+      while (queue.size > 0) {
+        const [y, x] = queue.pop() as [number, number];
+        for (const [yN, xN] of neighbors(y, x)) {
+          const d = distance[y][x] + 1;
+          if (d < distance[yN][xN]) {
+            if (distance[yN][xN] == Infinity)
+              // Not reached previously
+              queue.push([yN, xN], d);
+            // Found a shorter path
+            else queue.changeWeight(([yQ, xQ]) => yQ == yN && xQ == xN, d);
+            //prev[yN][xN] = [y, x];
+            distance[yN][xN] = d;
+          }
+        }
+      }
+
+      // No path at all?
+      if (distance[dstY][dstX] == Infinity) return ans == "";
+
+      // There is a solution, require that the answer path is as short as the shortest
+      // path we found
+      if (ans.length > distance[dstY][dstX]) return false;
+
+      // Further verify that the answer path is a valid path
+      let ansX = 0;
+      let ansY = 0;
+      for (const direction of ans) {
+        switch (direction) {
+          case "U":
+            ansY -= 1;
+            break;
+          case "D":
+            ansY += 1;
+            break;
+          case "L":
+            ansX -= 1;
+            break;
+          case "R":
+            ansX += 1;
+            break;
+          default:
+            return false; // Invalid character
+        }
+        if (!validPosition(ansY, ansX)) return false;
+      }
+
+      // Path was valid, finally verify that the answer path brought us to the end coordinates
+      return ansY == dstY && ansX == dstX;
+    },
+  },
+  {
     desc: (data: string): string => {
       return [
         "Given the following string:\n\n",
@@ -884,14 +1122,17 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
       dfs(0, 0, left, right, data, "", res);
 
-      const sanitizedPlayerAns = removeBracketsFromArrayString(ans).replace(/\s/g, "");
+      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+      const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
+      for (let i = 0; i < sanitizedPlayerAnsArr.length; ++i) {
+        sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i]).replace(/\s/g, "");
+      }
 
-      const playerAnsArray: string[] = sanitizedPlayerAns.split(",");
-      if (playerAnsArray.length !== res.length) {
+      if (sanitizedPlayerAnsArr.length !== res.length) {
         return false;
       }
       for (const resultInAnswer of res) {
-        if (!playerAnsArray.includes(resultInAnswer)) {
+        if (!sanitizedPlayerAnsArr.includes(resultInAnswer)) {
           return false;
         }
       }
@@ -1006,6 +1247,365 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
 
       return true;
+    },
+  },
+  {
+    name: "HammingCodes: Integer to Encoded Binary",
+    numTries: 10,
+    difficulty: 5,
+    desc: (n: number): string => {
+      return [
+        "You are given the following decimal Value: \n",
+        `${n} \n`,
+        "Convert it into a binary string and encode it as a 'Hamming-Code'. eg:\n ",
+        "Value 8 will result into binary '1000', which will be encoded",
+        "with the pattern 'pppdpddd', where p is a paritybit and d a databit,\n",
+        "or '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n\n",
+        "NOTE: You need an parity Bit on Index 0 as an 'overall'-paritybit. \n",
+        "NOTE 2: You should watch the HammingCode-video from 3Blue1Brown, which explains the 'rule' of encoding,",
+        "including the first Index parity-bit mentioned on the first note.\n\n",
+        "Now the only one rule for this encoding:\n",
+        " It's not allowed to add additional leading '0's to the binary value\n",
+        "That means, the binary value has to be encoded as it is",
+      ].join(" ");
+    },
+    gen: (): number => {
+      return getRandomInt(Math.pow(2, 4), Math.pow(2, getRandomInt(1, 57)));
+    },
+    solver: (data: number, ans: string): boolean => {
+      return ans === HammingEncode(data);
+    },
+  },
+  {
+    name: "HammingCodes: Encoded Binary to Integer",
+    difficulty: 8,
+    numTries: 10,
+    desc: (n: string): string => {
+      return [
+        "You are given the following encoded binary String: \n",
+        `'${n}' \n`,
+        "Treat it as a Hammingcode with 1 'possible' error on an random Index.\n",
+        "Find the 'possible' wrong bit, fix it and extract the decimal value, which is hidden inside the string.\n\n",
+        "Note: The length of the binary string is dynamic, but it's encoding/decoding is following Hammings 'rule'\n",
+        "Note 2: Index 0 is an 'overall' parity bit. Watch the Hammingcode-video from 3Blue1Brown for more information\n",
+        "Note 3: There's a ~55% chance for an altered Bit. So... MAYBE there is an altered Bit 😉\n",
+        "Extranote for automation: return the decimal value as a string",
+      ].join(" ");
+    },
+    gen: (): string => {
+      const _alteredBit = Math.round(Math.random());
+      const _buildArray: Array<string> = HammingEncode(
+        getRandomInt(Math.pow(2, 4), Math.pow(2, getRandomInt(1, 57))),
+      ).split("");
+      if (_alteredBit) {
+        const _randomIndex: number = getRandomInt(0, _buildArray.length - 1);
+        _buildArray[_randomIndex] = _buildArray[_randomIndex] == "0" ? "1" : "0";
+      }
+      return _buildArray.join("");
+    },
+    solver: (data: string, ans: string): boolean => {
+      return parseInt(ans, 10) === HammingDecode(data);
+    },
+  },
+  {
+    name: "Proper 2-Coloring of a Graph",
+    difficulty: 7,
+    numTries: 5,
+    desc: (data: [number, [number, number][]]): string => {
+      return [
+        `You are given the following data, representing a graph:\n`,
+        `${JSON.stringify(data)}\n`,
+        `Note that "graph", as used here, refers to the field of graph theory, and has`,
+        `no relation to statistics or plotting.`,
+        `The first element of the data represents the number of vertices in the graph.`,
+        `Each vertex is a unique number between 0 and ${data[0] - 1}.`,
+        `The next element of the data represents the edges of the graph.`,
+        `Two vertices u,v in a graph are said to be adjacent if there exists an edge [u,v].`,
+        `Note that an edge [u,v] is the same as an edge [v,u], as order does not matter.`,
+        `You must construct a 2-coloring of the graph, meaning that you have to assign each`,
+        `vertex in the graph a "color", either 0 or 1, such that no two adjacent vertices have`,
+        `the same color. Submit your answer in the form of an array, where element i`,
+        `represents the color of vertex i. If it is impossible to construct a 2-coloring of`,
+        `the given graph, instead submit an empty array.\n\n`,
+        `Examples:\n\n`,
+        `Input: [4, [[0, 2], [0, 3], [1, 2], [1, 3]]]\n`,
+        `Output: [0, 0, 1, 1]\n\n`,
+        `Input: [3, [[0, 1], [0, 2], [1, 2]]]\n`,
+        `Output: []`,
+      ].join(" ");
+    },
+    gen: (): [number, [number, number][]] => {
+      //Generate two partite sets
+      const n = Math.floor(Math.random() * 5) + 3;
+      const m = Math.floor(Math.random() * 5) + 3;
+
+      //50% chance of spawning any given valid edge in the bipartite graph
+      const edges: [number, number][] = [];
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+          if (Math.random() > 0.5) {
+            edges.push([i, n + j]);
+          }
+        }
+      }
+
+      //Add an edge at random with no regard to partite sets
+      let a = Math.floor(Math.random() * (n + m));
+      let b = Math.floor(Math.random() * (n + m));
+      if (a > b) [a, b] = [b, a]; //Enforce lower numbers come first
+      if (a != b && !edges.includes([a, b])) {
+        edges.push([a, b]);
+      }
+
+      //Randomize array in-place using Durstenfeld shuffle algorithm.
+      function shuffle(array: any[]): void {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
+      //Replace instances of the original vertex names in-place
+      const vertexShuffler = Array.from(Array(n + m).keys());
+      shuffle(vertexShuffler);
+      for (let i = 0; i < edges.length; i++) {
+        edges[i] = [vertexShuffler[edges[i][0]], vertexShuffler[edges[i][1]]];
+        if (edges[i][0] > edges[i][1]) {
+          //Enforce lower numbers come first
+          [edges[i][0], edges[i][1]] = [edges[i][1], edges[i][0]];
+        }
+      }
+
+      //Shuffle the order of the edges themselves, as well
+      shuffle(edges);
+
+      return [n + m, edges];
+    },
+    solver: (data: [number, [number, number][]], ans: string): boolean => {
+      //Case where the player believes there is no solution
+      if (ans == "[]") {
+        //Helper function to get neighbourhood of a vertex
+        function neighbourhood(vertex: number): number[] {
+          const adjLeft = data[1].filter(([a, _]) => a == vertex).map(([_, b]) => b);
+          const adjRight = data[1].filter(([_, b]) => b == vertex).map(([a, _]) => a);
+          return adjLeft.concat(adjRight);
+        }
+
+        //Verify that there is no solution by attempting to create a proper 2-coloring.
+        const coloring: (number | undefined)[] = Array(data[0]).fill(undefined);
+        while (coloring.some((val) => val === undefined)) {
+          //Color a vertex in the graph
+          const initialVertex: number = coloring.findIndex((val) => val === undefined);
+          coloring[initialVertex] = 0;
+          const frontier: number[] = [initialVertex];
+
+          //Propogate the coloring throughout the component containing v greedily
+          while (frontier.length > 0) {
+            const v: number = frontier.pop() || 0;
+            const neighbors: number[] = neighbourhood(v);
+
+            //For each vertex u adjacent to v
+            for (const id in neighbors) {
+              const u: number = neighbors[id];
+
+              //Set the color of u to the opposite of v's color if it is new,
+              //then add u to the frontier to continue the algorithm.
+              if (coloring[u] === undefined) {
+                if (coloring[v] === 0) coloring[u] = 1;
+                else coloring[u] = 0;
+
+                frontier.push(u);
+              }
+
+              //Assert u,v do not have the same color
+              else if (coloring[u] === coloring[v]) {
+                //If u,v do have the same color, no proper 2-coloring exists, meaning
+                //the player was correct to say there is no proper 2-coloring of the graph.
+                return true;
+              }
+            }
+          }
+        }
+
+        //If this code is reached, there exists a proper 2-coloring of the input
+        //graph, and thus the player was incorrect in submitting no answer.
+        return false;
+      }
+
+      //Sanitize player input
+      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+      const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
+      const coloring: number[] = sanitizedPlayerAnsArr.map((val) => parseInt(val));
+
+      //Solution provided case
+      if (coloring.length == data[0]) {
+        const edges = data[1];
+        const validColors = [0, 1];
+        //Check that the provided solution is a proper 2-coloring
+        return edges.every(([a, b]) => {
+          const aColor = coloring[a];
+          const bColor = coloring[b];
+          return (
+            validColors.includes(aColor) && //Enforce the first endpoint is color 0 or 1
+            validColors.includes(bColor) && //Enforce the second endpoint is color 0 or 1
+            aColor != bColor //Enforce the endpoints are different colors
+          );
+        });
+      }
+
+      //Return false if the coloring is the wrong size
+      else return false;
+    },
+  },
+  {
+    name: "Compression I: RLE Compression",
+    difficulty: 2,
+    numTries: 10,
+    desc: (plaintext: string): string => {
+      return [
+        "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of",
+        "a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths",
+        "are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them",
+        "into multiple runs.\n\n",
+        "You are given the following input string:\n",
+        `&nbsp; &nbsp; ${plaintext}\n`,
+        "Encode it using run-length encoding with the minimum possible output length.\n\n",
+        "Examples:\n",
+        "&nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n",
+        "&nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n",
+        "&nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n",
+        "&nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n",
+      ].join(" ");
+    },
+    gen: (): string => {
+      const length = 50 + Math.floor(25 * (Math.random() + Math.random()));
+      let plain = "";
+
+      while (plain.length < length) {
+        const r = Math.random();
+
+        let n = 1;
+        if (r < 0.3) {
+          n = 1;
+        } else if (r < 0.6) {
+          n = 2;
+        } else if (r < 0.9) {
+          n = Math.floor(10 * Math.random());
+        } else {
+          n = 10 + Math.floor(5 * Math.random());
+        }
+
+        const c = comprGenChar();
+        plain += c.repeat(n);
+      }
+
+      return plain.substring(0, length);
+    },
+    solver: (plain: string, ans: string): boolean => {
+      if (ans.length % 2 !== 0) {
+        return false;
+      }
+
+      let ans_plain = "";
+      for (let i = 0; i + 1 < ans.length; i += 2) {
+        const length = ans.charCodeAt(i) - 0x30;
+        if (length < 0 || length > 9) {
+          return false;
+        }
+
+        ans_plain += ans[i + 1].repeat(length);
+      }
+      if (ans_plain !== plain) {
+        return false;
+      }
+
+      let length = 0;
+      for (let i = 0; i < plain.length; ) {
+        let run_length = 1;
+        while (i + run_length < plain.length && plain[i + run_length] === plain[i]) {
+          ++run_length;
+        }
+        i += run_length;
+
+        while (run_length > 0) {
+          run_length -= 9;
+          length += 2;
+        }
+      }
+      return ans.length === length;
+    },
+  },
+  {
+    name: "Compression II: LZ Decompression",
+    difficulty: 4,
+    numTries: 10,
+    desc: (compressed: string): string => {
+      return [
+        "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to",
+        "earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk",
+        "begins with a length L, encoded as a single ASCII digit from 1 - 9, followed by the chunk data,",
+        "which is either:\n\n",
+        "1. Exactly L characters, which are to be copied directly into the uncompressed data.\n",
+        "2. A reference to an earlier part of the uncompressed data. To do this, the length is followed",
+        "by a second ASCII digit X: each of the L output characters is a copy of the character X",
+        "places before it in the uncompressed data.\n\n",
+        "For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character",
+        "is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final",
+        "chunk may be of either type.\n\n",
+        "You are given the following LZ-encoded string:\n",
+        `&nbsp; &nbsp; ${compressed}\n`,
+        "Decode it and output the original string.\n\n",
+        "Example: decoding '5aaabc340533bca' chunk-by-chunk\n",
+        "&nbsp; &nbsp; 5aaabc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabc\n",
+        "&nbsp; &nbsp; 5aaabc34 &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabcaab\n",
+        "&nbsp; &nbsp; 5aaabc340 &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;aaabcaab\n",
+        "&nbsp; &nbsp; 5aaabc34053 &nbsp; &nbsp; &nbsp;-> &nbsp;aaabcaabaabaa\n",
+        "&nbsp; &nbsp; 5aaabc340533bca &nbsp;-> &nbsp;aaabcaabaabaabca",
+      ].join(" ");
+    },
+    gen: (): string => {
+      return comprLZEncode(comprLZGenerate());
+    },
+    solver: (compr: string, ans: string): boolean => {
+      return ans === comprLZDecode(compr);
+    },
+  },
+  {
+    name: "Compression III: LZ Compression",
+    difficulty: 10,
+    numTries: 10,
+    desc: (plaintext: string): string => {
+      return [
+        "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to",
+        "earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk",
+        "begins with a length L, encoded as a single ASCII digit from 1 - 9, followed by the chunk data,",
+        "which is either:\n\n",
+        "1. Exactly L characters, which are to be copied directly into the uncompressed data.\n",
+        "2. A reference to an earlier part of the uncompressed data. To do this, the length is followed",
+        "by a second ASCII digit X: each of the L output characters is a copy of the character X",
+        "places before it in the uncompressed data.\n\n",
+        "For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character",
+        "is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final",
+        "chunk may be of either type.\n\n",
+        "You are given the following input string:\n",
+        `&nbsp; &nbsp; ${plaintext}\n`,
+        "Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n",
+        "Examples (some have other possible encodings of minimal length):\n",
+        "&nbsp; &nbsp; abracadabra &nbsp; &nbsp;-> &nbsp;7abracad47\n",
+        "&nbsp; &nbsp; mississippi &nbsp; &nbsp;-> &nbsp;4miss433ppi\n",
+        "&nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp;-> &nbsp;3aAA53035\n",
+        "&nbsp; &nbsp; 2718281828 &nbsp; &nbsp; -> &nbsp;627182844\n",
+        "&nbsp; &nbsp; abcdefghijk &nbsp; &nbsp;-> &nbsp;9abcdefghi02jk\n",
+        "&nbsp; &nbsp; aaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;1a911a\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaa &nbsp; -> &nbsp;1a912aa\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaaa &nbsp;-> &nbsp;1a91031",
+      ].join(" ");
+    },
+    gen: (): string => {
+      return comprLZGenerate();
+    },
+    solver: (plain: string, ans: string): boolean => {
+      return comprLZDecode(ans) === plain && ans.length === comprLZEncode(plain).length;
     },
   },
 ];

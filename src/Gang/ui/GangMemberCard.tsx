@@ -16,7 +16,7 @@ interface IProps {
 
 export function GangMemberCard(props: IProps): React.ReactElement {
   return (
-    <Box component={Paper} sx={{ width: 'auto' }}>
+    <Box component={Paper} sx={{ width: "auto" }}>
       <Box sx={{ m: 1 }}>
         <ListItemText primary={<b>{props.member.name}</b>} />
         <GangMemberCardContent member={props.member} />

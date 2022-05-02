@@ -225,9 +225,7 @@ export class Gang implements IGang {
           if (AllGangs[otherGang].territory <= 0) return;
           const territoryGain = calculateTerritoryGain(thisGang, otherGang);
           AllGangs[thisGang].territory += territoryGain;
-          if (AllGangs[thisGang].territory > 0.999) AllGangs[thisGang].territory = 1;
           AllGangs[otherGang].territory -= territoryGain;
-          if (AllGangs[thisGang].territory < 0.001) AllGangs[thisGang].territory = 0;
           if (thisGang === gangName) {
             this.clash(true); // Player won
             AllGangs[otherGang].power *= 1 / 1.01;
@@ -240,9 +238,7 @@ export class Gang implements IGang {
           if (AllGangs[thisGang].territory <= 0) return;
           const territoryGain = calculateTerritoryGain(otherGang, thisGang);
           AllGangs[thisGang].territory -= territoryGain;
-          if (AllGangs[otherGang].territory < 0.001) AllGangs[otherGang].territory = 0;
           AllGangs[otherGang].territory += territoryGain;
-          if (AllGangs[otherGang].territory > 0.999) AllGangs[otherGang].territory = 1;
           if (thisGang === gangName) {
             this.clash(false); // Player lost
           } else if (otherGang === gangName) {
@@ -252,6 +248,12 @@ export class Gang implements IGang {
             AllGangs[thisGang].power *= 1 / 1.01;
           }
         }
+
+        const total = Object.values(AllGangs)
+          .map((g) => g.territory)
+          .reduce((p, c) => p + c, 0);
+        console.log(total);
+        Object.values(AllGangs).forEach((g) => (g.territory /= total));
       }
     }
   }

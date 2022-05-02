@@ -43,12 +43,14 @@ export function mem(
     const verboseEntries = script.ramUsageEntries?.sort((a, b) => b.cost - a.cost) ?? [];
     const padding = Settings.UseIEC60027_2 ? 9 : 8;
     for (const entry of verboseEntries) {
-      terminal.print(`${numeralWrapper.formatRAM(entry.cost * numThreads).padStart(padding)} | ${entry.name} (${entry.type})`);
+      terminal.print(
+        `${numeralWrapper.formatRAM(entry.cost * numThreads).padStart(padding)} | ${entry.name} (${entry.type})`,
+      );
     }
 
     if (ramUsage > 0 && verboseEntries.length === 0) {
       // Let's warn the user that he might need to save his script again to generate the detailed entries
-      terminal.warn('You might have to open & save this script to see the detailed RAM usage information.');
+      terminal.warn("You might have to open & save this script to see the detailed RAM usage information.");
     }
   } catch (e) {
     terminal.error(e + "");

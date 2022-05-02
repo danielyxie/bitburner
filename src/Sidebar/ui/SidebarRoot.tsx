@@ -51,7 +51,6 @@ import { CONSTANTS } from "../../Constants";
 import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../../InteractiveTutorial";
 import { getAvailableCreatePrograms } from "../../Programs/ProgramHelpers";
 import { Settings } from "../../Settings/Settings";
-import { redPillFlag } from "../../RedPill";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
@@ -275,8 +274,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     //  Alt-o - Options
     function handleShortcuts(this: Document, event: KeyboardEvent): any {
       if (Settings.DisableHotkeys) return;
-      if ((props.player.isWorking && props.player.focus) || redPillFlag) return;
-      if (event.key === "t" && event.altKey) {
+      if ((props.player.isWorking && props.player.focus) || props.router.page() === Page.BitVerse) return;
+      if (event.key === KEY.T && event.altKey) {
         event.preventDefault();
         clickTerminal();
       } else if (event.key === KEY.C && event.altKey) {
@@ -522,7 +521,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               <ListItemIcon>
                 <Badge badgeContent={invitationsCount !== 0 ? invitationsCount : undefined} color="error">
                   <Tooltip title={!open ? "Factions" : ""}>
-                    <ContactsIcon color={![Page.Factions, Page.Faction].includes(props.page) ? "secondary" : "primary"} />
+                    <ContactsIcon
+                      color={![Page.Factions, Page.Faction].includes(props.page) ? "secondary" : "primary"}
+                    />
                   </Tooltip>
                 </Badge>
               </ListItemIcon>
@@ -570,7 +571,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Hacknet" : ""}>
-                <AccountTreeIcon color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"} />
+                <AccountTreeIcon
+                  color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"}
+                />
               </Tooltip>
             </ListItemIcon>
             <ListItemText>
@@ -617,7 +620,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             key={"City"}
             className={clsx({
               [classes.active]:
-                props.page === Page.City || props.page === Page.Resleeves || props.page === Page.Location,
+                props.page === Page.City || props.page === Page.Grafting || props.page === Page.Location,
             })}
             onClick={clickCity}
           >

@@ -519,6 +519,14 @@ export class Sleeve extends Person {
           break;
         }
 
+        // If the player has a gang with the faction the sleeve is working
+        // for, we need to reset the sleeve's task
+        if (p.gang) {
+          if (fac.name === p.gang.facName) {
+            this.resetTaskStatus();
+          }
+        }
+
         fac.playerReputation += this.getRepGain(p) * cyclesUsed;
         break;
       }
@@ -859,7 +867,7 @@ export class Sleeve extends Person {
    * Returns boolean indicating success
    */
   workForFaction(p: IPlayer, factionName: string, workType: string): boolean {
-    const faction = Factions[factionName]
+    const faction = Factions[factionName];
     if (factionName === "" || !faction || !(faction instanceof Faction) || !p.factions.includes(factionName)) {
       return false;
     }

@@ -1,4 +1,4 @@
-import { CityName } from './../../../src/Locations/data/CityNames';
+import { CityName } from "./../../../src/Locations/data/CityNames";
 /* eslint-disable no-await-in-loop */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { jest, describe, expect, test } from "@jest/globals";
@@ -42,10 +42,10 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
       requiredHackingSkill: 1,
       serverGrowth: 3000,
     });
-    Player.getHomeComputer().serversOnNetwork.push(closeServer.ip);
-    closeServer.serversOnNetwork.push(Player.getHomeComputer().ip);
-    closeServer.serversOnNetwork.push(farServer.ip);
-    farServer.serversOnNetwork.push(closeServer.ip);
+    Player.getHomeComputer().serversOnNetwork.push(closeServer.hostname);
+    closeServer.serversOnNetwork.push(Player.getHomeComputer().hostname);
+    closeServer.serversOnNetwork.push(farServer.hostname);
+    farServer.serversOnNetwork.push(closeServer.hostname);
     AddToAllServers(closeServer);
     AddToAllServers(farServer);
   });

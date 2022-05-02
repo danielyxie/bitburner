@@ -4,7 +4,8 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 import { Aliases, GlobalAliases, substituteAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { GetServer, GetAllServers } from "../Server/AllServers";
+import { GetAllServers } from "../Server/AllServers";
+import { Server } from "../Server/Server";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { HelpTexts } from "./HelpText";
 import { isScriptFilename } from "../Script/isScriptFilename";
@@ -181,7 +182,7 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   // Autocomplete the command
-  if (index === -1 && !input.startsWith('./')) {
+  if (index === -1 && !input.startsWith("./")) {
     return commands.concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
   }
 
@@ -238,16 +239,14 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   if (isCommand("connect")) {
-    // All network connections
-    for (let i = 0; i < currServ.serversOnNetwork.length; ++i) {
-      const serv = GetServer(currServ.serversOnNetwork[i]);
-      if (serv == null) {
-        continue;
-      }
-      allPos.push(serv.hostname);
-    }
-
-    return allPos;
+    // All directly connected and backdoored servers are reachable
+    console.log(GetAllServers());
+    return GetAllServers()
+      .filter(
+        (server) =>
+          currServ.serversOnNetwork.includes(server.hostname) || (server instanceof Server && server.backdoorInstalled),
+      )
+      .map((server) => server.hostname);
   }
 
   if (isCommand("nano") || isCommand("vim")) {
@@ -283,9 +282,9 @@ export async function determineAllPossibilitiesForTabCompletion(
     // the output of processFilepath or if it matches with a '/' prepended,
     // this way autocomplete works inside of directories
     const script = currServ.scripts.find((script) => {
-      const fn = filename.replace(/^\.\//g, '');
-      return (processFilepath(script.filename) === fn || script.filename === '/' + fn);
-    })
+      const fn = filename.replace(/^\.\//g, "");
+      return processFilepath(script.filename) === fn || script.filename === "/" + fn;
+    });
     if (!script) return; // Doesn't exist.
     if (!script.module) {
       await compile(p, script, currServ.scripts);
@@ -314,15 +313,10 @@ export async function determineAllPossibilitiesForTabCompletion(
           return undefined;
         }
       },
-    }
+    };
     let pos: string[] = [];
     let pos2: string[] = [];
-    pos = pos.concat(
-      loadedModule.autocomplete(
-        autocompleteData,
-        flags._,
-      ),
-    );
+    pos = pos.concat(loadedModule.autocomplete(autocompleteData, flags._));
     return pos.concat(pos2);
   }
   const pos = await scriptAutocomplete();

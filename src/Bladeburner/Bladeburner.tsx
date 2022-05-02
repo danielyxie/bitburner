@@ -28,13 +28,13 @@ import { Factions, factionExists } from "../Faction/Factions";
 import { calculateHospitalizationCost } from "../Hospital/Hospital";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Settings } from "../Settings/Settings";
-import { Augmentations } from "../Augmentation/Augmentations";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "./data/BlackOperationNames";
+import { KEY } from "../utils/helpers/keyCodes";
 
 interface BlackOpsAttempt {
   error?: string;
@@ -793,7 +793,7 @@ export class Bladeburner implements IBladeburner {
       if (c === '"') {
         // Double quotes
         const endQuote = command.indexOf('"', i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === " ")) {
+        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
           args.push(command.substr(i + 1, endQuote - i - 1));
           if (endQuote === command.length - 1) {
             start = i = endQuote + 1;
@@ -805,7 +805,7 @@ export class Bladeburner implements IBladeburner {
       } else if (c === "'") {
         // Single quotes, same thing as above
         const endQuote = command.indexOf("'", i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === " ")) {
+        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
           args.push(command.substr(i + 1, endQuote - i - 1));
           if (endQuote === command.length - 1) {
             start = i = endQuote + 1;
@@ -814,7 +814,7 @@ export class Bladeburner implements IBladeburner {
           }
           continue;
         }
-      } else if (c === " ") {
+      } else if (c === KEY.SPACE) {
         args.push(command.substr(start, i - start));
         start = i + 1;
       }
@@ -1466,20 +1466,19 @@ export class Bladeburner implements IBladeburner {
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
         }
-        const hackingExpGain = 20 * player.hacking_exp_mult,
-          charismaExpGain = 20 * player.charisma_exp_mult;
+        const hackingExpGain = 20 * player.hacking_exp_mult;
+        const charismaExpGain = 20 * player.charisma_exp_mult;
+        const rankGain = 0.1 * BitNodeMultipliers.BladeburnerRank;
         player.gainHackingExp(hackingExpGain);
         player.gainIntelligenceExp(BladeburnerConstants.BaseIntGain);
         player.gainCharismaExp(charismaExpGain);
-        this.changeRank(player, 0.1 * BitNodeMultipliers.BladeburnerRank);
+        this.changeRank(player, rankGain);
         this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
         if (this.logging.general) {
           this.log(
-            "Field analysis completed. Gained 0.1 rank, " +
-              formatNumber(hackingExpGain, 1) +
-              " hacking exp, and " +
-              formatNumber(charismaExpGain, 1) +
-              " charisma exp",
+            `Field analysis completed. Gained ${formatNumber(rankGain, 2)} rank, ` +
+              `${formatNumber(hackingExpGain, 1)} hacking exp, and ` +
+              `${formatNumber(charismaExpGain, 1)} charisma exp`,
           );
         }
         this.startAction(player, this.action); // Repeat action
@@ -1920,7 +1919,7 @@ export class Bladeburner implements IBladeburner {
     }
 
     // If the Player starts doing some other actions, set action to idle and alert
-    if (Augmentations[AugmentationNames.BladesSimulacrum].owned === false && player.isWorking) {
+    if (player.hasAugmentation(AugmentationNames.BladesSimulacrum) === false && player.isWorking) {
       if (this.action.type !== ActionTypes["Idle"]) {
         let msg = "Your Bladeburner action was cancelled because you started doing something else.";
         if (this.automateEnabled) {

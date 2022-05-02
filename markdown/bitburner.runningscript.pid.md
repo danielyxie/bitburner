@@ -4,6 +4,8 @@
 
 ## RunningScript.pid property
 
+Process ID. Must be an integer
+
 <b>Signature:</b>
 
 ```typescript

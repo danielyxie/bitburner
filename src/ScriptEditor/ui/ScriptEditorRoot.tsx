@@ -25,7 +25,7 @@ import { Settings } from "../../Settings/Settings";
 import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
 import { debounce } from "lodash";
 import { saveObject } from "../../SaveObject";
-import { loadThemes } from "./themes";
+import { loadThemes, makeTheme, sanitizeTheme } from "./themes";
 import { GetServer } from "../../Server/AllServers";
 
 import Button from "@mui/material/Button";
@@ -235,7 +235,7 @@ export function Root(props: IProps): React.ReactElement {
           MonacoVim.VimMode.Vim.mapCommand("gT", "action", "prevTabs", {}, { context: "normal" });
           editor.focus();
         });
-      } catch { }
+      } catch {}
     } else if (!options.vim) {
       // Whem vim mode is disabled
       vimEditor?.dispose();
@@ -362,6 +362,8 @@ export function Root(props: IProps): React.ReactElement {
     monaco.languages.typescript.javascriptDefaults.addExtraLib(source, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
     loadThemes(monaco);
+    sanitizeTheme(Settings.EditorTheme);
+    monaco.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
   }
 
   // When the editor is mounted
@@ -481,7 +483,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     try {
       infLoop(newCode);
-    } catch (err) { }
+    } catch (err) {}
   }
 
   function saveScript(scriptToSave: OpenScript): void {
@@ -794,11 +796,11 @@ export function Root(props: IProps): React.ReactElement {
     setFilter(event.target.value);
   }
   function handleExpandSearch(): void {
-    setFilter("")
-    setSearchExpanded(!searchExpanded)
+    setFilter("");
+    setSearchExpanded(!searchExpanded);
   }
   const filteredOpenScripts = Object.values(openScripts).filter(
-    (script) => (script.hostname.includes(filter) || script.fileName.includes(filter))
+    (script) => script.hostname.includes(filter) || script.fileName.includes(filter),
   );
 
   // Toolbars are roughly 112px:
@@ -835,7 +837,7 @@ export function Root(props: IProps): React.ReactElement {
                 }}
               >
                 <Tooltip title={"Search Open Scripts"}>
-                  {searchExpanded ?
+                  {searchExpanded ? (
                     <TextField
                       value={filter}
                       onChange={handleFilterChange}
@@ -843,9 +845,14 @@ export function Root(props: IProps): React.ReactElement {
                       InputProps={{
                         startAdornment: <SearchIcon />,
                         spellCheck: false,
-                        endAdornment: <CloseIcon onClick={handleExpandSearch} />
+                        endAdornment: <CloseIcon onClick={handleExpandSearch} />,
                       }}
-                    /> : <Button onClick={handleExpandSearch} ><SearchIcon /></Button>}
+                    />
+                  ) : (
+                    <Button onClick={handleExpandSearch}>
+                      <SearchIcon />
+                    </Button>
+                  )}
                 </Tooltip>
                 {filteredOpenScripts.map(({ fileName, hostname }, index) => {
                   const iconButtonStyle = {
@@ -855,15 +862,15 @@ export function Root(props: IProps): React.ReactElement {
                     maxHeight: "38.5px",
                     ...(currentScript?.fileName === filteredOpenScripts[index].fileName
                       ? {
-                        background: Settings.theme.button,
-                        borderColor: Settings.theme.button,
-                        color: Settings.theme.primary,
-                      }
+                          background: Settings.theme.button,
+                          borderColor: Settings.theme.button,
+                          color: Settings.theme.primary,
+                        }
                       : {
-                        background: Settings.theme.backgroundsecondary,
-                        borderColor: Settings.theme.backgroundsecondary,
-                        color: Settings.theme.secondary,
-                      }),
+                          background: Settings.theme.backgroundsecondary,
+                          borderColor: Settings.theme.backgroundsecondary,
+                          color: Settings.theme.secondary,
+                        }),
                   };
 
                   const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`;
@@ -896,19 +903,19 @@ export function Root(props: IProps): React.ReactElement {
                               }}
                               style={{
                                 maxWidth: `${tabTextWidth}px`,
-                                minHeight: '38.5px',
+                                minHeight: "38.5px",
                                 overflow: "hidden",
                                 ...(currentScript?.fileName === filteredOpenScripts[index].fileName
                                   ? {
-                                    background: Settings.theme.button,
-                                    borderColor: Settings.theme.button,
-                                    color: Settings.theme.primary,
-                                  }
+                                      background: Settings.theme.button,
+                                      borderColor: Settings.theme.button,
+                                      color: Settings.theme.primary,
+                                    }
                                   : {
-                                    background: Settings.theme.backgroundsecondary,
-                                    borderColor: Settings.theme.backgroundsecondary,
-                                    color: Settings.theme.secondary,
-                                  }),
+                                      background: Settings.theme.backgroundsecondary,
+                                      borderColor: Settings.theme.backgroundsecondary,
+                                      color: Settings.theme.secondary,
+                                    }),
                               }}
                             >
                               <span style={{ overflow: "hidden", direction: "rtl", textOverflow: "ellipsis" }}>
@@ -976,11 +983,11 @@ export function Root(props: IProps): React.ReactElement {
           </Button>
           <Typography>
             {" "}
-            Documentation:{" "}
+            <strong>Documentation:</strong>{" "}
             <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
               Basic
-            </Link>{" "}
-            |
+            </Link>
+            {" | "}
             <Link target="_blank" href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md">
               Full
             </Link>
@@ -988,7 +995,11 @@ export function Root(props: IProps): React.ReactElement {
         </Box>
         <OptionsModal
           open={optionsOpen}
-          onClose={() => setOptionsOpen(false)}
+          onClose={() => {
+            sanitizeTheme(Settings.EditorTheme);
+            monacoRef.current?.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
+            setOptionsOpen(false);
+          }}
           options={{
             theme: Settings.MonacoTheme,
             insertSpaces: Settings.MonacoInsertSpaces,
@@ -997,6 +1008,8 @@ export function Root(props: IProps): React.ReactElement {
             vim: Settings.MonacoVim,
           }}
           save={(options: Options) => {
+            sanitizeTheme(Settings.EditorTheme);
+            monacoRef.current?.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
             setOptions(options);
             Settings.MonacoTheme = options.theme;
             Settings.MonacoInsertSpaces = options.insertSpaces;
