@@ -179,11 +179,15 @@ export function WorkInProgressRoot(): React.ReactElement {
         </>
       ),
       gains: [
-        <StatsRow name="Money" color={Settings.theme.money}>
-          <Typography>
-            <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
-          </Typography>
-        </StatsRow>,
+        player.workMoneyGained > 0 ? (
+          <StatsRow name="Money" color={Settings.theme.money}>
+            <Typography>
+              <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
+            </Typography>
+          </StatsRow>
+        ) : (
+          <></>
+        ),
         <StatsRow name="Faction Reputation" color={Settings.theme.rep}>
           <Typography>
             <Reputation reputation={player.workRepGained} /> (
