@@ -21,6 +21,24 @@ import { createProgressBarText } from "../utils/helpers/createProgressBarText";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
+interface IWorkInfo {
+  buttons: {
+    cancel: () => void;
+    unfocus?: () => void;
+  };
+  title: string | React.ReactElement;
+
+  description?: string | React.ReactElement;
+  gains?: (string | React.ReactElement)[];
+  progress?: {
+    elapsed?: number;
+    percentage?: number;
+  };
+
+  stopText: string;
+  stopTooltip?: string | React.ReactElement;
+}
+
 export function WorkInProgressRoot(): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -527,7 +545,52 @@ export function WorkInProgressRoot(): React.ReactElement {
     );
   }
 
-  if (!player.workType) router.toTerminal();
+  return (
+    <Container
+      maxWidth="md"
+      sx={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "calc(100vh - 16px)" }}
+    >
+      <Paper sx={{ p: 1, mb: 1 }}>
+        <Typography variant="h6">{workInfo.title}</Typography>
+        <Typography>{workInfo.description}</Typography>
+      </Paper>
+      <Paper sx={{ mb: 1, p: 1 }}>
+        {workInfo.progress !== undefined && (
+          <Box sx={{ mb: 1 }}>
+            <Box
+              display="grid"
+              sx={{
+                gridTemplateColumns: `repeat(${Object.keys(workInfo.progress).length}, 1fr)`,
+                width: "100%",
+                justifyItems: "center",
+              }}
+            >
+              {workInfo.progress.elapsed !== undefined && (
+                <Typography>{convertTimeMsToTimeElapsedString(workInfo.progress.elapsed)} elapsed</Typography>
+              )}
+              {workInfo.progress.percentage !== undefined && (
+                <Typography>{workInfo.progress.percentage.toFixed(2)}% done</Typography>
+              )}
+            </Box>
+            {workInfo.progress.percentage !== undefined && (
+              <ProgressBar variant="determinate" value={workInfo.progress.percentage} color="primary" />
+            )}
+          </Box>
+        )}
 
-  return <></>;
+        <Box display="grid" sx={{ gridTemplateColumns: `repeat(${Object.keys(workInfo.buttons).length}, 1fr)` }}>
+          {workInfo.stopTooltip ? (
+            <Tooltip title={tooltipInfo}>
+              <Button onClick={workInfo.buttons.cancel}>{workInfo.stopText}</Button>
+            </Tooltip>
+          ) : (
+            <Button onClick={workInfo.buttons.cancel}>{workInfo.stopText}</Button>
+          )}
+          {workInfo.buttons.unfocus && (
+            <Button onClick={workInfo.buttons.unfocus}>Do something else simultaneously</Button>
+          )}
+        </Box>
+      </Paper>
+    </Container>
+  );
 }
