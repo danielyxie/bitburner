@@ -176,12 +176,14 @@ export function SleeveElem(props: IProps): React.ReactElement {
               </Button>
               <Typography>{desc}</Typography>
               <Typography>
-                {props.sleeve.currentTask === SleeveTaskType.Crime &&
-                  createProgressBarText({
-                    progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
-                    totalTicks: 25,
-                  })}
-              </Typography>
+            {props.sleeve.currentTask === SleeveTaskType.Crime && (
+              <ProgressBar
+                variant="determinate"
+                value={(props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime) * 100}
+                color="primary"
+              />
+            )}
+          </Typography>
             </Box>
           </Box>
           <MoreStatsModal open={statsOpen} onClose={() => setStatsOpen(false)} sleeve={props.sleeve} />
