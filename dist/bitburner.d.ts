@@ -4450,7 +4450,7 @@ export declare interface NS {
     /**
      * {@inheritDoc NS.(getScriptIncome:1)}
      */
-    getScriptIncome(script: string, host: string, ...args: string[]): number;
+    getScriptIncome(script: string, host: string, ...args: (string | number | boolean)[]): number;
 
     /**
      * Get the exp gain of a script.
