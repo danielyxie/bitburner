@@ -369,23 +369,32 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     hostname: string,
     manual: boolean,
     {
-        threads: requestedThreads,
-        stock,
-        hackOverrideTiming: requestedHackOverrideTiming,
-        hackOverrideEffect: requestedHackOverrideEffect,
-    }: any = {},
+      threads: requestedThreads,
+      stock: stock,
+      hackOverrideTiming: requestedHackOverrideTiming,
+      hackOverrideEffect: requestedHackOverrideEffect,
+    }: BasicHGWOptions = {},
   ): Promise<number> {
     if (hostname === undefined) {
       throw makeRuntimeErrorMsg("hack", "Takes 1 argument.");
     }
-    const threads = resolveNetscriptRequestedThreads(workerScript, "hack", requestedThreads);
+    const threads = resolveNetscriptRequestedThreads(
+      workerScript,
+      "hack",
+      requestedThreads ?? workerScript.scriptRef.threads,
+    );
     const server = safeGetServer(hostname, "hack");
     if (!(server instanceof Server)) {
       throw makeRuntimeErrorMsg("hack", "Cannot be executed on this server.");
     }
 
     // Calculate the hacking time
-    const hackSkillTiming = resolveNetscriptHackOverride(workerScript, "hack", Player, requestedHackOverrideTiming);
+    const hackSkillTiming = resolveNetscriptHackOverride(
+      workerScript,
+      "hack",
+      Player,
+      requestedHackOverrideTiming ?? Player.hacking,
+    );
     const hackingTime = calculateHackingTime(server, Player, hackSkillTiming); // This is in seconds
 
     // No root access or skill level too low
@@ -410,7 +419,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const expGainedOnFailure = expGainedOnSuccess / 4;
       if (rand < hackChance) {
         // Success!
-        const hackSkillEffect = resolveNetscriptHackOverride(workerScript, "hack", Player, requestedHackOverrideEffect);
+        const hackSkillEffect = resolveNetscriptHackOverride(
+          workerScript,
+          "hack",
+          Player,
+          requestedHackOverrideEffect ?? Player.hacking,
+        );
         const percentHacked = calculatePercentMoneyHacked(server, Player, hackSkillEffect);
         let maxThreadNeeded = Math.ceil(1 / percentHacked);
         if (isNaN(maxThreadNeeded)) {
@@ -588,12 +602,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       workerScript.log("scan", () => `returned ${server.serversOnNetwork.length} connections for ${server.hostname}`);
       return out;
     },
-    hack: function (_hostname: unknown, {
+    hack: function (
+      _hostname: unknown,
+      {
         threads: requestedThreads,
-        stock,
+        stock: stock,
         hackOverrideTiming: requestedHackOverrideTiming,
         hackOverrideEffect: requestedHackOverrideEffect,
-      }: BasicHGWOptions = {}): Promise<number> {
+      }: BasicHGWOptions = {},
+    ): Promise<number> {
       updateDynamicRam("hack", getRamCost(Player, "hack"));
       const hostname = helper.string("hack", "hostname", _hostname);
       return hack(hostname, false, {
@@ -704,9 +721,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       _hostname: unknown,
       {
         threads: requestedThreads,
-        stock,
+        stock: stock,
         hackOverrideTiming: requestedHackOverrideTiming,
-        hackOverrideEffect: requestedHackOverrideEffect,
       }: BasicHGWOptions = {},
     ): Promise<number> {
       updateDynamicRam("grow", getRamCost(Player, "grow"));
@@ -736,7 +752,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("grow", canHack.msg || "");
       }
 
-      const hackSkillTiming = resolveNetscriptHackOverride(workerScript, "hack", Player, requestedHackOverrideTiming);
+      const hackSkillTiming = resolveNetscriptHackOverride(
+        workerScript,
+        "hack",
+        Player,
+        requestedHackOverrideTiming ?? Player.hacking,
+      );
       const growTime = calculateGrowTime(server, Player, hackSkillTiming);
       workerScript.log(
         "grow",
@@ -748,7 +769,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       return netscriptDelay(growTime * 1000, workerScript).then(function () {
         const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
-        const hackSkillEffect = resolveNetscriptHackOverride(workerScript, "hack", Player, requestedHackOverrideEffect);
         processSingleServerGrowth(server, threads, Player, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
         workerScript.scriptRef.recordGrow(server.hostname, threads);
@@ -810,8 +830,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return 2 * CONSTANTS.ServerFortifyAmount * threads;
     },
-    weaken: async function (_hostname: unknown, { threads: requestedThreads,
-        hackOverrideTiming: requestedHackOverrideTiming }: BasicHGWOptions = {}): Promise<number> {
+    weaken: async function (
+      _hostname: unknown,
+      { threads: requestedThreads, hackOverrideTiming: requestedHackOverrideTiming }: BasicHGWOptions = {},
+    ): Promise<number> {
       updateDynamicRam("weaken", getRamCost(Player, "weaken"));
       const hostname = helper.string("weaken", "hostname", _hostname);
       const threads = resolveNetscriptRequestedThreads(
@@ -834,7 +856,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("weaken", canHack.msg || "");
       }
 
-      const hackSkill = resolveNetscriptHackOverride(workerScript, "weaken", Player, requestedHackOverrideTiming);
+      const hackSkill = resolveNetscriptHackOverride(
+        workerScript,
+        "weaken",
+        Player,
+        requestedHackOverrideTiming ?? Player.hacking,
+      );
       const weakenTime = calculateWeakenTime(server, Player, hackSkill);
       workerScript.log(
         "weaken",

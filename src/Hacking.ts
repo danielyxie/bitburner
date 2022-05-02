@@ -46,10 +46,10 @@ export function calculateHackingExpGain(server: Server, player: IPlayer): number
 export function calculatePercentMoneyHacked(server: Server, player: IPlayer, hackOverride?: number): number {
   // Adjust if needed for balancing. This is the divisor for the final calculation
   const balanceFactor = 240;
-  const hackSkill = hackOverride ? hackOverride : player.hacking;
+  hackOverride ||= player.hacking
 
   const difficultyMult = (100 - server.hackDifficulty) / 100;
-  const skillMult = (hackSkill - (server.requiredHackingSkill - 1)) / hackSkill;
+  const skillMult = (hackOverride - (server.requiredHackingSkill - 1)) / hackOverride;
   const percentMoneyHacked =
     (difficultyMult * skillMult * player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney) / balanceFactor;
   if (percentMoneyHacked < 0) {
@@ -67,14 +67,14 @@ export function calculatePercentMoneyHacked(server: Server, player: IPlayer, hac
  */
 export function calculateHackingTime(server: Server, player: IPlayer, hackOverride?: number): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-  const hackSkill = hackOverride ? hackOverride : player.hacking;
+  hackOverride ||= player.hacking
 
   const baseDiff = 500;
   const baseSkill = 50;
   const diffFactor = 2.5;
   let skillFactor = diffFactor * difficultyMult + baseDiff;
   // tslint:disable-next-line
-  skillFactor /= hackSkill + baseSkill;
+  skillFactor /= hackOverride + baseSkill;
 
   const hackTimeMultiplier = 5;
   const hackingTime =

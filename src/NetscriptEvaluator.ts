@@ -65,9 +65,9 @@ export function resolveNetscriptHackOverride(
   workerScript: WorkerScript,
   functionName: string,
   player: IPlayer,
-  hackOverride: number | undefined,
+  hackOverride: number,
 ): number {
-  if (hackOverride === undefined || isNaN(hackOverride))
+  if (isNaN(hackOverride))
     return player.hacking;
 
   if (hackOverride <= 0) {

@@ -267,7 +267,7 @@ export declare interface BasicHGWOptions {
   /** Override hack skill level for purposes of HGW timing. Must be less than or equal to the player's hack level. */
   hackOverrideTiming?: number;
   /** Override hack skill level for purposes of HGW effect. Must be less than or equal to the player's hack level. 
-  *    Only affects magnitude of hack operations*/
+  *    Only affects magnitude of hack operations. */
   hackOverrideEffect?: number;
 }
 
@@ -3916,6 +3916,8 @@ interface HackingFormulas {
    * Multiply by thread to get total percent hacked.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param hackOverride - Optional. Override the hacking level used for calculation. Defaults
+   * player.hacking if no value is provided.
    * @returns The calculated hack percent.
    */
   hackPercent(server: Server, player: Player, hackOverride?: number): number;
@@ -3933,7 +3935,8 @@ interface HackingFormulas {
    * Calculate hack time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param hackOverride - Optional value to override the player's hack skill for timing purposes
+   * @param hackOverride - Optional. Override the hacking level used for timing. Defaults
+   * player.hacking if no value is provided.
    * @returns The calculated hack time.
    */
   hackTime(server: Server, player: Player, hackOverride?: number): number;
@@ -3946,18 +3949,11 @@ interface HackingFormulas {
    */
   hackLevelForTime(server: Server, player: Player, ms: number): number;
   /**
-   * Calculate hack level to hit a specific hack time for a server.
-   * @param server - Server info from {@link NS.getServer | getServer}
-   * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param ms - Time in ms to have the hack take.
-   * @returns The calculated hack level.
-   */
-  hackLevelForTime(server: Server, player: Player, ms: number): number;
-  /**
    * Calculate grow time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param hackOverride - Optional value to override the player's hack skill for timing purposes
+   * @param hackOverride - Optional. Override the hacking level used for timing. Defaults
+   * player.hacking if no value is provided.
    * @returns The calculated grow time.
    */
   growTime(server: Server, player: Player, hackOverride?: number): number;
@@ -3970,18 +3966,11 @@ interface HackingFormulas {
    */
   growLevelForTime(server: Server, player: Player, ms: number): number;
   /**
-   * Calculate hack level to hit a specific grow time for a server.
-   * @param server - Server info from {@link NS.getServer | getServer}
-   * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param ms - Time in ms to have the grow take.
-   * @returns The calculated hack level.
-   */
-  growLevelForTime(server: Server, player: Player, ms: number): number;
-  /**
    * Calculate weaken time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param hackOverride - Optional value to override the player's hack skill for timing purposes
+   * @param hackOverride - Optional. Override the hacking level used for timing. Defaults
+   * player.hacking if no value is provided.
    * @returns The calculated weaken time.
    */
   weakenTime(server: Server, player: Player, hackOverride?: number): number;
