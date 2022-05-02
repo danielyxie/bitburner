@@ -1,20 +1,8 @@
-import LinearProgress from "@mui/material/LinearProgress";
-import React, { useState, useEffect } from "react";
-import withStyles from "@mui/styles/withStyles";
-import { Theme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
-import { use } from "../../ui/Context";
+import React, { useEffect, useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-
-const TimerProgress = withStyles((theme: Theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-  },
-  bar: {
-    transition: "none",
-    backgroundColor: theme.palette.primary.main,
-  },
-}))(LinearProgress);
+import { use } from "../../ui/Context";
+import { ProgressBar } from "../../ui/React/Progress";
 
 interface IProps {
   millis: number;
@@ -44,7 +32,7 @@ export function GameTimer(props: IProps): React.ReactElement {
   // bar physically reaches the end
   return (
     <Grid item xs={12}>
-      <TimerProgress variant="determinate" value={v} color="primary" />
+      <ProgressBar variant="determinate" value={v} color="primary" />
     </Grid>
   );
 }
