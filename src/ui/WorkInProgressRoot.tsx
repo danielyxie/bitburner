@@ -392,7 +392,6 @@ export function WorkInProgressRoot(): React.ReactElement {
       title: `You are attempting to ${player.crimeType}`,
 
       progress: {
-        elapsed: player.timeWorked,
         remaining: player.timeNeededToCompleteWork - player.timeWorked,
         percentage: completion,
       },
