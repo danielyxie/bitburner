@@ -1,4 +1,5 @@
 export enum WorkType {
+  None = "",
   Company = "Working for Company",
   CompanyPartTime = "Working for Company part-time",
   Faction = "Working for Faction",
@@ -8,13 +9,15 @@ export enum WorkType {
   GraftAugmentation = "Grafting an Augmentation",
 }
 
-export enum FactionWorkType {
+export enum PlayerFactionWorkType {
+  None = "",
   Hacking = "Faction Hacking Work",
   Field = "Faction Field Work",
   Security = "Faction Security Work",
 }
 
 export enum ClassType {
+  None = "",
   StudyComputerScience = "studying Computer Science",
   DataStructures = "taking a Data Structures course",
   Networks = "taking a Networks course",
@@ -30,6 +33,7 @@ export enum ClassType {
 }
 
 export enum CrimeType {
+  None = "",
   Shoplift = "shoplift",
   RobStore = "rob a store",
   Mug = "mug someone",

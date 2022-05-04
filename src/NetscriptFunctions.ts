@@ -2460,7 +2460,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         crime_money_mult: Player.crime_money_mult,
         crime_success_mult: Player.crime_success_mult,
         isWorking: Player.isWorking,
-        workType: Player.workType ?? "", // Avoids breaking scripts that for some reason rely on this
+        workType: Player.workType,
         currentWorkFactionName: Player.currentWorkFactionName,
         currentWorkFactionDescription: Player.currentWorkFactionDescription,
         workHackExpGainRate: Player.workHackExpGainRate,
@@ -2482,8 +2482,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workMoneyGained: Player.workMoneyGained,
         createProgramName: Player.createProgramName,
         createProgramReqLvl: Player.createProgramReqLvl,
-        className: Player.className ?? "", // ditto
-        crimeType: Player.crimeType ?? "", // ditto (*2)
+        className: Player.className,
+        crimeType: Player.crimeType,
         work_money_mult: Player.work_money_mult,
         hacknet_node_money_mult: Player.hacknet_node_money_mult,
         hacknet_node_purchase_cost_mult: Player.hacknet_node_purchase_cost_mult,

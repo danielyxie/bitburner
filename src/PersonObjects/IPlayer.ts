@@ -131,14 +131,14 @@ export interface IPlayer {
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: CrimeType | null;
+  crimeType: CrimeType;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: ClassType | null;
+  className: ClassType;
   currentWorkFactionName: string;
-  workType: WorkType | null;
+  workType: WorkType;
   workCostMult: number;
   workExpMult: number;
   currentWorkFactionDescription: string;

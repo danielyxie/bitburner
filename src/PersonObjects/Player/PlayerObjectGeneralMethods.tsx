@@ -66,7 +66,7 @@ import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
-import { WorkType, FactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
+import { WorkType, PlayerFactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -142,8 +142,8 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
-  this.className = null;
-  this.crimeType = null;
+  this.className = ClassType.None;
+  this.crimeType = CrimeType.None;
 
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -534,8 +534,8 @@ export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: s
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.graftAugmentationName = "";
-  this.className = null;
-  this.workType = null;
+  this.className = ClassType.None;
+  this.workType = WorkType.None;
 }
 
 export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
@@ -889,19 +889,19 @@ export function startFactionWork(this: IPlayer, faction: Faction): void {
 }
 
 export function startFactionHackWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(WorkType.Faction, faction.name, FactionWorkType.Hacking);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Hacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getHackingWorkRepGain(this, faction);
 
-  this.factionWorkType = FactionWorkType.Hacking;
+  this.factionWorkType = PlayerFactionWorkType.Hacking;
   this.currentWorkFactionDescription = "carrying out hacking contracts";
 
   this.startFactionWork(faction);
 }
 
 export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(WorkType.Faction, faction.name, FactionWorkType.Field);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Field);
 
   this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workStrExpGainRate = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -911,14 +911,14 @@ export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
   this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
 
-  this.factionWorkType = FactionWorkType.Field;
+  this.factionWorkType = PlayerFactionWorkType.Field;
   this.currentWorkFactionDescription = "carrying out field missions";
 
   this.startFactionWork(faction);
 }
 
 export function startFactionSecurityWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(WorkType.Faction, faction.name, FactionWorkType.Security);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Security);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workStrExpGainRate = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -928,7 +928,7 @@ export function startFactionSecurityWork(this: IPlayer, faction: Faction): void 
   this.workChaExpGainRate = 0.0 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
 
-  this.factionWorkType = FactionWorkType.Security;
+  this.factionWorkType = PlayerFactionWorkType.Security;
   this.currentWorkFactionDescription = "performing security detail";
 
   this.startFactionWork(faction);
@@ -943,13 +943,13 @@ export function workForFaction(this: IPlayer, numCycles: number): boolean {
 
   //Constantly update the rep gain rate
   switch (this.factionWorkType) {
-    case FactionWorkType.Hacking:
+    case PlayerFactionWorkType.Hacking:
       this.workRepGainRate = getHackingWorkRepGain(this, faction);
       break;
-    case FactionWorkType.Field:
+    case PlayerFactionWorkType.Field:
       this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
       break;
-    case FactionWorkType.Security:
+    case PlayerFactionWorkType.Security:
       this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
       break;
     default:
@@ -1536,7 +1536,7 @@ export function commitCrime(this: IPlayer, numCycles: number): boolean {
 export function finishCrime(this: IPlayer, cancelled: boolean): string {
   //Determine crime success/failure
   if (!cancelled) {
-    if (determineCrimeSuccess(this, this.crimeType ?? "")) {
+    if (determineCrimeSuccess(this, this.crimeType)) {
       //Handle Karma and crime statistics
       let crime = null;
       for (const i of Object.keys(Crimes)) {
@@ -1669,7 +1669,7 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
   this.committingCrimeThruSingFn = false;
   this.singFnCrimeWorkerScript = null;
   this.isWorking = false;
-  this.crimeType = null;
+  this.crimeType = CrimeType.None;
   this.resetWorkStatus();
   return "";
 }

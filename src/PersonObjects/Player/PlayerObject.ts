@@ -38,7 +38,7 @@ import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
-import { WorkType, ClassType, CrimeType } from "../../utils/WorkType";
+import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../utils/WorkType";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -136,19 +136,19 @@ export class PlayerObject implements IPlayer {
   bladeburner_success_chance_mult: number;
 
   createProgramReqLvl: number;
-  factionWorkType: string;
+  factionWorkType: PlayerFactionWorkType;
   createProgramName: string;
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: CrimeType | null;
+  crimeType: CrimeType;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: ClassType | null;
+  className: ClassType;
   currentWorkFactionName: string;
-  workType: WorkType | null;
+  workType: WorkType;
   workCostMult: number;
   workExpMult: number;
   currentWorkFactionDescription: string;
@@ -399,7 +399,7 @@ export class PlayerObject implements IPlayer {
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;
     this.focus = false;
-    this.workType = null;
+    this.workType = WorkType.None;
     this.workCostMult = 1;
     this.workExpMult = 1;
 
@@ -431,9 +431,9 @@ export class PlayerObject implements IPlayer {
     this.graftAugmentationName = "";
     this.timeWorkedGraftAugmentation = 0;
 
-    this.className = null;
+    this.className = ClassType.None;
 
-    this.crimeType = null;
+    this.crimeType = CrimeType.None;
 
     this.timeWorked = 0; //in m;
     this.timeWorkedCreateProgram = 0;
@@ -619,7 +619,7 @@ export class PlayerObject implements IPlayer {
     this.getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;
     this.getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
     this.createHacknetServer = serverMethods.createHacknetServer;
-    this.factionWorkType = "";
+    this.factionWorkType = PlayerFactionWorkType.None;
     this.committingCrimeThruSingFn = false;
     this.singFnCrimeWorkerScript = null;
 

@@ -391,12 +391,10 @@ export const achievements: IMap<Achievement> = {
   WORKOUT: {
     ...achievementData["WORKOUT"],
     Icon: "WORKOUT",
-    Condition: () => {
-      if (Player.className === null) return false;
-      return [ClassType.GymStrength, ClassType.GymDefense, ClassType.GymDexterity, ClassType.GymAgility].includes(
+    Condition: () =>
+      [ClassType.GymStrength, ClassType.GymDefense, ClassType.GymDexterity, ClassType.GymAgility].includes(
         Player.className,
-      );
-    },
+      ),
   },
   TOR: {
     ...achievementData["TOR"],
