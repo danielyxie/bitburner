@@ -49,6 +49,7 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
+import { WorkType } from "../utils/WorkType";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -650,11 +651,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         if (
           !(
-            player.workType == CONSTANTS.WorkTypeFaction ||
-            player.workType == CONSTANTS.WorkTypeCompany ||
-            player.workType == CONSTANTS.WorkTypeCompanyPartTime ||
-            player.workType == CONSTANTS.WorkTypeCreateProgram ||
-            player.workType == CONSTANTS.WorkTypeStudyClass
+            player.workType === WorkType.Faction ||
+            player.workType === WorkType.Company ||
+            player.workType === WorkType.CompanyPartTime ||
+            player.workType === WorkType.CreateProgram ||
+            player.workType === WorkType.StudyClass
           )
         ) {
           throw _ctx.helper.makeRuntimeErrorMsg("Cannot change focus for current job");

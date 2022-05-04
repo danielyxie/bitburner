@@ -66,13 +66,6 @@ export const CONSTANTS: {
   FactionWorkHacking: string;
   FactionWorkField: string;
   FactionWorkSecurity: string;
-  WorkTypeCompany: string;
-  WorkTypeCompanyPartTime: string;
-  WorkTypeFaction: string;
-  WorkTypeCreateProgram: string;
-  WorkTypeStudyClass: string;
-  WorkTypeCrime: string;
-  WorkTypeGraftAugmentation: string;
   ClassStudyComputerScience: string;
   ClassDataStructures: string;
   ClassNetworks: string;
@@ -226,14 +219,6 @@ export const CONSTANTS: {
   FactionWorkHacking: "Faction Hacking Work",
   FactionWorkField: "Faction Field Work",
   FactionWorkSecurity: "Faction Security Work",
-
-  WorkTypeCompany: "Working for Company",
-  WorkTypeCompanyPartTime: "Working for Company part-time",
-  WorkTypeFaction: "Working for Faction",
-  WorkTypeCreateProgram: "Working on Create a Program",
-  WorkTypeStudyClass: "Studying or Taking a class at university",
-  WorkTypeCrime: "Committing a crime",
-  WorkTypeGraftAugmentation: "Grafting an Augmentation",
 
   ClassStudyComputerScience: "studying Computer Science",
   ClassDataStructures: "taking a Data Structures course",

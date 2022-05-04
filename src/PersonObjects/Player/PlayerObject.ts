@@ -38,6 +38,7 @@ import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
+import { WorkType } from "../../utils/WorkType";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -147,7 +148,7 @@ export class PlayerObject implements IPlayer {
   focus: boolean;
   className: string;
   currentWorkFactionName: string;
-  workType: string;
+  workType: WorkType | null;
   workCostMult: number;
   workExpMult: number;
   currentWorkFactionDescription: string;
@@ -280,7 +281,7 @@ export class PlayerObject implements IPlayer {
   prestigeSourceFile: () => void;
   calculateSkill: (exp: number, mult?: number) => number;
   calculateSkillProgress: (exp: number, mult?: number) => ISkillProgress;
-  resetWorkStatus: (generalType?: string, group?: string, workType?: string) => void;
+  resetWorkStatus: (generalType?: WorkType, group?: string, workType?: string) => void;
   getWorkHackExpGain: () => number;
   getWorkStrExpGain: () => number;
   getWorkDefExpGain: () => number;
@@ -398,7 +399,7 @@ export class PlayerObject implements IPlayer {
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;
     this.focus = false;
-    this.workType = "";
+    this.workType = null;
     this.workCostMult = 1;
     this.workExpMult = 1;
 

@@ -30,6 +30,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
+import { WorkType } from "../utils/WorkType";
 
 export interface IPlayer {
   // Class members
@@ -137,7 +138,7 @@ export interface IPlayer {
   focus: boolean;
   className: string;
   currentWorkFactionName: string;
-  workType: string;
+  workType: WorkType | null;
   workCostMult: number;
   workExpMult: number;
   currentWorkFactionDescription: string;
@@ -269,7 +270,7 @@ export interface IPlayer {
   prestigeSourceFile(): void;
   calculateSkill(exp: number, mult?: number): number;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
-  resetWorkStatus(generalType?: string, group?: string, workType?: string): void;
+  resetWorkStatus(generalType?: WorkType, group?: string, workType?: string): void;
   getWorkHackExpGain(): number;
   getWorkStrExpGain(): number;
   getWorkDefExpGain(): number;

@@ -19,6 +19,7 @@ import { ProgressBar } from "./React/Progress";
 import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
 import { StatsRow } from "./React/StatsRow";
+import { WorkType } from "../utils/WorkType";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -139,7 +140,7 @@ export function WorkInProgressRoot(): React.ReactElement {
   let workInfo: IWorkInfo | null;
 
   switch (player.workType) {
-    case CONSTANTS.WorkTypeFaction: {
+    case WorkType.Faction: {
       const faction = Factions[player.currentWorkFactionName];
       if (!faction) {
         workInfo = {
@@ -208,7 +209,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case CONSTANTS.WorkTypeStudyClass: {
+    case WorkType.StudyClass: {
       const className = player.className;
       function cancel(): void {
         player.finishClass(true);
@@ -262,7 +263,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case CONSTANTS.WorkTypeCompany: {
+    case WorkType.Company: {
       const comp = Companies[player.companyName];
       if (comp == null || !(comp instanceof Company)) {
         workInfo = {
@@ -337,7 +338,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case CONSTANTS.WorkTypeCompanyPartTime: {
+    case WorkType.CompanyPartTime: {
       function cancel(): void {
         player.finishWorkPartTime(true);
         router.toJob();
@@ -398,7 +399,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case CONSTANTS.WorkTypeCrime: {
+    case WorkType.Crime: {
       const completion = Math.round((player.timeWorked / player.timeNeededToCompleteWork) * 100);
 
       workInfo = {
@@ -421,7 +422,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case CONSTANTS.WorkTypeCreateProgram: {
+    case WorkType.CreateProgram: {
       function cancel(): void {
         player.finishCreateProgramWork(true);
         router.toTerminal();
@@ -456,7 +457,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case CONSTANTS.WorkTypeGraftAugmentation: {
+    case WorkType.GraftAugmentation: {
       function cancel(): void {
         player.finishGraftAugmentationWork(true);
         router.toTerminal();

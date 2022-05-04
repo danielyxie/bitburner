@@ -2460,7 +2460,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         crime_money_mult: Player.crime_money_mult,
         crime_success_mult: Player.crime_success_mult,
         isWorking: Player.isWorking,
-        workType: Player.workType,
+        workType: Player.workType ?? "", // Avoids breaking scripts that for some reason rely on this
         currentWorkFactionName: Player.currentWorkFactionName,
         currentWorkFactionDescription: Player.currentWorkFactionDescription,
         workHackExpGainRate: Player.workHackExpGainRate,
