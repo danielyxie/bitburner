@@ -8,12 +8,12 @@ function parseArg(arg: string): string | number | boolean {
     return asNumber;
   }
 
-  if (arg === 'true' || arg === 'false') {
-    return arg === 'true';
+  if (arg === "true" || arg === "false") {
+    return arg === "true";
   }
 
   // Strip quotation marks from strings that begin/end with the same mark
-  return arg.replace(/^"(.*?)"$/g, '$1').replace(/^'(.*?)'$/g, '$1');
+  return arg.replace(/^"(.*?)"$/g, "$1").replace(/^'(.*?)'$/g, "$1");
 }
 
 export function ParseCommands(commands: string): string[] {
@@ -48,14 +48,14 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
   // Track depth of quoted strings, e.g.: "the're 'going away' rather 'quickly \"and awkwardly\"'" should be parsed as a single string
   const quotes: string[] = [];
 
-  let arg = '';
+  let arg = "";
   while (idx < command.length) {
     const c = command.charAt(idx);
 
     // If the current character is a backslash, add the next character verbatim to the argument
-    if (c === '\\') {
+    if (c === "\\") {
       arg += command.charAt(++idx);
-    // If the current character is a single- or double-quote mark, add it to the current argument.
+      // If the current character is a single- or double-quote mark, add it to the current argument.
     } else if (c === KEY.DOUBLE_QUOTE || c === KEY.QUOTE) {
       arg += c;
       const quote = quotes[quotes.length - 1];
@@ -65,32 +65,28 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
       // If we're already in a quoted string, push onto the stack of string starts to track depth.
       if (
         c !== quote &&
-        (
-          prev === KEY.SPACE ||
+        (prev === KEY.SPACE ||
           prev === KEY.EQUAL ||
           (c === KEY.DOUBLE_QUOTE && prev === KEY.QUOTE) ||
-          (c === KEY.QUOTE && prev === KEY.DOUBLE_QUOTE)
-        )
+          (c === KEY.QUOTE && prev === KEY.DOUBLE_QUOTE))
       ) {
         quotes.push(c);
-      // If the next character is a space and the current character is the same as the previously used
-      // quotation mark, this is a valid end to a string. Pop off the depth tracker.
+        // If the next character is a space and the current character is the same as the previously used
+        // quotation mark, this is a valid end to a string. Pop off the depth tracker.
       } else if (
         c === quote &&
-        (
-          next === KEY.SPACE ||
+        (next === KEY.SPACE ||
           (c === KEY.DOUBLE_QUOTE && next === KEY.QUOTE) ||
-          (c === KEY.QUOTE && next === KEY.DOUBLE_QUOTE)
-        )
+          (c === KEY.QUOTE && next === KEY.DOUBLE_QUOTE))
       ) {
         quotes.pop();
       }
-    // If the current character is a space and we are not inside a string, parse the current argument
-    // and start a new one
+      // If the current character is a space and we are not inside a string, parse the current argument
+      // and start a new one
     } else if (c === KEY.SPACE && quotes.length === 0) {
       args.push(parseArg(arg));
 
-      arg = '';
+      arg = "";
     } else {
       // Add the current character to the current argument
       arg += c;
@@ -100,7 +96,7 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
   }
 
   // Add the last arg (if any)
-  if (arg !== '') {
+  if (arg !== "") {
     args.push(parseArg(arg));
   }
 
