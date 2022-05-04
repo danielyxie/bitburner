@@ -1751,14 +1751,6 @@ export function hospitalize(this: IPlayer): number {
 //The 'sing' argument designates whether or not this is being called from
 //the applyToCompany() Netscript Singularity function
 export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing = false): boolean {
-  // Get current company and job
-  let currCompany = null;
-  if (this.companyName !== "") {
-    currCompany = Companies[this.companyName];
-  }
-  const currPositionName = this.jobs[this.companyName];
-
-  // Get company that's being applied to
   const company = Companies[this.location]; //Company being applied to
   if (!(company instanceof Company)) {
     console.error(`Could not find company that matches the location: ${this.location}. Player.applyToCompany() failed`);
@@ -1768,66 +1760,44 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   let pos = entryPosType;
 
   if (!this.isQualified(company, pos)) {
-    const reqText = getJobRequirementText(company, pos);
     if (!sing) {
-      dialogBoxCreate("Unfortunately, you do not qualify for this position<br>" + reqText);
+      dialogBoxCreate("Unfortunately, you do not qualify for this position<br>" + getJobRequirementText(company, pos));
     }
     return false;
   }
 
-  // Check if this company has the position
   if (!company.hasPosition(pos)) {
+    console.error(`Company ${company.name} does not have position ${pos}. Player.applyToCompany() failed`);
     return false;
   }
 
   while (true) {
-    const newPos = getNextCompanyPositionHelper(pos);
-    if (newPos == null) {
-      break;
-    }
-
-    //Check if this company has this position
-    if (company.hasPosition(newPos)) {
-      if (!this.isQualified(company, newPos)) {
-        //If player not qualified for next job, break loop so player will be given current job
-        break;
-      }
-      pos = newPos;
-    } else {
-      break;
-    }
+    const nextPos = getNextCompanyPositionHelper(pos);
+    if (nextPos == null) break;
+    if (company.hasPosition(nextPos) && this.isQualified(company, nextPos)) {
+      pos = nextPos;
+    } else break;
   }
 
-  //Check if the determined job is the same as the player's current job
-  if (currCompany != null) {
-    if (currCompany.name == company.name && pos.name == currPositionName) {
+  //Check if player already has the assigned job
+  if (this.jobs[company.name] === pos.name) {
+    if (!sing) {
       const nextPos = getNextCompanyPositionHelper(pos);
-      if (nextPos == null) {
-        if (!sing) {
-          dialogBoxCreate("You are already at the highest position for your field! No promotion available");
-        }
-        return false;
-      } else if (company.hasPosition(nextPos)) {
-        if (!sing) {
-          const reqText = getJobRequirementText(company, nextPos);
-          dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
-        }
-        return false;
+      if (nextPos == null || !company.hasPosition(nextPos)) {
+        dialogBoxCreate("You are already at the highest position for your field! No promotion available");
       } else {
-        if (!sing) {
-          dialogBoxCreate("You are already at the highest position for your field! No promotion available");
-        }
-        return false;
+        const reqText = getJobRequirementText(company, nextPos);
+        dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
       }
     }
+    return false;
   }
 
   this.jobs[company.name] = pos.name;
-  if (!this.focus && this.isWorking && this.companyName !== this.location) this.resetWorkStatus();
-  this.companyName = this.location;
+  if (!this.isWorking || !this.workType.includes("Working for Company")) this.companyName = company.name;
 
   if (!sing) {
-    dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
+    dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
   }
   return true;
 }
