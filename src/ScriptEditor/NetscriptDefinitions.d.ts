@@ -7045,22 +7045,27 @@ interface CorporationInfo {
 interface Employee {
   /** Name of the employee */
   name: string;
-  /** Morale */
+  /** Morale of the employee */
   mor: number;
-  /** Happiness */
+  /** Happiness of the employee */
   hap: number;
-  /** Energy */
+  /** Energy of the employee */
   ene: number;
+  /** Intelligence of the employee */
   int: number;
+  /** Charisma of the employee */
   cha: number;
+  /** Experience of the employee */
   exp: number;
+  /** Creativity of the employee */
   cre: number;
+  /** Efficiency of the employee */
   eff: number;
-  /** Salary */
+  /** Salary of the employee */
   sal: number;
-  /** City */
+  /** Current Location (city) */
   loc: string;
-  /** Current job */
+  /** Current job position */
   pos: string;
 }
 
