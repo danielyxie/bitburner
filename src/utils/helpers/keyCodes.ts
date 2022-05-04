@@ -25,6 +25,7 @@ export enum KEY {
   CLOSE_PARENTHESIS = ")",
   OPEN_BRACE = "{",
   CLOSE_BRACE = "}",
+  EQUAL = "=",
 
   PIPE = "|",
   DOT = ".",
