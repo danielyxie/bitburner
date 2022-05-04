@@ -197,11 +197,11 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         ownedAugNames={owned}
         player={player}
         canPurchase={(player, aug) => {
-          const augCost = aug.getCost(player).moneyCost;
+          const costs = aug.getCost(player);
           return (
             hasAugmentationPrereqs(aug) &&
-            props.faction.playerReputation >= aug.baseRepRequirement &&
-            (augCost === 0 || player.money > augCost)
+            props.faction.playerReputation >= costs.repCost &&
+            (costs.moneyCost === 0 || player.money > costs.moneyCost)
           );
         }}
         purchaseAugmentation={(player, aug, showModal) => {
