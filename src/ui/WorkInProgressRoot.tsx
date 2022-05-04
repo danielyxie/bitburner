@@ -19,7 +19,7 @@ import { ProgressBar } from "./React/Progress";
 import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
 import { StatsRow } from "./React/StatsRow";
-import { WorkType } from "../utils/WorkType";
+import { WorkType, ClassType } from "../utils/WorkType";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -223,10 +223,10 @@ export function WorkInProgressRoot(): React.ReactElement {
 
       let stopText = "";
       if (
-        className === CONSTANTS.ClassGymStrength ||
-        className === CONSTANTS.ClassGymDefense ||
-        className === CONSTANTS.ClassGymDexterity ||
-        className === CONSTANTS.ClassGymAgility
+        className === ClassType.GymStrength ||
+        className === ClassType.GymDefense ||
+        className === ClassType.GymDexterity ||
+        className === ClassType.GymAgility
       ) {
         stopText = "Stop training at gym";
       } else {

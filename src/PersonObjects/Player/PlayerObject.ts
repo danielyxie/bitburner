@@ -38,7 +38,7 @@ import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
-import { WorkType } from "../../utils/WorkType";
+import { WorkType, ClassType } from "../../utils/WorkType";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -146,7 +146,7 @@ export class PlayerObject implements IPlayer {
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: string;
+  className: ClassType | null;
   currentWorkFactionName: string;
   workType: WorkType | null;
   workCostMult: number;
@@ -230,7 +230,7 @@ export class PlayerObject implements IPlayer {
   singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
   startFactionWork: (faction: Faction) => void;
-  startClass: (costMult: number, expMult: number, className: string) => void;
+  startClass: (costMult: number, expMult: number, className: ClassType) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
   startCrime: (
     router: IRouter,
@@ -431,7 +431,7 @@ export class PlayerObject implements IPlayer {
     this.graftAugmentationName = "";
     this.timeWorkedGraftAugmentation = 0;
 
-    this.className = "";
+    this.className = null;
 
     this.crimeType = "";
 

@@ -2482,7 +2482,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workMoneyGained: Player.workMoneyGained,
         createProgramName: Player.createProgramName,
         createProgramReqLvl: Player.createProgramReqLvl,
-        className: Player.className,
+        className: Player.className ?? "", // Avoids breaking scripts that for some reason rely on this
         crimeType: Player.crimeType,
         work_money_mult: Player.work_money_mult,
         hacknet_node_money_mult: Player.hacknet_node_money_mult,

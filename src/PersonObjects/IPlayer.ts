@@ -30,7 +30,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
-import { WorkType } from "../utils/WorkType";
+import { WorkType, ClassType } from "../utils/WorkType";
 
 export interface IPlayer {
   // Class members
@@ -136,7 +136,7 @@ export interface IPlayer {
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: string;
+  className: ClassType | null;
   currentWorkFactionName: string;
   workType: WorkType | null;
   workCostMult: number;
@@ -220,7 +220,7 @@ export interface IPlayer {
   singularityStopWork(): string;
   startBladeburner(p: any): void;
   startFactionWork(faction: Faction): void;
-  startClass(costMult: number, expMult: number, className: string): void;
+  startClass(costMult: number, expMult: number, className: ClassType): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startCrime(
     router: IRouter,

@@ -49,7 +49,7 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { WorkType } from "../utils/WorkType";
+import { ClassType, WorkType } from "../utils/WorkType";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -299,25 +299,25 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             return false;
         }
 
-        let task = "";
+        let task: ClassType;
         switch (className.toLowerCase()) {
           case "Study Computer Science".toLowerCase():
-            task = CONSTANTS.ClassStudyComputerScience;
+            task = ClassType.StudyComputerScience;
             break;
           case "Data Structures".toLowerCase():
-            task = CONSTANTS.ClassDataStructures;
+            task = ClassType.DataStructures;
             break;
           case "Networks".toLowerCase():
-            task = CONSTANTS.ClassNetworks;
+            task = ClassType.Networks;
             break;
           case "Algorithms".toLowerCase():
-            task = CONSTANTS.ClassAlgorithms;
+            task = ClassType.Algorithms;
             break;
           case "Management".toLowerCase():
-            task = CONSTANTS.ClassManagement;
+            task = ClassType.Management;
             break;
           case "Leadership".toLowerCase():
-            task = CONSTANTS.ClassLeadership;
+            task = ClassType.Leadership;
             break;
           default:
             _ctx.log(() => `Invalid class name: ${className}.`);
@@ -416,19 +416,19 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         switch (stat.toLowerCase()) {
           case "strength".toLowerCase():
           case "str".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymStrength);
+            player.startClass(costMult, expMult, ClassType.GymStrength);
             break;
           case "defense".toLowerCase():
           case "def".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymDefense);
+            player.startClass(costMult, expMult, ClassType.GymDefense);
             break;
           case "dexterity".toLowerCase():
           case "dex".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymDexterity);
+            player.startClass(costMult, expMult, ClassType.GymDexterity);
             break;
           case "agility".toLowerCase():
           case "agi".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
+            player.startClass(costMult, expMult, ClassType.GymAgility);
             break;
           default:
             _ctx.log(() => `Invalid stat: ${stat}.`);
