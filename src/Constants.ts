@@ -63,7 +63,7 @@ export const CONSTANTS: {
   GameCyclesPerQuarterHour: number;
   MillisecondsPerFiveMinutes: number;
   GameCyclesPerFiveMinutes: number;
-    ClassDataStructuresBaseCost: number;
+  ClassDataStructuresBaseCost: number;
   ClassNetworksBaseCost: number;
   ClassAlgorithmsBaseCost: number;
   ClassManagementBaseCost: number;
@@ -75,18 +75,6 @@ export const CONSTANTS: {
   ClassAlgorithmsBaseExp: number;
   ClassManagementBaseExp: number;
   ClassLeadershipBaseExp: number;
-  CrimeShoplift: string;
-  CrimeRobStore: string;
-  CrimeMug: string;
-  CrimeLarceny: string;
-  CrimeDrugs: string;
-  CrimeBondForgery: string;
-  CrimeTraffickArms: string;
-  CrimeHomicide: string;
-  CrimeGrandTheftAuto: string;
-  CrimeKidnap: string;
-  CrimeAssassination: string;
-  CrimeHeist: string;
   CodingContractBaseFactionRepGain: number;
   CodingContractBaseCompanyRepGain: number;
   CodingContractBaseMoneyGain: number;
@@ -217,19 +205,6 @@ export const CONSTANTS: {
   ClassAlgorithmsBaseExp: 4,
   ClassManagementBaseExp: 2,
   ClassLeadershipBaseExp: 4,
-
-  CrimeShoplift: "shoplift",
-  CrimeRobStore: "rob a store",
-  CrimeMug: "mug someone",
-  CrimeLarceny: "commit larceny",
-  CrimeDrugs: "deal drugs",
-  CrimeBondForgery: "forge corporate bonds",
-  CrimeTraffickArms: "traffick illegal arms",
-  CrimeHomicide: "commit homicide",
-  CrimeGrandTheftAuto: "commit grand theft auto",
-  CrimeKidnap: "kidnap someone for ransom",
-  CrimeAssassination: "assassinate a high-profile target",
-  CrimeHeist: "pull off the ultimate heist",
 
   // Coding Contract
   // TODO: Move this into Coding contract implementation?

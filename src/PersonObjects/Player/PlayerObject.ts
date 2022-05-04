@@ -38,7 +38,7 @@ import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
-import { WorkType, ClassType } from "../../utils/WorkType";
+import { WorkType, ClassType, CrimeType } from "../../utils/WorkType";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -141,7 +141,7 @@ export class PlayerObject implements IPlayer {
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: string;
+  crimeType: CrimeType | null;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
@@ -234,7 +234,7 @@ export class PlayerObject implements IPlayer {
   startCorporation: (corpName: string, additionalShares?: number) => void;
   startCrime: (
     router: IRouter,
-    crimeType: string,
+    crimeType: CrimeType,
     hackExp: number,
     strExp: number,
     defExp: number,
@@ -433,7 +433,7 @@ export class PlayerObject implements IPlayer {
 
     this.className = null;
 
-    this.crimeType = "";
+    this.crimeType = null;
 
     this.timeWorked = 0; //in m;
     this.timeWorkedCreateProgram = 0;

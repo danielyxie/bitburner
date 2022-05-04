@@ -66,7 +66,7 @@ import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
-import { WorkType, FactionWorkType, ClassType } from "../../utils/WorkType";
+import { WorkType, FactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -143,7 +143,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.className = null;
-  this.crimeType = "";
+  this.crimeType = null;
 
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -1488,7 +1488,7 @@ export function finishClass(this: IPlayer, sing = false): string {
 export function startCrime(
   this: IPlayer,
   router: IRouter,
-  crimeType: string,
+  crimeType: CrimeType,
   hackExp: number,
   strExp: number,
   defExp: number,
@@ -1536,7 +1536,7 @@ export function commitCrime(this: IPlayer, numCycles: number): boolean {
 export function finishCrime(this: IPlayer, cancelled: boolean): string {
   //Determine crime success/failure
   if (!cancelled) {
-    if (determineCrimeSuccess(this, this.crimeType)) {
+    if (determineCrimeSuccess(this, this.crimeType ?? "")) {
       //Handle Karma and crime statistics
       let crime = null;
       for (const i of Object.keys(Crimes)) {
@@ -1669,7 +1669,7 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
   this.committingCrimeThruSingFn = false;
   this.singFnCrimeWorkerScript = null;
   this.isWorking = false;
-  this.crimeType = "";
+  this.crimeType = null;
   this.resetWorkStatus();
   return "";
 }

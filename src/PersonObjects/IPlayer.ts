@@ -30,7 +30,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
-import { WorkType, ClassType } from "../utils/WorkType";
+import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
 
 export interface IPlayer {
   // Class members
@@ -131,7 +131,7 @@ export interface IPlayer {
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: string;
+  crimeType: CrimeType | null;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
@@ -224,7 +224,7 @@ export interface IPlayer {
   startCorporation(corpName: string, additionalShares?: number): void;
   startCrime(
     router: IRouter,
-    crimeType: string,
+    crimeType: CrimeType,
     hackExp: number,
     strExp: number,
     defExp: number,
