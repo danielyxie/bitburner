@@ -1,6 +1,5 @@
 import { IPlayer } from "../IPlayer";
 import { PlayerObject } from "./PlayerObject";
-import { Augmentations } from "../../Augmentation/Augmentations";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
@@ -1367,7 +1366,7 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
 export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean, singularity = false): string {
   const augName = this.graftAugmentationName;
   if (cancelled === false) {
-    applyAugmentation(Augmentations[augName]);
+    applyAugmentation({ name: augName, level: 1 });
 
     if (!this.hasAugmentation(AugmentationNames.CongruityImplant)) {
       this.entropy += 1;

@@ -16,12 +16,10 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction";
 
 import { use } from "../../ui/Context";
-import { CreateGangModal } from "./CreateGangModal";
 
-import { Box, Paper, Typography, Button, Tooltip } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
 import { FactionNames } from "../data/FactionNames";
-import { GangConstants } from "../../Gang/data/Constants";
 import { GangButton } from "./GangButton";
 
 type IProps = {
@@ -30,7 +28,6 @@ type IProps = {
 };
 
 // Info text for all options on the UI
-const gangInfo = "Create and manage a gang for this Faction. Gangs will earn you money and faction reputation";
 const hackingContractsInfo =
   "Complete hacking contracts for your faction. " +
   "Your effectiveness, which determines how much " +
