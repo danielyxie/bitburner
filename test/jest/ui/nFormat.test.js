@@ -1,3 +1,4 @@
+import { describe, expect, test } from "@jest/globals";
 import { numeralWrapper } from "../../../src/ui/numeralFormat";
 
 let decimalFormat = "0.[000000]";
