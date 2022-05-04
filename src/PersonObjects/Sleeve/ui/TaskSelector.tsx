@@ -77,7 +77,9 @@ function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
   }
 
   return factions.filter((faction) => {
-    const facInfo = Factions[faction].getInfo();
+    const factionObj = Factions[faction];
+    if (!factionObj) return false;
+    const facInfo = factionObj.getInfo();
     return facInfo.offerHackingWork || facInfo.offerFieldWork || facInfo.offerSecurityWork;
   });
 }
