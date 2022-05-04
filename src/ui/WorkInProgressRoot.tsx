@@ -138,337 +138,366 @@ export function WorkInProgressRoot(): React.ReactElement {
 
   let workInfo: IWorkInfo | null;
 
-  if (player.workType == CONSTANTS.WorkTypeFaction) {
-    const faction = Factions[player.currentWorkFactionName];
-    if (!faction) {
+  switch (player.workType) {
+    case CONSTANTS.WorkTypeFaction: {
+      const faction = Factions[player.currentWorkFactionName];
+      if (!faction) {
+        workInfo = {
+          buttons: {
+            cancel: () => router.toFactions(),
+          },
+          title:
+            `You have not joined ${player.currentWorkFactionName || "(Faction not found)"} at this time,` +
+            " please try again if you think this should have worked",
+
+          stopText: "Back to Factions",
+        };
+      }
+
+      function cancel(): void {
+        router.toFaction(faction);
+        player.finishFactionWork(true);
+      }
+      function unfocus(): void {
+        router.toFaction(faction);
+        player.stopFocusing();
+      }
+
       workInfo = {
         buttons: {
-          cancel: () => router.toFactions(),
+          cancel: cancel,
+          unfocus: unfocus,
         },
-        title:
-          `You have not joined ${player.currentWorkFactionName || "(Faction not found)"} at this time,` +
-          " please try again if you think this should have worked",
+        title: (
+          <>
+            You are currently {player.currentWorkFactionDescription} for your faction <b>{faction.name}</b>
+          </>
+        ),
 
-        stopText: "Back to Factions",
+        description: (
+          <>
+            Current Faction Reputation: <Reputation reputation={faction.playerReputation} />
+          </>
+        ),
+        gains: [
+          player.workMoneyGained > 0 ? (
+            <StatsRow name="Money" color={Settings.theme.money}>
+              <Typography>
+                <Money money={player.workMoneyGained} /> (
+                <MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
+              </Typography>
+            </StatsRow>
+          ) : (
+            <></>
+          ),
+          <StatsRow name="Faction Reputation" color={Settings.theme.rep}>
+            <Typography>
+              <Reputation reputation={player.workRepGained} /> (
+              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
+            </Typography>
+          </StatsRow>,
+          ...expGains,
+        ],
+        progress: {
+          elapsed: player.timeWorked,
+        },
+
+        stopText: "Stop Faction work",
       };
+
+      break;
     }
 
-    function cancel(): void {
-      router.toFaction(faction);
-      player.finishFactionWork(true);
-    }
-    function unfocus(): void {
-      router.toFaction(faction);
-      player.stopFocusing();
+    case CONSTANTS.WorkTypeStudyClass: {
+      const className = player.className;
+      function cancel(): void {
+        player.finishClass(true);
+        router.toCity();
+      }
+
+      function unfocus(): void {
+        router.toCity();
+        player.stopFocusing();
+      }
+
+      let stopText = "";
+      if (
+        className === CONSTANTS.ClassGymStrength ||
+        className === CONSTANTS.ClassGymDefense ||
+        className === CONSTANTS.ClassGymDexterity ||
+        className === CONSTANTS.ClassGymAgility
+      ) {
+        stopText = "Stop training at gym";
+      } else {
+        stopText = "Stop taking course";
+      }
+
+      workInfo = {
+        buttons: {
+          cancel: cancel,
+          unfocus: unfocus,
+        },
+        title: (
+          <>
+            You are currently <b>{className}</b>
+          </>
+        ),
+
+        gains: [
+          <StatsRow name="Total Cost" color={Settings.theme.money}>
+            <Typography>
+              <Money money={-player.workMoneyGained} /> (<MoneyRate money={player.workMoneyLossRate * CYCLES_PER_SEC} />
+              )
+            </Typography>
+          </StatsRow>,
+          ...expGains,
+        ],
+        progress: {
+          elapsed: player.timeWorked,
+        },
+
+        stopText: stopText,
+      };
+
+      break;
     }
 
-    workInfo = {
-      buttons: {
-        cancel: cancel,
-        unfocus: unfocus,
-      },
-      title: (
-        <>
-          You are currently {player.currentWorkFactionDescription} for your faction <b>{faction.name}</b>
-        </>
-      ),
+    case CONSTANTS.WorkTypeCompany: {
+      const comp = Companies[player.companyName];
+      if (comp == null || !(comp instanceof Company)) {
+        workInfo = {
+          buttons: {
+            cancel: () => router.toTerminal(),
+          },
+          title:
+            `You cannot work for ${player.companyName || "(Company not found)"} at this time,` +
+            " please try again if you think this should have worked",
 
-      description: (
-        <>
-          Current Faction Reputation: <Reputation reputation={faction.playerReputation} />
-        </>
-      ),
-      gains: [
-        player.workMoneyGained > 0 ? (
+          stopText: "Back to Terminal",
+        };
+      }
+
+      const companyRep = comp.playerReputation;
+
+      function cancel(): void {
+        player.finishWork(true);
+        router.toJob();
+      }
+      function unfocus(): void {
+        player.stopFocusing();
+        router.toJob();
+      }
+
+      const position = player.jobs[player.companyName];
+
+      const penalty = player.cancelationPenalty();
+
+      const penaltyString = penalty === 0.5 ? "half" : "three-quarters";
+
+      workInfo = {
+        buttons: {
+          cancel: cancel,
+          unfocus: unfocus,
+        },
+        title: (
+          <>
+            You are currently working as a <b>{position}</b> at <b>{player.companyName}</b>
+          </>
+        ),
+
+        description: (
+          <>
+            Current Company Reputation: <Reputation reputation={companyRep} />
+          </>
+        ),
+        gains: [
           <StatsRow name="Money" color={Settings.theme.money}>
             <Typography>
               <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
             </Typography>
-          </StatsRow>
-        ) : (
-          <></>
-        ),
-        <StatsRow name="Faction Reputation" color={Settings.theme.rep}>
-          <Typography>
-            <Reputation reputation={player.workRepGained} /> (
-            <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
-          </Typography>
-        </StatsRow>,
-        ...expGains,
-      ],
-      progress: {
-        elapsed: player.timeWorked,
-      },
+          </StatsRow>,
+          <StatsRow name="Company Reputation" color={Settings.theme.rep}>
+            <Typography>
+              <Reputation reputation={player.workRepGained} /> (
+              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
+            </Typography>
+          </StatsRow>,
+          ...expGains,
+        ],
+        progress: {
+          elapsed: player.timeWorked,
+        },
 
-      stopText: "Stop Faction work",
-    };
-  } else if (player.className !== "") {
-    const className = player.className;
-    function cancel(): void {
-      player.finishClass(true);
-      router.toCity();
+        stopText: "Stop working",
+        stopTooltip:
+          "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
+          ` but you will only gain ${penaltyString} of the reputation you've earned so far.`,
+      };
+
+      break;
     }
 
-    function unfocus(): void {
-      router.toCity();
-      player.stopFocusing();
-    }
+    case CONSTANTS.WorkTypeCompanyPartTime: {
+      function cancel(): void {
+        player.finishWorkPartTime(true);
+        router.toJob();
+      }
+      function unfocus(): void {
+        player.stopFocusing();
+        router.toJob();
+      }
+      const comp = Companies[player.companyName];
+      let companyRep = 0;
+      if (comp == null || !(comp instanceof Company)) {
+        throw new Error(`Could not find Company: ${player.companyName}`);
+      }
+      companyRep = comp.playerReputation;
 
-    let stopText = "";
-    if (
-      className == CONSTANTS.ClassGymStrength ||
-      className == CONSTANTS.ClassGymDefense ||
-      className == CONSTANTS.ClassGymDexterity ||
-      className == CONSTANTS.ClassGymAgility
-    ) {
-      stopText = "Stop training at gym";
-    } else {
-      stopText = "Stop taking course";
-    }
+      const position = player.jobs[player.companyName];
 
-    workInfo = {
-      buttons: {
-        cancel: cancel,
-        unfocus: unfocus,
-      },
-      title: (
-        <>
-          You are currently <b>{className}</b>
-        </>
-      ),
-
-      gains: [
-        <StatsRow name="Total Cost" color={Settings.theme.money}>
-          <Typography>
-            <Money money={-player.workMoneyGained} /> (<MoneyRate money={player.workMoneyLossRate * CYCLES_PER_SEC} />)
-          </Typography>
-        </StatsRow>,
-        ...expGains,
-      ],
-      progress: {
-        elapsed: player.timeWorked,
-      },
-
-      stopText: stopText,
-    };
-  } else if (player.workType == CONSTANTS.WorkTypeCompany) {
-    const comp = Companies[player.companyName];
-    if (comp == null || !(comp instanceof Company)) {
       workInfo = {
         buttons: {
-          cancel: () => router.toTerminal(),
+          cancel: cancel,
+          unfocus: unfocus,
         },
-        title:
-          `You cannot work for ${player.companyName || "(Company not found)"} at this time,` +
-          " please try again if you think this should have worked",
+        title: (
+          <>
+            You are currently working as a <b>{position}</b> at <b>{player.companyName}</b>
+          </>
+        ),
 
-        stopText: "Back to Terminal",
+        description: (
+          <>
+            Current Company Reputation: <Reputation reputation={companyRep} />
+          </>
+        ),
+        gains: [
+          <StatsRow name="Money" color={Settings.theme.money}>
+            <Typography>
+              <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
+            </Typography>
+          </StatsRow>,
+          <StatsRow name="Company Reputation" color={Settings.theme.rep}>
+            <Typography>
+              <Reputation reputation={player.workRepGained} /> (
+              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
+            </Typography>
+          </StatsRow>,
+          ...expGains,
+        ],
+        progress: {
+          elapsed: player.timeWorked,
+        },
+
+        stopText: "Stop working",
+        stopTooltip:
+          "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
+          " and there will be no penalty because this is a part-time job.",
       };
+
+      break;
     }
 
-    const companyRep = comp.playerReputation;
+    case CONSTANTS.WorkTypeCrime: {
+      const completion = Math.round((player.timeWorked / player.timeNeededToCompleteWork) * 100);
 
-    function cancel(): void {
-      player.finishWork(true);
-      router.toJob();
-    }
-    function unfocus(): void {
-      player.stopFocusing();
-      router.toJob();
-    }
-
-    const position = player.jobs[player.companyName];
-
-    const penalty = player.cancelationPenalty();
-
-    const penaltyString = penalty === 0.5 ? "half" : "three-quarters";
-
-    workInfo = {
-      buttons: {
-        cancel: cancel,
-        unfocus: unfocus,
-      },
-      title: (
-        <>
-          You are currently working as a <b>{position}</b> at <b>{player.companyName}</b>
-        </>
-      ),
-
-      description: (
-        <>
-          Current Company Reputation: <Reputation reputation={companyRep} />
-        </>
-      ),
-      gains: [
-        <StatsRow name="Money" color={Settings.theme.money}>
-          <Typography>
-            <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
-          </Typography>
-        </StatsRow>,
-        <StatsRow name="Company Reputation" color={Settings.theme.rep}>
-          <Typography>
-            <Reputation reputation={player.workRepGained} /> (
-            <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
-          </Typography>
-        </StatsRow>,
-        ...expGains,
-      ],
-      progress: {
-        elapsed: player.timeWorked,
-      },
-
-      stopText: "Stop working",
-      stopTooltip:
-        "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
-        ` but you will only gain ${penaltyString} of the reputation you've earned so far.`,
-    };
-  } else if (player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
-    function cancel(): void {
-      player.finishWorkPartTime(true);
-      router.toJob();
-    }
-    function unfocus(): void {
-      player.stopFocusing();
-      router.toJob();
-    }
-    const comp = Companies[player.companyName];
-    let companyRep = 0;
-    if (comp == null || !(comp instanceof Company)) {
-      throw new Error(`Could not find Company: ${player.companyName}`);
-    }
-    companyRep = comp.playerReputation;
-
-    const position = player.jobs[player.companyName];
-
-    workInfo = {
-      buttons: {
-        cancel: cancel,
-        unfocus: unfocus,
-      },
-      title: (
-        <>
-          You are currently working as a <b>{position}</b> at <b>{player.companyName}</b>
-        </>
-      ),
-
-      description: (
-        <>
-          Current Company Reputation: <Reputation reputation={companyRep} />
-        </>
-      ),
-      gains: [
-        <StatsRow name="Money" color={Settings.theme.money}>
-          <Typography>
-            <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
-          </Typography>
-        </StatsRow>,
-        <StatsRow name="Company Reputation" color={Settings.theme.rep}>
-          <Typography>
-            <Reputation reputation={player.workRepGained} /> (
-            <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
-          </Typography>
-        </StatsRow>,
-        ...expGains,
-      ],
-      progress: {
-        elapsed: player.timeWorked,
-      },
-
-      stopText: "Stop working",
-      stopTooltip:
-        "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
-        " and there will be no penalty because this is a part-time job.",
-    };
-  } else if (player.crimeType !== "") {
-    const completion = Math.round((player.timeWorked / player.timeNeededToCompleteWork) * 100);
-
-    workInfo = {
-      buttons: {
-        cancel: () => {
-          router.toLocation(Locations[LocationName.Slums]);
-          player.finishCrime(true);
+      workInfo = {
+        buttons: {
+          cancel: () => {
+            router.toLocation(Locations[LocationName.Slums]);
+            player.finishCrime(true);
+          },
         },
-      },
-      title: `You are attempting to ${player.crimeType}`,
+        title: `You are attempting to ${player.crimeType}`,
 
-      progress: {
-        remaining: player.timeNeededToCompleteWork - player.timeWorked,
-        percentage: completion,
-      },
+        progress: {
+          remaining: player.timeNeededToCompleteWork - player.timeWorked,
+          percentage: completion,
+        },
 
-      stopText: "Cancel crime",
-    };
-  } else if (player.createProgramName !== "") {
-    function cancel(): void {
-      player.finishCreateProgramWork(true);
-      router.toTerminal();
-    }
-    function unfocus(): void {
-      router.toTerminal();
-      player.stopFocusing();
+        stopText: "Cancel crime",
+      };
+
+      break;
     }
 
-    const completion = (player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100;
+    case CONSTANTS.WorkTypeCreateProgram: {
+      function cancel(): void {
+        player.finishCreateProgramWork(true);
+        router.toTerminal();
+      }
+      function unfocus(): void {
+        router.toTerminal();
+        player.stopFocusing();
+      }
 
-    workInfo = {
-      buttons: {
-        cancel: cancel,
-        unfocus: unfocus,
-      },
-      title: (
-        <>
-          You are currently working on coding <b>{player.createProgramName}</b>
-        </>
-      ),
+      const completion = (player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100;
 
-      progress: {
-        elapsed: player.timeWorked,
-        percentage: completion,
-      },
+      workInfo = {
+        buttons: {
+          cancel: cancel,
+          unfocus: unfocus,
+        },
+        title: (
+          <>
+            You are currently working on coding <b>{player.createProgramName}</b>
+          </>
+        ),
 
-      stopText: "Stop creating program",
-      stopTooltip: "Your work will be saved and you can return to complete the program later.",
-    };
-  } else if (player.graftAugmentationName !== "") {
-    function cancel(): void {
-      player.finishGraftAugmentationWork(true);
-      router.toTerminal();
+        progress: {
+          elapsed: player.timeWorked,
+          percentage: completion,
+        },
+
+        stopText: "Stop creating program",
+        stopTooltip: "Your work will be saved and you can return to complete the program later.",
+      };
+
+      break;
     }
-    function unfocus(): void {
-      router.toTerminal();
-      player.stopFocusing();
+
+    case CONSTANTS.WorkTypeGraftAugmentation: {
+      function cancel(): void {
+        player.finishGraftAugmentationWork(true);
+        router.toTerminal();
+      }
+      function unfocus(): void {
+        router.toTerminal();
+        player.stopFocusing();
+      }
+
+      const completion = (player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100;
+
+      workInfo = {
+        buttons: {
+          cancel: cancel,
+          unfocus: unfocus,
+        },
+        title: (
+          <>
+            You are currently working on grafting <b>{player.graftAugmentationName}</b>
+          </>
+        ),
+
+        progress: {
+          elapsed: player.timeWorked,
+          percentage: completion,
+        },
+
+        stopText: "Stop grafting",
+        stopTooltip: (
+          <>
+            If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned
+          </>
+        ),
+      };
+
+      break;
     }
 
-    const completion = (player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100;
-
-    workInfo = {
-      buttons: {
-        cancel: cancel,
-        unfocus: unfocus,
-      },
-      title: (
-        <>
-          You are currently working on grafting <b>{player.graftAugmentationName}</b>
-        </>
-      ),
-
-      progress: {
-        elapsed: player.timeWorked,
-        percentage: completion,
-      },
-
-      stopText: "Stop grafting",
-      stopTooltip: (
-        <>
-          If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned
-        </>
-      ),
-    };
-  } else if (!player.workType) {
-    router.toTerminal();
-    workInfo = null;
-  } else {
-    workInfo = null;
+    default:
+      router.toTerminal();
+      workInfo = null;
   }
 
   if (workInfo === null) {
