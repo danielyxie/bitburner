@@ -1801,6 +1801,18 @@ export interface Singularity {
   workForCompany(companyName?: string, focus?: boolean): boolean;
 
   /**
+   * Quit jobs by company.
+   * @remarks
+   * RAM cost: 3 GB * 16/4/1
+   *
+   *
+   * This function will finish work with the company provided and quit any jobs.
+   *
+   * @param companyName - Name of the company.
+   */
+  quitJob(companyName?: string): void;
+
+  /**
    * Apply for a job at a company.
    * @remarks
    * RAM cost: 3 GB * 16/4/1
