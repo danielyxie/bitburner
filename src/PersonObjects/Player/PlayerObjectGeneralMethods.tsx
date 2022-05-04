@@ -1364,7 +1364,7 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
   return false;
 }
 
-export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): string {
+export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean, singularity = false): string {
   const augName = this.graftAugmentationName;
   if (cancelled === false) {
     applyAugmentation(Augmentations[augName]);
@@ -1378,7 +1378,7 @@ export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): 
       `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
         (this.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."),
     );
-  } else {
+  } else if (cancelled && singularity === false) {
     dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
   }
 
@@ -1699,6 +1699,9 @@ export function singularityStopWork(this: IPlayer): string {
       break;
     case CONSTANTS.WorkTypeCrime:
       res = this.finishCrime(true);
+      break;
+    case CONSTANTS.WorkTypeGraftAugmentation:
+      res = this.finishGraftAugmentationWork(true, true);
       break;
     default:
       console.error(`Unrecognized work type (${this.workType})`);
