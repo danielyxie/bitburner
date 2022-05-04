@@ -1,17 +1,17 @@
 import { KEY } from "../utils/helpers/keyCodes";
 import { substituteAliases } from "../Alias";
 // Helper function to parse individual arguments into number/boolean/string as appropriate
-function parseArg(arg) {
+function parseArg(arg: string): string | number | boolean {
   // Handles all numbers including hexadecimal, octal, and binary representations, returning NaN on an unparseable string
   const asNumber = Number(arg);
   if (!isNaN(asNumber)) {
     return asNumber;
   }
-  
+
   if (arg === 'true' || arg === 'false') {
     return arg === 'true';
   }
-  
+
   // Strip quotation marks from strings that begin/end with the same mark
   return arg.replace(/^"(.*?)"$/g, '$1').replace(/^'(.*?)'$/g, '$1');
 }
@@ -44,14 +44,14 @@ export function ParseCommands(commands: string): string[] {
 export function ParseCommand(command: string): (string | number | boolean)[] {
   let idx = 0;
   const args = [];
-  
+
   // Track depth of quoted strings, e.g.: "the're 'going away' rather 'quickly \"and awkwardly\"'" should be parsed as a single string
-  const quotes = [];
-  
+  const quotes: string[] = [];
+
   let arg = '';
   while (idx < command.length) {
     const c = command.charAt(idx);
-    
+
     // If the current character is a backslash, add the next character verbatim to the argument
     if (c === '\\') {
       arg += command.charAt(++idx);
@@ -89,20 +89,20 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
     // and start a new one
     } else if (c === KEY.SPACE && quotes.length === 0) {
       args.push(parseArg(arg));
-      
+
       arg = '';
     } else {
       // Add the current character to the current argument
       arg += c;
     }
-    
+
     idx++;
   }
-  
+
   // Add the last arg (if any)
   if (arg !== '') {
-  	args.push(parseArg(arg));
+    args.push(parseArg(arg));
   }
-  
+
   return args;
 }
