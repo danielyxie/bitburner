@@ -359,6 +359,7 @@ export function NetscriptCorporation(
       const corporation = getCorporation();
       return {
         cost: material.bCost,
+        sCost: material.sCost,
         name: material.name,
         qty: material.qty,
         qlt: material.qlt,

@@ -7129,6 +7129,8 @@ interface Material {
   sell: number;
   /** cost to buy material */
   cost: number;
+  /** Sell cost, can be "MP+5" */
+  sCost: string | number;
 }
 
 /**
