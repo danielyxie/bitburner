@@ -2340,13 +2340,13 @@ export interface Singularity {
    * @example
    * ```ts
    * // NS1
-   * getDarkwebProgramsAvailable();
+   * getDarkwebPrograms();
    * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
    * ```
    * @example
    * ```ts
    * // NS2
-   * ns.getDarkwebProgramsAvailable();
+   * ns.getDarkwebPrograms();
    * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
    * ```
    * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
