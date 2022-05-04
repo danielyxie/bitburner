@@ -106,6 +106,7 @@ interface IProps {
   onClose: () => void;
   mat: Material;
   warehouse: Warehouse;
+  disablePurchaseLimit: boolean;
 }
 
 // Create a popup that lets the player purchase a Material
@@ -143,6 +144,7 @@ export function PurchaseMaterialModal(props: IProps): React.ReactElement {
         <Typography>
           Enter the amount of {props.mat.name} you would like to purchase per second. This material's cost changes
           constantly.
+          {props.disablePurchaseLimit ? "Note: Purchase amount is disabled as smart supply is enabled" : ""}
         </Typography>
         <TextField
           value={buyAmt}
@@ -150,10 +152,15 @@ export function PurchaseMaterialModal(props: IProps): React.ReactElement {
           autoFocus={true}
           placeholder="Purchase amount"
           type="number"
+          disabled={props.disablePurchaseLimit}
           onKeyDown={onKeyDown}
         />
-        <Button onClick={purchaseMaterial}>Confirm</Button>
-        <Button onClick={clearPurchase}>Clear Purchase</Button>
+        <Button disabled={props.disablePurchaseLimit} onClick={purchaseMaterial}>
+          Confirm
+        </Button>
+        <Button disabled={props.disablePurchaseLimit} onClick={clearPurchase}>
+          Clear Purchase
+        </Button>
         {division.hasResearch("Bulk Purchasing") && (
           <BulkPurchaseSection onClose={props.onClose} mat={props.mat} warehouse={props.warehouse} />
         )}
