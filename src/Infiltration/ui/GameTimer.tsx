@@ -1,19 +1,8 @@
-import { LinearProgress, Paper } from "@mui/material";
-import { Theme } from "@mui/material/styles";
-import withStyles from "@mui/styles/withStyles";
+import { Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { use } from "../../ui/Context";
-
-const TimerProgress = withStyles((theme: Theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-  },
-  bar: {
-    transition: "none",
-    backgroundColor: theme.palette.primary.main,
-  },
-}))(LinearProgress);
+import { ProgressBar } from "../../ui/React/Progress";
 
 interface IProps {
   millis: number;
@@ -43,10 +32,10 @@ export function GameTimer(props: IProps): React.ReactElement {
   // TODO(hydroflame): there's like a bug where it triggers the end before the
   // bar physically reaches the end
   return props.noPaper ? (
-    <TimerProgress variant="determinate" value={v} color="primary" />
+    <ProgressBar variant="determinate" value={v} color="primary" />
   ) : (
     <Paper sx={{ p: 1, mb: 1 }}>
-      <TimerProgress variant="determinate" value={v} color="primary" />
+      <ProgressBar variant="determinate" value={v} color="primary" />
     </Paper>
   );
 }
