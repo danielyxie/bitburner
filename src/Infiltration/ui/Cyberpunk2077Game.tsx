@@ -1,15 +1,14 @@
+import { Paper, Typography, Box } from "@mui/material";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import { IMinigameProps } from "./IMinigameProps";
-import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { interpolate } from "./Difficulty";
-import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
-import Typography from "@mui/material/Typography";
-import { KEY } from "../../utils/helpers/keyCodes";
-import { Settings } from "../../Settings/Settings";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Player } from "../../Player";
+import { Settings } from "../../Settings/Settings";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
+import { IMinigameProps } from "./IMinigameProps";
+import { KeyHandler } from "./KeyHandler";
 
 interface Difficulty {
   [key: string]: number;
@@ -17,6 +16,12 @@ interface Difficulty {
   width: number;
   height: number;
   symbols: number;
+}
+
+interface GridItem {
+  content: string;
+  color: string;
+  selected?: boolean;
 }
 
 const difficulties: {
@@ -76,18 +81,33 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
     }
   }
 
+  const flatGrid: GridItem[] = [];
+  grid.map((line, y) =>
+    line.map((cell, x) => {
+      const isCorrectAnswer = cell === answers[currentAnswerIndex];
+      const optionColor = hasAugment && !isCorrectAnswer ? Settings.theme.disabled : Settings.theme.primary;
+
+      if (x === pos[0] && y === pos[1]) {
+        flatGrid.push({ color: optionColor, content: cell, selected: true });
+        return;
+      }
+
+      flatGrid.push({ color: optionColor, content: cell });
+    }),
+  );
+
   const fontSize = "2em";
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center", pb: 1 }}>
         <Typography variant="h4">Match the symbols!</Typography>
         <Typography variant="h5" color={Settings.theme.primary}>
           Targets:{" "}
           {answers.map((a, i) => {
             if (i == currentAnswerIndex)
               return (
-                <span key={`${i}`} style={{ fontSize: "1em", color: "blue" }}>
+                <span key={`${i}`} style={{ fontSize: "1em", color: Settings.theme.infolight }}>
                   {a}&nbsp;
                 </span>
               );
@@ -99,34 +119,30 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
           })}
         </Typography>
         <br />
-        {grid.map((line, y) => (
-          <div key={y}>
-            <Typography>
-              {line.map((cell, x) => {
-                const isCorrectAnswer = cell === answers[currentAnswerIndex];
-
-                if (x == pos[0] && y == pos[1]) {
-                  return (
-                    <span key={`${x}${y}`} style={{ fontSize: fontSize, color: "blue" }}>
-                      {cell}&nbsp;
-                    </span>
-                  );
-                }
-
-                const optionColor = hasAugment && !isCorrectAnswer ? Settings.theme.disabled : Settings.theme.primary;
-                return (
-                  <span key={`${x}${y}`} style={{ fontSize: fontSize, color: optionColor }}>
-                    {cell}&nbsp;
-                  </span>
-                );
-              })}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${Math.round(difficulty.width)}, 1fr)`,
+            gap: 1,
+          }}
+        >
+          {flatGrid.map((item) => (
+            <Typography
+              sx={{
+                fontSize: fontSize,
+                color: item.color,
+                border: item.selected ? `2px solid ${Settings.theme.infolight}` : "unset",
+                lineHeight: "unset",
+                p: item.selected ? "2px" : "4px",
+              }}
+            >
+              {item.content}
             </Typography>
-            <br />
-          </div>
-        ))}
+          ))}
+        </Box>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 

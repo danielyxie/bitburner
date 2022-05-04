@@ -3,7 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
 import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";
-import { Augmentations } from "../Augmentation/Augmentations";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { killWorkerScript } from "../Netscript/killWorkerScript";
@@ -56,7 +56,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       throw _ctx.helper.makeRuntimeErrorMsg(`Invalid augmentation: '${name}'`);
     }
 
-    return Augmentations[name];
+    return StaticAugmentations[name];
   };
 
   const getFaction = function (_ctx: NetscriptContext, name: string): Faction {
@@ -122,7 +122,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return [aug.baseRepRequirement, aug.baseCost];
+        return [aug.getCost(player).moneyCost, aug.getCost(player).repCost];
       },
     getAugmentationPrereq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): string[] {
@@ -136,14 +136,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.baseCost;
+        return aug.getCost(player).moneyCost;
       },
     getAugmentationRepReq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): number {
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.baseRepRequirement;
+        return aug.getCost(player).repCost;
       },
     getAugmentationStats: (_ctx: NetscriptContext) =>
       function (_augName: unknown): AugmentationStats {
@@ -183,7 +183,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           }
         }
 
-        if (fac.playerReputation < aug.baseRepRequirement) {
+        if (fac.playerReputation < aug.getCost(player).repCost) {
           _ctx.log(() => `You do not have enough reputation with '${fac.name}'.`);
           return false;
         }
@@ -947,6 +947,12 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         return res;
       },
+    quitJob: (_ctx: NetscriptContext) =>
+      function (_companyName: unknown): void {
+        _ctx.helper.checkSingularityAccess();
+        const companyName = _ctx.helper.string("companyName", _companyName);
+        player.quitJob(companyName);
+      },
     getCompanyRep: (_ctx: NetscriptContext) =>
       function (_companyName: unknown): number {
         _ctx.helper.checkSingularityAccess();
@@ -1079,7 +1085,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             _ctx.log(() => `Invalid work type: '${type}`);
             return false;
         }
-        return true;
       },
     getFactionRep: (_ctx: NetscriptContext) =>
       function (_facName: unknown): number {

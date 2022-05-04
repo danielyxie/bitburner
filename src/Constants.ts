@@ -293,7 +293,7 @@ export const CONSTANTS: {
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,
 
-  Donations: 6,
+  Donations: 7,
 
   LatestUpdate: `
   v1.6.3 - 2022-04-01 Few stanek fixes

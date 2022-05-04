@@ -5,15 +5,14 @@
 import { CheckBox, CheckBoxOutlineBlank, CheckCircle, Info, NewReleases, Report } from "@mui/icons-material";
 import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { getNextNeuroFluxLevel } from "../AugmentationHelpers";
 import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentation } from "../Augmentation";
-import { Augmentations } from "../Augmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
 import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
+import { StaticAugmentations } from "../StaticAugmentations";
 
 interface IPreReqsProps {
   player: IPlayer;
@@ -160,10 +159,10 @@ interface IPurchasableAugProps {
 export function PurchasableAugmentation(props: IPurchasableAugProps): React.ReactElement {
   const [open, setOpen] = useState(false);
 
-  const aug = Augmentations[props.augName];
-
-  const cost = props.parent.sleeveAugs ? aug.startingCost : aug.baseCost;
-
+  const aug = StaticAugmentations[props.augName];
+  const augCosts = aug.getCost(props.parent.player);
+  const cost = props.parent.sleeveAugs ? aug.baseCost : augCosts.moneyCost;
+  const repCost = augCosts.repCost;
   const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
   const description = (
     <>
@@ -205,7 +204,8 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                   <>
                     <Typography variant="h5">
                       {props.augName}
-                      {props.augName === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
+                      {props.augName === AugmentationNames.NeuroFluxGovernor &&
+                        ` - Level ${aug.getLevel(props.parent.player)}`}
                     </Typography>
                     <Typography>{description}</Typography>
                   </>
@@ -222,7 +222,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                 }}
               >
                 {aug.name}
-                {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
+                {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel(props.parent.player)}`}
               </Typography>
               {aug.factions.length === 1 && !props.parent.sleeveAugs && (
                 <Exclusive player={props.parent.player} aug={aug} />
@@ -236,14 +236,14 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
         {props.owned || (
           <Box sx={{ display: "grid", alignItems: "center", justifyItems: "left" }}>
             <Requirement
-              fulfilled={aug.baseCost === 0 || props.parent.player.money > cost}
+              fulfilled={cost === 0 || props.parent.player.money > cost}
               value={numeralWrapper.formatMoney(cost)}
               color={Settings.theme.money}
             />
             {props.parent.rep !== undefined && (
               <Requirement
-                fulfilled={props.parent.rep >= aug.baseRepRequirement}
-                value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} rep`}
+                fulfilled={props.parent.rep >= repCost}
+                value={`${numeralWrapper.formatReputation(repCost)} rep`}
                 color={Settings.theme.rep}
               />
             )}

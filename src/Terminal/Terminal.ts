@@ -718,7 +718,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.TerminalCreateScript:
-          if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "nano" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");
@@ -734,7 +738,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.TerminalRunScript:
-          if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "run" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");
@@ -742,7 +750,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.ActiveScriptsToTerminal:
-          if (commandArray.length == 2 && commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "tail" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");

@@ -544,11 +544,14 @@ export function Root(props: IProps): React.ReactElement {
     // this is duplicate code with saving later.
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
       //Make sure filename + code properly follow tutorial
-      if (currentScript.fileName !== "n00dles.script") {
-        dialogBoxCreate("Leave the script name as 'n00dles.script'!");
+      if (currentScript.fileName !== "n00dles.script" && currentScript.fileName !== "n00dles.js") {
+        dialogBoxCreate("Don't change the script name for now.");
         return;
       }
-      if (currentScript.code.replace(/\s/g, "").indexOf("while(true){hack('n00dles');}") == -1) {
+      const cleanCode = currentScript.code.replace(/\s/g, "");
+      const ns1 = "while(true){hack('n00dles');}";
+      const ns2 = `exportasyncfunctionmain(ns){while(true){awaitns.hack('n00dles');}}`;
+      if (cleanCode.indexOf(ns1) == -1 && cleanCode.indexOf(ns2) == -1) {
         dialogBoxCreate("Please copy and paste the code from the tutorial!");
         return;
       }
@@ -692,7 +695,7 @@ export function Root(props: IProps): React.ReactElement {
     const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
     if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex as number].code) {
       PromptEvent.emit({
-        txt: "Do you want to save changes to " + closingScript.fileName + "?",
+        txt: `Do you want to save changes to ${closingScript.fileName} on ${closingScript.hostname}?`,
         resolve: (result: boolean | string) => {
           if (result) {
             // Save changes
@@ -855,22 +858,31 @@ export function Root(props: IProps): React.ReactElement {
                   )}
                 </Tooltip>
                 {filteredOpenScripts.map(({ fileName, hostname }, index) => {
+                  const editingCurrentScript =
+                    currentScript?.fileName === filteredOpenScripts[index].fileName &&
+                    currentScript?.hostname === filteredOpenScripts[index].hostname;
+                  const externalScript = hostname !== "home";
+                  const colorProps = editingCurrentScript
+                    ? {
+                        background: Settings.theme.button,
+                        borderColor: Settings.theme.button,
+                        color: Settings.theme.primary,
+                      }
+                    : {
+                        background: Settings.theme.backgroundsecondary,
+                        borderColor: Settings.theme.backgroundsecondary,
+                        color: Settings.theme.secondary,
+                      };
+
+                  if (externalScript) {
+                    colorProps.color = Settings.theme.info;
+                  }
                   const iconButtonStyle = {
                     maxWidth: `${tabIconWidth}px`,
                     minWidth: `${tabIconWidth}px`,
                     minHeight: "38.5px",
                     maxHeight: "38.5px",
-                    ...(currentScript?.fileName === filteredOpenScripts[index].fileName
-                      ? {
-                          background: Settings.theme.button,
-                          borderColor: Settings.theme.button,
-                          color: Settings.theme.primary,
-                        }
-                      : {
-                          background: Settings.theme.backgroundsecondary,
-                          borderColor: Settings.theme.backgroundsecondary,
-                          color: Settings.theme.secondary,
-                        }),
+                    ...colorProps,
                   };
 
                   const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`;
@@ -905,17 +917,7 @@ export function Root(props: IProps): React.ReactElement {
                                 maxWidth: `${tabTextWidth}px`,
                                 minHeight: "38.5px",
                                 overflow: "hidden",
-                                ...(currentScript?.fileName === filteredOpenScripts[index].fileName
-                                  ? {
-                                      background: Settings.theme.button,
-                                      borderColor: Settings.theme.button,
-                                      color: Settings.theme.primary,
-                                    }
-                                  : {
-                                      background: Settings.theme.backgroundsecondary,
-                                      borderColor: Settings.theme.backgroundsecondary,
-                                      color: Settings.theme.secondary,
-                                    }),
+                                ...colorProps,
                               }}
                             >
                               <span style={{ overflow: "hidden", direction: "rtl", textOverflow: "ellipsis" }}>

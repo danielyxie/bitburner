@@ -1,11 +1,11 @@
-import { Augmentations } from "../../Augmentation/Augmentations";
+import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { GraftableAugmentation } from "./GraftableAugmentation";
 import { IPlayer } from "../IPlayer";
 
 export const getGraftingAvailableAugs = (player: IPlayer): string[] => {
   const augs: string[] = [];
 
-  for (const [augName, aug] of Object.entries(Augmentations)) {
+  for (const [augName, aug] of Object.entries(StaticAugmentations)) {
     if (aug.isSpecial) continue;
     augs.push(augName);
   }

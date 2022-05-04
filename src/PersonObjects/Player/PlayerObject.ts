@@ -258,7 +258,7 @@ export class PlayerObject implements IPlayer {
   queryStatFromString: (str: string) => number;
   getIntelligenceBonus: (weight: number) => number;
   getCasinoWinnings: () => number;
-  quitJob: (company: string) => void;
+  quitJob: (company: string, sing?: boolean) => void;
   hasJob: () => boolean;
   process: (router: IRouter, numCycles?: number) => void;
   createHacknetServer: () => HacknetServer;
@@ -302,7 +302,7 @@ export class PlayerObject implements IPlayer {
   sourceFileLvl: (n: number) => number;
   startGraftAugmentationWork: (augmentationName: string, time: number) => void;
   graftAugmentationWork: (numCycles: number) => boolean;
-  finishGraftAugmentationWork: (cancelled: boolean) => string;
+  finishGraftAugmentationWork: (cancelled: boolean, singularity?: boolean) => string;
   applyEntropy: (stacks?: number) => void;
 
   constructor() {
@@ -463,12 +463,12 @@ export class PlayerObject implements IPlayer {
     this.bladeburner = null;
     this.bladeburner_max_stamina_mult = 1;
     this.bladeburner_stamina_gain_mult = 1;
-    this.bladeburner_analysis_mult = 1; //Field Analysis Onl;
+    this.bladeburner_analysis_mult = 1; //Field Analysis Only
     this.bladeburner_success_chance_mult = 1;
 
     // Sleeves & Re-sleeving
     this.sleeves = [];
-    this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenan;
+    this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenant
     //bitnode
     this.bitNodeN = 1;
 
@@ -483,8 +483,8 @@ export class PlayerObject implements IPlayer {
     this.playtimeSinceLastBitnode = 0;
 
     // Keep track of where money comes from
-    this.moneySourceA = new MoneySourceTracker(); // Where money comes from since last-installed Augmentatio;
-    this.moneySourceB = new MoneySourceTracker(); // Where money comes from for this entire BitNode ru;
+    this.moneySourceA = new MoneySourceTracker(); // Where money comes from since last-installed Augmentation
+    this.moneySourceB = new MoneySourceTracker(); // Where money comes from for this entire BitNode run
     // Production since last Augmentation installation
     this.scriptProdSinceLastAug = 0;
 

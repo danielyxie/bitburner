@@ -1801,6 +1801,18 @@ export interface Singularity {
   workForCompany(companyName?: string, focus?: boolean): boolean;
 
   /**
+   * Quit jobs by company.
+   * @remarks
+   * RAM cost: 3 GB * 16/4/1
+   *
+   *
+   * This function will finish work with the company provided and quit any jobs.
+   *
+   * @param companyName - Name of the company.
+   */
+  quitJob(companyName?: string): void;
+
+  /**
    * Apply for a job at a company.
    * @remarks
    * RAM cost: 3 GB * 16/4/1
@@ -2340,13 +2352,13 @@ export interface Singularity {
    * @example
    * ```ts
    * // NS1
-   * getDarkwebProgramsAvailable();
+   * getDarkwebPrograms();
    * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
    * ```
    * @example
    * ```ts
    * // NS2
-   * ns.getDarkwebProgramsAvailable();
+   * ns.getDarkwebPrograms();
    * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
    * ```
    * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
@@ -5311,9 +5323,10 @@ export interface NS {
    * If no host is defined, it will kill all scripts, where the script is running.
    *
    * @param host - IP or hostname of the server on which to kill all scripts.
+   * @param safetyguard - Skips the script that calls this function
    * @returns True if any scripts were killed, and false otherwise.
    */
-  killall(host?: string): boolean;
+  killall(host?: string, safetyguard?: boolean): boolean;
 
   /**
    * Terminates the current script immediately.
@@ -6126,7 +6139,7 @@ export interface NS {
    * Returns 0 if the script does not exist.
    *
    * @param script - Filename of script. This is case-sensitive.
-   * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
+   * @param host - Host of target server the script is located on. This is optional, if it is not specified then the function will use the current server as the target server.
    * @returns Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
    */
   getScriptRam(script: string, host?: string): number;
@@ -7044,22 +7057,27 @@ interface CorporationInfo {
 interface Employee {
   /** Name of the employee */
   name: string;
-  /** Morale */
+  /** Morale of the employee */
   mor: number;
-  /** Happiness */
+  /** Happiness of the employee */
   hap: number;
-  /** Energy */
+  /** Energy of the employee */
   ene: number;
+  /** Intelligence of the employee */
   int: number;
+  /** Charisma of the employee */
   cha: number;
+  /** Experience of the employee */
   exp: number;
+  /** Creativity of the employee */
   cre: number;
+  /** Efficiency of the employee */
   eff: number;
-  /** Salary */
+  /** Salary of the employee */
   sal: number;
-  /** City */
+  /** Current Location (city) */
   loc: string;
-  /** Current job */
+  /** Current job position */
   pos: string;
 }
 
@@ -7111,6 +7129,8 @@ interface Material {
   sell: number;
   /** cost to buy material */
   cost: number;
+  /** Sell cost, can be "MP+5" */
+  sCost: string | number;
 }
 
 /**
@@ -7202,6 +7222,8 @@ interface Division {
   cities: string[];
   /** Products developed by this division */
   products: string[];
+  /** Whether the industry this division is in is capable of making products */
+  makesProducts: boolean;
 }
 
 /**

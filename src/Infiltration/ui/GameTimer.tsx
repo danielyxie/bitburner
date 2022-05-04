@@ -1,4 +1,4 @@
-import Grid from "@mui/material/Grid";
+import { Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { use } from "../../ui/Context";
@@ -7,6 +7,7 @@ import { ProgressBar } from "../../ui/React/Progress";
 interface IProps {
   millis: number;
   onExpire: () => void;
+  noPaper?: boolean;
 }
 
 export function GameTimer(props: IProps): React.ReactElement {
@@ -30,9 +31,11 @@ export function GameTimer(props: IProps): React.ReactElement {
   // https://stackoverflow.com/questions/55593367/disable-material-uis-linearprogress-animation
   // TODO(hydroflame): there's like a bug where it triggers the end before the
   // bar physically reaches the end
-  return (
-    <Grid item xs={12}>
+  return props.noPaper ? (
+    <ProgressBar variant="determinate" value={v} color="primary" />
+  ) : (
+    <Paper sx={{ p: 1, mb: 1 }}>
       <ProgressBar variant="determinate" value={v} color="primary" />
-    </Grid>
+    </Paper>
   );
 }

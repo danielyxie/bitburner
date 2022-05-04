@@ -162,11 +162,7 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
           <Tooltip
             title={tutorial ? <Typography>Purchase your required materials to get production started!</Typography> : ""}
           >
-            <Button
-              color={tutorial ? "error" : "primary"}
-              onClick={() => setPurchaseMaterialOpen(true)}
-              disabled={props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)}
-            >
+            <Button color={tutorial ? "error" : "primary"} onClick={() => setPurchaseMaterialOpen(true)}>
               {purchaseButtonText}
             </Button>
           </Tooltip>
@@ -174,6 +170,9 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
             mat={mat}
             warehouse={warehouse}
             open={purchaseMaterialOpen}
+            disablePurchaseLimit={
+              props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)
+            }
             onClose={() => setPurchaseMaterialOpen(false)}
           />
 

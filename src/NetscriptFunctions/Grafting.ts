@@ -1,4 +1,4 @@
-import { Augmentations } from "../Augmentation/Augmentations";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { hasAugmentationPrereqs } from "../Faction/FactionHelpers";
 import { CityName } from "../Locations/data/CityNames";
 import { getRamCost } from "../Netscript/RamCostGenerator";
@@ -28,10 +28,10 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       updateRam("getAugmentationGraftPrice");
       const augName = helper.string("getAugmentationGraftPrice", "augName", _augName);
       checkGraftingAPIAccess("getAugmentationGraftPrice");
-      if (!getGraftingAvailableAugs(player).includes(augName) || !Augmentations.hasOwnProperty(augName)) {
+      if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
         throw helper.makeRuntimeErrorMsg("grafting.getAugmentationGraftPrice", `Invalid aug: ${augName}`);
       }
-      const graftableAug = new GraftableAugmentation(Augmentations[augName]);
+      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
       return graftableAug.cost;
     },
 
@@ -39,10 +39,10 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       updateRam("getAugmentationGraftTime");
       const augName = helper.string("getAugmentationGraftTime", "augName", _augName);
       checkGraftingAPIAccess("getAugmentationGraftTime");
-      if (!getGraftingAvailableAugs(player).includes(augName) || !Augmentations.hasOwnProperty(augName)) {
+      if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
         throw helper.makeRuntimeErrorMsg("grafting.getAugmentationGraftTime", `Invalid aug: ${augName}`);
       }
-      const graftableAug = new GraftableAugmentation(Augmentations[augName]);
+      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
       return calculateGraftingTimeWithBonus(player, graftableAug);
     },
 
@@ -64,7 +64,7 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
           "You must be in New Tokyo to begin grafting an Augmentation.",
         );
       }
-      if (!getGraftingAvailableAugs(player).includes(augName) || !Augmentations.hasOwnProperty(augName)) {
+      if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
         workerScript.log("grafting.graftAugmentation", () => `Invalid aug: ${augName}`);
         return false;
       }
@@ -75,7 +75,7 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
         workerScript.log("graftAugmentation", () => txt);
       }
 
-      const craftableAug = new GraftableAugmentation(Augmentations[augName]);
+      const craftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
       if (player.money < craftableAug.cost) {
         workerScript.log("grafting.graftAugmentation", () => `You don't have enough money to craft ${augName}`);
         return false;
