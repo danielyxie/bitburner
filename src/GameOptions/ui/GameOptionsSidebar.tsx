@@ -189,9 +189,9 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
           title={
             <Typography>
               Forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the game.
-              After using this, save the game and then reload the page. This is different then normal kill in that
+              After using this, save the game and then reload the page. This is different than normal kill in that
               normal kill will tell the script to shut down while force kill just removes the references to it (and it
-              should crash on it's own). This will not remove the files on your computer. Just forcefully kill all
+              should crash on its own). This will not remove the files on your computer, just forcefully kill all
               running instances of all scripts.
             </Typography>
           }
@@ -210,7 +210,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
           title={
             <Typography>
               If your save file is extremely big you can use this button to view a map of all the files on every server.
-              Be careful there might be spoilers.
+              Be careful: there might be spoilers.
             </Typography>
           }
         >

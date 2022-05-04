@@ -248,7 +248,7 @@ export interface IPlayer {
   queryStatFromString(str: string): number;
   getIntelligenceBonus(weight: number): number;
   getCasinoWinnings(): number;
-  quitJob(company: string): void;
+  quitJob(company: string, sing?: boolean): void;
   hasJob(): boolean;
   createHacknetServer(): HacknetServer;
   startCreateProgramWork(programName: string, time: number, reqLevel: number): void;

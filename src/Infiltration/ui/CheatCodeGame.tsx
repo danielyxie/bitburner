@@ -1,21 +1,20 @@
+import { Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import { IMinigameProps } from "./IMinigameProps";
-import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
 import {
-  random,
+  downArrowSymbol,
   getArrow,
   getInverseArrow,
   leftArrowSymbol,
+  random,
   rightArrowSymbol,
   upArrowSymbol,
-  downArrowSymbol,
 } from "../utils";
 import { interpolate } from "./Difficulty";
-import Typography from "@mui/material/Typography";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Player } from "../../Player";
+import { GameTimer } from "./GameTimer";
+import { IMinigameProps } from "./IMinigameProps";
+import { KeyHandler } from "./KeyHandler";
 
 interface Difficulty {
   [key: string]: number;
@@ -55,14 +54,14 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
   }
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center" }}>
         <Typography variant="h4">Enter the Code!</Typography>
         <Typography variant="h4">{code[index]}</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 

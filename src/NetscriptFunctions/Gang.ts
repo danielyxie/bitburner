@@ -342,7 +342,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       checkGangApiAccess("getBonusTime");
       const gang = player.gang;
       if (gang === null) throw new Error("Should not be called without Gang");
-      return Math.round(gang.storedCycles / 5);
+      return Math.round(gang.storedCycles / 5) * 1000;
     },
   };
 }

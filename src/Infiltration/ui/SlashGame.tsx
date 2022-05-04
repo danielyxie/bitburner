@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
+import { Box, Paper, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { interpolate } from "./Difficulty";
-import Typography from "@mui/material/Typography";
-import { KEY } from "../../utils/helpers/keyCodes";
-import { Player } from "../../Player";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface Difficulty {
   [key: string]: number;
@@ -59,23 +58,25 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
   }, []);
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={5000} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center" }}>
         <Typography variant="h4">Slash when his guard is down!</Typography>
+
         {hasAugment ? (
-          <>
-            <Typography variant="h4">Guard will drop in...</Typography>
-            <GameTimer millis={timeUntilAttacking} onExpire={props.onFailure} />
-          </>
+          <Box sx={{ my: 1 }}>
+            <Typography variant="h5">Guard will drop in...</Typography>
+            <GameTimer millis={timeUntilAttacking} onExpire={() => null} noPaper />
+          </Box>
         ) : (
           <></>
         )}
+
         {phase === 0 && <Typography variant="h4">Guarding ...</Typography>}
         {phase === 1 && <Typography variant="h4">Preparing?</Typography>}
         {phase === 2 && <Typography variant="h4">ATTACKING!</Typography>}
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
