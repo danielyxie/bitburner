@@ -62,7 +62,15 @@ export class Crime {
   charisma_exp = 0;
   intelligence_exp = 0;
 
-  constructor(name = "", type: CrimeType, time = 0, money = 0, difficulty = 0, karma = 0, params: IConstructorParams = {}) {
+  constructor(
+    name = "",
+    type: CrimeType,
+    time = 0,
+    money = 0,
+    difficulty = 0,
+    karma = 0,
+    params: IConstructorParams = {},
+  ) {
     this.name = name;
     this.type = type;
     this.time = time;
