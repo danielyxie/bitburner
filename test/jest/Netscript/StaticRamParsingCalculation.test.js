@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { describe, expect, jest } from "@jest/globals";
+
 // Player is needed for calculating costs like Singularity functions, that depend on acquired source files
 import { Player } from "../../../src/Player";
 

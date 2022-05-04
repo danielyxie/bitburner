@@ -1,3 +1,5 @@
+import { jest, describe, expect } from "@jest/globals";
+
 import { Player } from "../../../src/Player";
 import { NetscriptFunctions } from "../../../src/NetscriptFunctions";
 import { getRamCost, RamCostConstants } from "../../../src/Netscript/RamCostGenerator";

@@ -57,7 +57,6 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/escodegen": "^0.0.7",
     "@types/file-saver": "^2.0.3",
-    "@types/jest": "^27.4.1",
     "@types/jquery": "^3.5.14",
     "@types/lodash": "^4.14.168",
     "@types/numeral": "^2.0.2",
