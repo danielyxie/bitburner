@@ -1233,16 +1233,21 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return false;
       }
     },
-    killall: function (_hostname: unknown = workerScript.hostname): boolean {
+    killall: function (_hostname: unknown = workerScript.hostname, _safetyguard: unknown = true): boolean {
       updateDynamicRam("killall", getRamCost(Player, "killall"));
       const hostname = helper.string("killall", "hostname", _hostname);
+      const safetyguard = helper.boolean(_safetyguard);
       if (hostname === undefined) {
-        throw makeRuntimeErrorMsg("killall", "Takes 1 argument");
+        throw makeRuntimeErrorMsg("killall", "Usage: killall(hostname, [safetyguard boolean])");
       }
       const server = safeGetServer(hostname, "killall");
-      const scriptsRunning = server.runningScripts.length > 0;
+
+      let scriptsKilled = 0;
+
       for (let i = server.runningScripts.length - 1; i >= 0; --i) {
+        if (safetyguard === true && server.runningScripts[i].pid == workerScript.pid) continue;
         killWorkerScript(server.runningScripts[i], server.hostname, false);
+        ++scriptsKilled;
       }
       WorkerScriptStartStopEventEmitter.emit();
       workerScript.log(
@@ -1250,7 +1255,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         () => `Killing all scripts on '${server.hostname}'. May take a few minutes for the scripts to die.`,
       );
 
-      return scriptsRunning;
+      return scriptsKilled > 0;
     },
     exit: function (): void {
       updateDynamicRam("exit", getRamCost(Player, "exit"));

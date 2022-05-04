@@ -5311,9 +5311,10 @@ export interface NS {
    * If no host is defined, it will kill all scripts, where the script is running.
    *
    * @param host - IP or hostname of the server on which to kill all scripts.
+   * @param safetyguard - Skips the script that calls this function
    * @returns True if any scripts were killed, and false otherwise.
    */
-  killall(host?: string): boolean;
+  killall(host?: string, safetyguard?: boolean): boolean;
 
   /**
    * Terminates the current script immediately.
