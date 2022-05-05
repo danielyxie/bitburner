@@ -95,11 +95,21 @@ export const GraftingRoot = (): React.ReactElement => {
         {getGraftingAvailableAugs(player).length > 0 ? (
           <Paper sx={{ my: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
-              {getGraftingAvailableAugs(player).sort((a, b) => GraftableAugmentations[a].cost - GraftableAugmentations[b].cost).map((k, i) => (
-                <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
-                  <Typography sx={{color: canGraft(player, GraftableAugmentations[k]) ? Settings.theme.primary : Settings.theme.disabled}}>{k}</Typography>
-                </ListItemButton>
-              ))}
+              {getGraftingAvailableAugs(player)
+                .sort((a, b) => GraftableAugmentations[a].cost - GraftableAugmentations[b].cost)
+                .map((k, i) => (
+                  <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
+                    <Typography
+                      sx={{
+                        color: canGraft(player, GraftableAugmentations[k])
+                          ? Settings.theme.primary
+                          : Settings.theme.disabled,
+                      }}
+                    >
+                      {k}
+                    </Typography>
+                  </ListItemButton>
+                ))}
             </List>
             <Box sx={{ m: 1 }}>
               <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
