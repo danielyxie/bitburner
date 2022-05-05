@@ -30,6 +30,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
+import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
 
 export interface IPlayer {
   // Class members
@@ -130,14 +131,14 @@ export interface IPlayer {
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: string;
+  crimeType: CrimeType;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: string;
+  className: ClassType;
   currentWorkFactionName: string;
-  workType: string;
+  workType: WorkType;
   workCostMult: number;
   workExpMult: number;
   currentWorkFactionDescription: string;
@@ -219,11 +220,11 @@ export interface IPlayer {
   singularityStopWork(): string;
   startBladeburner(p: any): void;
   startFactionWork(faction: Faction): void;
-  startClass(costMult: number, expMult: number, className: string): void;
+  startClass(costMult: number, expMult: number, className: ClassType): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startCrime(
     router: IRouter,
-    crimeType: string,
+    crimeType: CrimeType,
     hackExp: number,
     strExp: number,
     defExp: number,
@@ -269,7 +270,7 @@ export interface IPlayer {
   prestigeSourceFile(): void;
   calculateSkill(exp: number, mult?: number): number;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
-  resetWorkStatus(generalType?: string, group?: string, workType?: string): void;
+  resetWorkStatus(generalType?: WorkType, group?: string, workType?: string): void;
   getWorkHackExpGain(): number;
   getWorkStrExpGain(): number;
   getWorkDefExpGain(): number;

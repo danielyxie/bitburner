@@ -66,6 +66,8 @@ import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
+import { WorkType, PlayerFactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
+
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
   const t_homeComp = safetlyCreateUniqueServer({
@@ -140,8 +142,8 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
-  this.className = "";
-  this.crimeType = "";
+  this.className = ClassType.None;
+  this.crimeType = CrimeType.None;
 
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -500,9 +502,8 @@ export function queryStatFromString(this: IPlayer, str: string): number {
 }
 
 /******* Working functions *******/
-export function resetWorkStatus(this: IPlayer, generalType?: string, group?: string, workType?: string): void {
-  if (this.workType !== CONSTANTS.WorkTypeFaction && generalType === this.workType && group === this.companyName)
-    return;
+export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: string, workType?: string): void {
+  if (this.workType !== WorkType.Faction && generalType === this.workType && group === this.companyName) return;
   if (generalType === this.workType && group === this.currentWorkFactionName && workType === this.factionWorkType)
     return;
   if (this.isWorking) this.singularityStopWork();
@@ -533,8 +534,8 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.graftAugmentationName = "";
-  this.className = "";
-  this.workType = "";
+  this.className = ClassType.None;
+  this.workType = WorkType.None;
 }
 
 export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
@@ -569,10 +570,10 @@ export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
 
 /* Working for Company */
 export function startWork(this: IPlayer, companyName: string): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeCompany, companyName);
+  this.resetWorkStatus(WorkType.Company, companyName);
   this.isWorking = true;
   this.companyName = companyName;
-  this.workType = CONSTANTS.WorkTypeCompany;
+  this.workType = WorkType.Company;
 
   this.workHackExpGainRate = this.getWorkHackExpGain();
   this.workStrExpGainRate = this.getWorkStrExpGain();
@@ -589,27 +590,27 @@ export function startWork(this: IPlayer, companyName: string): void {
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   // Working
   if (this.isWorking) {
-    if (this.workType == CONSTANTS.WorkTypeFaction) {
+    if (this.workType === WorkType.Faction) {
       if (this.workForFaction(numCycles)) {
         router.toFaction(Factions[this.currentWorkFactionName]);
       }
-    } else if (this.workType == CONSTANTS.WorkTypeCreateProgram) {
+    } else if (this.workType === WorkType.CreateProgram) {
       if (this.createProgramWork(numCycles)) {
         router.toTerminal();
       }
-    } else if (this.workType == CONSTANTS.WorkTypeStudyClass) {
+    } else if (this.workType === WorkType.StudyClass) {
       if (this.takeClass(numCycles)) {
         router.toCity();
       }
-    } else if (this.workType == CONSTANTS.WorkTypeCrime) {
+    } else if (this.workType === WorkType.Crime) {
       if (this.commitCrime(numCycles)) {
         router.toLocation(Locations[LocationName.Slums]);
       }
-    } else if (this.workType == CONSTANTS.WorkTypeCompanyPartTime) {
+    } else if (this.workType === WorkType.CompanyPartTime) {
       if (this.workPartTime(numCycles)) {
         router.toCity();
       }
-    } else if (this.workType === CONSTANTS.WorkTypeGraftAugmentation) {
+    } else if (this.workType === WorkType.GraftAugmentation) {
       if (this.graftAugmentationWork(numCycles)) {
         router.toGrafting();
       }
@@ -765,10 +766,10 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
 }
 
 export function startWorkPartTime(this: IPlayer, companyName: string): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeCompanyPartTime, companyName);
+  this.resetWorkStatus(WorkType.CompanyPartTime, companyName);
   this.isWorking = true;
   this.companyName = companyName;
-  this.workType = CONSTANTS.WorkTypeCompanyPartTime;
+  this.workType = WorkType.CompanyPartTime;
 
   this.workHackExpGainRate = this.getWorkHackExpGain();
   this.workStrExpGainRate = this.getWorkStrExpGain();
@@ -881,26 +882,26 @@ export function startFactionWork(this: IPlayer, faction: Faction): void {
   this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
   this.isWorking = true;
-  this.workType = CONSTANTS.WorkTypeFaction;
+  this.workType = WorkType.Faction;
   this.currentWorkFactionName = faction.name;
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
 }
 
 export function startFactionHackWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Hacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getHackingWorkRepGain(this, faction);
 
-  this.factionWorkType = CONSTANTS.FactionWorkHacking;
+  this.factionWorkType = PlayerFactionWorkType.Hacking;
   this.currentWorkFactionDescription = "carrying out hacking contracts";
 
   this.startFactionWork(faction);
 }
 
 export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkField);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Field);
 
   this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workStrExpGainRate = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -910,14 +911,14 @@ export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
   this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
 
-  this.factionWorkType = CONSTANTS.FactionWorkField;
+  this.factionWorkType = PlayerFactionWorkType.Field;
   this.currentWorkFactionDescription = "carrying out field missions";
 
   this.startFactionWork(faction);
 }
 
 export function startFactionSecurityWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Security);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workStrExpGainRate = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -927,7 +928,7 @@ export function startFactionSecurityWork(this: IPlayer, faction: Faction): void 
   this.workChaExpGainRate = 0.0 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
 
-  this.factionWorkType = CONSTANTS.FactionWorkSecurity;
+  this.factionWorkType = PlayerFactionWorkType.Security;
   this.currentWorkFactionDescription = "performing security detail";
 
   this.startFactionWork(faction);
@@ -942,13 +943,13 @@ export function workForFaction(this: IPlayer, numCycles: number): boolean {
 
   //Constantly update the rep gain rate
   switch (this.factionWorkType) {
-    case CONSTANTS.FactionWorkHacking:
+    case PlayerFactionWorkType.Hacking:
       this.workRepGainRate = getHackingWorkRepGain(this, faction);
       break;
-    case CONSTANTS.FactionWorkField:
+    case PlayerFactionWorkType.Field:
       this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
       break;
-    case CONSTANTS.FactionWorkSecurity:
+    case PlayerFactionWorkType.Security:
       this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
       break;
     default:
@@ -1261,7 +1262,7 @@ export function getWorkRepGain(this: IPlayer): number {
 export function startCreateProgramWork(this: IPlayer, programName: string, time: number, reqLevel: number): void {
   this.resetWorkStatus();
   this.isWorking = true;
-  this.workType = CONSTANTS.WorkTypeCreateProgram;
+  this.workType = WorkType.CreateProgram;
 
   //Time needed to complete work affected by hacking skill (linearly based on
   //ratio of (your skill - required level) to MAX skill)
@@ -1338,7 +1339,7 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
 export function startGraftAugmentationWork(this: IPlayer, augmentationName: string, time: number): void {
   this.resetWorkStatus();
   this.isWorking = true;
-  this.workType = CONSTANTS.WorkTypeGraftAugmentation;
+  this.workType = WorkType.GraftAugmentation;
 
   this.timeNeededToCompleteWork = time;
   this.graftAugmentationName = augmentationName;
@@ -1392,10 +1393,10 @@ export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean, s
 }
 
 /* Studying/Taking Classes */
-export function startClass(this: IPlayer, costMult: number, expMult: number, className: string): void {
+export function startClass(this: IPlayer, costMult: number, expMult: number, className: ClassType): void {
   this.resetWorkStatus();
   this.isWorking = true;
-  this.workType = CONSTANTS.WorkTypeStudyClass;
+  this.workType = WorkType.StudyClass;
   this.workCostMult = costMult;
   this.workExpMult = expMult;
   this.className = className;
@@ -1487,7 +1488,7 @@ export function finishClass(this: IPlayer, sing = false): string {
 export function startCrime(
   this: IPlayer,
   router: IRouter,
-  crimeType: string,
+  crimeType: CrimeType,
   hackExp: number,
   strExp: number,
   defExp: number,
@@ -1503,7 +1504,7 @@ export function startCrime(
   this.resetWorkStatus();
   this.isWorking = true;
   this.focus = true;
-  this.workType = CONSTANTS.WorkTypeCrime;
+  this.workType = WorkType.Crime;
 
   if (workerscript !== null) {
     this.committingCrimeThruSingFn = true;
@@ -1668,7 +1669,7 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
   this.committingCrimeThruSingFn = false;
   this.singFnCrimeWorkerScript = null;
   this.isWorking = false;
-  this.crimeType = "";
+  this.crimeType = CrimeType.None;
   this.resetWorkStatus();
   return "";
 }
@@ -1681,25 +1682,25 @@ export function singularityStopWork(this: IPlayer): string {
   }
   let res = ""; //Earnings text for work
   switch (this.workType) {
-    case CONSTANTS.WorkTypeStudyClass:
+    case WorkType.StudyClass:
       res = this.finishClass(true);
       break;
-    case CONSTANTS.WorkTypeCompany:
+    case WorkType.Company:
       res = this.finishWork(true, true);
       break;
-    case CONSTANTS.WorkTypeCompanyPartTime:
+    case WorkType.CompanyPartTime:
       res = this.finishWorkPartTime(true);
       break;
-    case CONSTANTS.WorkTypeFaction:
+    case WorkType.Faction:
       res = this.finishFactionWork(true, true);
       break;
-    case CONSTANTS.WorkTypeCreateProgram:
+    case WorkType.CreateProgram:
       res = this.finishCreateProgramWork(true);
       break;
-    case CONSTANTS.WorkTypeCrime:
+    case WorkType.Crime:
       res = this.finishCrime(true);
       break;
-    case CONSTANTS.WorkTypeGraftAugmentation:
+    case WorkType.GraftAugmentation:
       res = this.finishGraftAugmentationWork(true, true);
       break;
     default:
@@ -1793,7 +1794,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   }
 
   this.jobs[company.name] = pos.name;
-  if (!this.isWorking || !this.workType.includes("Working for Company")) this.companyName = company.name;
+  if (!this.isWorking || this.workType !== WorkType.Company) this.companyName = company.name;
 
   if (!sing) {
     dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
@@ -1842,7 +1843,7 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string, _sing = false): void {
-  if (this.isWorking == true && this.workType.includes("Working for Company") && this.companyName == company) {
+  if (this.isWorking == true && this.workType !== WorkType.Company && this.companyName == company) {
     this.finishWork(true);
   }
   delete this.jobs[company];

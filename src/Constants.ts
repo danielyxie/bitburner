@@ -63,26 +63,6 @@ export const CONSTANTS: {
   GameCyclesPerQuarterHour: number;
   MillisecondsPerFiveMinutes: number;
   GameCyclesPerFiveMinutes: number;
-  FactionWorkHacking: string;
-  FactionWorkField: string;
-  FactionWorkSecurity: string;
-  WorkTypeCompany: string;
-  WorkTypeCompanyPartTime: string;
-  WorkTypeFaction: string;
-  WorkTypeCreateProgram: string;
-  WorkTypeStudyClass: string;
-  WorkTypeCrime: string;
-  WorkTypeGraftAugmentation: string;
-  ClassStudyComputerScience: string;
-  ClassDataStructures: string;
-  ClassNetworks: string;
-  ClassAlgorithms: string;
-  ClassManagement: string;
-  ClassLeadership: string;
-  ClassGymStrength: string;
-  ClassGymDefense: string;
-  ClassGymDexterity: string;
-  ClassGymAgility: string;
   ClassDataStructuresBaseCost: number;
   ClassNetworksBaseCost: number;
   ClassAlgorithmsBaseCost: number;
@@ -95,18 +75,6 @@ export const CONSTANTS: {
   ClassAlgorithmsBaseExp: number;
   ClassManagementBaseExp: number;
   ClassLeadershipBaseExp: number;
-  CrimeShoplift: string;
-  CrimeRobStore: string;
-  CrimeMug: string;
-  CrimeLarceny: string;
-  CrimeDrugs: string;
-  CrimeBondForgery: string;
-  CrimeTraffickArms: string;
-  CrimeHomicide: string;
-  CrimeGrandTheftAuto: string;
-  CrimeKidnap: string;
-  CrimeAssassination: string;
-  CrimeHeist: string;
   CodingContractBaseFactionRepGain: number;
   CodingContractBaseCompanyRepGain: number;
   CodingContractBaseMoneyGain: number;
@@ -223,28 +191,6 @@ export const CONSTANTS: {
 
   // Player Work & Action
   BaseFocusBonus: 0.8,
-  FactionWorkHacking: "Faction Hacking Work",
-  FactionWorkField: "Faction Field Work",
-  FactionWorkSecurity: "Faction Security Work",
-
-  WorkTypeCompany: "Working for Company",
-  WorkTypeCompanyPartTime: "Working for Company part-time",
-  WorkTypeFaction: "Working for Faction",
-  WorkTypeCreateProgram: "Working on Create a Program",
-  WorkTypeStudyClass: "Studying or Taking a class at university",
-  WorkTypeCrime: "Committing a crime",
-  WorkTypeGraftAugmentation: "Grafting an Augmentation",
-
-  ClassStudyComputerScience: "studying Computer Science",
-  ClassDataStructures: "taking a Data Structures course",
-  ClassNetworks: "taking a Networks course",
-  ClassAlgorithms: "taking an Algorithms course",
-  ClassManagement: "taking a Management course",
-  ClassLeadership: "taking a Leadership course",
-  ClassGymStrength: "training your strength at a gym",
-  ClassGymDefense: "training your defense at a gym",
-  ClassGymDexterity: "training your dexterity at a gym",
-  ClassGymAgility: "training your agility at a gym",
 
   ClassDataStructuresBaseCost: 40,
   ClassNetworksBaseCost: 80,
@@ -259,19 +205,6 @@ export const CONSTANTS: {
   ClassAlgorithmsBaseExp: 4,
   ClassManagementBaseExp: 2,
   ClassLeadershipBaseExp: 4,
-
-  CrimeShoplift: "shoplift",
-  CrimeRobStore: "rob a store",
-  CrimeMug: "mug someone",
-  CrimeLarceny: "commit larceny",
-  CrimeDrugs: "deal drugs",
-  CrimeBondForgery: "forge corporate bonds",
-  CrimeTraffickArms: "traffick illegal arms",
-  CrimeHomicide: "commit homicide",
-  CrimeGrandTheftAuto: "commit grand theft auto",
-  CrimeKidnap: "kidnap someone for ransom",
-  CrimeAssassination: "assassinate a high-profile target",
-  CrimeHeist: "pull off the ultimate heist",
 
   // Coding Contract
   // TODO: Move this into Coding contract implementation?
