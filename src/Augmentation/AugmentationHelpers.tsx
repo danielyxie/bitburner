@@ -85,9 +85,17 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
     Player.applyEntropy(Player.entropy);
   }
 
+  // Special logic for NeuroFlux Governor
+  const ownedNfg = Player.augmentations.find((pAug) => pAug.name === AugmentationNames.NeuroFluxGovernor);
+  if (aug.name === AugmentationNames.NeuroFluxGovernor && !reapply && ownedNfg) {
+    ownedNfg.level = aug.level;
+    return;
+  }
+
   // Push onto Player's Augmentation list
   if (!reapply) {
     const ownedAug = new PlayerOwnedAugmentation(aug.name);
+
     Player.augmentations.push(ownedAug);
   }
 }
