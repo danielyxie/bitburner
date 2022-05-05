@@ -219,6 +219,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
+                  color: props.owned ? Settings.theme.disabled : Settings.theme.primary,
                 }}
               >
                 {aug.name}
