@@ -430,6 +430,9 @@ function evaluateVersionCompatibility(ver: string | number): void {
         ...Player.augmentations.filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor),
         newNFG,
       ];
+
+      Player.reapplyAllAugmentations(true);
+      Player.reapplyAllSourceFiles();
     }
   }
 }
