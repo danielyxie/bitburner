@@ -145,7 +145,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     <>
       <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
         <Button onClick={props.routeToMainPage}>Back</Button>
-        <Typography variant="h4">Faction Augmentations</Typography>
+        <Typography variant="h4">Faction Augmentations - {props.faction.name}</Typography>
         <Paper sx={{ p: 1, mb: 1 }}>
           <Typography>
             These are all of the Augmentations that are available to purchase from <b>{props.faction.name}</b>.
