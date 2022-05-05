@@ -9,7 +9,7 @@ export function determineCrimeSuccess(p: IPlayer, type: string): boolean {
   let found = false;
   for (const i of Object.keys(Crimes)) {
     const crime = Crimes[i];
-    if (crime.type == type) {
+    if (crime.type === type) {
       chance = crime.successRate(p);
       found = true;
       break;
