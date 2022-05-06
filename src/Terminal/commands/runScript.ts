@@ -63,7 +63,7 @@ export function runScript(
       return;
     }
 
-    if (ramUsage > ramAvailable) {
+    if (ramUsage > ramAvailable + 0.001) {
       terminal.error(
         "This machine does not have enough RAM to run this script with " +
           numThreads +
