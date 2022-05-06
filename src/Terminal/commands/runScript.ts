@@ -65,11 +65,9 @@ export function runScript(
 
     if (ramUsage > ramAvailable + 0.001) {
       terminal.error(
-        "This machine does not have enough RAM to run this script with " +
-          numThreads +
-          " threads. Script requires " +
-          numeralWrapper.formatRAM(ramUsage) +
-          " of RAM",
+        "This machine does not have enough RAM to run this script" +
+          (numThreads === 1 ? "" : ` with ${numThreads} threads`) +
+          `. Script requires ${numeralWrapper.formatRAM(ramUsage)} of RAM`,
       );
       return;
     }
