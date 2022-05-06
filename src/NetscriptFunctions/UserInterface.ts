@@ -112,6 +112,7 @@ export function NetscriptUserInterface(
 
     clearTerminal: function (): void {
       updateRam("clearTerminal");
+      workerScript.log("ui.clearTerminal", () => `Clearing terminal`);
       Terminal.clear();
     },
   };
