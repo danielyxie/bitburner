@@ -83,7 +83,7 @@ function CurrentBitNode(): React.ReactElement {
   const player = use.Player();
   if (player.sourceFiles.length > 0) {
     const index = "BitNode" + player.bitNodeN;
-    const lvl = player.sourceFileLvl(player.bitNodeN) + 1;
+    const lvl = Math.min(player.sourceFileLvl(player.bitNodeN) + 1, player.bitNodeN === 12 ? Infinity : 3);
     return (
       <Paper sx={{ mb: 1, p: 1 }}>
         <Typography variant="h5">
