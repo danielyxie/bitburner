@@ -414,6 +414,26 @@ function evaluateVersionCompatibility(ver: string | number): void {
         }
       }
     }
+
+    // Fix bugged NFG accumulation in owned augmentations
+    if (ver < 17) {
+      let ownedNFGs = [...Player.augmentations];
+      ownedNFGs = ownedNFGs.filter((aug) => aug.name === AugmentationNames.NeuroFluxGovernor);
+      const newNFG = new PlayerOwnedAugmentation(AugmentationNames.NeuroFluxGovernor);
+      newNFG.level = 0;
+
+      for (const nfg of ownedNFGs) {
+        newNFG.level += nfg.level;
+      }
+
+      Player.augmentations = [
+        ...Player.augmentations.filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor),
+        newNFG,
+      ];
+
+      Player.reapplyAllAugmentations(true);
+      Player.reapplyAllSourceFiles();
+    }
   }
 }
 

@@ -3,6 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { IPerson } from "../PersonObjects/IPerson";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
+import { CrimeType } from "../utils/WorkType";
 
 interface IConstructorParams {
   hacking_success_weight?: number;
@@ -42,7 +43,7 @@ export class Crime {
   time = 0;
 
   // Corresponding type in CONSTANTS. Contains a description for the crime activity
-  type = "";
+  type: CrimeType;
 
   // Weighting factors that determine how stats affect the success rate of this crime
   hacking_success_weight = 0;
@@ -61,7 +62,15 @@ export class Crime {
   charisma_exp = 0;
   intelligence_exp = 0;
 
-  constructor(name = "", type = "", time = 0, money = 0, difficulty = 0, karma = 0, params: IConstructorParams = {}) {
+  constructor(
+    name = "",
+    type: CrimeType,
+    time = 0,
+    money = 0,
+    difficulty = 0,
+    karma = 0,
+    params: IConstructorParams = {},
+  ) {
     this.name = name;
     this.type = type;
     this.time = time;

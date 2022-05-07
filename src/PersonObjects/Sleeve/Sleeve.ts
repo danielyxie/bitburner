@@ -769,7 +769,7 @@ export class Sleeve extends Person {
   }
 
   tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
-    if (!p.canAfford(aug.startingCost)) {
+    if (!p.canAfford(aug.baseCost)) {
       return false;
     }
 
@@ -778,7 +778,7 @@ export class Sleeve extends Person {
       return false;
     }
 
-    p.loseMoney(aug.startingCost, "sleeves");
+    p.loseMoney(aug.baseCost, "sleeves");
     this.installAugmentation(aug);
     return true;
   }

@@ -44,7 +44,7 @@ export function PurchaseAugmentationModal(props: IProps): React.ReactElement {
         <br />
         <br />
         Would you like to purchase the {props.aug.name} Augmentation for&nbsp;
-        <Money money={props.aug.baseCost} />?
+        <Money money={props.aug.getCost(player).moneyCost} />?
         <br />
         <br />
       </Typography>

@@ -3,7 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
 import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";
-import { Augmentations } from "../Augmentation/Augmentations";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { killWorkerScript } from "../Netscript/killWorkerScript";
@@ -49,6 +49,7 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
+import { ClassType, WorkType } from "../utils/WorkType";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -56,7 +57,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       throw _ctx.helper.makeRuntimeErrorMsg(`Invalid augmentation: '${name}'`);
     }
 
-    return Augmentations[name];
+    return StaticAugmentations[name];
   };
 
   const getFaction = function (_ctx: NetscriptContext, name: string): Faction {
@@ -122,7 +123,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return [aug.baseRepRequirement, aug.baseCost];
+        return [aug.getCost(player).moneyCost, aug.getCost(player).repCost];
       },
     getAugmentationPrereq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): string[] {
@@ -136,14 +137,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.baseCost;
+        return aug.getCost(player).moneyCost;
       },
     getAugmentationRepReq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): number {
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.baseRepRequirement;
+        return aug.getCost(player).repCost;
       },
     getAugmentationStats: (_ctx: NetscriptContext) =>
       function (_augName: unknown): AugmentationStats {
@@ -183,7 +184,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           }
         }
 
-        if (fac.playerReputation < aug.baseRepRequirement) {
+        if (fac.playerReputation < aug.getCost(player).repCost) {
           _ctx.log(() => `You do not have enough reputation with '${fac.name}'.`);
           return false;
         }
@@ -298,25 +299,25 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             return false;
         }
 
-        let task = "";
+        let task: ClassType;
         switch (className.toLowerCase()) {
           case "Study Computer Science".toLowerCase():
-            task = CONSTANTS.ClassStudyComputerScience;
+            task = ClassType.StudyComputerScience;
             break;
           case "Data Structures".toLowerCase():
-            task = CONSTANTS.ClassDataStructures;
+            task = ClassType.DataStructures;
             break;
           case "Networks".toLowerCase():
-            task = CONSTANTS.ClassNetworks;
+            task = ClassType.Networks;
             break;
           case "Algorithms".toLowerCase():
-            task = CONSTANTS.ClassAlgorithms;
+            task = ClassType.Algorithms;
             break;
           case "Management".toLowerCase():
-            task = CONSTANTS.ClassManagement;
+            task = ClassType.Management;
             break;
           case "Leadership".toLowerCase():
-            task = CONSTANTS.ClassLeadership;
+            task = ClassType.Leadership;
             break;
           default:
             _ctx.log(() => `Invalid class name: ${className}.`);
@@ -415,19 +416,19 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         switch (stat.toLowerCase()) {
           case "strength".toLowerCase():
           case "str".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymStrength);
+            player.startClass(costMult, expMult, ClassType.GymStrength);
             break;
           case "defense".toLowerCase():
           case "def".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymDefense);
+            player.startClass(costMult, expMult, ClassType.GymDefense);
             break;
           case "dexterity".toLowerCase():
           case "dex".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymDexterity);
+            player.startClass(costMult, expMult, ClassType.GymDexterity);
             break;
           case "agility".toLowerCase():
           case "agi".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
+            player.startClass(costMult, expMult, ClassType.GymAgility);
             break;
           default:
             _ctx.log(() => `Invalid stat: ${stat}.`);
@@ -650,11 +651,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         if (
           !(
-            player.workType == CONSTANTS.WorkTypeFaction ||
-            player.workType == CONSTANTS.WorkTypeCompany ||
-            player.workType == CONSTANTS.WorkTypeCompanyPartTime ||
-            player.workType == CONSTANTS.WorkTypeCreateProgram ||
-            player.workType == CONSTANTS.WorkTypeStudyClass
+            player.workType === WorkType.Faction ||
+            player.workType === WorkType.Company ||
+            player.workType === WorkType.CompanyPartTime ||
+            player.workType === WorkType.CreateProgram ||
+            player.workType === WorkType.StudyClass
           )
         ) {
           throw _ctx.helper.makeRuntimeErrorMsg("Cannot change focus for current job");
@@ -947,6 +948,12 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         return res;
       },
+    quitJob: (_ctx: NetscriptContext) =>
+      function (_companyName: unknown): void {
+        _ctx.helper.checkSingularityAccess();
+        const companyName = _ctx.helper.string("companyName", _companyName);
+        player.quitJob(companyName);
+      },
     getCompanyRep: (_ctx: NetscriptContext) =>
       function (_companyName: unknown): number {
         _ctx.helper.checkSingularityAccess();
@@ -1079,7 +1086,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             _ctx.log(() => `Invalid work type: '${type}`);
             return false;
         }
-        return true;
       },
     getFactionRep: (_ctx: NetscriptContext) =>
       function (_facName: unknown): number {

@@ -1,15 +1,14 @@
+import { Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { random } from "../utils";
+import { BlinkingCursor } from "./BlinkingCursor";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { random } from "../utils";
-import { interpolate } from "./Difficulty";
-import { BlinkingCursor } from "./BlinkingCursor";
-import Typography from "@mui/material/Typography";
-import { KEY } from "../../utils/helpers/keyCodes";
-import { Player } from "../../Player";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface Difficulty {
   [key: string]: number;
@@ -48,24 +47,18 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
   }
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center", pb: 1 }}>
         <Typography variant="h4">Type it{!hasAugment ? " backward" : ""}</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-      <Grid item xs={6}>
-        <Typography style={{ transform: hasAugment ? "none" : "scaleX(-1)", marginLeft: hasAugment ? "50%" : "none" }}>
-          {answer}
-        </Typography>
-      </Grid>
-      <Grid item xs={6}>
+        <Typography style={{ transform: hasAugment ? "none" : "scaleX(-1)" }}>{answer}</Typography>
         <Typography>
           {guess}
           <BlinkingCursor />
         </Typography>
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 

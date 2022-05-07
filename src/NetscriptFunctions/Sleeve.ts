@@ -5,7 +5,7 @@ import { FactionWorkType } from "../Faction/FactionWorkTypeEnum";
 import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
-import { Augmentations } from "../Augmentation/Augmentations";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";
 
@@ -286,7 +286,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         const aug = purchasableAugs[i];
         augs.push({
           name: aug.name,
-          cost: aug.startingCost,
+          cost: aug.baseCost,
         });
       }
 
@@ -303,7 +303,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         throw helper.makeRuntimeErrorMsg("sleeve.purchaseSleeveAug", `Sleeve shock too high: Sleeve ${sleeveNumber}`);
       }
 
-      const aug = Augmentations[augName];
+      const aug = StaticAugmentations[augName];
       if (!aug) {
         throw helper.makeRuntimeErrorMsg("sleeve.purchaseSleeveAug", `Invalid aug: ${augName}`);
       }

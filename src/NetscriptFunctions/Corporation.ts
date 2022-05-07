@@ -295,6 +295,7 @@ export function NetscriptCorporation(
       if (office === 0) continue;
       cities.push(office.loc);
     }
+
     return {
       name: division.name,
       type: division.type,
@@ -309,6 +310,7 @@ export function NetscriptCorporation(
       upgrades: division.upgrades.slice(),
       cities: cities,
       products: division.products === undefined ? [] : Object.keys(division.products),
+      makesProducts: division.makesProducts,
     };
   }
 
@@ -359,6 +361,7 @@ export function NetscriptCorporation(
       const corporation = getCorporation();
       return {
         cost: material.bCost,
+        sCost: material.sCost,
         name: material.name,
         qty: material.qty,
         qlt: material.qlt,

@@ -156,6 +156,7 @@ const singularity: IMap<any> = {
   getUpgradeHomeCoresCost: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 2),
   workForCompany: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
   applyToCompany: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  quitJob: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
   getCompanyRep: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
   getCompanyFavor: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
   getCompanyFavorGain: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 4),

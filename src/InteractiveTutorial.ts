@@ -7,6 +7,7 @@ import { ITutorialEvents } from "./ui/InteractiveTutorial/ITutorialEvents";
 // Ordered array of keys to Interactive Tutorial Steps
 enum iTutorialSteps {
   Start,
+  NSSelection,
   GoToCharacterPage, // Click on 'Stats' page
   CharacterPage, // Introduction to 'Stats' page
   CharacterGoToTerminalPage, // Go back to Terminal
@@ -43,6 +44,7 @@ const ITutorial: {
   isRunning: boolean;
   stepIsDone: {
     [iTutorialSteps.Start]: boolean;
+    [iTutorialSteps.NSSelection]: boolean;
     [iTutorialSteps.GoToCharacterPage]: boolean;
     [iTutorialSteps.CharacterPage]: boolean;
     [iTutorialSteps.CharacterGoToTerminalPage]: boolean;
@@ -80,6 +82,7 @@ const ITutorial: {
   // Keeps track of whether each step has been done
   stepIsDone: {
     [iTutorialSteps.Start]: false,
+    [iTutorialSteps.NSSelection]: false,
     [iTutorialSteps.GoToCharacterPage]: false,
     [iTutorialSteps.CharacterPage]: false,
     [iTutorialSteps.CharacterGoToTerminalPage]: false,

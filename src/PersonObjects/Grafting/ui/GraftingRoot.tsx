@@ -2,7 +2,7 @@ import { Construction, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-materia
 import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Augmentation } from "../../../Augmentation/Augmentation";
-import { Augmentations } from "../../../Augmentation/Augmentations";
+import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../../../Constants";
 import { hasAugmentationPrereqs } from "../../../Faction/FactionHelpers";
@@ -54,7 +54,7 @@ export const GraftingRoot = (): React.ReactElement => {
   const player = use.Player();
   const router = use.Router();
 
-  for (const aug of Object.values(Augmentations)) {
+  for (const aug of Object.values(StaticAugmentations)) {
     const name = aug.name;
     const graftableAug = new GraftableAugmentation(aug);
     GraftableAugmentations[name] = graftableAug;
@@ -62,6 +62,7 @@ export const GraftingRoot = (): React.ReactElement => {
 
   const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs(player)[0]);
   const [graftOpen, setGraftOpen] = useState(false);
+  const selectedAugmentation = StaticAugmentations[selectedAug];
 
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -148,22 +149,26 @@ export const GraftingRoot = (): React.ReactElement => {
                   {/* Use formula so the displayed creation time is accurate to player bonus */}
                 </Typography>
 
-                {Augmentations[selectedAug].prereqs.length > 0 && (
-                  <AugPreReqsChecklist player={player} aug={Augmentations[selectedAug]} />
+                {selectedAugmentation.prereqs.length > 0 && (
+                  <AugPreReqsChecklist player={player} aug={selectedAugmentation} />
                 )}
+
                 <br />
 
                 <Typography>
                   {(() => {
-                    const aug = Augmentations[selectedAug];
-
-                    const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
+                    const info =
+                      typeof selectedAugmentation.info === "string" ? (
+                        <span>{selectedAugmentation.info}</span>
+                      ) : (
+                        selectedAugmentation.info
+                      );
                     const tooltip = (
                       <>
                         {info}
                         <br />
                         <br />
-                        {aug.stats}
+                        {selectedAugmentation.stats}
                       </>
                     );
                     return tooltip;

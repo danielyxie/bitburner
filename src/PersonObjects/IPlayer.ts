@@ -31,6 +31,7 @@ import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
+import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
 
 export interface IPlayer extends IPerson {
   // Class members
@@ -131,14 +132,14 @@ export interface IPlayer extends IPerson {
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: string;
+  crimeType: CrimeType;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: string;
+  className: ClassType;
   currentWorkFactionName: string;
-  workType: string;
+  workType: WorkType;
   workCostMult: number;
   workExpMult: number;
   currentWorkFactionDescription: string;
@@ -212,11 +213,11 @@ export interface IPlayer extends IPerson {
   singularityStopWork(): string;
   startBladeburner(p: any): void;
   startFactionWork(faction: Faction): void;
-  startClass(costMult: number, expMult: number, className: string): void;
+  startClass(costMult: number, expMult: number, className: ClassType): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startCrime(
     router: IRouter,
-    crimeType: string,
+    crimeType: CrimeType,
     hackExp: number,
     strExp: number,
     defExp: number,
@@ -238,7 +239,7 @@ export interface IPlayer extends IPerson {
   giveExploit(exploit: Exploit): void;
   giveAchievement(achievementId: string): void;
   getCasinoWinnings(): number;
-  quitJob(company: string): void;
+  quitJob(company: string, sing?: boolean): void;
   hasJob(): boolean;
   createHacknetServer(): HacknetServer;
   startCreateProgramWork(programName: string, time: number, reqLevel: number): void;
@@ -258,7 +259,7 @@ export interface IPlayer extends IPerson {
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
-  resetWorkStatus(generalType?: string, group?: string, workType?: string): void;
+  resetWorkStatus(generalType?: WorkType, group?: string, workType?: string): void;
   getWorkHackExpGain(): number;
   getWorkStrExpGain(): number;
   getWorkDefExpGain(): number;
@@ -280,6 +281,6 @@ export interface IPlayer extends IPerson {
   sourceFileLvl(n: number): number;
   startGraftAugmentationWork(augmentationName: string, time: number): void;
   graftAugmentationWork(numCycles: number): boolean;
-  finishGraftAugmentationWork(cancelled: boolean): string;
+  finishGraftAugmentationWork(cancelled: boolean, singularity?: boolean): string;
   applyEntropy(stacks?: number): void;
 }
