@@ -179,6 +179,12 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             </>
           }
         />
+        <OptionSwitch
+          checked={Settings.InfinityLoopSafety}
+          onChange={(newValue) => (Settings.InfinityLoopSafety = newValue)}
+          text="Script infinite loop safety net"
+          tooltip={<>If this is set the game will attempt to automatically kill scripts stuck in infinite loops.</>}
+        />
       </GameOptionsPage>
     ),
     [GameOptionsTab.INTERFACE]: (
