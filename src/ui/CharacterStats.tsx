@@ -84,14 +84,12 @@ function CurrentBitNode(): React.ReactElement {
     const index = "BitNode" + player.bitNodeN;
     const lvl = player.sourceFileLvl(player.bitNodeN) + 1;
     return (
-      <Box>
-        <Paper sx={{ p: 1 }}>
-          <Typography variant="h5">
-            BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {lvl})
-          </Typography>
-          <Typography sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</Typography>
-        </Paper>
-      </Box>
+      <Paper sx={{ mb: 1, p: 1 }}>
+        <Typography variant="h5">
+          BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {lvl})
+        </Typography>
+        <Typography sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</Typography>
+      </Paper>
     );
   }
 
@@ -332,185 +330,171 @@ export function CharacterStats(): React.ReactElement {
           </Table>
         </Paper>
       </Box>
-      <Box sx={{ mb: 1 }}>
-        <Paper sx={{ p: 1 }}>
-          <Typography variant="h5" color="primary" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-            Multipliers
-            {player.sourceFileLvl(5) > 0 && (
-              <Tooltip
-                title={
-                  <Typography>
-                    Displays your current multipliers.
-                    <br />
-                    <br />
-                    When there is a dim number next to a multiplier, that means that the multiplier in question is being
-                    affected by BitNode multipliers.
-                    <br />
-                    <br />
-                    The dim number is the raw multiplier, and the undimmed number is the effective multiplier, as
-                    dictated by the BitNode.
-                  </Typography>
-                }
-              >
-                <Info sx={{ ml: 1, mb: 0.5 }} color="info" />
-              </Tooltip>
-            )}
-          </Typography>
-          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1 }}>
-            <Box>
-              <MultiplierTable
-                rows={[
-                  ["Hacking Chance", player.hacking_chance_mult],
-                  ["Hacking Speed", player.hacking_speed_mult],
-                  [
-                    "Hacking Money",
-                    player.hacking_money_mult,
-                    player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
-                  ],
-                  [
-                    "Hacking Growth",
-                    player.hacking_grow_mult,
-                    player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
-                  ],
-                ]}
-                color={Settings.theme.hack}
-              />
-              <MultiplierTable
-                rows={[
-                  [
-                    "Hacking Level",
-                    player.hacking_mult,
-                    player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
-                  ],
-                  [
-                    "Hacking Experience",
-                    player.hacking_exp_mult,
-                    player.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
-                  ],
-                ]}
-                color={Settings.theme.hack}
-              />
-              <MultiplierTable
-                rows={[
-                  [
-                    "Strength Level",
-                    player.strength_mult,
-                    player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
-                  ],
-                  ["Strength Experience", player.strength_exp_mult],
-                ]}
-                color={Settings.theme.combat}
-              />
-              <MultiplierTable
-                rows={[
-                  [
-                    "Defense Level",
-                    player.defense_mult,
-                    player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
-                  ],
-                  ["Defense Experience", player.defense_exp_mult],
-                ]}
-                color={Settings.theme.combat}
-              />
-              <MultiplierTable
-                rows={[
-                  [
-                    "Dexterity Level",
-                    player.dexterity_mult,
-                    player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
-                  ],
-                  ["Dexterity Experience", player.dexterity_exp_mult],
-                ]}
-                color={Settings.theme.combat}
-              />
-              <MultiplierTable
-                rows={[
-                  [
-                    "Agility Level",
-                    player.agility_mult,
-                    player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
-                  ],
-                  ["Agility Experience", player.agility_exp_mult],
-                ]}
-                color={Settings.theme.combat}
-              />
-              <MultiplierTable
-                rows={[
-                  [
-                    "Charisma Level",
-                    player.charisma_mult,
-                    player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
-                  ],
-                  ["Charisma Experience", player.charisma_exp_mult],
-                ]}
-                color={Settings.theme.cha}
-                noMargin
-              />
-            </Box>
 
-            <Box>
+      <Paper sx={{ p: 1, mb: 1 }}>
+        <Typography variant="h5" color="primary" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+          Multipliers
+          {player.sourceFileLvl(5) > 0 && (
+            <Tooltip
+              title={
+                <Typography>
+                  Displays your current multipliers.
+                  <br />
+                  <br />
+                  When there is a dim number next to a multiplier, that means that the multiplier in question is being
+                  affected by BitNode multipliers.
+                  <br />
+                  <br />
+                  The dim number is the raw multiplier, and the undimmed number is the effective multiplier, as dictated
+                  by the BitNode.
+                </Typography>
+              }
+            >
+              <Info sx={{ ml: 1, mb: 0.5 }} color="info" />
+            </Tooltip>
+          )}
+        </Typography>
+        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1 }}>
+          <Box>
+            <MultiplierTable
+              rows={[
+                ["Hacking Chance", player.hacking_chance_mult],
+                ["Hacking Speed", player.hacking_speed_mult],
+                [
+                  "Hacking Money",
+                  player.hacking_money_mult,
+                  player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
+                ],
+                [
+                  "Hacking Growth",
+                  player.hacking_grow_mult,
+                  player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
+                ],
+              ]}
+              color={Settings.theme.hack}
+            />
+            <MultiplierTable
+              rows={[
+                ["Hacking Level", player.hacking_mult, player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier],
+                [
+                  "Hacking Experience",
+                  player.hacking_exp_mult,
+                  player.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
+                ],
+              ]}
+              color={Settings.theme.hack}
+            />
+            <MultiplierTable
+              rows={[
+                [
+                  "Strength Level",
+                  player.strength_mult,
+                  player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+                ],
+                ["Strength Experience", player.strength_exp_mult],
+              ]}
+              color={Settings.theme.combat}
+            />
+            <MultiplierTable
+              rows={[
+                ["Defense Level", player.defense_mult, player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier],
+                ["Defense Experience", player.defense_exp_mult],
+              ]}
+              color={Settings.theme.combat}
+            />
+            <MultiplierTable
+              rows={[
+                [
+                  "Dexterity Level",
+                  player.dexterity_mult,
+                  player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+                ],
+                ["Dexterity Experience", player.dexterity_exp_mult],
+              ]}
+              color={Settings.theme.combat}
+            />
+            <MultiplierTable
+              rows={[
+                ["Agility Level", player.agility_mult, player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier],
+                ["Agility Experience", player.agility_exp_mult],
+              ]}
+              color={Settings.theme.combat}
+            />
+            <MultiplierTable
+              rows={[
+                [
+                  "Charisma Level",
+                  player.charisma_mult,
+                  player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+                ],
+                ["Charisma Experience", player.charisma_exp_mult],
+              ]}
+              color={Settings.theme.cha}
+              noMargin
+            />
+          </Box>
+
+          <Box>
+            <MultiplierTable
+              rows={[
+                [
+                  "Hacknet Node production",
+                  player.hacknet_node_money_mult,
+                  player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
+                ],
+                ["Hacknet Node purchase cost", player.hacknet_node_purchase_cost_mult],
+                ["Hacknet Node RAM upgrade cost", player.hacknet_node_ram_cost_mult],
+                ["Hacknet Node Core purchase cost", player.hacknet_node_core_cost_mult],
+                ["Hacknet Node level upgrade cost", player.hacknet_node_level_cost_mult],
+              ]}
+              color={Settings.theme.primary}
+            />
+            <MultiplierTable
+              rows={[
+                ["Company reputation gain", player.company_rep_mult],
+                [
+                  "Faction reputation gain",
+                  player.faction_rep_mult,
+                  player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
+                ],
+                ["Salary", player.work_money_mult, player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
+              ]}
+              color={Settings.theme.money}
+            />
+            <MultiplierTable
+              rows={[
+                ["Crime success", player.crime_success_mult],
+                ["Crime money", player.crime_money_mult, player.crime_money_mult * BitNodeMultipliers.CrimeMoney],
+              ]}
+              color={Settings.theme.combat}
+            />
+            {player.canAccessBladeburner() && (
               <MultiplierTable
                 rows={[
-                  [
-                    "Hacknet Node production",
-                    player.hacknet_node_money_mult,
-                    player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
-                  ],
-                  ["Hacknet Node purchase cost", player.hacknet_node_purchase_cost_mult],
-                  ["Hacknet Node RAM upgrade cost", player.hacknet_node_ram_cost_mult],
-                  ["Hacknet Node Core purchase cost", player.hacknet_node_core_cost_mult],
-                  ["Hacknet Node level upgrade cost", player.hacknet_node_level_cost_mult],
+                  ["Bladeburner Success Chance", player.bladeburner_success_chance_mult],
+                  ["Bladeburner Max Stamina", player.bladeburner_max_stamina_mult],
+                  ["Bladeburner Stamina Gain", player.bladeburner_stamina_gain_mult],
+                  ["Bladeburner Field Analysis", player.bladeburner_analysis_mult],
                 ]}
                 color={Settings.theme.primary}
+                noMargin
               />
-              <MultiplierTable
-                rows={[
-                  ["Company reputation gain", player.company_rep_mult],
-                  [
-                    "Faction reputation gain",
-                    player.faction_rep_mult,
-                    player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
-                  ],
-                  ["Salary", player.work_money_mult, player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
-                ]}
-                color={Settings.theme.money}
-              />
-              <MultiplierTable
-                rows={[
-                  ["Crime success", player.crime_success_mult],
-                  ["Crime money", player.crime_money_mult, player.crime_money_mult * BitNodeMultipliers.CrimeMoney],
-                ]}
-                color={Settings.theme.combat}
-              />
-              {player.canAccessBladeburner() && (
-                <MultiplierTable
-                  rows={[
-                    ["Bladeburner Success Chance", player.bladeburner_success_chance_mult],
-                    ["Bladeburner Max Stamina", player.bladeburner_max_stamina_mult],
-                    ["Bladeburner Stamina Gain", player.bladeburner_stamina_gain_mult],
-                    ["Bladeburner Field Analysis", player.bladeburner_analysis_mult],
-                  ]}
-                  color={Settings.theme.primary}
-                  noMargin
-                />
-              )}
-            </Box>
+            )}
           </Box>
-        </Paper>
-      </Box>
+        </Box>
+      </Paper>
 
-      <Box sx={{ mb: 1 }}>
-        <Paper sx={{ p: 1 }}>
-          <Typography variant="h5">Time Played</Typography>
-          <Table>
-            <TableBody>
-              {timeRows.map(([name, content]) => (
-                <StatsRow key={name} name={name} color={Settings.theme.primary} data={{ content: content }} />
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
-      </Box>
+      <Paper sx={{ p: 1, mb: 1 }}>
+        <Typography variant="h5">Time Played</Typography>
+        <Table>
+          <TableBody>
+            {timeRows.map(([name, content]) => (
+              <StatsRow key={name} name={name} color={Settings.theme.primary} data={{ content: content }} />
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+
       <CurrentBitNode />
       <MoneyModal open={moneyOpen} onClose={() => setMoneyOpen(false)} />
       <EmployersModal open={employersOpen} onClose={() => setEmployersOpen(false)} />
