@@ -302,7 +302,7 @@ function StanekMults({ mults }: IMultsProps): React.ReactElement {
 
 function GangMults({ mults }: IMultsProps): React.ReactElement {
   const player = use.Player();
-  if (!player.canAccessGang()) return <></>;
+  if (player.bitNodeN !== 2 && player.sourceFileLvl(2) <= 0) return <></>;
 
   const rows: IBNMultRows = {
     GangSoftcap: {
