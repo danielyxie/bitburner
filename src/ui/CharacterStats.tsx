@@ -1,7 +1,7 @@
 import { Paper, Table, TableBody, Box, IconButton, Typography, Container, Tooltip } from "@mui/material";
 import { MoreHoriz, Info } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { BitNodes } from "../BitNode/BitNode";
+import { BitNodes, defaultMultipliers, getBitNodeMultipliers } from "../BitNode/BitNode";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { BitNodeMultipliersDisplay } from "../BitNode/ui/BitnodeMultipliersDescription";
 import { HacknetServerConstants } from "../Hacknet/data/Constants";
@@ -15,6 +15,7 @@ import { Modal } from "./React/Modal";
 import { Money } from "./React/Money";
 import { StatsRow } from "./React/StatsRow";
 import { StatsTable } from "./React/StatsTable";
+import { isEqual } from "lodash";
 
 interface EmployersModalProps {
   open: boolean;
@@ -223,6 +224,14 @@ export function CharacterStats(): React.ReactElement {
     timeRows.push(["Since last Bitnode destroyed", convertTimeMsToTimeElapsedString(player.playtimeSinceLastBitnode)]);
   }
   timeRows.push(["Total", convertTimeMsToTimeElapsedString(player.totalPlaytime)]);
+
+  let showBitNodeMults = false;
+  if (player.sourceFileLvl(5) > 0) {
+    const n = player.bitNodeN;
+    const maxSfLevel = n === 12 ? Infinity : 3;
+    const mults = getBitNodeMultipliers(n, Math.min(player.sourceFileLvl(n) + 1, maxSfLevel));
+    showBitNodeMults = !isEqual(mults, defaultMultipliers);
+  }
 
   return (
     <Container maxWidth="lg" disableGutters sx={{ mx: 0 }}>
@@ -534,7 +543,7 @@ export function CharacterStats(): React.ReactElement {
                   mult: "Crime Money",
                   value: player.crime_money_mult,
                   effValue: player.crime_money_mult * BitNodeMultipliers.CrimeMoney,
-                  color: Settings.theme.money
+                  color: Settings.theme.money,
                 },
               ]}
               color={Settings.theme.combat}
@@ -580,7 +589,7 @@ export function CharacterStats(): React.ReactElement {
 
       <CurrentBitNode />
 
-      {player.bitNodeN !== 1 && player.sourceFileLvl(5) > 0 && (
+      {showBitNodeMults && (
         <Paper sx={{ p: 1, mb: 1 }}>
           <Typography variant="h5">BitNode Multipliers</Typography>
           <BitNodeMultipliersDisplay n={player.bitNodeN} />
