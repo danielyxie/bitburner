@@ -10,6 +10,9 @@ import { Modal } from "../../ui/React/Modal";
 import { useGang } from "./Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { GangMemberUpgrades } from "../GangMemberUpgrades";
+import { use } from "../../ui/Context";
+import Tooltip from "@mui/material/Tooltip";
 
 interface IProps {
   open: boolean;
@@ -20,6 +23,7 @@ interface IProps {
 
 export function AscensionModal(props: IProps): React.ReactElement {
   const gang = useGang();
+  const player = use.Player();
   const setRerender = useState(false)[1];
 
   useEffect(() => {
@@ -27,9 +31,17 @@ export function AscensionModal(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
-  function confirm(): void {
+  function confirm(reEquip = false): void {
     props.onAscend();
+    const arrEquipement = Object.assign([], reEquip ? props.member.upgrades : null);
     const res = gang.ascendMember(props.member);
+    arrEquipement?.forEach((equipement) => {
+      const upg = GangMemberUpgrades[equipement];
+      if (player.money >= gang.getUpgradeCost(upg)) {
+        props.member.buyUpgrade(upg, player, gang);
+      }
+    });
+
     dialogBoxCreate(
       <>
         You ascended {props.member.name}!<br />
@@ -92,7 +104,23 @@ export function AscensionModal(props: IProps): React.ReactElement {
         {numeralWrapper.format(postAscend.cha, "0.000")}
         <br />
       </Typography>
-      <Button onClick={confirm}>Ascend</Button>
+      <Button
+        onClick={() => {
+          confirm();
+        }}
+        sx={{ mr: 1 }}
+      >
+        Ascend
+      </Button>
+      <Tooltip title={<Typography>Will attempt to buy back all current upgrade after ascending.</Typography>}>
+        <Button
+          onClick={() => {
+            confirm(true);
+          }}
+        >
+          Ascend + Re-Equip
+        </Button>
+      </Tooltip>
     </Modal>
   );
 }
