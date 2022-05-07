@@ -252,4 +252,4 @@ export interface IBitNodeMultipliers {
  * The multipliers that are influenced by current Bitnode progression.
  */
 // tslint:disable-next-line:variable-name
-export const BitNodeMultipliers = defaultMultipliers;
+export const BitNodeMultipliers = Object.assign({}, defaultMultipliers);
