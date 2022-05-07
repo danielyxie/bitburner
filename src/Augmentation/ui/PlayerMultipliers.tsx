@@ -200,38 +200,38 @@ export function PlayerMultipliers(): React.ReactElement {
   ];
   const rightColData: MultiplierListItemData[] = [
     {
-      mult: "Hacknet Node production",
+      mult: "Hacknet Node Production",
       current: Player.hacknet_node_money_mult,
       augmented: Player.hacknet_node_money_mult * mults.hacknet_node_money_mult,
       bnMult: BitNodeMultipliers.HacknetNodeMoney,
     },
     {
-      mult: "Hacknet Node purchase cost",
+      mult: "Hacknet Node Purchase Cost",
       current: Player.hacknet_node_purchase_cost_mult,
       augmented: Player.hacknet_node_purchase_cost_mult * mults.hacknet_node_purchase_cost_mult,
     },
     {
-      mult: "Hacknet Node RAM upgrade cost",
+      mult: "Hacknet Node RAM Upgrade Cost",
       current: Player.hacknet_node_ram_cost_mult,
       augmented: Player.hacknet_node_ram_cost_mult * mults.hacknet_node_ram_cost_mult,
     },
     {
-      mult: "Hacknet Node Core purchase cost",
+      mult: "Hacknet Node Core Purchase Cost",
       current: Player.hacknet_node_core_cost_mult,
       augmented: Player.hacknet_node_core_cost_mult * mults.hacknet_node_core_cost_mult,
     },
     {
-      mult: "Hacknet Node level upgrade cost",
+      mult: "Hacknet Node Level Upgrade Cost",
       current: Player.hacknet_node_level_cost_mult,
       augmented: Player.hacknet_node_level_cost_mult * mults.hacknet_node_level_cost_mult,
     },
     {
-      mult: "Company reputation gain",
+      mult: "Company Reputation Gain",
       current: Player.company_rep_mult,
       augmented: Player.company_rep_mult * mults.company_rep_mult,
     },
     {
-      mult: "Faction reputation gain",
+      mult: "Faction Reputation Gain",
       current: Player.faction_rep_mult,
       augmented: Player.faction_rep_mult * mults.faction_rep_mult,
       bnMult: BitNodeMultipliers.FactionWorkRepGain,
@@ -244,13 +244,13 @@ export function PlayerMultipliers(): React.ReactElement {
       color: Settings.theme.money,
     },
     {
-      mult: "Crime success",
+      mult: "Crime Success Chance",
       current: Player.crime_success_mult,
       augmented: Player.crime_success_mult * mults.crime_success_mult,
       color: Settings.theme.combat,
     },
     {
-      mult: "Crime money",
+      mult: "Crime Money",
       current: Player.crime_money_mult,
       augmented: Player.crime_money_mult * mults.crime_money_mult,
       bnMult: BitNodeMultipliers.CrimeMoney,
