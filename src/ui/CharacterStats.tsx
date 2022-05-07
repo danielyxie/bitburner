@@ -3,6 +3,7 @@ import { MoreHoriz, Info } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { BitNodes } from "../BitNode/BitNode";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { BitNodeMultipliersDisplay } from "../BitNode/ui/BitnodeMultipliersDescription";
 import { HacknetServerConstants } from "../Hacknet/data/Constants";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
 import { Settings } from "../Settings/Settings";
@@ -496,6 +497,14 @@ export function CharacterStats(): React.ReactElement {
       </Paper>
 
       <CurrentBitNode />
+
+      {player.bitNodeN !== 1 && player.sourceFileLvl(5) > 0 && (
+        <Paper sx={{ p: 1, mb: 1 }}>
+          <Typography variant="h5">BitNode Multipliers</Typography>
+          <BitNodeMultipliersDisplay n={player.bitNodeN} />
+        </Paper>
+      )}
+
       <MoneyModal open={moneyOpen} onClose={() => setMoneyOpen(false)} />
       <EmployersModal open={employersOpen} onClose={() => setEmployersOpen(false)} />
     </Container>
