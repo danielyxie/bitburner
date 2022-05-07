@@ -25,23 +25,21 @@ export function FragmentInspector(props: IProps): React.ReactElement {
 
   if (props.fragment === undefined) {
     return (
-      <Paper>
+      <Paper sx={{ flexGrow: 1 }}>
         <Typography>
+          [X, Y] {props.x}, {props.y}
+          <br />
+          <br />
           ID: N/A
           <br />
           Effect: N/A
           <br />
-          Magnitude: N/A
+          Base Power: N/A
           <br />
           Charge: N/A
           <br />
-          Heat: N/A
+          root [X, Y] N/A
           <br />
-          Effect: N/A
-          <br />
-          [X, Y] N/A
-          <br />
-          [X, Y] {props.x}, {props.y}
         </Typography>
       </Paper>
     );
@@ -63,8 +61,11 @@ export function FragmentInspector(props: IProps): React.ReactElement {
   }
 
   return (
-    <Paper>
+    <Paper sx={{ flexGrow: 1 }}>
       <Typography>
+        [X, Y] {props.x}, {props.y}
+        <br />
+        <br />
         ID: {props.fragment.id}
         <br />
         Effect: {effect}
@@ -73,10 +74,8 @@ export function FragmentInspector(props: IProps): React.ReactElement {
         <br />
         Charge: {charge}
         <br />
-        <br />
         root [X, Y] {props.fragment.x}, {props.fragment.y}
         <br />
-        [X, Y] {props.x}, {props.y}
       </Typography>
     </Paper>
   );

@@ -9,6 +9,9 @@ import Button from "@mui/material/Button";
 import { Table } from "../../ui/React/Table";
 import { Grid } from "./Grid";
 import { zeros, calculateGrid } from "../Helper";
+import { ActiveFragmentSummary } from "./ActiveFragmentSummary";
+import Tooltip from "@mui/material/Tooltip/Tooltip";
+import Typography from "@mui/material/Typography/Typography";
 
 interface IProps {
   gift: IStaneksGift;
@@ -84,9 +87,8 @@ export function MainBoard(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Button onClick={clear}>Clear</Button>
-      <Box display="flex">
-        <Table>
+      <Box display="flex" sx={{ mb: 1 }}>
+        <Table sx={{ mr: 1 }}>
           <Grid
             width={props.gift.width()}
             height={props.gift.height()}
@@ -99,7 +101,22 @@ export function MainBoard(props: IProps): React.ReactElement {
         </Table>
         <FragmentInspector gift={props.gift} x={pos[0]} y={pos[1]} fragment={props.gift.fragmentAt(pos[0], pos[1])} />
       </Box>
-      <FragmentSelector gift={props.gift} selectFragment={updateSelectedFragment} />
+      <Box display="flex" sx={{ mb: 1 }}>
+        <FragmentSelector gift={props.gift} selectFragment={updateSelectedFragment} />
+      </Box>
+
+      <ActiveFragmentSummary gift={props.gift} />
+
+      <Tooltip
+        title={
+          <Typography>
+            WARNING : This will remove all active fragment from the grid. <br />
+            All cumulated charges will be lost.
+          </Typography>
+        }
+      >
+        <Button onClick={clear}>Clear grid</Button>
+      </Tooltip>
     </>
   );
 }
