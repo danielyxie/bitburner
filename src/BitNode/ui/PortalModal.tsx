@@ -41,7 +41,7 @@ export function PortalModal(props: IProps): React.ReactElement {
       <br />
       <br />
       <Typography>{bitNode.info}</Typography>
-      <BitnodeMultiplierDescription n={props.n} showNext={!props.flume} />
+      <BitnodeMultiplierDescription n={props.n} level={newLevel} />
       <br />
       <br />
       <Button

@@ -12,10 +12,10 @@ import { IBitNodeMultipliers } from "../BitNodeMultipliers";
 
 interface IProps {
   n: number;
-  showNext?: boolean;
+  level?: number;
 }
 
-export function BitnodeMultiplierDescription({ n, showNext = false }: IProps): React.ReactElement {
+export function BitnodeMultiplierDescription({ n, level }: IProps): React.ReactElement {
   const [open, setOpen] = React.useState(false);
   if (n === 1) return <></>;
 
@@ -26,15 +26,15 @@ export function BitnodeMultiplierDescription({ n, showNext = false }: IProps): R
         {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
       </ListItemButton>
       <Collapse in={open}>
-        <BitNodeMultipliersDisplay n={n} showNext={showNext} />
+        <BitNodeMultipliersDisplay n={n} level={level} />
       </Collapse>
     </Box>
   );
 }
 
-export const BitNodeMultipliersDisplay = ({ n, showNext = false }: IProps): React.ReactElement => {
+export const BitNodeMultipliersDisplay = ({ n, level }: IProps): React.ReactElement => {
   const player = use.Player();
-  const mults = getBitNodeMultipliers(n, player.sourceFileLvl(n) + +!!showNext);
+  const mults = getBitNodeMultipliers(n, level ?? Math.min(player.sourceFileLvl(n) + 1, n === 12 ? Infinity : 3));
 
   return (
     <Box sx={{ columnCount: 2, columnGap: 1, mb: -2 }}>
