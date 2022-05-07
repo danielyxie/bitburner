@@ -10,8 +10,8 @@ import { Table } from "../../ui/React/Table";
 import { Grid } from "./Grid";
 import { zeros, calculateGrid } from "../Helper";
 import { ActiveFragmentSummary } from "./ActiveFragmentSummary";
-import Tooltip from "@mui/material/Tooltip/Tooltip";
-import Typography from "@mui/material/Typography/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 interface IProps {
   gift: IStaneksGift;
