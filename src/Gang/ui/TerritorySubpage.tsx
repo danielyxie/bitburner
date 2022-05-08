@@ -85,9 +85,11 @@ export function TerritorySubpage(): React.ReactElement {
         </Typography>
       </Box>
       <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-        {gangNames.map((name) => (
-          <OtherGangTerritory key={name} name={name} />
-        ))}
+        {gangNames
+          .filter((name) => AllGangs[name].territory > 0)
+          .map((name) => (
+            <OtherGangTerritory key={name} name={name} />
+          ))}
       </Box>
       <TerritoryInfoModal open={infoOpen} onClose={() => setInfoOpen(false)} />
     </Container>
