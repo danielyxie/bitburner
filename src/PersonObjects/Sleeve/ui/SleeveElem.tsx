@@ -186,14 +186,14 @@ export function SleeveElem(props: IProps): React.ReactElement {
           <Typography>{desc}</Typography>
           <Typography>
             {(props.sleeve.currentTask === SleeveTaskType.Crime ||
-                  props.sleeve.currentTask === SleeveTaskType.Bladeburner) &&
-                  props.sleeve.currentTaskMaxTime > 0 && (
-              <ProgressBar
-                variant="determinate"
-                value={(props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime) * 100}
-                color="primary"
-              />
-            )}
+              props.sleeve.currentTask === SleeveTaskType.Bladeburner) &&
+              props.sleeve.currentTaskMaxTime > 0 && (
+                <ProgressBar
+                  variant="determinate"
+                  value={(props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime) * 100}
+                  color="primary"
+                />
+              )}
           </Typography>
         </span>
       </Paper>
