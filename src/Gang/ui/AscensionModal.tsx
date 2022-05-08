@@ -33,14 +33,17 @@ export function AscensionModal(props: IProps): React.ReactElement {
 
   function confirm(reEquip = false): void {
     props.onAscend();
-    const arrEquipement = Object.assign([], reEquip ? props.member.upgrades : null);
+    const arrEquipment = Object.assign([], reEquip ? props.member.upgrades : null);
     const res = gang.ascendMember(props.member);
-    arrEquipement?.forEach((equipement) => {
-      const upg = GangMemberUpgrades[equipement];
-      if (player.money >= gang.getUpgradeCost(upg)) {
-        props.member.buyUpgrade(upg, player, gang);
-      }
-    });
+
+    if (arrEquipment) {
+      arrEquipment.forEach((equipment) => {
+        const upg = GangMemberUpgrades[equipment];
+        if (player.money >= gang.getUpgradeCost(upg)) {
+          props.member.buyUpgrade(upg, player, gang);
+        }
+      });
+    }
 
     dialogBoxCreate(
       <>
@@ -112,13 +115,13 @@ export function AscensionModal(props: IProps): React.ReactElement {
       >
         Ascend
       </Button>
-      <Tooltip title={<Typography>Will attempt to buy back all current upgrade after ascending.</Typography>}>
+      <Tooltip title={<Typography>Will attempt to buy back all current upgrades after ascending.</Typography>}>
         <Button
           onClick={() => {
             confirm(true);
           }}
         >
-          Ascend and re-purchase upgrade.
+          Ascend and re-purchase upgrades.
         </Button>
       </Tooltip>
     </Modal>
