@@ -118,7 +118,7 @@ export function AscensionModal(props: IProps): React.ReactElement {
             confirm(true);
           }}
         >
-          Ascend + Re-Equip
+          Ascend and re-purchase upgrade.
         </Button>
       </Tooltip>
     </Modal>
