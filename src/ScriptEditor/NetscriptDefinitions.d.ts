@@ -1108,6 +1108,8 @@ export interface SleeveTask {
   location: string;
   /** Stat being trained at the gym, if any */
   gymStatType: string;
+  /** Class being taken at university, if any */
+  className: string;
   /** Faction work type being performed, if any */
   factionWorkType: string;
 }
@@ -2160,9 +2162,10 @@ export interface Singularity {
    *
    *
    * @param augName - Name of Augmentation.
+   * @param basePrice - If true, function return base cost value. False by default.
    * @returns Price of the augmentation.
    */
-  getAugmentationPrice(augName: string): number;
+  getAugmentationPrice(augName: string, basePrice?: boolean): number;
 
   /**
    * Get reputation requirement of an augmentation.
@@ -2171,9 +2174,10 @@ export interface Singularity {
    *
    *
    * @param augName - Name of Augmentation.
+   * @param basePrice - If true, function return base cost value. False by default.
    * @returns Reputation requirement of the augmentation.
    */
-  getAugmentationRepReq(augName: string): number;
+  getAugmentationRepReq(augName: string, basePrice?: boolean): number;
 
   /**
    * Purchase an augmentation
@@ -3789,6 +3793,28 @@ export interface Sleeve {
    * @returns True if the aug was purchased and installed on the sleeve, false otherwise.
    */
   purchaseSleeveAug(sleeveNumber: number, augName: string): boolean;
+
+  /**
+   * Get price of an augmentation.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   *
+   * @param augName - Name of Augmentation.
+   * @returns Price of the augmentation.
+   */
+  getSleeveAugmentationPrice(augName: string): number;
+
+  /**
+   * Get reputation requirement of an augmentation.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   *
+   * @param augName - Name of Augmentation.
+   * @returns Reputation requirement of the augmentation.
+   */
+  getSleeveAugmentationRepReq(augName: string): number;
 }
 
 /**

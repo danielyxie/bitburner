@@ -133,18 +133,18 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         return aug.prereqs.slice();
       },
     getAugmentationPrice: (_ctx: NetscriptContext) =>
-      function (_augName: unknown): number {
+      function (_augName: unknown, _basePrice: unknown = false): number {
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.getCost(player).moneyCost;
+        return !_basePrice ? aug.getCost(player).moneyCost : aug.baseCost;
       },
     getAugmentationRepReq: (_ctx: NetscriptContext) =>
-      function (_augName: unknown): number {
+      function (_augName: unknown, _basePrice: unknown = false): number {
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.getCost(player).repCost;
+        return !_basePrice ? aug.getCost(player).repCost : aug.baseRepRequirement;
       },
     getAugmentationStats: (_ctx: NetscriptContext) =>
       function (_augName: unknown): AugmentationStats {

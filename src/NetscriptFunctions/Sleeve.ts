@@ -17,6 +17,7 @@ import {
   SleeveTask,
 } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/checkEnum";
+import { Augmentation } from "src/Augmentation/Augmentation";
 
 export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): ISleeve {
   const checkSleeveAPIAccess = function (func: string): void {
@@ -112,7 +113,6 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       const companyName = helper.string("setToCompanyWork", "companyName", acompanyName);
       checkSleeveAPIAccess("setToCompanyWork");
       checkSleeveNumber("setToCompanyWork", sleeveNumber);
-
       // Cannot work at the same company that another sleeve is working at
       for (let i = 0; i < player.sleeves.length; ++i) {
         if (i === sleeveNumber) {
@@ -126,7 +126,6 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
           );
         }
       }
-
       return player.sleeves[sleeveNumber].workForCompany(player, companyName);
     },
     setToFactionWork: function (
@@ -174,6 +173,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
 
       return player.sleeves[sleeveNumber].workoutAtGym(player, gymName, stat);
     },
+
     getSleeveStats: function (_sleeveNumber: unknown): SleeveSkills {
       updateRam("getSleeveStats");
       const sleeveNumber = helper.number("getSleeveStats", "sleeveNumber", _sleeveNumber);
@@ -193,6 +193,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         crime: sl.crimeType,
         location: sl.currentTaskLocation,
         gymStatType: sl.gymStatType,
+        className: sl.className,
         factionWorkType: FactionWorkType[sl.factionWorkType],
       };
     },
@@ -309,6 +310,20 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       }
 
       return player.sleeves[sleeveNumber].tryBuyAugmentation(player, aug);
+    },
+    getSleeveAugmentationPrice: function (_augName: unknown): number {
+      updateRam("getSleeveAugmentationPrice");
+      checkSleeveAPIAccess("getSleeveAugmentationPrice");
+      const augName = helper.string("getSleeveAugmentationPrice", "augName", _augName);
+      const aug: Augmentation = StaticAugmentations[augName];
+      return aug.baseCost;
+    },
+    getSleeveAugmentationRepReq: function (_augName: unknown, _basePrice = false): number {
+      updateRam("getSleeveAugmentationRepReq");
+      checkSleeveAPIAccess("getSleeveAugmentationRepReq");
+      const augName = helper.string("getSleeveAugmentationRepReq", "augName", _augName);
+      const aug: Augmentation = StaticAugmentations[augName];
+      return aug.getCost(player).repCost;
     },
   };
 }

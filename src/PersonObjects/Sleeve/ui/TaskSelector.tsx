@@ -35,7 +35,7 @@ interface ITaskDetails {
 
 function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
   // Array of all companies that other sleeves are working at
-  const forbiddenCompanies = [];
+  const forbiddenCompanies: string[] = [];
   for (const otherSleeve of player.sleeves) {
     if (sleeve === otherSleeve) {
       continue;
@@ -45,13 +45,8 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
     }
   }
   const allJobs: string[] = Object.keys(player.jobs);
-  for (let i = 0; i < allJobs.length; ++i) {
-    if (!forbiddenCompanies.includes(allJobs[i])) {
-      allJobs[i];
-    }
-  }
 
-  return allJobs;
+  return allJobs.filter((company) => !forbiddenCompanies.includes(company));
 }
 
 function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
@@ -226,8 +221,18 @@ function getABC(sleeve: Sleeve): [string, string, string] {
       return ["Commit Crime", sleeve.crimeType, "------"];
     case SleeveTaskType.Class:
       return ["Take University Course", sleeve.className, sleeve.currentTaskLocation];
-    case SleeveTaskType.Gym:
-      return ["Workout at Gym", sleeve.gymStatType, sleeve.currentTaskLocation];
+    case SleeveTaskType.Gym: {
+      const sanitizedStat: string = sleeve.gymStatType.toLowerCase();
+      if (sanitizedStat.includes("str")) {
+        return ["Workout at Gym", "Train Strength", sleeve.currentTaskLocation];
+      } else if (sanitizedStat.includes("def")) {
+        return ["Workout at Gym", "Train Defense", sleeve.currentTaskLocation];
+      } else if (sanitizedStat.includes("dex")) {
+        return ["Workout at Gym", "Train Dexterity", sleeve.currentTaskLocation];
+      } else if (sanitizedStat.includes("agi")) {
+        return ["Workout at Gym", "Train Agility", sleeve.currentTaskLocation];
+      }
+    }
     case SleeveTaskType.Recovery:
       return ["Shock Recovery", "------", "------"];
     case SleeveTaskType.Synchro:
