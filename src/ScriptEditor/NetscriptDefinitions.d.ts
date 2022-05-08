@@ -4395,7 +4395,7 @@ interface UserInterface {
   /**
    * Clear the Terminal window, as if the player ran `clear` in the terminal
    * @remarks
-   * RAM cost: 0 GB
+   * RAM cost: 0.2 GB
    */
   clearTerminal(): void;
 }
