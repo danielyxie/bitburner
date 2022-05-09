@@ -86,7 +86,11 @@ export function TerritorySubpage(): React.ReactElement {
       </Box>
       <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
         {gangNames
-          .filter((name) => AllGangs[name].territory > 0)
+          .sort((a, b) => {
+            if (AllGangs[a].territory <= 0 && AllGangs[b].territory > 0) return 1;
+            if (AllGangs[a].territory > 0 && AllGangs[b].territory <= 0) return -1;
+            return 0;
+          })
           .map((name) => (
             <OtherGangTerritory key={name} name={name} />
           ))}
@@ -116,14 +120,16 @@ function OtherGangTerritory(props: ITerritoryProps): React.ReactElement {
   const playerPower = AllGangs[gang.facName].power;
   const power = AllGangs[props.name].power;
   const clashVictoryChance = playerPower / (power + playerPower);
+  const territory = AllGangs[props.name].territory;
+  const opacity = territory ? 1 : 0.75;
   return (
-    <Box component={Paper} sx={{ p: 1 }}>
+    <Box component={Paper} sx={{ p: 1, opacity }}>
       <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
         {props.name}
       </Typography>
       <Typography>
         <b>Power:</b> {formatNumber(power, 3)} <br />
-        <b>Territory:</b> {formatTerritory(AllGangs[props.name].territory)}% <br />
+        <b>Territory:</b> {formatTerritory(territory)}% <br />
         <b>Clash Win Chance:</b> {numeralWrapper.formatPercentage(clashVictoryChance, 3)}
       </Typography>
     </Box>
