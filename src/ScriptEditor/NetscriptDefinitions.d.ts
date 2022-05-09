@@ -2165,7 +2165,7 @@ export interface Singularity {
    * @param basePrice - If true, function return base cost value. False by default.
    * @returns Price of the augmentation.
    */
-  getAugmentationPrice(augName: string, basePrice?: boolean): number;
+  getAugmentationPrice(augName: string, returnBasePrice?: boolean): number;
 
   /**
    * Get reputation requirement of an augmentation.
@@ -2177,7 +2177,7 @@ export interface Singularity {
    * @param basePrice - If true, function return base cost value. False by default.
    * @returns Reputation requirement of the augmentation.
    */
-  getAugmentationRepReq(augName: string, basePrice?: boolean): number;
+  getAugmentationRepReq(augName: string, returnBasePrice?: boolean): number;
 
   /**
    * Purchase an augmentation
