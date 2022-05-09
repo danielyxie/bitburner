@@ -488,7 +488,7 @@ export const defaultMultipliers: IBitNodeMultipliers = {
   FourSigmaMarketDataApiCost: 1,
 
   CorporationValuation: 1,
-  CorporationSoftCap: 1,
+  CorporationSoftcap: 1,
 
   BladeburnerRank: 1,
   BladeburnerSkillCost: 1,
@@ -523,7 +523,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         StaneksGiftPowerMultiplier: 2,
         StaneksGiftExtraSize: -6,
         PurchasedServerSoftcap: 1.3,
-        CorporationSoftCap: 0.9,
+        CorporationSoftcap: 0.9,
         WorldDaemonDifficulty: 5,
       });
     }
@@ -609,7 +609,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         StaneksGiftPowerMultiplier: 0.5,
         StaneksGiftExtraSize: 2,
         GangSoftcap: 0.7,
-        CorporationSoftCap: 0.9,
+        CorporationSoftcap: 0.9,
         WorldDaemonDifficulty: 2,
         GangUniqueAugs: 0.2,
       });
@@ -637,7 +637,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         StaneksGiftPowerMultiplier: 0.9,
         StaneksGiftExtraSize: -1,
         GangSoftcap: 0.7,
-        CorporationSoftCap: 0.9,
+        CorporationSoftcap: 0.9,
         WorldDaemonDifficulty: 2,
         GangUniqueAugs: 0.2,
       });
@@ -657,7 +657,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         StaneksGiftExtraSize: -99,
         PurchasedServerSoftcap: 4,
         GangSoftcap: 0,
-        CorporationSoftCap: 0,
+        CorporationSoftcap: 0,
         GangUniqueAugs: 0,
       });
     }
@@ -685,7 +685,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         StaneksGiftPowerMultiplier: 0.5,
         StaneksGiftExtraSize: 2,
         GangSoftcap: 0.8,
-        CorporationSoftCap: 0.7,
+        CorporationSoftcap: 0.7,
         WorldDaemonDifficulty: 2,
         GangUniqueAugs: 0.25,
       });
@@ -717,7 +717,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         StaneksGiftExtraSize: -3,
         PurchasedServerSoftcap: 1.1,
         GangSoftcap: 0.9,
-        CorporationSoftCap: 0.9,
+        CorporationSoftcap: 0.9,
         WorldDaemonDifficulty: 2,
         GangUniqueAugs: 0.25,
       });
@@ -741,7 +741,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         FourSigmaMarketDataCost: 4,
         FourSigmaMarketDataApiCost: 4,
         PurchasedServerSoftcap: 2,
-        CorporationSoftCap: 0.9,
+        CorporationSoftcap: 0.9,
         WorldDaemonDifficulty: 1.5,
         GangUniqueAugs: 0.75,
       });
@@ -809,7 +809,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         StaneksGiftPowerMultiplier: inc,
         StaneksGiftExtraSize: inc,
         GangSoftcap: 0.8,
-        CorporationSoftCap: 0.8,
+        CorporationSoftcap: 0.8,
         WorldDaemonDifficulty: inc,
 
         GangUniqueAugs: dec,
@@ -854,7 +854,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         StaneksGiftPowerMultiplier: 2,
         StaneksGiftExtraSize: 1,
         GangSoftcap: 0.3,
-        CorporationSoftCap: 0.3,
+        CorporationSoftcap: 0.3,
         WorldDaemonDifficulty: 3,
         GangUniqueAugs: 0.1,
       });
