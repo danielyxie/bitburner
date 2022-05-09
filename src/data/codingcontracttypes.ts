@@ -1382,7 +1382,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return [n + m, edges];
     },
     solver: (data: [number, [number, number][]], ans: string): boolean => {
-      //Case where the player believes there is no solution
+      //Case where the player believes there is no solution.
+      //Attempt to construct one to check if this is correct.
       if (ans == "[]") {
         //Helper function to get neighbourhood of a vertex
         function neighbourhood(vertex: number): number[] {
