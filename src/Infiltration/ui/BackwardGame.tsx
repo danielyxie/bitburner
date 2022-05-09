@@ -38,10 +38,7 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
   const hasAugment = Player.hasAugmentation(AugmentationNames.ChaosOfDionysus, true);
 
   function ignorableKeyboardEvent(event: KeyboardEvent): boolean {
-    return event.key === KEY.BACKSPACE
-    || (event.shiftKey && event.key === "Shift")
-    || event.ctrlKey
-    || event.altKey;
+    return event.key === KEY.BACKSPACE || (event.shiftKey && event.key === "Shift") || event.ctrlKey || event.altKey;
   }
 
   function press(this: Document, event: KeyboardEvent): void {
