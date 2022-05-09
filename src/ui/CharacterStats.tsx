@@ -66,7 +66,7 @@ function MultiplierTable(props: MultTableProps): React.ReactElement {
         {props.rows.map((data) => {
           const { mult, value, effValue = null, color = props.color } = data;
 
-          if (effValue && effValue !== value && player.sourceFileLvl(5) > 0) {
+          if (effValue !== null && effValue !== value && player.sourceFileLvl(5) > 0) {
             return (
               <StatsRow key={mult} name={mult} color={color} data={{}}>
                 <>
