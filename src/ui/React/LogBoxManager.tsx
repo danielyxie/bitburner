@@ -18,6 +18,7 @@ import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
+import { Settings } from "../../Settings/Settings";
 
 let layerCounter = 0;
 
@@ -77,7 +78,7 @@ interface IProps {
   onClose: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((_theme: Theme) =>
   createStyles({
     title: {
       "&.is-minimized + *": {
@@ -93,26 +94,11 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowY: "scroll",
       overflowX: "hidden",
       scrollbarWidth: "auto",
-      display: "flex",
       flexDirection: "column-reverse",
     },
     titleButton: {
-      padding: "1px 6px",
-    },
-    success: {
-      color: theme.colors.success,
-    },
-    error: {
-      color: theme.palette.error.main,
-    },
-    primary: {
-      color: theme.palette.primary.main,
-    },
-    info: {
-      color: theme.palette.info.main,
-    },
-    warning: {
-      color: theme.palette.warning.main,
+      padding: "1px 0",
+      height: "100%",
     },
   }),
 );
@@ -192,18 +178,18 @@ function LogWindow(props: IProps): React.ReactElement {
 
   function lineClass(s: string): string {
     if (s.match(/(^\[[^\]]+\] )?ERROR/) || s.match(/(^\[[^\]]+\] )?FAIL/)) {
-      return classes.error;
+      return Settings.theme.error;
     }
     if (s.match(/(^\[[^\]]+\] )?SUCCESS/)) {
-      return classes.success;
+      return Settings.theme.success;
     }
     if (s.match(/(^\[[^\]]+\] )?WARN/)) {
-      return classes.warning;
+      return Settings.theme.warning;
     }
     if (s.match(/(^\[[^\]]+\] )?INFO/)) {
-      return classes.info;
+      return Settings.theme.info;
     }
-    return classes.primary;
+    return Settings.theme.primary;
   }
 
   // And trigger fakeDrag when the window is resized
