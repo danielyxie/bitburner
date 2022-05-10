@@ -27,7 +27,7 @@ export const OptionsSlider = (props: IProps): React.ReactElement => {
       <Slider
         value={value}
         onChange={onChange}
-        onChangeCommitted={(evt) => props.callback(evt, value)}
+        onChangeCommitted={props.callback}
         step={props.step}
         min={props.min}
         max={props.max}
