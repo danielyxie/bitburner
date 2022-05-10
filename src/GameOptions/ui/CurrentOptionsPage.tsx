@@ -70,7 +70,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
         <>
           <OptionsSlider
             label=".script exec time (ms)"
-            value={execTime}
+            initialValue={execTime}
             callback={handleExecTimeChange}
             step={1}
             min={5}
@@ -84,7 +84,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
           />
           <OptionsSlider
             label="Recently killed scripts size"
-            value={recentScriptsSize}
+            initialValue={recentScriptsSize}
             callback={handleRecentScriptsSizeChange}
             step={25}
             min={0}
@@ -98,7 +98,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
           />
           <OptionsSlider
             label="Netscript log size"
-            value={logSize}
+            initialValue={logSize}
             callback={handleLogSizeChange}
             step={20}
             min={20}
@@ -112,7 +112,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
           />
           <OptionsSlider
             label="Netscript port size"
-            value={portSize}
+            initialValue={portSize}
             callback={handlePortSizeChange}
             step={1}
             min={20}
@@ -126,7 +126,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
           />
           <OptionsSlider
             label="Terminal capacity"
-            value={terminalSize}
+            initialValue={terminalSize}
             callback={handleTerminalSizeChange}
             step={50}
             min={50}
@@ -141,7 +141,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
           />
           <OptionsSlider
             label="Autosave interval (s)"
-            value={autosaveInterval}
+            initialValue={autosaveInterval}
             callback={handleAutosaveIntervalChange}
             step={30}
             min={0}
