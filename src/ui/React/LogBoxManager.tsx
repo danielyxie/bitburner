@@ -256,7 +256,7 @@ function LogWindow(props: IProps): React.ReactElement {
               style={{
                 position: "absolute",
                 right: "-10px",
-                bottom: "-13px",
+                bottom: "-16px",
                 cursor: "nw-resize",
                 display: minimized ? "none" : "inline-block",
               }}
