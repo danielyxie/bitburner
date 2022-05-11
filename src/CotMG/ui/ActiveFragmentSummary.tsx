@@ -53,7 +53,6 @@ export function ActiveFragmentSummary(props: IProps): React.ReactElement {
   return (
     <Paper sx={{ mb: 1 }}>
       <Typography variant="h5">Summary of active fragments:</Typography>
-      {summary.length <= 0 && <Typography>None currently.</Typography>}
       <Table sx={{ display: "table", width: "100%" }}>
         <TableBody>
           <TableRow>
