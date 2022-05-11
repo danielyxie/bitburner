@@ -284,7 +284,7 @@ export class Terminal implements ITerminal {
       `Security decreased on '${server.hostname}' from ${numeralWrapper.formatSecurity(
         oldSec,
       )} to ${numeralWrapper.formatSecurity(newSec)} (min: ${numeralWrapper.formatSecurity(server.minDifficulty)})` +
-      ` and Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
+        ` and Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
     );
   }
 
@@ -330,7 +330,8 @@ export class Terminal implements ITerminal {
         this.print("Time to hack: " + (!isHacknet ? convertTimeMsToTimeElapsedString(hackingTime, true) : "N/A"));
       }
       this.print(
-        `Total money available on server: ${currServ instanceof Server ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"
+        `Total money available on server: ${
+          currServ instanceof Server ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"
         }`,
       );
       if (currServ instanceof Server) {
