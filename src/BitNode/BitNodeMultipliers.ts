@@ -242,7 +242,7 @@ export interface IBitNodeMultipliers {
   /**
    * Influences corporation dividends.
    */
-  CorporationSoftCap: number;
+  CorporationSoftcap: number;
 
   // Index signature
   [key: string]: number;

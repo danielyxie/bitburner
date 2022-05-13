@@ -560,7 +560,7 @@ export interface BitNodeMultipliers {
   /** Influences how much money the player earns when completing working their job. */
   CompanyWorkMoney: number;
   /** Influences the money gain from dividends of corporations created by the player. */
-  CorporationSoftCap: number;
+  CorporationSoftcap: number;
   /** Influences the valuation of corporations created by the player. */
   CorporationValuation: number;
   /** Influences the base experience gained for each ability when the player commits a crime. */
@@ -4391,6 +4391,13 @@ interface UserInterface {
    * RAM cost: 0 GB
    */
   getGameInfo(): GameInfo;
+
+  /**
+   * Clear the Terminal window, as if the player ran `clear` in the terminal
+   * @remarks
+   * RAM cost: 0.2 GB
+   */
+  clearTerminal(): void;
 }
 
 /**

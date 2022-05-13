@@ -320,9 +320,9 @@ function CorporationMults({ mults }: IMultsProps): React.ReactElement {
   if (!player.canAccessCorporation()) return <></>;
 
   const rows: IBNMultRows = {
-    CorporationSoftCap: {
+    CorporationSoftcap: {
       name: "Corporation Softcap",
-      content: mults.CorporationSoftCap.toFixed(3),
+      content: mults.CorporationSoftcap.toFixed(3),
     },
     CorporationValuation: { name: "Valuation" },
   };

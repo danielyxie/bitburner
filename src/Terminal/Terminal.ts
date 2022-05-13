@@ -463,6 +463,12 @@ export class Terminal implements ITerminal {
     this.contractOpen = true;
     const res = await contract.prompt();
 
+    //Check if the contract still exists by the time the promise is fullfilled
+    if (serv.getContract(contractName) == null) {
+      this.contractOpen = false;
+      return this.error("Contract no longer exists (Was it solved by a script?)");
+    }
+
     switch (res) {
       case CodingContractResult.Success:
         if (contract.reward !== null) {

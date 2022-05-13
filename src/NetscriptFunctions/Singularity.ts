@@ -84,7 +84,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       if (script.filename === cbScript) {
         const ramUsage = script.ramUsage;
         const ramAvailable = home.maxRam - home.ramUsed;
-        if (ramUsage > ramAvailable) {
+        if (ramUsage > ramAvailable + 0.001) {
           return; // Not enough RAM
         }
         const runningScriptObj = new RunningScript(script, []); // No args
@@ -123,7 +123,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return [aug.getCost(player).moneyCost, aug.getCost(player).repCost];
+        const costs = aug.getCost(player);
+        return [costs.repCost, costs.moneyCost];
       },
     getAugmentationPrereq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): string[] {
