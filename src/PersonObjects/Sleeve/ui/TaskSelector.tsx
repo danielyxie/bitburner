@@ -222,15 +222,17 @@ function getABC(sleeve: Sleeve): [string, string, string] {
     case SleeveTaskType.Class:
       return ["Take University Course", sleeve.className, sleeve.currentTaskLocation];
     case SleeveTaskType.Gym: {
-      const sanitizedStat: string = sleeve.gymStatType.toLowerCase();
-      if (sanitizedStat.includes("str")) {
-        return ["Workout at Gym", "Train Strength", sleeve.currentTaskLocation];
-      } else if (sanitizedStat.includes("def")) {
-        return ["Workout at Gym", "Train Defense", sleeve.currentTaskLocation];
-      } else if (sanitizedStat.includes("dex")) {
-        return ["Workout at Gym", "Train Dexterity", sleeve.currentTaskLocation];
-      } else if (sanitizedStat.includes("agi")) {
-        return ["Workout at Gym", "Train Agility", sleeve.currentTaskLocation];
+      switch (sleeve.gymStatType) {
+        case "none":
+          return ["Idle", "------", "------"];
+        case "str":
+          return ["Workout at Gym", "Train Strength", sleeve.currentTaskLocation];
+        case "def":
+          return ["Workout at Gym", "Train Defense", sleeve.currentTaskLocation];
+        case "dex":
+          return ["Workout at Gym", "Train Dexterity", sleeve.currentTaskLocation];
+        case "agi":
+          return ["Workout at Gym", "Train Agility", sleeve.currentTaskLocation];
       }
     }
     case SleeveTaskType.Recovery:
