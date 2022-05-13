@@ -697,7 +697,7 @@ export class Bladeburner implements IBladeburner {
 
     // Set variables
     if (args.length === 4) {
-      const variable = args[1];
+      const variable = args[1].toLowerCase(); // allows Action Type to be with or without capitalisation.
       const val = args[2];
 
       let highLow = false; // True for high, false for low
