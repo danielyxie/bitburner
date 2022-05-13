@@ -37,9 +37,13 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
   const [guess, setGuess] = useState("");
   const hasAugment = Player.hasAugmentation(AugmentationNames.ChaosOfDionysus, true);
 
+  function ignorableKeyboardEvent(event: KeyboardEvent): boolean {
+    return event.key === KEY.BACKSPACE || (event.shiftKey && event.key === "Shift") || event.ctrlKey || event.altKey;
+  }
+
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    if (event.key === KEY.BACKSPACE) return;
+    if (ignorableKeyboardEvent(event)) return;
     const nextGuess = guess + event.key.toUpperCase();
     if (!answer.startsWith(nextGuess)) props.onFailure();
     else if (answer === nextGuess) props.onSuccess();
