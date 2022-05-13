@@ -504,6 +504,8 @@ export const defaultMultipliers: IBitNodeMultipliers = {
   WorldDaemonDifficulty: 1,
 };
 
+Object.freeze(defaultMultipliers);
+
 export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultipliers {
   const mults = Object.assign({}, defaultMultipliers);
   switch (n) {
