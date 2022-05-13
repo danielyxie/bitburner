@@ -123,7 +123,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return [aug.getCost(player).moneyCost, aug.getCost(player).repCost];
+        const costs = aug.getCost(player);
+        return [costs.repCost, costs.moneyCost];
       },
     getAugmentationPrereq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): string[] {
