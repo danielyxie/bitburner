@@ -82,7 +82,7 @@ const BNMultTable = (props: IBNMultTableProps): React.ReactElement => {
       <StatsRow
         key={uniqueId()}
         name={value.name}
-        data={{ content: value.content ?? `x${props.mults[key].toFixed(3)}` }}
+        data={{ content: value.content ?? `${(props.mults[key] * 100).toFixed(3)}%` }}
         color={value.color ?? Settings.theme.primary}
       />
     ));
