@@ -67,7 +67,6 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
 import { WorkType, PlayerFactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
-import { SleeveTaskType } from "../Sleeve/SleeveTaskTypesEnum";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -1796,15 +1795,6 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
 
   this.jobs[company.name] = pos.name;
 
-  if (this.sleeves !== null) {
-    for (const sleeve of this.sleeves) {
-      if (sleeve.currentTask === SleeveTaskType.Company && sleeve.currentTaskLocation === company.name) {
-        sleeve.finishTask(this);
-        sleeve.workForCompany(this, company.name);
-      }
-    }
-  }
-
   if (!this.isWorking || this.workType !== WorkType.Company) this.companyName = company.name;
 
   if (!sing) {
@@ -1860,14 +1850,6 @@ export function quitJob(this: IPlayer, company: string, _sing = false): void {
   delete this.jobs[company];
   if (this.companyName === company) {
     this.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
-  }
-
-  if (this.sleeves !== null) {
-    for (const sleeve of this.sleeves) {
-      if (sleeve.currentTask === SleeveTaskType.Company && sleeve.currentTaskLocation === company) {
-        sleeve.finishTask(this);
-      }
-    }
   }
 }
 
