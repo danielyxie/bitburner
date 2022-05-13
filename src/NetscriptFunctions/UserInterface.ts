@@ -14,6 +14,7 @@ import { defaultTheme } from "../Themes/Themes";
 import { defaultStyles } from "../Themes/Styles";
 import { CONSTANTS } from "../Constants";
 import { hash } from "../hash/hash";
+import { Terminal } from "../../src/Terminal";
 
 export function NetscriptUserInterface(
   player: IPlayer,
@@ -107,6 +108,12 @@ export function NetscriptUserInterface(
       };
 
       return gameInfo;
+    },
+
+    clearTerminal: function (): void {
+      updateRam("clearTerminal");
+      workerScript.log("ui.clearTerminal", () => `Clearing terminal`);
+      Terminal.clear();
     },
   };
 }
