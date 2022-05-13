@@ -84,7 +84,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       if (script.filename === cbScript) {
         const ramUsage = script.ramUsage;
         const ramAvailable = home.maxRam - home.ramUsed;
-        if (ramUsage > ramAvailable) {
+        if (ramUsage > ramAvailable + 0.001) {
           return; // Not enough RAM
         }
         const runningScriptObj = new RunningScript(script, []); // No args
