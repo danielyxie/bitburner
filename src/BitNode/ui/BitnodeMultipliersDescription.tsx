@@ -528,7 +528,7 @@ function CorporationMults({ n, mults }: IMultsProps): React.ReactElement {
   if (n !== 3 && player.sourceFileLvl(3) === 0) return <></>;
   // is it empty check
   if (
-    mults.CorporationSoftCap === defaultMultipliers.CorporationSoftCap &&
+    mults.CorporationSoftcap === defaultMultipliers.CorporationSoftcap &&
     mults.CorporationValuation === defaultMultipliers.CorporationValuation
   )
     return <></>;
@@ -538,8 +538,8 @@ function CorporationMults({ n, mults }: IMultsProps): React.ReactElement {
       <br />
       <Typography variant={"h5"}>Corporation:</Typography>
       <Box mx={1}>
-        {mults.CorporationSoftCap !== defaultMultipliers.CorporationSoftCap ? (
-          <Typography>Softcap: {mults.CorporationSoftCap.toFixed(3)}</Typography>
+        {mults.CorporationSoftcap !== defaultMultipliers.CorporationSoftcap ? (
+          <Typography>Softcap: {mults.CorporationSoftcap.toFixed(3)}</Typography>
         ) : (
           <></>
         )}
