@@ -24,7 +24,7 @@ import { IMap } from "../types";
 import * as data from "./AchievementData.json";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
-import { ClassType } from "../utils/WorkType";
+import { ClassType } from "../Work/WorkType";
 
 // Unable to correctly cast the JSON data into AchievementDataJson type otherwise...
 const achievementData = (<AchievementDataJson>(<unknown>data)).achievements;

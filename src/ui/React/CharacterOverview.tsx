@@ -26,7 +26,7 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Box, Tooltip } from "@mui/material";
 
-import { WorkType } from "../../utils/WorkType";
+import { WorkType } from "../../Work/WorkType";
 
 interface IProps {
   save: () => void;

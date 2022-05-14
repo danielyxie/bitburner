@@ -50,7 +50,7 @@ import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
 import { Button, Typography } from "@mui/material";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
-import { WorkType } from "./utils/WorkType";
+import { WorkType } from "./Work/WorkType";
 
 const Engine: {
   _lastUpdate: number;

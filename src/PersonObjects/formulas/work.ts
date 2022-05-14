@@ -1,7 +1,7 @@
 import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { IPlayer } from "../IPlayer";
-import { ClassType } from "../../utils/WorkType";
+import { ClassType } from "../../Work/WorkType";
 
 export interface WorkEarnings {
   workMoneyLossRate: number;

@@ -66,7 +66,7 @@ import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
-import { WorkType, PlayerFactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
+import { WorkType, PlayerFactionWorkType, ClassType, CrimeType } from "../../Work/WorkType";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */

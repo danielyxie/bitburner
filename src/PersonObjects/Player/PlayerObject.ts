@@ -38,7 +38,7 @@ import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
-import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../utils/WorkType";
+import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../Work/WorkType";
 
 export class PlayerObject implements IPlayer {
   // Class members

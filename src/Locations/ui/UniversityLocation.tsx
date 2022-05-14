@@ -17,7 +17,7 @@ import { Money } from "../../ui/React/Money";
 import { use } from "../../ui/Context";
 import { Box } from "@mui/material";
 
-import { ClassType } from "../../utils/WorkType";
+import { ClassType } from "../../Work/WorkType";
 
 type IProps = {
   loc: Location;

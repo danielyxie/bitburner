@@ -30,7 +30,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
-import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
+import { WorkType, ClassType, CrimeType } from "../Work/WorkType";
 
 export interface IPlayer {
   // Class members

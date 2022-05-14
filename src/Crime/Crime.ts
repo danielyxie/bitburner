@@ -3,7 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { CrimeType } from "../utils/WorkType";
+import { CrimeType } from "../Work/WorkType";
 
 interface IConstructorParams {
   hacking_success_weight?: number;

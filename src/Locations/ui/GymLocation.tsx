@@ -17,7 +17,7 @@ import { Money } from "../../ui/React/Money";
 import { IRouter } from "../../ui/Router";
 import { serverMetadata } from "../../Server/data/servers";
 import { Box } from "@mui/material";
-import { ClassType } from "../../utils/WorkType";
+import { ClassType } from "../../Work/WorkType";
 
 type IProps = {
   loc: Location;
