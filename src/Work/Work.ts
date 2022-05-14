@@ -21,17 +21,7 @@ type WorkGains = {
   rep: number;
 };
 
-type WorkRates = {
-  hackExp: number;
-  strExp: number;
-  defExp: number;
-  dexExp: number;
-  agiExp: number;
-  chaExp: number;
-
-  money: number;
-  rep: number;
-};
+type WorkRates = WorkGains;
 
 export interface Work {
   type: WorkType;
@@ -49,6 +39,6 @@ export interface Work {
     | StudyClassWorkInfo
     | null;
 
-  gains: WorkGains;
-  rates: WorkRates;
+  gains?: WorkGains;
+  rates?: WorkRates;
 }

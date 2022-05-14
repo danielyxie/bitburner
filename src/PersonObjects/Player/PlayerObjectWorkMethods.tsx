@@ -22,6 +22,7 @@ import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { IRouter } from "../../ui/Router";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { CreateProgramWorkInfo } from "../../Work/WorkInfo";
 import { ClassType, CrimeType, PlayerFactionWorkType, WorkType } from "../../Work/WorkType";
 import {
   getFactionFieldWorkRepGain,
@@ -38,6 +39,34 @@ export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: s
   if (generalType === this.workType && group === this.currentWorkFactionName && workType === this.factionWorkType)
     return;
   if (this.isWorking) this.singularityStopWork();
+
+  this.workData = {
+    type: WorkType.None,
+    timeWorked: 0,
+    timeToCompletion: 0,
+    info: null,
+    gains: {
+      hackExp: 0,
+      strExp: 0,
+      defExp: 0,
+      dexExp: 0,
+      agiExp: 0,
+      chaExp: 0,
+      rep: 0,
+      money: 0,
+    },
+    rates: {
+      hackExp: 0,
+      strExp: 0,
+      defExp: 0,
+      dexExp: 0,
+      agiExp: 0,
+      chaExp: 0,
+      rep: 0,
+      money: 0,
+    },
+  };
+
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
   this.workDefExpGainRate = 0;
@@ -800,9 +829,8 @@ export function startCreateProgramWork(this: IPlayer, programName: string, time:
   //var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking - reqLevel)) / CONSTANTS.MaxSkillLevel;
   //if (timeMultiplier > 1) {timeMultiplier = 1;}
   //if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
-  this.createProgramReqLvl = reqLevel;
 
-  this.timeNeededToCompleteWork = time;
+  let timeWorkedCreateProgram = 0;
   //Check for incomplete program
   for (let i = 0; i < this.getHomeComputer().programs.length; ++i) {
     const programFile = this.getHomeComputer().programs[i];
@@ -815,12 +843,24 @@ export function startCreateProgramWork(this: IPlayer, programName: string, time:
       if (isNaN(percComplete) || percComplete < 0 || percComplete >= 100) {
         break;
       }
-      this.timeWorkedCreateProgram = (percComplete / 100) * this.timeNeededToCompleteWork;
+      timeWorkedCreateProgram = (percComplete / 100) * time;
       this.getHomeComputer().programs.splice(i, 1);
     }
   }
 
   this.createProgramName = programName;
+
+  this.workData = {
+    type: WorkType.CreateProgram,
+    timeToCompletion: time,
+    timeWorked: 0,
+
+    info: {
+      programName,
+      requiredLevel: reqLevel,
+      timeWorked: timeWorkedCreateProgram,
+    },
+  };
 }
 
 export function createProgramWork(this: IPlayer, numCycles: number): boolean {
@@ -828,16 +868,19 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
   if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
     focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
   }
+
+  const workInfo = this.workData.info as CreateProgramWorkInfo;
+
   //Higher hacking skill will allow you to create programs faster
-  const reqLvl = this.createProgramReqLvl;
+  const reqLvl = workInfo.requiredLevel;
   let skillMult = (this.hacking / reqLvl) * this.getIntelligenceBonus(3); //This should always be greater than 1;
   skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
   skillMult *= focusBonus;
   //Skill multiplier directly applied to "time worked"
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-  this.timeWorkedCreateProgram += CONSTANTS._idleSpeed * numCycles * skillMult;
+  this.workData.timeWorked += CONSTANTS._idleSpeed * numCycles;
+  workInfo.timeWorked += CONSTANTS._idleSpeed * numCycles * skillMult;
 
-  if (this.timeWorkedCreateProgram >= this.timeNeededToCompleteWork) {
+  if (workInfo.timeWorked >= this.workData.timeToCompletion) {
     this.finishCreateProgramWork(false);
     return true;
   }
@@ -845,10 +888,12 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
 }
 
 export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
-  const programName = this.createProgramName;
+  const workInfo = this.workData.info as CreateProgramWorkInfo;
+
+  const programName = workInfo.programName;
   if (!cancelled) {
     //Complete case
-    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
+    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.workData.timeWorked) / 1000);
     dialogBoxCreate(`You've finished creating ${programName}!<br>The new program can be found on your home computer.`);
 
     if (!this.getHomeComputer().programs.includes(programName)) {
@@ -856,7 +901,7 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
     }
   } else if (!this.getHomeComputer().programs.includes(programName)) {
     //Incomplete case
-    const perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
+    const perc = (Math.floor((workInfo.timeWorked / this.workData.timeToCompletion) * 10000) / 100).toString();
     const incompleteName = programName + "-" + perc + "%-INC";
     this.getHomeComputer().programs.push(incompleteName);
   }

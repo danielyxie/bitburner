@@ -117,6 +117,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   }
 
   this.isWorking = false;
+  this.resetWorkStatus();
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
