@@ -1,17 +1,31 @@
+import { Info } from "@mui/icons-material";
+import { Box, Button, Container, Paper, TableBody, TableRow, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-
-import { Box, Button, Container, Paper, TableBody, TableRow, Typography } from "@mui/material";
-
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Table, TableCell } from "../../ui/React/Table";
 import { IRouter } from "../../ui/Router";
-
-import { Faction } from "../Faction";
-import { joinFaction, getFactionAugmentationsFiltered } from "../FactionHelpers";
-import { Factions } from "../Factions";
 import { FactionNames } from "../data/FactionNames";
+import { Faction } from "../Faction";
+import { getFactionAugmentationsFiltered, joinFaction } from "../FactionHelpers";
+import { Factions } from "../Factions";
 
 export const InvitationsSeen: string[] = [];
+
+interface IFactionProps {
+  player: IPlayer;
+  router: IRouter;
+  faction: Faction;
+
+  joined: boolean;
+}
+
+const FactionElement = (props: IFactionProps): React.ReactElement => {
+  return (
+    <Paper sx={{ width: "100%", p: 1 }}>
+      <Typography variant="h6">{props.faction.name}</Typography>
+    </Paper>
+  );
+};
 
 interface IProps {
   player: IPlayer;
@@ -56,21 +70,41 @@ export function FactionsRoot(props: IProps): React.ReactElement {
   };
 
   const allFactions = Object.values(FactionNames).map((faction) => faction as string);
-  const allJoinedFactions = props.player.factions.slice(0);
+  const allJoinedFactions = [...props.player.factions];
   allJoinedFactions.sort((a, b) => allFactions.indexOf(a) - allFactions.indexOf(b));
 
   return (
     <Container disableGutters maxWidth="md" sx={{ mx: 0, mb: 10 }}>
-      <Typography variant="h4">Factions</Typography>
-      <Typography mb={4}>
-        Throughout the game you may receive invitations from factions. There are many different factions, and each
-        faction has different criteria for determining its potential members. Joining a faction and furthering its cause
-        is crucial to progressing in the game and unlocking endgame content.
+      <Typography variant="h4">
+        Factions
+        <Tooltip
+          title={
+            <Typography>
+              Throughout the game you may receive invitations from factions. There are many different factions, and each
+              faction has different criteria for determining its potential members. Joining a faction and furthering its
+              cause is crucial to progressing in the game and unlocking endgame content.
+            </Typography>
+          }
+        >
+          <Info sx={{ ml: 1, mb: 0 }} color="info" />
+        </Tooltip>
       </Typography>
 
-      <Typography variant="h5" color="primary" mt={2} mb={1}>
-        Factions you have joined:
+      <Typography variant="h5" color="primary">
+        Your Factions
       </Typography>
+      {allJoinedFactions.map((facName) => {
+        if (!Factions.hasOwnProperty(facName)) return null;
+        return (
+          <FactionElement
+            key={facName}
+            faction={Factions[facName]}
+            player={props.player}
+            router={props.router}
+            joined={true}
+          />
+        );
+      })}
       {(allJoinedFactions.length > 0 && (
         <Paper sx={{ my: 1, p: 1, pb: 0, display: "inline-block" }}>
           <Table padding="none" style={{ width: "fit-content" }}>
