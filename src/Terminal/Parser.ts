@@ -12,8 +12,7 @@ function parseArg(arg: string): string | number | boolean {
     return arg === "true";
   }
 
-  // Strip quotation marks from strings that begin/end with the same mark
-  return arg.replace(/^"(.*?)"$/g, "$1").replace(/^'(.*?)'$/g, "$1");
+  return arg;
 }
 
 export function ParseCommands(commands: string): string[] {
@@ -45,8 +44,7 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
   let idx = 0;
   const args = [];
 
-  // Track depth of quoted strings, e.g.: "the're 'going away' rather 'quickly \"and awkwardly\"'" should be parsed as a single string
-  const quotes: string[] = [];
+  let lastQuote = "";
 
   let arg = "";
   while (idx < command.length) {
@@ -57,33 +55,20 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
       arg += command.charAt(++idx);
       // If the current character is a single- or double-quote mark, add it to the current argument.
     } else if (c === KEY.DOUBLE_QUOTE || c === KEY.QUOTE) {
-      arg += c;
-      const quote = quotes[quotes.length - 1];
-      const prev = command.charAt(idx - 1);
-      const next = command.charAt(idx + 1);
-      // If the previous character is a space or an equal sign this is a valid start to a new string.
-      // If we're already in a quoted string, push onto the stack of string starts to track depth.
-      if (
-        c !== quote &&
-        (prev === KEY.SPACE ||
-          prev === KEY.EQUAL ||
-          (c === KEY.DOUBLE_QUOTE && prev === KEY.QUOTE) ||
-          (c === KEY.QUOTE && prev === KEY.DOUBLE_QUOTE))
-      ) {
-        quotes.push(c);
-        // If the next character is a space and the current character is the same as the previously used
-        // quotation mark, this is a valid end to a string. Pop off the depth tracker.
-      } else if (
-        c === quote &&
-        (next === KEY.SPACE ||
-          (c === KEY.DOUBLE_QUOTE && next === KEY.QUOTE) ||
-          (c === KEY.QUOTE && next === KEY.DOUBLE_QUOTE))
-      ) {
-        quotes.pop();
+      // If we're currently in a quoted string argument and this quote mark is the same as the beginning,
+      // the string is done
+      if (lastQuote !== "" && c === lastQuote) {
+        lastQuote = "";
+        // Otherwise if we're not in a string argument, we've begun one
+      } else if (lastQuote === "") {
+        lastQuote = c;
+        // Otherwise if we're in a string argument, add the current character to it
+      } else {
+      	arg += c;
       }
       // If the current character is a space and we are not inside a string, parse the current argument
       // and start a new one
-    } else if (c === KEY.SPACE && quotes.length === 0) {
+    } else if (c === KEY.SPACE && lastQuote === "") {
       args.push(parseArg(arg));
 
       arg = "";
