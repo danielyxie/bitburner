@@ -20,7 +20,14 @@ import { Reputation } from "../../ui/React/Reputation";
 import { ReputationRate } from "../../ui/React/ReputationRate";
 import { StatsRow } from "../../ui/React/StatsRow";
 import { WorkType, ClassType } from "../WorkType";
-import { CreateProgramWorkInfo, GraftAugmentationWorkInfo } from "../WorkInfo";
+import {
+  CompanyPartTimeWorkInfo,
+  CompanyWorkInfo,
+  CreateProgramWorkInfo,
+  FactionWorkInfo,
+  GraftAugmentationWorkInfo,
+  StudyClassWorkInfo,
+} from "../WorkInfo";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -57,79 +64,82 @@ export function WorkInProgressRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
 
+  const gains = player.workData.gains,
+    rates = player.workData.rates;
+
   const expGains = [
-    player.workHackExpGained > 0 ? (
+    gains.hackExp > 0 ? (
       <StatsRow
         name="Hacking Exp"
         color={Settings.theme.hack}
         data={{
-          content: `${numeralWrapper.formatExp(player.workHackExpGained)} (${numeralWrapper.formatExp(
-            player.workHackExpGainRate * CYCLES_PER_SEC,
+          content: `${numeralWrapper.formatExp(gains.hackExp)} (${numeralWrapper.formatExp(
+            rates.hackExp * CYCLES_PER_SEC,
           )} / sec)`,
         }}
       />
     ) : (
       <></>
     ),
-    player.workStrExpGained > 0 ? (
+    gains.strExp > 0 ? (
       <StatsRow
         name="Strength Exp"
         color={Settings.theme.combat}
         data={{
-          content: `${numeralWrapper.formatExp(player.workStrExpGained)} (${numeralWrapper.formatExp(
-            player.workStrExpGainRate * CYCLES_PER_SEC,
+          content: `${numeralWrapper.formatExp(gains.strExp)} (${numeralWrapper.formatExp(
+            rates.strExp * CYCLES_PER_SEC,
           )} / sec)`,
         }}
       />
     ) : (
       <></>
     ),
-    player.workDefExpGained > 0 ? (
+    gains.defExp > 0 ? (
       <StatsRow
         name="Defense Exp"
         color={Settings.theme.combat}
         data={{
-          content: `${numeralWrapper.formatExp(player.workDefExpGained)} (${numeralWrapper.formatExp(
-            player.workDefExpGainRate * CYCLES_PER_SEC,
+          content: `${numeralWrapper.formatExp(gains.defExp)} (${numeralWrapper.formatExp(
+            rates.defExp * CYCLES_PER_SEC,
           )} / sec)`,
         }}
       />
     ) : (
       <></>
     ),
-    player.workDexExpGained > 0 ? (
+    gains.dexExp > 0 ? (
       <StatsRow
         name="Dexterity Exp"
         color={Settings.theme.combat}
         data={{
-          content: `${numeralWrapper.formatExp(player.workDexExpGained)} (${numeralWrapper.formatExp(
-            player.workDexExpGainRate * CYCLES_PER_SEC,
+          content: `${numeralWrapper.formatExp(gains.dexExp)} (${numeralWrapper.formatExp(
+            rates.dexExp * CYCLES_PER_SEC,
           )} / sec)`,
         }}
       />
     ) : (
       <></>
     ),
-    player.workAgiExpGained > 0 ? (
+    gains.agiExp > 0 ? (
       <StatsRow
         name="Agility Exp"
         color={Settings.theme.combat}
         data={{
-          content: `${numeralWrapper.formatExp(player.workAgiExpGained)} (${numeralWrapper.formatExp(
-            player.workAgiExpGainRate * CYCLES_PER_SEC,
+          content: `${numeralWrapper.formatExp(gains.agiExp)} (${numeralWrapper.formatExp(
+            rates.agiExp * CYCLES_PER_SEC,
           )} / sec)`,
         }}
       />
     ) : (
       <></>
     ),
-    player.workChaExpGained > 0 ? (
+    gains.chaExp > 0 ? (
       <StatsRow
         name="Charisma Exp"
         color={Settings.theme.cha}
         data={{
-          content: `${numeralWrapper.formatExp(player.workChaExpGained)} (${numeralWrapper.formatExp(
-            player.workChaExpGainRate * CYCLES_PER_SEC,
+          content: `${numeralWrapper.formatExp(gains.chaExp)} (${numeralWrapper.formatExp(
+            rates.chaExp * CYCLES_PER_SEC,
           )} / sec)`,
         }}
       />
@@ -140,7 +150,7 @@ export function WorkInProgressRoot(): React.ReactElement {
 
   let workInfo: IWorkInfo | null;
 
-  switch (player.workType) {
+  switch (player.workData.type) {
     case WorkType.Faction: {
       const faction = Factions[player.currentWorkFactionName];
       if (!faction) {
@@ -165,6 +175,8 @@ export function WorkInProgressRoot(): React.ReactElement {
         player.stopFocusing();
       }
 
+      const playerWorkInfo = player.workData.info as FactionWorkInfo;
+
       workInfo = {
         buttons: {
           cancel: cancel,
@@ -172,7 +184,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
         title: (
           <>
-            You are currently {player.currentWorkFactionDescription} for your faction <b>{faction.name}</b>
+            You are currently {playerWorkInfo.jobDescription} for your faction <b>{faction.name}</b>
           </>
         ),
 
@@ -185,8 +197,8 @@ export function WorkInProgressRoot(): React.ReactElement {
           player.workMoneyGained > 0 ? (
             <StatsRow name="Money" color={Settings.theme.money}>
               <Typography>
-                <Money money={player.workMoneyGained} /> (
-                <MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
+                <Money money={gains.money} /> (
+                <MoneyRate money={rates.money * CYCLES_PER_SEC} />)
               </Typography>
             </StatsRow>
           ) : (
@@ -194,14 +206,14 @@ export function WorkInProgressRoot(): React.ReactElement {
           ),
           <StatsRow name="Faction Reputation" color={Settings.theme.rep}>
             <Typography>
-              <Reputation reputation={player.workRepGained} /> (
-              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
+              <Reputation reputation={gains.rep} /> (
+              <ReputationRate reputation={rates.rep * CYCLES_PER_SEC} />)
             </Typography>
           </StatsRow>,
           ...expGains,
         ],
         progress: {
-          elapsed: player.timeWorked,
+          elapsed: player.workData.timeWorked,
         },
 
         stopText: "Stop Faction work",
@@ -211,7 +223,9 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     case WorkType.StudyClass: {
-      const className = player.className;
+      const playerWorkInfo = player.workData.info as StudyClassWorkInfo;
+
+      const className = playerWorkInfo.class;
       function cancel(): void {
         player.finishClass(true);
         router.toCity();
@@ -248,14 +262,13 @@ export function WorkInProgressRoot(): React.ReactElement {
         gains: [
           <StatsRow name="Total Cost" color={Settings.theme.money}>
             <Typography>
-              <Money money={-player.workMoneyGained} /> (<MoneyRate money={player.workMoneyLossRate * CYCLES_PER_SEC} />
-              )
+              <Money money={-gains.money} /> (<MoneyRate money={rates.moneyLoss * CYCLES_PER_SEC} />)
             </Typography>
           </StatsRow>,
           ...expGains,
         ],
         progress: {
-          elapsed: player.timeWorked,
+          elapsed: player.workData.timeWorked,
         },
 
         stopText: stopText,
@@ -265,14 +278,16 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     case WorkType.Company: {
-      const comp = Companies[player.companyName];
+      const playerWorkInfo = player.workData.info as CompanyWorkInfo;
+
+      const comp = Companies[playerWorkInfo.company];
       if (comp == null || !(comp instanceof Company)) {
         workInfo = {
           buttons: {
             cancel: () => router.toTerminal(),
           },
           title:
-            `You cannot work for ${player.companyName || "(Company not found)"} at this time,` +
+            `You cannot work for ${playerWorkInfo.company || "(Company not found)"} at this time,` +
             " please try again if you think this should have worked",
 
           stopText: "Back to Terminal",
@@ -290,7 +305,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         router.toJob();
       }
 
-      const position = player.jobs[player.companyName];
+      const position = player.jobs[playerWorkInfo.company];
 
       const penalty = player.cancelationPenalty();
 
@@ -303,7 +318,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
         title: (
           <>
-            You are currently working as a <b>{position}</b> at <b>{player.companyName}</b>
+            You are currently working as a <b>{position}</b> at <b>{playerWorkInfo.company}</b>
           </>
         ),
 
@@ -315,19 +330,19 @@ export function WorkInProgressRoot(): React.ReactElement {
         gains: [
           <StatsRow name="Money" color={Settings.theme.money}>
             <Typography>
-              <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
+              <Money money={gains.money} /> (<MoneyRate money={rates.money * CYCLES_PER_SEC} />)
             </Typography>
           </StatsRow>,
           <StatsRow name="Company Reputation" color={Settings.theme.rep}>
             <Typography>
-              <Reputation reputation={player.workRepGained} /> (
-              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
+              <Reputation reputation={gains.rep} /> (
+              <ReputationRate reputation={rates.rep * CYCLES_PER_SEC} />)
             </Typography>
           </StatsRow>,
           ...expGains,
         ],
         progress: {
-          elapsed: player.timeWorked,
+          elapsed: player.workData.timeWorked,
         },
 
         stopText: "Stop working",
@@ -340,6 +355,8 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     case WorkType.CompanyPartTime: {
+      const playerWorkInfo = player.workData.info as CompanyPartTimeWorkInfo;
+
       function cancel(): void {
         player.finishWorkPartTime(true);
         router.toJob();
@@ -348,14 +365,14 @@ export function WorkInProgressRoot(): React.ReactElement {
         player.stopFocusing();
         router.toJob();
       }
-      const comp = Companies[player.companyName];
+      const comp = Companies[playerWorkInfo.company];
       let companyRep = 0;
       if (comp == null || !(comp instanceof Company)) {
-        throw new Error(`Could not find Company: ${player.companyName}`);
+        throw new Error(`Could not find Company: ${playerWorkInfo.company}`);
       }
       companyRep = comp.playerReputation;
 
-      const position = player.jobs[player.companyName];
+      const position = player.jobs[playerWorkInfo.company];
 
       workInfo = {
         buttons: {
@@ -364,7 +381,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
         title: (
           <>
-            You are currently working as a <b>{position}</b> at <b>{player.companyName}</b>
+            You are currently working as a <b>{position}</b> at <b>{playerWorkInfo.company}</b>
           </>
         ),
 
@@ -376,19 +393,19 @@ export function WorkInProgressRoot(): React.ReactElement {
         gains: [
           <StatsRow name="Money" color={Settings.theme.money}>
             <Typography>
-              <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
+              <Money money={gains.money} /> (<MoneyRate money={rates.money * CYCLES_PER_SEC} />)
             </Typography>
           </StatsRow>,
           <StatsRow name="Company Reputation" color={Settings.theme.rep}>
             <Typography>
-              <Reputation reputation={player.workRepGained} /> (
-              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
+              <Reputation reputation={gains.rep} /> (
+              <ReputationRate reputation={rates.money * CYCLES_PER_SEC} />)
             </Typography>
           </StatsRow>,
           ...expGains,
         ],
         progress: {
-          elapsed: player.timeWorked,
+          elapsed: player.workData.timeWorked,
         },
 
         stopText: "Stop working",

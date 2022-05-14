@@ -2,6 +2,8 @@ import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { IPlayer } from "../IPlayer";
 import { ClassType } from "../../Work/WorkType";
+import { WorkRates } from "../../Work/Work";
+import { StudyClassWorkInfo } from "../../Work/WorkInfo";
 
 export interface WorkEarnings {
   workMoneyLossRate: number;
@@ -13,7 +15,7 @@ export interface WorkEarnings {
   workChaExpGainRate: number;
 }
 
-export function calculateClassEarnings(player: IPlayer): WorkEarnings {
+export function calculateClassEarnings(player: IPlayer): WorkRates {
   const gameCPS = 1000 / CONSTANTS._idleSpeed;
 
   //Find cost and exp gain per game cycle
@@ -25,7 +27,7 @@ export function calculateClassEarnings(player: IPlayer): WorkEarnings {
     agiExp = 0,
     chaExp = 0;
   const hashManager = player.hashManager;
-  switch (player.className) {
+  switch ((player.workData.info as StudyClassWorkInfo).class) {
     case ClassType.StudyComputerScience:
       hackExp =
         ((CONSTANTS.ClassStudyComputerScienceBaseExp * player.workExpMult) / gameCPS) * hashManager.getStudyMult();
@@ -70,12 +72,14 @@ export function calculateClassEarnings(player: IPlayer): WorkEarnings {
       throw new Error("ERR: Invalid/unrecognized class name");
   }
   return {
-    workMoneyLossRate: cost,
-    workHackExpGainRate: hackExp * player.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    workStrExpGainRate: strExp * player.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    workDefExpGainRate: defExp * player.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    workDexExpGainRate: dexExp * player.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    workAgiExpGainRate: agiExp * player.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    workChaExpGainRate: chaExp * player.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    moneyLoss: cost,
+    hackExp: hackExp * player.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    strExp: strExp * player.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    defExp: defExp * player.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    dexExp: dexExp * player.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    agiExp: agiExp * player.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    chaExp: chaExp * player.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    rep: 0,
+    money: 0,
   };
 }

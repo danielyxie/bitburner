@@ -22,7 +22,12 @@ import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { IRouter } from "../../ui/Router";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { CreateProgramWorkInfo, GraftAugmentationWorkInfo } from "../../Work/WorkInfo";
+import {
+  CreateProgramWorkInfo,
+  FactionWorkInfo,
+  GraftAugmentationWorkInfo,
+  StudyClassWorkInfo,
+} from "../../Work/WorkInfo";
 import { ClassType, CrimeType, PlayerFactionWorkType, WorkType } from "../../Work/WorkType";
 import {
   getFactionFieldWorkRepGain,
@@ -64,6 +69,7 @@ export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: s
       chaExp: 0,
       rep: 0,
       money: 0,
+      moneyLoss: 0,
     },
   };
 
@@ -103,79 +109,104 @@ export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
   if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
     focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
   }
-  const hackExpGain = focusBonus * this.workHackExpGainRate * numCycles;
-  const strExpGain = focusBonus * this.workStrExpGainRate * numCycles;
-  const defExpGain = focusBonus * this.workDefExpGainRate * numCycles;
-  const dexExpGain = focusBonus * this.workDexExpGainRate * numCycles;
-  const agiExpGain = focusBonus * this.workAgiExpGainRate * numCycles;
-  const chaExpGain = focusBonus * this.workChaExpGainRate * numCycles;
-  const moneyGain = (this.workMoneyGainRate - this.workMoneyLossRate) * numCycles;
+
+  const rates = this.workData.rates;
+
+  const hackExpGain = focusBonus * rates.hackExp * numCycles;
+  const strExpGain = focusBonus * rates.strExp * numCycles;
+  const defExpGain = focusBonus * rates.defExp * numCycles;
+  const dexExpGain = focusBonus * rates.dexExp * numCycles;
+  const agiExpGain = focusBonus * rates.agiExp * numCycles;
+  const chaExpGain = focusBonus * rates.chaExp * numCycles;
+  const moneyGain = (rates.money - rates.moneyLoss) * numCycles;
   this.gainHackingExp(hackExpGain);
   this.gainStrengthExp(strExpGain);
   this.gainDefenseExp(defExpGain);
   this.gainDexterityExp(dexExpGain);
   this.gainAgilityExp(agiExpGain);
   this.gainCharismaExp(chaExpGain);
-  this.gainMoney(moneyGain, this.className ? "class" : "work");
-  this.workHackExpGained += hackExpGain;
-  this.workStrExpGained += strExpGain;
-  this.workDefExpGained += defExpGain;
-  this.workDexExpGained += dexExpGain;
-  this.workAgiExpGained += agiExpGain;
-  this.workChaExpGained += chaExpGain;
-  this.workRepGained += focusBonus * this.workRepGainRate * numCycles;
-  this.workMoneyGained += focusBonus * this.workMoneyGainRate * numCycles;
-  this.workMoneyGained -= focusBonus * this.workMoneyLossRate * numCycles;
+  this.gainMoney(moneyGain, this.workData.type === WorkType.StudyClass ? "class" : "work");
+
+  this.workData.gains = {
+    hackExp: this.workData.gains.hackExp + hackExpGain,
+    strExp: this.workData.gains.strExp + strExpGain,
+    defExp: this.workData.gains.defExp + defExpGain,
+    dexExp: this.workData.gains.dexExp + dexExpGain,
+    agiExp: this.workData.gains.agiExp + agiExpGain,
+    chaExp: this.workData.gains.chaExp + chaExpGain,
+    money: this.workData.gains.money + focusBonus * (rates.money * numCycles - rates.moneyLoss * numCycles),
+    rep: this.workData.gains.rep + focusBonus * this.workRepGainRate * numCycles,
+  };
 }
 
 /* Working for Company */
 export function startWork(this: IPlayer, companyName: string): void {
   this.resetWorkStatus(WorkType.Company, companyName);
   this.isWorking = true;
-  this.companyName = companyName;
-  this.workType = WorkType.Company;
 
-  this.workHackExpGainRate = this.getWorkHackExpGain();
-  this.workStrExpGainRate = this.getWorkStrExpGain();
-  this.workDefExpGainRate = this.getWorkDefExpGain();
-  this.workDexExpGainRate = this.getWorkDexExpGain();
-  this.workAgiExpGainRate = this.getWorkAgiExpGain();
-  this.workChaExpGainRate = this.getWorkChaExpGain();
-  this.workRepGainRate = this.getWorkRepGain();
-  this.workMoneyGainRate = this.getWorkMoneyGain();
+  this.workData = {
+    type: WorkType.Company,
+    timeToCompletion: CONSTANTS.MillisecondsPer8Hours,
+    timeWorked: 0,
 
-  this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
+    info: {
+      company: companyName,
+    },
+
+    rates: {
+      hackExp: this.getWorkHackExpGain(),
+      strExp: this.getWorkStrExpGain(),
+      defExp: this.getWorkDefExpGain(),
+      dexExp: this.getWorkDexExpGain(),
+      agiExp: this.getWorkAgiExpGain(),
+      chaExp: this.getWorkChaExpGain(),
+      rep: this.getWorkRepGain(),
+      money: this.getWorkMoneyGain(),
+      moneyLoss: 0,
+    },
+    gains: this.workData.gains,
+  };
 }
 
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   // Working
   if (this.isWorking) {
-    if (this.workType === WorkType.Faction) {
-      if (this.workForFaction(numCycles)) {
-        router.toFaction(Factions[this.currentWorkFactionName]);
-      }
-    } else if (this.workType === WorkType.CreateProgram) {
-      if (this.createProgramWork(numCycles)) {
-        router.toTerminal();
-      }
-    } else if (this.workType === WorkType.StudyClass) {
-      if (this.takeClass(numCycles)) {
-        router.toCity();
-      }
-    } else if (this.workType === WorkType.Crime) {
-      if (this.commitCrime(numCycles)) {
-        router.toLocation(Locations[LocationName.Slums]);
-      }
-    } else if (this.workType === WorkType.CompanyPartTime) {
-      if (this.workPartTime(numCycles)) {
-        router.toCity();
-      }
-    } else if (this.workType === WorkType.GraftAugmentation) {
-      if (this.graftAugmentationWork(numCycles)) {
-        router.toGrafting();
-      }
-    } else if (this.work(numCycles)) {
-      router.toCity();
+    switch (this.workData.type) {
+      case WorkType.Faction:
+        if (this.workForFaction(numCycles)) {
+          router.toFaction(Factions[(this.workData.info as FactionWorkInfo).faction]);
+        }
+        break;
+      case WorkType.CreateProgram:
+        if (this.workForFaction(numCycles)) {
+          router.toFaction(Factions[this.currentWorkFactionName]);
+        }
+        break;
+      case WorkType.StudyClass:
+        if (this.takeClass(numCycles)) {
+          router.toCity();
+        }
+        break;
+      case WorkType.Crime:
+        if (this.commitCrime(numCycles)) {
+          router.toLocation(Locations[LocationName.Slums]);
+        }
+        break;
+      case WorkType.CompanyPartTime:
+        if (this.workPartTime(numCycles)) {
+          router.toCity();
+        }
+        break;
+      case WorkType.GraftAugmentation:
+        if (this.graftAugmentationWork(numCycles)) {
+          router.toGrafting();
+        }
+        break;
+      case WorkType.Company:
+        if (this.work(numCycles)) {
+          router.toCity();
+        }
+        break;
     }
   }
 }
@@ -848,8 +879,6 @@ export function startCreateProgramWork(this: IPlayer, programName: string, time:
     }
   }
 
-  this.createProgramName = programName;
-
   this.workData = {
     type: WorkType.CreateProgram,
     timeToCompletion: time,
@@ -860,6 +889,9 @@ export function startCreateProgramWork(this: IPlayer, programName: string, time:
       requiredLevel: reqLevel,
       timeWorked: timeWorkedCreateProgram,
     },
+
+    gains: this.workData.gains,
+    rates: this.workData.rates,
   };
 }
 
@@ -926,6 +958,9 @@ export function startGraftAugmentationWork(this: IPlayer, augmentationName: stri
       augmentation: augmentationName,
       timeWorked: 0,
     },
+
+    gains: this.workData.gains,
+    rates: this.workData.rates,
   };
 }
 
@@ -987,27 +1022,29 @@ export function startClass(this: IPlayer, costMult: number, expMult: number, cla
   this.workType = WorkType.StudyClass;
   this.workCostMult = costMult;
   this.workExpMult = expMult;
-  this.className = className;
+
+  this.workData = {
+    type: WorkType.StudyClass,
+    timeWorked: 0,
+    timeToCompletion: 0,
+
+    info: {
+      class: className,
+    },
+    rates: this.workData.rates,
+    gains: this.workData.gains,
+  };
+
   const earnings = calculateClassEarnings(this);
-  this.workMoneyLossRate = earnings.workMoneyLossRate;
-  this.workHackExpGainRate = earnings.workHackExpGainRate;
-  this.workStrExpGainRate = earnings.workStrExpGainRate;
-  this.workDefExpGainRate = earnings.workDefExpGainRate;
-  this.workDexExpGainRate = earnings.workDexExpGainRate;
-  this.workAgiExpGainRate = earnings.workAgiExpGainRate;
-  this.workChaExpGainRate = earnings.workChaExpGainRate;
+
+  Object.assign(this.workData.rates, earnings);
 }
 
 export function takeClass(this: IPlayer, numCycles: number): boolean {
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
+  this.workData.timeWorked += CONSTANTS._idleSpeed * numCycles;
   const earnings = calculateClassEarnings(this);
-  this.workMoneyLossRate = earnings.workMoneyLossRate;
-  this.workHackExpGainRate = earnings.workHackExpGainRate;
-  this.workStrExpGainRate = earnings.workStrExpGainRate;
-  this.workDefExpGainRate = earnings.workDefExpGainRate;
-  this.workDexExpGainRate = earnings.workDexExpGainRate;
-  this.workAgiExpGainRate = earnings.workAgiExpGainRate;
-  this.workChaExpGainRate = earnings.workChaExpGainRate;
+  Object.assign(this.workData.rates, earnings);
+
   this.processWorkEarnings(numCycles);
   return false;
 }
@@ -1015,9 +1052,12 @@ export function takeClass(this: IPlayer, numCycles: number): boolean {
 //The 'sing' argument defines whether or not this function was called
 //through a Singularity Netscript function
 export function finishClass(this: IPlayer, sing = false): string {
-  this.gainIntelligenceExp(CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000));
+  const gains = this.workData.gains,
+    workInfo = this.workData.info as StudyClassWorkInfo;
 
-  if (this.workMoneyGained > 0) {
+  this.gainIntelligenceExp(CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.workData.timeWorked / 1000));
+
+  if (gains.money > 0) {
     throw new Error("ERR: Somehow gained money while taking class");
   }
 
@@ -1025,16 +1065,16 @@ export function finishClass(this: IPlayer, sing = false): string {
   if (!sing) {
     dialogBoxCreate(
       <>
-        After {this.className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}, <br />
+        After {workInfo.class} for {convertTimeMsToTimeElapsedString(this.workData.timeWorked)}, <br />
         you spent a total of <Money money={-this.workMoneyGained} />. <br />
         <br />
         You earned a total of: <br />
-        {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
-        {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
-        {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
-        {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
-        {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
-        {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp
+        {numeralWrapper.formatExp(gains.hackExp)} hacking exp <br />
+        {numeralWrapper.formatExp(gains.strExp)} strength exp <br />
+        {numeralWrapper.formatExp(gains.defExp)} defense exp <br />
+        {numeralWrapper.formatExp(gains.dexExp)} dexterity exp <br />
+        {numeralWrapper.formatExp(gains.agiExp)} agility exp <br />
+        {numeralWrapper.formatExp(gains.chaExp)} charisma exp
         <br />
       </>,
     );
@@ -1045,25 +1085,25 @@ export function finishClass(this: IPlayer, sing = false): string {
   if (sing) {
     const res =
       "After " +
-      this.className +
+      workInfo.class +
       " for " +
-      convertTimeMsToTimeElapsedString(this.timeWorked) +
+      convertTimeMsToTimeElapsedString(this.workData.timeWorked) +
       ", " +
       "you spent a total of " +
-      numeralWrapper.formatMoney(this.workMoneyGained * -1) +
+      numeralWrapper.formatMoney(gains.money * -1) +
       ". " +
       "You earned a total of: " +
-      numeralWrapper.formatExp(this.workHackExpGained) +
+      numeralWrapper.formatExp(gains.hackExp) +
       " hacking exp, " +
-      numeralWrapper.formatExp(this.workStrExpGained) +
+      numeralWrapper.formatExp(gains.strExp) +
       " strength exp, " +
-      numeralWrapper.formatExp(this.workDefExpGained) +
+      numeralWrapper.formatExp(gains.defExp) +
       " defense exp, " +
-      numeralWrapper.formatExp(this.workDexExpGained) +
+      numeralWrapper.formatExp(gains.dexExp) +
       " dexterity exp, " +
-      numeralWrapper.formatExp(this.workAgiExpGained) +
+      numeralWrapper.formatExp(gains.agiExp) +
       " agility exp, and " +
-      numeralWrapper.formatExp(this.workChaExpGained) +
+      numeralWrapper.formatExp(gains.chaExp) +
       " charisma exp";
     this.resetWorkStatus();
     return res;

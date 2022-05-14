@@ -423,6 +423,7 @@ export class PlayerObject implements IPlayer {
         chaExp: 0,
         rep: 0,
         money: 0,
+        moneyLoss: 0,
       },
     };
 

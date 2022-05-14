@@ -9,7 +9,7 @@ import {
 } from "./WorkInfo";
 import { WorkType } from "./WorkType";
 
-type WorkGains = {
+export type WorkGains = {
   hackExp: number;
   strExp: number;
   defExp: number;
@@ -21,7 +21,7 @@ type WorkGains = {
   rep: number;
 };
 
-type WorkRates = WorkGains;
+export type WorkRates = WorkGains & { moneyLoss: number };
 
 export interface Work {
   type: WorkType;
@@ -39,6 +39,6 @@ export interface Work {
     | StudyClassWorkInfo
     | null;
 
-  gains?: WorkGains;
-  rates?: WorkRates;
+  gains: WorkGains;
+  rates: WorkRates;
 }
