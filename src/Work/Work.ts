@@ -13,6 +13,7 @@ export interface Work {
   type: WorkType;
   focused: boolean;
   timeWorked: number;
+  timeToCompletion: number;
 
   info:
     | CompanyPartTimeWorkInfo
