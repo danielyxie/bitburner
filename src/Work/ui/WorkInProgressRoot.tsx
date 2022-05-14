@@ -20,7 +20,7 @@ import { Reputation } from "../../ui/React/Reputation";
 import { ReputationRate } from "../../ui/React/ReputationRate";
 import { StatsRow } from "../../ui/React/StatsRow";
 import { WorkType, ClassType } from "../WorkType";
-import { CreateProgramWorkInfo } from "../WorkInfo";
+import { CreateProgramWorkInfo, GraftAugmentationWorkInfo } from "../WorkInfo";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -469,7 +469,8 @@ export function WorkInProgressRoot(): React.ReactElement {
         player.stopFocusing();
       }
 
-      const completion = (player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100;
+      const playerWorkInfo = player.workData.info as GraftAugmentationWorkInfo;
+      const completion = (playerWorkInfo.timeWorked / player.workData.timeToCompletion) * 100;
 
       workInfo = {
         buttons: {
@@ -478,12 +479,12 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
         title: (
           <>
-            You are currently working on grafting <b>{player.graftAugmentationName}</b>
+            You are currently working on grafting <b>{playerWorkInfo.augmentation}</b>
           </>
         ),
 
         progress: {
-          elapsed: player.timeWorked,
+          elapsed: player.workData.timeWorked,
           percentage: completion,
         },
 

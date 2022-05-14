@@ -22,7 +22,7 @@ import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { IRouter } from "../../ui/Router";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { CreateProgramWorkInfo } from "../../Work/WorkInfo";
+import { CreateProgramWorkInfo, GraftAugmentationWorkInfo } from "../../Work/WorkInfo";
 import { ClassType, CrimeType, PlayerFactionWorkType, WorkType } from "../../Work/WorkType";
 import {
   getFactionFieldWorkRepGain,
@@ -917,11 +917,21 @@ export function startGraftAugmentationWork(this: IPlayer, augmentationName: stri
   this.isWorking = true;
   this.workType = WorkType.GraftAugmentation;
 
-  this.timeNeededToCompleteWork = time;
-  this.graftAugmentationName = augmentationName;
+  this.workData = {
+    type: WorkType.GraftAugmentation,
+    timeToCompletion: time,
+    timeWorked: 0,
+
+    info: {
+      augmentation: augmentationName,
+      timeWorked: 0,
+    },
+  };
 }
 
-export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean {
+export function graftAugmentationWork(this: IPlayer, numCycles: number): boolean {
+  const workInfo = this.workData.info as GraftAugmentationWorkInfo;
+
   let focusBonus = 1;
   if (!this.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
     focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
@@ -930,10 +940,10 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
   let skillMult = graftingIntBonus(this);
   skillMult *= focusBonus;
 
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-  this.timeWorkedGraftAugmentation += CONSTANTS._idleSpeed * numCycles * skillMult;
+  this.workData.timeWorked += CONSTANTS._idleSpeed * numCycles;
+  workInfo.timeWorked += CONSTANTS._idleSpeed * numCycles * skillMult;
 
-  if (this.timeWorkedGraftAugmentation >= this.timeNeededToCompleteWork) {
+  if (workInfo.timeWorked >= this.workData.timeToCompletion) {
     this.finishGraftAugmentationWork(false);
     return true;
   }
@@ -941,7 +951,9 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
 }
 
 export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean, singularity = false): string {
-  const augName = this.graftAugmentationName;
+  const workInfo = this.workData.info as GraftAugmentationWorkInfo;
+
+  const augName = workInfo.augmentation;
   if (cancelled === false) {
     applyAugmentation({ name: augName, level: 1 });
 
@@ -960,7 +972,7 @@ export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean, s
 
   // Intelligence gain
   if (!cancelled) {
-    this.gainIntelligenceExp((CONSTANTS.IntelligenceGraftBaseExpGain * this.timeWorked) / 10000);
+    this.gainIntelligenceExp((CONSTANTS.IntelligenceGraftBaseExpGain * this.workData.timeWorked) / 10000);
   }
 
   this.isWorking = false;

@@ -585,7 +585,7 @@ export class PlayerObject implements IPlayer {
     this.createProgramWork = workMethods.createProgramWork;
     this.finishCreateProgramWork = workMethods.finishCreateProgramWork;
     this.startGraftAugmentationWork = workMethods.startGraftAugmentationWork;
-    this.graftAugmentationWork = workMethods.craftAugmentationWork;
+    this.graftAugmentationWork = workMethods.graftAugmentationWork;
     this.finishGraftAugmentationWork = workMethods.finishGraftAugmentationWork;
     this.startClass = workMethods.startClass;
     this.takeClass = workMethods.takeClass;
