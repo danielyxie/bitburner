@@ -51,7 +51,7 @@ export function isValidFilename(filename: string): boolean {
 export function isValidDirectoryName(name: string): boolean {
   // Allows alphanumerics, hyphens, underscores, and percentage signs.
   // Name can begin with a single period, but otherwise cannot have any
-  const regex = /^.?[a-zA-Z0-9_-]+$/;
+  const regex = /^\.?(?:\w[_\-.%]*)+$/;
 
   // match() returns null if no match is found
   return name.match(regex) != null;
