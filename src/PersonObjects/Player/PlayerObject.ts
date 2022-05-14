@@ -4,6 +4,7 @@ import * as corporationMethods from "./PlayerObjectCorporationMethods";
 import * as gangMethods from "./PlayerObjectGangMethods";
 import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
+import * as workMethods from "./PlayerObjectWorkMethods";
 
 import { IMap } from "../../types";
 import { Sleeve } from "../Sleeve/Sleeve";
@@ -39,6 +40,7 @@ import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
 import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../Work/WorkType";
+import { Work } from "../../Work/Work";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -135,6 +137,7 @@ export class PlayerObject implements IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  workData: Work;
   createProgramReqLvl: number;
   factionWorkType: PlayerFactionWorkType;
   createProgramName: string;
@@ -396,6 +399,33 @@ export class PlayerObject implements IPlayer {
     this.crime_money_mult = 1;
     this.crime_success_mult = 1;
 
+    this.workData = {
+      type: WorkType.None,
+      timeWorked: 0,
+      timeToCompletion: 0,
+      info: null,
+      gains: {
+        hackExp: 0,
+        strExp: 0,
+        defExp: 0,
+        dexExp: 0,
+        agiExp: 0,
+        chaExp: 0,
+        rep: 0,
+        money: 0,
+      },
+      rates: {
+        hackExp: 0,
+        strExp: 0,
+        defExp: 0,
+        dexExp: 0,
+        agiExp: 0,
+        chaExp: 0,
+        rep: 0,
+        money: 0,
+      },
+    };
+
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;
     this.focus = false;
@@ -525,45 +555,45 @@ export class PlayerObject implements IPlayer {
     this.gainCharismaExp = generalMethods.gainCharismaExp;
     this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
     this.queryStatFromString = generalMethods.queryStatFromString;
-    this.resetWorkStatus = generalMethods.resetWorkStatus;
-    this.processWorkEarnings = generalMethods.processWorkEarnings;
-    this.startWork = generalMethods.startWork;
-    this.cancelationPenalty = generalMethods.cancelationPenalty;
-    this.work = generalMethods.work;
-    this.finishWork = generalMethods.finishWork;
-    this.startWorkPartTime = generalMethods.startWorkPartTime;
-    this.workPartTime = generalMethods.workPartTime;
-    this.finishWorkPartTime = generalMethods.finishWorkPartTime;
-    this.startFocusing = generalMethods.startFocusing;
-    this.stopFocusing = generalMethods.stopFocusing;
-    this.startFactionWork = generalMethods.startFactionWork;
-    this.startFactionHackWork = generalMethods.startFactionHackWork;
-    this.startFactionFieldWork = generalMethods.startFactionFieldWork;
-    this.startFactionSecurityWork = generalMethods.startFactionSecurityWork;
-    this.workForFaction = generalMethods.workForFaction;
-    this.finishFactionWork = generalMethods.finishFactionWork;
-    this.getWorkMoneyGain = generalMethods.getWorkMoneyGain;
-    this.getWorkHackExpGain = generalMethods.getWorkHackExpGain;
-    this.getWorkStrExpGain = generalMethods.getWorkStrExpGain;
-    this.getWorkDefExpGain = generalMethods.getWorkDefExpGain;
-    this.getWorkDexExpGain = generalMethods.getWorkDexExpGain;
-    this.getWorkAgiExpGain = generalMethods.getWorkAgiExpGain;
-    this.getWorkChaExpGain = generalMethods.getWorkChaExpGain;
-    this.getWorkRepGain = generalMethods.getWorkRepGain;
-    this.process = generalMethods.process;
-    this.startCreateProgramWork = generalMethods.startCreateProgramWork;
-    this.createProgramWork = generalMethods.createProgramWork;
-    this.finishCreateProgramWork = generalMethods.finishCreateProgramWork;
-    this.startGraftAugmentationWork = generalMethods.startGraftAugmentationWork;
-    this.graftAugmentationWork = generalMethods.craftAugmentationWork;
-    this.finishGraftAugmentationWork = generalMethods.finishGraftAugmentationWork;
-    this.startClass = generalMethods.startClass;
-    this.takeClass = generalMethods.takeClass;
-    this.finishClass = generalMethods.finishClass;
-    this.startCrime = generalMethods.startCrime;
-    this.commitCrime = generalMethods.commitCrime;
-    this.finishCrime = generalMethods.finishCrime;
-    this.singularityStopWork = generalMethods.singularityStopWork;
+    this.resetWorkStatus = workMethods.resetWorkStatus;
+    this.processWorkEarnings = workMethods.processWorkEarnings;
+    this.startWork = workMethods.startWork;
+    this.cancelationPenalty = workMethods.cancelationPenalty;
+    this.work = workMethods.work;
+    this.finishWork = workMethods.finishWork;
+    this.startWorkPartTime = workMethods.startWorkPartTime;
+    this.workPartTime = workMethods.workPartTime;
+    this.finishWorkPartTime = workMethods.finishWorkPartTime;
+    this.startFocusing = workMethods.startFocusing;
+    this.stopFocusing = workMethods.stopFocusing;
+    this.startFactionWork = workMethods.startFactionWork;
+    this.startFactionHackWork = workMethods.startFactionHackWork;
+    this.startFactionFieldWork = workMethods.startFactionFieldWork;
+    this.startFactionSecurityWork = workMethods.startFactionSecurityWork;
+    this.workForFaction = workMethods.workForFaction;
+    this.finishFactionWork = workMethods.finishFactionWork;
+    this.getWorkMoneyGain = workMethods.getWorkMoneyGain;
+    this.getWorkHackExpGain = workMethods.getWorkHackExpGain;
+    this.getWorkStrExpGain = workMethods.getWorkStrExpGain;
+    this.getWorkDefExpGain = workMethods.getWorkDefExpGain;
+    this.getWorkDexExpGain = workMethods.getWorkDexExpGain;
+    this.getWorkAgiExpGain = workMethods.getWorkAgiExpGain;
+    this.getWorkChaExpGain = workMethods.getWorkChaExpGain;
+    this.getWorkRepGain = workMethods.getWorkRepGain;
+    this.process = workMethods.process;
+    this.startCreateProgramWork = workMethods.startCreateProgramWork;
+    this.createProgramWork = workMethods.createProgramWork;
+    this.finishCreateProgramWork = workMethods.finishCreateProgramWork;
+    this.startGraftAugmentationWork = workMethods.startGraftAugmentationWork;
+    this.graftAugmentationWork = workMethods.craftAugmentationWork;
+    this.finishGraftAugmentationWork = workMethods.finishGraftAugmentationWork;
+    this.startClass = workMethods.startClass;
+    this.takeClass = workMethods.takeClass;
+    this.finishClass = workMethods.finishClass;
+    this.startCrime = workMethods.startCrime;
+    this.commitCrime = workMethods.commitCrime;
+    this.finishCrime = workMethods.finishCrime;
+    this.singularityStopWork = workMethods.singularityStopWork;
     this.takeDamage = generalMethods.takeDamage;
     this.regenerateHp = generalMethods.regenerateHp;
     this.hospitalize = generalMethods.hospitalize;

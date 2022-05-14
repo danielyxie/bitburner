@@ -9,9 +9,33 @@ import {
 } from "./WorkInfo";
 import { WorkType } from "./WorkType";
 
+type WorkGains = {
+  hackExp: number;
+  strExp: number;
+  defExp: number;
+  dexExp: number;
+  agiExp: number;
+  chaExp: number;
+
+  money: number;
+  rep: number;
+};
+
+type WorkRates = {
+  hackExp: number;
+  strExp: number;
+  defExp: number;
+  dexExp: number;
+  agiExp: number;
+  chaExp: number;
+
+  money: number;
+  rep: number;
+};
+
 export interface Work {
   type: WorkType;
-  focused: boolean;
+  // focused?: boolean;
   timeWorked: number;
   timeToCompletion: number;
 
@@ -22,5 +46,9 @@ export interface Work {
     | CrimeWorkInfo
     | FactionWorkInfo
     | GraftAugmentationWorkInfo
-    | StudyClassWorkInfo;
+    | StudyClassWorkInfo
+    | null;
+
+  gains: WorkGains;
+  rates: WorkRates;
 }
