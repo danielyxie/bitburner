@@ -145,7 +145,7 @@ const FactionElement = (props: IFactionProps): React.ReactElement => {
           </Typography>
 
           <span style={{ display: "flex", alignItems: "center" }}>
-            <WorkTypesOffered faction={props.faction} />
+            {!props.player.hasGangWith(props.faction.name) && <WorkTypesOffered faction={props.faction} />}
 
             {props.joined && (
               <Typography variant="body2" sx={{ display: "flex" }}>
