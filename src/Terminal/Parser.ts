@@ -64,7 +64,7 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
         lastQuote = c;
         // Otherwise if we're in a string argument, add the current character to it
       } else {
-      	arg += c;
+        arg += c;
       }
       // If the current character is a space and we are not inside a string, parse the current argument
       // and start a new one
