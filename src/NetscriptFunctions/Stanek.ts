@@ -18,6 +18,25 @@ import { FactionNames } from "../Faction/data/FactionNames";
 import { joinFaction } from "../Faction/FactionHelpers";
 import { Factions } from "../Faction/Factions";
 
+class APIActiveFragment implements IActiveFragment {
+  id: number;
+  highestCharge: number;
+  numCharge: number;
+  rotation: number;
+  x: number;
+  y: number;
+  
+  constructor (src:IActiveFragment) {
+    this.id = src.id;
+    this.highestCharge = src.highestCharge;
+    this.numCharge = src.numCharge;
+    this.rotation = src.rotation;
+    this.x = src.x;
+    this.y = src.y;
+  }
+}
+
+
 export function NetscriptStanek(
   player: IPlayer,
   workerScript: WorkerScript,
@@ -103,7 +122,7 @@ export function NetscriptStanek(
         const rootY = _ctx.helper.number("rootY", _rootY);
         checkStanekAPIAccess("getFragment");
         const fragment = staneksGift.findFragment(rootX, rootY);
-        if (fragment !== undefined) return fragment.copy();
+        if (fragment !== undefined) return new APIActiveFragment(fragment);
         return undefined;
       },
     removeFragment: (_ctx: NetscriptContext) =>
