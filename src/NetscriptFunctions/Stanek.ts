@@ -92,7 +92,9 @@ export function NetscriptStanek(
       function (): IFragment[] {
         checkStanekAPIAccess("fragmentDefinitions");
         _ctx.log(() => `Returned ${Fragments.length} fragments`);
-        return Fragments.map((f) => {return new APIFragment(f)});
+        return Fragments.map((f) => {
+          return new APIFragment(f);
+        });
       },
     activeFragments: (_ctx: NetscriptContext) =>
       function (): IActiveFragment[] {
