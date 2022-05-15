@@ -248,7 +248,7 @@ export class WorkManager {
       timeToCompletion: this.timeToCompletion,
 
       gains: this.gains,
-      rates: this.gains,
+      rates: this.rates,
 
       info: {
         faction: <FactionWorkInfo>{
@@ -283,6 +283,7 @@ export class WorkManager {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static fromJSON(value: any): WorkManager {
     const baseObject = Generic_fromJSON(WorkManager, value.data);
+    console.log(baseObject)
     merge(baseObject, {
       info: {
         faction: <FactionWorkInfo>{

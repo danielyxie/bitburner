@@ -171,40 +171,39 @@ export function startWork(this: IPlayer, companyName: string): void {
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   // Working
   if (this.isWorking) {
-    this.workManager.process(numCycles)
-    switch (this.workData.type) {
+    switch (this.workManager.workType) {
       case WorkType.Faction:
-        if (this.workForFaction(numCycles)) {
+        if (this.workManager.process(numCycles)) {
           router.toFaction(Factions[(this.workData.info as FactionWorkInfo).factionName]);
         }
         break;
       case WorkType.CreateProgram:
-        if (this.workForFaction(numCycles)) {
+        if (this.workManager.process(numCycles)) {
           router.toFaction(Factions[this.currentWorkFactionName]);
         }
         break;
       case WorkType.StudyClass:
-        if (this.takeClass(numCycles)) {
+        if (this.workManager.process(numCycles)) {
           router.toCity();
         }
         break;
       case WorkType.Crime:
-        if (this.commitCrime(numCycles)) {
+        if (this.workManager.process(numCycles)) {
           router.toLocation(Locations[LocationName.Slums]);
         }
         break;
       case WorkType.CompanyPartTime:
-        if (this.workPartTime(numCycles)) {
+        if (this.workManager.process(numCycles)) {
           router.toCity();
         }
         break;
       case WorkType.GraftAugmentation:
-        if (this.graftAugmentationWork(numCycles)) {
+        if (this.workManager.process(numCycles)) {
           router.toGrafting();
         }
         break;
       case WorkType.Company:
-        if (this.work(numCycles)) {
+        if (this.workManager.process(numCycles)) {
           router.toCity();
         }
         break;
