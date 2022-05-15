@@ -1,5 +1,6 @@
 import { Button, Typography, Box, Paper, Tooltip } from "@mui/material";
 import React, { useState } from "react";
+import { Money } from "../../ui/React/Money";
 import { GangConstants } from "../../Gang/data/Constants";
 import { use } from "../../ui/Context";
 import { Faction } from "../Faction";
@@ -37,11 +38,19 @@ export function GangButton({ faction }: IProps): React.ReactElement {
       description: "Manage a gang for this Faction. Gangs will earn you money and faction reputation",
     };
   } else {
+    const requirement = player.getGangRequirement(faction.name);
     data = {
-      enabled: player.canAccessGang(),
+      enabled: player.canAccessGang(faction.name),
       title: "Create Gang",
-      tooltip: !player.canAccessGang() ? (
-        <Typography>Unlocked when reaching {GangConstants.GangKarmaRequirement} karma</Typography>
+      tooltip: !player.canAccessGang(faction.name) ? (
+        <Typography>
+          Unlocked when reaching : <br />
+          {player.karma}/{requirement.karma} karma,
+          <br />
+          <Money money={player.moneySourceB.crime} />/<Money money={requirement.crime} /> from crime source,
+          <br />
+          <Money money={player.moneySourceB.hacking} />/<Money money={requirement.hacking} /> from hacking source.
+        </Typography>
       ) : (
         ""
       ),

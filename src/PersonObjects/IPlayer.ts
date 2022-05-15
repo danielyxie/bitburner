@@ -31,6 +31,7 @@ import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
+import { GangRequirement } from "./Player/PlayerObjectGangMethods";
 
 export interface IPlayer {
   // Class members
@@ -183,7 +184,7 @@ export interface IPlayer {
   applyForWaiterJob(sing?: boolean): boolean;
   canAccessBladeburner(): boolean;
   canAccessCorporation(): boolean;
-  canAccessGang(): boolean;
+  canAccessGang(factionName: string): boolean;
   canAccessGrafting(): boolean;
   canAfford(cost: number): boolean;
   gainHackingExp(exp: number): void;
@@ -197,6 +198,7 @@ export interface IPlayer {
   getCurrentServer(): BaseServer;
   getGangFaction(): Faction;
   getGangName(): string;
+  getGangRequirement(factionName: string): GangRequirement;
   getHomeComputer(): Server;
   getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition | null;
   getUpgradeHomeRamCost(): number;

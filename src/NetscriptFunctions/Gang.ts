@@ -20,6 +20,7 @@ import {
   EquipmentStats,
   GangTaskStats,
 } from "../ScriptEditor/NetscriptDefinitions";
+import { GangRequirement } from "../PersonObjects/Player/PlayerObjectGangMethods";
 
 export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IGang {
   const checkGangApiAccess = function (func: string): void {
@@ -50,12 +51,16 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
   const updateRam = (funcName: string): void => helper.updateDynamicRam(funcName, getRamCost(player, "gang", funcName));
 
   return {
+    getGangRequirement: function (_faction: unknown): GangRequirement {
+      updateRam("getGangRequirement");
+      const faction = helper.string("getGangRequirement", "faction", _faction);
+      return player.getGangRequirement(faction);
+    },
     createGang: function (_faction: unknown): boolean {
       updateRam("createGang");
       const faction = helper.string("createGang", "faction", _faction);
-      // this list is copied from Faction/ui/Root.tsx
 
-      if (!player.canAccessGang() || !GangConstants.Names.includes(faction)) return false;
+      if (!player.canAccessGang(faction) || !GangConstants.Names.includes(faction)) return false;
       if (player.inGang()) return false;
       if (!player.factions.includes(faction)) return false;
 

@@ -190,6 +190,7 @@ const singularity: IMap<any> = {
 
 // Gang API
 const gang: IMap<any> = {
+  getGangRequirement: RamCostConstants.ScriptGangApiBaseRamCost / 4,
   createGang: RamCostConstants.ScriptGangApiBaseRamCost / 4,
   inGang: RamCostConstants.ScriptGangApiBaseRamCost / 4,
   getMemberNames: RamCostConstants.ScriptGangApiBaseRamCost / 4,

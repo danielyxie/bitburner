@@ -7,6 +7,8 @@ export const GangConstants: {
   AscensionMultiplierRatio: number;
   Names: string[];
   GangKarmaRequirement: number;
+  GangCrimeMoneyRequirement: number;
+  GangHackingMoneyRequirement: number;
 } = {
   // Respect is divided by this to get rep gain
   GangRespectToReputationRatio: 75,
@@ -25,4 +27,6 @@ export const GangConstants: {
     FactionNames.TheBlackHand,
   ],
   GangKarmaRequirement: -54000,
+  GangCrimeMoneyRequirement: 100000000,
+  GangHackingMoneyRequirement: 150000000,
 };

@@ -3,8 +3,15 @@ import { Faction } from "../../Faction/Faction";
 import { Gang } from "../../Gang/Gang";
 import { IPlayer } from "../IPlayer";
 import { GangConstants } from "../../Gang/data/Constants";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
-export function canAccessGang(this: IPlayer): boolean {
+export type GangRequirement = {
+  karma: number;
+  crime: number;
+  hacking: number;
+};
+
+export function canAccessGang(this: IPlayer, factionName: string): boolean {
   if (this.bitNodeN === 2) {
     return true;
   }
@@ -12,7 +19,61 @@ export function canAccessGang(this: IPlayer): boolean {
     return false;
   }
 
-  return this.karma <= GangConstants.GangKarmaRequirement;
+  const requirement = GetGangRequirement(factionName);
+  return (
+    this.karma <= requirement.karma &&
+    this.moneySourceB.crime <= requirement.crime &&
+    this.moneySourceB.hacking <= requirement.crime
+  );
+}
+
+export function GetGangRequirement(factionName: string): GangRequirement {
+  let requirement = {
+    karma: GangConstants.GangKarmaRequirement,
+    crime: GangConstants.GangCrimeMoneyRequirement,
+    hacking: GangConstants.GangHackingMoneyRequirement,
+  };
+
+  switch (factionName) {
+    case FactionNames.SlumSnakes:
+      requirement.karma *= 1;
+      requirement.crime *= 0;
+      requirement.hacking *= 0;
+      break;
+    case FactionNames.Tetrads:
+      requirement.karma *= 0;
+      requirement.crime *= 1;
+      requirement.hacking *= 0;
+      break;
+    case FactionNames.TheSyndicate:
+      requirement.karma *= 0;
+      requirement.crime *= 0.1;
+      requirement.hacking *= 0.1;
+      break;
+    case FactionNames.TheDarkArmy:
+      requirement.karma *= 0.01;
+      requirement.crime *= 0.01;
+      requirement.hacking *= 0.01;
+      break;
+    case FactionNames.SpeakersForTheDead:
+      requirement.karma *= 0.1;
+      requirement.crime *= 0.1;
+      requirement.hacking *= 0;
+      break;
+    case FactionNames.NiteSec:
+      requirement.karma *= 0;
+      requirement.crime *= 0;
+      requirement.hacking *= 1;
+      break;
+    case FactionNames.TheBlackHand:
+      requirement.karma *= 0.1;
+      requirement.crime *= 0;
+      requirement.hacking *= 0.1;
+      break;
+    default:
+      throw new Error("This is not a Gang Faction.");
+  }
+  return requirement;
 }
 
 export function isAwareOfGang(this: IPlayer): boolean {

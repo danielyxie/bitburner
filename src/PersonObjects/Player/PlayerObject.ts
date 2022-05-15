@@ -39,6 +39,7 @@ import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
 import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../utils/WorkType";
+import { GangRequirement } from "./PlayerObjectGangMethods";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -193,7 +194,7 @@ export class PlayerObject implements IPlayer {
   applyForWaiterJob: (sing?: boolean) => boolean;
   canAccessBladeburner: () => boolean;
   canAccessCorporation: () => boolean;
-  canAccessGang: () => boolean;
+  canAccessGang: (factioName: string) => boolean;
   canAccessGrafting: () => boolean;
   canAfford: (cost: number) => boolean;
   gainHackingExp: (exp: number) => void;
@@ -207,6 +208,7 @@ export class PlayerObject implements IPlayer {
   getCurrentServer: () => BaseServer;
   getGangFaction: () => Faction;
   getGangName: () => string;
+  getGangRequirement: (factionName: string) => GangRequirement;
   getHomeComputer: () => Server;
   getNextCompanyPosition: (company: Company, entryPosType: CompanyPosition) => CompanyPosition | null;
   getUpgradeHomeRamCost: () => number;
@@ -609,6 +611,7 @@ export class PlayerObject implements IPlayer {
     this.isAwareOfGang = gangMethods.isAwareOfGang;
     this.getGangFaction = gangMethods.getGangFaction;
     this.getGangName = gangMethods.getGangName;
+    this.getGangRequirement = gangMethods.GetGangRequirement;
     this.hasGangWith = gangMethods.hasGangWith;
     this.inGang = gangMethods.inGang;
     this.startGang = gangMethods.startGang;

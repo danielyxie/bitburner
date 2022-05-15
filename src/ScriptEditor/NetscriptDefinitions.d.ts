@@ -1,3 +1,5 @@
+import { GangRequirement } from "src/PersonObjects/Player/PlayerObjectGangMethods";
+
 /**
  * @public
  */
@@ -3340,6 +3342,17 @@ export interface CodingContract {
  * @public
  */
 export interface Gang {
+  /**
+   * List all gang requirement.
+   * @remarks
+   * RAM cost: 1GB
+   *
+   * Get the amount of karma, crime-sourced money, and hacking-sourced money needed to create a gang with the specified faction.
+   *
+   * @returns Gang's requirement.
+   */
+  getGangRequirement(faction: string): GangRequirement;
+
   /**
    * Create a gang.
    * @remarks
