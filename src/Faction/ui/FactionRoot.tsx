@@ -21,6 +21,7 @@ import { Typography, Button } from "@mui/material";
 import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
 import { FactionNames } from "../data/FactionNames";
 import { GangButton } from "./GangButton";
+import { PlayerFactionWorkType, WorkType } from "../../Work/WorkType";
 
 type IProps = {
   faction: Faction;
@@ -67,17 +68,17 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   }
 
   function startFieldWork(faction: Faction): void {
-    player.startFactionFieldWork(faction);
+    player.workManager.start(WorkType.Faction, faction, PlayerFactionWorkType.Field);
     startWork();
   }
 
   function startHackingContracts(faction: Faction): void {
-    player.startFactionHackWork(faction);
+    player.workManager.start(WorkType.Faction, faction, PlayerFactionWorkType.Hacking);
     startWork();
   }
 
   function startSecurityWork(faction: Faction): void {
-    player.startFactionSecurityWork(faction);
+    player.workManager.start(WorkType.Faction, faction, PlayerFactionWorkType.Security);
     startWork();
   }
 

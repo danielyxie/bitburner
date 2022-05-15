@@ -64,8 +64,8 @@ export function WorkInProgressRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
 
-  const gains = player.workData.gains,
-    rates = player.workData.rates;
+  const gains = player.workManager.gains,
+    rates = player.workManager.rates;
 
   const expGains = [
     gains.hackExp > 0 ? (
@@ -150,17 +150,20 @@ export function WorkInProgressRoot(): React.ReactElement {
 
   let workInfo: IWorkInfo | null;
 
-  switch (player.workData.type) {
+  switch (player.workManager.workType) {
     case WorkType.Faction: {
-      const faction = Factions[player.currentWorkFactionName];
+      const playerWorkInfo = player.workManager.info.faction;
+
+      const faction = Factions[playerWorkInfo.factionName];
       if (!faction) {
         workInfo = {
           buttons: {
             cancel: () => router.toFactions(),
           },
           title:
-            `You have not joined ${player.currentWorkFactionName || "(Faction not found)"} at this time,` +
-            " please try again if you think this should have worked",
+            `You have not joined ${
+              player.workManager.info.faction.factionName || "(Faction not found)"
+            } at this time,` + " please try again if you think this should have worked",
 
           stopText: "Back to Factions",
         };
@@ -168,14 +171,12 @@ export function WorkInProgressRoot(): React.ReactElement {
 
       function cancel(): void {
         router.toFaction(faction);
-        player.finishFactionWork(true);
+        player.workManager.finish({ cancelled: true });
       }
       function unfocus(): void {
         router.toFaction(faction);
         player.stopFocusing();
       }
-
-      const playerWorkInfo = player.workData.info as FactionWorkInfo;
 
       workInfo = {
         buttons: {
@@ -213,7 +214,7 @@ export function WorkInProgressRoot(): React.ReactElement {
           ...expGains,
         ],
         progress: {
-          elapsed: player.workData.timeWorked,
+          elapsed: player.workManager.timeWorked,
         },
 
         stopText: "Stop Faction work",
@@ -223,7 +224,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     case WorkType.StudyClass: {
-      const playerWorkInfo = player.workData.info as StudyClassWorkInfo;
+      const playerWorkInfo = player.workManager.info?.studyClass ?? {};
 
       const className = playerWorkInfo.className;
       function cancel(): void {
@@ -268,7 +269,7 @@ export function WorkInProgressRoot(): React.ReactElement {
           ...expGains,
         ],
         progress: {
-          elapsed: player.workData.timeWorked,
+          elapsed: player.workManager.timeWorked,
         },
 
         stopText: stopText,
@@ -278,7 +279,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     case WorkType.Company: {
-      const playerWorkInfo = player.workData.info as CompanyWorkInfo;
+      const playerWorkInfo = player.workManager.info.company;
 
       const comp = Companies[playerWorkInfo.companyName];
       if (comp == null || !(comp instanceof Company)) {
@@ -297,7 +298,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       const companyRep = comp.playerReputation;
 
       function cancel(): void {
-        player.finishWork(true);
+        player.workManager.finish({ cancelled: true });
         router.toJob();
       }
       function unfocus(): void {
@@ -342,7 +343,7 @@ export function WorkInProgressRoot(): React.ReactElement {
           ...expGains,
         ],
         progress: {
-          elapsed: player.workData.timeWorked,
+          elapsed: player.workManager.timeWorked,
         },
 
         stopText: "Stop working",
@@ -355,10 +356,10 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     case WorkType.CompanyPartTime: {
-      const playerWorkInfo = player.workData.info as CompanyPartTimeWorkInfo;
+      const playerWorkInfo = player.workManager.info.companyPartTime;
 
       function cancel(): void {
-        player.finishWorkPartTime(true);
+        player.workManager.finish({ cancelled: true });
         router.toJob();
       }
       function unfocus(): void {
@@ -405,7 +406,7 @@ export function WorkInProgressRoot(): React.ReactElement {
           ...expGains,
         ],
         progress: {
-          elapsed: player.workData.timeWorked,
+          elapsed: player.workManager.timeWorked,
         },
 
         stopText: "Stop working",
@@ -442,7 +443,7 @@ export function WorkInProgressRoot(): React.ReactElement {
 
     case WorkType.CreateProgram: {
       function cancel(): void {
-        player.finishCreateProgramWork(true);
+        player.workManager.finish({ cancelled: true });
         router.toTerminal();
       }
       function unfocus(): void {
@@ -450,8 +451,8 @@ export function WorkInProgressRoot(): React.ReactElement {
         player.stopFocusing();
       }
 
-      const playerWorkInfo = player.workData.info as CreateProgramWorkInfo;
-      const completion = (playerWorkInfo.timeWorked / player.workData.timeToCompletion) * 100;
+      const playerWorkInfo = player.workManager.info.createProgram;
+      const completion = (playerWorkInfo.timeWorked / player.workManager.timeToCompletion) * 100;
 
       workInfo = {
         buttons: {
@@ -465,7 +466,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         ),
 
         progress: {
-          elapsed: player.workData.timeWorked,
+          elapsed: player.workManager.timeWorked,
           percentage: completion,
         },
 
@@ -478,7 +479,7 @@ export function WorkInProgressRoot(): React.ReactElement {
 
     case WorkType.GraftAugmentation: {
       function cancel(): void {
-        player.finishGraftAugmentationWork(true);
+        player.workManager.finish({ cancelled: true });
         router.toTerminal();
       }
       function unfocus(): void {
@@ -486,8 +487,8 @@ export function WorkInProgressRoot(): React.ReactElement {
         player.stopFocusing();
       }
 
-      const playerWorkInfo = player.workData.info as GraftAugmentationWorkInfo;
-      const completion = (playerWorkInfo.timeWorked / player.workData.timeToCompletion) * 100;
+      const playerWorkInfo = player.workManager.info.graftAugmentation;
+      const completion = (playerWorkInfo.timeWorked / player.workManager.timeToCompletion) * 100;
 
       workInfo = {
         buttons: {
@@ -501,7 +502,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         ),
 
         progress: {
-          elapsed: player.workData.timeWorked,
+          elapsed: player.workManager.timeWorked,
           percentage: completion,
         },
 

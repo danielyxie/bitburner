@@ -171,6 +171,7 @@ export function startWork(this: IPlayer, companyName: string): void {
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   // Working
   if (this.isWorking) {
+    this.workManager.process(numCycles)
     switch (this.workData.type) {
       case WorkType.Faction:
         if (this.workForFaction(numCycles)) {

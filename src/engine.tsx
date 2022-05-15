@@ -294,28 +294,7 @@ const Engine: {
       loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
       if (Player.isWorking) {
         Player.focus = true;
-        switch (Player.workType) {
-          case WorkType.Faction:
-            Player.workForFaction(numCyclesOffline);
-            break;
-          case WorkType.CreateProgram:
-            Player.createProgramWork(numCyclesOffline);
-            break;
-          case WorkType.StudyClass:
-            Player.takeClass(numCyclesOffline);
-            break;
-          case WorkType.Crime:
-            Player.commitCrime(numCyclesOffline);
-            break;
-          case WorkType.CompanyPartTime:
-            Player.workPartTime(numCyclesOffline);
-            break;
-          case WorkType.GraftAugmentation:
-            Player.graftAugmentationWork(numCyclesOffline);
-            break;
-          default:
-            Player.work(numCyclesOffline);
-        }
+        Player.workManager.process(numCyclesOffline);
       } else {
         for (let i = 0; i < Player.factions.length; i++) {
           const facName = Player.factions[i];

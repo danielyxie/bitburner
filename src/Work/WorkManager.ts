@@ -148,12 +148,20 @@ export class WorkManager {
     throw new Error("Tried to process an unknown WorkType. This is a bug!");
   }
 
-  finish(options: { singularity?: boolean; cancelled: boolean }) {
+  finish(options: { singularity?: boolean; cancelled: boolean }): string | undefined {
+    let ret: string | null = null;
+
     const info = this.info[<keyof WorkInfo>workTypeToInfoKey[this.workType]];
     if (info) {
-      return info.finish(this, options);
+      ret = info.finish(this, options);
     }
-    throw new Error("Tried to finish an unknown WorkType. This is a bug!");
+
+    this.reset();
+    if (ret === null) {
+      throw new Error("Tried to finish an unknown WorkType. This is a bug!");
+    } else {
+      return ret;
+    }
   }
 
   reset(): void {
