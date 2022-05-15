@@ -1,7 +1,8 @@
+import { merge } from "lodash";
 import React from "react";
 import { Companies } from "../../Company/Companies";
 import { CONSTANTS } from "../../Constants";
-import { influenceStockThroughCompanyWork } from "../../StockMarket/playerInfluencing";
+import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Money } from "../../ui/React/Money";
@@ -19,7 +20,7 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
 
     workManager.info.company.companyName = company;
 
-    Object.assign(workManager.rates, {
+    merge(workManager.rates, {
       hackExp: workManager.player.getWorkHackExpGain(),
       strExp: workManager.player.getWorkStrExpGain(),
       defExp: workManager.player.getWorkDefExpGain(),
@@ -39,7 +40,7 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
     }
     workManager.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
-    Object.assign(workManager.rates, {
+    merge(workManager.rates, {
       rep: workManager.player.getWorkRepGain(),
       money: workManager.player.getWorkMoneyGain(),
     } as WorkRates);

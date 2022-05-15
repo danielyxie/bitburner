@@ -41,6 +41,7 @@ import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
 import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../Work/WorkType";
 import { Work } from "../../Work/Work";
+import { WorkManager } from "../../Work/WorkManager";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -137,6 +138,7 @@ export class PlayerObject implements IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  workManager: WorkManager;
   workData: Work;
   createProgramReqLvl: number;
   factionWorkType: PlayerFactionWorkType;
@@ -399,6 +401,7 @@ export class PlayerObject implements IPlayer {
     this.crime_money_mult = 1;
     this.crime_success_mult = 1;
 
+    this.workManager = new WorkManager(this);
     this.workData = {
       type: WorkType.None,
       timeWorked: 0,

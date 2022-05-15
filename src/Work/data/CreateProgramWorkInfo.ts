@@ -1,3 +1,4 @@
+import { merge } from "lodash";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../../Constants";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
@@ -31,7 +32,7 @@ export const baseCreateProgramWorkInfo: CreateProgramWorkInfo = {
     workManager.workType = WorkType.CreateProgram;
     workManager.timeToCompletion = time;
     workManager.timeWorked = 0;
-    Object.assign(workManager.info.createProgram, <CreateProgramWorkInfo>{
+    merge(workManager.info.createProgram, <CreateProgramWorkInfo>{
       programName: program,
       requiredLevel,
       timeWorked: effectiveTimeWorked,

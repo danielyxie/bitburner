@@ -32,6 +32,7 @@ import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { WorkType, ClassType, CrimeType } from "../Work/WorkType";
 import { Work } from "../Work/Work";
+import { WorkManager } from "../Work/WorkManager";
 
 export interface IPlayer {
   // Class members
@@ -126,6 +127,7 @@ export interface IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  workManager: WorkManager;
   workData: Work;
   createProgramReqLvl: number;
   factionWorkType: string;

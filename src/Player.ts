@@ -9,4 +9,5 @@ export function loadPlayer(saveString: string): void {
   Player = JSON.parse(saveString, Reviver);
   Player.money = parseFloat(Player.money as any);
   Player.exploits = sanitizeExploits(Player.exploits);
+  Player.workManager.player = Player
 }

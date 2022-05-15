@@ -1,7 +1,7 @@
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { Generic_fromJSON, Generic_toJSON } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { baseCompanyPartTimeWorkInfo } from "./data/CompanyPartTimeWorkInfo";
 import { baseCompanyWorkInfo } from "./data/CompanyWorkInfo";
 import { baseCreateProgramWorkInfo } from "./data/CreateProgramWorkInfo";
@@ -16,8 +16,9 @@ import {
   GraftAugmentationWorkInfo,
   StudyClassWorkInfo,
 } from "./WorkInfo";
-import { WorkType } from "./WorkType";
-import { use } from "../ui/Context";
+import { PlayerFactionWorkType, WorkType } from "./WorkType";
+import { merge } from "lodash";
+import { Faction } from "../Faction/Faction";
 
 export type WorkGains = {
   hackExp: number;
@@ -43,8 +44,18 @@ export interface WorkInfo {
   graftAugmentation: GraftAugmentationWorkInfo;
 }
 
+const workTypeToInfoKey: { [workType in WorkType]?: string } = {
+  [WorkType.Company]: "company",
+  [WorkType.CompanyPartTime]: "companyPartTime",
+  [WorkType.Faction]: "faction",
+  [WorkType.CreateProgram]: "createProgram",
+  [WorkType.StudyClass]: "studyClass",
+  [WorkType.Crime]: "crime",
+  [WorkType.GraftAugmentation]: "graftAugmentation",
+};
+
 export class WorkManager {
-  readonly player: IPlayer;
+  player: IPlayer;
 
   workType: WorkType;
   timeWorked: number;
@@ -55,8 +66,11 @@ export class WorkManager {
 
   info: WorkInfo;
 
-  constructor() {
-    this.player = use.Player();
+  constructor(player?: IPlayer) {
+    // This is okay because when the player object is loaded, it
+    // assigns itself as the work manager's player property, so
+    // it will exist even if not provided explicitly
+    this.player = player as IPlayer;
 
     this.workType = WorkType.None;
     this.timeWorked = 0;
@@ -93,6 +107,53 @@ export class WorkManager {
       createProgram: baseCreateProgramWorkInfo,
       graftAugmentation: baseGraftAugmentationWorkInfo,
     };
+  }
+
+  start(workType: WorkType, ...rest: unknown[]): void {
+    this.reset();
+    this.player.isWorking = true;
+
+    switch (workType) {
+      case WorkType.Company:
+        this.info.company.start(this, ...(<[string]>rest));
+        break;
+      case WorkType.CompanyPartTime:
+        this.info.companyPartTime.start(this, ...(<[string]>rest));
+        break;
+      case WorkType.Faction:
+        this.info.faction.start(this, ...(<[Faction, PlayerFactionWorkType]>rest));
+        break;
+      case WorkType.CreateProgram:
+        this.info.createProgram.start(this, ...(<[string, number, number]>rest));
+        break;
+      case WorkType.StudyClass:
+        // TODO
+        break;
+      case WorkType.Crime:
+        // TODO
+        break;
+      case WorkType.GraftAugmentation:
+        this.info.graftAugmentation.start(this, ...(<[string, number]>rest));
+        break;
+      default:
+        throw new Error("Tried to start working with an unknown WorkType. This is a bug!");
+    }
+  }
+
+  process(numCycles = 1): boolean | undefined {
+    const info = this.info[<keyof WorkInfo>workTypeToInfoKey[this.workType]];
+    if (info) {
+      return info.process(this, numCycles);
+    }
+    throw new Error("Tried to process an unknown WorkType. This is a bug!");
+  }
+
+  finish(options: { singularity?: boolean; cancelled: boolean }) {
+    const info = this.info[<keyof WorkInfo>workTypeToInfoKey[this.workType]];
+    if (info) {
+      return info.finish(this, options);
+    }
+    throw new Error("Tried to finish an unknown WorkType. This is a bug!");
   }
 
   reset(): void {
@@ -214,7 +275,7 @@ export class WorkManager {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static fromJSON(value: any): WorkManager {
     const baseObject = Generic_fromJSON(WorkManager, value.data);
-    return Object.assign(baseObject, {
+    merge(baseObject, {
       info: {
         faction: <FactionWorkInfo>{
           start: baseFactionWorkInfo.start,
@@ -250,5 +311,8 @@ export class WorkManager {
         },
       },
     });
+    return baseObject;
   }
 }
+
+Reviver.constructors.WorkManager = WorkManager;

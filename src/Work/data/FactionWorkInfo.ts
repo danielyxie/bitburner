@@ -1,3 +1,4 @@
+import { merge } from "lodash";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
 import { Faction } from "../../Faction/Faction";
@@ -21,19 +22,19 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
 
     switch (workType) {
       case PlayerFactionWorkType.Hacking:
-        Object.assign(workManager.rates, <WorkRates>{
+        merge(workManager.rates, <WorkRates>{
           hackExp: 0.15 * workManager.player.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain,
           rep: getHackingWorkRepGain(workManager.player, faction),
         });
 
-        Object.assign(workManager.info.faction, <FactionWorkInfo>{
+        merge(workManager.info.faction, <FactionWorkInfo>{
           jobType: PlayerFactionWorkType.Hacking,
           jobDescription: "carrying out hacking contracts",
         });
         break;
 
       case PlayerFactionWorkType.Field:
-        Object.assign(
+        merge(
           workManager.rates,
           Object.fromEntries(
             Object.entries(<WorkRates>{
@@ -48,14 +49,14 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
           { rep: getFactionFieldWorkRepGain(workManager.player, faction) },
         );
 
-        Object.assign(workManager.info.faction, <FactionWorkInfo>{
+        merge(workManager.info.faction, <FactionWorkInfo>{
           jobType: PlayerFactionWorkType.Field,
           jobDescription: "carrying out field missions",
         });
         break;
 
       case PlayerFactionWorkType.Security:
-        Object.assign(
+        merge(
           workManager.rates,
           Object.fromEntries(
             Object.entries(<WorkRates>{
@@ -71,7 +72,7 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
           },
         );
 
-        Object.assign(workManager.info.faction, <FactionWorkInfo>{
+        merge(workManager.info.faction, <FactionWorkInfo>{
           jobType: PlayerFactionWorkType.Security,
           jobDescription: "performing security detail",
         });

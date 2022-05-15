@@ -1,3 +1,4 @@
+import { merge } from "lodash";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../../Constants";
@@ -14,7 +15,7 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
     workManager.workType = WorkType.GraftAugmentation;
     workManager.timeToCompletion = time;
 
-    Object.assign(workManager.info.graftAugmentation, <GraftAugmentationWorkInfo>{
+    merge(workManager.info.graftAugmentation, <GraftAugmentationWorkInfo>{
       augmentation,
       timeWorked: 0,
     });
