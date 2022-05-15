@@ -25,8 +25,8 @@ class APIActiveFragment implements IActiveFragment {
   rotation: number;
   x: number;
   y: number;
-  
-  constructor (src:IActiveFragment) {
+
+  constructor(src: IActiveFragment) {
     this.id = src.id;
     this.highestCharge = src.highestCharge;
     this.numCharge = src.numCharge;
@@ -36,6 +36,21 @@ class APIActiveFragment implements IActiveFragment {
   }
 }
 
+class APIFragment implements IFragment {
+  id: number;
+  shape: boolean[][];
+  type: number;
+  power: number;
+  limit: number;
+
+  constructor(src: IFragment) {
+    this.id = src.id;
+    this.shape = src.shape;
+    this.power = src.power;
+    this.type = src.type;
+    this.limit = src.limit;
+  }
+}
 
 export function NetscriptStanek(
   player: IPlayer,
@@ -77,7 +92,7 @@ export function NetscriptStanek(
       function (): IFragment[] {
         checkStanekAPIAccess("fragmentDefinitions");
         _ctx.log(() => `Returned ${Fragments.length} fragments`);
-        return Fragments.map((f) => f.copy());
+        return Fragments.map((f) => {return new APIFragment(f)});
       },
     activeFragments: (_ctx: NetscriptContext) =>
       function (): IActiveFragment[] {
