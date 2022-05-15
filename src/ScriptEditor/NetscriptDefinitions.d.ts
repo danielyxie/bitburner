@@ -1,9 +1,16 @@
-import { GangRequirement } from "src/PersonObjects/Player/PlayerObjectGangMethods";
-
 /**
  * @public
  */
 type FilenameOrPID = number | string;
+
+/**
+ * @public
+ */
+type GangRequirement = {
+  karma: number;
+  crime: number;
+  hacking: number;
+};
 
 /**
  * @public
@@ -3346,9 +3353,7 @@ export interface Gang {
    * List all gang requirement.
    * @remarks
    * RAM cost: 1GB
-   *
    * Get the amount of karma, crime-sourced money, and hacking-sourced money needed to create a gang with the specified faction.
-   *
    * @returns Gang's requirement.
    */
   getGangRequirement(faction: string): GangRequirement;

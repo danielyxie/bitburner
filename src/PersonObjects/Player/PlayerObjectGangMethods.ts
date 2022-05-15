@@ -22,13 +22,13 @@ export function canAccessGang(this: IPlayer, factionName: string): boolean {
   const requirement = GetGangRequirement(factionName);
   return (
     this.karma <= requirement.karma &&
-    this.moneySourceB.crime <= requirement.crime &&
-    this.moneySourceB.hacking <= requirement.crime
+    this.moneySourceB.crime >= requirement.crime &&
+    this.moneySourceB.hacking >= requirement.crime
   );
 }
 
 export function GetGangRequirement(factionName: string): GangRequirement {
-  let requirement = {
+  const requirement = {
     karma: GangConstants.GangKarmaRequirement,
     crime: GangConstants.GangCrimeMoneyRequirement,
     hacking: GangConstants.GangHackingMoneyRequirement,

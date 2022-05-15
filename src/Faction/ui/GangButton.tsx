@@ -44,12 +44,13 @@ export function GangButton({ faction }: IProps): React.ReactElement {
       title: "Create Gang",
       tooltip: !player.canAccessGang(faction.name) ? (
         <Typography>
-          Unlocked when reaching : <br />
-          {player.karma}/{requirement.karma} karma,
+          Unlocked when reaching :
           <br />
-          <Money money={player.moneySourceB.crime} />/<Money money={requirement.crime} /> from crime source,
+          {player.karma}/{requirement.karma} karma
           <br />
-          <Money money={player.moneySourceB.hacking} />/<Money money={requirement.hacking} /> from hacking source.
+          <Money money={player.moneySourceB.crime} />/<Money money={requirement.crime} /> from crime source
+          <br />
+          <Money money={player.moneySourceB.hacking} />/<Money money={requirement.hacking} /> from hacking source
         </Typography>
       ) : (
         ""
