@@ -150,7 +150,7 @@ export function startWork(this: IPlayer, companyName: string): void {
     timeWorked: 0,
 
     info: {
-      company: companyName,
+      companyName: companyName,
     },
 
     rates: {
@@ -174,7 +174,7 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
     switch (this.workData.type) {
       case WorkType.Faction:
         if (this.workForFaction(numCycles)) {
-          router.toFaction(Factions[(this.workData.info as FactionWorkInfo).faction]);
+          router.toFaction(Factions[(this.workData.info as FactionWorkInfo).factionName]);
         }
         break;
       case WorkType.CreateProgram:
@@ -1029,7 +1029,7 @@ export function startClass(this: IPlayer, costMult: number, expMult: number, cla
     timeToCompletion: 0,
 
     info: {
-      class: className,
+      className: className,
     },
     rates: this.workData.rates,
     gains: this.workData.gains,
@@ -1065,7 +1065,7 @@ export function finishClass(this: IPlayer, sing = false): string {
   if (!sing) {
     dialogBoxCreate(
       <>
-        After {workInfo.class} for {convertTimeMsToTimeElapsedString(this.workData.timeWorked)}, <br />
+        After {workInfo.className} for {convertTimeMsToTimeElapsedString(this.workData.timeWorked)}, <br />
         you spent a total of <Money money={-this.workMoneyGained} />. <br />
         <br />
         You earned a total of: <br />
@@ -1085,7 +1085,7 @@ export function finishClass(this: IPlayer, sing = false): string {
   if (sing) {
     const res =
       "After " +
-      workInfo.class +
+      workInfo.className +
       " for " +
       convertTimeMsToTimeElapsedString(this.workData.timeWorked) +
       ", " +

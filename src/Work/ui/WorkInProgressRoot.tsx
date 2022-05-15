@@ -225,7 +225,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     case WorkType.StudyClass: {
       const playerWorkInfo = player.workData.info as StudyClassWorkInfo;
 
-      const className = playerWorkInfo.class;
+      const className = playerWorkInfo.className;
       function cancel(): void {
         player.finishClass(true);
         router.toCity();
@@ -280,14 +280,14 @@ export function WorkInProgressRoot(): React.ReactElement {
     case WorkType.Company: {
       const playerWorkInfo = player.workData.info as CompanyWorkInfo;
 
-      const comp = Companies[playerWorkInfo.company];
+      const comp = Companies[playerWorkInfo.companyName];
       if (comp == null || !(comp instanceof Company)) {
         workInfo = {
           buttons: {
             cancel: () => router.toTerminal(),
           },
           title:
-            `You cannot work for ${playerWorkInfo.company || "(Company not found)"} at this time,` +
+            `You cannot work for ${playerWorkInfo.companyName || "(Company not found)"} at this time,` +
             " please try again if you think this should have worked",
 
           stopText: "Back to Terminal",
@@ -305,7 +305,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         router.toJob();
       }
 
-      const position = player.jobs[playerWorkInfo.company];
+      const position = player.jobs[playerWorkInfo.companyName];
 
       const penalty = player.cancelationPenalty();
 
@@ -318,7 +318,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
         title: (
           <>
-            You are currently working as a <b>{position}</b> at <b>{playerWorkInfo.company}</b>
+            You are currently working as a <b>{position}</b> at <b>{playerWorkInfo.companyName}</b>
           </>
         ),
 
@@ -365,14 +365,14 @@ export function WorkInProgressRoot(): React.ReactElement {
         player.stopFocusing();
         router.toJob();
       }
-      const comp = Companies[playerWorkInfo.company];
+      const comp = Companies[playerWorkInfo.companyName];
       let companyRep = 0;
       if (comp == null || !(comp instanceof Company)) {
-        throw new Error(`Could not find Company: ${playerWorkInfo.company}`);
+        throw new Error(`Could not find Company: ${playerWorkInfo.companyName}`);
       }
       companyRep = comp.playerReputation;
 
-      const position = player.jobs[playerWorkInfo.company];
+      const position = player.jobs[playerWorkInfo.companyName];
 
       workInfo = {
         buttons: {
@@ -381,7 +381,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
         title: (
           <>
-            You are currently working as a <b>{position}</b> at <b>{playerWorkInfo.company}</b>
+            You are currently working as a <b>{position}</b> at <b>{playerWorkInfo.companyName}</b>
           </>
         ),
 
