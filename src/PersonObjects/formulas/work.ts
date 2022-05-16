@@ -27,7 +27,7 @@ export function calculateClassEarnings(player: IPlayer): WorkRates {
     agiExp = 0,
     chaExp = 0;
   const hashManager = player.hashManager;
-  switch ((player.workData.info as StudyClassWorkInfo).class) {
+  switch (player.workManager.info.studyClass.className) {
     case ClassType.StudyComputerScience:
       hackExp =
         ((CONSTANTS.ClassStudyComputerScienceBaseExp * player.workExpMult) / gameCPS) * hashManager.getStudyMult();
