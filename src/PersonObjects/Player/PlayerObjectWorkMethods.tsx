@@ -1300,6 +1300,7 @@ export function singularityStopWork(this: IPlayer): string {
     return "";
   }
   let res = ""; //Earnings text for work
+  this.workManager.finish({ singularity: true, cancelled: true });
   switch (this.workType) {
     case WorkType.StudyClass:
       res = this.finishClass(true);

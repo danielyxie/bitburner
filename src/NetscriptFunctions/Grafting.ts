@@ -1,3 +1,4 @@
+import { WorkType } from "../Work/WorkType";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { hasAugmentationPrereqs } from "../Faction/FactionHelpers";
 import { CityName } from "../Locations/data/CityNames";
@@ -9,6 +10,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../ui/GameRoot";
 import { INetscriptHelper } from "./INetscriptHelper";
+import { StartGraftingParams } from "../Work/WorkInfo";
 
 export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IGrafting {
   const checkGraftingAPIAccess = (func: string): void => {
@@ -87,7 +89,11 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       }
 
       player.loseMoney(craftableAug.cost, "augmentations");
-      player.startGraftAugmentationWork(augName, craftableAug.time);
+      player.workManager.start(WorkType.GraftAugmentation, {
+        augmentation: augName,
+        time: craftableAug.time,
+        throughAPI: true,
+      } as StartGraftingParams);
 
       if (focus) {
         player.startFocusing();

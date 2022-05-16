@@ -108,11 +108,13 @@ export interface CrimeWorkInfo extends GenericWorkInfo {
 
 export type StartGraftingParams = {
   augmentation: string;
+  throughAPI?: boolean;
   time: number;
 };
 
 export interface GraftAugmentationWorkInfo extends GenericWorkInfo {
   augmentation: string;
+  throughAPI: boolean;
 
   timeWorked: number;
 

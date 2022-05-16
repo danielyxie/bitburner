@@ -11,14 +11,16 @@ import { WorkType } from "../WorkType";
 export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
   augmentation: "",
   timeWorked: 0,
+  throughAPI: false,
 
-  start: function (workManager: WorkManager, { augmentation, time }): void {
+  start: function (workManager: WorkManager, { augmentation, time, throughAPI = false }): void {
     workManager.workType = WorkType.GraftAugmentation;
     workManager.timeToCompletion = time;
 
     // Update manager data with augmentation name
     merge(workManager.info.graftAugmentation, <GraftAugmentationWorkInfo>{
       augmentation,
+      throughAPI,
       timeWorked: 0,
     });
   },
@@ -66,7 +68,7 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
       }
 
       // If not done through API, show a popup
-      if (!options?.singularity) {
+      if (!options?.singularity && !this.throughAPI) {
         dialogBoxCreate(
           `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
             (workManager.player.hasAugmentation(AugmentationNames.CongruityImplant)
@@ -74,7 +76,7 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
               : ", but you feel a bit off."),
         );
       }
-    } else if (options.cancelled && !options?.singularity) {
+    } else if (options.cancelled && !options?.singularity && !this.throughAPI) {
       // If grafting was cancelled and it wasn't done through API, show a popup
       dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
     }
