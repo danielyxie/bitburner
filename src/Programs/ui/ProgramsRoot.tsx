@@ -8,6 +8,7 @@ import { use } from "../../ui/Context";
 import { Settings } from "../../Settings/Settings";
 
 import { Programs } from "../Programs";
+import { WorkType } from "../../Work/WorkType";
 
 export const ProgramsSeen: string[] = [];
 
@@ -96,7 +97,7 @@ export function ProgramsRoot(): React.ReactElement {
                   sx={{ my: 1, width: "100%" }}
                   onClick={(event) => {
                     if (!event.isTrusted) return;
-                    player.startCreateProgramWork(program.name, create.time, create.level);
+                    player.workManager.start(WorkType.CreateProgram, program.name, create.time, create.level);
                     player.startFocusing();
                     router.toWork();
                   }}

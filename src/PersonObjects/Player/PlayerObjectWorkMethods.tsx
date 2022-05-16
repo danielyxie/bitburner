@@ -171,42 +171,33 @@ export function startWork(this: IPlayer, companyName: string): void {
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   // Working
   if (this.isWorking) {
-    switch (this.workManager.workType) {
-      case WorkType.Faction:
-        if (this.workManager.process(numCycles)) {
-          router.toFaction(Factions[(this.workData.info as FactionWorkInfo).factionName]);
-        }
-        break;
-      case WorkType.CreateProgram:
-        if (this.workManager.process(numCycles)) {
-          router.toFaction(Factions[this.currentWorkFactionName]);
-        }
-        break;
-      case WorkType.StudyClass:
-        if (this.workManager.process(numCycles)) {
+    const workType = this.workManager.workType;
+    const done = this.workManager.process(numCycles);
+
+    if (done) {
+      switch (workType) {
+        case WorkType.Faction:
+          router.toFaction(Factions[this.workManager.info.faction.factionName]);
+          break;
+        case WorkType.CreateProgram:
+          router.toCreateProgram();
+          break;
+        case WorkType.StudyClass:
           router.toCity();
-        }
-        break;
-      case WorkType.Crime:
-        if (this.workManager.process(numCycles)) {
+          break;
+        case WorkType.Crime:
           router.toLocation(Locations[LocationName.Slums]);
-        }
-        break;
-      case WorkType.CompanyPartTime:
-        if (this.workManager.process(numCycles)) {
+          break;
+        case WorkType.CompanyPartTime:
           router.toCity();
-        }
-        break;
-      case WorkType.GraftAugmentation:
-        if (this.workManager.process(numCycles)) {
+          break;
+        case WorkType.GraftAugmentation:
           router.toGrafting();
-        }
-        break;
-      case WorkType.Company:
-        if (this.workManager.process(numCycles)) {
+          break;
+        case WorkType.Company:
           router.toCity();
-        }
-        break;
+          break;
+      }
     }
   }
 }
