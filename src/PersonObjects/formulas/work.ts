@@ -1,19 +1,8 @@
-import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { IPlayer } from "../IPlayer";
-import { ClassType } from "../../Work/WorkType";
+import { CONSTANTS } from "../../Constants";
 import { WorkRates } from "../../Work/Work";
-import { StudyClassWorkInfo } from "../../Work/WorkInfo";
-
-export interface WorkEarnings {
-  workMoneyLossRate: number;
-  workHackExpGainRate: number;
-  workStrExpGainRate: number;
-  workDefExpGainRate: number;
-  workDexExpGainRate: number;
-  workAgiExpGainRate: number;
-  workChaExpGainRate: number;
-}
+import { ClassType } from "../../Work/WorkType";
+import { IPlayer } from "../IPlayer";
 
 export function calculateClassEarnings(player: IPlayer): WorkRates {
   const gameCPS = 1000 / CONSTANTS._idleSpeed;
