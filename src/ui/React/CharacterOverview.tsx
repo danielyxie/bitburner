@@ -27,6 +27,7 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Box, Tooltip } from "@mui/material";
 
 import { WorkType } from "../../Work/WorkType";
+import { CompanyPartTimeWorkInfo, CompanyWorkInfo } from "../../Work/WorkInfo";
 
 interface IProps {
   save: () => void;
@@ -144,66 +145,80 @@ function Work(): React.ReactElement {
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
-  switch (player.workType) {
+  const work = player.workManager;
+
+  switch (work.workType) {
     case WorkType.CompanyPartTime:
-    case WorkType.Company:
+    case WorkType.Company: {
+      const data: CompanyWorkInfo | CompanyPartTimeWorkInfo =
+        work.workType === WorkType.Company ? work.info.company : work.info.companyPartTime;
+      const companyName = data.companyName;
       details = (
         <>
-          {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
+          {player.jobs[companyName]} at <strong>{companyName}</strong>
         </>
       );
       header = (
         <>
-          Working at <strong>{player.companyName}</strong>
+          Working at <strong>{companyName}</strong>
         </>
       );
       innerText = (
         <>
-          +<Reputation reputation={player.workRepGained} /> rep
+          +<Reputation reputation={work.gains.rep} /> rep
         </>
       );
       break;
-    case WorkType.Faction:
+    }
+    case WorkType.Faction: {
+      const data = work.info.faction;
+      const facName = data.factionName;
       details = (
         <>
-          {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
+          {data.jobType} for <strong>{facName}</strong>
         </>
       );
       header = (
         <>
-          Working for <strong>{player.currentWorkFactionName}</strong>
+          Working for <strong>{facName}</strong>
         </>
       );
       innerText = (
         <>
-          +<Reputation reputation={player.workRepGained} /> rep
+          +<Reputation reputation={work.gains.rep} /> rep
         </>
       );
       break;
-    case WorkType.StudyClass:
-      details = <>{player.workType}</>;
-      header = <>You are {player.className}</>;
-      innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
+    }
+    case WorkType.StudyClass: {
+      const data = work.info.studyClass;
+      details = <>{work.workType}</>;
+      header = <>You are {data.className}</>;
+      innerText = <>{convertTimeMsToTimeElapsedString(work.timeWorked)}</>;
       break;
-    case WorkType.CreateProgram:
-      details = <>Coding {player.createProgramName}</>;
+    }
+    case WorkType.CreateProgram: {
+      const data = work.info.createProgram;
+      const program = data.programName;
+      details = <>Coding {program}</>;
       header = <>Creating a program</>;
       innerText = (
         <>
-          {player.createProgramName}{" "}
-          {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
+          {program} {((data.timeWorked / work.timeToCompletion) * 100).toFixed(2)}%
         </>
       );
       break;
-    case WorkType.GraftAugmentation:
-      details = <>Grafting {player.graftAugmentationName}</>;
+    }
+    case WorkType.GraftAugmentation: {
+      const data = work.info.graftAugmentation;
+      details = <>Grafting {data.augmentation}</>;
       header = <>Grafting an Augmentation</>;
       innerText = (
         <>
-          <strong>{((player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}%</strong>{" "}
-          done
+          <strong>{((data.timeWorked / work.timeToCompletion) * 100).toFixed(2)}%</strong> done
         </>
       );
+    }
   }
 
   return (
