@@ -202,6 +202,10 @@ function SkillMults({ mults }: IMultsProps): React.ReactElement {
       name: "Dexterity Level",
       color: Settings.theme.combat,
     },
+    AgilityLevelMultiplier: {
+      name: "Agility Level",
+      color: Settings.theme.combat,
+    },
     CharismaLevelMultiplier: {
       name: "Charisma Level",
       color: Settings.theme.cha,
