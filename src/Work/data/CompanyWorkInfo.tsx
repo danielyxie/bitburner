@@ -21,6 +21,7 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
 
     workManager.info.company.companyName = company;
 
+    // Update rates
     merge(workManager.rates, {
       hackExp: workManager.player.getWorkHackExpGain(),
       strExp: workManager.player.getWorkStrExpGain(),
@@ -34,6 +35,7 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
   },
 
   process: function (workManager: WorkManager, numCycles: number): boolean {
+    // If worked a shift
     let overMax = false;
     if (workManager.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
       overMax = true;
@@ -41,18 +43,22 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
     }
     workManager.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
+    // Update rates
     merge(workManager.rates, {
       rep: workManager.player.getWorkRepGain(),
       money: workManager.player.getWorkMoneyGain(),
     } as WorkRates);
 
+    // Process earnings
     workManager.processWorkEarnings(numCycles);
 
+    // Influence stocks
     const company = Companies[workManager.info.company.companyName];
     influenceStockThroughCompanyWork(company, workManager.rates.rep, numCycles);
 
+    // Maybe finish through manager
     if (overMax || workManager.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
-      workManager.finish({ cancelled: true });
+      workManager.finish({ cancelled: false });
       return true;
     }
     return false;
@@ -62,16 +68,20 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
     workManager: WorkManager,
     options: { singularity?: boolean | undefined; cancelled: boolean },
   ): string {
+    // If the job was finished with less than a full shift, apply penalty
     if (options.cancelled) {
       workManager.gains.rep *= workManager.player.cancelationPenalty();
     }
     const penaltyString = workManager.player.cancelationPenalty() === 0.5 ? "half" : "three-quarters";
 
     const company = Companies[workManager.info.company.companyName];
+    // Update player's rep with the company
     company.playerReputation += workManager.gains.rep;
 
+    // Upadte skill levels
     workManager.player.updateSkillLevels();
 
+    // Show summary if not done through Singularity
     if (!options?.singularity) {
       let content = (
         <>
@@ -99,6 +109,7 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
         </>
       );
 
+      // Append info about penalty
       if (options.cancelled) {
         content = (
           <>
@@ -121,6 +132,7 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
       dialogBoxCreate(content);
       return "";
     } else {
+      // Otherwise show summary through Singularity
       const res =
         "You worked a short shift of " +
         convertTimeMsToTimeElapsedString(workManager.timeWorked) +

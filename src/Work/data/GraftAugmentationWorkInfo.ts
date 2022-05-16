@@ -16,6 +16,7 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
     workManager.workType = WorkType.GraftAugmentation;
     workManager.timeToCompletion = time;
 
+    // Update manager data with augmentation name
     merge(workManager.info.graftAugmentation, <GraftAugmentationWorkInfo>{
       augmentation,
       timeWorked: 0,
@@ -23,17 +24,23 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
   },
 
   process: function (workManager: WorkManager, numCycles: number): boolean {
+    // Get focus bonus
+    // TODO: Helper function for this
     let focusBonus = 1;
     if (!workManager.player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
       focusBonus = workManager.player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
 
+    // Calculate speed bonus
     let skillMult = graftingIntBonus(workManager.player);
     skillMult *= focusBonus;
 
+    // Update actual time worked
     workManager.timeWorked += CONSTANTS._idleSpeed * numCycles;
+    // Update effective time worked
     workManager.info.graftAugmentation.timeWorked += CONSTANTS._idleSpeed * numCycles * skillMult;
 
+    // If grafting is done, finish task through manager
     if (workManager.info.graftAugmentation.timeWorked >= workManager.timeToCompletion) {
       workManager.finish({ cancelled: false });
       return true;
@@ -46,22 +53,33 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
     options: { singularity?: boolean | undefined; cancelled: boolean },
   ): string {
     const augName = workManager.info.graftAugmentation.augmentation;
-    if (options.cancelled === false && !options?.singularity) {
+
+    // If not cancelled, grant Augmentation and stuff
+    if (options.cancelled === false) {
+      // Apply aug
       applyAugmentation({ name: augName, level: 1 });
 
+      // If player doesn't have nickofolas Congruity Implant, apply a level of entropy
       if (!workManager.player.hasAugmentation(AugmentationNames.CongruityImplant)) {
         workManager.player.entropy += 1;
         workManager.player.applyEntropy(workManager.player.entropy);
       }
 
-      dialogBoxCreate(
-        `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
-          (workManager.player.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."),
-      );
-    } else if (!options.cancelled && !options?.singularity) {
+      // If not done through API, show a popup
+      if (!options?.singularity) {
+        dialogBoxCreate(
+          `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
+            (workManager.player.hasAugmentation(AugmentationNames.CongruityImplant)
+              ? "."
+              : ", but you feel a bit off."),
+        );
+      }
+    } else if (options.cancelled && !options?.singularity) {
+      // If grafting was cancelled and it wasn't done through API, show a popup
       dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
     }
 
+    // If grafting wasn't cancelled, gain some INT exp
     if (!options.cancelled) {
       workManager.player.gainIntelligenceExp((CONSTANTS.IntelligenceGraftBaseExpGain * workManager.timeWorked) / 10000);
     }
