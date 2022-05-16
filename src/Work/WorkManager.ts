@@ -199,6 +199,8 @@ export class WorkManager {
         companyPartTime: baseCompanyPartTimeWorkInfo,
         createProgram: baseCreateProgramWorkInfo,
         graftAugmentation: baseGraftAugmentationWorkInfo,
+        studyClass: baseStudyClassWorkInfo,
+        crime: baseCrimeWorkInfo,
       },
     });
   }
@@ -263,8 +265,12 @@ export class WorkManager {
           timeWorked: this.info.createProgram.timeWorked,
         },
 
-        // studyClass: <StudyClassWorkInfo>{},
-        // crime: <CrimeWorkInfo>{},
+        studyClass: <StudyClassWorkInfo>{ className: this.info.studyClass.className },
+
+        crime: <CrimeWorkInfo>{
+          crimeType: this.info.crime.crimeType,
+          singularity: this.info.crime.singularity,
+        },
 
         graftAugmentation: <GraftAugmentationWorkInfo>{
           augmentation: this.info.graftAugmentation.augmentation,
@@ -306,8 +312,17 @@ export class WorkManager {
           finish: baseCreateProgramWorkInfo.finish,
         },
 
-        // studyClass: <StudyClassWorkInfo>{},
-        // crime: <CrimeWorkInfo>{},
+        studyClass: <StudyClassWorkInfo>{
+          start: baseStudyClassWorkInfo.start,
+          process: baseStudyClassWorkInfo.process,
+          finish: baseStudyClassWorkInfo.finish,
+        },
+
+        crime: <CrimeWorkInfo>{
+          start: baseCrimeWorkInfo.start,
+          process: baseCrimeWorkInfo.process,
+          finish: baseCrimeWorkInfo.finish,
+        },
 
         graftAugmentation: <GraftAugmentationWorkInfo>{
           start: baseGraftAugmentationWorkInfo.start,
