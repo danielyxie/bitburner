@@ -47,7 +47,7 @@ export interface WorkInfo {
   graftAugmentation: GraftAugmentationWorkInfo;
 }
 
-const workTypeToInfoKey: { [workType in WorkType]?: string } = {
+const workTypeToInfoKey: { [workType in Exclude<WorkType, WorkType.None>]: keyof WorkInfo } = {
   [WorkType.Company]: "company",
   [WorkType.CompanyPartTime]: "companyPartTime",
   [WorkType.Faction]: "faction",
@@ -114,12 +114,13 @@ export class WorkManager {
     };
   }
 
+  // https://github.com/Microsoft/TypeScript/issues/30581 :/
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  start(workType: WorkType, params: any): void {
+  start(workType: Exclude<WorkType, WorkType.None>, params: any): void {
     this.reset();
     this.player.isWorking = true;
 
-    const info = this.info[<keyof WorkInfo>workTypeToInfoKey[workType]];
+    const info = this.info[workTypeToInfoKey[workType]];
     if (info) {
       info.start(this, params);
       return;
@@ -128,7 +129,11 @@ export class WorkManager {
   }
 
   process(numCycles = 1): boolean | undefined {
-    const info = this.info[<keyof WorkInfo>workTypeToInfoKey[this.workType]];
+    if (this.workType === WorkType.None) {
+      throw new Error("Tried to process work whilst not working. This is a bug!");
+    }
+
+    const info = this.info[workTypeToInfoKey[this.workType]];
     if (info) {
       return info.process(this, numCycles);
     }
@@ -136,9 +141,13 @@ export class WorkManager {
   }
 
   finish(options: { singularity?: boolean; cancelled: boolean }): string | undefined {
+    if (this.workType === WorkType.None) {
+      throw new Error("Tried to process work whilst not working. This is a bug!");
+    }
+
     let ret: string | null = null;
 
-    const info = this.info[<keyof WorkInfo>workTypeToInfoKey[this.workType]];
+    const info = this.info[workTypeToInfoKey[this.workType]];
     if (info) {
       ret = info.finish(this, options);
     }
