@@ -11,6 +11,7 @@ import { WorkType } from "../WorkType";
 export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
   augmentation: "",
   timeWorked: 0,
+
   start: function (workManager: WorkManager, augmentation: string, time: number): void {
     workManager.workType = WorkType.GraftAugmentation;
     workManager.timeToCompletion = time;

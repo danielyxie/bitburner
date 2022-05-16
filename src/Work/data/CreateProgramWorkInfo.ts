@@ -10,6 +10,7 @@ export const baseCreateProgramWorkInfo: CreateProgramWorkInfo = {
   programName: "",
   requiredLevel: 0,
   timeWorked: 0,
+
   start: function (workManager: WorkManager, program: string, time: number, requiredLevel: number): void {
     let effectiveTimeWorked = 0;
 

@@ -20,19 +20,22 @@ export interface FactionWorkInfo extends GenericWorkInfo {
   jobDescription: string;
   jobType: PlayerFactionWorkType;
 
-  start: (workManager: WorkManager, faction: Faction, workType: PlayerFactionWorkType) => void;
+  start: (
+    workManager: WorkManager,
+    ...[faction, workType]: [faction: Faction, workType: PlayerFactionWorkType]
+  ) => void;
 }
 
 export interface CompanyWorkInfo extends GenericWorkInfo {
   companyName: string;
 
-  start: (workManager: WorkManager, company: string) => void;
+  start: (workManager: WorkManager, ...[company]: [company: string]) => void;
 }
 
 export interface CompanyPartTimeWorkInfo extends GenericWorkInfo {
   companyName: string;
 
-  start: (workManager: WorkManager, company: string) => void;
+  start: (workManager: WorkManager, ...[company]: [company: string]) => void;
 }
 
 export interface CreateProgramWorkInfo extends GenericWorkInfo {
@@ -41,13 +44,19 @@ export interface CreateProgramWorkInfo extends GenericWorkInfo {
 
   timeWorked: number;
 
-  start: (workManager: WorkManager, program: string, time: number, requiredLevel: number) => void;
+  start: (
+    workManager: WorkManager,
+    ...[program, time, requiredLevel]: [program: string, time: number, requiredLevel: number]
+  ) => void;
 }
 
 export interface StudyClassWorkInfo extends GenericWorkInfo {
   className: ClassType;
 
-  start: (workManager: WorkManager, costMult: number, expMult: number, className: string) => void;
+  start: (
+    workManager: WorkManager,
+    ...[costMult, expMult, className]: [costMult: number, expMult: number, className: string]
+  ) => void;
 }
 
 export interface CrimeWorkInfo extends GenericWorkInfo {
@@ -56,19 +65,21 @@ export interface CrimeWorkInfo extends GenericWorkInfo {
 
   start: (
     workManager: WorkManager,
-    router: IRouter,
-    crimeType: CrimeType,
-    exp: {
-      hack: number;
-      str: number;
-      def: number;
-      dex: number;
-      agi: number;
-      cha: number;
-    },
-    money: number,
-    time: number,
-    workerscript: WorkerScript | null,
+    ...[router, crimeType, exp, money, time, workerscript]: [
+      router: IRouter,
+      crimeType: CrimeType,
+      exp: {
+        hack: number;
+        str: number;
+        def: number;
+        dex: number;
+        agi: number;
+        cha: number;
+      },
+      money: number,
+      time: number,
+      workerscript: WorkerScript | null,
+    ]
   ) => void;
 }
 
@@ -77,5 +88,5 @@ export interface GraftAugmentationWorkInfo extends GenericWorkInfo {
 
   timeWorked: number;
 
-  start: (workManager: WorkManager, augmentation: string, time: number) => void;
+  start: (workManager: WorkManager, ...[augmentation, time]: [augmenation: string, time: number]) => void;
 }

@@ -14,6 +14,7 @@ import { WorkType } from "../WorkType";
 
 export const baseCompanyPartTimeWorkInfo: CompanyPartTimeWorkInfo = {
   companyName: "",
+
   start: function (workManager: WorkManager, company: string): void {
     workManager.workType = WorkType.Company;
     workManager.timeToCompletion = CONSTANTS.MillisecondsPer8Hours;

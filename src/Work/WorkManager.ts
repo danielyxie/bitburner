@@ -16,9 +16,8 @@ import {
   GraftAugmentationWorkInfo,
   StudyClassWorkInfo,
 } from "./WorkInfo";
-import { PlayerFactionWorkType, WorkType } from "./WorkType";
+import { WorkType } from "./WorkType";
 import { merge } from "lodash";
-import { Faction } from "../Faction/Faction";
 
 export type WorkGains = {
   hackExp: number;
@@ -109,35 +108,16 @@ export class WorkManager {
     };
   }
 
-  start(workType: WorkType, ...rest: unknown[]): void {
+  start(workType: WorkType, ...args: any[]): void {
     this.reset();
     this.player.isWorking = true;
 
-    switch (workType) {
-      case WorkType.Company:
-        this.info.company.start(this, ...(<[string]>rest));
-        break;
-      case WorkType.CompanyPartTime:
-        this.info.companyPartTime.start(this, ...(<[string]>rest));
-        break;
-      case WorkType.Faction:
-        this.info.faction.start(this, ...(<[Faction, PlayerFactionWorkType]>rest));
-        break;
-      case WorkType.CreateProgram:
-        this.info.createProgram.start(this, ...(<[string, number, number]>rest));
-        break;
-      case WorkType.StudyClass:
-        // TODO
-        break;
-      case WorkType.Crime:
-        // TODO
-        break;
-      case WorkType.GraftAugmentation:
-        this.info.graftAugmentation.start(this, ...(<[string, number]>rest));
-        break;
-      default:
-        throw new Error("Tried to start working with an unknown WorkType. This is a bug!");
+    const info = this.info[<keyof WorkInfo>workTypeToInfoKey[workType]];
+    if (info) {
+      info.start(this, ...args);
+      return;
     }
+    throw new Error("Tried to start working with an unknown WorkType. This is a bug!");
   }
 
   process(numCycles = 1): boolean | undefined {
@@ -283,7 +263,7 @@ export class WorkManager {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static fromJSON(value: any): WorkManager {
     const baseObject = Generic_fromJSON(WorkManager, value.data);
-    console.log(baseObject)
+    console.log(baseObject);
     merge(baseObject, {
       info: {
         faction: <FactionWorkInfo>{

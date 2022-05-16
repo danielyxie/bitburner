@@ -16,6 +16,7 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
   factionName: "",
   jobDescription: "",
   jobType: PlayerFactionWorkType.None,
+
   start: function (workManager: WorkManager, faction: Faction, workType: PlayerFactionWorkType): void {
     let favorMult = 1 + faction.favor / 100;
     if (isNaN(favorMult)) favorMult = 1;
