@@ -15,28 +15,46 @@ interface GenericWorkInfo {
   ) => string;
 }
 
+// Faction work
+
+export type StartFactionWorkParams = {
+  faction: Faction;
+  workType: PlayerFactionWorkType;
+};
+
 export interface FactionWorkInfo extends GenericWorkInfo {
   factionName: string;
   jobDescription: string;
   jobType: PlayerFactionWorkType;
 
-  start: (
-    workManager: WorkManager,
-    ...[faction, workType]: [faction: Faction, workType: PlayerFactionWorkType]
-  ) => void;
+  start: (workManager: WorkManager, params: StartFactionWorkParams) => void;
 }
+
+// Company work (both full and part time)
+
+export type StartCompanyWorkParams = {
+  company: string;
+};
 
 export interface CompanyWorkInfo extends GenericWorkInfo {
   companyName: string;
 
-  start: (workManager: WorkManager, ...[company]: [company: string]) => void;
+  start: (workManager: WorkManager, params: StartCompanyWorkParams) => void;
 }
 
 export interface CompanyPartTimeWorkInfo extends GenericWorkInfo {
   companyName: string;
 
-  start: (workManager: WorkManager, ...[company]: [company: string]) => void;
+  start: (workManager: WorkManager, params: StartCompanyWorkParams) => void;
 }
+
+// Program creation
+
+export type StartCreateProgramParams = {
+  program: string;
+  time: number;
+  requiredLevel: number;
+};
 
 export interface CreateProgramWorkInfo extends GenericWorkInfo {
   programName: string;
@@ -44,49 +62,59 @@ export interface CreateProgramWorkInfo extends GenericWorkInfo {
 
   timeWorked: number;
 
-  start: (
-    workManager: WorkManager,
-    ...[program, time, requiredLevel]: [program: string, time: number, requiredLevel: number]
-  ) => void;
+  start: (workManager: WorkManager, params: StartCreateProgramParams) => void;
 }
+
+// Classes
+
+export type StartStudyClassParams = {
+  costMult: number;
+  expMult: number;
+  className: string;
+};
 
 export interface StudyClassWorkInfo extends GenericWorkInfo {
   className: ClassType;
 
-  start: (
-    workManager: WorkManager,
-    ...[costMult, expMult, className]: [costMult: number, expMult: number, className: string]
-  ) => void;
+  start: (workManager: WorkManager, params: StartStudyClassParams) => void;
 }
+
+// Crime
+
+export type StartCrimeParams = {
+  router: IRouter;
+  crimeType: CrimeType;
+  exp: {
+    hack: number;
+    str: number;
+    def: number;
+    dex: number;
+    agi: number;
+    cha: number;
+  };
+  money: number;
+  time: number;
+  workerScript: WorkerScript | null;
+};
 
 export interface CrimeWorkInfo extends GenericWorkInfo {
   crimeType: CrimeType;
   singularity: boolean;
 
-  start: (
-    workManager: WorkManager,
-    ...[router, crimeType, exp, money, time, workerscript]: [
-      router: IRouter,
-      crimeType: CrimeType,
-      exp: {
-        hack: number;
-        str: number;
-        def: number;
-        dex: number;
-        agi: number;
-        cha: number;
-      },
-      money: number,
-      time: number,
-      workerscript: WorkerScript | null,
-    ]
-  ) => void;
+  start: (workManager: WorkManager, params: StartCrimeParams) => void;
 }
+
+// Grafting
+
+export type StartGraftingParams = {
+  augmentation: string;
+  time: number;
+};
 
 export interface GraftAugmentationWorkInfo extends GenericWorkInfo {
   augmentation: string;
 
   timeWorked: number;
 
-  start: (workManager: WorkManager, ...[augmentation, time]: [augmenation: string, time: number]) => void;
+  start: (workManager: WorkManager, params: StartGraftingParams) => void;
 }

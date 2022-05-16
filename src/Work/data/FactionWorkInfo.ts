@@ -1,7 +1,6 @@
 import { merge } from "lodash";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
-import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import {
   getFactionFieldWorkRepGain,
@@ -17,7 +16,7 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
   jobDescription: "",
   jobType: PlayerFactionWorkType.None,
 
-  start: function (workManager: WorkManager, faction: Faction, workType: PlayerFactionWorkType): void {
+  start: function (workManager: WorkManager, { faction, workType }): void {
     let favorMult = 1 + faction.favor / 100;
     if (isNaN(favorMult)) favorMult = 1;
 

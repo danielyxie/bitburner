@@ -9,6 +9,7 @@ import { Settings } from "../../Settings/Settings";
 
 import { Programs } from "../Programs";
 import { WorkType } from "../../Work/WorkType";
+import { StartCreateProgramParams } from "../../Work/WorkInfo";
 
 export const ProgramsSeen: string[] = [];
 
@@ -97,7 +98,11 @@ export function ProgramsRoot(): React.ReactElement {
                   sx={{ my: 1, width: "100%" }}
                   onClick={(event) => {
                     if (!event.isTrusted) return;
-                    player.workManager.start(WorkType.CreateProgram, program.name, create.time, create.level);
+                    player.workManager.start(WorkType.CreateProgram, {
+                      program: program.name,
+                      time: create.time,
+                      requiredLevel: create.level,
+                    } as StartCreateProgramParams);
                     player.startFocusing();
                     router.toWork();
                   }}

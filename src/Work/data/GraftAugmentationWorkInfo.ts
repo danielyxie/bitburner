@@ -12,7 +12,7 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
   augmentation: "",
   timeWorked: 0,
 
-  start: function (workManager: WorkManager, augmentation: string, time: number): void {
+  start: function (workManager: WorkManager, { augmentation, time }): void {
     workManager.workType = WorkType.GraftAugmentation;
     workManager.timeToCompletion = time;
 

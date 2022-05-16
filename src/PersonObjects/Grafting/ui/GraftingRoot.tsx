@@ -18,6 +18,7 @@ import { IPlayer } from "../../IPlayer";
 import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../GraftingHelpers";
 import { GraftableAugmentation } from "../GraftableAugmentation";
 import { WorkType } from "../../../Work/WorkType";
+import { StartGraftingParams } from "../../../Work/WorkInfo";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
 
@@ -133,7 +134,10 @@ export const GraftingRoot = (): React.ReactElement => {
                 onConfirm={() => {
                   const graftableAug = GraftableAugmentations[selectedAug];
                   player.loseMoney(graftableAug.cost, "augmentations");
-                  player.workManager.start(WorkType.GraftAugmentation, selectedAug, graftableAug.time);
+                  player.workManager.start(WorkType.GraftAugmentation, {
+                    augmentation: selectedAug,
+                    time: graftableAug.time,
+                  } as StartGraftingParams);
                   player.startFocusing();
                   router.toWork();
                 }}

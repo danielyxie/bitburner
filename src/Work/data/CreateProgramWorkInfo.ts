@@ -11,7 +11,7 @@ export const baseCreateProgramWorkInfo: CreateProgramWorkInfo = {
   requiredLevel: 0,
   timeWorked: 0,
 
-  start: function (workManager: WorkManager, program: string, time: number, requiredLevel: number): void {
+  start: function (workManager: WorkManager, { program, time, requiredLevel }): void {
     let effectiveTimeWorked = 0;
 
     const playerPrograms = workManager.player.getHomeComputer().programs;

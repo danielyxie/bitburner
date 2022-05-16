@@ -1,12 +1,17 @@
+import { merge } from "lodash";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { baseCompanyPartTimeWorkInfo } from "./data/CompanyPartTimeWorkInfo";
-import { baseCompanyWorkInfo } from "./data/CompanyWorkInfo";
-import { baseCreateProgramWorkInfo } from "./data/CreateProgramWorkInfo";
-import { baseFactionWorkInfo } from "./data/FactionWorkInfo";
-import { baseGraftAugmentationWorkInfo } from "./data/GraftAugmentationWorkInfo";
+import {
+  baseCompanyPartTimeWorkInfo,
+  baseCompanyWorkInfo,
+  baseCreateProgramWorkInfo,
+  baseCrimeWorkInfo,
+  baseFactionWorkInfo,
+  baseGraftAugmentationWorkInfo,
+  baseStudyClassWorkInfo,
+} from "./data";
 import {
   CompanyPartTimeWorkInfo,
   CompanyWorkInfo,
@@ -17,7 +22,6 @@ import {
   StudyClassWorkInfo,
 } from "./WorkInfo";
 import { WorkType } from "./WorkType";
-import { merge } from "lodash";
 
 export type WorkGains = {
   hackExp: number;
@@ -38,8 +42,8 @@ export interface WorkInfo {
   company: CompanyWorkInfo;
   companyPartTime: CompanyPartTimeWorkInfo;
   createProgram: CreateProgramWorkInfo;
-  // studyClass: StudyClassWorkInfo;
-  // crime: CrimeWorkInfo;
+  studyClass: StudyClassWorkInfo;
+  crime: CrimeWorkInfo;
   graftAugmentation: GraftAugmentationWorkInfo;
 }
 
@@ -105,16 +109,19 @@ export class WorkManager {
       companyPartTime: baseCompanyPartTimeWorkInfo,
       createProgram: baseCreateProgramWorkInfo,
       graftAugmentation: baseGraftAugmentationWorkInfo,
+      studyClass: baseStudyClassWorkInfo,
+      crime: baseCrimeWorkInfo,
     };
   }
 
-  start(workType: WorkType, ...args: any[]): void {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  start(workType: WorkType, params: any): void {
     this.reset();
     this.player.isWorking = true;
 
     const info = this.info[<keyof WorkInfo>workTypeToInfoKey[workType]];
     if (info) {
-      info.start(this, ...args);
+      info.start(this, params);
       return;
     }
     throw new Error("Tried to start working with an unknown WorkType. This is a bug!");
