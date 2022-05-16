@@ -1062,6 +1062,8 @@ export interface SleeveSkills {
   agility: number;
   /** Current charisma of the sleeve */
   charisma: number;
+  /** Current memory of the sleeve [1-100] */
+  memory: number;
 }
 
 /**

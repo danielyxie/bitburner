@@ -48,6 +48,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       dexterity: sl.dexterity,
       agility: sl.agility,
       charisma: sl.charisma,
+      memory: sl.memory,
     };
   };
 
