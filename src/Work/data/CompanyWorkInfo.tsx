@@ -52,7 +52,7 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
     influenceStockThroughCompanyWork(company, workManager.rates.rep, numCycles);
 
     if (overMax || workManager.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
-      this.finish(workManager, { cancelled: true });
+      workManager.finish({ cancelled: true });
       return true;
     }
     return false;
@@ -119,8 +119,6 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
         );
       }
       dialogBoxCreate(content);
-
-      workManager.reset();
       return "";
     } else {
       const res =
@@ -145,8 +143,6 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
         " agility exp, and " +
         numeralWrapper.formatExp(workManager.gains.chaExp) +
         " charisma exp";
-
-      workManager.reset();
       return res;
     }
   },

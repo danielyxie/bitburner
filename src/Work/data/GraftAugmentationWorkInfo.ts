@@ -35,7 +35,7 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
     workManager.info.graftAugmentation.timeWorked += CONSTANTS._idleSpeed * numCycles * skillMult;
 
     if (workManager.info.graftAugmentation.timeWorked >= workManager.timeToCompletion) {
-      this.finish(workManager, { cancelled: false });
+      workManager.finish({ cancelled: false });
       return true;
     }
     return false;
@@ -66,7 +66,6 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
       workManager.player.gainIntelligenceExp((CONSTANTS.IntelligenceGraftBaseExpGain * workManager.timeWorked) / 10000);
     }
 
-    workManager.reset();
     return `Grafting of ${augName} has ended.`;
   },
 };

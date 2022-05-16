@@ -55,7 +55,7 @@ export const baseCreateProgramWorkInfo: CreateProgramWorkInfo = {
     workManager.info.createProgram.timeWorked += CONSTANTS._idleSpeed * numCycles * skillMult;
 
     if (workManager.info.createProgram.timeWorked >= workManager.timeToCompletion) {
-      this.finish(workManager, { cancelled: false });
+      workManager.finish({ cancelled: false });
       return true;
     }
     return false;
@@ -86,7 +86,6 @@ export const baseCreateProgramWorkInfo: CreateProgramWorkInfo = {
       playerPrograms.push(partialName);
     }
 
-    workManager.reset();
     return "You've finished creating " + programName + "! The new program can be found on your home computer.";
   },
 };

@@ -112,7 +112,7 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
     workManager.processWorkEarnings(numCycles);
 
     if (overMax || workManager.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
-      this.finish(workManager, { cancelled: false });
+      workManager.finish({ cancelled: false });
       return true;
     }
     return false;
