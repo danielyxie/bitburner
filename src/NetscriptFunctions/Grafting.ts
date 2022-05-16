@@ -77,21 +77,21 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
         workerScript.log("graftAugmentation", () => txt);
       }
 
-      const craftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
-      if (player.money < craftableAug.cost) {
+      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
+      if (player.money < graftableAug.cost) {
         workerScript.log("grafting.graftAugmentation", () => `You don't have enough money to craft ${augName}`);
         return false;
       }
 
-      if (!hasAugmentationPrereqs(craftableAug.augmentation)) {
+      if (!hasAugmentationPrereqs(graftableAug.augmentation)) {
         workerScript.log("grafting.graftAugmentation", () => `You don't have the pre-requisites for ${augName}`);
         return false;
       }
 
-      player.loseMoney(craftableAug.cost, "augmentations");
+      player.loseMoney(graftableAug.cost, "augmentations");
       player.workManager.start(WorkType.GraftAugmentation, {
         augmentation: augName,
-        time: craftableAug.time,
+        time: graftableAug.time,
         throughAPI: true,
       } as StartGraftingParams);
 
