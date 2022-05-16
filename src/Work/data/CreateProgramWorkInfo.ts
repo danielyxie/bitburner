@@ -18,17 +18,17 @@ export const baseCreateProgramWorkInfo: CreateProgramWorkInfo = {
     const partialProgram = playerPrograms.find(
       (programFile) => programFile.startsWith(program) && programFile.endsWith("%-INC"),
     );
-    if (partialProgram)
-      do {
-        const res = partialProgram.split("-");
-        if (res.length !== 3) break;
 
-        const percentage = parseInt(res[1].slice(0, -1));
-        if (isNaN(percentage) || percentage < 0 || percentage >= 1) break;
-
-        effectiveTimeWorked = (percentage / 100) * time;
-        playerPrograms.splice(playerPrograms.indexOf(partialProgram));
-      } while (false);
+    if (partialProgram) {
+      const res = partialProgram.split("-");
+      if (res.length === 3) {
+        const percentage = Number(res[1].slice(0, -1));
+        if (!(isNaN(percentage) || percentage < 0 || percentage >= 100)) {
+          effectiveTimeWorked = (percentage / 100) * time;
+          playerPrograms.splice(playerPrograms.indexOf(partialProgram), 1);
+        }
+      }
+    }
 
     workManager.workType = WorkType.CreateProgram;
     workManager.timeToCompletion = time;
