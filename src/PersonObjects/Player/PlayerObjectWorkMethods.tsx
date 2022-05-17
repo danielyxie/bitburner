@@ -43,7 +43,7 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
 }
 
 export function cancelationPenalty(this: IPlayer): number {
-  const data = serverMetadata.find((s) => s.specialName === this.companyName);
+  const data = serverMetadata.find((s) => s.specialName === this.getCompanyName());
   if (!data) return 0.5; // Does not have special server.
   const server = GetServer(data.hostname);
   if (server instanceof Server) {
@@ -78,7 +78,7 @@ export function singularityStopWork(this: IPlayer): string {
   }
   const res = this.workManager.finish({ singularity: true, cancelled: true });
   if (!res) {
-    console.error(`Unrecognized work type (${this.workType})`);
+    console.error(`Unrecognized work type (${this.workManager.workType})`);
     return "";
   }
   return res;

@@ -35,7 +35,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
-import { ClassType, CrimeType, WorkType } from "../../Work/WorkType";
+import { WorkType } from "../../Work/WorkType";
 import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import {
   calculateSkill as calculateSkillF,
@@ -118,31 +118,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
 
   this.isWorking = false;
   this.workManager.reset();
-  this.currentWorkFactionName = "";
-  this.currentWorkFactionDescription = "";
-  this.createProgramName = "";
-  this.className = ClassType.None;
-  this.crimeType = CrimeType.None;
-
-  this.workHackExpGainRate = 0;
-  this.workStrExpGainRate = 0;
-  this.workDefExpGainRate = 0;
-  this.workDexExpGainRate = 0;
-  this.workAgiExpGainRate = 0;
-  this.workChaExpGainRate = 0;
-  this.workRepGainRate = 0;
-  this.workMoneyGainRate = 0;
-
-  this.workHackExpGained = 0;
-  this.workStrExpGained = 0;
-  this.workDefExpGained = 0;
-  this.workDexExpGained = 0;
-  this.workAgiExpGained = 0;
-  this.workChaExpGained = 0;
-  this.workRepGained = 0;
-  this.workMoneyGained = 0;
-
-  this.timeWorked = 0;
 
   this.lastUpdate = new Date().getTime();
 
@@ -178,8 +153,6 @@ export function prestigeSourceFile(this: IPlayer): void {
       this.sleeves[i].sync = Math.max(25, this.sleeves[i].sync);
     }
   }
-
-  this.timeWorked = 0;
 
   // Gang
   this.gang = null;
@@ -564,7 +537,6 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   }
 
   this.jobs[company.name] = pos.name;
-  if (!this.isWorking || this.workType !== WorkType.Company) this.companyName = company.name;
 
   if (!sing) {
     dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
@@ -579,8 +551,8 @@ export function getNextCompanyPosition(
   entryPosType: CompanyPosition,
 ): CompanyPosition | null {
   let currCompany = null;
-  if (this.companyName !== "") {
-    currCompany = Companies[this.companyName];
+  if (this.getCompanyName() !== "") {
+    currCompany = Companies[this.getCompanyName()];
   }
 
   //Not employed at this company, so return the entry position
@@ -591,7 +563,7 @@ export function getNextCompanyPosition(
   //If the entry pos type and the player's current position have the same type,
   //return the player's "nextCompanyPosition". Otherwise return the entryposType
   //Employed at this company, so just return the next position if it exists.
-  const currentPositionName = this.jobs[this.companyName];
+  const currentPositionName = this.jobs[this.getCompanyName()];
   if (!currentPositionName) return entryPosType;
   const currentPosition = CompanyPositions[currentPositionName];
   if (
@@ -709,8 +681,6 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.workManager.reset();
-    this.companyName = company.name;
 
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed at " + this.location);
@@ -735,8 +705,6 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.workManager.reset();
-    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
     }
@@ -760,8 +728,6 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.workManager.reset();
-    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
     }
@@ -783,8 +749,6 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean 
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.workManager.reset();
-    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);
     }
