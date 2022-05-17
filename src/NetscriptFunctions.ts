@@ -55,7 +55,7 @@ import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads 
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
-import { LogBoxEvents } from "./ui/React/LogBoxManager";
+import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 
@@ -193,7 +193,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-          `This is probably a bug. Please report to game developer`,
+        `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -826,8 +826,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${
-              server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
@@ -990,7 +989,21 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     closeTail: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void {
       updateDynamicRam("closeTail", getRamCost(Player, "closeTail"));
-      // TODO
+      //Get the script object
+      let runningScriptObj;
+      if (arguments.length === 0) {
+        runningScriptObj = workerScript.scriptRef;
+      } else if (typeof fn === "number") {
+        runningScriptObj = getRunningScriptByPid(fn, "tail");
+      } else {
+        runningScriptObj = getRunningScript(fn, hostname, "tail", scriptArgs);
+      }
+      if (runningScriptObj == null) {
+        workerScript.log("closeTail", () => getCannotFindRunningScriptErrorMessage(fn, hostname, scriptArgs));
+        return;
+      }
+      //Emit an event to tell the game to close the tail window
+      LogBoxCloserEvents.emit(runningScriptObj);
     },
     nuke: function (_hostname: unknown): boolean {
       updateDynamicRam("nuke", getRamCost(Player, "nuke"));

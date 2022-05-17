@@ -23,6 +23,7 @@ import { Settings } from "../../Settings/Settings";
 let layerCounter = 0;
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
+export const LogBoxCloserEvents = new EventEmitter<[RunningScript]>();
 export const LogBoxClearEvents = new EventEmitter<[]>();
 
 interface Log {
@@ -47,6 +48,16 @@ export function LogBoxManager(): React.ReactElement {
           script: script,
         });
         rerender();
+      }),
+    [],
+  );
+
+  //Event used by ns.closeTail to close tail windows
+  useEffect(
+    () =>
+      LogBoxCloserEvents.subscribe((script: RunningScript) => {
+        const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
+        close(id);
       }),
     [],
   );
