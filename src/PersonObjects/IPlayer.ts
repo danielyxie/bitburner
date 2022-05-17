@@ -224,24 +224,7 @@ export interface IPlayer {
   singularityStopWork(): string;
   startBladeburner(p: any): void;
   startFactionWork(faction: Faction): void;
-  startClass(costMult: number, expMult: number, className: ClassType): void;
   startCorporation(corpName: string, additionalShares?: number): void;
-  startCrime(
-    router: IRouter,
-    crimeType: CrimeType,
-    hackExp: number,
-    strExp: number,
-    defExp: number,
-    dexExp: number,
-    agiExp: number,
-    chaExp: number,
-    money: number,
-    time: number,
-    singParams: any,
-  ): void;
-  startFactionFieldWork(faction: Faction): void;
-  startFactionHackWork(faction: Faction): void;
-  startFactionSecurityWork(faction: Faction): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
   startWork(companyName: string): void;
@@ -274,7 +257,6 @@ export interface IPlayer {
   prestigeSourceFile(): void;
   calculateSkill(exp: number, mult?: number): number;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
-  resetWorkStatus(generalType?: WorkType, group?: string, workType?: string): void;
   getWorkHackExpGain(): number;
   getWorkStrExpGain(): number;
   getWorkDefExpGain(): number;

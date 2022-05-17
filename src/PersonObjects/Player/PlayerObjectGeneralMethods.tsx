@@ -117,7 +117,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   }
 
   this.isWorking = false;
-  this.resetWorkStatus();
+  this.workManager.reset()
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
@@ -704,7 +704,7 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.workManager.reset();
     this.companyName = company.name;
 
     if (!sing) {
@@ -730,7 +730,7 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.workManager.reset();
     this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
@@ -755,7 +755,7 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.workManager.reset();
     this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
@@ -778,7 +778,7 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean 
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.workManager.reset();
     this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);

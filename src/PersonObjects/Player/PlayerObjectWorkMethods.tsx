@@ -1299,33 +1299,10 @@ export function singularityStopWork(this: IPlayer): string {
   if (!this.isWorking) {
     return "";
   }
-  let res = ""; //Earnings text for work
-  this.workManager.finish({ singularity: true, cancelled: true });
-  switch (this.workType) {
-    case WorkType.StudyClass:
-      res = this.finishClass(true);
-      break;
-    case WorkType.Company:
-      res = this.finishWork(true, true);
-      break;
-    case WorkType.CompanyPartTime:
-      res = this.finishWorkPartTime(true);
-      break;
-    case WorkType.Faction:
-      res = this.finishFactionWork(true, true);
-      break;
-    case WorkType.CreateProgram:
-      res = this.finishCreateProgramWork(true);
-      break;
-    case WorkType.Crime:
-      res = this.finishCrime(true);
-      break;
-    case WorkType.GraftAugmentation:
-      res = this.finishGraftAugmentationWork(true, true);
-      break;
-    default:
-      console.error(`Unrecognized work type (${this.workType})`);
-      return "";
+  const res = this.workManager.finish({ singularity: true, cancelled: true });
+  if (!res) {
+    console.error(`Unrecognized work type (${this.workType})`);
+    return "";
   }
   return res;
 }

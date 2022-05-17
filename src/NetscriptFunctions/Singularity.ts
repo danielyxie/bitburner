@@ -49,7 +49,8 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { ClassType, WorkType } from "../Work/WorkType";
+import { ClassType, PlayerFactionWorkType, WorkType } from "../Work/WorkType";
+import { StartFactionWorkParams, StartStudyClassParams } from "../Work/WorkInfo";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -324,7 +325,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             _ctx.log(() => `Invalid class name: ${className}.`);
             return false;
         }
-        player.startClass(costMult, expMult, task);
+        player.workManager.start(WorkType.StudyClass, { className: task, costMult, expMult });
         if (focus) {
           player.startFocusing();
           Router.toWork();
@@ -414,27 +415,34 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             return false;
         }
 
+        let className: ClassType;
         switch (stat.toLowerCase()) {
           case "strength".toLowerCase():
           case "str".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymStrength);
+            className = ClassType.GymStrength;
             break;
           case "defense".toLowerCase():
           case "def".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymDefense);
+            className = ClassType.GymDefense;
             break;
           case "dexterity".toLowerCase():
           case "dex".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymDexterity);
+            className = ClassType.GymDexterity;
             break;
           case "agility".toLowerCase():
           case "agi".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymAgility);
+            className = ClassType.GymAgility;
             break;
           default:
             _ctx.log(() => `Invalid stat: ${stat}.`);
             return false;
         }
+
+        player.workManager.start(WorkType.StudyClass, <StartStudyClassParams>{
+          className,
+          costMult,
+          expMult,
+        });
         if (focus) {
           player.startFocusing();
           Router.toWork();
@@ -535,8 +543,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         player.getHomeComputer().pushProgram(item.program);
         // Cancel if the program is in progress of writing
         if (player.createProgramName === item.program) {
-          player.isWorking = false;
-          player.resetWorkStatus();
+          player.workManager.reset();
         }
 
         player.loseMoney(item.price, "other");
@@ -1039,7 +1046,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with hacking contracts.`);
               return false;
             }
-            player.startFactionHackWork(faction);
+            player.workManager.start(WorkType.Faction, <StartFactionWorkParams>{
+              faction,
+              workType: PlayerFactionWorkType.Hacking,
+            });
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1056,7 +1066,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with field missions.`);
               return false;
             }
-            player.startFactionFieldWork(faction);
+            player.workManager.start(WorkType.Faction, <StartFactionWorkParams>{
+              faction,
+              workType: PlayerFactionWorkType.Field,
+            });
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1073,7 +1086,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with security work.`);
               return false;
             }
-            player.startFactionSecurityWork(faction);
+            player.workManager.start(WorkType.Faction, <StartFactionWorkParams>{
+              faction,
+              workType: PlayerFactionWorkType.Security,
+            });
             if (focus) {
               player.startFocusing();
               Router.toWork();

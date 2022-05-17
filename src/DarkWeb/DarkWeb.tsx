@@ -75,8 +75,7 @@ export function buyDarkwebItem(itemName: string): void {
   Player.getHomeComputer().pushProgram(item.program);
   // Cancel if the program is in progress of writing
   if (Player.createProgramName === item.program) {
-    Player.isWorking = false;
-    Player.resetWorkStatus();
+    Player.workManager.reset()
   }
 
   Terminal.print(

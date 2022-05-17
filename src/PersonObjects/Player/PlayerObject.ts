@@ -237,22 +237,6 @@ export class PlayerObject implements IPlayer {
   startFactionWork: (faction: Faction) => void;
   startClass: (costMult: number, expMult: number, className: ClassType) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
-  startCrime: (
-    router: IRouter,
-    crimeType: CrimeType,
-    hackExp: number,
-    strExp: number,
-    defExp: number,
-    dexExp: number,
-    agiExp: number,
-    chaExp: number,
-    money: number,
-    time: number,
-    singParams: any,
-  ) => void;
-  startFactionFieldWork: (faction: Faction) => void;
-  startFactionHackWork: (faction: Faction) => void;
-  startFactionSecurityWork: (faction: Faction) => void;
   startFocusing: () => void;
   startGang: (facName: string, isHacking: boolean) => void;
   startWork: (companyName: string) => void;
@@ -286,7 +270,6 @@ export class PlayerObject implements IPlayer {
   prestigeSourceFile: () => void;
   calculateSkill: (exp: number, mult?: number) => number;
   calculateSkillProgress: (exp: number, mult?: number) => ISkillProgress;
-  resetWorkStatus: (generalType?: WorkType, group?: string, workType?: string) => void;
   getWorkHackExpGain: () => number;
   getWorkStrExpGain: () => number;
   getWorkDefExpGain: () => number;
@@ -559,7 +542,6 @@ export class PlayerObject implements IPlayer {
     this.gainCharismaExp = generalMethods.gainCharismaExp;
     this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
     this.queryStatFromString = generalMethods.queryStatFromString;
-    this.resetWorkStatus = workMethods.resetWorkStatus;
     this.processWorkEarnings = workMethods.processWorkEarnings;
     this.startWork = workMethods.startWork;
     this.cancelationPenalty = workMethods.cancelationPenalty;
@@ -571,9 +553,6 @@ export class PlayerObject implements IPlayer {
     this.startFocusing = workMethods.startFocusing;
     this.stopFocusing = workMethods.stopFocusing;
     this.startFactionWork = workMethods.startFactionWork;
-    this.startFactionHackWork = workMethods.startFactionHackWork;
-    this.startFactionFieldWork = workMethods.startFactionFieldWork;
-    this.startFactionSecurityWork = workMethods.startFactionSecurityWork;
     this.workForFaction = workMethods.workForFaction;
     this.finishFactionWork = workMethods.finishFactionWork;
     this.getWorkMoneyGain = workMethods.getWorkMoneyGain;
@@ -594,7 +573,6 @@ export class PlayerObject implements IPlayer {
     this.startClass = workMethods.startClass;
     this.takeClass = workMethods.takeClass;
     this.finishClass = workMethods.finishClass;
-    this.startCrime = workMethods.startCrime;
     this.commitCrime = workMethods.commitCrime;
     this.finishCrime = workMethods.finishCrime;
     this.singularityStopWork = workMethods.singularityStopWork;
