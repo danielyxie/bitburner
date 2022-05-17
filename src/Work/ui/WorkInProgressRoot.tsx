@@ -269,69 +269,6 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case WorkType.CompanyPartTime: {
-      const playerWorkInfo = player.workManager.info.companyPartTime;
-
-      function cancel(): void {
-        player.workManager.finish({ cancelled: true });
-        router.toJob();
-      }
-      function unfocus(): void {
-        player.stopFocusing();
-        router.toJob();
-      }
-      const comp = Companies[playerWorkInfo.companyName];
-      let companyRep = 0;
-      if (comp == null || !(comp instanceof Company)) {
-        throw new Error(`Could not find Company: ${playerWorkInfo.companyName}`);
-      }
-      companyRep = comp.playerReputation;
-
-      const position = player.jobs[playerWorkInfo.companyName];
-
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently working as a <b>{position}</b> at <b>{playerWorkInfo.companyName}</b>
-          </>
-        ),
-
-        description: (
-          <>
-            Current Company Reputation: <Reputation reputation={companyRep} />
-          </>
-        ),
-        gains: [
-          <StatsRow name="Money" color={Settings.theme.money}>
-            <Typography>
-              <Money money={gains.money} /> (<MoneyRate money={rates.money * CYCLES_PER_SEC} />)
-            </Typography>
-          </StatsRow>,
-          <StatsRow name="Company Reputation" color={Settings.theme.rep}>
-            <Typography>
-              <Reputation reputation={gains.rep} /> (
-              <ReputationRate reputation={rates.money * CYCLES_PER_SEC} />)
-            </Typography>
-          </StatsRow>,
-          ...expGains,
-        ],
-        progress: {
-          elapsed: player.workManager.timeWorked,
-        },
-
-        stopText: "Stop working",
-        stopTooltip:
-          "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
-          " and there will be no penalty because this is a part-time job.",
-      };
-
-      break;
-    }
-
     case WorkType.Company: {
       const playerWorkInfo = player.workManager.info.company;
 
@@ -403,7 +340,9 @@ export function WorkInProgressRoot(): React.ReactElement {
         stopText: "Stop working",
         stopTooltip:
           "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
-          ` but you will only gain ${penaltyString} of the reputation you've earned so far.`,
+          (playerWorkInfo.partTime
+            ? " and there will be no penalty because this is a part-time job."
+            : ` but you will only gain ${penaltyString} of the reputation you've earned so far.`),
       };
 
       break;

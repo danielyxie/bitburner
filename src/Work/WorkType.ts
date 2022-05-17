@@ -1,7 +1,6 @@
 export enum WorkType {
   None = "",
   Company = "Working for Company",
-  CompanyPartTime = "Working for Company part-time",
   Faction = "Working for Faction",
   CreateProgram = "Working on Create a Program",
   StudyClass = "Studying or Taking a class at university",

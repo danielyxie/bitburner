@@ -52,7 +52,7 @@ interface Player {
   isWorking: boolean;
   /** @deprecated Use `Player.work.workType` instead */
   workType: string;
-  /** @deprecated Use `Player.work.company.name` or `Player.work.companyPartTime.name` instead */
+  /** @deprecated Use `Player.work.company.name` instead */
   companyName: string;
   /** @deprecated Use `Player.work.faction.factionName` instead */
   currentWorkFactionName: string;
@@ -156,9 +156,6 @@ export interface PlayerWork {
     jobDescription: string;
   };
   company: {
-    name: string;
-  };
-  companyPartTime: {
     name: string;
   };
   createProgram: {

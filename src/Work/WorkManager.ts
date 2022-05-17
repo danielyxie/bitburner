@@ -5,7 +5,6 @@ import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import {
-  baseCompanyPartTimeWorkInfo,
   baseCompanyWorkInfo,
   baseCreateProgramWorkInfo,
   baseCrimeWorkInfo,
@@ -14,7 +13,7 @@ import {
   baseStudyClassWorkInfo,
 } from "./data";
 import {
-  GenericCompanyWorkInfo,
+  CompanyWorkInfo,
   CreateProgramWorkInfo,
   CrimeWorkInfo,
   FactionWorkInfo,
@@ -40,8 +39,7 @@ export type WorkRates = WorkGains & { moneyLoss: number };
 
 export interface WorkInfo {
   faction: FactionWorkInfo;
-  company: GenericCompanyWorkInfo;
-  companyPartTime: GenericCompanyWorkInfo;
+  company: CompanyWorkInfo;
   createProgram: CreateProgramWorkInfo;
   studyClass: StudyClassWorkInfo;
   crime: CrimeWorkInfo;
@@ -50,7 +48,6 @@ export interface WorkInfo {
 
 const workTypeToInfoKey: { [workType in Exclude<WorkType, WorkType.None>]: keyof WorkInfo } = {
   [WorkType.Company]: "company",
-  [WorkType.CompanyPartTime]: "companyPartTime",
   [WorkType.Faction]: "faction",
   [WorkType.CreateProgram]: "createProgram",
   [WorkType.StudyClass]: "studyClass",
@@ -94,7 +91,6 @@ const defaultManagerData = {
   info: <WorkInfo>{
     faction: baseFactionWorkInfo,
     company: baseCompanyWorkInfo,
-    companyPartTime: baseCompanyPartTimeWorkInfo,
     createProgram: baseCreateProgramWorkInfo,
     graftAugmentation: baseGraftAugmentationWorkInfo,
     studyClass: baseStudyClassWorkInfo,
@@ -233,9 +229,6 @@ export class WorkManager {
       },
       company: {
         name: copy.info.company.companyName,
-      },
-      companyPartTime: {
-        name: copy.info.companyPartTime.companyName,
       },
       createProgram: {
         programName: copy.info.createProgram.programName,

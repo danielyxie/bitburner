@@ -668,7 +668,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           !(
             workType === WorkType.Faction ||
             workType === WorkType.Company ||
-            workType === WorkType.CompanyPartTime ||
             workType === WorkType.CreateProgram ||
             workType === WorkType.StudyClass
           )
@@ -882,9 +881,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           _ctx.log(() => txt);
         }
 
-        player.workManager.start(companyPosition.isPartTimeJob() ? WorkType.CompanyPartTime : WorkType.Company, <
-          StartCompanyWorkParams
-        >{ company: companyName });
+        player.workManager.start(WorkType.Company, <StartCompanyWorkParams>{
+          company: companyName,
+          partTime: companyPosition.isPartTimeJob(),
+        });
 
         if (focus) {
           player.startFocusing();

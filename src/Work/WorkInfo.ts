@@ -35,10 +35,12 @@ export interface FactionWorkInfo extends GenericWorkInfo {
 
 export type StartCompanyWorkParams = {
   company: string;
+  partTime: boolean;
 };
 
-export interface GenericCompanyWorkInfo extends GenericWorkInfo {
+export interface CompanyWorkInfo extends GenericWorkInfo {
   companyName: string;
+  partTime: boolean;
 
   getMoneyGain: (player: IPlayer) => number;
   getRepGain: (player: IPlayer) => number;

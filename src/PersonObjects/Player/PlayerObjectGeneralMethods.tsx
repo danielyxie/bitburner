@@ -588,11 +588,7 @@ export function quitJob(this: IPlayer, company: string): void {
   const companyName = this.getCompanyName();
   if (companyName === "") return;
 
-  if (
-    this.isWorking === true &&
-    [WorkType.Company, WorkType.CompanyPartTime].includes(this.workManager.workType) &&
-    companyName === company
-  ) {
+  if (this.isWorking === true && this.workManager.workType === WorkType.Company && companyName === company) {
     this.workManager.finish({ cancelled: true });
   }
 

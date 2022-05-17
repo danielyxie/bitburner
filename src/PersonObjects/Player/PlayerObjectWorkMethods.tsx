@@ -28,9 +28,6 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
         case WorkType.Crime:
           router.toLocation(Locations[LocationName.Slums]);
           break;
-        case WorkType.CompanyPartTime:
-          router.toCity();
-          break;
         case WorkType.GraftAugmentation:
           router.toGrafting();
           break;
@@ -63,11 +60,7 @@ export function stopFocusing(this: IPlayer): void {
 
 export function getCompanyName(this: IPlayer): string {
   const workType = this.workManager.workType;
-  return workType === WorkType.Company
-    ? this.workManager.info.company.companyName
-    : workType === WorkType.CompanyPartTime
-    ? this.workManager.info.companyPartTime.companyName
-    : Object.keys(this.jobs)[0] ?? "";
+  return workType === WorkType.Company ? this.workManager.info.company.companyName : Object.keys(this.jobs)[0] ?? "";
 }
 
 //Cancels the player's current "work" assignment and gives the proper rewards

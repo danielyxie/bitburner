@@ -16,7 +16,6 @@ import React, { useEffect, useState } from "react";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Settings } from "../../Settings/Settings";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { GenericCompanyWorkInfo } from "../../Work/WorkInfo";
 import { WorkType } from "../../Work/WorkType";
 import { use } from "../Context";
 import { numeralWrapper } from "../numeralFormat";
@@ -143,11 +142,8 @@ function Work(): React.ReactElement {
   const work = player.workManager;
 
   switch (work.workType) {
-    case WorkType.CompanyPartTime:
     case WorkType.Company: {
-      const data: GenericCompanyWorkInfo =
-        work.workType === WorkType.Company ? work.info.company : work.info.companyPartTime;
-      const companyName = data.companyName;
+      const companyName = work.info.company.companyName;
       details = (
         <>
           {player.jobs[companyName]} at <strong>{companyName}</strong>

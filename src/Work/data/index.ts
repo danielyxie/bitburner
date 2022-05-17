@@ -1,4 +1,3 @@
-export { baseCompanyPartTimeWorkInfo } from "./CompanyPartTimeWorkInfo";
 export { baseCompanyWorkInfo } from "./CompanyWorkInfo";
 export { baseCreateProgramWorkInfo } from "./CreateProgramWorkInfo";
 export { baseFactionWorkInfo } from "./FactionWorkInfo";

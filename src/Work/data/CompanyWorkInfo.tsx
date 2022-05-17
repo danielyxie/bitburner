@@ -18,16 +18,18 @@ import {
   getWorkAgiExp,
   getWorkChaExp,
 } from "../helpers/companyWorkCommon";
-import { GenericCompanyWorkInfo } from "../WorkInfo";
+import { CompanyWorkInfo } from "../WorkInfo";
 import { WorkManager, WorkRates } from "../WorkManager";
 
-export const baseCompanyWorkInfo: GenericCompanyWorkInfo = {
+export const baseCompanyWorkInfo: CompanyWorkInfo = {
   companyName: "",
+  partTime: false,
 
-  start: function (workManager: WorkManager, { company }): void {
+  start: function (workManager: WorkManager, { company, partTime }): void {
     workManager.timeToCompletion = CONSTANTS.MillisecondsPer8Hours;
 
     workManager.info.company.companyName = company;
+    workManager.info.company.partTime = partTime;
 
     // Update rates
     merge(workManager.rates, {
@@ -76,11 +78,17 @@ export const baseCompanyWorkInfo: GenericCompanyWorkInfo = {
     workManager: WorkManager,
     options: { singularity?: boolean | undefined; cancelled: boolean },
   ): string {
+    const info = workManager.info.company;
+
     // If the job was finished with less than a full shift, apply penalty
-    if (options.cancelled) {
+    if (options.cancelled && !info.partTime) {
       workManager.gains.rep *= workManager.player.cancelationPenalty();
     }
-    const penaltyString = workManager.player.cancelationPenalty() === 0.5 ? "half" : "three-quarters";
+    const penaltyString = info.partTime
+      ? ""
+      : workManager.player.cancelationPenalty() === 0.5
+      ? "half"
+      : "three-quarters";
 
     const company = Companies[workManager.info.company.companyName];
     // Update player's rep with the company
@@ -117,33 +125,35 @@ export const baseCompanyWorkInfo: GenericCompanyWorkInfo = {
         </>
       );
 
-      // Append info about penalty
-      if (options.cancelled) {
-        content = (
-          <>
-            You worked a short shift of {convertTimeMsToTimeElapsedString(workManager.timeWorked)} <br />
-            <br />
-            Since you cancelled your work early, you only gained {penaltyString} of the reputation you earned.
-            <br />
-            <br />
-            {content}
-          </>
-        );
-      } else {
-        content = (
-          <>
-            You worked a full shift of 8 hours! <br />
-            <br />
-            {content}
-          </>
-        );
+      if (!info.partTime) {
+        // Append info about penalty
+        if (options.cancelled) {
+          content = (
+            <>
+              You worked a short shift of {convertTimeMsToTimeElapsedString(workManager.timeWorked)} <br />
+              <br />
+              Since you cancelled your work early, you only gained {penaltyString} of the reputation you earned.
+              <br />
+              <br />
+              {content}
+            </>
+          );
+        } else {
+          content = (
+            <>
+              You worked a full shift of 8 hours! <br />
+              <br />
+              {content}
+            </>
+          );
+        }
       }
       dialogBoxCreate(content);
       return "";
     } else {
       // Otherwise show summary through Singularity
       const res =
-        "You worked a short shift of " +
+        "You worked " + info.partTime ? "for " : "a short shift of " +
         convertTimeMsToTimeElapsedString(workManager.timeWorked) +
         " and " +
         "earned a total of " +
