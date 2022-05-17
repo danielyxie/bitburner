@@ -70,7 +70,7 @@ export interface CreateProgramWorkInfo extends GenericWorkInfo {
 export type StartStudyClassParams = {
   costMult: number;
   expMult: number;
-  className: string;
+  className: ClassType;
 };
 
 export interface StudyClassWorkInfo extends GenericWorkInfo {

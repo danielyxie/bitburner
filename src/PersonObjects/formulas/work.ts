@@ -19,43 +19,46 @@ export function calculateClassEarnings(player: IPlayer): WorkRates {
   switch (player.workManager.info.studyClass.className) {
     case ClassType.StudyComputerScience:
       hackExp =
-        ((CONSTANTS.ClassStudyComputerScienceBaseExp * player.workExpMult) / gameCPS) * hashManager.getStudyMult();
+        ((CONSTANTS.ClassStudyComputerScienceBaseExp * player.workManager.expMult) / gameCPS) *
+        hashManager.getStudyMult();
       break;
     case ClassType.DataStructures:
-      cost = (CONSTANTS.ClassDataStructuresBaseCost * player.workCostMult) / gameCPS;
-      hackExp = ((CONSTANTS.ClassDataStructuresBaseExp * player.workExpMult) / gameCPS) * hashManager.getStudyMult();
+      cost = (CONSTANTS.ClassDataStructuresBaseCost * player.workManager.costMult) / gameCPS;
+      hackExp =
+        ((CONSTANTS.ClassDataStructuresBaseExp * player.workManager.expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case ClassType.Networks:
-      cost = (CONSTANTS.ClassNetworksBaseCost * player.workCostMult) / gameCPS;
-      hackExp = ((CONSTANTS.ClassNetworksBaseExp * player.workExpMult) / gameCPS) * hashManager.getStudyMult();
+      cost = (CONSTANTS.ClassNetworksBaseCost * player.workManager.costMult) / gameCPS;
+      hackExp = ((CONSTANTS.ClassNetworksBaseExp * player.workManager.expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case ClassType.Algorithms:
-      cost = (CONSTANTS.ClassAlgorithmsBaseCost * player.workCostMult) / gameCPS;
-      hackExp = ((CONSTANTS.ClassAlgorithmsBaseExp * player.workExpMult) / gameCPS) * hashManager.getStudyMult();
+      cost = (CONSTANTS.ClassAlgorithmsBaseCost * player.workManager.costMult) / gameCPS;
+      hackExp =
+        ((CONSTANTS.ClassAlgorithmsBaseExp * player.workManager.expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case ClassType.Management:
-      cost = (CONSTANTS.ClassManagementBaseCost * player.workCostMult) / gameCPS;
-      chaExp = ((CONSTANTS.ClassManagementBaseExp * player.workExpMult) / gameCPS) * hashManager.getStudyMult();
+      cost = (CONSTANTS.ClassManagementBaseCost * player.workManager.costMult) / gameCPS;
+      chaExp = ((CONSTANTS.ClassManagementBaseExp * player.workManager.expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case ClassType.Leadership:
-      cost = (CONSTANTS.ClassLeadershipBaseCost * player.workCostMult) / gameCPS;
-      chaExp = ((CONSTANTS.ClassLeadershipBaseExp * player.workExpMult) / gameCPS) * hashManager.getStudyMult();
+      cost = (CONSTANTS.ClassLeadershipBaseCost * player.workManager.costMult) / gameCPS;
+      chaExp = ((CONSTANTS.ClassLeadershipBaseExp * player.workManager.expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case ClassType.GymStrength:
-      cost = (CONSTANTS.ClassGymBaseCost * player.workCostMult) / gameCPS;
-      strExp = (player.workExpMult / gameCPS) * hashManager.getTrainingMult();
+      cost = (CONSTANTS.ClassGymBaseCost * player.workManager.costMult) / gameCPS;
+      strExp = (player.workManager.expMult / gameCPS) * hashManager.getTrainingMult();
       break;
     case ClassType.GymDefense:
-      cost = (CONSTANTS.ClassGymBaseCost * player.workCostMult) / gameCPS;
-      defExp = (player.workExpMult / gameCPS) * hashManager.getTrainingMult();
+      cost = (CONSTANTS.ClassGymBaseCost * player.workManager.costMult) / gameCPS;
+      defExp = (player.workManager.expMult / gameCPS) * hashManager.getTrainingMult();
       break;
     case ClassType.GymDexterity:
-      cost = (CONSTANTS.ClassGymBaseCost * player.workCostMult) / gameCPS;
-      dexExp = (player.workExpMult / gameCPS) * hashManager.getTrainingMult();
+      cost = (CONSTANTS.ClassGymBaseCost * player.workManager.costMult) / gameCPS;
+      dexExp = (player.workManager.expMult / gameCPS) * hashManager.getTrainingMult();
       break;
     case ClassType.GymAgility:
-      cost = (CONSTANTS.ClassGymBaseCost * player.workCostMult) / gameCPS;
-      agiExp = (player.workExpMult / gameCPS) * hashManager.getTrainingMult();
+      cost = (CONSTANTS.ClassGymBaseCost * player.workManager.costMult) / gameCPS;
+      agiExp = (player.workManager.expMult / gameCPS) * hashManager.getTrainingMult();
       break;
     default:
       throw new Error("ERR: Invalid/unrecognized class name");

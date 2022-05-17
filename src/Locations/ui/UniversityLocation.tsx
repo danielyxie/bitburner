@@ -17,7 +17,8 @@ import { Money } from "../../ui/React/Money";
 import { use } from "../../ui/Context";
 import { Box } from "@mui/material";
 
-import { ClassType } from "../../Work/WorkType";
+import { ClassType, WorkType } from "../../Work/WorkType";
+import { StartStudyClassParams } from "../../Work/WorkInfo";
 
 type IProps = {
   loc: Location;
@@ -36,7 +37,11 @@ export function UniversityLocation(props: IProps): React.ReactElement {
 
   function take(stat: ClassType): void {
     const loc = props.loc;
-    player.startClass(calculateCost(), loc.expMult, stat);
+    player.workManager.start(WorkType.StudyClass, {
+      className: stat,
+      costMult: calculateCost(),
+      expMult: loc.expMult,
+    } as StartStudyClassParams);
     player.startFocusing();
     router.toWork();
   }

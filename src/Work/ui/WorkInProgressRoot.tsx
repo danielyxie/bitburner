@@ -219,7 +219,7 @@ export function WorkInProgressRoot(): React.ReactElement {
 
       const className = playerWorkInfo.className;
       function cancel(): void {
-        player.finishClass(true);
+        player.workManager.finish({ cancelled: true });
         router.toCity();
       }
 

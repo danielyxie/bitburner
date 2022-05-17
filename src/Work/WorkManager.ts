@@ -99,6 +99,9 @@ const defaultManagerData = {
     studyClass: baseStudyClassWorkInfo,
     crime: baseCrimeWorkInfo,
   },
+
+  costMult: 1,
+  expMult: 1,
 };
 
 export class WorkManager {
@@ -112,6 +115,9 @@ export class WorkManager {
   rates!: WorkRates;
 
   info!: WorkInfo;
+
+  costMult!: number;
+  expMult!: number;
 
   constructor(player?: IPlayer) {
     // This is okay because when the player object is loaded, it
