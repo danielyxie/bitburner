@@ -988,6 +988,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       LogBoxEvents.emit(runningScriptObj);
     },
+    closeTail: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void {
+      updateDynamicRam("closeTail", getRamCost(Player, "closeTail"));
+      // TODO
+    },
     nuke: function (_hostname: unknown): boolean {
       updateDynamicRam("nuke", getRamCost(Player, "nuke"));
       const hostname = helper.string("tail", "hostname", _hostname);

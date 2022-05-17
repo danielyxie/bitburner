@@ -131,6 +131,8 @@ function LogWindow(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
+  //TODO Not actually a todo I just want this file to show up as changed
+  //so I can find it easier later
   function kill(): void {
     killWorkerScript(script, script.server, true);
   }
