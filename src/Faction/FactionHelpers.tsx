@@ -113,7 +113,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 
 export function processPassiveFactionRepGain(numCycles: number): void {
   for (const name of Object.keys(Factions)) {
-    if (name === Player.currentWorkFactionName) continue;
+    if (name === Player.workManager.info.faction.factionName) continue;
     if (!Factions.hasOwnProperty(name)) continue;
     const faction = Factions[name];
     if (!faction.isMember) continue;

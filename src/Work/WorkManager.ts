@@ -22,6 +22,7 @@ import {
   StudyClassWorkInfo,
 } from "./WorkInfo";
 import { WorkType } from "./WorkType";
+import { PlayerWork as NetscriptPlayerWork } from "../ScriptEditor/NetscriptDefinitions";
 
 export type WorkGains = {
   hackExp: number;
@@ -213,6 +214,46 @@ export class WorkManager {
       money: this.gains.money + focusBonus * (this.rates.money * numCycles - this.rates.moneyLoss * numCycles),
       rep: this.gains.rep + focusBonus * this.rates.rep * numCycles,
     });
+  }
+
+  toPlayerSafe(): NetscriptPlayerWork {
+    const copy = cloneDeep(this);
+
+    return {
+      workType: copy.workType,
+      timeWorked: copy.timeWorked,
+      timeToCompletion: copy.timeToCompletion,
+
+      gains: copy.gains,
+      rates: copy.rates,
+
+      faction: {
+        factionName: copy.info.faction.factionName,
+        jobDescription: copy.info.faction.jobDescription,
+      },
+      company: {
+        name: copy.info.company.companyName,
+      },
+      companyPartTime: {
+        name: copy.info.companyPartTime.companyName,
+      },
+      createProgram: {
+        programName: copy.info.createProgram.programName,
+        requiredLevel: copy.info.createProgram.requiredLevel,
+      },
+      studyClass: {
+        className: copy.info.studyClass.className,
+      },
+      crime: {
+        crimeType: copy.info.crime.crimeType,
+      },
+      graftAugmentation: {
+        augmentation: copy.info.graftAugmentation.augmentation,
+      },
+
+      costMult: copy.costMult,
+      expMult: copy.expMult,
+    };
   }
 
   toJSON(): any {

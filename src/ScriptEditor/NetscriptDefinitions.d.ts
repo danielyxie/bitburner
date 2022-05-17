@@ -44,34 +44,65 @@ interface Player {
   money: number;
   city: string;
   location: string;
-  companyName: string;
   crime_money_mult: number;
   crime_success_mult: number;
+
+  // Work properties
+
   isWorking: boolean;
+  /** @deprecated Use `Player.work.workType` instead */
   workType: string;
+  /** @deprecated Use `Player.work.company.name` or `Player.work.companyPartTime.name` instead */
+  companyName: string;
+  /** @deprecated Use `Player.work.faction.factionName` instead */
   currentWorkFactionName: string;
+  /** @deprecated Use `Player.work.faction.jobDescription` instead */
   currentWorkFactionDescription: string;
+  /** @deprecated Use `Player.work.rates.hackExp` instead */
   workHackExpGainRate: number;
+  /** @deprecated Use `Player.work.rates.strExp` instead */
   workStrExpGainRate: number;
+  /** @deprecated Use `Player.work.rates.defExp` instead */
   workDefExpGainRate: number;
+  /** @deprecated Use `Player.work.rates.dexExp` instead */
   workDexExpGainRate: number;
+  /** @deprecated Use `Player.work.rates.agiExp` instead */
   workAgiExpGainRate: number;
+  /** @deprecated Use `Player.work.rates.chaExp` instead */
   workChaExpGainRate: number;
+  /** @deprecated use `Player.work.rates.rep` instead */
   workRepGainRate: number;
+  /** @deprecated Use `Player.work.rates.money` instead */
   workMoneyGainRate: number;
+  /** @deprecated Use `Player.work.rates.moneyLoss` instead */
   workMoneyLossRate: number;
+  /** @deprecated Use `Player.work.gains.hackExp` instead */
   workHackExpGained: number;
+  /** @deprecated Use `Player.work.gains.strExp` instead */
   workStrExpGained: number;
+  /** @deprecated Use `Player.work.gains.defExp` instead */
   workDefExpGained: number;
+  /** @deprecated Use `Player.work.gains.dexExp` instead */
   workDexExpGained: number;
+  /** @deprecated Use `Player.work.gains.agiExp` instead */
   workAgiExpGained: number;
+  /** @deprecated Use `Player.work.gains.chaExp` instead */
   workChaExpGained: number;
+  /** @deprecated Use `Player.work.gains.rep` instead */
   workRepGained: number;
+  /** @deprecated Use `Player.work.gains.money` instead */
   workMoneyGained: number;
+  /** @deprecated Use `Player.work.createProgram.programName` instead */
   createProgramName: string;
+  /** @deprecated Use `Player.work.createProgram.requiredLevel` instead */
   createProgramReqLvl: number;
+  /** @deprecated Use `Player.work.studyClass.className` instead */
   className: string;
+  /** @deprecated Use `Player.work.crime.crimeType` instead */
   crimeType: string;
+
+  work: PlayerWork;
+
   work_money_mult: number;
   hacknet_node_money_mult: number;
   hacknet_node_purchase_cost_mult: number;
@@ -96,6 +127,56 @@ interface Player {
   hasCorporation: boolean;
   inBladeburner: boolean;
   entropy: number;
+}
+
+export type WorkGains = {
+  hackExp: number;
+  strExp: number;
+  defExp: number;
+  dexExp: number;
+  agiExp: number;
+  chaExp: number;
+
+  money: number;
+  rep: number;
+};
+
+export type WorkRates = WorkGains & { moneyLoss: number };
+
+export interface PlayerWork {
+  workType: string;
+  timeWorked: number;
+  timeToCompletion: number;
+
+  gains: WorkGains;
+  rates: WorkRates;
+
+  faction: {
+    factionName: string;
+    jobDescription: string;
+  };
+  company: {
+    name: string;
+  };
+  companyPartTime: {
+    name: string;
+  };
+  createProgram: {
+    programName: string;
+    requiredLevel: number;
+  };
+  studyClass: {
+    className: string;
+  };
+  crime: {
+    crimeType: string;
+  };
+  graftAugmentation: {
+    augmentation: string;
+  };
+
+  costMult: number;
+  expMult: number;
 }
 
 /**
