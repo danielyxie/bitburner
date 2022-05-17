@@ -153,27 +153,29 @@ export const baseCompanyWorkInfo: CompanyWorkInfo = {
     } else {
       // Otherwise show summary through Singularity
       const res =
-        "You worked " + info.partTime ? "for " : "a short shift of " +
-        convertTimeMsToTimeElapsedString(workManager.timeWorked) +
-        " and " +
-        "earned a total of " +
-        "$" +
-        numeralWrapper.formatMoney(workManager.gains.money) +
-        ", " +
-        numeralWrapper.formatReputation(workManager.gains.rep) +
-        " reputation, " +
-        numeralWrapper.formatExp(workManager.gains.hackExp) +
-        " hacking exp, " +
-        numeralWrapper.formatExp(workManager.gains.strExp) +
-        " strength exp, " +
-        numeralWrapper.formatExp(workManager.gains.defExp) +
-        " defense exp, " +
-        numeralWrapper.formatExp(workManager.gains.dexExp) +
-        " dexterity exp, " +
-        numeralWrapper.formatExp(workManager.gains.agiExp) +
-        " agility exp, and " +
-        numeralWrapper.formatExp(workManager.gains.chaExp) +
-        " charisma exp";
+        "You worked " + info.partTime
+          ? "for "
+          : "a short shift of " +
+            convertTimeMsToTimeElapsedString(workManager.timeWorked) +
+            " and " +
+            "earned a total of " +
+            "$" +
+            numeralWrapper.formatMoney(workManager.gains.money) +
+            ", " +
+            numeralWrapper.formatReputation(workManager.gains.rep) +
+            " reputation, " +
+            numeralWrapper.formatExp(workManager.gains.hackExp) +
+            " hacking exp, " +
+            numeralWrapper.formatExp(workManager.gains.strExp) +
+            " strength exp, " +
+            numeralWrapper.formatExp(workManager.gains.defExp) +
+            " defense exp, " +
+            numeralWrapper.formatExp(workManager.gains.dexExp) +
+            " dexterity exp, " +
+            numeralWrapper.formatExp(workManager.gains.agiExp) +
+            " agility exp, and " +
+            numeralWrapper.formatExp(workManager.gains.chaExp) +
+            " charisma exp";
       return res;
     }
   },
