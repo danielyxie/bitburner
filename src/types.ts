@@ -61,3 +61,5 @@ export interface IMinMaxRange {
    */
   min: number;
 }
+
+export type PropertyOf<T> = T[keyof T];

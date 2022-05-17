@@ -1,4 +1,5 @@
 import { cloneDeep, merge } from "lodash";
+import { PropertyOf } from "src/types";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -18,6 +19,7 @@ import {
   CreateProgramWorkInfo,
   CrimeWorkInfo,
   FactionWorkInfo,
+  GenericWorkInfo,
   GraftAugmentationWorkInfo,
   StudyClassWorkInfo,
 } from "./WorkInfo";
@@ -65,7 +67,7 @@ const defaultManagerData = {
   timeWorked: 0,
   timeToCompletion: 0,
 
-  gains: {
+  gains: <WorkGains>{
     hackExp: 0,
     strExp: 0,
     defExp: 0,
@@ -77,7 +79,7 @@ const defaultManagerData = {
     rep: 0,
   },
 
-  rates: {
+  rates: <WorkRates>{
     hackExp: 0,
     strExp: 0,
     defExp: 0,
@@ -90,7 +92,7 @@ const defaultManagerData = {
     rep: 0,
   },
 
-  info: {
+  info: <WorkInfo>{
     faction: baseFactionWorkInfo,
     company: baseCompanyWorkInfo,
     companyPartTime: baseCompanyPartTimeWorkInfo,
@@ -224,36 +226,23 @@ export class WorkManager {
       gains: this.gains,
       rates: this.rates,
 
-      info: {
-        faction: <FactionWorkInfo>{
-          factionName: this.info.faction.factionName,
-          jobDescription: this.info.faction.jobDescription,
-          jobType: this.info.faction.jobType,
-        },
-
-        company: <CompanyWorkInfo>{ companyName: this.info.company.companyName },
-
-        companyPartTime: <CompanyPartTimeWorkInfo>{ companyName: this.info.companyPartTime.companyName },
-
-        createProgram: <CreateProgramWorkInfo>{
-          programName: this.info.createProgram.programName,
-          requiredLevel: this.info.createProgram.requiredLevel,
-          timeWorked: this.info.createProgram.timeWorked,
-        },
-
-        studyClass: <StudyClassWorkInfo>{ className: this.info.studyClass.className },
-
-        crime: <CrimeWorkInfo>{
-          crimeType: this.info.crime.crimeType,
-          singularity: this.info.crime.singularity,
-          workerScript: this.info.crime.workerScript,
-        },
-
-        graftAugmentation: <GraftAugmentationWorkInfo>{
-          augmentation: this.info.graftAugmentation.augmentation,
-          timeWorked: this.info.graftAugmentation.timeWorked,
-        },
-      },
+      // Generate the info JSON automatically
+      info: <WorkInfo>(<unknown>Object.fromEntries(
+        Object.entries(defaultManagerData.info).map(([workType, workTypeInfo]: [string, PropertyOf<WorkInfo>]) => [
+          // Outer object uses the work type as a key
+          workType,
+          // And generates an object accordingly
+          <PropertyOf<WorkInfo>>(<unknown>Object.fromEntries(
+            Object.entries(workTypeInfo).filter(
+              // Filter the live object's entries such that functions are removed
+              // This way, we only get serializable data to save in JSON
+              ([, workTypeInfoProperty]: [string, PropertyOf<PropertyOf<WorkInfo>>]) => {
+                return typeof workTypeInfoProperty !== "function";
+              },
+            ),
+          )),
+        ]),
+      )),
     };
 
     return Generic_toJSON("WorkManager", cleanedObject);
@@ -262,50 +251,18 @@ export class WorkManager {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static fromJSON(value: any): WorkManager {
     const baseObject = Generic_fromJSON(WorkManager, value.data);
+    // Add the functions from the base work types to the manager
     merge(baseObject, {
-      info: {
-        faction: <FactionWorkInfo>{
-          start: baseFactionWorkInfo.start,
-          process: baseFactionWorkInfo.process,
-          finish: baseFactionWorkInfo.finish,
-        },
-
-        company: <CompanyWorkInfo>{
-          start: baseCompanyWorkInfo.start,
-          process: baseCompanyWorkInfo.process,
-          finish: baseCompanyWorkInfo.finish,
-        },
-
-        companyPartTime: <CompanyPartTimeWorkInfo>{
-          start: baseCompanyPartTimeWorkInfo.start,
-          process: baseCompanyPartTimeWorkInfo.process,
-          finish: baseCompanyPartTimeWorkInfo.finish,
-        },
-
-        createProgram: <CreateProgramWorkInfo>{
-          start: baseCreateProgramWorkInfo.start,
-          process: baseCreateProgramWorkInfo.process,
-          finish: baseCreateProgramWorkInfo.finish,
-        },
-
-        studyClass: <StudyClassWorkInfo>{
-          start: baseStudyClassWorkInfo.start,
-          process: baseStudyClassWorkInfo.process,
-          finish: baseStudyClassWorkInfo.finish,
-        },
-
-        crime: <CrimeWorkInfo>{
-          start: baseCrimeWorkInfo.start,
-          process: baseCrimeWorkInfo.process,
-          finish: baseCrimeWorkInfo.finish,
-        },
-
-        graftAugmentation: <GraftAugmentationWorkInfo>{
-          start: baseGraftAugmentationWorkInfo.start,
-          process: baseGraftAugmentationWorkInfo.process,
-          finish: baseGraftAugmentationWorkInfo.finish,
-        },
-      },
+      info: <WorkInfo>(<unknown>Object.fromEntries(
+        Object.keys(defaultManagerData.info).map((k) => [
+          k,
+          {
+            start: defaultManagerData.info[<keyof WorkInfo>k].start,
+            process: defaultManagerData.info[<keyof WorkInfo>k].process,
+            finish: defaultManagerData.info[<keyof WorkInfo>k].finish,
+          },
+        ]),
+      )),
     });
     return baseObject;
   }

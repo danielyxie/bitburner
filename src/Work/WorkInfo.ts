@@ -4,7 +4,7 @@ import { IRouter } from "../ui/Router";
 import { WorkManager } from "./WorkManager";
 import { ClassType, CrimeType, PlayerFactionWorkType } from "./WorkType";
 
-interface GenericWorkInfo {
+export interface GenericWorkInfo {
   process: (workManager: WorkManager, numCycles: number) => boolean;
   finish: (
     workManager: WorkManager,
