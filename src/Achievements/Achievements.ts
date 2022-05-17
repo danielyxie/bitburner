@@ -393,7 +393,7 @@ export const achievements: IMap<Achievement> = {
     Icon: "WORKOUT",
     Condition: () =>
       [ClassType.GymStrength, ClassType.GymDefense, ClassType.GymDexterity, ClassType.GymAgility].includes(
-        Player.className,
+        Player.workManager.info.studyClass.className,
       ),
   },
   TOR: {

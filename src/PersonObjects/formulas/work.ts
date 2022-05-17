@@ -1,6 +1,6 @@
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
-import { WorkRates } from "../../Work/Work";
+import { WorkRates } from "../../Work/WorkManager";
 import { ClassType } from "../../Work/WorkType";
 import { IPlayer } from "../IPlayer";
 
