@@ -23,7 +23,7 @@ import { Settings } from "../../Settings/Settings";
 let layerCounter = 0;
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
-export const LogBoxCloserEvents = new EventEmitter<[any, any, any[]]>();
+export const LogBoxCloserEvents = new EventEmitter<[number]>();
 export const LogBoxClearEvents = new EventEmitter<[]>();
 
 interface Log {
@@ -55,9 +55,8 @@ export function LogBoxManager(): React.ReactElement {
   //Event used by ns.closeTail to close tail windows
   useEffect(
     () =>
-      LogBoxCloserEvents.subscribe((hostname: any, filename: any, stringArgs: any[]) => {
-        const id = hostname + "-" + filename + stringArgs.map((x: any): string => `${x}`).join("-");
-        close(id);
+      LogBoxCloserEvents.subscribe((pid: number) => {
+        closePid(pid);
       }),
     [],
   );
@@ -69,8 +68,15 @@ export function LogBoxManager(): React.ReactElement {
     }),
   );
 
+  //Close tail windows by their id
   function close(id: string): void {
     logs = logs.filter((l) => l.id !== id);
+    rerender();
+  }
+
+  //Close tail windows by their pid
+  function closePid(pid: number): void {
+    logs = logs.filter((log) => log.script.pid != pid);
     rerender();
   }
 
@@ -249,14 +255,14 @@ function LogWindow(props: IProps): React.ReactElement {
           minHeight: `${minConstraints[1]}px`,
           ...(minimized
             ? {
-                border: "none",
-                margin: 0,
-                maxHeight: 0,
-                padding: 0,
-              }
+              border: "none",
+              margin: 0,
+              maxHeight: 0,
+              padding: 0,
+            }
             : {
-                border: `1px solid ${Settings.theme.welllight}`,
-              }),
+              border: `1px solid ${Settings.theme.welllight}`,
+            }),
         }}
         ref={container}
       >

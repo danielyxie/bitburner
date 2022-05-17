@@ -987,37 +987,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       LogBoxEvents.emit(runningScriptObj);
     },
-    closeTail: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void {
+    closeTail: function (pid?: number): void {
       updateDynamicRam("closeTail", getRamCost(Player, "closeTail"));
-      //Get the script details
-      let server;
-      let filename;
-      let args;
-      if (arguments.length === 0) {
-        //Get the details from the script calling the function
-        const runningScriptObj = workerScript.scriptRef;
-        server = runningScriptObj.server;
-        filename = runningScriptObj.filename;
-        args = runningScriptObj.args;
-      } else if (typeof fn === "number") {
-        //Get the details via the pid of a running script
-        const runningScriptObj = getRunningScriptByPid(fn, "tail");
-        if (runningScriptObj == null) {
-          workerScript.log("closeTail", () => getCannotFindRunningScriptErrorMessage(`${fn}`, hostname, scriptArgs));
-          return;
-        }
-        server = runningScriptObj.server;
-        filename = runningScriptObj.filename;
-        args = runningScriptObj.args;
-      } else {
-        //Get the details from the input directly
-        server = hostname;
-        filename = fn;
-        args = scriptArgs;
+      //Get the pid of the calling script if no pid is given
+      if (pid === undefined) {
+        pid = workerScript.scriptRef.pid;
       }
-
       //Emit an event to tell the game to close the tail window if it exists
-      LogBoxCloserEvents.emit(server, filename, args.map((x: any): string => `${x}`));
+      LogBoxCloserEvents.emit(pid);
     },
     nuke: function (_hostname: unknown): boolean {
       updateDynamicRam("nuke", getRamCost(Player, "nuke"));
