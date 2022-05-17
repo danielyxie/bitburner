@@ -547,7 +547,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         player.getHomeComputer().pushProgram(item.program);
         // Cancel if the program is in progress of writing
-        if (player.createProgramName === item.program) {
+        if (player.workManager.info.createProgram.programName === item.program) {
           player.workManager.reset();
         }
 
@@ -662,13 +662,15 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         if (!player.isWorking) {
           throw _ctx.helper.makeRuntimeErrorMsg("Not currently working");
         }
+
+        const workType = player.workManager.workType;
         if (
           !(
-            player.workType === WorkType.Faction ||
-            player.workType === WorkType.Company ||
-            player.workType === WorkType.CompanyPartTime ||
-            player.workType === WorkType.CreateProgram ||
-            player.workType === WorkType.StudyClass
+            workType === WorkType.Faction ||
+            workType === WorkType.Company ||
+            workType === WorkType.CompanyPartTime ||
+            workType === WorkType.CreateProgram ||
+            workType === WorkType.StudyClass
           )
         ) {
           throw _ctx.helper.makeRuntimeErrorMsg("Cannot change focus for current job");
@@ -703,6 +705,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (): CharacterInfo {
         _ctx.helper.checkSingularityAccess();
         _ctx.log(() => `getCharacterInformation is deprecated, please use getplayer`);
+        const gains = player.workManager.gains
 
         return {
           bitnode: player.bitNodeN,
@@ -731,16 +734,16 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             strengthExp: player.strength_exp_mult,
             workMoney: player.work_money_mult,
           },
-          timeWorked: player.timeWorked,
+          timeWorked: player.workManager.timeWorked,
           tor: player.hasTorRouter(),
-          workHackExpGain: player.workHackExpGained,
-          workStrExpGain: player.workStrExpGained,
-          workDefExpGain: player.workDefExpGained,
-          workDexExpGain: player.workDexExpGained,
-          workAgiExpGain: player.workAgiExpGained,
-          workChaExpGain: player.workChaExpGained,
-          workRepGain: player.workRepGained,
-          workMoneyGain: player.workMoneyGained,
+          workHackExpGain: gains.hackExp,
+          workStrExpGain: gains.strExp,
+          workDefExpGain: gains.defExp,
+          workDexExpGain: gains.dexExp,
+          workAgiExpGain: gains.agiExp,
+          workChaExpGain: gains.chaExp,
+          workRepGain: gains.rep,
+          workMoneyGain: gains.money,
           hackingExp: player.hacking_exp,
           strengthExp: player.strength_exp,
           defenseExp: player.defense_exp,
@@ -850,7 +853,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         // Sanitize input
         if (companyName == null) {
-          companyName = player.companyName;
+          companyName = player.getCompanyName();
         }
 
         // Make sure its a valid company
@@ -890,7 +893,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           player.stopFocusing();
           Router.toTerminal();
         }
-        _ctx.log(() => `Began working at '${player.companyName}' as a '${companyPositionName}'`);
+        _ctx.log(() => `Began working at '${player.getCompanyName()}' as a '${companyPositionName}'`);
         return true;
       },
     applyToCompany: (_ctx: NetscriptContext) =>
