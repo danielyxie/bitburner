@@ -4990,14 +4990,11 @@ export interface NS {
    *
    * If the function is called with no arguments, it will close the current script’s logs.
    *
-   * Otherwise, the fn, hostname/ip, and args… arguments can be used to close the logs from another script.
-   * Remember that scripts are uniquely identified by both their names and arguments.
+   * Otherwise, the pid argument can be used to close the logs from another script.
    *
-   * @param fn - Optional. Filename or PID of the script having its tail closed. If omitted, the current script is used.
-   * @param host - Optional. Hostname of the script having its tail closed. Defaults to the server this script is running on. If args are specified, this is not optional.
-   * @param args - Arguments for the script having its tail closed.
+   * @param pid - Optional. PID of the script having its tail closed. If omitted, the current script is used.
    */
-   closeTail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
+   closeTail(pid?: number): void;
 
   /**
    * Get the list of servers connected to a server.
