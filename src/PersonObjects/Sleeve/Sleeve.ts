@@ -679,13 +679,10 @@ export class Sleeve extends Person {
    * Travel to another City. Costs money from player
    */
   travel(p: IPlayer, newCity: CityName): boolean {
-    if (p.canAfford(CONSTANTS.TravelCost)) {
-      p.loseMoney(CONSTANTS.TravelCost, "sleeves");
-      this.city = newCity;
-      return true;
-    } else {
-      return false;
-    }
+    p.loseMoney(CONSTANTS.TravelCost, "sleeves");
+    this.city = newCity;
+
+    return true;
   }
 
   tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
