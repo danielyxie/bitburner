@@ -186,7 +186,7 @@ export function WorkInProgressRoot(): React.ReactElement {
           </>
         ),
         gains: [
-          player.workMoneyGained > 0 ? (
+          gains.money > 0 ? (
             <StatsRow name="Money" color={Settings.theme.money}>
               <Typography>
                 <Money money={gains.money} /> (
