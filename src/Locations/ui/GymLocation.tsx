@@ -17,7 +17,8 @@ import { Money } from "../../ui/React/Money";
 import { IRouter } from "../../ui/Router";
 import { serverMetadata } from "../../Server/data/servers";
 import { Box } from "@mui/material";
-import { ClassType } from "../../Work/WorkType";
+import { ClassType, WorkType } from "../../Work/WorkType";
+import { StartStudyClassParams } from "../../Work/WorkInfo";
 
 type IProps = {
   loc: Location;
@@ -36,7 +37,11 @@ export function GymLocation(props: IProps): React.ReactElement {
 
   function train(stat: ClassType): void {
     const loc = props.loc;
-    props.p.startClass(calculateCost(), loc.expMult, stat);
+    props.p.workManager.start(WorkType.StudyClass, {
+      className: stat,
+      costMult: calculateCost(),
+      expMult: loc.expMult,
+    } as StartStudyClassParams);
     props.p.startFocusing();
     props.router.toWork();
   }
