@@ -18,7 +18,7 @@ export const baseCompanyPartTimeWorkInfo: CompanyPartTimeWorkInfo = {
     workManager.timeToCompletion = CONSTANTS.MillisecondsPer8Hours;
 
     // Update the manager's company name
-    workManager.info.company.companyName = company;
+    workManager.info.companyPartTime.companyName = company;
 
     // Update the manager rates
     merge(workManager.rates, {
@@ -54,7 +54,7 @@ export const baseCompanyPartTimeWorkInfo: CompanyPartTimeWorkInfo = {
     workManager.processWorkEarnings(numCycles);
 
     // Influence the stock market
-    const company = Companies[workManager.info.company.companyName];
+    const company = Companies[workManager.info.companyPartTime.companyName];
     influenceStockThroughCompanyWork(company, workManager.rates.rep, numCycles);
 
     // If player has worked a full shift, end the work through the manager
@@ -69,7 +69,7 @@ export const baseCompanyPartTimeWorkInfo: CompanyPartTimeWorkInfo = {
     workManager: WorkManager,
     options: { singularity?: boolean | undefined; cancelled: boolean },
   ): string {
-    const company = Companies[workManager.info.company.companyName];
+    const company = Companies[workManager.info.companyPartTime.companyName];
     // Update the player's rep with the company
     company.playerReputation += workManager.gains.rep;
 

@@ -168,9 +168,6 @@ export interface IPlayer {
   entropy: number;
 
   // Methods
-  work(numCycles: number): boolean;
-  workPartTime(numCycles: number): boolean;
-  workForFaction(numCycles: number): boolean;
   applyForAgentJob(sing?: boolean): boolean;
   applyForBusinessConsultantJob(sing?: boolean): boolean;
   applyForBusinessJob(sing?: boolean): boolean;
@@ -223,7 +220,6 @@ export interface IPlayer {
   setMoney(amt: number): void;
   singularityStopWork(): string;
   startBladeburner(p: any): void;
-  startFactionWork(faction: Faction): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
@@ -268,8 +264,6 @@ export interface IPlayer {
   processWorkEarnings(cycles: number): void;
   hospitalize(): void;
   createProgramWork(numCycles: number): boolean;
-  takeClass(numCycles: number): boolean;
-  commitCrime(numCycles: number): boolean;
   checkForFactionInvitations(): Faction[];
   setBitNodeNumber(n: number): void;
   getMult(name: string): number;
