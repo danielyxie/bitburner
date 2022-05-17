@@ -988,12 +988,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       LogBoxEvents.emit(runningScriptObj);
     },
-    closeTail: function (pid?: number): void {
+    closeTail: function (_pid: unknown = workerScript.scriptRef.pid): void {
       updateDynamicRam("closeTail", getRamCost(Player, "closeTail"));
-      //Get the pid of the calling script if no pid is given
-      if (pid === undefined) {
-        pid = workerScript.scriptRef.pid;
-      }
+      const pid = helper.number("closeTail", "pid", _pid);
       //Emit an event to tell the game to close the tail window if it exists
       LogBoxCloserEvents.emit(pid);
     },
