@@ -1,33 +1,33 @@
 // Root React Component for the Corporation UI
-import React, { useState, useEffect } from "react";
-
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import SaveIcon from "@mui/icons-material/Save";
+import { Box, Tooltip } from "@mui/material";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import { Theme, useTheme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import { numeralWrapper } from "../numeralFormat";
-import { Reputation } from "./Reputation";
-import { KillScriptsModal } from "./KillScriptsModal";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import SaveIcon from "@mui/icons-material/Save";
-import ClearAllIcon from "@mui/icons-material/ClearAll";
-
-import { Settings } from "../../Settings/Settings";
-import { use } from "../Context";
-import { StatsProgressOverviewCell } from "./StatsProgressBar";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import React, { useEffect, useState } from "react";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-
-import { Box, Tooltip } from "@mui/material";
-
+import { Settings } from "../../Settings/Settings";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { GenericCompanyWorkInfo } from "../../Work/WorkInfo";
 import { WorkType } from "../../Work/WorkType";
-import { CompanyPartTimeWorkInfo, CompanyWorkInfo } from "../../Work/WorkInfo";
+import { use } from "../Context";
+import { numeralWrapper } from "../numeralFormat";
+import { KillScriptsModal } from "./KillScriptsModal";
+import { Reputation } from "./Reputation";
+import { StatsProgressOverviewCell } from "./StatsProgressBar";
+
+
+
+
+
 
 interface IProps {
   save: () => void;
@@ -150,7 +150,7 @@ function Work(): React.ReactElement {
   switch (work.workType) {
     case WorkType.CompanyPartTime:
     case WorkType.Company: {
-      const data: CompanyWorkInfo | CompanyPartTimeWorkInfo =
+      const data: GenericCompanyWorkInfo =
         work.workType === WorkType.Company ? work.info.company : work.info.companyPartTime;
       const companyName = data.companyName;
       details = (

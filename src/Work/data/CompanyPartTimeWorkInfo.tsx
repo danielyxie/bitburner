@@ -8,10 +8,20 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { CompanyPartTimeWorkInfo } from "../WorkInfo";
+import {
+  getWorkAgiExp,
+  getWorkChaExp,
+  getWorkDefExp,
+  getWorkDexExp,
+  getWorkHackExp,
+  getWorkMoneyGain,
+  getWorkRepGain,
+  getWorkStrExp,
+} from "../helpers/companyWorkCommon";
+import { GenericCompanyWorkInfo } from "../WorkInfo";
 import { WorkManager, WorkRates } from "../WorkManager";
 
-export const baseCompanyPartTimeWorkInfo: CompanyPartTimeWorkInfo = {
+export const baseCompanyPartTimeWorkInfo: GenericCompanyWorkInfo = {
   companyName: "",
 
   start: function (workManager: WorkManager, { company }): void {
@@ -22,14 +32,14 @@ export const baseCompanyPartTimeWorkInfo: CompanyPartTimeWorkInfo = {
 
     // Update the manager rates
     merge(workManager.rates, {
-      hackExp: workManager.player.getWorkHackExpGain(),
-      strExp: workManager.player.getWorkStrExpGain(),
-      defExp: workManager.player.getWorkDefExpGain(),
-      dexExp: workManager.player.getWorkDexExpGain(),
-      agiExp: workManager.player.getWorkAgiExpGain(),
-      chaExp: workManager.player.getWorkChaExpGain(),
-      rep: workManager.player.getWorkRepGain(),
-      money: workManager.player.getWorkMoneyGain(),
+      hackExp: this.getHackExpGain(workManager.player),
+      strExp: this.getStrExpGain(workManager.player),
+      defExp: this.getDefExpGain(workManager.player),
+      dexExp: this.getDexExpGain(workManager.player),
+      agiExp: this.getAgiExpGain(workManager.player),
+      chaExp: this.getChaExpGain(workManager.player),
+      rep: this.getRepGain(workManager.player),
+      money: this.getMoneyGain(workManager.player),
     } as WorkRates);
   },
 
@@ -46,8 +56,8 @@ export const baseCompanyPartTimeWorkInfo: CompanyPartTimeWorkInfo = {
 
     // Update the manager's rates every tick
     merge(workManager.rates, {
-      rep: workManager.player.getWorkRepGain(),
-      money: workManager.player.getWorkMoneyGain(),
+      rep: this.getRepGain(workManager.player),
+      money: this.getMoneyGain(workManager.player),
     } as WorkRates);
 
     // Update the player's exp and money earnings
@@ -132,4 +142,13 @@ export const baseCompanyPartTimeWorkInfo: CompanyPartTimeWorkInfo = {
       return res;
     }
   },
+
+  getMoneyGain: getWorkMoneyGain,
+  getRepGain: getWorkRepGain,
+  getHackExpGain: getWorkHackExp,
+  getStrExpGain: getWorkStrExp,
+  getDefExpGain: getWorkDefExp,
+  getDexExpGain: getWorkDexExp,
+  getAgiExpGain: getWorkAgiExp,
+  getChaExpGain: getWorkChaExp,
 };

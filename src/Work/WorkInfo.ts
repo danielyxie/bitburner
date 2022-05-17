@@ -1,5 +1,6 @@
 import { Faction } from "../Faction/Faction";
 import { WorkerScript } from "../Netscript/WorkerScript";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { IRouter } from "../ui/Router";
 import { WorkManager } from "./WorkManager";
 import { ClassType, CrimeType, PlayerFactionWorkType } from "./WorkType";
@@ -36,14 +37,17 @@ export type StartCompanyWorkParams = {
   company: string;
 };
 
-export interface CompanyWorkInfo extends GenericWorkInfo {
+export interface GenericCompanyWorkInfo extends GenericWorkInfo {
   companyName: string;
 
-  start: (workManager: WorkManager, params: StartCompanyWorkParams) => void;
-}
-
-export interface CompanyPartTimeWorkInfo extends GenericWorkInfo {
-  companyName: string;
+  getMoneyGain: (player: IPlayer) => number;
+  getRepGain: (player: IPlayer) => number;
+  getHackExpGain: (player: IPlayer) => number;
+  getStrExpGain: (player: IPlayer) => number;
+  getDefExpGain: (player: IPlayer) => number;
+  getDexExpGain: (player: IPlayer) => number;
+  getAgiExpGain: (player: IPlayer) => number;
+  getChaExpGain: (player: IPlayer) => number;
 
   start: (workManager: WorkManager, params: StartCompanyWorkParams) => void;
 }

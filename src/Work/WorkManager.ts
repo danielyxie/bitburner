@@ -1,4 +1,5 @@
 import { cloneDeep, merge } from "lodash";
+import { PropertyOf } from "../types";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -13,8 +14,7 @@ import {
   baseStudyClassWorkInfo,
 } from "./data";
 import {
-  CompanyPartTimeWorkInfo,
-  CompanyWorkInfo,
+  GenericCompanyWorkInfo,
   CreateProgramWorkInfo,
   CrimeWorkInfo,
   FactionWorkInfo,
@@ -39,8 +39,8 @@ export type WorkRates = WorkGains & { moneyLoss: number };
 
 export interface WorkInfo {
   faction: FactionWorkInfo;
-  company: CompanyWorkInfo;
-  companyPartTime: CompanyPartTimeWorkInfo;
+  company: GenericCompanyWorkInfo;
+  companyPartTime: GenericCompanyWorkInfo;
   createProgram: CreateProgramWorkInfo;
   studyClass: StudyClassWorkInfo;
   crime: CrimeWorkInfo;
@@ -225,16 +225,22 @@ export class WorkManager {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static fromJSON(value: any): WorkManager {
     const baseObject = Generic_fromJSON(WorkManager, value.data);
-    // Add the functions from the base work types to the manager
+    // Automatically add all functions from the WorkInfo objects to the WorkManager
     merge(baseObject, {
       info: <WorkInfo>(<unknown>Object.fromEntries(
-        Object.keys(defaultManagerData.info).map((k) => [
-          k,
-          {
-            start: defaultManagerData.info[<keyof WorkInfo>k].start,
-            process: defaultManagerData.info[<keyof WorkInfo>k].process,
-            finish: defaultManagerData.info[<keyof WorkInfo>k].finish,
-          },
+        Object.entries(defaultManagerData.info).map(([workType, baseWorkInfo]: [string, PropertyOf<WorkInfo>]) => [
+          // Outer object uses the work type as key
+          workType,
+          // And generates missing object from the functions on the base type
+          <PropertyOf<WorkInfo>>(<unknown>Object.fromEntries(
+            Object.entries(baseWorkInfo).filter(
+              // Filter the base work info's entries such that only functions are returned
+              // This gets us the non-serializable data back onto the object
+
+              ([, baseWorkTypeInfoProperty]: [string, PropertyOf<PropertyOf<WorkInfo>>]) =>
+                typeof baseWorkTypeInfoProperty === "function",
+            ),
+          )),
         ]),
       )),
     });
