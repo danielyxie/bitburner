@@ -612,28 +612,19 @@ export function getNextCompanyPosition(
   return entryPosType;
 }
 
-export function quitJob(this: IPlayer, company: string, _sing = false): void {
-  const workType = this.workManager.workType,
-    info =
-      workType === WorkType.Company
-        ? this.workManager.info.company
-        : workType === WorkType.CompanyPartTime
-        ? this.workManager.info.companyPartTime
-        : null;
-  if (!info) return;
+export function quitJob(this: IPlayer, company: string): void {
+  const companyName = this.getCompanyName();
+  if (companyName === "") return;
 
   if (
     this.isWorking === true &&
-    [WorkType.Company, WorkType.CompanyPartTime].includes(workType) &&
-    info.companyName === company
+    [WorkType.Company, WorkType.CompanyPartTime].includes(this.workManager.workType) &&
+    companyName === company
   ) {
     this.workManager.finish({ cancelled: true });
   }
 
   delete this.jobs[company];
-  if (info.companyName === company) {
-    info.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
-  }
 }
 
 /**
