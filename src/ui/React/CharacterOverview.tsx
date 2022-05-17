@@ -24,11 +24,6 @@ import { KillScriptsModal } from "./KillScriptsModal";
 import { Reputation } from "./Reputation";
 import { StatsProgressOverviewCell } from "./StatsProgressBar";
 
-
-
-
-
-
 interface IProps {
   save: () => void;
   killScripts: () => void;

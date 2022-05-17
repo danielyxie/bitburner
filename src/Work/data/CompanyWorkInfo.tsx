@@ -8,7 +8,16 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { getWorkMoneyGain, getWorkRepGain, getWorkHackExp, getWorkStrExp, getWorkDefExp, getWorkDexExp, getWorkAgiExp, getWorkChaExp } from "../helpers/companyWorkCommon";
+import {
+  getWorkMoneyGain,
+  getWorkRepGain,
+  getWorkHackExp,
+  getWorkStrExp,
+  getWorkDefExp,
+  getWorkDexExp,
+  getWorkAgiExp,
+  getWorkChaExp,
+} from "../helpers/companyWorkCommon";
 import { GenericCompanyWorkInfo } from "../WorkInfo";
 import { WorkManager, WorkRates } from "../WorkManager";
 
