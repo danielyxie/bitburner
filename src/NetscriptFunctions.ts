@@ -989,21 +989,35 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     closeTail: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void {
       updateDynamicRam("closeTail", getRamCost(Player, "closeTail"));
-      //Get the script object
-      let runningScriptObj;
+      //Get the script details
+      let server;
+      let filename;
+      let args;
       if (arguments.length === 0) {
-        runningScriptObj = workerScript.scriptRef;
+        //Get the details from the script calling the function
+        const runningScriptObj = workerScript.scriptRef;
+        server = runningScriptObj.server;
+        filename = runningScriptObj.filename;
+        args = runningScriptObj.args;
       } else if (typeof fn === "number") {
-        runningScriptObj = getRunningScriptByPid(fn, "tail");
+        //Get the details via the pid of a running script
+        const runningScriptObj = getRunningScriptByPid(fn, "tail");
+        if (runningScriptObj == null) {
+          workerScript.log("closeTail", () => getCannotFindRunningScriptErrorMessage(`${fn}`, hostname, scriptArgs));
+          return;
+        }
+        server = runningScriptObj.server;
+        filename = runningScriptObj.filename;
+        args = runningScriptObj.args;
       } else {
-        runningScriptObj = getRunningScript(fn, hostname, "tail", scriptArgs);
+        //Get the details from the input directly
+        server = hostname;
+        filename = fn;
+        args = scriptArgs;
       }
-      if (runningScriptObj == null) {
-        workerScript.log("closeTail", () => getCannotFindRunningScriptErrorMessage(fn, hostname, scriptArgs));
-        return;
-      }
-      //Emit an event to tell the game to close the tail window
-      LogBoxCloserEvents.emit(runningScriptObj);
+
+      //Emit an event to tell the game to close the tail window if it exists
+      LogBoxCloserEvents.emit(server, filename, args.map((x: any): string => `${x}`));
     },
     nuke: function (_hostname: unknown): boolean {
       updateDynamicRam("nuke", getRamCost(Player, "nuke"));
