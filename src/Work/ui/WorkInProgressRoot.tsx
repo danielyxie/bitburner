@@ -10,7 +10,6 @@ import { Factions } from "../../Faction/Factions";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Locations } from "../../Locations/Locations";
 import { Settings } from "../../Settings/Settings";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { use } from "../../ui/Context";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
@@ -19,15 +18,8 @@ import { ProgressBar } from "../../ui/React/Progress";
 import { Reputation } from "../../ui/React/Reputation";
 import { ReputationRate } from "../../ui/React/ReputationRate";
 import { StatsRow } from "../../ui/React/StatsRow";
-import { WorkType, ClassType } from "../WorkType";
-import {
-  CompanyPartTimeWorkInfo,
-  CompanyWorkInfo,
-  CreateProgramWorkInfo,
-  FactionWorkInfo,
-  GraftAugmentationWorkInfo,
-  StudyClassWorkInfo,
-} from "../WorkInfo";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { ClassType, WorkType } from "../WorkType";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -160,10 +152,9 @@ export function WorkInProgressRoot(): React.ReactElement {
           buttons: {
             cancel: () => router.toFactions(),
           },
-          title:
-            `You have not joined ${
-              player.workManager.info.faction.factionName || "(Faction not found)"
-            } at this time,` + " please try again if you think this should have worked",
+          title: `You have not joined ${
+            player.workManager.info.faction.factionName || "(Faction not found)"
+          } at this time, please try again if you think this should have worked`,
 
           stopText: "Back to Factions",
         };
@@ -419,19 +410,21 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     case WorkType.Crime: {
-      const completion = Math.round((player.timeWorked / player.timeNeededToCompleteWork) * 100);
+      const playerWorkInfo = player.workManager.info.crime;
+
+      const completion = Math.round((player.workManager.timeWorked / player.workManager.timeToCompletion) * 100);
 
       workInfo = {
         buttons: {
           cancel: () => {
             router.toLocation(Locations[LocationName.Slums]);
-            player.finishCrime(true);
+            player.workManager.finish({ cancelled: true });
           },
         },
-        title: `You are attempting to ${player.crimeType}`,
+        title: `You are attempting to ${playerWorkInfo.crimeType}`,
 
         progress: {
-          remaining: player.timeNeededToCompleteWork - player.timeWorked,
+          remaining: player.workManager.timeToCompletion - player.workManager.timeWorked,
           percentage: completion,
         },
 

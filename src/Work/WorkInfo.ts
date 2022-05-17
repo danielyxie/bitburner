@@ -100,6 +100,7 @@ export type StartCrimeParams = {
 export interface CrimeWorkInfo extends GenericWorkInfo {
   crimeType: CrimeType;
   singularity: boolean;
+  workerScript: WorkerScript | null;
 
   start: (workManager: WorkManager, params: StartCrimeParams) => void;
 }

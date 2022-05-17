@@ -3,7 +3,8 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { CrimeType } from "../Work/WorkType";
+import { CrimeType, WorkType } from "../Work/WorkType";
+import { StartCrimeParams } from "../Work/WorkInfo";
 
 interface IConstructorParams {
   hacking_success_weight?: number;
@@ -100,19 +101,21 @@ export class Crime {
     if (div <= 0) {
       div = 1;
     }
-    p.startCrime(
-      router,
-      this.type,
-      this.hacking_exp / div,
-      this.strength_exp / div,
-      this.defense_exp / div,
-      this.dexterity_exp / div,
-      this.agility_exp / div,
-      this.charisma_exp / div,
-      this.money / div,
-      this.time,
-      workerScript,
-    );
+    p.workManager.start(WorkType.Crime, <StartCrimeParams>{
+      router: router,
+      crimeType: this.type,
+      exp: {
+        hack: this.hacking_exp / div,
+        str: this.strength_exp / div,
+        def: this.defense_exp / div,
+        dex: this.dexterity_exp / div,
+        agi: this.agility_exp / div,
+        cha: this.charisma_exp / div,
+      },
+      money: this.money / div,
+      time: this.time,
+      workerScript: workerScript,
+    });
 
     return this.time;
   }

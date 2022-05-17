@@ -1,4 +1,4 @@
-import { merge } from "lodash";
+import { cloneDeep, merge } from "lodash";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -57,17 +57,61 @@ const workTypeToInfoKey: { [workType in Exclude<WorkType, WorkType.None>]: keyof
   [WorkType.GraftAugmentation]: "graftAugmentation",
 };
 
+// Base for both manager init and reset
+// Is deep cloned every time it's used to prevent
+// default data from being overwritten by reference
+const defaultManagerData = {
+  workType: WorkType.None,
+  timeWorked: 0,
+  timeToCompletion: 0,
+
+  gains: {
+    hackExp: 0,
+    strExp: 0,
+    defExp: 0,
+    dexExp: 0,
+    agiExp: 0,
+    chaExp: 0,
+
+    money: 0,
+    rep: 0,
+  },
+
+  rates: {
+    hackExp: 0,
+    strExp: 0,
+    defExp: 0,
+    dexExp: 0,
+    agiExp: 0,
+    chaExp: 0,
+
+    money: 0,
+    moneyLoss: 0,
+    rep: 0,
+  },
+
+  info: {
+    faction: baseFactionWorkInfo,
+    company: baseCompanyWorkInfo,
+    companyPartTime: baseCompanyPartTimeWorkInfo,
+    createProgram: baseCreateProgramWorkInfo,
+    graftAugmentation: baseGraftAugmentationWorkInfo,
+    studyClass: baseStudyClassWorkInfo,
+    crime: baseCrimeWorkInfo,
+  },
+};
+
 export class WorkManager {
   player: IPlayer;
 
-  workType: WorkType;
-  timeWorked: number;
-  timeToCompletion: number;
+  workType!: WorkType;
+  timeWorked!: number;
+  timeToCompletion!: number;
 
-  gains: WorkGains;
-  rates: WorkRates;
+  gains!: WorkGains;
+  rates!: WorkRates;
 
-  info: WorkInfo;
+  info!: WorkInfo;
 
   constructor(player?: IPlayer) {
     // This is okay because when the player object is loaded, it
@@ -75,43 +119,7 @@ export class WorkManager {
     // it will exist even if not provided explicitly
     this.player = player as IPlayer;
 
-    this.workType = WorkType.None;
-    this.timeWorked = 0;
-    this.timeToCompletion = 0;
-
-    this.gains = {
-      hackExp: 0,
-      strExp: 0,
-      defExp: 0,
-      dexExp: 0,
-      agiExp: 0,
-      chaExp: 0,
-
-      money: 0,
-      rep: 0,
-    };
-    this.rates = {
-      hackExp: 0,
-      strExp: 0,
-      defExp: 0,
-      dexExp: 0,
-      agiExp: 0,
-      chaExp: 0,
-
-      money: 0,
-      moneyLoss: 0,
-      rep: 0,
-    };
-
-    this.info = {
-      faction: baseFactionWorkInfo,
-      company: baseCompanyWorkInfo,
-      companyPartTime: baseCompanyPartTimeWorkInfo,
-      createProgram: baseCreateProgramWorkInfo,
-      graftAugmentation: baseGraftAugmentationWorkInfo,
-      studyClass: baseStudyClassWorkInfo,
-      crime: baseCrimeWorkInfo,
-    };
+    Object.assign(this, cloneDeep(defaultManagerData));
   }
 
   // https://github.com/Microsoft/TypeScript/issues/30581 :/
@@ -163,46 +171,7 @@ export class WorkManager {
   reset(): void {
     this.player.isWorking = false;
 
-    Object.assign(this, {
-      workType: WorkType.None,
-      timeWorked: 0,
-      timeToCompletion: 0,
-
-      gains: {
-        hackExp: 0,
-        strExp: 0,
-        defExp: 0,
-        dexExp: 0,
-        agiExp: 0,
-        chaExp: 0,
-
-        money: 0,
-        rep: 0,
-      },
-
-      rates: {
-        hackExp: 0,
-        strExp: 0,
-        defExp: 0,
-        dexExp: 0,
-        agiExp: 0,
-        chaExp: 0,
-
-        money: 0,
-        moneyLoss: 0,
-        rep: 0,
-      },
-
-      info: {
-        faction: baseFactionWorkInfo,
-        company: baseCompanyWorkInfo,
-        companyPartTime: baseCompanyPartTimeWorkInfo,
-        createProgram: baseCreateProgramWorkInfo,
-        graftAugmentation: baseGraftAugmentationWorkInfo,
-        studyClass: baseStudyClassWorkInfo,
-        crime: baseCrimeWorkInfo,
-      },
-    });
+    Object.assign(this, cloneDeep(defaultManagerData));
   }
 
   processWorkEarnings(numCycles: number): void {
@@ -270,6 +239,7 @@ export class WorkManager {
         crime: <CrimeWorkInfo>{
           crimeType: this.info.crime.crimeType,
           singularity: this.info.crime.singularity,
+          workerScript: this.info.crime.workerScript,
         },
 
         graftAugmentation: <GraftAugmentationWorkInfo>{
