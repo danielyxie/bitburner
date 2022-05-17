@@ -1,12 +1,17 @@
 import { merge } from "lodash";
+import React from "react";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
 import { Factions } from "../../Faction/Factions";
 import {
   getFactionFieldWorkRepGain,
   getFactionSecurityWorkRepGain,
-  getHackingWorkRepGain
+  getHackingWorkRepGain,
 } from "../../PersonObjects/formulas/reputation";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Reputation } from "../../ui/React/Reputation";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { FactionWorkInfo } from "../WorkInfo";
 import { WorkManager, WorkRates } from "../WorkManager";
 import { PlayerFactionWorkType } from "../WorkType";
@@ -26,16 +31,16 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
       // Hacking contracts
       case PlayerFactionWorkType.Hacking:
         // Rates are 15% of player hacking exp mult * faction work exp BN mult
-        merge(workManager.rates, <WorkRates>{
+        merge(workManager.rates, {
           hackExp: 0.15 * workManager.player.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain,
           rep: getHackingWorkRepGain(workManager.player, faction),
-        });
+        } as WorkRates);
 
         // Update descriptions
-        merge(workManager.info.faction, <FactionWorkInfo>{
+        merge(workManager.info.faction, {
           jobType: PlayerFactionWorkType.Hacking,
           jobDescription: "carrying out hacking contracts",
-        });
+        } as FactionWorkInfo);
         break;
 
       // Field work
@@ -45,23 +50,23 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
         merge(
           workManager.rates,
           Object.fromEntries(
-            Object.entries(<WorkRates>{
+            Object.entries({
               hackExp: workManager.player.hacking_exp_mult,
               strExp: workManager.player.strength_exp_mult,
               defExp: workManager.player.defense_exp_mult,
               dexExp: workManager.player.dexterity_exp_mult,
               agiExp: workManager.player.agility_exp_mult,
               chaExp: workManager.player.charisma_exp_mult,
-            }).map(([k, v]) => [k, 0.1 * v * BitNodeMultipliers.FactionWorkExpGain]),
+            } as WorkRates).map(([k, v]) => [k, 0.1 * v * BitNodeMultipliers.FactionWorkExpGain]),
           ),
           { rep: getFactionFieldWorkRepGain(workManager.player, faction) },
         );
 
         // Update descriptions
-        merge(workManager.info.faction, <FactionWorkInfo>{
+        merge(workManager.info.faction, {
           jobType: PlayerFactionWorkType.Field,
           jobDescription: "carrying out field missions",
-        });
+        } as FactionWorkInfo);
         break;
 
       // Security detail
@@ -71,12 +76,12 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
         merge(
           workManager.rates,
           Object.fromEntries(
-            Object.entries(<WorkRates>{
+            Object.entries({
               strExp: workManager.player.strength_exp_mult,
               defExp: workManager.player.defense_exp_mult,
               dexExp: workManager.player.dexterity_exp_mult,
               agiExp: workManager.player.charisma_exp_mult,
-            }).map(([k, v]) => [k, 0.15 * v * BitNodeMultipliers.FactionWorkExpGain]),
+            } as WorkRates).map(([k, v]) => [k, 0.15 * v * BitNodeMultipliers.FactionWorkExpGain]),
           ),
           // Hack exp gained at 5% of hacking mult * faction work exp BN mult
           {
@@ -86,10 +91,10 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
         );
 
         // Update description
-        merge(workManager.info.faction, <FactionWorkInfo>{
+        merge(workManager.info.faction, {
           jobType: PlayerFactionWorkType.Security,
           jobDescription: "performing security detail",
-        });
+        } as FactionWorkInfo);
         break;
     }
 
@@ -148,11 +153,53 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
     // Update player skills
     workManager.player.updateSkillLevels();
 
+    const gains = workManager.gains;
+
     if (!options?.singularity) {
-      // TODO: Dialog box stuff
+      // If initiated via UI, show UI popup on completion
+      dialogBoxCreate(
+        <>
+          You worked for your faction {faction.name} for a total of{" "}
+          {convertTimeMsToTimeElapsedString(workManager.timeWorked)}
+          <br />
+          <br />
+          You earned a total of:
+          <br />
+          <Reputation reputation={gains.rep} /> reputation for the faction
+          <br />
+          {numeralWrapper.formatExp(gains.hackExp)} hacking exp <br />
+          {numeralWrapper.formatExp(gains.strExp)} strength exp <br />
+          {numeralWrapper.formatExp(gains.defExp)} defense exp <br />
+          {numeralWrapper.formatExp(gains.dexExp)} dexterity exp <br />
+          {numeralWrapper.formatExp(gains.agiExp)} agility exp <br />
+          {numeralWrapper.formatExp(gains.chaExp)} charisma exp
+        </>,
+      );
+      return "";
     } else {
-      // TODO: Return stuff for NS
+      // If initiated via API, return summary string
+      const res =
+        "You worked for your faction " +
+        faction.name +
+        " for a total of " +
+        convertTimeMsToTimeElapsedString(workManager.timeWorked) +
+        ". " +
+        "You earned " +
+        numeralWrapper.formatReputation(gains.rep) +
+        "rep, " +
+        numeralWrapper.formatExp(gains.hackExp) +
+        " hacking exp, " +
+        numeralWrapper.formatExp(gains.strExp) +
+        " strength exp, " +
+        numeralWrapper.formatExp(gains.defExp) +
+        " defense exp, " +
+        numeralWrapper.formatExp(gains.dexExp) +
+        " dexterity exp, " +
+        numeralWrapper.formatExp(gains.agiExp) +
+        " agility exp, and " +
+        numeralWrapper.formatExp(gains.chaExp) +
+        " charisma exp";
+      return res;
     }
-    return "";
   },
 };
