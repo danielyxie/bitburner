@@ -250,17 +250,17 @@ export function CharacterStats(): React.ReactElement {
                   </IconButton>
                 </>
               </StatsRow>
-              {player.companyName ? (
+              {player.getCompanyName() ? (
                 <>
                   <StatsRow
                     name="Last Employer"
                     color={Settings.theme.primary}
-                    data={{ content: player.companyName }}
+                    data={{ content: player.getCompanyName() }}
                   />
                   <StatsRow
                     name="Last Job"
                     color={Settings.theme.primary}
-                    data={{ content: player.jobs[player.companyName] }}
+                    data={{ content: player.jobs[player.getCompanyName()] }}
                   />
                 </>
               ) : (

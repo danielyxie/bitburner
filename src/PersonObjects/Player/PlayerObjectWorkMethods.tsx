@@ -67,7 +67,7 @@ export function getCompanyName(this: IPlayer): string {
     ? this.workManager.info.company.companyName
     : workType === WorkType.CompanyPartTime
     ? this.workManager.info.companyPartTime.companyName
-    : "";
+    : Object.keys(this.jobs)[0] ?? "";
 }
 
 //Cancels the player's current "work" assignment and gives the proper rewards
