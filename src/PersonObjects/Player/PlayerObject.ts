@@ -1,3 +1,33 @@
+import { PlayerAchievement } from "../../Achievements/Achievements";
+import { Augmentation } from "../../Augmentation/Augmentation";
+import { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
+import { IBladeburner } from "../../Bladeburner/IBladeburner";
+import { ICodingContractReward } from "../../CodingContracts";
+import { Company } from "../../Company/Company";
+import { CompanyPosition } from "../../Company/CompanyPosition";
+import { CONSTANTS } from "../../Constants";
+import { ICorporation } from "../../Corporation/ICorporation";
+import { Exploit } from "../../Exploits/Exploit";
+import { Faction } from "../../Faction/Faction";
+import { IGang } from "../../Gang/IGang";
+import { HacknetNode } from "../../Hacknet/HacknetNode";
+import { HacknetServer } from "../../Hacknet/HacknetServer";
+import { HashManager } from "../../Hacknet/HashManager";
+import { CityName } from "../../Locations/data/CityNames";
+import { LocationName } from "../../Locations/data/LocationNames";
+import { BaseServer } from "../../Server/BaseServer";
+import { Server } from "../../Server/Server";
+import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
+import { IMap } from "../../types";
+import { IRouter } from "../../ui/Router";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
+import { cyrb53 } from "../../utils/StringHelperFunctions";
+import { WorkManager } from "../../Work/WorkManager";
+import { ISkillProgress } from "../formulas/skill";
+import { IPlayer } from "../IPlayer";
+import { Sleeve } from "../Sleeve/Sleeve";
 import * as augmentationMethods from "./PlayerObjectAugmentationMethods";
 import * as bladeburnerMethods from "./PlayerObjectBladeburnerMethods";
 import * as corporationMethods from "./PlayerObjectCorporationMethods";
@@ -5,43 +35,6 @@ import * as gangMethods from "./PlayerObjectGangMethods";
 import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
 import * as workMethods from "./PlayerObjectWorkMethods";
-
-import { IMap } from "../../types";
-import { Sleeve } from "../Sleeve/Sleeve";
-import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
-import { Exploit } from "../../Exploits/Exploit";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-import { CompanyPosition } from "../../Company/CompanyPosition";
-import { Server } from "../../Server/Server";
-import { BaseServer } from "../../Server/BaseServer";
-import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { Faction } from "../../Faction/Faction";
-import { Company } from "../../Company/Company";
-import { Augmentation } from "../../Augmentation/Augmentation";
-import { IRouter } from "../../ui/Router";
-import { ICodingContractReward } from "../../CodingContracts";
-
-import { IPlayer } from "../IPlayer";
-import { LocationName } from "../../Locations/data/LocationNames";
-import { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
-import { ICorporation } from "../../Corporation/ICorporation";
-import { IGang } from "../../Gang/IGang";
-import { IBladeburner } from "../../Bladeburner/IBladeburner";
-import { HacknetNode } from "../../Hacknet/HacknetNode";
-
-import { HashManager } from "../../Hacknet/HashManager";
-import { CityName } from "../../Locations/data/CityNames";
-
-import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
-import { ISkillProgress } from "../formulas/skill";
-import { PlayerAchievement } from "../../Achievements/Achievements";
-import { cyrb53 } from "../../utils/StringHelperFunctions";
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import { CONSTANTS } from "../../Constants";
-import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../Work/WorkType";
-import { Work } from "../../Work/Work";
-import { WorkManager } from "../../Work/WorkManager";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -139,42 +132,7 @@ export class PlayerObject implements IPlayer {
   bladeburner_success_chance_mult: number;
 
   workManager: WorkManager;
-  workData: Work;
-  createProgramReqLvl: number;
-  factionWorkType: PlayerFactionWorkType;
-  createProgramName: string;
-  timeWorkedCreateProgram: number;
-  graftAugmentationName: string;
-  timeWorkedGraftAugmentation: number;
-  crimeType: CrimeType;
-  committingCrimeThruSingFn: boolean;
-  singFnCrimeWorkerScript: WorkerScript | null;
-  timeNeededToCompleteWork: number;
   focus: boolean;
-  className: ClassType;
-  currentWorkFactionName: string;
-  workType: WorkType;
-  workCostMult: number;
-  workExpMult: number;
-  currentWorkFactionDescription: string;
-  timeWorked: number;
-  workMoneyGained: number;
-  workMoneyGainRate: number;
-  workRepGained: number;
-  workRepGainRate: number;
-  workHackExpGained: number;
-  workHackExpGainRate: number;
-  workStrExpGained: number;
-  workStrExpGainRate: number;
-  workDefExpGained: number;
-  workDefExpGainRate: number;
-  workDexExpGained: number;
-  workDexExpGainRate: number;
-  workAgiExpGained: number;
-  workAgiExpGainRate: number;
-  workChaExpGained: number;
-  workChaExpGainRate: number;
-  workMoneyLossRate: number;
 
   entropy: number;
 
@@ -357,76 +315,10 @@ export class PlayerObject implements IPlayer {
     this.crime_success_mult = 1;
 
     this.workManager = new WorkManager(this);
-    this.workData = {
-      type: WorkType.None,
-      timeWorked: 0,
-      timeToCompletion: 0,
-      info: null,
-      gains: {
-        hackExp: 0,
-        strExp: 0,
-        defExp: 0,
-        dexExp: 0,
-        agiExp: 0,
-        chaExp: 0,
-        rep: 0,
-        money: 0,
-      },
-      rates: {
-        hackExp: 0,
-        strExp: 0,
-        defExp: 0,
-        dexExp: 0,
-        agiExp: 0,
-        chaExp: 0,
-        rep: 0,
-        money: 0,
-        moneyLoss: 0,
-      },
-    };
 
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;
     this.focus = false;
-    this.workType = WorkType.None;
-    this.workCostMult = 1;
-    this.workExpMult = 1;
-
-    this.currentWorkFactionName = "";
-    this.currentWorkFactionDescription = "";
-
-    this.workHackExpGainRate = 0;
-    this.workStrExpGainRate = 0;
-    this.workDefExpGainRate = 0;
-    this.workDexExpGainRate = 0;
-    this.workAgiExpGainRate = 0;
-    this.workChaExpGainRate = 0;
-    this.workRepGainRate = 0;
-    this.workMoneyGainRate = 0;
-    this.workMoneyLossRate = 0;
-
-    this.workHackExpGained = 0;
-    this.workStrExpGained = 0;
-    this.workDefExpGained = 0;
-    this.workDexExpGained = 0;
-    this.workAgiExpGained = 0;
-    this.workChaExpGained = 0;
-    this.workRepGained = 0;
-    this.workMoneyGained = 0;
-
-    this.createProgramName = "";
-    this.createProgramReqLvl = 0;
-
-    this.graftAugmentationName = "";
-    this.timeWorkedGraftAugmentation = 0;
-
-    this.className = ClassType.None;
-
-    this.crimeType = CrimeType.None;
-
-    this.timeWorked = 0; //in m;
-    this.timeWorkedCreateProgram = 0;
-    this.timeNeededToCompleteWork = 0;
 
     this.work_money_mult = 1;
 
@@ -574,9 +466,6 @@ export class PlayerObject implements IPlayer {
     this.getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;
     this.getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
     this.createHacknetServer = serverMethods.createHacknetServer;
-    this.factionWorkType = PlayerFactionWorkType.None;
-    this.committingCrimeThruSingFn = false;
-    this.singFnCrimeWorkerScript = null;
 
     this.getMult = generalMethods.getMult;
     this.setMult = generalMethods.setMult;

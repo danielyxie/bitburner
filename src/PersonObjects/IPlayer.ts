@@ -3,43 +3,37 @@
  * Used because at the time of implementation, the PlayerObject
  * cant be converted to TypeScript.
  */
-import { Sleeve } from "./Sleeve/Sleeve";
-
-import { IMap } from "../types";
-
-import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import { PlayerAchievement } from "../Achievements/Achievements";
 import { Augmentation } from "../Augmentation/Augmentation";
-import { Company } from "../Company/Company";
-import { CompanyPosition } from "../Company/CompanyPosition";
-import { CityName } from "../Locations/data/CityNames";
-import { Faction } from "../Faction/Faction";
-import { HashManager } from "../Hacknet/HashManager";
-import { HacknetNode } from "../Hacknet/HacknetNode";
-import { LocationName } from "../Locations/data/LocationNames";
-import { Server } from "../Server/Server";
-import { BaseServer } from "../Server/BaseServer";
-import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
-import { MoneySourceTracker } from "../utils/MoneySourceTracker";
-import { Exploit } from "../Exploits/Exploit";
-import { ICorporation } from "../Corporation/ICorporation";
-import { IGang } from "../Gang/IGang";
+import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { IBladeburner } from "../Bladeburner/IBladeburner";
 import { ICodingContractReward } from "../CodingContracts";
-import { IRouter } from "../ui/Router";
-import { WorkerScript } from "../Netscript/WorkerScript";
+import { Company } from "../Company/Company";
+import { CompanyPosition } from "../Company/CompanyPosition";
+import { ICorporation } from "../Corporation/ICorporation";
+import { Exploit } from "../Exploits/Exploit";
+import { Faction } from "../Faction/Faction";
+import { IGang } from "../Gang/IGang";
+import { HacknetNode } from "../Hacknet/HacknetNode";
 import { HacknetServer } from "../Hacknet/HacknetServer";
-import { ISkillProgress } from "./formulas/skill";
-import { PlayerAchievement } from "../Achievements/Achievements";
-import { WorkType, ClassType, CrimeType } from "../Work/WorkType";
-import { Work } from "../Work/Work";
+import { HashManager } from "../Hacknet/HashManager";
+import { CityName } from "../Locations/data/CityNames";
+import { LocationName } from "../Locations/data/LocationNames";
+import { BaseServer } from "../Server/BaseServer";
+import { Server } from "../Server/Server";
+import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
+import { IMap } from "../types";
+import { IRouter } from "../ui/Router";
+import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 import { WorkManager } from "../Work/WorkManager";
+import { ISkillProgress } from "./formulas/skill";
+import { Sleeve } from "./Sleeve/Sleeve";
 
 export interface IPlayer {
   // Class members
   augmentations: IPlayerOwnedAugmentation[];
   bitNodeN: number;
   city: CityName;
-  companyName: string;
   corporation: ICorporation | null;
   gang: IGang | null;
   bladeburner: IBladeburner | null;
@@ -128,42 +122,7 @@ export interface IPlayer {
   bladeburner_success_chance_mult: number;
 
   workManager: WorkManager;
-  workData: Work;
-  createProgramReqLvl: number;
-  factionWorkType: string;
-  createProgramName: string;
-  timeWorkedCreateProgram: number;
-  graftAugmentationName: string;
-  timeWorkedGraftAugmentation: number;
-  crimeType: CrimeType;
-  committingCrimeThruSingFn: boolean;
-  singFnCrimeWorkerScript: WorkerScript | null;
-  timeNeededToCompleteWork: number;
   focus: boolean;
-  className: ClassType;
-  currentWorkFactionName: string;
-  workType: WorkType;
-  workCostMult: number;
-  workExpMult: number;
-  currentWorkFactionDescription: string;
-  timeWorked: number;
-  workMoneyGained: number;
-  workMoneyGainRate: number;
-  workRepGained: number;
-  workRepGainRate: number;
-  workHackExpGained: number;
-  workHackExpGainRate: number;
-  workStrExpGained: number;
-  workStrExpGainRate: number;
-  workDefExpGained: number;
-  workDefExpGainRate: number;
-  workDexExpGained: number;
-  workDexExpGainRate: number;
-  workAgiExpGained: number;
-  workAgiExpGainRate: number;
-  workChaExpGained: number;
-  workChaExpGainRate: number;
-  workMoneyLossRate: number;
 
   entropy: number;
 
