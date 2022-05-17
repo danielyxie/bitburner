@@ -1,5 +1,4 @@
 import { cloneDeep, merge } from "lodash";
-import { PropertyOf } from "src/types";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -19,7 +18,6 @@ import {
   CreateProgramWorkInfo,
   CrimeWorkInfo,
   FactionWorkInfo,
-  GenericWorkInfo,
   GraftAugmentationWorkInfo,
   StudyClassWorkInfo,
 } from "./WorkInfo";
@@ -218,34 +216,10 @@ export class WorkManager {
   }
 
   toJSON(): any {
-    const cleanedObject = {
-      workType: this.workType,
-      timeWorked: this.timeWorked,
-      timeToCompletion: this.timeToCompletion,
-
-      gains: this.gains,
-      rates: this.rates,
-
-      // Generate the info JSON automatically
-      info: <WorkInfo>(<unknown>Object.fromEntries(
-        Object.entries(defaultManagerData.info).map(([workType, workTypeInfo]: [string, PropertyOf<WorkInfo>]) => [
-          // Outer object uses the work type as a key
-          workType,
-          // And generates an object accordingly
-          <PropertyOf<WorkInfo>>(<unknown>Object.fromEntries(
-            Object.entries(workTypeInfo).filter(
-              // Filter the live object's entries such that functions are removed
-              // This way, we only get serializable data to save in JSON
-              ([, workTypeInfoProperty]: [string, PropertyOf<PropertyOf<WorkInfo>>]) => {
-                return typeof workTypeInfoProperty !== "function";
-              },
-            ),
-          )),
-        ]),
-      )),
-    };
-
-    return Generic_toJSON("WorkManager", cleanedObject);
+    const copy = cloneDeep(this);
+    // Do this so we don't cause a recursive mess
+    copy.player = <IPlayer>{};
+    return Generic_toJSON("WorkManager", copy);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
