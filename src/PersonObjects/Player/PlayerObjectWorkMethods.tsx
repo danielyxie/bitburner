@@ -614,21 +614,32 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
   return "";
 }
 
+export function getCompanyName(this: IPlayer): string {
+  const workType = this.workManager.workType;
+  return workType === WorkType.Company
+    ? this.workManager.info.company.companyName
+    : workType === WorkType.CompanyPartTime
+    ? this.workManager.info.companyPartTime.companyName
+    : "";
+}
+
 //Money gained per game cycle
 export function getWorkMoneyGain(this: IPlayer): number {
-  // If player has SF-11, calculate salary multiplier from favor
-  let bn11Mult = 1;
-  const company = Companies[this.companyName];
-  if (this.sourceFileLvl(11) > 0) {
-    bn11Mult = 1 + company.favor / 100;
-  }
+  const companyName = this.getCompanyName();
 
   // Get base salary
-  const companyPositionName = this.jobs[this.companyName];
+  const companyPositionName = this.jobs[companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (companyPosition == null) {
     console.error(`Could not find CompanyPosition object for ${companyPositionName}. Work salary will be 0`);
     return 0;
+  }
+
+  // If player has SF-11, calculate salary multiplier from favor
+  let bn11Mult = 1;
+  const company = Companies[companyName];
+  if (this.sourceFileLvl(11) > 0) {
+    bn11Mult = 1 + company.favor / 100;
   }
 
   return (
@@ -642,13 +653,14 @@ export function getWorkMoneyGain(this: IPlayer): number {
 
 //Hack exp gained per game cycle
 export function getWorkHackExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
+  const companyName = this.getCompanyName();
+  const company = Companies[companyName];
+  const companyPositionName = this.jobs[companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (company == null || companyPosition == null) {
     console.error(
       [
-        `Could not find Company object for ${this.companyName}`,
+        `Could not find Company object for ${companyName}`,
         `or CompanyPosition object for ${companyPositionName}.`,
         `Work hack exp gain will be 0`,
       ].join(" "),
@@ -666,13 +678,15 @@ export function getWorkHackExpGain(this: IPlayer): number {
 
 //Str exp gained per game cycle
 export function getWorkStrExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
+  const companyName = this.getCompanyName();
+
+  const company = Companies[companyName];
+  const companyPositionName = this.jobs[companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (company == null || companyPosition == null) {
     console.error(
       [
-        `Could not find Company object for ${this.companyName}`,
+        `Could not find Company object for ${companyName}`,
         `or CompanyPosition object for ${companyPositionName}.`,
         `Work str exp gain will be 0`,
       ].join(" "),
@@ -690,13 +704,15 @@ export function getWorkStrExpGain(this: IPlayer): number {
 
 //Def exp gained per game cycle
 export function getWorkDefExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
+  const companyName = this.getCompanyName();
+
+  const company = Companies[companyName];
+  const companyPositionName = this.jobs[companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (company == null || companyPosition == null) {
     console.error(
       [
-        `Could not find Company object for ${this.companyName}`,
+        `Could not find Company object for ${companyName}`,
         `or CompanyPosition object for ${companyPositionName}.`,
         `Work def exp gain will be 0`,
       ].join(" "),
@@ -714,13 +730,15 @@ export function getWorkDefExpGain(this: IPlayer): number {
 
 //Dex exp gained per game cycle
 export function getWorkDexExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
+  const companyName = this.getCompanyName();
+
+  const company = Companies[companyName];
+  const companyPositionName = this.jobs[companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (company == null || companyPosition == null) {
     console.error(
       [
-        `Could not find Company object for ${this.companyName}`,
+        `Could not find Company object for ${companyName}`,
         `or CompanyPosition object for ${companyPositionName}.`,
         `Work dex exp gain will be 0`,
       ].join(" "),
@@ -738,13 +756,15 @@ export function getWorkDexExpGain(this: IPlayer): number {
 
 //Agi exp gained per game cycle
 export function getWorkAgiExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
+  const companyName = this.getCompanyName();
+
+  const company = Companies[companyName];
+  const companyPositionName = this.jobs[companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (company == null || companyPosition == null) {
     console.error(
       [
-        `Could not find Company object for ${this.companyName}`,
+        `Could not find Company object for ${companyName}`,
         `or CompanyPosition object for ${companyPositionName}.`,
         `Work agi exp gain will be 0`,
       ].join(" "),
@@ -762,13 +782,15 @@ export function getWorkAgiExpGain(this: IPlayer): number {
 
 //Charisma exp gained per game cycle
 export function getWorkChaExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
+  const companyName = this.getCompanyName();
+
+  const company = Companies[companyName];
+  const companyPositionName = this.jobs[companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (company == null || companyPosition == null) {
     console.error(
       [
-        `Could not find Company object for ${this.companyName}`,
+        `Could not find Company object for ${companyName}`,
         `or CompanyPosition object for ${companyPositionName}.`,
         `Work cha exp gain will be 0`,
       ].join(" "),
@@ -786,13 +808,15 @@ export function getWorkChaExpGain(this: IPlayer): number {
 
 //Reputation gained per game cycle
 export function getWorkRepGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
+  const companyName = this.getCompanyName();
+
+  const company = Companies[companyName];
+  const companyPositionName = this.jobs[companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (company == null || companyPosition == null) {
     console.error(
       [
-        `Could not find Company object for ${this.companyName}`,
+        `Could not find Company object for ${companyName}`,
         `or CompanyPosition object for ${companyPositionName}.`,
         `Work rep gain will be 0`,
       ].join(" "),

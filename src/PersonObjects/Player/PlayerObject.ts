@@ -293,6 +293,7 @@ export class PlayerObject implements IPlayer {
   graftAugmentationWork: (numCycles: number) => boolean;
   finishGraftAugmentationWork: (cancelled: boolean, singularity?: boolean) => string;
   applyEntropy: (stacks?: number) => void;
+  getCompanyName: () => string;
 
   constructor() {
     //Skills and stats
@@ -642,6 +643,8 @@ export class PlayerObject implements IPlayer {
     this.sourceFileLvl = generalMethods.sourceFileLvl;
 
     this.applyEntropy = augmentationMethods.applyEntropy;
+
+    this.getCompanyName = workMethods.getCompanyName;
   }
 
   /**

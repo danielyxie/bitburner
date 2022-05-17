@@ -223,8 +223,6 @@ export interface IPlayer {
   startCorporation(corpName: string, additionalShares?: number): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
-  startWork(companyName: string): void;
-  startWorkPartTime(companyName: string): void;
   takeDamage(amt: number): boolean;
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
@@ -241,8 +239,6 @@ export interface IPlayer {
   updateSkillLevels(): void;
   gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
   stopFocusing(): void;
-  finishFactionWork(cancelled: boolean, sing?: boolean): string;
-  finishClass(sing?: boolean): string;
   finishWork(cancelled: boolean, sing?: boolean): string;
   cancelationPenalty(): number;
   finishWorkPartTime(sing?: boolean): string;
@@ -261,7 +257,6 @@ export interface IPlayer {
   getWorkChaExpGain(): number;
   getWorkRepGain(): number;
   getWorkMoneyGain(): number;
-  processWorkEarnings(cycles: number): void;
   hospitalize(): void;
   createProgramWork(numCycles: number): boolean;
   checkForFactionInvitations(): Faction[];
@@ -270,8 +265,6 @@ export interface IPlayer {
   setMult(name: string, mult: number): void;
   canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
-  startGraftAugmentationWork(augmentationName: string, time: number): void;
-  graftAugmentationWork(numCycles: number): boolean;
-  finishGraftAugmentationWork(cancelled: boolean, singularity?: boolean): string;
   applyEntropy(stacks?: number): void;
+  getCompanyName(): string;
 }

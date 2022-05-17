@@ -117,7 +117,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   }
 
   this.isWorking = false;
-  this.workManager.reset()
+  this.workManager.reset();
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
@@ -613,12 +613,26 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string, _sing = false): void {
-  if (this.isWorking == true && this.workType !== WorkType.Company && this.companyName == company) {
-    this.finishWork(true);
+  const workType = this.workManager.workType,
+    info =
+      workType === WorkType.Company
+        ? this.workManager.info.company
+        : workType === WorkType.CompanyPartTime
+        ? this.workManager.info.companyPartTime
+        : null;
+  if (!info) return;
+
+  if (
+    this.isWorking === true &&
+    [WorkType.Company, WorkType.CompanyPartTime].includes(workType) &&
+    info.companyName === company
+  ) {
+    this.workManager.finish({ cancelled: true });
   }
+
   delete this.jobs[company];
-  if (this.companyName === company) {
-    this.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
+  if (info.companyName === company) {
+    info.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
   }
 }
 
