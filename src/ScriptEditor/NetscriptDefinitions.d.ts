@@ -4994,7 +4994,7 @@ export interface NS {
    *
    * @param pid - Optional. PID of the script having its tail closed. If omitted, the current script is used.
    */
-   closeTail(pid?: number): void;
+  closeTail(pid?: number): void;
 
   /**
    * Get the list of servers connected to a server.

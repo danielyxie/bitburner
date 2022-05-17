@@ -255,14 +255,14 @@ function LogWindow(props: IProps): React.ReactElement {
           minHeight: `${minConstraints[1]}px`,
           ...(minimized
             ? {
-              border: "none",
-              margin: 0,
-              maxHeight: 0,
-              padding: 0,
-            }
+                border: "none",
+                margin: 0,
+                maxHeight: 0,
+                padding: 0,
+              }
             : {
-              border: `1px solid ${Settings.theme.welllight}`,
-            }),
+                border: `1px solid ${Settings.theme.welllight}`,
+              }),
         }}
         ref={container}
       >

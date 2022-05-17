@@ -193,7 +193,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-        `This is probably a bug. Please report to game developer`,
+          `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -826,7 +826,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${
+              server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
