@@ -165,7 +165,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   const setRerender = useState(0)[1];
   const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
-    player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
+    player.workManager.info.faction.factionName
+      ? Factions[player.workManager.info.faction.factionName]
+      : (undefined as unknown as Faction),
   );
   if (faction === undefined && page === Page.Faction)
     throw new Error("Trying to go to a page without the proper setup");
@@ -240,7 +242,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toTerminal: () => setPage(Page.Terminal),
     toTutorial: () => setPage(Page.Tutorial),
     toJob: () => {
-      setLocation(Locations[player.companyName]);
+      setLocation(Locations[player.getCompanyName()]);
       setPage(Page.Job);
     },
     toCity: () => {
