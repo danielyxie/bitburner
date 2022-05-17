@@ -10,13 +10,11 @@ import { Reputation } from "../../ui/React/Reputation";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { CompanyWorkInfo } from "../WorkInfo";
 import { WorkManager, WorkRates } from "../WorkManager";
-import { WorkType } from "../WorkType";
 
 export const baseCompanyWorkInfo: CompanyWorkInfo = {
   companyName: "",
 
   start: function (workManager: WorkManager, { company }): void {
-    workManager.workType = WorkType.Company;
     workManager.timeToCompletion = CONSTANTS.MillisecondsPer8Hours;
 
     workManager.info.company.companyName = company;

@@ -136,6 +136,7 @@ export class WorkManager {
 
     const info = this.info[workTypeToInfoKey[workType]];
     if (info) {
+      this.workType = workType;
       info.start(this, params);
       return;
     }

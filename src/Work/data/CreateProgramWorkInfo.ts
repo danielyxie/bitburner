@@ -4,7 +4,6 @@ import { CONSTANTS } from "../../Constants";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { CreateProgramWorkInfo } from "../WorkInfo";
 import { WorkManager } from "../WorkManager";
-import { WorkType } from "../WorkType";
 
 export const baseCreateProgramWorkInfo: CreateProgramWorkInfo = {
   programName: "",
@@ -33,7 +32,6 @@ export const baseCreateProgramWorkInfo: CreateProgramWorkInfo = {
     }
 
     // Update the manager with relevant data
-    workManager.workType = WorkType.CreateProgram;
     workManager.timeToCompletion = time;
     workManager.timeWorked = 0;
     merge(workManager.info.createProgram, <CreateProgramWorkInfo>{

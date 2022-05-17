@@ -9,7 +9,7 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Money } from "../../ui/React/Money";
 import { CrimeWorkInfo } from "../WorkInfo";
 import { WorkManager, WorkRates } from "../WorkManager";
-import { CrimeType, WorkType } from "../WorkType";
+import { CrimeType } from "../WorkType";
 
 export const baseCrimeWorkInfo: CrimeWorkInfo = {
   crimeType: CrimeType.None,
@@ -47,7 +47,6 @@ export const baseCrimeWorkInfo: CrimeWorkInfo = {
 
     // Update other data
     workManager.info.crime.crimeType = crimeType;
-    workManager.workType = WorkType.Crime;
     workManager.timeToCompletion = time;
 
     // Go to the work in progress screen

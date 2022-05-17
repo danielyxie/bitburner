@@ -5,11 +5,11 @@ import { Factions } from "../../Faction/Factions";
 import {
   getFactionFieldWorkRepGain,
   getFactionSecurityWorkRepGain,
-  getHackingWorkRepGain,
+  getHackingWorkRepGain
 } from "../../PersonObjects/formulas/reputation";
 import { FactionWorkInfo } from "../WorkInfo";
 import { WorkManager, WorkRates } from "../WorkManager";
-import { PlayerFactionWorkType, WorkType } from "../WorkType";
+import { PlayerFactionWorkType } from "../WorkType";
 
 export const baseFactionWorkInfo: FactionWorkInfo = {
   factionName: "",
@@ -95,7 +95,6 @@ export const baseFactionWorkInfo: FactionWorkInfo = {
 
     // Update manager data with the rest of the info
     workManager.rates.rep *= favorMult * BitNodeMultipliers.FactionWorkRepGain;
-    workManager.workType = WorkType.Faction;
     workManager.info.faction.factionName = faction.name;
     workManager.timeToCompletion = CONSTANTS.MillisecondsPer20Hours;
   },

@@ -8,14 +8,13 @@ import { Money } from "../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { StudyClassWorkInfo } from "../WorkInfo";
 import { WorkManager } from "../WorkManager";
-import { ClassType, WorkType } from "../WorkType";
+import { ClassType } from "../WorkType";
 
 export const baseStudyClassWorkInfo: StudyClassWorkInfo = {
   className: ClassType.None,
 
   start: function (workManager: WorkManager, { costMult, expMult, className }): void {
     // Other setup
-    workManager.workType = WorkType.StudyClass;
     workManager.info.studyClass.className = className;
 
     // Setup cost and exp mults

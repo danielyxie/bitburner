@@ -6,7 +6,6 @@ import { graftingIntBonus } from "../../PersonObjects/Grafting/GraftingHelpers";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { GraftAugmentationWorkInfo } from "../WorkInfo";
 import { WorkManager } from "../WorkManager";
-import { WorkType } from "../WorkType";
 
 export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
   augmentation: "",
@@ -14,7 +13,6 @@ export const baseGraftAugmentationWorkInfo: GraftAugmentationWorkInfo = {
   throughAPI: false,
 
   start: function (workManager: WorkManager, { augmentation, time, throughAPI = false }): void {
-    workManager.workType = WorkType.GraftAugmentation;
     workManager.timeToCompletion = time;
 
     // Update manager data with augmentation name
