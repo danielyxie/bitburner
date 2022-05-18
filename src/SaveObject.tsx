@@ -1,31 +1,30 @@
-import { loadAliases, loadGlobalAliases, Aliases, GlobalAliases } from "./Alias";
-import { Companies, loadCompanies } from "./Company/Companies";
-import { CONSTANTS } from "./Constants";
-import { Factions, loadFactions } from "./Faction/Factions";
-import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
-import { Player, loadPlayer } from "./Player";
-import { saveAllServers, loadAllServers, GetAllServers } from "./Server/AllServers";
-import { Settings } from "./Settings/Settings";
-import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
-import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
-
-import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
-
-import * as ExportBonus from "./ExportBonus";
-
-import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "./utils/JSONReviver";
-import { save } from "./db";
-import { v1APIBreak } from "./utils/v1APIBreak";
+import { SxProps } from "@mui/system";
+import React from "react";
+import { Aliases, GlobalAliases, loadAliases, loadGlobalAliases } from "./Alias";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
-import { LocationName } from "./Locations/data/LocationNames";
-import { SxProps } from "@mui/system";
-import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
+import { Companies, loadCompanies } from "./Company/Companies";
+import { CONSTANTS } from "./Constants";
+import { loadStaneksGift, staneksGift } from "./CotMG/Helper";
+import { save } from "./db";
 import { pushGameSaved } from "./Electron";
-import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
+import * as ExportBonus from "./ExportBonus";
 import { FactionNames } from "./Faction/data/FactionNames";
 import { Faction } from "./Faction/Faction";
+import { Factions, loadFactions } from "./Faction/Factions";
+import { AllGangs, loadAllGangs } from "./Gang/AllGangs";
+import { LocationName } from "./Locations/data/LocationNames";
+import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
+import { loadPlayer, Player } from "./Player";
+import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
+import { GetAllServers, loadAllServers, saveAllServers } from "./Server/AllServers";
+import { Settings } from "./Settings/Settings";
+import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { Reputation } from "./ui/React/Reputation";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
+import { v1APIBreak } from "./utils/v1APIBreak";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -430,6 +429,85 @@ function evaluateVersionCompatibility(ver: string | number): void {
         ...Player.augmentations.filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor),
         newNFG,
       ];
+
+      Player.reapplyAllAugmentations(true);
+      Player.reapplyAllSourceFiles();
+    }
+
+    // Update player work properties for the rewritten work system
+    // Grants some rewards to players who were actively working beforehand:
+    // * Rep to anyone doing faction/company work
+    // * Finishes graft for free (with no Entropy) for anyone doing grafting
+    // * Finishes program for free for anyone creating a program
+    // Everyone gets 1 free level of NeuroFlux Governor as well
+    if (ver < 18) {
+      Player.workManager.reset();
+
+      const gainedRep = anyPlayer.workRepGained;
+      const fac = Factions[anyPlayer.currentWorkFactionName];
+      if (fac) {
+        fac.playerReputation += gainedRep;
+      }
+
+      const company = Companies[anyPlayer.companyName];
+      if (company) {
+        company.playerReputation += gainedRep;
+      }
+
+      if (anyPlayer.graftAugmentationName) {
+        Player.augmentations.push(new PlayerOwnedAugmentation(anyPlayer.graftAugmentationName));
+      }
+
+      const program = anyPlayer.createProgramName;
+      if (program) {
+        Player.getHomeComputer().programs.push(program);
+      }
+
+      const ownedNFG = Player.augmentations.find((a) => a.name === AugmentationNames.NeuroFluxGovernor);
+      if (ownedNFG) {
+        ownedNFG.level += 1;
+      } else {
+        const newNFG = new PlayerOwnedAugmentation(AugmentationNames.NeuroFluxGovernor);
+        Player.augmentations.push(newNFG);
+      }
+
+      setTimeout(
+        () =>
+          dialogBoxCreate(
+            <>
+              Due to internal changes to the work system, your current work task has been reset.
+              <br />
+              As compensation, you have been granted the following rewards:
+              <ul>
+                {anyPlayer.graftAugmentationName && (
+                  <li>
+                    Grafting of <b>{anyPlayer.graftAugmentationName}</b> has been automatically completed,
+                    <br /> and applied with no increase to the Entropy virus
+                  </li>
+                )}
+                {fac && gainedRep > 0 && (
+                  <li>
+                    <Reputation reputation={anyPlayer.workRepGained} /> reputation for your faction <b>{fac.name}</b>
+                  </li>
+                )}
+                {company && gainedRep > 0 && (
+                  <li>
+                    <Reputation reputation={anyPlayer.workRepGained} /> reputation for your company{" "}
+                    <b>{company.name}</b>
+                  </li>
+                )}
+                {program && (
+                  <li>
+                    Your WIP program <b>{program}</b> has been automatically completed
+                    <br /> and added to your home computer
+                  </li>
+                )}
+                <li>1 free level of NeuroFlux Governor</li>
+              </ul>
+            </>,
+          ),
+        1000,
+      );
 
       Player.reapplyAllAugmentations(true);
       Player.reapplyAllSourceFiles();
