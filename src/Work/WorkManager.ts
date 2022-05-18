@@ -229,6 +229,7 @@ export class WorkManager {
       },
       company: {
         name: copy.info.company.companyName,
+        partTime: copy.info.company.partTime,
       },
       createProgram: {
         programName: copy.info.createProgram.programName,

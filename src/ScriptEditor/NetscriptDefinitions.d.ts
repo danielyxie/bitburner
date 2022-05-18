@@ -157,6 +157,7 @@ export interface PlayerWork {
   };
   company: {
     name: string;
+    partTime: boolean;
   };
   createProgram: {
     programName: string;
