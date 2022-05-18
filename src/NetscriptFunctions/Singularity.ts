@@ -704,7 +704,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (): CharacterInfo {
         _ctx.helper.checkSingularityAccess();
         _ctx.log(() => `getCharacterInformation is deprecated, please use getplayer`);
-        const gains = player.workManager.gains;
+        const manager = player.workManager.toPlayerSafe()
+        const gains = manager.gains
 
         return {
           bitnode: player.bitNodeN,
@@ -733,7 +734,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             strengthExp: player.strength_exp_mult,
             workMoney: player.work_money_mult,
           },
-          timeWorked: player.workManager.timeWorked,
+          timeWorked: manager.timeWorked,
           tor: player.hasTorRouter(),
           workHackExpGain: gains.hackExp,
           workStrExpGain: gains.strExp,
