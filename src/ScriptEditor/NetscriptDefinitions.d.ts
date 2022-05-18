@@ -155,20 +155,25 @@ export interface PlayerWork {
     factionName: string;
     jobDescription: string;
   };
+
   company: {
     name: string;
     partTime: boolean;
   };
+
   createProgram: {
     programName: string;
     requiredLevel: number;
   };
+
   studyClass: {
     className: string;
   };
+
   crime: {
     crimeType: string;
   };
+
   graftAugmentation: {
     augmentation: string;
   };
