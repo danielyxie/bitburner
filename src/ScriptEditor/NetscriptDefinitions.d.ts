@@ -129,6 +129,7 @@ interface Player {
   entropy: number;
 }
 
+/** @public */
 export type WorkGains = {
   hackExp: number;
   strExp: number;
@@ -141,44 +142,68 @@ export type WorkGains = {
   rep: number;
 };
 
+/** @public */
 export type WorkRates = WorkGains & { moneyLoss: number };
 
+/** @public */
 export interface PlayerWork {
+  /** The type of work you are doing */
   workType: string;
+  /** The amount of time you have been working for */
   timeWorked: number;
+  /** The amount of time required to complete your work */
   timeToCompletion: number;
 
+  /** Contains the money, rep, exp that you've gained from work */
   gains: WorkGains;
+  /** Contains the rates at which you are gaining money, rep, exp from work */
   rates: WorkRates;
 
+  /** Faction work info */
   faction: {
+    /** The name of the faction you are working for */
     factionName: string;
+    /** A description of your current faction job */
     jobDescription: string;
   };
 
+  /** Company work info */
   company: {
+    /** The name of the company you are working for */
     name: string;
+    /** Whether your job is a part-time job or not */
     partTime: boolean;
   };
 
+  /** Program creation info */
   createProgram: {
+    /** The name of the program you are creating */
     programName: string;
+    /** The required hacking level for the program you are creating */
     requiredLevel: number;
   };
 
+  /** Class study info */
   studyClass: {
+    /** The name of the class you are taking */
     className: string;
   };
 
+  /** Crime info */
   crime: {
+    /** The type of crime you are committing */
     crimeType: string;
   };
 
+  /** Augmentation grafting info */
   graftAugmentation: {
+    /** The name of the augmentation you are grafting */
     augmentation: string;
   };
 
+  /** The multiplier for the money cost of your work (i.e. for class study) */
   costMult: number;
+  /** The multiplier for the exp gain of your work (i.e. for class study) */
   expMult: number;
 }
 
