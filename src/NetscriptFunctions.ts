@@ -55,7 +55,7 @@ import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads 
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
-import { LogBoxEvents } from "./ui/React/LogBoxManager";
+import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 
@@ -987,6 +987,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       LogBoxEvents.emit(runningScriptObj);
+    },
+    closeTail: function (_pid: unknown = workerScript.scriptRef.pid): void {
+      updateDynamicRam("closeTail", getRamCost(Player, "closeTail"));
+      const pid = helper.number("closeTail", "pid", _pid);
+      //Emit an event to tell the game to close the tail window if it exists
+      LogBoxCloserEvents.emit(pid);
     },
     nuke: function (_hostname: unknown): boolean {
       updateDynamicRam("nuke", getRamCost(Player, "nuke"));
