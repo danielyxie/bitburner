@@ -471,46 +471,79 @@ function evaluateVersionCompatibility(ver: string | number): void {
         Player.augmentations.push(newNFG);
       }
 
-      setTimeout(
-        () =>
-          dialogBoxCreate(
-            <>
-              Due to internal changes to the work system, your current work task has been reset.
-              <br />
-              As compensation, you have been granted the following rewards:
-              <ul>
-                {anyPlayer.graftAugmentationName && (
-                  <li>
-                    Grafting of <b>{anyPlayer.graftAugmentationName}</b> has been automatically completed,
-                    <br /> and applied with no increase to the Entropy virus
-                  </li>
-                )}
-                {fac && gainedRep > 0 && (
-                  <li>
-                    <Reputation reputation={anyPlayer.workRepGained} /> reputation for your faction <b>{fac.name}</b>
-                  </li>
-                )}
-                {company && gainedRep > 0 && (
-                  <li>
-                    <Reputation reputation={anyPlayer.workRepGained} /> reputation for your company{" "}
-                    <b>{company.name}</b>
-                  </li>
-                )}
-                {program && (
-                  <li>
-                    Your WIP program <b>{program}</b> has been automatically completed
-                    <br /> and added to your home computer
-                  </li>
-                )}
-                <li>1 free level of NeuroFlux Governor</li>
-              </ul>
-            </>,
-          ),
-        1000,
-      );
+      setTimeout(() => {
+        dialogBoxCreate(
+          <>
+            Due to internal changes to the work system, your current work task has been reset.
+            <br />
+            As compensation, you have been granted the following rewards:
+            <ul>
+              {anyPlayer.graftAugmentationName && (
+                <li>
+                  Grafting of <b>{anyPlayer.graftAugmentationName}</b> has been automatically completed,
+                  <br /> and applied with no increase to the Entropy virus
+                </li>
+              )}
+              {fac && gainedRep > 0 && (
+                <li>
+                  <Reputation reputation={anyPlayer.workRepGained} /> reputation for your faction <b>{fac.name}</b>
+                </li>
+              )}
+              {company && gainedRep > 0 && (
+                <li>
+                  <Reputation reputation={anyPlayer.workRepGained} /> reputation for your company <b>{company.name}</b>
+                </li>
+              )}
+              {program && (
+                <li>
+                  Your WIP program <b>{program}</b> has been automatically completed
+                  <br /> and added to your home computer
+                </li>
+              )}
+              <li>1 free level of NeuroFlux Governor</li>
+            </ul>
+          </>,
+        );
 
-      Player.reapplyAllAugmentations(true);
-      Player.reapplyAllSourceFiles();
+        delete anyPlayer.companyName;
+        delete anyPlayer.createProgramReqLvl;
+        delete anyPlayer.factionWorkType;
+        delete anyPlayer.createProgramName;
+        delete anyPlayer.timeWorkedCreateProgram;
+        delete anyPlayer.graftAugmentationName;
+        delete anyPlayer.timeWorkedGraftAugmentation;
+        delete anyPlayer.crimeType;
+        delete anyPlayer.committingCrimeThruSingFn;
+        delete anyPlayer.singFnCrimeWorkerScript;
+        delete anyPlayer.timeNeededToCompleteWork;
+        delete anyPlayer.className;
+        delete anyPlayer.currentWorkFactionName;
+        delete anyPlayer.workType;
+        delete anyPlayer.workCostMult;
+        delete anyPlayer.workExpMult;
+        delete anyPlayer.currentWorkFactionDescription;
+        delete anyPlayer.timeWorked;
+        delete anyPlayer.workMoneyGained;
+        delete anyPlayer.workMoneyGainRate;
+        delete anyPlayer.workRepGained;
+        delete anyPlayer.workRepGainRate;
+        delete anyPlayer.workHackExpGained;
+        delete anyPlayer.workHackExpGainRate;
+        delete anyPlayer.workStrExpGained;
+        delete anyPlayer.workStrExpGainRate;
+        delete anyPlayer.workDefExpGained;
+        delete anyPlayer.workDefExpGainRate;
+        delete anyPlayer.workDexExpGained;
+        delete anyPlayer.workDexExpGainRate;
+        delete anyPlayer.workAgiExpGained;
+        delete anyPlayer.workAgiExpGainRate;
+        delete anyPlayer.workChaExpGained;
+        delete anyPlayer.workChaExpGainRate;
+        delete anyPlayer.workMoneyLossRate;
+
+        Player.reapplyAllAugmentations(true);
+        Player.reapplyAllSourceFiles();
+      }, 1000);
     }
   }
 }
