@@ -704,8 +704,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (): CharacterInfo {
         _ctx.helper.checkSingularityAccess();
         _ctx.log(() => `getCharacterInformation is deprecated, please use getplayer`);
-        const manager = player.workManager.toPlayerSafe()
-        const gains = manager.gains
+        const manager = player.workManager.toPlayerSafe();
+        const gains = manager.gains;
 
         return {
           bitnode: player.bitNodeN,
