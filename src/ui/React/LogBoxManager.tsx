@@ -23,6 +23,7 @@ import { Settings } from "../../Settings/Settings";
 let layerCounter = 0;
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
+export const LogBoxCloserEvents = new EventEmitter<[number]>();
 export const LogBoxClearEvents = new EventEmitter<[]>();
 
 interface Log {
@@ -51,6 +52,15 @@ export function LogBoxManager(): React.ReactElement {
     [],
   );
 
+  //Event used by ns.closeTail to close tail windows
+  useEffect(
+    () =>
+      LogBoxCloserEvents.subscribe((pid: number) => {
+        closePid(pid);
+      }),
+    [],
+  );
+
   useEffect(() =>
     LogBoxClearEvents.subscribe(() => {
       logs = [];
@@ -58,8 +68,15 @@ export function LogBoxManager(): React.ReactElement {
     }),
   );
 
+  //Close tail windows by their id
   function close(id: string): void {
     logs = logs.filter((l) => l.id !== id);
+    rerender();
+  }
+
+  //Close tail windows by their pid
+  function closePid(pid: number): void {
+    logs = logs.filter((log) => log.script.pid != pid);
     rerender();
   }
 

@@ -83,7 +83,7 @@ import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers
 import { createTextFile, getTextFile, TextFile } from "./TextFile";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { LogBoxEvents } from "./ui/React/LogBoxManager";
+import { LogBoxCloserEvents, LogBoxEvents } from "./ui/React/LogBoxManager";
 import { PromptEvent } from "./ui/React/PromptManager";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 import { arrayToString } from "./utils/helpers/arrayToString";
@@ -968,6 +968,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       LogBoxEvents.emit(runningScriptObj);
+    },
+    closeTail: function (_pid: unknown = workerScript.scriptRef.pid): void {
+      updateDynamicRam("closeTail", getRamCost(Player, "closeTail"));
+      const pid = helper.number("closeTail", "pid", _pid);
+      //Emit an event to tell the game to close the tail window if it exists
+      LogBoxCloserEvents.emit(pid);
     },
     nuke: function (_hostname: unknown): boolean {
       updateDynamicRam("nuke", getRamCost(Player, "nuke"));

@@ -5091,6 +5091,21 @@ export interface NS {
   tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
 
   /**
+   * Close the tail window of a script.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * Closes a script’s logs. This is functionally the same pressing the "Close" button on the tail window.
+   *
+   * If the function is called with no arguments, it will close the current script’s logs.
+   *
+   * Otherwise, the pid argument can be used to close the logs from another script.
+   *
+   * @param pid - Optional. PID of the script having its tail closed. If omitted, the current script is used.
+   */
+  closeTail(pid?: number): void;
+
+  /**
    * Get the list of servers connected to a server.
    * @remarks
    * RAM cost: 0.2 GB
