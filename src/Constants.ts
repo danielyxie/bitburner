@@ -84,6 +84,7 @@ export const CONSTANTS: {
   SoARepMult: number;
   EntropyEffect: number;
   TotalNumBitNodes: number;
+  InfiniteLoopLimit: number;
   Donations: number; // number of blood/plasma/palette donation the dev have verified., boosts NFG
   LatestUpdate: string;
 } = {
@@ -225,6 +226,8 @@ export const CONSTANTS: {
 
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,
+
+  InfiniteLoopLimit: 1000,
 
   Donations: 7,
 
