@@ -136,8 +136,9 @@ export class StaneksGift implements IStaneksGift {
   }
 
   updateMults(p: IPlayer): void {
-    p.reapplyAllAugmentations(true);
-    p.reapplyAllSourceFiles();
+    // applyEntropy also reapplies all augmentations and source files
+    // This wraps up the reset nicely
+    p.applyEntropy(p.entropy);
 
     for (const aFrag of this.fragments) {
       const fragment = aFrag.fragment();

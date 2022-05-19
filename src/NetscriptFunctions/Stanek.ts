@@ -26,7 +26,7 @@ export function NetscriptStanek(
 ): InternalAPI<IStanek> {
   function checkStanekAPIAccess(func: string): void {
     if (!player.hasAugmentation(AugmentationNames.StaneksGift1, true)) {
-      helper.makeRuntimeErrorMsg(func, "Requires Stanek's Gift installed.");
+      throw helper.makeRuntimeErrorMsg(func, "Stanek's Gift is not installed");
     }
   }
 
@@ -58,8 +58,8 @@ export function NetscriptStanek(
         //Charge the fragment
         const time = staneksGift.inBonus() ? 200 : 1000;
         return netscriptDelay(time, workerScript).then(function () {
-          const charge = staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
-          _ctx.log(() => `Charged fragment for ${charge} charge.`);
+          staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
+          _ctx.log(() => `Charged fragment with ${_ctx.workerScript.scriptRef.threads} threads.`);
           return Promise.resolve();
         });
       },
