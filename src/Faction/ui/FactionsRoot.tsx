@@ -60,7 +60,6 @@ interface IFactionProps {
 }
 
 const FactionElement = (props: IFactionProps): React.ReactElement => {
-  const theme = useTheme();
   const facInfo = props.faction.getInfo();
 
   function openFaction(faction: Faction): void {
@@ -78,7 +77,14 @@ const FactionElement = (props: IFactionProps): React.ReactElement => {
   }
 
   return (
-    <Paper sx={{ display: "grid", p: 1, alignItems: "center", gridTemplateColumns: "minmax(0, 4fr) 1fr" }}>
+    <Paper
+      sx={{
+        display: "grid",
+        p: 1,
+        alignItems: "center",
+        gridTemplateColumns: "minmax(0, 4fr)" + (props.joined ? " 1fr" : ""),
+      }}
+    >
       <Box display="flex" sx={{ alignItems: "center" }}>
         {props.joined ? (
           <Box
@@ -100,46 +106,51 @@ const FactionElement = (props: IFactionProps): React.ReactElement => {
           </Button>
         )}
 
-        <span>
+        <span style={{ maxWidth: props.joined ? "70%" : "95%" }}>
           <Typography
             variant="h6"
             sx={{
               mr: 1,
-              display: "flex",
+              display: "grid",
+              gridTemplateColumns: "fit-content(100vw) max-content",
               alignItems: "center",
             }}
           >
-            {props.faction.name}
+            <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+              {props.faction.name}
+            </span>
 
-            {props.player.hasGangWith(props.faction.name) && (
-              <Tooltip title="You have a gang with this Faction">
-                <SportsMma sx={{ color: Settings.theme.hp, ml: 1 }} />
-              </Tooltip>
-            )}
+            <span style={{ display: "flex", alignItems: "center" }}>
+              {props.player.hasGangWith(props.faction.name) && (
+                <Tooltip title="You have a gang with this Faction">
+                  <SportsMma sx={{ color: Settings.theme.hp, ml: 1 }} />
+                </Tooltip>
+              )}
 
-            {facInfo.special && (
-              <Tooltip title="This is a special Faction">
-                <NewReleases sx={{ ml: 1, color: Settings.theme.money, transform: "rotate(180deg)" }} />
-              </Tooltip>
-            )}
+              {facInfo.special && (
+                <Tooltip title="This is a special Faction">
+                  <NewReleases sx={{ ml: 1, color: Settings.theme.money, transform: "rotate(180deg)" }} />
+                </Tooltip>
+              )}
 
-            {!props.joined && facInfo.enemies.length > 0 && (
-              <Tooltip
-                title={
-                  <Typography>
-                    This Faction is enemies with:
-                    <ul>
-                      {facInfo.enemies.map((enemy) => (
-                        <li key={enemy}>{enemy}</li>
-                      ))}
-                    </ul>
-                    Joining this Faction will prevent you from joining its enemies
-                  </Typography>
-                }
-              >
-                <Report sx={{ ml: 1, color: Settings.theme.error }} />
-              </Tooltip>
-            )}
+              {!props.joined && facInfo.enemies.length > 0 && (
+                <Tooltip
+                  title={
+                    <Typography>
+                      This Faction is enemies with:
+                      <ul>
+                        {facInfo.enemies.map((enemy) => (
+                          <li key={enemy}>{enemy}</li>
+                        ))}
+                      </ul>
+                      Joining this Faction will prevent you from joining its enemies
+                    </Typography>
+                  }
+                >
+                  <Report sx={{ ml: 1, color: Settings.theme.error }} />
+                </Tooltip>
+              )}
+            </span>
           </Typography>
 
           <span style={{ display: "flex", alignItems: "center" }}>
@@ -194,6 +205,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
   const allFactions = Object.values(FactionNames).map((faction) => faction as string);
   const allJoinedFactions = [...props.player.factions];
   allJoinedFactions.sort((a, b) => allFactions.indexOf(a) - allFactions.indexOf(b));
+  const invitations = props.player.factionInvitations;
 
   return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0, mb: 10 }}>
@@ -212,12 +224,48 @@ export function FactionsRoot(props: IProps): React.ReactElement {
         </Tooltip>
       </Typography>
 
-      <Box sx={{ [theme.breakpoints.down("lg")]: { columCount: 1 }, [theme.breakpoints.up("lg")]: { columnCount: 2 } }}>
-        <span style={{ width: "100%", display: "inline-block" }}>
+      <Box
+        display="grid"
+        sx={{
+          gap: 1,
+          gridTemplateColumns: (invitations.length > 0 ? "1fr " : "") + "2fr",
+          [theme.breakpoints.down("lg")]: { gridTemplateColumns: "1fr", "& > span:nth-child(1)": { order: 1 } },
+          gridTemplateRows: "minmax(0, 1fr)",
+          "& > span > .MuiBox-root": {
+            display: "grid",
+            gridAutoRows: "70px",
+            gap: 1,
+          },
+        }}
+      >
+        {invitations.length > 0 && (
+          <span>
+            <Typography variant="h5" color="primary">
+              Faction Invitations
+            </Typography>
+            <Box>
+              {invitations.map((facName) => {
+                if (!Factions.hasOwnProperty(facName)) return null;
+                return (
+                  <FactionElement
+                    key={facName}
+                    faction={Factions[facName]}
+                    player={props.player}
+                    router={props.router}
+                    joined={false}
+                    rerender={rerender}
+                  />
+                );
+              })}
+            </Box>
+          </span>
+        )}
+
+        <span>
           <Typography variant="h5" color="primary">
             Your Factions
           </Typography>
-          <Box display="grid" sx={{ gap: 1 }}>
+          <Box>
             {allJoinedFactions.length > 0 ? (
               allJoinedFactions.map((facName) => {
                 if (!Factions.hasOwnProperty(facName)) return null;
@@ -234,31 +282,6 @@ export function FactionsRoot(props: IProps): React.ReactElement {
               })
             ) : (
               <Typography>You have not yet joined any Factions.</Typography>
-            )}
-          </Box>
-        </span>
-
-        <span style={{ width: "100%", display: "inline-block" }}>
-          <Typography variant="h5" color="primary">
-            Faction Invitations
-          </Typography>
-          <Box display="grid" sx={{ gap: 1 }}>
-            {props.player.factionInvitations.length > 0 ? (
-              props.player.factionInvitations.map((facName) => {
-                if (!Factions.hasOwnProperty(facName)) return null;
-                return (
-                  <FactionElement
-                    key={facName}
-                    faction={Factions[facName]}
-                    player={props.player}
-                    router={props.router}
-                    joined={false}
-                    rerender={rerender}
-                  />
-                );
-              })
-            ) : (
-              <Typography>You have not yet received any Faction invitations.</Typography>
             )}
           </Box>
         </span>
