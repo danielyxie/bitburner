@@ -1,5 +1,5 @@
 import { Explore, Info, LastPage, LocalPolice, NewReleases, Report, SportsMma } from "@mui/icons-material";
-import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Container, Paper, Tooltip, Typography, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
@@ -60,6 +60,7 @@ interface IFactionProps {
 }
 
 const FactionElement = (props: IFactionProps): React.ReactElement => {
+  const theme = useTheme();
   const facInfo = props.faction.getInfo();
 
   function openFaction(faction: Faction): void {
@@ -99,13 +100,10 @@ const FactionElement = (props: IFactionProps): React.ReactElement => {
           </Button>
         )}
 
-        <span style={{ maxWidth: "65%" }}>
+        <span>
           <Typography
             variant="h6"
             sx={{
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
               mr: 1,
               display: "flex",
               alignItems: "center",
@@ -176,6 +174,7 @@ interface IProps {
 }
 
 export function FactionsRoot(props: IProps): React.ReactElement {
+  const theme = useTheme();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -213,50 +212,56 @@ export function FactionsRoot(props: IProps): React.ReactElement {
         </Tooltip>
       </Typography>
 
-      <Typography variant="h5" color="primary">
-        Your Factions
-      </Typography>
-      <Box display="grid" sx={{ gap: 1 }}>
-        {allJoinedFactions.length > 0 ? (
-          allJoinedFactions.map((facName) => {
-            if (!Factions.hasOwnProperty(facName)) return null;
-            return (
-              <FactionElement
-                key={facName}
-                faction={Factions[facName]}
-                player={props.player}
-                router={props.router}
-                joined={true}
-                rerender={rerender}
-              />
-            );
-          })
-        ) : (
-          <Typography>You have not yet joined any Factions.</Typography>
-        )}
-      </Box>
+      <Box sx={{ [theme.breakpoints.down("lg")]: { columCount: 1 }, [theme.breakpoints.up("lg")]: { columnCount: 2 } }}>
+        <span style={{ width: "100%", display: "inline-block" }}>
+          <Typography variant="h5" color="primary">
+            Your Factions
+          </Typography>
+          <Box display="grid" sx={{ gap: 1 }}>
+            {allJoinedFactions.length > 0 ? (
+              allJoinedFactions.map((facName) => {
+                if (!Factions.hasOwnProperty(facName)) return null;
+                return (
+                  <FactionElement
+                    key={facName}
+                    faction={Factions[facName]}
+                    player={props.player}
+                    router={props.router}
+                    joined={true}
+                    rerender={rerender}
+                  />
+                );
+              })
+            ) : (
+              <Typography>You have not yet joined any Factions.</Typography>
+            )}
+          </Box>
+        </span>
 
-      <Typography variant="h5" color="primary" sx={{ mt: 2 }}>
-        Faction Invitations
-      </Typography>
-      <Box display="grid" sx={{ gap: 1 }}>
-        {props.player.factionInvitations.length > 0 ? (
-          props.player.factionInvitations.map((facName) => {
-            if (!Factions.hasOwnProperty(facName)) return null;
-            return (
-              <FactionElement
-                key={facName}
-                faction={Factions[facName]}
-                player={props.player}
-                router={props.router}
-                joined={false}
-                rerender={rerender}
-              />
-            );
-          })
-        ) : (
-          <Typography>You have not yet received any Faction invitations.</Typography>
-        )}
+        <span style={{ width: "100%", display: "inline-block" }}>
+          <Typography variant="h5" color="primary">
+            Faction Invitations
+          </Typography>
+          <Box display="grid" sx={{ gap: 1 }}>
+            {props.player.factionInvitations.length > 0 ? (
+              props.player.factionInvitations.map((facName) => {
+                if (!Factions.hasOwnProperty(facName)) return null;
+                return (
+                  <FactionElement
+                    key={facName}
+                    faction={Factions[facName]}
+                    player={props.player}
+                    router={props.router}
+                    joined={false}
+                    rerender={rerender}
+                  />
+                );
+              })
+            ) : (
+              <Typography>You have not yet received any Faction invitations.</Typography>
+            )}
+          </Box>
+        </span>
       </Box>
     </Container>
   );
