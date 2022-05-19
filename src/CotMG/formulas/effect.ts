@@ -1,4 +1,3 @@
-import { shuffle } from "lodash";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 export function CalculateEffect(highestCharge: number, numCharge: number, power: number, boost: number): number {
