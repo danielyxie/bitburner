@@ -26,7 +26,7 @@ export function NetscriptStanek(
 ): InternalAPI<IStanek> {
   function checkStanekAPIAccess(func: string): void {
     if (!player.hasAugmentation(AugmentationNames.StaneksGift1, true)) {
-      helper.makeRuntimeErrorMsg(func, "Requires Stanek's Gift installed.");
+      throw helper.makeRuntimeErrorMsg(func, "Stanek's Gift is not installed");
     }
   }
 

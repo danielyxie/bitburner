@@ -1,24 +1,25 @@
-import { Construction, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, Construction } from "@mui/icons-material";
 import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Augmentation } from "../../../Augmentation/Augmentation";
-import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
+import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
 import { CONSTANTS } from "../../../Constants";
 import { hasAugmentationPrereqs } from "../../../Faction/FactionHelpers";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
+import { PurchaseAugmentationsOrderSetting } from "../../../Settings/SettingEnums";
 import { Settings } from "../../../Settings/Settings";
 import { IMap } from "../../../types";
 import { use } from "../../../ui/Context";
 import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
-import { IPlayer } from "../../IPlayer";
-import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../GraftingHelpers";
-import { GraftableAugmentation } from "../GraftableAugmentation";
-import { WorkType } from "../../../Work/WorkType";
 import { StartGraftingParams } from "../../../Work/WorkInfo";
+import { WorkType } from "../../../Work/WorkType";
+import { IPlayer } from "../../IPlayer";
+import { GraftableAugmentation } from "../GraftableAugmentation";
+import { calculateGraftingTimeWithBonus, getGraftingAvailableAugs } from "../GraftingHelpers";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
 
@@ -71,6 +72,21 @@ export const GraftingRoot = (): React.ReactElement => {
     setRerender((old) => !old);
   }
 
+  const getAugsSorted = (): string[] => {
+    const augs = getGraftingAvailableAugs(player);
+    switch (Settings.PurchaseAugmentationsOrder) {
+      case PurchaseAugmentationsOrderSetting.Cost:
+        return augs.sort((a, b) => GraftableAugmentations[a].cost - GraftableAugmentations[b].cost);
+      default:
+        return augs;
+    }
+  };
+
+  const switchSortOrder = (newOrder: PurchaseAugmentationsOrderSetting): void => {
+    Settings.PurchaseAugmentationsOrder = newOrder;
+    rerender();
+  };
+
   useEffect(() => {
     const id = setInterval(rerender, 200);
     return () => clearInterval(id);
@@ -93,25 +109,33 @@ export const GraftingRoot = (): React.ReactElement => {
       </Typography>
 
       <Box sx={{ my: 3 }}>
-        <Typography variant="h5">Graft Augmentations</Typography>
+        <Paper sx={{ p: 1 }}>
+          <Typography variant="h5">Graft Augmentations</Typography>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            <Button sx={{ width: "100%" }} onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>
+              Sort by Cost
+            </Button>
+            <Button sx={{ width: "100%" }} onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}>
+              Sort by Default Order
+            </Button>
+          </Box>
+        </Paper>
         {getGraftingAvailableAugs(player).length > 0 ? (
-          <Paper sx={{ my: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
+          <Paper sx={{ mb: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
-              {getGraftingAvailableAugs(player)
-                .sort((a, b) => GraftableAugmentations[a].cost - GraftableAugmentations[b].cost)
-                .map((k, i) => (
-                  <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
-                    <Typography
-                      sx={{
-                        color: canGraft(player, GraftableAugmentations[k])
-                          ? Settings.theme.primary
-                          : Settings.theme.disabled,
-                      }}
-                    >
-                      {k}
-                    </Typography>
-                  </ListItemButton>
-                ))}
+              {getAugsSorted().map((k, i) => (
+                <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
+                  <Typography
+                    sx={{
+                      color: canGraft(player, GraftableAugmentations[k])
+                        ? Settings.theme.primary
+                        : Settings.theme.disabled,
+                    }}
+                  >
+                    {k}
+                  </Typography>
+                </ListItemButton>
+              ))}
             </List>
             <Box sx={{ m: 1 }}>
               <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>

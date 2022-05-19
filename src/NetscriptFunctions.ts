@@ -51,8 +51,12 @@ import {
   BasicHGWOptions,
   BitNodeMultipliers as IBNMults,
   Bladeburner as IBladeburner,
+  CodingContract as ICodingContract,
+  Corporation as ICorporation,
   Gang as IGang,
+  Grafting as IGrafting,
   HackingMultipliers,
+  Hacknet as IHacknet,
   HacknetMultipliers,
   Infiltration as IInfiltration,
   NS as INS,
@@ -63,8 +67,11 @@ import {
   RunningScript as IRunningScriptDef,
   Server as IServerDef,
   Singularity as ISingularity,
+  Sleeve as ISleeve,
   SourceFileLvl,
   Stanek as IStanek,
+  TIX as ITIX,
+  UserInterface as IUserInterface,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { AddToAllServers, createUniqueRandomIp, DeleteServer, GetAllServers, GetServer } from "./Server/AllServers";
 import { BaseServer } from "./Server/BaseServer";
@@ -341,7 +348,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
   };
 
-  const hack = function (
+  const hack = async function (
     hostname: string,
     manual: boolean,
     { threads: requestedThreads, stock }: any = {},
@@ -505,23 +512,35 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
   };
 
-  const gang = NetscriptGang(Player, workerScript, helper);
-  const sleeve = NetscriptSleeve(Player, workerScript, helper);
   const extra = NetscriptExtra(Player, workerScript, helper);
-  const hacknet = NetscriptHacknet(Player, workerScript, helper);
+  const formulas = NetscriptFormulas(Player, workerScript, helper);
+
+  const gang = wrapAPI(helper, {}, workerScript, NetscriptGang(Player, workerScript), "gang").gang as unknown as IGang;
+  const sleeve = wrapAPI(helper, {}, workerScript, NetscriptSleeve(Player), "sleeve").sleeve as unknown as ISleeve;
+  const hacknet = wrapAPI(helper, {}, workerScript, NetscriptHacknet(Player, workerScript), "hacknet")
+    .hacknet as unknown as IHacknet;
+  const bladeburner = wrapAPI(helper, {}, workerScript, NetscriptBladeburner(Player, workerScript), "bladeburner")
+    .bladeburner as unknown as IBladeburner;
+  const codingcontract = wrapAPI(
+    helper,
+    {},
+    workerScript,
+    NetscriptCodingContract(Player, workerScript),
+    "codingcontract",
+  ).codingcontract as unknown as ICodingContract;
   const infiltration = wrapAPI(helper, {}, workerScript, NetscriptInfiltration(Player), "infiltration")
     .infiltration as unknown as IInfiltration;
   const stanek = wrapAPI(helper, {}, workerScript, NetscriptStanek(Player, workerScript, helper), "stanek")
     .stanek as unknown as IStanek;
-  const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
-  const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
-  const corporation = NetscriptCorporation(Player, workerScript, helper);
-  const formulas = NetscriptFormulas(Player, workerScript, helper);
+  const corporation = wrapAPI(helper, {}, workerScript, NetscriptCorporation(Player, workerScript), "corporation")
+    .corporation as unknown as ICorporation;
   const singularity = wrapAPI(helper, {}, workerScript, NetscriptSingularity(Player, workerScript), "singularity")
     .singularity as unknown as ISingularity;
-  const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
-  const ui = NetscriptUserInterface(Player, workerScript, helper);
-  const grafting = NetscriptGrafting(Player, workerScript, helper);
+  const stockmarket = wrapAPI(helper, {}, workerScript, NetscriptStockMarket(Player, workerScript), "stock")
+    .stock as unknown as ITIX;
+  const ui = wrapAPI(helper, {}, workerScript, NetscriptUserInterface(), "ui").ui as unknown as IUserInterface;
+  const grafting = wrapAPI(helper, {}, workerScript, NetscriptGrafting(Player), "grafting")
+    .grafting as unknown as IGrafting;
 
   const base: INS = {
     ...singularity,

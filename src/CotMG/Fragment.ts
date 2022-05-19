@@ -76,13 +76,7 @@ export class Fragment {
   }
 
   copy(): Fragment {
-    return new Fragment(
-      this.id,
-      this.shape.map((a) => a.slice()),
-      this.type,
-      this.power,
-      this.limit,
-    );
+    return Object.assign({}, this);
   }
 }
 
