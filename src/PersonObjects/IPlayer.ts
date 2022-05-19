@@ -49,7 +49,7 @@ export interface IPlayer {
   has4SDataTixApi: boolean;
   hashManager: HashManager;
   hasTixApiAccess: boolean;
-  hasTorRouter: boolean; 
+  hasTorRouter: boolean;
   hasWseAccount: boolean;
   hp: number;
   jobs: IMap<string>;

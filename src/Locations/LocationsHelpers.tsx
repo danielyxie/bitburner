@@ -23,13 +23,17 @@ export function purchaseTorRouter(p: IPlayer): void {
     dialogBoxCreate("You cannot afford to purchase the TOR router!");
     return;
   }
-  p.loseMoney(CONSTANTS.TorRouterCost, "other");
 
   const darkweb = GetServer(SpecialServers.DarkWeb);
-  p.hasTorRouter = true;
+  if (darkweb) {
+    p.loseMoney(CONSTANTS.TorRouterCost, "other");
+    p.hasTorRouter = true;
 
-  p.getHomeComputer()!.serversOnNetwork!.push(darkweb!.hostname);
-  darkweb!.serversOnNetwork.push(p.getHomeComputer().hostname);
+    p.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
+    darkweb.serversOnNetwork.push(p.getHomeComputer().hostname);
+  } else {
+    throw new Error('You broke the game; darkweb does not exist!');
+  }
   dialogBoxCreate(
     "You have purchased a TOR router!<br>" +
       "You now have access to the dark web from your home computer.<br>" +
