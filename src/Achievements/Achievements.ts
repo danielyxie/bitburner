@@ -399,7 +399,7 @@ export const achievements: IMap<Achievement> = {
   TOR: {
     ...achievementData["TOR"],
     Icon: "TOR",
-    Condition: () => Player.hasTorRouter(),
+    Condition: () => Player.hasTorRouter,
   },
   HOSPITALIZED: {
     ...achievementData["HOSPITALIZED"],

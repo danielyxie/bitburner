@@ -2510,7 +2510,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         playtimeSinceLastBitnode: Player.playtimeSinceLastBitnode,
         jobs: {},
         factions: Player.factions.slice(),
-        tor: Player.hasTorRouter(),
+        tor: Player.hasTorRouter,
         inBladeburner: Player.inBladeburner(),
         hasCorporation: Player.hasCorporation(),
         entropy: Player.entropy,

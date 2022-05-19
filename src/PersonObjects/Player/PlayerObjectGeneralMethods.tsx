@@ -175,6 +175,10 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.hacknetNodes.length = 0;
   this.hashManager.prestige();
 
+  // Reset DarkWeb
+
+  this.hasTorRouter = false;
+
   // Reapply augs, re-calculate skills and reset HP
   this.reapplyAllAugmentations(true);
   this.hp = this.max_hp;

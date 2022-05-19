@@ -49,6 +49,7 @@ export interface IPlayer {
   has4SDataTixApi: boolean;
   hashManager: HashManager;
   hasTixApiAccess: boolean;
+  hasTorRouter: boolean; 
   hasWseAccount: boolean;
   hp: number;
   jobs: IMap<string>;
@@ -205,7 +206,6 @@ export interface IPlayer {
   hasAugmentation(aug: string | Augmentation, installed?: boolean): boolean;
   hasCorporation(): boolean;
   hasGangWith(facName: string): boolean;
-  hasTorRouter(): boolean;
   hasProgram(program: string): boolean;
   inBladeburner(): boolean;
   inGang(): boolean;

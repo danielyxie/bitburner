@@ -1565,4 +1565,15 @@ export const serverMetadata: IServerMetadata[] = [
     serverGrowth: 0,
     specialName: SpecialServers.WorldDaemon,
   },
+  {
+    hackDifficulty: 0,
+    hostname: "darkweb",
+    moneyAvailable: 0,
+    numOpenPortsRequired: 5,
+    organizationName: "darkweb",
+    requiredHackingSkill: 3000,
+    serverGrowth: 0,
+    specialName: SpecialServers.DarkWeb,
+    maxRam: 1,
+  },
 ];

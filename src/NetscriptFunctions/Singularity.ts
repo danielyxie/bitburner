@@ -476,7 +476,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (): boolean {
         _ctx.helper.checkSingularityAccess();
 
-        if (player.hasTorRouter()) {
+        if (player.hasTorRouter) {
           _ctx.log(() => "You already have a TOR router!");
           return true;
         }
@@ -509,7 +509,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const programName = _ctx.helper.string("programName", _programName).toLowerCase();
 
-        if (!player.hasTorRouter()) {
+        if (!player.hasTorRouter) {
           _ctx.log(() => "You do not have the TOR router.");
           return false;
         }
@@ -720,7 +720,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             workMoney: player.work_money_mult,
           },
           timeWorked: player.timeWorked,
-          tor: player.hasTorRouter(),
+          tor: player.hasTorRouter,
           workHackExpGain: player.workHackExpGained,
           workStrExpGain: player.workStrExpGained,
           workDefExpGain: player.workDefExpGained,
@@ -1250,7 +1250,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
 
         // If we don't have Tor, log it and return [] (empty list)
-        if (!player.hasTorRouter()) {
+        if (!player.hasTorRouter) {
           _ctx.log(() => "You do not have the TOR router.");
           return [];
         }
@@ -1262,7 +1262,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const programName = _ctx.helper.string("programName", _programName).toLowerCase();
 
         // If we don't have Tor, log it and return -1
-        if (!player.hasTorRouter()) {
+        if (!player.hasTorRouter) {
           _ctx.log(() => "You do not have the TOR router.");
           // returning -1 rather than throwing an error to be consistent with purchaseProgram
           // which returns false if tor has

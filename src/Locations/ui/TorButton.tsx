@@ -19,7 +19,7 @@ export function TorButton(props: IProps): React.ReactElement {
     props.rerender();
   }
 
-  if (props.p.hasTorRouter()) {
+  if (props.p.hasTorRouter) {
     return <Button>TOR Router - Purchased</Button>;
   }
 

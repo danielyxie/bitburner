@@ -57,6 +57,7 @@ export class PlayerObject implements IPlayer {
   has4SDataTixApi: boolean;
   hashManager: HashManager;
   hasTixApiAccess: boolean;
+  hasTorRouter: boolean;
   hasWseAccount: boolean;
   hp: number;
   jobs: IMap<string>;
@@ -215,7 +216,6 @@ export class PlayerObject implements IPlayer {
   hasAugmentation: (aug: string | Augmentation, installed?: boolean) => boolean;
   hasCorporation: () => boolean;
   hasGangWith: (facName: string) => boolean;
-  hasTorRouter: () => boolean;
   hasProgram: (program: string) => boolean;
   inBladeburner: () => boolean;
   inGang: () => boolean;
@@ -378,6 +378,9 @@ export class PlayerObject implements IPlayer {
     // Hacknet Nodes/Servers
     this.hacknetNodes = []; // Note= For Hacknet Servers, this array holds the hostnames of the server;
     this.hashManager = new HashManager();
+
+    // Darkweb
+    this.hasTorRouter = false;
 
     //Factions
     this.factions = []; //Names of all factions player has joine;
@@ -613,7 +616,6 @@ export class PlayerObject implements IPlayer {
     this.inGang = gangMethods.inGang;
     this.startGang = gangMethods.startGang;
 
-    this.hasTorRouter = serverMethods.hasTorRouter;
     this.getCurrentServer = serverMethods.getCurrentServer;
     this.getHomeComputer = serverMethods.getHomeComputer;
     this.getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;

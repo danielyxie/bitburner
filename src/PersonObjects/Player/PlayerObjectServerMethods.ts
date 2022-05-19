@@ -12,10 +12,6 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { SpecialServers } from "../../Server/data/SpecialServers";
 
-export function hasTorRouter(this: IPlayer): boolean {
-  return !!GetServer(SpecialServers.DarkWeb);
-}
-
 export function getCurrentServer(this: IPlayer): BaseServer {
   const server = GetServer(this.currentServer);
   if (server === null) throw new Error(`somehow connected to a server that does not exist. ${this.currentServer}`);
