@@ -560,7 +560,7 @@ export interface BitNodeMultipliers {
   /** Influences how much money the player earns when completing working their job. */
   CompanyWorkMoney: number;
   /** Influences the money gain from dividends of corporations created by the player. */
-  CorporationSoftCap: number;
+  CorporationSoftcap: number;
   /** Influences the valuation of corporations created by the player. */
   CorporationValuation: number;
   /** Influences the base experience gained for each ability when the player commits a crime. */
@@ -4391,6 +4391,13 @@ interface UserInterface {
    * RAM cost: 0 GB
    */
   getGameInfo(): GameInfo;
+
+  /**
+   * Clear the Terminal window, as if the player ran `clear` in the terminal
+   * @remarks
+   * RAM cost: 0.2 GB
+   */
+  clearTerminal(): void;
 }
 
 /**
@@ -4973,6 +4980,21 @@ export interface NS {
    * @param args - Arguments for the script being tailed.
    */
   tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
+
+  /**
+   * Close the tail window of a script.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * Closes a script’s logs. This is functionally the same pressing the "Close" button on the tail window.
+   *
+   * If the function is called with no arguments, it will close the current script’s logs.
+   *
+   * Otherwise, the pid argument can be used to close the logs from another script.
+   *
+   * @param pid - Optional. PID of the script having its tail closed. If omitted, the current script is used.
+   */
+  closeTail(pid?: number): void;
 
   /**
    * Get the list of servers connected to a server.

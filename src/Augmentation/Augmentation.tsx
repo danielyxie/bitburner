@@ -631,6 +631,7 @@ export class Augmentation {
         augmentationReference.baseCost *
         getGenericAugmentationPriceMultiplier() *
         BitNodeMultipliers.AugmentationMoneyCost;
+      repCost = augmentationReference.baseRepRequirement * BitNodeMultipliers.AugmentationRepCost;
     }
     return { moneyCost, repCost };
   }

@@ -36,7 +36,7 @@ export function calculateTradeInformationRepReward(
     30 *
     levelBonus *
     (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 1.5 : 1) *
-    BitNodeMultipliers.InfiltrationMoney
+    BitNodeMultipliers.InfiltrationRep
   );
 }
 

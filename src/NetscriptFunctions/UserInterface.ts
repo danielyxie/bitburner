@@ -11,6 +11,7 @@ import { defaultStyles } from "../Themes/Styles";
 import { CONSTANTS } from "../Constants";
 import { hash } from "../hash/hash";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { Terminal } from "../../src/Terminal";
 
 export function NetscriptUserInterface(): InternalAPI<IUserInterface> {
   return {
@@ -95,6 +96,12 @@ export function NetscriptUserInterface(): InternalAPI<IUserInterface> {
       };
 
       return gameInfo;
+    },
+
+    clearTerminal: function (): void {
+      updateRam("clearTerminal");
+      workerScript.log("ui.clearTerminal", () => `Clearing terminal`);
+      Terminal.clear();
     },
   };
 }
