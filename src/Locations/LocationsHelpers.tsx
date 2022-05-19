@@ -2,11 +2,11 @@
  * Location and traveling-related helper functions.
  * Mostly used for UI
  */
+import { SpecialServers } from "../Server/data/SpecialServers";
 import { CONSTANTS } from "../Constants";
 
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
-import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
+import { GetServer } from "../Server/AllServers";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 
@@ -25,19 +25,14 @@ export function purchaseTorRouter(p: IPlayer): void {
   }
   p.loseMoney(CONSTANTS.TorRouterCost, "other");
 
-  const darkweb = safetlyCreateUniqueServer({
-    ip: createUniqueRandomIp(),
-    hostname: "darkweb",
-    organizationName: "",
-    isConnectedTo: false,
-    adminRights: false,
-    purchasedByPlayer: false,
-    maxRam: 1,
-  });
-  AddToAllServers(darkweb);
+  const darkweb = GetServer(SpecialServers.DarkWeb);
+  if (!darkweb) {
+    throw new Error("Dark web is not a server.");
+  }
 
   p.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
   darkweb.serversOnNetwork.push(p.getHomeComputer().hostname);
+  console.log(darkweb);
   dialogBoxCreate(
     "You have purchased a TOR router!<br>" +
       "You now have access to the dark web from your home computer.<br>" +

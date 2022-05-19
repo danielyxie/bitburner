@@ -17,7 +17,16 @@ import { LocationName } from "./Locations/data/LocationNames";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { loadPlayer, Player } from "./Player";
 import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
-import { GetAllServers, loadAllServers, saveAllServers } from "./Server/AllServers";
+import {
+  AddToAllServers,
+  createUniqueRandomIp,
+  GetAllServers,
+  GetServer,
+  loadAllServers,
+  saveAllServers,
+} from "./Server/AllServers";
+import { SpecialServers } from "./Server/data/SpecialServers";
+import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
 import { Settings } from "./Settings/Settings";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
@@ -434,13 +443,30 @@ function evaluateVersionCompatibility(ver: string | number): void {
       Player.reapplyAllSourceFiles();
     }
 
+    if (ver < 18) {
+      // Create the darkweb for everyone but it won't be linked
+      const dw = GetServer(SpecialServers.DarkWeb);
+      if (!dw) {
+        const darkweb = safetlyCreateUniqueServer({
+          ip: createUniqueRandomIp(),
+          hostname: SpecialServers.DarkWeb,
+          organizationName: "",
+          isConnectedTo: false,
+          adminRights: false,
+          purchasedByPlayer: false,
+          maxRam: 1,
+        });
+        AddToAllServers(darkweb);
+      }
+    }
+
     // Update player work properties for the rewritten work system
     // Grants some rewards to players who were actively working beforehand:
     // * Rep to anyone doing faction/company work
     // * Finishes graft for free (with no Entropy) for anyone doing grafting
     // * Finishes program for free for anyone creating a program
     // Everyone gets 1 free level of NeuroFlux Governor as well
-    if (ver < 18) {
+    if (ver < 19) {
       Player.workManager.reset();
 
       const gainedRep = anyPlayer.workRepGained;
