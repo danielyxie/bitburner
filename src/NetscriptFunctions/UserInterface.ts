@@ -98,9 +98,8 @@ export function NetscriptUserInterface(): InternalAPI<IUserInterface> {
       return gameInfo;
     },
 
-    clearTerminal: function (): void {
-      updateRam("clearTerminal");
-      workerScript.log("ui.clearTerminal", () => `Clearing terminal`);
+    clearTerminal: (ctx: NetscriptContext) => (): void => {
+      ctx.log(() => `Clearing terminal`);
       Terminal.clear();
     },
   };
