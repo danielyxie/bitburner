@@ -102,17 +102,28 @@ describe("Terminal Directory Tests", function () {
       expect(isValidDirectoryName(".a1")).toEqual(true);
       expect(isValidDirectoryName("._foo")).toEqual(true);
       expect(isValidDirectoryName("_foo")).toEqual(true);
+      expect(isValidDirectoryName("foo.dir")).toEqual(true);
+      expect(isValidDirectoryName("foov1.0.0.1")).toEqual(true);
+      expect(isValidDirectoryName("foov1..0..0..1")).toEqual(true);
+      expect(isValidDirectoryName("foov1-0-0-1")).toEqual(true);
+      expect(isValidDirectoryName("foov1-0-0-1-")).toEqual(true);
+      expect(isValidDirectoryName("foov1--0--0--1--")).toEqual(true);
+      expect(isValidDirectoryName("foov1_0_0_1")).toEqual(true);
+      expect(isValidDirectoryName("foov1_0_0_1_")).toEqual(true);
+      expect(isValidDirectoryName("foov1__0__0__1")).toEqual(true);
     });
 
     it("should return false for invalid directory names", function () {
       expect(isValidDirectoryName("")).toEqual(false);
-      expect(isValidDirectoryName("foo.dir")).toEqual(false);
-      expect(isValidDirectoryName("1.")).toEqual(false);
-      expect(isValidDirectoryName("foo.")).toEqual(false);
+      expect(isValidDirectoryName("👨‍💻")).toEqual(false);
       expect(isValidDirectoryName("dir#")).toEqual(false);
       expect(isValidDirectoryName("dir!")).toEqual(false);
       expect(isValidDirectoryName("dir*")).toEqual(false);
       expect(isValidDirectoryName(".")).toEqual(false);
+      expect(isValidDirectoryName("..")).toEqual(false);
+      expect(isValidDirectoryName("1.")).toEqual(false);
+      expect(isValidDirectoryName("foo.")).toEqual(false);
+      expect(isValidDirectoryName("foov1.0.0.1.")).toEqual(false);
     });
   });
 
