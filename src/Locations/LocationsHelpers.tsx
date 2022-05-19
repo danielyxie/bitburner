@@ -32,7 +32,7 @@ export function purchaseTorRouter(p: IPlayer): void {
     p.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
     darkweb.serversOnNetwork.push(p.getHomeComputer().hostname);
   } else {
-    throw new Error('You broke the game; darkweb does not exist!');
+    throw new Error("You broke the game; darkweb does not exist!");
   }
   dialogBoxCreate(
     "You have purchased a TOR router!<br>" +
