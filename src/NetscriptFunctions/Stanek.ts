@@ -58,8 +58,8 @@ export function NetscriptStanek(
         //Charge the fragment
         const time = staneksGift.inBonus() ? 200 : 1000;
         return netscriptDelay(time, workerScript).then(function () {
-          const charge = staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
-          _ctx.log(() => `Charged fragment for ${charge} charge.`);
+          staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
+          _ctx.log(() => `Charged fragment with ${_ctx.workerScript.scriptRef.threads} threads.`);
           return Promise.resolve();
         });
       },
