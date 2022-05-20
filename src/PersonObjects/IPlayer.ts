@@ -27,11 +27,10 @@ import { IRouter } from "../ui/Router";
 import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 import { WorkManager } from "../Work/WorkManager";
 import { ISkillProgress } from "./formulas/skill";
+import { IPerson } from "./IPerson";
 import { Sleeve } from "./Sleeve/Sleeve";
 
-export interface IPlayer {
-  // Class members
-  augmentations: IPlayerOwnedAugmentation[];
+export interface IPlayer extends IPerson {
   bitNodeN: number;
   city: CityName;
   corporation: ICorporation | null;
@@ -146,13 +145,6 @@ export interface IPlayer {
   canAccessGang(): boolean;
   canAccessGrafting(): boolean;
   canAfford(cost: number): boolean;
-  gainHackingExp(exp: number): void;
-  gainStrengthExp(exp: number): void;
-  gainDefenseExp(exp: number): void;
-  gainDexterityExp(exp: number): void;
-  gainAgilityExp(exp: number): void;
-  gainCharismaExp(exp: number): void;
-  gainIntelligenceExp(exp: number): void;
   gainMoney(money: number, source: string): void;
   getCurrentServer(): BaseServer;
   getGangFaction(): Faction;
@@ -175,7 +167,6 @@ export interface IPlayer {
   process(router: IRouter, numCycles?: number): void;
   reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
-  regenerateHp(amt: number): void;
   setMoney(amt: number): void;
   singularityStopWork(): string;
   startBladeburner(p: any): void;
@@ -186,8 +177,6 @@ export interface IPlayer {
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
   giveAchievement(achievementId: string): void;
-  queryStatFromString(str: string): number;
-  getIntelligenceBonus(weight: number): number;
   getCasinoWinnings(): number;
   quitJob(company: string): void;
   hasJob(): boolean;
@@ -201,7 +190,6 @@ export interface IPlayer {
   resetMultipliers(): void;
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
-  calculateSkill(exp: number, mult?: number): number;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
   hospitalize(): void;
   checkForFactionInvitations(): Faction[];

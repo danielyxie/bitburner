@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
+import { IPerson } from "../PersonObjects/IPerson";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType, WorkType } from "../Work/WorkType";
@@ -120,7 +120,7 @@ export class Crime {
     return this.time;
   }
 
-  successRate(p: IPlayerOrSleeve): number {
+  successRate(p: IPerson): number {
     let chance: number =
       this.hacking_success_weight * p.hacking +
       this.strength_success_weight * p.strength +

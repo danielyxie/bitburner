@@ -27,6 +27,7 @@ import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { WorkManager } from "../../Work/WorkManager";
 import { ISkillProgress } from "../formulas/skill";
 import { IPlayer } from "../IPlayer";
+import { ITaskTracker } from "../ITaskTracker";
 import { Sleeve } from "../Sleeve/Sleeve";
 import * as augmentationMethods from "./PlayerObjectAugmentationMethods";
 import * as bladeburnerMethods from "./PlayerObjectBladeburnerMethods";
@@ -163,6 +164,7 @@ export class PlayerObject implements IPlayer {
   gainAgilityExp: (exp: number) => void;
   gainCharismaExp: (exp: number) => void;
   gainIntelligenceExp: (exp: number) => void;
+  gainStats: (retValue: ITaskTracker) => void;
   gainMoney: (money: number, source: string) => void;
   getCurrentServer: () => BaseServer;
   getGangFaction: () => Faction;
@@ -405,6 +407,7 @@ export class PlayerObject implements IPlayer {
     this.gainAgilityExp = generalMethods.gainAgilityExp;
     this.gainCharismaExp = generalMethods.gainCharismaExp;
     this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
+    this.gainStats = generalMethods.gainStats;
     this.queryStatFromString = generalMethods.queryStatFromString;
     this.cancelationPenalty = workMethods.cancelationPenalty;
     this.startFocusing = workMethods.startFocusing;
@@ -476,6 +479,10 @@ export class PlayerObject implements IPlayer {
     this.applyEntropy = augmentationMethods.applyEntropy;
 
     this.getCompanyName = workMethods.getCompanyName;
+  }
+
+  whoAmI(): string {
+    return "Player";
   }
 
   /**
