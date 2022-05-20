@@ -443,7 +443,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
       Player.reapplyAllAugmentations(true);
       Player.reapplyAllSourceFiles();
     }
-    if (ver < 18) {
+    if (ver < 19) {
       // Create the darkweb for everyone but it won't be linked
       const dw = GetServer(SpecialServers.DarkWeb);
       if (!dw) {
