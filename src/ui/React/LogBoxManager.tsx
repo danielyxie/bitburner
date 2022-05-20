@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { EventEmitter } from "../../utils/EventEmitter";
 import { RunningScript } from "../../Script/RunningScript";
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
@@ -19,6 +19,7 @@ import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
 import { Settings } from "../../Settings/Settings";
+import CircularProgress from "@mui/material/CircularProgress";
 
 let layerCounter = 0;
 
@@ -29,15 +30,34 @@ export const LogBoxClearEvents = new EventEmitter<[]>();
 interface Log {
   id: string;
   script: RunningScript;
+  foreignWindow: WindowProxy | null;
 }
 
 let logs: Log[] = [];
 
+function kill(script: RunningScript): void {
+  workerScripts.has(script.pid) && killWorkerScript(script, script.server, true);
+}
+
+function run(script: RunningScript): RunningScript | null {
+  const server = GetServer(script.server);
+  if (server === null) return null;
+  const s = findRunningScript(script.filename, script.args, server);
+  if (s === null) {
+    startWorkerScript(Player, script, server);
+    return script;
+  } else {
+    return s;
+  }
+}
+
 export function LogBoxManager(): React.ReactElement {
   const setRerender = useState(true)[1];
+
   function rerender(): void {
     setRerender((o) => !o);
   }
+
   useEffect(
     () =>
       LogBoxEvents.subscribe((script: RunningScript) => {
@@ -46,6 +66,7 @@ export function LogBoxManager(): React.ReactElement {
         logs.push({
           id: id,
           script: script,
+          foreignWindow: null,
         });
         rerender();
       }),
@@ -68,6 +89,57 @@ export function LogBoxManager(): React.ReactElement {
     }),
   );
 
+  function broadcast(): void {
+    logs.forEach((log) => {
+      const foreignWindow = log.foreignWindow;
+      if (!foreignWindow) return;
+      if (foreignWindow.closed) {
+        log.foreignWindow = null;
+        rerender();
+        return;
+      }
+
+      const message: ICrossWindowMessage<ICrossWindowMessageUpdate> = makeMessage({
+        filename: log.script.filename,
+        args: log.script.args,
+        logs: log.script.logs,
+        running: workerScripts.has(log.script.pid),
+      });
+      foreignWindow.postMessage(message, location.origin);
+    });
+  }
+
+  useEffect(() => {
+    const id = setInterval(broadcast, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  function onMessage(event: MessageEvent): void {
+    const sender = event.source;
+    const type = retrieveMessage<ICrossWindowMessageCommand>(event.data);
+    if (!type) return;
+
+    const log = logs.find((log) => log.foreignWindow === sender);
+    if (!log) return;
+    if (type.command === "run") {
+      const newScript = run(log.script);
+      if (newScript && newScript !== log.script) {
+        log.script = newScript;
+      }
+    } else if (type.command === "kill") {
+      kill(log.script);
+    } else if (type.command === "close") {
+      // window will close itself, just cleanup and rerender to make experience
+      // smoother
+      close(log.id);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  });
+
   //Close tail windows by their id
   function close(id: string): void {
     logs = logs.filter((l) => l.id !== id);
@@ -80,19 +152,58 @@ export function LogBoxManager(): React.ReactElement {
     rerender();
   }
 
+  function openExternally(log: Log): void {
+    if (log.foreignWindow) return;
+    const url = new URL(window.location.href);
+    url.hash = `#log`;
+    log.foreignWindow = window.open(url, "_blank", "popup");
+    rerender();
+  }
+
   return (
     <>
-      {logs.map((log) => (
-        <LogWindow key={log.id} script={log.script} id={log.id} onClose={() => close(log.id)} />
-      ))}
+      {logs
+        .filter((log) => !log.foreignWindow)
+        .map((log) => (
+          <LogWindow
+            key={log.id}
+            script={log.script}
+            id={log.id}
+            onClose={() => close(log.id)}
+            onOpenExternally={() => openExternally(log)}
+          />
+        ))}
     </>
   );
+}
+
+type ICrossWindowMessage<T> = T & { messageType: "Bitburner" };
+
+function makeMessage<T>(message: T): ICrossWindowMessage<T> {
+  return { messageType: "Bitburner", ...message };
+}
+
+function retrieveMessage<T>(message: any): T | undefined {
+  if (message.messageType !== "Bitburner") return;
+  return message as T;
+}
+
+interface ICrossWindowMessageUpdate {
+  filename: string;
+  args: any[];
+  running: boolean;
+  logs: string[];
+}
+
+interface ICrossWindowMessageCommand {
+  command: "run" | "kill" | "close";
 }
 
 interface IProps {
   script: RunningScript;
   id: string;
   onClose: () => void;
+  onOpenExternally: () => void;
 }
 
 const useStyles = makeStyles((_theme: Theme) =>
@@ -117,87 +228,40 @@ function LogWindow(props: IProps): React.ReactElement {
   const draggableRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<Draggable>(null);
   const [script, setScript] = useState(props.script);
+  const [running, setRunning] = useState(workerScripts.has(script.pid));
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
-  const setRerender = useState(false)[1];
   const [minimized, setMinimized] = useState(false);
-  function rerender(): void {
-    setRerender((old) => !old);
-  }
-
-  // useEffect(
-  //   () =>
-  //     WorkerScriptStartStopEventEmitter.subscribe(() => {
-  //       setTimeout(() => {
-  //         const server = GetServer(script.server);
-  //         if (server === null) return;
-  //         const exisitingScript = findRunningScript(script.filename, script.args, server);
-  //         if (exisitingScript) {
-  //           exisitingScript.logs = script.logs.concat(exisitingScript.logs)
-  //           setScript(exisitingScript)
-  //         }
-  //         rerender();
-  //       }, 100)
-  //     }),
-  //   [],
-  // );
 
   useEffect(() => {
     updateLayer();
-    const id = setInterval(rerender, 1000);
-    return () => clearInterval(id);
   }, []);
 
-  function kill(): void {
-    killWorkerScript(script, script.server, true);
-  }
-
-  function run(): void {
-    const server = GetServer(script.server);
-    if (server === null) return;
-    const s = findRunningScript(script.filename, script.args, server);
-    if (s === null) {
-      startWorkerScript(Player, script, server);
-    } else {
-      setScript(s);
-    }
-  }
+  useEffect(() => {
+    const timerId = setInterval(() => setRunning(workerScripts.has(script.pid)), 100);
+    return () => clearInterval(timerId);
+  }, []);
 
   function updateLayer(): void {
     const c = container.current;
     if (c === null) return;
     c.style.zIndex = logBoxBaseZIndex + layerCounter + "";
     layerCounter++;
-    rerender();
   }
 
-  function title(full = false): string {
-    const maxLength = 30;
-    const t = `${script.filename} ${script.args.map((x: any): string => `${x}`).join(" ")}`;
-    if (full || t.length <= maxLength) {
-      return t;
+  function maybeRunScript(): void {
+    const newScript = run(script);
+    if (newScript && script !== newScript) {
+      setScript(newScript);
     }
-    return t.slice(0, maxLength - 3) + "...";
   }
 
   function minimize(): void {
     setMinimized(!minimized);
   }
 
-  function lineColor(s: string): string {
-    if (s.match(/(^\[[^\]]+\] )?ERROR/) || s.match(/(^\[[^\]]+\] )?FAIL/)) {
-      return Settings.theme.error;
-    }
-    if (s.match(/(^\[[^\]]+\] )?SUCCESS/)) {
-      return Settings.theme.success;
-    }
-    if (s.match(/(^\[[^\]]+\] )?WARN/)) {
-      return Settings.theme.warning;
-    }
-    if (s.match(/(^\[[^\]]+\] )?INFO/)) {
-      return Settings.theme.info;
-    }
-    return Settings.theme.primary;
+  function openExternally(): void {
+    props.onOpenExternally();
   }
 
   // And trigger fakeDrag when the window is resized
@@ -282,53 +346,175 @@ function LogWindow(props: IProps): React.ReactElement {
             </span>
           }
         >
-          <>
-            <Paper className="drag" sx={{ display: "flex", alignItems: "center", cursor: "grab" }} ref={draggableRef}>
-              <Typography
-                variant="h6"
-                sx={{ marginRight: "auto", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}
-                title={title(true)}
-              >
-                {title(true)}
-              </Typography>
-
-              <span style={{ minWidth: "fit-content", height: `${minConstraints[1]}px` }}>
-                {!workerScripts.has(script.pid) ? (
-                  <Button className={classes.titleButton} onClick={run} onTouchEnd={run}>
-                    Run
-                  </Button>
-                ) : (
-                  <Button className={classes.titleButton} onClick={kill} onTouchEnd={kill}>
-                    Kill
-                  </Button>
-                )}
-                <Button className={classes.titleButton} onClick={minimize} onTouchEnd={minimize}>
-                  {minimized ? "\u{1F5D6}" : "\u{1F5D5}"}
-                </Button>
-                <Button className={classes.titleButton} onClick={props.onClose} onTouchEnd={props.onClose}>
-                  Close
-                </Button>
-              </span>
-            </Paper>
-
-            <Paper
-              className={classes.logs}
-              sx={{ height: `calc(100% - ${minConstraints[1]}px)`, display: minimized ? "none" : "flex" }}
-            >
-              <span style={{ display: "flex", flexDirection: "column" }}>
-                {script.logs.map(
-                  (line: string, i: number): JSX.Element => (
-                    <Typography key={i} sx={{ color: lineColor(line) }}>
-                      {line}
-                      <br />
-                    </Typography>
-                  ),
-                )}
-              </span>
-            </Paper>
-          </>
+          <LogWindowContent
+            draggableRef={draggableRef}
+            showLogs={!minimized}
+            filename={script.filename}
+            args={script.args}
+            running={running}
+            logs={script.logs}
+            run={maybeRunScript}
+            kill={() => kill(script)}
+            close={props.onClose}
+          >
+            <Button className={classes.titleButton} onClick={minimize} onTouchEnd={minimize}>
+              {minimized ? "\u{1F5D6}" : "\u{1F5D5}"}
+            </Button>
+            <Button className={classes.titleButton} onClick={openExternally} onTouchEnd={openExternally}>
+              &#x2197;
+            </Button>
+          </LogWindowContent>
         </ResizableBox>
       </Box>
     </Draggable>
+  );
+}
+
+interface IContentProps {
+  draggableRef: React.RefObject<HTMLDivElement>;
+  showLogs: boolean;
+  filename: string;
+  args: any[];
+  running: boolean;
+  logs: string[];
+  run: () => void;
+  kill: () => void;
+  close: () => void;
+}
+
+function LogWindowContent(props: PropsWithChildren<IContentProps>): React.ReactElement {
+  const classes = useStyles();
+  const setRerender = useState(false)[1];
+
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  function kill(): void {
+    props.kill();
+  }
+
+  function run(): void {
+    props.run();
+  }
+
+  function title(full = false): string {
+    const maxLength = 30;
+    const t = `${props.filename} ${props.args.map((x: any): string => `${x}`).join(" ")}`;
+    if (full || t.length <= maxLength) {
+      return t;
+    }
+    return t.slice(0, maxLength - 3) + "...";
+  }
+
+  function lineColor(s: string): string {
+    if (s.match(/(^\[[^\]]+\] )?ERROR/) || s.match(/(^\[[^\]]+\] )?FAIL/)) {
+      return Settings.theme.error;
+    }
+    if (s.match(/(^\[[^\]]+\] )?SUCCESS/)) {
+      return Settings.theme.success;
+    }
+    if (s.match(/(^\[[^\]]+\] )?WARN/)) {
+      return Settings.theme.warning;
+    }
+    if (s.match(/(^\[[^\]]+\] )?INFO/)) {
+      return Settings.theme.info;
+    }
+    return Settings.theme.primary;
+  }
+
+  // Max [width, height]
+  const minConstraints: [number, number] = [250, 33];
+
+  return (
+    <>
+      <Paper className="drag" sx={{ display: "flex", alignItems: "center", cursor: "grab" }} ref={props.draggableRef}>
+        <Typography
+          variant="h6"
+          sx={{ marginRight: "auto", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}
+          title={title(true)}
+        >
+          {title(true)}
+        </Typography>
+
+        <span style={{ minWidth: "fit-content", height: `${minConstraints[1]}px` }}>
+          {!props.running ? (
+            <Button className={classes.titleButton} onClick={run} onTouchEnd={run}>
+              Run
+            </Button>
+          ) : (
+            <Button className={classes.titleButton} onClick={kill} onTouchEnd={kill}>
+              Kill
+            </Button>
+          )}
+          {props.children}
+          <Button className={classes.titleButton} onClick={props.close} onTouchEnd={props.close}>
+            Close
+          </Button>
+        </span>
+      </Paper>
+
+      <Paper
+        className={classes.logs}
+        sx={{ height: `calc(100% - ${minConstraints[1]}px)`, display: props.showLogs ? "flex" : "none" }}
+      >
+        <span style={{ display: "flex", flexDirection: "column" }}>
+          {props.logs.map(
+            (line: string, i: number): JSX.Element => (
+              <Typography key={i} sx={{ color: lineColor(line) }}>
+                {line}
+                <br />
+              </Typography>
+            ),
+          )}
+        </span>
+      </Paper>
+    </>
+  );
+}
+
+export function ForeignLogWindow(): React.ReactElement {
+  const ignoredRef = useRef(null);
+  const [state, setState] = useState<ICrossWindowMessageUpdate | null>(null);
+
+  useEffect(() => {
+    const listener = (e: MessageEvent): void => {
+      const data = retrieveMessage<ICrossWindowMessageUpdate>(e.data);
+      data && setState(data);
+    };
+    window.addEventListener("message", listener);
+    return () => window.removeEventListener("message", listener);
+  });
+
+  function messageSender(type: ICrossWindowMessageCommand["command"]): () => void {
+    const message: ICrossWindowMessageCommand = { command: type };
+    return () => window.opener?.postMessage(makeMessage(message));
+  }
+
+  function close(): void {
+    messageSender("close")();
+    window.close();
+  }
+
+  if (!state) {
+    return <CircularProgress size={150} color="primary" />;
+  }
+  return (
+    <LogWindowContent
+      draggableRef={ignoredRef}
+      showLogs={true}
+      filename={state.filename}
+      args={state.args}
+      running={state.running}
+      logs={state.logs}
+      run={messageSender("run")}
+      kill={messageSender("kill")}
+      close={close}
+    />
   );
 }

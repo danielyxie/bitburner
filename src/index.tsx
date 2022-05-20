@@ -4,12 +4,19 @@ import ReactDOM from "react-dom";
 import { TTheme as Theme, ThemeEvents, refreshTheme } from "./Themes/ui/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import { initElectron } from "./Electron";
-initElectron();
+import { ForeignLogWindow } from "./ui/React/LogBoxManager";
+
 globalThis["React"] = React;
 globalThis["ReactDOM"] = ReactDOM;
+
+const isLogWindow = window.location.hash === "#log";
+const componentFn = isLogWindow ? () => <ForeignLogWindow /> : () => <LoadingScreen />;
+
+!isLogWindow && initElectron();
+
 ReactDOM.render(
   <Theme>
-    <LoadingScreen />
+    {componentFn()}
   </Theme>,
   document.getElementById("root"),
 );
@@ -18,7 +25,7 @@ function rerender(): void {
   refreshTheme();
   ReactDOM.render(
     <Theme>
-      <LoadingScreen />
+      {componentFn()}
     </Theme>,
     document.getElementById("root"),
   );
