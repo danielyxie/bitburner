@@ -34,8 +34,6 @@ import { IPerson } from "./IPerson";
 import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
 
 export interface IPlayer extends IPerson {
-  // Class members
-  augmentations: IPlayerOwnedAugmentation[];
   bitNodeN: number;
   city: CityName;
   companyName: string;

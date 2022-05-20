@@ -382,7 +382,7 @@ export function recordMoneySource(this: PlayerObject, amt: number, source: strin
   this.moneySourceB.record(amt, source);
 }
 
-export function gainHackingExp(this: IPlayer, exp: number): void {
+export function gainHackingExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainHackingExp()");
     return;

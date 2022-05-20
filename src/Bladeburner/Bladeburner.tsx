@@ -1343,7 +1343,7 @@ export class Bladeburner implements IBladeburner {
               damage = action.hpLoss * difficultyMultiplier;
               damage = Math.ceil(addOffset(damage, 10));
               this.hpLost += damage;
-              const cost = calculateHospitalizationCost(person, damage);
+              const cost = calculateHospitalizationCost(player, damage);
               if (person.takeDamage(damage)) {
                 ++this.numHosp;
                 this.moneyLost += cost;
@@ -1420,7 +1420,7 @@ export class Bladeburner implements IBladeburner {
             if (action.hpLoss) {
               damage = action.hpLoss * difficultyMultiplier;
               damage = Math.ceil(addOffset(damage, 10));
-              const cost = calculateHospitalizationCost(person, damage);
+              const cost = calculateHospitalizationCost(player, damage);
               if (person.takeDamage(damage)) {
                 ++this.numHosp;
                 this.moneyLost += cost;
@@ -1611,12 +1611,14 @@ export class Bladeburner implements IBladeburner {
     return retValue;
   }
 
-  infiltrateSynthoidCommunities(): void {
+  infiltrateSynthoidCommunities(p: IPlayer): void {
+    const infilSleeves = p.sleeves.filter((s) => s.bbAction === "Infiltrate synthoids").length;
+    const amt = Math.pow(infilSleeves, -0.5) / 2;
     for (const contract of Object.keys(this.contracts)) {
-      this.contracts[contract].count += 1;
+      this.contracts[contract].count += amt;
     }
     for (const operation of Object.keys(this.operations)) {
-      this.operations[operation].count += 1;
+      this.operations[operation].count += amt;
     }
     if (this.logging.general) {
       this.log(`Sleeve: Infiltrate the synthoid communities.`);

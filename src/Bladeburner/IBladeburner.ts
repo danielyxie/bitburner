@@ -101,7 +101,7 @@ export interface IBladeburner {
   getActionObject(actionId: IActionIdentifier): IAction | null;
   completeContract(success: boolean, actionIdent: IActionIdentifier): void;
   completeAction(player: IPlayer, person: IPerson, actionIdent: IActionIdentifier, isPlayer?: boolean): ITaskTracker;
-  infiltrateSynthoidCommunities(): void;
+  infiltrateSynthoidCommunities(p: IPlayer): void;
   changeRank(player: IPlayer, change: number): void;
   processAction(router: IRouter, player: IPlayer, seconds: number): void;
   calculateStaminaGainPerSecond(player: IPlayer): number;

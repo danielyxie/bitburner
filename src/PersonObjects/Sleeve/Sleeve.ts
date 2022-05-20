@@ -238,7 +238,7 @@ export class Sleeve extends Person {
 
       if (this.currentTaskTime >= this.currentTaskMaxTime) {
         if (this.bbAction === "Infiltrate synthoids") {
-          bb.infiltrateSynthoidCommunities();
+          bb.infiltrateSynthoidCommunities(p);
           this.currentTaskTime = 0;
           return retValue;
         }

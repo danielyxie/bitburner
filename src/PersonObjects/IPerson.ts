@@ -1,6 +1,7 @@
 // Interface that represents either the player (PlayerObject) or
 // a Sleeve. Used for functions that need to take in both.
 
+import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { ITaskTracker } from "./ITaskTracker";
 
 export interface IPerson {
@@ -14,7 +15,6 @@ export interface IPerson {
   intelligence: number;
   hp: number;
   max_hp: number;
-  money: number;
 
   // Experience
   hacking_exp: number;
@@ -46,6 +46,8 @@ export interface IPerson {
   crime_success_mult: number;
 
   bladeburner_analysis_mult: number;
+
+  augmentations: IPlayerOwnedAugmentation[];
 
   getIntelligenceBonus(weight: number): number;
   gainHackingExp(exp: number): void;
