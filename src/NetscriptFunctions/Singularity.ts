@@ -487,16 +487,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         player.loseMoney(CONSTANTS.TorRouterCost, "other");
 
-        const darkweb = safetlyCreateUniqueServer({
-          ip: createUniqueRandomIp(),
-          hostname: "darkweb",
-          organizationName: "",
-          isConnectedTo: false,
-          adminRights: false,
-          purchasedByPlayer: false,
-          maxRam: 1,
-        });
-        AddToAllServers(darkweb);
+        const darkweb = GetServer(SpecialServers.DarkWeb);
+        if (!darkweb) throw _ctx.makeRuntimeErrorMsg("DarkWeb was not a server but should have been");
 
         player.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
         darkweb.serversOnNetwork.push(player.getHomeComputer().hostname);
