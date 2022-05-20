@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { TTheme as Theme, ThemeEvents, refreshTheme } from "./Themes/ui/Theme";
+import { refreshTheme, ThemeEvents, TTheme as Theme } from "./Themes/ui/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import { initElectron } from "./Electron";
 import { ForeignLogWindow } from "./ui/React/LogBoxManager";
@@ -14,21 +14,11 @@ const componentFn = isLogWindow ? () => <ForeignLogWindow /> : () => <LoadingScr
 
 !isLogWindow && initElectron();
 
-ReactDOM.render(
-  <Theme>
-    {componentFn()}
-  </Theme>,
-  document.getElementById("root"),
-);
+ReactDOM.render(<Theme>{componentFn()}</Theme>, document.getElementById("root"));
 
 function rerender(): void {
   refreshTheme();
-  ReactDOM.render(
-    <Theme>
-      {componentFn()}
-    </Theme>,
-    document.getElementById("root"),
-  );
+  ReactDOM.render(<Theme>{componentFn()}</Theme>, document.getElementById("root"));
 }
 
 (function () {
