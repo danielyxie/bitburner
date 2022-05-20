@@ -51,6 +51,7 @@ export const RamCostConstants: IMap<number> = {
   ScriptCodingContractBaseRamCost: 10,
   ScriptSleeveBaseRamCost: 4,
   ScriptGetOwnedSourceFiles: 5,
+  ScriptClearTerminalCost: 0.2,
 
   ScriptSingularityFn1RamCost: 2,
   ScriptSingularityFn2RamCost: 3,
@@ -359,6 +360,7 @@ export const RamCosts: IMap<any> = {
   enableLog: 0,
   isLogEnabled: 0,
   getScriptLogs: 0,
+  clearTerminal: RamCostConstants.ScriptClearTerminalCost,
   nuke: RamCostConstants.ScriptPortProgramRamCost,
   brutessh: RamCostConstants.ScriptPortProgramRamCost,
   ftpcrack: RamCostConstants.ScriptPortProgramRamCost,

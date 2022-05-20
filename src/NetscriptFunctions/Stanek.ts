@@ -5,6 +5,7 @@ import { netscriptDelay } from "../NetscriptEvaluator";
 
 import { staneksGift } from "../CotMG/Helper";
 import { Fragments, FragmentById } from "../CotMG/Fragment";
+import { FragmentType } from "../CotMG/FragmentType";
 
 import {
   Fragment as IFragment,
@@ -25,7 +26,7 @@ export function NetscriptStanek(
 ): InternalAPI<IStanek> {
   function checkStanekAPIAccess(func: string): void {
     if (!player.hasAugmentation(AugmentationNames.StaneksGift1, true)) {
-      helper.makeRuntimeErrorMsg(func, "Requires Stanek's Gift installed.");
+      throw helper.makeRuntimeErrorMsg(func, "Stanek's Gift is not installed");
     }
   }
 
@@ -42,15 +43,23 @@ export function NetscriptStanek(
       },
     chargeFragment: (_ctx: NetscriptContext) =>
       function (_rootX: unknown, _rootY: unknown): Promise<void> {
+        //Get the fragment object using the given coordinates
         const rootX = _ctx.helper.number("rootX", _rootX);
         const rootY = _ctx.helper.number("rootY", _rootY);
         checkStanekAPIAccess("chargeFragment");
         const fragment = staneksGift.findFragment(rootX, rootY);
+        //Check whether the selected fragment can ge charged
         if (!fragment) throw _ctx.makeRuntimeErrorMsg(`No fragment with root (${rootX}, ${rootY}).`);
+        if (fragment.fragment().type == FragmentType.Booster) {
+          throw _ctx.makeRuntimeErrorMsg(
+            `The fragment with root (${rootX}, ${rootY}) is a Booster Fragment and thus cannot be charged.`,
+          );
+        }
+        //Charge the fragment
         const time = staneksGift.inBonus() ? 200 : 1000;
         return netscriptDelay(time, workerScript).then(function () {
-          const charge = staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
-          _ctx.log(() => `Charged fragment for ${charge} charge.`);
+          staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
+          _ctx.log(() => `Charged fragment with ${_ctx.workerScript.scriptRef.threads} threads.`);
           return Promise.resolve();
         });
       },

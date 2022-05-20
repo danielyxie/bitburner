@@ -700,7 +700,7 @@ export class Bladeburner implements IBladeburner {
 
     // Set variables
     if (args.length === 4) {
-      const variable = args[1];
+      const variable = args[1].toLowerCase(); // allows Action Type to be with or without capitalisation.
       const val = args[2];
 
       let highLow = false; // True for high, false for low
@@ -1993,7 +1993,7 @@ export class Bladeburner implements IBladeburner {
     }
 
     // If the Player starts doing some other actions, set action to idle and alert
-    if (player.hasAugmentation(AugmentationNames.BladesSimulacrum) === false && player.isWorking) {
+    if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true) && player.isWorking) {
       if (this.action.type !== ActionTypes["Idle"]) {
         let msg = "Your Bladeburner action was cancelled because you started doing something else.";
         if (this.automateEnabled) {
