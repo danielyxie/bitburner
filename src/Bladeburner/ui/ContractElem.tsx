@@ -32,7 +32,7 @@ export function ContractElem(props: IProps): React.ReactElement {
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,
     props.bladeburner.actionTimeToComplete,
   );
-  const actionTime = props.action.getActionTime(props.bladeburner);
+  const actionTime = props.action.getActionTime(props.bladeburner, props.player);
 
   const actionData = Contracts[props.action.name];
   if (actionData === undefined) {
