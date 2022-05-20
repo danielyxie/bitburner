@@ -83,7 +83,7 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
               <li>
                 <b>{props.aug.factions[0]}</b> faction
               </li>
-              {props.player.canAccessGang() && !props.aug.isSpecial && (
+              {props.player.isAwareOfGang() && !props.aug.isSpecial && (
                 <li>
                   Certain <b>gangs</b>
                 </li>
