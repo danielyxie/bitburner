@@ -1110,7 +1110,7 @@ export class Sleeve extends Person {
         this.gainRatesForTask.cha =
           2 * BladeburnerConstants.BaseStatGain * (p.bladeburner?.getRecruitmentTime(this) ?? 0) * 1000;
         this.currentTaskLocation = `(Success Rate: ${numeralWrapper.formatPercentage(
-          this.recrutmentSuccessChance(p),
+          this.recruitmentSuccessChance(p),
         )})`;
         break;
       case "Diplomacy":
@@ -1138,7 +1138,7 @@ export class Sleeve extends Person {
     return true;
   }
 
-  recrutmentSuccessChance(p: IPlayer): number {
+  recruitmentSuccessChance(p: IPlayer): number {
     return Math.max(0, Math.min(1, p.bladeburner?.getRecruitmentSuccessChance(this) ?? 0));
   }
 
