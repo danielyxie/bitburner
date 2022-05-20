@@ -354,5 +354,3 @@ export abstract class Person implements IPerson {
 
   abstract whoAmI(): string;
 }
-
-Reviver.constructors.Person = Person;
