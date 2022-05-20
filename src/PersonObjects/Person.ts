@@ -7,8 +7,6 @@ import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
 import { IPerson } from "./IPerson";
-import { Reviver } from "../utils/JSONReviver";
-import { ITaskTracker } from "./ITaskTracker";
 
 // Base class representing a person-like object
 export abstract class Person implements IPerson {
