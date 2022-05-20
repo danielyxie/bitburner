@@ -34,6 +34,7 @@ import { Reputation } from "./ui/React/Reputation";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
 import { v1APIBreak } from "./utils/v1APIBreak";
+import { WorkType } from "./Work/WorkType";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -470,12 +471,14 @@ function evaluateVersionCompatibility(ver: string | number): void {
 
       const gainedRep = anyPlayer.workRepGained;
       const fac = Factions[anyPlayer.currentWorkFactionName];
-      if (fac) {
+      const isDoingFacWork = fac && anyPlayer.workType === WorkType.Faction;
+      if (isDoingFacWork) {
         fac.playerReputation += gainedRep;
       }
 
       const company = Companies[anyPlayer.companyName];
-      if (company) {
+      const isDoingCompanyWork = company && anyPlayer.workType.startsWith(WorkType.Company);
+      if (isDoingCompanyWork) {
         company.playerReputation += gainedRep;
       }
 
@@ -509,12 +512,12 @@ function evaluateVersionCompatibility(ver: string | number): void {
                   <br /> and applied with no increase to the Entropy virus
                 </li>
               )}
-              {fac && gainedRep > 0 && (
+              {isDoingFacWork && gainedRep > 0 && (
                 <li>
                   <Reputation reputation={anyPlayer.workRepGained} /> reputation for your faction <b>{fac.name}</b>
                 </li>
               )}
-              {company && gainedRep > 0 && (
+              {isDoingCompanyWork && gainedRep > 0 && (
                 <li>
                   <Reputation reputation={anyPlayer.workRepGained} /> reputation for your company <b>{company.name}</b>
                 </li>
