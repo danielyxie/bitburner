@@ -1,4 +1,4 @@
-import { Augmentations } from "../Augmentation/Augmentations";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { Augmentation } from "../Augmentation/Augmentation";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
@@ -18,7 +18,6 @@ import {
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
 import { FactionNames } from "./data/FactionNames";
-import { updateAugmentationCosts, getNextNeuroFluxLevel } from "../Augmentation/AugmentationHelpers";
 import { SFC32RNG } from "../Casino/RNG";
 
 export function inviteToFaction(faction: Faction): void {
@@ -54,63 +53,41 @@ export function joinFaction(faction: Faction): void {
 //Returns a boolean indicating whether the player has the prerequisites for the
 //specified Augmentation
 export function hasAugmentationPrereqs(aug: Augmentation): boolean {
-  let hasPrereqs = true;
-  if (aug.prereqs && aug.prereqs.length > 0) {
-    for (let i = 0; i < aug.prereqs.length; ++i) {
-      const prereqAug = Augmentations[aug.prereqs[i]];
-      if (prereqAug == null) {
-        console.error(`Invalid prereq Augmentation ${aug.prereqs[i]}`);
-        continue;
-      }
-
-      if (Player.hasAugmentation(prereqAug, true) === false) {
-        hasPrereqs = false;
-
-        // Check if the aug is purchased
-        for (let j = 0; j < Player.queuedAugmentations.length; ++j) {
-          if (Player.queuedAugmentations[j].name === prereqAug.name) {
-            hasPrereqs = true;
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  return hasPrereqs;
+  return aug.prereqs.every((aug) => Player.hasAugmentation(aug));
 }
 
 export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = false): string {
   const hasPrereqs = hasAugmentationPrereqs(aug);
+  const augCosts = aug.getCost(Player);
   if (!hasPrereqs) {
-    const txt = `You must first purchase or install ${aug.prereqs.join(",")} before you can purchase this one.`;
+    const txt = `You must first purchase or install ${aug.prereqs
+      .filter((req) => !Player.hasAugmentation(req))
+      .join(",")} before you can purchase this one.`;
     if (sing) {
       return txt;
     } else {
       dialogBoxCreate(txt);
     }
-  } else if (aug.baseCost !== 0 && Player.money < aug.baseCost) {
+  } else if (augCosts.moneyCost !== 0 && Player.money < augCosts.moneyCost) {
     const txt = "You don't have enough money to purchase " + aug.name;
     if (sing) {
       return txt;
     }
     dialogBoxCreate(txt);
-  } else if (fac.playerReputation < aug.baseRepRequirement) {
+  } else if (fac.playerReputation < augCosts.repCost) {
     const txt = "You don't have enough faction reputation to purchase " + aug.name;
     if (sing) {
       return txt;
     }
     dialogBoxCreate(txt);
-  } else if (aug.baseCost === 0 || Player.money >= aug.baseCost) {
+  } else if (augCosts.moneyCost === 0 || Player.money >= augCosts.moneyCost) {
     const queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-      queuedAugmentation.level = getNextNeuroFluxLevel();
+      queuedAugmentation.level = aug.getLevel(Player);
     }
     Player.queuedAugmentations.push(queuedAugmentation);
 
-    Player.loseMoney(aug.baseCost, "augmentations");
-
-    updateAugmentationCosts();
+    Player.loseMoney(augCosts.moneyCost, "augmentations");
 
     if (sing) {
       return "You purchased " + aug.name;
@@ -162,16 +139,14 @@ export function processPassiveFactionRepGain(numCycles: number): void {
 export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Faction): string[] => {
   // If player has a gang with this faction, return (almost) all augmentations
   if (player.hasGangWith(faction.name)) {
-    let augs = Object.values(Augmentations);
+    let augs = Object.values(StaticAugmentations);
 
     // Remove special augs
-    augs = augs.filter((a) => !a.isSpecial);
+    augs = augs.filter((a) => !a.isSpecial && a.name !== AugmentationNames.CongruityImplant);
 
-    const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.CongruityImplant];
-
-    if (player.bitNodeN !== 2) {
+    if (player.bitNodeN === 2) {
       // TRP is not available outside of BN2 for Gangs
-      blacklist.push(AugmentationNames.TheRedPill);
+      augs.push(StaticAugmentations[AugmentationNames.TheRedPill]);
     }
 
     const rng = SFC32RNG(`BN${player.bitNodeN}.${player.sourceFileLvl(player.bitNodeN)}`);
@@ -189,9 +164,6 @@ export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Factio
       return rng() >= 1 - BitNodeMultipliers.GangUniqueAugs;
     };
     augs = augs.filter(uniqueFilter);
-
-    // Remove blacklisted augs
-    augs = augs.filter((a) => !blacklist.includes(a.name));
 
     return augs.map((a) => a.name);
   }

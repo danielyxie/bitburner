@@ -31,12 +31,12 @@ export function calculateTradeInformationRepReward(
   const levelBonus = maxLevel * Math.pow(1.01, maxLevel);
 
   return (
-    Math.pow(reward + 1, 2) *
-    Math.pow(difficulty, 3) *
-    3e3 *
+    Math.pow(reward + 1, 1.1) *
+    Math.pow(difficulty, 1.2) *
+    30 *
     levelBonus *
     (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 1.5 : 1) *
-    BitNodeMultipliers.InfiltrationMoney
+    BitNodeMultipliers.InfiltrationRep
   );
 }
 

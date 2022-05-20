@@ -38,6 +38,7 @@ import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
+import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../utils/WorkType";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -135,19 +136,19 @@ export class PlayerObject implements IPlayer {
   bladeburner_success_chance_mult: number;
 
   createProgramReqLvl: number;
-  factionWorkType: string;
+  factionWorkType: PlayerFactionWorkType;
   createProgramName: string;
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: string;
+  crimeType: CrimeType;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: string;
+  className: ClassType;
   currentWorkFactionName: string;
-  workType: string;
+  workType: WorkType;
   workCostMult: number;
   workExpMult: number;
   currentWorkFactionDescription: string;
@@ -229,11 +230,11 @@ export class PlayerObject implements IPlayer {
   singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
   startFactionWork: (faction: Faction) => void;
-  startClass: (costMult: number, expMult: number, className: string) => void;
+  startClass: (costMult: number, expMult: number, className: ClassType) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
   startCrime: (
     router: IRouter,
-    crimeType: string,
+    crimeType: CrimeType,
     hackExp: number,
     strExp: number,
     defExp: number,
@@ -258,7 +259,7 @@ export class PlayerObject implements IPlayer {
   queryStatFromString: (str: string) => number;
   getIntelligenceBonus: (weight: number) => number;
   getCasinoWinnings: () => number;
-  quitJob: (company: string) => void;
+  quitJob: (company: string, sing?: boolean) => void;
   hasJob: () => boolean;
   process: (router: IRouter, numCycles?: number) => void;
   createHacknetServer: () => HacknetServer;
@@ -280,7 +281,7 @@ export class PlayerObject implements IPlayer {
   prestigeSourceFile: () => void;
   calculateSkill: (exp: number, mult?: number) => number;
   calculateSkillProgress: (exp: number, mult?: number) => ISkillProgress;
-  resetWorkStatus: (generalType?: string, group?: string, workType?: string) => void;
+  resetWorkStatus: (generalType?: WorkType, group?: string, workType?: string) => void;
   getWorkHackExpGain: () => number;
   getWorkStrExpGain: () => number;
   getWorkDefExpGain: () => number;
@@ -302,7 +303,7 @@ export class PlayerObject implements IPlayer {
   sourceFileLvl: (n: number) => number;
   startGraftAugmentationWork: (augmentationName: string, time: number) => void;
   graftAugmentationWork: (numCycles: number) => boolean;
-  finishGraftAugmentationWork: (cancelled: boolean) => string;
+  finishGraftAugmentationWork: (cancelled: boolean, singularity?: boolean) => string;
   applyEntropy: (stacks?: number) => void;
 
   constructor() {
@@ -398,7 +399,7 @@ export class PlayerObject implements IPlayer {
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;
     this.focus = false;
-    this.workType = "";
+    this.workType = WorkType.None;
     this.workCostMult = 1;
     this.workExpMult = 1;
 
@@ -430,9 +431,9 @@ export class PlayerObject implements IPlayer {
     this.graftAugmentationName = "";
     this.timeWorkedGraftAugmentation = 0;
 
-    this.className = "";
+    this.className = ClassType.None;
 
-    this.crimeType = "";
+    this.crimeType = CrimeType.None;
 
     this.timeWorked = 0; //in m;
     this.timeWorkedCreateProgram = 0;
@@ -463,12 +464,12 @@ export class PlayerObject implements IPlayer {
     this.bladeburner = null;
     this.bladeburner_max_stamina_mult = 1;
     this.bladeburner_stamina_gain_mult = 1;
-    this.bladeburner_analysis_mult = 1; //Field Analysis Onl;
+    this.bladeburner_analysis_mult = 1; //Field Analysis Only
     this.bladeburner_success_chance_mult = 1;
 
     // Sleeves & Re-sleeving
     this.sleeves = [];
-    this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenan;
+    this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenant
     //bitnode
     this.bitNodeN = 1;
 
@@ -483,8 +484,8 @@ export class PlayerObject implements IPlayer {
     this.playtimeSinceLastBitnode = 0;
 
     // Keep track of where money comes from
-    this.moneySourceA = new MoneySourceTracker(); // Where money comes from since last-installed Augmentatio;
-    this.moneySourceB = new MoneySourceTracker(); // Where money comes from for this entire BitNode ru;
+    this.moneySourceA = new MoneySourceTracker(); // Where money comes from since last-installed Augmentation
+    this.moneySourceB = new MoneySourceTracker(); // Where money comes from for this entire BitNode run
     // Production since last Augmentation installation
     this.scriptProdSinceLastAug = 0;
 
@@ -618,7 +619,7 @@ export class PlayerObject implements IPlayer {
     this.getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;
     this.getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
     this.createHacknetServer = serverMethods.createHacknetServer;
-    this.factionWorkType = "";
+    this.factionWorkType = PlayerFactionWorkType.None;
     this.committingCrimeThruSingFn = false;
     this.singFnCrimeWorkerScript = null;
 

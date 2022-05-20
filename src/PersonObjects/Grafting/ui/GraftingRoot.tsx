@@ -1,13 +1,14 @@
-import { Construction, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, Construction } from "@mui/icons-material";
 import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Augmentation } from "../../../Augmentation/Augmentation";
-import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
+import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
 import { CONSTANTS } from "../../../Constants";
 import { hasAugmentationPrereqs } from "../../../Faction/FactionHelpers";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
+import { PurchaseAugmentationsOrderSetting } from "../../../Settings/SettingEnums";
 import { Settings } from "../../../Settings/Settings";
 import { IMap } from "../../../types";
 import { use } from "../../../ui/Context";
@@ -15,8 +16,8 @@ import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
 import { IPlayer } from "../../IPlayer";
-import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../GraftingHelpers";
 import { GraftableAugmentation } from "../GraftableAugmentation";
+import { calculateGraftingTimeWithBonus, getGraftingAvailableAugs } from "../GraftingHelpers";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
 
@@ -54,7 +55,7 @@ export const GraftingRoot = (): React.ReactElement => {
   const player = use.Player();
   const router = use.Router();
 
-  for (const aug of Object.values(Augmentations)) {
+  for (const aug of Object.values(StaticAugmentations)) {
     const name = aug.name;
     const graftableAug = new GraftableAugmentation(aug);
     GraftableAugmentations[name] = graftableAug;
@@ -62,11 +63,27 @@ export const GraftingRoot = (): React.ReactElement => {
 
   const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs(player)[0]);
   const [graftOpen, setGraftOpen] = useState(false);
+  const selectedAugmentation = StaticAugmentations[selectedAug];
 
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  const getAugsSorted = (): string[] => {
+    const augs = getGraftingAvailableAugs(player);
+    switch (Settings.PurchaseAugmentationsOrder) {
+      case PurchaseAugmentationsOrderSetting.Cost:
+        return augs.sort((a, b) => GraftableAugmentations[a].cost - GraftableAugmentations[b].cost);
+      default:
+        return augs;
+    }
+  };
+
+  const switchSortOrder = (newOrder: PurchaseAugmentationsOrderSetting): void => {
+    Settings.PurchaseAugmentationsOrder = newOrder;
+    rerender();
+  };
 
   useEffect(() => {
     const id = setInterval(rerender, 200);
@@ -90,13 +107,31 @@ export const GraftingRoot = (): React.ReactElement => {
       </Typography>
 
       <Box sx={{ my: 3 }}>
-        <Typography variant="h5">Graft Augmentations</Typography>
+        <Paper sx={{ p: 1 }}>
+          <Typography variant="h5">Graft Augmentations</Typography>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            <Button sx={{ width: "100%" }} onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>
+              Sort by Cost
+            </Button>
+            <Button sx={{ width: "100%" }} onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}>
+              Sort by Default Order
+            </Button>
+          </Box>
+        </Paper>
         {getGraftingAvailableAugs(player).length > 0 ? (
-          <Paper sx={{ my: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
+          <Paper sx={{ mb: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
-              {getGraftingAvailableAugs(player).map((k, i) => (
+              {getAugsSorted().map((k, i) => (
                 <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
-                  <Typography>{k}</Typography>
+                  <Typography
+                    sx={{
+                      color: canGraft(player, GraftableAugmentations[k])
+                        ? Settings.theme.primary
+                        : Settings.theme.disabled,
+                    }}
+                  >
+                    {k}
+                  </Typography>
                 </ListItemButton>
               ))}
             </List>
@@ -139,34 +174,41 @@ export const GraftingRoot = (): React.ReactElement => {
                   </>
                 }
               />
-              <Typography color={Settings.theme.info}>
-                <b>Time to Graft:</b>{" "}
-                {convertTimeMsToTimeElapsedString(
-                  calculateGraftingTimeWithBonus(player, GraftableAugmentations[selectedAug]),
+              <Box sx={{ maxHeight: 330, overflowY: "scroll" }}>
+                <Typography color={Settings.theme.info}>
+                  <b>Time to Graft:</b>{" "}
+                  {convertTimeMsToTimeElapsedString(
+                    calculateGraftingTimeWithBonus(player, GraftableAugmentations[selectedAug]),
+                  )}
+                  {/* Use formula so the displayed creation time is accurate to player bonus */}
+                </Typography>
+
+                {selectedAugmentation.prereqs.length > 0 && (
+                  <AugPreReqsChecklist player={player} aug={selectedAugmentation} />
                 )}
-                {/* Use formula so the displayed creation time is accurate to player bonus */}
-              </Typography>
-              {Augmentations[selectedAug].prereqs.length > 0 && (
-                <AugPreReqsChecklist player={player} aug={Augmentations[selectedAug]} />
-              )}
 
-              <br />
-              <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
-                {(() => {
-                  const aug = Augmentations[selectedAug];
+                <br />
 
-                  const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
-                  const tooltip = (
-                    <>
-                      {info}
-                      <br />
-                      <br />
-                      {aug.stats}
-                    </>
-                  );
-                  return tooltip;
-                })()}
-              </Typography>
+                <Typography>
+                  {(() => {
+                    const info =
+                      typeof selectedAugmentation.info === "string" ? (
+                        <span>{selectedAugmentation.info}</span>
+                      ) : (
+                        selectedAugmentation.info
+                      );
+                    const tooltip = (
+                      <>
+                        {info}
+                        <br />
+                        <br />
+                        {selectedAugmentation.stats}
+                      </>
+                    );
+                    return tooltip;
+                  })()}
+                </Typography>
+              </Box>
             </Box>
           </Paper>
         ) : (

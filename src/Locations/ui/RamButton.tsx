@@ -32,7 +32,7 @@ export function RamButton(props: IProps): React.ReactElement {
   }
 
   const bnMult = BitNodeMultipliers.HomeComputerRamCost === 1 ? "" : `\\cdot ${BitNodeMultipliers.HomeComputerRamCost}`;
-  console.log(BitNodeMultipliers.HomeComputerRamCost);
+
   return (
     <Tooltip
       title={

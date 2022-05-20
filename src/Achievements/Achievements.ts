@@ -24,6 +24,7 @@ import { IMap } from "../types";
 import * as data from "./AchievementData.json";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
+import { ClassType } from "../utils/WorkType";
 
 // Unable to correctly cast the JSON data into AchievementDataJson type otherwise...
 const achievementData = (<AchievementDataJson>(<unknown>data)).achievements;
@@ -391,12 +392,9 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["WORKOUT"],
     Icon: "WORKOUT",
     Condition: () =>
-      [
-        CONSTANTS.ClassGymStrength,
-        CONSTANTS.ClassGymDefense,
-        CONSTANTS.ClassGymDexterity,
-        CONSTANTS.ClassGymAgility,
-      ].includes(Player.className),
+      [ClassType.GymStrength, ClassType.GymDefense, ClassType.GymDexterity, ClassType.GymAgility].includes(
+        Player.className,
+      ),
   },
   TOR: {
     ...achievementData["TOR"],
@@ -799,5 +797,5 @@ export function calculateAchievements(): void {
   // Write all player's achievements to document for Steam/Electron
   // This could be replaced by "availableAchievements"
   // if we don't want to grant the save game achievements to steam but only currently available
-  (document as any).achievements = [...Player.achievements.map((a) => a.ID)];
+  document.achievements = [...Player.achievements.map((a) => a.ID)];
 }

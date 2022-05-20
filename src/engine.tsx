@@ -50,6 +50,8 @@ import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
 import { Button, Typography } from "@mui/material";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
+import { WorkType } from "./utils/WorkType";
+
 const Engine: {
   _lastUpdate: number;
   updateGame: (numCycles?: number) => void;
@@ -292,20 +294,27 @@ const Engine: {
       loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
       if (Player.isWorking) {
         Player.focus = true;
-        if (Player.workType == CONSTANTS.WorkTypeFaction) {
-          Player.workForFaction(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
-          Player.createProgramWork(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
-          Player.takeClass(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
-          Player.commitCrime(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
-          Player.workPartTime(numCyclesOffline);
-        } else if (Player.workType === CONSTANTS.WorkTypeGraftAugmentation) {
-          Player.graftAugmentationWork(numCyclesOffline);
-        } else {
-          Player.work(numCyclesOffline);
+        switch (Player.workType) {
+          case WorkType.Faction:
+            Player.workForFaction(numCyclesOffline);
+            break;
+          case WorkType.CreateProgram:
+            Player.createProgramWork(numCyclesOffline);
+            break;
+          case WorkType.StudyClass:
+            Player.takeClass(numCyclesOffline);
+            break;
+          case WorkType.Crime:
+            Player.commitCrime(numCyclesOffline);
+            break;
+          case WorkType.CompanyPartTime:
+            Player.workPartTime(numCyclesOffline);
+            break;
+          case WorkType.GraftAugmentation:
+            Player.graftAugmentationWork(numCyclesOffline);
+            break;
+          default:
+            Player.work(numCyclesOffline);
         }
       } else {
         for (let i = 0; i < Player.factions.length; i++) {

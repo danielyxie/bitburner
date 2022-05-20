@@ -1250,7 +1250,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
-    name: "HammingCodes: Integer to encoded Binary",
+    name: "HammingCodes: Integer to Encoded Binary",
     numTries: 10,
     difficulty: 5,
     desc: (n: number): string => {
@@ -1383,7 +1383,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return [n + m, edges];
     },
     solver: (data: [number, [number, number][]], ans: string): boolean => {
-      //Case where the player believes there is no solution
+      //Case where the player believes there is no solution.
+      //Attempt to construct one to check if this is correct.
       if (ans == "[]") {
         //Helper function to get neighbourhood of a vertex
         function neighbourhood(vertex: number): number[] {
@@ -1533,7 +1534,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
           length += 2;
         }
       }
-      return ans.length === length;
+
+      return ans.length <= length;
     },
   },
   {
@@ -1556,12 +1558,12 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "You are given the following LZ-encoded string:\n",
         `&nbsp; &nbsp; ${compressed}\n`,
         "Decode it and output the original string.\n\n",
-        "Example: decoding '5aaabc340533bca' chunk-by-chunk\n",
-        "&nbsp; &nbsp; 5aaabc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabc\n",
-        "&nbsp; &nbsp; 5aaabc34 &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabcaab\n",
-        "&nbsp; &nbsp; 5aaabc340 &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;aaabcaab\n",
-        "&nbsp; &nbsp; 5aaabc34053 &nbsp; &nbsp; &nbsp;-> &nbsp;aaabcaabaabaa\n",
-        "&nbsp; &nbsp; 5aaabc340533bca &nbsp;-> &nbsp;aaabcaabaabaabca",
+        "Example: decoding '5aaabb450723abb' chunk-by-chunk\n",
+        "&nbsp; &nbsp; 5aaabb &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabb\n",
+        "&nbsp; &nbsp; 5aaabb45 &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;aaabbaaab\n",
+        "&nbsp; &nbsp; 5aaabb450 &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;aaabbaaab\n",
+        "&nbsp; &nbsp; 5aaabb45072 &nbsp; &nbsp; &nbsp;-> &nbsp;aaabbaaababababa\n",
+        "&nbsp; &nbsp; 5aaabb450723abb &nbsp;-> &nbsp;aaabbaaababababaabb",
       ].join(" ");
     },
     gen: (): string => {
@@ -1592,21 +1594,21 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `&nbsp; &nbsp; ${plaintext}\n`,
         "Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n",
         "Examples (some have other possible encodings of minimal length):\n",
-        "&nbsp; &nbsp; abracadabra &nbsp; &nbsp;-> &nbsp;7abracad47\n",
-        "&nbsp; &nbsp; mississippi &nbsp; &nbsp;-> &nbsp;4miss433ppi\n",
-        "&nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp;-> &nbsp;3aAA53035\n",
-        "&nbsp; &nbsp; 2718281828 &nbsp; &nbsp; -> &nbsp;627182844\n",
-        "&nbsp; &nbsp; abcdefghijk &nbsp; &nbsp;-> &nbsp;9abcdefghi02jk\n",
-        "&nbsp; &nbsp; aaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;1a911a\n",
-        "&nbsp; &nbsp; aaaaaaaaaaaa &nbsp; -> &nbsp;1a912aa\n",
-        "&nbsp; &nbsp; aaaaaaaaaaaaa &nbsp;-> &nbsp;1a91031",
+        "&nbsp; &nbsp; abracadabra &nbsp; &nbsp; -> &nbsp;7abracad47\n",
+        "&nbsp; &nbsp; mississippi &nbsp; &nbsp; -> &nbsp;4miss433ppi\n",
+        "&nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp; -> &nbsp;3aAA53035\n",
+        "&nbsp; &nbsp; 2718281828 &nbsp; &nbsp; &nbsp;-> &nbsp;627182844\n",
+        "&nbsp; &nbsp; abcdefghijk &nbsp; &nbsp; -> &nbsp;9abcdefghi02jk\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;3aaa91\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaaa &nbsp; -> &nbsp;1a91031\n",
+        "&nbsp; &nbsp; aaaaaaaaaaaaaa &nbsp;-> &nbsp;1a91041",
       ].join(" ");
     },
     gen: (): string => {
       return comprLZGenerate();
     },
     solver: (plain: string, ans: string): boolean => {
-      return comprLZDecode(ans) === plain && ans.length === comprLZEncode(plain).length;
+      return comprLZDecode(ans) === plain && ans.length <= comprLZEncode(plain).length;
     },
   },
 ];

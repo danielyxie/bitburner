@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Intro } from "./Intro";
-import { Game } from "./Game";
 import { Location } from "../../Locations/Location";
 import { use } from "../../ui/Context";
 import { calculateDifficulty, calculateReward } from "../formulas/game";
+import { Game } from "./Game";
+import { Intro } from "./Intro";
 interface IProps {
   location: Location;
 }
@@ -22,24 +22,24 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
     router.toCity();
   }
 
-  if (!start) {
-    return (
-      <Intro
-        Location={props.location}
-        Difficulty={difficulty}
-        MaxLevel={props.location.infiltrationData.maxClearanceLevel}
-        start={() => setStart(true)}
-        cancel={cancel}
-      />
-    );
-  }
-
   return (
-    <Game
-      StartingDifficulty={startingSecurityLevel}
-      Difficulty={difficulty}
-      Reward={reward}
-      MaxLevel={props.location.infiltrationData.maxClearanceLevel}
-    />
+    <div style={{ display: "flex", alignItems: "center", height: "calc(100vh - 16px)" }}>
+      {start ? (
+        <Game
+          StartingDifficulty={startingSecurityLevel}
+          Difficulty={difficulty}
+          Reward={reward}
+          MaxLevel={props.location.infiltrationData.maxClearanceLevel}
+        />
+      ) : (
+        <Intro
+          Location={props.location}
+          Difficulty={difficulty}
+          MaxLevel={props.location.infiltrationData.maxClearanceLevel}
+          start={() => setStart(true)}
+          cancel={cancel}
+        />
+      )}
+    </div>
   );
 }

@@ -105,6 +105,13 @@ export function comprLZEncode(plain: string): string {
 
         // start new literal
         set(new_state, 0, 1, string + length + offset);
+
+        // end current backreference and start new backreference
+        for (let new_offset = 1; new_offset <= Math.min(9, i); ++new_offset) {
+          if (plain[i - new_offset] === c) {
+            set(new_state, new_offset, 1, string + length + offset + "0");
+          }
+        }
       }
     }
 

@@ -463,6 +463,12 @@ export class Terminal implements ITerminal {
     this.contractOpen = true;
     const res = await contract.prompt();
 
+    //Check if the contract still exists by the time the promise is fullfilled
+    if (serv.getContract(contractName) == null) {
+      this.contractOpen = false;
+      return this.error("Contract no longer exists (Was it solved by a script?)");
+    }
+
     switch (res) {
       case CodingContractResult.Success:
         if (contract.reward !== null) {
@@ -718,7 +724,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.TerminalCreateScript:
-          if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "nano" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");
@@ -734,7 +744,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.TerminalRunScript:
-          if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "run" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");
@@ -742,7 +756,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.ActiveScriptsToTerminal:
-          if (commandArray.length == 2 && commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "tail" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");

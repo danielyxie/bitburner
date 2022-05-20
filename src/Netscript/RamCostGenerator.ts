@@ -51,6 +51,7 @@ export const RamCostConstants: IMap<number> = {
   ScriptCodingContractBaseRamCost: 10,
   ScriptSleeveBaseRamCost: 4,
   ScriptGetOwnedSourceFiles: 5,
+  ScriptClearTerminalCost: 0.2,
 
   ScriptSingularityFn1RamCost: 2,
   ScriptSingularityFn2RamCost: 3,
@@ -156,6 +157,7 @@ const singularity: IMap<any> = {
   getUpgradeHomeCoresCost: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 2),
   workForCompany: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
   applyToCompany: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  quitJob: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
   getCompanyRep: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
   getCompanyFavor: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
   getCompanyFavorGain: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 4),
@@ -357,6 +359,7 @@ export const RamCosts: IMap<any> = {
   enableLog: 0,
   isLogEnabled: 0,
   getScriptLogs: 0,
+  clearTerminal: RamCostConstants.ScriptClearTerminalCost,
   nuke: RamCostConstants.ScriptPortProgramRamCost,
   brutessh: RamCostConstants.ScriptPortProgramRamCost,
   ftpcrack: RamCostConstants.ScriptPortProgramRamCost,

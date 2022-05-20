@@ -55,6 +55,11 @@ interface IDefaultSettings {
   EnableBashHotkeys: boolean;
 
   /**
+   * Infinite loop safety net
+   */
+  InfinityLoopSafety: boolean;
+
+  /**
    * Timestamps format
    */
   TimestampsFormat: string;
@@ -201,6 +206,7 @@ export const defaultSettings: IDefaultSettings = {
   DisableOverviewProgressBars: false,
   EnableBashHotkeys: false,
   TimestampsFormat: "",
+  InfinityLoopSafety: true,
   Locale: "en",
   MaxRecentScriptsCapacity: 50,
   MaxLogCapacity: 50,
@@ -241,6 +247,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   DisableOverviewProgressBars: defaultSettings.DisableOverviewProgressBars,
   EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
   TimestampsFormat: defaultSettings.TimestampsFormat,
+  InfinityLoopSafety: defaultSettings.InfinityLoopSafety,
   Locale: "en",
   MaxRecentScriptsCapacity: defaultSettings.MaxRecentScriptsCapacity,
   MaxLogCapacity: defaultSettings.MaxLogCapacity,

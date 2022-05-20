@@ -55,7 +55,7 @@ import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads 
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
-import { LogBoxEvents } from "./ui/React/LogBoxManager";
+import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 
@@ -82,6 +82,7 @@ import {
   Gang as IGang,
   Bladeburner as IBladeburner,
   Stanek as IStanek,
+  Sleeve as ISleeve,
   Infiltration as IInfiltration,
   RunningScript as IRunningScript,
   RecentScript as IRecentScript,
@@ -93,6 +94,12 @@ import {
   BitNodeMultipliers as IBNMults,
   Server as IServerDef,
   RunningScript as IRunningScriptDef,
+  Grafting as IGrafting,
+  UserInterface as IUserInterface,
+  TIX as ITIX,
+  Corporation as ICorporation,
+  CodingContract as ICodingContract,
+  Hacknet as IHacknet,
   // ToastVariant,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
@@ -360,7 +367,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
   };
 
-  const hack = function (
+  const hack = async function (
     hostname: string,
     manual: boolean,
     { threads: requestedThreads, stock }: any = {},
@@ -524,23 +531,35 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
   };
 
-  const gang = NetscriptGang(Player, workerScript, helper);
-  const sleeve = NetscriptSleeve(Player, workerScript, helper);
   const extra = NetscriptExtra(Player, workerScript, helper);
-  const hacknet = NetscriptHacknet(Player, workerScript, helper);
+  const formulas = NetscriptFormulas(Player, workerScript, helper);
+
+  const gang = wrapAPI(helper, {}, workerScript, NetscriptGang(Player, workerScript), "gang").gang as unknown as IGang;
+  const sleeve = wrapAPI(helper, {}, workerScript, NetscriptSleeve(Player), "sleeve").sleeve as unknown as ISleeve;
+  const hacknet = wrapAPI(helper, {}, workerScript, NetscriptHacknet(Player, workerScript), "hacknet")
+    .hacknet as unknown as IHacknet;
+  const bladeburner = wrapAPI(helper, {}, workerScript, NetscriptBladeburner(Player, workerScript), "bladeburner")
+    .bladeburner as unknown as IBladeburner;
+  const codingcontract = wrapAPI(
+    helper,
+    {},
+    workerScript,
+    NetscriptCodingContract(Player, workerScript),
+    "codingcontract",
+  ).codingcontract as unknown as ICodingContract;
   const infiltration = wrapAPI(helper, {}, workerScript, NetscriptInfiltration(Player), "infiltration")
     .infiltration as unknown as IInfiltration;
   const stanek = wrapAPI(helper, {}, workerScript, NetscriptStanek(Player, workerScript, helper), "stanek")
     .stanek as unknown as IStanek;
-  const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
-  const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
-  const corporation = NetscriptCorporation(Player, workerScript, helper);
-  const formulas = NetscriptFormulas(Player, workerScript, helper);
+  const corporation = wrapAPI(helper, {}, workerScript, NetscriptCorporation(Player, workerScript), "corporation")
+    .corporation as unknown as ICorporation;
   const singularity = wrapAPI(helper, {}, workerScript, NetscriptSingularity(Player, workerScript), "singularity")
     .singularity as unknown as ISingularity;
-  const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
-  const ui = NetscriptUserInterface(Player, workerScript, helper);
-  const grafting = NetscriptGrafting(Player, workerScript, helper);
+  const stockmarket = wrapAPI(helper, {}, workerScript, NetscriptStockMarket(Player, workerScript), "stock")
+    .stock as unknown as ITIX;
+  const ui = wrapAPI(helper, {}, workerScript, NetscriptUserInterface(), "ui").ui as unknown as IUserInterface;
+  const grafting = wrapAPI(helper, {}, workerScript, NetscriptGrafting(Player), "grafting")
+    .grafting as unknown as IGrafting;
 
   const base: INS = {
     ...singularity,
@@ -988,6 +1007,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       LogBoxEvents.emit(runningScriptObj);
     },
+    closeTail: function (_pid: unknown = workerScript.scriptRef.pid): void {
+      updateDynamicRam("closeTail", getRamCost(Player, "closeTail"));
+      const pid = helper.number("closeTail", "pid", _pid);
+      //Emit an event to tell the game to close the tail window if it exists
+      LogBoxCloserEvents.emit(pid);
+    },
     nuke: function (_hostname: unknown): boolean {
       updateDynamicRam("nuke", getRamCost(Player, "nuke"));
       const hostname = helper.string("tail", "hostname", _hostname);
@@ -1233,16 +1258,21 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return false;
       }
     },
-    killall: function (_hostname: unknown = workerScript.hostname): boolean {
+    killall: function (_hostname: unknown = workerScript.hostname, _safetyguard: unknown = true): boolean {
       updateDynamicRam("killall", getRamCost(Player, "killall"));
       const hostname = helper.string("killall", "hostname", _hostname);
+      const safetyguard = helper.boolean(_safetyguard);
       if (hostname === undefined) {
-        throw makeRuntimeErrorMsg("killall", "Takes 1 argument");
+        throw makeRuntimeErrorMsg("killall", "Usage: killall(hostname, [safetyguard boolean])");
       }
       const server = safeGetServer(hostname, "killall");
-      const scriptsRunning = server.runningScripts.length > 0;
+
+      let scriptsKilled = 0;
+
       for (let i = server.runningScripts.length - 1; i >= 0; --i) {
+        if (safetyguard === true && server.runningScripts[i].pid == workerScript.pid) continue;
         killWorkerScript(server.runningScripts[i], server.hostname, false);
+        ++scriptsKilled;
       }
       WorkerScriptStartStopEventEmitter.emit();
       workerScript.log(
@@ -1250,7 +1280,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         () => `Killing all scripts on '${server.hostname}'. May take a few minutes for the scripts to die.`,
       );
 
-      return scriptsRunning;
+      return scriptsKilled > 0;
     },
     exit: function (): void {
       updateDynamicRam("exit", getRamCost(Player, "exit"));
