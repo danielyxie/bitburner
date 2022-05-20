@@ -116,7 +116,10 @@ const FactionElement = (props: IFactionProps): React.ReactElement => {
               alignItems: "center",
             }}
           >
-            <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+            <span
+              style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}
+              title={props.faction.name}
+            >
               {props.faction.name}
             </span>
 
