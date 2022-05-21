@@ -220,6 +220,12 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             <>If this is set all references to memory will use GiB instead of GB, in accordance with IEC 60027-2.</>
           }
         />
+        <OptionSwitch
+          checked={Settings.ShowMiddleNullTimeUnit}
+          onChange={(newValue) => (Settings.ShowMiddleNullTimeUnit = newValue)}
+          text="Show all intermediary times unit, even when null."
+          tooltip={<>ex : 1 hours 13 seconds becomes 1 hours 0 minutes 13 seconds.</>}
+        />
         <Tooltip
           title={
             <Typography>
