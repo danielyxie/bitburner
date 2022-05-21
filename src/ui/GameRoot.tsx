@@ -68,7 +68,7 @@ import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
 import { Unclickable } from "../Exploits/Unclickable";
 import { Snackbar, SnackbarProvider } from "./React/Snackbar";
-import { LogBoxManager } from "./React/LogBoxManager";
+import { LogBoxManager } from "./Log/LogBoxManager";
 import { AlertManager } from "./React/AlertManager";
 import { PromptManager } from "./React/PromptManager";
 import { InvitationModal } from "../Faction/ui/InvitationModal";

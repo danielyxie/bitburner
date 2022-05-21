@@ -55,7 +55,7 @@ import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads 
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
-import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
+import { LogBoxEvents, LogBoxCloserEvents } from "./ui/Log/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 

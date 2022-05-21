@@ -27,7 +27,7 @@ import { arrayToString } from "../../utils/helpers/arrayToString";
 import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
 import { RecentScript } from "../../Netscript/RecentScripts";
-import { LogBoxEvents } from "../React/LogBoxManager";
+import { LogBoxEvents } from "../Log/LogBoxManager";
 
 const useStyles = makeStyles({
   noborder: {

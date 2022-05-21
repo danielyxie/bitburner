@@ -30,7 +30,7 @@ import { staneksGift } from "./CotMG/Helper";
 import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
 import { CONSTANTS } from "./Constants";
-import { LogBoxClearEvents } from "./ui/React/LogBoxManager";
+import { LogBoxClearEvents } from "./ui/Log/LogBoxManager";
 
 const BitNode8StartingMoney = 250e6;
 

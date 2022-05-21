@@ -6,13 +6,29 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
-module.exports = (env, argv) => {
+const configs = [
+  {
+    entry: "./src/index.tsx",
+    main: true,
+    entryName: "main",
+    suffix: "",
+    outputDirectory: "dist",
+  },
+  {
+    entry: "./src/ui/Log/Window/index.tsx",
+    main: false,
+    entryName: "log",
+    suffix: "-log",
+    outputDirectory: "dist/log",
+  },
+];
+
+module.exports = configs.map((config) => (env, argv) => {
   const isDevServer = (env || {}).devServer === true;
   const runInContainer = (env || {}).runInContainer === true;
   const isDevelopment = argv.mode === "development";
   const isFastRefresh = argv.fast === "true";
-  const outputDirectory = "dist";
-  const entry = "./src/index.tsx";
+  const outputDirectory = config.outputDirectory;
 
   const statsConfig = {
     builtAt: true,
@@ -53,6 +69,8 @@ module.exports = (env, argv) => {
     googleAnalytics: {
       trackingId: "UA-100157497-1",
     },
+    main: config.main, // include GA + editor in html
+    suffix: config.suffix,
     meta: {},
     minify: isDevelopment
       ? false
@@ -130,7 +148,9 @@ module.exports = (env, argv) => {
     // node: {
     //   fs: "mock",
     // },
-    entry: entry,
+    entry: {
+      [config.entryName]: config.entry,
+    },
     output: {
       path: path.resolve(__dirname, outputDirectory),
       filename: "[name].bundle.js",
@@ -181,7 +201,7 @@ module.exports = (env, argv) => {
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: `vendor`,
+            name: `vendor${config.suffix}`,
             chunks: "all",
           },
         },
@@ -193,4 +213,4 @@ module.exports = (env, argv) => {
     },
     stats: statsConfig,
   };
-};
+});

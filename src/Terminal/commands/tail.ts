@@ -5,7 +5,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import { findRunningScriptByPid } from "../../Script/ScriptHelpers";
 import { isScriptFilename, validScriptExtensions } from "../../Script/isScriptFilename";
 import { compareArrays } from "../../utils/helpers/compareArrays";
-import { LogBoxEvents } from "../../ui/React/LogBoxManager";
+import { LogBoxEvents } from "../../ui/Log/LogBoxManager";
 
 export function tail(
   terminal: ITerminal,

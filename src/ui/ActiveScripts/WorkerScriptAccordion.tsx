@@ -28,7 +28,7 @@ import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 
 import { dialogBoxCreate } from "../React/DialogBox";
-import { LogBoxEvents } from "../React/LogBoxManager";
+import { LogBoxEvents } from "../Log/LogBoxManager";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { arrayToString } from "../../utils/helpers/arrayToString";
 import { Money } from "../React/Money";

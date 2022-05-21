@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { refreshTheme, ThemeEvents, TTheme as Theme } from "./Themes/ui/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import { initElectron } from "./Electron";
-import { ForeignLogWindow } from "./ui/React/LogBoxManager";
+import { ForeignLogWindow } from "./ui/Log/Window/ForeignLogWindow";
 
 globalThis["React"] = React;
 globalThis["ReactDOM"] = ReactDOM;

@@ -1,11 +1,9 @@
-import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EventEmitter } from "../../utils/EventEmitter";
 import { RunningScript } from "../../Script/RunningScript";
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Draggable from "react-draggable";
 import { ResizableBox } from "react-resizable";
 import makeStyles from "@mui/styles/makeStyles";
@@ -19,7 +17,14 @@ import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
 import { Settings } from "../../Settings/Settings";
-import CircularProgress from "@mui/material/CircularProgress";
+import { LogWindowContent } from "./LogWindowContent";
+import {
+  ICrossWindowMessage,
+  ICrossWindowMessageCommand,
+  ICrossWindowMessageUpdate,
+  makeMessage,
+  retrieveMessage,
+} from "./messaging";
 
 let layerCounter = 0;
 
@@ -154,8 +159,7 @@ export function LogBoxManager(): React.ReactElement {
 
   function openExternally(log: Log): void {
     if (log.foreignWindow) return;
-    const url = new URL(window.location.href);
-    url.hash = `#log`;
+    const url = new URL("./log/index.html", window.location.href);
     log.foreignWindow = window.open(url, "_blank", "popup");
     rerender();
   }
@@ -177,28 +181,6 @@ export function LogBoxManager(): React.ReactElement {
   );
 }
 
-type ICrossWindowMessage<T> = T & { messageType: "Bitburner" };
-
-function makeMessage<T>(message: T): ICrossWindowMessage<T> {
-  return { messageType: "Bitburner", ...message };
-}
-
-function retrieveMessage<T>(message: any): T | undefined {
-  if (message.messageType !== "Bitburner") return;
-  return message as T;
-}
-
-interface ICrossWindowMessageUpdate {
-  filename: string;
-  args: any[];
-  running: boolean;
-  logs: string[];
-}
-
-interface ICrossWindowMessageCommand {
-  command: "run" | "kill" | "close";
-}
-
 interface IProps {
   script: RunningScript;
   id: string;
@@ -208,13 +190,6 @@ interface IProps {
 
 const useStyles = makeStyles((_theme: Theme) =>
   createStyles({
-    logs: {
-      overflowY: "scroll",
-      overflowX: "hidden",
-      scrollbarWidth: "auto",
-      flexDirection: "column-reverse",
-      whiteSpace: "pre-wrap",
-    },
     titleButton: {
       padding: "1px 0",
       height: "100%",
@@ -367,154 +342,5 @@ function LogWindow(props: IProps): React.ReactElement {
         </ResizableBox>
       </Box>
     </Draggable>
-  );
-}
-
-interface IContentProps {
-  draggableRef: React.RefObject<HTMLDivElement>;
-  showLogs: boolean;
-  filename: string;
-  args: any[];
-  running: boolean;
-  logs: string[];
-  run: () => void;
-  kill: () => void;
-  close: () => void;
-}
-
-function LogWindowContent(props: PropsWithChildren<IContentProps>): React.ReactElement {
-  const classes = useStyles();
-  const setRerender = useState(false)[1];
-
-  function rerender(): void {
-    setRerender((old) => !old);
-  }
-
-  useEffect(() => {
-    const id = setInterval(rerender, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  function kill(): void {
-    props.kill();
-  }
-
-  function run(): void {
-    props.run();
-  }
-
-  function title(full = false): string {
-    const maxLength = 30;
-    const t = `${props.filename} ${props.args.map((x: any): string => `${x}`).join(" ")}`;
-    if (full || t.length <= maxLength) {
-      return t;
-    }
-    return t.slice(0, maxLength - 3) + "...";
-  }
-
-  function lineColor(s: string): string {
-    if (s.match(/(^\[[^\]]+\] )?ERROR/) || s.match(/(^\[[^\]]+\] )?FAIL/)) {
-      return Settings.theme.error;
-    }
-    if (s.match(/(^\[[^\]]+\] )?SUCCESS/)) {
-      return Settings.theme.success;
-    }
-    if (s.match(/(^\[[^\]]+\] )?WARN/)) {
-      return Settings.theme.warning;
-    }
-    if (s.match(/(^\[[^\]]+\] )?INFO/)) {
-      return Settings.theme.info;
-    }
-    return Settings.theme.primary;
-  }
-
-  // Max [width, height]
-  const minConstraints: [number, number] = [250, 33];
-
-  return (
-    <>
-      <Paper className="drag" sx={{ display: "flex", alignItems: "center", cursor: "grab" }} ref={props.draggableRef}>
-        <Typography
-          variant="h6"
-          sx={{ marginRight: "auto", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}
-          title={title(true)}
-        >
-          {title(true)}
-        </Typography>
-
-        <span style={{ minWidth: "fit-content", height: `${minConstraints[1]}px` }}>
-          {!props.running ? (
-            <Button className={classes.titleButton} onClick={run} onTouchEnd={run}>
-              Run
-            </Button>
-          ) : (
-            <Button className={classes.titleButton} onClick={kill} onTouchEnd={kill}>
-              Kill
-            </Button>
-          )}
-          {props.children}
-          <Button className={classes.titleButton} onClick={props.close} onTouchEnd={props.close}>
-            Close
-          </Button>
-        </span>
-      </Paper>
-
-      <Paper
-        className={classes.logs}
-        sx={{ height: `calc(100% - ${minConstraints[1]}px)`, display: props.showLogs ? "flex" : "none" }}
-      >
-        <span style={{ display: "flex", flexDirection: "column" }}>
-          {props.logs.map(
-            (line: string, i: number): JSX.Element => (
-              <Typography key={i} sx={{ color: lineColor(line) }}>
-                {line}
-                <br />
-              </Typography>
-            ),
-          )}
-        </span>
-      </Paper>
-    </>
-  );
-}
-
-export function ForeignLogWindow(): React.ReactElement {
-  const ignoredRef = useRef(null);
-  const [state, setState] = useState<ICrossWindowMessageUpdate | null>(null);
-
-  useEffect(() => {
-    const listener = (e: MessageEvent): void => {
-      const data = retrieveMessage<ICrossWindowMessageUpdate>(e.data);
-      data && setState(data);
-    };
-    window.addEventListener("message", listener);
-    return () => window.removeEventListener("message", listener);
-  });
-
-  function messageSender(type: ICrossWindowMessageCommand["command"]): () => void {
-    const message: ICrossWindowMessageCommand = { command: type };
-    return () => window.opener?.postMessage(makeMessage(message));
-  }
-
-  function close(): void {
-    messageSender("close")();
-    window.close();
-  }
-
-  if (!state) {
-    return <CircularProgress size={150} color="primary" />;
-  }
-  return (
-    <LogWindowContent
-      draggableRef={ignoredRef}
-      showLogs={true}
-      filename={state.filename}
-      args={state.args}
-      running={state.running}
-      logs={state.logs}
-      run={messageSender("run")}
-      kill={messageSender("kill")}
-      close={close}
-    />
   );
 }

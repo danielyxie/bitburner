@@ -13,6 +13,7 @@
     <meta name="msapplication-TileColor" content="#000000" />
     <meta name="msapplication-config" content="dist/browserconfig.xml" />
     <meta name="theme-color" content="#ffffff" />
+    <% if (htmlWebpackPlugin.options.main) { %>
     <!-- MONACO JS -->
     <link
       rel="stylesheet"
@@ -50,6 +51,7 @@
       ga("create", "<%= htmlWebpackPlugin.options.googleAnalytics.trackingId %>", "auto");
       ga("send", "pageview");
     </script>
+    <% } %>
     <% } %>
     <style>
       html, body {

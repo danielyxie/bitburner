@@ -4,7 +4,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import { EventEmitter } from "../../utils/EventEmitter";
 import Alert from "@mui/material/Alert";
 import Paper from "@mui/material/Paper";
-import { logBoxBaseZIndex } from "./LogBoxManager";
+import { logBoxBaseZIndex } from "../Log/LogBoxManager";
 
 interface IProps {
   children: React.ReactNode | React.ReactNode[];
