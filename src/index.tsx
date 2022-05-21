@@ -1,24 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { refreshTheme, ThemeEvents, TTheme as Theme } from "./Themes/ui/Theme";
+import { TTheme as Theme, ThemeEvents, refreshTheme } from "./Themes/ui/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import { initElectron } from "./Electron";
-import { ForeignLogWindow } from "./ui/Log/Window/ForeignLogWindow";
-
+initElectron();
 globalThis["React"] = React;
 globalThis["ReactDOM"] = ReactDOM;
-
-const isLogWindow = window.location.hash === "#log";
-const componentFn = isLogWindow ? () => <ForeignLogWindow /> : () => <LoadingScreen />;
-
-!isLogWindow && initElectron();
-
-ReactDOM.render(<Theme>{componentFn()}</Theme>, document.getElementById("root"));
+ReactDOM.render(
+  <Theme>
+    <LoadingScreen />
+  </Theme>,
+  document.getElementById("root"),
+);
 
 function rerender(): void {
   refreshTheme();
-  ReactDOM.render(<Theme>{componentFn()}</Theme>, document.getElementById("root"));
+  ReactDOM.render(
+    <Theme>
+      <LoadingScreen />
+    </Theme>,
+    document.getElementById("root"),
+  );
 }
 
 (function () {
