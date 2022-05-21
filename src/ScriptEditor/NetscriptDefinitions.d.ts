@@ -3817,7 +3817,7 @@ export interface Sleeve {
    * @returns Reputation requirement of the augmentation.
    */
   getSleeveAugmentationRepReq(augName: string): number;
-  
+
   /**
    * Set a sleeve to perform bladeburner actions.
    * @remarks

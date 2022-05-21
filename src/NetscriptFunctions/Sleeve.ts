@@ -45,7 +45,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
       dexterity: sl.dexterity,
       agility: sl.agility,
       charisma: sl.charisma,
-      memory: sl.memory
+      memory: sl.memory,
     };
   };
 
@@ -192,7 +192,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
           location: sl.currentTaskLocation,
           gymStatType: sl.gymStatType,
           factionWorkType: FactionWorkType[sl.factionWorkType],
-          className: sl.className
+          className: sl.className,
         };
       },
     getInformation:
@@ -294,13 +294,17 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
 
         return augs;
       },
-      getSleeveAugmentationPrice: (ctx: NetscriptContext) => (_augName: unknown): number => {
+    getSleeveAugmentationPrice:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown): number => {
         checkSleeveAPIAccess(ctx);
         const augName = ctx.helper.string("augName", _augName);
         const aug: Augmentation = StaticAugmentations[augName];
         return aug.baseCost;
       },
-      getSleeveAugmentationRepReq: (ctx: NetscriptContext) => (_augName: unknown, _basePrice = false): number => {
+    getSleeveAugmentationRepReq:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown, _basePrice = false): number => {
         checkSleeveAPIAccess(ctx);
         const augName = ctx.helper.string("augName", _augName);
         const aug: Augmentation = StaticAugmentations[augName];
