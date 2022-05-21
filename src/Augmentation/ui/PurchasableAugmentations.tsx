@@ -2,7 +2,7 @@
  * React component for displaying a single augmentation for purchase through
  * the faction UI
  */
-import { CheckBox, CheckBoxOutlineBlank, CheckCircle, Info, NewReleases, Report } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, CheckCircle, NewReleases, Report } from "@mui/icons-material";
 import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Faction } from "../../Faction/Faction";
@@ -11,8 +11,8 @@ import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentation } from "../Augmentation";
 import { AugmentationNames } from "../data/AugmentationNames";
-import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 import { StaticAugmentations } from "../StaticAugmentations";
+import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 interface IPreReqsProps {
   player: IPlayer;
@@ -211,23 +211,22 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                   </>
                 }
               >
-                <Info sx={{ mr: 1 }} color="info" />
+                <Typography
+                  variant="h6"
+                  sx={{
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    color:
+                      props.owned || !props.parent.canPurchase(props.parent.player, aug)
+                        ? Settings.theme.disabled
+                        : Settings.theme.primary,
+                  }}
+                >
+                  {aug.name}
+                  {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel(props.parent.player)}`}
+                </Typography>
               </Tooltip>
-              <Typography
-                variant="h6"
-                sx={{
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  color:
-                    props.owned || !props.parent.canPurchase(props.parent.player, aug)
-                      ? Settings.theme.disabled
-                      : Settings.theme.primary,
-                }}
-              >
-                {aug.name}
-                {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel(props.parent.player)}`}
-              </Typography>
               {aug.factions.length === 1 && !props.parent.sleeveAugs && (
                 <Exclusive player={props.parent.player} aug={aug} />
               )}
