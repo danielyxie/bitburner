@@ -32,7 +32,7 @@ function randomColor(fragment: ActiveFragment): string {
 }
 
 export function Grid(props: IProps): React.ReactElement {
-  const activeGrid = calculateGrid(props.gift)
+  const activeGrid = calculateGrid(props.gift);
 
   function color(worldX: number, worldY: number): string {
     if (props.ghostGrid[worldX][worldY] && activeGrid[worldX][worldY]) return "red";
