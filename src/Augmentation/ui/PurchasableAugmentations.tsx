@@ -219,7 +219,10 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
-                  color: props.owned ? Settings.theme.disabled : Settings.theme.primary,
+                  color:
+                    props.owned || !props.parent.canPurchase(props.parent.player, aug)
+                      ? Settings.theme.disabled
+                      : Settings.theme.primary,
                 }}
               >
                 {aug.name}
