@@ -466,7 +466,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
     // * Finishes graft for free (with no Entropy) for anyone doing grafting
     // * Finishes program for free for anyone creating a program
     // Everyone gets 1 free level of NeuroFlux Governor as well
-    if (ver < 20) {
+    if (ver < 21) {
       Player.workManager.reset();
 
       const gainedRep = anyPlayer.workRepGained;
