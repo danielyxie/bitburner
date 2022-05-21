@@ -4532,7 +4532,7 @@ export interface NS {
    * It is also possible to get the number of arguments that was passed into a script using: 'args.length'
    * WARNING: Do not try to modify the args array. This will break the game.
    */
-  readonly args: (string | number | boolean)[];
+  readonly args: (string | number | boolean | undefined)[];
 
   /**
    * Steal a servers money.
