@@ -1,13 +1,13 @@
 import { TableBody, TableRow } from "@mui/material";
 import * as React from "react";
 import { ActiveFragment } from "../ActiveFragment";
+import { calculateGrid } from "../Helper";
 import { IStaneksGift } from "../IStaneksGift";
 import { Cell } from "./Cell";
 
 interface IProps {
   width: number;
   height: number;
-  activeGrid: number[][];
   ghostGrid: number[][];
   gift: IStaneksGift;
   enter(i: number, j: number): void;
@@ -32,11 +32,13 @@ function randomColor(fragment: ActiveFragment): string {
 }
 
 export function Grid(props: IProps): React.ReactElement {
+  const activeGrid = calculateGrid(props.gift)
+
   function color(worldX: number, worldY: number): string {
-    if (props.ghostGrid[worldX][worldY] && props.activeGrid[worldX][worldY]) return "red";
+    if (props.ghostGrid[worldX][worldY] && activeGrid[worldX][worldY]) return "red";
     if (props.ghostGrid[worldX][worldY]) return "white";
 
-    if (props.activeGrid[worldX][worldY]) {
+    if (activeGrid[worldX][worldY]) {
       const fragment = props.gift.fragmentAt(worldX, worldY);
       if (!fragment) throw new Error("ActiveFragment should not be null");
       return randomColor(fragment);
