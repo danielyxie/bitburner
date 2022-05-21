@@ -155,8 +155,8 @@ interface IDefaultSettings {
   UseIEC60027_2: boolean;
 
   /*
-  * Display intermediary time unit when their value is null
-  */
+   * Display intermediary time unit when their value is null
+   */
   ShowMiddleNullTimeUnit: boolean;
 
   /*
