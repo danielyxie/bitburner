@@ -993,6 +993,7 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
   faction.playerReputation += this.workRepGained;
 
   this.updateSkillLevels();
+  let res = "";
 
   if (!sing) {
     dialogBoxCreate(
@@ -1013,12 +1014,8 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
         <br />
       </>,
     );
-  }
-
-  this.isWorking = false;
-  this.resetWorkStatus();
-  if (sing) {
-    const res =
+  } else {
+    res =
       "You worked for your faction " +
       faction.name +
       " for a total of " +
@@ -1039,10 +1036,11 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
       " agi exp, and " +
       numeralWrapper.formatExp(this.workChaExpGained) +
       " cha exp.";
-
-    return res;
   }
-  return "";
+
+  this.isWorking = false;
+  this.resetWorkStatus();
+  return res;
 }
 
 //Money gained per game cycle
