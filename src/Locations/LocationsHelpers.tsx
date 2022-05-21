@@ -32,7 +32,6 @@ export function purchaseTorRouter(p: IPlayer): void {
 
   p.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
   darkweb.serversOnNetwork.push(p.getHomeComputer().hostname);
-  console.log(darkweb);
   dialogBoxCreate(
     "You have purchased a TOR router!<br>" +
       "You now have access to the dark web from your home computer.<br>" +
