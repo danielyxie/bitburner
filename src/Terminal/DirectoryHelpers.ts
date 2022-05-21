@@ -53,7 +53,7 @@ export function isValidDirectoryName(name: string): boolean {
   // Must be at least 1 character long
   // Can only include characters in the character set [-.%a-zA-Z0-9_]
   // Cannot end with a '.'
-  const regex = /^(?:[-.%]|\w)*[-%a-zA-Z0-9_]$/;
+  const regex = /^.?[a-zA-Z0-9_-]+$/;
 
   // match() returns null if no match is found
   return name.match(regex) != null;
@@ -233,7 +233,7 @@ export function evaluateDirectoryPath(path: string, currPath?: string): string |
 
   // If the path begins with a slash, then its an absolute path. Otherwise its relative
   // For relative paths, we need to prepend the current directory
-  if (!t_path.startsWith("/") && currPath != null) {
+  if (!t_path.startsWith("/") && currPath) {
     t_path = currPath + (currPath.endsWith("/") ? "" : "/") + t_path;
   }
 

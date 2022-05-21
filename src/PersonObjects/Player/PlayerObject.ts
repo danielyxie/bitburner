@@ -37,6 +37,7 @@ import { ISkillProgress } from "../formulas/skill";
 import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { ITaskTracker } from "../ITaskTracker";
 import { CONSTANTS } from "../../Constants";
 import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../utils/WorkType";
 
@@ -203,6 +204,7 @@ export class PlayerObject implements IPlayer {
   gainAgilityExp: (exp: number) => void;
   gainCharismaExp: (exp: number) => void;
   gainIntelligenceExp: (exp: number) => void;
+  gainStats: (retValue: ITaskTracker) => void;
   gainMoney: (money: number, source: string) => void;
   getCurrentServer: () => BaseServer;
   getGangFaction: () => Faction;
@@ -524,6 +526,7 @@ export class PlayerObject implements IPlayer {
     this.gainAgilityExp = generalMethods.gainAgilityExp;
     this.gainCharismaExp = generalMethods.gainCharismaExp;
     this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
+    this.gainStats = generalMethods.gainStats;
     this.queryStatFromString = generalMethods.queryStatFromString;
     this.resetWorkStatus = generalMethods.resetWorkStatus;
     this.processWorkEarnings = generalMethods.processWorkEarnings;
@@ -630,6 +633,10 @@ export class PlayerObject implements IPlayer {
     this.sourceFileLvl = generalMethods.sourceFileLvl;
 
     this.applyEntropy = augmentationMethods.applyEntropy;
+  }
+
+  whoAmI(): string {
+    return "Player";
   }
 
   /**

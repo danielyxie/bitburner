@@ -1,4 +1,4 @@
-// Base class representing a person-like object
+import * as generalMethods from "./Player/PlayerObjectGeneralMethods";
 import { Augmentation } from "../Augmentation/Augmentation";
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -6,32 +6,10 @@ import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
+import { IPerson } from "./IPerson";
 
-// Interface that defines a generic object used to track experience/money
-// earnings for tasks
-export interface ITaskTracker {
-  hack: number;
-  str: number;
-  def: number;
-  dex: number;
-  agi: number;
-  cha: number;
-  money: number;
-}
-
-export function createTaskTracker(): ITaskTracker {
-  return {
-    hack: 0,
-    str: 0,
-    def: 0,
-    dex: 0,
-    agi: 0,
-    cha: 0,
-    money: 0,
-  };
-}
-
-export abstract class Person {
+// Base class representing a person-like object
+export abstract class Person implements IPerson {
   /**
    * Stats
    */
@@ -41,7 +19,7 @@ export abstract class Person {
   dexterity = 1;
   agility = 1;
   charisma = 1;
-  intelligence = 1;
+  intelligence = 0;
   hp = 10;
   max_hp = 10;
 
@@ -97,23 +75,27 @@ export abstract class Person {
   bladeburner_analysis_mult = 1;
   bladeburner_success_chance_mult = 1;
 
-  infiltration_base_rep_increase = 0;
-  infiltration_rep_mult = 1;
-  infiltration_trade_mult = 1;
-  infiltration_sell_mult = 1;
-  infiltration_timer_mult = 1;
-  infiltration_damage_reduction_mult = 1;
-
   /**
    * Augmentations
    */
   augmentations: IPlayerOwnedAugmentation[] = [];
-  queuedAugmentations: IPlayerOwnedAugmentation[] = [];
 
   /**
    * City that the person is in
    */
   city: CityName = CityName.Sector12;
+
+  gainHackingExp = generalMethods.gainHackingExp;
+  gainStrengthExp = generalMethods.gainStrengthExp;
+  gainDefenseExp = generalMethods.gainDefenseExp;
+  gainDexterityExp = generalMethods.gainDexterityExp;
+  gainAgilityExp = generalMethods.gainAgilityExp;
+  gainCharismaExp = generalMethods.gainCharismaExp;
+  gainIntelligenceExp = generalMethods.gainIntelligenceExp;
+  gainStats = generalMethods.gainStats;
+  calculateSkill = generalMethods.calculateSkill;
+  regenerateHp = generalMethods.regenerateHp;
+  queryStatFromString = generalMethods.queryStatFromString;
 
   /**
    * Updates this object's multipliers for the given augmentation
@@ -213,13 +195,6 @@ export abstract class Person {
     this.bladeburner_stamina_gain_mult = 1;
     this.bladeburner_analysis_mult = 1;
     this.bladeburner_success_chance_mult = 1;
-
-    this.infiltration_base_rep_increase = 0;
-    this.infiltration_rep_mult = 1;
-    this.infiltration_trade_mult = 1;
-    this.infiltration_sell_mult = 1;
-    this.infiltration_timer_mult = 1;
-    this.infiltration_damage_reduction_mult = 1;
   }
 
   /**
@@ -265,4 +240,8 @@ export abstract class Person {
   getIntelligenceBonus(weight: number): number {
     return calculateIntelligenceBonus(this.intelligence, weight);
   }
+
+  abstract takeDamage(amt: number): boolean;
+
+  abstract whoAmI(): string;
 }
