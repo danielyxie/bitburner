@@ -159,7 +159,8 @@ export function LogBoxManager(): React.ReactElement {
 
   function openExternally(log: Log): void {
     if (log.foreignWindow) return;
-    const url = new URL("./log/index.html", window.location.href);
+    const relativePath = process.env.NODE_ENV === "development" ? "./log/index.html" : "./dist/log/index.html";
+    const url = new URL(relativePath, window.location.href);
     log.foreignWindow = window.open(url, "_blank", "popup");
     rerender();
   }

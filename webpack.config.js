@@ -13,6 +13,7 @@ const configs = [
     entryName: "main",
     suffix: "",
     outputDirectory: "dist",
+    relativePath: "dist", // in production mode, since index.html is @root
   },
   {
     entry: "./src/ui/Log/Window/index.tsx",
@@ -20,6 +21,7 @@ const configs = [
     entryName: "log",
     suffix: "-log",
     outputDirectory: "dist/log",
+    relativePath: "..",
   },
 ];
 
@@ -71,6 +73,7 @@ module.exports = configs.map((config) => (env, argv) => {
     },
     main: config.main, // include GA + editor in html
     suffix: config.suffix,
+    relativePath: config.relativePath,
     meta: {},
     minify: isDevelopment
       ? false

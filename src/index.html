@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png" />
-    <link rel="manifest" href="dist/site.webmanifest" />
-    <link rel="mask-icon" href="dist/safari-pinned-tab.svg" color="#000000" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= htmlWebpackPlugin.options.relativePath %>/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= htmlWebpackPlugin.options.relativePath %>/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= htmlWebpackPlugin.options.relativePath %>/favicon-16x16.png" />
+    <link rel="manifest" href="<%= htmlWebpackPlugin.options.relativePath %>/site.webmanifest" />
+    <link rel="mask-icon" href="<%= htmlWebpackPlugin.options.relativePath %>/safari-pinned-tab.svg" color="#000000" />
     <meta name="apple-mobile-web-app-title" content="Bitburner" />
     <meta name="application-name" content="Bitburner" />
     <meta name="msapplication-TileColor" content="#000000" />
-    <meta name="msapplication-config" content="dist/browserconfig.xml" />
+    <meta name="msapplication-config" content="<%= htmlWebpackPlugin.options.relativePath %>/browserconfig.xml" />
     <meta name="theme-color" content="#ffffff" />
     <% if (htmlWebpackPlugin.options.main) { %>
     <!-- MONACO JS -->
@@ -25,10 +25,10 @@
       var require = { paths: { vs: "dist/ext/monaco-editor/min/vs", "monaco-vim": "dist/ext/monaco-vim" } };
     </script>
 
-    <script src="dist/ext/monaco-editor/min/vs/loader.js"></script>
-    <script src="dist/ext/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
-    <script src="dist/ext/monaco-editor/min/vs/editor/editor.main.js"></script>
-    <script src="dist/ext/monaco-vim.js"></script>
+    <script src="<%= htmlWebpackPlugin.options.relativePath %>/ext/monaco-editor/min/vs/loader.js"></script>
+    <script src="<%= htmlWebpackPlugin.options.relativePath %>/ext/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+    <script src="<%= htmlWebpackPlugin.options.relativePath %>/ext/monaco-editor/min/vs/editor/editor.main.js"></script>
+    <script src="<%= htmlWebpackPlugin.options.relativePath %>/ext/monaco-vim.js"></script>
 
     <!-- Google Analytics -->
     <script>
