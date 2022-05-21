@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Table } from "../../ui/React/Table";
 import { Grid } from "./Grid";
-import { zeros, calculateGrid } from "../Helper";
+import { zeros } from "../Helper";
 import { ActiveFragmentSummary } from "./ActiveFragmentSummary";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";

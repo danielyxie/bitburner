@@ -3,7 +3,7 @@ import * as React from "react";
 import { ActiveFragment } from "../ActiveFragment";
 import { DummyGift } from "../DummyGift";
 import { Grid } from "./Grid";
-import { calculateGrid, zeros } from "../Helper";
+import { zeros } from "../Helper";
 
 interface IProps {
   width: number;
