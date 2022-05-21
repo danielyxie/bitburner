@@ -102,7 +102,7 @@ module.exports = configs.map((config) => (env, argv) => {
           useShortDoctype: false,
         },
   };
-  if (!isDevelopment) {
+  if (!isDevelopment && config.main) {
     htmlConfig.filename = "../index.html";
   }
 
