@@ -159,7 +159,7 @@ export class Corporation {
     if (this.unlockUpgrades[6] === 1) {
       upgrades += 0.1;
     }
-    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftCap + upgrades);
+    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftcap + upgrades);
   }
 
   determineValuation(): number {

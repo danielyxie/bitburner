@@ -1,10 +1,11 @@
-import React from "react";
 import { Theme } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import M from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
+import M from "@mui/material/Modal";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { SxProps } from "@mui/system";
+import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -12,7 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      zIndex: 999999,
     },
     paper: {
       backgroundColor: theme.palette.background.default,
@@ -35,6 +35,7 @@ interface IProps {
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  sx?: SxProps<Theme>;
 }
 
 export const Modal = (props: IProps): React.ReactElement => {
@@ -49,6 +50,7 @@ export const Modal = (props: IProps): React.ReactElement => {
       onClose={props.onClose}
       closeAfterTransition
       className={classes.modal}
+      sx={props.sx}
     >
       <Fade in={props.open}>
         <div className={classes.paper}>

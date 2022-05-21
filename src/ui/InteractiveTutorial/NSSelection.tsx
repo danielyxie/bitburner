@@ -35,7 +35,7 @@ export function NSSelection(props: IProps): React.ReactElement {
   }
 
   return (
-    <Modal open={props.open} onClose={props.onClose}>
+    <Modal open={props.open} onClose={props.onClose} sx={{ zIndex: 999999 }}>
       <Tabs variant="fullWidth" value={value} onChange={handleChange}>
         <Tab label="NS1" />
         <Tab label="NS2" />

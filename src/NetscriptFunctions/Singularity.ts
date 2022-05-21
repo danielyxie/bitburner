@@ -29,7 +29,7 @@ import { Router } from "../ui/GameRoot";
 import { SpecialServers } from "../Server/data/SpecialServers";
 import { Page } from "../ui/Router";
 import { Locations } from "../Locations/Locations";
-import { GetServer, AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
+import { GetServer } from "../Server/AllServers";
 import { Programs } from "../Programs/Programs";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -39,7 +39,7 @@ import { Factions, factionExists } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
 import { netscriptDelay } from "../NetscriptEvaluator";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { getServerOnNetwork, safetlyCreateUniqueServer } from "../Server/ServerHelpers";
+import { getServerOnNetwork } from "../Server/ServerHelpers";
 import { Terminal } from "../Terminal";
 import { calculateHackingTime } from "../Hacking";
 import { Server } from "../Server/Server";
@@ -84,7 +84,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       if (script.filename === cbScript) {
         const ramUsage = script.ramUsage;
         const ramAvailable = home.maxRam - home.ramUsed;
-        if (ramUsage > ramAvailable) {
+        if (ramUsage > ramAvailable + 0.001) {
           return; // Not enough RAM
         }
         const runningScriptObj = new RunningScript(script, []); // No args
@@ -123,7 +123,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return [aug.getCost(player).moneyCost, aug.getCost(player).repCost];
+        const costs = aug.getCost(player);
+        return [costs.repCost, costs.moneyCost];
       },
     getAugmentationPrereq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): string[] {
@@ -488,16 +489,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         player.loseMoney(CONSTANTS.TorRouterCost, "other");
 
-        const darkweb = safetlyCreateUniqueServer({
-          ip: createUniqueRandomIp(),
-          hostname: "darkweb",
-          organizationName: "",
-          isConnectedTo: false,
-          adminRights: false,
-          purchasedByPlayer: false,
-          maxRam: 1,
-        });
-        AddToAllServers(darkweb);
+        const darkweb = GetServer(SpecialServers.DarkWeb);
+        if (!darkweb) throw _ctx.makeRuntimeErrorMsg("DarkWeb was not a server but should have been");
 
         player.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
         darkweb.serversOnNetwork.push(player.getHomeComputer().hostname);

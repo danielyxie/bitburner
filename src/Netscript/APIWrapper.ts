@@ -5,6 +5,8 @@ import type { WorkerScript } from "./WorkerScript";
 import { makeRuntimeRejectMsg } from "../NetscriptEvaluator";
 import { Player } from "../Player";
 import { CityName } from "src/Locations/data/CityNames";
+import { Settings } from "../Settings/Settings";
+import { CONSTANTS } from "../Constants";
 
 type ExternalFunction = (...args: any[]) => any;
 type ExternalAPI = {
@@ -91,8 +93,14 @@ function wrapFunction(
       getValidPort: (port: any) => helpers.getValidPort(functionPath, port),
     },
   };
+  const safetyEnabled = Settings.InfinityLoopSafety;
   function wrappedFunction(...args: unknown[]): unknown {
     helpers.updateDynamicRam(ctx.function, getRamCost(Player, ...tree, ctx.function));
+    if (safetyEnabled) workerScript.infiniteLoopSafetyCounter++;
+    if (workerScript.infiniteLoopSafetyCounter > CONSTANTS.InfiniteLoopLimit)
+      throw new Error(
+        `Infinite loop without sleep detected. ${CONSTANTS.InfiniteLoopLimit} ns functions were called without sleep. This will cause your UI to hang.`,
+      );
     return func(ctx)(...args);
   }
   const parent = getNestedProperty(wrappedAPI, ...tree);

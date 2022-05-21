@@ -532,7 +532,7 @@ function createAndAddWorkerScript(
   const oneRamUsage = getRamUsageFromRunningScript(runningScriptObj);
   const ramUsage = roundToTwo(oneRamUsage * threads);
   const ramAvailable = server.maxRam - server.ramUsed;
-  if (ramUsage > ramAvailable) {
+  if (ramUsage > ramAvailable + 0.001) {
     dialogBoxCreate(
       `Not enough RAM to run script ${runningScriptObj.filename} with args ` +
         `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
@@ -750,7 +750,7 @@ export function runScriptFromScript(
     if (server.hasAdminRights == false) {
       workerScript.log(caller, () => `You do not have root access on '${server.hostname}'`);
       return 0;
-    } else if (ramUsage > ramAvailable) {
+    } else if (ramUsage > ramAvailable + 0.001) {
       workerScript.log(
         caller,
         () =>

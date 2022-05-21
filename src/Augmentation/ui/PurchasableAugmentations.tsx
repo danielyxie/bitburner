@@ -83,7 +83,7 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
               <li>
                 <b>{props.aug.factions[0]}</b> faction
               </li>
-              {props.player.canAccessGang() && !props.aug.isSpecial && (
+              {props.player.isAwareOfGang() && !props.aug.isSpecial && (
                 <li>
                   Certain <b>gangs</b>
                 </li>
@@ -219,7 +219,10 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
-                  color: props.owned ? Settings.theme.disabled : Settings.theme.primary,
+                  color:
+                    props.owned || !props.parent.canPurchase(props.parent.player, aug)
+                      ? Settings.theme.disabled
+                      : Settings.theme.primary,
                 }}
               >
                 {aug.name}

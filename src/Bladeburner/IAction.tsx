@@ -1,3 +1,4 @@
+import { IPerson } from "../PersonObjects/IPerson";
 import { IBladeburner } from "./IBladeburner";
 
 interface IStatsMultiplier {
@@ -55,15 +56,15 @@ export interface IAction {
   teamCount: number;
 
   getDifficulty(): number;
-  attempt(inst: IBladeburner): boolean;
+  attempt(inst: IBladeburner, person: IPerson): boolean;
   getActionTimePenalty(): number;
-  getActionTime(inst: IBladeburner): number;
+  getActionTime(inst: IBladeburner, person: IPerson): number;
   getTeamSuccessBonus(inst: IBladeburner): number;
   getActionTypeSkillSuccessBonus(inst: IBladeburner): number;
   getChaosCompetencePenalty(inst: IBladeburner, params: ISuccessChanceParams): number;
   getChaosDifficultyBonus(inst: IBladeburner): number;
-  getEstSuccessChance(inst: IBladeburner): [number, number];
-  getSuccessChance(inst: IBladeburner, params: ISuccessChanceParams): number;
+  getEstSuccessChance(inst: IBladeburner, person: IPerson): [number, number];
+  getSuccessChance(inst: IBladeburner, person: IPerson, params: ISuccessChanceParams): number;
   getSuccessesNeededForNextLevel(baseSuccessesPerLevel: number): number;
   setMaxLevel(baseSuccessesPerLevel: number): void;
   toJSON(): any;
