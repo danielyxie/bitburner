@@ -64,6 +64,9 @@ import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { ITaskTracker } from "../ITaskTracker";
+import { IPerson } from "../IPerson";
+import { Player } from "../../Player";
 import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
 import { WorkType, PlayerFactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
@@ -228,7 +231,7 @@ export function receiveInvite(this: IPlayer, factionName: string): void {
 }
 
 //Calculates skill level based on experience. The same formula will be used for every skill
-export function calculateSkill(this: IPlayer, exp: number, mult = 1): number {
+export function calculateSkill(this: IPerson, exp: number, mult = 1): number {
   return calculateSkillF(exp, mult);
 }
 
@@ -379,7 +382,7 @@ export function recordMoneySource(this: PlayerObject, amt: number, source: strin
   this.moneySourceB.record(amt, source);
 }
 
-export function gainHackingExp(this: IPlayer, exp: number): void {
+export function gainHackingExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainHackingExp()");
     return;
@@ -392,7 +395,7 @@ export function gainHackingExp(this: IPlayer, exp: number): void {
   this.hacking = calculateSkillF(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
 }
 
-export function gainStrengthExp(this: IPlayer, exp: number): void {
+export function gainStrengthExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainStrengthExp()");
     return;
@@ -405,7 +408,7 @@ export function gainStrengthExp(this: IPlayer, exp: number): void {
   this.strength = calculateSkillF(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier);
 }
 
-export function gainDefenseExp(this: IPlayer, exp: number): void {
+export function gainDefenseExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into player.gainDefenseExp()");
     return;
@@ -421,7 +424,7 @@ export function gainDefenseExp(this: IPlayer, exp: number): void {
   this.hp = Math.round(this.max_hp * ratio);
 }
 
-export function gainDexterityExp(this: IPlayer, exp: number): void {
+export function gainDexterityExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainDexterityExp()");
     return;
@@ -437,7 +440,7 @@ export function gainDexterityExp(this: IPlayer, exp: number): void {
   );
 }
 
-export function gainAgilityExp(this: IPlayer, exp: number): void {
+export function gainAgilityExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainAgilityExp()");
     return;
@@ -450,7 +453,7 @@ export function gainAgilityExp(this: IPlayer, exp: number): void {
   this.agility = calculateSkillF(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier);
 }
 
-export function gainCharismaExp(this: IPlayer, exp: number): void {
+export function gainCharismaExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainCharismaExp()");
     return;
@@ -463,15 +466,25 @@ export function gainCharismaExp(this: IPlayer, exp: number): void {
   this.charisma = calculateSkillF(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier);
 }
 
-export function gainIntelligenceExp(this: IPlayer, exp: number): void {
+export function gainIntelligenceExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERROR: NaN passed into Player.gainIntelligenceExp()");
     return;
   }
-  if (this.sourceFileLvl(5) > 0 || this.intelligence > 0) {
+  if (Player.sourceFileLvl(5) > 0 || this.intelligence > 0) {
     this.intelligence_exp += exp;
-    this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
+    this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp, 1));
   }
+}
+
+export function gainStats(this: IPerson, retValue: ITaskTracker): void {
+  this.gainHackingExp(retValue.hack * this.hacking_exp_mult);
+  this.gainStrengthExp(retValue.str * this.strength_exp_mult);
+  this.gainDefenseExp(retValue.def * this.defense_exp_mult);
+  this.gainDexterityExp(retValue.dex * this.dexterity_exp_mult);
+  this.gainAgilityExp(retValue.agi * this.agility_exp_mult);
+  this.gainCharismaExp(retValue.cha * this.charisma_exp_mult);
+  this.gainIntelligenceExp(retValue.int);
 }
 
 //Given a string expression like "str" or "strength", returns the given stat
@@ -1726,7 +1739,7 @@ export function takeDamage(this: IPlayer, amt: number): boolean {
   }
 }
 
-export function regenerateHp(this: IPlayer, amt: number): void {
+export function regenerateHp(this: IPerson, amt: number): void {
   if (typeof amt !== "number") {
     console.warn(`Player.regenerateHp() called without a numeric argument: ${amt}`);
     return;

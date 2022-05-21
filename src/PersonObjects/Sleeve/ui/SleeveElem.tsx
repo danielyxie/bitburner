@@ -30,7 +30,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
   const [abc, setABC] = useState(["------", "------", "------"]);
 
   function setTask(): void {
-    props.sleeve.resetTaskStatus(); // sets to idle
+    props.sleeve.resetTaskStatus(player); // sets to idle
     switch (abc[0]) {
       case "------":
         break;
@@ -48,6 +48,9 @@ export function SleeveElem(props: IProps): React.ReactElement {
         break;
       case "Workout at Gym":
         props.sleeve.workoutAtGym(player, abc[2], abc[1]);
+        break;
+      case "Perform Bladeburner Actions":
+        props.sleeve.bladeburner(player, abc[1], abc[2]);
         break;
       case "Shock Recovery":
         props.sleeve.shockRecovery(player);
@@ -106,6 +109,20 @@ export function SleeveElem(props: IProps): React.ReactElement {
     case SleeveTaskType.Gym:
       desc = <>This sleeve is currently working out at {props.sleeve.currentTaskLocation}.</>;
       break;
+    case SleeveTaskType.Bladeburner: {
+      let message = "";
+      if (props.sleeve.bbContract !== "------") {
+        message = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
+      } else if (props.sleeve.currentTaskLocation !== "") {
+        message = props.sleeve.currentTaskLocation;
+      }
+      desc = (
+        <>
+          This sleeve is currently attempting to {props.sleeve.bbAction}. {message}
+        </>
+      );
+      break;
+    }
     case SleeveTaskType.Recovery:
       desc = (
         <>
@@ -168,13 +185,15 @@ export function SleeveElem(props: IProps): React.ReactElement {
           </Button>
           <Typography>{desc}</Typography>
           <Typography>
-            {props.sleeve.currentTask === SleeveTaskType.Crime && (
-              <ProgressBar
-                variant="determinate"
-                value={(props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime) * 100}
-                color="primary"
-              />
-            )}
+            {(props.sleeve.currentTask === SleeveTaskType.Crime ||
+              props.sleeve.currentTask === SleeveTaskType.Bladeburner) &&
+              props.sleeve.currentTaskMaxTime > 0 && (
+                <ProgressBar
+                  variant="determinate"
+                  value={(props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime) * 100}
+                  color="primary"
+                />
+              )}
           </Typography>
         </span>
       </Paper>

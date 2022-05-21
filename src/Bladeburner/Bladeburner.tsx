@@ -15,6 +15,8 @@ import { Skill } from "./Skill";
 import { City } from "./City";
 import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { createTaskTracker, ITaskTracker } from "../PersonObjects/ITaskTracker";
+import { IPerson } from "../PersonObjects/IPerson";
 import { IRouter, Page } from "../ui/Router";
 import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
@@ -52,6 +54,7 @@ export class Bladeburner implements IBladeburner {
   totalSkillPoints = 0;
 
   teamSize = 0;
+  sleeveSize = 0;
   teamLost = 0;
   hpLost = 0;
 
@@ -158,7 +161,7 @@ export class Bladeburner implements IBladeburner {
     return { isAvailable: true, action };
   }
 
-  startAction(player: IPlayer, actionId: IActionIdentifier): void {
+  startAction(person: IPerson, actionId: IActionIdentifier): void {
     if (actionId == null) return;
     this.action = actionId;
     this.actionTimeCurrent = 0;
@@ -175,7 +178,7 @@ export class Bladeburner implements IBladeburner {
           if (action.count < 1) {
             return this.resetAction();
           }
-          this.actionTimeToComplete = action.getActionTime(this);
+          this.actionTimeToComplete = action.getActionTime(this, person);
         } catch (e: any) {
           exceptionAlert(e);
         }
@@ -192,7 +195,7 @@ export class Bladeburner implements IBladeburner {
           if (actionId.name === "Raid" && this.getCurrentCity().comms === 0) {
             return this.resetAction();
           }
-          this.actionTimeToComplete = action.getActionTime(this);
+          this.actionTimeToComplete = action.getActionTime(this, person);
         } catch (e: any) {
           exceptionAlert(e);
         }
@@ -210,14 +213,14 @@ export class Bladeburner implements IBladeburner {
           if (testBlackOp.action === undefined) {
             throw new Error("action should not be null");
           }
-          this.actionTimeToComplete = testBlackOp.action.getActionTime(this);
+          this.actionTimeToComplete = testBlackOp.action.getActionTime(this, person);
         } catch (e: any) {
           exceptionAlert(e);
         }
         break;
       }
       case ActionTypes["Recruitment"]:
-        this.actionTimeToComplete = this.getRecruitmentTime(player);
+        this.actionTimeToComplete = this.getRecruitmentTime(person);
         break;
       case ActionTypes["Training"]:
       case ActionTypes["FieldAnalysis"]:
@@ -996,11 +999,11 @@ export class Bladeburner implements IBladeburner {
   }
 
   /**
-   * Process stat gains from Contracts, Operations, and Black Operations
+   * Return stat to be gained from Contracts, Operations, and Black Operations
    * @param action(Action obj) - Derived action class
    * @param success(bool) - Whether action was successful
    */
-  gainActionStats(player: IPlayer, action: IAction, success: boolean): void {
+  getActionStats(action: IAction, success: boolean): ITaskTracker {
     const difficulty = action.getDifficulty();
 
     /**
@@ -1017,32 +1020,46 @@ export class Bladeburner implements IBladeburner {
     const unweightedGain = time * BladeburnerConstants.BaseStatGain * successMult * difficultyMult;
     const unweightedIntGain = time * BladeburnerConstants.BaseIntGain * successMult * difficultyMult;
     const skillMult = this.skillMultipliers.expGain;
-    player.gainHackingExp(unweightedGain * action.weights.hack * player.hacking_exp_mult * skillMult);
-    player.gainStrengthExp(unweightedGain * action.weights.str * player.strength_exp_mult * skillMult);
-    player.gainDefenseExp(unweightedGain * action.weights.def * player.defense_exp_mult * skillMult);
-    player.gainDexterityExp(unweightedGain * action.weights.dex * player.dexterity_exp_mult * skillMult);
-    player.gainAgilityExp(unweightedGain * action.weights.agi * player.agility_exp_mult * skillMult);
-    player.gainCharismaExp(unweightedGain * action.weights.cha * player.charisma_exp_mult * skillMult);
-    player.gainIntelligenceExp(unweightedIntGain * action.weights.int * skillMult);
+
+    return {
+      hack: unweightedGain * action.weights.hack * skillMult,
+      str: unweightedGain * action.weights.str * skillMult,
+      def: unweightedGain * action.weights.def * skillMult,
+      dex: unweightedGain * action.weights.dex * skillMult,
+      agi: unweightedGain * action.weights.agi * skillMult,
+      cha: unweightedGain * action.weights.cha * skillMult,
+      int: unweightedIntGain * action.weights.int * skillMult,
+      money: 0,
+    };
   }
 
-  getDiplomacyEffectiveness(player: IPlayer): number {
+  getDiplomacyEffectiveness(person: IPerson): number {
     // Returns a decimal by which the city's chaos level should be multiplied (e.g. 0.98)
     const CharismaLinearFactor = 1e3;
     const CharismaExponentialFactor = 0.045;
 
-    const charismaEff = Math.pow(player.charisma, CharismaExponentialFactor) + player.charisma / CharismaLinearFactor;
+    const charismaEff = Math.pow(person.charisma, CharismaExponentialFactor) + person.charisma / CharismaLinearFactor;
     return (100 - charismaEff) / 100;
   }
 
-  getRecruitmentSuccessChance(player: IPlayer): number {
-    return Math.pow(player.charisma, 0.45) / (this.teamSize + 1);
+  getRecruitmentSuccessChance(person: IPerson): number {
+    return Math.pow(person.charisma, 0.45) / (this.teamSize - this.sleeveSize + 1);
   }
 
-  getRecruitmentTime(player: IPlayer): number {
-    const effCharisma = player.charisma * this.skillMultipliers.effCha;
+  getRecruitmentTime(person: IPerson): number {
+    const effCharisma = person.charisma * this.skillMultipliers.effCha;
     const charismaFactor = Math.pow(effCharisma, 0.81) + effCharisma / 90;
     return Math.max(10, Math.round(BladeburnerConstants.BaseRecruitmentTimeNeeded - charismaFactor));
+  }
+
+  sleeveSupport(joining: boolean): void {
+    if (joining) {
+      this.sleeveSize += 1;
+      this.teamSize += 1;
+    } else {
+      this.sleeveSize -= 1;
+      this.teamSize -= 1;
+    }
   }
 
   resetSkillMultipliers(): void {
@@ -1096,7 +1113,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  completeOperation(success: boolean): void {
+  completeOperation(success: boolean, player: IPlayer): void {
     if (this.action.type !== ActionTypes.Operation) {
       throw new Error("completeOperation() called even though current action is not an Operation");
     }
@@ -1116,6 +1133,15 @@ export class Bladeburner implements IBladeburner {
       }
       const losses = getRandomInt(0, max);
       this.teamSize -= losses;
+      if (this.teamSize < this.sleeveSize) {
+        const sup = player.sleeves.filter((x) => x.bbAction == "Support main sleeve");
+        for (let i = 0; i > this.teamSize - this.sleeveSize; i--) {
+          const r = Math.floor(Math.random() * sup.length);
+          sup[r].takeDamage(sup[r].max_hp);
+          sup.splice(r, 1);
+        }
+        this.teamSize += this.sleeveSize;
+      }
       this.teamLost += losses;
       if (this.logging.ops && losses > 0) {
         this.log("Lost " + formatNumber(losses, 0) + " team members during this " + action.name);
@@ -1213,13 +1239,13 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  completeContract(success: boolean): void {
-    if (this.action.type !== ActionTypes.Contract) {
+  completeContract(success: boolean, actionIdent: IActionIdentifier): void {
+    if (actionIdent.type !== ActionTypes.Contract) {
       throw new Error("completeContract() called even though current action is not a Contract");
     }
     const city = this.getCurrentCity();
     if (success) {
-      switch (this.action.name) {
+      switch (actionIdent.name) {
         case "Tracking":
           // Increase estimate accuracy by a relatively small amount
           city.improvePopulationEstimateByCount(getRandomInt(100, 1e3));
@@ -1233,20 +1259,21 @@ export class Bladeburner implements IBladeburner {
           city.changeChaosByCount(0.04);
           break;
         default:
-          throw new Error("Invalid Action name in completeContract: " + this.action.name);
+          throw new Error("Invalid Action name in completeContract: " + actionIdent.name);
       }
     }
   }
 
-  completeAction(router: IRouter, player: IPlayer): void {
-    switch (this.action.type) {
+  completeAction(player: IPlayer, person: IPerson, actionIdent: IActionIdentifier, isPlayer = true): ITaskTracker {
+    let retValue = createTaskTracker();
+    switch (actionIdent.type) {
       case ActionTypes["Contract"]:
       case ActionTypes["Operation"]: {
         try {
-          const isOperation = this.action.type === ActionTypes["Operation"];
-          const action = this.getActionObject(this.action);
+          const isOperation = actionIdent.type === ActionTypes["Operation"];
+          const action = this.getActionObject(actionIdent);
           if (action == null) {
-            throw new Error("Failed to get Contract/Operation Object for: " + this.action.name);
+            throw new Error("Failed to get Contract/Operation Object for: " + actionIdent.name);
           }
           const difficulty = action.getDifficulty();
           const difficultyMultiplier =
@@ -1254,15 +1281,17 @@ export class Bladeburner implements IBladeburner {
             difficulty / BladeburnerConstants.DiffMultLinearFactor;
           const rewardMultiplier = Math.pow(action.rewardFac, action.level - 1);
 
-          // Stamina loss is based on difficulty
-          this.stamina -= BladeburnerConstants.BaseStaminaLoss * difficultyMultiplier;
-          if (this.stamina < 0) {
-            this.stamina = 0;
+          if (isPlayer) {
+            // Stamina loss is based on difficulty
+            this.stamina -= BladeburnerConstants.BaseStaminaLoss * difficultyMultiplier;
+            if (this.stamina < 0) {
+              this.stamina = 0;
+            }
           }
 
           // Process Contract/Operation success/failure
-          if (action.attempt(this)) {
-            this.gainActionStats(player, action, true);
+          if (action.attempt(this, person)) {
+            retValue = this.getActionStats(action, true);
             ++action.successes;
             --action.count;
 
@@ -1270,7 +1299,7 @@ export class Bladeburner implements IBladeburner {
             let moneyGain = 0;
             if (!isOperation) {
               moneyGain = BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * this.skillMultipliers.money;
-              player.gainMoney(moneyGain, "bladeburner");
+              retValue.money = moneyGain;
             }
 
             if (isOperation) {
@@ -1280,12 +1309,19 @@ export class Bladeburner implements IBladeburner {
             }
             if (action.rankGain) {
               const gain = addOffset(action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank, 10);
-              this.changeRank(player, gain);
+              this.changeRank(person, gain);
               if (isOperation && this.logging.ops) {
-                this.log(action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
+                this.log(
+                  `${person.whoAmI()}: ` +
+                    action.name +
+                    " successfully completed! Gained " +
+                    formatNumber(gain, 3) +
+                    " rank",
+                );
               } else if (!isOperation && this.logging.contracts) {
                 this.log(
-                  action.name +
+                  `${person.whoAmI()}: ` +
+                    action.name +
                     " contract successfully completed! Gained " +
                     formatNumber(gain, 3) +
                     " rank and " +
@@ -1293,22 +1329,22 @@ export class Bladeburner implements IBladeburner {
                 );
               }
             }
-            isOperation ? this.completeOperation(true) : this.completeContract(true);
+            isOperation ? this.completeOperation(true, player) : this.completeContract(true, actionIdent);
           } else {
-            this.gainActionStats(player, action, false);
+            retValue = this.getActionStats(action, false);
             ++action.failures;
             let loss = 0,
               damage = 0;
             if (action.rankLoss) {
               loss = addOffset(action.rankLoss * rewardMultiplier, 10);
-              this.changeRank(player, -1 * loss);
+              this.changeRank(person, -1 * loss);
             }
             if (action.hpLoss) {
               damage = action.hpLoss * difficultyMultiplier;
               damage = Math.ceil(addOffset(damage, 10));
               this.hpLost += damage;
               const cost = calculateHospitalizationCost(player, damage);
-              if (player.takeDamage(damage)) {
+              if (person.takeDamage(damage)) {
                 ++this.numHosp;
                 this.moneyLost += cost;
               }
@@ -1321,16 +1357,15 @@ export class Bladeburner implements IBladeburner {
               logLossText += "Took " + formatNumber(damage, 0) + " damage.";
             }
             if (isOperation && this.logging.ops) {
-              this.log(action.name + " failed! " + logLossText);
+              this.log(`${person.whoAmI()}: ` + action.name + " failed! " + logLossText);
             } else if (!isOperation && this.logging.contracts) {
-              this.log(action.name + " contract failed! " + logLossText);
+              this.log(`${person.whoAmI()}: ` + action.name + " contract failed! " + logLossText);
             }
-            isOperation ? this.completeOperation(false) : this.completeContract(false);
+            isOperation ? this.completeOperation(false, player) : this.completeContract(false, actionIdent);
           }
           if (action.autoLevel) {
             action.level = action.maxLevel;
           } // Autolevel
-          this.startAction(player, this.action); // Repeat action
         } catch (e: any) {
           exceptionAlert(e);
         }
@@ -1339,9 +1374,9 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["BlackOp"]:
       case ActionTypes["BlackOperation"]: {
         try {
-          const action = this.getActionObject(this.action);
+          const action = this.getActionObject(actionIdent);
           if (action == null || !(action instanceof BlackOperation)) {
-            throw new Error("Failed to get BlackOperation Object for: " + this.action.name);
+            throw new Error("Failed to get BlackOperation Object for: " + actionIdent.name);
           }
           const difficulty = action.getDifficulty();
           const difficultyMultiplier =
@@ -1358,39 +1393,35 @@ export class Bladeburner implements IBladeburner {
           const teamCount = action.teamCount;
           let teamLossMax;
 
-          if (action.attempt(this)) {
-            this.gainActionStats(player, action, true);
+          if (action.attempt(this, person)) {
+            retValue = this.getActionStats(action, true);
             action.count = 0;
             this.blackops[action.name] = true;
             let rankGain = 0;
             if (action.rankGain) {
               rankGain = addOffset(action.rankGain * BitNodeMultipliers.BladeburnerRank, 10);
-              this.changeRank(player, rankGain);
+              this.changeRank(person, rankGain);
             }
             teamLossMax = Math.ceil(teamCount / 2);
 
-            // Operation Daedalus
-            if (action.name === BlackOperationNames.OperationDaedalus) {
-              this.resetAction();
-              return router.toBitVerse(false, false);
-            }
-
             if (this.logging.blackops) {
-              this.log(action.name + " successful! Gained " + formatNumber(rankGain, 1) + " rank");
+              this.log(
+                `${person.whoAmI()}: ` + action.name + " successful! Gained " + formatNumber(rankGain, 1) + " rank",
+              );
             }
           } else {
-            this.gainActionStats(player, action, false);
+            retValue = this.getActionStats(action, false);
             let rankLoss = 0;
             let damage = 0;
             if (action.rankLoss) {
               rankLoss = addOffset(action.rankLoss, 10);
-              this.changeRank(player, -1 * rankLoss);
+              this.changeRank(person, -1 * rankLoss);
             }
             if (action.hpLoss) {
               damage = action.hpLoss * difficultyMultiplier;
               damage = Math.ceil(addOffset(damage, 10));
               const cost = calculateHospitalizationCost(player, damage);
-              if (player.takeDamage(damage)) {
+              if (person.takeDamage(damage)) {
                 ++this.numHosp;
                 this.moneyLost += cost;
               }
@@ -1399,7 +1430,8 @@ export class Bladeburner implements IBladeburner {
 
             if (this.logging.blackops) {
               this.log(
-                action.name +
+                `${person.whoAmI()}: ` +
+                  action.name +
                   " failed! Lost " +
                   formatNumber(rankLoss, 1) +
                   " rank and took " +
@@ -1415,9 +1447,18 @@ export class Bladeburner implements IBladeburner {
           if (teamCount >= 1) {
             const losses = getRandomInt(1, teamLossMax);
             this.teamSize -= losses;
+            if (this.teamSize < this.sleeveSize) {
+              const sup = player.sleeves.filter((x) => x.bbAction == "Support main sleeve");
+              for (let i = 0; i > this.teamSize - this.sleeveSize; i--) {
+                const r = Math.floor(Math.random() * sup.length);
+                sup[r].takeDamage(sup[r].max_hp);
+                sup.splice(r, 1);
+              }
+              this.teamSize += this.sleeveSize;
+            }
             this.teamLost += losses;
             if (this.logging.blackops) {
-              this.log("You lost " + formatNumber(losses, 0) + " team members during " + action.name);
+              this.log(`${person.whoAmI()}:  You lost ${formatNumber(losses, 0)} team members during ${action.name}`);
             }
           }
         } catch (e: any) {
@@ -1427,19 +1468,20 @@ export class Bladeburner implements IBladeburner {
       }
       case ActionTypes["Training"]: {
         this.stamina -= 0.5 * BladeburnerConstants.BaseStaminaLoss;
-        const strExpGain = 30 * player.strength_exp_mult,
-          defExpGain = 30 * player.defense_exp_mult,
-          dexExpGain = 30 * player.dexterity_exp_mult,
-          agiExpGain = 30 * player.agility_exp_mult,
+        const strExpGain = 30 * person.strength_exp_mult,
+          defExpGain = 30 * person.defense_exp_mult,
+          dexExpGain = 30 * person.dexterity_exp_mult,
+          agiExpGain = 30 * person.agility_exp_mult,
           staminaGain = 0.04 * this.skillMultipliers.stamina;
-        player.gainStrengthExp(strExpGain);
-        player.gainDefenseExp(defExpGain);
-        player.gainDexterityExp(dexExpGain);
-        player.gainAgilityExp(agiExpGain);
+        retValue.str = strExpGain;
+        retValue.def = defExpGain;
+        retValue.dex = dexExpGain;
+        retValue.agi = agiExpGain;
         this.staminaBonus += staminaGain;
         if (this.logging.general) {
           this.log(
-            "Training completed. Gained: " +
+            `${person.whoAmI()}: ` +
+              "Training completed. Gained: " +
               formatNumber(strExpGain, 1) +
               " str exp, " +
               formatNumber(defExpGain, 1) +
@@ -1452,80 +1494,89 @@ export class Bladeburner implements IBladeburner {
               " max stamina",
           );
         }
-        this.startAction(player, this.action); // Repeat action
         break;
       }
       case ActionTypes["FieldAnalysis"]:
       case ActionTypes["Field Analysis"]: {
         // Does not use stamina. Effectiveness depends on hacking, int, and cha
         let eff =
-          0.04 * Math.pow(player.hacking, 0.3) +
-          0.04 * Math.pow(player.intelligence, 0.9) +
-          0.02 * Math.pow(player.charisma, 0.3);
-        eff *= player.bladeburner_analysis_mult;
+          0.04 * Math.pow(person.hacking, 0.3) +
+          0.04 * Math.pow(person.intelligence, 0.9) +
+          0.02 * Math.pow(person.charisma, 0.3);
+        eff *= person.bladeburner_analysis_mult;
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
         }
-        const hackingExpGain = 20 * player.hacking_exp_mult;
-        const charismaExpGain = 20 * player.charisma_exp_mult;
+        const hackingExpGain = 20 * person.hacking_exp_mult;
+        const charismaExpGain = 20 * person.charisma_exp_mult;
         const rankGain = 0.1 * BitNodeMultipliers.BladeburnerRank;
-        player.gainHackingExp(hackingExpGain);
-        player.gainIntelligenceExp(BladeburnerConstants.BaseIntGain);
-        player.gainCharismaExp(charismaExpGain);
-        this.changeRank(player, rankGain);
+        retValue.hack = hackingExpGain;
+        retValue.cha = charismaExpGain;
+        retValue.int = BladeburnerConstants.BaseIntGain;
+        this.changeRank(person, rankGain);
         this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
         if (this.logging.general) {
           this.log(
-            `Field analysis completed. Gained ${formatNumber(rankGain, 2)} rank, ` +
+            `${person.whoAmI()}: ` +
+              `Field analysis completed. Gained ${formatNumber(rankGain, 2)} rank, ` +
               `${formatNumber(hackingExpGain, 1)} hacking exp, and ` +
               `${formatNumber(charismaExpGain, 1)} charisma exp`,
           );
         }
-        this.startAction(player, this.action); // Repeat action
         break;
       }
       case ActionTypes["Recruitment"]: {
-        const successChance = this.getRecruitmentSuccessChance(player);
+        const successChance = this.getRecruitmentSuccessChance(person);
+        const recruitTime = this.getRecruitmentTime(person) * 1000;
         if (Math.random() < successChance) {
-          const expGain = 2 * BladeburnerConstants.BaseStatGain * this.actionTimeToComplete;
-          player.gainCharismaExp(expGain);
+          const expGain = 2 * BladeburnerConstants.BaseStatGain * recruitTime;
+          retValue.cha = expGain;
           ++this.teamSize;
           if (this.logging.general) {
-            this.log("Successfully recruited a team member! Gained " + formatNumber(expGain, 1) + " charisma exp");
+            this.log(
+              `${person.whoAmI()}: ` +
+                "Successfully recruited a team member! Gained " +
+                formatNumber(expGain, 1) +
+                " charisma exp",
+            );
           }
         } else {
-          const expGain = BladeburnerConstants.BaseStatGain * this.actionTimeToComplete;
-          player.gainCharismaExp(expGain);
+          const expGain = BladeburnerConstants.BaseStatGain * recruitTime;
+          retValue.cha = expGain;
           if (this.logging.general) {
-            this.log("Failed to recruit a team member. Gained " + formatNumber(expGain, 1) + " charisma exp");
+            this.log(
+              `${person.whoAmI()}: ` +
+                "Failed to recruit a team member. Gained " +
+                formatNumber(expGain, 1) +
+                " charisma exp",
+            );
           }
         }
-        this.startAction(player, this.action); // Repeat action
         break;
       }
       case ActionTypes["Diplomacy"]: {
-        const eff = this.getDiplomacyEffectiveness(player);
+        const eff = this.getDiplomacyEffectiveness(person);
         this.getCurrentCity().chaos *= eff;
         if (this.getCurrentCity().chaos < 0) {
           this.getCurrentCity().chaos = 0;
         }
         if (this.logging.general) {
           this.log(
-            `Diplomacy completed. Chaos levels in the current city fell by ${numeralWrapper.formatPercentage(1 - eff)}`,
+            `${person.whoAmI()}: Diplomacy completed. Chaos levels in the current city fell by ${numeralWrapper.formatPercentage(
+              1 - eff,
+            )}`,
           );
         }
-        this.startAction(player, this.action); // Repeat Action
         break;
       }
       case ActionTypes["Hyperbolic Regeneration Chamber"]: {
-        player.regenerateHp(BladeburnerConstants.HrcHpGain);
+        person.regenerateHp(BladeburnerConstants.HrcHpGain);
 
         const staminaGain = this.maxStamina * (BladeburnerConstants.HrcStaminaGain / 100);
         this.stamina = Math.min(this.maxStamina, this.stamina + staminaGain);
-        this.startAction(player, this.action);
         if (this.logging.general) {
           this.log(
-            `Rested in Hyperbolic Regeneration Chamber. Restored ${
+            `${person.whoAmI()}: Rested in Hyperbolic Regeneration Chamber. Restored ${
               BladeburnerConstants.HrcHpGain
             } HP and gained ${numeralWrapper.formatStamina(staminaGain)} stamina`,
           );
@@ -1544,24 +1595,37 @@ export class Bladeburner implements IBladeburner {
           this.operations[operation].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
         }
         if (this.logging.general) {
-          this.log(`Incited violence in the synthoid communities.`);
+          this.log(`${person.whoAmI()}: Incited violence in the synthoid communities.`);
         }
         for (const cityName of Object.keys(this.cities)) {
           const city = this.cities[cityName];
           city.chaos += 10;
           city.chaos += city.chaos / (Math.log(city.chaos) / Math.log(10));
         }
-
-        this.startAction(player, this.action);
         break;
       }
       default:
-        console.error(`Bladeburner.completeAction() called for invalid action: ${this.action.type}`);
+        console.error(`Bladeburner.completeAction() called for invalid action: ${actionIdent.type}`);
         break;
+    }
+    return retValue;
+  }
+
+  infiltrateSynthoidCommunities(p: IPlayer): void {
+    const infilSleeves = p.sleeves.filter((s) => s.bbAction === "Infiltrate synthoids").length;
+    const amt = Math.pow(infilSleeves, -0.5) / 2;
+    for (const contract of Object.keys(this.contracts)) {
+      this.contracts[contract].count += amt;
+    }
+    for (const operation of Object.keys(this.operations)) {
+      this.operations[operation].count += amt;
+    }
+    if (this.logging.general) {
+      this.log(`Sleeve: Infiltrate the synthoid communities.`);
     }
   }
 
-  changeRank(player: IPlayer, change: number): void {
+  changeRank(person: IPerson, change: number): void {
     if (isNaN(change)) {
       throw new Error("NaN passed into Bladeburner.changeRank()");
     }
@@ -1582,7 +1646,7 @@ export class Bladeburner implements IBladeburner {
       if (bladeburnerFac.isMember) {
         const favorBonus = 1 + bladeburnerFac.favor / 100;
         bladeburnerFac.playerReputation +=
-          BladeburnerConstants.RankToFactionRepFactor * change * player.faction_rep_mult * favorBonus;
+          BladeburnerConstants.RankToFactionRepFactor * change * person.faction_rep_mult * favorBonus;
       }
     }
 
@@ -1613,7 +1677,19 @@ export class Bladeburner implements IBladeburner {
     this.actionTimeOverflow = 0;
     if (this.actionTimeCurrent >= this.actionTimeToComplete) {
       this.actionTimeOverflow = this.actionTimeCurrent - this.actionTimeToComplete;
-      return this.completeAction(router, player);
+      const retValue = this.completeAction(player, player, this.action);
+      player.gainMoney(retValue.money, "bladeburner");
+      player.gainStats(retValue);
+      // Operation Daedalus
+      const action = this.getActionObject(this.action);
+      if (action == null) {
+        throw new Error("Failed to get BlackOperation Object for: " + this.action.name);
+      } else if (action.name === BlackOperationNames.OperationDaedalus && this.blackops[action.name]) {
+        this.resetAction();
+        router.toBitVerse(false, false);
+      } else if (this.action.type != ActionTypes["BlackOperation"] && this.action.type != ActionTypes["BlackOp"]) {
+        this.startAction(player, this.action); // Repeat action
+      }
     }
   }
 
@@ -2092,67 +2168,53 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  getActionTimeNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number {
-    const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+  getActionTimeNetscriptFn(person: IPerson, type: string, name: string): number | string {
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-      workerScript.log("bladeburner.getActionTime", () => errorLogText);
-      return -1;
+      return "bladeburner.getActionTime";
     }
 
     const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-      workerScript.log("bladeburner.getActionTime", () => errorLogText);
-      return -1;
+      return "bladeburner.getActionTime";
     }
-
     switch (actionId.type) {
       case ActionTypes["Contract"]:
       case ActionTypes["Operation"]:
       case ActionTypes["BlackOp"]:
       case ActionTypes["BlackOperation"]:
-        return actionObj.getActionTime(this) * 1000;
+        return actionObj.getActionTime(this, person) * 1000;
       case ActionTypes["Training"]:
       case ActionTypes["Field Analysis"]:
       case ActionTypes["FieldAnalysis"]:
         return 30000;
       case ActionTypes["Recruitment"]:
-        return this.getRecruitmentTime(player) * 1000;
+        return this.getRecruitmentTime(person) * 1000;
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
       case ActionTypes["Incite Violence"]:
         return 60000;
       default:
-        workerScript.log("bladeburner.getActionTime", () => errorLogText);
-        return -1;
+        return "bladeburner.getActionTime";
     }
   }
 
-  getActionEstimatedSuccessChanceNetscriptFn(
-    player: IPlayer,
-    type: string,
-    name: string,
-    workerScript: WorkerScript,
-  ): [number, number] {
-    const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+  getActionEstimatedSuccessChanceNetscriptFn(person: IPerson, type: string, name: string): [number, number] | string {
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-      workerScript.log("bladeburner.getActionEstimatedSuccessChance", () => errorLogText);
-      return [-1, -1];
+      return "bladeburner.getActionEstimatedSuccessChance";
     }
 
     const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-      workerScript.log("bladeburner.getActionEstimatedSuccessChance", () => errorLogText);
-      return [-1, -1];
+      return "bladeburner.getActionEstimatedSuccessChance";
     }
-
     switch (actionId.type) {
       case ActionTypes["Contract"]:
       case ActionTypes["Operation"]:
       case ActionTypes["BlackOp"]:
       case ActionTypes["BlackOperation"]:
-        return actionObj.getEstSuccessChance(this);
+        return actionObj.getEstSuccessChance(this, person);
       case ActionTypes["Training"]:
       case ActionTypes["Field Analysis"]:
       case ActionTypes["FieldAnalysis"]:
@@ -2161,12 +2223,11 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Incite Violence"]:
         return [1, 1];
       case ActionTypes["Recruitment"]: {
-        const recChance = this.getRecruitmentSuccessChance(player);
+        const recChance = this.getRecruitmentSuccessChance(person);
         return [recChance, recChance];
       }
       default:
-        workerScript.log("bladeburner.getActionEstimatedSuccessChance", () => errorLogText);
-        return [-1, -1];
+        return "bladeburner.getActionEstimatedSuccessChance";
     }
   }
 

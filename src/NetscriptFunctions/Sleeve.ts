@@ -310,5 +310,36 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
 
         return player.sleeves[sleeveNumber].tryBuyAugmentation(player, aug);
       },
+    setToBladeburnerAction:
+      (ctx: NetscriptContext) =>
+      (_sleeveNumber: unknown, _action: unknown, _contract?: unknown): boolean => {
+        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
+        const action = ctx.helper.string("action", _action);
+        let contract: string;
+        if (typeof _contract === "undefined") {
+          contract = "------";
+        } else {
+          contract = ctx.helper.string("contract", _contract);
+        }
+        checkSleeveAPIAccess(ctx);
+        checkSleeveNumber(ctx, sleeveNumber);
+
+        // Cannot Take on Contracts if another sleeve is performing that action
+        if (action === "Take on contracts") {
+          for (let i = 0; i < player.sleeves.length; ++i) {
+            if (i === sleeveNumber) {
+              continue;
+            }
+            const other = player.sleeves[i];
+            if (other.currentTask === SleeveTaskType.Bladeburner && other.bbAction === action) {
+              throw ctx.helper.makeRuntimeErrorMsg(
+                `Sleeve ${sleeveNumber} cannot take of contracts because Sleeve ${i} is already performing that action.`,
+              );
+            }
+          }
+        }
+
+        return player.sleeves[sleeveNumber].bladeburner(player, action, contract);
+      },
   };
 }

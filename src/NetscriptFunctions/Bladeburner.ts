@@ -125,7 +125,14 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.getActionTimeNetscriptFn(player, type, name, workerScript);
+          const time = bladeburner.getActionTimeNetscriptFn(player, type, name);
+          if (typeof time === "string") {
+            const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+            ctx.log(() => errorLogText);
+            return -1;
+          } else {
+            return time;
+          }
         } catch (e: any) {
           throw ctx.makeRuntimeErrorMsg(e);
         }
@@ -139,7 +146,14 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.getActionEstimatedSuccessChanceNetscriptFn(player, type, name, workerScript);
+          const chance = bladeburner.getActionEstimatedSuccessChanceNetscriptFn(player, type, name);
+          if (typeof chance === "string") {
+            const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+            ctx.log(() => errorLogText);
+            return [-1, -1];
+          } else {
+            return chance;
+          }
         } catch (e: any) {
           throw ctx.makeRuntimeErrorMsg(e);
         }
