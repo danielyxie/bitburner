@@ -226,6 +226,7 @@ const bladeburner: IMap<any> = {
   stopBladeburnerAction: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 2,
   getCurrentAction: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 4,
   getActionTime: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+  getActionCurrentTime: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
   getActionEstimatedSuccessChance: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
   getActionRepGain: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
   getActionCountRemaining: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
