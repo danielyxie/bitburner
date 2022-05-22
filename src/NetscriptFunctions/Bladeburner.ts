@@ -142,10 +142,9 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       try {
-        const timecomputed = Math.min(
-          bladeburner.actionTimeCurrent + bladeburner.actionTimeOverflow,
-          bladeburner.actionTimeToComplete,
-        ) * 1000 ;
+        const timecomputed =
+          Math.min(bladeburner.actionTimeCurrent + bladeburner.actionTimeOverflow, bladeburner.actionTimeToComplete) *
+          1000;
         return timecomputed;
       } catch (e: any) {
         throw ctx.makeRuntimeErrorMsg(e);
