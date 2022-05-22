@@ -60,6 +60,7 @@ export function Overview({ rerender }: IProps): React.ReactElement {
           ["Total Funds:", <Money money={corp.funds} />],
           ["Total Revenue:", <MoneyRate money={corp.revenue} />],
           ["Total Expenses:", <MoneyRate money={corp.expenses} />],
+          ["Total Profit:", <MoneyRate money={corp.revenue-corp.expenses} />],
           ["Publicly Traded:", corp.public ? "Yes" : "No"],
           ["Owned Stock Shares:", numeralWrapper.format(corp.numShares, "0.000a")],
           ["Stock Price:", corp.public ? <Money money={corp.sharePrice} /> : "N/A"],
