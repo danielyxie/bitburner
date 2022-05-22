@@ -118,7 +118,9 @@ interface IReqProps {
 
 const Requirement = (props: IReqProps): React.ReactElement => {
   return (
-    <Typography sx={{ display: "flex", alignItems: "center", color: props.color }}>
+    <Typography
+      sx={{ display: "flex", alignItems: "center", color: props.fulfilled ? props.color : Settings.theme.error }}
+    >
       {props.fulfilled ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
       {props.value}
     </Typography>
@@ -143,7 +145,7 @@ export const PurchasableAugmentations = (props: IPurchasableAugsProps): React.Re
     <Container
       maxWidth="lg"
       disableGutters
-      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
+      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 0.75 }}
     >
       {props.augNames.map((augName: string) => (
         <PurchasableAugmentation key={augName} parent={props} augName={augName} owned={false} />
