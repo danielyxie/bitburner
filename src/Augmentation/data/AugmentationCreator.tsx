@@ -129,7 +129,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     name: AugmentationNames.WisdomOfAthena,
     repCost: 1e4,
     moneyCost: 1e6,
-    info: "A connective brain implant to SASHA that focuses in on pattern recognition and predictive templating.",
+    info: "A connective brain implant to SASHA that focuses on pattern recognition and predictive templating.",
     stats: <>This augmentation makes the Bracket minigame easier by removing all '[' ']'.</>,
     isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
