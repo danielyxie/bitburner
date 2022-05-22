@@ -117,8 +117,8 @@ export const initSoAAugmentations = (): Augmentation[] => [
     repCost: 1e4,
     moneyCost: 1e6,
     info:
-      "Extra-occular neurons taken from old martial art master. Injecting the user the ability to " +
-      "predict enemy attack before they even know it themselves.",
+      "Extra-occular neurons taken from old martial art master. Injecting them gives the user the ability to " +
+      "predict the enemy's attack before they even know it themself.",
     stats: (
       <>This augmentation makes the Slash minigame easier by showing you via an indicator when the slash in coming.</>
     ),
