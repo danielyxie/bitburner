@@ -105,7 +105,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
       "injects *Γ-based cells that provides general enhancement to the body.",
     stats: (
       <>
-        This augmentation makes many aspect of infiltration easier and more productive. Such as increased timer,
+        This augmentation makes many aspects of infiltration easier and more productive. Such as increased timer,
         rewards, reduced damage taken, etc.
       </>
     ),
@@ -118,9 +118,9 @@ export const initSoAAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     info:
       "Extra-occular neurons taken from old martial art master. Injecting the user the ability to " +
-      "predict enemy attack before they even know it themself.",
+      "predict enemy attack before they even know it themselves.",
     stats: (
-      <>This augmentation makes the Slash minigame easier by showing you via an indictor when the slash in coming.</>
+      <>This augmentation makes the Slash minigame easier by showing you via an indicator when the slash in coming.</>
     ),
     isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
@@ -129,7 +129,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     name: AugmentationNames.WisdomOfAthena,
     repCost: 1e4,
     moneyCost: 1e6,
-    info: "A connective brain implant to SASHA that focuses in pattern recognition and predictive templating.",
+    info: "A connective brain implant to SASHA that focuses in on pattern recognition and predictive templating.",
     stats: <>This augmentation makes the Bracket minigame easier by removing all '[' ']'.</>,
     isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
@@ -138,7 +138,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     name: AugmentationNames.ChaosOfDionysus,
     repCost: 1e4,
     moneyCost: 1e6,
-    info: "Opto-occipito implant to process visual signal before brain interpretation.",
+    info: "Opto-occipito implant to process visual signals before brain interpretation.",
     stats: <>This augmentation makes the Backwards minigame easier by flipping the words.</>,
     isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
@@ -176,7 +176,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     name: AugmentationNames.HuntOfArtemis,
     repCost: 1e4,
     moneyCost: 1e6,
-    info: "magneto-turboencabulator based on technology by Micha Eike Siemon, increases the users electro-magnetic sensitivity.",
+    info: "magneto-turboencabulator based on technology by Micha Eike Siemon, increases the user's electro-magnetic sensitivity.",
     stats: (
       <>
         This augmentation makes the Minesweeper minigame easier by showing the location of all mines and keeping their
@@ -190,7 +190,7 @@ export const initSoAAugmentations = (): Augmentation[] => [
     name: AugmentationNames.KnowledgeOfApollo,
     repCost: 1e4,
     moneyCost: 1e6,
-    info: "Neodynic retention fjengeln spoofer using -φ karmions, net positive effect on implantees delta wave.",
+    info: "Neodynic retention fjengeln spoofer using -φ karmions, net positive effect on implantee's delta wave.",
     stats: <>This augmentation makes the Wire Cutting minigame easier by indicating the incorrect wires.</>,
     isSpecial: true,
     factions: [FactionNames.ShadowsOfAnarchy],
@@ -515,7 +515,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "TITN is a series of viruses that targets and alters the sequences of human DNA in genes that " +
       "control personality. The TITN-41 strain alters these genes so that the subject becomes more " +
-      "outgoing and socialable.",
+      "outgoing and sociable.",
     charisma_mult: 1.15,
     charisma_exp_mult: 1.15,
     factions: [FactionNames.Silhouette],
@@ -526,9 +526,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 1.375e9,
     info:
       "A cranial implant that greatly assists in the user's ability to analyze social situations " +
-      "and interactions. The system uses a wide variety of factors such as facial expressions, body " +
-      "language, and the voice tone, and inflection to determine the best course of action during social" +
-      "situations. The implant also uses deep learning software to continuously learn new behavior" +
+      "and interactions. The system uses a wide variety of factors such as facial expression, body " +
+      "language, voice tone, and inflection to determine the best course of action during social " +
+      "situations. The implant also uses deep learning software to continuously learn new behavior " +
       "patterns and how to best respond.",
     charisma_mult: 1.6,
     charisma_exp_mult: 1.6,
@@ -988,7 +988,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "This is an additional installation that upgrades the functionality of the " +
       "PC Direct-Neural Interface augmentation. When connected to a computer, " +
-      "The Neural Network upgrade allows the user to use their own brain's " +
+      "the Neural Network upgrade allows the user to use their own brain's " +
       "processing power to aid the computer in computational tasks.",
     prereqs: [AugmentationNames.PCDNI],
     company_rep_mult: 2,
@@ -1172,7 +1172,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "A skin implant that reinforces the skin with highly-advanced synthetic cells. These " +
       "cells, when powered, have a negative refractive index. As a result, they bend light " +
-      "around the skin, making the user much harder to see to the naked eye.",
+      "around the skin, making the user much harder to see with the naked eye.",
     agility_mult: 1.05,
     crime_money_mult: 1.1,
     factions: [FactionNames.SlumSnakes, FactionNames.Tetrads],
@@ -1734,7 +1734,7 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
     info:
       "An improved version of Vangelis, a synthetic symbiotic virus that is " +
       "injected into human brain tissue. On top of the benefits of the original " +
-      "virus, this also grants an accelerated healing factor and enhanced " +
+      "virus, this also grants accelerated healing and enhanced " +
       "reflexes.",
     prereqs: [AugmentationNames.VangelisVirus],
     defense_exp_mult: 1.1,
@@ -1930,7 +1930,7 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
     info:
       "The next evolution is near, a coming together of man and machine. A synthesis greater than the birth of the human " +
       "organism. Time spent with the gift has allowed for acclimatization of the invasive augment and the toll it takes upon " +
-      "your frame granting lesser penalty of 5% to all stats.",
+      "your frame granting a 5% reduced penalty to all stats.",
     prereqs: [AugmentationNames.StaneksGift1],
     isSpecial: true,
     hacking_chance_mult: 0.95 / 0.9,
@@ -1969,7 +1969,7 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
     info:
       "The synthesis of human and machine is nothing to fear. It is our destiny. " +
       "You will become greater than the sum of our parts. As One. Embrace your gift " +
-      "fully and wholly free of it's accursed toll. Serenity brings tranquility the form " +
+      "fully and wholly free of it's accursed toll. Serenity brings tranquility in the form " +
       "of no longer suffering a stat penalty. ",
     prereqs: [AugmentationNames.StaneksGift2, AugmentationNames.StaneksGift1],
     isSpecial: true,
