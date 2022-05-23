@@ -105,6 +105,7 @@ const hacknet: IMap<any> = {
   numHashes: 0,
   hashCost: 0,
   spendHashes: 0,
+  maxNumNodes: 0,
 };
 
 // Stock API
