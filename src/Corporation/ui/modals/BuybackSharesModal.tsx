@@ -54,14 +54,14 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
       return <Typography>ERROR: Invalid value entered for number of shares to buyback</Typography>;
     } else if (shares > corp.issuedShares) {
       return (
-        <Typography>
+        <Typography variant="caption">
           There are not this many shares available to buy back. There are only{" "}
           {numeralWrapper.formatBigNumber(corp.issuedShares)} outstanding shares.
         </Typography>
       );
     } else {
       return (
-        <Typography>
+        <Typography variant="caption">
           Purchase {shares} shares for a total of {numeralWrapper.formatMoney(shares * buybackPrice)}
         </Typography>
       );
