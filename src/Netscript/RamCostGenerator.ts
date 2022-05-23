@@ -356,6 +356,7 @@ export const RamCosts: IMap<any> = {
   print: 0,
   printf: 0,
   tprint: 0,
+  tprintf: 0,
   clearLog: 0,
   disableLog: 0,
   enableLog: 0,
