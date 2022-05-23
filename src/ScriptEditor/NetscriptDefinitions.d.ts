@@ -1110,6 +1110,8 @@ export interface SleeveTask {
   gymStatType: string;
   /** Faction work type being performed, if any */
   factionWorkType: string;
+  /** Class being taken at university, if any */
+  className: string;
 }
 
 /**

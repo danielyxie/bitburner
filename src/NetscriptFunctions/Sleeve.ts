@@ -190,6 +190,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
           location: sl.currentTaskLocation,
           gymStatType: sl.gymStatType,
           factionWorkType: FactionWorkType[sl.factionWorkType],
+          className: sl.className,
         };
       },
     getInformation:
