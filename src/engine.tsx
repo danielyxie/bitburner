@@ -282,7 +282,6 @@ const Engine: {
         // just average it.
         numContracts = (numCyclesOffline / 3000) * 0.25;
       }
-      console.log(`${numCyclesOffline} ${numContracts}`);
       for (let i = 0; i < numContracts; i++) {
         generateRandomContract();
       }
