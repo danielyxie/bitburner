@@ -44,8 +44,8 @@ export function Victory(props: IProps): React.ReactElement {
   }
 
   function trade(): void {
-    handleInfiltrators();
     if (faction === "none") return;
+    handleInfiltrators();
     Factions[faction].playerReputation += repGain;
     quitInfiltration();
   }
