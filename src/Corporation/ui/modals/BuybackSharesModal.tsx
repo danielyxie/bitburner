@@ -51,7 +51,7 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
   function CostIndicator(): React.ReactElement {
     if (shares === null) return <Typography></Typography>;
     if (isNaN(shares) || shares <= 0) {
-      return <Typography>ERROR: Invalid value entered for number of shares to buyback</Typography>;
+      return <Typography variant="caption">ERROR: Invalid value entered for number of shares to buyback</Typography>;
     } else if (shares > corp.issuedShares) {
       return (
         <Typography variant="caption">
