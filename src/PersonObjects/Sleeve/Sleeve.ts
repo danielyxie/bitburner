@@ -854,17 +854,22 @@ export class Sleeve extends Person {
       // Set stat gain rate
       const baseGymExp = 1;
       const totalExpMultiplier = p.hashManager.getTrainingMult() * expMult;
-      const sanitizedStat: string = this.gymStatType.toLowerCase();
-      if (sanitizedStat.includes("str")) {
-        this.gainRatesForTask.str = baseGymExp * totalExpMultiplier * this.strength_exp_mult;
-      } else if (sanitizedStat.includes("def")) {
-        this.gainRatesForTask.def = baseGymExp * totalExpMultiplier * this.defense_exp_mult;
-      } else if (sanitizedStat.includes("dex")) {
-        this.gainRatesForTask.dex = baseGymExp * totalExpMultiplier * this.dexterity_exp_mult;
-      } else if (sanitizedStat.includes("agi")) {
-        this.gainRatesForTask.agi = baseGymExp * totalExpMultiplier * this.agility_exp_mult;
+      switch (this.gymStatType) {
+        case "none": // Note : due to the way Sleeve.workOutAtGym() is currently designed, this should never happend.
+          break;
+        case "str":
+          this.gainRatesForTask.str = baseGymExp * totalExpMultiplier * this.strength_exp_mult;
+          break;
+        case "def":
+          this.gainRatesForTask.def = baseGymExp * totalExpMultiplier * this.defense_exp_mult;
+          break;
+        case "dex":
+          this.gainRatesForTask.dex = baseGymExp * totalExpMultiplier * this.dexterity_exp_mult;
+          break;
+        case "agi":
+          this.gainRatesForTask.agi = baseGymExp * totalExpMultiplier * this.agility_exp_mult;
+          break;
       }
-
       return;
     }
 
@@ -1058,19 +1063,27 @@ export class Sleeve extends Person {
     // Set experience/money gains based on class
     const sanitizedStat: string = stat.toLowerCase();
 
-    // Set cost
-    this.gainRatesForTask.money = -1 * (CONSTANTS.ClassGymBaseCost * costMult);
-
-    // Validate "stat" argument
-    if (
-      !sanitizedStat.includes("str") &&
-      !sanitizedStat.includes("def") &&
-      !sanitizedStat.includes("dex") &&
-      !sanitizedStat.includes("agi")
-    ) {
+    // set stat to a default value.
+    stat = "none";
+    if (sanitizedStat.includes("str")) {
+      stat = "str";
+    }
+    if (sanitizedStat.includes("def")) {
+      stat = "def";
+    }
+    if (sanitizedStat.includes("dex")) {
+      stat = "dex";
+    }
+    if (sanitizedStat.includes("agi")) {
+      stat = "agi";
+    }
+    // if stat is still equals its default value, then validation has failed.
+    if (stat === "none") {
       return false;
     }
 
+    // Set cost
+    this.gainRatesForTask.money = -1 * (CONSTANTS.ClassGymBaseCost * costMult);
     this.gymStatType = stat;
     this.currentTask = SleeveTaskType.Gym;
 
