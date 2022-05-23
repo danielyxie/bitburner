@@ -2897,7 +2897,7 @@ export interface Bladeburner {
    * @remarks
    * RAM cost: 4 GB
    *
-   * Returns the number of milliseconds it takes to complete the specified action
+   * Returns the number of milliseconds already spent on the current action.
    *
    * @returns Number of milliseconds already spent on the current action.
    */
