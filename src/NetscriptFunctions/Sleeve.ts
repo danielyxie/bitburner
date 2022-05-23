@@ -15,6 +15,7 @@ import {
 } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { Augmentation } from "../Augmentation/Augmentation";
 
 export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext): void {
@@ -271,6 +272,22 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
           augs.push(player.sleeves[sleeveNumber].augmentations[i].name);
         }
         return augs;
+      },
+    getSleeveAugmentationPrice:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown): number => {
+        checkSleeveAPIAccess(ctx);
+        const augName = ctx.helper.string("augName", _augName);
+        const aug: Augmentation = StaticAugmentations[augName];
+        return aug.baseCost;
+      },
+    getSleeveAugmentationRepReq:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown, _basePrice = false): number => {
+        checkSleeveAPIAccess(ctx);
+        const augName = ctx.helper.string("augName", _augName);
+        const aug: Augmentation = StaticAugmentations[augName];
+        return aug.getCost(player).repCost;
       },
     getSleevePurchasableAugs:
       (ctx: NetscriptContext) =>

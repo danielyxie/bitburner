@@ -2160,9 +2160,10 @@ export interface Singularity {
    *
    *
    * @param augName - Name of Augmentation.
+   * @param basePrice - If true, function return base cost value. False by default.
    * @returns Price of the augmentation.
    */
-  getAugmentationPrice(augName: string): number;
+  getAugmentationPrice(augName: string, returnBasePrice?: boolean): number;
 
   /**
    * Get reputation requirement of an augmentation.
@@ -2171,9 +2172,10 @@ export interface Singularity {
    *
    *
    * @param augName - Name of Augmentation.
+   * @param basePrice - If true, function return base cost value. False by default.
    * @returns Reputation requirement of the augmentation.
    */
-  getAugmentationRepReq(augName: string): number;
+  getAugmentationRepReq(augName: string, returnBasePrice?: boolean): number;
 
   /**
    * Purchase an augmentation
@@ -3775,6 +3777,28 @@ export interface Sleeve {
    * @returns List of augmentation names that this sleeve has installed.
    */
   getSleeveAugmentations(sleeveNumber: number): string[];
+
+  /**
+   * Get price of an augmentation.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   *
+   * @param augName - Name of Augmentation.
+   * @returns Price of the augmentation.
+   */
+  getSleeveAugmentationPrice(augName: string): number;
+
+  /**
+   * Get reputation requirement of an augmentation.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   *
+   * @param augName - Name of Augmentation.
+   * @returns Reputation requirement of the augmentation.
+   */
+  getSleeveAugmentationRepReq(augName: string): number;
 
   /**
    * List purchasable augs for a sleeve.
