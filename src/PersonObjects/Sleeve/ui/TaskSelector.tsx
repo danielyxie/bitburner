@@ -54,7 +54,7 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
     }
   }
   const allJobs: string[] = Object.keys(player.jobs);
-  
+
   return allJobs.filter((company) => !forbiddenCompanies.includes(company));
 }
 
