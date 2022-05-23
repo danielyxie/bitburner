@@ -2884,13 +2884,24 @@ export interface Bladeburner {
    * @remarks
    * RAM cost: 4 GB
    *
-   * Returns the number of seconds it takes to complete the specified action
+   * Returns the number of milliseconds it takes to complete the specified action
    *
    * @param type - Type of action.
    * @param name - Name of action. Must be an exact match.
    * @returns Number of milliseconds it takes to complete the specified action.
    */
   getActionTime(type: string, name: string): number;
+
+  /**
+   * Get the time elapsed on current action.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   * Returns the number of milliseconds already spent on the current action.
+   *
+   * @returns Number of milliseconds already spent on the current action.
+   */
+  getActionCurrentTime(): number;
 
   /**
    * Get estimate success chance of an action.
