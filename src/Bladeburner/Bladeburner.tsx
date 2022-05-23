@@ -1677,11 +1677,11 @@ export class Bladeburner implements IBladeburner {
     this.actionTimeOverflow = 0;
     if (this.actionTimeCurrent >= this.actionTimeToComplete) {
       this.actionTimeOverflow = this.actionTimeCurrent - this.actionTimeToComplete;
+      const action = this.getActionObject(this.action);
       const retValue = this.completeAction(player, player, this.action);
       player.gainMoney(retValue.money, "bladeburner");
       player.gainStats(retValue);
       // Operation Daedalus
-      const action = this.getActionObject(this.action);
       if (action == null) {
         throw new Error("Failed to get BlackOperation Object for: " + this.action.name);
       } else if (action.name === BlackOperationNames.OperationDaedalus && this.blackops[action.name]) {
