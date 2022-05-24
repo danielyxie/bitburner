@@ -155,7 +155,7 @@ function getRandomReward(): ICodingContractReward {
 }
 
 function getRandomServer(): BaseServer {
-  const servers = GetAllServers();
+  const servers = GetAllServers().filter((server: BaseServer) => server.serversOnNetwork.length !== 0);
   let randIndex = getRandomInt(0, servers.length - 1);
   let randServer = servers[randIndex];
 

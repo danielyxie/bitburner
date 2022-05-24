@@ -2,7 +2,7 @@
  * React component for displaying a single augmentation for purchase through
  * the faction UI
  */
-import { CheckBox, CheckBoxOutlineBlank, CheckCircle, Info, NewReleases, Report } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, CheckCircle, NewReleases, Report } from "@mui/icons-material";
 import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Faction } from "../../Faction/Faction";
@@ -11,8 +11,8 @@ import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentation } from "../Augmentation";
 import { AugmentationNames } from "../data/AugmentationNames";
-import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 import { StaticAugmentations } from "../StaticAugmentations";
+import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 interface IPreReqsProps {
   player: IPlayer;
@@ -42,11 +42,13 @@ const PreReqs = (props: IPreReqsProps): React.ReactElement => {
       }
     >
       <Typography
-        variant="body2"
         sx={{
+          ml: 1,
+          fontSize: "0.9rem",
           display: "flex",
           alignItems: "center",
           color: hasPreReqs ? Settings.theme.successlight : Settings.theme.error,
+          gridArea: "prereqs",
         }}
       >
         {hasPreReqs ? (
@@ -100,7 +102,10 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
         </>
       }
     >
-      <NewReleases sx={{ ml: 1, color: Settings.theme.money, transform: "rotate(180deg)" }} />
+      <NewReleases
+        fontSize="small"
+        sx={{ ml: 1, color: Settings.theme.money, transform: "rotate(180deg)", gridArea: "exclusive" }}
+      />
     </Tooltip>
   );
 };
@@ -113,7 +118,9 @@ interface IReqProps {
 
 const Requirement = (props: IReqProps): React.ReactElement => {
   return (
-    <Typography sx={{ display: "flex", alignItems: "center", color: props.color }}>
+    <Typography
+      sx={{ display: "flex", alignItems: "center", color: props.fulfilled ? props.color : Settings.theme.error }}
+    >
       {props.fulfilled ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
       {props.value}
     </Typography>
@@ -138,7 +145,7 @@ export const PurchasableAugmentations = (props: IPurchasableAugsProps): React.Re
     <Container
       maxWidth="lg"
       disableGutters
-      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
+      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 0.75 }}
     >
       {props.augNames.map((augName: string) => (
         <PurchasableAugmentation key={augName} parent={props} augName={augName} owned={false} />
@@ -176,11 +183,12 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
   return (
     <Paper
       sx={{
-        p: 1,
+        p: 0.5,
         display: "grid",
-        gridTemplateColumns: "minmax(0, 4fr) 1fr",
+        gridTemplateColumns: "minmax(0, 4fr) 1.4fr",
         gap: 1,
         opacity: props.owned ? 0.75 : 1,
+        minWidth: "1100px",
       }}
     >
       <>
@@ -192,13 +200,13 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
               })
             }
             disabled={!props.parent.canPurchase(props.parent.player, aug) || props.owned}
-            sx={{ width: "48px", height: "48px", float: "left", clear: "none", mr: 1 }}
+            sx={{ width: "48px", height: "36px", float: "left", clear: "none", mr: 1 }}
           >
             {props.owned ? "Owned" : "Buy"}
           </Button>
 
           <Box sx={{ maxWidth: props.owned ? "100%" : "85%" }}>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "grid", alignItems: "center", gridTemplateAreas: `"title exclusive prereqs"` }}>
               <Tooltip
                 title={
                   <>
@@ -211,34 +219,33 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                   </>
                 }
               >
-                <Info sx={{ mr: 1 }} color="info" />
+                <Typography
+                  sx={{
+                    gridArea: "title",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    color:
+                      props.owned || !props.parent.canPurchase(props.parent.player, aug)
+                        ? Settings.theme.disabled
+                        : Settings.theme.primary,
+                  }}
+                >
+                  {aug.name}
+                  {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel(props.parent.player)}`}
+                </Typography>
               </Tooltip>
-              <Typography
-                variant="h6"
-                sx={{
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  color:
-                    props.owned || !props.parent.canPurchase(props.parent.player, aug)
-                      ? Settings.theme.disabled
-                      : Settings.theme.primary,
-                }}
-              >
-                {aug.name}
-                {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel(props.parent.player)}`}
-              </Typography>
+
               {aug.factions.length === 1 && !props.parent.sleeveAugs && (
                 <Exclusive player={props.parent.player} aug={aug} />
               )}
+              {aug.prereqs.length > 0 && !props.parent.sleeveAugs && <PreReqs player={props.parent.player} aug={aug} />}
             </Box>
-
-            {aug.prereqs.length > 0 && !props.parent.sleeveAugs && <PreReqs player={props.parent.player} aug={aug} />}
           </Box>
         </Box>
 
         {props.owned || (
-          <Box sx={{ display: "grid", alignItems: "center", justifyItems: "left" }}>
+          <Box sx={{ display: "grid", alignItems: "center", gridTemplateColumns: "1fr 1fr" }}>
             <Requirement
               fulfilled={cost === 0 || props.parent.player.money > cost}
               value={numeralWrapper.formatMoney(cost)}
