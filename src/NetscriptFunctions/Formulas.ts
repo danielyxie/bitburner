@@ -41,11 +41,7 @@ import { favorToRep as calculateFavorToRep, repToFavor as calculateRepToFavor } 
 import { repFromDonation } from "../Faction/formulas/donation";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 
-export function NetscriptFormulas(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): InternalAPI<IFormulas> {
+export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
     if (!player.hasProgram(Programs.Formulas.name)) {
       throw helper.makeRuntimeErrorMsg(`formulas.${ctx.function}`, `Requires Formulas.exe to run.`);

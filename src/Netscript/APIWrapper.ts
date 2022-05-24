@@ -9,11 +9,12 @@ import { Settings } from "../Settings/Settings";
 import { CONSTANTS } from "../Constants";
 
 type ExternalFunction = (...args: any[]) => any;
-type ExternalAPI = {
+export type ExternalAPI = {
   [string: string]: ExternalAPI | ExternalFunction;
 };
 
 type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: NetscriptContext) => F;
+
 export type InternalAPI<API> = {
   [Property in keyof API]: API[Property] extends ExternalFunction
     ? InternalFunction<API[Property]>

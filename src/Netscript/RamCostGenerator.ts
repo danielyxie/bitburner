@@ -443,6 +443,53 @@ export const RamCosts: IMap<any> = {
     // Easter egg function
     break: 0,
   },
+
+  formulas: {
+    reputation: {
+      calculateFavorToRep: 0,
+      calculateRepToFavor: 0,
+      repFromDonation: 0,
+    },
+    skills: {
+      calculateSkill: 0,
+      calculateExp: 0,
+    },
+    hacking: {
+      hackChance: 0,
+      hackExp: 0,
+      hackPercent: 0,
+      growPercent: 0,
+      hackTime: 0,
+      growTime: 0,
+      weakenTime: 0,
+    },
+    hacknetNodes: {
+      moneyGainRate: 0,
+      levelUpgradeCost: 0,
+      ramUpgradeCost: 0,
+      coreUpgradeCost: 0,
+      hacknetNodeCost: 0,
+      constants: 0,
+    },
+    hacknetServers: {
+      hashGainRate: 0,
+      levelUpgradeCost: 0,
+      ramUpgradeCost: 0,
+      coreUpgradeCost: 0,
+      cacheUpgradeCost: 0,
+      hashUpgradeCost: 0,
+      hacknetServerCost: 0,
+      constants: 0,
+    },
+    gang: {
+      wantedPenalty: 0,
+      respectGain: 0,
+      wantedLevelGain: 0,
+      moneyGain: 0,
+      ascensionPointsGain: 0,
+      ascensionMultiplier: 0,
+    },
+  },
 };
 
 export function getRamCost(player: IPlayer, ...args: string[]): number {

@@ -78,6 +78,7 @@ import { IPort } from "./NetscriptPort";
 import {
   NS as INS,
   Singularity as ISingularity,
+  Formulas as IFormulas,
   Player as INetscriptPlayer,
   Gang as IGang,
   Bladeburner as IBladeburner,
@@ -532,8 +533,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   };
 
   const extra = NetscriptExtra(Player, workerScript, helper);
-  const formulas = NetscriptFormulas(Player, workerScript, helper);
 
+  const formulas = wrapAPI(helper, {}, workerScript, NetscriptFormulas(Player, helper), "formulas")
+    .formulas as unknown as IFormulas;
   const gang = wrapAPI(helper, {}, workerScript, NetscriptGang(Player, workerScript), "gang").gang as unknown as IGang;
   const sleeve = wrapAPI(helper, {}, workerScript, NetscriptSleeve(Player), "sleeve").sleeve as unknown as ISleeve;
   const hacknet = wrapAPI(helper, {}, workerScript, NetscriptHacknet(Player, workerScript), "hacknet")
