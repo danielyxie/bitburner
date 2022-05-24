@@ -287,6 +287,8 @@ export class Bladeburner implements IBladeburner {
 
   resetAction(): void {
     this.action = new ActionIdentifier({ type: ActionTypes.Idle });
+    this.actionTimeCurrent = 0;
+    this.actionTimeToComplete = 0;
   }
 
   clearConsole(): void {

@@ -73,6 +73,7 @@ import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 import { hash } from "../hash/hash";
 import { apr1 } from "./commands/apr1";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 export class Terminal implements ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze
@@ -204,7 +205,7 @@ export class Terminal implements ITerminal {
         router.toBitVerse(false, false);
         return;
       }
-      let moneyGained = calculatePercentMoneyHacked(server, player);
+      let moneyGained = calculatePercentMoneyHacked(server, player) * BitNodeMultipliers.ManualHackMoney;
       moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
       if (moneyGained <= 0) {
