@@ -103,6 +103,7 @@ const useStyles = makeStyles((_theme: Theme) =>
       scrollbarWidth: "auto",
       flexDirection: "column-reverse",
       whiteSpace: "pre-wrap",
+      wordWrap: "break-word",
     },
     titleButton: {
       padding: "1px 0",
