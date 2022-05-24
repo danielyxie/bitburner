@@ -427,8 +427,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (server.moneyAvailable < 0) {
           server.moneyAvailable = 0;
         }
-
-        const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
+        
+        if (manual) {
+          const moneyGained = moneyDrained * BitNodeMultipliers.ManualHackMoney;
+        } else {
+          const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
+        }
 
         Player.gainMoney(moneyGained, "hacking");
         workerScript.scriptRef.onlineMoneyMade += moneyGained;
