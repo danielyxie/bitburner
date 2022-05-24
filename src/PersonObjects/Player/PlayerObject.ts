@@ -4,6 +4,7 @@ import * as corporationMethods from "./PlayerObjectCorporationMethods";
 import * as gangMethods from "./PlayerObjectGangMethods";
 import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
+import * as workMethods from "./PlayerObjectWorkMethods";
 
 import { IMap } from "../../types";
 import { Sleeve } from "../Sleeve/Sleeve";
@@ -40,6 +41,7 @@ import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { ITaskTracker } from "../ITaskTracker";
 import { CONSTANTS } from "../../Constants";
 import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../utils/WorkType";
+import { Work } from "../Work/Work";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -252,8 +254,8 @@ export class PlayerObject implements IPlayer {
   startFactionSecurityWork: (faction: Faction) => void;
   startFocusing: () => void;
   startGang: (facName: string, isHacking: boolean) => void;
-  startWork: (companyName: string) => void;
-  startWorkPartTime: (companyName: string) => void;
+  startCompanyWork: (companyName: string) => void;
+  startCompanyWorkPartTime: (companyName: string) => void;
   takeDamage: (amt: number) => boolean;
   travel: (to: CityName) => boolean;
   giveExploit: (exploit: Exploit) => void;
@@ -307,6 +309,8 @@ export class PlayerObject implements IPlayer {
   graftAugmentationWork: (numCycles: number) => boolean;
   finishGraftAugmentationWork: (cancelled: boolean, singularity?: boolean) => string;
   applyEntropy: (stacks?: number) => void;
+  startWork: (w: Work) => void;
+  cancelWork: () => void;
 
   constructor() {
     //Skills and stats
@@ -530,11 +534,11 @@ export class PlayerObject implements IPlayer {
     this.queryStatFromString = generalMethods.queryStatFromString;
     this.resetWorkStatus = generalMethods.resetWorkStatus;
     this.processWorkEarnings = generalMethods.processWorkEarnings;
-    this.startWork = generalMethods.startWork;
+    this.startCompanyWork = generalMethods.startWork;
     this.cancelationPenalty = generalMethods.cancelationPenalty;
     this.work = generalMethods.work;
     this.finishWork = generalMethods.finishWork;
-    this.startWorkPartTime = generalMethods.startWorkPartTime;
+    this.startCompanyWorkPartTime = generalMethods.startWorkPartTime;
     this.workPartTime = generalMethods.workPartTime;
     this.finishWorkPartTime = generalMethods.finishWorkPartTime;
     this.startFocusing = generalMethods.startFocusing;
@@ -633,6 +637,8 @@ export class PlayerObject implements IPlayer {
     this.sourceFileLvl = generalMethods.sourceFileLvl;
 
     this.applyEntropy = augmentationMethods.applyEntropy;
+    this.startWork = workMethods.startWork;
+    this.cancelWork = workMethods.cancelWork;
   }
 
   whoAmI(): string {

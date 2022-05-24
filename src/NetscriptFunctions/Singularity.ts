@@ -50,6 +50,7 @@ import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { ClassType, WorkType } from "../utils/WorkType";
+import { CreateProgramWork } from "../PersonObjects/Work/CreateProgramWork";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -860,9 +861,9 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
 
         if (companyPosition.isPartTimeJob()) {
-          player.startWorkPartTime(companyName);
+          player.startCompanyWorkPartTime(companyName);
         } else {
-          player.startWork(companyName);
+          player.startCompanyWork(companyName);
         }
 
         if (focus) {
@@ -1181,7 +1182,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           return false;
         }
 
-        player.startCreateProgramWork(p.name, create.time, create.level);
+        player.startWork(new CreateProgramWork({ p: player, program: p }));
         if (focus) {
           player.startFocusing();
           Router.toWork();

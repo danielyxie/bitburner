@@ -28,6 +28,9 @@ import { Box, Tooltip } from "@mui/material";
 
 import { WorkType } from "../../utils/WorkType";
 
+import { Work as PlayerWork, WorkType as OtherWorkType } from "../../PersonObjects/Work/Work";
+import { CreateProgramWork } from "../../PersonObjects/Work/CreateProgramWork";
+
 interface IProps {
   save: () => void;
   killScripts: () => void;
@@ -139,7 +142,7 @@ function Work(): React.ReactElement {
     router.toWork();
   };
 
-  if (!player.isWorking || player.focus) return <></>;
+  if ((!player.isWorking && !player.currentWork) || player.focus) return <></>;
 
   let details = <></>;
   let header = <></>;
@@ -185,16 +188,6 @@ function Work(): React.ReactElement {
       header = <>You are {player.className}</>;
       innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
       break;
-    case WorkType.CreateProgram:
-      details = <>Coding {player.createProgramName}</>;
-      header = <>Creating a program</>;
-      innerText = (
-        <>
-          {player.createProgramName}{" "}
-          {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
-        </>
-      );
-      break;
     case WorkType.GraftAugmentation:
       details = <>Grafting {player.graftAugmentationName}</>;
       header = <>Grafting an Augmentation</>;
@@ -204,6 +197,21 @@ function Work(): React.ReactElement {
           done
         </>
       );
+  }
+
+  const isCreateProgramWork = (w: PlayerWork | undefined): w is CreateProgramWork =>
+    w !== undefined && w.type == OtherWorkType.CreateProgram;
+
+  const w = player.currentWork;
+
+  if (isCreateProgramWork(w)) {
+    details = <>Coding {w.programName}</>;
+    header = <>Creating a program</>;
+    innerText = (
+      <>
+        {w.programName} {((w.unitWorked / w.unitNeeded) * 100).toFixed(2)}%
+      </>
+    );
   }
 
   return (

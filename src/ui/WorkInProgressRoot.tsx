@@ -20,6 +20,8 @@ import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
 import { StatsRow } from "./React/StatsRow";
 import { WorkType, ClassType } from "../utils/WorkType";
+import { CreateProgramWork } from "../PersonObjects/Work/CreateProgramWork";
+import { Work, WorkType as OtherWorkType } from "../PersonObjects/Work/Work";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -422,38 +424,17 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
+    case WorkType.None:
     case WorkType.CreateProgram: {
-      function cancel(): void {
-        player.finishCreateProgramWork(true);
-        router.toTerminal();
-      }
-      function unfocus(): void {
-        router.toTerminal();
-        player.stopFocusing();
-      }
-
-      const completion = (player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100;
+      // is set earlier
 
       workInfo = {
         buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
+          cancel: () => undefined,
         },
-        title: (
-          <>
-            You are currently working on coding <b>{player.createProgramName}</b>
-          </>
-        ),
-
-        progress: {
-          elapsed: player.timeWorked,
-          percentage: completion,
-        },
-
-        stopText: "Stop creating program",
-        stopTooltip: "Your work will be saved and you can return to complete the program later.",
+        title: "",
+        stopText: "",
       };
-
       break;
     }
 
@@ -499,6 +480,44 @@ export function WorkInProgressRoot(): React.ReactElement {
     default:
       router.toTerminal();
       workInfo = null;
+  }
+
+  const isCreateProgramWork = (w: Work): w is CreateProgramWork => w.type == OtherWorkType.CreateProgram;
+
+  if (player.currentWork) {
+    const w = player.currentWork;
+    if (isCreateProgramWork(w)) {
+      function cancel(): void {
+        player.cancelWork();
+        router.toTerminal();
+      }
+      function unfocus(): void {
+        router.toTerminal();
+        player.stopFocusing();
+      }
+
+      const completion = (w.unitWorked / w.unitNeeded) * 100;
+
+      workInfo = {
+        buttons: {
+          cancel: cancel,
+          unfocus: unfocus,
+        },
+        title: (
+          <>
+            You are currently working on coding <b>{w.programName}</b>
+          </>
+        ),
+
+        progress: {
+          elapsed: w.cyclesWorked * CONSTANTS._idleSpeed,
+          percentage: completion,
+        },
+
+        stopText: "Stop creating program",
+        stopTooltip: "Your work will be saved and you can return to complete the program later.",
+      };
+    }
   }
 
   if (workInfo === null) {

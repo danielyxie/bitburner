@@ -32,8 +32,10 @@ import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
 import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
+import type { Work } from "./Work/Work";
 
 export interface IPlayer extends IPerson {
+  currentWork?: Work;
   bitNodeN: number;
   city: CityName;
   companyName: string;
@@ -231,8 +233,8 @@ export interface IPlayer extends IPerson {
   startFactionSecurityWork(faction: Faction): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
-  startWork(companyName: string): void;
-  startWorkPartTime(companyName: string): void;
+  startCompanyWork(companyName: string): void;
+  startCompanyWorkPartTime(companyName: string): void;
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
   giveAchievement(achievementId: string): void;
@@ -281,4 +283,6 @@ export interface IPlayer extends IPerson {
   graftAugmentationWork(numCycles: number): boolean;
   finishGraftAugmentationWork(cancelled: boolean, singularity?: boolean): string;
   applyEntropy(stacks?: number): void;
+  startWork(w: Work): void;
+  cancelWork(): void;
 }

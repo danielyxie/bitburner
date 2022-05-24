@@ -601,15 +601,21 @@ export function startWork(this: IPlayer, companyName: string): void {
 }
 
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
+  if (this.currentWork) {
+    const finished = this.currentWork.work(this, numCycles);
+    if (finished) {
+      this.currentWork.finish(this, false);
+      this.currentWork = undefined;
+      console.log("finish");
+    }
+    console.log("process");
+    return;
+  }
   // Working
   if (this.isWorking) {
     if (this.workType === WorkType.Faction) {
       if (this.workForFaction(numCycles)) {
         router.toFaction(Factions[this.currentWorkFactionName]);
-      }
-    } else if (this.workType === WorkType.CreateProgram) {
-      if (this.createProgramWork(numCycles)) {
-        router.toTerminal();
       }
     } else if (this.workType === WorkType.StudyClass) {
       if (this.takeClass(numCycles)) {

@@ -176,9 +176,9 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     const pos = companyPosition;
     if (pos instanceof CompanyPosition) {
       if (pos.isPartTimeJob() || pos.isSoftwareConsultantJob() || pos.isBusinessConsultantJob()) {
-        p.startWorkPartTime(props.locName);
+        p.startCompanyWorkPartTime(props.locName);
       } else {
-        p.startWork(props.locName);
+        p.startCompanyWork(props.locName);
       }
       p.startFocusing();
       router.toWork();
