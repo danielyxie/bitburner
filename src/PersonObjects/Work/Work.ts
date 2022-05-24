@@ -2,6 +2,7 @@ import { IPlayer } from "../IPlayer";
 
 export enum WorkType {
   CreateProgram = 0,
+  Crime = 1,
 }
 
 export abstract class Work {

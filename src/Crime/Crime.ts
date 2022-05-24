@@ -39,7 +39,7 @@ export class Crime {
   // Name of crime
   name = "";
 
-  // Milliseconds it takes to attempt the crime
+  // cycles it takes to attempt the crime
   time = 0;
 
   // Corresponding type in CONSTANTS. Contains a description for the crime activity

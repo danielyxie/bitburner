@@ -20,8 +20,8 @@ import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
 import { StatsRow } from "./React/StatsRow";
 import { WorkType, ClassType } from "../utils/WorkType";
-import { CreateProgramWork } from "../PersonObjects/Work/CreateProgramWork";
-import { Work, WorkType as OtherWorkType } from "../PersonObjects/Work/Work";
+import { isCreateProgramWork } from "../PersonObjects/Work/CreateProgramWork";
+import { isCrimeWork } from "../PersonObjects/Work/CrimeWork";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -401,29 +401,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case WorkType.Crime: {
-      const completion = Math.round((player.timeWorked / player.timeNeededToCompleteWork) * 100);
-
-      workInfo = {
-        buttons: {
-          cancel: () => {
-            router.toLocation(Locations[LocationName.Slums]);
-            player.finishCrime(true);
-          },
-        },
-        title: `You are attempting to ${player.crimeType}`,
-
-        progress: {
-          remaining: player.timeNeededToCompleteWork - player.timeWorked,
-          percentage: completion,
-        },
-
-        stopText: "Cancel crime",
-      };
-
-      break;
-    }
-
+    case WorkType.Crime:
     case WorkType.None:
     case WorkType.CreateProgram: {
       // is set earlier
@@ -448,7 +426,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         player.stopFocusing();
       }
 
-      const completion = (player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100;
+      const completion = player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork;
 
       workInfo = {
         buttons: {
@@ -482,8 +460,6 @@ export function WorkInProgressRoot(): React.ReactElement {
       workInfo = null;
   }
 
-  const isCreateProgramWork = (w: Work): w is CreateProgramWork => w.type == OtherWorkType.CreateProgram;
-
   if (player.currentWork) {
     const w = player.currentWork;
     if (isCreateProgramWork(w)) {
@@ -496,7 +472,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         player.stopFocusing();
       }
 
-      const completion = (w.unitWorked / w.unitNeeded) * 100;
+      const completion = w.unitWorked / w.unitNeeded;
 
       workInfo = {
         buttons: {
@@ -516,6 +492,25 @@ export function WorkInProgressRoot(): React.ReactElement {
 
         stopText: "Stop creating program",
         stopTooltip: "Your work will be saved and you can return to complete the program later.",
+      };
+    } else if (isCrimeWork(w)) {
+      const completion = w.cyclesWorked / w.getCrime().time;
+
+      workInfo = {
+        buttons: {
+          cancel: () => {
+            router.toLocation(Locations[LocationName.Slums]);
+            player.finishCrime(true);
+          },
+        },
+        title: `You are attempting to ${w.getCrime().name}`,
+
+        progress: {
+          remaining: (w.getCrime().time - w.cyclesWorked) * CONSTANTS._idleSpeed,
+          percentage: completion,
+        },
+
+        stopText: "Cancel crime",
       };
     }
   }
@@ -572,7 +567,7 @@ export function WorkInProgressRoot(): React.ReactElement {
                 <Typography>{convertTimeMsToTimeElapsedString(workInfo.progress.remaining)} remaining</Typography>
               )}
               {workInfo.progress.percentage !== undefined && (
-                <Typography>{workInfo.progress.percentage.toFixed(2)}% done</Typography>
+                <Typography>{(workInfo.progress.percentage * 100).toFixed(2)}% done</Typography>
               )}
             </Box>
             {workInfo.progress.percentage !== undefined && (
