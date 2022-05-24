@@ -40,7 +40,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 1,
       tooltip: "This virus is used to gain root access to a machine if enough ports are opened.",
       req: requireHackingLevel(1),
-      time: CONSTANTS.MillisecondsPerFiveMinutes,
+      time: CONSTANTS.MillisecondsPerFiveMinutes / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
@@ -69,7 +69,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 50,
       tooltip: "This program executes a brute force attack that opens SSH ports",
       req: requireHackingLevel(50),
-      time: CONSTANTS.MillisecondsPerFiveMinutes * 2,
+      time: (CONSTANTS.MillisecondsPerFiveMinutes * 2) / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
@@ -93,7 +93,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 100,
       tooltip: "This program cracks open FTP ports",
       req: requireHackingLevel(100),
-      time: CONSTANTS.MillisecondsPerHalfHour,
+      time: CONSTANTS.MillisecondsPerHalfHour / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
@@ -117,7 +117,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 250,
       tooltip: "This program opens SMTP ports by redirecting data",
       req: requireHackingLevel(250),
-      time: CONSTANTS.MillisecondsPer2Hours,
+      time: CONSTANTS.MillisecondsPer2Hours / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
@@ -141,7 +141,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 500,
       tooltip: "This virus opens up HTTP ports",
       req: requireHackingLevel(500),
-      time: CONSTANTS.MillisecondsPer4Hours,
+      time: CONSTANTS.MillisecondsPer4Hours / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
@@ -165,7 +165,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 750,
       tooltip: "This virus opens SQL ports",
       req: requireHackingLevel(750),
-      time: CONSTANTS.MillisecondsPer8Hours,
+      time: CONSTANTS.MillisecondsPer8Hours / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
@@ -189,7 +189,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 75,
       tooltip: "This program allows you to use the scan-analyze command with a depth up to 5",
       req: requireHackingLevel(75),
-      time: CONSTANTS.MillisecondsPerQuarterHour,
+      time: CONSTANTS.MillisecondsPerQuarterHour / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
       terminal.print("This executable cannot be run.");
@@ -203,7 +203,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 400,
       tooltip: "This program allows you to use the scan-analyze command with a depth up to 10",
       req: requireHackingLevel(400),
-      time: CONSTANTS.MillisecondsPer2Hours,
+      time: CONSTANTS.MillisecondsPer2Hours / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
       terminal.print("This executable cannot be run.");
@@ -217,7 +217,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 75,
       tooltip: "This program is used to display hacking and Netscript-related information about servers",
       req: requireHackingLevel(75),
-      time: CONSTANTS.MillisecondsPerHalfHour,
+      time: CONSTANTS.MillisecondsPerHalfHour / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]): void => {
       if (args.length !== 1) {
@@ -267,7 +267,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 25,
       tooltip: "This program allows you to directly connect to other servers through the 'scan-analyze' command",
       req: requireHackingLevel(25),
-      time: CONSTANTS.MillisecondsPerQuarterHour,
+      time: CONSTANTS.MillisecondsPerQuarterHour / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
       terminal.print("This executable cannot be run.");
@@ -282,7 +282,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 1000,
       tooltip: "This program allows you to use the formulas API",
       req: requireHackingLevel(1000),
-      time: CONSTANTS.MillisecondsPer4Hours,
+      time: CONSTANTS.MillisecondsPer4Hours / CONSTANTS._idleSpeed,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
       terminal.print("This executable cannot be run.");
@@ -296,7 +296,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       level: 1,
       tooltip: "This program creates a portal to the BitNode Nexus (allows you to restart and switch BitNodes)",
       req: bitFlumeRequirements(),
-      time: CONSTANTS.MillisecondsPerFiveMinutes / 20,
+      time: CONSTANTS.MillisecondsPerFiveMinutes / 20 / CONSTANTS._idleSpeed,
     },
     run: (): void => {
       BitFlumeEvent.emit();

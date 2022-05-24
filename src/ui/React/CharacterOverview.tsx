@@ -142,7 +142,7 @@ function Work(): React.ReactElement {
     router.toWork();
   };
 
-  if ((!player.isWorking && !player.currentWork) || player.focus) return <></>;
+  if (!player.isWorking || player.focus || !player.currentWork) return <></>;
 
   let details = <></>;
   let header = <></>;

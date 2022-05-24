@@ -154,7 +154,7 @@ export let Router: IRouter = {
 
 function determineStartPage(player: IPlayer): Page {
   if (RecoveryMode) return Page.Recovery;
-  if (player.isWorking) return Page.Work;
+  if (player.isWorking || player.currentWork) return Page.Work;
   return Page.Terminal;
 }
 

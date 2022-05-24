@@ -53,8 +53,7 @@ export class CreateProgramWork extends Work {
     skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
     skillMult *= focusBonus;
     //Skill multiplier directly applied to "time worked"
-    this.unitWorked += CONSTANTS._idleSpeed * cycles;
-    this.unitNeeded += CONSTANTS._idleSpeed * cycles * skillMult;
+    this.unitWorked += cycles * skillMult;
 
     if (this.unitWorked >= this.unitNeeded) {
       return true;

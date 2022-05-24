@@ -520,6 +520,10 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
   }
 
+  if (!player.currentWork && player.workType === "") {
+    setTimeout(() => router.toTerminal(), 0);
+  }
+
   if (workInfo === null) {
     return <></>;
   }
