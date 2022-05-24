@@ -527,7 +527,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         player.getHomeComputer().pushProgram(item.program);
         // Cancel if the program is in progress of writing
-        if (isCreateProgramWork(player.currentWork) && player.currentWork.programName === item.program) {
+        const w = player.currentWork;
+        if (isCreateProgramWork(w) && w.programName === item.program) {
           player.isWorking = false;
           player.currentWork = undefined;
           player.resetWorkStatus();
