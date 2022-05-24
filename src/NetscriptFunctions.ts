@@ -62,7 +62,7 @@ import { isString } from "./utils/helpers/isString";
 import { BaseServer } from "./Server/BaseServer";
 import { NetscriptGang } from "./NetscriptFunctions/Gang";
 import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
-import { NetscriptExtra } from "./NetscriptFunctions/Extra";
+import { NetscriptExtra, INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
 import { NetscriptInfiltration } from "./NetscriptFunctions/Infiltration";
@@ -532,7 +532,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
   };
 
-  const extra = NetscriptExtra(Player, workerScript, helper);
+  const extra = wrapAPI(helper, {}, workerScript, NetscriptExtra(Player)) as unknown as INetscriptExtra;
 
   const formulas = wrapAPI(helper, {}, workerScript, NetscriptFormulas(Player, helper), "formulas")
     .formulas as unknown as IFormulas;

@@ -18,7 +18,7 @@ type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: Netscri
 export type InternalAPI<API> = {
   [Property in keyof API]: API[Property] extends ExternalFunction
     ? InternalFunction<API[Property]>
-    : API[Property] extends ExternalAPI
+    : API[Property] extends object
     ? InternalAPI<API[Property]>
     : never;
 };
