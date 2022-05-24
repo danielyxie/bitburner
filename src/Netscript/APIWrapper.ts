@@ -99,7 +99,7 @@ function wrapFunction(
     if (safetyEnabled) workerScript.infiniteLoopSafetyCounter++;
     if (workerScript.infiniteLoopSafetyCounter > CONSTANTS.InfiniteLoopLimit)
       throw new Error(
-        `Infinite loop without sleep detected. ${CONSTANTS.InfiniteLoopLimit} ns functions were called without sleep. This will cause your UI to hang.`,
+        `Infinite loop without sleep detected. ${CONSTANTS.InfiniteLoopLimit} ns functions were called without 'sleep'. This will cause your UI to hang. Are you using 'asleep' by mistake?`,
       );
     return func(ctx)(...args);
   }

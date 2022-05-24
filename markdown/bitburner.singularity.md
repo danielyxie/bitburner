@@ -21,10 +21,12 @@ This API requires Source-File 4 to use. The RAM cost of all these functions is m
 |  Method | Description |
 |  --- | --- |
 |  [applyToCompany(companyName, field)](./bitburner.singularity.applytocompany.md) | Apply for a job at a company. |
+|  [b1tflum3(nextBN, callbackScript)](./bitburner.singularity.b1tflum3.md) | b1t\_flum3 into a different BN. |
 |  [checkFactionInvitations()](./bitburner.singularity.checkfactioninvitations.md) | List all current faction invitations. |
 |  [commitCrime(crime)](./bitburner.singularity.commitcrime.md) | Commit a crime. |
 |  [connect(hostname)](./bitburner.singularity.connect.md) | Connect to a server. |
 |  [createProgram(program, focus)](./bitburner.singularity.createprogram.md) | Create a program. |
+|  [destroyW0r1dD43m0n(nextBN, callbackScript)](./bitburner.singularity.destroyw0r1dd43m0n.md) | Destroy the w0r1d\_d43m0n and move on to the next BN. |
 |  [donateToFaction(faction, amount)](./bitburner.singularity.donatetofaction.md) | Donate to a faction. |
 |  [getAugmentationCost(augName)](./bitburner.singularity.getaugmentationcost.md) | Get the price and reputation of an augmentation. |
 |  [getAugmentationPrereq(augName)](./bitburner.singularity.getaugmentationprereq.md) | Get the pre-requisite of an augmentation. |
@@ -60,6 +62,7 @@ This API requires Source-File 4 to use. The RAM cost of all these functions is m
 |  [purchaseAugmentation(faction, augmentation)](./bitburner.singularity.purchaseaugmentation.md) | Purchase an augmentation |
 |  [purchaseProgram(programName)](./bitburner.singularity.purchaseprogram.md) | Purchase a program from the dark web. |
 |  [purchaseTor()](./bitburner.singularity.purchasetor.md) | Purchase the TOR router. |
+|  [quitJob(companyName)](./bitburner.singularity.quitjob.md) | Quit jobs by company. |
 |  [setFocus(focus)](./bitburner.singularity.setfocus.md) | Set the players focus. |
 |  [softReset(cbScript)](./bitburner.singularity.softreset.md) | Soft reset the game. |
 |  [stopAction()](./bitburner.singularity.stopaction.md) | Stop the current action. |

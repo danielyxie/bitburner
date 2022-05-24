@@ -4,6 +4,8 @@
 
 ## Employee.int property
 
+Intelligence of the employee
+
 <b>Signature:</b>
 
 ```typescript

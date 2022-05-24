@@ -4,6 +4,8 @@
 
 ## Employee.exp property
 
+Experience of the employee
+
 <b>Signature:</b>
 
 ```typescript

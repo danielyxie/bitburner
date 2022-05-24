@@ -17,7 +17,7 @@ attempt(answer: string[] | number, filename: string, host?: string, opts?: Codin
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  answer | string\[\] \| number | Solution for the contract. |
-|  filename | string |  |
+|  filename | string | Filename of the contract. |
 |  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 |  opts | [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Optional parameters for configuring function behavior. |
 

@@ -26,5 +26,5 @@ void
 
 RAM cost: 5 GB \* 16/4/1
 
-This function will automatically install your Augmentations, resetting the game as usual.
+This function will automatically install your Augmentations, resetting the game as usual. If you do not own uninstalled Augmentations then the game will not reset.
 

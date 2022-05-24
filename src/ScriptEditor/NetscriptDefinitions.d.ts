@@ -4299,12 +4299,18 @@ interface Stanek {
   acceptGift(): boolean;
 }
 
+/**
+ * @public
+ */
 export interface InfiltrationReward {
   tradeRep: number;
   sellCash: number;
   SoARep: number;
 }
 
+/**
+ * @public
+ */
 export interface InfiltrationLocation {
   location: any;
   reward: InfiltrationReward;
@@ -4797,6 +4803,7 @@ export interface NS {
 
   /**
    * Suspends the script for n milliseconds. Doesn't block with concurrent calls.
+   * You should prefer 'sleep' over 'asleep' except when doing very complex UI work.
    * @remarks
    * RAM cost: 0 GB
    *
