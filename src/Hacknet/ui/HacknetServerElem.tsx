@@ -253,7 +253,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       <Table size="small">
         <TableBody>
           <TableRow>
-            <TableCell>
+            <TableCell colSpan={3}>
               <Typography>{node.hostname}</Typography>
             </TableCell>
           </TableRow>

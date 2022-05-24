@@ -27,7 +27,7 @@ import { GetServer } from "../../Server/AllServers";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 interface IProps {
   player: IPlayer;
@@ -118,7 +118,7 @@ export function HacknetRoot(props: IProps): React.ReactElement {
   });
 
   return (
-    <>
+    <Container maxWidth="lg" disableGutters sx={{ mx: 0 }}>
       <Typography variant="h4">Hacknet {hasHacknetServers(props.player) ? "Servers" : "Nodes"}</Typography>
       <GeneralInfo hasHacknetServers={hasHacknetServers(props.player)} />
 
@@ -137,8 +137,8 @@ export function HacknetRoot(props: IProps): React.ReactElement {
 
       {hasHacknetServers(props.player) && <Button onClick={() => setOpen(true)}>Spend Hashes on Upgrades</Button>}
 
-      <Box sx={{ display: "grid", width: "fit-content", gridTemplateColumns: "repeat(3, 1fr)" }}>{nodes}</Box>
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px,1fr))" }}>{nodes}</Box>
       <HashUpgradeModal open={open} onClose={() => setOpen(false)} />
-    </>
+    </Container>
   );
 }
