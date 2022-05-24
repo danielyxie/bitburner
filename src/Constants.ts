@@ -227,7 +227,7 @@ export const CONSTANTS: {
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,
 
-  InfiniteLoopLimit: 1000,
+  InfiniteLoopLimit: 2000,
 
   Donations: 7,
 

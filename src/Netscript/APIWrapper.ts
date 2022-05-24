@@ -96,11 +96,15 @@ function wrapFunction(
   const safetyEnabled = Settings.InfinityLoopSafety;
   function wrappedFunction(...args: unknown[]): unknown {
     helpers.updateDynamicRam(ctx.function, getRamCost(Player, ...tree, ctx.function));
-    if (safetyEnabled) workerScript.infiniteLoopSafetyCounter++;
-    if (workerScript.infiniteLoopSafetyCounter > CONSTANTS.InfiniteLoopLimit)
-      throw new Error(
-        `Infinite loop without sleep detected. ${CONSTANTS.InfiniteLoopLimit} ns functions were called without 'sleep'. This will cause your UI to hang. Are you using 'asleep' by mistake?`,
-      );
+    if (safetyEnabled) {
+      const now = performance.now();
+      if (now - workerScript.infiniteLoopSafety > CONSTANTS.InfiniteLoopLimit) {
+        throw new Error(
+          `Potential infinite loop without sleep detected. The game spent ${CONSTANTS.InfiniteLoopLimit}ms stuck in this script. (Are you using 'asleep' by mistake?)`,
+        );
+      }
+    }
+
     return func(ctx)(...args);
   }
   const parent = getNestedProperty(wrappedAPI, ...tree);
