@@ -26,7 +26,7 @@ export interface BitNodeMultipliers
 |  [CodingContractMoney](./bitburner.bitnodemultipliers.codingcontractmoney.md) | number | Influences the amount of money gained from completing Coding Contracts |
 |  [CompanyWorkExpGain](./bitburner.bitnodemultipliers.companyworkexpgain.md) | number | Influences the experience gained for each ability when the player completes working their job. |
 |  [CompanyWorkMoney](./bitburner.bitnodemultipliers.companyworkmoney.md) | number | Influences how much money the player earns when completing working their job. |
-|  [CorporationSoftCap](./bitburner.bitnodemultipliers.corporationsoftcap.md) | number | Influences the money gain from dividends of corporations created by the player. |
+|  [CorporationSoftcap](./bitburner.bitnodemultipliers.corporationsoftcap.md) | number | Influences the money gain from dividends of corporations created by the player. |
 |  [CorporationValuation](./bitburner.bitnodemultipliers.corporationvaluation.md) | number | Influences the valuation of corporations created by the player. |
 |  [CrimeExpGain](./bitburner.bitnodemultipliers.crimeexpgain.md) | number | Influences the base experience gained for each ability when the player commits a crime. |
 |  [CrimeMoney](./bitburner.bitnodemultipliers.crimemoney.md) | number | Influences the base money gained when the player commits a crime. |

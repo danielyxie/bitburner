@@ -9,7 +9,7 @@ Upgrade warehouse
 <b>Signature:</b>
 
 ```typescript
-upgradeWarehouse(divisionName: string, cityName: string): void;
+upgradeWarehouse(divisionName: string, cityName: string, amt?: number): void;
 ```
 
 ## Parameters
@@ -18,6 +18,7 @@ upgradeWarehouse(divisionName: string, cityName: string): void;
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
 |  cityName | string | Name of the city |
+|  amt | number | amount of upgrades defaults to 1 |
 
 <b>Returns:</b>
 

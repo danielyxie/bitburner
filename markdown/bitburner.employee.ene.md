@@ -4,7 +4,7 @@
 
 ## Employee.ene property
 
-Energy
+Energy of the employee
 
 <b>Signature:</b>
 

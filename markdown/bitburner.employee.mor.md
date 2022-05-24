@@ -4,7 +4,7 @@
 
 ## Employee.mor property
 
-Morale
+Morale of the employee
 
 <b>Signature:</b>
 

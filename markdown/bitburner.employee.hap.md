@@ -4,7 +4,7 @@
 
 ## Employee.hap property
 
-Happiness
+Happiness of the employee
 
 <b>Signature:</b>
 
