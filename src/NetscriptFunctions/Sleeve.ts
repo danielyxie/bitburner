@@ -332,7 +332,11 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
               continue;
             }
             const other = player.sleeves[i];
-            if (other.currentTask === SleeveTaskType.Bladeburner && other.bbAction === action) {
+            if (
+              other.currentTask === SleeveTaskType.Bladeburner &&
+              other.bbAction === action &&
+              other.bbContract === contract
+            ) {
               throw ctx.helper.makeRuntimeErrorMsg(
                 `Sleeve ${sleeveNumber} cannot take of contracts because Sleeve ${i} is already performing that action.`,
               );
