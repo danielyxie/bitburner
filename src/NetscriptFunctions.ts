@@ -2505,8 +2505,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workChaExpGained: Player.workChaExpGained,
         workRepGained: Player.workRepGained,
         workMoneyGained: Player.workMoneyGained,
-        createProgramName: Player.createProgramName,
-        createProgramReqLvl: Player.createProgramReqLvl,
         className: Player.className,
         crimeType: Player.crimeType,
         work_money_mult: Player.work_money_mult,

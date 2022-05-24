@@ -96,6 +96,7 @@ function wrapFunction(
   const safetyEnabled = Settings.InfinityLoopSafety;
   function wrappedFunction(...args: unknown[]): unknown {
     helpers.updateDynamicRam(ctx.function, getRamCost(Player, ...tree, ctx.function));
+
     if (safetyEnabled) {
       const now = performance.now();
       if (now - workerScript.infiniteLoopSafety > CONSTANTS.InfiniteLoopLimit) {

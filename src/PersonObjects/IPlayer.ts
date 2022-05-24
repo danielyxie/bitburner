@@ -126,10 +126,7 @@ export interface IPlayer extends IPerson {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
-  createProgramReqLvl: number;
   factionWorkType: string;
-  createProgramName: string;
-  timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
   crimeType: CrimeType;
@@ -242,7 +239,6 @@ export interface IPlayer extends IPerson {
   quitJob(company: string, sing?: boolean): void;
   hasJob(): boolean;
   createHacknetServer(): HacknetServer;
-  startCreateProgramWork(programName: string, time: number, reqLevel: number): void;
   queueAugmentation(augmentationName: string): void;
   receiveInvite(factionName: string): void;
   updateSkillLevels(): void;
@@ -254,7 +250,6 @@ export interface IPlayer extends IPerson {
   cancelationPenalty(): number;
   finishWorkPartTime(sing?: boolean): string;
   finishCrime(cancelled: boolean): string;
-  finishCreateProgramWork(cancelled: boolean): string;
   resetMultipliers(): void;
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
@@ -270,7 +265,6 @@ export interface IPlayer extends IPerson {
   getWorkMoneyGain(): number;
   processWorkEarnings(cycles: number): void;
   hospitalize(): void;
-  createProgramWork(numCycles: number): boolean;
   takeClass(numCycles: number): boolean;
   commitCrime(numCycles: number): boolean;
   checkForFactionInvitations(): Faction[];

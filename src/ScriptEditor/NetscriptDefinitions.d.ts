@@ -68,8 +68,6 @@ interface Player {
   workChaExpGained: number;
   workRepGained: number;
   workMoneyGained: number;
-  createProgramName: string;
-  createProgramReqLvl: number;
   className: string;
   crimeType: string;
   work_money_mult: number;

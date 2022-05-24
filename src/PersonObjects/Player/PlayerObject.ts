@@ -138,10 +138,8 @@ export class PlayerObject implements IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
-  createProgramReqLvl: number;
+  currentWork?: Work;
   factionWorkType: PlayerFactionWorkType;
-  createProgramName: string;
-  timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
   crimeType: CrimeType;
@@ -267,7 +265,6 @@ export class PlayerObject implements IPlayer {
   hasJob: () => boolean;
   process: (router: IRouter, numCycles?: number) => void;
   createHacknetServer: () => HacknetServer;
-  startCreateProgramWork: (programName: string, time: number, reqLevel: number) => void;
   queueAugmentation: (augmentationName: string) => void;
   receiveInvite: (factionName: string) => void;
   updateSkillLevels: () => void;
@@ -279,7 +276,6 @@ export class PlayerObject implements IPlayer {
   cancelationPenalty: () => number;
   finishWorkPartTime: (sing?: boolean) => string;
   finishCrime: (cancelled: boolean) => string;
-  finishCreateProgramWork: (cancelled: boolean) => string;
   resetMultipliers: () => void;
   prestigeAugmentation: () => void;
   prestigeSourceFile: () => void;
@@ -296,7 +292,6 @@ export class PlayerObject implements IPlayer {
   getWorkMoneyGain: () => number;
   processWorkEarnings: (cycles: number) => void;
   hospitalize: () => void;
-  createProgramWork: (numCycles: number) => boolean;
   takeClass: (numCycles: number) => boolean;
   commitCrime: (numCycles: number) => boolean;
   checkForFactionInvitations: () => Faction[];
@@ -431,9 +426,6 @@ export class PlayerObject implements IPlayer {
     this.workRepGained = 0;
     this.workMoneyGained = 0;
 
-    this.createProgramName = "";
-    this.createProgramReqLvl = 0;
-
     this.graftAugmentationName = "";
     this.timeWorkedGraftAugmentation = 0;
 
@@ -442,7 +434,6 @@ export class PlayerObject implements IPlayer {
     this.crimeType = CrimeType.None;
 
     this.timeWorked = 0; //in m;
-    this.timeWorkedCreateProgram = 0;
     this.timeNeededToCompleteWork = 0;
 
     this.work_money_mult = 1;
@@ -558,9 +549,6 @@ export class PlayerObject implements IPlayer {
     this.getWorkChaExpGain = generalMethods.getWorkChaExpGain;
     this.getWorkRepGain = generalMethods.getWorkRepGain;
     this.process = generalMethods.process;
-    this.startCreateProgramWork = generalMethods.startCreateProgramWork;
-    this.createProgramWork = generalMethods.createProgramWork;
-    this.finishCreateProgramWork = generalMethods.finishCreateProgramWork;
     this.startGraftAugmentationWork = generalMethods.startGraftAugmentationWork;
     this.graftAugmentationWork = generalMethods.craftAugmentationWork;
     this.finishGraftAugmentationWork = generalMethods.finishGraftAugmentationWork;

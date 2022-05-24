@@ -5,6 +5,10 @@ import { Program } from "../../Programs/Program";
 import { IPlayer } from "../IPlayer";
 import { Work, WorkType } from "./Work";
 
+export const isCreateProgramWork = (w: Work | undefined): w is CreateProgramWork => {
+  return w !== undefined && w.type === WorkType.CreateProgram;
+};
+
 export class CreateProgramWork extends Work {
   programName = "";
   reqLevel = 0;

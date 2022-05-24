@@ -291,14 +291,11 @@ const Engine: {
       Player.gainMoney(offlineHackingIncome, "hacking");
       // Process offline progress
       loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
+      Player.focus = true;
       if (Player.isWorking) {
-        Player.focus = true;
         switch (Player.workType) {
           case WorkType.Faction:
             Player.workForFaction(numCyclesOffline);
-            break;
-          case WorkType.CreateProgram:
-            Player.createProgramWork(numCyclesOffline);
             break;
           case WorkType.StudyClass:
             Player.takeClass(numCyclesOffline);
@@ -315,6 +312,8 @@ const Engine: {
           default:
             Player.work(numCyclesOffline);
         }
+      } else if (Player.currentWork) {
+        Player.currentWork.work(Player, numCyclesOffline);
       } else {
         for (let i = 0; i < Player.factions.length; i++) {
           const facName = Player.factions[i];

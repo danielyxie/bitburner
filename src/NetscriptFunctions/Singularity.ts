@@ -50,7 +50,7 @@ import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { ClassType, WorkType } from "../utils/WorkType";
-import { CreateProgramWork } from "../PersonObjects/Work/CreateProgramWork";
+import { CreateProgramWork, isCreateProgramWork } from "../PersonObjects/Work/CreateProgramWork";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -527,8 +527,9 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         player.getHomeComputer().pushProgram(item.program);
         // Cancel if the program is in progress of writing
-        if (player.createProgramName === item.program) {
+        if (isCreateProgramWork(player.currentWork) && player.currentWork.programName === item.program) {
           player.isWorking = false;
+          player.currentWork = undefined;
           player.resetWorkStatus();
         }
 
