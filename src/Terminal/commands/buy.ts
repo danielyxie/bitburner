@@ -3,8 +3,6 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { listAllDarkwebItems, buyAllDarkwebItems, buyDarkwebItem } from "../../DarkWeb/DarkWeb";
-import { SpecialServers } from "../../Server/data/SpecialServers";
-import { GetServer } from "../../Server/AllServers";
 
 export function buy(
   terminal: ITerminal,
