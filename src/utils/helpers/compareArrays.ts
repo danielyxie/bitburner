@@ -9,18 +9,18 @@ export function compareArrays<T>(a1: T[], a2: T[]): boolean {
   }
 
   for (let i = 0; i < a1.length; ++i) {
-    if (Array.isArray(a1[i])) {
+    const v1 = a1[i];
+    const v2 = a2[i];
+    if (Array.isArray(v1)) {
       // If the other element is not an array, then these cannot be equal
-      if (!Array.isArray(a2[i])) {
+      if (!Array.isArray(v2)) {
         return false;
       }
 
-      const elem1 = a1[i] as any;
-      const elem2 = a2[i] as any;
-      if (!compareArrays(elem1, elem2)) {
+      if (!compareArrays(v1, v2)) {
         return false;
       }
-    } else if (a1[i] !== a2[i] && !(Number.isNaN(a1[i]) && Number.isNaN(a2[i]))) {
+    } else if (v1 !== v2 && !(Number.isNaN(v1) && Number.isNaN(v2))) {
       // strict (in)equality considers NaN not equal to itself
       return false;
     }

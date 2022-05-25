@@ -66,7 +66,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
       <TimeSkip player={props.player} engine={props.engine} />
       <Achievements player={props.player} engine={props.engine} />
       <Entropy player={props.player} engine={props.engine} />
-      <SaveFile player={props.player} />
+      <SaveFile />
     </>
   );
 }
