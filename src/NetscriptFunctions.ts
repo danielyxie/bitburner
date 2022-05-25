@@ -411,11 +411,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (server.moneyAvailable < 0) {
           server.moneyAvailable = 0;
         }
-        
+
+        let moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
         if (manual) {
-          const moneyGained = moneyDrained * BitNodeMultipliers.ManualHackMoney;
-        } else {
-          const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
+          moneyGained = moneyDrained * BitNodeMultipliers.ManualHackMoney;
         }
 
         Player.gainMoney(moneyGained, "hacking");
