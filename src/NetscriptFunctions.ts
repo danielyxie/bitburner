@@ -581,7 +581,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         _hostname: unknown,
         {
           threads: requestedThreads,
-          stock,
+          stock: requestedStock,
           hackOverrideTiming: requestedHackOverrideTiming,
           hackOverrideEffect: requestedHackOverrideEffect,
         }: BasicHGWOptions = {},
@@ -589,7 +589,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         const hostname = ctx.helper.string("hostname", _hostname);
         return hack(ctx, hostname, false, {
           threads: requestedThreads,
-          stock: stock,
+          stock: requestedStock,
           hackOverrideTiming: requestedHackOverrideTiming,
           hackOverrideEffect: requestedHackOverrideEffect,
         });
@@ -696,7 +696,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (ctx: NetscriptContext) =>
       async (
         _hostname: unknown,
-        { threads: requestedThreads, stock, hackOverrideTiming: requestedHackOverrideTiming }: BasicHGWOptions = {},
+        { threads: requestedThreads, stock: requestedStock, hackOverrideTiming: requestedHackOverrideTiming }: BasicHGWOptions = {},
       ): Promise<number> => {
         const hostname = ctx.helper.string("hostname", _hostname);
         const threads = resolveNetscriptRequestedThreads(ctx, requestedThreads ?? workerScript.scriptRef.threads);
@@ -749,7 +749,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           );
           workerScript.scriptRef.onlineExpGained += expGain;
           Player.gainHackingExp(expGain);
-          if (stock) {
+          if (requestedStock) {
             influenceStockThroughServerGrow(server, moneyAfter - moneyBefore);
           }
           return Promise.resolve(moneyAfter / moneyBefore);

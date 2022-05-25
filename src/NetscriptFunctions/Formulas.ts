@@ -23,10 +23,10 @@ import {
   calculateHackingExpGain,
   calculatePercentMoneyHacked,
   calculateHackingTime,
-  calculateHackLevelForTime,
   calculateGrowTime,
-  calculateGrowLevelForTime,
   calculateWeakenTime,
+  calculateHackLevelForTime,
+  calculateGrowLevelForTime,
   calculateWeakenLevelForTime,
 } from "../Hacking";
 import { numCycleForGrowth } from "../Server/ServerHelpers";

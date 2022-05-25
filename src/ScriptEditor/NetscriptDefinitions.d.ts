@@ -259,7 +259,7 @@ export interface AugmentationStats {
  * Options to affect the behavior of {@link NS.hack | hack}, {@link NS.grow | grow}, and {@link NS.weaken | weaken}.
  * @public
  */
-export declare interface BasicHGWOptions {
+export interface BasicHGWOptions {
   /** Number of threads to use for this function. Must be less than or equal to the number of threads the script is running with. */
   threads?: number;
   /** Set to true this action will affect the stock market. */
@@ -3980,14 +3980,6 @@ interface HackingFormulas {
    */
   hackTime(server: Server, player: Player, hackOverride?: number): number;
   /**
-   * Calculate hack level to hit a specific hack time for a server.
-   * @param server - Server info from {@link NS.getServer | getServer}
-   * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param ms - Time in ms to have the hack take.
-   * @returns The calculated hack level.
-   */
-  hackLevelForTime(server: Server, player: Player, ms: number): number;
-  /**
    * Calculate grow time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
@@ -3997,14 +3989,6 @@ interface HackingFormulas {
    */
   growTime(server: Server, player: Player, hackOverride?: number): number;
   /**
-   * Calculate hack level to hit a specific grow time for a server.
-   * @param server - Server info from {@link NS.getServer | getServer}
-   * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param ms - Time in ms to have the grow take.
-   * @returns The calculated hack level.
-   */
-  growLevelForTime(server: Server, player: Player, ms: number): number;
-  /**
    * Calculate weaken time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
@@ -4013,6 +3997,22 @@ interface HackingFormulas {
    * @returns The calculated weaken time.
    */
   weakenTime(server: Server, player: Player, hackOverride?: number): number;
+ /**
+   * Calculate hack level to hit a specific hack time for a server.
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param ms - Time in ms to have the hack take.
+   * @returns The calculated hack level.
+   */
+ hackLevelForTime(server: Server, player: Player, ms: number): number;
+ /**
+  * Calculate hack level to hit a specific grow time for a server.
+  * @param server - Server info from {@link NS.getServer | getServer}
+  * @param player - Player info from {@link NS.getPlayer | getPlayer}
+  * @param ms - Time in ms to have the grow take.
+  * @returns The calculated hack level.
+  */
+ growLevelForTime(server: Server, player: Player, ms: number): number;
   /**
    * Calculate hack level to hit a specific weaken time for a server.
    * @param server - Server info from {@link NS.getServer | getServer}
