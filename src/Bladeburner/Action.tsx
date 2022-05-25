@@ -5,6 +5,7 @@ import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver"
 import { BladeburnerConstants } from "./data/Constants";
 import { IBladeburner } from "./IBladeburner";
 import { IAction, ISuccessChanceParams } from "./IAction";
+import { IPerson } from "../PersonObjects/IPerson";
 
 class StatsMultiplier {
   [key: string]: number;
@@ -152,8 +153,8 @@ export class Action implements IAction {
    * Tests for success. Should be called when an action has completed
    * @param inst {Bladeburner} - Bladeburner instance
    */
-  attempt(inst: IBladeburner): boolean {
-    return Math.random() < this.getSuccessChance(inst);
+  attempt(inst: IBladeburner, person: IPerson): boolean {
+    return Math.random() < this.getSuccessChance(inst, person);
   }
 
   // To be implemented by subtypes
@@ -161,13 +162,13 @@ export class Action implements IAction {
     return 1;
   }
 
-  getActionTime(inst: IBladeburner): number {
+  getActionTime(inst: IBladeburner, person: IPerson): number {
     const difficulty = this.getDifficulty();
     let baseTime = difficulty / BladeburnerConstants.DifficultyToTimeFactor;
     const skillFac = inst.skillMultipliers.actionTime; // Always < 1
 
-    const effAgility = Player.agility * inst.skillMultipliers.effAgi;
-    const effDexterity = Player.dexterity * inst.skillMultipliers.effDex;
+    const effAgility = person.agility * inst.skillMultipliers.effAgi;
+    const effDexterity = person.dexterity * inst.skillMultipliers.effDex;
     const statFac =
       0.5 *
       (Math.pow(effAgility, BladeburnerConstants.EffAgiExponentialFactor) +
@@ -211,12 +212,12 @@ export class Action implements IAction {
     return 1;
   }
 
-  getEstSuccessChance(inst: IBladeburner): [number, number] {
+  getEstSuccessChance(inst: IBladeburner, person: IPerson): [number, number] {
     function clamp(x: number): number {
       return Math.max(0, Math.min(x, 1));
     }
-    const est = this.getSuccessChance(inst, { est: true });
-    const real = this.getSuccessChance(inst);
+    const est = this.getSuccessChance(inst, person, { est: true });
+    const real = this.getSuccessChance(inst, person);
     const diff = Math.abs(real - est);
     let low = real - diff;
     let high = real + diff;
@@ -232,7 +233,7 @@ export class Action implements IAction {
    * @params - options:
    *  est (bool): Get success chance estimate instead of real success chance
    */
-  getSuccessChance(inst: IBladeburner, params: ISuccessChanceParams = { est: false }): number {
+  getSuccessChance(inst: IBladeburner, person: IPerson, params: ISuccessChanceParams = { est: false }): number {
     if (inst == null) {
       throw new Error("Invalid Bladeburner instance passed into Action.getSuccessChance");
     }
@@ -240,7 +241,7 @@ export class Action implements IAction {
     let competence = 0;
     for (const stat of Object.keys(this.weights)) {
       if (this.weights.hasOwnProperty(stat)) {
-        const playerStatLvl = Player.queryStatFromString(stat);
+        const playerStatLvl = person.queryStatFromString(stat);
         const key = "eff" + stat.charAt(0).toUpperCase() + stat.slice(1);
         let effMultiplier = inst.skillMultipliers[key];
         if (effMultiplier == null) {

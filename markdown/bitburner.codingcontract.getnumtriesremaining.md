@@ -16,7 +16,7 @@ getNumTriesRemaining(filename: string, host?: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  filename | string |  |
+|  filename | string | Filename of the contract. |
 |  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>

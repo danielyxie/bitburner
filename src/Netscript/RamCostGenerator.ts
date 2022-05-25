@@ -1,6 +1,18 @@
 import { IPlayer } from "src/PersonObjects/IPlayer";
 import { IMap } from "../types";
 
+import { NS as INS } from "../ScriptEditor/NetscriptDefinitions";
+
+import { INetscriptExtra } from "../NetscriptFunctions/Extra";
+
+type RamCostTree<API> = {
+  [Property in keyof API]: API[Property] extends () => void
+    ? number | ((p: IPlayer) => void)
+    : API[Property] extends object
+    ? RamCostTree<API[Property]>
+    : never;
+};
+
 // TODO remember to update RamCalculations.js and WorkerScript.js
 
 // RAM costs for Netscript functions
@@ -51,6 +63,7 @@ export const RamCostConstants: IMap<number> = {
   ScriptCodingContractBaseRamCost: 10,
   ScriptSleeveBaseRamCost: 4,
   ScriptGetOwnedSourceFiles: 5,
+  ScriptClearTerminalCost: 0.2,
 
   ScriptSingularityFn1RamCost: 2,
   ScriptSingularityFn2RamCost: 3,
@@ -88,7 +101,7 @@ function SF4Cost(cost: number): (player: IPlayer) => number {
 }
 
 // Hacknet API
-const hacknet: IMap<any> = {
+const hacknet = {
   numNodes: 0,
   purchaseNode: 0,
   getPurchaseNodeCost: 0,
@@ -104,10 +117,16 @@ const hacknet: IMap<any> = {
   numHashes: 0,
   hashCost: 0,
   spendHashes: 0,
+  maxNumNodes: 0,
+  hashCapacity: 0,
+  getHashUpgrades: 0,
+  getHashUpgradeLevel: 0,
+  getStudyMult: 0,
+  getTrainingMult: 0,
 };
 
 // Stock API
-const stock: IMap<any> = {
+const stock = {
   getSymbols: RamCostConstants.ScriptGetStockRamCost,
   getPrice: RamCostConstants.ScriptGetStockRamCost,
   getAskPrice: RamCostConstants.ScriptGetStockRamCost,
@@ -132,7 +151,7 @@ const stock: IMap<any> = {
 };
 
 // Singularity API
-const singularity: IMap<any> = {
+const singularity = {
   universityCourse: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   gymWorkout: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   travelToCity: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
@@ -156,6 +175,7 @@ const singularity: IMap<any> = {
   getUpgradeHomeCoresCost: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 2),
   workForCompany: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
   applyToCompany: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  quitJob: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
   getCompanyRep: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
   getCompanyFavor: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
   getCompanyFavorGain: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 4),
@@ -187,7 +207,7 @@ const singularity: IMap<any> = {
 };
 
 // Gang API
-const gang: IMap<any> = {
+const gang = {
   createGang: RamCostConstants.ScriptGangApiBaseRamCost / 4,
   inGang: RamCostConstants.ScriptGangApiBaseRamCost / 4,
   getMemberNames: RamCostConstants.ScriptGangApiBaseRamCost / 4,
@@ -212,7 +232,7 @@ const gang: IMap<any> = {
 };
 
 // Bladeburner API
-const bladeburner: IMap<any> = {
+const bladeburner = {
   getContractNames: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
   getOperationNames: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
   getBlackOpNames: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
@@ -223,6 +243,7 @@ const bladeburner: IMap<any> = {
   stopBladeburnerAction: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 2,
   getCurrentAction: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 4,
   getActionTime: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+  getActionCurrentTime: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
   getActionEstimatedSuccessChance: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
   getActionRepGain: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
   getActionCountRemaining: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
@@ -249,15 +270,13 @@ const bladeburner: IMap<any> = {
   getBonusTime: 0,
 };
 
-const infiltration: IMap<any> = {
-  calculateDifficulty: RamCostConstants.ScriptInfiltrationCalculateDifficulty,
-  calculateRewards: RamCostConstants.ScriptInfiltrationCalculateRewards,
-  calculateGetLocations: RamCostConstants.ScriptInfiltrationGetLocations,
-  calculateGetInfiltrations: RamCostConstants.ScriptInfiltrationGetInfiltrations,
+const infiltration = {
+  getPossibleLocations: RamCostConstants.ScriptInfiltrationGetLocations,
+  getInfiltration: RamCostConstants.ScriptInfiltrationGetInfiltrations,
 };
 
 // Coding Contract API
-const codingcontract: IMap<any> = {
+const codingcontract = {
   attempt: RamCostConstants.ScriptCodingContractBaseRamCost,
   getContractType: RamCostConstants.ScriptCodingContractBaseRamCost / 2,
   getData: RamCostConstants.ScriptCodingContractBaseRamCost / 2,
@@ -266,7 +285,7 @@ const codingcontract: IMap<any> = {
 };
 
 // Duplicate Sleeve API
-const sleeve: IMap<any> = {
+const sleeve = {
   getNumSleeves: RamCostConstants.ScriptSleeveBaseRamCost,
   setToShockRecovery: RamCostConstants.ScriptSleeveBaseRamCost,
   setToSynchronize: RamCostConstants.ScriptSleeveBaseRamCost,
@@ -282,10 +301,11 @@ const sleeve: IMap<any> = {
   getSleeveAugmentations: RamCostConstants.ScriptSleeveBaseRamCost,
   getSleevePurchasableAugs: RamCostConstants.ScriptSleeveBaseRamCost,
   purchaseSleeveAug: RamCostConstants.ScriptSleeveBaseRamCost,
+  setToBladeburnerAction: RamCostConstants.ScriptSleeveBaseRamCost,
 };
 
 // Stanek API
-const stanek: IMap<any> = {
+const stanek = {
   giftWidth: RamCostConstants.ScriptStanekWidth,
   giftHeight: RamCostConstants.ScriptStanekHeight,
   chargeFragment: RamCostConstants.ScriptStanekCharge,
@@ -300,7 +320,7 @@ const stanek: IMap<any> = {
 };
 
 // UI API
-const ui: IMap<any> = {
+const ui = {
   getTheme: 0,
   setTheme: 0,
   resetTheme: 0,
@@ -308,17 +328,84 @@ const ui: IMap<any> = {
   setStyles: 0,
   resetStyles: 0,
   getGameInfo: 0,
+  clearTerminal: 0,
 };
 
 // Grafting API
-const grafting: IMap<any> = {
+const grafting = {
   getAugmentationGraftPrice: 3.75,
   getAugmentationGraftTime: 3.75,
   getGraftableAugmentations: 5,
   graftAugmentation: 7.5,
 };
 
-export const RamCosts: IMap<any> = {
+const corporation = {
+  createCorporation: 0,
+  hasUnlockUpgrade: 0,
+  getUnlockUpgradeCost: 0,
+  getUpgradeLevel: 0,
+  getUpgradeLevelCost: 0,
+  getExpandIndustryCost: 0,
+  getExpandCityCost: 0,
+  getInvestmentOffer: 0,
+  acceptInvestmentOffer: 0,
+  goPublic: 0,
+  bribe: 0,
+  getCorporation: 0,
+  getDivision: 0,
+  expandIndustry: 0,
+  expandCity: 0,
+  unlockUpgrade: 0,
+  levelUpgrade: 0,
+  issueDividends: 0,
+  buyBackShares: 0,
+  sellShares: 0,
+  getBonusTime: 0,
+  sellMaterial: 0,
+  sellProduct: 0,
+  discontinueProduct: 0,
+  setSmartSupply: 0,
+  setSmartSupplyUseLeftovers: 0,
+  buyMaterial: 0,
+  bulkPurchase: 0,
+  getWarehouse: 0,
+  getProduct: 0,
+  getMaterial: 0,
+  setMaterialMarketTA1: 0,
+  setMaterialMarketTA2: 0,
+  setProductMarketTA1: 0,
+  setProductMarketTA2: 0,
+  exportMaterial: 0,
+  cancelExportMaterial: 0,
+  purchaseWarehouse: 0,
+  upgradeWarehouse: 0,
+  makeProduct: 0,
+  limitMaterialProduction: 0,
+  limitProductProduction: 0,
+  getPurchaseWarehouseCost: 0,
+  getUpgradeWarehouseCost: 0,
+  hasWarehouse: 0,
+  assignJob: 0,
+  hireEmployee: 0,
+  upgradeOfficeSize: 0,
+  throwParty: 0,
+  buyCoffee: 0,
+  hireAdVert: 0,
+  research: 0,
+  getOffice: 0,
+  getEmployee: 0,
+  getHireAdVertCost: 0,
+  getHireAdVertCount: 0,
+  getResearchCost: 0,
+  hasResearched: 0,
+  setAutoJobAssignment: 0,
+  getOfficeSizeUpgradeCost: 0,
+};
+
+const SourceRamCosts = {
+  args: undefined as unknown as never[], // special use case
+  enums: undefined as unknown as never,
+  corporation,
   hacknet,
   stock,
   singularity,
@@ -352,6 +439,7 @@ export const RamCosts: IMap<any> = {
   print: 0,
   printf: 0,
   tprint: 0,
+  tprintf: 0,
   clearLog: 0,
   disableLog: 0,
   enableLog: 0,
@@ -375,7 +463,6 @@ export const RamCosts: IMap<any> = {
   ps: RamCostConstants.ScriptScanRamCost,
   getRecentScripts: RamCostConstants.ScriptRecentScriptsRamCost,
   hasRootAccess: RamCostConstants.ScriptHasRootAccessRamCost,
-  getIp: RamCostConstants.ScriptGetHostnameRamCost,
   getHostname: RamCostConstants.ScriptGetHostnameRamCost,
   getHackingLevel: RamCostConstants.ScriptGetHackingLevelRamCost,
   getHackingMultipliers: RamCostConstants.ScriptGetMultipliersRamCost,
@@ -432,11 +519,73 @@ export const RamCosts: IMap<any> = {
   getOwnedSourceFiles: RamCostConstants.ScriptGetOwnedSourceFiles,
   tail: 0,
   toast: 0,
+  closeTail: 0,
+  clearPort: 0,
+  openDevMenu: 0,
+  alert: 0,
+  flags: 0,
+  exploit: 0,
+  bypass: 0,
+  alterReality: 0,
+  rainbow: 0,
   heart: {
     // Easter egg function
     break: 0,
   },
+
+  formulas: {
+    reputation: {
+      calculateFavorToRep: 0,
+      calculateRepToFavor: 0,
+      repFromDonation: 0,
+    },
+    skills: {
+      calculateSkill: 0,
+      calculateExp: 0,
+    },
+    hacking: {
+      hackChance: 0,
+      hackExp: 0,
+      hackPercent: 0,
+      growPercent: 0,
+      hackTime: 0,
+      growTime: 0,
+      weakenTime: 0,
+    },
+    hacknetNodes: {
+      moneyGainRate: 0,
+      levelUpgradeCost: 0,
+      ramUpgradeCost: 0,
+      coreUpgradeCost: 0,
+      hacknetNodeCost: 0,
+      constants: 0,
+    },
+    hacknetServers: {
+      hashGainRate: 0,
+      levelUpgradeCost: 0,
+      ramUpgradeCost: 0,
+      coreUpgradeCost: 0,
+      cacheUpgradeCost: 0,
+      hashUpgradeCost: 0,
+      hacknetServerCost: 0,
+      constants: 0,
+    },
+    gang: {
+      wantedPenalty: 0,
+      respectGain: 0,
+      wantedLevelGain: 0,
+      moneyGain: 0,
+      ascensionPointsGain: 0,
+      ascensionMultiplier: 0,
+    },
+  },
 };
+
+export const RamCosts: IMap<any> = SourceRamCosts;
+
+// This line in particular is there so typescript typechecks that we are not missing any static ram cost.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _typecheck: RamCostTree<INS & INetscriptExtra> = SourceRamCosts;
 
 export function getRamCost(player: IPlayer, ...args: string[]): number {
   if (args.length === 0) {

@@ -565,7 +565,7 @@ export interface BitNodeMultipliers {
   /** Influences how much money the player earns when completing working their job. */
   CompanyWorkMoney: number;
   /** Influences the money gain from dividends of corporations created by the player. */
-  CorporationSoftCap: number;
+  CorporationSoftcap: number;
   /** Influences the valuation of corporations created by the player. */
   CorporationValuation: number;
   /** Influences the base experience gained for each ability when the player commits a crime. */
@@ -1115,6 +1115,8 @@ export interface SleeveTask {
   gymStatType: string;
   /** Faction work type being performed, if any */
   factionWorkType: string;
+  /** Class being taken at university, if any */
+  className: string;
 }
 
 /**
@@ -1806,6 +1808,18 @@ export interface Singularity {
   workForCompany(companyName?: string, focus?: boolean): boolean;
 
   /**
+   * Quit jobs by company.
+   * @remarks
+   * RAM cost: 3 GB * 16/4/1
+   *
+   *
+   * This function will finish work with the company provided and quit any jobs.
+   *
+   * @param companyName - Name of the company.
+   */
+  quitJob(companyName?: string): void;
+
+  /**
    * Apply for a job at a company.
    * @remarks
    * RAM cost: 3 GB * 16/4/1
@@ -2345,13 +2359,13 @@ export interface Singularity {
    * @example
    * ```ts
    * // NS1
-   * getDarkwebProgramsAvailable();
+   * getDarkwebPrograms();
    * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
    * ```
    * @example
    * ```ts
    * // NS2
-   * ns.getDarkwebProgramsAvailable();
+   * ns.getDarkwebPrograms();
    * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
    * ```
    * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
@@ -2877,13 +2891,24 @@ export interface Bladeburner {
    * @remarks
    * RAM cost: 4 GB
    *
-   * Returns the number of seconds it takes to complete the specified action
+   * Returns the number of milliseconds it takes to complete the specified action
    *
    * @param type - Type of action.
    * @param name - Name of action. Must be an exact match.
    * @returns Number of milliseconds it takes to complete the specified action.
    */
   getActionTime(type: string, name: string): number;
+
+  /**
+   * Get the time elapsed on current action.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   * Returns the number of milliseconds already spent on the current action.
+   *
+   * @returns Number of milliseconds already spent on the current action.
+   */
+  getActionCurrentTime(): number;
 
   /**
    * Get estimate success chance of an action.
@@ -3782,6 +3807,20 @@ export interface Sleeve {
    * @returns True if the aug was purchased and installed on the sleeve, false otherwise.
    */
   purchaseSleeveAug(sleeveNumber: number, augName: string): boolean;
+
+  /**
+   * Set a sleeve to perform bladeburner actions.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   * Return a boolean indicating whether or not the sleeve started working out.
+   *
+   * @param sleeveNumber - Index of the sleeve to workout at the gym.
+   * @param action - Name of the action to be performed.
+   * @param contract - Name of the contract if applicable.
+   * @returns True if the sleeve started working out, false otherwise.
+   */
+  setToBladeburnerAction(sleeveNumber: number, action: string, contract?: string): boolean;
 }
 
 /**
@@ -4320,12 +4359,18 @@ interface Stanek {
   acceptGift(): boolean;
 }
 
+/**
+ * @public
+ */
 export interface InfiltrationReward {
   tradeRep: number;
   sellCash: number;
   SoARep: number;
 }
 
+/**
+ * @public
+ */
 export interface InfiltrationLocation {
   location: any;
   reward: InfiltrationReward;
@@ -4426,6 +4471,13 @@ interface UserInterface {
    * RAM cost: 0 GB
    */
   getGameInfo(): GameInfo;
+
+  /**
+   * Clear the Terminal window, as if the player ran `clear` in the terminal
+   * @remarks
+   * RAM cost: 0.2 GB
+   */
+  clearTerminal(): void;
 }
 
 /**
@@ -4813,6 +4865,7 @@ export interface NS {
 
   /**
    * Suspends the script for n milliseconds. Doesn't block with concurrent calls.
+   * You should prefer 'sleep' over 'asleep' except when doing very complex UI work.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -5010,6 +5063,21 @@ export interface NS {
    * @param args - Arguments for the script being tailed.
    */
   tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
+
+  /**
+   * Close the tail window of a script.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * Closes a script’s logs. This is functionally the same pressing the "Close" button on the tail window.
+   *
+   * If the function is called with no arguments, it will close the current script’s logs.
+   *
+   * Otherwise, the pid argument can be used to close the logs from another script.
+   *
+   * @param pid - Optional. PID of the script having its tail closed. If omitted, the current script is used.
+   */
+  closeTail(pid?: number): void;
 
   /**
    * Get the list of servers connected to a server.
@@ -5360,9 +5428,10 @@ export interface NS {
    * If no host is defined, it will kill all scripts, where the script is running.
    *
    * @param host - IP or hostname of the server on which to kill all scripts.
+   * @param safetyguard - Skips the script that calls this function
    * @returns True if any scripts were killed, and false otherwise.
    */
-  killall(host?: string): boolean;
+  killall(host?: string, safetyguard?: boolean): boolean;
 
   /**
    * Terminates the current script immediately.
@@ -6175,7 +6244,7 @@ export interface NS {
    * Returns 0 if the script does not exist.
    *
    * @param script - Filename of script. This is case-sensitive.
-   * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
+   * @param host - Host of target server the script is located on. This is optional, if it is not specified then the function will use the current server as the target server.
    * @returns Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
    */
   getScriptRam(script: string, host?: string): number;
@@ -7096,22 +7165,27 @@ interface CorporationInfo {
 interface Employee {
   /** Name of the employee */
   name: string;
-  /** Morale */
+  /** Morale of the employee */
   mor: number;
-  /** Happiness */
+  /** Happiness of the employee */
   hap: number;
-  /** Energy */
+  /** Energy of the employee */
   ene: number;
+  /** Intelligence of the employee */
   int: number;
+  /** Charisma of the employee */
   cha: number;
+  /** Experience of the employee */
   exp: number;
+  /** Creativity of the employee */
   cre: number;
+  /** Efficiency of the employee */
   eff: number;
-  /** Salary */
+  /** Salary of the employee */
   sal: number;
-  /** City */
+  /** Current Location (city) */
   loc: string;
-  /** Current job */
+  /** Current job position */
   pos: string;
 }
 
@@ -7163,6 +7237,8 @@ interface Material {
   sell: number;
   /** cost to buy material */
   cost: number;
+  /** Sell cost, can be "MP+5" */
+  sCost: string | number;
 }
 
 /**
@@ -7254,6 +7330,8 @@ interface Division {
   cities: string[];
   /** Products developed by this division */
   products: string[];
+  /** Whether the industry this division is in is capable of making products */
+  makesProducts: boolean;
 }
 
 /**

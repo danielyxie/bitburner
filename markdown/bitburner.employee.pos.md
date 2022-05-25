@@ -4,7 +4,7 @@
 
 ## Employee.pos property
 
-Current job
+Current job position
 
 <b>Signature:</b>
 

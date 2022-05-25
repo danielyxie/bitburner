@@ -2,17 +2,16 @@
  * React component for displaying a single augmentation for purchase through
  * the faction UI
  */
-import { CheckBox, CheckBoxOutlineBlank, CheckCircle, Info, NewReleases, Report } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, CheckCircle, NewReleases, Report } from "@mui/icons-material";
 import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { getNextNeuroFluxLevel } from "../AugmentationHelpers";
 import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentation } from "../Augmentation";
-import { Augmentations } from "../Augmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
+import { StaticAugmentations } from "../StaticAugmentations";
 import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 interface IPreReqsProps {
@@ -43,11 +42,13 @@ const PreReqs = (props: IPreReqsProps): React.ReactElement => {
       }
     >
       <Typography
-        variant="body2"
         sx={{
+          ml: 1,
+          fontSize: "0.9rem",
           display: "flex",
           alignItems: "center",
           color: hasPreReqs ? Settings.theme.successlight : Settings.theme.error,
+          gridArea: "prereqs",
         }}
       >
         {hasPreReqs ? (
@@ -84,7 +85,7 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
               <li>
                 <b>{props.aug.factions[0]}</b> faction
               </li>
-              {props.player.canAccessGang() && !props.aug.isSpecial && (
+              {props.player.isAwareOfGang() && !props.aug.isSpecial && (
                 <li>
                   Certain <b>gangs</b>
                 </li>
@@ -101,7 +102,10 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
         </>
       }
     >
-      <NewReleases sx={{ ml: 1, color: Settings.theme.money, transform: "rotate(180deg)" }} />
+      <NewReleases
+        fontSize="small"
+        sx={{ ml: 1, color: Settings.theme.money, transform: "rotate(180deg)", gridArea: "exclusive" }}
+      />
     </Tooltip>
   );
 };
@@ -114,7 +118,9 @@ interface IReqProps {
 
 const Requirement = (props: IReqProps): React.ReactElement => {
   return (
-    <Typography sx={{ display: "flex", alignItems: "center", color: props.color }}>
+    <Typography
+      sx={{ display: "flex", alignItems: "center", color: props.fulfilled ? props.color : Settings.theme.error }}
+    >
       {props.fulfilled ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
       {props.value}
     </Typography>
@@ -139,7 +145,7 @@ export const PurchasableAugmentations = (props: IPurchasableAugsProps): React.Re
     <Container
       maxWidth="lg"
       disableGutters
-      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 1 }}
+      sx={{ mx: 0, display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 0.75 }}
     >
       {props.augNames.map((augName: string) => (
         <PurchasableAugmentation key={augName} parent={props} augName={augName} owned={false} />
@@ -160,10 +166,10 @@ interface IPurchasableAugProps {
 export function PurchasableAugmentation(props: IPurchasableAugProps): React.ReactElement {
   const [open, setOpen] = useState(false);
 
-  const aug = Augmentations[props.augName];
-
-  const cost = props.parent.sleeveAugs ? aug.startingCost : aug.baseCost;
-
+  const aug = StaticAugmentations[props.augName];
+  const augCosts = aug.getCost(props.parent.player);
+  const cost = props.parent.sleeveAugs ? aug.baseCost : augCosts.moneyCost;
+  const repCost = augCosts.repCost;
   const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
   const description = (
     <>
@@ -177,11 +183,12 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
   return (
     <Paper
       sx={{
-        p: 1,
+        p: 0.5,
         display: "grid",
-        gridTemplateColumns: "minmax(0, 4fr) 1fr",
+        gridTemplateColumns: "minmax(0, 4fr) 1.4fr",
         gap: 1,
         opacity: props.owned ? 0.75 : 1,
+        minWidth: "1100px",
       }}
     >
       <>
@@ -193,57 +200,61 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
               })
             }
             disabled={!props.parent.canPurchase(props.parent.player, aug) || props.owned}
-            sx={{ width: "48px", height: "48px", float: "left", clear: "none", mr: 1 }}
+            sx={{ width: "48px", height: "36px", float: "left", clear: "none", mr: 1 }}
           >
             {props.owned ? "Owned" : "Buy"}
           </Button>
 
           <Box sx={{ maxWidth: props.owned ? "100%" : "85%" }}>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "grid", alignItems: "center", gridTemplateAreas: `"title exclusive prereqs"` }}>
               <Tooltip
                 title={
                   <>
                     <Typography variant="h5">
                       {props.augName}
-                      {props.augName === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
+                      {props.augName === AugmentationNames.NeuroFluxGovernor &&
+                        ` - Level ${aug.getLevel(props.parent.player)}`}
                     </Typography>
                     <Typography>{description}</Typography>
                   </>
                 }
               >
-                <Info sx={{ mr: 1 }} color="info" />
+                <Typography
+                  sx={{
+                    gridArea: "title",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    color:
+                      props.owned || !props.parent.canPurchase(props.parent.player, aug)
+                        ? Settings.theme.disabled
+                        : Settings.theme.primary,
+                  }}
+                >
+                  {aug.name}
+                  {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel(props.parent.player)}`}
+                </Typography>
               </Tooltip>
-              <Typography
-                variant="h6"
-                sx={{
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                }}
-              >
-                {aug.name}
-                {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${getNextNeuroFluxLevel()}`}
-              </Typography>
+
               {aug.factions.length === 1 && !props.parent.sleeveAugs && (
                 <Exclusive player={props.parent.player} aug={aug} />
               )}
+              {aug.prereqs.length > 0 && !props.parent.sleeveAugs && <PreReqs player={props.parent.player} aug={aug} />}
             </Box>
-
-            {aug.prereqs.length > 0 && !props.parent.sleeveAugs && <PreReqs player={props.parent.player} aug={aug} />}
           </Box>
         </Box>
 
         {props.owned || (
-          <Box sx={{ display: "grid", alignItems: "center", justifyItems: "left" }}>
+          <Box sx={{ display: "grid", alignItems: "center", gridTemplateColumns: "1fr 1fr" }}>
             <Requirement
-              fulfilled={aug.baseCost === 0 || props.parent.player.money > cost}
+              fulfilled={cost === 0 || props.parent.player.money > cost}
               value={numeralWrapper.formatMoney(cost)}
               color={Settings.theme.money}
             />
             {props.parent.rep !== undefined && (
               <Requirement
-                fulfilled={props.parent.rep >= aug.baseRepRequirement}
-                value={`${numeralWrapper.formatReputation(aug.baseRepRequirement)} rep`}
+                fulfilled={props.parent.rep >= repCost}
+                value={`${numeralWrapper.formatReputation(repCost)} rep`}
                 color={Settings.theme.rep}
               />
             )}

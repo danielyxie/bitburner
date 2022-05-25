@@ -30,10 +30,10 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
+import { IPerson } from "./IPerson";
+import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
 
-export interface IPlayer {
-  // Class members
-  augmentations: IPlayerOwnedAugmentation[];
+export interface IPlayer extends IPerson {
   bitNodeN: number;
   city: CityName;
   companyName: string;
@@ -130,14 +130,14 @@ export interface IPlayer {
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: string;
+  crimeType: CrimeType;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: string;
+  className: ClassType;
   currentWorkFactionName: string;
-  workType: string;
+  workType: WorkType;
   workCostMult: number;
   workExpMult: number;
   currentWorkFactionDescription: string;
@@ -185,13 +185,6 @@ export interface IPlayer {
   canAccessGang(): boolean;
   canAccessGrafting(): boolean;
   canAfford(cost: number): boolean;
-  gainHackingExp(exp: number): void;
-  gainStrengthExp(exp: number): void;
-  gainDefenseExp(exp: number): void;
-  gainDexterityExp(exp: number): void;
-  gainAgilityExp(exp: number): void;
-  gainCharismaExp(exp: number): void;
-  gainIntelligenceExp(exp: number): void;
   gainMoney(money: number, source: string): void;
   getCurrentServer(): BaseServer;
   getGangFaction(): Faction;
@@ -214,16 +207,15 @@ export interface IPlayer {
   process(router: IRouter, numCycles?: number): void;
   reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
-  regenerateHp(amt: number): void;
   setMoney(amt: number): void;
   singularityStopWork(): string;
   startBladeburner(p: any): void;
   startFactionWork(faction: Faction): void;
-  startClass(costMult: number, expMult: number, className: string): void;
+  startClass(costMult: number, expMult: number, className: ClassType): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startCrime(
     router: IRouter,
-    crimeType: string,
+    crimeType: CrimeType,
     hackExp: number,
     strExp: number,
     defExp: number,
@@ -241,14 +233,11 @@ export interface IPlayer {
   startGang(facName: string, isHacking: boolean): void;
   startWork(companyName: string): void;
   startWorkPartTime(companyName: string): void;
-  takeDamage(amt: number): boolean;
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
   giveAchievement(achievementId: string): void;
-  queryStatFromString(str: string): number;
-  getIntelligenceBonus(weight: number): number;
   getCasinoWinnings(): number;
-  quitJob(company: string): void;
+  quitJob(company: string, sing?: boolean): void;
   hasJob(): boolean;
   createHacknetServer(): HacknetServer;
   startCreateProgramWork(programName: string, time: number, reqLevel: number): void;
@@ -267,9 +256,8 @@ export interface IPlayer {
   resetMultipliers(): void;
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
-  calculateSkill(exp: number, mult?: number): number;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
-  resetWorkStatus(generalType?: string, group?: string, workType?: string): void;
+  resetWorkStatus(generalType?: WorkType, group?: string, workType?: string): void;
   getWorkHackExpGain(): number;
   getWorkStrExpGain(): number;
   getWorkDefExpGain(): number;
@@ -291,6 +279,6 @@ export interface IPlayer {
   sourceFileLvl(n: number): number;
   startGraftAugmentationWork(augmentationName: string, time: number): void;
   graftAugmentationWork(numCycles: number): boolean;
-  finishGraftAugmentationWork(cancelled: boolean): string;
+  finishGraftAugmentationWork(cancelled: boolean, singularity?: boolean): string;
   applyEntropy(stacks?: number): void;
 }

@@ -20,6 +20,7 @@ interface Division
 |  [cities](./bitburner.division.cities.md) | string\[\] | Cities in which this division has expanded |
 |  [lastCycleExpenses](./bitburner.division.lastcycleexpenses.md) | number | Expenses last cycle |
 |  [lastCycleRevenue](./bitburner.division.lastcyclerevenue.md) | number | Revenue last cycle |
+|  [makesProducts](./bitburner.division.makesproducts.md) | boolean | Whether the industry this division is in is capable of making products |
 |  [name](./bitburner.division.name.md) | string | Name of the division |
 |  [popularity](./bitburner.division.popularity.md) | number | Popularity of the division |
 |  [prodMult](./bitburner.division.prodmult.md) | number | Production multiplier |

@@ -4,6 +4,7 @@ import { StealthIcon } from "./StealthIcon";
 import { KillIcon } from "./KillIcon";
 import { IAction } from "../IAction";
 import { IBladeburner } from "../IBladeburner";
+import { Player } from "../../Player";
 
 interface IProps {
   bladeburner: IBladeburner;
@@ -11,7 +12,7 @@ interface IProps {
 }
 
 export function SuccessChance(props: IProps): React.ReactElement {
-  const estimatedSuccessChance = props.action.getEstSuccessChance(props.bladeburner);
+  const estimatedSuccessChance = props.action.getEstSuccessChance(props.bladeburner, Player);
 
   let chance = <></>;
   if (estimatedSuccessChance[0] === estimatedSuccessChance[1]) {

@@ -4,6 +4,8 @@
 
 ## Employee.cha property
 
+Charisma of the employee
+
 <b>Signature:</b>
 
 ```typescript

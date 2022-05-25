@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
 import { use } from "../../ui/Context";
-import { Augmentations } from "../Augmentations";
+import { StaticAugmentations } from "../StaticAugmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
 
 export function InstalledAugmentations(): React.ReactElement {
@@ -77,7 +77,7 @@ export function InstalledAugmentations(): React.ReactElement {
             </Typography>
             <Typography sx={{ maxHeight: 350, overflowY: "scroll" }}>
               {(() => {
-                const aug = Augmentations[selectedAug.name];
+                const aug = StaticAugmentations[selectedAug.name];
 
                 const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
                 const tooltip = (

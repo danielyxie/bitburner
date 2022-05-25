@@ -16,6 +16,7 @@ interface Stanek
 
 |  Method | Description |
 |  --- | --- |
+|  [acceptGift()](./bitburner.stanek.acceptgift.md) | Accept Stanek's Gift by joining the Church of the Machine God |
 |  [activeFragments()](./bitburner.stanek.activefragments.md) | List of fragments in Stanek's Gift. |
 |  [canPlaceFragment(rootX, rootY, rotation, fragmentId)](./bitburner.stanek.canplacefragment.md) | Check if fragment can be placed at specified location. |
 |  [chargeFragment(rootX, rootY)](./bitburner.stanek.chargefragment.md) | Charge a fragment, increasing its power. |

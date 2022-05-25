@@ -49,6 +49,7 @@ export async function main(ns) {
 |  [gang](./bitburner.ns.gang.md) | [Gang](./bitburner.gang.md) | Namespace for gang functions. |
 |  [grafting](./bitburner.ns.grafting.md) | [Grafting](./bitburner.grafting.md) | Namespace for grafting functions. |
 |  [hacknet](./bitburner.ns.hacknet.md) | [Hacknet](./bitburner.hacknet.md) | Namespace for hacknet functions. |
+|  [infiltration](./bitburner.ns.infiltration.md) | [Infiltration](./bitburner.infiltration.md) | Namespace for infiltration functions. RAM cost: 0 GB |
 |  [singularity](./bitburner.ns.singularity.md) | [Singularity](./bitburner.singularity.md) | Namespace for singularity functions. RAM cost: 0 GB |
 |  [sleeve](./bitburner.ns.sleeve.md) | [Sleeve](./bitburner.sleeve.md) | Namespace for sleeve functions. |
 |  [stanek](./bitburner.ns.stanek.md) | [Stanek](./bitburner.stanek.md) | Namespace for stanek functions. RAM cost: 0 GB |
@@ -60,12 +61,13 @@ export async function main(ns) {
 |  Method | Description |
 |  --- | --- |
 |  [alert(msg)](./bitburner.ns.alert.md) | Open up a message box. |
-|  [asleep(millis)](./bitburner.ns.asleep.md) | Suspends the script for n milliseconds. Doesn't block with concurrent calls. |
+|  [asleep(millis)](./bitburner.ns.asleep.md) | Suspends the script for n milliseconds. Doesn't block with concurrent calls. You should prefer 'sleep' over 'asleep' except when doing very complex UI work. |
 |  [atExit(f)](./bitburner.ns.atexit.md) | Add callback function when the script dies |
 |  [brutessh(host)](./bitburner.ns.brutessh.md) | Runs BruteSSH.exe on a server. |
 |  [clear(handle)](./bitburner.ns.clear.md) | Clear data from a file. |
 |  [clearLog()](./bitburner.ns.clearlog.md) | Clears the script’s logs. |
 |  [clearPort(handle)](./bitburner.ns.clearport.md) | Clear data from a port. |
+|  [closeTail(pid)](./bitburner.ns.closetail.md) | Close the tail window of a script. |
 |  [deleteServer(host)](./bitburner.ns.deleteserver.md) | Delete a purchased server. |
 |  [disableLog(fn)](./bitburner.ns.disablelog.md) | Disables logging for the given function. |
 |  [enableLog(fn)](./bitburner.ns.enablelog.md) | Enable logging for a certain function. |
@@ -127,7 +129,7 @@ export async function main(ns) {
 |  [isRunning(script, host, args)](./bitburner.ns.isrunning.md) | Check if a script is running. |
 |  [kill(script)](./bitburner.ns.kill.md) | Terminate another script. |
 |  [kill(script, host, args)](./bitburner.ns.kill_1.md) | Terminate another script. |
-|  [killall(host)](./bitburner.ns.killall.md) | Terminate all scripts on a server. |
+|  [killall(host, safetyguard)](./bitburner.ns.killall.md) | Terminate all scripts on a server. |
 |  [ls(host, grep)](./bitburner.ns.ls.md) | List files on a server. |
 |  [mv(host, source, destination)](./bitburner.ns.mv.md) | Move a file on the target server. |
 |  [nFormat(n, format)](./bitburner.ns.nformat.md) | Format a number |

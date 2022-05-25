@@ -4,7 +4,14 @@ import { CONSTANTS } from "./Constants";
 import { Factions, loadFactions } from "./Faction/Factions";
 import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
 import { Player, loadPlayer } from "./Player";
-import { saveAllServers, loadAllServers, GetAllServers } from "./Server/AllServers";
+import {
+  saveAllServers,
+  loadAllServers,
+  GetAllServers,
+  createUniqueRandomIp,
+  AddToAllServers,
+  GetServer,
+} from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
@@ -26,6 +33,8 @@ import { pushGameSaved } from "./Electron";
 import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
 import { FactionNames } from "./Faction/data/FactionNames";
 import { Faction } from "./Faction/Faction";
+import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
+import { SpecialServers } from "./Server/data/SpecialServers";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -412,6 +421,42 @@ function evaluateVersionCompatibility(ver: string | number): void {
             contract.type = "HammingCodes: Integer to Encoded Binary";
           }
         }
+      }
+    }
+
+    // Fix bugged NFG accumulation in owned augmentations
+    if (ver < 17) {
+      let ownedNFGs = [...Player.augmentations];
+      ownedNFGs = ownedNFGs.filter((aug) => aug.name === AugmentationNames.NeuroFluxGovernor);
+      const newNFG = new PlayerOwnedAugmentation(AugmentationNames.NeuroFluxGovernor);
+      newNFG.level = 0;
+
+      for (const nfg of ownedNFGs) {
+        newNFG.level += nfg.level;
+      }
+
+      Player.augmentations = [
+        ...Player.augmentations.filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor),
+        newNFG,
+      ];
+
+      Player.reapplyAllAugmentations(true);
+      Player.reapplyAllSourceFiles();
+    }
+    if (ver < 20) {
+      // Create the darkweb for everyone but it won't be linked
+      const dw = GetServer(SpecialServers.DarkWeb);
+      if (!dw) {
+        const darkweb = safetlyCreateUniqueServer({
+          ip: createUniqueRandomIp(),
+          hostname: SpecialServers.DarkWeb,
+          organizationName: "",
+          isConnectedTo: false,
+          adminRights: false,
+          purchasedByPlayer: false,
+          maxRam: 1,
+        });
+        AddToAllServers(darkweb);
       }
     }
   }

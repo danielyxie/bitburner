@@ -22,6 +22,15 @@ const universitySelectorOptions: string[] = [
 
 const gymSelectorOptions: string[] = ["Train Strength", "Train Defense", "Train Dexterity", "Train Agility"];
 
+const bladeburnerSelectorOptions: string[] = [
+  "Field analysis",
+  "Recruitment",
+  "Diplomacy",
+  "Infiltrate synthoids",
+  "Support main sleeve",
+  "Take on contracts",
+];
+
 interface IProps {
   sleeve: Sleeve;
   player: IPlayer;
@@ -77,9 +86,31 @@ function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
   }
 
   return factions.filter((faction) => {
-    const facInfo = Factions[faction].getInfo();
+    const factionObj = Factions[faction];
+    if (!factionObj) return false;
+    const facInfo = factionObj.getInfo();
     return facInfo.offerHackingWork || facInfo.offerFieldWork || facInfo.offerSecurityWork;
   });
+}
+
+function possibleContracts(player: IPlayer, sleeve: Sleeve): string[] {
+  const bb = player.bladeburner;
+  if (bb === null) {
+    return ["------"];
+  }
+  let contracts = bb.getContractNamesNetscriptFn();
+  for (const otherSleeve of player.sleeves) {
+    if (sleeve === otherSleeve) {
+      continue;
+    }
+    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner && otherSleeve.bbAction == "Take on contracts") {
+      contracts = contracts.filter((x) => x != otherSleeve.bbContract);
+    }
+  }
+  if (contracts.length === 0) {
+    return ["------"];
+  }
+  return contracts;
 }
 
 const tasks: {
@@ -90,6 +121,7 @@ const tasks: {
   ["Commit Crime"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Take University Course"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Workout at Gym"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
+  ["Perform Bladeburner Actions"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Shock Recovery"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Synchronize"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
 } = {
@@ -168,6 +200,18 @@ const tasks: {
 
     return { first: gymSelectorOptions, second: () => gyms };
   },
+  "Perform Bladeburner Actions": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
+    return {
+      first: bladeburnerSelectorOptions,
+      second: (s1: string) => {
+        if (s1 === "Take on contracts") {
+          return possibleContracts(player, sleeve);
+        } else {
+          return ["------"];
+        }
+      },
+    };
+  },
   "Shock Recovery": (): ITaskDetails => {
     return { first: ["------"], second: () => ["------"] };
   },
@@ -184,6 +228,7 @@ const canDo: {
   ["Commit Crime"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Take University Course"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Workout at Gym"]: (player: IPlayer, sleeve: Sleeve) => boolean;
+  ["Perform Bladeburner Actions"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Shock Recovery"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Synchronize"]: (player: IPlayer, sleeve: Sleeve) => boolean;
 } = {
@@ -195,6 +240,7 @@ const canDo: {
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
   "Workout at Gym": (player: IPlayer, sleeve: Sleeve) =>
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
+  "Perform Bladeburner Actions": (player: IPlayer, _: Sleeve) => player.inBladeburner(),
   "Shock Recovery": (player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
   Synchronize: (player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
 };
@@ -226,6 +272,8 @@ function getABC(sleeve: Sleeve): [string, string, string] {
       return ["Take University Course", sleeve.className, sleeve.currentTaskLocation];
     case SleeveTaskType.Gym:
       return ["Workout at Gym", sleeve.gymStatType, sleeve.currentTaskLocation];
+    case SleeveTaskType.Bladeburner:
+      return ["Perform Bladeburner Actions", sleeve.bbAction, sleeve.bbContract];
     case SleeveTaskType.Recovery:
       return ["Shock Recovery", "------", "------"];
     case SleeveTaskType.Synchro:

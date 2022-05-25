@@ -1,7 +1,7 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "main": "electron-main.js",
   "author": {
     "name": "Daniel Xie & Olivier Gagnon"
@@ -57,6 +57,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/escodegen": "^0.0.7",
     "@types/file-saver": "^2.0.3",
+    "@types/jest": "^27.4.1",
     "@types/jquery": "^3.5.14",
     "@types/lodash": "^4.14.168",
     "@types/numeral": "^2.0.2",
@@ -128,7 +129,7 @@
     "electron:packager-win": "electron-packager .package bitburner --platform win32 --arch x64 --out .build --overwrite --icon .package/icon.png",
     "electron:packager-mac": "electron-packager .package bitburner --platform darwin --arch x64 --out .build --overwrite --icon .package/icon.png",
     "electron:packager-linux": "electron-packager .package bitburner --platform linux --arch x64 --out .build --overwrite --icon .package/icon.png",
-    "allbuild": "npm run build && npm run electron && git add --all && git commit -m \"allbuild commit $(git rev-parse --short HEAD)\" && git push -f -u origin dev",
+    "allbuild": "npm run build && npm run electron && git add --all && git commit -m \"allbuild commit $(git rev-parse --short HEAD)\" && git push -u origin dev",
     "preversion": "npm install && npm run test",
     "version": "sh ./tools/build-release.sh && git add --all",
     "postversion": "git push -u origin dev && git push --tags",

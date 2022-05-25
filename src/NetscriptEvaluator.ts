@@ -2,6 +2,7 @@ import { isString } from "./utils/helpers/isString";
 import { GetServer } from "./Server/AllServers";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { WorkerScript } from "./Netscript/WorkerScript";
+import { NetscriptContext } from "./Netscript/APIWrapper";
 import { IPlayer } from "./PersonObjects/IPlayer";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
@@ -15,6 +16,7 @@ export function netscriptDelay(time: number, workerScript: WorkerScript): Promis
       workerScript.delay = null;
       workerScript.delayReject = undefined;
 
+      workerScript.infiniteLoopSafety = performance.now();
       if (workerScript.env.stopFlag) reject(new ScriptDeath(workerScript));
       else resolve();
     }, time);
@@ -36,50 +38,40 @@ export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): s
   return "|DELIMITER|" + server.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
 }
 
-export function resolveNetscriptRequestedThreads(
-  workerScript: WorkerScript,
-  functionName: string,
-  requestedThreads: number,
-): number {
-  const threads = workerScript.scriptRef.threads;
+export function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThreads: number): number {
+  const threads = ctx.workerScript.scriptRef.threads;
   if (!requestedThreads) {
     return isNaN(threads) || threads < 1 ? 1 : threads;
   }
   const requestedThreadsAsInt = requestedThreads | 0;
   if (isNaN(requestedThreads) || requestedThreadsAsInt < 1) {
     throw makeRuntimeRejectMsg(
-      workerScript,
-      `Invalid thread count passed to ${functionName}: ${requestedThreads}. Threads must be a positive number.`,
+      ctx.workerScript,
+      `Invalid thread count passed to ${ctx.function}: ${requestedThreads}. Threads must be a positive number.`,
     );
   }
   if (requestedThreadsAsInt > threads) {
     throw makeRuntimeRejectMsg(
-      workerScript,
-      `Too many threads requested by ${functionName}. Requested: ${requestedThreads}. Has: ${threads}.`,
+      ctx.workerScript,
+      `Too many threads requested by ${ctx.function}. Requested: ${requestedThreads}. Has: ${threads}.`,
     );
   }
   return requestedThreadsAsInt;
 }
 
-export function resolveNetscriptHackOverride(
-  workerScript: WorkerScript,
-  functionName: string,
-  player: IPlayer,
-  hackOverride: number,
-): number {
-  if (isNaN(hackOverride))
-    return player.hacking;
+export function resolveNetscriptHackOverride(ctx: NetscriptContext, player: IPlayer, hackOverride: number): number {
+  if (isNaN(hackOverride)) return player.hacking;
 
   if (hackOverride <= 0) {
     throw makeRuntimeRejectMsg(
-      workerScript,
-      `Invalid hack override passed to ${functionName}: ${hackOverride}. Override must be a positive number.`,
+      ctx.workerScript,
+      `Invalid hack override passed to ${ctx.function}: ${hackOverride}. Override must be a positive number.`,
     );
   }
   if (hackOverride > player.hacking) {
     throw makeRuntimeRejectMsg(
-      workerScript,
-      `Hack override requested by ${functionName} exceeds the players hacking skill. Requested: ${hackOverride}. Has: ${player.hacking}.`,
+        ctx.workerScript,
+      `Hack override requested by ${ctx.function} exceeds the players hacking skill. Requested: ${hackOverride}. Has: ${player.hacking}.`,
     );
   }
   return hackOverride;
