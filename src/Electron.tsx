@@ -11,11 +11,41 @@ import { exportScripts } from "./Terminal/commands/download";
 import { CONSTANTS } from "./Constants";
 import { hash } from "./hash/hash";
 
+interface IReturnWebStatus extends IReturnStatus {
+  data?: Record<string, unknown>;
+}
+
+declare global {
+  interface Window {
+    appNotifier: {
+      terminal: (message: string, type?: string) => void;
+      toast: (message: string, type: ToastVariant, duration?: number) => void;
+    };
+    appSaveFns: {
+      triggerSave: () => Promise<void>;
+      triggerGameExport: () => void;
+      triggerScriptsExport: () => void;
+      getSaveData: () => { save: string; fileName: string };
+      getSaveInfo: (base64save: string) => Promise<ImportPlayerData | undefined>;
+      pushSaveData: (base64save: string, automatic?: boolean) => void;
+    };
+    electronBridge: {
+      send: (channel: string, data?: unknown) => void;
+      receive: (channel: string, func: (...args: any[]) => void) => void;
+    };
+  }
+  interface Document {
+    getFiles: () => IReturnWebStatus;
+    deleteFile: (filename: string) => IReturnWebStatus;
+    saveFile: (filename: string, code: string) => IReturnWebStatus;
+  }
+}
+
 export function initElectron(): void {
   const userAgent = navigator.userAgent.toLowerCase();
   if (userAgent.indexOf(" electron/") > -1) {
     // Electron-specific code
-    (document as any).achievements = [];
+    document.achievements = [];
     initWebserver();
     initAppNotifier();
     initSaveFunctions();
@@ -24,11 +54,6 @@ export function initElectron(): void {
 }
 
 function initWebserver(): void {
-  interface IReturnWebStatus extends IReturnStatus {
-    data?: {
-      [propName: string]: any;
-    };
-  }
   function normalizeFileName(filename: string): string {
     filename = filename.replace(/\/\/+/g, "/");
     filename = removeLeadingSlash(filename);
@@ -38,7 +63,7 @@ function initWebserver(): void {
     return filename;
   }
 
-  (document as any).getFiles = function (): IReturnWebStatus {
+  document.getFiles = function (): IReturnWebStatus {
     const home = GetServer("home");
     if (home === null) {
       return {
@@ -58,7 +83,7 @@ function initWebserver(): void {
     };
   };
 
-  (document as any).deleteFile = function (filename: string): IReturnWebStatus {
+  document.deleteFile = function (filename: string): IReturnWebStatus {
     filename = normalizeFileName(filename);
     const home = GetServer("home");
     if (home === null) {
@@ -70,7 +95,7 @@ function initWebserver(): void {
     return home.removeFile(filename);
   };
 
-  (document as any).saveFile = function (filename: string, code: string): IReturnWebStatus {
+  document.saveFile = function (filename: string, code: string): IReturnWebStatus {
     filename = normalizeFileName(filename);
 
     code = Buffer.from(code, "base64").toString();
@@ -115,7 +140,7 @@ function initAppNotifier(): void {
   };
 
   // Will be consumud by the electron wrapper.
-  (window as any).appNotifier = funcs;
+  window.appNotifier = funcs;
 }
 
 function initSaveFunctions(): void {
@@ -149,38 +174,38 @@ function initSaveFunctions(): void {
   };
 
   // Will be consumud by the electron wrapper.
-  (window as any).appSaveFns = funcs;
+  window.appSaveFns = funcs;
 }
 
 function initElectronBridge(): void {
-  const bridge = (window as any).electronBridge as any;
+  const bridge = window.electronBridge;
   if (!bridge) return;
 
   bridge.receive("get-save-data-request", () => {
-    const data = (window as any).appSaveFns.getSaveData();
+    const data = window.appSaveFns.getSaveData();
     bridge.send("get-save-data-response", data);
   });
   bridge.receive("get-save-info-request", async (save: string) => {
-    const data = await (window as any).appSaveFns.getSaveInfo(save);
+    const data = await window.appSaveFns.getSaveInfo(save);
     bridge.send("get-save-info-response", data);
   });
   bridge.receive("push-save-request", ({ save, automatic = false }: { save: string; automatic: boolean }) => {
-    (window as any).appSaveFns.pushSaveData(save, automatic);
+    window.appSaveFns.pushSaveData(save, automatic);
   });
   bridge.receive("trigger-save", () => {
-    return (window as any).appSaveFns
+    return window.appSaveFns
       .triggerSave()
       .then(() => {
         bridge.send("save-completed");
       })
-      .catch((error: any) => {
+      .catch((error: unknown) => {
         console.log(error);
         SnackbarEvents.emit("Could not save game.", ToastVariant.ERROR, 2000);
       });
   });
   bridge.receive("trigger-game-export", () => {
     try {
-      (window as any).appSaveFns.triggerGameExport();
+      window.appSaveFns.triggerGameExport();
     } catch (error) {
       console.log(error);
       SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
@@ -188,7 +213,7 @@ function initElectronBridge(): void {
   });
   bridge.receive("trigger-scripts-export", () => {
     try {
-      (window as any).appSaveFns.triggerScriptsExport();
+      window.appSaveFns.triggerScriptsExport();
     } catch (error) {
       console.log(error);
       SnackbarEvents.emit("Could not export scripts.", ToastVariant.ERROR, 2000);
@@ -197,14 +222,14 @@ function initElectronBridge(): void {
 }
 
 export function pushGameSaved(data: SaveData): void {
-  const bridge = (window as any).electronBridge as any;
+  const bridge = window.electronBridge;
   if (!bridge) return;
 
   bridge.send("push-game-saved", data);
 }
 
 export function pushGameReady(): void {
-  const bridge = (window as any).electronBridge as any;
+  const bridge = window.electronBridge;
   if (!bridge) return;
 
   // Send basic information to the electron wrapper
@@ -222,7 +247,7 @@ export function pushGameReady(): void {
 }
 
 export function pushImportResult(wasImported: boolean): void {
-  const bridge = (window as any).electronBridge as any;
+  const bridge = window.electronBridge;
   if (!bridge) return;
 
   bridge.send("push-import-result", { wasImported });
@@ -230,7 +255,7 @@ export function pushImportResult(wasImported: boolean): void {
 }
 
 export function pushDisableRestore(): void {
-  const bridge = (window as any).electronBridge as any;
+  const bridge = window.electronBridge;
   if (!bridge) return;
 
   bridge.send("push-disable-restore", { duration: 1000 * 60 });

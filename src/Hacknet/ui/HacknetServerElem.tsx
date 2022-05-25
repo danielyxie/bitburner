@@ -60,15 +60,22 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       multiplier = Math.min(levelsToMax, purchaseMult as number);
     }
 
-    const increase =
+    const base_increase =
       calculateHashGainRate(node.level + multiplier, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult) -
-      node.hashRate;
+      calculateHashGainRate(node.level, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult);
+    const modded_increase = (base_increase * (node.maxRam - node.ramUsed)) / node.maxRam;
+
     const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, props.player.hacknet_node_level_cost_mult);
     upgradeLevelButton = (
       <Tooltip
         title={
           <Typography>
-            +<HashRate hashes={increase} />
+            +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
+            <br />
+            <span style={{ opacity: 0.5 }}>
+              +<HashRate hashes={base_increase} />
+            </span>{" "}
+            (base increase, attained when no script is running)
           </Typography>
         }
       >
@@ -109,20 +116,36 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       multiplier = Math.min(levelsToMax, purchaseMult as number);
     }
 
-    const increase =
+    const base_increase =
       calculateHashGainRate(
         node.level,
         0,
         node.maxRam * Math.pow(2, multiplier),
         node.cores,
         props.player.hacknet_node_money_mult,
-      ) - node.hashRate;
+      ) - calculateHashGainRate(node.level, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult);
+
+    const modded_increase =
+      calculateHashGainRate(
+        node.level,
+        node.ramUsed,
+        node.maxRam * Math.pow(2, multiplier),
+        node.cores,
+        props.player.hacknet_node_money_mult,
+      ) -
+      calculateHashGainRate(node.level, node.ramUsed, node.maxRam, node.cores, props.player.hacknet_node_money_mult);
+
     const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, props.player.hacknet_node_ram_cost_mult);
     upgradeRamButton = (
       <Tooltip
         title={
           <Typography>
-            +<HashRate hashes={increase} />
+            +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
+            <br />
+            <span style={{ opacity: 0.5 }}>
+              +<HashRate hashes={base_increase} />
+            </span>{" "}
+            (base increase, attained when no script is running)
           </Typography>
         }
       >
@@ -155,15 +178,22 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       multiplier = Math.min(levelsToMax, purchaseMult as number);
     }
 
-    const increase =
+    const base_increase =
       calculateHashGainRate(node.level, 0, node.maxRam, node.cores + multiplier, props.player.hacknet_node_money_mult) -
-      node.hashRate;
+      calculateHashGainRate(node.level, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult);
+    const modded_increase = (base_increase * (node.maxRam - node.ramUsed)) / node.maxRam;
+
     const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, props.player.hacknet_node_core_cost_mult);
     upgradeCoresButton = (
       <Tooltip
         title={
           <Typography>
-            +<HashRate hashes={increase} />
+            +<HashRate hashes={modded_increase} /> (effective increase, taking current RAM usage into account)
+            <br />
+            <span style={{ opacity: 0.5 }}>
+              +<HashRate hashes={base_increase} />
+            </span>{" "}
+            (base increase, attained when no script is running)
           </Typography>
         }
       >
@@ -232,9 +262,31 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
               <Typography>Production:</Typography>
             </TableCell>
             <TableCell colSpan={2}>
-              <Typography>
-                <Hashes hashes={node.totalHashesGenerated} /> (<HashRate hashes={node.hashRate} />)
-              </Typography>
+              <Tooltip
+                title={
+                  <Typography>
+                    <Hashes hashes={node.totalHashesGenerated} /> hashes produced by this server since last augment
+                    installation.
+                    <br />
+                    <HashRate hashes={node.hashRate} /> current production rate.
+                    <br />
+                    <span style={{ opacity: 0.5 }}>
+                      <HashRate hashes={(node.hashRate * node.maxRam) / (node.maxRam - node.ramUsed)} />
+                    </span>{" "}
+                    max production rate. (achieved when 100% RAM is allocated to it)
+                    <br />
+                    {numeralWrapper.formatRAM(node.ramUsed)} / {numeralWrapper.formatRAM(node.maxRam)} (
+                    {Math.round((100 * node.ramUsed) / node.maxRam)}%) RAM allocated to script.
+                    <br />
+                    {numeralWrapper.formatRAM(node.maxRam - node.ramUsed)} / {numeralWrapper.formatRAM(node.maxRam)} (
+                    {Math.round((100 * (node.maxRam - node.ramUsed)) / node.maxRam)}%) RAM allocated to hash production.
+                  </Typography>
+                }
+              >
+                <Typography>
+                  <Hashes hashes={node.totalHashesGenerated} /> (<HashRate hashes={node.hashRate} />)
+                </Typography>
+              </Tooltip>
             </TableCell>
           </TableRow>
           <TableRow>

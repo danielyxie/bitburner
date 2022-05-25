@@ -67,8 +67,18 @@ SourceFiles["SourceFile5"] = new SourceFile(
       This Source-File grants a special new stat called Intelligence. Intelligence is unique because it is permanent and
       persistent (it never gets reset back to 1). However, gaining Intelligence experience is much slower than other
       stats. Higher Intelligence levels will boost your production for many actions in the game. In addition, this
-      Source-File will unlock the getBitNodeMultipliers() Netscript function and let you start with Formulas.exe, and
-      will raise all of your hacking-related multipliers by:
+      Source-File will unlock:
+      <br />
+      <ul>
+        <li>
+          The <code>getBitNodeMultipliers()</code> Netscript function
+        </li>
+        <li>Permanent access to Formulas.exe</li>
+        <li>
+          Access to BitNode multiplier information on the <b>Stats</b> page
+        </li>
+      </ul>
+      It will also raise all of your hacking-related multipliers by:
       <br />
       <br />
       Level 1: 8%

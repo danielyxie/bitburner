@@ -25,7 +25,8 @@ import { StatsProgressOverviewCell } from "./StatsProgressBar";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Box, Tooltip } from "@mui/material";
-import { CONSTANTS } from "../../Constants";
+
+import { WorkType } from "../../utils/WorkType";
 
 interface IProps {
   save: () => void;
@@ -144,8 +145,8 @@ function Work(): React.ReactElement {
   let header = <></>;
   let innerText = <></>;
   switch (player.workType) {
-    case CONSTANTS.WorkTypeCompanyPartTime:
-    case CONSTANTS.WorkTypeCompany:
+    case WorkType.CompanyPartTime:
+    case WorkType.Company:
       details = (
         <>
           {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
@@ -162,7 +163,7 @@ function Work(): React.ReactElement {
         </>
       );
       break;
-    case CONSTANTS.WorkTypeFaction:
+    case WorkType.Faction:
       details = (
         <>
           {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
@@ -179,12 +180,12 @@ function Work(): React.ReactElement {
         </>
       );
       break;
-    case CONSTANTS.WorkTypeStudyClass:
+    case WorkType.StudyClass:
       details = <>{player.workType}</>;
       header = <>You are {player.className}</>;
       innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
       break;
-    case CONSTANTS.WorkTypeCreateProgram:
+    case WorkType.CreateProgram:
       details = <>Coding {player.createProgramName}</>;
       header = <>Creating a program</>;
       innerText = (
@@ -194,7 +195,7 @@ function Work(): React.ReactElement {
         </>
       );
       break;
-    case CONSTANTS.WorkTypeGraftAugmentation:
+    case WorkType.GraftAugmentation:
       details = <>Grafting {player.graftAugmentationName}</>;
       header = <>Grafting an Augmentation</>;
       innerText = (

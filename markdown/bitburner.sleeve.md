@@ -27,6 +27,7 @@ If you are not in BitNode-10, then you must have Source-File 10 in order to use 
 |  [getSleeveStats(sleeveNumber)](./bitburner.sleeve.getsleevestats.md) | Get the stats of a sleeve. |
 |  [getTask(sleeveNumber)](./bitburner.sleeve.gettask.md) | Get task of a sleeve. |
 |  [purchaseSleeveAug(sleeveNumber, augName)](./bitburner.sleeve.purchasesleeveaug.md) | Purchase an aug for a sleeve. |
+|  [setToBladeburnerAction(sleeveNumber, action, contract)](./bitburner.sleeve.settobladeburneraction.md) | Set a sleeve to perform bladeburner actions. |
 |  [setToCommitCrime(sleeveNumber, name)](./bitburner.sleeve.settocommitcrime.md) | Set a sleeve to commit crime. |
 |  [setToCompanyWork(sleeveNumber, companyName)](./bitburner.sleeve.settocompanywork.md) | Set a sleeve to work for a company. |
 |  [setToFactionWork(sleeveNumber, factionName, factionWorkType)](./bitburner.sleeve.settofactionwork.md) | Set a sleeve to work for a faction. |

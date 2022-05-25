@@ -22,7 +22,7 @@ import { Settings } from "../../Settings/Settings";
 import { ConfirmationModal } from "../../ui/React/ConfirmationModal";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { AugmentationNames } from "../data/AugmentationNames";
-import { Augmentations } from "../Augmentations";
+import { StaticAugmentations } from "../StaticAugmentations";
 import { CONSTANTS } from "../../Constants";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { Info } from "@mui/icons-material";
@@ -39,7 +39,9 @@ const NeuroFluxDisplay = ({ player }: NFGDisplayProps): React.ReactElement => {
       <Typography variant="h5" color={Settings.theme.info}>
         NeuroFlux Governor - Level {level}
       </Typography>
-      <Typography color={Settings.theme.info}>{Augmentations[AugmentationNames.NeuroFluxGovernor].stats}</Typography>
+      <Typography color={Settings.theme.info}>
+        {StaticAugmentations[AugmentationNames.NeuroFluxGovernor].stats}
+      </Typography>
     </Paper>
   ) : (
     <></>
@@ -172,7 +174,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
               </span>
             </Tooltip>
             <Tooltip title={<Typography>It's always a good idea to backup/export your save!</Typography>}>
-              <Button sx={{ width: "100%" }} onClick={doExport} color="error">
+              <Button sx={{ width: "100%", color: Settings.theme.successlight }} onClick={doExport}>
                 Backup Save {exportBonusStr()}
               </Button>
             </Tooltip>

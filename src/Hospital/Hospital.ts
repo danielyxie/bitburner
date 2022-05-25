@@ -1,5 +1,5 @@
-import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { CONSTANTS } from "../Constants";
 
 export function getHospitalizationCost(p: IPlayer): number {
   if (p.money < 0) {

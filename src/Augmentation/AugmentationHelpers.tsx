@@ -1,9 +1,8 @@
 import { Augmentation } from "./Augmentation";
-import { Augmentations } from "./Augmentations";
+import { StaticAugmentations } from "./StaticAugmentations";
 import { PlayerOwnedAugmentation, IPlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
 import { AugmentationNames } from "./data/AugmentationNames";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
 import { Player } from "../Player";
@@ -17,32 +16,15 @@ import {
   initBladeburnerAugmentations,
   initChurchOfTheMachineGodAugmentations,
   initGeneralAugmentations,
+  initSoAAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
-} from "./AugmentationCreator";
+} from "./data/AugmentationCreator";
 import { Router } from "../ui/GameRoot";
 
-export function AddToAugmentations(aug: Augmentation): void {
+export function AddToStaticAugmentations(aug: Augmentation): void {
   const name = aug.name;
-  Augmentations[name] = aug;
-}
-
-export function getNextNeuroFluxLevel(): number {
-  // Get current Neuroflux level based on Player's augmentations
-  let currLevel = 0;
-  for (let i = 0; i < Player.augmentations.length; ++i) {
-    if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-      currLevel = Player.augmentations[i].level;
-    }
-  }
-
-  // Account for purchased but uninstalled Augmentations
-  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-    if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-      ++currLevel;
-    }
-  }
-  return currLevel + 1;
+  StaticAugmentations[name] = aug;
 }
 
 function createAugmentations(): void {
@@ -50,6 +32,7 @@ function createAugmentations(): void {
     initNeuroFluxGovernor(),
     initUnstableCircadianModulator(),
     ...initGeneralAugmentations(),
+    ...initSoAAugmentations(),
     ...(factionExists(FactionNames.Bladeburners) ? initBladeburnerAugmentations() : []),
     ...(factionExists(FactionNames.ChurchOfTheMachineGod) ? initChurchOfTheMachineGodAugmentations() : []),
   ].map(resetAugmentation);
@@ -65,45 +48,16 @@ function resetFactionAugmentations(): void {
 
 function initAugmentations(): void {
   resetFactionAugmentations();
-  clearObject(Augmentations);
+  clearObject(StaticAugmentations);
   createAugmentations();
-  updateAugmentationCosts();
   Player.reapplyAllAugmentations();
 }
 
-function getBaseAugmentationPriceMultiplier(): number {
+export function getBaseAugmentationPriceMultiplier(): number {
   return CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][Player.sourceFileLvl(11)];
 }
 export function getGenericAugmentationPriceMultiplier(): number {
   return Math.pow(getBaseAugmentationPriceMultiplier(), Player.queuedAugmentations.length);
-}
-
-function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentation): void {
-  let nextLevel = getNextNeuroFluxLevel();
-  --nextLevel;
-  const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-  neuroFluxGovernorAugmentation.baseRepRequirement *= multiplier * BitNodeMultipliers.AugmentationRepCost;
-  neuroFluxGovernorAugmentation.baseCost *= multiplier * BitNodeMultipliers.AugmentationMoneyCost;
-
-  for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
-    neuroFluxGovernorAugmentation.baseCost *= getBaseAugmentationPriceMultiplier();
-  }
-}
-
-export function updateAugmentationCosts(): void {
-  for (const name of Object.keys(Augmentations)) {
-    if (Augmentations.hasOwnProperty(name)) {
-      const augmentationToUpdate = Augmentations[name];
-      if (augmentationToUpdate.name === AugmentationNames.NeuroFluxGovernor) {
-        updateNeuroFluxGovernorCosts(augmentationToUpdate);
-      } else {
-        augmentationToUpdate.baseCost =
-          augmentationToUpdate.startingCost *
-          getGenericAugmentationPriceMultiplier() *
-          BitNodeMultipliers.AugmentationMoneyCost;
-      }
-    }
-  }
 }
 
 //Resets an Augmentation during (re-initizliation)
@@ -111,32 +65,18 @@ function resetAugmentation(aug: Augmentation): void {
   aug.addToFactions(aug.factions);
   const name = aug.name;
   if (augmentationExists(name)) {
-    delete Augmentations[name];
+    delete StaticAugmentations[name];
   }
-  AddToAugmentations(aug);
+  AddToStaticAugmentations(aug);
 }
 
 function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void {
-  const augObj = Augmentations[aug.name];
+  const staticAugmentation = StaticAugmentations[aug.name];
 
   // Apply multipliers
-  for (const mult of Object.keys(augObj.mults)) {
-    const v = Player.getMult(mult) * augObj.mults[mult];
+  for (const mult of Object.keys(staticAugmentation.mults)) {
+    const v = Player.getMult(mult) * staticAugmentation.mults[mult];
     Player.setMult(mult, v);
-  }
-
-  // Special logic for NeuroFlux Governor
-  if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-    if (!reapply) {
-      Augmentations[aug.name].level = aug.level;
-      for (let i = 0; i < Player.augmentations.length; ++i) {
-        if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-          Player.augmentations[i].level = aug.level;
-          return;
-          // break;
-        }
-      }
-    }
   }
 
   // Special logic for Congruity Implant
@@ -145,9 +85,17 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
     Player.applyEntropy(Player.entropy);
   }
 
+  // Special logic for NeuroFlux Governor
+  const ownedNfg = Player.augmentations.find((pAug) => pAug.name === AugmentationNames.NeuroFluxGovernor);
+  if (aug.name === AugmentationNames.NeuroFluxGovernor && !reapply && ownedNfg) {
+    ownedNfg.level = aug.level;
+    return;
+  }
+
   // Push onto Player's Augmentation list
   if (!reapply) {
     const ownedAug = new PlayerOwnedAugmentation(aug.name);
+
     Player.augmentations.push(ownedAug);
   }
 }
@@ -167,7 +115,7 @@ function installAugmentations(force?: boolean): boolean {
   }
   for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
     const ownedAug = Player.queuedAugmentations[i];
-    const aug = Augmentations[ownedAug.name];
+    const aug = StaticAugmentations[ownedAug.name];
     if (aug == null) {
       console.error(`Invalid augmentation: ${ownedAug.name}`);
       continue;
@@ -197,7 +145,7 @@ function installAugmentations(force?: boolean): boolean {
 }
 
 function augmentationExists(name: string): boolean {
-  return Augmentations.hasOwnProperty(name);
+  return StaticAugmentations.hasOwnProperty(name);
 }
 
 export function isRepeatableAug(aug: Augmentation): boolean {

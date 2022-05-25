@@ -13,7 +13,7 @@ import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/A
 import { SpecialServers } from "../../Server/data/SpecialServers";
 
 export function hasTorRouter(this: IPlayer): boolean {
-  return !!GetServer(SpecialServers.DarkWeb);
+  return this.getHomeComputer().serversOnNetwork.includes(SpecialServers.DarkWeb);
 }
 
 export function getCurrentServer(this: IPlayer): BaseServer {

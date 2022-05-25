@@ -1,6 +1,5 @@
 import { IPlayer } from "../IPlayer";
 import { PlayerObject } from "./PlayerObject";
-import { Augmentations } from "../../Augmentation/Augmentations";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
@@ -65,6 +64,12 @@ import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { ITaskTracker } from "../ITaskTracker";
+import { IPerson } from "../IPerson";
+import { Player } from "../../Player";
+import { graftingIntBonus } from "../Grafting/GraftingHelpers";
+
+import { WorkType, PlayerFactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -140,8 +145,8 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
-  this.className = "";
-  this.crimeType = "";
+  this.className = ClassType.None;
+  this.crimeType = CrimeType.None;
 
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -226,7 +231,7 @@ export function receiveInvite(this: IPlayer, factionName: string): void {
 }
 
 //Calculates skill level based on experience. The same formula will be used for every skill
-export function calculateSkill(this: IPlayer, exp: number, mult = 1): number {
+export function calculateSkill(this: IPerson, exp: number, mult = 1): number {
   return calculateSkillF(exp, mult);
 }
 
@@ -377,7 +382,7 @@ export function recordMoneySource(this: PlayerObject, amt: number, source: strin
   this.moneySourceB.record(amt, source);
 }
 
-export function gainHackingExp(this: IPlayer, exp: number): void {
+export function gainHackingExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainHackingExp()");
     return;
@@ -390,7 +395,7 @@ export function gainHackingExp(this: IPlayer, exp: number): void {
   this.hacking = calculateSkillF(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
 }
 
-export function gainStrengthExp(this: IPlayer, exp: number): void {
+export function gainStrengthExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainStrengthExp()");
     return;
@@ -403,7 +408,7 @@ export function gainStrengthExp(this: IPlayer, exp: number): void {
   this.strength = calculateSkillF(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier);
 }
 
-export function gainDefenseExp(this: IPlayer, exp: number): void {
+export function gainDefenseExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into player.gainDefenseExp()");
     return;
@@ -419,7 +424,7 @@ export function gainDefenseExp(this: IPlayer, exp: number): void {
   this.hp = Math.round(this.max_hp * ratio);
 }
 
-export function gainDexterityExp(this: IPlayer, exp: number): void {
+export function gainDexterityExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainDexterityExp()");
     return;
@@ -435,7 +440,7 @@ export function gainDexterityExp(this: IPlayer, exp: number): void {
   );
 }
 
-export function gainAgilityExp(this: IPlayer, exp: number): void {
+export function gainAgilityExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainAgilityExp()");
     return;
@@ -448,7 +453,7 @@ export function gainAgilityExp(this: IPlayer, exp: number): void {
   this.agility = calculateSkillF(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier);
 }
 
-export function gainCharismaExp(this: IPlayer, exp: number): void {
+export function gainCharismaExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainCharismaExp()");
     return;
@@ -461,15 +466,25 @@ export function gainCharismaExp(this: IPlayer, exp: number): void {
   this.charisma = calculateSkillF(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier);
 }
 
-export function gainIntelligenceExp(this: IPlayer, exp: number): void {
+export function gainIntelligenceExp(this: IPerson, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERROR: NaN passed into Player.gainIntelligenceExp()");
     return;
   }
-  if (this.sourceFileLvl(5) > 0 || this.intelligence > 0) {
+  if (Player.sourceFileLvl(5) > 0 || this.intelligence > 0) {
     this.intelligence_exp += exp;
-    this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
+    this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp, 1));
   }
+}
+
+export function gainStats(this: IPerson, retValue: ITaskTracker): void {
+  this.gainHackingExp(retValue.hack * this.hacking_exp_mult);
+  this.gainStrengthExp(retValue.str * this.strength_exp_mult);
+  this.gainDefenseExp(retValue.def * this.defense_exp_mult);
+  this.gainDexterityExp(retValue.dex * this.dexterity_exp_mult);
+  this.gainAgilityExp(retValue.agi * this.agility_exp_mult);
+  this.gainCharismaExp(retValue.cha * this.charisma_exp_mult);
+  this.gainIntelligenceExp(retValue.int);
 }
 
 //Given a string expression like "str" or "strength", returns the given stat
@@ -500,9 +515,8 @@ export function queryStatFromString(this: IPlayer, str: string): number {
 }
 
 /******* Working functions *******/
-export function resetWorkStatus(this: IPlayer, generalType?: string, group?: string, workType?: string): void {
-  if (this.workType !== CONSTANTS.WorkTypeFaction && generalType === this.workType && group === this.companyName)
-    return;
+export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: string, workType?: string): void {
+  if (this.workType !== WorkType.Faction && generalType === this.workType && group === this.companyName) return;
   if (generalType === this.workType && group === this.currentWorkFactionName && workType === this.factionWorkType)
     return;
   if (this.isWorking) this.singularityStopWork();
@@ -533,8 +547,8 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.graftAugmentationName = "";
-  this.className = "";
-  this.workType = "";
+  this.className = ClassType.None;
+  this.workType = WorkType.None;
 }
 
 export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
@@ -569,10 +583,10 @@ export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
 
 /* Working for Company */
 export function startWork(this: IPlayer, companyName: string): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeCompany, companyName);
+  this.resetWorkStatus(WorkType.Company, companyName);
   this.isWorking = true;
   this.companyName = companyName;
-  this.workType = CONSTANTS.WorkTypeCompany;
+  this.workType = WorkType.Company;
 
   this.workHackExpGainRate = this.getWorkHackExpGain();
   this.workStrExpGainRate = this.getWorkStrExpGain();
@@ -589,27 +603,27 @@ export function startWork(this: IPlayer, companyName: string): void {
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   // Working
   if (this.isWorking) {
-    if (this.workType == CONSTANTS.WorkTypeFaction) {
+    if (this.workType === WorkType.Faction) {
       if (this.workForFaction(numCycles)) {
         router.toFaction(Factions[this.currentWorkFactionName]);
       }
-    } else if (this.workType == CONSTANTS.WorkTypeCreateProgram) {
+    } else if (this.workType === WorkType.CreateProgram) {
       if (this.createProgramWork(numCycles)) {
         router.toTerminal();
       }
-    } else if (this.workType == CONSTANTS.WorkTypeStudyClass) {
+    } else if (this.workType === WorkType.StudyClass) {
       if (this.takeClass(numCycles)) {
         router.toCity();
       }
-    } else if (this.workType == CONSTANTS.WorkTypeCrime) {
+    } else if (this.workType === WorkType.Crime) {
       if (this.commitCrime(numCycles)) {
         router.toLocation(Locations[LocationName.Slums]);
       }
-    } else if (this.workType == CONSTANTS.WorkTypeCompanyPartTime) {
+    } else if (this.workType === WorkType.CompanyPartTime) {
       if (this.workPartTime(numCycles)) {
         router.toCity();
       }
-    } else if (this.workType === CONSTANTS.WorkTypeGraftAugmentation) {
+    } else if (this.workType === WorkType.GraftAugmentation) {
       if (this.graftAugmentationWork(numCycles)) {
         router.toGrafting();
       }
@@ -765,10 +779,10 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
 }
 
 export function startWorkPartTime(this: IPlayer, companyName: string): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeCompanyPartTime, companyName);
+  this.resetWorkStatus(WorkType.CompanyPartTime, companyName);
   this.isWorking = true;
   this.companyName = companyName;
-  this.workType = CONSTANTS.WorkTypeCompanyPartTime;
+  this.workType = WorkType.CompanyPartTime;
 
   this.workHackExpGainRate = this.getWorkHackExpGain();
   this.workStrExpGainRate = this.getWorkStrExpGain();
@@ -881,26 +895,26 @@ export function startFactionWork(this: IPlayer, faction: Faction): void {
   this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
   this.isWorking = true;
-  this.workType = CONSTANTS.WorkTypeFaction;
+  this.workType = WorkType.Faction;
   this.currentWorkFactionName = faction.name;
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
 }
 
 export function startFactionHackWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Hacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getHackingWorkRepGain(this, faction);
 
-  this.factionWorkType = CONSTANTS.FactionWorkHacking;
+  this.factionWorkType = PlayerFactionWorkType.Hacking;
   this.currentWorkFactionDescription = "carrying out hacking contracts";
 
   this.startFactionWork(faction);
 }
 
 export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkField);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Field);
 
   this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workStrExpGainRate = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -910,14 +924,14 @@ export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
   this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
 
-  this.factionWorkType = CONSTANTS.FactionWorkField;
+  this.factionWorkType = PlayerFactionWorkType.Field;
   this.currentWorkFactionDescription = "carrying out field missions";
 
   this.startFactionWork(faction);
 }
 
 export function startFactionSecurityWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
+  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Security);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workStrExpGainRate = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -927,7 +941,7 @@ export function startFactionSecurityWork(this: IPlayer, faction: Faction): void 
   this.workChaExpGainRate = 0.0 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
 
-  this.factionWorkType = CONSTANTS.FactionWorkSecurity;
+  this.factionWorkType = PlayerFactionWorkType.Security;
   this.currentWorkFactionDescription = "performing security detail";
 
   this.startFactionWork(faction);
@@ -942,13 +956,13 @@ export function workForFaction(this: IPlayer, numCycles: number): boolean {
 
   //Constantly update the rep gain rate
   switch (this.factionWorkType) {
-    case CONSTANTS.FactionWorkHacking:
+    case PlayerFactionWorkType.Hacking:
       this.workRepGainRate = getHackingWorkRepGain(this, faction);
       break;
-    case CONSTANTS.FactionWorkField:
+    case PlayerFactionWorkType.Field:
       this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
       break;
-    case CONSTANTS.FactionWorkSecurity:
+    case PlayerFactionWorkType.Security:
       this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
       break;
     default:
@@ -979,6 +993,7 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
   faction.playerReputation += this.workRepGained;
 
   this.updateSkillLevels();
+  let res = "";
 
   if (!sing) {
     dialogBoxCreate(
@@ -999,12 +1014,8 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
         <br />
       </>,
     );
-  }
-
-  this.isWorking = false;
-  this.resetWorkStatus();
-  if (sing) {
-    const res =
+  } else {
+    res =
       "You worked for your faction " +
       faction.name +
       " for a total of " +
@@ -1025,10 +1036,11 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
       " agi exp, and " +
       numeralWrapper.formatExp(this.workChaExpGained) +
       " cha exp.";
-
-    return res;
   }
-  return "";
+
+  this.isWorking = false;
+  this.resetWorkStatus();
+  return res;
 }
 
 //Money gained per game cycle
@@ -1261,7 +1273,7 @@ export function getWorkRepGain(this: IPlayer): number {
 export function startCreateProgramWork(this: IPlayer, programName: string, time: number, reqLevel: number): void {
   this.resetWorkStatus();
   this.isWorking = true;
-  this.workType = CONSTANTS.WorkTypeCreateProgram;
+  this.workType = WorkType.CreateProgram;
 
   //Time needed to complete work affected by hacking skill (linearly based on
   //ratio of (your skill - required level) to MAX skill)
@@ -1338,7 +1350,7 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
 export function startGraftAugmentationWork(this: IPlayer, augmentationName: string, time: number): void {
   this.resetWorkStatus();
   this.isWorking = true;
-  this.workType = CONSTANTS.WorkTypeGraftAugmentation;
+  this.workType = WorkType.GraftAugmentation;
 
   this.timeNeededToCompleteWork = time;
   this.graftAugmentationName = augmentationName;
@@ -1350,7 +1362,7 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
     focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
   }
 
-  let skillMult = 1 + (this.getIntelligenceBonus(3) - 1) / 3;
+  let skillMult = graftingIntBonus(this);
   skillMult *= focusBonus;
 
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
@@ -1363,10 +1375,10 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
   return false;
 }
 
-export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): string {
+export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean, singularity = false): string {
   const augName = this.graftAugmentationName;
   if (cancelled === false) {
-    applyAugmentation(Augmentations[augName]);
+    applyAugmentation({ name: augName, level: 1 });
 
     if (!this.hasAugmentation(AugmentationNames.CongruityImplant)) {
       this.entropy += 1;
@@ -1377,7 +1389,7 @@ export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): 
       `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
         (this.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."),
     );
-  } else {
+  } else if (cancelled && singularity === false) {
     dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
   }
 
@@ -1392,10 +1404,10 @@ export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): 
 }
 
 /* Studying/Taking Classes */
-export function startClass(this: IPlayer, costMult: number, expMult: number, className: string): void {
+export function startClass(this: IPlayer, costMult: number, expMult: number, className: ClassType): void {
   this.resetWorkStatus();
   this.isWorking = true;
-  this.workType = CONSTANTS.WorkTypeStudyClass;
+  this.workType = WorkType.StudyClass;
   this.workCostMult = costMult;
   this.workExpMult = expMult;
   this.className = className;
@@ -1487,7 +1499,7 @@ export function finishClass(this: IPlayer, sing = false): string {
 export function startCrime(
   this: IPlayer,
   router: IRouter,
-  crimeType: string,
+  crimeType: CrimeType,
   hackExp: number,
   strExp: number,
   defExp: number,
@@ -1504,7 +1516,7 @@ export function startCrime(
   this.resetWorkStatus();
   this.isWorking = true;
   this.focus = focus;
-  this.workType = CONSTANTS.WorkTypeCrime;
+  this.workType = WorkType.Crime;
 
   if (workerscript !== null) {
     this.committingCrimeThruSingFn = true;
@@ -1671,7 +1683,7 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
   this.committingCrimeThruSingFn = false;
   this.singFnCrimeWorkerScript = null;
   this.isWorking = false;
-  this.crimeType = "";
+  this.crimeType = CrimeType.None;
   this.resetWorkStatus();
   return "";
 }
@@ -1684,23 +1696,26 @@ export function singularityStopWork(this: IPlayer): string {
   }
   let res = ""; //Earnings text for work
   switch (this.workType) {
-    case CONSTANTS.WorkTypeStudyClass:
+    case WorkType.StudyClass:
       res = this.finishClass(true);
       break;
-    case CONSTANTS.WorkTypeCompany:
+    case WorkType.Company:
       res = this.finishWork(true, true);
       break;
-    case CONSTANTS.WorkTypeCompanyPartTime:
+    case WorkType.CompanyPartTime:
       res = this.finishWorkPartTime(true);
       break;
-    case CONSTANTS.WorkTypeFaction:
+    case WorkType.Faction:
       res = this.finishFactionWork(true, true);
       break;
-    case CONSTANTS.WorkTypeCreateProgram:
+    case WorkType.CreateProgram:
       res = this.finishCreateProgramWork(true);
       break;
-    case CONSTANTS.WorkTypeCrime:
+    case WorkType.Crime:
       res = this.finishCrime(true);
+      break;
+    case WorkType.GraftAugmentation:
+      res = this.finishGraftAugmentationWork(true, true);
       break;
     default:
       console.error(`Unrecognized work type (${this.workType})`);
@@ -1725,7 +1740,7 @@ export function takeDamage(this: IPlayer, amt: number): boolean {
   }
 }
 
-export function regenerateHp(this: IPlayer, amt: number): void {
+export function regenerateHp(this: IPerson, amt: number): void {
   if (typeof amt !== "number") {
     console.warn(`Player.regenerateHp() called without a numeric argument: ${amt}`);
     return;
@@ -1750,14 +1765,6 @@ export function hospitalize(this: IPlayer): number {
 //The 'sing' argument designates whether or not this is being called from
 //the applyToCompany() Netscript Singularity function
 export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing = false): boolean {
-  // Get current company and job
-  let currCompany = null;
-  if (this.companyName !== "") {
-    currCompany = Companies[this.companyName];
-  }
-  const currPositionName = this.jobs[this.companyName];
-
-  // Get company that's being applied to
   const company = Companies[this.location]; //Company being applied to
   if (!(company instanceof Company)) {
     console.error(`Could not find company that matches the location: ${this.location}. Player.applyToCompany() failed`);
@@ -1767,66 +1774,44 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   let pos = entryPosType;
 
   if (!this.isQualified(company, pos)) {
-    const reqText = getJobRequirementText(company, pos);
     if (!sing) {
-      dialogBoxCreate("Unfortunately, you do not qualify for this position<br>" + reqText);
+      dialogBoxCreate("Unfortunately, you do not qualify for this position<br>" + getJobRequirementText(company, pos));
     }
     return false;
   }
 
-  // Check if this company has the position
   if (!company.hasPosition(pos)) {
+    console.error(`Company ${company.name} does not have position ${pos}. Player.applyToCompany() failed`);
     return false;
   }
 
   while (true) {
-    const newPos = getNextCompanyPositionHelper(pos);
-    if (newPos == null) {
-      break;
-    }
-
-    //Check if this company has this position
-    if (company.hasPosition(newPos)) {
-      if (!this.isQualified(company, newPos)) {
-        //If player not qualified for next job, break loop so player will be given current job
-        break;
-      }
-      pos = newPos;
-    } else {
-      break;
-    }
+    const nextPos = getNextCompanyPositionHelper(pos);
+    if (nextPos == null) break;
+    if (company.hasPosition(nextPos) && this.isQualified(company, nextPos)) {
+      pos = nextPos;
+    } else break;
   }
 
-  //Check if the determined job is the same as the player's current job
-  if (currCompany != null) {
-    if (currCompany.name == company.name && pos.name == currPositionName) {
+  //Check if player already has the assigned job
+  if (this.jobs[company.name] === pos.name) {
+    if (!sing) {
       const nextPos = getNextCompanyPositionHelper(pos);
-      if (nextPos == null) {
-        if (!sing) {
-          dialogBoxCreate("You are already at the highest position for your field! No promotion available");
-        }
-        return false;
-      } else if (company.hasPosition(nextPos)) {
-        if (!sing) {
-          const reqText = getJobRequirementText(company, nextPos);
-          dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
-        }
-        return false;
+      if (nextPos == null || !company.hasPosition(nextPos)) {
+        dialogBoxCreate("You are already at the highest position for your field! No promotion available");
       } else {
-        if (!sing) {
-          dialogBoxCreate("You are already at the highest position for your field! No promotion available");
-        }
-        return false;
+        const reqText = getJobRequirementText(company, nextPos);
+        dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
       }
     }
+    return false;
   }
 
   this.jobs[company.name] = pos.name;
-  if (!this.focus && this.isWorking && this.companyName !== this.location) this.resetWorkStatus();
-  this.companyName = this.location;
+  if (!this.isWorking || this.workType !== WorkType.Company) this.companyName = company.name;
 
   if (!sing) {
-    dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
+    dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
   }
   return true;
 }
@@ -1871,15 +1856,14 @@ export function getNextCompanyPosition(
   return entryPosType;
 }
 
-export function quitJob(this: IPlayer, company: string): void {
-  if (this.isWorking == true && this.workType.includes("Working for Company") && this.companyName == company) {
-    this.isWorking = false;
-    this.companyName = "";
-  }
-  if (this.companyName === company) {
-    this.companyName = "";
+export function quitJob(this: IPlayer, company: string, _sing = false): void {
+  if (this.isWorking == true && this.workType !== WorkType.Company && this.companyName == company) {
+    this.finishWork(true);
   }
   delete this.jobs[company];
+  if (this.companyName === company) {
+    this.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
+  }
 }
 
 /**
@@ -2170,7 +2154,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !daedalusFac.isBanned &&
     !daedalusFac.isMember &&
     !daedalusFac.alreadyInvited &&
-    numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
+    numAugmentations >= BitNodeMultipliers.DaedalusAugsRequirement &&
     this.money >= 100000000000 &&
     (this.hacking >= 2500 ||
       (this.strength >= 1500 && this.defense >= 1500 && this.dexterity >= 1500 && this.agility >= 1500))

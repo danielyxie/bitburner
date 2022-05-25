@@ -3,10 +3,11 @@ import Typography from "@mui/material/Typography";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
 
-import { KEY } from "../../utils/helpers/keyCodes";
+import { KEY, KEYCODE } from "../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -317,57 +318,57 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
     // Extra Bash Emulation Hotkeys, must be enabled through options
     if (Settings.EnableBashHotkeys) {
-      if (event.key === KEY.A && event.ctrlKey) {
+      if (event.code === KEYCODE.A && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("home");
       }
 
-      if (event.key === KEY.E && event.ctrlKey) {
+      if (event.code === KEYCODE.E && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("end");
       }
 
-      if (event.key === KEY.B && event.ctrlKey) {
+      if (event.code === KEYCODE.B && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("prevchar");
       }
 
-      if (event.key === KEY.B && event.altKey) {
+      if (event.code === KEYCODE.B && event.altKey) {
         event.preventDefault();
         moveTextCursor("prevword");
       }
 
-      if (event.key === KEY.F && event.ctrlKey) {
+      if (event.code === KEYCODE.F && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("nextchar");
       }
 
-      if (event.key === KEY.F && event.altKey) {
+      if (event.code === KEYCODE.F && event.altKey) {
         event.preventDefault();
         moveTextCursor("nextword");
       }
 
-      if ((event.key === KEY.H || event.key === KEY.D) && event.ctrlKey) {
+      if ((event.code === KEYCODE.H || event.code === KEYCODE.D) && event.ctrlKey) {
         modifyInput("backspace");
         event.preventDefault();
       }
 
-      if (event.key === KEY.W && event.ctrlKey) {
+      if (event.code === KEYCODE.W && event.ctrlKey) {
         event.preventDefault();
         modifyInput("deletewordbefore");
       }
 
-      if (event.key === KEY.D && event.altKey) {
+      if (event.code === KEYCODE.D && event.altKey) {
         event.preventDefault();
         modifyInput("deletewordafter");
       }
 
-      if (event.key === KEY.U && event.ctrlKey) {
+      if (event.code === KEYCODE.U && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearbefore");
       }
 
-      if (event.key === KEY.K && event.ctrlKey) {
+      if (event.code === KEYCODE.K && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearafter");
       }
@@ -376,46 +377,40 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
   return (
     <>
-      <Tooltip
-        title={
-          possibilities.length > 0 ? (
-            <>
-              <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-                Possible autocomplete candidate:
-              </Typography>
-              <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-                {possibilities.join(" ")}
-              </Typography>
-            </>
-          ) : (
-            ""
-          )
-        }
-      >
-        <TextField
-          fullWidth
-          color={terminal.action === null ? "primary" : "secondary"}
-          autoFocus
-          disabled={terminal.action !== null}
-          autoComplete="off"
-          value={value}
-          classes={{ root: classes.textfield }}
-          onChange={handleValueChange}
-          inputRef={terminalInput}
-          InputProps={{
-            // for players to hook in
-            id: "terminal-input",
-            className: classes.input,
-            startAdornment: (
-              <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
-                [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
-              </Typography>
-            ),
-            spellCheck: false,
-            onKeyDown: onKeyDown,
-          }}
-        ></TextField>
-      </Tooltip>
+      <TextField
+        fullWidth
+        color={terminal.action === null ? "primary" : "secondary"}
+        autoFocus
+        disabled={terminal.action !== null}
+        autoComplete="off"
+        value={value}
+        classes={{ root: classes.textfield }}
+        onChange={handleValueChange}
+        inputRef={terminalInput}
+        InputProps={{
+          // for players to hook in
+          id: "terminal-input",
+          className: classes.input,
+          startAdornment: (
+            <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
+              [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
+            </Typography>
+          ),
+          spellCheck: false,
+          onBlur: () => setPossibilities([]),
+          onKeyDown: onKeyDown,
+        }}
+      ></TextField>
+      <Popper open={possibilities.length > 0} anchorEl={terminalInput.current} placement={"top-start"}>
+        <Paper sx={{ m: 1, p: 2 }}>
+          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+            Possible autocomplete candidates:
+          </Typography>
+          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+            {possibilities.join(" ")}
+          </Typography>
+        </Paper>
+      </Popper>
     </>
   );
 }
