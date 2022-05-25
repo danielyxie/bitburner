@@ -14,8 +14,6 @@ export function netscriptDelay(time: number, workerScript: WorkerScript): Promis
     workerScript.delay = window.setTimeout(() => {
       workerScript.delay = null;
       workerScript.delayReject = undefined;
-
-      workerScript.infiniteLoopSafety = performance.now();
       if (workerScript.env.stopFlag) reject(new ScriptDeath(workerScript));
       else resolve();
     }, time);
