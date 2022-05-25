@@ -19,7 +19,7 @@ type RamCostTree<API> = {
 export const RamCostConstants: IMap<number> = {
   ScriptBaseRamCost: 1.6,
   ScriptDomRamCost: 25,
-  ScriptCorporationRamCost: 1024 - 1.6,
+  ScriptCorporationRamCost: 64,
   ScriptHackRamCost: 0.1,
   ScriptHackAnalyzeRamCost: 1,
   ScriptGrowRamCost: 0.15,
