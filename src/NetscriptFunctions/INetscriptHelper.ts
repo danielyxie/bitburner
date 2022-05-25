@@ -1,4 +1,6 @@
 import { CityName } from "src/Locations/data/CityNames";
+import { NetscriptContext } from "src/Netscript/APIWrapper";
+import { IPort } from "src/NetscriptPort";
 import { BaseServer } from "../Server/BaseServer";
 
 export interface INetscriptHelper {
@@ -8,7 +10,8 @@ export interface INetscriptHelper {
   number(funcName: string, argName: string, v: unknown): number;
   city(funcName: string, argName: string, v: unknown): CityName;
   boolean(v: unknown): boolean;
-  getServer(ip: any, fn: any): BaseServer;
+  getServer(ip: any, ctx: NetscriptContext): BaseServer;
   checkSingularityAccess(func: string): void;
-  hack(hostname: string, manual: boolean): Promise<number>;
+  hack(ctx: NetscriptContext, hostname: string, manual: boolean): Promise<number>;
+  getValidPort(funcName: string, port: number): IPort;
 }
