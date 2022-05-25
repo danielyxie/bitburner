@@ -120,8 +120,8 @@ function Text(): React.ReactElement {
       <br />
       <StatsTable
         rows={[
-          ["Awareness:", numeralWrapper.format(division.awareness, "0.000")],
-          ["Popularity:", numeralWrapper.format(division.popularity, "0.000")],
+          ["Awareness:", numeralWrapper.formatReallyBigNumber(division.awareness)],
+          ["Popularity:", numeralWrapper.formatReallyBigNumber(division.popularity)],
         ]}
       />
       {advertisingInfo !== false && (
@@ -131,15 +131,15 @@ function Text(): React.ReactElement {
               <Typography>Total multiplier for this industrys sales due to its awareness and popularity</Typography>
               <StatsTable
                 rows={[
-                  ["Awareness Bonus:", "x" + numeralWrapper.format(Math.pow(awarenessFac, 0.85), "0.000")],
-                  ["Popularity Bonus:", "x" + numeralWrapper.format(Math.pow(popularityFac, 0.85), "0.000")],
-                  ["Ratio Multiplier:", "x" + numeralWrapper.format(Math.pow(ratioFac, 0.85), "0.000")],
+                  ["Awareness Bonus:", "x" + numeralWrapper.formatReallyBigNumber(Math.pow(awarenessFac, 0.85))],
+                  ["Popularity Bonus:", "x" + numeralWrapper.formatReallyBigNumber(Math.pow(popularityFac, 0.85))],
+                  ["Ratio Multiplier:", "x" + numeralWrapper.formatReallyBigNumber(Math.pow(ratioFac, 0.85))],
                 ]}
               />
             </>
           }
         >
-          <Typography>Advertising Multiplier: x{numeralWrapper.format(totalAdvertisingFac, "0.000")}</Typography>
+          <Typography>Advertising Multiplier: x{numeralWrapper.formatReallyBigNumber(totalAdvertisingFac)}</Typography>
         </Tooltip>
       )}
       <br />
@@ -160,7 +160,7 @@ function Text(): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>Production Multiplier: {numeralWrapper.format(division.prodMult, "0.00")}</Typography>
+          <Typography>Production Multiplier: {numeralWrapper.formatReallyBigNumber(division.prodMult)}</Typography>
         </Tooltip>
         <IconButton onClick={() => setHelpOpen(true)}>
           <HelpIcon />
@@ -200,7 +200,7 @@ function Text(): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>Scientific Research: {numeralWrapper.format(division.sciResearch.qty, "0.000a")}</Typography>
+          <Typography>Scientific Research: {numeralWrapper.formatReallyBigNumber(division.sciResearch.qty)}</Typography>
         </Tooltip>
         <Button sx={{ mx: 1 }} onClick={() => setResearchOpen(true)}>
           Research
