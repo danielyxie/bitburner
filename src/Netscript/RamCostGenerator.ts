@@ -551,6 +551,10 @@ const SourceRamCosts = {
       hackTime: 0,
       growTime: 0,
       weakenTime: 0,
+      hackLevelForTime: 0,
+      growLevelForTime: 0,
+      weakenLevelForTime: 0,
+      numCycleForGrowth: 0,
     },
     hacknetNodes: {
       moneyGainRate: 0,

@@ -362,10 +362,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     manual: boolean,
     {
       threads: requestedThreads,
-      stock: stock,
+      stock: requestedStock,
       hackOverrideTiming: requestedHackOverrideTiming,
       hackOverrideEffect: requestedHackOverrideEffect,
-    }: BasicHGWOptions = {},
+    }: any = {},
   ): Promise<number> {
     if (hostname === undefined) {
       throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
@@ -428,10 +428,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           server.moneyAvailable = 0;
         }
 
+        let moneyGained = 0;
         if (manual) {
-          const moneyGained = moneyDrained * BitNodeMultipliers.ManualHackMoney;
+          moneyGained = moneyDrained * BitNodeMultipliers.ManualHackMoney;
         } else {
-          const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
+          moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
         }
 
         Player.gainMoney(moneyGained, "hacking");
@@ -448,7 +449,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
             )} and ${numeralWrapper.formatExp(expGainedOnSuccess)} exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
-        if (stock) {
+        if (requestedStock) {
           influenceStockThroughServerHack(server, moneyDrained);
         }
         if (manual) {
