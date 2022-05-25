@@ -18,6 +18,11 @@ const CorpCost = 1024 - ScriptBaseCost;
 
 describe("Parsing NetScript code to work out static RAM costs", function () {
   // Tests numeric equality, allowing for floating point imprecision - and includes script base cost
+  /**
+   *
+   * @param {number} val
+   * @param {number} expected
+   */
   function expectCost(val, expected) {
     const expectedWithBase = expected + ScriptBaseCost;
     expect(val).toBeGreaterThanOrEqual(expectedWithBase - 100 * Number.EPSILON);

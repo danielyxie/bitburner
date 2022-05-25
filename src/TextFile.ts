@@ -121,7 +121,7 @@ export function getTextFile(fn: string, server: BaseServer): TextFile | null {
     filename = removeLeadingSlash(filename);
   }
 
-  for (const file of server.textFiles as TextFile[]) {
+  for (const file of server.textFiles ) {
     if (file.fn === filename) {
       return file;
     }

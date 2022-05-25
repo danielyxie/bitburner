@@ -68,7 +68,7 @@ export function placeOrder(
 
   // Process to see if it should be executed immediately
   const processOrderRefs = {
-    stockMarket: StockMarket as IStockMarket,
+    stockMarket: StockMarket ,
     symbolToStockMap: SymbolToStockMap,
   };
   processOrders(stock, order.type, order.pos, processOrderRefs);

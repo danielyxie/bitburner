@@ -2,6 +2,7 @@
  * The environment in which a script runs. The environment holds
  * Netscript functions and arguments for that script.
  */
+import { NS } from "src/ScriptEditor/NetscriptDefinitions";
 import { IMap } from "../types";
 
 export class Environment {
@@ -18,7 +19,7 @@ export class Environment {
   /**
    * Environment variables (currently only Netscript functions)
    */
-  vars: IMap<any> = {};
+  vars: any = {};
 
   constructor(parent: Environment | null) {
     if (parent instanceof Environment) {

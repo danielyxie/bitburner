@@ -606,7 +606,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           _ctx.log(() => "cannot backdoor this kind of server");
           return Promise.resolve();
         }
-        const server = baseserver as Server;
+        const server = baseserver ;
         const installTime = (calculateHackingTime(server, player) / 4) * 1000;
 
         // No root access or skill level too low

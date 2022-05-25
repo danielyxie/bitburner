@@ -14,6 +14,7 @@ import { Script } from "../Script/Script";
 import { GetServer } from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
 import { IMap } from "../types";
+import { NS } from "../ScriptEditor/NetscriptDefinitions";
 
 export class WorkerScript {
   /**
@@ -116,7 +117,7 @@ export class WorkerScript {
    */
   infiniteLoopSafety = performance.now();
 
-  constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
+  constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => NS) {
     this.name = runningScriptObj.filename;
     this.hostname = runningScriptObj.server;
 

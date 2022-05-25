@@ -2,6 +2,7 @@ import { isString } from "./utils/helpers/isString";
 import { GetServer } from "./Server/AllServers";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { WorkerScript } from "./Netscript/WorkerScript";
+import { NetscriptContext } from "./Netscript/APIWrapper";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
   // Cancel any pre-existing netscriptDelay'ed function call
@@ -36,26 +37,22 @@ export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): s
   return "|DELIMITER|" + server.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
 }
 
-export function resolveNetscriptRequestedThreads(
-  workerScript: WorkerScript,
-  functionName: string,
-  requestedThreads: number,
-): number {
-  const threads = workerScript.scriptRef.threads;
+export function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThreads: number): number {
+  const threads = ctx.workerScript.scriptRef.threads;
   if (!requestedThreads) {
     return isNaN(threads) || threads < 1 ? 1 : threads;
   }
   const requestedThreadsAsInt = requestedThreads | 0;
   if (isNaN(requestedThreads) || requestedThreadsAsInt < 1) {
     throw makeRuntimeRejectMsg(
-      workerScript,
-      `Invalid thread count passed to ${functionName}: ${requestedThreads}. Threads must be a positive number.`,
+      ctx.workerScript,
+      `Invalid thread count passed to ${ctx.function}: ${requestedThreads}. Threads must be a positive number.`,
     );
   }
   if (requestedThreadsAsInt > threads) {
     throw makeRuntimeRejectMsg(
-      workerScript,
-      `Too many threads requested by ${functionName}. Requested: ${requestedThreads}. Has: ${threads}.`,
+      ctx.workerScript,
+      `Too many threads requested by ${ctx.function}. Requested: ${requestedThreads}. Has: ${threads}.`,
     );
   }
   return requestedThreadsAsInt;

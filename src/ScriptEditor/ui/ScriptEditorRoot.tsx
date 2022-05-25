@@ -693,7 +693,7 @@ export function Root(props: IProps): React.ReactElement {
     if (server === null) throw new Error(`Server '${closingScript.hostname}' should not be null, but it is.`);
 
     const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
-    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex as number].code) {
+    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex ].code) {
       PromptEvent.emit({
         txt: `Do you want to save changes to ${closingScript.fileName} on ${closingScript.hostname}?`,
         resolve: (result: boolean | string) => {

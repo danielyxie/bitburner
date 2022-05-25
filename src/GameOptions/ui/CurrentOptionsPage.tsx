@@ -54,8 +54,8 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
   }
 
   function handleLocaleChange(event: SelectChangeEvent<string>): void {
-    setLocale(event.target.value as string);
-    Settings.Locale = event.target.value as string;
+    setLocale(event.target.value );
+    Settings.Locale = event.target.value ;
   }
 
   function handleTimestampFormatChange(event: React.ChangeEvent<HTMLInputElement>): void {
