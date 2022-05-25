@@ -7,10 +7,10 @@
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function clearObject(obj: unknown): void {
   if (typeof obj !== "object" || obj === null || obj === undefined) return;
-  for (const key of Object.getOwnPropertyNames(obj)) {
-    if (obj.hasOwnProperty(key)) {
-      // tslint:disable-next-line:no-dynamic-delete
-      delete (obj as any)[key];
+  const o = obj as Record<string, unknown>;
+  for (const key of Object.getOwnPropertyNames(o)) {
+    if (o.hasOwnProperty(key)) {
+      delete o[key];
     }
   }
 }

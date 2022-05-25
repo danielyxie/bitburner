@@ -80,7 +80,7 @@ export function comprLZEncode(plain: string): string {
       for (let offset = 1; offset <= Math.min(9, i); ++offset) {
         if (plain[i - offset] === c) {
           // start new backreference
-          set(new_state, offset, 1, string + length + plain.substring(i - length, i));
+          set(new_state, offset, 1, string + String(length) + plain.substring(i - length, i));
         }
       }
     }
@@ -99,17 +99,17 @@ export function comprLZEncode(plain: string): string {
             set(new_state, offset, length + 1, string);
           } else {
             // start new backreference
-            set(new_state, offset, 1, string + "9" + offset + "0");
+            set(new_state, offset, 1, string + "9" + String(offset) + "0");
           }
         }
 
         // start new literal
-        set(new_state, 0, 1, string + length + offset);
+        set(new_state, 0, 1, string + String(length) + String(offset));
 
         // end current backreference and start new backreference
         for (let new_offset = 1; new_offset <= Math.min(9, i); ++new_offset) {
           if (plain[i - new_offset] === c) {
-            set(new_state, new_offset, 1, string + length + offset + "0");
+            set(new_state, new_offset, 1, string + String(length) + String(offset) + "0");
           }
         }
       }
@@ -128,7 +128,7 @@ export function comprLZEncode(plain: string): string {
       continue;
     }
 
-    string += len + plain.substring(plain.length - len, plain.length);
+    string += String(len) + plain.substring(plain.length - len, plain.length);
     if (result == null || string.length < result.length) {
       result = string;
     } else if (string.length == result.length && Math.random() < 0.5) {
@@ -143,7 +143,7 @@ export function comprLZEncode(plain: string): string {
         continue;
       }
 
-      string += len + "" + offset;
+      string += String(len) + "" + String(offset);
       if (result == null || string.length < result.length) {
         result = string;
       } else if (string.length == result.length && Math.random() < 0.5) {

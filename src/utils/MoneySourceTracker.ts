@@ -2,7 +2,7 @@
  * This is an object that is used to keep track of where all of the player's
  * money is coming from (or going to)
  */
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "./JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver, IReviverValue } from "./JSONReviver";
 
 export class MoneySourceTracker {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -56,7 +56,7 @@ export class MoneySourceTracker {
 
   // Initiatizes a MoneySourceTracker object from a JSON save state.
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): MoneySourceTracker {
+  static fromJSON(value: IReviverValue): MoneySourceTracker {
     return Generic_fromJSON(MoneySourceTracker, value.data);
   }
 }
