@@ -2,9 +2,7 @@ import { Factions } from "../../Faction/Factions";
 import { Faction } from "../../Faction/Faction";
 import { Gang } from "../../Gang/Gang";
 import { IPlayer } from "../IPlayer";
-
-// Amount of negative karma needed to manage a gang in BitNodes other than 2
-const GangKarmaRequirement = -54000;
+import { GangConstants } from "../../Gang/data/Constants";
 
 export function canAccessGang(this: IPlayer): boolean {
   if (this.bitNodeN === 2) {
@@ -14,7 +12,11 @@ export function canAccessGang(this: IPlayer): boolean {
     return false;
   }
 
-  return this.karma <= GangKarmaRequirement;
+  return this.karma <= GangConstants.GangKarmaRequirement;
+}
+
+export function isAwareOfGang(this: IPlayer): boolean {
+  return this.bitNodeN === 2 || this.sourceFileLvl(2) >= 1;
 }
 
 export function getGangFaction(this: IPlayer): Faction {

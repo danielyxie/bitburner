@@ -1,23 +1,19 @@
+import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-
-import { Box, Paper, Typography, Button, Tooltip } from "@mui/material";
-
 import { CONSTANTS } from "../../../Constants";
 import { Crimes } from "../../../Crime/Crimes";
-import { numeralWrapper } from "../../../ui/numeralFormat";
-import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-import { use } from "../../../ui/Context";
 import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
-
+import { use } from "../../../ui/Context";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { ProgressBar } from "../../../ui/React/Progress";
 import { Sleeve } from "../Sleeve";
 import { SleeveTaskType } from "../SleeveTaskTypesEnum";
-
-import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
-import { TravelModal } from "./TravelModal";
-import { StatsElement, EarningsElement } from "./StatsElement";
-import { MoreStatsModal } from "./MoreStatsModal";
 import { MoreEarningsModal } from "./MoreEarningsModal";
+import { MoreStatsModal } from "./MoreStatsModal";
+import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
+import { EarningsElement, StatsElement } from "./StatsElement";
 import { TaskSelector } from "./TaskSelector";
+import { TravelModal } from "./TravelModal";
 
 interface IProps {
   sleeve: Sleeve;
@@ -34,7 +30,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
   const [abc, setABC] = useState(["------", "------", "------"]);
 
   function setTask(): void {
-    props.sleeve.resetTaskStatus(); // sets to idle
+    props.sleeve.resetTaskStatus(player); // sets to idle
     switch (abc[0]) {
       case "------":
         break;
@@ -52,6 +48,9 @@ export function SleeveElem(props: IProps): React.ReactElement {
         break;
       case "Workout at Gym":
         props.sleeve.workoutAtGym(player, abc[2], abc[1]);
+        break;
+      case "Perform Bladeburner Actions":
+        props.sleeve.bladeburner(player, abc[1], abc[2]);
         break;
       case "Shock Recovery":
         props.sleeve.shockRecovery(player);
@@ -110,6 +109,20 @@ export function SleeveElem(props: IProps): React.ReactElement {
     case SleeveTaskType.Gym:
       desc = <>This sleeve is currently working out at {props.sleeve.currentTaskLocation}.</>;
       break;
+    case SleeveTaskType.Bladeburner: {
+      let message = "";
+      if (props.sleeve.bbContract !== "------") {
+        message = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
+      } else if (props.sleeve.currentTaskLocation !== "") {
+        message = props.sleeve.currentTaskLocation;
+      }
+      desc = (
+        <>
+          This sleeve is currently attempting to {props.sleeve.bbAction}. {message}
+        </>
+      );
+      break;
+    }
     case SleeveTaskType.Recovery:
       desc = (
         <>
@@ -131,74 +144,72 @@ export function SleeveElem(props: IProps): React.ReactElement {
   }
 
   return (
-    <Box component={Paper} sx={{ width: "auto" }}>
-      <Box sx={{ m: 1 }}>
-        <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%", gap: 1 }}>
-          <Box>
-            <StatsElement sleeve={props.sleeve} />
-            <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%" }}>
-              <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
-              <Button onClick={() => setEarningsOpen(true)}>More Earnings Info</Button>
-              <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
-                <span>
-                  <Button
-                    onClick={() => setTravelOpen(true)}
-                    disabled={player.money < CONSTANTS.TravelCost}
-                    sx={{ width: "100%", height: "100%" }}
-                  >
-                    Travel
-                  </Button>
-                </span>
-              </Tooltip>
-              <Tooltip
-                title={
-                  props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""
-                }
-              >
-                <span>
-                  <Button
-                    onClick={() => setAugmentationsOpen(true)}
-                    disabled={props.sleeve.shock < 100}
-                    sx={{ width: "100%", height: "100%" }}
-                  >
-                    Manage Augmentations
-                  </Button>
-                </span>
-              </Tooltip>
-            </Box>
+    <>
+      <Paper sx={{ p: 1, display: "grid", gridTemplateColumns: "1fr 1fr", width: "auto", gap: 1 }}>
+        <span>
+          <StatsElement sleeve={props.sleeve} />
+          <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%" }}>
+            <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
+            <Button onClick={() => setEarningsOpen(true)}>More Earnings Info</Button>
+            <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
+              <span>
+                <Button
+                  onClick={() => setTravelOpen(true)}
+                  disabled={player.money < CONSTANTS.TravelCost}
+                  sx={{ width: "100%", height: "100%" }}
+                >
+                  Travel
+                </Button>
+              </span>
+            </Tooltip>
+            <Tooltip
+              title={props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
+            >
+              <span>
+                <Button
+                  onClick={() => setAugmentationsOpen(true)}
+                  disabled={props.sleeve.shock < 100}
+                  sx={{ width: "100%", height: "100%" }}
+                >
+                  Manage Augmentations
+                </Button>
+              </span>
+            </Tooltip>
           </Box>
-          <Box>
-            <EarningsElement sleeve={props.sleeve} />
-            <Box>
-              <TaskSelector player={player} sleeve={props.sleeve} setABC={setABC} />
-              <Button onClick={setTask} sx={{ width: "100%" }}>
-                Set Task
-              </Button>
-              <Typography>{desc}</Typography>
-              <Typography>
-                {props.sleeve.currentTask === SleeveTaskType.Crime &&
-                  createProgressBarText({
-                    progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
-                    totalTicks: 25,
-                  })}
-              </Typography>
-            </Box>
-          </Box>
-          <MoreStatsModal open={statsOpen} onClose={() => setStatsOpen(false)} sleeve={props.sleeve} />
-          <MoreEarningsModal open={earningsOpen} onClose={() => setEarningsOpen(false)} sleeve={props.sleeve} />
-          <TravelModal
-            open={travelOpen}
-            onClose={() => setTravelOpen(false)}
-            sleeve={props.sleeve}
-            rerender={props.rerender}
-          />
-          <SleeveAugmentationsModal
-            open={augmentationsOpen}
-            onClose={() => setAugmentationsOpen(false)}
-            sleeve={props.sleeve}
-          />
-        </Box>
-      </Box>
-    </Box>
+        </span>
+        <span>
+          <EarningsElement sleeve={props.sleeve} />
+          <TaskSelector player={player} sleeve={props.sleeve} setABC={setABC} />
+          <Button onClick={setTask} sx={{ width: "100%" }}>
+            Set Task
+          </Button>
+          <Typography>{desc}</Typography>
+          <Typography>
+            {(props.sleeve.currentTask === SleeveTaskType.Crime ||
+              props.sleeve.currentTask === SleeveTaskType.Bladeburner) &&
+              props.sleeve.currentTaskMaxTime > 0 && (
+                <ProgressBar
+                  variant="determinate"
+                  value={(props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime) * 100}
+                  color="primary"
+                />
+              )}
+          </Typography>
+        </span>
+      </Paper>
+      <MoreStatsModal open={statsOpen} onClose={() => setStatsOpen(false)} sleeve={props.sleeve} />
+      <MoreEarningsModal open={earningsOpen} onClose={() => setEarningsOpen(false)} sleeve={props.sleeve} />
+      <TravelModal
+        open={travelOpen}
+        onClose={() => setTravelOpen(false)}
+        sleeve={props.sleeve}
+        rerender={props.rerender}
+      />
+      <SleeveAugmentationsModal
+        open={augmentationsOpen}
+        onClose={() => setAugmentationsOpen(false)}
+        sleeve={props.sleeve}
+      />
+    </>
   );
 }

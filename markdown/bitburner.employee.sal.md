@@ -4,7 +4,7 @@
 
 ## Employee.sal property
 
-Salary
+Salary of the employee
 
 <b>Signature:</b>
 

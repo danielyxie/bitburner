@@ -1,13 +1,14 @@
+import { Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { random } from "../utils";
+import { BlinkingCursor } from "./BlinkingCursor";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { random } from "../utils";
-import { interpolate } from "./Difficulty";
-import { BlinkingCursor } from "./BlinkingCursor";
-import Typography from "@mui/material/Typography";
-import { KEY } from "../../utils/helpers/keyCodes";
 
 interface Difficulty {
   [key: string]: number;
@@ -31,9 +32,12 @@ const difficulties: {
 function generateLeftSide(difficulty: Difficulty): string {
   let str = "";
   const options = [KEY.OPEN_BRACKET, KEY.LESS_THAN, KEY.OPEN_PARENTHESIS, KEY.OPEN_BRACE];
+  if (Player.hasAugmentation(AugmentationNames.WisdomOfAthena, true)) {
+    options.splice(0, 1);
+  }
   const length = random(difficulty.min, difficulty.max);
   for (let i = 0; i < length; i++) {
-    str += options[Math.floor(Math.random() * 4)];
+    str += options[Math.floor(Math.random() * options.length)];
   }
 
   return str;
@@ -79,16 +83,16 @@ export function BracketGame(props: IMinigameProps): React.ReactElement {
   }
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center" }}>
         <Typography variant="h4">Close the brackets</Typography>
         <Typography style={{ fontSize: "5em" }}>
           {`${left}${right}`}
           <BlinkingCursor />
         </Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }

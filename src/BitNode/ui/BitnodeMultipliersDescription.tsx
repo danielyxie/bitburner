@@ -1,53 +1,103 @@
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import ExpandLess from "@mui/icons-material/ExpandLess";
-import { Box, Collapse, ListItemButton, ListItemText, Paper, Typography } from "@mui/material";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { Box, Collapse, ListItemButton, ListItemText, Paper, Table, TableBody, Typography } from "@mui/material";
+import { uniqueId } from "lodash";
 import React from "react";
+import { SpecialServers } from "../../Server/data/SpecialServers";
+import { Settings } from "../../Settings/Settings";
 import { use } from "../../ui/Context";
+import { StatsRow } from "../../ui/React/StatsRow";
 import { defaultMultipliers, getBitNodeMultipliers } from "../BitNode";
 import { IBitNodeMultipliers } from "../BitNodeMultipliers";
-import { SpecialServers } from "../../Server/data/SpecialServers";
 
 interface IProps {
   n: number;
+  level?: number;
 }
 
-export function BitnodeMultiplierDescription({ n }: IProps): React.ReactElement {
-  const player = use.Player();
+export function BitnodeMultiplierDescription({ n, level }: IProps): React.ReactElement {
   const [open, setOpen] = React.useState(false);
-  const mults = getBitNodeMultipliers(n, player.sourceFileLvl(n));
   if (n === 1) return <></>;
 
   return (
-    <>
-      <br />
-      <Box component={Paper}>
-        <ListItemButton onClick={() => setOpen((old) => !old)}>
-          <ListItemText primary={<Typography>Bitnode multipliers:</Typography>} />
-          {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
-        </ListItemButton>
-        <Box mx={2}>
-          <Collapse in={open}>
-            <GeneralMults n={n} mults={mults} />
-            <FactionMults n={n} mults={mults} />
-            <AugmentationMults n={n} mults={mults} />
-            <StockMults n={n} mults={mults} />
-            <SkillMults n={n} mults={mults} />
-            <HackingMults n={n} mults={mults} />
-            <PurchasedServersMults n={n} mults={mults} />
-            <CrimeMults n={n} mults={mults} />
-            <InfiltrationMults n={n} mults={mults} />
-            <CompanyMults n={n} mults={mults} />
-            <GangMults n={n} mults={mults} />
-            <CorporationMults n={n} mults={mults} />
-            <BladeburnerMults n={n} mults={mults} />
-            <StanekMults n={n} mults={mults} />
-            <br />
-          </Collapse>
-        </Box>
-      </Box>
-    </>
+    <Box component={Paper} sx={{ mt: 1, p: 1 }}>
+      <ListItemButton disableGutters onClick={() => setOpen((old) => !old)}>
+        <ListItemText primary={<Typography variant="h6">Bitnode Multipliers</Typography>} />
+        {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
+      </ListItemButton>
+      <Collapse in={open}>
+        <BitNodeMultipliersDisplay n={n} level={level} />
+      </Collapse>
+    </Box>
   );
 }
+
+export const BitNodeMultipliersDisplay = ({ n, level }: IProps): React.ReactElement => {
+  const player = use.Player();
+  // If a level argument has been provided, use that as the multiplier level
+  // If not, then we have to assume that we want the next level up from the
+  // current node's source file, so we get the min of that, the SF's max level,
+  // or if it's BN12, ∞
+  const maxSfLevel = n === 12 ? Infinity : 3;
+  const mults = getBitNodeMultipliers(n, level ?? Math.min(player.sourceFileLvl(n) + 1, maxSfLevel));
+
+  return (
+    <Box sx={{ columnCount: 2, columnGap: 1, mb: -2 }}>
+      <GeneralMults n={n} mults={mults} />
+      <SkillMults n={n} mults={mults} />
+      <FactionMults n={n} mults={mults} />
+      <AugmentationMults n={n} mults={mults} />
+      <HackingMults n={n} mults={mults} />
+      <PurchasedServersMults n={n} mults={mults} />
+      <StockMults n={n} mults={mults} />
+      <CrimeMults n={n} mults={mults} />
+      <InfiltrationMults n={n} mults={mults} />
+      <CompanyMults n={n} mults={mults} />
+      <GangMults n={n} mults={mults} />
+      <CorporationMults n={n} mults={mults} />
+      <BladeburnerMults n={n} mults={mults} />
+      <StanekMults n={n} mults={mults} />
+    </Box>
+  );
+};
+
+interface IBNMultRows {
+  [mult: string]: {
+    name: string;
+    content?: string;
+    color?: string;
+  };
+}
+
+interface IBNMultTableProps {
+  sectionName: string;
+  rowData: IBNMultRows;
+  mults: IBitNodeMultipliers;
+}
+
+const BNMultTable = (props: IBNMultTableProps): React.ReactElement => {
+  const rowsArray = Object.entries(props.rowData)
+    .filter(([key, _value]) => props.mults[key] !== defaultMultipliers[key])
+    .map(([key, value]) => (
+      <StatsRow
+        key={uniqueId()}
+        name={value.name}
+        data={{ content: value.content ?? `${(props.mults[key] * 100).toFixed(3)}%` }}
+        color={value.color ?? Settings.theme.primary}
+      />
+    ));
+
+  return rowsArray.length > 0 ? (
+    <span style={{ display: "inline-block", width: "100%", marginBottom: "16px" }}>
+      <Typography variant="h6">{props.sectionName}</Typography>
+      <Table>
+        <TableBody>{rowsArray}</TableBody>
+      </Table>
+    </span>
+  ) : (
+    <></>
+  );
+};
 
 interface IMultsProps {
   n: number;
@@ -55,500 +105,231 @@ interface IMultsProps {
 }
 
 function GeneralMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.ClassGymExpGain === defaultMultipliers.ClassGymExpGain &&
-    mults.CodingContractMoney === defaultMultipliers.CodingContractMoney &&
-    mults.DaedalusAugsRequirement === defaultMultipliers.DaedalusAugsRequirement &&
-    mults.WorldDaemonDifficulty === defaultMultipliers.WorldDaemonDifficulty &&
-    mults.HacknetNodeMoney === defaultMultipliers.HacknetNodeMoney
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>General:</Typography>
-      <Box mx={1}>
-        {mults.WorldDaemonDifficulty !== defaultMultipliers.WorldDaemonDifficulty ? (
-          <Typography>
-            {SpecialServers.WorldDaemon} difficulty: x{mults.WorldDaemonDifficulty.toFixed(3)}
-          </Typography>
-        ) : (
-          <></>
-        )}
-        {mults.DaedalusAugsRequirement !== defaultMultipliers.DaedalusAugsRequirement ? (
-          <Typography>Daedalus aug req.: {mults.DaedalusAugsRequirement}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.HacknetNodeMoney !== defaultMultipliers.HacknetNodeMoney ? (
-          <Typography>Hacknet production: x{mults.HacknetNodeMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.CodingContractMoney !== defaultMultipliers.CodingContractMoney ? (
-          <Typography>Coding contract reward: x{mults.CodingContractMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ClassGymExpGain !== defaultMultipliers.ClassGymExpGain ? (
-          <Typography>Class/Gym exp: x{mults.ClassGymExpGain.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    WorldDaemonDifficulty: { name: `${SpecialServers.WorldDaemon} Difficulty` },
+    DaedalusAugsRequirement: {
+      name: "Daedalus Augs Requirement",
+      content: String(mults.DaedalusAugsRequirement),
+    },
+    HacknetNodeMoney: { name: "Hacknet Production" },
+    CodingContractMoney: { name: "Coding Contract Reward" },
+    ClassGymExpGain: { name: "Class/Gym Exp" },
+  };
+
+  return <BNMultTable sectionName="General" rowData={rows} mults={mults} />;
 }
 
 function AugmentationMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.AugmentationMoneyCost === defaultMultipliers.AugmentationMoneyCost &&
-    mults.AugmentationRepCost === defaultMultipliers.AugmentationRepCost
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Augmentations:</Typography>
-      <Box mx={1}>
-        {mults.AugmentationMoneyCost !== defaultMultipliers.AugmentationMoneyCost ? (
-          <Typography>Cost: x{mults.AugmentationMoneyCost.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.AugmentationRepCost !== defaultMultipliers.AugmentationRepCost ? (
-          <Typography>Reputation: x{mults.AugmentationRepCost.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    AugmentationMoneyCost: { name: "Money Cost" },
+    AugmentationRepCost: {
+      name: "Reputation Cost",
+      color: Settings.theme.rep,
+    },
+  };
+
+  return <BNMultTable sectionName="Augmentations" rowData={rows} mults={mults} />;
 }
 
 function CompanyMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.CompanyWorkExpGain === defaultMultipliers.CompanyWorkExpGain &&
-    mults.CompanyWorkMoney === defaultMultipliers.CompanyWorkMoney
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Company:</Typography>
-      <Box mx={1}>
-        {mults.CompanyWorkMoney !== defaultMultipliers.CompanyWorkMoney ? (
-          <Typography>Money: x{mults.CompanyWorkMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.CompanyWorkExpGain !== defaultMultipliers.CompanyWorkExpGain ? (
-          <Typography>Exp: x{mults.CompanyWorkExpGain.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    CompanyWorkMoney: {
+      name: "Work Money",
+      color: Settings.theme.money,
+    },
+    CompanyWorkExpGain: { name: "Work Exp" },
+  };
+
+  return <BNMultTable sectionName="Company" rowData={rows} mults={mults} />;
 }
 
 function StockMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.FourSigmaMarketDataApiCost === defaultMultipliers.FourSigmaMarketDataApiCost &&
-    mults.FourSigmaMarketDataCost === defaultMultipliers.FourSigmaMarketDataCost
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Stock market:</Typography>
-      <Box mx={1}>
-        {mults.FourSigmaMarketDataCost !== defaultMultipliers.FourSigmaMarketDataCost ? (
-          <Typography>Market data cost: x{mults.FourSigmaMarketDataCost.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.FourSigmaMarketDataApiCost !== defaultMultipliers.FourSigmaMarketDataApiCost ? (
-          <Typography>Market data API cost: x{mults.FourSigmaMarketDataApiCost.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    FourSigmaMarketDataCost: { name: "Market Data Cost" },
+    FourSigmaMarketDataApiCost: { name: "Market Data API Cost" },
+  };
+
+  return <BNMultTable sectionName="Stock Market" rowData={rows} mults={mults} />;
 }
 
 function FactionMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.FactionPassiveRepGain === defaultMultipliers.FactionPassiveRepGain &&
-    mults.FactionWorkExpGain === defaultMultipliers.FactionWorkExpGain &&
-    mults.FactionWorkRepGain === defaultMultipliers.FactionWorkRepGain &&
-    mults.RepToDonateToFaction === defaultMultipliers.RepToDonateToFaction
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Faction:</Typography>
-      <Box mx={1}>
-        {mults.RepToDonateToFaction !== defaultMultipliers.RepToDonateToFaction ? (
-          <Typography>Favor to donate: x{mults.RepToDonateToFaction.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.FactionWorkRepGain !== defaultMultipliers.FactionWorkRepGain ? (
-          <Typography>Work rep: x{mults.FactionWorkRepGain.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.FactionWorkExpGain !== defaultMultipliers.FactionWorkExpGain ? (
-          <Typography>Work exp: x{mults.FactionWorkExpGain.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.FactionPassiveRepGain !== defaultMultipliers.FactionPassiveRepGain ? (
-          <Typography>Passive rep: x{mults.FactionPassiveRepGain.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    RepToDonateToFaction: { name: "Favor to Donate" },
+    FactionWorkRepGain: {
+      name: "Work Reputation",
+      color: Settings.theme.rep,
+    },
+    FactionWorkExpGain: { name: "Work Exp" },
+    FactionPassiveRepGain: {
+      name: "Passive Rep",
+      color: Settings.theme.rep,
+    },
+  };
+
+  return <BNMultTable sectionName="Faction" rowData={rows} mults={mults} />;
 }
 
 function CrimeMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (mults.CrimeExpGain === defaultMultipliers.CrimeExpGain && mults.CrimeMoney === defaultMultipliers.CrimeMoney)
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Crime:</Typography>
-      <Box mx={1}>
-        {mults.CrimeExpGain !== defaultMultipliers.CrimeExpGain ? (
-          <Typography>Exp: x{mults.CrimeExpGain.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.CrimeMoney !== defaultMultipliers.CrimeMoney ? (
-          <Typography>Money: x{mults.CrimeMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    CrimeExpGain: {
+      name: "Crime Exp",
+      color: Settings.theme.combat,
+    },
+    CrimeMoney: {
+      name: "Crime Money",
+      color: Settings.theme.combat,
+    },
+  };
+
+  return <BNMultTable sectionName="Crime" rowData={rows} mults={mults} />;
 }
 
 function SkillMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.HackingLevelMultiplier === defaultMultipliers.HackingLevelMultiplier &&
-    mults.AgilityLevelMultiplier === defaultMultipliers.AgilityLevelMultiplier &&
-    mults.DefenseLevelMultiplier === defaultMultipliers.DefenseLevelMultiplier &&
-    mults.DexterityLevelMultiplier === defaultMultipliers.DexterityLevelMultiplier &&
-    mults.StrengthLevelMultiplier === defaultMultipliers.StrengthLevelMultiplier &&
-    mults.CharismaLevelMultiplier === defaultMultipliers.CharismaLevelMultiplier
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Skills:</Typography>
-      <Box mx={1}>
-        {mults.HackingLevelMultiplier !== defaultMultipliers.HackingLevelMultiplier ? (
-          <Typography>Hacking: x{mults.HackingLevelMultiplier.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.AgilityLevelMultiplier !== defaultMultipliers.AgilityLevelMultiplier ? (
-          <Typography>Agility: x{mults.AgilityLevelMultiplier.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.DefenseLevelMultiplier !== defaultMultipliers.DefenseLevelMultiplier ? (
-          <Typography>Defense: x{mults.DefenseLevelMultiplier.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.DexterityLevelMultiplier !== defaultMultipliers.DexterityLevelMultiplier ? (
-          <Typography>Dexterity: x{mults.DexterityLevelMultiplier.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.StrengthLevelMultiplier !== defaultMultipliers.StrengthLevelMultiplier ? (
-          <Typography>Strength: x{mults.StrengthLevelMultiplier.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.CharismaLevelMultiplier !== defaultMultipliers.CharismaLevelMultiplier ? (
-          <Typography>Charisma: x{mults.CharismaLevelMultiplier.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    HackingLevelMultiplier: {
+      name: "Hacking Level",
+      color: Settings.theme.hack,
+    },
+    StrengthLevelMultiplier: {
+      name: "Strength Level",
+      color: Settings.theme.combat,
+    },
+    DefenseLevelMultiplier: {
+      name: "Defense Level",
+      color: Settings.theme.combat,
+    },
+    DexterityLevelMultiplier: {
+      name: "Dexterity Level",
+      color: Settings.theme.combat,
+    },
+    AgilityLevelMultiplier: {
+      name: "Agility Level",
+      color: Settings.theme.combat,
+    },
+    CharismaLevelMultiplier: {
+      name: "Charisma Level",
+      color: Settings.theme.cha,
+    },
+  };
+
+  return <BNMultTable sectionName="Skills" rowData={rows} mults={mults} />;
 }
 
 function HackingMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.ServerGrowthRate === defaultMultipliers.ServerGrowthRate &&
-    mults.ServerMaxMoney === defaultMultipliers.ServerMaxMoney &&
-    mults.ServerStartingMoney === defaultMultipliers.ServerStartingMoney &&
-    mults.ServerStartingSecurity === defaultMultipliers.ServerStartingSecurity &&
-    mults.ServerWeakenRate === defaultMultipliers.ServerWeakenRate &&
-    mults.ManualHackMoney === defaultMultipliers.ManualHackMoney &&
-    mults.ScriptHackMoney === defaultMultipliers.ScriptHackMoney &&
-    mults.ScriptHackMoneyGain === defaultMultipliers.ScriptHackMoneyGain &&
-    mults.HackExpGain === defaultMultipliers.HackExpGain
-  )
-    return <></>;
+  const rows: IBNMultRows = {
+    HackExpGain: {
+      name: "Hacking Exp",
+      color: Settings.theme.hack,
+    },
+    ServerGrowthRate: { name: "Server Growth Rate" },
+    ServerMaxMoney: { name: "Server Max Money" },
+    ServerStartingMoney: { name: "Server Starting Money" },
+    ServerStartingSecurity: { name: "Server Starting Security" },
+    ServerWeakenRate: { name: "Server Weaken Rate" },
+    ManualHackMoney: {
+      name: "Manual Hack Money",
+      color: Settings.theme.money,
+    },
+    ScriptHackMoney: {
+      name: "Script Hack Money",
+      color: Settings.theme.money,
+    },
+    ScriptHackMoneyGain: {
+      name: "Money Gained From Hack",
+      color: Settings.theme.money,
+    },
+  };
 
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Hacking:</Typography>
-      <Box mx={1}>
-        {mults.HackExpGain !== defaultMultipliers.HackExpGain ? (
-          <Typography>Exp: x{mults.HackExpGain.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ServerGrowthRate !== defaultMultipliers.ServerGrowthRate ? (
-          <Typography>Growth rate: x{mults.ServerGrowthRate.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ServerMaxMoney !== defaultMultipliers.ServerMaxMoney ? (
-          <Typography>Max money: x{mults.ServerMaxMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ServerStartingMoney !== defaultMultipliers.ServerStartingMoney ? (
-          <Typography>Starting money: x{mults.ServerStartingMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ServerStartingSecurity !== defaultMultipliers.ServerStartingSecurity ? (
-          <Typography>Starting security: x{mults.ServerStartingSecurity.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ServerWeakenRate !== defaultMultipliers.ServerWeakenRate ? (
-          <Typography>Weaken rate: x{mults.ServerWeakenRate.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ManualHackMoney !== defaultMultipliers.ManualHackMoney ? (
-          <Typography>Manual hack money: x{mults.ManualHackMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ScriptHackMoney !== defaultMultipliers.ScriptHackMoney ? (
-          <Typography>Hack money stolen: x{mults.ScriptHackMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.ScriptHackMoneyGain !== defaultMultipliers.ScriptHackMoneyGain ? (
-          <Typography>Money gained from hack: x{mults.ScriptHackMoneyGain.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  return <BNMultTable sectionName="Hacking" rowData={rows} mults={mults} />;
 }
 
 function PurchasedServersMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.PurchasedServerCost === defaultMultipliers.PurchasedServerCost &&
-    mults.PurchasedServerSoftcap === defaultMultipliers.PurchasedServerSoftcap &&
-    mults.PurchasedServerLimit === defaultMultipliers.PurchasedServerLimit &&
-    mults.PurchasedServerMaxRam === defaultMultipliers.PurchasedServerMaxRam &&
-    mults.HomeComputerRamCost === defaultMultipliers.HomeComputerRamCost
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Purchased servers:</Typography>
-      <Box mx={1}>
-        {mults.PurchasedServerCost !== defaultMultipliers.PurchasedServerCost ? (
-          <Typography>Base cost: {mults.PurchasedServerCost.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.PurchasedServerSoftcap !== defaultMultipliers.PurchasedServerSoftcap ? (
-          <Typography>Softcap cost: {mults.PurchasedServerSoftcap.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.PurchasedServerLimit !== defaultMultipliers.PurchasedServerLimit ? (
-          <Typography>Limit: x{mults.PurchasedServerLimit.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.PurchasedServerMaxRam !== defaultMultipliers.PurchasedServerMaxRam ? (
-          <Typography>Max ram: x{mults.PurchasedServerMaxRam.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.HomeComputerRamCost !== defaultMultipliers.HomeComputerRamCost ? (
-          <Typography>Home ram cost: x{mults.HomeComputerRamCost.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    PurchasedServerCost: {
+      name: "Base Cost",
+      content: mults.PurchasedServerCost.toFixed(3),
+    },
+    PurchasedServerSoftcap: {
+      name: "Softcap Cost",
+      content: mults.PurchasedServerSoftcap.toFixed(3),
+    },
+    PurchasedServerLimit: { name: "Server Limit" },
+    PurchasedServerMaxRam: { name: "Max RAM" },
+    HomeComputerRamCost: { name: "Home RAM Cost" },
+  };
+
+  return <BNMultTable sectionName="Purchased Servers" rowData={rows} mults={mults} />;
 }
 
 function InfiltrationMults({ mults }: IMultsProps): React.ReactElement {
-  // is it empty check
-  if (
-    mults.InfiltrationMoney === defaultMultipliers.InfiltrationMoney &&
-    mults.InfiltrationRep === defaultMultipliers.InfiltrationRep
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Infiltration:</Typography>
-      <Box mx={1}>
-        {mults.InfiltrationMoney !== defaultMultipliers.InfiltrationMoney ? (
-          <Typography>Money: {mults.InfiltrationMoney.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.InfiltrationRep !== defaultMultipliers.InfiltrationRep ? (
-          <Typography>Reputation: x{mults.InfiltrationRep.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    InfiltrationMoney: {
+      name: "Infiltration Money",
+      color: Settings.theme.money,
+    },
+    InfiltrationRep: {
+      name: "Infiltration Reputation",
+      color: Settings.theme.rep,
+    },
+  };
+
+  return <BNMultTable sectionName="Infiltration" rowData={rows} mults={mults} />;
 }
 
-function BladeburnerMults({ n, mults }: IMultsProps): React.ReactElement {
+function BladeburnerMults({ mults }: IMultsProps): React.ReactElement {
   const player = use.Player();
-  // access check
-  if (n !== 6 && n !== 7 && player.sourceFileLvl(6) === 0) return <></>;
-  //default mults check
-  if (mults.BladeburnerRank === 1 && mults.BladeburnerSkillCost === 1) return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Bladeburner:</Typography>
-      <Box mx={1}>
-        {mults.BladeburnerRank !== 1 ? <Typography>Rank gain: x{mults.BladeburnerRank.toFixed(3)}</Typography> : <></>}
-        {mults.BladeburnerSkillCost !== 1 ? (
-          <Typography>Skill cost: x{mults.BladeburnerSkillCost.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  if (!player.canAccessBladeburner()) return <></>;
+
+  const rows: IBNMultRows = {
+    BladeburnerRank: { name: "Rank Gain" },
+    BladeburnerSkillCost: { name: "Skill Cost" },
+  };
+
+  return <BNMultTable sectionName="Bladeburner" rowData={rows} mults={mults} />;
 }
 
-function StanekMults({ n, mults }: IMultsProps): React.ReactElement {
+function StanekMults({ mults }: IMultsProps): React.ReactElement {
   const player = use.Player();
-  // access check
-  if (n !== 13 && player.sourceFileLvl(13) === 0) return <></>;
-  //default mults check
-  if (
-    mults.StaneksGiftExtraSize === defaultMultipliers.StaneksGiftExtraSize &&
-    mults.StaneksGiftPowerMultiplier === defaultMultipliers.StaneksGiftPowerMultiplier
-  )
-    return <></>;
+  if (!player.canAccessCotMG()) return <></>;
 
-  const s = mults.StaneksGiftExtraSize;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Stanek's Gift:</Typography>
-      <Box mx={1}>
-        {mults.StaneksGiftPowerMultiplier !== defaultMultipliers.StaneksGiftPowerMultiplier ? (
-          <Typography>Gift power: x{mults.StaneksGiftPowerMultiplier.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {s !== defaultMultipliers.StaneksGiftExtraSize ? (
-          <Typography>Base size modifier: {s > defaultMultipliers.StaneksGiftExtraSize ? `+${s}` : s}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const extraSize = mults.StaneksGiftExtraSize.toFixed(3);
+  const rows: IBNMultRows = {
+    StnakesGiftPowerMultiplier: { name: "Gift Power" },
+    StaneksGiftExtraSize: {
+      name: "Base Size Modifier",
+      content: `${mults.StaneksGiftExtraSize > defaultMultipliers.StaneksGiftExtraSize ? `+${extraSize}` : extraSize}`,
+    },
+  };
+
+  return <BNMultTable sectionName="Stanek's Gift" rowData={rows} mults={mults} />;
 }
 
-function GangMults({ n, mults }: IMultsProps): React.ReactElement {
+function GangMults({ mults }: IMultsProps): React.ReactElement {
   const player = use.Player();
-  // access check
-  if (n !== 2 && player.sourceFileLvl(2) === 0) return <></>;
-  // is it empty check
-  if (
-    mults.GangSoftcap === defaultMultipliers.GangSoftcap &&
-    mults.GangUniqueAugs === defaultMultipliers.GangUniqueAugs
-  )
-    return <></>;
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Gang:</Typography>
-      <Box mx={1}>
-        {mults.GangSoftcap !== defaultMultipliers.GangSoftcap ? (
-          <Typography>Softcap: {mults.GangSoftcap.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.GangUniqueAugs !== defaultMultipliers.GangUniqueAugs ? (
-          <Typography>Unique augs: x{mults.GangUniqueAugs.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  if (player.bitNodeN !== 2 && player.sourceFileLvl(2) <= 0) return <></>;
+
+  const rows: IBNMultRows = {
+    GangSoftcap: {
+      name: "Gang Softcap",
+      content: mults.GangSoftcap.toFixed(3),
+    },
+    GangUniqueAugs: { name: "Unique Augmentations" },
+  };
+
+  return <BNMultTable sectionName="Gang" rowData={rows} mults={mults} />;
 }
 
-function CorporationMults({ n, mults }: IMultsProps): React.ReactElement {
+function CorporationMults({ mults }: IMultsProps): React.ReactElement {
   const player = use.Player();
-  // access check
-  if (n !== 3 && player.sourceFileLvl(3) === 0) return <></>;
-  // is it empty check
-  if (
-    mults.CorporationSoftCap === defaultMultipliers.CorporationSoftCap &&
-    mults.CorporationValuation === defaultMultipliers.CorporationValuation
-  )
-    return <></>;
+  if (!player.canAccessCorporation()) return <></>;
 
-  return (
-    <>
-      <br />
-      <Typography variant={"h5"}>Corporation:</Typography>
-      <Box mx={1}>
-        {mults.CorporationSoftCap !== defaultMultipliers.CorporationSoftCap ? (
-          <Typography>Softcap: {mults.CorporationSoftCap.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-        {mults.CorporationValuation !== defaultMultipliers.CorporationValuation ? (
-          <Typography>Valuation: x{mults.CorporationValuation.toFixed(3)}</Typography>
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
-  );
+  const rows: IBNMultRows = {
+    CorporationSoftcap: {
+      name: "Corporation Softcap",
+      content: mults.CorporationSoftcap.toFixed(3),
+    },
+    CorporationValuation: { name: "Valuation" },
+  };
+
+  return <BNMultTable sectionName="Corporation" rowData={rows} mults={mults} />;
 }

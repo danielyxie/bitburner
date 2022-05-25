@@ -114,9 +114,14 @@ export enum AugmentationNames {
   StaneksGift2 = "Stanek's Gift - Awakening",
   StaneksGift3 = "Stanek's Gift - Serenity",
 
-  //Wasteland Augs
-  //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System
-  //PepBoyForceField Generates plasma force fields
-  //PepBoyBlasts Generate high density plasma concussive blasts
-  //PepBoyDataStorage STore more data on pep boy,
+  // Infiltrators MiniGames
+  MightOfAres = "SoA - Might of Ares", // slash
+  WisdomOfAthena = "SoA - Wisdom of Athena", // bracket
+  TrickeryOfHermes = "SoA - Trickery of Hermes", // cheatcode
+  BeautyOfAphrodite = "SoA - Beauty of Aphrodite", // bribe
+  ChaosOfDionysus = "SoA - Chaos of Dionysus", // reverse
+  FloodOfPoseidon = "SoA - Flood of Poseidon", // hex
+  HuntOfArtemis = "SoA - Hunt of Artemis", // mine
+  KnowledgeOfApollo = "SoA - Knowledge of Apollo", // wire
+  WKSharmonizer = "SoA - phyzical WKS harmonizer",
 }

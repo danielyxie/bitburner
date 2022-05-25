@@ -1,6 +1,6 @@
 import { FactionNames } from "./Faction/data/FactionNames";
 import { CityName } from "./Locations/data/CityNames";
-import { Augmentations } from "./Augmentation/Augmentations";
+import { StaticAugmentations } from "./Augmentation/StaticAugmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
@@ -225,9 +225,9 @@ export function prestigeSourceFile(flume: boolean): void {
   }
 
   // Delete all Augmentations
-  for (const name of Object.keys(Augmentations)) {
-    if (Augmentations.hasOwnProperty(name)) {
-      delete Augmentations[name];
+  for (const name of Object.keys(StaticAugmentations)) {
+    if (StaticAugmentations.hasOwnProperty(name)) {
+      delete StaticAugmentations[name];
     }
   }
 

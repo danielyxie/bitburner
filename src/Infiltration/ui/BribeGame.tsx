@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import { IMinigameProps } from "./IMinigameProps";
-import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { interpolate } from "./Difficulty";
-import Typography from "@mui/material/Typography";
+import { Paper, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { Settings } from "../../Settings/Settings";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { downArrowSymbol, upArrowSymbol } from "../utils";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
+import { IMinigameProps } from "./IMinigameProps";
+import { KeyHandler } from "./KeyHandler";
 
 interface Difficulty {
   [key: string]: number;
@@ -31,44 +33,76 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
   interpolate(difficulties, props.difficulty, difficulty);
   const timer = difficulty.timer;
   const [choices] = useState(makeChoices(difficulty));
+  const [correctIndex, setCorrectIndex] = useState(0);
   const [index, setIndex] = useState(0);
+  const currentChoice = choices[index];
+
+  useEffect(() => {
+    setCorrectIndex(choices.findIndex((choice) => positive.includes(choice)));
+  }, [choices]);
+
+  const defaultColor = Settings.theme.primary;
+  const disabledColor = Settings.theme.disabled;
+  let upColor = defaultColor;
+  let downColor = defaultColor;
+  let choiceColor = defaultColor;
+  const hasAugment = Player.hasAugmentation(AugmentationNames.BeautyOfAphrodite, true);
+
+  if (hasAugment) {
+    const upIndex = index + 1 >= choices.length ? 0 : index + 1;
+    let upDistance = correctIndex - upIndex;
+    if (upIndex > correctIndex) {
+      upDistance = choices.length - 1 - upIndex + correctIndex;
+    }
+
+    const downIndex = index - 1 < 0 ? choices.length - 1 : index - 1;
+    let downDistance = downIndex - correctIndex;
+    if (downIndex < correctIndex) {
+      downDistance = downIndex + choices.length - 1 - correctIndex;
+    }
+
+    const onCorrectIndex = correctIndex == index;
+
+    upColor = upDistance <= downDistance && !onCorrectIndex ? upColor : disabledColor;
+    downColor = upDistance >= downDistance && !onCorrectIndex ? downColor : disabledColor;
+    choiceColor = onCorrectIndex ? defaultColor : disabledColor;
+  }
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
+
     const k = event.key;
     if (k === KEY.SPACE) {
-      if (positive.includes(choices[index])) props.onSuccess();
+      if (positive.includes(currentChoice)) props.onSuccess();
       else props.onFailure();
       return;
     }
 
     let newIndex = index;
-    if ([KEY.UP_ARROW, KEY.W, KEY.RIGHT_ARROW, KEY.D].map((key) => key as string).includes(k)) newIndex++;
-    if ([KEY.DOWN_ARROW, KEY.S, KEY.LEFT_ARROW, KEY.A].map((key) => key as string).includes(k)) newIndex--;
+    if ([KEY.UP_ARROW, KEY.W, KEY.RIGHT_ARROW, KEY.D].map((k) => k as string).includes(k)) newIndex++;
+    if ([KEY.DOWN_ARROW, KEY.S, KEY.LEFT_ARROW, KEY.A].map((k) => k as string).includes(k)) newIndex--;
     while (newIndex < 0) newIndex += choices.length;
     while (newIndex > choices.length - 1) newIndex -= choices.length;
     setIndex(newIndex);
   }
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
-        <Typography variant="h4">Say something nice about the guard.</Typography>
+      <Paper sx={{ display: "grid", justifyItems: "center" }}>
+        <Typography variant="h4">Say something nice about the guard</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-      <Grid item xs={6}>
-        <Typography variant="h5" color="primary">
+        <Typography variant="h5" color={upColor}>
           {upArrowSymbol}
         </Typography>
-        <Typography variant="h5" color="primary">
-          {choices[index]}
+        <Typography variant="h5" color={choiceColor}>
+          {currentChoice}
         </Typography>
-        <Typography variant="h5" color="primary">
+        <Typography variant="h5" color={downColor}>
           {downArrowSymbol}
         </Typography>
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 
@@ -117,6 +151,7 @@ const positive = [
   "patient",
   "dynamic",
   "loyal",
+  "based",
 ];
 
 const negative = [
@@ -140,4 +175,5 @@ const negative = [
   "picky",
   "tactless",
   "thoughtless",
+  "cringe",
 ];

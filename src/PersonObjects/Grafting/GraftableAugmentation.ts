@@ -18,7 +18,7 @@ export class GraftableAugmentation {
   }
 
   get cost(): number {
-    return this.augmentation.startingCost * CONSTANTS.AugmentationGraftingCostMult;
+    return this.augmentation.baseCost * CONSTANTS.AugmentationGraftingCostMult;
   }
 
   get time(): number {

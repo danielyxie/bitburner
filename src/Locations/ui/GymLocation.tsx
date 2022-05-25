@@ -17,6 +17,7 @@ import { Money } from "../../ui/React/Money";
 import { IRouter } from "../../ui/Router";
 import { serverMetadata } from "../../Server/data/servers";
 import { Box } from "@mui/material";
+import { ClassType } from "../../utils/WorkType";
 
 type IProps = {
   loc: Location;
@@ -33,7 +34,7 @@ export function GymLocation(props: IProps): React.ReactElement {
     return props.loc.costMult * discount;
   }
 
-  function train(stat: string): void {
+  function train(stat: ClassType): void {
     const loc = props.loc;
     props.p.startClass(calculateCost(), loc.expMult, stat);
     props.p.startFocusing();
@@ -41,19 +42,19 @@ export function GymLocation(props: IProps): React.ReactElement {
   }
 
   function trainStrength(): void {
-    train(CONSTANTS.ClassGymStrength);
+    train(ClassType.GymStrength);
   }
 
   function trainDefense(): void {
-    train(CONSTANTS.ClassGymDefense);
+    train(ClassType.GymDefense);
   }
 
   function trainDexterity(): void {
-    train(CONSTANTS.ClassGymDexterity);
+    train(ClassType.GymDexterity);
   }
 
   function trainAgility(): void {
-    train(CONSTANTS.ClassGymAgility);
+    train(ClassType.GymAgility);
   }
 
   const cost = CONSTANTS.ClassGymBaseCost * calculateCost();

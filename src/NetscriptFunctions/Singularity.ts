@@ -3,7 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
 import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";
-import { Augmentations } from "../Augmentation/Augmentations";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { killWorkerScript } from "../Netscript/killWorkerScript";
@@ -29,7 +29,7 @@ import { Router } from "../ui/GameRoot";
 import { SpecialServers } from "../Server/data/SpecialServers";
 import { Page } from "../ui/Router";
 import { Locations } from "../Locations/Locations";
-import { GetServer, AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
+import { GetServer } from "../Server/AllServers";
 import { Programs } from "../Programs/Programs";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -39,7 +39,7 @@ import { Factions, factionExists } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
 import { netscriptDelay } from "../NetscriptEvaluator";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { getServerOnNetwork, safetlyCreateUniqueServer } from "../Server/ServerHelpers";
+import { getServerOnNetwork } from "../Server/ServerHelpers";
 import { Terminal } from "../Terminal";
 import { calculateHackingTime } from "../Hacking";
 import { Server } from "../Server/Server";
@@ -49,6 +49,7 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
+import { ClassType, WorkType } from "../utils/WorkType";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -56,7 +57,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       throw _ctx.helper.makeRuntimeErrorMsg(`Invalid augmentation: '${name}'`);
     }
 
-    return Augmentations[name];
+    return StaticAugmentations[name];
   };
 
   const getFaction = function (_ctx: NetscriptContext, name: string): Faction {
@@ -83,7 +84,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       if (script.filename === cbScript) {
         const ramUsage = script.ramUsage;
         const ramAvailable = home.maxRam - home.ramUsed;
-        if (ramUsage > ramAvailable) {
+        if (ramUsage > ramAvailable + 0.001) {
           return; // Not enough RAM
         }
         const runningScriptObj = new RunningScript(script, []); // No args
@@ -122,7 +123,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return [aug.baseRepRequirement, aug.baseCost];
+        const costs = aug.getCost(player);
+        return [costs.repCost, costs.moneyCost];
       },
     getAugmentationPrereq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): string[] {
@@ -136,14 +138,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.baseCost;
+        return aug.getCost(player).moneyCost;
       },
     getAugmentationRepReq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): number {
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.baseRepRequirement;
+        return aug.getCost(player).repCost;
       },
     getAugmentationStats: (_ctx: NetscriptContext) =>
       function (_augName: unknown): AugmentationStats {
@@ -183,7 +185,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           }
         }
 
-        if (fac.playerReputation < aug.baseRepRequirement) {
+        if (fac.playerReputation < aug.getCost(player).repCost) {
           _ctx.log(() => `You do not have enough reputation with '${fac.name}'.`);
           return false;
         }
@@ -302,25 +304,25 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             return false;
         }
 
-        let task = "";
+        let task: ClassType;
         switch (className.toLowerCase()) {
           case "Study Computer Science".toLowerCase():
-            task = CONSTANTS.ClassStudyComputerScience;
+            task = ClassType.StudyComputerScience;
             break;
           case "Data Structures".toLowerCase():
-            task = CONSTANTS.ClassDataStructures;
+            task = ClassType.DataStructures;
             break;
           case "Networks".toLowerCase():
-            task = CONSTANTS.ClassNetworks;
+            task = ClassType.Networks;
             break;
           case "Algorithms".toLowerCase():
-            task = CONSTANTS.ClassAlgorithms;
+            task = ClassType.Algorithms;
             break;
           case "Management".toLowerCase():
-            task = CONSTANTS.ClassManagement;
+            task = ClassType.Management;
             break;
           case "Leadership".toLowerCase():
-            task = CONSTANTS.ClassLeadership;
+            task = ClassType.Leadership;
             break;
           default:
             _ctx.log(() => `Invalid class name: ${className}.`);
@@ -423,19 +425,19 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         switch (stat.toLowerCase()) {
           case "strength".toLowerCase():
           case "str".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymStrength);
+            player.startClass(costMult, expMult, ClassType.GymStrength);
             break;
           case "defense".toLowerCase():
           case "def".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymDefense);
+            player.startClass(costMult, expMult, ClassType.GymDefense);
             break;
           case "dexterity".toLowerCase():
           case "dex".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymDexterity);
+            player.startClass(costMult, expMult, ClassType.GymDexterity);
             break;
           case "agility".toLowerCase():
           case "agi".toLowerCase():
-            player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
+            player.startClass(costMult, expMult, ClassType.GymAgility);
             break;
           default:
             _ctx.log(() => `Invalid stat: ${stat}.`);
@@ -493,16 +495,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         player.loseMoney(CONSTANTS.TorRouterCost, "other");
 
-        const darkweb = safetlyCreateUniqueServer({
-          ip: createUniqueRandomIp(),
-          hostname: "darkweb",
-          organizationName: "",
-          isConnectedTo: false,
-          adminRights: false,
-          purchasedByPlayer: false,
-          maxRam: 1,
-        });
-        AddToAllServers(darkweb);
+        const darkweb = GetServer(SpecialServers.DarkWeb);
+        if (!darkweb) throw _ctx.makeRuntimeErrorMsg("DarkWeb was not a server but should have been");
 
         player.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
         darkweb.serversOnNetwork.push(player.getHomeComputer().hostname);
@@ -658,11 +652,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         if (
           !(
-            player.workType == CONSTANTS.WorkTypeFaction ||
-            player.workType == CONSTANTS.WorkTypeCompany ||
-            player.workType == CONSTANTS.WorkTypeCompanyPartTime ||
-            player.workType == CONSTANTS.WorkTypeCreateProgram ||
-            player.workType == CONSTANTS.WorkTypeStudyClass
+            player.workType === WorkType.Faction ||
+            player.workType === WorkType.Company ||
+            player.workType === WorkType.CompanyPartTime ||
+            player.workType === WorkType.CreateProgram ||
+            player.workType === WorkType.StudyClass
           )
         ) {
           throw _ctx.helper.makeRuntimeErrorMsg("Cannot change focus for current job");
@@ -954,6 +948,12 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           _ctx.log(() => `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`);
         }
         return res;
+      },
+    quitJob: (_ctx: NetscriptContext) =>
+      function (_companyName: unknown): void {
+        _ctx.helper.checkSingularityAccess();
+        const companyName = _ctx.helper.string("companyName", _companyName);
+        player.quitJob(companyName);
       },
     getCompanyRep: (_ctx: NetscriptContext) =>
       function (_companyName: unknown): number {

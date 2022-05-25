@@ -1,5 +1,5 @@
 /**
- * Keyboard key codes
+ * Keyboard key codes as returned by event.key
  */
 export enum KEY {
   //SHIFT: 16, // Check by `&& event.shiftKey`
@@ -69,4 +69,70 @@ export enum KEY {
   X = "x",
   Y = "y",
   Z = "z",
+}
+
+/**
+ * Keyboard key codes as returned by event.code
+ */
+export enum KEYCODE {
+  //SHIFT: 16, // Check by `&& event.shiftKey`
+  //CTRL: 17, // Check by `&& event.ctrlKey`
+  //ALT: 18, // Check by `&& event.altKey`
+  ENTER = "Enter",
+  ESC = "Escape",
+  TAB = "Tab",
+  SPACE = "Space",
+  BACKSPACE = "Backspace",
+  UP_ARROW = "ArrowUp",
+  DOWN_ARROW = "ArrowDown",
+  LEFT_ARROW = "ArrowLeft",
+  RIGHT_ARROW = "ArrowRight",
+
+  BACKWARD_SLASH = "Backslash",
+  BACKQUOTE = "Backquote",
+  COMMA = "Comma",
+  DOT = "Period",
+  EQUAL = "Equal",
+  FORWARD_SLASH = "Slash",
+  HYPHEN = "Minus",
+  SEMICOLON = "Semicolon",
+  QUOTE = "Quote",
+
+  k0 = "Digit0",
+  k1 = "Digit1",
+  k2 = "Digit2",
+  k3 = "Digit3",
+  k4 = "Digit4",
+  k5 = "Digit5",
+  k6 = "Digit6",
+  k7 = "Digit7",
+  k8 = "Digit8",
+  k9 = "Digit9",
+
+  A = "KeyA",
+  B = "KeyB",
+  C = "KeyC",
+  D = "KeyD",
+  E = "KeyE",
+  F = "KeyF",
+  G = "KeyG",
+  H = "KeyH",
+  I = "KeyI",
+  J = "KeyJ",
+  K = "KeyK",
+  L = "KeyL",
+  M = "KeyM",
+  N = "KeyN",
+  O = "KeyO",
+  P = "KeyP",
+  Q = "KeyQ",
+  R = "KeyR",
+  S = "KeyS",
+  T = "KeyT",
+  U = "KeyU",
+  V = "KeyV",
+  W = "KeyW",
+  X = "KeyX",
+  Y = "KeyY",
+  Z = "KeyZ",
 }

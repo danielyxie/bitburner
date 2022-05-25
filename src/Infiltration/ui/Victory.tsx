@@ -1,14 +1,17 @@
-import { Factions } from "../../Faction/Factions";
+import { Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
+import { FactionNames } from "../../Faction/data/FactionNames";
+import { inviteToFaction } from "../../Faction/FactionHelpers";
+import { Factions } from "../../Faction/Factions";
+import { use } from "../../ui/Context";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { use } from "../../ui/Context";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { formatNumber } from "../../utils/StringHelperFunctions";
+import {
+  calculateInfiltratorsRepReward,
+  calculateSellInformationCashReward,
+  calculateTradeInformationRepReward,
+} from "../formulas/victory";
 
 interface IProps {
   StartingDifficulty: number;
@@ -23,32 +26,26 @@ export function Victory(props: IProps): React.ReactElement {
   const [faction, setFaction] = useState("none");
 
   function quitInfiltration(): void {
+    handleInfiltrators();
     router.toCity();
   }
 
-  const levelBonus = props.MaxLevel * Math.pow(1.01, props.MaxLevel);
+  const soa = Factions[FactionNames.ShadowsOfAnarchy];
+  const repGain = calculateTradeInformationRepReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const moneyGain = calculateSellInformationCashReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const infiltrationRepGain = calculateInfiltratorsRepReward(player, soa, props.StartingDifficulty);
 
-  const repGain =
-    Math.pow(props.Reward + 1, 1.1) *
-    Math.pow(props.StartingDifficulty, 1.2) *
-    30 *
-    levelBonus *
-    BitNodeMultipliers.InfiltrationRep;
-
-  const moneyGain =
-    Math.pow(props.Reward + 1, 2) *
-    Math.pow(props.StartingDifficulty, 3) *
-    3e3 *
-    levelBonus *
-    BitNodeMultipliers.InfiltrationMoney;
+  const isMemberOfInfiltrators = player.factions.includes(FactionNames.ShadowsOfAnarchy);
 
   function sell(): void {
+    handleInfiltrators();
     player.gainMoney(moneyGain, "infiltration");
     quitInfiltration();
   }
 
   function trade(): void {
     if (faction === "none") return;
+    handleInfiltrators();
     Factions[faction].playerReputation += repGain;
     quitInfiltration();
   }
@@ -57,17 +54,30 @@ export function Victory(props: IProps): React.ReactElement {
     setFaction(event.target.value);
   }
 
+  function handleInfiltrators(): void {
+    inviteToFaction(Factions[FactionNames.ShadowsOfAnarchy]);
+    if (isMemberOfInfiltrators) {
+      soa.playerReputation += infiltrationRepGain;
+    }
+  }
+
   return (
-    <>
-      <Grid container spacing={3}>
-        <Grid item xs={10}>
-          <Typography variant="h4">Infiltration successful!</Typography>
-        </Grid>
-        <Grid item xs={10}>
-          <Typography variant="h5" color="primary">
-            You can trade the confidential information you found for money or reputation.
-          </Typography>
-          <Select value={faction} onChange={changeDropdown}>
+    <Paper sx={{ p: 1, textAlign: "center", display: "flex", alignItems: "center", flexDirection: "column" }}>
+      <Typography variant="h4">Infiltration successful!</Typography>
+      <Typography variant="h5" color="primary" width="75%">
+        You{" "}
+        {isMemberOfInfiltrators ? (
+          <>
+            have gained {formatNumber(infiltrationRepGain, 2)} rep for {FactionNames.ShadowsOfAnarchy} and{" "}
+          </>
+        ) : (
+          <></>
+        )}
+        can trade the confidential information you found for money or reputation.
+      </Typography>
+      <Box sx={{ width: "fit-content" }}>
+        <Box sx={{ width: "100%" }}>
+          <Select value={faction} onChange={changeDropdown} sx={{ mr: 1 }}>
             <MenuItem key={"none"} value={"none"}>
               {"none"}
             </MenuItem>
@@ -82,17 +92,15 @@ export function Victory(props: IProps): React.ReactElement {
           <Button onClick={trade}>
             Trade for <Reputation reputation={repGain} /> reputation
           </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button onClick={sell}>
-            Sell for&nbsp;
-            <Money money={moneyGain} />
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button onClick={quitInfiltration}>Quit</Button>
-        </Grid>
-      </Grid>
-    </>
+        </Box>
+        <Button onClick={sell} sx={{ width: "100%" }}>
+          Sell for&nbsp;
+          <Money money={moneyGain} />
+        </Button>
+      </Box>
+      <Button onClick={quitInfiltration} sx={{ width: "100%", mt: 1 }}>
+        Quit
+      </Button>
+    </Paper>
   );
 }

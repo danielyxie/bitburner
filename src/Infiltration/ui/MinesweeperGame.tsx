@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
+import { Close, Flag, Report } from "@mui/icons-material";
+import { Box, Paper, Typography } from "@mui/material";
+import { uniqueId } from "lodash";
+import React, { useEffect, useState } from "react";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { Settings } from "../../Settings/Settings";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { interpolate } from "./Difficulty";
-import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
-import Typography from "@mui/material/Typography";
-import { KEY } from "../../utils/helpers/keyCodes";
 
 interface Difficulty {
   [key: string]: number;
@@ -36,7 +40,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
   const [answer, setAnswer] = useState(generateEmptyField(difficulty));
   const [pos, setPos] = useState([0, 0]);
   const [memoryPhase, setMemoryPhase] = useState(true);
-
+  const hasAugment = Player.hasAugmentation(AugmentationNames.HuntOfArtemis, true);
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (memoryPhase) return;
@@ -79,31 +83,77 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
+  const flatGrid: { flagged?: boolean; current?: boolean; marked?: boolean }[] = [];
+
+  minefield.map((line, y) =>
+    line.map((cell, x) => {
+      if (memoryPhase) {
+        flatGrid.push({ flagged: Boolean(minefield[y][x]) });
+        return;
+      } else if (x === pos[0] && y === pos[1]) {
+        flatGrid.push({ current: true });
+      } else if (answer[y][x]) {
+        flatGrid.push({ marked: true });
+      } else if (hasAugment && minefield[y][x]) {
+        flatGrid.push({ flagged: true });
+      } else {
+        flatGrid.push({});
+      }
+    }),
+  );
+
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center", pb: 1 }}>
         <Typography variant="h4">{memoryPhase ? "Remember all the mines!" : "Mark all the mines!"}</Typography>
-        {minefield.map((line, y) => (
-          <div key={y}>
-            <Typography>
-              {line.map((cell, x) => {
-                if (memoryPhase) {
-                  if (minefield[y][x]) return <span key={x}>[?]&nbsp;</span>;
-                  return <span key={x}>[&nbsp;]&nbsp;</span>;
-                } else {
-                  if (x == pos[0] && y == pos[1]) return <span key={x}>[X]&nbsp;</span>;
-                  if (answer[y][x]) return <span key={x}>[.]&nbsp;</span>;
-                  return <span key={x}>[&nbsp;]&nbsp;</span>;
-                }
-              })}
-            </Typography>
-            <br />
-          </div>
-        ))}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${Math.round(difficulty.width)}, 1fr)`,
+            gridTemplateRows: `repeat(${Math.round(difficulty.height)}, 1fr)`,
+            gap: 1,
+          }}
+        >
+          {flatGrid.map((item) => {
+            let color: string;
+            let icon: React.ReactElement;
+
+            if (item.marked) {
+              color = Settings.theme.warning;
+              icon = <Flag />;
+            } else if (item.current) {
+              color = Settings.theme.infolight;
+              icon = <Close />;
+            } else if (item.flagged) {
+              color = Settings.theme.error;
+              icon = <Report />;
+            } else {
+              color = Settings.theme.primary;
+              icon = <></>;
+            }
+
+            return (
+              <Typography
+                key={`${item}${uniqueId()}`}
+                sx={{
+                  color: color,
+                  border: `2px solid ${item.current ? Settings.theme.infolight : Settings.theme.primary}`,
+                  height: "32px",
+                  width: "32px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {icon}
+              </Typography>
+            );
+          })}
+        </Box>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 
