@@ -377,12 +377,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
 
     // Calculate the hacking time
-    const hackSkillTiming = resolveNetscriptHackOverride(
-      workerScript,
-      "hack",
-      Player,
-      requestedHackOverrideTiming ?? Player.hacking,
-    );
+    const hackSkillTiming = resolveNetscriptHackOverride(ctx, Player, requestedHackOverrideTiming ?? Player.hacking);
     const hackingTime = calculateHackingTime(server, Player, hackSkillTiming); // This is in seconds
 
     // No root access or skill level too low
@@ -407,8 +402,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (rand < hackChance) {
         // Success!
         const hackSkillEffect = resolveNetscriptHackOverride(
-          workerScript,
-          "hack",
+          ctx,
           Player,
           requestedHackOverrideEffect ?? Player.hacking,
         );
@@ -724,8 +718,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
 
         const hackSkillTiming = resolveNetscriptHackOverride(
-          workerScript,
-          "hack",
+          ctx,
           Player,
           requestedHackOverrideTiming ?? Player.hacking,
         );
@@ -826,12 +819,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           throw ctx.makeRuntimeErrorMsg(canHack.msg || "");
         }
 
-        const hackSkill = resolveNetscriptHackOverride(
-          workerScript,
-          "weaken",
-          Player,
-          requestedHackOverrideTiming ?? Player.hacking,
-        );
+        const hackSkill = resolveNetscriptHackOverride(ctx, Player, requestedHackOverrideTiming ?? Player.hacking);
 
         const weakenTime = calculateWeakenTime(server, Player, hackSkill);
         ctx.log(
