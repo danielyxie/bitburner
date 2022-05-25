@@ -13,7 +13,7 @@ export function buy(
   server: BaseServer,
   args: (string | number | boolean)[],
 ): void {
-  if (!GetServer(SpecialServers.DarkWeb)) {
+  if (!GetServer(SpecialServers.DarkWeb) && player.hasTorRouter) {
     terminal.error(
       "You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)",
     );
