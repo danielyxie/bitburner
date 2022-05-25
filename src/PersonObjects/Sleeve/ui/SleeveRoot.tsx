@@ -22,7 +22,7 @@ export function SleeveRoot(): React.ReactElement {
 
   return (
     <>
-      <Container disableGutters maxWidth="md" sx={{ mx: 0 }}>
+      <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
         <Typography variant="h4">Sleeves</Typography>
         <Typography>
           Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your consciousness has been copied. In
@@ -42,7 +42,7 @@ export function SleeveRoot(): React.ReactElement {
       >
         Wiki Documentation
       </Button>
-      <Box display="grid" sx={{ gridTemplateColumns: "repeat(2, 1fr)", mt: 1 }}>
+      <Box display="grid" sx={{ gridTemplateColumns: "repeat(auto-fit, minmax(600px,min-content))", mt: 1 }}>
         {player.sleeves.map((sleeve, i) => (
           <SleeveElem key={i} rerender={rerender} sleeve={sleeve} />
         ))}
