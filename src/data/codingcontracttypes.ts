@@ -1834,9 +1834,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       // build char array, shifting via map and corresponding keyword letter and join to final results
       const cipher = [...data[0]]
         .map((a, i) =>
-          a === " "
+          (a === " "
             ? a
-            : String.fromCharCode(((a.charCodeAt(0) - 2 * 65 + data[1].charCodeAt(i % data[1].length)) % 26) + 65),
+            : String.fromCharCode(((a.charCodeAt(0) - 2 * 65 + data[1].charCodeAt(i % data[1].length)) % 26) + 65)),
         )
         .join("");
       return cipher === ans;
