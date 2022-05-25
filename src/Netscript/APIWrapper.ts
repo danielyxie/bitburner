@@ -99,21 +99,8 @@ function wrapFunction(
       getValidPort: (port: any) => helpers.getValidPort(functionPath, port),
     },
   };
-  const safetyEnabled = Settings.InfinityLoopSafety;
   function wrappedFunction(...args: unknown[]): unknown {
     helpers.updateDynamicRam(ctx.function, getRamCost(Player, ...tree, ctx.function));
-    if (safetyEnabled) {
-      const now = performance.now();
-      if (
-        now - workerScript.infiniteLoopSafety > CONSTANTS.InfiniteLoopLimit &&
-        workerScript.scriptRef.filename.endsWith(".js")
-      ) {
-        throw new Error(
-          `Potential infinite loop without sleep detected. The game spent ${CONSTANTS.InfiniteLoopLimit}ms stuck in this script. (Are you using 'asleep' by mistake?)`,
-        );
-      }
-    }
-
     return func(ctx)(...args);
   }
   const parent = getNestedProperty(wrappedAPI, ...tree);
