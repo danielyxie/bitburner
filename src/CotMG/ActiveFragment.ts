@@ -68,13 +68,7 @@ export class ActiveFragment {
   }
 
   copy(): ActiveFragment {
-    // We have to do a round trip because the constructor.
-    const fragment = FragmentById(this.id);
-    if (fragment === null) throw new Error("ActiveFragment id refers to unknown Fragment.");
-    const c = new ActiveFragment({ x: this.x, y: this.y, rotation: this.rotation, fragment: fragment });
-    c.highestCharge = this.highestCharge;
-    c.numCharge = this.numCharge;
-    return c;
+    return Object.assign({}, this);
   }
 
   /**

@@ -111,6 +111,11 @@ export class WorkerScript {
    */
   atExit: any;
 
+  /**
+   * Once this counter reaches it's limit the script crashes. It is reset when a promise completes.
+   */
+  infiniteLoopSafety = performance.now();
+
   constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
     this.name = runningScriptObj.filename;
     this.hostname = runningScriptObj.server;

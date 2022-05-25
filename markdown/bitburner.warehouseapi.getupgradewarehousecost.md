@@ -9,7 +9,7 @@ Gets the cost to upgrade a warehouse to the next level
 <b>Signature:</b>
 
 ```typescript
-getUpgradeWarehouseCost(adivisionName: any, acityName: any): number;
+getUpgradeWarehouseCost(adivisionName: any, acityName: any, amt?: number): number;
 ```
 
 ## Parameters
@@ -18,6 +18,7 @@ getUpgradeWarehouseCost(adivisionName: any, acityName: any): number;
 |  --- | --- | --- |
 |  adivisionName | any |  |
 |  acityName | any |  |
+|  amt | number | amount of upgrades defaults to 1 |
 
 <b>Returns:</b>
 

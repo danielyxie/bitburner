@@ -136,7 +136,7 @@ export declare interface BitNodeMultipliers {
     /** Influences how much money the player earns when completing working their job. */
     CompanyWorkMoney: number;
     /** Influences the money gain from dividends of corporations created by the player. */
-    CorporationSoftCap: number;
+    CorporationSoftcap: number;
     /** Influences the valuation of corporations created by the player. */
     CorporationValuation: number;
     /** Influences the base experience gained for each ability when the player commits a crime. */
@@ -813,7 +813,7 @@ export declare interface CodingContract {
      * Attempts to solve the Coding Contract with the provided solution.
      *
      * @param answer - Solution for the contract.
-     * @param fn - Filename of the contract.
+     * @param filename - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
@@ -828,7 +828,7 @@ export declare interface CodingContract {
      * Returns a name describing the type of problem posed by the Coding Contract.
      * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
      *
-     * @param fn - Filename of the contract.
+     * @param filename - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Name describing the type of problem posed by the Coding Contract.
      */
@@ -841,7 +841,7 @@ export declare interface CodingContract {
      *
      * Get the full text description for the problem posed by the Coding Contract.
      *
-     * @param fn - Filename of the contract.
+     * @param filename - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Contract’s text description.
      */
@@ -869,7 +869,7 @@ export declare interface CodingContract {
      *
      * Get the number of tries remaining on the contract before it self-destructs.
      *
-     * @param fn - Filename of the contract.
+     * @param filename - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns How many attempts are remaining for the contract;
      */
@@ -1120,6 +1120,8 @@ export declare interface Division {
     cities: string[];
     /** Products developed by this division */
     products: string[];
+    /** Whether the industry this division is in is capable of making products */
+    makesProducts: boolean;
 }
 
 /**
@@ -1129,22 +1131,27 @@ export declare interface Division {
 export declare interface Employee {
     /** Name of the employee */
     name: string;
-    /** Morale */
+    /** Morale of the employee */
     mor: number;
-    /** Happiness */
+    /** Happiness of the employee */
     hap: number;
-    /** Energy */
+    /** Energy of the employee */
     ene: number;
+    /** Intelligence of the employee */
     int: number;
+    /** Charisma of the employee */
     cha: number;
+    /** Experience of the employee */
     exp: number;
+    /** Creativity of the employee */
     cre: number;
+    /** Efficiency of the employee */
     eff: number;
-    /** Salary */
+    /** Salary of the employee */
     sal: number;
-    /** City */
+    /** Current Location (city) */
     loc: string;
-    /** Current job */
+    /** Current job position */
     pos: string;
 }
 
@@ -2440,6 +2447,47 @@ export declare interface HacknetServersFormulas {
 }
 
 /**
+ * Infiltration API.
+ * @public
+ */
+export declare interface Infiltration {
+    /**
+     * Get all locations that can be infiltrated.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * @returns all locations that can be infiltrated.
+     */
+    getPossibleLocations(): string[];
+    /**
+     * Get all infiltrations with difficulty, location and rewards.
+     * @remarks
+     * RAM cost: 15 GB
+     *
+     * @returns Infiltration data for given location.
+     */
+    getInfiltration(location: string): InfiltrationLocation;
+}
+
+/**
+ * @public
+ */
+export declare interface InfiltrationLocation {
+    location: any;
+    reward: InfiltrationReward;
+    difficulty: number;
+}
+
+/**
+ * @public
+ */
+export declare interface InfiltrationReward {
+    tradeRep: number;
+    sellCash: number;
+    SoARep: number;
+}
+
+/**
  * Corporation investment offer
  * @public
  */
@@ -2478,8 +2526,12 @@ export declare interface Material {
     cmp: number | undefined;
     /** Amount of material produced  */
     prod: number;
-    /** Amount of material sold  */
+    /** Amount of material sold */
     sell: number;
+    /** cost to buy material */
+    cost: number;
+    /** Sell cost, can be "MP+5" */
+    sCost: string | number;
 }
 
 /**
@@ -2657,6 +2709,11 @@ export declare interface NS {
      * RAM cost: 0 GB
      */
     readonly stanek: Stanek;
+    /**
+     * Namespace for infiltration functions.
+     * RAM cost: 0 GB
+     */
+    readonly infiltration: Infiltration;
     /**
      * Namespace for corporation functions.
      * RAM cost: 0 GB
@@ -2959,6 +3016,7 @@ export declare interface NS {
 
     /**
      * Suspends the script for n milliseconds. Doesn't block with concurrent calls.
+     * You should prefer 'sleep' over 'asleep' except when doing very complex UI work.
      * @remarks
      * RAM cost: 0 GB
      *
@@ -3156,6 +3214,21 @@ export declare interface NS {
      * @param args - Arguments for the script being tailed.
      */
     tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
+
+    /**
+     * Close the tail window of a script.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * Closes a script’s logs. This is functionally the same pressing the "Close" button on the tail window.
+     *
+     * If the function is called with no arguments, it will close the current script’s logs.
+     *
+     * Otherwise, the pid argument can be used to close the logs from another script.
+     *
+     * @param pid - Optional. PID of the script having its tail closed. If omitted, the current script is used.
+     */
+    closeTail(pid?: number): void;
 
     /**
      * Get the list of servers connected to a server.
@@ -3361,8 +3434,7 @@ export declare interface NS {
      * PID stands for Process ID. The PID is a unique identifier for each script.
      * The PID will always be a positive integer.
      *
-     * Running this function with a numThreads argument of 0 will return 0 without running the script.
-     * However, running this function with a negative numThreads argument will cause a runtime error.
+     * Running this function with 0 or a negative numThreads argument will cause a runtime error.
      *
      * @example
      * ```ts
@@ -3507,9 +3579,10 @@ export declare interface NS {
      * If no host is defined, it will kill all scripts, where the script is running.
      *
      * @param host - IP or hostname of the server on which to kill all scripts.
+     * @param safetyguard - Skips the script that calls this function
      * @returns True if any scripts were killed, and false otherwise.
      */
-    killall(host?: string): boolean;
+    killall(host?: string, safetyguard?: boolean): boolean;
 
     /**
      * Terminates the current script immediately.
@@ -4322,7 +4395,7 @@ export declare interface NS {
      * Returns 0 if the script does not exist.
      *
      * @param script - Filename of script. This is case-sensitive.
-     * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
+     * @param host - Host of target server the script is located on. This is optional, if it is not specified then the function will use the current server as the target server.
      * @returns Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
      */
     getScriptRam(script: string, host?: string): number;
@@ -5066,6 +5139,13 @@ export declare interface ReputationFormulas {
      * @returns The calculated faction favor.
      */
     calculateRepToFavor(rep: number): number;
+
+    /**
+     * Calculate how much rep would be gained.
+     * @param amount - Amount of money donated
+     * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     */
+    repFromDonation(amount: number, player: Player): number;
 }
 
 /**
@@ -5431,6 +5511,18 @@ export declare interface Singularity {
      * @returns True if the player starts working, and false otherwise.
      */
     workForCompany(companyName?: string, focus?: boolean): boolean;
+
+    /**
+     * Quit jobs by company.
+     * @remarks
+     * RAM cost: 3 GB * 16/4/1
+     *
+     *
+     * This function will finish work with the company provided and quit any jobs.
+     *
+     * @param companyName - Name of the company.
+     */
+    quitJob(companyName?: string): void;
 
     /**
      * Apply for a job at a company.
@@ -5830,7 +5922,7 @@ export declare interface Singularity {
      * RAM cost: 5 GB * 16/4/1
      *
      *
-     * This function will automatically install your Augmentations, resetting the game as usual.
+     * This function will automatically install your Augmentations, resetting the game as usual. If you do not own uninstalled Augmentations then the game will not reset.
      *
      * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.
      */
@@ -5972,13 +6064,13 @@ export declare interface Singularity {
      * @example
      * ```ts
      * // NS1
-     * getDarkwebProgramsAvailable();
+     * getDarkwebPrograms();
      * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
      * ```
      * @example
      * ```ts
      * // NS2
-     * ns.getDarkwebProgramsAvailable();
+     * ns.getDarkwebPrograms();
      * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
      * ```
      * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
@@ -6018,6 +6110,30 @@ export declare interface Singularity {
      * purchased. Throws an error if the specified program/exploit does not exist
      */
     getDarkwebProgramCost(programName: string): number;
+
+    /**
+     * b1t_flum3 into a different BN.
+     * @remarks
+     * RAM cost: 16 GB * 16/4/1
+     *
+     * @param nextBN - BN number to jump to
+     * @param callbackScript - Name of the script to launch in the next BN.
+     */
+    b1tflum3(nextBN: number, callbackScript?: string): void;
+
+    /**
+     * Destroy the w0r1d_d43m0n and move on to the next BN.
+     * @remarks
+     * RAM cost: 32 GB * 16/4/1
+     *
+     * You must have the special augment installed and the required hacking level
+     *   OR
+     * Completed the final black op.
+     *
+     * @param nextBN - BN number to jump to
+     * @param callbackScript - Name of the script to launch in the next BN.
+     */
+    destroyW0r1dD43m0n(nextBN: number, callbackScript?: string): void;
 }
 
 /**
@@ -6238,6 +6354,20 @@ export declare interface Sleeve {
      * @returns True if the aug was purchased and installed on the sleeve, false otherwise.
      */
     purchaseSleeveAug(sleeveNumber: number, augName: string): boolean;
+
+    /**
+     * Set a sleeve to perform bladeburner actions.
+     * @remarks
+     * RAM cost: 4 GB
+     *
+     * Return a boolean indicating whether or not the sleeve started working out.
+     *
+     * @param sleeveNumber - Index of the sleeve to workout at the gym.
+     * @param action - Name of the action to be performed.
+     * @param contract - Name of the contract if applicable.
+     * @returns True if the sleeve started working out, false otherwise.
+     */
+    setToBladeburnerAction(sleeveNumber: number, action: string, contract?: string): boolean;
 }
 
 /**
@@ -6441,6 +6571,16 @@ export declare interface Stanek {
      * @returns The fragment at [rootX, rootY], if any.
      */
     removeFragment(rootX: number, rootY: number): boolean;
+
+    /**
+     * Accept Stanek's Gift by joining the Church of the Machine God
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * @returns true if the player is a member of the church and has the gift installed,
+     * false otherwise.
+     */
+    acceptGift(): boolean;
 }
 
 /**
@@ -6927,6 +7067,13 @@ export declare interface UserInterface {
      * RAM cost: 0 GB
      */
     getGameInfo(): GameInfo;
+
+    /**
+     * Clear the Terminal window, as if the player ran `clear` in the terminal
+     * @remarks
+     * RAM cost: 0.2 GB
+     */
+    clearTerminal(): void;
 }
 
 /**
@@ -7152,8 +7299,9 @@ export declare interface WarehouseAPI {
      * Upgrade warehouse
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
+     * @param amt - amount of upgrades defaults to 1
      */
-    upgradeWarehouse(divisionName: string, cityName: string): void;
+    upgradeWarehouse(divisionName: string, cityName: string, amt?: number): void;
     /**
      * Create a new product
      * @param divisionName - Name of the division
@@ -7170,15 +7318,34 @@ export declare interface WarehouseAPI {
     marketingInvest: number,
     ): void;
     /**
+     * Limit Material Production.
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param materialName - Name of the material
+     * @param qty - Amount to limit to
+     */
+    limitMaterialProduction(divisionName: string, cityName: string, materialName: string, qty: number): void;
+    /**
+     * Limit Product Production.
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param productName - Name of the product
+     * @param qty - Amount to limit to
+     */
+    limitProductProduction(divisionName: string, cityName: string, productName: string, qty: number): void;
+    /**
      * Gets the cost to purchase a warehouse
      * @returns cost
      */
     getPurchaseWarehouseCost(): number;
     /**
      * Gets the cost to upgrade a warehouse to the next level
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param amt - amount of upgrades defaults to 1
      * @returns cost to upgrade
      */
-    getUpgradeWarehouseCost(adivisionName: any, acityName: any): number;
+    getUpgradeWarehouseCost(adivisionName: any, acityName: any, amt?: number): number;
     /**
      * Check if you have a warehouse in city
      * @returns true if warehouse is present, false if not

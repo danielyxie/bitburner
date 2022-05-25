@@ -1,11 +1,11 @@
-import { Augmentation, IConstructorParams } from "./Augmentation";
-import { AugmentationNames } from "./data/AugmentationNames";
-import { Player } from "../Player";
-import { Programs } from "../Programs/Programs";
-import { WHRNG } from "../Casino/RNG";
+import { Augmentation, IConstructorParams } from "../Augmentation";
+import { AugmentationNames } from "./AugmentationNames";
+import { Player } from "../../Player";
+import { Programs } from "../../Programs/Programs";
+import { WHRNG } from "../../Casino/RNG";
 import React from "react";
-import { FactionNames } from "../Faction/data/FactionNames";
-import { CONSTANTS } from "../Constants";
+import { FactionNames } from "../../Faction/data/FactionNames";
+import { CONSTANTS } from "../../Constants";
 
 function getRandomBonus(): any {
   const bonuses = [
@@ -95,6 +95,108 @@ function getRandomBonus(): any {
   return bonuses[Math.floor(bonuses.length * randomNumber.random())];
 }
 
+export const initSoAAugmentations = (): Augmentation[] => [
+  new Augmentation({
+    name: AugmentationNames.WKSharmonizer,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info:
+      `A copy of the WKS harmonizer from the MIA leader of the ${FactionNames.ShadowsOfAnarchy} ` +
+      "injects *Γ-based cells that provides general enhancement to the body.",
+    stats: (
+      <>
+        This augmentation makes many aspects of infiltration easier and more productive. Such as increased timer,
+        rewards, reduced damage taken, etc.
+      </>
+    ),
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.MightOfAres,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info:
+      "Extra-occular neurons taken from old martial art master. Injecting them gives the user the ability to " +
+      "predict the enemy's attack before they even know it themself.",
+    stats: (
+      <>This augmentation makes the Slash minigame easier by showing you via an indicator when the slash in coming.</>
+    ),
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.WisdomOfAthena,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "A connective brain implant to SASHA that focuses on pattern recognition and predictive templating.",
+    stats: <>This augmentation makes the Bracket minigame easier by removing all '[' ']'.</>,
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.ChaosOfDionysus,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "Opto-occipito implant to process visual signals before brain interpretation.",
+    stats: <>This augmentation makes the Backwards minigame easier by flipping the words.</>,
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.BeautyOfAphrodite,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info:
+      "Pheromone extruder injected in the thoracodorsal nerve. Emits pleasing scent guaranteed to " +
+      "make conversational partners more agreeable.",
+    stats: <>This augmentation makes the Bribe minigame easier by indicating the incorrect paths.</>,
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.TrickeryOfHermes,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "Penta-dynamo-neurovascular-valve inserted in the carpal ligament, enhances dexterity.",
+    stats: <>This augmentation makes the Cheat Code minigame easier by allowing the opposite character.</>,
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.FloodOfPoseidon,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "Transtinatium VVD reticulator used in optico-sterbing recognition.",
+    stats: <>This augmentation makes the Symbol matching minigame easier by indicating the correct choice.</>,
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.HuntOfArtemis,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "magneto-turboencabulator based on technology by Micha Eike Siemon, increases the user's electro-magnetic sensitivity.",
+    stats: (
+      <>
+        This augmentation makes the Minesweeper minigame easier by showing the location of all mines and keeping their
+        position.
+      </>
+    ),
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+  new Augmentation({
+    name: AugmentationNames.KnowledgeOfApollo,
+    repCost: 1e4,
+    moneyCost: 1e6,
+    info: "Neodynic retention fjengeln spoofer using -φ karmions, net positive effect on implantee's delta wave.",
+    stats: <>This augmentation makes the Wire Cutting minigame easier by indicating the incorrect wires.</>,
+    isSpecial: true,
+    factions: [FactionNames.ShadowsOfAnarchy],
+  }),
+];
+
 export const initGeneralAugmentations = (): Augmentation[] => [
   new Augmentation({
     name: AugmentationNames.HemoRecirculator,
@@ -149,7 +251,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 1.15e8,
     repCost: 2.75e4,
     info: "The latest version of the 'Augmented Targeting' implant adds the ability to lock-on and track threats.",
-    prereqs: [AugmentationNames.Targeting2],
+    prereqs: [AugmentationNames.Targeting2, AugmentationNames.Targeting1],
     dexterity_mult: 1.3,
     factions: [
       FactionNames.TheDarkArmy,
@@ -246,7 +348,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "The latest version of the 'Combat Rib' augmentation releases advanced anabolic steroids that " +
       "improve muscle mass and physical performance while being safe and free of side effects.",
-    prereqs: [AugmentationNames.CombatRib2],
+    prereqs: [AugmentationNames.CombatRib2, AugmentationNames.CombatRib1],
     strength_mult: 1.18,
     defense_mult: 1.18,
     factions: [
@@ -413,7 +515,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "TITN is a series of viruses that targets and alters the sequences of human DNA in genes that " +
       "control personality. The TITN-41 strain alters these genes so that the subject becomes more " +
-      "outgoing and socialable.",
+      "outgoing and sociable.",
     charisma_mult: 1.15,
     charisma_exp_mult: 1.15,
     factions: [FactionNames.Silhouette],
@@ -424,9 +526,9 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 1.375e9,
     info:
       "A cranial implant that greatly assists in the user's ability to analyze social situations " +
-      "and interactions. The system uses a wide variety of factors such as facial expressions, body " +
-      "language, and the voice tone, and inflection to determine the best course of action during social" +
-      "situations. The implant also uses deep learning software to continuously learn new behavior" +
+      "and interactions. The system uses a wide variety of factors such as facial expression, body " +
+      "language, voice tone, and inflection to determine the best course of action during social " +
+      "situations. The implant also uses deep learning software to continuously learn new behavior " +
       "patterns and how to best respond.",
     charisma_mult: 1.6,
     charisma_exp_mult: 1.6,
@@ -580,7 +682,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "This upgraded firmware allows the Embedded Netburner Module to control information on " +
       "a network by re-routing traffic, spoofing IP addresses, and altering the data inside network " +
       "packets.",
-    prereqs: [AugmentationNames.ENMCore],
+    prereqs: [AugmentationNames.ENMCore, AugmentationNames.ENM],
     hacking_speed_mult: 1.05,
     hacking_money_mult: 1.3,
     hacking_chance_mult: 1.05,
@@ -605,7 +707,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The Core V3 library is an implant that upgrades the firmware of the Embedded Netburner Module. " +
       "This upgraded firmware allows the Embedded Netburner Module to seamlessly inject code into " +
       "any device on a network.",
-    prereqs: [AugmentationNames.ENMCoreV2],
+    prereqs: [AugmentationNames.ENMCoreV2, AugmentationNames.ENMCore, AugmentationNames.ENM],
     hacking_speed_mult: 1.05,
     hacking_money_mult: 1.4,
     hacking_chance_mult: 1.1,
@@ -733,7 +835,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "are a set of specialized microprocessors that are attached to " +
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
-    prereqs: [AugmentationNames.CranialSignalProcessorsG2],
+    prereqs: [AugmentationNames.CranialSignalProcessorsG2, AugmentationNames.CranialSignalProcessorsG1],
     hacking_speed_mult: 1.02,
     hacking_money_mult: 1.15,
     hacking_mult: 1.09,
@@ -748,7 +850,11 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "are a set of specialized microprocessors that are attached to " +
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
-    prereqs: [AugmentationNames.CranialSignalProcessorsG3],
+    prereqs: [
+      AugmentationNames.CranialSignalProcessorsG3,
+      AugmentationNames.CranialSignalProcessorsG2,
+      AugmentationNames.CranialSignalProcessorsG1,
+    ],
     hacking_speed_mult: 1.02,
     hacking_money_mult: 1.2,
     hacking_grow_mult: 1.25,
@@ -763,7 +869,12 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "are a set of specialized microprocessors that are attached to " +
       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
       "so that the brain doesn't have to.",
-    prereqs: [AugmentationNames.CranialSignalProcessorsG4],
+    prereqs: [
+      AugmentationNames.CranialSignalProcessorsG4,
+      AugmentationNames.CranialSignalProcessorsG3,
+      AugmentationNames.CranialSignalProcessorsG2,
+      AugmentationNames.CranialSignalProcessorsG1,
+    ],
     hacking_mult: 1.3,
     hacking_money_mult: 1.25,
     hacking_grow_mult: 1.75,
@@ -877,7 +988,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "This is an additional installation that upgrades the functionality of the " +
       "PC Direct-Neural Interface augmentation. When connected to a computer, " +
-      "The Neural Network upgrade allows the user to use their own brain's " +
+      "the Neural Network upgrade allows the user to use their own brain's " +
       "processing power to aid the computer in computational tasks.",
     prereqs: [AugmentationNames.PCDNI],
     company_rep_mult: 2,
@@ -1061,7 +1172,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "A skin implant that reinforces the skin with highly-advanced synthetic cells. These " +
       "cells, when powered, have a negative refractive index. As a result, they bend light " +
-      "around the skin, making the user much harder to see to the naked eye.",
+      "around the skin, making the user much harder to see with the naked eye.",
     agility_mult: 1.05,
     crime_money_mult: 1.1,
     factions: [FactionNames.SlumSnakes, FactionNames.Tetrads],
@@ -1161,6 +1272,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 0,
     info: "It's time to leave the cave.",
     stats: null,
+    isSpecial: true,
     factions: [FactionNames.Daedalus],
   }),
   new Augmentation({
@@ -1622,7 +1734,7 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
     info:
       "An improved version of Vangelis, a synthetic symbiotic virus that is " +
       "injected into human brain tissue. On top of the benefits of the original " +
-      "virus, this also grants an accelerated healing factor and enhanced " +
+      "virus, this also grants accelerated healing and enhanced " +
       "reflexes.",
     prereqs: [AugmentationNames.VangelisVirus],
     defense_exp_mult: 1.1,
@@ -1818,7 +1930,7 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
     info:
       "The next evolution is near, a coming together of man and machine. A synthesis greater than the birth of the human " +
       "organism. Time spent with the gift has allowed for acclimatization of the invasive augment and the toll it takes upon " +
-      "your frame granting lesser penalty of 5% to all stats.",
+      "your frame granting a 5% reduced penalty to all stats.",
     prereqs: [AugmentationNames.StaneksGift1],
     isSpecial: true,
     hacking_chance_mult: 0.95 / 0.9,
@@ -1857,9 +1969,9 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
     info:
       "The synthesis of human and machine is nothing to fear. It is our destiny. " +
       "You will become greater than the sum of our parts. As One. Embrace your gift " +
-      "fully and wholly free of it's accursed toll. Serenity brings tranquility the form " +
+      "fully and wholly free of it's accursed toll. Serenity brings tranquility in the form " +
       "of no longer suffering a stat penalty. ",
-    prereqs: [AugmentationNames.StaneksGift2],
+    prereqs: [AugmentationNames.StaneksGift2, AugmentationNames.StaneksGift1],
     isSpecial: true,
     hacking_chance_mult: 1 / 0.95,
     hacking_speed_mult: 1 / 0.95,
@@ -1910,6 +2022,7 @@ export function initNeuroFluxGovernor(): Augmentation {
         multiplicatively.
       </>
     ),
+    isSpecial: true,
     hacking_chance_mult: 1.01 + donationBonus,
     hacking_speed_mult: 1.01 + donationBonus,
     hacking_money_mult: 1.01 + donationBonus,
@@ -1936,7 +2049,12 @@ export function initNeuroFluxGovernor(): Augmentation {
     hacknet_node_core_cost_mult: 1 / (1.01 + donationBonus),
     hacknet_node_level_cost_mult: 1 / (1.01 + donationBonus),
     work_money_mult: 1.01 + donationBonus,
-    factions: Object.values(FactionNames),
+    factions: Object.values(FactionNames).filter(
+      (factionName) =>
+        ![FactionNames.ShadowsOfAnarchy, FactionNames.Bladeburners, FactionNames.ChurchOfTheMachineGod].includes(
+          factionName,
+        ),
+    ),
   });
 }
 

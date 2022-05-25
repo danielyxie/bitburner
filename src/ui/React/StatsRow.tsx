@@ -16,19 +16,21 @@ interface IProps {
   name: string;
   color: string;
   classes?: any;
-  data: ITableRowData;
+  data?: ITableRowData;
   children?: React.ReactElement;
 }
 
 export const StatsRow = ({ name, color, classes = useStyles(), children, data }: IProps): React.ReactElement => {
-  let content;
+  let content = "";
 
-  if (data.content !== undefined) {
-    content = data.content;
-  } else if (data.level !== undefined && data.exp !== undefined) {
-    content = `${formatNumber(data.level, 0)} (${numeralWrapper.formatExp(data.exp)} exp)`;
-  } else if (data.level !== undefined && data.exp === undefined) {
-    content = `${formatNumber(data.level, 0)}`;
+  if (data) {
+    if (data.content !== undefined) {
+      content = data.content;
+    } else if (data.level !== undefined && data.exp !== undefined) {
+      content = `${formatNumber(data.level, 0)} (${numeralWrapper.formatExp(data.exp)} exp)`;
+    } else if (data.level !== undefined && data.exp === undefined) {
+      content = `${formatNumber(data.level, 0)}`;
+    }
   }
 
   return (

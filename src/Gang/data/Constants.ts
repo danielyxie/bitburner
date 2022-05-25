@@ -6,6 +6,7 @@ export const GangConstants: {
   CyclesPerTerritoryAndPowerUpdate: number;
   AscensionMultiplierRatio: number;
   Names: string[];
+  GangKarmaRequirement: number;
 } = {
   // Respect is divided by this to get rep gain
   GangRespectToReputationRatio: 75,
@@ -23,4 +24,5 @@ export const GangConstants: {
     FactionNames.NiteSec,
     FactionNames.TheBlackHand,
   ],
+  GangKarmaRequirement: -54000,
 };

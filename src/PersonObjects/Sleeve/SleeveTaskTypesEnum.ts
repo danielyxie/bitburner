@@ -9,6 +9,7 @@ export enum SleeveTaskType {
   Crime,
   Class,
   Gym,
+  Bladeburner,
   Recovery,
   Synchro,
 }

@@ -28,9 +28,11 @@ Requires the Warehouse API upgrade from your corporation.
 |  [getMaterial(divisionName, cityName, materialName)](./bitburner.warehouseapi.getmaterial.md) | Get material data |
 |  [getProduct(divisionName, productName)](./bitburner.warehouseapi.getproduct.md) | Get product data |
 |  [getPurchaseWarehouseCost()](./bitburner.warehouseapi.getpurchasewarehousecost.md) | Gets the cost to purchase a warehouse |
-|  [getUpgradeWarehouseCost(adivisionName, acityName)](./bitburner.warehouseapi.getupgradewarehousecost.md) | Gets the cost to upgrade a warehouse to the next level |
+|  [getUpgradeWarehouseCost(adivisionName, acityName, amt)](./bitburner.warehouseapi.getupgradewarehousecost.md) | Gets the cost to upgrade a warehouse to the next level |
 |  [getWarehouse(divisionName, cityName)](./bitburner.warehouseapi.getwarehouse.md) | Get warehouse data |
 |  [hasWarehouse(adivisionName, acityName)](./bitburner.warehouseapi.haswarehouse.md) | Check if you have a warehouse in city |
+|  [limitMaterialProduction(divisionName, cityName, materialName, qty)](./bitburner.warehouseapi.limitmaterialproduction.md) | Limit Material Production. |
+|  [limitProductProduction(divisionName, cityName, productName, qty)](./bitburner.warehouseapi.limitproductproduction.md) | Limit Product Production. |
 |  [makeProduct(divisionName, cityName, productName, designInvest, marketingInvest)](./bitburner.warehouseapi.makeproduct.md) | Create a new product |
 |  [purchaseWarehouse(divisionName, cityName)](./bitburner.warehouseapi.purchasewarehouse.md) | Purchase warehouse for a new city |
 |  [sellMaterial(divisionName, cityName, materialName, amt, price)](./bitburner.warehouseapi.sellmaterial.md) | Set material sell data. |
@@ -41,5 +43,5 @@ Requires the Warehouse API upgrade from your corporation.
 |  [setProductMarketTA2(divisionName, productName, on)](./bitburner.warehouseapi.setproductmarketta2.md) | Set market TA 2 for a product. |
 |  [setSmartSupply(divisionName, cityName, enabled)](./bitburner.warehouseapi.setsmartsupply.md) | Set smart supply |
 |  [setSmartSupplyUseLeftovers(divisionName, cityName, materialName, enabled)](./bitburner.warehouseapi.setsmartsupplyuseleftovers.md) | Set whether smart supply uses leftovers before buying |
-|  [upgradeWarehouse(divisionName, cityName)](./bitburner.warehouseapi.upgradewarehouse.md) | Upgrade warehouse |
+|  [upgradeWarehouse(divisionName, cityName, amt)](./bitburner.warehouseapi.upgradewarehouse.md) | Upgrade warehouse |
 

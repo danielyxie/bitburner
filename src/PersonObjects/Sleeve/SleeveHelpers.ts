@@ -4,8 +4,7 @@ import { Sleeve } from "./Sleeve";
 import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 
@@ -22,9 +21,6 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   // Helper function that helps filter out augs that are already owned
   // and augs that aren't allowed for sleeves
   function isAvailableForSleeve(aug: Augmentation): boolean {
-    if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-      return false;
-    }
     if (ownedAugNames.includes(aug.name)) {
       return false;
     }
@@ -68,13 +64,13 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   if (p.inGang()) {
     const fac = p.getGangFaction();
 
-    for (const augName of Object.keys(Augmentations)) {
-      const aug = Augmentations[augName];
+    for (const augName of Object.keys(StaticAugmentations)) {
+      const aug = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) {
         continue;
       }
 
-      if (fac.playerReputation > aug.baseRepRequirement) {
+      if (fac.playerReputation > aug.getCost(p).repCost) {
         availableAugs.push(aug);
       }
     }
@@ -93,12 +89,12 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
     }
 
     for (const augName of fac.augmentations) {
-      const aug: Augmentation = Augmentations[augName];
+      const aug: Augmentation = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) {
         continue;
       }
 
-      if (fac.playerReputation > aug.baseRepRequirement) {
+      if (fac.playerReputation > aug.getCost(p).repCost) {
         availableAugs.push(aug);
       }
     }

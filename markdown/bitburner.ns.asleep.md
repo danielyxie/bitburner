@@ -4,7 +4,7 @@
 
 ## NS.asleep() method
 
-Suspends the script for n milliseconds. Doesn't block with concurrent calls.
+Suspends the script for n milliseconds. Doesn't block with concurrent calls. You should prefer 'sleep' over 'asleep' except when doing very complex UI work.
 
 <b>Signature:</b>
 

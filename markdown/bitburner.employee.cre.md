@@ -4,6 +4,8 @@
 
 ## Employee.cre property
 
+Creativity of the employee
+
 <b>Signature:</b>
 
 ```typescript

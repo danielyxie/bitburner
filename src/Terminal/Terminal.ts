@@ -73,6 +73,7 @@ import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 import { hash } from "../hash/hash";
 import { apr1 } from "./commands/apr1";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 export class Terminal implements ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze
@@ -204,7 +205,7 @@ export class Terminal implements ITerminal {
         router.toBitVerse(false, false);
         return;
       }
-      let moneyGained = calculatePercentMoneyHacked(server, player);
+      let moneyGained = calculatePercentMoneyHacked(server, player) * BitNodeMultipliers.ManualHackMoney;
       moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
       if (moneyGained <= 0) {
@@ -463,6 +464,12 @@ export class Terminal implements ITerminal {
     this.contractOpen = true;
     const res = await contract.prompt();
 
+    //Check if the contract still exists by the time the promise is fullfilled
+    if (serv.getContract(contractName) == null) {
+      this.contractOpen = false;
+      return this.error("Contract no longer exists (Was it solved by a script?)");
+    }
+
     switch (res) {
       case CodingContractResult.Success:
         if (contract.reward !== null) {
@@ -718,7 +725,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.TerminalCreateScript:
-          if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "nano" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");
@@ -734,7 +745,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.TerminalRunScript:
-          if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "run" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");
@@ -742,7 +757,11 @@ export class Terminal implements ITerminal {
           }
           break;
         case iTutorialSteps.ActiveScriptsToTerminal:
-          if (commandArray.length == 2 && commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
+          if (
+            commandArray.length == 2 &&
+            commandArray[0] == "tail" &&
+            (commandArray[1] == "n00dles.script" || commandArray[1] == "n00dles.js")
+          ) {
             iTutorialNextStep();
           } else {
             this.error("Bad command. Please follow the tutorial");

@@ -1,18 +1,17 @@
-import { use } from "../../ui/Context";
+import { Button, Container, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import { Countdown } from "./Countdown";
-import { BracketGame } from "./BracketGame";
-import { SlashGame } from "./SlashGame";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { use } from "../../ui/Context";
 import { BackwardGame } from "./BackwardGame";
+import { BracketGame } from "./BracketGame";
 import { BribeGame } from "./BribeGame";
 import { CheatCodeGame } from "./CheatCodeGame";
+import { Countdown } from "./Countdown";
 import { Cyberpunk2077Game } from "./Cyberpunk2077Game";
 import { MinesweeperGame } from "./MinesweeperGame";
-import { WireCuttingGame } from "./WireCuttingGame";
+import { SlashGame } from "./SlashGame";
 import { Victory } from "./Victory";
-import Typography from "@mui/material/Typography";
+import { WireCuttingGame } from "./WireCuttingGame";
 
 interface IProps {
   StartingDifficulty: number;
@@ -91,7 +90,9 @@ export function Game(props: IProps): React.ReactElement {
     pushResult(false);
     // Kill the player immediately if they use automation, so
     // it's clear they're not meant to
-    const damage = options?.automated ? player.hp : props.StartingDifficulty * 3;
+    const damage = options?.automated
+      ? player.hp
+      : props.StartingDifficulty * 3 * (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 0.5 : 1);
     if (player.takeDamage(damage)) {
       router.toCity();
       return;
@@ -136,22 +137,20 @@ export function Game(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
-      <Grid container spacing={3}>
-        <Grid item xs={3}>
-          <Button onClick={cancel}>Cancel</Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Typography>
-            Level: {level}&nbsp;/&nbsp;{props.MaxLevel}
-          </Typography>
-          <Progress />
-        </Grid>
+    <Container>
+      <Paper sx={{ p: 1, mb: 1, display: "grid", justifyItems: "center", gap: 1 }}>
+        {stage !== Stage.Sell && (
+          <Button sx={{ width: "100%" }} onClick={cancel}>
+            Cancel Infiltration
+          </Button>
+        )}
+        <Typography variant="h5">
+          Level {level} / {props.MaxLevel}
+        </Typography>
+        <Progress />
+      </Paper>
 
-        <Grid item xs={12}>
-          {stageComponent}
-        </Grid>
-      </Grid>
-    </>
+      {stageComponent}
+    </Container>
   );
 }
