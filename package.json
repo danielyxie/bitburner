@@ -114,7 +114,7 @@
     "start:container": "webpack-dev-server --progress --env.devServer --mode development --env.runInContainer",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "lint": "eslint --fix --ext js,jsx,ts,tsx --max-warnings 0 .",
+    "lint": "eslint --fix --ext js,jsx,ts,tsx --max-warnings 0 src test",
     "lint:report": "eslint --ext js,jsx,ts,tsx --max-warnings 0 .",
     "lint:report-diff": "eslint --max-warnings 0 $(git diff --name-only --diff-filter=ACMRTUXB origin/dev | grep -E \"(.js$|.jsx$|.ts$|.tsx$)\" | xargs)",
     "preinstall": "node ./tools/engines-check/engines-check.js",

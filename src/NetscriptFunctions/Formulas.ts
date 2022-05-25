@@ -1,5 +1,4 @@
 import { INetscriptHelper } from "./INetscriptHelper";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { calculateServerGrowth } from "../Server/formulas/grow";
 import {

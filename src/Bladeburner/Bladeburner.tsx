@@ -2029,12 +2029,12 @@ export class Bladeburner implements IBladeburner {
       this.stamina = Math.min(this.maxStamina, this.stamina);
 
       // Count increase for contracts/operations
-      for (const contract of Object.values(this.contracts) as Contract[]) {
+      for (const contract of Object.values(this.contracts) ) {
         const growthF = Growths[contract.name];
         if (growthF === undefined) throw new Error(`growth formula for action '${contract.name}' is undefined`);
         contract.count += (seconds * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
       }
-      for (const op of Object.values(this.operations) as Operation[]) {
+      for (const op of Object.values(this.operations) ) {
         const growthF = Growths[op.name];
         if (growthF === undefined) throw new Error(`growth formula for action '${op.name}' is undefined`);
         if (growthF !== undefined) {

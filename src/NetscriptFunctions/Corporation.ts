@@ -257,7 +257,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
 
   function getMaterial(divisionName: string, cityName: string, materialName: string): Material {
     const warehouse = getWarehouse(divisionName, cityName);
-    const matName = (materialName as string).replace(/ /g, "");
+    const matName = (materialName ).replace(/ /g, "");
     const material = warehouse.materials[matName];
     if (material === undefined) throw new Error(`Invalid material name: '${materialName}'`);
     return material;
