@@ -161,10 +161,6 @@ async function parseOnlyRamCalculate(
         ram += RamCostConstants.ScriptDomRamCost;
         detailedCosts.push({ type: "dom", name: "window", cost: RamCostConstants.ScriptDomRamCost });
       }
-      if (ref === "corporation" && !resolvedRefs.has("corporation")) {
-        ram += RamCostConstants.ScriptCorporationRamCost;
-        detailedCosts.push({ type: "ns", name: "corporation", cost: RamCostConstants.ScriptCorporationRamCost });
-      }
 
       resolvedRefs.add(ref);
 
@@ -236,6 +232,9 @@ async function parseOnlyRamCalculate(
         } else if (ref in workerScript.env.vars.singularity) {
           func = workerScript.env.vars.singularity[ref];
           refDetail = `singularity.${ref}`;
+        } else if (ref in workerScript.env.vars.corporation) {
+          func = workerScript.env.vars.corporation[ref];
+          refDetail = `corporation.${ref}`;
         } else {
           func = workerScript.env.vars[ref];
           refDetail = `${ref}`;

@@ -6614,6 +6614,9 @@ export interface NSEnums {
 export interface OfficeAPI {
   /**
    * Assign an employee to a job.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param employeeName - name of the employee
@@ -6623,6 +6626,9 @@ export interface OfficeAPI {
   assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
   /**
    * Hire an employee.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @returns The newly hired employee, if any
@@ -6630,6 +6636,9 @@ export interface OfficeAPI {
   hireEmployee(divisionName: string, cityName: string): Employee | undefined;
   /**
    * Upgrade office size.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param size - Amount of positions to open
@@ -6637,6 +6646,9 @@ export interface OfficeAPI {
   upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
   /**
    * Throw a party for your employees
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param costPerEmployee - Amount to spend per employee.
@@ -6645,6 +6657,9 @@ export interface OfficeAPI {
   throwParty(divisionName: string, cityName: string, costPerEmployee: number): Promise<number>;
   /**
    * Buy coffee for your employees
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @returns A promise that is fulfilled when the coffee is served.
@@ -6652,17 +6667,26 @@ export interface OfficeAPI {
   buyCoffee(divisionName: string, cityName: string): Promise<void>;
   /**
    * Hire AdVert.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    */
   hireAdVert(divisionName: string): void;
   /**
    * Purchase a research
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param researchName - Name of the research
    */
   research(divisionName: string, researchName: string): void;
   /**
    * Get data about an office
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @returns Office data
@@ -6670,6 +6694,9 @@ export interface OfficeAPI {
   getOffice(divisionName: string, cityName: string): Office;
   /**
    * Get data about an employee
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param employeeName - Name of the employee
@@ -6678,18 +6705,27 @@ export interface OfficeAPI {
   getEmployee(divisionName: string, cityName: string, employeeName: string): Employee;
   /**
    * Get the cost to Hire AdVert
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @returns Cost
    */
   getHireAdVertCost(divisionName: string): number;
   /**
    * Get the number of times you have Hired AdVert
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @returns Number of times you have Hired AdVert
    */
   getHireAdVertCount(adivisionName: string): number;
   /**
    * Get the cost to unlock research
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param researchName - Name of the research
    * @returns cost
@@ -6697,6 +6733,9 @@ export interface OfficeAPI {
   getResearchCost(divisionName: string, researchName: string): number;
   /**
    * Gets if you have unlocked a research
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param researchName - Name of the research
    * @returns true is unlocked, false if not
@@ -6704,6 +6743,9 @@ export interface OfficeAPI {
   hasResearched(divisionName: string, researchName: string): boolean;
   /**
    * Set the auto job assignment for a job
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param job - Name of the job
@@ -6713,6 +6755,9 @@ export interface OfficeAPI {
   setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
   /**
    * Cost to Upgrade office size.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param size - Amount of positions to open
@@ -6730,6 +6775,9 @@ export interface OfficeAPI {
 export interface WarehouseAPI {
   /**
    * Set material sell data.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param materialName - Name of the material
@@ -6739,6 +6787,9 @@ export interface WarehouseAPI {
   sellMaterial(divisionName: string, cityName: string, materialName: string, amt: string, price: string): void;
   /**
    * Set product sell data.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param productName - Name of the product
@@ -6756,12 +6807,18 @@ export interface WarehouseAPI {
   ): void;
   /**
    * Discontinue a product.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param productName - Name of the product
    */
   discontinueProduct(divisionName: string, productName: string): void;
   /**
    * Set smart supply
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param enabled - smart supply enabled
@@ -6769,6 +6826,9 @@ export interface WarehouseAPI {
   setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
   /**
    * Set whether smart supply uses leftovers before buying
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param materialName - Name of the material
@@ -6777,6 +6837,9 @@ export interface WarehouseAPI {
   setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName: string, enabled: boolean): void;
   /**
    * Set material buy data
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param materialName - Name of the material
@@ -6785,6 +6848,9 @@ export interface WarehouseAPI {
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
    * Set material to bulk buy
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param materialName - Name of the material
@@ -6793,6 +6859,9 @@ export interface WarehouseAPI {
   bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
    * Get warehouse data
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @returns warehouse data
@@ -6800,6 +6869,9 @@ export interface WarehouseAPI {
   getWarehouse(divisionName: string, cityName: string): Warehouse;
   /**
    * Get product data
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param productName - Name of the product
    * @returns product data
@@ -6807,6 +6879,9 @@ export interface WarehouseAPI {
   getProduct(divisionName: string, productName: string): Product;
   /**
    * Get material data
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param materialName - Name of the material
    * @returns material data
@@ -6814,6 +6889,9 @@ export interface WarehouseAPI {
   getMaterial(divisionName: string, cityName: string, materialName: string): Material;
   /**
    * Set market TA 1 for a material.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param materialName - Name of the material
@@ -6822,6 +6900,9 @@ export interface WarehouseAPI {
   setMaterialMarketTA1(divisionName: string, cityName: string, materialName: string, on: boolean): void;
   /**
    * Set market TA 2 for a material.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param materialName - Name of the material
@@ -6830,6 +6911,9 @@ export interface WarehouseAPI {
   setMaterialMarketTA2(divisionName: string, cityName: string, materialName: string, on: boolean): void;
   /**
    * Set market TA 1 for a product.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param productName - Name of the product
    * @param on - market ta enabled
@@ -6837,6 +6921,9 @@ export interface WarehouseAPI {
   setProductMarketTA1(divisionName: string, productName: string, on: boolean): void;
   /**
    * Set market TA 2 for a product.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param productName - Name of the product
    * @param on - market ta enabled
@@ -6844,6 +6931,9 @@ export interface WarehouseAPI {
   setProductMarketTA2(divisionName: string, productName: string, on: boolean): void;
   /**
    * Set material export data
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param sourceDivision - Source division
    * @param sourceCity - Source city
    * @param targetDivision - Target division
@@ -6861,6 +6951,9 @@ export interface WarehouseAPI {
   ): void;
   /**
    * Cancel material export
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param sourceDivision - Source division
    * @param sourceCity - Source city
    * @param targetDivision - Target division
@@ -6878,12 +6971,18 @@ export interface WarehouseAPI {
   ): void;
   /**
    * Purchase warehouse for a new city
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    */
   purchaseWarehouse(divisionName: string, cityName: string): void;
   /**
    * Upgrade warehouse
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param amt - amount of upgrades defaults to 1
@@ -6891,6 +6990,9 @@ export interface WarehouseAPI {
   upgradeWarehouse(divisionName: string, cityName: string, amt?: number): void;
   /**
    * Create a new product
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param productName - Name of the product
@@ -6906,6 +7008,9 @@ export interface WarehouseAPI {
   ): void;
   /**
    * Limit Material Production.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param materialName - Name of the material
@@ -6914,6 +7019,9 @@ export interface WarehouseAPI {
   limitMaterialProduction(divisionName: string, cityName: string, materialName: string, qty: number): void;
   /**
    * Limit Product Production.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param productName - Name of the product
@@ -6927,6 +7035,9 @@ export interface WarehouseAPI {
   getPurchaseWarehouseCost(): number;
   /**
    * Gets the cost to upgrade a warehouse to the next level
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param amt - amount of upgrades defaults to 1
@@ -6935,6 +7046,9 @@ export interface WarehouseAPI {
   getUpgradeWarehouseCost(adivisionName: any, acityName: any, amt?: number): number;
   /**
    * Check if you have a warehouse in city
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @returns true if warehouse is present, false if not
    */
   hasWarehouse(adivisionName: any, acityName: any): boolean;
@@ -6947,6 +7061,9 @@ export interface WarehouseAPI {
 export interface Corporation extends WarehouseAPI, OfficeAPI {
   /**
    * Create a Corporation
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param selfFund - If you should self fund, defaults to true, false will only work on Bitnode 3
    * @returns true if created and false if not
@@ -6954,46 +7071,70 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   createCorporation(corporationName: string, selfFund: boolean): boolean;
   /**
    * Check if you have a one time unlockable upgrade
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param upgradeName - Name of the upgrade
    * @returns true if unlocked and false if not
    */
   hasUnlockUpgrade(upgradeName: string): boolean;
   /**
    * Gets the cost to unlock a one time unlockable upgrade
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param upgradeName - Name of the upgrade
    * @returns cost of the upgrade
    */
   getUnlockUpgradeCost(upgradeName: string): number;
   /**
    * Get the level of a levelable upgrade
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param upgradeName - Name of the upgrade
    * @returns the level of the upgrade
    */
   getUpgradeLevel(upgradeName: string): number;
   /**
    * Gets the cost to unlock the next level of a levelable upgrade
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param upgradeName - Name of the upgrade
    * @returns cost of the upgrade
    */
   getUpgradeLevelCost(upgradeName: string): number;
   /**
    * Gets the cost to expand into a new industry
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param industryName - Name of the industry
    * @returns cost
    */
   getExpandIndustryCost(industryName: string): number;
   /**
    * Gets the cost to expand into a new city
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @returns cost
    */
   getExpandCityCost(): number;
   /**
    * Get an offer for investment based on you companies current valuation
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @returns An offer of investment
    */
   getInvestmentOffer(): InvestmentOffer;
   /**
    * Accept investment based on you companies current valuation
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @remarks
    * Is based on current valuation and will not honer a specific Offer
    * @returns An offer of investment
@@ -7001,12 +7142,18 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   acceptInvestmentOffer(): boolean;
   /**
    * Go public
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param numShares - number of shares you would like to issue for your IPO
    * @returns true if you successfully go public, false if not
    */
   goPublic(numShares: number): boolean;
   /**
    * Bribe a faction
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param factionName - Faction name
    * @param amountCash - Amount of money to bribe
    * @param amountShares - Amount of shares to bribe
@@ -7015,56 +7162,86 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   bribe(factionName: string, amountCash: number, amountShares: number): boolean;
   /**
    * Get corporation data
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @returns Corporation data
    */
   getCorporation(): CorporationInfo;
   /**
    * Get division data
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @returns Division data
    */
   getDivision(divisionName: string): Division;
   /**
    * Expand to a new industry
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param industryType - Name of the industry
    * @param divisionName - Name of the division
    */
   expandIndustry(industryType: string, divisionName: string): void;
   /**
    * Expand to a new city
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    */
   expandCity(divisionName: string, cityName: string): void;
   /**
    * Unlock an upgrade
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param upgradeName - Name of the upgrade
    */
   unlockUpgrade(upgradeName: string): void;
   /**
    * Level an upgrade.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param upgradeName - Name of the upgrade
    */
   levelUpgrade(upgradeName: string): void;
   /**
-   * Issue dividends
+   * Issue dividends.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param percent - Percent of profit to issue as dividends.
    */
   issueDividends(percent: number): void;
   /**
-   * Buyback Shares
+   * Buyback Shares.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param amount - Amount of shares to buy back.
    *
    */
   buyBackShares(amount: number): void;
   /**
    * Sell Shares
+   * @remarks
+   * RAM cost: 4 GB
+   *
    * @param amount -  Amount of shares to sell.
    *
    */
   sellShares(amount: number): void;
   /**
    * Get bonus time.
+   * @remarks
+   * RAM cost: 4 GB
+   *
    *
    * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
    *
