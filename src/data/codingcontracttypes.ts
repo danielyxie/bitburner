@@ -1618,9 +1618,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "is replaced by a letter some fixed number of positions down the alphabet.",
         "For example, with a left shift of 3, D would be replaced by A, ",
         "E would become B, and A would become X (because of rotation).\n\n",
-        "You are given the following plaintext\n",
-        `&nbsp;&nbsp;${data[0]}\n`,
-        `and a left shift of ${data[1]}\n\n`,
+        "You are given the an array with two elements:\n",
+        `&nbsp;&nbsp;["${data[0]}", ${data[1]}]\n`,
+        "The first element is the plaintext, the second element is the left shift value.\n\n",
         "Return the ciphertext as uppercase string. Spaces remains the same.",
       ].join(" ");
     },
@@ -1659,7 +1659,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
           .sort(() => Math.random() - 0.5)
           .slice(0, 5)
           .join(" "),
-        Math.floor(Math.random() * 26),
+        Math.floor(Math.random() * 25 + 1),
       ];
     },
     name: "Encryption I: Caesar Cipher",
@@ -1695,9 +1695,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "&nbsp;&nbsp; Keyword:&nbsp;&nbsp;&nbsp;LINUXLINU\n",
         "So, the first letter D is paired with the first letter of the key L. Therefore, row D and column L of the ",
         "Vigenère square are used to get the first cipher letter O. This must be repeated for the whole ciphertext.\n\n",
-        "You are given the following plaintext\n",
-        `&nbsp;&nbsp;${data[0]}\n`,
-        `and a keyword ${data[1]}\n\n`,
+        "You are given an array with two elements:\n",
+        `&nbsp;&nbsp;["${data[0]}", "${data[1]}"]\n`,
+        "The first element is the plaintext, the second element is the keyword.\n\n",
         "Return the ciphertext as uppercase string.",
       ].join(" ");
     },
