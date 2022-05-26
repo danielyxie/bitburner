@@ -598,38 +598,37 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const server = player.getCurrentServer();
         return _ctx.helper.hack(server.hostname, true);
       },
-    installBackdoor: (_ctx: NetscriptContext) =>
-      function (): Promise<void> {
-        _ctx.helper.checkSingularityAccess();
-        const baseserver = player.getCurrentServer();
-        if (!(baseserver instanceof Server)) {
-          _ctx.log(() => "cannot backdoor this kind of server");
-          return Promise.resolve();
+    installBackdoor: (_ctx: NetscriptContext) => async (): Promise<void> => {
+      _ctx.helper.checkSingularityAccess();
+      const baseserver = player.getCurrentServer();
+      if (!(baseserver instanceof Server)) {
+        _ctx.log(() => "cannot backdoor this kind of server");
+        return Promise.resolve();
+      }
+      const server = baseserver;
+      const installTime = (calculateHackingTime(server, player) / 4) * 1000;
+
+      // No root access or skill level too low
+      const canHack = netscriptCanHack(server, player);
+      if (!canHack.res) {
+        throw _ctx.helper.makeRuntimeErrorMsg(canHack.msg || "");
+      }
+
+      _ctx.log(
+        () => `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`,
+      );
+
+      return netscriptDelay(installTime, workerScript).then(function () {
+        _ctx.log(() => `Successfully installed backdoor on '${server.hostname}'`);
+
+        server.backdoorInstalled = true;
+
+        if (SpecialServers.WorldDaemon === server.hostname) {
+          Router.toBitVerse(false, false);
         }
-        const server = baseserver ;
-        const installTime = (calculateHackingTime(server, player) / 4) * 1000;
-
-        // No root access or skill level too low
-        const canHack = netscriptCanHack(server, player);
-        if (!canHack.res) {
-          throw _ctx.helper.makeRuntimeErrorMsg(canHack.msg || "");
-        }
-
-        _ctx.log(
-          () => `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`,
-        );
-
-        return netscriptDelay(installTime, workerScript).then(function () {
-          _ctx.log(() => `Successfully installed backdoor on '${server.hostname}'`);
-
-          server.backdoorInstalled = true;
-
-          if (SpecialServers.WorldDaemon === server.hostname) {
-            Router.toBitVerse(false, false);
-          }
-          return Promise.resolve();
-        });
-      },
+        return Promise.resolve();
+      });
+    },
     isFocused: (_ctx: NetscriptContext) =>
       function (): boolean {
         _ctx.helper.checkSingularityAccess();
