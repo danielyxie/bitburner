@@ -3255,7 +3255,7 @@ export interface Bladeburner {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Returns the amount of accumulated “bonus time” (seconds) for the Bladeburner mechanic.
+   * Returns the amount of accumulated “bonus time” (milliseconds) for the Bladeburner mechanic.
    *
    * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
    *
@@ -3592,7 +3592,7 @@ export interface Gang {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Returns the amount of accumulated “bonus time” (seconds) for the Gang mechanic.
+   * Returns the amount of accumulated “bonus time” (milliseconds) for the Gang mechanic.
    *
    * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
    *
