@@ -1618,7 +1618,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "is replaced by a letter some fixed number of positions down the alphabet.",
         "For example, with a left shift of 3, D would be replaced by A, ",
         "E would become B, and A would become X (because of rotation).\n\n",
-        "You are given the an array with two elements:\n",
+        "You are given an array with two elements:\n",
         `&nbsp;&nbsp;["${data[0]}", ${data[1]}]\n`,
         "The first element is the plaintext, the second element is the left shift value.\n\n",
         "Return the ciphertext as uppercase string. Spaces remains the same.",
