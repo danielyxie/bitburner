@@ -277,14 +277,6 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
           >
             Reddit
           </Button>
-          <Button
-            startIcon={<Public />}
-            href="https://plaza.dsolver.ca/games/bitburner"
-            target="_blank"
-            sx={{ gridArea: "plaza" }}
-          >
-            Incremental game plaza
-          </Button>
         </Box>
 
         {!location.href.startsWith("file://") && (

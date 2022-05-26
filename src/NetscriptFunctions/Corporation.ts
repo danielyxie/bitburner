@@ -725,7 +725,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const employeeName = ctx.helper.string("employeeName", _employeeName);
         const job = ctx.helper.string("job", _job);
         const employee = getEmployee(divisionName, cityName, employeeName);
-        return netscriptDelay(1000, workerScript).then(function () {
+        return netscriptDelay(["Training", "Unassigned"].includes(employee.pos) ? 0 : 1000, workerScript).then(function () {
           return Promise.resolve(AssignJob(employee, job));
         });
       },

@@ -54,8 +54,8 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
   }
 
   function handleLocaleChange(event: SelectChangeEvent<string>): void {
-    setLocale(event.target.value );
-    Settings.Locale = event.target.value ;
+    setLocale(event.target.value);
+    Settings.Locale = event.target.value;
   }
 
   function handleTimestampFormatChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -178,12 +178,6 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
               lagging a lot. You'll have to restart your script every time you launch the game.
             </>
           }
-        />
-        <OptionSwitch
-          checked={Settings.InfinityLoopSafety}
-          onChange={(newValue) => (Settings.InfinityLoopSafety = newValue)}
-          text="Script infinite loop safety net"
-          tooltip={<>If this is set the game will attempt to automatically kill scripts stuck in infinite loops.</>}
         />
       </GameOptionsPage>
     ),
