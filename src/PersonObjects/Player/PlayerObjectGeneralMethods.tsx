@@ -2287,7 +2287,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !fulcrumsecrettechonologiesFac.isMember &&
     !fulcrumsecrettechonologiesFac.alreadyInvited &&
     fulcrumSecretServer.backdoorInstalled &&
-    checkMegacorpRequirements(LocationName.AevumFulcrumTechnologies, 250e3)
+    checkMegacorpRequirements(LocationName.AevumFulcrumTechnologies, 200e3)
   ) {
     invitedFactions.push(fulcrumsecrettechonologiesFac);
   }
