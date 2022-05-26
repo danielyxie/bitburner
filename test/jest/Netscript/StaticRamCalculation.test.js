@@ -11,6 +11,11 @@ const HacknetNamespaceCost = RamCostConstants.ScriptHacknetNodesRamCost;
 
 describe("Netscript Static RAM Calculation/Generation Tests", function () {
   // Tests numeric equality, allowing for floating point imprecision
+  /**
+   *
+   * @param {number} val
+   * @param {number} expected
+   */
   function testEquality(val, expected) {
     expect(val).toBeGreaterThanOrEqual(expected - 100 * Number.EPSILON);
     expect(val).toBeLessThanOrEqual(expected + 100 * Number.EPSILON);
@@ -25,9 +30,6 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
   async function expectNonZeroRamCost(fnDesc) {
-    if (!Array.isArray(fnDesc)) {
-      expect.fail("Non-array passed to expectNonZeroRamCost()");
-    }
     const expected = getRamCost(Player, ...fnDesc);
     expect(expected).toBeGreaterThan(0);
 
@@ -50,9 +52,6 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
   async function expectZeroRamCost(fnDesc) {
-    if (!Array.isArray(fnDesc)) {
-      expect.fail("Non-array passed to expectZeroRamCost()");
-    }
     const expected = getRamCost(Player, ...fnDesc);
     expect(expected).toEqual(0);
 
@@ -64,7 +63,12 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
     expect(multipleCallsCalculated).toEqual(ScriptBaseCost);
   }
 
-  // simplyfied version from RamCostGenerator.ts
+  /**
+   *
+   * @param {Player} player
+   * @param {number} cost
+   * @returns
+   */
   function SF4Cost(player, cost) {
     if (player.bitNodeN === 4) return cost;
     const sf4 = player.sourceFileLvl(4);
@@ -83,9 +87,6 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    * @param {number} cost     - expected cost
    */
   async function expectSpecificRamCost(fnDesc, cost) {
-    if (!Array.isArray(fnDesc)) {
-      expect.fail("Non-array passed to expectZeroRamCost()");
-    }
     const expected = getRamCost(Player, ...fnDesc);
     expect(expected).toEqual(SF4Cost(Player, cost));
 

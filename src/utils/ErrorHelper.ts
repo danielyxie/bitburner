@@ -87,7 +87,7 @@ export function getErrorForDisplay(error: Error, errorInfo?: React.ErrorInfo, pa
   const fileName = (metadata.error as any).fileName;
   const features =
     `lang=${metadata.features.language} cookiesEnabled=${metadata.features.cookiesEnabled.toString()}` +
-    ` doNotTrack=${metadata.features.doNotTrack} indexedDb=${metadata.features.indexedDb.toString()}`;
+    ` doNotTrack=${metadata.features.doNotTrack ?? "null"} indexedDb=${metadata.features.indexedDb.toString()}`;
 
   const title = `${metadata.error.name}: ${metadata.error.message}${metadata.page && ` (at "${Page[metadata.page]}")`}`;
   const body = `

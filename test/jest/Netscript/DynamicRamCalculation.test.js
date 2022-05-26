@@ -13,6 +13,11 @@ const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 
 describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
   // Creates a mock RunningScript object
+  /**
+   *
+   * @param {string} code
+   * @returns
+   */
   async function createRunningScript(code) {
     const script = new Script();
     script.code = code;
@@ -24,12 +29,23 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
   }
 
   // Tests numeric equality, allowing for floating point imprecision
+  /**
+   *
+   * @param {number} val
+   * @param {number} expected
+   */
   function testEquality(val, expected) {
     expect(val).toBeGreaterThanOrEqual(expected - 100 * Number.EPSILON);
     expect(val).toBeLessThanOrEqual(expected + 100 * Number.EPSILON);
   }
 
   // Runs a Netscript function and properly catches it if it returns promise
+
+  /**
+   *
+   * @param {(...args: unknown[]) => unknown} fn
+   * @param  {unknown[]} args
+   */
   function runPotentiallyAsyncFunction(fn, ...args) {
     const res = fn(...args);
     if (res instanceof Promise) {
@@ -93,7 +109,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
         runPotentiallyAsyncFunction(curr, ...args);
       } catch (e) {}
     } else {
-      throw new Error(`Invalid function specified: [${fnDesc}]`);
+      throw new Error(`Invalid function specified: [${fnDesc.toString()}]`);
     }
 
     const fnName = fnDesc[fnDesc.length - 1];

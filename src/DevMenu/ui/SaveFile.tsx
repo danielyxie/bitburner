@@ -6,20 +6,13 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Typography from "@mui/material/Typography";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { saveObject } from "../../SaveObject";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { Upload } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { OptionSwitch } from "../../ui/React/OptionSwitch";
 
-// Update as additional BitNodes get implemented
-
-interface IProps {
-  player: IPlayer;
-}
-
-export function SaveFile(props: IProps): React.ReactElement {
+export function SaveFile(): React.ReactElement {
   const importInput = useRef<HTMLInputElement>(null);
   const [saveFile, setSaveFile] = useState("");
   const [restoreScripts, setRestoreScripts] = useState(true);

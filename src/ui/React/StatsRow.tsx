@@ -5,6 +5,7 @@ import { Typography, TableCell, TableRow } from "@mui/material";
 import { numeralWrapper } from "../numeralFormat";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { characterOverviewStyles as useStyles } from "./CharacterOverview";
+import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 
 interface ITableRowData {
   content?: string;
@@ -15,7 +16,7 @@ interface ITableRowData {
 interface IProps {
   name: string;
   color: string;
-  classes?: any;
+  classes?: ClassNameMap;
   data?: ITableRowData;
   children?: React.ReactElement;
 }
