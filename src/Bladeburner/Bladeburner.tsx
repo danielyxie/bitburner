@@ -1686,9 +1686,6 @@ export class Bladeburner implements IBladeburner {
       // Operation Daedalus
       if (action == null) {
         throw new Error("Failed to get BlackOperation Object for: " + this.action.name);
-      } else if (action.name === BlackOperationNames.OperationDaedalus && this.blackops[action.name]) {
-        this.resetAction();
-        router.toBitVerse(false, false);
       } else if (this.action.type != ActionTypes["BlackOperation"] && this.action.type != ActionTypes["BlackOp"]) {
         this.startAction(player, this.action); // Repeat action
       }
@@ -1990,11 +1987,6 @@ export class Bladeburner implements IBladeburner {
   process(router: IRouter, player: IPlayer): void {
     // Edge race condition when the engine checks the processing counters and attempts to route before the router is initialized.
     if (!router.isInitialized) return;
-
-    // Edge case condition...if Operation Daedalus is complete trigger the BitNode
-    if (router.page() !== Page.BitVerse && this.blackops.hasOwnProperty(BlackOperationNames.OperationDaedalus)) {
-      return router.toBitVerse(false, false);
-    }
 
     // If the Player starts doing some other actions, set action to idle and alert
     if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true) && player.isWorking) {
