@@ -4340,9 +4340,9 @@ interface Infiltration {
    * @remarks
    * RAM cost: 5 GB
    *
-   * @returns all locations that can be infiltrated.
+   * @returns array of objects {city, name}
    */
-  getPossibleLocations(): string[];
+  getPossibleLocations(): any[];
   /**
    * Get all infiltrations with difficulty, location and rewards.
    * @remarks
