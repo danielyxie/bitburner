@@ -2,7 +2,7 @@ import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { MinHeap } from "../utils/Heap";
 
 import { comprGenChar, comprLZGenerate, comprLZEncode, comprLZDecode } from "../utils/CompressionContracts";
-import { HammingEncode, HammingDecode } from "../utils/HammingCodeTools";
+import { HammingEncode, HammingDecode, HammingEncodeProperly } from "../utils/HammingCodeTools";
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 
 /* Function that generates a valid 'data' for a contract type */
@@ -1257,16 +1257,16 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return [
         "You are given the following decimal Value: \n",
         `${n} \n`,
-        "Convert it into a binary string and encode it as a 'Hamming-Code'. eg:\n ",
-        "Value 8 will result into binary '1000', which will be encoded",
-        "with the pattern 'pppdpddd', where p is a paritybit and d a databit,\n",
+        "Convert it to a binary representation and encode it as an 'extended Hamming code'. Eg:\n ",
+        "Value 8 is expressed in binary as '1000', which will be encoded",
+        "with the pattern 'pppdpddd', where p is a parity bit and d a data bit,\n",
         "or '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n\n",
-        "NOTE: You need an parity Bit on Index 0 as an 'overall'-paritybit. \n",
-        "NOTE 2: You should watch the HammingCode-video from 3Blue1Brown, which explains the 'rule' of encoding,",
-        "including the first Index parity-bit mentioned on the first note.\n\n",
-        "Now the only one rule for this encoding:\n",
-        " It's not allowed to add additional leading '0's to the binary value\n",
-        "That means, the binary value has to be encoded as it is",
+	"NOTE: the endianness of the data bits is reversed in relation to the endianness of the parity bits.\n",
+        "NOTE: The bit at index zero is the overall parity bit, this should be set last.\n",
+        "NOTE 2: You should watch the Hamming Code video from 3Blue1Brown, which explains the 'rule' of encoding,",
+        "including the first index parity bit mentioned in the previous note.\n\n",
+        "Extra rule for encoding:\n",
+	"There should be no leading zeros in the 'data bit' section",
       ].join(" ");
     },
     gen: (): number => {
@@ -1284,17 +1284,21 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return [
         "You are given the following encoded binary String: \n",
         `'${n}' \n`,
-        "Treat it as a Hammingcode with 1 'possible' error on an random Index.\n",
+        "Treat it as an extended Hamming code with 1 'possible' error at a random index.\n",
         "Find the 'possible' wrong bit, fix it and extract the decimal value, which is hidden inside the string.\n\n",
-        "Note: The length of the binary string is dynamic, but it's encoding/decoding is following Hammings 'rule'\n",
-        "Note 2: Index 0 is an 'overall' parity bit. Watch the Hammingcode-video from 3Blue1Brown for more information\n",
+        "Note: The length of the binary string is dynamic, but it's encoding/decoding follows Hamming's 'rule'\n",
+        "Note 2: Index 0 is an 'overall' parity bit. Watch the Hamming code video from 3Blue1Brown for more information\n",
         "Note 3: There's a ~55% chance for an altered Bit. So... MAYBE there is an altered Bit 😉\n",
-        "Extranote for automation: return the decimal value as a string",
+	"Note: The endianness of the \
+	encoded decimal value is reversed in relation to the endianness of the Hamming code. Where \
+	the Hamming code is expressed as little-endian (LSB at index 0), the decimal value encoded in it is expressed as big-endian \
+	(MSB at index 0)\n",
+        "Extra note for automation: return the decimal value as a string",
       ].join(" ");
     },
     gen: (): string => {
       const _alteredBit = Math.round(Math.random());
-      const _buildArray: Array<string> = HammingEncode(
+      const _buildArray: Array<string> = HammingEncodeProperly(
         getRandomInt(Math.pow(2, 4), Math.pow(2, getRandomInt(1, 57))),
       ).split("");
       if (_alteredBit) {
