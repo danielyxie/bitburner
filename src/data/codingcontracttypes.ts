@@ -1261,13 +1261,13 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "Value 8 is expressed in binary as '1000', which will be encoded",
         "with the pattern 'pppdpddd', where p is a parity bit and d a data bit,\n",
         "or '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n",
-	"The answer should be given as a string containing only 1s and 0s.\n",
-	"NOTE: the endianness of the data bits is reversed in relation to the endianness of the parity bits.\n",
+        "The answer should be given as a string containing only 1s and 0s.\n",
+        "NOTE: the endianness of the data bits is reversed in relation to the endianness of the parity bits.\n",
         "NOTE: The bit at index zero is the overall parity bit, this should be set last.\n",
         "NOTE 2: You should watch the Hamming Code video from 3Blue1Brown, which explains the 'rule' of encoding,",
         "including the first index parity bit mentioned in the previous note.\n\n",
         "Extra rule for encoding:\n",
-	"There should be no leading zeros in the 'data bit' section",
+        "There should be no leading zeros in the 'data bit' section",
       ].join(" ");
     },
     gen: (): number => {
@@ -1290,7 +1290,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "Note: The length of the binary string is dynamic, but it's encoding/decoding follows Hamming's 'rule'\n",
         "Note 2: Index 0 is an 'overall' parity bit. Watch the Hamming code video from 3Blue1Brown for more information\n",
         "Note 3: There's a ~55% chance for an altered Bit. So... MAYBE there is an altered Bit 😉\n",
-	"Note: The endianness of the \
+        "Note: The endianness of the \
 	encoded decimal value is reversed in relation to the endianness of the Hamming code. Where \
 	the Hamming code is expressed as little-endian (LSB at index 0), the decimal value encoded in it is expressed as big-endian \
 	(MSB at index 0)\n",
