@@ -98,8 +98,9 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setShares(null);
-    else setShares(parseFloat(event.target.value));
+    const amt = numeralWrapper.parseMoney(event.target.value);
+    if (event.target.value === "" || isNaN(amt)) setShares(null);
+    else setShares(amt);
   }
 
   return (

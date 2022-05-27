@@ -42,7 +42,9 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
     stock > corp.numShares;
 
   function onMoneyChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setMoney(parseFloat(event.target.value));
+    const amt = numeralWrapper.parseMoney(event.target.value);
+    if (isNaN(amt)) setMoney(null);
+    else setMoney(amt);
   }
 
   function onStockChange(event: React.ChangeEvent<HTMLInputElement>): void {

@@ -24,8 +24,9 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
   const [shares, setShares] = useState<number | null>(null);
 
   function changeShares(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setShares(null);
-    else setShares(Math.round(parseFloat(event.target.value)));
+    const amt = numeralWrapper.parseMoney(event.target.value);
+    if (event.target.value === "" || isNaN(amt)) setShares(null);
+    else setShares(amt);
   }
 
   const currentStockPrice = corp.sharePrice;
@@ -89,7 +90,7 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
       <br />
       <TextField
         autoFocus={true}
-        type="number"
+        type="string"
         placeholder="Shares to buyback"
         onChange={changeShares}
         onKeyDown={onKeyDown}

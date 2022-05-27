@@ -27,8 +27,9 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   const disabled = shares === null || isNaN(shares) || shares <= 0 || shares > corp.numShares;
 
   function changeShares(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setShares(null);
-    else setShares(Math.round(parseFloat(event.target.value)));
+    const amt = numeralWrapper.parseMoney(event.target.value);
+    if (event.target.value === "" || isNaN(amt)) setShares(null);
+    else setShares(amt);
   }
 
   function ProfitIndicator(props: { shares: number | null; corp: ICorporation }): React.ReactElement {
@@ -91,7 +92,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
       <TextField
         variant="standard"
         autoFocus
-        type="number"
+        type="string"
         placeholder="Shares to sell"
         onChange={changeShares}
         onKeyDown={onKeyDown}

@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { KEY } from "../../../utils/helpers/keyCodes";
+import { numeralWrapper } from "../../../ui/numeralFormat";
 
 interface IProps {
   open: boolean;
@@ -156,13 +157,15 @@ export function MakeProductModal(props: IProps): React.ReactElement {
   }
 
   function onDesignChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setDesign(null);
-    else setDesign(parseFloat(event.target.value));
+    const amt = numeralWrapper.parseMoney(event.target.value);
+    if (event.target.value === "" || isNaN(amt)) setDesign(null);
+    else setDesign(amt);
   }
 
   function onMarketingChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setMarketing(null);
-    else setMarketing(parseFloat(event.target.value));
+    const amt = numeralWrapper.parseMoney(event.target.value);
+    if (event.target.value === "" || isNaN(amt)) setMarketing(null);
+    else setMarketing(amt);
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -181,11 +184,11 @@ export function MakeProductModal(props: IProps): React.ReactElement {
       </Select>
       <TextField onChange={onProductNameChange} placeholder={productPlaceholder(division.type)} />
       <br />
-      <TextField onChange={onDesignChange} autoFocus={true} type="number" placeholder={"Design investment"} />
+      <TextField onChange={onDesignChange} autoFocus={true} type="string" placeholder={"Design investment"} />
       <TextField
         onChange={onMarketingChange}
         onKeyDown={onKeyDown}
-        type="number"
+        type="string"
         placeholder={"Marketing investment"}
       />
       <Button onClick={makeProduct}>Develop Product</Button>
