@@ -338,7 +338,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
               other.bbContract === contract
             ) {
               throw ctx.helper.makeRuntimeErrorMsg(
-                `Sleeve ${sleeveNumber} cannot take of contracts because Sleeve ${i} is already performing that action.`,
+                `Sleeve ${sleeveNumber} cannot take on contracts because Sleeve ${i} is already performing that action.`,
               );
             }
           }
