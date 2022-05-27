@@ -65,13 +65,7 @@ export function GoPublicModal(props: IProps): React.ReactElement {
         You have a total of {numeralWrapper.format(corp.numShares, "0.000a")} of shares that you can issue.
       </Typography>
       <Box display="flex" alignItems="center">
-        <TextField
-          onChange={onChange}
-          autoFocus
-          type="string"
-          placeholder="Shares to issue"
-          onKeyDown={onKeyDown}
-        />
+        <TextField onChange={onChange} autoFocus type="string" placeholder="Shares to issue" onKeyDown={onKeyDown} />
         <Button disabled={shares < 0 || shares > corp.numShares} sx={{ mx: 1 }} onClick={goPublic}>
           Go Public
         </Button>
