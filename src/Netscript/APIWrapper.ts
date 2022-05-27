@@ -95,22 +95,12 @@ function wrapFunction(
       boolean: helpers.boolean,
       getServer: (hostname: string) => helpers.getServer(hostname, ctx),
       checkSingularityAccess: () => helpers.checkSingularityAccess(functionName),
-      hack: helpers.hack,
+      hack: (hostname: any, manual: any, extra?: any) => helpers.hack(ctx, hostname, manual, extra),
       getValidPort: (port: any) => helpers.getValidPort(functionPath, port),
     },
   };
-  const safetyEnabled = Settings.InfinityLoopSafety;
   function wrappedFunction(...args: unknown[]): unknown {
     helpers.updateDynamicRam(ctx.function, getRamCost(Player, ...tree, ctx.function));
-    if (safetyEnabled) {
-      const now = performance.now();
-      if (now - workerScript.infiniteLoopSafety > CONSTANTS.InfiniteLoopLimit) {
-        throw new Error(
-          `Potential infinite loop without sleep detected. The game spent ${CONSTANTS.InfiniteLoopLimit}ms stuck in this script. (Are you using 'asleep' by mistake?)`,
-        );
-      }
-    }
-
     return func(ctx)(...args);
   }
   const parent = getNestedProperty(wrappedAPI, ...tree);

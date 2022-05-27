@@ -70,17 +70,17 @@ export class Bladeburner implements IBladeburner {
     type: ActionTypes["Idle"],
   });
 
-  cities: any = {};
+  cities: Record<string, City> = {};
   city: string = BladeburnerConstants.CityNames[2];
-  skills: any = {};
-  skillMultipliers: any = {};
+  skills: Record<string, number> = {};
+  skillMultipliers: Record<string, number> = {};
   staminaBonus = 0;
   maxStamina = 0;
   stamina = 0;
-  contracts: any = {};
-  operations: any = {};
-  blackops: any = {};
-  logging: any = {
+  contracts: Record<string, Contract> = {};
+  operations: Record<string, Operation> = {};
+  blackops: Record<string, boolean> = {};
+  logging = {
     general: true,
     contracts: true,
     ops: true,
@@ -477,54 +477,54 @@ export class Bladeburner implements IBladeburner {
           this.postToConsole("Effects: ");
           const multKeys = Object.keys(this.skillMultipliers);
           for (let i = 0; i < multKeys.length; ++i) {
-            let mult = this.skillMultipliers[multKeys[i]];
+            const mult = this.skillMultipliers[multKeys[i]];
             if (mult && mult !== 1) {
-              mult = formatNumber(mult, 3);
+              const mults = formatNumber(mult, 3);
               switch (multKeys[i]) {
                 case "successChanceAll":
-                  this.postToConsole("Total Success Chance: x" + mult);
+                  this.postToConsole("Total Success Chance: x" + mults);
                   break;
                 case "successChanceStealth":
-                  this.postToConsole("Stealth Success Chance: x" + mult);
+                  this.postToConsole("Stealth Success Chance: x" + mults);
                   break;
                 case "successChanceKill":
-                  this.postToConsole("Retirement Success Chance: x" + mult);
+                  this.postToConsole("Retirement Success Chance: x" + mults);
                   break;
                 case "successChanceContract":
-                  this.postToConsole("Contract Success Chance: x" + mult);
+                  this.postToConsole("Contract Success Chance: x" + mults);
                   break;
                 case "successChanceOperation":
-                  this.postToConsole("Operation Success Chance: x" + mult);
+                  this.postToConsole("Operation Success Chance: x" + mults);
                   break;
                 case "successChanceEstimate":
-                  this.postToConsole("Synthoid Data Estimate: x" + mult);
+                  this.postToConsole("Synthoid Data Estimate: x" + mults);
                   break;
                 case "actionTime":
-                  this.postToConsole("Action Time: x" + mult);
+                  this.postToConsole("Action Time: x" + mults);
                   break;
                 case "effHack":
-                  this.postToConsole("Hacking Skill: x" + mult);
+                  this.postToConsole("Hacking Skill: x" + mults);
                   break;
                 case "effStr":
-                  this.postToConsole("Strength: x" + mult);
+                  this.postToConsole("Strength: x" + mults);
                   break;
                 case "effDef":
-                  this.postToConsole("Defense: x" + mult);
+                  this.postToConsole("Defense: x" + mults);
                   break;
                 case "effDex":
-                  this.postToConsole("Dexterity: x" + mult);
+                  this.postToConsole("Dexterity: x" + mults);
                   break;
                 case "effAgi":
-                  this.postToConsole("Agility: x" + mult);
+                  this.postToConsole("Agility: x" + mults);
                   break;
                 case "effCha":
-                  this.postToConsole("Charisma: x" + mult);
+                  this.postToConsole("Charisma: x" + mults);
                   break;
                 case "effInt":
-                  this.postToConsole("Intelligence: x" + mult);
+                  this.postToConsole("Intelligence: x" + mults);
                   break;
                 case "stamina":
-                  this.postToConsole("Stamina: x" + mult);
+                  this.postToConsole("Stamina: x" + mults);
                   break;
                 default:
                   console.warn(`Unrecognized SkillMult Key: ${multKeys[i]}`);
@@ -1686,9 +1686,6 @@ export class Bladeburner implements IBladeburner {
       // Operation Daedalus
       if (action == null) {
         throw new Error("Failed to get BlackOperation Object for: " + this.action.name);
-      } else if (action.name === BlackOperationNames.OperationDaedalus && this.blackops[action.name]) {
-        this.resetAction();
-        router.toBitVerse(false, false);
       } else if (this.action.type != ActionTypes["BlackOperation"] && this.action.type != ActionTypes["BlackOp"]) {
         this.startAction(player, this.action); // Repeat action
       }
@@ -1991,11 +1988,6 @@ export class Bladeburner implements IBladeburner {
     // Edge race condition when the engine checks the processing counters and attempts to route before the router is initialized.
     if (!router.isInitialized) return;
 
-    // Edge case condition...if Operation Daedalus is complete trigger the BitNode
-    if (router.page() !== Page.BitVerse && this.blackops.hasOwnProperty(BlackOperationNames.OperationDaedalus)) {
-      return router.toBitVerse(false, false);
-    }
-
     // If the Player starts doing some other actions, set action to idle and alert
     if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true) && player.isWorking) {
       if (this.action.type !== ActionTypes["Idle"]) {
@@ -2029,12 +2021,12 @@ export class Bladeburner implements IBladeburner {
       this.stamina = Math.min(this.maxStamina, this.stamina);
 
       // Count increase for contracts/operations
-      for (const contract of Object.values(this.contracts) as Contract[]) {
+      for (const contract of Object.values(this.contracts)) {
         const growthF = Growths[contract.name];
         if (growthF === undefined) throw new Error(`growth formula for action '${contract.name}' is undefined`);
         contract.count += (seconds * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
       }
-      for (const op of Object.values(this.operations) as Operation[]) {
+      for (const op of Object.values(this.operations)) {
         const growthF = Growths[op.name];
         if (growthF === undefined) throw new Error(`growth formula for action '${op.name}' is undefined`);
         if (growthF !== undefined) {

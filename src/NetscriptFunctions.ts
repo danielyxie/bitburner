@@ -411,11 +411,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (server.moneyAvailable < 0) {
           server.moneyAvailable = 0;
         }
-        
+
+        let moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
         if (manual) {
-          const moneyGained = moneyDrained * BitNodeMultipliers.ManualHackMoney;
-        } else {
-          const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
+          moneyGained = moneyDrained * BitNodeMultipliers.ManualHackMoney;
         }
 
         Player.gainMoney(moneyGained, "hacking");
@@ -540,8 +539,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     stock: NetscriptStockMarket(Player, workerScript),
     grafting: NetscriptGrafting(Player),
     hacknet: NetscriptHacknet(Player, workerScript),
-    sprintf: sprintf,
-    vsprintf: vsprintf,
+    sprintf: () => sprintf,
+    vsprintf: () => vsprintf,
     scan:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname): string[] => {
@@ -951,7 +950,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (ctx: NetscriptContext) =>
       (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void => {
         let runningScriptObj;
-        if (arguments.length === 0) {
+        if (fn === undefined) {
           runningScriptObj = workerScript.scriptRef;
         } else if (typeof fn === "number") {
           runningScriptObj = getRunningScriptByPid(fn);
@@ -1249,12 +1248,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (ctx: NetscriptContext) =>
       async (scriptname: any, _hostname1: unknown, hostname2?: any): Promise<boolean> => {
         const hostname1 = ctx.helper.string("hostname1", _hostname1);
-        if (arguments.length !== 2 && arguments.length !== 3) {
-          throw ctx.makeRuntimeErrorMsg("Takes 2 or 3 arguments");
-        }
         if (scriptname && scriptname.constructor === Array) {
           // Recursively call scp on all elements of array
-          const scripts: Array<string> = scriptname;
+          const scripts: string[] = scriptname;
           if (scripts.length === 0) {
             throw ctx.makeRuntimeErrorMsg("No scripts to copy");
           }
@@ -1413,7 +1409,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         // Get the grep filter, if one exists
         let filter = "";
-        if (arguments.length >= 2) {
+        if (_grep !== undefined) {
           filter = grep.toString();
         }
 
@@ -1788,7 +1784,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (_name: unknown, _ram: unknown): string => {
         const name = ctx.helper.string("name", _name);
         const ram = ctx.helper.number("ram", _ram);
-        if (arguments.length !== 2) throw ctx.makeRuntimeErrorMsg("Takes 2 arguments");
         let hostnameStr = String(name);
         hostnameStr = hostnameStr.replace(/\s+/g, "");
         if (hostnameStr == "") {
@@ -2215,7 +2210,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getScriptIncome:
       (ctx: NetscriptContext) =>
       (scriptname?: any, hostname?: any, ...args: any[]): any => {
-        if (arguments.length === 0) {
+        if (scriptname === undefined) {
           const res = [];
 
           // First element is total income of all currently running scripts
@@ -2242,7 +2237,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getScriptExpGain:
       (ctx: NetscriptContext) =>
       (scriptname?: any, hostname?: any, ...args: any[]): number => {
-        if (arguments.length === 0) {
+        if (scriptname === undefined) {
           let total = 0;
           for (const ws of workerScripts.values()) {
             total += ws.scriptRef.onlineExpGained / ws.scriptRef.onlineRunningTime;

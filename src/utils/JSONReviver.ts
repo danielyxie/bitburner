@@ -2,7 +2,7 @@
 
 import { validateObject } from "./Validator";
 
-interface IReviverValue {
+export interface IReviverValue {
   ctor: string;
   data: any;
 }

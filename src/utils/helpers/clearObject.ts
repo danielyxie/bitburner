@@ -5,11 +5,12 @@
  * @param obj the object to clear all properties
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function clearObject(obj: any): void {
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      // tslint:disable-next-line:no-dynamic-delete
-      delete obj[key];
+export function clearObject(obj: unknown): void {
+  if (typeof obj !== "object" || obj === null || obj === undefined) return;
+  const o = obj as Record<string, unknown>;
+  for (const key of Object.getOwnPropertyNames(o)) {
+    if (o.hasOwnProperty(key)) {
+      delete o[key];
     }
   }
 }
