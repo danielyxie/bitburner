@@ -5,7 +5,7 @@ import { numeralWrapper } from "../../../ui/numeralFormat";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { NumberInput } from "../../../ui/React/NumberInput";
 import Box from "@mui/material/Box";
 import { KEY } from "../../../utils/helpers/keyCodes";
 
@@ -18,7 +18,7 @@ interface IProps {
 // Create a popup that lets the player manage exports
 export function GoPublicModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  const [shares, setShares] = useState<number>(0);
+  const [shares, setShares] = useState<number>(NaN);
   const initialSharePrice = corp.determineValuation() / corp.totalShares;
 
   function goPublic(): void {
@@ -48,12 +48,6 @@ export function GoPublicModal(props: IProps): React.ReactElement {
     if (event.key === KEY.ENTER) goPublic();
   }
 
-  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    const amt = numeralWrapper.parseMoney(event.target.value);
-    if (event.target.value === "" || isNaN(amt)) setShares(NaN);
-    else setShares(amt);
-  }
-
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
@@ -65,7 +59,7 @@ export function GoPublicModal(props: IProps): React.ReactElement {
         You have a total of {numeralWrapper.format(corp.numShares, "0.000a")} of shares that you can issue.
       </Typography>
       <Box display="flex" alignItems="center">
-        <TextField onChange={onChange} autoFocus type="string" placeholder="Shares to issue" onKeyDown={onKeyDown} />
+        <NumberInput onChange={setShares} autoFocus placeholder="Shares to issue" onKeyDown={onKeyDown} />
         <Button disabled={shares < 0 || shares > corp.numShares} sx={{ mx: 1 }} onClick={goPublic}>
           Go Public
         </Button>
