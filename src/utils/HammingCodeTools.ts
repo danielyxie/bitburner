@@ -60,7 +60,7 @@ export function HammingEncodeProperly(data: number): string {
 
   let m = 1;
 
-  while (2 ** (2 ** m - m - 1) < data) {
+  while (((2**((2**m) - m - 1)) - 1) < data) {
     m++;
   }
 
