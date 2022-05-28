@@ -292,13 +292,18 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
       },
     upgradeSkill:
       (ctx: NetscriptContext) =>
-      (_skillName: unknown): boolean => {
+      (_skillName: unknown, count = 1): number => {
         const skillName = ctx.helper.string("skillName", _skillName);
         checkBladeburnerAccess(ctx);
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.upgradeSkillNetscriptFn(skillName, workerScript);
+          for(let i=0; i<count; i++){
+            if(!bladeburner.upgradeSkillNetscriptFn(skillName, workerScript)){
+              return i;
+            }
+          }
+          return count;
         } catch (e: any) {
           throw ctx.makeRuntimeErrorMsg(e);
         }

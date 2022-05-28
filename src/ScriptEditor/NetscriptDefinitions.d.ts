@@ -3101,7 +3101,7 @@ export interface Bladeburner {
    * @param skillName - Name of skill to be upgraded. Case-sensitive and must be an exact match
    * @returns true if the skill is successfully upgraded, and false otherwise.
    */
-  upgradeSkill(name: string): boolean;
+  upgradeSkill(name: string, count: number): number;
 
   /**
    * Get team size.
