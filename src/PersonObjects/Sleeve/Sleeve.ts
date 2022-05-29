@@ -1221,7 +1221,7 @@ export class Sleeve extends Person {
 
     this.hp -= amt;
     if (this.hp <= 0) {
-      this.shock += 0.5;
+      this.shock = Math.min(1, this.shock - 0.5);
       this.hp = this.max_hp;
       return true;
     } else {
