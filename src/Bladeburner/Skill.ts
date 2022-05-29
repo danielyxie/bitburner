@@ -136,20 +136,19 @@ export class Skill {
   calculateCost(currentLevel: number, count = 1): number {
     if (count == 1) {
       return Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
-    }
-    else if (count < 0 || isNaN(count)) {
+    } else if (count < 0 || isNaN(count)) {
       throw new Error(`Attempted to find cost of ${count} BB upgrades`);
-    }
-    else if (count < 100) {
-      const thisUpgrade = Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
+    } else if (count < 100) {
+      const thisUpgrade = Math.floor(
+        (this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost,
+      );
       return this.calculateCost(currentLevel + 1, count - 1) + thisUpgrade;
-    }
-    else {
+    } else {
       //unFloored is roughly equivalent to
       //(this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost
       //being repeated for increasing currentLevel
-      const preMult = count * ((2 * this.baseCost) + this.costInc * (2 * currentLevel + count + 1)) / 2;
-      const unFloored = (preMult * BitNodeMultipliers.BladeburnerSkillCost) - count / 2;
+      const preMult = (count * (2 * this.baseCost + this.costInc * (2 * currentLevel + count + 1))) / 2;
+      const unFloored = preMult * BitNodeMultipliers.BladeburnerSkillCost - count / 2;
       return Math.floor(unFloored);
     }
   }
