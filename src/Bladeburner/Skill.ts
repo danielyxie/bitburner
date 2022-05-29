@@ -148,7 +148,7 @@ export class Skill {
       //unFloored is roughly equivalent to
       //(this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost
       //being repeated for increasing currentLevel
-      const preMult = (count + 1) * ((2 * this.baseCost) + this.costInc * (2 * currentLevel + count)) / 2;
+      const preMult = count * ((2 * this.baseCost) + this.costInc * (2 * currentLevel + count + 1)) / 2;
       const unFloored = (preMult * BitNodeMultipliers.BladeburnerSkillCost) - count / 2;
       return Math.floor(unFloored);
     }
