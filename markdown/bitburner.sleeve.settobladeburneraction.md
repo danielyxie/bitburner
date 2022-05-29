@@ -16,7 +16,7 @@ setToBladeburnerAction(sleeveNumber: number, action: string, contract?: string):
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to workout at the gym. |
+|  sleeveNumber | number | Index of the sleeve which will perform Action. |
 |  action | string | Name of the action to be performed. |
 |  contract | string | Name of the contract if applicable. |
 
