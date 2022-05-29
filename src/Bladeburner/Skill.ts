@@ -133,8 +133,13 @@ export class Skill {
     }
   }
 
-  calculateCost(currentLevel: number): number {
-    return Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
+  calculateCost(currentLevel: number, count = 1): number {
+    //unFloored is roughly equivalent to
+    //(this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost
+    //being repeated for increasing currentLevel
+    const preMult = (count + 1) * (2 * this.baseCost + this.costInc * (2 * currentLevel + count)) / 2;
+    const unFloored = (preMult * BitNodeMultipliers.BladeburnerSkillCost) - count / 2;
+    return Math.floor(unFloored);
   }
 
   getMultiplier(name: string): number {
