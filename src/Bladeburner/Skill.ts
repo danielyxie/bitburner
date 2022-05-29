@@ -136,8 +136,8 @@ export class Skill {
   calculateCost(currentLevel: number, count = 1): number {
     if (count == 1) {
       return Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
-    } else if (count < 0 || isNaN(count)) {
-      throw new Error(`Attempted to find cost of ${count} BB upgrades`);
+    } else if (count < 0 || isNaN(count) || count == Infinity || count % 1 != 0) {
+      throw new Error(`${count} is an invalid number of upgrades`);
     } else if (count < 100) {
       const thisUpgrade = Math.floor(
         (this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost,

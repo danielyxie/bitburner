@@ -2276,7 +2276,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number {
+  getSkillUpgradeCostNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): number {
     if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
       workerScript.log("bladeburner.getSkillUpgradeCost", () => `Invalid skill: '${skillName}'`);
       return -1;
@@ -2284,9 +2284,9 @@ export class Bladeburner implements IBladeburner {
 
     const skill = Skills[skillName];
     if (this.skills[skillName] == null) {
-      return skill.calculateCost(0);
+      return skill.calculateCost(0, count);
     } else {
-      return skill.calculateCost(this.skills[skillName]);
+      return skill.calculateCost(this.skills[skillName], count);
     }
   }
 
