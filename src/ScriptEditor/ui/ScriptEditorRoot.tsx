@@ -207,6 +207,11 @@ export function Root(props: IProps): React.ReactElement {
             save();
             props.router.toTerminal();
           });
+          // "wqriteandquit" is not a typo, prefix must be found in full string
+          MonacoVim.VimMode.Vim.defineEx("xriteandquit", "x", function () {
+            save();
+            props.router.toTerminal();
+          });
 
           // Setup "go to next tab" and "go to previous tab". This is a little more involved
           // since these aren't Ex commands (they run in normal mode, not after typing `:`)
@@ -693,7 +698,7 @@ export function Root(props: IProps): React.ReactElement {
     if (server === null) throw new Error(`Server '${closingScript.hostname}' should not be null, but it is.`);
 
     const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
-    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex ].code) {
+    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex].code) {
       PromptEvent.emit({
         txt: `Do you want to save changes to ${closingScript.fileName} on ${closingScript.hostname}?`,
         resolve: (result: boolean | string) => {
