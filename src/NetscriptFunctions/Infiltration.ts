@@ -42,7 +42,7 @@ export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltratio
   };
   return {
     getPossibleLocations: () => (): string[] => {
-      return getLocationsWithInfiltrations.map((l) => {return l.city as string});
+      return getLocationsWithInfiltrations.map((l) => {return l.name});
     },
     getInfiltration:
       (ctx: NetscriptContext) =>
