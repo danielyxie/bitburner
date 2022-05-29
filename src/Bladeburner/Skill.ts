@@ -134,16 +134,29 @@ export class Skill {
   }
 
   calculateCost(currentLevel: number, count = 1): number {
-    if (count == 1) {
-      return Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
-    } else if (count < 0 || isNaN(count) || count == Infinity || count % 1 != 0) {
+    //Recursive mode does not handle invalid inputs properly, but it should never
+    //be possible for it to run with them. For the sake of not crashing the game,
+    const recursiveMode = (currentLevel: number, count: number): number => {
+      if (count <= 1) {
+        return Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
+      } else {
+        const thisUpgrade = Math.floor(
+          (this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost,
+        );
+        return this.calculateCost(currentLevel + 1, count - 1) + thisUpgrade;
+      }
+    };
+
+    //Count must be a positive integer.
+    if (count < 0 || count % 1 != 0) {
       throw new Error(`${count} is an invalid number of upgrades`);
-    } else if (count < 100) {
-      const thisUpgrade = Math.floor(
-        (this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost,
-      );
-      return this.calculateCost(currentLevel + 1, count - 1) + thisUpgrade;
-    } else {
+    }
+    //Use recursive mode if count is small
+    if (count <= 100) {
+      return recursiveMode(currentLevel, count);
+    }
+    //Use optimized mode if count is large
+    else {
       //unFloored is roughly equivalent to
       //(this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost
       //being repeated for increasing currentLevel
