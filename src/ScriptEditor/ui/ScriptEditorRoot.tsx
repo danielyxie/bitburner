@@ -207,7 +207,7 @@ export function Root(props: IProps): React.ReactElement {
             save();
             props.router.toTerminal();
           });
-          // "wqriteandquit" is not a typo, prefix must be found in full string
+          // "xriteandquit" is not a typo, prefix must be found in full string
           MonacoVim.VimMode.Vim.defineEx("xriteandquit", "x", function () {
             save();
             props.router.toTerminal();
