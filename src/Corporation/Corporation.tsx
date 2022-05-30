@@ -36,7 +36,7 @@ export class Corporation {
   shareSaleCooldown = 0; // Game cycles until player can sell shares again
   issueNewSharesCooldown = 0; // Game cycles until player can issue shares again
   dividendRate = 0;
-  dividendTaxPercentage = 100 - 100 * BitNodeMultipliers.CorporationSoftcap;
+  dividendTax = 1 - BitNodeMultipliers.CorporationSoftcap + 0.15;
   issuedShares = 0;
   sharePrice = 0;
   storedCycles = 0;
@@ -121,6 +121,7 @@ export class Corporation {
         }
 
         // Process dividends
+        this.updateDividendTax();
         if (this.dividendRate > 0 && cycleProfit > 0) {
           // Validate input again, just to be safe
           if (
@@ -146,20 +147,23 @@ export class Corporation {
     }
   }
 
+  updateDividendTax(): void {
+    this.dividendTax = 1 - BitNodeMultipliers.CorporationSoftcap + 0.15;
+    if (this.unlockUpgrades[5] === 1) {
+      this.dividendTax -= 0.05;
+    }
+    if (this.unlockUpgrades[6] === 1) {
+      this.dividendTax -= 0.1;
+    }
+  }
+
   getDividends(): number {
     const profit = this.revenue - this.expenses;
     const cycleProfit = profit * CorporationConstants.SecsPerMarketCycle;
     const totalDividends = this.dividendRate * cycleProfit;
     const dividendsPerShare = totalDividends / this.totalShares;
     const dividends = this.numShares * dividendsPerShare;
-    let upgrades = -0.15;
-    if (this.unlockUpgrades[5] === 1) {
-      upgrades += 0.05;
-    }
-    if (this.unlockUpgrades[6] === 1) {
-      upgrades += 0.1;
-    }
-    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftcap + upgrades);
+    return Math.pow(dividends, 1 - this.dividendTax);
   }
 
   determineValuation(): number {
@@ -277,10 +281,8 @@ export class Corporation {
     this.funds = this.funds - price;
 
     // Apply effects for one-time upgrades
-    if (upgN === 5) {
-      this.dividendTaxPercentage -= 5;
-    } else if (upgN === 6) {
-      this.dividendTaxPercentage -= 10;
+    if (upgN === 5 || upgN === 6) {
+      this.updateDividendTax();
     }
   }
 
