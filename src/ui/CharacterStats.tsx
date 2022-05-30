@@ -228,8 +228,7 @@ export function CharacterStats(): React.ReactElement {
   let showBitNodeMults = false;
   if (player.sourceFileLvl(5) > 0) {
     const n = player.bitNodeN;
-    const maxSfLevel = n === 12 ? Infinity : 3;
-    const mults = getBitNodeMultipliers(n, Math.min(player.sourceFileLvl(n) + 1, maxSfLevel));
+    const mults = getBitNodeMultipliers(n, player.sourceFileLvl(n));
     showBitNodeMults = !isEqual(mults, defaultMultipliers);
   }
 
