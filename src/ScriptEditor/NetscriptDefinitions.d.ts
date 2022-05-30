@@ -7048,9 +7048,9 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   levelUpgrade(upgradeName: string): void;
   /**
    * Issue dividends
-   * @param percent - Percent of profit to issue as dividends.
+   * @param rate - Fraction of profit to issue as dividends.
    */
-  issueDividends(percent: number): void;
+  issueDividends(rate: number): void;
   /**
    * Buyback Shares
    * @param amount - Amount of shares to buy back.
