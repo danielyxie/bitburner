@@ -17,7 +17,7 @@ import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { createTaskTracker, ITaskTracker } from "../PersonObjects/ITaskTracker";
 import { IPerson } from "../PersonObjects/IPerson";
-import { IRouter, Page } from "../ui/Router";
+import { IRouter } from "../ui/Router";
 import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -35,7 +35,6 @@ import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { BlackOperationNames } from "./data/BlackOperationNames";
 import { KEY } from "../utils/helpers/keyCodes";
 
 interface BlackOpsAttempt {
