@@ -29,7 +29,7 @@ export function Factions(props: IProps): React.ReactElement {
   const [faction, setFaction] = useState(FactionNames.Illuminati as string);
 
   function setFactionDropdown(event: SelectChangeEvent<string>): void {
-    setFaction(event.target.value );
+    setFaction(event.target.value);
   }
 
   function receiveInvite(): void {
