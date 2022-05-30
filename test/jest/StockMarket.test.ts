@@ -463,7 +463,7 @@ describe("Stock Market Tests", function () {
           if (!(stock instanceof Stock)) {
             continue;
           }
-          initialValues[stock.symbol] = {...stock};
+          initialValues[stock.symbol] = { ...stock };
         }
 
         // Don't know or care how many exact cycles are required
