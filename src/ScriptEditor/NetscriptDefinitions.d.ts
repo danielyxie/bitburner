@@ -7100,6 +7100,12 @@ interface CorporationInfo {
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;
+  /** Fraction of profits issued as dividends */
+  dividendRate: number;
+  /** Tax applied on your earnings as a shareholder */
+  dividendTax: number;
+  /** Your earnings as a shareholder per second this cycle */
+  dividendEarnings: number;
   /** State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT. */
   state: string;
   /** Array of all divisions */
