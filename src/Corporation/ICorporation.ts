@@ -19,7 +19,7 @@ export interface ICorporation {
   shareSalesUntilPriceUpdate: number;
   shareSaleCooldown: number;
   issueNewSharesCooldown: number;
-  dividendPercentage: number;
+  dividendRate: number;
   dividendTaxPercentage: number;
   issuedShares: number;
   sharePrice: number;

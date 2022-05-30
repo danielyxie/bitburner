@@ -275,15 +275,15 @@ interface IDividendsStatsProps {
 }
 function DividendsStats({ profit }: IDividendsStatsProps): React.ReactElement {
   const corp = useCorporation();
-  if (corp.dividendPercentage <= 0 || profit <= 0) return <></>;
-  const totalDividends = (corp.dividendPercentage / 100) * profit;
+  if (corp.dividendRate <= 0 || profit <= 0) return <></>;
+  const totalDividends = corp.dividendRate * profit;
   const retainedEarnings = profit - totalDividends;
   const dividendsPerShare = totalDividends / corp.totalShares;
   return (
     <StatsTable
       rows={[
         ["Retained Profits (after dividends):", <MoneyRate money={retainedEarnings} />],
-        ["Dividend Percentage:", numeralWrapper.format(corp.dividendPercentage / 100, "0%")],
+        ["Dividend Percentage:", numeralWrapper.format(corp.dividendRate, "0%")],
         ["Dividends per share:", <MoneyRate money={dividendsPerShare} />],
         ["Your earnings as a shareholder:", <MoneyRate money={corp.getDividends()} />],
       ]}

@@ -84,12 +84,12 @@ export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgr
   }
 }
 
-export function IssueDividends(corporation: ICorporation, percent: number): void {
-  if (isNaN(percent) || percent < 0 || percent > CorporationConstants.DividendMaxPercentage) {
-    throw new Error(`Invalid value. Must be an integer between 0 and ${CorporationConstants.DividendMaxPercentage}`);
+export function IssueDividends(corporation: ICorporation, rate: number): void {
+  if (isNaN(rate) || rate < 0 || rate > CorporationConstants.DividendMaxRate) {
+    throw new Error(`Invalid value. Must be an number between 0 and ${CorporationConstants.DividendMaxRate}`);
   }
 
-  corporation.dividendPercentage = percent * 100;
+  corporation.dividendRate = rate;
 }
 
 export function SellMaterial(mat: Material, amt: string, price: string): void {

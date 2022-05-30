@@ -35,8 +35,8 @@ export class Corporation {
   shareSalesUntilPriceUpdate = CorporationConstants.SHARESPERPRICEUPDATE;
   shareSaleCooldown = 0; // Game cycles until player can sell shares again
   issueNewSharesCooldown = 0; // Game cycles until player can issue shares again
-  dividendPercentage = 0;
-  dividendTaxPercentage = 50;
+  dividendRate = 0;
+  dividendTaxPercentage = 100 - 100 * BitNodeMultipliers.CorporationSoftcap;
   issuedShares = 0;
   sharePrice = 0;
   storedCycles = 0;
@@ -121,16 +121,16 @@ export class Corporation {
         }
 
         // Process dividends
-        if (this.dividendPercentage > 0 && cycleProfit > 0) {
+        if (this.dividendRate > 0 && cycleProfit > 0) {
           // Validate input again, just to be safe
           if (
-            isNaN(this.dividendPercentage) ||
-            this.dividendPercentage < 0 ||
-            this.dividendPercentage > CorporationConstants.DividendMaxPercentage * 100
+            isNaN(this.dividendRate) ||
+            this.dividendRate < 0 ||
+            this.dividendRate > CorporationConstants.DividendMaxRate
           ) {
-            console.error(`Invalid Corporation dividend percentage: ${this.dividendPercentage}`);
+            console.error(`Invalid Corporation dividend rate: ${this.dividendRate}`);
           } else {
-            const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
+            const totalDividends = this.dividendRate * cycleProfit;
             const retainedEarnings = cycleProfit - totalDividends;
             player.gainMoney(this.getDividends(), "corporation");
             this.addFunds(retainedEarnings);
@@ -149,7 +149,7 @@ export class Corporation {
   getDividends(): number {
     const profit = this.revenue - this.expenses;
     const cycleProfit = profit * CorporationConstants.SecsPerMarketCycle;
-    const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
+    const totalDividends = this.dividendRate * cycleProfit;
     const dividendsPerShare = totalDividends / this.totalShares;
     const dividends = this.numShares * dividendsPerShare;
     let upgrades = -0.15;
@@ -167,8 +167,8 @@ export class Corporation {
       profit = this.avgProfit;
     if (this.public) {
       // Account for dividends
-      if (this.dividendPercentage > 0) {
-        profit *= (100 - this.dividendPercentage) / 100;
+      if (this.dividendRate > 0) {
+        profit *= 1 - this.dividendRate;
       }
 
       val = this.funds + profit * 85e3;
