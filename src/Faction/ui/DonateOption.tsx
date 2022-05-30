@@ -12,8 +12,6 @@ import { Favor } from "../../ui/React/Favor";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
-
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { MathJaxWrapper } from "../../MathJaxWrapper";
 

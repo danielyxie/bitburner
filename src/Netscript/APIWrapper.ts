@@ -5,8 +5,6 @@ import type { WorkerScript } from "./WorkerScript";
 import { makeRuntimeRejectMsg } from "../NetscriptEvaluator";
 import { Player } from "../Player";
 import { CityName } from "src/Locations/data/CityNames";
-import { Settings } from "../Settings/Settings";
-import { CONSTANTS } from "../Constants";
 
 type ExternalFunction = (...args: any[]) => any;
 export type ExternalAPI = {
