@@ -34,6 +34,7 @@ export class Employee {
   cyclesUntilRaise = CorporationConstants.CyclesPerEmployeeRaise;
   loc: string;
   pos: string;
+  nextPos: string;
 
   constructor(params: IParams = {}) {
     this.name = params.name ? params.name : "Bobby";
@@ -52,6 +53,7 @@ export class Employee {
 
     this.loc = params.loc ? params.loc : "";
     this.pos = EmployeePositions.Unassigned;
+    this.nextPos = this.pos;
   }
 
   //Returns the amount the employee needs to be paid

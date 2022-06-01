@@ -115,14 +115,14 @@ function ManualManagement(props: IProps): React.ReactElement {
         {positionNames[i]}
       </MenuItem>,
     );
-    if (emp != null && emp.pos === positionNames[i]) {
-      employeePositionSelectorInitialValue = positionNames[i];
+    if (emp != null && emp.nextPos === positionNames[i]) {
+      employeePositionSelectorInitialValue = emp.nextPos;
     }
   }
 
   function employeePositionSelectorOnChange(e: SelectChangeEvent<string>): void {
     if (employee === null) return;
-    employee.pos = e.target.value;
+    props.office.assignSingleJob(employee, e.target.value);
     props.rerender();
   }
 
@@ -181,38 +181,40 @@ interface IAutoAssignProps {
 function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const numJob = countEmployee(props.office.employees, props.job);
-  const numUnassigned = countEmployee(props.office.employees, EmployeePositions.Unassigned);
+
+  const currJob = props.office.employeeJobs[props.job];
+  const nextJob = props.office.employeeNextJobs[props.job];
+  const nextUna = props.office.employeeNextJobs[EmployeePositions.Unassigned];
+
   function assignEmployee(): void {
-    if (numUnassigned <= 0) {
+    if (nextUna <= 0) {
       console.warn("Cannot assign employee. No unassigned employees available");
       return;
     }
 
-    props.office.assignEmployeeToJob(props.job);
-    props.office.calculateEmployeeProductivity(corp, division);
+    props.office.autoAssignJob(props.job, nextJob + 1);
     props.rerender();
   }
 
   function unassignEmployee(): void {
-    props.office.unassignEmployeeFromJob(props.job);
-    props.office.calculateEmployeeProductivity(corp, division);
+    props.office.autoAssignJob(props.job, nextJob - 1);
     props.rerender();
   }
+
   return (
     <TableRow>
       <TableCell>
         <Tooltip title={props.desc}>
           <Typography>
-            {props.job} ({numJob})
+            {props.job} ({(currJob == nextJob ? currJob : `${currJob} -> ${nextJob}`)})
           </Typography>
         </Tooltip>
       </TableCell>
       <TableCell>
-        <IconButton disabled={numUnassigned === 0} onClick={assignEmployee}>
+        <IconButton disabled={nextUna === 0} onClick={assignEmployee}>
           <ArrowDropUpIcon />
         </IconButton>
-        <IconButton disabled={numJob === 0} onClick={unassignEmployee}>
+        <IconButton disabled={nextJob === 0} onClick={unassignEmployee}>
           <ArrowDropDownIcon />
         </IconButton>
       </TableCell>
@@ -223,7 +225,6 @@ function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
 function AutoManagement(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const numUnassigned = countEmployee(props.office.employees, EmployeePositions.Unassigned);
   const vechain = corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
 
   // Calculate average morale, happiness,  energy, and salary.
@@ -247,6 +248,9 @@ function AutoManagement(props: IProps): React.ReactElement {
     avgEnergy = totalEnergy / props.office.employees.length;
   }
 
+  const currUna = props.office.employeeJobs[EmployeePositions.Unassigned];
+  const nextUna = props.office.employeeNextJobs[EmployeePositions.Unassigned];
+
   return (
     <>
       <Table padding="none">
@@ -256,7 +260,7 @@ function AutoManagement(props: IProps): React.ReactElement {
               <Typography>Unassigned Employees:</Typography>
             </TableCell>
             <TableCell>
-              <Typography>{numUnassigned}</Typography>
+              <Typography>{(currUna == nextUna ? currUna : `${currUna} -> ${nextUna}`)}</Typography>
             </TableCell>
           </TableRow>
           <TableRow>

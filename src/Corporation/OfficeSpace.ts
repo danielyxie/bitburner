@@ -37,7 +37,15 @@ export class OfficeSpace {
     [EmployeePositions.RandD]: 0,
     [EmployeePositions.Training]: 0,
     [EmployeePositions.Unassigned]: 0,
-    total: 0,
+  };
+  employeeNextJobs: { [key: string]: number } = {
+    [EmployeePositions.Operations]: 0,
+    [EmployeePositions.Engineer]: 0,
+    [EmployeePositions.Business]: 0,
+    [EmployeePositions.Management]: 0,
+    [EmployeePositions.RandD]: 0,
+    [EmployeePositions.Training]: 0,
+    [EmployeePositions.Unassigned]: 0,
   };
 
   constructor(params: IParams = {}) {
@@ -58,7 +66,13 @@ export class OfficeSpace {
       }
     }
 
+    for (let i = 0; i < this.employees.length; ++i) {
+      const emp = this.employees[i];
+      emp.pos = emp.nextPos;
+    }
+
     this.calculateTotalEmployees();
+    this.calculateNextEmployees();
 
     // Process Office properties
     this.maxEne = 100;
@@ -113,6 +127,18 @@ export class OfficeSpace {
     return salaryPaid;
   }
 
+  calculateNextEmployees(): void {
+    //Reset
+    for (const name of Object.keys(this.employeeNextJobs)) {
+      this.employeeNextJobs[name] = 0;
+    }
+
+    for (let i = 0; i < this.employees.length; ++i) {
+      const employee = this.employees[i];
+      this.employeeNextJobs[employee.nextPos]++;
+    }
+  }
+
   calculateTotalEmployees(): void {
     //Reset
     for (const name of Object.keys(this.employeeJobs)) {
@@ -123,7 +149,6 @@ export class OfficeSpace {
       const employee = this.employees[i];
       this.employeeJobs[employee.pos]++;
     }
-    this.employeeJobs.total = this.employees.length;
   }
 
   calculateEmployeeProductivity(corporation: ICorporation, industry: IIndustry): void {
@@ -173,45 +198,33 @@ export class OfficeSpace {
     emp.name = name;
     this.employees.push(emp);
 
+    this.calculateTotalEmployees();
+    this.calculateNextEmployees();
     return emp;
   }
 
-  //Finds the first unassigned employee and assigns its to the specified job
-  assignEmployeeToJob(job: string): boolean {
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].pos === EmployeePositions.Unassigned) {
-        this.employees[i].pos = job;
-        return true;
-      }
-    }
-    return false;
+  assignSingleJob(employee: Employee, job: string): void {
+    employee.nextPos = job;
+    this.calculateNextEmployees();
   }
 
-  //Finds the first employee with the given job and unassigns it
-  unassignEmployeeFromJob(job: string): boolean {
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].pos === job) {
-        this.employees[i].pos = EmployeePositions.Unassigned;
-        return true;
-      }
-    }
-    return false;
-  }
-
-  setEmployeeToJob(job: string, amount: number): boolean {
-    let jobCount = this.employees.reduce((acc, employee) => (employee.pos === job ? acc + 1 : acc), 0);
+  autoAssignJob(job: string, target: number): boolean {
+    let count = this.employeeNextJobs[job];
 
     for (const employee of this.employees) {
-      if (jobCount == amount) return true;
-      if (employee.pos === EmployeePositions.Unassigned && jobCount <= amount) {
-        employee.pos = job;
-        jobCount++;
-      } else if (employee.pos === job && jobCount >= amount) {
-        employee.pos = EmployeePositions.Unassigned;
-        jobCount--;
+      if (count === target) {
+        break;
+      } else if (employee.nextPos === EmployeePositions.Unassigned && count <= target) {
+        employee.nextPos = job;
+        count++;
+      } else if (employee.nextPos === job && count >= target) {
+        employee.nextPos = EmployeePositions.Unassigned;
+        count--;
       }
     }
-    return jobCount === amount;
+
+    this.calculateNextEmployees();
+    return count === target;
   }
 
   toJSON(): any {

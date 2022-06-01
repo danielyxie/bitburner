@@ -34,6 +34,7 @@ import {
   SetSmartSupply,
   BuyMaterial,
   AssignJob,
+  AutoAssignJob,
   UpgradeOfficeSize,
   ThrowParty,
   PurchaseWarehouse,
@@ -685,20 +686,6 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const researchName = ctx.helper.string("researchName", _researchName);
         return hasResearched(getDivision(divisionName), researchName);
       },
-    setAutoJobAssignment:
-      (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown, _job: unknown, _amount: unknown): Promise<boolean> => {
-        checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const amount = ctx.helper.number("amount", _amount);
-        const job = ctx.helper.string("job", _job);
-        const office = getOffice(divisionName, cityName);
-        if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-        return netscriptDelay(1000, workerScript).then(function () {
-          return Promise.resolve(office.setEmployeeToJob(job, amount));
-        });
-      },
     getOfficeSizeUpgradeCost:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _size: unknown): number => {
@@ -724,10 +711,31 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const cityName = ctx.helper.city("cityName", _cityName);
         const employeeName = ctx.helper.string("employeeName", _employeeName);
         const job = ctx.helper.string("job", _job);
-        const employee = getEmployee(divisionName, cityName, employeeName);
-        return netscriptDelay(["Training", "Unassigned"].includes(employee.pos) ? 0 : 1000, workerScript).then(function () {
-          return Promise.resolve(AssignJob(employee, job));
+
+        if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
+        const office = getOffice(divisionName, cityName);
+
+        return netscriptDelay(0, workerScript).then(function () {
+          return Promise.resolve(AssignJob(office, employeeName, job));
         });
+        //return AssignJob(office, employeeName, job);
+      },
+    setAutoJobAssignment:
+      (ctx: NetscriptContext) =>
+      (_divisionName: unknown, _cityName: unknown, _job: unknown, _amount: unknown): Promise<boolean> => {
+        checkAccess(ctx, 8);
+        const divisionName = ctx.helper.string("divisionName", _divisionName);
+        const cityName = ctx.helper.city("cityName", _cityName);
+        const amount = ctx.helper.number("amount", _amount);
+        const job = ctx.helper.string("job", _job);
+
+        if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
+        const office = getOffice(divisionName, cityName);
+
+        return netscriptDelay(0, workerScript).then(function () {
+          return Promise.resolve(AutoAssignJob(office, job, amount));
+        });
+        //return AutoAssignJob(office, job, amount);
       },
     hireEmployee:
       (ctx: NetscriptContext) =>

@@ -304,9 +304,19 @@ export function BuyBackShares(corporation: ICorporation, player: IPlayer, numSha
   return true;
 }
 
-export function AssignJob(employee: Employee, job: string): void {
+export function AssignJob(office: OfficeSpace, employeeName: string, job: string): void {
+  const employee = office.employees.find(e => e.name === employeeName);
+
+  if (!employee) throw new Error(`Could not find employee '${name}'.`);
   if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-  employee.pos = job;
+
+  office.assignSingleJob(employee, job);
+}
+
+export function AutoAssignJob(office: OfficeSpace, job: string, count: number): boolean {
+  if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
+  
+  return office.autoAssignJob(job, count);
 }
 
 export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size: number): void {
