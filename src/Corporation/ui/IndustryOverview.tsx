@@ -2,6 +2,8 @@
 // (top-left panel in the Industry UI)
 import React, { useState } from "react";
 
+import { BuyCoffee } from "../Actions";
+
 import { OfficeSpace } from "../OfficeSpace";
 import { Industries } from "../IndustryData";
 import { IndustryUpgrades } from "../IndustryUpgrades";
@@ -226,30 +228,39 @@ function Upgrades(props: { office: OfficeSpace; rerender: () => void }): React.R
     const i = upgrade[0];
     const baseCost = upgrade[1];
     const priceMult = upgrade[2];
+
     let cost = 0;
+    let disabled = false;
     switch (i) {
       case 0: //Coffee, cost is static per employee
         cost = props.office.employees.length * baseCost;
+        disabled = cost > corp.funds || props.office.coffeeMult > 0;
         break;
       default:
         cost = baseCost * Math.pow(priceMult, division.upgrades[i]);
+        disabled = cost > corp.funds;
         break;
     }
 
     function onClick(): void {
       if (corp.funds < cost) return;
       corp.funds = corp.funds - cost;
-      division.upgrade(upgrade, {
-        corporation: corp,
-        office: props.office,
-      });
+
+      if (i == 0) {
+        BuyCoffee(corp, props.office);
+      } else {
+        division.upgrade(upgrade, {
+          corporation: corp,
+          office: props.office,
+        });
+      }
       props.rerender();
     }
 
     upgrades.push(
       <Tooltip key={index} title={upgrade[5]}>
         <span>
-          <Button disabled={corp.funds < cost} onClick={onClick}>
+          <Button disabled={disabled} onClick={onClick}>
             {upgrade[4]} -&nbsp;
             <MoneyCost money={cost} corp={corp} />
           </Button>
