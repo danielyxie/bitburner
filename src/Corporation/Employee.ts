@@ -58,8 +58,8 @@ export class Employee {
 
   //Returns the amount the employee needs to be paid
   process(marketCycles = 1, office: OfficeSpace): number {
-    const gain = 0.003 * marketCycles,
-      det = gain * Math.random();
+    const gain = 0.003 * marketCycles;
+    const det = gain * Math.random();
     this.exp += gain;
 
     //Training
@@ -74,12 +74,6 @@ export class Employee {
     this.ene -= det;
     this.hap -= det;
 
-    if (this.ene < office.minEne) {
-      this.ene = office.minEne;
-    }
-    if (this.hap < office.minHap) {
-      this.hap = office.minHap;
-    }
     const salary = this.sal * marketCycles * CorporationConstants.SecsPerMarketCycle;
     return salary;
   }
@@ -118,16 +112,6 @@ export class Employee {
         break;
     }
     return prodBase * prodMult;
-  }
-
-  //Process benefits from having an office party thrown
-  throwParty(money: number): number {
-    const mult = 1 + money / 10e6;
-    this.mor *= mult;
-    this.mor = Math.min(100, this.mor);
-    this.hap *= mult;
-    this.hap = Math.min(100, this.hap);
-    return mult;
   }
 
   toJSON(): any {

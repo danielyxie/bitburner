@@ -7222,6 +7222,8 @@ interface Office {
   minHap: number;
   /** Maximum happiness of the employees */
   maxHap: number;
+  /** Minimum morale of the employees */
+  minMor: number;
   /** Maximum morale of the employees */
   maxMor: number;
   /** Name of all the employees */

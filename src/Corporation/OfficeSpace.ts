@@ -15,11 +15,20 @@ interface IParams {
 export class OfficeSpace {
   loc: string;
   size: number;
+
   minEne = 0;
-  maxEne = 100;
   minHap = 0;
+  minMor = 0;
+
+  maxEne = 100;
   maxHap = 100;
   maxMor = 100;
+
+  autoCoffee = false;
+  autoParty  = false;
+  coffeeMult = 0;
+  partyMult  = 0;
+
   employees: Employee[] = [];
   employeeProd: { [key: string]: number } = {
     [EmployeePositions.Operations]: 0,
@@ -66,11 +75,8 @@ export class OfficeSpace {
       }
     }
 
-    for (let i = 0; i < this.employees.length; ++i) {
-      const emp = this.employees[i];
-      emp.pos = emp.nextPos;
-    }
-
+    // Update employee jobs and job counts
+    for (const employee of this.employees) { employee.pos = employee.nextPos; }
     this.calculateTotalEmployees();
     this.calculateNextEmployees();
 
@@ -78,6 +84,7 @@ export class OfficeSpace {
     this.maxEne = 100;
     this.maxHap = 100;
     this.maxMor = 100;
+
     if (industry.hasResearch("Go-Juice")) {
       this.maxEne += 10;
     }
@@ -86,6 +93,12 @@ export class OfficeSpace {
     }
     if (industry.hasResearch("Sti.mu")) {
       this.maxMor += 10;
+    }
+    if (industry.hasResearch("AutoBrew")) {
+      this.autoCoffee = true;
+    }
+    if (industry.hasResearch("AutoPartyManager")) {
+      this.autoParty = true;
     }
 
     // Calculate changes in Morale/Happiness/Energy for Employees
@@ -96,35 +109,40 @@ export class OfficeSpace {
       perfMult = Math.pow(1.01, marketCycles);
     }
 
-    const hasAutobrew = industry.hasResearch("AutoBrew");
-    const hasAutoparty = industry.hasResearch("AutoPartyManager");
+    let totalSalary = 0;
+    for (const employee of this.employees) {
+      const salary = employee.process(marketCycles, this);
+      totalSalary += salary;
 
-    let salaryPaid = 0;
-    for (let i = 0; i < this.employees.length; ++i) {
-      const emp = this.employees[i];
-      if (hasAutoparty) {
-        emp.mor = this.maxMor;
-        emp.hap = this.maxHap;
+      if (this.autoCoffee) {
+        employee.ene = this.maxEne;
+      } else if (this.coffeeMult > 1) {
+        employee.ene *= this.coffeeMult;
       } else {
-        emp.mor *= perfMult;
-        emp.hap *= perfMult;
-        emp.mor = Math.min(emp.mor, this.maxMor);
-        emp.hap = Math.min(emp.hap, this.maxHap);
+        employee.ene *= perfMult;
       }
 
-      if (hasAutobrew) {
-        emp.ene = this.maxEne;
+      if (this.autoParty) {
+        employee.mor = this.maxMor;
+        employee.hap = this.maxHap;
+      } else if (this.partyMult > 1) {
+        employee.mor *= this.partyMult;
+        employee.hap *= this.partyMult;
       } else {
-        emp.ene *= perfMult;
-        emp.ene = Math.min(emp.ene, this.maxEne);
+        employee.mor *= perfMult;
+        employee.hap *= perfMult;
       }
 
-      const salary = emp.process(marketCycles, this);
-      salaryPaid += salary;
+      employee.ene = Math.max(Math.min(employee.ene, this.maxEne), this.minEne);
+      employee.mor = Math.max(Math.min(employee.mor, this.maxMor), this.minMor);
+      employee.hap = Math.max(Math.min(employee.hap, this.maxHap), this.minHap);
     }
 
+    this.coffeeMult = 0;
+    this.partyMult  = 0;
+
     this.calculateEmployeeProductivity(corporation, industry);
-    return salaryPaid;
+    return totalSalary;
   }
 
   calculateNextEmployees(): void {
@@ -225,6 +243,24 @@ export class OfficeSpace {
 
     this.calculateNextEmployees();
     return count === target;
+  }
+
+  setCoffee(mult = 1.05): boolean {
+    if (mult > 1 && this.coffeeMult === 0 && !this.autoCoffee) {
+      this.coffeeMult = mult;
+      return true;
+    }
+
+    return false;
+  }
+
+  setParty(mult: number): boolean {
+    if (mult > 1 && this.partyMult === 0 && !this.autoParty) {
+      this.partyMult = mult;
+      return true;
+    }
+
+    return false;
   }
 
   toJSON(): any {

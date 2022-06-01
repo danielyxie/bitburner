@@ -36,10 +36,10 @@ import {
   AssignJob,
   AutoAssignJob,
   UpgradeOfficeSize,
-  ThrowParty,
   PurchaseWarehouse,
   UpgradeWarehouse,
   BuyCoffee,
+  ThrowParty,
   HireAdVert,
   MakeProduct,
   Research,
@@ -774,16 +774,18 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
         const costPerEmployee = ctx.helper.number("costPerEmployee", _costPerEmployee);
-        if (costPerEmployee < 0)
+
+        if (costPerEmployee < 0) {
           throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
-        const office = getOffice(divisionName, cityName);
+        }
+
         const corporation = getCorporation();
-        return netscriptDelay(
-          (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
-          workerScript,
-        ).then(function () {
+        const office = getOffice(divisionName, cityName);
+
+        return netscriptDelay(0, workerScript).then(function () {
           return Promise.resolve(ThrowParty(corporation, office, costPerEmployee));
         });
+        //return ThrowParty(corporation, office, costPerEmployee)
       },
     buyCoffee:
       (ctx: NetscriptContext) =>
@@ -791,13 +793,14 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
+
         const corporation = getCorporation();
-        return netscriptDelay(
-          (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
-          workerScript,
-        ).then(function () {
-          return Promise.resolve(BuyCoffee(corporation, getDivision(divisionName), getOffice(divisionName, cityName)));
+        const office = getOffice(divisionName, cityName);
+
+        return netscriptDelay(0, workerScript).then(function () {
+          return Promise.resolve(BuyCoffee(corporation, office));
         });
+        //BuyCoffee(corporation, getOffice(divisionName, cityName);
       },
     hireAdVert:
       (ctx: NetscriptContext) =>
@@ -829,6 +832,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
           maxEne: office.maxEne,
           minHap: office.minHap,
           maxHap: office.maxHap,
+          minMor: office.minMor,
           maxMor: office.maxMor,
           employees: office.employees.map((e) => e.name),
           employeeProd: {

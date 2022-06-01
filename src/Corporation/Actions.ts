@@ -333,14 +333,21 @@ export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size:
   corp.funds = corp.funds - cost;
 }
 
+export function BuyCoffee(corp: ICorporation, office: OfficeSpace): void {
+  const cost = 500e3 * office.employees.length;
+  if (corp.funds < cost) { return; }
+
+  if (!office.setCoffee()) { return; }
+  corp.funds -= cost;
+}
+
 export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
-  const totalCost = costPerEmployee * office.employees.length;
-  if (corp.funds < totalCost) return 0;
-  corp.funds = corp.funds - totalCost;
-  let mult = 0;
-  for (let i = 0; i < office.employees.length; ++i) {
-    mult = office.employees[i].throwParty(costPerEmployee);
-  }
+  const mult = 1 + costPerEmployee / 10e6;
+  const cost = costPerEmployee * office.employees.length;
+  if (corp.funds < cost) { return 0; }
+
+  if (!office.setParty(mult)) { return 0; }
+  corp.funds -= cost;
 
   return mult;
 }
@@ -370,17 +377,6 @@ export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, wareho
   warehouse.level += amt;
   warehouse.updateSize(corp, division);
   corp.funds = corp.funds - sizeUpgradeCost;
-}
-
-export function BuyCoffee(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
-  const upgrade = IndustryUpgrades[0];
-  const cost = office.employees.length * upgrade[1];
-  if (corp.funds < cost) return;
-  corp.funds = corp.funds - cost;
-  division.upgrade(upgrade, {
-    corporation: corp,
-    office: office,
-  });
 }
 
 export function HireAdVert(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
