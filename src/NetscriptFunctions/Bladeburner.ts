@@ -279,7 +279,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
       },
     getSkillUpgradeCost:
       (ctx: NetscriptContext) =>
-      (_skillName: unknown, _count = 1): number => {
+      (_skillName: unknown, _count: unknown = 1): number => {
         const skillName = ctx.helper.string("skillName", _skillName);
         const count = ctx.helper.number("count", _count);
         checkBladeburnerAccess(ctx);
@@ -293,7 +293,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
       },
     upgradeSkill:
       (ctx: NetscriptContext) =>
-      (_skillName: unknown, _count = 1): boolean => {
+      (_skillName: unknown, _count: unknown = 1): boolean => {
         const skillName = ctx.helper.string("skillName", _skillName);
         const count = ctx.helper.number("count", _count);
         checkBladeburnerAccess(ctx);
