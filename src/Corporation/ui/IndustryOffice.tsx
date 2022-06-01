@@ -203,7 +203,7 @@ function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
 
   return (
     <TableRow>
-      <TableCell>
+      <TableCell width="70%">
         <Tooltip title={props.desc}>
           <Typography>
             {props.job} ({(currJob == nextJob ? currJob : `${currJob} -> ${nextJob}`)})
@@ -256,7 +256,7 @@ function AutoManagement(props: IProps): React.ReactElement {
       <Table padding="none">
         <TableBody>
           <TableRow>
-            <TableCell>
+            <TableCell width="70%">
               <Typography>Unassigned Employees:</Typography>
             </TableCell>
             <TableCell>
@@ -264,7 +264,7 @@ function AutoManagement(props: IProps): React.ReactElement {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>
+            <TableCell width="70%">
               <Typography>Avg Employee Morale:</Typography>
             </TableCell>
             <TableCell>
@@ -272,7 +272,7 @@ function AutoManagement(props: IProps): React.ReactElement {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>
+            <TableCell width="70%">
               <Typography>Avg Employee Happiness:</Typography>
             </TableCell>
             <TableCell>
@@ -280,7 +280,7 @@ function AutoManagement(props: IProps): React.ReactElement {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>
+            <TableCell width="70%">
               <Typography>Avg Employee Energy:</Typography>
             </TableCell>
             <TableCell>
@@ -288,7 +288,7 @@ function AutoManagement(props: IProps): React.ReactElement {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>
+            <TableCell width="70%">
               <Typography>Total Employee Salary:</Typography>
             </TableCell>
             <TableCell>
@@ -300,7 +300,7 @@ function AutoManagement(props: IProps): React.ReactElement {
           {vechain && (
             <>
               <TableRow>
-                <TableCell>
+                <TableCell width="70%">
                   <Tooltip
                     title={
                       <Typography>
@@ -320,7 +320,7 @@ function AutoManagement(props: IProps): React.ReactElement {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>
+                <TableCell width="70%">
                   <Tooltip
                     title={
                       <Typography>
@@ -345,7 +345,7 @@ function AutoManagement(props: IProps): React.ReactElement {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>
+                <TableCell width="70%">
                   <Tooltip
                     title={<Typography>The effect this office's 'Business' employees has on boosting sales</Typography>}
                   >
