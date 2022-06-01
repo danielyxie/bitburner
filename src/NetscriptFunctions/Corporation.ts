@@ -705,7 +705,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
       },
     assignJob:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown, _employeeName: unknown, _job: unknown): Promise<void> => {
+      (_divisionName: unknown, _cityName: unknown, _employeeName: unknown, _job: unknown): void => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
@@ -715,14 +715,11 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
         const office = getOffice(divisionName, cityName);
 
-        return netscriptDelay(0, workerScript).then(function () {
-          return Promise.resolve(AssignJob(office, employeeName, job));
-        });
-        //return AssignJob(office, employeeName, job);
+        AssignJob(office, employeeName, job);
       },
     setAutoJobAssignment:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown, _job: unknown, _amount: unknown): Promise<boolean> => {
+      (_divisionName: unknown, _cityName: unknown, _job: unknown, _amount: unknown): boolean => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
@@ -732,10 +729,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
         const office = getOffice(divisionName, cityName);
 
-        return netscriptDelay(0, workerScript).then(function () {
-          return Promise.resolve(AutoAssignJob(office, job, amount));
-        });
-        //return AutoAssignJob(office, job, amount);
+        return AutoAssignJob(office, job, amount);
       },
     hireEmployee:
       (ctx: NetscriptContext) =>

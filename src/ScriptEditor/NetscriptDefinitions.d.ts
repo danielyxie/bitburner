@@ -6618,9 +6618,8 @@ export interface OfficeAPI {
    * @param cityName - Name of the city
    * @param employeeName - name of the employee
    * @param job - Name of the job.
-   * @returns A promise that is fulfilled when the assignment is complete.
    */
-  assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
+  assignJob(divisionName: string, cityName: string, employeeName: string, job: string): void;
   /**
    * Hire an employee.
    * @param divisionName - Name of the division
@@ -6708,9 +6707,9 @@ export interface OfficeAPI {
    * @param cityName - Name of the city
    * @param job - Name of the job
    * @param amount - Number of employees to assign to that job
-   * @returns A promise that is fulfilled when the assignment is complete.
+   * @returns true if the employee count reached the target amount, false if not
    */
-  setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
+  setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): boolean;
   /**
    * Cost to Upgrade office size.
    * @param divisionName - Name of the division
