@@ -38,11 +38,15 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
       dialogBoxCreate("You don't have enough company funds to throw a party!");
     } else {
       const mult = ThrowParty(corp, props.office, cost);
-      dialogBoxCreate(
-        "You threw a party for the office! The morale and happiness " +
-          "of each employee increased by " +
-          numeralWrapper.formatPercentage(mult - 1),
-      );
+
+      if (mult > 0) {
+        dialogBoxCreate(
+          "You threw a party for the office! The morale and happiness " +
+            "of each employee increased by " +
+            numeralWrapper.formatPercentage(mult - 1),
+        );
+      }
+
       props.rerender();
       props.onClose();
     }

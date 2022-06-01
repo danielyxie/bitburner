@@ -464,8 +464,8 @@ export function IndustryOffice(props: IProps): React.ReactElement {
                 title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
               >
                 <span>
-                  <Button disabled={corp.funds < 0} onClick={() => setThrowPartyOpen(true)}>
-                    Throw Party
+                  <Button disabled={corp.funds < 0 || props.office.partyMult > 0} onClick={() => setThrowPartyOpen(true)}>
+                    {props.office.partyMult > 0 ? "Throwing Party..." : "Throw Party"}
                   </Button>
                 </span>
               </Tooltip>
