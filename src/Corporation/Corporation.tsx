@@ -281,9 +281,7 @@ export class Corporation {
     this.funds = this.funds - price;
 
     // Apply effects for one-time upgrades
-    if (upgN === 5 || upgN === 6) {
-      this.updateDividendTax();
-    }
+    this.updateDividendTax();
   }
 
   //Levelable upgrades
