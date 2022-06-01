@@ -769,7 +769,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
       },
     throwParty:
       (ctx: NetscriptContext) =>
-      async (_divisionName: unknown, _cityName: unknown, _costPerEmployee: unknown): Promise<number> => {
+      (_divisionName: unknown, _cityName: unknown, _costPerEmployee: unknown): number => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
@@ -782,14 +782,11 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const corporation = getCorporation();
         const office = getOffice(divisionName, cityName);
 
-        return netscriptDelay(0, workerScript).then(function () {
-          return Promise.resolve(ThrowParty(corporation, office, costPerEmployee));
-        });
-        //return ThrowParty(corporation, office, costPerEmployee)
+        return ThrowParty(corporation, office, costPerEmployee)
       },
     buyCoffee:
       (ctx: NetscriptContext) =>
-      async (_divisionName: unknown, _cityName: unknown): Promise<void> => {
+      (_divisionName: unknown, _cityName: unknown): boolean => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
@@ -797,10 +794,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const corporation = getCorporation();
         const office = getOffice(divisionName, cityName);
 
-        return netscriptDelay(0, workerScript).then(function () {
-          return Promise.resolve(BuyCoffee(corporation, office));
-        });
-        //BuyCoffee(corporation, getOffice(divisionName, cityName);
+        return BuyCoffee(corporation, office);
       },
     hireAdVert:
       (ctx: NetscriptContext) =>

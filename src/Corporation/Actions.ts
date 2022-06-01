@@ -333,12 +333,14 @@ export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size:
   corp.funds = corp.funds - cost;
 }
 
-export function BuyCoffee(corp: ICorporation, office: OfficeSpace): void {
+export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
   const cost = 500e3 * office.employees.length;
-  if (corp.funds < cost) { return; }
+  if (corp.funds < cost) { return false; }
 
-  if (!office.setCoffee()) { return; }
+  if (!office.setCoffee()) { return false; }
   corp.funds -= cost;
+
+  return true;
 }
 
 export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {

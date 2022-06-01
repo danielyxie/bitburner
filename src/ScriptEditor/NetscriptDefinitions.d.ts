@@ -6639,16 +6639,16 @@ export interface OfficeAPI {
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param costPerEmployee - Amount to spend per employee.
-   * @returns Amount of happiness increased.
+   * @returns Multiplier for happiness and morale, or zero on failure
    */
-  throwParty(divisionName: string, cityName: string, costPerEmployee: number): Promise<number>;
+  throwParty(divisionName: string, cityName: string, costPerEmployee: number): number;
   /**
    * Buy coffee for your employees
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
-   * @returns A promise that is fulfilled when the coffee is served.
+   * @returns true if buying coffee was successful, false otherwise
    */
-  buyCoffee(divisionName: string, cityName: string): Promise<void>;
+  buyCoffee(divisionName: string, cityName: string): boolean;
   /**
    * Hire AdVert.
    * @param divisionName - Name of the division
