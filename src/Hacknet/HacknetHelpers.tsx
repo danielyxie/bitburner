@@ -497,7 +497,7 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
           const target = GetServer(upgTarget);
           if (target == null) {
             console.error(`Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`);
-            return false;
+            throw new Error(`'${upgTarget}' is not a server.`);
           }
           if (!(target instanceof Server)) throw new Error(`'${upgTarget}' is not a normal server.`);
 
@@ -513,7 +513,7 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
           const target = GetServer(upgTarget);
           if (target == null) {
             console.error(`Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`);
-            return false;
+            throw new Error(`'${upgTarget}' is not a server.`);
           }
           if (!(target instanceof Server)) throw new Error(`'${upgTarget}' is not a normal server.`);
 
