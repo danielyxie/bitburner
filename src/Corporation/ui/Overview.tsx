@@ -279,7 +279,7 @@ function DividendsStats({ profit }: IDividendsStatsProps): React.ReactElement {
   const totalDividends = corp.dividendRate * profit;
   const retainedEarnings = profit - totalDividends;
   const dividendsPerShare = totalDividends / corp.totalShares;
-  const playerEarnings = corp.getDividends() / CorporationConstants.SecsPerMarketCycle;
+  const playerEarnings = corp.getCycleDividends() / CorporationConstants.SecsPerMarketCycle;
   return (
     <StatsTable
       rows={[

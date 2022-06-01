@@ -133,7 +133,7 @@ export class Corporation {
           } else {
             const totalDividends = this.dividendRate * cycleProfit;
             const retainedEarnings = cycleProfit - totalDividends;
-            player.gainMoney(this.getDividends(), "corporation");
+            player.gainMoney(this.getCycleDividends(), "corporation");
             this.addFunds(retainedEarnings);
           }
         } else {
@@ -157,7 +157,7 @@ export class Corporation {
     }
   }
 
-  getDividends(): number {
+  getCycleDividends(): number {
     const profit = this.revenue - this.expenses;
     const cycleProfit = profit * CorporationConstants.SecsPerMarketCycle;
     const totalDividends = this.dividendRate * cycleProfit;

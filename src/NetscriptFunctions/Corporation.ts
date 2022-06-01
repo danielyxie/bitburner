@@ -955,7 +955,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         sharePrice: corporation.sharePrice,
         dividendRate: corporation.dividendRate,
         dividendTax: corporation.dividendTax,
-        dividendEarnings: corporation.getDividends() / CorporationConstants.SecsPerMarketCycle,
+        dividendEarnings: corporation.getCycleDividends() / CorporationConstants.SecsPerMarketCycle,
         state: corporation.state.getState(),
         divisions: corporation.divisions.map((division): NSDivision => getSafeDivision(division)),
       };

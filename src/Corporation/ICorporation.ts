@@ -55,6 +55,6 @@ export interface ICorporation {
   getScientificResearchMultiplier(): number;
   getStarterGuide(player: IPlayer): void;
   updateDividendTax(): void;
-  getDividends(): number;
+  getCycleDividends(): number;
   toJSON(): any;
 }
