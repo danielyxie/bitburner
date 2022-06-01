@@ -188,23 +188,25 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): I
     },
     hashCost:
       (ctx: NetscriptContext) =>
-      (_upgName: unknown): number => {
+      (_upgName: unknown, _count: unknown = 1): number => {
         const upgName = ctx.helper.string("upgName", _upgName);
+        const count = ctx.helper.number("count", _count);
         if (!hasHacknetServers(player)) {
           return Infinity;
         }
 
-        return player.hashManager.getUpgradeCost(upgName);
+        return player.hashManager.getUpgradeCost(upgName, count);
       },
     spendHashes:
       (ctx: NetscriptContext) =>
-      (_upgName: unknown, _upgTarget: unknown = ""): boolean => {
+      (_upgName: unknown, _upgTarget: unknown = "", _count: unknown = 1): boolean => {
         const upgName = ctx.helper.string("upgName", _upgName);
         const upgTarget = ctx.helper.string("upgTarget", _upgTarget);
+        const count = ctx.helper.number("count", _count);
         if (!hasHacknetServers(player)) {
           return false;
         }
-        return purchaseHashUpgrade(player, upgName, upgTarget);
+        return purchaseHashUpgrade(player, upgName, upgTarget, count);
       },
     getHashUpgrades: () => (): string[] => {
       if (!hasHacknetServers(player)) {
