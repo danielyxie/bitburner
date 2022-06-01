@@ -28,6 +28,8 @@ export class OfficeSpace {
   autoParty  = false;
   coffeeMult = 0;
   partyMult  = 0;
+  coffeeEmployees = 0;
+  partyEmployees  = 0;
 
   employees: Employee[] = [];
   employeeProd: { [key: string]: number } = {
@@ -117,7 +119,8 @@ export class OfficeSpace {
       if (this.autoCoffee) {
         employee.ene = this.maxEne;
       } else if (this.coffeeMult > 1) {
-        employee.ene *= this.coffeeMult;
+        const mult = 1 + (this.coffeeMult - 1) * this.employees.length / this.coffeeEmployees;
+        employee.ene *= mult;
       } else {
         employee.ene *= perfMult;
       }
@@ -126,8 +129,9 @@ export class OfficeSpace {
         employee.mor = this.maxMor;
         employee.hap = this.maxHap;
       } else if (this.partyMult > 1) {
-        employee.mor *= this.partyMult;
-        employee.hap *= this.partyMult;
+        const mult = 1 + (this.partyMult - 1) * this.employees.length / this.partyEmployees;
+        employee.mor *= mult;
+        employee.hap *= mult;
       } else {
         employee.mor *= perfMult;
         employee.hap *= perfMult;
@@ -140,6 +144,8 @@ export class OfficeSpace {
 
     this.coffeeMult = 0;
     this.partyMult  = 0;
+    this.coffeeEmployees = 0;
+    this.partyEmployees  = 0;
 
     this.calculateEmployeeProductivity(corporation, industry);
     return totalSalary;
@@ -246,8 +252,9 @@ export class OfficeSpace {
   }
 
   setCoffee(mult = 1.05): boolean {
-    if (mult > 1 && this.coffeeMult === 0 && !this.autoCoffee) {
+    if (mult > 1 && this.coffeeMult === 0 && !this.autoCoffee && this.employees.length > 0) {
       this.coffeeMult = mult;
+      this.coffeeEmployees = this.employees.length;
       return true;
     }
 
@@ -255,8 +262,9 @@ export class OfficeSpace {
   }
 
   setParty(mult: number): boolean {
-    if (mult > 1 && this.partyMult === 0 && !this.autoParty) {
+    if (mult > 1 && this.partyMult === 0 && !this.autoParty && this.employees.length > 0) {
       this.partyMult = mult;
+      this.partyEmployees = this.employees.length;
       return true;
     }
 
