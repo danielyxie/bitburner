@@ -576,7 +576,6 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
       }
       default:
         console.warn(`Unrecognized upgrade name ${upgName}. Upgrade has no effect`);
-        player.hashManager.refundUpgrade(upgName, count);
         return false;
     }
 
