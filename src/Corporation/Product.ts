@@ -62,6 +62,7 @@ export class Product {
     [EmployeePositions.Business]: 0,
     [EmployeePositions.Management]: 0,
     [EmployeePositions.RandD]: 0,
+    total: 0
   };
 
   // Aggregate score for this Product's 'rating'
@@ -151,6 +152,7 @@ export class Product {
 
     this.prog += progress;
     for (const pos of Object.keys(employeeProd)) {
+      console.log(`${pos} ${this.creationProd[pos]} += ${(employeeProd[pos] * progress) / 100}`);
       this.creationProd[pos] += (employeeProd[pos] * progress) / 100;
     }
   }
@@ -160,7 +162,7 @@ export class Product {
     this.fin = true;
 
     // Calculate properties
-    const totalProd = Object.values(this.creationProd).reduce((p, q) => p + q);
+    const totalProd = this.creationProd.total;
     const engrRatio = this.creationProd[EmployeePositions.Engineer] / totalProd;
     const mgmtRatio = this.creationProd[EmployeePositions.Management] / totalProd;
     const rndRatio = this.creationProd[EmployeePositions.RandD] / totalProd;
@@ -171,6 +173,12 @@ export class Product {
     const balanceMult = 1.2 * engrRatio + 0.9 * mgmtRatio + 1.3 * rndRatio + 1.5 * opsRatio + busRatio;
     const sciMult = 1 + Math.pow(industry.sciResearch.qty, industry.sciFac) / 800;
     const totalMult = balanceMult * designMult * sciMult;
+
+    console.log("============");
+    console.log(`${totalProd} ${this.creationProd[EmployeePositions.Engineer]} ${this.creationProd[EmployeePositions.Management]} ${this.creationProd[EmployeePositions.RandD]} ${this.creationProd[EmployeePositions.Operations]} ${this.creationProd[EmployeePositions.Business]}`);
+    console.log(`${engrRatio} ${mgmtRatio} ${rndRatio} ${opsRatio} ${busRatio}`);
+    console.log(`${designMult} ${balanceMult} ${sciMult} ${totalMult}`);
+    console.log("============");
 
     this.qlt =
       totalMult *
