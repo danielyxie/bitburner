@@ -19,6 +19,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Tooltip from "@mui/material/Tooltip";
@@ -180,6 +181,16 @@ interface IAutoAssignProps {
   rerender: () => void;
 }
 
+function EmployeeCount(props: { num: number, next: number }): React.ReactElement {
+  return (
+    <Typography display="flex" alignItems="center" justifyContent="flex-end">
+      {props.num === props.next ? null : props.num}
+      {props.num === props.next ? null : <KeyboardArrowRightIcon />}
+      {props.next}
+    </Typography>
+  );
+}
+
 function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
@@ -205,17 +216,20 @@ function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
 
   return (
     <TableRow>
-      <TableCell width="70%">
+      <TableCell>
         <Tooltip title={props.desc}>
-          <Typography>
-            {props.job} ({(currJob == nextJob ? currJob : `${currJob} -> ${nextJob}`)})
-          </Typography>
+          <Typography>{props.job}</Typography>
         </Tooltip>
       </TableCell>
       <TableCell>
+        <EmployeeCount num={currJob} next={nextJob} />
+      </TableCell>
+      <TableCell width="1px">
         <IconButton disabled={nextUna === 0} onClick={assignEmployee}>
           <ArrowDropUpIcon />
         </IconButton>
+      </TableCell>
+      <TableCell width="1px">
         <IconButton disabled={nextJob === 0} onClick={unassignEmployee}>
           <ArrowDropDownIcon />
         </IconButton>
@@ -254,167 +268,160 @@ function AutoManagement(props: IProps): React.ReactElement {
   const nextUna = props.office.employeeNextJobs[EmployeePositions.Unassigned];
 
   return (
-    <>
-      <Table padding="none">
-        <TableBody>
-          <TableRow>
-            <TableCell width="70%">
-              <Typography>Unassigned Employees:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{(currUna == nextUna ? currUna : `${currUna} -> ${nextUna}`)}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell width="70%">
-              <Typography>Avg Employee Morale:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{numeralWrapper.format(avgMorale, "0.000")}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell width="70%">
-              <Typography>Avg Employee Happiness:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{numeralWrapper.format(avgHappiness, "0.000")}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell width="70%">
-              <Typography>Avg Employee Energy:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{numeralWrapper.format(avgEnergy, "0.000")}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell width="70%">
-              <Typography>Total Employee Salary:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>
-                <Money money={totalSalary} />
-              </Typography>
-            </TableCell>
-          </TableRow>
-          {vechain && (
-            <>
-              <TableRow>
-                <TableCell width="70%">
-                  <Tooltip
-                    title={
-                      <Typography>
-                        The base amount of material this office can produce. Does not include production multipliers
-                        from upgrades and materials. This value is based off the productivity of your Operations,
-                        Engineering, and Management employees
-                      </Typography>
-                    }
-                  >
-                    <Typography>Material Production:</Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Typography>
-                    {numeralWrapper.format(division.getOfficeProductivity(props.office), "0.000")}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell width="70%">
-                  <Tooltip
-                    title={
-                      <Typography>
-                        The base amount of any given Product this office can produce. Does not include production
-                        multipliers from upgrades and materials. This value is based off the productivity of your
-                        Operations, Engineering, and Management employees
-                      </Typography>
-                    }
-                  >
-                    <Typography>Product Production:</Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Typography>
-                    {numeralWrapper.format(
-                      division.getOfficeProductivity(props.office, {
-                        forProduct: true,
-                      }),
-                      "0.000",
-                    )}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell width="70%">
-                  <Tooltip
-                    title={<Typography>The effect this office's 'Business' employees has on boosting sales</Typography>}
-                  >
-                    <Typography> Business Multiplier:</Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Typography>x{numeralWrapper.format(division.getBusinessFactor(props.office), "0.000")}</Typography>
-                </TableCell>
-              </TableRow>
-            </>
-          )}
-        </TableBody>
-      </Table>
+    <Table padding="none">
+      <TableBody>
+        <TableRow>
+          <TableCell>
+            <Typography>Unassigned Employees:</Typography>
+          </TableCell>
+          <TableCell>
+            <EmployeeCount num={currUna} next={nextUna} />
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Avg Employee Morale:</Typography>
+          </TableCell>
+          <TableCell align="right">
+            <Typography>{numeralWrapper.format(avgMorale, "0.000")}</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Avg Employee Happiness:</Typography>
+          </TableCell>
+          <TableCell align="right">
+            <Typography>{numeralWrapper.format(avgHappiness, "0.000")}</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Avg Employee Energy:</Typography>
+          </TableCell>
+          <TableCell align="right">
+            <Typography>{numeralWrapper.format(avgEnergy, "0.000")}</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Total Employee Salary:</Typography>
+          </TableCell>
+          <TableCell>
+            <Typography align="right">
+              <Money money={totalSalary} />
+            </Typography>
+          </TableCell>
+        </TableRow>
+        {vechain && (
+          <>
+            <TableRow>
+              <TableCell>
+                <Tooltip
+                  title={
+                    <Typography>
+                      The base amount of material this office can produce. Does not include production multipliers
+                      from upgrades and materials. This value is based off the productivity of your Operations,
+                      Engineering, and Management employees
+                    </Typography>
+                  }
+                >
+                  <Typography>Material Production:</Typography>
+                </Tooltip>
+              </TableCell>
+              <TableCell>
+                <Typography align="right">
+                  {numeralWrapper.format(division.getOfficeProductivity(props.office), "0.000")}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Tooltip
+                  title={
+                    <Typography>
+                      The base amount of any given Product this office can produce. Does not include production
+                      multipliers from upgrades and materials. This value is based off the productivity of your
+                      Operations, Engineering, and Management employees
+                    </Typography>
+                  }
+                >
+                  <Typography>Product Production:</Typography>
+                </Tooltip>
+              </TableCell>
+              <TableCell>
+                <Typography align="right">
+                  {numeralWrapper.format(
+                    division.getOfficeProductivity(props.office, {
+                      forProduct: true,
+                    }),
+                    "0.000",
+                  )}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Tooltip
+                  title={<Typography>The effect this office's 'Business' employees has on boosting sales</Typography>}
+                >
+                  <Typography> Business Multiplier:</Typography>
+                </Tooltip>
+              </TableCell>
+              <TableCell align="right">
+                <Typography>x{numeralWrapper.format(division.getBusinessFactor(props.office), "0.000")}</Typography>
+              </TableCell>
+            </TableRow>
+          </>
+        )}
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Operations}
+          desc={"Manages supply chain operations. Improves the amount of Materials and Products you produce."}
+        />
 
-      <Table padding="none">
-        <TableBody>
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Operations}
-            desc={"Manages supply chain operations. Improves the amount of Materials and Products you produce."}
-          />
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Engineer}
+          desc={
+            "Develops and maintains products and production systems. Increases the quality of everything you produce. Also increases the amount you produce (not as much as Operations, however)"
+          }
+        />
 
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Engineer}
-            desc={
-              "Develops and maintains products and production systems. Increases the quality of everything you produce. Also increases the amount you produce (not as much as Operations, however)"
-            }
-          />
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Business}
+          desc={"Handles sales and finances. Improves the amount of Materials and Products you can sell."}
+        />
 
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Business}
-            desc={"Handles sales and finances. Improves the amount of Materials and Products you can sell."}
-          />
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Management}
+          desc={
+            "Leads and oversees employees and office operations. Improves the effectiveness of Engineer and Operations employees."
+          }
+        />
 
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Management}
-            desc={
-              "Leads and oversees employees and office operations. Improves the effectiveness of Engineer and Operations employees."
-            }
-          />
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.RandD}
+          desc={"Research new innovative ways to improve the company. Generates Scientific Research."}
+        />
 
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.RandD}
-            desc={"Research new innovative ways to improve the company. Generates Scientific Research."}
-          />
-
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Training}
-            desc={
-              "Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations."
-            }
-          />
-        </TableBody>
-      </Table>
-    </>
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Training}
+          desc={
+            "Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations."
+          }
+        />
+      </TableBody>
+    </Table>
   );
 }
 
