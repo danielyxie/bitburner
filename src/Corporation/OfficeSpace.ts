@@ -25,11 +25,11 @@ export class OfficeSpace {
   maxMor = 100;
 
   autoCoffee = false;
-  autoParty  = false;
+  autoParty = false;
   coffeeMult = 0;
-  partyMult  = 0;
+  partyMult = 0;
   coffeeEmployees = 0;
-  partyEmployees  = 0;
+  partyEmployees = 0;
 
   employees: Employee[] = [];
   employeeProd: { [key: string]: number } = {
@@ -78,7 +78,9 @@ export class OfficeSpace {
     }
 
     // Update employee jobs and job counts
-    for (const employee of this.employees) { employee.pos = employee.nextPos; }
+    for (const employee of this.employees) {
+      employee.pos = employee.nextPos;
+    }
     this.calculateTotalEmployees();
     this.calculateNextEmployees();
 
@@ -113,13 +115,13 @@ export class OfficeSpace {
 
     let totalSalary = 0;
     for (const employee of this.employees) {
-      const salary = employee.process(marketCycles, this);
+      const salary = employee.process(marketCycles);
       totalSalary += salary;
 
       if (this.autoCoffee) {
         employee.ene = this.maxEne;
       } else if (this.coffeeMult > 1) {
-        const mult = 1 + (this.coffeeMult - 1) * this.employees.length / this.coffeeEmployees;
+        const mult = 1 + ((this.coffeeMult - 1) * this.employees.length) / this.coffeeEmployees;
         employee.ene *= mult;
       } else {
         employee.ene *= perfMult;
@@ -129,7 +131,7 @@ export class OfficeSpace {
         employee.mor = this.maxMor;
         employee.hap = this.maxHap;
       } else if (this.partyMult > 1) {
-        const mult = 1 + (this.partyMult - 1) * this.employees.length / this.partyEmployees;
+        const mult = 1 + ((this.partyMult - 1) * this.employees.length) / this.partyEmployees;
         employee.mor *= mult;
         employee.hap *= mult;
       } else {
@@ -143,9 +145,9 @@ export class OfficeSpace {
     }
 
     this.coffeeMult = 0;
-    this.partyMult  = 0;
+    this.partyMult = 0;
     this.coffeeEmployees = 0;
-    this.partyEmployees  = 0;
+    this.partyEmployees = 0;
 
     this.calculateEmployeeProductivity(corporation, industry);
     return totalSalary;

@@ -3,7 +3,6 @@ import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { EmployeePositions } from "./EmployeePositions";
 import { ICorporation } from "./ICorporation";
-import { OfficeSpace } from "./OfficeSpace";
 import { IIndustry } from "./IIndustry";
 
 interface IParams {
@@ -57,7 +56,7 @@ export class Employee {
   }
 
   //Returns the amount the employee needs to be paid
-  process(marketCycles = 1, office: OfficeSpace): number {
+  process(marketCycles = 1): number {
     const gain = 0.003 * marketCycles;
     const det = gain * Math.random();
     this.exp += gain;

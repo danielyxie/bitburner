@@ -128,24 +128,30 @@ export class Product {
 
   // Make progress on this product based on current employee productivity
   createProduct(marketCycles: number, employeeProd: typeof this["creationProd"]): void {
-    if (this.fin) { return; }
+    if (this.fin) {
+      return;
+    }
 
     // Designing/Creating a Product is based mostly off Engineers
-    const opProd   = employeeProd[EmployeePositions.Operations];
+    const opProd = employeeProd[EmployeePositions.Operations];
     const engrProd = employeeProd[EmployeePositions.Engineer];
     const mgmtProd = employeeProd[EmployeePositions.Management];
-    const total    = opProd + engrProd + mgmtProd;
-    if (total <= 0) { return; }
+    const total = opProd + engrProd + mgmtProd;
+    if (total <= 0) {
+      return;
+    }
 
     // Management is a multiplier for the production from Engineers
     const mgmtFactor = 1 + mgmtProd / (1.2 * total);
-    const prodMult   = (Math.pow(engrProd, 0.34) + Math.pow(opProd, 0.2)) * mgmtFactor;
-    const progress   = Math.min(marketCycles * 0.01 * prodMult, 100 - this.prog);
-    if (progress <= 0) { return; }
+    const prodMult = (Math.pow(engrProd, 0.34) + Math.pow(opProd, 0.2)) * mgmtFactor;
+    const progress = Math.min(marketCycles * 0.01 * prodMult, 100 - this.prog);
+    if (progress <= 0) {
+      return;
+    }
 
     this.prog += progress;
     for (const pos of Object.keys(employeeProd)) {
-      this.creationProd[pos] += employeeProd[pos] * progress / 100;
+      this.creationProd[pos] += (employeeProd[pos] * progress) / 100;
     }
   }
 
@@ -155,16 +161,16 @@ export class Product {
 
     // Calculate properties
     const totalProd = Object.values(this.creationProd).reduce((p, q) => p + q);
-    const engrRatio = this.creationProd[EmployeePositions.Engineer]   / totalProd;
+    const engrRatio = this.creationProd[EmployeePositions.Engineer] / totalProd;
     const mgmtRatio = this.creationProd[EmployeePositions.Management] / totalProd;
-    const rndRatio  = this.creationProd[EmployeePositions.RandD]      / totalProd;
-    const opsRatio  = this.creationProd[EmployeePositions.Operations] / totalProd;
-    const busRatio  = this.creationProd[EmployeePositions.Business]   / totalProd;
+    const rndRatio = this.creationProd[EmployeePositions.RandD] / totalProd;
+    const opsRatio = this.creationProd[EmployeePositions.Operations] / totalProd;
+    const busRatio = this.creationProd[EmployeePositions.Business] / totalProd;
 
-    const designMult  = 1 + Math.pow(this.designCost, 0.1) / 100;
+    const designMult = 1 + Math.pow(this.designCost, 0.1) / 100;
     const balanceMult = 1.2 * engrRatio + 0.9 * mgmtRatio + 1.3 * rndRatio + 1.5 * opsRatio + busRatio;
-    const sciMult     = 1 + Math.pow(industry.sciResearch.qty, industry.sciFac) / 800;
-    const totalMult   = balanceMult * designMult * sciMult;
+    const sciMult = 1 + Math.pow(industry.sciResearch.qty, industry.sciFac) / 800;
+    const totalMult = balanceMult * designMult * sciMult;
 
     this.qlt =
       totalMult *

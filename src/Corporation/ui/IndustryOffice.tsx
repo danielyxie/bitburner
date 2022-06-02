@@ -36,14 +36,6 @@ interface IProps {
   rerender: () => void;
 }
 
-function countEmployee(employees: Employee[], job: string): number {
-  let n = 0;
-  for (let i = 0; i < employees.length; ++i) {
-    if (employees[i].pos === job) n++;
-  }
-  return n;
-}
-
 interface ISwitchProps {
   manualMode: boolean;
   switchMode: (f: (b: boolean) => boolean) => void;
@@ -181,7 +173,7 @@ interface IAutoAssignProps {
   rerender: () => void;
 }
 
-function EmployeeCount(props: { num: number, next: number }): React.ReactElement {
+function EmployeeCount(props: { num: number; next: number }): React.ReactElement {
   return (
     <Typography display="flex" alignItems="center" justifyContent="flex-end">
       {props.num === props.next ? null : props.num}
@@ -192,9 +184,6 @@ function EmployeeCount(props: { num: number, next: number }): React.ReactElement
 }
 
 function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
-  const corp = useCorporation();
-  const division = useDivision();
-
   const currJob = props.office.employeeJobs[props.job];
   const nextJob = props.office.employeeNextJobs[props.job];
   const nextUna = props.office.employeeNextJobs[EmployeePositions.Unassigned];
@@ -319,9 +308,9 @@ function AutoManagement(props: IProps): React.ReactElement {
                 <Tooltip
                   title={
                     <Typography>
-                      The base amount of material this office can produce. Does not include production multipliers
-                      from upgrades and materials. This value is based off the productivity of your Operations,
-                      Engineering, and Management employees
+                      The base amount of material this office can produce. Does not include production multipliers from
+                      upgrades and materials. This value is based off the productivity of your Operations, Engineering,
+                      and Management employees
                     </Typography>
                   }
                 >
@@ -473,8 +462,17 @@ export function IndustryOffice(props: IProps): React.ReactElement {
                 title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
               >
                 <span>
-                  <Button disabled={corp.funds < props.office.getCoffeeCost() || props.office.coffeeMult > 0} onClick={() => BuyCoffee(corp, props.office)}>
-                    {props.office.coffeeMult > 0 ? "Buying coffee..." : <span>Buy Coffee - <MoneyCost money={props.office.getCoffeeCost()} corp={corp} /></span>}
+                  <Button
+                    disabled={corp.funds < props.office.getCoffeeCost() || props.office.coffeeMult > 0}
+                    onClick={() => BuyCoffee(corp, props.office)}
+                  >
+                    {props.office.coffeeMult > 0 ? (
+                      "Buying coffee..."
+                    ) : (
+                      <span>
+                        Buy Coffee - <MoneyCost money={props.office.getCoffeeCost()} corp={corp} />
+                      </span>
+                    )}
                   </Button>
                 </span>
               </Tooltip>
@@ -487,7 +485,10 @@ export function IndustryOffice(props: IProps): React.ReactElement {
                 title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
               >
                 <span>
-                  <Button disabled={corp.funds < 0 || props.office.partyMult > 0} onClick={() => setThrowPartyOpen(true)}>
+                  <Button
+                    disabled={corp.funds < 0 || props.office.partyMult > 0}
+                    onClick={() => setThrowPartyOpen(true)}
+                  >
                     {props.office.partyMult > 0 ? "Throwing Party..." : "Throw Party"}
                   </Button>
                 </span>

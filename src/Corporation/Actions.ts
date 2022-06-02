@@ -13,7 +13,6 @@ import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { Cities } from "../Locations/Cities";
 import { EmployeePositions } from "./EmployeePositions";
-import { Employee } from "./Employee";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
 
@@ -304,7 +303,7 @@ export function BuyBackShares(corporation: ICorporation, player: IPlayer, numSha
 }
 
 export function AssignJob(office: OfficeSpace, employeeName: string, job: string): void {
-  const employee = office.employees.find(e => e.name === employeeName);
+  const employee = office.employees.find((e) => e.name === employeeName);
 
   if (!employee) throw new Error(`Could not find employee '${name}'.`);
   if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
@@ -314,7 +313,7 @@ export function AssignJob(office: OfficeSpace, employeeName: string, job: string
 
 export function AutoAssignJob(office: OfficeSpace, job: string, count: number): boolean {
   if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-  
+
   return office.autoAssignJob(job, count);
 }
 
@@ -334,9 +333,13 @@ export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size:
 
 export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
   const cost = office.getCoffeeCost();
-  if (corp.funds < cost) { return false; }
+  if (corp.funds < cost) {
+    return false;
+  }
 
-  if (!office.setCoffee()) { return false; }
+  if (!office.setCoffee()) {
+    return false;
+  }
   corp.funds -= cost;
 
   return true;
@@ -345,9 +348,13 @@ export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
 export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
   const mult = 1 + costPerEmployee / 10e6;
   const cost = costPerEmployee * office.employees.length;
-  if (corp.funds < cost) { return 0; }
+  if (corp.funds < cost) {
+    return 0;
+  }
 
-  if (!office.setParty(mult)) { return 0; }
+  if (!office.setParty(mult)) {
+    return 0;
+  }
   corp.funds -= cost;
 
   return mult;

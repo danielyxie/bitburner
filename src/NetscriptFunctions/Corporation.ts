@@ -1,6 +1,4 @@
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { netscriptDelay } from "../NetscriptEvaluator";
 
 import { OfficeSpace } from "../Corporation/OfficeSpace";
 import { Employee } from "../Corporation/Employee";
@@ -60,7 +58,6 @@ import {
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
-import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 import { Industry } from "../Corporation/Industry";
 import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/IndustryData";
 import { CorporationConstants } from "../Corporation/data/Constants";
@@ -69,7 +66,7 @@ import { Factions } from "../Faction/Factions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 
-export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript): InternalAPI<NSCorporation> {
+export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
     if (!player.canAccessCorporation() || player.hasCorporation()) return false;
     if (!corporationName) return false;
@@ -257,7 +254,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
 
   function getMaterial(divisionName: string, cityName: string, materialName: string): Material {
     const warehouse = getWarehouse(divisionName, cityName);
-    const matName = (materialName ).replace(/ /g, "");
+    const matName = materialName.replace(/ /g, "");
     const material = warehouse.materials[matName];
     if (material === undefined) throw new Error(`Invalid material name: '${materialName}'`);
     return material;
@@ -780,7 +777,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const corporation = getCorporation();
         const office = getOffice(divisionName, cityName);
 
-        return ThrowParty(corporation, office, costPerEmployee)
+        return ThrowParty(corporation, office, costPerEmployee);
       },
     buyCoffee:
       (ctx: NetscriptContext) =>

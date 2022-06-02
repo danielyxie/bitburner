@@ -2,7 +2,6 @@
 // (top-left panel in the Industry UI)
 import React, { useState } from "react";
 
-import { OfficeSpace } from "../OfficeSpace";
 import { Industries } from "../IndustryData";
 import { HireAdVert } from "../Actions";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -89,8 +88,6 @@ function MakeProductButton(): React.ReactElement {
 }
 
 interface IProps {
-  currentCity: string;
-  office: OfficeSpace;
   rerender: () => void;
 }
 
@@ -218,14 +215,20 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         <Tooltip
           title={
             <Typography>
-              Hire AdVert.Inc to advertise your company. Each level of
-              this upgrade grants your company a static increase of 3 and 1 to its awareness and
-              popularity, respectively. It will then increase your company's awareness by 1%, and its popularity
-              by a random percentage between 1% and 3%. These effects are increased by other upgrades
-              that increase the power of your advertising.
+              Hire AdVert.Inc to advertise your company. Each level of this upgrade grants your company a static
+              increase of 3 and 1 to its awareness and popularity, respectively. It will then increase your company's
+              awareness by 1%, and its popularity by a random percentage between 1% and 3%. These effects are increased
+              by other upgrades that increase the power of your advertising.
             </Typography>
-          }>
-          <Button disabled={division.getAdVertCost() > corp.funds} onClick={() => HireAdVert(corp, division)}>
+          }
+        >
+          <Button
+            disabled={division.getAdVertCost() > corp.funds}
+            onClick={function () {
+              HireAdVert(corp, division);
+              props.rerender();
+            }}
+          >
             Hire AdVert -&nbsp; <MoneyCost money={division.getAdVertCost()} corp={corp} />
           </Button>
         </Tooltip>
