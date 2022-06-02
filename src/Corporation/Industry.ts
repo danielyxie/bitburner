@@ -1002,23 +1002,9 @@ export class Industry implements IIndustry {
           const office = this.offices[city];
           if (office === 0) continue;
 
-          // Designing/Creating a Product is based mostly off Engineers
-          const engrProd = office.employeeProd[EmployeePositions.Engineer];
-          const mgmtProd = office.employeeProd[EmployeePositions.Management];
-          const opProd = office.employeeProd[EmployeePositions.Operations];
-          const total = engrProd + mgmtProd + opProd;
-          if (total <= 0) {
-            break;
-          }
-
-          // Management is a multiplier for the production from Engineers
-          const mgmtFactor = 1 + mgmtProd / (1.2 * total);
-
-          const progress = (Math.pow(engrProd, 0.34) + Math.pow(opProd, 0.2)) * mgmtFactor;
-
-          prod.createProduct(marketCycles, progress);
+          prod.createProduct(marketCycles, office.employeeProd);
           if (prod.prog >= 100) {
-            prod.finishProduct(office.employeeProd, this);
+            prod.finishProduct(this);
           }
           break;
         }
