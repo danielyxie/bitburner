@@ -5,7 +5,9 @@ import React, { useState } from "react";
 import { OfficeSpace } from "../OfficeSpace";
 import { Employee } from "../Employee";
 import { EmployeePositions } from "../EmployeePositions";
+import { BuyCoffee } from "../Actions";
 
+import { MoneyCost } from "./MoneyCost";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { UpgradeOfficeSizeModal } from "./modals/UpgradeOfficeSizeModal";
@@ -457,6 +459,20 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             open={upgradeOfficeSizeOpen}
             onClose={() => setUpgradeOfficeSizeOpen(false)}
           />
+
+          {!division.hasResearch("AutoBrew") && (
+            <>
+              <Tooltip
+                title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
+              >
+                <span>
+                  <Button disabled={corp.funds < props.office.getCoffeeCost() || props.office.coffeeMult > 0} onClick={() => BuyCoffee(corp, props.office)}>
+                    {props.office.coffeeMult > 0 ? "Buying coffee..." : <span>Buy Coffee - <MoneyCost money={props.office.getCoffeeCost()} corp={corp} /></span>}
+                  </Button>
+                </span>
+              </Tooltip>
+            </>
+          )}
 
           {!division.hasResearch("AutoPartyManager") && (
             <>

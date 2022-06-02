@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { OfficeSpace } from "../OfficeSpace";
 import { Industries } from "../IndustryData";
-import { BuyCoffee, HireAdVert } from "../Actions";
+import { HireAdVert } from "../Actions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { MakeProductModal } from "./modals/MakeProductModal";
@@ -87,7 +87,14 @@ function MakeProductButton(): React.ReactElement {
     </>
   );
 }
-function Text(): React.ReactElement {
+
+interface IProps {
+  currentCity: string;
+  office: OfficeSpace;
+  rerender: () => void;
+}
+
+export function IndustryOverview(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
   const [helpOpen, setHelpOpen] = useState(false);
@@ -113,7 +120,7 @@ function Text(): React.ReactElement {
   }
 
   return (
-    <>
+    <Paper>
       <Typography>
         Industry: {division.type} (Corp Funds: <Money money={corp.funds} />)
       </Typography>
@@ -191,7 +198,6 @@ function Text(): React.ReactElement {
           </Typography>
         </StaticModal>
       </Box>
-
       <Box display="flex" alignItems="center">
         <Tooltip
           title={
@@ -207,18 +213,8 @@ function Text(): React.ReactElement {
         </Button>
         <ResearchModal open={researchOpen} onClose={() => setResearchOpen(false)} industry={division} />
       </Box>
-
-      <Typography>Purchases & Upgrades</Typography>
-
+      <br />
       <Box display="flex" alignItems="center">
-        <Tooltip title={"Provide your employees with coffee, increasing their energy by 5%."}>
-          <span>
-            <Button disabled={false} onClick={() => undefined}>
-              {"coffee"} -&nbsp;
-              <MoneyCost money={1e6} corp={corp} />
-            </Button>
-          </span>
-        </Tooltip>
         <Tooltip
           title={
             <Typography>
@@ -229,32 +225,12 @@ function Text(): React.ReactElement {
               that increase the power of your advertising.
             </Typography>
           }>
-          <span>
-            <Button disabled={division.getAdVertCost() > corp.funds} onClick={() => HireAdVert(corp, division)}>
-              {"Hire AdVert"} -&nbsp;
-              <MoneyCost money={division.getAdVertCost()} corp={corp} />
-            </Button>
-          </span>
+          <Button disabled={division.getAdVertCost() > corp.funds} onClick={() => HireAdVert(corp, division)}>
+            Hire AdVert -&nbsp; <MoneyCost money={division.getAdVertCost()} corp={corp} />
+          </Button>
         </Tooltip>
+        {division.makesProducts && <MakeProductButton />}
       </Box>
-    </>
-  );
-}
-
-interface IProps {
-  currentCity: string;
-  office: OfficeSpace;
-  rerender: () => void;
-}
-
-export function IndustryOverview(props: IProps): React.ReactElement {
-  const division = useDivision();
-
-  return (
-    <Paper>
-      <Text />
-      <br />
-      {division.makesProducts && <MakeProductButton />}
     </Paper>
   );
 }
