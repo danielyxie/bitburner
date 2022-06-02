@@ -14,7 +14,6 @@ import { MaterialSizes } from "./MaterialSizes";
 import { Warehouse } from "./Warehouse";
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
-import { IndustryUpgrade, IndustryUpgrades } from "./IndustryUpgrades";
 
 interface IParams {
   name?: string;
@@ -59,9 +58,6 @@ export class Industry implements IIndustry {
   thisCycleRevenue: number;
   thisCycleExpenses: number;
 
-  //Upgrades
-  upgrades: number[] = Array(Object.keys(IndustryUpgrades).length).fill(0);
-
   state = "START";
   newInd = true;
 
@@ -80,6 +76,8 @@ export class Industry implements IIndustry {
     [CityName.Ishima]: 0,
     [CityName.Volhaven]: 0,
   };
+
+  numAdVerts = 0;
 
   constructor(params: IParams = {}) {
     this.name = params.name ? params.name : "";
@@ -1262,38 +1260,19 @@ export class Industry implements IIndustry {
     }
   }
 
-  upgrade(upgrade: IndustryUpgrade, refs: { corporation: ICorporation; office: OfficeSpace }): void {
-    const corporation = refs.corporation;
-    const office = refs.office;
-    const upgN = upgrade[0];
-    while (this.upgrades.length <= upgN) {
-      this.upgrades.push(0);
-    }
-    ++this.upgrades[upgN];
+  getAdVertCost(): number {
+    return 1e9 * Math.pow(1.06, this.numAdVerts);
+  }
 
-    switch (upgN) {
-      case 0: {
-        //Coffee, 5% energy per employee
-        for (let i = 0; i < office.employees.length; ++i) {
-          office.employees[i].ene = Math.min(office.employees[i].ene * 1.05, office.maxEne);
-        }
-        break;
-      }
-      case 1: {
-        //AdVert.Inc,
-        const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
-        const awareness = (this.awareness + 3 * advMult) * (1.01 * advMult);
-        this.awareness = Math.min(awareness, Number.MAX_VALUE);
+  applyAdVert(corporation: ICorporation): void {
+    const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
+    const awareness = (this.awareness + 3 * advMult) * (1.01 * advMult);
+    this.awareness = Math.min(awareness, Number.MAX_VALUE);
 
-        const popularity = (this.popularity + 1 * advMult) * ((1 + getRandomInt(1, 3) / 100) * advMult);
-        this.popularity = Math.min(popularity, Number.MAX_VALUE);
-        break;
-      }
-      default: {
-        console.error(`Un-implemented function index: ${upgN}`);
-        break;
-      }
-    }
+    const popularity = (this.popularity + 1 * advMult) * ((1 + getRandomInt(1, 3) / 100) * advMult);
+    this.popularity = Math.min(popularity, Number.MAX_VALUE);
+
+    ++this.numAdVerts;
   }
 
   // Returns how much of a material can be produced based of office productivity (employee stats)

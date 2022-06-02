@@ -251,6 +251,10 @@ export class OfficeSpace {
     return count === target;
   }
 
+  getCoffeeCost(): number {
+    return 500e3 * this.employees.length;
+  }
+
   setCoffee(mult = 1.05): boolean {
     if (mult > 1 && this.coffeeMult === 0 && !this.autoCoffee && this.employees.length > 0) {
       this.coffeeMult = mult;

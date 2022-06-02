@@ -64,7 +64,6 @@ import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligen
 import { Industry } from "../Corporation/Industry";
 import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/IndustryData";
 import { CorporationConstants } from "../Corporation/data/Constants";
-import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -303,7 +302,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
       lastCycleExpenses: division.lastCycleExpenses,
       thisCycleRevenue: division.thisCycleRevenue,
       thisCycleExpenses: division.thisCycleExpenses,
-      upgrades: division.upgrades.slice(),
+      upgrades: [0, division.numAdVerts],
       cities: cities,
       products: division.products === undefined ? [] : Object.keys(division.products),
       makesProducts: division.makesProducts,
@@ -659,8 +658,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const division = getDivision(divisionName);
-        const upgrade = IndustryUpgrades[1];
-        return upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
+        return division.getAdVertCost();
       },
     getHireAdVertCount:
       (ctx: NetscriptContext) =>
@@ -668,7 +666,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const division = getDivision(divisionName);
-        return division.upgrades[1];
+        return division.numAdVerts;
       },
     getResearchCost:
       (ctx: NetscriptContext) =>
@@ -802,7 +800,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const corporation = getCorporation();
-        HireAdVert(corporation, getDivision(divisionName), getOffice(divisionName, "Sector-12"));
+        HireAdVert(corporation, getDivision(divisionName));
       },
     research:
       (ctx: NetscriptContext) =>

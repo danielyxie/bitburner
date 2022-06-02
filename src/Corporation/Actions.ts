@@ -14,7 +14,6 @@ import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { Cities } from "../Locations/Cities";
 import { EmployeePositions } from "./EmployeePositions";
 import { Employee } from "./Employee";
-import { IndustryUpgrades } from "./IndustryUpgrades";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
 
@@ -334,7 +333,7 @@ export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size:
 }
 
 export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
-  const cost = 500e3 * office.employees.length;
+  const cost = office.getCoffeeCost();
   if (corp.funds < cost) { return false; }
 
   if (!office.setCoffee()) { return false; }
@@ -381,15 +380,11 @@ export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, wareho
   corp.funds = corp.funds - sizeUpgradeCost;
 }
 
-export function HireAdVert(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
-  const upgrade = IndustryUpgrades[1];
-  const cost = upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
+export function HireAdVert(corp: ICorporation, division: IIndustry): void {
+  const cost = division.getAdVertCost();
   if (corp.funds < cost) return;
   corp.funds = corp.funds - cost;
-  division.upgrade(upgrade, {
-    corporation: corp,
-    office: office,
-  });
+  division.applyAdVert(corp);
 }
 
 export function MakeProduct(

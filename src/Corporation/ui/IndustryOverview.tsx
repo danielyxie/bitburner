@@ -2,11 +2,9 @@
 // (top-left panel in the Industry UI)
 import React, { useState } from "react";
 
-import { BuyCoffee } from "../Actions";
-
 import { OfficeSpace } from "../OfficeSpace";
 import { Industries } from "../IndustryData";
-import { IndustryUpgrades } from "../IndustryUpgrades";
+import { BuyCoffee, HireAdVert } from "../Actions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { MakeProductModal } from "./modals/MakeProductModal";
@@ -209,67 +207,38 @@ function Text(): React.ReactElement {
         </Button>
         <ResearchModal open={researchOpen} onClose={() => setResearchOpen(false)} industry={division} />
       </Box>
+
+      <Typography>Purchases & Upgrades</Typography>
+
+      <Box display="flex" alignItems="center">
+        <Tooltip title={"Provide your employees with coffee, increasing their energy by 5%."}>
+          <span>
+            <Button disabled={false} onClick={() => undefined}>
+              {"coffee"} -&nbsp;
+              <MoneyCost money={1e6} corp={corp} />
+            </Button>
+          </span>
+        </Tooltip>
+        <Tooltip
+          title={
+            <Typography>
+              Hire AdVert.Inc to advertise your company. Each level of
+              this upgrade grants your company a static increase of 3 and 1 to its awareness and
+              popularity, respectively. It will then increase your company's awareness by 1%, and its popularity
+              by a random percentage between 1% and 3%. These effects are increased by other upgrades
+              that increase the power of your advertising.
+            </Typography>
+          }>
+          <span>
+            <Button disabled={division.getAdVertCost() > corp.funds} onClick={() => HireAdVert(corp, division)}>
+              {"Hire AdVert"} -&nbsp;
+              <MoneyCost money={division.getAdVertCost()} corp={corp} />
+            </Button>
+          </span>
+        </Tooltip>
+      </Box>
     </>
   );
-}
-
-function Upgrades(props: { office: OfficeSpace; rerender: () => void }): React.ReactElement {
-  const corp = useCorporation();
-  const division = useDivision();
-  const upgrades = [];
-  for (const index of Object.keys(IndustryUpgrades)) {
-    const upgrade = IndustryUpgrades[index];
-
-    // AutoBrew research disables the Coffee upgrade
-    if (division.hasResearch("AutoBrew") && upgrade[4] === "Coffee") {
-      continue;
-    }
-
-    const i = upgrade[0];
-    const baseCost = upgrade[1];
-    const priceMult = upgrade[2];
-
-    let cost = 0;
-    let disabled = false;
-    switch (i) {
-      case 0: //Coffee, cost is static per employee
-        cost = props.office.employees.length * baseCost;
-        disabled = cost > corp.funds || props.office.coffeeMult > 0;
-        break;
-      default:
-        cost = baseCost * Math.pow(priceMult, division.upgrades[i]);
-        disabled = cost > corp.funds;
-        break;
-    }
-
-    function onClick(): void {
-      if (corp.funds < cost) return;
-      corp.funds = corp.funds - cost;
-
-      if (i == 0) {
-        BuyCoffee(corp, props.office);
-      } else {
-        division.upgrade(upgrade, {
-          corporation: corp,
-          office: props.office,
-        });
-      }
-      props.rerender();
-    }
-
-    upgrades.push(
-      <Tooltip key={index} title={upgrade[5]}>
-        <span>
-          <Button disabled={disabled} onClick={onClick}>
-            {upgrade[4]} -&nbsp;
-            <MoneyCost money={cost} corp={corp} />
-          </Button>
-        </span>
-      </Tooltip>,
-    );
-  }
-
-  return <>{upgrades}</>;
 }
 
 interface IProps {
@@ -285,8 +254,6 @@ export function IndustryOverview(props: IProps): React.ReactElement {
     <Paper>
       <Text />
       <br />
-      <Typography>Purchases & Upgrades</Typography>
-      <Upgrades office={props.office} rerender={props.rerender} /> <br />
       {division.makesProducts && <MakeProductButton />}
     </Paper>
   );
