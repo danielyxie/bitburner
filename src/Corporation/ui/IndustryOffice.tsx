@@ -19,7 +19,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Tooltip from "@mui/material/Tooltip";
@@ -177,7 +177,7 @@ function EmployeeCount(props: { num: number; next: number }): React.ReactElement
   return (
     <Typography display="flex" alignItems="center" justifyContent="flex-end">
       {props.num === props.next ? null : props.num}
-      {props.num === props.next ? null : <KeyboardArrowRightIcon />}
+      {props.num === props.next ? null : <ArrowForwardIcon fontSize="inherit"/>}
       {props.next}
     </Typography>
   );
