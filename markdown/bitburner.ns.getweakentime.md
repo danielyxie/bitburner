@@ -28,5 +28,5 @@ Returns the amount of time in milliseconds it takes to execute the weaken Netscr
 
 RAM cost: 0.05 GB
 
-Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server. 
+Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server. The required time is increased by the security level of the target server and decreased by the player's hacking level.
 
