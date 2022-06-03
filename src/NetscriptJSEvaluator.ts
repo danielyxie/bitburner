@@ -27,7 +27,7 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
   // load fully dynamic content. So we hide the import from webpack
   // by placing it inside an eval call.
   await script.updateRamUsage(player, scripts);
-  const uurls = _getScriptUrls(script, scripts, []);
+  const uurls = _getScriptUrls(script, scripts, [], {});
   const url = uurls[uurls.length - 1].url;
   if (script.url && script.url !== url) {
     URL.revokeObjectURL(script.url);
@@ -107,21 +107,22 @@ function shouldCompile(script: Script, scripts: Script[]): boolean {
 // - script -- the script for whom we are getting a URL.
 // - scripts -- all the scripts available on this server
 // - seen -- The modules above this one -- to prevent mutual dependency.
-//
-// TODO We don't make any effort to cache a given module when it is imported at
-// different parts of the tree. That hasn't presented any problem with during
-// testing, but it might be an idea for the future. Would require a topo-sort
-// then url-izing from leaf-most to root-most.
+// - blobCache -- map of script filename to a compiled blob url.
 /**
  * @param {Script} script
  * @param {Script[]} scripts
  * @param {Script[]} seen
+ * @param {Object.<string, string>} blobCache
  * @returns {ScriptUrl[]} All of the compiled scripts, with the final one
  *                         in the list containing the blob corresponding to
  *                         the script parameter.
  */
-// BUG: apparently seen is never consulted. Oops.
-function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): ScriptUrl[] {
+function _getScriptUrls(
+  script: Script,
+  scripts: Script[],
+  seen: Script[],
+  blobCache: { [filename: string]: string },
+): ScriptUrl[] {
   // Inspired by: https://stackoverflow.com/a/43834063/91401
   const urlStack: ScriptUrl[] = [];
   // Seen contains the dependents of the current script. Make sure we include that in the script dependents.
@@ -189,8 +190,9 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
       if (matchingScripts.length === 0) continue;
 
       const [importedScript] = matchingScripts;
+      if (seen.includes(importedScript)) continue;
 
-      const urls = _getScriptUrls(importedScript, scripts, seen);
+      const urls = _getScriptUrls(importedScript, scripts, seen, blobCache);
 
       // The top url in the stack is the replacement import file for this script.
       urlStack.push(...urls);
@@ -204,7 +206,15 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     // accidental calls to window.print() do not bring up the "print screen" dialog
     transformedCode += `\n//# sourceURL=${script.server}/${script.filename}`;
 
-    const blob = URL.createObjectURL(makeScriptBlob(transformedCode));
+    // TODO: Transformations in case of cache hit are discarded,
+    // but walking through dependency tree is required to fill in all dependents for reused scripts
+    let blob: string;
+    if (script.filename in blobCache) {
+      blob = blobCache[script.filename];
+    } else {
+      blob = URL.createObjectURL(makeScriptBlob(transformedCode));
+      blobCache[script.filename] = blob;
+    }
     // Push the blob URL onto the top of the stack.
     urlStack.push(new ScriptUrl(script.filename, blob, script.moduleSequenceNumber));
     return urlStack;
