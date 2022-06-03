@@ -44,6 +44,7 @@ import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 import { TextField, Tooltip } from "@mui/material";
+import * as path from "path";
 
 interface IProps {
   // Map of filename -> code
@@ -274,7 +275,12 @@ export function Root(props: IProps): React.ReactElement {
     }
     setUpdatingRam(true);
     const codeCopy = newCode + "";
-    const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
+    const ramUsage = await calculateRamUsage(
+      props.player,
+      codeCopy,
+      props.player.getCurrentServer().scripts,
+      currentScript ? path.dirname(path.resolve("/", currentScript.fileName)) : "/",
+    );
     if (ramUsage.cost > 0) {
       const entries = ramUsage.entries?.sort((a, b) => b.cost - a.cost) ?? [];
       const entriesDisp = [];
@@ -693,7 +699,7 @@ export function Root(props: IProps): React.ReactElement {
     if (server === null) throw new Error(`Server '${closingScript.hostname}' should not be null, but it is.`);
 
     const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
-    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex ].code) {
+    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex].code) {
       PromptEvent.emit({
         txt: `Do you want to save changes to ${closingScript.fileName} on ${closingScript.hostname}?`,
         resolve: (result: boolean | string) => {

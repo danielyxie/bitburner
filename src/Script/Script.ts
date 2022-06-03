@@ -10,6 +10,7 @@ import { ScriptUrl } from "./ScriptUrl";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import * as path from "path";
 
 let globalModuleSequenceNumber = 0;
 
@@ -120,7 +121,12 @@ export class Script {
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
   async updateRamUsage(player: IPlayer, otherScripts: Script[]): Promise<void> {
-    const res = await calculateRamUsage(player, this.code, otherScripts);
+    const res = await calculateRamUsage(
+      player,
+      this.code,
+      otherScripts,
+      path.dirname(path.resolve("/", this.filename)),
+    );
     if (res.cost > 0) {
       this.ramUsage = roundToTwo(res.cost);
       this.ramUsageEntries = res.entries;
