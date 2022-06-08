@@ -18,6 +18,7 @@ import { use } from "../../ui/Context";
 import { Box } from "@mui/material";
 
 import { ClassType } from "../../utils/WorkType";
+import { serverMetadata } from "../../Server/data/servers";
 
 type IProps = {
   loc: Location;
@@ -28,7 +29,8 @@ export function UniversityLocation(props: IProps): React.ReactElement {
   const router = use.Router();
 
   function calculateCost(): number {
-    const server = GetServer(props.loc.name);
+    const serverMeta = serverMetadata.find((s) => s.specialName === props.loc.name);
+    const server = GetServer(serverMeta ? serverMeta.hostname : "");
     if (server == null || !server.hasOwnProperty("backdoorInstalled")) return props.loc.costMult;
     const discount = (server as Server).backdoorInstalled ? 0.9 : 1;
     return props.loc.costMult * discount;
