@@ -4349,7 +4349,7 @@ interface Infiltration {
    * @remarks
    * RAM cost: 5 GB
    *
-   * @returns array of objects {city, name}
+   * @returns array of SimpleLocation [{city, name}]
    */
   getPossibleLocations(): SimpleLocation[];
   /**
