@@ -4325,9 +4325,18 @@ export interface InfiltrationReward {
  * @public
  */
 export interface InfiltrationLocation {
-  location: any;
+  location: SimpleLocation;
   reward: InfiltrationReward;
   difficulty: number;
+}
+
+/**
+ * Infiltration API.
+ * @public
+ */
+interface SimpleLocation {
+  city: CityName | null;
+  name: LocationName;
 }
 
 /**
@@ -4342,7 +4351,7 @@ interface Infiltration {
    *
    * @returns array of objects {city, name}
    */
-  getPossibleLocations(): any[];
+  getPossibleLocations(): SimpleLocation[];
   /**
    * Get all infiltrations with difficulty, location and rewards.
    * @remarks

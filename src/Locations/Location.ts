@@ -21,6 +21,11 @@ export interface IConstructorParams {
   techVendorMinRam?: number;
 }
 
+export interface SimpleLocation {
+  city: CityName | null;
+  name: LocationName;
+}
+
 export class Location {
   /**
    * Name of city this location is in. If this property is null, it means this i

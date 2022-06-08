@@ -1,7 +1,7 @@
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 import { Infiltration as IInfiltration, InfiltrationLocation } from "../ScriptEditor/NetscriptDefinitions";
-import { Location } from "../Locations/Location";
+import { Location, SimpleLocation } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
 import { calculateDifficulty, calculateReward } from "../Infiltration/formulas/game";
 import {
@@ -16,10 +16,6 @@ import { checkEnum } from "../utils/helpers/checkEnum";
 import { LocationName } from "../Locations/data/LocationNames";
 
 export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltration> {
-  const getLocationsWithInfiltrations = Object.values(Locations).filter(
-    (location: Location) => location.infiltrationData,
-  );
-
   const calculateInfiltrationData = (ctx: NetscriptContext, locationName: string): InfiltrationLocation => {
     if (!checkEnum(LocationName, locationName)) throw new Error(`Location '${locationName}' does not exists.`);
     const location = Locations[locationName];
@@ -41,8 +37,10 @@ export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltratio
     };
   };
   return {
-    getPossibleLocations: () => (): any[] => {
-      return getLocationsWithInfiltrations.map((l) => ({ city: l.city, name: l.name }));
+    getPossibleLocations: () => (): SimpleLocation[] => {
+      return Object.values(Locations)
+        .filter((location: Location) => location.infiltrationData)
+        .map((location: Location) => ({ name: location.name, city: location.city }));
     },
     getInfiltration:
       (ctx: NetscriptContext) =>
