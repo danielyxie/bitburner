@@ -5878,7 +5878,11 @@ export interface NS {
    * @param args  - Arguments to identify the script
    * @returns The info about the running script if found, and null otherwise.
    */
-  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number | boolean)[]): RunningScript | null;
+  getRunningScript(
+    filename?: FilenameOrPID,
+    hostname?: string,
+    ...args: (string | number | boolean)[]
+  ): RunningScript | null;
 
   /**
    * Get cost of purchasing a server.
