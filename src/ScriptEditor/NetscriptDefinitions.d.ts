@@ -4950,7 +4950,7 @@ export interface NS {
    * @param args - Arguments to identify which scripts to get logs for.
    * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
    */
-  getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
+  getScriptLogs(fn?: string, host?: string, ...args: (string | number | boolean)[]): string[];
 
   /**
    * Get an array of recently killed scripts across all servers.
@@ -5013,7 +5013,7 @@ export interface NS {
    * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.
    * @param args - Arguments for the script being tailed.
    */
-  tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
+  tail(fn?: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): void;
 
   /**
    * Close the tail window of a script.
@@ -5218,7 +5218,7 @@ export interface NS {
    * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value.
    * @returns Returns the PID of a successfully started script, and 0 otherwise.
    */
-  run(script: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
+  run(script: string, numThreads?: number, ...args: (string | number | boolean)[]): number;
 
   /**
    * Start another script on any server.
@@ -5266,7 +5266,7 @@ export interface NS {
    * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.
    * @returns Returns the PID of a successfully started script, and 0 otherwise.
    */
-  exec(script: string, host: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
+  exec(script: string, host: string, numThreads?: number, ...args: (string | number | boolean)[]): number;
 
   /**
    * Terminate current script and start another in 10s.
@@ -5296,7 +5296,7 @@ export interface NS {
    * @param numThreads - Number of threads to spawn new script with. Will be rounded to nearest integer.
    * @param args - Additional arguments to pass into the new script that is being run.
    */
-  spawn(script: string, numThreads?: number, ...args: string[]): void;
+  spawn(script: string, numThreads?: number, ...args: (string | number | boolean)[]): void;
 
   /**
    * Terminate another script.
@@ -5366,7 +5366,7 @@ export interface NS {
    * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
    * ```
    */
-  kill(script: string, host: string, ...args: string[]): boolean;
+  kill(script: string, host: string, ...args: (string | number | boolean)[]): boolean;
 
   /**
    * Terminate all scripts on a server.
@@ -5863,7 +5863,7 @@ export interface NS {
    * @param args - Arguments to specify/identify which scripts to search for.
    * @returns True if specified script is running on the target server, and false otherwise.
    */
-  isRunning(script: FilenameOrPID, host: string, ...args: string[]): boolean;
+  isRunning(script: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): boolean;
 
   /**
    * Get general info about a running script.
@@ -5878,7 +5878,7 @@ export interface NS {
    * @param args  - Arguments to identify the script
    * @returns The info about the running script if found, and null otherwise.
    */
-  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript | null;
+  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number | boolean)[]): RunningScript | null;
 
   /**
    * Get cost of purchasing a server.
@@ -6271,7 +6271,7 @@ export interface NS {
   /**
    * {@inheritDoc NS.(getScriptIncome:1)}
    */
-  getScriptIncome(script: string, host: string, ...args: string[]): number;
+  getScriptIncome(script: string, host: string, ...args: (string | number | boolean)[]): number;
 
   /**
    * Get the exp gain of a script.
@@ -6295,7 +6295,7 @@ export interface NS {
   /**
    * {@inheritDoc NS.(getScriptExpGain:1)}
    */
-  getScriptExpGain(script: string, host: string, ...args: string[]): number;
+  getScriptExpGain(script: string, host: string, ...args: (string | number | boolean)[]): number;
 
   /**
    * Returns the amount of time in milliseconds that have passed since you last installed Augmentations.
