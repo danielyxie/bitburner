@@ -77,7 +77,12 @@ export function DeleteServer(serverkey: string): void {
 }
 
 export function ipExists(ip: string): boolean {
-  return AllServers[ip] != null;
+  for (const hostName in AllServers) {
+    if (AllServers[hostName].ip === ip) {
+      return true
+    }
+  }
+  return false
 }
 
 export function createUniqueRandomIp(): string {
