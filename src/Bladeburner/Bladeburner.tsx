@@ -795,21 +795,9 @@ export class Bladeburner implements IBladeburner {
     let i = 0;
     while (i < command.length) {
       const c = command.charAt(i);
-      if (c === '"') {
-        // Double quotes
-        const endQuote = command.indexOf('"', i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === " ")) {
-          args.push(command.substr(i + 1, endQuote - i - 1));
-          if (endQuote === command.length - 1) {
-            start = i = endQuote + 1;
-          } else {
-            start = i = endQuote + 2; // Skip the space
-          }
-          continue;
-        }
-      } else if (c === "'") {
-        // Single quotes, same thing as above
-        const endQuote = command.indexOf("'", i + 1);
+      if ((c === '"')||(c === "'")) {
+        // Double quotes or Single quotes
+        const endQuote = command.indexOf(c, i + 1);
         if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === " ")) {
           args.push(command.substr(i + 1, endQuote - i - 1));
           if (endQuote === command.length - 1) {
