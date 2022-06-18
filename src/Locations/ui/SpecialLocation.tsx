@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
-import { CreateCorporationModal } from "../../Corporation/ui/CreateCorporationModal";
+import { CreateCorporationModal } from "../../Corporation/ui/modals/CreateCorporationModal";
 import { LocationName } from "../data/LocationNames";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Factions } from "../../Faction/Factions";
@@ -24,7 +24,7 @@ import { joinFaction } from "../../Faction/FactionHelpers";
 import { use } from "../../ui/Context";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { N00dles } from "../../utils/helpers/N00dles";
 import { Exploit } from "../../Exploits/Exploit";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
@@ -32,6 +32,9 @@ import { CorruptableText } from "../../ui/React/CorruptableText";
 import { HacknetNode } from "../../Hacknet/HacknetNode";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
+import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
+import { FactionNames } from "../../Faction/data/FactionNames";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 type IProps = {
   loc: Location;
@@ -51,29 +54,27 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (p.inBladeburner()) {
       // Enter Bladeburner division
       router.toBladeburner();
-    } else {
+    } else if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
       // Apply for Bladeburner division
-      if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
-        p.startBladeburner({ new: true });
-        dialogBoxCreate("You have been accepted into the Bladeburner division!");
-        setRerender((old) => !old);
+      p.startBladeburner({ new: true });
+      dialogBoxCreate("You have been accepted into the Bladeburner division!");
+      setRerender((old) => !old);
 
-        const worldHeader = document.getElementById("world-menu-header");
-        if (worldHeader instanceof HTMLElement) {
-          worldHeader.click();
-          worldHeader.click();
-        }
-      } else {
-        dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
+      const worldHeader = document.getElementById("world-menu-header");
+      if (worldHeader instanceof HTMLElement) {
+        worldHeader.click();
+        worldHeader.click();
       }
+    } else {
+      dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
     }
   }
 
   /**
    * Click handler for Resleeving button at New Tokyo VitaLife
    */
-  function handleResleeving(): void {
-    router.toResleeves();
+  function handleGrafting(): void {
+    router.toGrafting();
   }
 
   function renderBladeburner(): React.ReactElement {
@@ -81,12 +82,17 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return <></>;
     }
     const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
-    return <Button onClick={handleBladeburner}>{text}</Button>;
+    return (
+      <>
+        <br />
+        <Button onClick={handleBladeburner}>{text}</Button>
+      </>
+    );
   }
 
   function renderNoodleBar(): React.ReactElement {
     function EatNoodles(): void {
-      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success", 2000);
+      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", ToastVariant.SUCCESS, 2000);
       N00dles(); // This is the true power of the noodles.
       if (player.sourceFiles.length > 0) player.giveExploit(Exploit.N00dles);
       if (player.sourceFileLvl(5) > 0 || player.bitNodeN === 5) {
@@ -146,16 +152,20 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     );
   }
 
-  function renderResleeving(): React.ReactElement {
-    if (!player.canAccessResleeving()) {
+  function renderGrafting(): React.ReactElement {
+    if (!player.canAccessGrafting()) {
       return <></>;
     }
-    return <Button onClick={handleResleeving}>Re-Sleeve</Button>;
+    return (
+      <Button onClick={handleGrafting} sx={{ my: 5 }}>
+        Enter the secret lab
+      </Button>
+    );
   }
 
   function handleCotMG(): void {
-    const faction = Factions["Church of the Machine God"];
-    if (!player.factions.includes("Church of the Machine God")) {
+    const faction = Factions[FactionNames.ChurchOfTheMachineGod];
+    if (!player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       joinFaction(faction);
     }
     if (
@@ -165,40 +175,41 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
     }
 
-    router.toFaction(faction);
+    router.toStaneksGift();
   }
 
   function renderCotMG(): React.ReactElement {
+    const toStanek = <Button onClick={() => router.toStaneksGift()}>Open Stanek's Gift</Button>;
     // prettier-ignore
-    const symbol = <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>
-        {"                 ``          "}<br />
-        {"             -odmmNmds:      "}<br />
-        {"           `hNmo:..-omNh.    "}<br />
-        {"           yMd`      `hNh    "}<br />
-        {"           mMd        oNm    "}<br />
-        {"           oMNo      .mM/    "}<br />
-        {"           `dMN+    -mM+     "}<br />
-        {"            -mMNo  -mN+      "}<br />
-        {"  .+-        :mMNo/mN/       "}<br />
-        {":yNMd.        :NMNNN/        "}<br />
-        {"-mMMMh.        /NMMh`        "}<br />
-        {" .dMMMd.       /NMMMy`       "}<br />
-        {"  `yMMMd.     /NNyNMMh`      "}<br />
-        {"   `sMMMd.   +Nm: +NMMh.     "}<br />
-        {"     oMMMm- oNm:   /NMMd.    "}<br />
-        {"      +NMMmsMm-     :mMMd.   "}<br />
-        {"       /NMMMm-       -mMMd.  "}<br />
-        {"        /MMMm-        -mMMd. "}<br />
-        {"       `sMNMMm-        .mMmo "}<br />
-        {"      `sMd:hMMm.        ./.  "}<br />
-        {"     `yMy` `yNMd`            "}<br />
-        {"    `hMs`    oMMy            "}<br />
-        {"   `hMh       sMN-           "}<br />
-        {"   /MM-       .NMo           "}<br />
-        {"   +MM:       :MM+           "}<br />
-        {"    sNNo-.`.-omNy`           "}<br />
-        {"     -smNNNNmdo-             "}<br />
-        {"        `..`                 "}</Typography>
+    const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
+      {"                 ``          "}<br />
+      {"             -odmmNmds:      "}<br />
+      {"           `hNmo:..-omNh.    "}<br />
+      {"           yMd`      `hNh    "}<br />
+      {"           mMd        oNm    "}<br />
+      {"           oMNo      .mM/    "}<br />
+      {"           `dMN+    -mM+     "}<br />
+      {"            -mMNo  -mN+      "}<br />
+      {"  .+-        :mMNo/mN/       "}<br />
+      {":yNMd.        :NMNNN/        "}<br />
+      {"-mMMMh.        /NMMh`        "}<br />
+      {" .dMMMd.       /NMMMy`       "}<br />
+      {"  `yMMMd.     /NNyNMMh`      "}<br />
+      {"   `sMMMd.   +Nm: +NMMh.     "}<br />
+      {"     oMMMm- oNm:   /NMMd.    "}<br />
+      {"      +NMMmsMm-     :mMMd.   "}<br />
+      {"       /NMMMm-       -mMMd.  "}<br />
+      {"        /MMMm-        -mMMd. "}<br />
+      {"       `sMNMMm-        .mMmo "}<br />
+      {"      `sMd:hMMm.        ./.  "}<br />
+      {"     `yMy` `yNMd`            "}<br />
+      {"    `hMs`    oMMy            "}<br />
+      {"   `hMh       sMN-           "}<br />
+      {"   /MM-       .NMo           "}<br />
+      {"   +MM:       :MM+           "}<br />
+      {"    sNNo-.`.-omNy`           "}<br />
+      {"     -smNNNNmdo-             "}<br />
+      {"        `..`                 "}</Typography>
     if (player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
       return (
         <>
@@ -209,6 +220,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
               seems. Curious, Just how much of a machine's soul do you house in that body?
             </i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
@@ -223,16 +237,22 @@ export function SpecialLocation(props: IProps): React.ReactElement {
               mastery of the gift clearly demonstrates that. My hopes are climbing by the day for you.
             </i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
     }
-    if (player.factions.includes("Church of the Machine God")) {
+    if (player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       return (
         <>
           <Typography>
             <i>Allison "Mother" Stanek: Welcome back my child!</i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
@@ -286,7 +306,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     return (
       <>
         <Typography>
-          <CorruptableText content={"An eerie aura surround this area. You feel you should leave."} />
+          <CorruptableText content={"An eerie aura surrounds this area. You feel you should leave."} />
         </Typography>
       </>
     );
@@ -294,10 +314,10 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   switch (props.loc.name) {
     case LocationName.NewTokyoVitaLife: {
-      return renderResleeving();
+      return renderGrafting();
     }
     case LocationName.Sector12CityHall: {
-      return <CreateCorporation />;
+      return (BitNodeMultipliers.CorporationSoftcap < 0.15 && <></>) || <CreateCorporation />;
     }
     case LocationName.Sector12NSA: {
       return renderBladeburner();
@@ -310,6 +330,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
     case LocationName.IshimaGlitch: {
       return renderGlitch();
+    }
+    case LocationName.NewTokyoArcade: {
+      return <ArcadeRoot />;
     }
     default:
       console.error(`Location ${props.loc.name} doesn't have any special properties`);

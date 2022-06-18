@@ -41,7 +41,9 @@ export function runScript(
 
   // Check if this script is already running
   if (findRunningScript(scriptName, args, server) != null) {
-    terminal.error("This script is already running. Cannot run multiple instances");
+    terminal.error(
+      "This script is already running with the same args. Cannot run multiple instances with the same args",
+    );
     return;
   }
 
@@ -61,13 +63,11 @@ export function runScript(
       return;
     }
 
-    if (ramUsage > ramAvailable) {
+    if (ramUsage > ramAvailable + 0.001) {
       terminal.error(
-        "This machine does not have enough RAM to run this script with " +
-          numThreads +
-          " threads. Script requires " +
-          numeralWrapper.formatRAM(ramUsage) +
-          " of RAM",
+        "This machine does not have enough RAM to run this script" +
+          (numThreads === 1 ? "" : ` with ${numThreads} threads`) +
+          `. Script requires ${numeralWrapper.formatRAM(ramUsage)} of RAM`,
       );
       return;
     }
@@ -76,7 +76,7 @@ export function runScript(
     const runningScript = new RunningScript(script, args);
     runningScript.threads = numThreads;
 
-    const success = startWorkerScript(runningScript, server);
+    const success = startWorkerScript(player, runningScript, server);
     if (!success) {
       terminal.error(`Failed to start script`);
       return;
@@ -85,6 +85,9 @@ export function runScript(
     terminal.print(
       `Running script with ${numThreads} thread(s), pid ${runningScript.pid} and args: ${JSON.stringify(args)}.`,
     );
+    if (runningScript.filename.endsWith(".ns")) {
+      terminal.warn(".ns files are deprecated, please rename everything to .js");
+    }
     if (tailFlag) {
       LogBoxEvents.emit(runningScript);
     }

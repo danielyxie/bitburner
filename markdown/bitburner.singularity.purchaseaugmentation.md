@@ -4,7 +4,7 @@
 
 ## Singularity.purchaseAugmentation() method
 
-SF4.3 - Purchase an augmentation
+Purchase an augmentation
 
 <b>Signature:</b>
 
@@ -27,7 +27,7 @@ True if the Augmentation is successfully purchased, and false otherwise.
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
 This function will try to purchase the specified Augmentation through the given Faction.
 

@@ -25,7 +25,7 @@ getServerRam(host: string): [number, number];
 
 \[number, number\]
 
-Array with total and used memory on the specified server.
+Array with total and used memory on the specified server, in GB.
 
 ## Remarks
 
@@ -33,12 +33,21 @@ RAM cost: 0.1 GB
 
 Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).
 
-## Example
+## Example 1
 
 
 ```ts
-res = getServerRam("helios");
-totalRam = res[0];
-ramUsed = res[1];
+// NS1:
+var serverRam = getServerRam("helios");
+var totalRam = serverRam[0];
+var ramUsed = serverRam[1];
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+const [totalRam, ramUsed] = ns.getServerRam("helios");
 ```
 

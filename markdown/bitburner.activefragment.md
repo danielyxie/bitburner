@@ -15,7 +15,7 @@ export interface ActiveFragment
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [avgCharge](./bitburner.activefragment.avgcharge.md) | number |  |
+|  [highestCharge](./bitburner.activefragment.highestcharge.md) | number |  |
 |  [id](./bitburner.activefragment.id.md) | number |  |
 |  [numCharge](./bitburner.activefragment.numcharge.md) | number |  |
 |  [rotation](./bitburner.activefragment.rotation.md) | number |  |

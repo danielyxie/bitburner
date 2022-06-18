@@ -19,5 +19,5 @@ An object containing the theme's colors
 
 ## Remarks
 
-RAM cost: cost: 0 GB
+RAM cost: 0 GB
 

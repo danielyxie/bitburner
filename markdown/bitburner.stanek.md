@@ -16,14 +16,15 @@ interface Stanek
 
 |  Method | Description |
 |  --- | --- |
+|  [acceptGift()](./bitburner.stanek.acceptgift.md) | Accept Stanek's Gift by joining the Church of the Machine God |
 |  [activeFragments()](./bitburner.stanek.activefragments.md) | List of fragments in Stanek's Gift. |
-|  [canPlace(rootX, rootY, rotation, fragmentId)](./bitburner.stanek.canplace.md) | Check if fragment can be placed at specified location. |
-|  [charge(rootX, rootY)](./bitburner.stanek.charge.md) | Charge a fragment, increasing it's power. |
-|  [clear()](./bitburner.stanek.clear.md) | Clear the board of all fragments. |
+|  [canPlaceFragment(rootX, rootY, rotation, fragmentId)](./bitburner.stanek.canplacefragment.md) | Check if fragment can be placed at specified location. |
+|  [chargeFragment(rootX, rootY)](./bitburner.stanek.chargefragment.md) | Charge a fragment, increasing its power. |
+|  [clearGift()](./bitburner.stanek.cleargift.md) | Clear the board of all fragments. |
 |  [fragmentDefinitions()](./bitburner.stanek.fragmentdefinitions.md) | List possible fragments. |
-|  [get(rootX, rootY)](./bitburner.stanek.get.md) | Get placed fragment at location. |
-|  [height()](./bitburner.stanek.height.md) | Stanek's Gift height. |
-|  [place(rootX, rootY, rotation, fragmentId)](./bitburner.stanek.place.md) | Place fragment on Stanek's Gift. |
-|  [remove(rootX, rootY)](./bitburner.stanek.remove.md) | Remove fragment at location. |
-|  [width()](./bitburner.stanek.width.md) | Stanek's Gift width. |
+|  [getFragment(rootX, rootY)](./bitburner.stanek.getfragment.md) | Get placed fragment at location. |
+|  [giftHeight()](./bitburner.stanek.giftheight.md) | Stanek's Gift height. |
+|  [giftWidth()](./bitburner.stanek.giftwidth.md) | Stanek's Gift width. |
+|  [placeFragment(rootX, rootY, rotation, fragmentId)](./bitburner.stanek.placefragment.md) | Place fragment on Stanek's Gift. |
+|  [removeFragment(rootX, rootY)](./bitburner.stanek.removefragment.md) | Remove fragment at location. |
 

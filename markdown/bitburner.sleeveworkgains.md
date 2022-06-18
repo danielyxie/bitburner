@@ -15,11 +15,11 @@ export interface SleeveWorkGains
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [workAgiExpGain](./bitburner.sleeveworkgains.workagiexpgain.md) | number | agility exp gained from work |
-|  [workChaExpGain](./bitburner.sleeveworkgains.workchaexpgain.md) | number | charisma exp gained from work |
-|  [workDefExpGain](./bitburner.sleeveworkgains.workdefexpgain.md) | number | defense exp gained from work, |
-|  [workDexExpGain](./bitburner.sleeveworkgains.workdexexpgain.md) | number | dexterity exp gained from work |
-|  [workHackExpGain](./bitburner.sleeveworkgains.workhackexpgain.md) | number | hacking exp gained from work |
-|  [workMoneyGain](./bitburner.sleeveworkgains.workmoneygain.md) | number | money gained from work |
-|  [workStrExpGain](./bitburner.sleeveworkgains.workstrexpgain.md) | number | strength exp gained from work |
+|  [workAgiExpGain](./bitburner.sleeveworkgains.workagiexpgain.md) | number | Agility exp gained from work |
+|  [workChaExpGain](./bitburner.sleeveworkgains.workchaexpgain.md) | number | Charisma exp gained from work |
+|  [workDefExpGain](./bitburner.sleeveworkgains.workdefexpgain.md) | number | Defense exp gained from work, |
+|  [workDexExpGain](./bitburner.sleeveworkgains.workdexexpgain.md) | number | Dexterity exp gained from work |
+|  [workHackExpGain](./bitburner.sleeveworkgains.workhackexpgain.md) | number | Hacking exp gained from work |
+|  [workMoneyGain](./bitburner.sleeveworkgains.workmoneygain.md) | number | Money gained from work |
+|  [workStrExpGain](./bitburner.sleeveworkgains.workstrexpgain.md) | number | Strength exp gained from work |
 

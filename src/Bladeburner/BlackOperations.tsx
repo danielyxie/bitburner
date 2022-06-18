@@ -1,11 +1,12 @@
 import { BlackOperation } from "./BlackOperation";
 import { IMap } from "../types";
+import { BlackOperationNames } from "./data/BlackOperationNames";
 
 export const BlackOperations: IMap<BlackOperation> = {};
 
 (function () {
-  BlackOperations["Operation Typhoon"] = new BlackOperation({
-    name: "Operation Typhoon",
+  BlackOperations[BlackOperationNames.OperationTyphoon] = new BlackOperation({
+    name: BlackOperationNames.OperationTyphoon,
     baseDifficulty: 2000,
     reqdRank: 2.5e3,
     rankGain: 50,
@@ -31,8 +32,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Zero"] = new BlackOperation({
-    name: "Operation Zero",
+  BlackOperations[BlackOperationNames.OperationZero] = new BlackOperation({
+    name: BlackOperationNames.OperationZero,
     baseDifficulty: 2500,
     reqdRank: 5e3,
     rankGain: 60,
@@ -58,8 +59,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isStealth: true,
   });
-  BlackOperations["Operation X"] = new BlackOperation({
-    name: "Operation X",
+  BlackOperations[BlackOperationNames.OperationX] = new BlackOperation({
+    name: BlackOperationNames.OperationX,
     baseDifficulty: 3000,
     reqdRank: 7.5e3,
     rankGain: 75,
@@ -85,8 +86,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Titan"] = new BlackOperation({
-    name: "Operation Titan",
+  BlackOperations[BlackOperationNames.OperationTitan] = new BlackOperation({
+    name: BlackOperationNames.OperationTitan,
     baseDifficulty: 4000,
     reqdRank: 10e3,
     rankGain: 100,
@@ -112,8 +113,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Ares"] = new BlackOperation({
-    name: "Operation Ares",
+  BlackOperations[BlackOperationNames.OperationAres] = new BlackOperation({
+    name: BlackOperationNames.OperationAres,
     baseDifficulty: 5000,
     reqdRank: 12.5e3,
     rankGain: 125,
@@ -139,8 +140,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Archangel"] = new BlackOperation({
-    name: "Operation Archangel",
+  BlackOperations[BlackOperationNames.OperationArchangel] = new BlackOperation({
+    name: BlackOperationNames.OperationArchangel,
     baseDifficulty: 7500,
     reqdRank: 15e3,
     rankGain: 200,
@@ -166,8 +167,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Juggernaut"] = new BlackOperation({
-    name: "Operation Juggernaut",
+  BlackOperations[BlackOperationNames.OperationJuggernaut] = new BlackOperation({
+    name: BlackOperationNames.OperationJuggernaut,
     baseDifficulty: 10e3,
     reqdRank: 20e3,
     rankGain: 300,
@@ -193,8 +194,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Red Dragon"] = new BlackOperation({
-    name: "Operation Red Dragon",
+  BlackOperations[BlackOperationNames.OperationRedDragon] = new BlackOperation({
+    name: BlackOperationNames.OperationRedDragon,
     baseDifficulty: 12.5e3,
     reqdRank: 25e3,
     rankGain: 500,
@@ -220,8 +221,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation K"] = new BlackOperation({
-    name: "Operation K",
+  BlackOperations[BlackOperationNames.OperationK] = new BlackOperation({
+    name: BlackOperationNames.OperationK,
     baseDifficulty: 15e3,
     reqdRank: 30e3,
     rankGain: 750,
@@ -247,8 +248,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Deckard"] = new BlackOperation({
-    name: "Operation Deckard",
+  BlackOperations[BlackOperationNames.OperationDeckard] = new BlackOperation({
+    name: BlackOperationNames.OperationDeckard,
     baseDifficulty: 20e3,
     reqdRank: 40e3,
     rankGain: 1e3,
@@ -274,8 +275,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Tyrell"] = new BlackOperation({
-    name: "Operation Tyrell",
+  BlackOperations[BlackOperationNames.OperationTyrell] = new BlackOperation({
+    name: BlackOperationNames.OperationTyrell,
     baseDifficulty: 25e3,
     reqdRank: 50e3,
     rankGain: 1.5e3,
@@ -301,8 +302,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Wallace"] = new BlackOperation({
-    name: "Operation Wallace",
+  BlackOperations[BlackOperationNames.OperationWallace] = new BlackOperation({
+    name: BlackOperationNames.OperationWallace,
     baseDifficulty: 30e3,
     reqdRank: 75e3,
     rankGain: 2e3,
@@ -328,8 +329,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Shoulder of Orion"] = new BlackOperation({
-    name: "Operation Shoulder of Orion",
+  BlackOperations[BlackOperationNames.OperationShoulderOfOrion] = new BlackOperation({
+    name: BlackOperationNames.OperationShoulderOfOrion,
     baseDifficulty: 35e3,
     reqdRank: 100e3,
     rankGain: 2.5e3,
@@ -355,8 +356,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isStealth: true,
   });
-  BlackOperations["Operation Hyron"] = new BlackOperation({
-    name: "Operation Hyron",
+  BlackOperations[BlackOperationNames.OperationHyron] = new BlackOperation({
+    name: BlackOperationNames.OperationHyron,
     baseDifficulty: 40e3,
     reqdRank: 125e3,
     rankGain: 3e3,
@@ -382,8 +383,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Morpheus"] = new BlackOperation({
-    name: "Operation Morpheus",
+  BlackOperations[BlackOperationNames.OperationMorpheus] = new BlackOperation({
+    name: BlackOperationNames.OperationMorpheus,
     baseDifficulty: 45e3,
     reqdRank: 150e3,
     rankGain: 4e3,
@@ -409,8 +410,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isStealth: true,
   });
-  BlackOperations["Operation Ion Storm"] = new BlackOperation({
-    name: "Operation Ion Storm",
+  BlackOperations[BlackOperationNames.OperationIonStorm] = new BlackOperation({
+    name: BlackOperationNames.OperationIonStorm,
     baseDifficulty: 50e3,
     reqdRank: 175e3,
     rankGain: 5e3,
@@ -436,8 +437,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Annihilus"] = new BlackOperation({
-    name: "Operation Annihilus",
+  BlackOperations[BlackOperationNames.OperationAnnihilus] = new BlackOperation({
+    name: BlackOperationNames.OperationAnnihilus,
     baseDifficulty: 55e3,
     reqdRank: 200e3,
     rankGain: 7.5e3,
@@ -463,8 +464,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Ultron"] = new BlackOperation({
-    name: "Operation Ultron",
+  BlackOperations[BlackOperationNames.OperationUltron] = new BlackOperation({
+    name: BlackOperationNames.OperationUltron,
     baseDifficulty: 60e3,
     reqdRank: 250e3,
     rankGain: 10e3,
@@ -490,8 +491,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
     },
     isKill: true,
   });
-  BlackOperations["Operation Centurion"] = new BlackOperation({
-    name: "Operation Centurion",
+  BlackOperations[BlackOperationNames.OperationCenturion] = new BlackOperation({
+    name: BlackOperationNames.OperationCenturion,
     baseDifficulty: 70e3,
     reqdRank: 300e3,
     rankGain: 15e3,
@@ -516,8 +517,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
       int: 0.75,
     },
   });
-  BlackOperations["Operation Vindictus"] = new BlackOperation({
-    name: "Operation Vindictus",
+  BlackOperations[BlackOperationNames.OperationVindictus] = new BlackOperation({
+    name: BlackOperationNames.OperationVindictus,
     baseDifficulty: 75e3,
     reqdRank: 350e3,
     rankGain: 20e3,
@@ -542,8 +543,8 @@ export const BlackOperations: IMap<BlackOperation> = {};
       int: 0.75,
     },
   });
-  BlackOperations["Operation Daedalus"] = new BlackOperation({
-    name: "Operation Daedalus",
+  BlackOperations[BlackOperationNames.OperationDaedalus] = new BlackOperation({
+    name: BlackOperationNames.OperationDaedalus,
     baseDifficulty: 80e3,
     reqdRank: 400e3,
     rankGain: 40e3,

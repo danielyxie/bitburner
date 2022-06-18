@@ -4,7 +4,7 @@
 
 ## CodingContract interface
 
-Coding Contact API
+Coding Contract API
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ export interface CodingContract
 
 |  Method | Description |
 |  --- | --- |
-|  [attempt(answer, filename, host, opts)](./bitburner.codingcontract.attempt.md) | Attemps a coding contract. |
+|  [attempt(answer, filename, host, opts)](./bitburner.codingcontract.attempt.md) | Attempts a coding contract. |
 |  [getContractType(filename, host)](./bitburner.codingcontract.getcontracttype.md) | Get the type of a coding contract. |
 |  [getData(filename, host)](./bitburner.codingcontract.getdata.md) | Get the input data. |
 |  [getDescription(filename, host)](./bitburner.codingcontract.getdescription.md) | Get the description. |

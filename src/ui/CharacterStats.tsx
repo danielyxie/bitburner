@@ -1,141 +1,89 @@
-import React, { useState, useEffect } from "react";
-
-import { numeralWrapper } from "../ui/numeralFormat";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { Paper, Table, TableBody, Box, IconButton, Typography, Container, Tooltip } from "@mui/material";
+import { MoreHoriz, Info } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { BitNodes, defaultMultipliers, getBitNodeMultipliers } from "../BitNode/BitNode";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
-import { getPurchaseServerLimit } from "../Server/ServerPurchases";
+import { BitNodeMultipliersDisplay } from "../BitNode/ui/BitnodeMultipliersDescription";
 import { HacknetServerConstants } from "../Hacknet/data/Constants";
-import { StatsTable } from "./React/StatsTable";
-import { Money } from "./React/Money";
-import { use } from "./Context";
+import { getPurchaseServerLimit } from "../Server/ServerPurchases";
+import { Settings } from "../Settings/Settings";
 import { MoneySourceTracker } from "../utils/MoneySourceTracker";
-import { BitNodes } from "../BitNode/BitNode";
-
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { use } from "./Context";
+import { numeralWrapper } from "./numeralFormat";
 import { Modal } from "./React/Modal";
+import { Money } from "./React/Money";
+import { StatsRow } from "./React/StatsRow";
+import { StatsTable } from "./React/StatsTable";
+import { isEqual } from "lodash";
 
-import TableBody from "@mui/material/TableBody";
-import { Table, TableCell } from "./React/Table";
-import TableRow from "@mui/material/TableRow";
-
-function LastEmployer(): React.ReactElement {
-  const player = use.Player();
-  if (player.companyName) {
-    return <Typography>Employer at which you last worked: {player.companyName}</Typography>;
-  }
-  return <></>;
+interface EmployersModalProps {
+  open: boolean;
+  onClose: () => void;
 }
 
-function LastJob(): React.ReactElement {
+const EmployersModal = ({ open, onClose }: EmployersModalProps): React.ReactElement => {
   const player = use.Player();
-  if (player.companyName !== "") {
-    return <Typography>Job you last worked: {player.jobs[player.companyName]}</Typography>;
-  }
-  return <></>;
-}
-
-function Employers(): React.ReactElement {
-  const player = use.Player();
-  if (player.jobs && Object.keys(player.jobs).length !== 0)
-    return (
+  return (
+    <Modal open={open} onClose={onClose}>
       <>
-        <Typography>All Employers:</Typography>
-
+        <Typography variant="h5">All Employers</Typography>
         <ul>
           {Object.keys(player.jobs).map((j) => (
-            <Typography key={j}> * {j}</Typography>
+            <Typography key={j}>* {j}</Typography>
           ))}
         </ul>
       </>
-    );
-  return <></>;
-}
-
-function Hacknet(): React.ReactElement {
-  const player = use.Player();
-  // Can't import HacknetHelpers for some reason.
-  if (!(player.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
-    return (
-      <>
-        <Typography>{`Hacknet Nodes owned: ${player.hacknetNodes.length}`}</Typography>
-        <br />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Typography>{`Hacknet Servers owned: ${player.hacknetNodes.length} / ${HacknetServerConstants.MaxServers}`}</Typography>
-        <br />
-      </>
-    );
-  }
-}
-
-function Intelligence(): React.ReactElement {
-  const player = use.Player();
-  if (player.intelligence > 0 && (player.bitNodeN === 5 || SourceFileFlags[5] > 0)) {
-    return (
-      <TableRow>
-        <TableCell>
-          <Typography>Intelligence:&nbsp;</Typography>
-        </TableCell>
-        <TableCell align="right">
-          <Typography>{numeralWrapper.formatSkill(player.intelligence)}&nbsp;</Typography>
-        </TableCell>
-      </TableRow>
-    );
-  }
-  return <></>;
-}
-
-function MultiplierTable(props: any): React.ReactElement {
-  function bn5Stat(r: any): JSX.Element {
-    if (SourceFileFlags[5] > 0 && r.length > 2 && r[1] != r[2]) {
-      return (
-        <TableCell key="2" align="right">
-          <Typography noWrap>({numeralWrapper.formatPercentage(r[2])})</Typography>
-        </TableCell>
-      );
-    }
-    return <></>;
-  }
-  return (
-    <>
-      <Table size="small" padding="none">
-        <TableBody>
-          {props.rows.map((r: any) => (
-            <TableRow key={r[0]}>
-              <TableCell key="0">
-                <Typography noWrap>{`${r[0]} multiplier:`}&nbsp;</Typography>
-              </TableCell>
-              <TableCell key="1" align="right">
-                <Typography noWrap>{numeralWrapper.formatPercentage(r[1])}</Typography>
-              </TableCell>
-              {bn5Stat(r)}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </>
+    </Modal>
   );
+};
+
+interface IMultRow {
+  // The name of the multiplier
+  mult: string;
+
+  // The player's raw multiplier value
+  value: number;
+
+  // The player's effective multiplier value, affected by BitNode mults
+  effValue?: number;
+
+  // The text color for the row
+  color?: string;
 }
 
-function BladeburnerMults(): React.ReactElement {
+interface MultTableProps {
+  rows: IMultRow[];
+  color: string;
+  noMargin?: boolean;
+}
+
+function MultiplierTable(props: MultTableProps): React.ReactElement {
   const player = use.Player();
-  if (!player.canAccessBladeburner()) return <></>;
   return (
-    <MultiplierTable
-      rows={[
-        ["Bladeburner Success Chance", player.bladeburner_success_chance_mult],
-        ["Bladeburner Max Stamina", player.bladeburner_max_stamina_mult],
-        ["Bladeburner Stamina Gain", player.bladeburner_stamina_gain_mult],
-        ["Bladeburner Field Analysis", player.bladeburner_analysis_mult],
-      ]}
-    />
+    <Table sx={{ display: "table", width: "100%", mb: (props.noMargin ?? false) === true ? 0 : 2 }}>
+      <TableBody>
+        {props.rows.map((data) => {
+          const { mult, value, effValue = null, color = props.color } = data;
+
+          if (effValue !== null && effValue !== value && player.sourceFileLvl(5) > 0) {
+            return (
+              <StatsRow key={mult} name={mult} color={color} data={{}}>
+                <>
+                  <Typography color={color}>
+                    <span style={{ opacity: 0.5 }}>{numeralWrapper.formatPercentage(value)}</span>{" "}
+                    {numeralWrapper.formatPercentage(effValue)}
+                  </Typography>
+                </>
+              </StatsRow>
+            );
+          }
+          return (
+            <StatsRow key={mult} name={mult} color={color} data={{ content: numeralWrapper.formatPercentage(value) }} />
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 }
 
@@ -143,15 +91,14 @@ function CurrentBitNode(): React.ReactElement {
   const player = use.Player();
   if (player.sourceFiles.length > 0) {
     const index = "BitNode" + player.bitNodeN;
+    const lvl = Math.min(player.sourceFileLvl(player.bitNodeN) + 1, player.bitNodeN === 12 ? Infinity : 3);
     return (
-      <>
-        <Typography variant="h4">
-          BitNode {player.bitNodeN}: {BitNodes[index].name}
+      <Paper sx={{ mb: 1, p: 1 }}>
+        <Typography variant="h5">
+          BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {lvl})
         </Typography>
-        <Typography sx={{ mx: 2 }} style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>
-          {BitNodes[index].info}
-        </Typography>
-      </>
+        <Typography sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</Typography>
+      </Paper>
     );
   }
 
@@ -259,6 +206,7 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
 export function CharacterStats(): React.ReactElement {
   const player = use.Player();
   const [moneyOpen, setMoneyOpen] = useState(false);
+  const [employersOpen, setEmployersOpen] = useState(false);
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -270,229 +218,386 @@ export function CharacterStats(): React.ReactElement {
   }, []);
 
   const timeRows = [
-    ["Time played since last Augmentation:", convertTimeMsToTimeElapsedString(player.playtimeSinceLastAug)],
+    ["Since last Augmentation installation", convertTimeMsToTimeElapsedString(player.playtimeSinceLastAug)],
   ];
   if (player.sourceFiles.length > 0) {
-    timeRows.push([
-      "Time played since last Bitnode destroyed:",
-      convertTimeMsToTimeElapsedString(player.playtimeSinceLastBitnode),
-    ]);
+    timeRows.push(["Since last Bitnode destroyed", convertTimeMsToTimeElapsedString(player.playtimeSinceLastBitnode)]);
   }
-  timeRows.push(["Total Time played:", convertTimeMsToTimeElapsedString(player.totalPlaytime)]);
+  timeRows.push(["Total", convertTimeMsToTimeElapsedString(player.totalPlaytime)]);
+
+  let showBitNodeMults = false;
+  if (player.sourceFileLvl(5) > 0) {
+    const n = player.bitNodeN;
+    const maxSfLevel = n === 12 ? Infinity : 3;
+    const mults = getBitNodeMultipliers(n, Math.min(player.sourceFileLvl(n) + 1, maxSfLevel));
+    showBitNodeMults = !isEqual(mults, defaultMultipliers);
+  }
 
   return (
-    <>
-      <Typography variant="h4">General</Typography>
-      <Box sx={{ mx: 2 }}>
-        <Typography>Current City: {player.city}</Typography>
-        <LastEmployer />
-        <LastJob />
-        <Employers />
-
-        <Typography>
-          Money: <Money money={player.money} />
-          <IconButton onClick={() => setMoneyOpen(true)}>
-            <MoreHorizIcon color="info" />
-          </IconButton>
-        </Typography>
-      </Box>
-      <br />
+    <Container maxWidth="lg" disableGutters sx={{ mx: 0 }}>
       <Typography variant="h4">Stats</Typography>
-      <Box sx={{ mx: 2 }}>
-        <Table size="small" padding="none">
+      <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", minWidth: "fit-content", mb: 1, gap: 1 }}>
+        <Paper sx={{ p: 1 }}>
+          <Typography variant="h5">General</Typography>
+          <Table>
+            <TableBody>
+              <StatsRow name="Current City" color={Settings.theme.primary} data={{ content: player.city }} />
+              <StatsRow name="Money" color={Settings.theme.money} data={{}}>
+                <>
+                  <Money money={player.money} />
+                  <IconButton onClick={() => setMoneyOpen(true)} sx={{ p: 0 }}>
+                    <MoreHoriz color="info" />
+                  </IconButton>
+                </>
+              </StatsRow>
+              {player.companyName ? (
+                <>
+                  <StatsRow
+                    name="Last Employer"
+                    color={Settings.theme.primary}
+                    data={{ content: player.companyName }}
+                  />
+                  <StatsRow
+                    name="Last Job"
+                    color={Settings.theme.primary}
+                    data={{ content: player.jobs[player.companyName] }}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+              {player.jobs && Object.keys(player.jobs).length !== 0 ? (
+                <StatsRow name="All Employers" color={Settings.theme.primary} data={{}}>
+                  <>
+                    <span style={{ color: Settings.theme.primary }}>{Object.keys(player.jobs).length} total</span>
+                    <IconButton onClick={() => setEmployersOpen(true)} sx={{ p: 0 }}>
+                      <MoreHoriz color="info" />
+                    </IconButton>
+                  </>
+                </StatsRow>
+              ) : (
+                <></>
+              )}
+              <StatsRow
+                name="Servers Owned"
+                color={Settings.theme.primary}
+                data={{ content: `${player.purchasedServers.length} / ${getPurchaseServerLimit()}` }}
+              />
+              <StatsRow
+                name={`Hacknet ${player.bitNodeN === 9 || player.sourceFileLvl(9) > 0 ? "Servers" : "Nodes"} owned`}
+                color={Settings.theme.primary}
+                data={{
+                  content: `${player.hacknetNodes.length}${
+                    player.bitNodeN === 9 || player.sourceFileLvl(9) > 0
+                      ? ` / ${HacknetServerConstants.MaxServers}`
+                      : ""
+                  }`,
+                }}
+              />
+              <StatsRow
+                name="Augmentations Installed"
+                color={Settings.theme.primary}
+                data={{ content: String(player.augmentations.length) }}
+              />
+            </TableBody>
+          </Table>
+        </Paper>
+        <Paper sx={{ p: 1 }}>
+          <Typography variant="h5">Skills</Typography>
+          <Table>
+            <TableBody>
+              <StatsRow
+                name="Hacking"
+                color={Settings.theme.hack}
+                data={{ level: player.hacking, exp: player.hacking_exp }}
+              />
+              <StatsRow
+                name="Strength"
+                color={Settings.theme.combat}
+                data={{ level: player.strength, exp: player.strength_exp }}
+              />
+              <StatsRow
+                name="Defense"
+                color={Settings.theme.combat}
+                data={{ level: player.defense, exp: player.defense_exp }}
+              />
+              <StatsRow
+                name="Dexterity"
+                color={Settings.theme.combat}
+                data={{ level: player.dexterity, exp: player.dexterity_exp }}
+              />
+              <StatsRow
+                name="Agility"
+                color={Settings.theme.combat}
+                data={{ level: player.agility, exp: player.agility_exp }}
+              />
+              <StatsRow
+                name="Charisma"
+                color={Settings.theme.cha}
+                data={{ level: player.charisma, exp: player.charisma_exp }}
+              />
+              {player.intelligence > 0 && (player.bitNodeN === 5 || player.sourceFileLvl(5) > 0) && (
+                <StatsRow
+                  name="Intelligence"
+                  color={Settings.theme.int}
+                  data={{ level: player.intelligence, exp: player.intelligence_exp }}
+                />
+              )}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Box>
+
+      <Paper sx={{ p: 1, mb: 1 }}>
+        <Typography variant="h5" color="primary" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+          Multipliers
+          {player.sourceFileLvl(5) > 0 && (
+            <Tooltip
+              title={
+                <Typography>
+                  Displays your current multipliers.
+                  <br />
+                  <br />
+                  When there is a dim number next to a multiplier, that means that the multiplier in question is being
+                  affected by BitNode multipliers.
+                  <br />
+                  <br />
+                  The dim number is the raw multiplier, and the undimmed number is the effective multiplier, as dictated
+                  by the BitNode.
+                </Typography>
+              }
+            >
+              <Info sx={{ ml: 1, mb: 0.5 }} color="info" />
+            </Tooltip>
+          )}
+        </Typography>
+        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1 }}>
+          <Box>
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Hacking Chance",
+                  value: player.hacking_chance_mult,
+                },
+                {
+                  mult: "Hacking Speed",
+                  value: player.hacking_speed_mult,
+                },
+                {
+                  mult: "Hacking Money",
+                  value: player.hacking_money_mult,
+                  effValue: player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
+                },
+                {
+                  mult: "Hacking Growth",
+                  value: player.hacking_grow_mult,
+                  effValue: player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
+                },
+              ]}
+              color={Settings.theme.hack}
+            />
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Hacking Level",
+                  value: player.hacking_mult,
+                  effValue: player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+                },
+                {
+                  mult: "Hacking Experience",
+                  value: player.hacking_exp_mult,
+                  effValue: player.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
+                },
+              ]}
+              color={Settings.theme.hack}
+            />
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Strength Level",
+                  value: player.strength_mult,
+                  effValue: player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+                },
+                {
+                  mult: "Strength Experience",
+                  value: player.strength_exp_mult,
+                },
+              ]}
+              color={Settings.theme.combat}
+            />
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Defense Level",
+                  value: player.defense_mult,
+                  effValue: player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+                },
+                {
+                  mult: "Defense Experience",
+                  value: player.defense_exp_mult,
+                },
+              ]}
+              color={Settings.theme.combat}
+            />
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Dexterity Level",
+                  value: player.dexterity_mult,
+                  effValue: player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+                },
+                {
+                  mult: "Dexterity Experience",
+                  value: player.dexterity_exp_mult,
+                },
+              ]}
+              color={Settings.theme.combat}
+            />
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Agility Level",
+                  value: player.agility_mult,
+                  effValue: player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+                },
+                {
+                  mult: "Agility Experience",
+                  value: player.agility_exp_mult,
+                },
+              ]}
+              color={Settings.theme.combat}
+            />
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Charisma Level",
+                  value: player.charisma_mult,
+                  effValue: player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+                },
+                {
+                  mult: "Charisma Experience",
+                  value: player.charisma_exp_mult,
+                },
+              ]}
+              color={Settings.theme.cha}
+              noMargin
+            />
+          </Box>
+
+          <Box>
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Hacknet Node Production",
+                  value: player.hacknet_node_money_mult,
+                  effValue: player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
+                },
+                {
+                  mult: "Hacknet Node Purchase Cost",
+                  value: player.hacknet_node_purchase_cost_mult,
+                },
+                {
+                  mult: "Hacknet Node RAM Upgrade Cost",
+                  value: player.hacknet_node_ram_cost_mult,
+                },
+                {
+                  mult: "Hacknet Node Core Purchase Cost",
+                  value: player.hacknet_node_core_cost_mult,
+                },
+                {
+                  mult: "Hacknet Node Level Upgrade Cost",
+                  value: player.hacknet_node_level_cost_mult,
+                },
+              ]}
+              color={Settings.theme.primary}
+            />
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Company Reputation Gain",
+                  value: player.company_rep_mult,
+                  color: Settings.theme.rep,
+                },
+                {
+                  mult: "Faction Reputation Gain",
+                  value: player.faction_rep_mult,
+                  effValue: player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
+                  color: Settings.theme.rep,
+                },
+                {
+                  mult: "Salary",
+                  value: player.work_money_mult,
+                  effValue: player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney,
+                  color: Settings.theme.money,
+                },
+              ]}
+              color={Settings.theme.money}
+            />
+            <MultiplierTable
+              rows={[
+                {
+                  mult: "Crime Success Chance",
+                  value: player.crime_success_mult,
+                },
+                {
+                  mult: "Crime Money",
+                  value: player.crime_money_mult,
+                  effValue: player.crime_money_mult * BitNodeMultipliers.CrimeMoney,
+                  color: Settings.theme.money,
+                },
+              ]}
+              color={Settings.theme.combat}
+            />
+            {player.canAccessBladeburner() && (
+              <MultiplierTable
+                rows={[
+                  {
+                    mult: "Bladeburner Success Chance",
+                    value: player.bladeburner_success_chance_mult,
+                  },
+                  {
+                    mult: "Bladeburner Max Stamina",
+                    value: player.bladeburner_max_stamina_mult,
+                  },
+                  {
+                    mult: "Bladeburner Stamina Gain",
+                    value: player.bladeburner_stamina_gain_mult,
+                  },
+                  {
+                    mult: "Bladeburner Field Analysis",
+                    value: player.bladeburner_analysis_mult,
+                  },
+                ]}
+                color={Settings.theme.primary}
+                noMargin
+              />
+            )}
+          </Box>
+        </Box>
+      </Paper>
+
+      <Paper sx={{ p: 1, mb: 1 }}>
+        <Typography variant="h5">Time Played</Typography>
+        <Table>
           <TableBody>
-            <TableRow>
-              <TableCell>
-                <Typography noWrap>Hacking:&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>{numeralWrapper.formatSkill(player.hacking)}&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>({numeralWrapper.formatExp(player.hacking_exp)} exp)</Typography>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography noWrap>Strength:&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>{numeralWrapper.formatSkill(player.strength)}&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>({numeralWrapper.formatExp(player.strength_exp)} exp)</Typography>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography noWrap>Defense:&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>{numeralWrapper.formatSkill(player.defense)}&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>({numeralWrapper.formatExp(player.defense_exp)} exp)</Typography>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography noWrap>Dexterity:&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>{numeralWrapper.formatSkill(player.dexterity)}&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>({numeralWrapper.formatExp(player.dexterity_exp)} exp)</Typography>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography noWrap>Agility:&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>{numeralWrapper.formatSkill(player.agility)}&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>({numeralWrapper.formatExp(player.agility_exp)} exp)</Typography>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography noWrap>Charisma:&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>{numeralWrapper.formatSkill(player.charisma)}&nbsp;</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography noWrap>({numeralWrapper.formatExp(player.charisma_exp)} exp)</Typography>
-              </TableCell>
-            </TableRow>
-            <Intelligence />
+            {timeRows.map(([name, content]) => (
+              <StatsRow key={name} name={name} color={Settings.theme.primary} data={{ content: content }} />
+            ))}
           </TableBody>
         </Table>
-        <br />
-      </Box>
-      <br />
-      <Typography variant="h4">Multipliers</Typography>
-      <Box sx={{ mx: 2 }}>
-        <MultiplierTable
-          rows={[
-            ["Hacking Chance", player.hacking_chance_mult],
-            ["Hacking Speed", player.hacking_speed_mult],
-            [
-              "Hacking Money",
-              player.hacking_money_mult,
-              player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
-            ],
-            [
-              "Hacking Growth",
-              player.hacking_grow_mult,
-              player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
-            ],
-          ]}
-        />
-        <br />
-        <MultiplierTable
-          rows={[
-            ["Hacking Level", player.hacking_mult, player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier],
-            ["Hacking Experience", player.hacking_exp_mult, player.hacking_exp_mult * BitNodeMultipliers.HackExpGain],
-          ]}
-        />
-        <br />
+      </Paper>
 
-        <MultiplierTable
-          rows={[
-            ["Strength Level", player.strength_mult, player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier],
-            ["Strength Experience", player.strength_exp_mult],
-          ]}
-        />
-        <br />
-
-        <MultiplierTable
-          rows={[
-            ["Defense Level", player.defense_mult, player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier],
-            ["Defense Experience", player.defense_exp_mult],
-          ]}
-        />
-        <br />
-
-        <MultiplierTable
-          rows={[
-            [
-              "Dexterity Level",
-              player.dexterity_mult,
-              player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
-            ],
-            ["Dexterity Experience", player.dexterity_exp_mult],
-          ]}
-        />
-        <br />
-
-        <MultiplierTable
-          rows={[
-            ["Agility Level", player.agility_mult, player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier],
-            ["Agility Experience", player.agility_exp_mult],
-          ]}
-        />
-        <br />
-
-        <MultiplierTable
-          rows={[
-            ["Charisma Level", player.charisma_mult, player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier],
-            ["Charisma Experience", player.charisma_exp_mult],
-          ]}
-        />
-        <br />
-
-        <MultiplierTable
-          rows={[
-            [
-              "Hacknet Node production",
-              player.hacknet_node_money_mult,
-              player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
-            ],
-            ["Hacknet Node purchase cost", player.hacknet_node_purchase_cost_mult],
-            ["Hacknet Node RAM upgrade cost", player.hacknet_node_ram_cost_mult],
-            ["Hacknet Node Core purchase cost", player.hacknet_node_core_cost_mult],
-            ["Hacknet Node level upgrade cost", player.hacknet_node_level_cost_mult],
-          ]}
-        />
-        <br />
-
-        <MultiplierTable
-          rows={[
-            ["Company reputation gain", player.company_rep_mult],
-            [
-              "Faction reputation gain",
-              player.faction_rep_mult,
-              player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
-            ],
-            ["Salary", player.work_money_mult, player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
-          ]}
-        />
-        <br />
-
-        <MultiplierTable
-          rows={[
-            ["Crime success", player.crime_success_mult],
-            ["Crime money", player.crime_money_mult, player.crime_money_mult * BitNodeMultipliers.CrimeMoney],
-          ]}
-        />
-        <br />
-        <BladeburnerMults />
-      </Box>
-      <br />
-
-      <Typography variant="h4">Misc</Typography>
-      <Box sx={{ mx: 2 }}>
-        <Typography>{`Servers owned: ${player.purchasedServers.length} / ${getPurchaseServerLimit()}`}</Typography>
-        <Hacknet />
-        <Typography>{`Augmentations installed: ${player.augmentations.length}`}</Typography>
-        <StatsTable rows={timeRows} />
-      </Box>
-      <br />
       <CurrentBitNode />
+
+      {showBitNodeMults && (
+        <Paper sx={{ p: 1, mb: 1 }}>
+          <Typography variant="h5">BitNode Multipliers</Typography>
+          <BitNodeMultipliersDisplay n={player.bitNodeN} />
+        </Paper>
+      )}
+
       <MoneyModal open={moneyOpen} onClose={() => setMoneyOpen(false)} />
-    </>
+      <EmployersModal open={employersOpen} onClose={() => setEmployersOpen(false)} />
+    </Container>
   );
 }

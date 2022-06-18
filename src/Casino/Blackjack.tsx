@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 
 const MAX_BET = 100e6;
+export const DECK_COUNT = 5; // 5-deck multideck
 
 enum Result {
   Pending = "",
@@ -45,7 +46,7 @@ export class Blackjack extends Game<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.deck = new Deck(5); // 5-deck multideck
+    this.deck = new Deck(DECK_COUNT);
 
     const initialBet = 1e6;
 

@@ -4,7 +4,7 @@
 
 ## Corporation.unlockUpgrade() method
 
-Unlock an upgrade.
+Unlock an upgrade
 
 <b>Signature:</b>
 

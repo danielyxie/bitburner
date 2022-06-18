@@ -28,7 +28,7 @@ export function toNative(pseudoObj: any): any {
   } else {
     // Object.
     nativeObj = {};
-    for (const key in pseudoObj.properties) {
+    for (const key of Object.keys(pseudoObj.properties)) {
       const val = pseudoObj.properties[key];
       nativeObj[key] = toNative(val);
     }

@@ -4,7 +4,7 @@
 
 ## Singularity.installBackdoor() method
 
-SF4.1 - Run the backdoor command in the terminal.
+Run the backdoor command in the terminal.
 
 <b>Signature:</b>
 
@@ -15,9 +15,9 @@ installBackdoor(): Promise<void>;
 
 Promise&lt;void&gt;
 
-True if the installation was successful.
+Promise waiting for the installation to finish.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB \* 16/4/1
 

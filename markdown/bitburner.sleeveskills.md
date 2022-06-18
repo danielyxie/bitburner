@@ -16,12 +16,12 @@ export interface SleeveSkills
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [agility](./bitburner.sleeveskills.agility.md) | number | current agility of the sleeve |
-|  [charisma](./bitburner.sleeveskills.charisma.md) | number | current charisma of the sleeve |
-|  [defense](./bitburner.sleeveskills.defense.md) | number | current defense of the sleeve |
-|  [dexterity](./bitburner.sleeveskills.dexterity.md) | number | current dexterity of the sleeve |
-|  [hacking](./bitburner.sleeveskills.hacking.md) | number | current hacking skill of the sleeve |
-|  [shock](./bitburner.sleeveskills.shock.md) | number | current shock of the sleeve \[0-100\] |
-|  [strength](./bitburner.sleeveskills.strength.md) | number | current strength of the sleeve |
-|  [sync](./bitburner.sleeveskills.sync.md) | number | current sync of the sleeve \[0-100\] |
+|  [agility](./bitburner.sleeveskills.agility.md) | number | Current agility of the sleeve |
+|  [charisma](./bitburner.sleeveskills.charisma.md) | number | Current charisma of the sleeve |
+|  [defense](./bitburner.sleeveskills.defense.md) | number | Current defense of the sleeve |
+|  [dexterity](./bitburner.sleeveskills.dexterity.md) | number | Current dexterity of the sleeve |
+|  [hacking](./bitburner.sleeveskills.hacking.md) | number | Current hacking skill of the sleeve |
+|  [shock](./bitburner.sleeveskills.shock.md) | number | Current shock of the sleeve \[0-100\] |
+|  [strength](./bitburner.sleeveskills.strength.md) | number | Current strength of the sleeve |
+|  [sync](./bitburner.sleeveskills.sync.md) | number | Current sync of the sleeve \[0-100\] |
 

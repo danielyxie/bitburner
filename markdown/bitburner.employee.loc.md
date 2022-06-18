@@ -4,7 +4,7 @@
 
 ## Employee.loc property
 
-City
+Current Location (city)
 
 <b>Signature:</b>
 

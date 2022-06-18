@@ -22,7 +22,7 @@ import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/Buyin
 import {
   cancelOrder,
   eventEmitterForUiReset,
-  initStockMarketFnForReact,
+  initStockMarketFn,
   placeOrder,
   StockMarket,
 } from "../StockMarket/StockMarket";
@@ -42,9 +42,9 @@ import { BladeburnerRoot } from "../Bladeburner/ui/BladeburnerRoot";
 import { GangRoot } from "../Gang/ui/GangRoot";
 import { CorporationRoot } from "../Corporation/ui/CorporationRoot";
 import { InfiltrationRoot } from "../Infiltration/ui/InfiltrationRoot";
-import { ResleeveRoot } from "../PersonObjects/Resleeving/ui/ResleeveRoot";
+import { GraftingRoot } from "../PersonObjects/Grafting/ui/GraftingRoot";
 import { WorkInProgressRoot } from "./WorkInProgressRoot";
-import { GameOptionsRoot } from "../ui/React/GameOptionsRoot";
+import { GameOptionsRoot } from "../GameOptions/ui/GameOptionsRoot";
 import { SleeveRoot } from "../PersonObjects/Sleeve/ui/SleeveRoot";
 import { HacknetRoot } from "../Hacknet/ui/HacknetRoot";
 import { GenericLocation } from "../Locations/ui/GenericLocation";
@@ -54,7 +54,7 @@ import { Root as ScriptEditorRoot } from "../ScriptEditor/ui/ScriptEditorRoot";
 import { MilestonesRoot } from "../Milestones/ui/MilestonesRoot";
 import { TerminalRoot } from "../Terminal/ui/TerminalRoot";
 import { TutorialRoot } from "../Tutorial/ui/TutorialRoot";
-import { ActiveScriptsRoot } from "../ui/ActiveScripts/ActiveScriptsRoot";
+import { ActiveScriptsRoot } from "./ActiveScripts/ActiveScriptsRoot";
 import { FactionsRoot } from "../Faction/ui/FactionsRoot";
 import { FactionRoot } from "../Faction/ui/FactionRoot";
 import { CharacterStats } from "./CharacterStats";
@@ -72,10 +72,21 @@ import { LogBoxManager } from "./React/LogBoxManager";
 import { AlertManager } from "./React/AlertManager";
 import { PromptManager } from "./React/PromptManager";
 import { InvitationModal } from "../Faction/ui/InvitationModal";
+import { calculateAchievements } from "../Achievements/Achievements";
 
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
+import { AchievementsRoot } from "../Achievements/AchievementsRoot";
+import { ErrorBoundary } from "./ErrorBoundary";
+import { Settings } from "../Settings/Settings";
+import { ThemeBrowser } from "../Themes/ui/ThemeBrowser";
+import { ImportSaveRoot } from "./React/ImportSaveRoot";
+import { BypassWrapper } from "./React/BypassWrapper";
+
+import _wrap from "lodash/wrap";
+import _functions from "lodash/functions";
+import { Apr1 } from "./Apr1";
 
 const htmlLocation = location;
 
@@ -91,98 +102,54 @@ const useStyles = makeStyles((theme: Theme) =>
       "-ms-overflow-style": "none" /* for Internet Explorer, Edge */,
       "scrollbar-width": "none" /* for Firefox */,
       margin: theme.spacing(0),
+      flexGrow: 1,
+      display: "block",
+      padding: "8px",
+      minHeight: "100vh",
+      boxSizing: "border-box",
     },
   }),
 );
 
+const uninitialized = (): any => {
+  throw new Error("Router called before initialization");
+};
+
 export let Router: IRouter = {
-  page: () => {
-    throw new Error("Router called before initialization");
-  },
-  toActiveScripts: () => {
-    throw new Error("Router called before initialization");
-  },
-  toAugmentations: () => {
-    throw new Error("Router called before initialization");
-  },
-  toBitVerse: () => {
-    throw new Error("Router called before initialization");
-  },
-  toBladeburner: () => {
-    throw new Error("Router called before initialization");
-  },
-  toStats: () => {
-    throw new Error("Router called before initialization");
-  },
-  toCity: () => {
-    throw new Error("Router called before initialization");
-  },
-  toCorporation: () => {
-    throw new Error("Router called before initialization");
-  },
-  toCreateProgram: () => {
-    throw new Error("Router called before initialization");
-  },
-  toDevMenu: () => {
-    throw new Error("Router called before initialization");
-  },
-  toFaction: () => {
-    throw new Error("Router called before initialization");
-  },
-  toFactions: () => {
-    throw new Error("Router called before initialization");
-  },
-  toGameOptions: () => {
-    throw new Error("Router called before initialization");
-  },
-  toGang: () => {
-    throw new Error("Router called before initialization");
-  },
-  toHacknetNodes: () => {
-    throw new Error("Router called before initialization");
-  },
-  toInfiltration: () => {
-    throw new Error("Router called before initialization");
-  },
-  toJob: () => {
-    throw new Error("Router called before initialization");
-  },
-  toMilestones: () => {
-    throw new Error("Router called before initialization");
-  },
-  toResleeves: () => {
-    throw new Error("Router called before initialization");
-  },
-  toScriptEditor: () => {
-    throw new Error("Router called before initialization");
-  },
-  toSleeves: () => {
-    throw new Error("Router called before initialization");
-  },
-  toStockMarket: () => {
-    throw new Error("Router called before initialization");
-  },
-  toTerminal: () => {
-    throw new Error("Router called before initialization");
-  },
-  toTravel: () => {
-    throw new Error("Router called before initialization");
-  },
-  toTutorial: () => {
-    throw new Error("Router called before initialization");
-  },
-  toWork: () => {
-    throw new Error("Router called before initialization");
-  },
-  toBladeburnerCinematic: () => {
-    throw new Error("Router called before initialization");
-  },
-  toLocation: () => {
-    throw new Error("Router called before initialization");
-  },
-  toStaneksGift: () => {
-    throw new Error("Router called before initialization");
-  },
+  isInitialized: false,
+  page: uninitialized,
+  allowRouting: uninitialized,
+  toActiveScripts: uninitialized,
+  toAugmentations: uninitialized,
+  toBitVerse: uninitialized,
+  toBladeburner: uninitialized,
+  toStats: uninitialized,
+  toCity: uninitialized,
+  toCorporation: uninitialized,
+  toCreateProgram: uninitialized,
+  toDevMenu: uninitialized,
+  toFaction: uninitialized,
+  toFactions: uninitialized,
+  toGameOptions: uninitialized,
+  toGang: uninitialized,
+  toHacknetNodes: uninitialized,
+  toInfiltration: uninitialized,
+  toJob: uninitialized,
+  toMilestones: uninitialized,
+  toGrafting: uninitialized,
+  toScriptEditor: uninitialized,
+  toSleeves: uninitialized,
+  toStockMarket: uninitialized,
+  toTerminal: uninitialized,
+  toTravel: uninitialized,
+  toTutorial: uninitialized,
+  toWork: uninitialized,
+  toBladeburnerCinematic: uninitialized,
+  toLocation: uninitialized,
+  toStaneksGift: uninitialized,
+  toAchievements: uninitialized,
+  toThemeBrowser: uninitialized,
+  toImportSave: uninitialized,
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -193,9 +160,10 @@ function determineStartPage(player: IPlayer): Page {
 
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
-  const [{files, vim}, setEditorOptions] = useState({files: {}, vim: false})
+  const [{ files, vim }, setEditorOptions] = useState({ files: {}, vim: false });
   const [page, setPage] = useState(determineStartPage(player));
   const setRerender = useState(0)[1];
+  const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
     player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
   );
@@ -209,6 +177,19 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     throw new Error("Trying to go to a page without the proper setup");
 
   const [cinematicText, setCinematicText] = useState("");
+  const [errorBoundaryKey, setErrorBoundaryKey] = useState<number>(0);
+  const [sidebarOpened, setSideBarOpened] = useState(Settings.IsSidebarOpened);
+
+  const [importString, setImportString] = useState<string>(undefined as unknown as string);
+  const [importAutomatic, setImportAutomatic] = useState<boolean>(false);
+  if (importString === undefined && page === Page.ImportSave)
+    throw new Error("Trying to go to a page without the proper setup");
+
+  const [allowRoutingCalls, setAllowRoutingCalls] = useState(true);
+
+  function resetErrorBoundary(): void {
+    setErrorBoundaryKey(errorBoundaryKey + 1);
+  }
 
   function rerender(): void {
     setRerender((old) => old + 1);
@@ -226,7 +207,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   }
 
   Router = {
+    isInitialized: true,
     page: () => page,
+    allowRouting: (value: boolean) => setAllowRoutingCalls(value),
     toActiveScripts: () => setPage(Page.ActiveScripts),
     toAugmentations: () => setPage(Page.Augmentations),
     toBladeburner: () => setPage(Page.Bladeburner),
@@ -234,7 +217,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toCorporation: () => setPage(Page.Corporation),
     toCreateProgram: () => setPage(Page.CreateProgram),
     toDevMenu: () => setPage(Page.DevMenu),
-    toFaction: (faction?: Faction) => {
+    toFaction: (faction: Faction, augPage = false) => {
+      setAugPage(augPage);
       setPage(Page.Faction);
       if (faction) setFaction(faction);
     },
@@ -243,7 +227,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toGang: () => setPage(Page.Gang),
     toHacknetNodes: () => setPage(Page.Hacknet),
     toMilestones: () => setPage(Page.Milestones),
-    toResleeves: () => setPage(Page.Resleeves),
+    toGrafting: () => setPage(Page.Grafting),
     toScriptEditor: (files: Record<string, string>, options?: ScriptEditorRouteOptions) => {
       setEditorOptions({
         files,
@@ -269,6 +253,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toBitVerse: (flume: boolean, quick: boolean) => {
       setFlume(flume);
       setQuick(quick);
+      calculateAchievements();
       setPage(Page.BitVerse);
     },
     toInfiltration: (location: Location) => {
@@ -287,142 +272,290 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toStaneksGift: () => {
       setPage(Page.StaneksGift);
     },
+    toAchievements: () => {
+      setPage(Page.Achievements);
+    },
+    toThemeBrowser: () => {
+      setPage(Page.ThemeBrowser);
+    },
+    toImportSave: (base64save: string, automatic = false) => {
+      setImportString(base64save);
+      setImportAutomatic(automatic);
+      setPage(Page.ImportSave);
+    },
   };
+
+  useEffect(() => {
+    // Wrap Router navigate functions to be able to disable the execution
+    _functions(Router)
+      .filter((fnName) => fnName.startsWith("to"))
+      .forEach((fnName) => {
+        // @ts-ignore - tslint does not like this, couldn't find a way to make it cooperate
+        Router[fnName] = _wrap(Router[fnName], (func, ...args) => {
+          if (!allowRoutingCalls) {
+            // Let's just log to console.
+            console.log(`Routing is currently disabled - Attempted router.${fnName}()`);
+            return;
+          }
+
+          // Call the function normally
+          return func(...args);
+        });
+      });
+  });
 
   useEffect(() => {
     if (page !== Page.Terminal) window.scrollTo(0, 0);
   });
 
+  function softReset(): void {
+    dialogBoxCreate("Soft Reset!");
+    installAugmentations(true);
+    resetErrorBoundary();
+    Router.toTerminal();
+  }
+
+  let mainPage = <Typography>Cannot load</Typography>;
+  let withSidebar = true;
+  let withPopups = true;
+  let bypassGame = false;
+  switch (page) {
+    case Page.Recovery: {
+      mainPage = <RecoveryRoot router={Router} softReset={softReset} />;
+      withSidebar = false;
+      withPopups = false;
+      bypassGame = true;
+      break;
+    }
+    case Page.BitVerse: {
+      mainPage = <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />;
+      withSidebar = false;
+      withPopups = false;
+      break;
+    }
+    case Page.Infiltration: {
+      mainPage = <InfiltrationRoot location={location} />;
+      withSidebar = false;
+      withPopups = false;
+      break;
+    }
+    case Page.BladeburnerCinematic: {
+      mainPage = <BladeburnerCinematic />;
+      withSidebar = false;
+      withPopups = false;
+      break;
+    }
+    case Page.Work: {
+      mainPage = <WorkInProgressRoot />;
+      withSidebar = false;
+      break;
+    }
+    case Page.Terminal: {
+      mainPage = <TerminalRoot terminal={terminal} router={Router} player={player} />;
+      break;
+    }
+    case Page.Sleeves: {
+      mainPage = <SleeveRoot />;
+      break;
+    }
+    case Page.StaneksGift: {
+      mainPage = <StaneksGiftRoot staneksGift={staneksGift} />;
+      break;
+    }
+    case Page.Stats: {
+      mainPage = <CharacterStats />;
+      break;
+    }
+    case Page.ScriptEditor: {
+      mainPage = (
+        <ScriptEditorRoot
+          files={files}
+          hostname={player.getCurrentServer().hostname}
+          player={player}
+          router={Router}
+          vim={vim}
+        />
+      );
+      break;
+    }
+    case Page.ActiveScripts: {
+      mainPage = <ActiveScriptsRoot workerScripts={workerScripts} />;
+      break;
+    }
+    case Page.Hacknet: {
+      mainPage = <HacknetRoot player={player} />;
+      break;
+    }
+    case Page.CreateProgram: {
+      mainPage = <ProgramsRoot />;
+      break;
+    }
+    case Page.Factions: {
+      mainPage = <FactionsRoot player={player} router={Router} />;
+      break;
+    }
+    case Page.Faction: {
+      mainPage = <FactionRoot faction={faction} augPage={augPage} />;
+      break;
+    }
+    case Page.Milestones: {
+      mainPage = <MilestonesRoot player={player} />;
+      break;
+    }
+    case Page.Tutorial: {
+      mainPage = (
+        <TutorialRoot
+          reactivateTutorial={() => {
+            prestigeAugmentation();
+            Router.toTerminal();
+            iTutorialStart();
+          }}
+        />
+      );
+      break;
+    }
+    case Page.DevMenu: {
+      mainPage = <DevMenuRoot player={player} engine={engine} router={Router} />;
+      break;
+    }
+    case Page.Gang: {
+      mainPage = <GangRoot />;
+      break;
+    }
+    case Page.Corporation: {
+      mainPage = <CorporationRoot />;
+      break;
+    }
+    case Page.Bladeburner: {
+      mainPage = <BladeburnerRoot />;
+      break;
+    }
+    case Page.Grafting: {
+      mainPage = <GraftingRoot />;
+      break;
+    }
+    case Page.Travel: {
+      mainPage = <TravelAgencyRoot p={player} router={Router} />;
+      break;
+    }
+    case Page.StockMarket: {
+      mainPage = (
+        <StockMarketRoot
+          buyStockLong={buyStock}
+          buyStockShort={shortStock}
+          cancelOrder={cancelOrder}
+          eventEmitterForReset={eventEmitterForUiReset}
+          initStockMarket={initStockMarketFn}
+          p={player}
+          placeOrder={placeOrder}
+          sellStockLong={sellStock}
+          sellStockShort={sellShort}
+          stockMarket={StockMarket}
+        />
+      );
+      break;
+    }
+    case Page.City: {
+      mainPage = <LocationCity />;
+      break;
+    }
+    case Page.Job:
+    case Page.Location: {
+      mainPage = <GenericLocation loc={location} />;
+      break;
+    }
+    case Page.Options: {
+      mainPage = (
+        <GameOptionsRoot
+          player={player}
+          router={Router}
+          save={() => saveObject.saveGame()}
+          export={() => {
+            // Apply the export bonus before saving the game
+            onExport(player);
+            saveObject.exportGame();
+          }}
+          forceKill={killAllScripts}
+          softReset={softReset}
+        />
+      );
+      break;
+    }
+    case Page.Augmentations: {
+      mainPage = (
+        <AugmentationsRoot
+          exportGameFn={() => {
+            // Apply the export bonus before saving the game
+            onExport(player);
+            saveObject.exportGame();
+          }}
+          installAugmentationsFn={() => {
+            installAugmentations();
+          }}
+        />
+      );
+      break;
+    }
+    case Page.Achievements: {
+      mainPage = <AchievementsRoot />;
+      break;
+    }
+    case Page.ThemeBrowser: {
+      mainPage = <ThemeBrowser router={Router} />;
+      break;
+    }
+    case Page.ImportSave: {
+      mainPage = <ImportSaveRoot importString={importString} automatic={importAutomatic} router={Router} />;
+      withSidebar = false;
+      withPopups = false;
+      bypassGame = true;
+    }
+  }
+
   return (
     <Context.Player.Provider value={player}>
       <Context.Router.Provider value={Router}>
-        <SnackbarProvider>
-          <Overview>
-            {!ITutorial.isRunning ? (
-              <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
-            ) : (
-              <InteractiveTutorialRoot />
-            )}
-          </Overview>
-          {page === Page.Recovery ? (
-            <RecoveryRoot router={Router} />
-          ) : page === Page.BitVerse ? (
-            <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
-          ) : page === Page.Infiltration ? (
-            <InfiltrationRoot location={location} />
-          ) : page === Page.BladeburnerCinematic ? (
-            <BladeburnerCinematic />
-          ) : page === Page.Work ? (
-            <WorkInProgressRoot />
-          ) : (
-            <Box display="flex" flexDirection="row" width="100%">
-              <SidebarRoot player={player} router={Router} page={page} />
-              <Box className={classes.root} flexGrow={1} display="block" px={1} min-height="100vh">
-                {page === Page.Terminal ? (
-                  <TerminalRoot terminal={terminal} router={Router} player={player} />
-                ) : page === Page.Sleeves ? (
-                  <SleeveRoot />
-                ) : page === Page.StaneksGift ? (
-                  <StaneksGiftRoot staneksGift={staneksGift} />
-                ) : page === Page.Stats ? (
-                  <CharacterStats />
-                ) : page === Page.ScriptEditor ? (
-                  <ScriptEditorRoot
-                    files={files}
-                    hostname={player.getCurrentServer().hostname}
+        <ErrorBoundary key={errorBoundaryKey} router={Router} softReset={softReset}>
+          <BypassWrapper content={bypassGame ? mainPage : null}>
+            <SnackbarProvider>
+              <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
+                {!ITutorial.isRunning ? (
+                  <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+                ) : (
+                  <InteractiveTutorialRoot />
+                )}
+              </Overview>
+              {withSidebar ? (
+                <Box display="flex" flexDirection="row" width="100%">
+                  <SidebarRoot
                     player={player}
                     router={Router}
-                    vim={vim}
-                  />
-                ) : page === Page.ActiveScripts ? (
-                  <ActiveScriptsRoot workerScripts={workerScripts} />
-                ) : page === Page.Hacknet ? (
-                  <HacknetRoot player={player} />
-                ) : page === Page.CreateProgram ? (
-                  <ProgramsRoot />
-                ) : page === Page.Factions ? (
-                  <FactionsRoot player={player} router={Router} />
-                ) : page === Page.Faction ? (
-                  <FactionRoot faction={faction} />
-                ) : page === Page.Milestones ? (
-                  <MilestonesRoot player={player} />
-                ) : page === Page.Tutorial ? (
-                  <TutorialRoot
-                    reactivateTutorial={() => {
-                      prestigeAugmentation();
-                      Router.toTerminal();
-                      iTutorialStart();
+                    page={page}
+                    opened={sidebarOpened}
+                    onToggled={(isOpened) => {
+                      setSideBarOpened(isOpened);
+                      Settings.IsSidebarOpened = isOpened;
                     }}
                   />
-                ) : page === Page.DevMenu ? (
-                  <DevMenuRoot player={player} engine={engine} router={Router} />
-                ) : page === Page.Gang ? (
-                  <GangRoot />
-                ) : page === Page.Corporation ? (
-                  <CorporationRoot />
-                ) : page === Page.Bladeburner ? (
-                  <BladeburnerRoot />
-                ) : page === Page.Resleeves ? (
-                  <ResleeveRoot />
-                ) : page === Page.Travel ? (
-                  <TravelAgencyRoot p={player} router={Router} />
-                ) : page === Page.StockMarket ? (
-                  <StockMarketRoot
-                    buyStockLong={buyStock}
-                    buyStockShort={shortStock}
-                    cancelOrder={cancelOrder}
-                    eventEmitterForReset={eventEmitterForUiReset}
-                    initStockMarket={initStockMarketFnForReact}
-                    p={player}
-                    placeOrder={placeOrder}
-                    sellStockLong={sellStock}
-                    sellStockShort={sellShort}
-                    stockMarket={StockMarket}
-                  />
-                ) : page === Page.City ? (
-                  <LocationCity />
-                ) : page === Page.Job ? (
-                  <GenericLocation loc={location} />
-                ) : page === Page.Location ? (
-                  <GenericLocation loc={location} />
-                ) : page === Page.Options ? (
-                  <GameOptionsRoot
-                    player={player}
-                    save={() => saveObject.saveGame()}
-                    export={() => saveObject.exportGame()}
-                    forceKill={killAllScripts}
-                    softReset={() => {
-                      dialogBoxCreate("Soft Reset!");
-                      prestigeAugmentation();
-                      Router.toTerminal();
-                    }}
-                  />
-                ) : page === Page.Augmentations ? (
-                  <AugmentationsRoot
-                    exportGameFn={() => {
-                      saveObject.exportGame();
-                      onExport(player);
-                    }}
-                    installAugmentationsFn={() => {
-                      installAugmentations();
-                      Router.toTerminal();
-                    }}
-                  />
-                ) : (
-                  <>
-                    <Typography>Cannot load</Typography>
-                  </>
-                )}
-              </Box>
-            </Box>
-          )}
-          <Unclickable />
-          <LogBoxManager />
-          <AlertManager />
-          <PromptManager />
-          <InvitationModal />
-          <Snackbar />
-        </SnackbarProvider>
+                  <Box className={classes.root}>{mainPage}</Box>
+                </Box>
+              ) : (
+                <Box className={classes.root}>{mainPage}</Box>
+              )}
+              <Unclickable />
+              {withPopups && (
+                <>
+                  <LogBoxManager />
+                  <AlertManager />
+                  <PromptManager />
+                  <InvitationModal />
+                  <Snackbar />
+                </>
+              )}
+              <Apr1 />
+            </SnackbarProvider>
+          </BypassWrapper>
+        </ErrorBoundary>
       </Context.Router.Provider>
     </Context.Player.Provider>
   );

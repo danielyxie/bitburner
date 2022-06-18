@@ -14,6 +14,7 @@ import { Script } from "../Script/Script";
 import { GetServer } from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
 import { IMap } from "../types";
+import { NS } from "../ScriptEditor/NetscriptDefinitions";
 
 export class WorkerScript {
   /**
@@ -33,9 +34,9 @@ export class WorkerScript {
   delay: number | null = null;
 
   /**
-   * Holds the Promise resolve() function for when the script is "blocked" by an async op
+   * Holds the Promise reject() function while the script is "blocked" by an async op
    */
-  delayResolve?: () => void;
+  delayReject?: (reason?: any) => void;
 
   /**
    * Stores names of all functions that have logging disabled
@@ -60,7 +61,7 @@ export class WorkerScript {
   env: Environment;
 
   /**
-   * Status message in case of script error. Currently unused I think
+   * Status message in case of script error.
    */
   errorMessage = "";
 
@@ -102,7 +103,7 @@ export class WorkerScript {
   scriptRef: RunningScript;
 
   /**
-   * IP Address on which this script is running
+   * hostname on which this script is running
    */
   hostname: string;
 
@@ -111,7 +112,7 @@ export class WorkerScript {
    */
   atExit: any;
 
-  constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
+  constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => NS) {
     this.name = runningScriptObj.filename;
     this.hostname = runningScriptObj.server;
 

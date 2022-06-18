@@ -96,6 +96,8 @@ export class Product {
   marketTa2 = false;
   marketTa2Price: IMap<number> = createCityMap<number>(0);
 
+  // Determines the maximum amount of this product that can be sold in one market cycle
+  maxsll = 0;
   constructor(params: IConstructorParams = {}) {
     this.name = params.name ? params.name : "";
     this.dmd = params.demand ? params.demand : 0;
@@ -129,8 +131,6 @@ export class Product {
     this.fin = true;
 
     //Calculate properties
-    const progrMult = this.prog / 100;
-
     const engrRatio = employeeProd[EmployeePositions.Engineer] / employeeProd["total"];
     const mgmtRatio = employeeProd[EmployeePositions.Management] / employeeProd["total"];
     const rndRatio = employeeProd[EmployeePositions.RandD] / employeeProd["total"];
@@ -139,7 +139,7 @@ export class Product {
     const designMult = 1 + Math.pow(this.designCost, 0.1) / 100;
     const balanceMult = 1.2 * engrRatio + 0.9 * mgmtRatio + 1.3 * rndRatio + 1.5 * opsRatio + busRatio;
     const sciMult = 1 + Math.pow(industry.sciResearch.qty, industry.sciFac) / 800;
-    const totalMult = progrMult * balanceMult * designMult * sciMult;
+    const totalMult = balanceMult * designMult * sciMult;
 
     this.qlt =
       totalMult *
@@ -198,7 +198,7 @@ export class Product {
 
     //Calculate the product's required materials
     //For now, just set it to be the same as the requirements to make materials
-    for (const matName in industry.reqMats) {
+    for (const matName of Object.keys(industry.reqMats)) {
       if (industry.reqMats.hasOwnProperty(matName)) {
         const reqMat = industry.reqMats[matName];
         if (reqMat === undefined) continue;
@@ -209,7 +209,7 @@ export class Product {
     //Calculate the product's size
     //For now, just set it to be the same size as the requirements to make materials
     this.siz = 0;
-    for (const matName in industry.reqMats) {
+    for (const matName of Object.keys(industry.reqMats)) {
       const reqMat = industry.reqMats[matName];
       if (reqMat === undefined) continue;
       this.siz += MaterialSizes[matName] * reqMat;

@@ -9,7 +9,7 @@
 > use getPlayer
 > 
 
-SF4.1 - Returns an object with various information about your character.
+Returns an object with various information about your character.
 
 <b>Signature:</b>
 
@@ -24,5 +24,5 @@ Object with various information about your character.
 
 ## Remarks
 
-RAM cost: 0.5 GB
+RAM cost: 0.5 GB \* 16/4/1
 

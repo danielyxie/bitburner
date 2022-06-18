@@ -41,6 +41,17 @@ var data = flags([
 ]);
 tprint(data);
 
+// example.ns
+export async function main(ns) {
+  const data = ns.flags([
+    ['delay', 0], // a default number means this flag is a number
+    ['server', 'foodnstuff'], //  a default string means this flag is a string
+    ['exclude', []], // a default array means this flag is a default array of string
+    ['help', false], // a default boolean means this flag is a boolean
+  ]);
+  ns.tprint(data);
+}
+
 // [home ~/]> run example.script
 // {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":false}
 // [home ~/]> run example.script --delay 3000

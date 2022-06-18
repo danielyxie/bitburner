@@ -28,10 +28,19 @@ RAM cost: 0.05 GB
 
 Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 httpworm("foodnstuff");
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+ns.httpworm("foodnstuff");
 ```
 

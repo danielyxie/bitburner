@@ -9,7 +9,7 @@ Terminate all scripts on a server.
 <b>Signature:</b>
 
 ```typescript
-killall(host: string): boolean;
+killall(host?: string, safetyguard?: boolean): boolean;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ killall(host: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  host | string | IP or hostname of the server on which to kill all scripts. |
+|  safetyguard | boolean | Skips the script that calls this function |
 
 <b>Returns:</b>
 
@@ -28,5 +29,5 @@ True if any scripts were killed, and false otherwise.
 
 RAM cost: 0.5 GB
 
-Kills all running scripts on the specified server. This function returns true if any scripts were killed, and false otherwise. In other words, it will return true if there are any scripts running on the target server.
+Kills all running scripts on the specified server. This function returns true if any scripts were killed, and false otherwise. In other words, it will return true if there are any scripts running on the target server. If no host is defined, it will kill all scripts, where the script is running.
 

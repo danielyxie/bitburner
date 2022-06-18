@@ -28,7 +28,7 @@ List of all Source-Files
 ||                                    || * Increases the player's charisma and company salary multipliers by 8%/12%/14%.                                                                                         |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-4: The Singularity         || * Let the player access and use Netscript Singularity Functions in other BitNodes.                                                                                      |
-||                                    || * Each level of this Source-File opens up more of the Singularity Functions to use.                                                                                     |
+||                                    || * Each level of this Source-File reduces the RAM cost of singularity functions.                                                                                         |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-5: Artificial Intelligence || * Unlocks :ref:`gameplay_intelligence`.                                                                                                                                 |
 ||                                    || * Unlocks :js:func:`getBitNodeMultipliers` and start with Formulas.exe.                                                                                                 |
@@ -53,6 +53,7 @@ List of all Source-Files
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-10: Digital Carbon         || * Each level of this grants a Duplicate Sleeve.                                                                                                                         |
 ||                                    || * Allows the player to access the `Sleeve API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.sleeve.md>`_ in other BitNodes.                      |
+||                                    || * Grants the player access to the VitaLife secret laboratory in other BitNodes. Also grants access to the Grafting API.                                                 |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-11: The Big Crash          || * Company favor increases both the player's salary and reputation gain at that                                                                                          |
 ||                                    || company by 1% per favor (rather than just the reputation gain).                                                                                                         |

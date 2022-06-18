@@ -62,6 +62,9 @@ export class Material {
   marketTa2 = false;
   marketTa2Price = 0;
 
+  // Determines the maximum amount of this material that can be sold in one market cycle
+  maxsll = 0;
+
   constructor(params: IConstructorParams = {}) {
     if (params.name) {
       this.name = params.name;
@@ -158,9 +161,9 @@ export class Material {
         break;
       case "Robots":
         this.dmd = 90;
-        this.dmdR = [80, 9];
+        this.dmdR = [80, 99];
         this.cmp = 90;
-        this.cmpR = [80, 9];
+        this.cmpR = [80, 99];
         this.bCost = 75e3;
         this.mv = 0.5; //Less mv bc its processed twice
         this.mku = 1;
@@ -169,7 +172,7 @@ export class Material {
         this.dmd = 90;
         this.dmdR = [80, 99];
         this.cmp = 90;
-        this.cmpR = [80, 9];
+        this.cmpR = [80, 99];
         this.bCost = 15e3;
         this.mv = 0.8; //Less mv bc its processed twice
         this.mku = 0.5;

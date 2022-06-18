@@ -4,6 +4,8 @@
 
 ## RunningScript.onlineRunningTime property
 
+Number of seconds that this script has been running online
+
 <b>Signature:</b>
 
 ```typescript

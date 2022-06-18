@@ -94,9 +94,9 @@ export function v1APIBreak(): void {
 
       if (s.length === 0) continue;
 
-      txt += `// Detected change ${change[0]}, reason: ${change[1]}` + "\n";
+      txt += `// Detected change ${change[0]}, reason: ${change[1]}\n`;
       for (const fl of s) {
-        txt += `${fl.file}:${fl.line}` + "\n";
+        txt += `${fl.file}:${fl.line}\n`;
       }
     }
   }
@@ -110,7 +110,7 @@ export function v1APIBreak(): void {
     for (const script of server.scripts) {
       if (!hasChanges(script.code)) continue;
       const prefix = script.filename.includes("/") ? "/BACKUP_" : "BACKUP_";
-      backups.push(new Script(prefix + script.filename, script.code, script.server));
+      backups.push(new Script(Player, prefix + script.filename, script.code, script.server));
       script.code = convert(script.code);
     }
     server.scripts = server.scripts.concat(backups);

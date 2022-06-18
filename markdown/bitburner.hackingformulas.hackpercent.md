@@ -4,7 +4,7 @@
 
 ## HackingFormulas.hackPercent() method
 
-Calculate hack percent for one thread.
+Calculate hack percent for one thread. (Ex: 0.25 would steal 25% of the server's current value.)
 
 <b>Signature:</b>
 

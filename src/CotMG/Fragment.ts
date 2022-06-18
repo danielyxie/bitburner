@@ -76,13 +76,7 @@ export class Fragment {
   }
 
   copy(): Fragment {
-    return new Fragment(
-      this.id,
-      this.shape.map((a) => a.slice()),
-      this.type,
-      this.power,
-      this.limit,
-    );
+    return Object.assign({}, this);
   }
 }
 
@@ -201,7 +195,7 @@ export function FragmentById(id: number): Fragment | null {
       21, // id
       Shapes.O,
       FragmentType.HacknetCost, // type
-      -1, // power
+      2, // power
       1, // limit
     ),
   );

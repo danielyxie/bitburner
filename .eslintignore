@@ -1,27 +1,26 @@
 node_modules/
-dist/
-input/
 
 .dist
 .tmp
 .package
-
-assets/
-css/
+.build
 .cypress/
-cypress/
+
+dist/
+input/
+assets/
 doc/
 markdown/
-netscript_tests/
-scripts/
+
+
+test/netscript/
 
 electron/lib
 electron/greenworks.js
 src/ThirdParty/*
 src/JSInterpreter.js
+tools/engines-check/
 
-test/*.bundle.*
 editor.main.js
 main.bundle.js
 webpack.config.js
-webpack.config-test.js

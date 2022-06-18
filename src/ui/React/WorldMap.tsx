@@ -2,6 +2,9 @@ import React from "react";
 import { CityName } from "../../Locations/data/CityNames";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 interface ICityProps {
   currentCity: CityName;
@@ -9,14 +12,23 @@ interface ICityProps {
   onTravel: (city: CityName) => void;
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    travel: {
+      color: theme.colors.white,
+      lineHeight: "1em",
+      whiteSpace: "pre",
+      cursor: "pointer",
+    },
+  }),
+);
+
 function City(props: ICityProps): React.ReactElement {
+  const classes = useStyles();
   if (props.city !== props.currentCity) {
     return (
       <Tooltip title={<Typography>{props.city}</Typography>}>
-        <span
-          onClick={() => props.onTravel(props.city)}
-          style={{ color: "white", lineHeight: "1em", whiteSpace: "pre", cursor: "pointer" }}
-        >
+        <span onClick={() => props.onTravel(props.city)} className={classes.travel}>
           {props.city[0]}
         </span>
       </Tooltip>

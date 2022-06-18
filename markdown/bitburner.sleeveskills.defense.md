@@ -4,7 +4,7 @@
 
 ## SleeveSkills.defense property
 
-current defense of the sleeve
+Current defense of the sleeve
 
 <b>Signature:</b>
 

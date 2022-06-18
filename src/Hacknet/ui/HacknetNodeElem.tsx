@@ -54,7 +54,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
       multiplier = getMaxNumberLevelUpgrades(props.player, node, HacknetNodeConstants.MaxLevel);
     } else {
       const levelsToMax = HacknetNodeConstants.MaxLevel - node.level;
-      multiplier = Math.min(levelsToMax, purchaseMult as number);
+      multiplier = Math.min(levelsToMax, purchaseMult );
     }
 
     const increase =
@@ -94,7 +94,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
       multiplier = getMaxNumberRamUpgrades(props.player, node, HacknetNodeConstants.MaxRam);
     } else {
       const levelsToMax = Math.round(Math.log2(HacknetNodeConstants.MaxRam / node.ram));
-      multiplier = Math.min(levelsToMax, purchaseMult as number);
+      multiplier = Math.min(levelsToMax, purchaseMult );
     }
 
     const increase =
@@ -144,7 +144,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
       multiplier = getMaxNumberCoreUpgrades(props.player, node, HacknetNodeConstants.MaxCores);
     } else {
       const levelsToMax = HacknetNodeConstants.MaxCores - node.cores;
-      multiplier = Math.min(levelsToMax, purchaseMult as number);
+      multiplier = Math.min(levelsToMax, purchaseMult );
     }
 
     const increase =
@@ -172,7 +172,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
       <Table size="small">
         <TableBody>
           <TableRow>
-            <TableCell>
+            <TableCell colSpan={3}>
               <Typography>{node.name}</Typography>
             </TableCell>
           </TableRow>
@@ -182,7 +182,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
             </TableCell>
             <TableCell colSpan={2}>
               <Typography>
-                <Money money={node.totalMoneyGenerated} player={props.player} /> (
+                <Money money={node.totalMoneyGenerated} /> (
                 <MoneyRate money={node.moneyGainRatePerSecond} />)
               </Typography>
             </TableCell>

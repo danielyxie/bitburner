@@ -34,14 +34,23 @@ The third element in the array is the number of shares the player owns of the st
 
 All elements in the returned array are numeric.
 
-## Example
+## Example 1
 
 
 ```ts
-pos = getPosition("ECP");
-shares      = pos[0];
-avgPx       = pos[1];
-sharesShort = pos[2];
-avgPxShort  = pos[3];
+// NS1
+var pos = stock.getPosition("ECP");
+var shares      = pos[0];
+var avgPx       = pos[1];
+var sharesShort = pos[2];
+var avgPxShort  = pos[3];
+```
+
+## Example 2
+
+
+```ts
+// NS2
+const [shares, avgPx, sharesShort, avgPxShort] = ns.stock.getPosition("ECP");
 ```
 

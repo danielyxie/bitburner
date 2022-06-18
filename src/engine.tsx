@@ -2,7 +2,6 @@
  * Game engine. Handles the main game loop.
  */
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
-import { Augmentations } from "./Augmentation/Augmentations";
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
@@ -15,6 +14,7 @@ import { Factions, initFactions } from "./Faction/Factions";
 import { staneksGift } from "./CotMG/Helper";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
+import { Page } from "./ui/Router";
 import { SetupTextEditor } from "./ScriptEditor/ui/ScriptEditorRoot";
 
 import {
@@ -24,14 +24,13 @@ import {
 } from "./PersonObjects/formulas/reputation";
 import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelpers";
 import { iTutorialStart } from "./InteractiveTutorial";
-import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
+import { checkForMessagesToSend } from "./Message/MessageHelpers";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { saveObject, loadGame } from "./SaveObject";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { ThemeEvents } from "./ui/React/Theme";
-import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
+import { ThemeEvents } from "./Themes/ui/Theme";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
@@ -44,9 +43,14 @@ import { AlertEvents } from "./ui/React/AlertManager";
 import { exceptionAlert } from "./utils/helpers/exceptionAlert";
 
 import { startExploits } from "./Exploits/loops";
+import { calculateAchievements } from "./Achievements/Achievements";
 
 import React from "react";
 import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
+import { Button, Typography } from "@mui/material";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
+
+import { WorkType } from "./utils/WorkType";
 
 const Engine: {
   _lastUpdate: number;
@@ -65,6 +69,7 @@ const Engine: {
     messages: number;
     mechanicProcess: number;
     contractGeneration: number;
+    achievementsCounter: number;
   };
   decrementAllCounters: (numCycles?: number) => void;
   checkCounters: () => void;
@@ -163,10 +168,11 @@ const Engine: {
     messages: 150,
     mechanicProcess: 5, // Processes certain mechanics (Corporation, Bladeburner)
     contractGeneration: 3000, // Generate Coding Contracts
+    achievementsCounter: 60, // Check if we have new achievements
   },
 
   decrementAllCounters: function (numCycles = 1) {
-    for (const counterName in Engine.Counters) {
+    for (const counterName of Object.keys(Engine.Counters)) {
       const counter = Engine.Counters[counterName];
       if (counter === undefined) throw new Error("counter should not be undefined");
       Engine.Counters[counterName] = counter - numCycles;
@@ -183,10 +189,11 @@ const Engine: {
         Settings.AutosaveInterval = 60;
       }
       if (Settings.AutosaveInterval === 0) {
-        Engine.Counters.autoSaveCounter = Infinity;
+        warnAutosaveDisabled();
+        Engine.Counters.autoSaveCounter = 60 * 5; // Let's check back in a bit
       } else {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
-        saveObject.saveGame();
+        saveObject.saveGame(!Settings.SuppressSavedGameToast);
       }
     }
 
@@ -207,7 +214,7 @@ const Engine: {
 
     if (Engine.Counters.messages <= 0) {
       checkForMessagesToSend();
-      if (Augmentations[AugmentationNames.TheRedPill].owned) {
+      if (Player.hasAugmentation(AugmentationNames.TheRedPill)) {
         Engine.Counters.messages = 4500; // 15 minutes for Red pill message
       } else {
         Engine.Counters.messages = 150;
@@ -234,6 +241,11 @@ const Engine: {
       }
       Engine.Counters.contractGeneration = 3000;
     }
+
+    if (Engine.Counters.achievementsCounter <= 0) {
+      calculateAchievements();
+      Engine.Counters.achievementsCounter = 300;
+    }
   },
 
   load: function (saveString) {
@@ -244,12 +256,14 @@ const Engine: {
       ThemeEvents.emit();
 
       initBitNodeMultipliers(Player);
-      updateSourceFileFlags(Player);
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
       if (Player.hasWseAccount) {
         initSymbolToStockMap();
       }
+
+      // Apply penalty for entropy accumulation
+      Player.applyEntropy(Player.entropy);
 
       // Calculate the number of cycles have elapsed while offline
       Engine._lastUpdate = new Date().getTime();
@@ -258,40 +272,50 @@ const Engine: {
       const numCyclesOffline = Math.floor(timeOffline / CONSTANTS._idleSpeed);
 
       // Generate coding contracts
-      // let numContracts = 0;
-      // if (numCyclesOffline < 3000 * 100) {
-      //   // if we have less than 100 rolls, just roll them exactly.
-      //   for (let i = 0; i < numCyclesOffline / 3000; i++) {
-      //     if (Math.random() < 0.25) numContracts++;
-      //   }
-      // } else {
-      //   // just average it.
-      //   numContracts = (numCyclesOffline / 3000) * 0.25;
-      // }
-      // console.log(`${numCyclesOffline} ${numContracts}`);
-      // for (let i = 0; i < numContracts; i++) {
-      //   generateRandomContract();
-      // }
+      if (Player.sourceFiles.length > 0) {
+        let numContracts = 0;
+        if (numCyclesOffline < 3000 * 100) {
+          // if we have less than 100 rolls, just roll them exactly.
+          for (let i = 0; i < numCyclesOffline / 3000; i++) {
+            if (Math.random() < 0.25) numContracts++;
+          }
+        } else {
+          // just average it.
+          numContracts = (numCyclesOffline / 3000) * 0.25;
+        }
+        for (let i = 0; i < numContracts; i++) {
+          generateRandomContract();
+        }
+      }
 
       let offlineReputation = 0;
       const offlineHackingIncome = (Player.moneySourceA.hacking / Player.playtimeSinceLastAug) * timeOffline * 0.75;
       Player.gainMoney(offlineHackingIncome, "hacking");
       // Process offline progress
-      loadAllRunningScripts(); // This also takes care of offline production for those scripts
+      loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
       if (Player.isWorking) {
         Player.focus = true;
-        if (Player.workType == CONSTANTS.WorkTypeFaction) {
-          Player.workForFaction(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
-          Player.createProgramWork(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
-          Player.takeClass(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
-          Player.commitCrime(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
-          Player.workPartTime(numCyclesOffline);
-        } else {
-          Player.work(numCyclesOffline);
+        switch (Player.workType) {
+          case WorkType.Faction:
+            Player.workForFaction(numCyclesOffline);
+            break;
+          case WorkType.CreateProgram:
+            Player.createProgramWork(numCyclesOffline);
+            break;
+          case WorkType.StudyClass:
+            Player.takeClass(numCyclesOffline);
+            break;
+          case WorkType.Crime:
+            Player.commitCrime(numCyclesOffline);
+            break;
+          case WorkType.CompanyPartTime:
+            Player.workPartTime(numCyclesOffline);
+            break;
+          case WorkType.GraftAugmentation:
+            Player.graftAugmentationWork(numCyclesOffline);
+            break;
+          default:
+            Player.work(numCyclesOffline);
         }
       } else {
         for (let i = 0; i < Player.factions.length; i++) {
@@ -393,9 +417,22 @@ const Engine: {
         () =>
           AlertEvents.emit(
             <>
-              Offline for {timeOfflineString}. While you were offline, your scripts generated{" "}
-              <Money money={offlineHackingIncome} />, your Hacknet Nodes generated {hacknetProdInfo} and you gained{" "}
-              <Reputation reputation={offlineReputation} /> reputation divided amongst your factions.
+              <Typography>Offline for {timeOfflineString}. While you were offline:</Typography>
+              <ul>
+                <li>
+                  <Typography>
+                    Your scripts generated <Money money={offlineHackingIncome} />
+                  </Typography>
+                </li>
+                <li>
+                  <Typography>Your Hacknet Nodes generated {hacknetProdInfo}</Typography>
+                </li>
+                <li>
+                  <Typography>
+                    You gained <Reputation reputation={offlineReputation} /> reputation divided amongst your factions
+                  </Typography>
+                </li>
+              </ul>
             </>,
           ),
         250,
@@ -409,8 +446,6 @@ const Engine: {
       initCompanies();
       initFactions();
       initAugmentations();
-      initMessages();
-      updateSourceFileFlags(Player);
 
       // Start interactive tutorial
       iTutorialStart();
@@ -436,5 +471,36 @@ const Engine: {
     window.requestAnimationFrame(Engine.start);
   },
 };
+
+/**
+ * Shows a toast warning that lets the player know that auto-saves are disabled, with an button to re-enable them.
+ */
+function warnAutosaveDisabled(): void {
+  // If the player has suppressed those warnings let's just exit right away.
+  if (Settings.SuppressAutosaveDisabledWarnings) return;
+
+  // We don't want this warning to show up on certain pages.
+  // When in recovery or importing we want to keep autosave disabled.
+  const ignoredPages = [Page.Recovery, Page.ImportSave];
+  if (ignoredPages.includes(Router.page())) return;
+
+  const warningToast = (
+    <>
+      Auto-saves are <strong>disabled</strong>!
+      <Button
+        sx={{ ml: 1 }}
+        color="warning"
+        size="small"
+        onClick={() => {
+          // We reset the value to a default
+          Settings.AutosaveInterval = 60;
+        }}
+      >
+        Enable
+      </Button>
+    </>
+  );
+  SnackbarEvents.emit(warningToast, ToastVariant.WARNING, 5000);
+}
 
 export { Engine };

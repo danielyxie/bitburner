@@ -1,6 +1,6 @@
 import React from "react";
 import { IIndustry } from "../IIndustry";
-import { MathJax, MathJaxContext } from "better-react-mathjax";
+import { MathJaxWrapper } from "../../MathJaxWrapper";
 
 interface IProps {
   division: IIndustry;
@@ -13,14 +13,10 @@ export function IndustryProductEquation(props: IProps): React.ReactElement {
     if (reqAmt === undefined) continue;
     reqs.push(String.raw`${reqAmt}\text{ }${reqMat}`);
   }
-  const prod = props.division.prodMats.slice();
+  const prod = props.division.prodMats.map((p) => `1\\text{ }${p}`);
   if (props.division.makesProducts) {
-    prod.push(props.division.type);
+    prod.push("Products");
   }
 
-  return (
-    <MathJaxContext>
-      <MathJax>{"\\(" + reqs.join("+") + `\\Rightarrow` + prod.map((p) => `1 \\text{${p}}`).join("+") + "\\)"}</MathJax>
-    </MathJaxContext>
-  );
+  return <MathJaxWrapper>{"\\(" + reqs.join("+") + `\\Rightarrow ` + prod.join("+") + "\\)"}</MathJaxWrapper>;
 }

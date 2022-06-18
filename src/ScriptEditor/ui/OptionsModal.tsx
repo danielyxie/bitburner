@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Options } from "./Options";
+import { Options, WordWrapOptions } from "./Options";
 import { Modal } from "../../ui/React/Modal";
 
 import Button from "@mui/material/Button";
@@ -9,6 +9,10 @@ import Select from "@mui/material/Select";
 import Switch from "@mui/material/Switch";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
+
+import { ThemeEditorModal } from "./ThemeEditorModal";
 
 interface IProps {
   options: Options;
@@ -21,13 +25,16 @@ export function OptionsModal(props: IProps): React.ReactElement {
   const [theme, setTheme] = useState(props.options.theme);
   const [insertSpaces, setInsertSpaces] = useState(props.options.insertSpaces);
   const [fontSize, setFontSize] = useState(props.options.fontSize);
+  const [wordWrap, setWordWrap] = useState(props.options.wordWrap);
   const [vim, setVim] = useState(props.options.vim);
+  const [themeEditorOpen, setThemeEditorOpen] = useState(false);
 
   function save(): void {
     props.save({
       theme,
       insertSpaces,
       fontSize,
+      wordWrap,
       vim,
     });
     props.onClose();
@@ -41,6 +48,7 @@ export function OptionsModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
+      <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
       <Box display="flex" flexDirection="row" alignItems="center">
         <Typography>Theme: </Typography>
         <Select onChange={(event) => setTheme(event.target.value)} value={theme}>
@@ -50,12 +58,27 @@ export function OptionsModal(props: IProps): React.ReactElement {
           <MenuItem value="vs-dark">dark</MenuItem>
           <MenuItem value="light">light</MenuItem>
           <MenuItem value="dracula">dracula</MenuItem>
+          <MenuItem value="one-dark">one-dark</MenuItem>
+          <MenuItem value="customTheme">Custom theme</MenuItem>
         </Select>
+        <Button onClick={() => setThemeEditorOpen(true)} sx={{ mx: 1 }} startIcon={<EditIcon />}>
+          Edit custom theme
+        </Button>
       </Box>
 
       <Box display="flex" flexDirection="row" alignItems="center">
         <Typography>Use whitespace over tabs: </Typography>
         <Switch onChange={(event) => setInsertSpaces(event.target.checked)} checked={insertSpaces} />
+      </Box>
+
+      <Box display="flex" flexDirection="row" alignItems="center">
+        <Typography>Word Wrap: </Typography>
+        <Select onChange={(event) => setWordWrap(event.target.value as WordWrapOptions)} value={wordWrap}>
+          <MenuItem value={"off"}>Off</MenuItem>
+          <MenuItem value={"on"}>On</MenuItem>
+          <MenuItem value={"bounded"}>Bounded</MenuItem>
+          <MenuItem value={"wordWrapColumn"}>Word Wrap Column</MenuItem>
+        </Select>
       </Box>
 
       <Box display="flex" flexDirection="row" alignItems="center">
@@ -67,7 +90,9 @@ export function OptionsModal(props: IProps): React.ReactElement {
         <TextField type="number" label="Font size" value={fontSize} onChange={onFontChange} />
       </Box>
       <br />
-      <Button onClick={save}>Save</Button>
+      <Button onClick={save} startIcon={<SaveIcon />}>
+        Save
+      </Button>
     </Modal>
   );
 }

@@ -1,5 +1,4 @@
 import { Bladeburner } from "../../Bladeburner/Bladeburner";
-import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { IPlayer } from "../IPlayer";
 
 export function canAccessBladeburner(this: IPlayer): boolean {
@@ -7,7 +6,7 @@ export function canAccessBladeburner(this: IPlayer): boolean {
     return false;
   }
 
-  return this.bitNodeN === 6 || this.bitNodeN === 7 || SourceFileFlags[6] > 0 || SourceFileFlags[7] > 0;
+  return this.bitNodeN === 6 || this.bitNodeN === 7 || this.sourceFileLvl(6) > 0 || this.sourceFileLvl(7) > 0;
 }
 
 export function inBladeburner(this: IPlayer): boolean {

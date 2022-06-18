@@ -17,6 +17,7 @@ import IconButton from "@mui/material/IconButton";
 import ReplyAllIcon from "@mui/icons-material/ReplyAll";
 import ReplyIcon from "@mui/icons-material/Reply";
 import InputLabel from "@mui/material/InputLabel";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 const bigNumber = 1e12;
 
@@ -25,10 +26,10 @@ interface IProps {
 }
 
 export function Factions(props: IProps): React.ReactElement {
-  const [faction, setFaction] = useState("Illuminati");
+  const [faction, setFaction] = useState(FactionNames.Illuminati as string);
 
   function setFactionDropdown(event: SelectChangeEvent<string>): void {
-    setFaction(event.target.value as string);
+    setFaction(event.target.value );
   }
 
   function receiveInvite(): void {
@@ -36,9 +37,7 @@ export function Factions(props: IProps): React.ReactElement {
   }
 
   function receiveAllInvites(): void {
-    for (const i in AllFaction) {
-      props.player.receiveInvite(AllFaction[i].name);
-    }
+    Object.values(FactionNames).forEach((faction) => props.player.receiveInvite(faction));
   }
 
   function modifyFactionRep(modifier: number): (x: number) => void {
@@ -74,25 +73,25 @@ export function Factions(props: IProps): React.ReactElement {
   }
 
   function tonsOfRep(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       AllFaction[i].playerReputation = bigNumber;
     }
   }
 
   function resetAllRep(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       AllFaction[i].playerReputation = 0;
     }
   }
 
   function tonsOfFactionFavor(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       AllFaction[i].favor = bigNumber;
     }
   }
 
   function resetAllFactionFavor(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       AllFaction[i].favor = 0;
     }
   }

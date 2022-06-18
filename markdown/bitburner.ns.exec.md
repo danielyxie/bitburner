@@ -9,7 +9,7 @@ Start another script on any server.
 <b>Signature:</b>
 
 ```typescript
-exec(script: string, host: string, numThreads?: number, ...args: string[]): number;
+exec(script: string, host: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
 ```
 
 ## Parameters
@@ -19,7 +19,7 @@ exec(script: string, host: string, numThreads?: number, ...args: string[]): numb
 |  script | string | Filename of script to execute. |
 |  host | string | Hostname of the <code>target server</code> on which to execute the script. |
 |  numThreads | number | Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer. |
-|  args | string\[\] | Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value. |
+|  args | Array&lt;string \| number \| boolean&gt; | Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value. |
 
 <b>Returns:</b>
 
@@ -37,29 +37,36 @@ If the script was successfully started, then this functions returns the PID of t
 
 PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.
 
-Running this function with a numThreads argument of 0 will return 0 without running the script. However, running this function with a negative numThreads argument will cause a runtime error.
+Running this function with 0 or a negative numThreads argument will cause a runtime error.
 
 ## Example 1
 
 
 ```ts
+// NS1:
 //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
 exec("generic-hack.script", "foodnstuff");
+
+//The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
+exec("generic-hack.script", "joesguns", 10);
+
+//This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
+exec("foo.script", "foodnstuff", 5, 1, "test");
 ```
+\*
 
 ## Example 2
 
 
 ```ts
+// NS2:
+//The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
+ns.exec("generic-hack.script", "foodnstuff");
+
 //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
-exec("generic-hack.script", "joesguns", 10);
-```
+ns.exec("generic-hack.script", "joesguns", 10);
 
-## Example 3
-
-
-```ts
 //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
-exec("foo.script", "foodnstuff", 5, 1, "test");
+ns.exec("foo.script", "foodnstuff", 5, 1, "test");
 ```
 

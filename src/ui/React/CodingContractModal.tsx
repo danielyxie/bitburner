@@ -37,9 +37,10 @@ export function CodingContractModal(): React.ReactElement {
     // whatever ...
     const value = (event.target as any).value;
 
-    if (event.keyCode === KEY.ENTER && value !== "") {
+    if (event.key === KEY.ENTER && value !== "") {
       event.preventDefault();
       props.onAttempt(answer);
+      setAnswer("");
       close();
     }
   }
@@ -75,6 +76,7 @@ export function CodingContractModal(): React.ReactElement {
             <Button
               onClick={() => {
                 props.onAttempt(answer);
+                setAnswer("");
                 close();
               }}
             >

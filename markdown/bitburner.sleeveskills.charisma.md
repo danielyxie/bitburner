@@ -4,7 +4,7 @@
 
 ## SleeveSkills.charisma property
 
-current charisma of the sleeve
+Current charisma of the sleeve
 
 <b>Signature:</b>
 

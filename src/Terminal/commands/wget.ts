@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -26,7 +28,7 @@ export function wget(
     function (data: any) {
       let res;
       if (isScriptFilename(target)) {
-        res = server.writeToScriptFile(target, data);
+        res = server.writeToScriptFile(player, target, data);
       } else {
         res = server.writeToTextFile(target, data);
       }

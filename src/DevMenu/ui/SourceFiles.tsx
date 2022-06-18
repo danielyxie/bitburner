@@ -12,7 +12,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
 // Update as additional BitNodes get implemented
-const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
 interface IProps {
   player: IPlayer;
@@ -21,6 +21,9 @@ interface IProps {
 export function SourceFiles(props: IProps): React.ReactElement {
   function setSF(sfN: number, sfLvl: number) {
     return function () {
+      if (sfN === 9) {
+        props.player.hacknetNodes = [];
+      }
       if (sfLvl === 0) {
         props.player.sourceFiles = props.player.sourceFiles.filter((sf) => sf.n !== sfN);
         return;

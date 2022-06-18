@@ -17,3 +17,9 @@ getPlayer(): Player;
 
 Player info
 
+## Remarks
+
+RAM cost: 0.5 GB
+
+Returns an object with information on the current player.
+

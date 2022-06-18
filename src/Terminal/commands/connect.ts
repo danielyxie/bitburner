@@ -4,6 +4,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { getServerOnNetwork } from "../../Server/ServerHelpers";
 import { GetServer } from "../../Server/AllServers";
+import { Server } from "../../Server/Server";
 
 export function connect(
   terminal: ITerminal,
@@ -29,8 +30,15 @@ export function connect(
     }
   }
 
-  if (GetServer(hostname) !== null) {
-    terminal.error(`Cannot directly connect to ${hostname}`);
+  const other = GetServer(hostname);
+  if (other !== null) {
+    if (other instanceof Server && other.backdoorInstalled) {
+      terminal.connectToServer(player, hostname);
+      return;
+    }
+    terminal.error(
+      `Cannot directly connect to ${hostname}. Make sure the server is backdoored or adjacent to your current Server`,
+    );
   } else {
     terminal.error("Host not found");
   }

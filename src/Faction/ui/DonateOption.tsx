@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 
 import { CONSTANTS } from "../../Constants";
-import { Faction } from "../../Faction/Faction";
+import { Faction } from "../Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { repFromDonation } from "../formulas/donation";
 import { Favor } from "../../ui/React/Favor";
@@ -15,12 +15,12 @@ import { Reputation } from "../../ui/React/Reputation";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { MathJax, MathJaxContext } from "better-react-mathjax";
+import { MathJaxWrapper } from "../../MathJaxWrapper";
 
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { NumberInput } from "../../ui/React/NumberInput";
 
 type IProps = {
   faction: Faction;
@@ -31,26 +31,20 @@ type IProps = {
 };
 
 export function DonateOption(props: IProps): React.ReactElement {
-  const [donateAmt, setDonateAmt] = useState<number | null>(null);
+  const [donateAmt, setDonateAmt] = useState<number>(NaN);
   const digits = (CONSTANTS.DonateMoneyToRepDivisor + "").length - 1;
 
   function canDonate(): boolean {
-    if (donateAmt === null) return false;
+    if (isNaN(donateAmt)) return false;
     if (isNaN(donateAmt) || donateAmt <= 0) return false;
     if (props.p.money < donateAmt) return false;
     return true;
   }
 
-  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    const amt = numeralWrapper.parseMoney(event.target.value);
-    if (event.target.value === "" || isNaN(amt)) setDonateAmt(null);
-    else setDonateAmt(amt);
-  }
-
   function donate(): void {
     const fac = props.faction;
     const amt = donateAmt;
-    if (amt === null) return;
+    if (isNaN(amt)) return;
     if (!canDonate()) return;
     props.p.loseMoney(amt, "other");
     const repGain = repFromDonation(amt, props.p);
@@ -77,7 +71,7 @@ export function DonateOption(props: IProps): React.ReactElement {
   }
 
   return (
-    <Paper sx={{ my: 1, p: 1, width: "100%" }}>
+    <Paper sx={{ my: 1, p: 1 }}>
       <Status />
       {props.disabled ? (
         <Typography>
@@ -85,8 +79,8 @@ export function DonateOption(props: IProps): React.ReactElement {
         </Typography>
       ) : (
         <>
-          <TextField
-            onChange={onChange}
+          <NumberInput
+            onChange={setDonateAmt}
             placeholder={"Donation amount"}
             disabled={props.disabled}
             InputProps={{
@@ -98,9 +92,7 @@ export function DonateOption(props: IProps): React.ReactElement {
             }}
           />
           <Typography>
-            <MathJaxContext>
-              <MathJax>{`\\(reputation = \\frac{\\text{donation amount} \\cdot \\text{reputation multiplier}}{10^{${digits}}}\\)`}</MathJax>
-            </MathJaxContext>
+            <MathJaxWrapper>{`\\(reputation = \\frac{\\text{donation amount} \\cdot \\text{reputation multiplier}}{10^{${digits}}}\\)`}</MathJaxWrapper>
           </Typography>
         </>
       )}

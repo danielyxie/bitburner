@@ -200,52 +200,52 @@ Here's what mine showed at the time I made this::
     --Root Access: YES, Required hacking skill: 1
     --Number of open ports required to NUKE: 0
     --RAM: 4.00GB
-    
+
     ----zer0
     ------Root Access: NO, Required hacking skill: 75
     ------Number of open ports required to NUKE: 1
     ------RAM: 32.00GB
-    
+
     foodnstuff
     --Root Access: NO, Required hacking skill: 1
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     sigma-cosmetics
     --Root Access: NO, Required hacking skill: 5
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     joesguns
     --Root Access: NO, Required hacking skill: 10
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     ----max-hardware
     ------Root Access: NO, Required hacking skill: 80
     ------Number of open ports required to NUKE: 1
     ------RAM: 32.00GB
-    
+
     ----CSEC
     ------Root Access: NO, Required hacking skill: 54
     ------Number of open ports required to NUKE: 1
     ------RAM: 8.00GB
-    
+
     hong-fang-tea
     --Root Access: NO, Required hacking skill: 30
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     ----nectar-net
     ------Root Access: NO, Required hacking skill: 20
     ------Number of open ports required to NUKE: 0
     ------RAM: 16.00GB
-    
+
     harakiri-sushi
     --Root Access: NO, Required hacking skill: 40
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     iron-gym
     --Root Access: NO, Required hacking skill: 100
     --Number of open ports required to NUKE: 1
@@ -253,7 +253,6 @@ Here's what mine showed at the time I made this::
 
 Take note of the following servers:
 
-* |n00dles|
 * |sigma-cosmetics|
 * |joesguns|
 * |nectar-net|
@@ -520,10 +519,12 @@ will appear that simply says :code:`Work`. Click this to start working.
 Working at :code:`Joe's Guns` earns $110 per second and also grants some experience
 for every stat except hacking.
 
-Working for a company is completely passive. However, you will not be able to do anything
-else in the game while you work. You can cancel working at any time. You'll notice that
-cancelling your work early causes you to lose out on some reputation gains, but
-you shouldn't worry about this. Company reputation isn't important right now.
+Working for a company is completely passive. You can choose to focus on your work, do
+something else simultaneously, or switch between those two. While you focus on work,
+you will not be able to do anything else in the game. If you do something else meanwhile,
+you will not gain reputation at the same speed. You can cancel working at any time.
+You'll notice that cancelling your work early causes you to lose out on some reputation
+gains, but you shouldn't worry about this. Company reputation isn't important right now.
 
 Once your hacking hits level 75, you can visit :code:`Carmichael Security` in the city
 and get a software job there. This job offers higher pay and also earns you
@@ -720,9 +721,10 @@ navigation menu, and from there select |CyberSec|. In the middle of
 the page there should be a button for :code:`Hacking Contracts`.
 Click it to start earning reputation for the |CyberSec| faction (as well
 as some hacking experience). The higher your hacking level, the more reputation you
-will gain. Note that while you are working for a faction, you cannot interact with
-the rest of the game in any way. You can cancel your faction work at any time
-with no penalty.
+will gain. Note that while you are working for a faction, you can choose to not interact
+with the rest of the game in any way to gain reputation at full speed. You can also select to
+do something else simultaneously, gaining reputation a bit more slowly, until you focus again.
+You can cancel your faction work at any time with no penalty to your reputation gained so far.
 
 Purchasing Upgrades and Augmentations
 -------------------------------------
@@ -804,8 +806,7 @@ startup script. Feel free to adjust it to your liking.
 
     // Array of all servers that don't need any ports opened
     // to gain root access. These have 16 GB of RAM
-    var servers0Port = ["n00dles",
-                        "sigma-cosmetics",
+    var servers0Port = ["sigma-cosmetics",
                         "joesguns",
                         "nectar-net",
                         "hong-fang-tea",

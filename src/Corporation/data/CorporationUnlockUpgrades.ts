@@ -1,70 +1,100 @@
-import { IMap } from "../../types";
+export interface CorporationUnlockUpgrade {
+  index: number;
+  price: number;
+  name: string;
+  desc: string;
+}
 
-export type CorporationUnlockUpgrade = [number, number, string, string];
+export enum CorporationUnlockUpgradeIndex {
+  Export = 0,
+  SmartSupply = 1,
+  MarketResearchDemand = 2,
+  MarketDataCompetition = 3,
+  VeChain = 4,
+  ShadyAccounting = 5,
+  GovernmentPartnership = 6,
+  WarehouseAPI = 7,
+  OfficeAPI = 8,
+}
 
 // Corporation Unlock Upgrades
 // Upgrades for entire corporation, unlocks features, either you have it or you dont
-// The data structure is an array with the following format:
-//  [index in Corporation feature upgrades array, price, name, description]
-export const CorporationUnlockUpgrades: IMap<CorporationUnlockUpgrade> = {
+export const CorporationUnlockUpgrades: Record<CorporationUnlockUpgradeIndex, CorporationUnlockUpgrade> = {
   //Lets you export goods
-  "0": [
-    0,
-    20e9,
-    "Export",
-    "Develop infrastructure to export your materials to your other facilities. " +
+  [CorporationUnlockUpgradeIndex.Export]: {
+    index: 0,
+    price: 20e9,
+    name: "Export",
+    desc:
+      "Develop infrastructure to export your materials to your other facilities. " +
       "This allows you to move materials around between different divisions and cities.",
-  ],
+  },
 
   //Lets you buy exactly however many required materials you need for production
-  "1": [
-    1,
-    25e9,
-    "Smart Supply",
-    "Use advanced AI to anticipate your supply needs. " +
+  [CorporationUnlockUpgradeIndex.SmartSupply]: {
+    index: 1,
+    price: 25e9,
+    name: "Smart Supply",
+    desc:
+      "Use advanced AI to anticipate your supply needs. " +
       "This allows you to purchase exactly however many materials you need for production.",
-  ],
+  },
 
   //Displays each material/product's demand
-  "2": [
-    2,
-    5e9,
-    "Market Research - Demand",
-    "Mine and analyze market data to determine the demand of all resources. " +
+  [CorporationUnlockUpgradeIndex.MarketResearchDemand]: {
+    index: 2,
+    price: 5e9,
+    name: "Market Research - Demand",
+    desc:
+      "Mine and analyze market data to determine the demand of all resources. " +
       "The demand attribute, which affects sales, will be displayed for every material and product.",
-  ],
+  },
 
   //Display's each material/product's competition
-  "3": [
-    3,
-    5e9,
-    "Market Data - Competition",
-    "Mine and analyze market data to determine how much competition there is on the market " +
+  [CorporationUnlockUpgradeIndex.MarketDataCompetition]: {
+    index: 3,
+    price: 5e9,
+    name: "Market Data - Competition",
+    desc:
+      "Mine and analyze market data to determine how much competition there is on the market " +
       "for all resources. The competition attribute, which affects sales, will be displayed for " +
       "every material and product.",
-  ],
-  "4": [
-    4,
-    10e9,
-    "VeChain",
-    "Use AI and blockchain technology to identify where you can improve your supply chain systems. " +
+  },
+  [CorporationUnlockUpgradeIndex.VeChain]: {
+    index: 4,
+    price: 10e9,
+    name: "VeChain",
+    desc:
+      "Use AI and blockchain technology to identify where you can improve your supply chain systems. " +
       "This upgrade will allow you to view a wide array of useful statistics about your " +
       "Corporation.",
-  ],
-  "5": [
-    5,
-    500e12,
-    "Shady Accounting",
-    "Utilize unscrupulous accounting practices and pay off government officials to save money " +
+  },
+  [CorporationUnlockUpgradeIndex.ShadyAccounting]: {
+    index: 5,
+    price: 500e12,
+    name: "Shady Accounting",
+    desc:
+      "Utilize unscrupulous accounting practices and pay off government officials to save money " +
       "on taxes. This reduces the dividend tax rate by 5%.",
-  ],
-  "6": [
-    6,
-    2e15,
-    "Government Partnership",
-    "Help national governments further their agendas in exchange for lowered taxes. " +
+  },
+  [CorporationUnlockUpgradeIndex.GovernmentPartnership]: {
+    index: 6,
+    price: 2e15,
+    name: "Government Partnership",
+    desc:
+      "Help national governments further their agendas in exchange for lowered taxes. " +
       "This reduces the dividend tax rate by 10%",
-  ],
-  "7": [7, 50e9, "Warehouse API", "Enables the warehouse API."],
-  "8": [8, 50e9, "Office API", "Enables the office API."],
+  },
+  [CorporationUnlockUpgradeIndex.WarehouseAPI]: {
+    index: 7,
+    price: 50e9,
+    name: "Warehouse API",
+    desc: "Enables the warehouse API.",
+  },
+  [CorporationUnlockUpgradeIndex.OfficeAPI]: {
+    index: 8,
+    price: 50e9,
+    name: "Office API",
+    desc: "Enables the office API.",
+  },
 };

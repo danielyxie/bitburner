@@ -25,44 +25,47 @@ export function FragmentInspector(props: IProps): React.ReactElement {
 
   if (props.fragment === undefined) {
     return (
-      <Paper>
+      <Paper sx={{ flexGrow: 1 }}>
         <Typography>
+          [X, Y] {props.x}, {props.y}
+          <br />
+          <br />
           ID: N/A
           <br />
           Effect: N/A
           <br />
-          Magnitude: N/A
+          Base Power: N/A
           <br />
           Charge: N/A
           <br />
-          Heat: N/A
+          root [X, Y] N/A
           <br />
-          Effect: N/A
-          <br />
-          [X, Y] N/A
-          <br />
-          [X, Y] {props.x}, {props.y}
         </Typography>
       </Paper>
     );
   }
   const f = props.fragment.fragment();
 
-  let charge = `${numeralWrapper.formatStaneksGiftCharge(props.fragment.avgCharge)} avg. * ${
-    props.fragment.numCharge
-  } times`;
+  let charge = numeralWrapper.formatStaneksGiftCharge(props.fragment.highestCharge * props.fragment.numCharge);
   let effect = "N/A";
   // Boosters and cooling don't deal with heat.
   if ([FragmentType.Booster, FragmentType.None, FragmentType.Delete].includes(f.type)) {
     charge = "N/A";
     effect = `${f.power}x adjacent fragment power`;
-  } else {
+  } else if (Effect(f.type).includes("+x%")) {
     effect = Effect(f.type).replace(/-*x%/, numeralWrapper.formatPercentage(props.gift.effect(props.fragment) - 1));
+  } else if (Effect(f.type).includes("-x%")) {
+    const effectAmt = props.gift.effect(props.fragment);
+    const perc = numeralWrapper.formatPercentage(1 - 1 / effectAmt);
+    effect = Effect(f.type).replace(/-x%/, perc);
   }
 
   return (
-    <Paper>
+    <Paper sx={{ flexGrow: 1 }}>
       <Typography>
+        [X, Y] {props.x}, {props.y}
+        <br />
+        <br />
         ID: {props.fragment.id}
         <br />
         Effect: {effect}
@@ -71,10 +74,8 @@ export function FragmentInspector(props: IProps): React.ReactElement {
         <br />
         Charge: {charge}
         <br />
-        <br />
         root [X, Y] {props.fragment.x}, {props.fragment.y}
         <br />
-        [X, Y] {props.x}, {props.y}
       </Typography>
     </Paper>
   );

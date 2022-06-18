@@ -6,7 +6,7 @@ import { CorporationConstants } from "../data/Constants";
 import { Material } from "../Material";
 import { Product } from "../Product";
 import { Warehouse } from "../Warehouse";
-import { SmartSupplyModal } from "./SmartSupplyModal";
+import { SmartSupplyModal } from "./modals/SmartSupplyModal";
 import { ProductElem } from "./ProductElem";
 import { MaterialElem } from "./MaterialElem";
 import { MaterialSizes } from "../MaterialSizes";
@@ -27,6 +27,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 interface IProps {
   corp: ICorporation;
@@ -36,6 +38,14 @@ interface IProps {
   player: IPlayer;
   rerender: () => void;
 }
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    retainHeight: {
+      minHeight: "3em",
+    },
+  }),
+);
 
 function WarehouseRoot(props: IProps): React.ReactElement {
   const corp = useCorporation();
@@ -55,6 +65,8 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     corp.funds = corp.funds - sizeUpgradeCost;
     props.rerender();
   }
+
+  const classes = useStyles();
 
   // Current State:
   let stateText;
@@ -81,10 +93,12 @@ function WarehouseRoot(props: IProps): React.ReactElement {
 
   // Create React components for materials
   const mats = [];
-  for (const matName in props.warehouse.materials) {
+  for (const matName of Object.keys(props.warehouse.materials)) {
     if (!(props.warehouse.materials[matName] instanceof Material)) continue;
-    // Only create UI for materials that are relevant for the industry
-    if (!isRelevantMaterial(matName, division)) continue;
+    // Only create UI for materials that are relevant for the industry or in stock
+    const isInStock = props.warehouse.materials[matName].qty > 0;
+    const isRelevant = isRelevantMaterial(matName, division);
+    if (!isInStock && !isRelevant) continue;
     mats.push(
       <MaterialElem
         rerender={props.rerender}
@@ -99,7 +113,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   // Create React components for products
   const products = [];
   if (division.makesProducts && Object.keys(division.products).length > 0) {
-    for (const productName in division.products) {
+    for (const productName of Object.keys(division.products)) {
       const product = division.products[productName];
       if (!(product instanceof Product)) continue;
       products.push(
@@ -108,48 +122,71 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     }
   }
 
-  let breakdown = <></>;
-  for (const matName in props.warehouse.materials) {
+  const breakdownItems: JSX.Element[] = [];
+  for (const matName of Object.keys(props.warehouse.materials)) {
     const mat = props.warehouse.materials[matName];
     if (!MaterialSizes.hasOwnProperty(matName)) continue;
     if (mat.qty === 0) continue;
-    breakdown = (
+    breakdownItems.push(
       <>
-        {breakdown}
         {matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}
-        <br />
-      </>
+      </>,
     );
   }
 
-  for (const prodName in division.products) {
+  for (const prodName of Object.keys(division.products)) {
     const prod = division.products[prodName];
     if (prod === undefined) continue;
-    breakdown = (
+    breakdownItems.push(
       <>
-        {breakdown}
         {prodName}: {numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}
-      </>
+      </>,
     );
+  }
+
+  let breakdown;
+  if (breakdownItems && breakdownItems.length > 0) {
+    breakdown = breakdownItems.reduce(
+      (previous: JSX.Element, current: JSX.Element): JSX.Element =>
+        (previous && (
+          <>
+            {previous}
+            <br />
+            {current}
+          </>
+        )) || <>{current}</>,
+    );
+  } else {
+    breakdown = <>No items in storage.</>;
   }
 
   return (
     <Paper>
       <Box display="flex" alignItems="center">
-        <Tooltip title={props.warehouse.sizeUsed !== 0 ? <Typography>{breakdown}</Typography> : ""}>
+        <Tooltip
+          title={
+            props.warehouse.sizeUsed !== 0 ? (
+              <Typography>
+                <>{breakdown}</>
+              </Typography>
+            ) : (
+              ""
+            )
+          }
+        >
           <Typography color={props.warehouse.sizeUsed >= props.warehouse.size ? "error" : "primary"}>
             Storage: {numeralWrapper.formatBigNumber(props.warehouse.sizeUsed)} /{" "}
             {numeralWrapper.formatBigNumber(props.warehouse.size)}
           </Typography>
         </Tooltip>
-
-        <Button disabled={!canAffordUpgrade} onClick={upgradeWarehouseOnClick}>
-          Upgrade Warehouse Size -&nbsp;
-          <MoneyCost money={sizeUpgradeCost} corp={corp} />
-        </Button>
       </Box>
 
-      <Typography>This industry uses the following equation for it's production: </Typography>
+      <Button disabled={!canAffordUpgrade} onClick={upgradeWarehouseOnClick}>
+        Upgrade Warehouse Size -&nbsp;
+        <MoneyCost money={sizeUpgradeCost} corp={corp} />
+      </Button>
+
+      <Typography>This industry uses the following equation for its production: </Typography>
       <br />
       <Typography>
         <IndustryProductEquation key={division.name} division={division} />
@@ -161,7 +198,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
       </Typography>
       <br />
 
-      <Typography>{stateText}</Typography>
+      <Typography className={classes.retainHeight}>{stateText}</Typography>
 
       {corp.unlockUpgrades[1] && (
         <>

@@ -9,7 +9,7 @@ Format a number
 <b>Signature:</b>
 
 ```typescript
-nFormat(n: number, format: string): number;
+nFormat(n: number, format: string): string;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ nFormat(n: number, format: string): number;
 
 <b>Returns:</b>
 
-number
+string
 
 Formated number.
 

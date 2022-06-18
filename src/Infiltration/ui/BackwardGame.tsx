@@ -1,12 +1,14 @@
+import { Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { random } from "../utils";
+import { BlinkingCursor } from "./BlinkingCursor";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { random } from "../utils";
-import { interpolate } from "./Difficulty";
-import { BlinkingCursor } from "./BlinkingCursor";
-import Typography from "@mui/material/Typography";
 
 interface Difficulty {
   [key: string]: number;
@@ -33,10 +35,15 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
   const timer = difficulty.timer;
   const [answer] = useState(makeAnswer(difficulty));
   const [guess, setGuess] = useState("");
+  const hasAugment = Player.hasAugmentation(AugmentationNames.ChaosOfDionysus, true);
+
+  function ignorableKeyboardEvent(event: KeyboardEvent): boolean {
+    return event.key === KEY.BACKSPACE || (event.shiftKey && event.key === "Shift") || event.ctrlKey || event.altKey;
+  }
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    if (event.key === "Backspace") return;
+    if (ignorableKeyboardEvent(event)) return;
     const nextGuess = guess + event.key.toUpperCase();
     if (!answer.startsWith(nextGuess)) props.onFailure();
     else if (answer === nextGuess) props.onSuccess();
@@ -44,22 +51,18 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
   }
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
-        <Typography variant="h4">Type it backward</Typography>
+      <Paper sx={{ display: "grid", justifyItems: "center", pb: 1 }}>
+        <Typography variant="h4">Type it{!hasAugment ? " backward" : ""}</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-      <Grid item xs={6}>
-        <Typography style={{ transform: "scaleX(-1)" }}>{answer}</Typography>
-      </Grid>
-      <Grid item xs={6}>
+        <Typography style={{ transform: hasAugment ? "none" : "scaleX(-1)" }}>{answer}</Typography>
         <Typography>
           {guess}
           <BlinkingCursor />
         </Typography>
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 

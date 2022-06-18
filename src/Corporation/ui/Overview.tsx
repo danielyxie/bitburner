@@ -2,18 +2,18 @@
 import React, { useState } from "react";
 import { LevelableUpgrade } from "./LevelableUpgrade";
 import { UnlockUpgrade } from "./UnlockUpgrade";
-import { BribeFactionModal } from "./BribeFactionModal";
-import { SellSharesModal } from "./SellSharesModal";
-import { BuybackSharesModal } from "./BuybackSharesModal";
-import { IssueDividendsModal } from "./IssueDividendsModal";
-import { IssueNewSharesModal } from "./IssueNewSharesModal";
-import { FindInvestorsModal } from "./FindInvestorsModal";
-import { GoPublicModal } from "./GoPublicModal";
+import { BribeFactionModal } from "./modals/BribeFactionModal";
+import { SellSharesModal } from "./modals/SellSharesModal";
+import { BuybackSharesModal } from "./modals/BuybackSharesModal";
+import { IssueDividendsModal } from "./modals/IssueDividendsModal";
+import { IssueNewSharesModal } from "./modals/IssueNewSharesModal";
+import { FindInvestorsModal } from "./modals/FindInvestorsModal";
+import { GoPublicModal } from "./modals/GoPublicModal";
 import { Factions } from "../../Faction/Factions";
 
 import { CorporationConstants } from "../data/Constants";
 import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "../data/CorporationUnlockUpgrades";
-import { CorporationUpgrade, CorporationUpgrades } from "../data/CorporationUpgrades";
+import { CorporationUpgrade, CorporationUpgradeIndex, CorporationUpgrades } from "../data/CorporationUpgrades";
 
 import { CONSTANTS } from "../../Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -60,6 +60,7 @@ export function Overview({ rerender }: IProps): React.ReactElement {
           ["Total Funds:", <Money money={corp.funds} />],
           ["Total Revenue:", <MoneyRate money={corp.revenue} />],
           ["Total Expenses:", <MoneyRate money={corp.expenses} />],
+          ["Total Profit:", <MoneyRate money={corp.revenue - corp.expenses} />],
           ["Publicly Traded:", corp.public ? "Yes" : "No"],
           ["Owned Stock Shares:", numeralWrapper.format(corp.numShares, "0.000a")],
           ["Stock Price:", corp.public ? <Money money={corp.sharePrice} /> : "N/A"],
@@ -89,19 +90,21 @@ export function Overview({ rerender }: IProps): React.ReactElement {
       <StatsTable rows={multRows} />
       <br />
       <BonusTime />
-      <Tooltip
-        title={
-          <Typography>
-            Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' This is a .lit file
-            that guides you through the beginning of setting up a Corporation and provides some tips/pointers for
-            helping you get started with managing it.
-          </Typography>
-        }
-      >
-        <Button onClick={() => corp.getStarterGuide(player)}>Getting Started Guide</Button>
-      </Tooltip>
-      {corp.public ? <PublicButtons rerender={rerender} /> : <PrivateButtons rerender={rerender} />}
-      <BribeButton />
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", width: "fit-content" }}>
+        <Tooltip
+          title={
+            <Typography>
+              Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' This is a .lit file
+              that guides you through the beginning of setting up a Corporation and provides some tips/pointers for
+              helping you get started with managing it.
+            </Typography>
+          }
+        >
+          <Button onClick={() => corp.getStarterGuide(player)}>Getting Started Guide</Button>
+        </Tooltip>
+        {corp.public ? <PublicButtons rerender={rerender} /> : <PrivateButtons rerender={rerender} />}
+        <BribeButton />
+      </Box>
       <br />
       <Upgrades rerender={rerender} />
     </>
@@ -125,11 +128,9 @@ function PrivateButtons({ rerender }: IPrivateButtonsProps): React.ReactElement 
   return (
     <>
       <Tooltip title={<Typography>{findInvestorsTooltip}</Typography>}>
-        <span>
-          <Button disabled={!fundingAvailable} onClick={() => setFindInvestorsopen(true)}>
-            Find Investors
-          </Button>
-        </span>
+        <Button disabled={!fundingAvailable} onClick={() => setFindInvestorsopen(true)}>
+          Find Investors
+        </Button>
       </Tooltip>
       <Tooltip
         title={
@@ -143,7 +144,6 @@ function PrivateButtons({ rerender }: IPrivateButtonsProps): React.ReactElement 
       </Tooltip>
       <FindInvestorsModal open={findInvestorsopen} onClose={() => setFindInvestorsopen(false)} rerender={rerender} />
       <GoPublicModal open={goPublicopen} onClose={() => setGoPublicopen(false)} rerender={rerender} />
-      <br />
     </>
   );
 }
@@ -165,9 +165,9 @@ function Upgrades({ rerender }: IUpgradeProps): React.ReactElement {
         <Typography variant="h4">Unlocks</Typography>
         <Grid container>
           {Object.values(CorporationUnlockUpgrades)
-            .filter((upgrade: CorporationUnlockUpgrade) => !corp.unlockUpgrades[upgrade[0]])
+            .filter((upgrade: CorporationUnlockUpgrade) => !corp.unlockUpgrades[upgrade.index])
             .map((upgrade: CorporationUnlockUpgrade) => (
-              <UnlockUpgrade rerender={rerender} upgradeData={upgrade} key={upgrade[0]} />
+              <UnlockUpgrade rerender={rerender} upgradeData={upgrade} key={upgrade.index} />
             ))}
         </Grid>
       </Paper>
@@ -175,9 +175,9 @@ function Upgrades({ rerender }: IUpgradeProps): React.ReactElement {
         <Typography variant="h4">Upgrades</Typography>
         <Grid container>
           {corp.upgrades
-            .map((level: number, i: number) => CorporationUpgrades[i])
+            .map((level: number, i: number) => CorporationUpgrades[i as CorporationUpgradeIndex])
             .map((upgrade: CorporationUpgrade) => (
-              <LevelableUpgrade rerender={rerender} upgrade={upgrade} key={upgrade[0]} />
+              <LevelableUpgrade rerender={rerender} upgrade={upgrade} key={upgrade.index} />
             ))}
         </Grid>
       </Paper>
@@ -212,28 +212,21 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
   return (
     <>
       <Tooltip title={<Typography>{sellSharesTooltip}</Typography>}>
-        <span>
-          <Button disabled={sellSharesOnCd} onClick={() => setSellSharesOpen(true)}>
-            Sell Shares
-          </Button>
-        </span>
+        <Button disabled={sellSharesOnCd} onClick={() => setSellSharesOpen(true)}>
+          Sell Shares
+        </Button>
       </Tooltip>
       <SellSharesModal open={sellSharesOpen} onClose={() => setSellSharesOpen(false)} rerender={rerender} />
       <Tooltip title={<Typography>Buy back shares you that previously issued or sold at market price.</Typography>}>
-        <span>
-          <Button disabled={corp.issuedShares < 1} onClick={() => setBuybackSharesOpen(true)}>
-            Buyback shares
-          </Button>
-        </span>
+        <Button disabled={corp.issuedShares < 1} onClick={() => setBuybackSharesOpen(true)}>
+          Buyback shares
+        </Button>
       </Tooltip>
       <BuybackSharesModal open={buybackSharesOpen} onClose={() => setBuybackSharesOpen(false)} rerender={rerender} />
-      <br />
       <Tooltip title={<Typography>{issueNewSharesTooltip}</Typography>}>
-        <span>
-          <Button disabled={issueNewSharesOnCd} onClick={() => setIssueNewSharesOpen(true)}>
-            Issue New Shares
-          </Button>
-        </span>
+        <Button disabled={issueNewSharesOnCd} onClick={() => setIssueNewSharesOpen(true)}>
+          Issue New Shares
+        </Button>
       </Tooltip>
       <IssueNewSharesModal open={issueNewSharesOpen} onClose={() => setIssueNewSharesOpen(false)} />
       <Tooltip
@@ -242,7 +235,6 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
         <Button onClick={() => setIssueDividendsOpen(true)}>Issue Dividends</Button>
       </Tooltip>
       <IssueDividendsModal open={issueDividendsOpen} onClose={() => setIssueDividendsOpen(false)} />
-      <br />
     </>
   );
 }
@@ -269,11 +261,9 @@ function BribeButton(): React.ReactElement {
             : "Your Corporation is not powerful enough to bribe Faction leaders"
         }
       >
-        <span>
-          <Button disabled={!canBribe} onClick={openBribe}>
-            Bribe Factions
-          </Button>
-        </span>
+        <Button disabled={!canBribe} onClick={openBribe}>
+          Bribe Factions
+        </Button>
       </Tooltip>
       <BribeFactionModal open={open} onClose={() => setOpen(false)} />
     </>

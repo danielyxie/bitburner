@@ -33,11 +33,21 @@ Use your hacking skills to increase the amount of money available on a server. T
 
 Like hack, `grow` can be called on any server, regardless of where the script is running. The grow() command requires root access to the target server, but there is no required hacking level to run the command. It also raises the security level of the target server by 0.004.
 
-## Example
+## Example 1
 
 
 ```ts
-grow("foodnstuff");
-grow("foodnstuff", { threads: 5 }); // Only use 5 threads to grow
+// NS1:
+var currentMoney = getServerMoneyAvailable("foodnstuff");
+currentMoney = currentMoney * (1 + grow("foodnstuff"));
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
+currentMoney *= (1 + await ns.grow("foodnstuff"));
 ```
 

@@ -9,6 +9,7 @@ import { Factions } from "../../../Faction/Factions";
 import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { FactionNames } from "../../../Faction/data/FactionNames";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -20,6 +21,15 @@ const universitySelectorOptions: string[] = [
 ];
 
 const gymSelectorOptions: string[] = ["Train Strength", "Train Defense", "Train Dexterity", "Train Agility"];
+
+const bladeburnerSelectorOptions: string[] = [
+  "Field analysis",
+  "Recruitment",
+  "Diplomacy",
+  "Infiltrate synthoids",
+  "Support main sleeve",
+  "Take on contracts",
+];
 
 interface IProps {
   sleeve: Sleeve;
@@ -55,7 +65,7 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
 
 function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
   // Array of all factions that other sleeves are working for
-  const forbiddenFactions = ["Bladeburners"];
+  const forbiddenFactions = [FactionNames.Bladeburners as string, FactionNames.ShadowsOfAnarchy as string];
   if (player.gang) {
     forbiddenFactions.push(player.gang.facName);
   }
@@ -75,7 +85,32 @@ function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
     }
   }
 
-  return factions;
+  return factions.filter((faction) => {
+    const factionObj = Factions[faction];
+    if (!factionObj) return false;
+    const facInfo = factionObj.getInfo();
+    return facInfo.offerHackingWork || facInfo.offerFieldWork || facInfo.offerSecurityWork;
+  });
+}
+
+function possibleContracts(player: IPlayer, sleeve: Sleeve): string[] {
+  const bb = player.bladeburner;
+  if (bb === null) {
+    return ["------"];
+  }
+  let contracts = bb.getContractNamesNetscriptFn();
+  for (const otherSleeve of player.sleeves) {
+    if (sleeve === otherSleeve) {
+      continue;
+    }
+    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner && otherSleeve.bbAction == "Take on contracts") {
+      contracts = contracts.filter((x) => x != otherSleeve.bbContract);
+    }
+  }
+  if (contracts.length === 0) {
+    return ["------"];
+  }
+  return contracts;
 }
 
 const tasks: {
@@ -86,6 +121,7 @@ const tasks: {
   ["Commit Crime"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Take University Course"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Workout at Gym"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
+  ["Perform Bladeburner Actions"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Shock Recovery"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Synchronize"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
 } = {
@@ -106,6 +142,8 @@ const tasks: {
       first: factions,
       second: (s1: string) => {
         const faction = Factions[s1];
+        if (!faction) return ["------"];
+
         const facInfo = faction.getInfo();
         const options: string[] = [];
         if (facInfo.offerHackingWork) {
@@ -162,6 +200,18 @@ const tasks: {
 
     return { first: gymSelectorOptions, second: () => gyms };
   },
+  "Perform Bladeburner Actions": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
+    return {
+      first: bladeburnerSelectorOptions,
+      second: (s1: string) => {
+        if (s1 === "Take on contracts") {
+          return possibleContracts(player, sleeve);
+        } else {
+          return ["------"];
+        }
+      },
+    };
+  },
   "Shock Recovery": (): ITaskDetails => {
     return { first: ["------"], second: () => ["------"] };
   },
@@ -178,6 +228,7 @@ const canDo: {
   ["Commit Crime"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Take University Course"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Workout at Gym"]: (player: IPlayer, sleeve: Sleeve) => boolean;
+  ["Perform Bladeburner Actions"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Shock Recovery"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Synchronize"]: (player: IPlayer, sleeve: Sleeve) => boolean;
 } = {
@@ -189,6 +240,7 @@ const canDo: {
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
   "Workout at Gym": (player: IPlayer, sleeve: Sleeve) =>
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
+  "Perform Bladeburner Actions": (player: IPlayer, _: Sleeve) => player.inBladeburner(),
   "Shock Recovery": (player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
   Synchronize: (player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
 };
@@ -220,6 +272,8 @@ function getABC(sleeve: Sleeve): [string, string, string] {
       return ["Take University Course", sleeve.className, sleeve.currentTaskLocation];
     case SleeveTaskType.Gym:
       return ["Workout at Gym", sleeve.gymStatType, sleeve.currentTaskLocation];
+    case SleeveTaskType.Bladeburner:
+      return ["Perform Bladeburner Actions", sleeve.bbAction, sleeve.bbContract];
     case SleeveTaskType.Recovery:
       return ["Shock Recovery", "------", "------"];
     case SleeveTaskType.Synchro:
@@ -256,7 +310,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
     const detailsF = tasks[n];
     if (detailsF === undefined) throw new Error(`No function for task '${s0}'`);
     const details = detailsF(props.player, props.sleeve);
-    const details2 = details.second(details.first[0]);
+    const details2 = details.second(details.first[0]) ?? ["------"];
     setS2(details2[0]);
     setS1(details.first[0]);
     setS0(n);
@@ -275,7 +329,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Select onChange={onS0Change} value={s0}>
+      <Select onChange={onS0Change} value={s0} sx={{ width: "100%" }}>
         {validActions.map((task) => (
           <MenuItem key={task} value={task}>
             {task}
@@ -284,8 +338,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
       </Select>
       {!(details.first.length === 1 && details.first[0] === "------") && (
         <>
-          <br />
-          <Select onChange={onS1Change} value={s1}>
+          <Select onChange={onS1Change} value={s1} sx={{ width: "100%" }}>
             {details.first.map((detail) => (
               <MenuItem key={detail} value={detail}>
                 {detail}
@@ -296,8 +349,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
       )}
       {!(details2.length === 1 && details2[0] === "------") && (
         <>
-          <br />
-          <Select onChange={onS2Change} value={s2}>
+          <Select onChange={onS2Change} value={s2} sx={{ width: "100%" }}>
             {details2.map((detail) => (
               <MenuItem key={detail} value={detail}>
                 {detail}

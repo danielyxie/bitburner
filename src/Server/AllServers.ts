@@ -20,7 +20,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 let AllServers: IMap<Server | HacknetServer> = {};
 
 function GetServerByIP(ip: string): BaseServer | undefined {
-  for (const key in AllServers) {
+  for (const key of Object.keys(AllServers)) {
     const server = AllServers[key];
     if (server.ip !== ip) continue;
     return server;
@@ -30,7 +30,7 @@ function GetServerByIP(ip: string): BaseServer | undefined {
 //Returns server object with corresponding hostname
 //    Relatively slow, would rather not use this a lot
 function GetServerByHostname(hostname: string): BaseServer | null {
-  for (const key in AllServers) {
+  for (const key of Object.keys(AllServers)) {
     const server = AllServers[key];
     if (server.hostname == hostname) {
       return server;
@@ -42,8 +42,11 @@ function GetServerByHostname(hostname: string): BaseServer | null {
 
 //Get server by IP or hostname. Returns null if invalid
 export function GetServer(s: string): BaseServer | null {
-  const server = AllServers[s];
-  if (server) return server;
+  if (AllServers.hasOwnProperty(s)) {
+    const server = AllServers[s];
+    if (server) return server;
+  }
+
   if (!isValidIPAddress(s)) {
     return GetServerByHostname(s);
   }
@@ -58,14 +61,14 @@ export function GetServer(s: string): BaseServer | null {
 
 export function GetAllServers(): BaseServer[] {
   const servers: BaseServer[] = [];
-  for (const key in AllServers) {
+  for (const key of Object.keys(AllServers)) {
     servers.push(AllServers[key]);
   }
   return servers;
 }
 
 export function DeleteServer(serverkey: string): void {
-  for (const key in AllServers) {
+  for (const key of Object.keys(AllServers)) {
     const server = AllServers[key];
     if (server.ip !== serverkey && server.hostname !== serverkey) continue;
     delete AllServers[key];
@@ -78,12 +81,11 @@ export function ipExists(ip: string): boolean {
 }
 
 export function createUniqueRandomIp(): string {
-  const ip = createRandomIp();
-
-  // If the Ip already exists, recurse to create a new one
-  if (ipExists(ip)) {
-    return createRandomIp();
-  }
+  let ip: string;
+  // Repeat generating ip, until unique one is found
+  do {
+    ip = createRandomIp();
+  } while (ipExists(ip));
 
   return ip;
 }
@@ -194,7 +196,7 @@ export function initForeignServers(homeComputer: Server): void {
 }
 
 export function prestigeAllServers(): void {
-  for (const member in AllServers) {
+  for (const member of Object.keys(AllServers)) {
     delete AllServers[member];
   }
   AllServers = {};
@@ -204,10 +206,14 @@ export function loadAllServers(saveString: string): void {
   AllServers = JSON.parse(saveString, Reviver);
 }
 
-export function saveAllServers(): string {
+export function saveAllServers(excludeRunningScripts = false): string {
   const TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
-  for (const key in TempAllServers) {
+  for (const key of Object.keys(TempAllServers)) {
     const server = TempAllServers[key];
+    if (excludeRunningScripts) {
+      server.runningScripts = [];
+      continue;
+    }
     for (let i = 0; i < server.runningScripts.length; ++i) {
       const runningScriptObj = server.runningScripts[i];
       runningScriptObj.logs.length = 0;

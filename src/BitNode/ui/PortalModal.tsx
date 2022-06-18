@@ -6,6 +6,7 @@ import { use } from "../../ui/Context";
 import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { BitnodeMultiplierDescription } from "./BitnodeMultipliersDescription";
 
 interface IProps {
   open: boolean;
@@ -40,9 +41,12 @@ export function PortalModal(props: IProps): React.ReactElement {
       <br />
       <br />
       <Typography>{bitNode.info}</Typography>
+      <BitnodeMultiplierDescription n={props.n} level={newLevel} />
       <br />
       <br />
       <Button
+        aria-label={`enter-bitnode-${bitNode.number.toString()}`}
+        autoFocus={true}
         onClick={() => {
           props.enter(router, props.flume, props.destroyedBitNode, props.n);
           props.onClose();

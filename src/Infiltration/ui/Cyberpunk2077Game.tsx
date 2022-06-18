@@ -1,11 +1,14 @@
+import { Paper, Typography, Box } from "@mui/material";
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { Settings } from "../../Settings/Settings";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { interpolate } from "./Difficulty";
-import { getArrow } from "../utils";
-import Typography from "@mui/material/Typography";
 
 interface Difficulty {
   [key: string]: number;
@@ -13,6 +16,12 @@ interface Difficulty {
   width: number;
   height: number;
   symbols: number;
+}
+
+interface GridItem {
+  content: string;
+  color: string;
+  selected?: boolean;
 }
 
 const difficulties: {
@@ -32,25 +41,26 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
   interpolate(difficulties, props.difficulty, difficulty);
   const timer = difficulty.timer;
   const [grid] = useState(generatePuzzle(difficulty));
-  const [answer] = useState(generateAnswer(grid, difficulty));
-  const [index, setIndex] = useState(0);
+  const [answers] = useState(generateAnswers(grid, difficulty));
+  const [currentAnswerIndex, setCurrentAnswerIndex] = useState(0);
   const [pos, setPos] = useState([0, 0]);
 
+  const hasAugment = Player.hasAugmentation(AugmentationNames.FloodOfPoseidon, true);
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const move = [0, 0];
     const arrow = getArrow(event);
     switch (arrow) {
-      case "↑":
+      case upArrowSymbol:
         move[1]--;
         break;
-      case "←":
+      case leftArrowSymbol:
         move[0]--;
         break;
-      case "↓":
+      case downArrowSymbol:
         move[1]++;
         break;
-      case "→":
+      case rightArrowSymbol:
         move[0]++;
         break;
     }
@@ -59,73 +69,89 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
     next[1] = (next[1] + grid.length) % grid.length;
     setPos(next);
 
-    if (event.key === " ") {
+    if (event.key === KEY.SPACE) {
       const selected = grid[pos[1]][pos[0]];
-      const expected = answer[index];
+      const expected = answers[currentAnswerIndex];
       if (selected !== expected) {
         props.onFailure();
         return;
       }
-      setIndex(index + 1);
-      if (answer.length === index + 1) props.onSuccess();
+      setCurrentAnswerIndex(currentAnswerIndex + 1);
+      if (answers.length === currentAnswerIndex + 1) props.onSuccess();
     }
   }
 
+  const flatGrid: GridItem[] = [];
+  grid.map((line, y) =>
+    line.map((cell, x) => {
+      const isCorrectAnswer = cell === answers[currentAnswerIndex];
+      const optionColor = hasAugment && !isCorrectAnswer ? Settings.theme.disabled : Settings.theme.primary;
+
+      if (x === pos[0] && y === pos[1]) {
+        flatGrid.push({ color: optionColor, content: cell, selected: true });
+        return;
+      }
+
+      flatGrid.push({ color: optionColor, content: cell });
+    }),
+  );
+
   const fontSize = "2em";
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={timer} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center", pb: 1 }}>
         <Typography variant="h4">Match the symbols!</Typography>
-        <Typography variant="h5" color="primary">
+        <Typography variant="h5" color={Settings.theme.primary}>
           Targets:{" "}
-          {answer.map((a, i) => {
-            if (i == index)
+          {answers.map((a, i) => {
+            if (i == currentAnswerIndex)
               return (
-                <span key={`${i}`} style={{ fontSize: "1em", color: "blue" }}>
+                <span key={`${i}`} style={{ fontSize: "1em", color: Settings.theme.infolight }}>
                   {a}&nbsp;
                 </span>
               );
             return (
-              <span key={`${i}`} style={{ fontSize: "1em" }}>
+              <span key={`${i}`} style={{ fontSize: "1em", color: Settings.theme.primary }}>
                 {a}&nbsp;
               </span>
             );
           })}
         </Typography>
         <br />
-        {grid.map((line, y) => (
-          <div key={y}>
-            <Typography>
-              {line.map((cell, x) => {
-                if (x == pos[0] && y == pos[1])
-                  return (
-                    <span key={`${x}${y}`} style={{ fontSize: fontSize, color: "blue" }}>
-                      {cell}&nbsp;
-                    </span>
-                  );
-                return (
-                  <span key={`${x}${y}`} style={{ fontSize: fontSize }}>
-                    {cell}&nbsp;
-                  </span>
-                );
-              })}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${Math.round(difficulty.width)}, 1fr)`,
+            gap: 1,
+          }}
+        >
+          {flatGrid.map((item) => (
+            <Typography
+              sx={{
+                fontSize: fontSize,
+                color: item.color,
+                border: item.selected ? `2px solid ${Settings.theme.infolight}` : "unset",
+                lineHeight: "unset",
+                p: item.selected ? "2px" : "4px",
+              }}
+            >
+              {item.content}
             </Typography>
-            <br />
-          </div>
-        ))}
+          ))}
+        </Box>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }
 
-function generateAnswer(grid: string[][], difficulty: Difficulty): string[] {
-  const answer = [];
+function generateAnswers(grid: string[][], difficulty: Difficulty): string[] {
+  const answers = [];
   for (let i = 0; i < Math.round(difficulty.symbols); i++) {
-    answer.push(grid[Math.floor(Math.random() * grid.length)][Math.floor(Math.random() * grid[0].length)]);
+    answers.push(grid[Math.floor(Math.random() * grid.length)][Math.floor(Math.random() * grid[0].length)]);
   }
-  return answer;
+  return answers;
 }
 
 function randChar(): string {

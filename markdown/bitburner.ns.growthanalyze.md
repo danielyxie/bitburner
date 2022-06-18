@@ -34,12 +34,23 @@ This function returns the number of “growths” needed in order to increase th
 
 Warning: The value returned by this function isn’t necessarily a whole number.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 //For example, if you want to determine how many grow calls you need to double the amount of money on foodnstuff, you would use:
-growthAnalyze("foodnstuff", 2);
+var growTimes = growthAnalyze("foodnstuff", 2);
+//If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+//For example, if you want to determine how many grow calls you need to double the amount of money on foodnstuff, you would use:
+const growTimes = ns.growthAnalyze("foodnstuff", 2);
 //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).
 ```
 

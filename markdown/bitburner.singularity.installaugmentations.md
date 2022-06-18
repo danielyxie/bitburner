@@ -4,7 +4,7 @@
 
 ## Singularity.installAugmentations() method
 
-SF4.3 - Install your purchased augmentations.
+Install your purchased augmentations.
 
 <b>Signature:</b>
 
@@ -24,7 +24,7 @@ void
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
-This function will automatically install your Augmentations, resetting the game as usual.
+This function will automatically install your Augmentations, resetting the game as usual. If you do not own uninstalled Augmentations then the game will not reset.
 

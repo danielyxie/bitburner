@@ -4,7 +4,7 @@
 
 ## Singularity.checkFactionInvitations() method
 
-SF4.2 - List all current faction invitations.
+List all current faction invitations.
 
 <b>Signature:</b>
 
@@ -19,7 +19,7 @@ Array with the name of all Factions you currently have oustanding invitations fr
 
 ## Remarks
 
-RAM cost: 3 GB
+RAM cost: 3 GB \* 16/4/1
 
 Returns an array with the name of all Factions you currently have oustanding invitations from.
 

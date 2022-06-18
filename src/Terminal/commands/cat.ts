@@ -2,9 +2,10 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { showMessage } from "../../Message/MessageHelpers";
+import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
 import { showLiterature } from "../../Literature/LiteratureHelpers";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { checkEnum } from "../../utils/helpers/checkEnum";
 
 export function cat(
   terminal: ITerminal,
@@ -19,7 +20,14 @@ export function cat(
   }
   const relative_filename = args[0] + "";
   const filename = terminal.getFilepath(relative_filename);
-  if (!filename.endsWith(".msg") && !filename.endsWith(".lit") && !filename.endsWith(".txt") && !filename.endsWith(".script") && !filename.endsWith(".js") && !filename.endsWith(".ns")) {
+  if (
+    !filename.endsWith(".msg") &&
+    !filename.endsWith(".lit") &&
+    !filename.endsWith(".txt") &&
+    !filename.endsWith(".script") &&
+    !filename.endsWith(".js") &&
+    !filename.endsWith(".ns")
+  ) {
     terminal.error(
       "Only .msg, .txt, .lit, .script, .js, and .ns files are viewable with cat (filename must end with .msg, .txt, .lit, .script, .js, or .ns)",
     );
@@ -36,6 +44,7 @@ export function cat(
       } else if (filename.endsWith(".msg")) {
         const file = server.messages[i];
         if (file !== filename) continue;
+        if (!checkEnum(MessageFilenames, file)) return;
         showMessage(file);
         return;
       }

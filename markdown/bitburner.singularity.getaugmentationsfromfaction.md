@@ -4,7 +4,7 @@
 
 ## Singularity.getAugmentationsFromFaction() method
 
-SF4.3 - Get a list of augmentation available from a faction.
+Get a list of augmentation available from a faction.
 
 <b>Signature:</b>
 
@@ -26,7 +26,7 @@ Array containing the names of all Augmentations.
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
 Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.
 

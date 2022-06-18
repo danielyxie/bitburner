@@ -22,12 +22,12 @@ export function loadGlobalAliases(saveString: string): void {
 
 // Prints all aliases to terminal
 export function printAliases(): void {
-  for (const name in Aliases) {
+  for (const name of Object.keys(Aliases)) {
     if (Aliases.hasOwnProperty(name)) {
       Terminal.print("alias " + name + "=" + Aliases[name]);
     }
   }
-  for (const name in GlobalAliases) {
+  for (const name of Object.keys(GlobalAliases)) {
     if (GlobalAliases.hasOwnProperty(name)) {
       Terminal.print("global alias " + name + "=" + GlobalAliases[name]);
     }
@@ -36,15 +36,16 @@ export function printAliases(): void {
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global = false): boolean {
-  const re = /^([\w|!|%|,|@|-]+)="(.+)"$/;
+  const re = /^([\w|!%,@-]+)=(("(.+)")|('(.+)'))$/;
   const matches = dec.match(re);
-  if (matches == null || matches.length != 3) {
+  if (matches == null || matches.length != 7) {
     return false;
   }
+
   if (global) {
-    addGlobalAlias(matches[1], matches[2]);
+    addGlobalAlias(matches[1], matches[4] || matches[6]);
   } else {
-    addAlias(matches[1], matches[2]);
+    addAlias(matches[1], matches[4] || matches[6]);
   }
   return true;
 }

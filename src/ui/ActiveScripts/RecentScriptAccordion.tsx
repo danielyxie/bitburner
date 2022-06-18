@@ -26,7 +26,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { arrayToString } from "../../utils/helpers/arrayToString";
 import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
-import { RecentScript } from "../..//Netscript/RecentScripts";
+import { RecentScript } from "../../Netscript/RecentScripts";
 import { LogBoxEvents } from "../React/LogBoxManager";
 
 const useStyles = makeStyles({
@@ -57,8 +57,8 @@ export function RecentScriptAccordion(props: IProps): React.ReactElement {
         <ListItemText
           primary={
             <Typography>
-              └ {recentScript.filename} (died{" "}
-              {convertTimeMsToTimeElapsedString(new Date().getTime() - recentScript.timestamp.getTime())} ago)
+              └ {recentScript.runningScript.filename} (died{" "}
+              {convertTimeMsToTimeElapsedString(new Date().getTime() - recentScript.timeOfDeath.getTime())} ago)
             </Typography>
           }
         />
@@ -78,7 +78,7 @@ export function RecentScriptAccordion(props: IProps): React.ReactElement {
               </TableRow>
               <TableRow>
                 <TableCell className={classes.noborder} colSpan={2}>
-                  <Typography>└ Args: {arrayToString(recentScript.args)}</Typography>
+                  <Typography>└ Args: {arrayToString(recentScript.runningScript.args)}</Typography>
                 </TableCell>
               </TableRow>
               <TableRow>

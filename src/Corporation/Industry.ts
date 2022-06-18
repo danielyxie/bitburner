@@ -378,7 +378,7 @@ export class Industry implements IIndustry {
   updateWarehouseSizeUsed(warehouse: Warehouse): void {
     warehouse.updateMaterialSizeUsed();
 
-    for (const prodName in this.products) {
+    for (const prodName of Object.keys(this.products)) {
       if (this.products.hasOwnProperty(prodName)) {
         const prod = this.products[prodName];
         if (prod === undefined) continue;
@@ -414,7 +414,7 @@ export class Industry implements IIndustry {
 
       // Process offices (and the employees in them)
       let employeeSalary = 0;
-      for (const officeLoc in this.offices) {
+      for (const officeLoc of Object.keys(this.offices)) {
         const office = this.offices[officeLoc];
         if (office === 0) continue;
         if (office instanceof OfficeSpace) {
@@ -435,8 +435,11 @@ export class Industry implements IIndustry {
       const popularityGain = corporation.getDreamSenseGain(),
         awarenessGain = popularityGain * 4;
       if (popularityGain > 0) {
-        this.popularity += popularityGain * marketCycles;
-        this.awareness += awarenessGain * marketCycles;
+        const awareness = this.awareness + awarenessGain * marketCycles;
+        this.awareness = Math.min(awareness, Number.MAX_VALUE);
+
+        const popularity = this.popularity + popularityGain * marketCycles;
+        this.popularity = Math.min(popularity, Number.MAX_VALUE);
       }
 
       return;
@@ -470,7 +473,7 @@ export class Industry implements IIndustry {
       if (this.warehouses[CorporationConstants.Cities[i]] instanceof Warehouse) {
         const wh = this.warehouses[CorporationConstants.Cities[i]];
         if (wh === 0) continue;
-        for (const name in reqMats) {
+        for (const name of Object.keys(reqMats)) {
           if (reqMats.hasOwnProperty(name)) {
             wh.materials[name].processMarket();
           }
@@ -493,7 +496,7 @@ export class Industry implements IIndustry {
   // Process change in demand and competition for this industry's products
   processProductMarket(marketCycles = 1): void {
     // Demand gradually decreases, and competition gradually increases
-    for (const name in this.products) {
+    for (const name of Object.keys(this.products)) {
       if (this.products.hasOwnProperty(name)) {
         const product = this.products[name];
         if (product === undefined) continue;
@@ -531,7 +534,7 @@ export class Industry implements IIndustry {
         }
         const warehouse = this.warehouses[city];
         if (warehouse === 0) continue;
-        for (const matName in warehouse.materials) {
+        for (const matName of Object.keys(warehouse.materials)) {
           if (warehouse.materials.hasOwnProperty(matName)) {
             const mat = warehouse.materials[matName];
             mat.imp = 0;
@@ -552,7 +555,7 @@ export class Industry implements IIndustry {
         switch (this.state) {
           case "PURCHASE": {
             /* Process purchase of materials */
-            for (const matName in warehouse.materials) {
+            for (const matName of Object.keys(warehouse.materials)) {
               if (!warehouse.materials.hasOwnProperty(matName)) continue;
               const mat = warehouse.materials[matName];
               let buyAmt = 0;
@@ -574,7 +577,7 @@ export class Industry implements IIndustry {
 
             // smart supply
             const smartBuy: { [key: string]: number | undefined } = {};
-            for (const matName in warehouse.materials) {
+            for (const matName of Object.keys(warehouse.materials)) {
               if (!warehouse.materials.hasOwnProperty(matName)) continue;
               if (!warehouse.smartSupplyEnabled || !Object.keys(this.reqMats).includes(matName)) continue;
               const mat = warehouse.materials[matName];
@@ -591,7 +594,7 @@ export class Industry implements IIndustry {
 
             // Find which material were trying to create the least amount of product with.
             let worseAmt = 1e99;
-            for (const matName in smartBuy) {
+            for (const matName of Object.keys(smartBuy)) {
               const buyAmt = smartBuy[matName];
               if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
               const reqMat = this.reqMats[matName];
@@ -601,7 +604,7 @@ export class Industry implements IIndustry {
             }
 
             // Align all the materials to the smallest amount.
-            for (const matName in smartBuy) {
+            for (const matName of Object.keys(smartBuy)) {
               const reqMat = this.reqMats[matName];
               if (reqMat === undefined) throw new Error(`reqMat "${matName}" is undefined`);
               smartBuy[matName] = worseAmt * reqMat;
@@ -609,7 +612,7 @@ export class Industry implements IIndustry {
 
             // Calculate the total size of all things were trying to buy
             let totalSize = 0;
-            for (const matName in smartBuy) {
+            for (const matName of Object.keys(smartBuy)) {
               const buyAmt = smartBuy[matName];
               if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
               totalSize += buyAmt * MaterialSizes[matName];
@@ -618,7 +621,7 @@ export class Industry implements IIndustry {
             // Shrink to the size of available space.
             const freeSpace = warehouse.size - warehouse.sizeUsed;
             if (totalSize > freeSpace) {
-              for (const matName in smartBuy) {
+              for (const matName of Object.keys(smartBuy)) {
                 const buyAmt = smartBuy[matName];
                 if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
                 smartBuy[matName] = Math.floor((buyAmt * freeSpace) / totalSize);
@@ -626,7 +629,7 @@ export class Industry implements IIndustry {
             }
 
             // Use the materials already in the warehouse if the option is on.
-            for (const matName in smartBuy) {
+            for (const matName of Object.keys(smartBuy)) {
               if (!warehouse.smartSupplyUseLeftovers[matName]) continue;
               const mat = warehouse.materials[matName];
               const buyAmt = smartBuy[matName];
@@ -635,7 +638,7 @@ export class Industry implements IIndustry {
             }
 
             // buy them
-            for (const matName in smartBuy) {
+            for (const matName of Object.keys(smartBuy)) {
               const mat = warehouse.materials[matName];
               const buyAmt = smartBuy[matName];
               if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
@@ -672,7 +675,7 @@ export class Industry implements IIndustry {
               for (let tmp = 0; tmp < this.prodMats.length; ++tmp) {
                 totalMatSize += MaterialSizes[this.prodMats[tmp]];
               }
-              for (const reqMatName in this.reqMats) {
+              for (const reqMatName of Object.keys(this.reqMats)) {
                 const normQty = this.reqMats[reqMatName];
                 if (normQty === undefined) continue;
                 totalMatSize -= MaterialSizes[reqMatName] * normQty;
@@ -692,7 +695,7 @@ export class Industry implements IIndustry {
 
               // Make sure we have enough resource to make our materials
               let producableFrac = 1;
-              for (const reqMatName in this.reqMats) {
+              for (const reqMatName of Object.keys(this.reqMats)) {
                 if (this.reqMats.hasOwnProperty(reqMatName)) {
                   const reqMat = this.reqMats[reqMatName];
                   if (reqMat === undefined) continue;
@@ -709,7 +712,7 @@ export class Industry implements IIndustry {
 
               // Make our materials if they are producable
               if (producableFrac > 0 && prod > 0) {
-                for (const reqMatName in this.reqMats) {
+                for (const reqMatName of Object.keys(this.reqMats)) {
                   const reqMat = this.reqMats[reqMatName];
                   if (reqMat === undefined) continue;
                   const reqMatQtyNeeded = reqMat * prod * producableFrac;
@@ -726,7 +729,7 @@ export class Industry implements IIndustry {
                     Math.pow(warehouse.materials["AICores"].qty, this.aiFac) / 10e3;
                 }
               } else {
-                for (const reqMatName in this.reqMats) {
+                for (const reqMatName of Object.keys(this.reqMats)) {
                   if (this.reqMats.hasOwnProperty(reqMatName)) {
                     warehouse.materials[reqMatName].prd = 0;
                   }
@@ -742,7 +745,7 @@ export class Industry implements IIndustry {
               //If this doesn't produce any materials, then it only creates
               //Products. Creating products will consume materials. The
               //Production of all consumed materials must be set to 0
-              for (const reqMatName in this.reqMats) {
+              for (const reqMatName of Object.keys(this.reqMats)) {
                 warehouse.materials[reqMatName].prd = 0;
               }
             }
@@ -750,7 +753,7 @@ export class Industry implements IIndustry {
 
           case "SALE":
             /* Process sale of materials */
-            for (const matName in warehouse.materials) {
+            for (const matName of Object.keys(warehouse.materials)) {
               if (warehouse.materials.hasOwnProperty(matName)) {
                 const mat = warehouse.materials[matName];
                 if (mat.sCost < 0 || mat.sllman[0] === false) {
@@ -825,7 +828,7 @@ export class Industry implements IIndustry {
                   }
                 }
 
-                const maxSell =
+                mat.maxsll =
                   (mat.qlt + 0.001) *
                   marketFactor *
                   markup *
@@ -836,7 +839,7 @@ export class Industry implements IIndustry {
                 let sellAmt;
                 if (isString(mat.sllman[1])) {
                   //Dynamically evaluated
-                  let tmp = (mat.sllman[1] as string).replace(/MAX/g, (maxSell + "").toUpperCase());
+                  let tmp = (mat.sllman[1] as string).replace(/MAX/g, (mat.maxsll + "").toUpperCase());
                   tmp = tmp.replace(/PROD/g, mat.prd + "");
                   try {
                     sellAmt = eval(tmp);
@@ -853,13 +856,13 @@ export class Industry implements IIndustry {
                     );
                     sellAmt = 0;
                   }
-                  sellAmt = Math.min(maxSell, sellAmt);
+                  sellAmt = Math.min(mat.maxsll, sellAmt);
                 } else if (mat.sllman[1] === -1) {
                   //Backwards compatibility, -1 = MAX
-                  sellAmt = maxSell;
+                  sellAmt = mat.maxsll;
                 } else {
                   //Player's input value is just a number
-                  sellAmt = Math.min(maxSell, mat.sllman[1] as number);
+                  sellAmt = Math.min(mat.maxsll, mat.sllman[1] as number);
                 }
 
                 sellAmt = sellAmt * CorporationConstants.SecsPerMarketCycle * marketCycles;
@@ -881,7 +884,7 @@ export class Industry implements IIndustry {
             break;
 
           case "EXPORT":
-            for (const matName in warehouse.materials) {
+            for (const matName of Object.keys(warehouse.materials)) {
               if (warehouse.materials.hasOwnProperty(matName)) {
                 const mat = warehouse.materials[matName];
                 mat.totalExp = 0; //Reset export
@@ -993,7 +996,7 @@ export class Industry implements IIndustry {
 
     //Create products
     if (this.state === "PRODUCTION") {
-      for (const prodName in this.products) {
+      for (const prodName of Object.keys(this.products)) {
         const prod = this.products[prodName];
         if (prod === undefined) continue;
         if (!prod.fin) {
@@ -1025,7 +1028,7 @@ export class Industry implements IIndustry {
     }
 
     //Produce Products
-    for (const prodName in this.products) {
+    for (const prodName of Object.keys(this.products)) {
       if (this.products.hasOwnProperty(prodName)) {
         const prod = this.products[prodName];
         if (prod instanceof Product && prod.fin) {
@@ -1067,7 +1070,7 @@ export class Industry implements IIndustry {
 
             //Calculate net change in warehouse storage making the Products will cost
             let netStorageSize = product.siz;
-            for (const reqMatName in product.reqMats) {
+            for (const reqMatName of Object.keys(product.reqMats)) {
               if (product.reqMats.hasOwnProperty(reqMatName)) {
                 const normQty = product.reqMats[reqMatName];
                 netStorageSize -= MaterialSizes[reqMatName] * normQty;
@@ -1084,7 +1087,7 @@ export class Industry implements IIndustry {
 
             //Make sure we have enough resources to make our Products
             let producableFrac = 1;
-            for (const reqMatName in product.reqMats) {
+            for (const reqMatName of Object.keys(product.reqMats)) {
               if (product.reqMats.hasOwnProperty(reqMatName)) {
                 const req = product.reqMats[reqMatName] * prod;
                 if (warehouse.materials[reqMatName].qty < req) {
@@ -1095,7 +1098,7 @@ export class Industry implements IIndustry {
 
             //Make our Products if they are producable
             if (producableFrac > 0 && prod > 0) {
-              for (const reqMatName in product.reqMats) {
+              for (const reqMatName of Object.keys(product.reqMats)) {
                 if (product.reqMats.hasOwnProperty(reqMatName)) {
                   const reqMatQtyNeeded = product.reqMats[reqMatName] * prod * producableFrac;
                   warehouse.materials[reqMatName].qty -= reqMatQtyNeeded;
@@ -1114,7 +1117,7 @@ export class Industry implements IIndustry {
           case "SALE": {
             //Process sale of Products
             product.pCost = 0; //Estimated production cost
-            for (const reqMatName in product.reqMats) {
+            for (const reqMatName of Object.keys(product.reqMats)) {
               if (product.reqMats.hasOwnProperty(reqMatName)) {
                 product.pCost += product.reqMats[reqMatName] * warehouse.materials[reqMatName].bCost;
               }
@@ -1185,7 +1188,7 @@ export class Industry implements IIndustry {
               }
             }
 
-            const maxSell =
+            product.maxsll =
               0.5 *
               Math.pow(product.rat, 0.65) *
               marketFactor *
@@ -1197,7 +1200,7 @@ export class Industry implements IIndustry {
             let sellAmt;
             if (product.sllman[city][0] && isString(product.sllman[city][1])) {
               //Sell amount is dynamically evaluated
-              let tmp = product.sllman[city][1].replace(/MAX/g, (maxSell + "").toUpperCase());
+              let tmp = product.sllman[city][1].replace(/MAX/g, (product.maxsll + "").toUpperCase());
               tmp = tmp.replace(/PROD/g, product.data[city][1]);
               try {
                 tmp = eval(tmp);
@@ -1211,16 +1214,16 @@ export class Industry implements IIndustry {
                     city +
                     " office. Sell price is being set to MAX",
                 );
-                tmp = maxSell;
+                tmp = product.maxsll;
               }
-              sellAmt = Math.min(maxSell, tmp);
+              sellAmt = Math.min(product.maxsll, tmp);
             } else if (product.sllman[city][0] && product.sllman[city][1] > 0) {
               //Sell amount is manually limited
-              sellAmt = Math.min(maxSell, product.sllman[city][1]);
+              sellAmt = Math.min(product.maxsll, product.sllman[city][1]);
             } else if (product.sllman[city][0] === false) {
               sellAmt = 0;
             } else {
-              sellAmt = maxSell;
+              sellAmt = product.maxsll;
             }
             if (sellAmt < 0) {
               sellAmt = 0;
@@ -1250,7 +1253,7 @@ export class Industry implements IIndustry {
   }
 
   discontinueProduct(product: Product): void {
-    for (const productName in this.products) {
+    for (const productName of Object.keys(this.products)) {
       if (this.products.hasOwnProperty(productName)) {
         if (product === this.products[productName]) {
           delete this.products[productName];
@@ -1279,10 +1282,11 @@ export class Industry implements IIndustry {
       case 1: {
         //AdVert.Inc,
         const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
-        this.awareness += 3 * advMult;
-        this.popularity += 1 * advMult;
-        this.awareness *= 1.01 * advMult;
-        this.popularity *= (1 + getRandomInt(1, 3) / 100) * advMult;
+        const awareness = (this.awareness + 3 * advMult) * (1.01 * advMult);
+        this.awareness = Math.min(awareness, Number.MAX_VALUE);
+
+        const popularity = (this.popularity + 1 * advMult) * ((1 + getRandomInt(1, 3) / 100) * advMult);
+        this.popularity = Math.min(popularity, Number.MAX_VALUE);
         break;
       }
       default: {
@@ -1354,7 +1358,7 @@ export class Industry implements IIndustry {
     // Since ResearchTree data isnt saved, we'll update the Research Tree data
     // based on the stored 'researched' property in the Industry object
     if (Object.keys(researchTree.researched).length !== Object.keys(this.researched).length) {
-      for (const research in this.researched) {
+      for (const research of Object.keys(this.researched)) {
         researchTree.research(research);
       }
     }

@@ -9,10 +9,10 @@ import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import { ITutorialEvents } from "./ITutorialEvents";
 import { CopyableText } from "../React/CopyableText";
 
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import HelpIcon from "@mui/icons-material/Help";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -28,6 +28,7 @@ import {
   iTutorialSteps,
   iTutorialEnd,
 } from "../../InteractiveTutorial";
+import { NSSelection } from "./NSSelection";
 
 interface IContent {
   content: React.ReactElement;
@@ -46,8 +47,22 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+enum Language {
+  None,
+  NS1,
+  NS2,
+}
+
 export function InteractiveTutorialRoot(): React.ReactElement {
+  const [nsSelectionOpen, setNSSelectionOpen] = useState(false);
+  const [language, setLanguage] = useState(Language.None);
   const classes = useStyles();
+
+  const tutorialScriptName = {
+    [Language.None]: "n00dles.script",
+    [Language.NS1]: "n00dles.script",
+    [Language.NS2]: "n00dles.js",
+  }[language];
 
   const contents: { [number: string]: IContent | undefined } = {
     [iTutorialSteps.Start as number]: {
@@ -61,11 +76,52 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             This tutorial will show you the basics of the game. You may skip the tutorial at any time.
             <br />
             <br />
-            You can also click the eye symbol <VisibilityOffIcon /> to temporarily hide this tutorial.
+            You can also collapse this panel to temporarily hide this tutorial.
           </Typography>
         </>
       ),
       canNext: true,
+    },
+    [iTutorialSteps.NSSelection as number]: {
+      content: (
+        <>
+          <Typography>The tutorial will adjust to your programming ability.</Typography>
+          <Typography>Bitburner has 2 types of scripts:</Typography>
+          <List>
+            <ListItem>
+              <Typography>NS1: Javascript from 2009, very simple. Recommended for beginners to programming.</Typography>
+            </ListItem>
+            <ListItem>
+              <Typography>
+                NS2: Native, modern Javascript. Recommended if you know any programming language or are serious about
+                learning programming.
+              </Typography>
+            </ListItem>
+          </List>
+          <Typography>
+            Both are available at all time and interchangeably. This choice is only for the tutorial.
+          </Typography>
+          <Button
+            onClick={() => {
+              setLanguage(Language.NS1);
+              iTutorialNextStep();
+            }}
+          >
+            Use NS1
+          </Button>
+          <Button
+            onClick={() => {
+              setLanguage(Language.NS2);
+              iTutorialNextStep();
+            }}
+          >
+            Use NS2
+          </Button>
+          <Button onClick={() => setNSSelectionOpen(true)}>More info</Button>
+          <br />
+        </>
+      ),
+      canNext: false,
     },
     [iTutorialSteps.GoToCharacterPage as number]: {
       content: (
@@ -213,7 +269,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
 
           <Typography>
             {" "}
-            we can see that the n00dles server is only one node away. Let's connect so it now using:
+            we can see that the n00dles server is only one node away. Let's connect to it now using:
           </Typography>
 
           <Typography classes={{ root: classes.textfield }}>{"[home ~/]> connect n00dles"}</Typography>
@@ -322,7 +378,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           <Typography classes={{ root: classes.textfield }}>{"[home ~/]> nano"}</Typography>
 
           <Typography>Scripts must end with the .script extension. Let's make a script now by entering </Typography>
-          <Typography classes={{ root: classes.textfield }}>{"[home ~/]> nano n00dles.script"}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{`[home ~/]> nano ${tutorialScriptName}`}</Typography>
 
           <Typography>
             after the hack command finishes running (Sidenote: Pressing ctrl + c will end a command like hack early)
@@ -335,23 +391,35 @@ export function InteractiveTutorialRoot(): React.ReactElement {
       content: (
         <>
           <Typography>
-            This is the script editor. You can use it to program your scripts. Scripts are written in a simplified
-            version of javascript. Copy and paste the following code into the script editor: <br />
+            This is the script editor. You can use it to program your scripts.{" "}
+            {language !== Language.NS2 && <>Scripts are written in a simplified version of javascript.</>} Copy and
+            paste the following code into the script editor: <br />
           </Typography>
 
           <Typography classes={{ root: classes.code }}>
-            <CopyableText
-              value={`while(true) {
+            {language !== Language.NS2 && (
+              <CopyableText
+                value={`while(true) {
   hack('n00dles');
 }`}
-            />
+              />
+            )}
+            {language === Language.NS2 && (
+              <CopyableText
+                value={`export async function main(ns) {
+	while(true) {
+		await ns.hack('n00dles');
+	}
+}`}
+              />
+            )}
           </Typography>
           <Typography>
             For anyone with basic programming experience, this code should be straightforward. This script will
             continuously hack the n00dles server.
             <br />
             <br />
-            To save and close the script editor, press the button in the bottom left, or press ctrl + b.
+            To save and close the script editor, press the button in the bottom left, or press ctrl + s then ctrl + b.
           </Typography>
         </>
       ),
@@ -379,7 +447,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           <Typography>
             We have 8GB of free RAM on this machine, which is enough to run our script. Let's run our script using
           </Typography>
-          <Typography classes={{ root: classes.textfield }}>{"[home ~/]> run n00dles.script"}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{`[home ~/]> run ${tutorialScriptName}`}</Typography>
         </>
       ),
       canNext: false,
@@ -426,7 +494,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             One last thing about scripts, each active script contains logs that detail what it's doing. We can check
             these logs using the tail command. Do that now for the script we just ran by typing{" "}
           </Typography>
-          <Typography classes={{ root: classes.textfield }}>{"[home ~/]> tail n00dles.script"}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{`[home ~/]> tail ${tutorialScriptName}`}</Typography>
         </>
       ),
       canNext: false,
@@ -446,14 +514,6 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           </ListItem>
           <Typography>
             in the main navigation menu to look at the documentation.
-            <br />
-            <br />
-            If you know even a little bit of programming it is highly recommended you use NS2 instead. You will enjoy
-            the game much more. NS1 files end with .script and are a subset of javascript. NS2 files end with .js and
-            are full speed native javascript.
-            <br />
-            <br />
-            You can learn more about the difference between them later in the documentation.
             <br />
             <br />
             For now, let's move on to something else!
@@ -550,25 +610,30 @@ export function InteractiveTutorialRoot(): React.ReactElement {
   const content = contents[step];
   if (content === undefined) throw new Error("error in the tutorial");
   return (
-    <Paper square sx={{ maxWidth: "70vw", p: 2 }}>
-      {content.content}
-      {step !== iTutorialSteps.TutorialPageInfo && (
-        <>
-          <IconButton onClick={iTutorialPrevStep} aria-label="previous">
-            <ArrowBackIos />
-          </IconButton>
-          {content.canNext && (
-            <IconButton onClick={iTutorialNextStep} aria-label="next">
-              <ArrowForwardIos />
-            </IconButton>
-          )}
-        </>
-      )}
-      <br />
-      <br />
-      <Button onClick={iTutorialEnd}>
-        {step !== iTutorialSteps.TutorialPageInfo ? "SKIP TUTORIAL" : "FINISH TUTORIAL"}
-      </Button>
-    </Paper>
+    <>
+      <NSSelection open={nsSelectionOpen} onClose={() => setNSSelectionOpen(false)} />
+      <Paper square sx={{ maxWidth: "70vw", p: 2 }}>
+        {content.content}
+        {step !== iTutorialSteps.TutorialPageInfo && (
+          <>
+            {step !== iTutorialSteps.Start && (
+              <IconButton onClick={iTutorialPrevStep} aria-label="previous">
+                <ArrowBackIos />
+              </IconButton>
+            )}
+            {content.canNext && (
+              <IconButton onClick={iTutorialNextStep} aria-label="next">
+                <ArrowForwardIos />
+              </IconButton>
+            )}
+          </>
+        )}
+        <br />
+        <br />
+        <Button onClick={iTutorialEnd}>
+          {step !== iTutorialSteps.TutorialPageInfo ? "SKIP TUTORIAL" : "FINISH TUTORIAL"}
+        </Button>
+      </Paper>
+    </>
   );
 }

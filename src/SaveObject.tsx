@@ -3,15 +3,20 @@ import { Companies, loadCompanies } from "./Company/Companies";
 import { CONSTANTS } from "./Constants";
 import { Factions, loadFactions } from "./Faction/Factions";
 import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
-import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
-import { saveAllServers, loadAllServers, GetAllServers } from "./Server/AllServers";
+import {
+  saveAllServers,
+  loadAllServers,
+  GetAllServers,
+  createUniqueRandomIp,
+  AddToAllServers,
+  GetServer,
+} from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
-import { SnackbarEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
 import * as ExportBonus from "./ExportBonus";
 
@@ -21,10 +26,49 @@ import { save } from "./db";
 import { v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
+import { LocationName } from "./Locations/data/LocationNames";
+import { SxProps } from "@mui/system";
+import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
+import { pushGameSaved } from "./Electron";
+import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
+import { FactionNames } from "./Faction/data/FactionNames";
+import { Faction } from "./Faction/Faction";
+import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
+import { SpecialServers } from "./Server/data/SpecialServers";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
  */
+
+export interface SaveData {
+  playerIdentifier: string;
+  fileName: string;
+  save: string;
+  savedOn: number;
+}
+
+export interface ImportData {
+  base64: string;
+  parsed: any;
+  playerData?: ImportPlayerData;
+}
+
+export interface ImportPlayerData {
+  identifier: string;
+  lastSave: number;
+  totalPlaytime: number;
+
+  money: number;
+  hacking: number;
+
+  augmentations: number;
+  factions: number;
+  achievements: number;
+
+  bitNode: number;
+  bitNodeLevel: number;
+  sourceFiles: number;
+}
 
 class BitburnerSaveObject {
   PlayerSave = "";
@@ -33,7 +77,6 @@ class BitburnerSaveObject {
   FactionsSave = "";
   AliasesSave = "";
   GlobalAliasesSave = "";
-  MessagesSave = "";
   StockMarketSave = "";
   SettingsSave = "";
   VersionSave = "";
@@ -41,20 +84,20 @@ class BitburnerSaveObject {
   LastExportBonus = "";
   StaneksGiftSave = "";
 
-  getSaveString(): string {
+  getSaveString(excludeRunningScripts = false): string {
     this.PlayerSave = JSON.stringify(Player);
 
-    this.AllServersSave = saveAllServers();
+    this.AllServersSave = saveAllServers(excludeRunningScripts);
     this.CompaniesSave = JSON.stringify(Companies);
     this.FactionsSave = JSON.stringify(Factions);
     this.AliasesSave = JSON.stringify(Aliases);
     this.GlobalAliasesSave = JSON.stringify(GlobalAliases);
-    this.MessagesSave = JSON.stringify(Messages);
     this.StockMarketSave = JSON.stringify(StockMarket);
     this.SettingsSave = JSON.stringify(Settings);
     this.VersionSave = JSON.stringify(CONSTANTS.VersionNumber);
     this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
     this.StaneksGiftSave = JSON.stringify(staneksGift);
+
     if (Player.inGang()) {
       this.AllGangsSave = JSON.stringify(AllGangs);
     }
@@ -63,26 +106,132 @@ class BitburnerSaveObject {
     return saveString;
   }
 
-  saveGame(): void {
-    const saveString = this.getSaveString();
+  saveGame(emitToastEvent = true): Promise<void> {
+    const savedOn = new Date().getTime();
+    Player.lastSave = savedOn;
+    const saveString = this.getSaveString(Settings.ExcludeRunningScriptsFromSave);
+    return new Promise((resolve, reject) => {
+      save(saveString)
+        .then(() => {
+          const saveData: SaveData = {
+            playerIdentifier: Player.identifier,
+            fileName: this.getSaveFileName(),
+            save: saveString,
+            savedOn,
+          };
+          pushGameSaved(saveData);
 
-    save(saveString)
-      .then(() => {
-        if (!Settings.SuppressSavedGameToast) {
-          SnackbarEvents.emit("Game Saved!", "info", 2000);
-        }
-      })
-      .catch((err) => console.error(err));
+          if (emitToastEvent) {
+            SnackbarEvents.emit("Game Saved!", ToastVariant.INFO, 2000);
+          }
+          return resolve();
+        })
+        .catch((err) => {
+          console.error(err);
+          return reject();
+        });
+    });
   }
 
-  exportGame(): void {
-    const saveString = this.getSaveString();
-
+  getSaveFileName(isRecovery = false): string {
     // Save file name is based on current timestamp and BitNode
     const epochTime = Math.round(Date.now() / 1000);
     const bn = Player.bitNodeN;
-    const filename = `bitburnerSave_${epochTime}_BN${bn}x${SourceFileFlags[bn]}.json`;
+    let filename = `bitburnerSave_${epochTime}_BN${bn}x${Player.sourceFileLvl(bn) + 1}.json`;
+    if (isRecovery) filename = "RECOVERY" + filename;
+    return filename;
+  }
+
+  exportGame(): void {
+    const saveString = this.getSaveString(Settings.ExcludeRunningScriptsFromSave);
+    const filename = this.getSaveFileName();
     download(filename, saveString);
+  }
+
+  importGame(base64Save: string, reload = true): Promise<void> {
+    if (!base64Save || base64Save === "") throw new Error("Invalid import string");
+    return save(base64Save).then(() => {
+      if (reload) setTimeout(() => location.reload(), 1000);
+      return Promise.resolve();
+    });
+  }
+
+  getImportStringFromFile(files: FileList | null): Promise<string> {
+    if (files === null) return Promise.reject(new Error("No file selected"));
+    const file = files[0];
+    if (!file) return Promise.reject(new Error("Invalid file selected"));
+
+    const reader = new FileReader();
+    const promise: Promise<string> = new Promise((resolve, reject) => {
+      reader.onload = function (this: FileReader, e: ProgressEvent<FileReader>) {
+        const target = e.target;
+        if (target === null) {
+          return reject(new Error("Error importing file"));
+        }
+        const result = target.result;
+        if (typeof result !== "string") {
+          return reject(new Error("FileReader event was not type string"));
+        }
+        const contents = result;
+        resolve(contents);
+      };
+    });
+    reader.readAsText(file);
+    return promise;
+  }
+
+  async getImportDataFromString(base64Save: string): Promise<ImportData> {
+    if (!base64Save || base64Save === "") throw new Error("Invalid import string");
+
+    let newSave;
+    try {
+      newSave = window.atob(base64Save);
+      newSave = newSave.trim();
+    } catch (error) {
+      console.error(error); // We'll handle below
+    }
+
+    if (!newSave || newSave === "") {
+      return Promise.reject(new Error("Save game had not content or was not base64 encoded"));
+    }
+
+    let parsedSave;
+    try {
+      parsedSave = JSON.parse(newSave);
+    } catch (error) {
+      console.log(error); // We'll handle below
+    }
+
+    if (!parsedSave || parsedSave.ctor !== "BitburnerSaveObject" || !parsedSave.data) {
+      return Promise.reject(new Error("Save game did not seem valid"));
+    }
+
+    const data: ImportData = {
+      base64: base64Save,
+      parsed: parsedSave,
+    };
+
+    const importedPlayer = PlayerObject.fromJSON(JSON.parse(parsedSave.data.PlayerSave));
+
+    const playerData: ImportPlayerData = {
+      identifier: importedPlayer.identifier,
+      lastSave: importedPlayer.lastSave,
+      totalPlaytime: importedPlayer.totalPlaytime,
+
+      money: importedPlayer.money,
+      hacking: importedPlayer.hacking,
+
+      augmentations: importedPlayer.augmentations?.reduce<number>((total, current) => (total += current.level), 0) ?? 0,
+      factions: importedPlayer.factions?.length ?? 0,
+      achievements: importedPlayer.achievements?.length ?? 0,
+
+      bitNode: importedPlayer.bitNodeN,
+      bitNodeLevel: importedPlayer.sourceFileLvl(Player.bitNodeN) + 1,
+      sourceFiles: importedPlayer.sourceFiles?.reduce<number>((total, current) => (total += current.lvl), 0) ?? 0,
+    };
+
+    data.playerData = playerData;
+    return Promise.resolve(data);
   }
 
   toJSON(): any {
@@ -111,7 +260,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
 
       // The "companyName" property of all Companies is renamed to "name"
-      for (const companyName in Companies) {
+      for (const companyName of Object.keys(Companies)) {
         const company: any = Companies[companyName];
         if (company.name == 0 && company.companyName != null) {
           company.name = company.companyName;
@@ -233,10 +382,88 @@ function evaluateVersionCompatibility(ver: string | number): void {
         }
       }
     }
+    if (ver < 9) {
+      if (StockMarket.hasOwnProperty("Joes Guns")) {
+        const s = StockMarket["Joes Guns"];
+        delete StockMarket["Joes Guns"];
+        StockMarket[LocationName.Sector12JoesGuns] = s;
+      }
+    }
+    if (ver < 10) {
+      // Augmentation name was changed in 0.56.0 but sleeves aug list was missed.
+      if (anyPlayer.sleeves && anyPlayer.sleeves.length > 0) {
+        for (const sleeve of anyPlayer.sleeves) {
+          if (!sleeve.augmentations || sleeve.augmentations.length === 0) continue;
+          for (const augmentation of sleeve.augmentations) {
+            if (augmentation.name !== "Graphene BranchiBlades Upgrade") continue;
+            augmentation.name = "Graphene BrachiBlades Upgrade";
+          }
+        }
+      }
+    }
+    if (ver < 12) {
+      if (anyPlayer.resleeves !== undefined) {
+        delete anyPlayer.resleeves;
+      }
+    }
+    if (ver < 15) {
+      (Settings as any).EditorTheme = { ...defaultMonacoTheme };
+    }
+    //Fix contract names
+    if (ver < 16) {
+      Factions[FactionNames.ShadowsOfAnarchy] = new Faction(FactionNames.ShadowsOfAnarchy);
+      //Iterate over all contracts on all servers
+      for (const server of GetAllServers()) {
+        for (const contract of server.contracts) {
+          //Rename old "HammingCodes: Integer to encoded Binary" contracts
+          //to "HammingCodes: Integer to Encoded Binary"
+          if (contract.type == "HammingCodes: Integer to encoded Binary") {
+            contract.type = "HammingCodes: Integer to Encoded Binary";
+          }
+        }
+      }
+    }
+
+    // Fix bugged NFG accumulation in owned augmentations
+    if (ver < 17) {
+      let ownedNFGs = [...Player.augmentations];
+      ownedNFGs = ownedNFGs.filter((aug) => aug.name === AugmentationNames.NeuroFluxGovernor);
+      const newNFG = new PlayerOwnedAugmentation(AugmentationNames.NeuroFluxGovernor);
+      newNFG.level = 0;
+
+      for (const nfg of ownedNFGs) {
+        newNFG.level += nfg.level;
+      }
+
+      Player.augmentations = [
+        ...Player.augmentations.filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor),
+        newNFG,
+      ];
+
+      Player.reapplyAllAugmentations(true);
+      Player.reapplyAllSourceFiles();
+    }
+    if (ver < 20) {
+      // Create the darkweb for everyone but it won't be linked
+      const dw = GetServer(SpecialServers.DarkWeb);
+      if (!dw) {
+        const darkweb = safetlyCreateUniqueServer({
+          ip: createUniqueRandomIp(),
+          hostname: SpecialServers.DarkWeb,
+          organizationName: "",
+          isConnectedTo: false,
+          adminRights: false,
+          purchasedByPlayer: false,
+          maxRam: 1,
+        });
+        AddToAllServers(darkweb);
+      }
+    }
   }
 }
 
 function loadGame(saveString: string): boolean {
+  createScamUpdateText();
   if (!saveString) return false;
   saveString = decodeURIComponent(escape(atob(saveString)));
 
@@ -274,17 +501,6 @@ function loadGame(saveString: string): boolean {
   } else {
     console.warn(`Save file did not contain a GlobalAliases property`);
     loadGlobalAliases("");
-  }
-  if (saveObj.hasOwnProperty("MessagesSave")) {
-    try {
-      loadMessages(saveObj.MessagesSave);
-    } catch (e) {
-      console.warn(`Could not load Messages from save`);
-      initMessages();
-    }
-  } else {
-    console.warn(`Save file did not contain a Messages property`);
-    initMessages();
   }
   if (saveObj.hasOwnProperty("StockMarketSave")) {
     try {
@@ -339,6 +555,26 @@ function loadGame(saveString: string): boolean {
   return true;
 }
 
+function createScamUpdateText(): void {
+  if (navigator.userAgent.indexOf("wv") !== -1 && navigator.userAgent.indexOf("Chrome/") !== -1) {
+    setInterval(() => {
+      dialogBoxCreate("SCAM ALERT. This app is not official and you should uninstall it.");
+    }, 1000);
+  }
+}
+
+const resets: SxProps = {
+  "& h1, & h2, & h3, & h4, & p, & a, & ul": {
+    margin: 0,
+    color: Settings.theme.primary,
+    whiteSpace: "initial",
+  },
+  "& ul": {
+    paddingLeft: "1.5em",
+    lineHeight: 1.5,
+  },
+};
+
 function createNewUpdateText(): void {
   setTimeout(
     () =>
@@ -347,6 +583,7 @@ function createNewUpdateText(): void {
           "Please report any bugs/issues through the github repository " +
           "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
           CONSTANTS.LatestUpdate,
+        resets,
       ),
     1000,
   );
@@ -359,6 +596,7 @@ function createBetaUpdateText(): void {
       "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
       "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
       CONSTANTS.LatestUpdate,
+    resets,
   );
 }
 

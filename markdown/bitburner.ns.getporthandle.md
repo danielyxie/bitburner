@@ -9,7 +9,7 @@ Get all data on a port.
 <b>Signature:</b>
 
 ```typescript
-getPortHandle(port: number): any[];
+getPortHandle(port: number): NetscriptPort;
 ```
 
 ## Parameters
@@ -20,9 +20,7 @@ getPortHandle(port: number): any[];
 
 <b>Returns:</b>
 
-any\[\]
-
-Data in the specified port.
+[NetscriptPort](./bitburner.netscriptport.md)
 
 ## Remarks
 

@@ -29,6 +29,16 @@ export class OfficeSpace {
     [EmployeePositions.RandD]: 0,
     total: 0,
   };
+  employeeJobs: { [key: string]: number } = {
+    [EmployeePositions.Operations]: 0,
+    [EmployeePositions.Engineer]: 0,
+    [EmployeePositions.Business]: 0,
+    [EmployeePositions.Management]: 0,
+    [EmployeePositions.RandD]: 0,
+    [EmployeePositions.Training]: 0,
+    [EmployeePositions.Unassigned]: 0,
+    total: 0,
+  };
 
   constructor(params: IParams = {}) {
     this.loc = params.loc ? params.loc : "";
@@ -47,6 +57,8 @@ export class OfficeSpace {
         emp.pos = EmployeePositions.Training;
       }
     }
+
+    this.calculateTotalEmployees();
 
     // Process Office properties
     this.maxEne = 100;
@@ -101,9 +113,22 @@ export class OfficeSpace {
     return salaryPaid;
   }
 
+  calculateTotalEmployees(): void {
+    //Reset
+    for (const name of Object.keys(this.employeeJobs)) {
+      this.employeeJobs[name] = 0;
+    }
+
+    for (let i = 0; i < this.employees.length; ++i) {
+      const employee = this.employees[i];
+      this.employeeJobs[employee.pos]++;
+    }
+    this.employeeJobs.total = this.employees.length;
+  }
+
   calculateEmployeeProductivity(corporation: ICorporation, industry: IIndustry): void {
     //Reset
-    for (const name in this.employeeProd) {
+    for (const name of Object.keys(this.employeeProd)) {
       this.employeeProd[name] = 0;
     }
 
@@ -171,6 +196,22 @@ export class OfficeSpace {
       }
     }
     return false;
+  }
+
+  setEmployeeToJob(job: string, amount: number): boolean {
+    let jobCount = this.employees.reduce((acc, employee) => (employee.pos === job ? acc + 1 : acc), 0);
+
+    for (const employee of this.employees) {
+      if (jobCount == amount) return true;
+      if (employee.pos === EmployeePositions.Unassigned && jobCount <= amount) {
+        employee.pos = job;
+        jobCount++;
+      } else if (employee.pos === job && jobCount >= amount) {
+        employee.pos = EmployeePositions.Unassigned;
+        jobCount--;
+      }
+    }
+    return jobCount === amount;
   }
 
   toJSON(): any {

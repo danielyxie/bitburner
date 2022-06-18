@@ -1,24 +1,31 @@
 {
   "name": "bitburner",
-  "version": "1.0.0",
+  "version": "1.6.4",
   "description": "A cyberpunk-themed programming incremental game",
   "main": "main.js",
   "author": "Daniel Xie & Olivier Gagnon",
   "mac": {
-    "icon": "./public/icons/mac/icon.icns",    
+    "icon": "./public/icons/mac/icon.icns",
     "category": "public.app-category.games"
   },
   "win": {
-    "icon": "./public/icons/png/256x256.png" 
+    "icon": "./public/icons/png/256x256.png"
   },
   "files": [
     "./build/**/*",
     "./dist/**/*",
     "./node_modules/**/*",
-    "./public/**/*",      
+    "./public/**/*",
+    "./src/**",
+    "./lib/**,",
     "*.js"
   ],
   "directories": {
     "buildResources": "public"
+  },
+  "dependencies": {
+    "electron-config": "^2.0.0",
+    "electron-log": "^4.4.4",
+    "lodash": "^4.17.21"
   }
 }

@@ -3,10 +3,11 @@ import Typography from "@mui/material/Typography";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
 
-import { KEY } from "../../utils/helpers/keyCodes";
+import { KEY, KEYCODE } from "../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -48,9 +49,15 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   const terminalInput = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState(command);
-  const [postUpdateValue, setPostUpdateValue] = useState<{postUpdate: () => void} | null>()
+  const [postUpdateValue, setPostUpdateValue] = useState<{ postUpdate: () => void } | null>();
   const [possibilities, setPossibilities] = useState<string[]>([]);
   const classes = useStyles();
+
+  // If we have no data in the current terminal history, let's initialize it from the player save
+  if (terminal.commandHistory.length === 0 && player.terminalCommandHistory.length > 0) {
+    terminal.commandHistory = player.terminalCommandHistory;
+    terminal.commandHistoryIndex = terminal.commandHistory.length;
+  }
 
   // Need to run after state updates, for example if we need to move cursor
   // *after* we modify input
@@ -59,14 +66,14 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       postUpdateValue.postUpdate();
       setPostUpdateValue(null);
     }
-  }, [postUpdateValue])
+  }, [postUpdateValue]);
 
   function saveValue(newValue: string, postUpdate?: () => void): void {
     command = newValue;
     setValue(newValue);
 
     if (postUpdate) {
-      setPostUpdateValue({postUpdate});
+      setPostUpdateValue({ postUpdate });
     }
   }
 
@@ -91,12 +98,12 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "deletewordbefore": // Delete rest of word before the cursor
         for (let delStart = start - 1; delStart > -2; --delStart) {
-          if ((inputText.charAt(delStart) === " " || delStart === -1) && delStart !== start - 1) {
+          if ((inputText.charAt(delStart) === KEY.SPACE || delStart === -1) && delStart !== start - 1) {
             saveValue(inputText.substr(0, delStart + 1) + inputText.substr(start), () => {
               // Move cursor to correct location
               // foo bar |baz bum --> foo |baz bum
               const ref = terminalInput.current;
-              ref?.setSelectionRange(delStart+1, delStart+1);
+              ref?.setSelectionRange(delStart + 1, delStart + 1);
             });
             return;
           }
@@ -104,12 +111,12 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "deletewordafter": // Delete rest of word after the cursor, including trailing space
         for (let delStart = start + 1; delStart <= value.length + 1; ++delStart) {
-          if (inputText.charAt(delStart) === " " || delStart === value.length + 1) {
+          if (inputText.charAt(delStart) === KEY.SPACE || delStart === value.length + 1) {
             saveValue(inputText.substr(0, start) + inputText.substr(delStart + 1), () => {
               // Move cursor to correct location
               // foo bar |baz bum --> foo bar |bum
               const ref = terminalInput.current;
-              ref?.setSelectionRange(start, start)
+              ref?.setSelectionRange(start, start);
             });
             return;
           }
@@ -145,7 +152,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "prevword":
         for (let i = start - 2; i >= 0; --i) {
-          if (ref.value.charAt(i) === " ") {
+          if (ref.value.charAt(i) === KEY.SPACE) {
             ref.setSelectionRange(i + 1, i + 1);
             return;
           }
@@ -157,7 +164,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "nextword":
         for (let i = start + 1; i <= inputLength; ++i) {
-          if (ref.value.charAt(i) === " ") {
+          if (ref.value.charAt(i) === KEY.SPACE) {
             ref.setSelectionRange(i, i);
             return;
           }
@@ -174,13 +181,13 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   useEffect(() => {
     function keyDown(this: Document, event: KeyboardEvent): void {
       if (terminal.contractOpen) return;
-      if (terminal.action !== null && event.keyCode === KEY.C && event.ctrlKey) {
+      if (terminal.action !== null && event.key === KEY.C && event.ctrlKey) {
         terminal.finishAction(router, player, true);
         return;
       }
       const ref = terminalInput.current;
       if (event.ctrlKey || event.metaKey) return;
-      if (event.keyCode === KEY.C && (event.ctrlKey || event.metaKey)) return; // trying to copy
+      if (event.key === KEY.C && (event.ctrlKey || event.metaKey)) return; // trying to copy
 
       if (ref) ref.focus();
     }
@@ -190,7 +197,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
   async function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): Promise<void> {
     // Run command.
-    if (event.keyCode === KEY.ENTER && value !== "") {
+    if (event.key === KEY.ENTER && value !== "") {
       event.preventDefault();
       terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
       terminal.executeCommands(router, player, value);
@@ -199,7 +206,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Autocomplete
-    if (event.keyCode === KEY.TAB && value !== "") {
+    if (event.key === KEY.TAB && value !== "") {
       event.preventDefault();
 
       let copy = value;
@@ -250,13 +257,13 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Clear screen.
-    if (event.keyCode === KEY.L && event.ctrlKey) {
+    if (event.key === KEY.L && event.ctrlKey) {
       event.preventDefault();
       terminal.clear();
     }
 
     // Select previous command.
-    if (event.keyCode === KEY.UPARROW || (Settings.EnableBashHotkeys && event.keyCode === KEY.P && event.ctrlKey)) {
+    if (event.key === KEY.UP_ARROW || (Settings.EnableBashHotkeys && event.key === KEY.P && event.ctrlKey)) {
       if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
@@ -284,7 +291,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Select next command
-    if (event.keyCode === KEY.DOWNARROW || (Settings.EnableBashHotkeys && event.keyCode === KEY.M && event.ctrlKey)) {
+    if (event.key === KEY.DOWN_ARROW || (Settings.EnableBashHotkeys && event.key === KEY.M && event.ctrlKey)) {
       if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
@@ -311,103 +318,99 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
     // Extra Bash Emulation Hotkeys, must be enabled through options
     if (Settings.EnableBashHotkeys) {
-      if (event.keyCode === KEY.A && event.ctrlKey) {
+      if (event.code === KEYCODE.A && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("home");
       }
 
-      if (event.keyCode === KEY.E && event.ctrlKey) {
+      if (event.code === KEYCODE.E && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("end");
       }
 
-      if (event.keyCode === KEY.B && event.ctrlKey) {
+      if (event.code === KEYCODE.B && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("prevchar");
       }
 
-      if (event.keyCode === KEY.B && event.altKey) {
+      if (event.code === KEYCODE.B && event.altKey) {
         event.preventDefault();
         moveTextCursor("prevword");
       }
 
-      if (event.keyCode === KEY.F && event.ctrlKey) {
+      if (event.code === KEYCODE.F && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("nextchar");
       }
 
-      if (event.keyCode === KEY.F && event.altKey) {
+      if (event.code === KEYCODE.F && event.altKey) {
         event.preventDefault();
         moveTextCursor("nextword");
       }
 
-      if ((event.keyCode === KEY.H || event.keyCode === KEY.D) && event.ctrlKey) {
+      if ((event.code === KEYCODE.H || event.code === KEYCODE.D) && event.ctrlKey) {
         modifyInput("backspace");
         event.preventDefault();
       }
 
-      if (event.keyCode === KEY.W && event.ctrlKey) {
+      if (event.code === KEYCODE.W && event.ctrlKey) {
         event.preventDefault();
         modifyInput("deletewordbefore");
       }
 
-      if (event.keyCode === KEY.U && event.ctrlKey) {
+      if (event.code === KEYCODE.D && event.altKey) {
+        event.preventDefault();
+        modifyInput("deletewordafter");
+      }
+
+      if (event.code === KEYCODE.U && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearbefore");
       }
 
-      if (event.keyCode === KEY.K && event.ctrlKey) {
+      if (event.code === KEYCODE.K && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearafter");
       }
-
-      // TODO AFTER THIS:
-      // alt + d deletes word after cursor
     }
   }
 
   return (
     <>
-      <Tooltip
-        title={
-          possibilities.length > 0 ? (
-            <>
-              <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-                Possible autocomplete candidate:
-              </Typography>
-              <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-                {possibilities.join(" ")}
-              </Typography>
-            </>
-          ) : (
-            ""
-          )
-        }
-      >
-        <TextField
-          fullWidth
-          color={terminal.action === null ? "primary" : "secondary"}
-          autoFocus
-          disabled={terminal.action !== null}
-          autoComplete="off"
-          value={value}
-          classes={{ root: classes.textfield }}
-          onChange={handleValueChange}
-          inputRef={terminalInput}
-          InputProps={{
-            // for players to hook in
-            id: "terminal-input",
-            className: classes.input,
-            startAdornment: (
-              <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
-                [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
-              </Typography>
-            ),
-            spellCheck: false,
-            onKeyDown: onKeyDown,
-          }}
-        ></TextField>
-      </Tooltip>
+      <TextField
+        fullWidth
+        color={terminal.action === null ? "primary" : "secondary"}
+        autoFocus
+        disabled={terminal.action !== null}
+        autoComplete="off"
+        value={value}
+        classes={{ root: classes.textfield }}
+        onChange={handleValueChange}
+        inputRef={terminalInput}
+        InputProps={{
+          // for players to hook in
+          id: "terminal-input",
+          className: classes.input,
+          startAdornment: (
+            <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
+              [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
+            </Typography>
+          ),
+          spellCheck: false,
+          onBlur: () => setPossibilities([]),
+          onKeyDown: onKeyDown,
+        }}
+      ></TextField>
+      <Popper open={possibilities.length > 0} anchorEl={terminalInput.current} placement={"top-start"}>
+        <Paper sx={{ m: 1, p: 2 }}>
+          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+            Possible autocomplete candidates:
+          </Typography>
+          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+            {possibilities.join(" ")}
+          </Typography>
+        </Paper>
+      </Popper>
     </>
   );
 }

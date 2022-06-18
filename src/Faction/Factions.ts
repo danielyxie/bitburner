@@ -34,7 +34,7 @@ export function factionExists(name: string): boolean {
 }
 
 export function initFactions(): void {
-  for (const name in FactionInfos) {
+  for (const name of Object.keys(FactionInfos)) {
     resetFaction(new Faction(name));
   }
 }

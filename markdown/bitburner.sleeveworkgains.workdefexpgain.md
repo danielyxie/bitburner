@@ -4,7 +4,7 @@
 
 ## SleeveWorkGains.workDefExpGain property
 
-defense exp gained from work,
+Defense exp gained from work,
 
 <b>Signature:</b>
 

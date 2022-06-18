@@ -27,20 +27,20 @@ export function Stanek(): React.ReactElement {
 
   function addCharge(): void {
     staneksGift.fragments.forEach((f) => {
-      f.avgCharge = 1e21;
+      f.highestCharge = 1e21;
       f.numCharge = 1e21;
     });
   }
 
   function modCharge(modify: number): (x: number) => void {
     return function (cycles: number): void {
-      staneksGift.fragments.forEach((f) => (f.avgCharge += cycles * modify));
+      staneksGift.fragments.forEach((f) => (f.highestCharge += cycles * modify));
     };
   }
 
   function resetCharge(): void {
     staneksGift.fragments.forEach((f) => {
-      f.avgCharge = 0;
+      f.highestCharge = 0;
       f.numCharge = 0;
     });
   }

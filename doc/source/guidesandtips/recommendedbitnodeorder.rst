@@ -117,7 +117,7 @@ Source-File
     :Max Level: 3
 
     This Source-File lets you access and use the Singularity Functions in other BitNodes.
-    Each level of this Source-File will open up more Singularity Functions that you can use.
+    Each level of this Source-File will reduce RAM costs.
 
 Difficulty:
     Depending on what Source-Files you have unlocked before attempting this BitNode,
@@ -280,7 +280,7 @@ Description
     In this BitNode:
 
     * Your stats are significantly decreased
-    * You cannnot purchase additional servers
+    * You cannot purchase additional servers
     * Hacking is significantly less profitable
 
 Source-File

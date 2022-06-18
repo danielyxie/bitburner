@@ -36,10 +36,19 @@ IMPORTANT: This is an asynchronous function that returns a Promise. The Promiseâ
 
 In NetscriptJS, you must preface any call to wget with the await keyword (like you would hack or sleep). wget will still work in Netscript 1.0, but the functions execution will not be synchronous (i.e. it may not execute when you expect/want it to). Furthermore, since Promises are not supported in ES5, you will not be able to process the returned value of wget in Netscript 1.0.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+await ns.wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
 ```
 

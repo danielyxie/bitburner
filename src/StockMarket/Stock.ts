@@ -36,7 +36,7 @@ function toNumber(n: number | IMinMaxRange): number {
       return n;
     }
     case "object": {
-      const range = n as IMinMaxRange;
+      const range = n ;
       value = getRandomInt(range.min, range.max);
       break;
     }
@@ -213,13 +213,11 @@ export class Stock {
       } else {
         this.otlkMag -= changeAmt;
       }
-    } else {
+    } else if (this.b) {
       // Forecast decreases
-      if (this.b) {
-        this.otlkMag -= changeAmt;
-      } else {
-        this.otlkMag += changeAmt;
-      }
+      this.otlkMag -= changeAmt;
+    } else {
+      this.otlkMag += changeAmt;
     }
 
     this.otlkMag = Math.min(this.otlkMag, 50);

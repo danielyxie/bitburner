@@ -4,7 +4,7 @@
 
 ## Singularity.travelToCity() method
 
-SF4.1 - Travel to another city.
+Travel to another city.
 
 <b>Signature:</b>
 
@@ -26,7 +26,7 @@ True if actions is successful, false otherwise.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB \* 16/4/1
 
 This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.
 

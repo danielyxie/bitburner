@@ -22,7 +22,7 @@ getServerUsedRam(host: string): number;
 
 number
 
-used ram
+used ram (GB)
 
 ## Remarks
 

@@ -4,7 +4,7 @@
 
 ## SleeveSkills.agility property
 
-current agility of the sleeve
+Current agility of the sleeve
 
 <b>Signature:</b>
 

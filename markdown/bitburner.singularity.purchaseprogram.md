@@ -4,7 +4,7 @@
 
 ## Singularity.purchaseProgram() method
 
-SF4.1 - Purchase a program from the dark web.
+Purchase a program from the dark web.
 
 <b>Signature:</b>
 
@@ -26,14 +26,23 @@ True if the specified program is purchased, and false otherwise.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB \* 16/4/1
 
 This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1
 purchaseProgram("brutessh.exe");
+```
+
+## Example 2
+
+
+```ts
+// NS2
+ns.purchaseProgram("brutessh.exe");
 ```
 

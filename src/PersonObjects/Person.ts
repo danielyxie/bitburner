@@ -1,4 +1,4 @@
-// Base class representing a person-like object
+import * as generalMethods from "./Player/PlayerObjectGeneralMethods";
 import { Augmentation } from "../Augmentation/Augmentation";
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -6,32 +6,10 @@ import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
+import { IPerson } from "./IPerson";
 
-// Interface that defines a generic object used to track experience/money
-// earnings for tasks
-export interface ITaskTracker {
-  hack: number;
-  str: number;
-  def: number;
-  dex: number;
-  agi: number;
-  cha: number;
-  money: number;
-}
-
-export function createTaskTracker(): ITaskTracker {
-  return {
-    hack: 0,
-    str: 0,
-    def: 0,
-    dex: 0,
-    agi: 0,
-    cha: 0,
-    money: 0,
-  };
-}
-
-export abstract class Person {
+// Base class representing a person-like object
+export abstract class Person implements IPerson {
   /**
    * Stats
    */
@@ -41,7 +19,7 @@ export abstract class Person {
   dexterity = 1;
   agility = 1;
   charisma = 1;
-  intelligence = 1;
+  intelligence = 0;
   hp = 10;
   max_hp = 10;
 
@@ -101,18 +79,29 @@ export abstract class Person {
    * Augmentations
    */
   augmentations: IPlayerOwnedAugmentation[] = [];
-  queuedAugmentations: IPlayerOwnedAugmentation[] = [];
 
   /**
    * City that the person is in
    */
   city: CityName = CityName.Sector12;
 
+  gainHackingExp = generalMethods.gainHackingExp;
+  gainStrengthExp = generalMethods.gainStrengthExp;
+  gainDefenseExp = generalMethods.gainDefenseExp;
+  gainDexterityExp = generalMethods.gainDexterityExp;
+  gainAgilityExp = generalMethods.gainAgilityExp;
+  gainCharismaExp = generalMethods.gainCharismaExp;
+  gainIntelligenceExp = generalMethods.gainIntelligenceExp;
+  gainStats = generalMethods.gainStats;
+  calculateSkill = generalMethods.calculateSkill;
+  regenerateHp = generalMethods.regenerateHp;
+  queryStatFromString = generalMethods.queryStatFromString;
+
   /**
    * Updates this object's multipliers for the given augmentation
    */
   applyAugmentation(aug: Augmentation): void {
-    for (const mult in aug.mults) {
+    for (const mult of Object.keys(aug.mults)) {
       if ((this as any)[mult] == null) {
         console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
       } else {
@@ -195,6 +184,17 @@ export abstract class Person {
     this.crime_success_mult = 1;
 
     this.work_money_mult = 1;
+
+    this.hacknet_node_money_mult = 1;
+    this.hacknet_node_purchase_cost_mult = 1;
+    this.hacknet_node_ram_cost_mult = 1;
+    this.hacknet_node_core_cost_mult = 1;
+    this.hacknet_node_level_cost_mult = 1;
+
+    this.bladeburner_max_stamina_mult = 1;
+    this.bladeburner_stamina_gain_mult = 1;
+    this.bladeburner_analysis_mult = 1;
+    this.bladeburner_success_chance_mult = 1;
   }
 
   /**
@@ -240,4 +240,8 @@ export abstract class Person {
   getIntelligenceBonus(weight: number): number {
     return calculateIntelligenceBonus(this.intelligence, weight);
   }
+
+  abstract takeDamage(amt: number): boolean;
+
+  abstract whoAmI(): string;
 }

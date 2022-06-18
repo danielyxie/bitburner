@@ -17,13 +17,13 @@ getScriptRam(script: string, host?: string): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script. This is case-sensitive. |
-|  host | string | Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server. |
+|  host | string | Host of target server the script is located on. This is optional, if it is not specified then the function will use the current server as the target server. |
 
 <b>Returns:</b>
 
 number
 
-Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.
+Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
 
 ## Remarks
 

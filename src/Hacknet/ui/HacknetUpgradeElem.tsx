@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { SelectChangeEvent } from "@mui/material/Select";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 interface IProps {
   player: IPlayer;
@@ -28,7 +29,7 @@ const serversMap: { [key: string]: string } = {};
 
 export function HacknetUpgradeElem(props: IProps): React.ReactElement {
   const [selectedServer, setSelectedServer] = useState(
-    serversMap[props.upg.name] ? serversMap[props.upg.name] : "ecorp",
+    serversMap[props.upg.name] ? serversMap[props.upg.name] : FactionNames.ECorp.toLowerCase(),
   );
   function changeTargetServer(event: SelectChangeEvent<string>): void {
     setSelectedServer(event.target.value);

@@ -1,279 +1,306 @@
-import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { getRamCost } from "../Netscript/RamCostGenerator";
 import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
-import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder } from "../StockMarket/StockMarket";
+import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder, initStockMarketFn } from "../StockMarket/StockMarket";
 import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/StockMarketHelpers";
 import { OrderTypes } from "../StockMarket/data/OrderTypes";
 import { PositionTypes } from "../StockMarket/data/PositionTypes";
 import { StockSymbols } from "../StockMarket/data/StockSymbols";
-import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMarket/StockMarketCosts";
+import {
+  getStockMarket4SDataCost,
+  getStockMarket4STixApiCost,
+  getStockMarketWseCost,
+  getStockMarketTixApiCost,
+} from "../StockMarket/StockMarketCosts";
 import { Stock } from "../StockMarket/Stock";
 import { TIX } from "../ScriptEditor/NetscriptDefinitions";
+import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 
-export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): TIX {
+export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript): InternalAPI<TIX> {
   /**
    * Checks if the player has TIX API access. Throws an error if the player does not
    */
-  const checkTixApiAccess = function (callingFn: string): void {
+  const checkTixApiAccess = function (ctx: NetscriptContext): void {
     if (!player.hasWseAccount) {
-      throw helper.makeRuntimeErrorMsg(callingFn, `You don't have WSE Access! Cannot use ${callingFn}()`);
+      throw ctx.makeRuntimeErrorMsg(`You don't have WSE Access! Cannot use ${ctx.function}()`);
     }
     if (!player.hasTixApiAccess) {
-      throw helper.makeRuntimeErrorMsg(callingFn, `You don't have TIX API Access! Cannot use ${callingFn}()`);
+      throw ctx.makeRuntimeErrorMsg(`You don't have TIX API Access! Cannot use ${ctx.function}()`);
     }
   };
 
-  const getStockFromSymbol = function (symbol: string, callingFn: string): Stock {
+  const getStockFromSymbol = function (ctx: NetscriptContext, symbol: string): Stock {
     const stock = SymbolToStockMap[symbol];
     if (stock == null) {
-      throw helper.makeRuntimeErrorMsg(callingFn, `Invalid stock symbol: '${symbol}'`);
+      throw ctx.makeRuntimeErrorMsg(`Invalid stock symbol: '${symbol}'`);
     }
 
     return stock;
   };
+
   return {
-    getSymbols: function (): any {
-      helper.updateDynamicRam("getSymbols", getRamCost("stock", "getSymbols"));
-      checkTixApiAccess("getSymbols");
+    getSymbols: (ctx: NetscriptContext) => (): string[] => {
+      checkTixApiAccess(ctx);
       return Object.values(StockSymbols);
     },
-    getPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getPrice", getRamCost("stock", "getPrice"));
-      checkTixApiAccess("getPrice");
-      const stock = getStockFromSymbol(symbol, "getPrice");
+    getPrice:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        checkTixApiAccess(ctx);
+        const stock = getStockFromSymbol(ctx, symbol);
 
-      return stock.price;
-    },
-    getAskPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getAskPrice", getRamCost("stock", "getAskPrice"));
-      checkTixApiAccess("getAskPrice");
-      const stock = getStockFromSymbol(symbol, "getAskPrice");
+        return stock.price;
+      },
+    getAskPrice:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        checkTixApiAccess(ctx);
+        const stock = getStockFromSymbol(ctx, symbol);
 
-      return stock.getAskPrice();
-    },
-    getBidPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getBidPrice", getRamCost("stock", "getBidPrice"));
-      checkTixApiAccess("getBidPrice");
-      const stock = getStockFromSymbol(symbol, "getBidPrice");
+        return stock.getAskPrice();
+      },
+    getBidPrice:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        checkTixApiAccess(ctx);
+        const stock = getStockFromSymbol(ctx, symbol);
 
-      return stock.getBidPrice();
-    },
-    getPosition: function (symbol: any): any {
-      helper.updateDynamicRam("getPosition", getRamCost("stock", "getPosition"));
-      checkTixApiAccess("getPosition");
-      const stock = SymbolToStockMap[symbol];
-      if (stock == null) {
-        throw helper.makeRuntimeErrorMsg("getPosition", `Invalid stock symbol: ${symbol}`);
-      }
-      return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
-    },
-    getMaxShares: function (symbol: any): any {
-      helper.updateDynamicRam("getMaxShares", getRamCost("stock", "getMaxShares"));
-      checkTixApiAccess("getMaxShares");
-      const stock = getStockFromSymbol(symbol, "getMaxShares");
-
-      return stock.maxShares;
-    },
-    getPurchaseCost: function (symbol: any, shares: any, posType: any): any {
-      helper.updateDynamicRam("getPurchaseCost", getRamCost("stock", "getPurchaseCost"));
-      checkTixApiAccess("getPurchaseCost");
-      const stock = getStockFromSymbol(symbol, "getPurchaseCost");
-      shares = Math.round(shares);
-
-      let pos;
-      const sanitizedPosType = posType.toLowerCase();
-      if (sanitizedPosType.includes("l")) {
-        pos = PositionTypes.Long;
-      } else if (sanitizedPosType.includes("s")) {
-        pos = PositionTypes.Short;
-      } else {
-        return Infinity;
-      }
-
-      const res = getBuyTransactionCost(stock, shares, pos);
-      if (res == null) {
-        return Infinity;
-      }
-
-      return res;
-    },
-    getSaleGain: function (symbol: any, shares: any, posType: any): any {
-      helper.updateDynamicRam("getSaleGain", getRamCost("stock", "getSaleGain"));
-      checkTixApiAccess("getSaleGain");
-      const stock = getStockFromSymbol(symbol, "getSaleGain");
-      shares = Math.round(shares);
-
-      let pos;
-      const sanitizedPosType = posType.toLowerCase();
-      if (sanitizedPosType.includes("l")) {
-        pos = PositionTypes.Long;
-      } else if (sanitizedPosType.includes("s")) {
-        pos = PositionTypes.Short;
-      } else {
-        return 0;
-      }
-
-      const res = getSellTransactionGain(stock, shares, pos);
-      if (res == null) {
-        return 0;
-      }
-
-      return res;
-    },
-    buy: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("buy", getRamCost("stock", "buy"));
-      checkTixApiAccess("buy");
-      const stock = getStockFromSymbol(symbol, "buy");
-      const res = buyStock(stock, shares, workerScript, {});
-      return res ? stock.getAskPrice() : 0;
-    },
-    sell: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("sell", getRamCost("stock", "sell"));
-      checkTixApiAccess("sell");
-      const stock = getStockFromSymbol(symbol, "sell");
-      const res = sellStock(stock, shares, workerScript, {});
-
-      return res ? stock.getBidPrice() : 0;
-    },
-    short: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("short", getRamCost("stock", "short"));
-      checkTixApiAccess("short");
-      if (player.bitNodeN !== 8) {
-        if (player.sourceFileLvl(8) <= 1) {
-          throw helper.makeRuntimeErrorMsg(
-            "short",
-            "You must either be in BitNode-8 or you must have Source-File 8 Level 2.",
-          );
+        return stock.getBidPrice();
+      },
+    getPosition:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown): [number, number, number, number] => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        checkTixApiAccess(ctx);
+        const stock = SymbolToStockMap[symbol];
+        if (stock == null) {
+          throw ctx.makeRuntimeErrorMsg(`Invalid stock symbol: ${symbol}`);
         }
-      }
-      const stock = getStockFromSymbol(symbol, "short");
-      const res = shortStock(stock, shares, workerScript, {});
+        return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
+      },
+    getMaxShares:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        checkTixApiAccess(ctx);
+        const stock = getStockFromSymbol(ctx, symbol);
 
-      return res ? stock.getBidPrice() : 0;
-    },
-    sellShort: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("sellShort", getRamCost("stock", "sellShort"));
-      checkTixApiAccess("sellShort");
-      if (player.bitNodeN !== 8) {
-        if (player.sourceFileLvl(8) <= 1) {
-          throw helper.makeRuntimeErrorMsg(
-            "sellShort",
-            "You must either be in BitNode-8 or you must have Source-File 8 Level 2.",
-          );
+        return stock.maxShares;
+      },
+    getPurchaseCost:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown, _shares: unknown, _posType: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        let shares = ctx.helper.number("shares", _shares);
+        const posType = ctx.helper.string("posType", _posType);
+        checkTixApiAccess(ctx);
+        const stock = getStockFromSymbol(ctx, symbol);
+        shares = Math.round(shares);
+
+        let pos;
+        const sanitizedPosType = posType.toLowerCase();
+        if (sanitizedPosType.includes("l")) {
+          pos = PositionTypes.Long;
+        } else if (sanitizedPosType.includes("s")) {
+          pos = PositionTypes.Short;
+        } else {
+          return Infinity;
         }
-      }
-      const stock = getStockFromSymbol(symbol, "sellShort");
-      const res = sellShort(stock, shares, workerScript, {});
 
-      return res ? stock.getAskPrice() : 0;
-    },
-    placeOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
-      helper.updateDynamicRam("placeOrder", getRamCost("stock", "placeOrder"));
-      checkTixApiAccess("placeOrder");
+        const res = getBuyTransactionCost(stock, shares, pos);
+        if (res == null) {
+          return Infinity;
+        }
+
+        return res;
+      },
+    getSaleGain:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown, _shares: unknown, _posType: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        let shares = ctx.helper.number("shares", _shares);
+        const posType = ctx.helper.string("posType", _posType);
+        checkTixApiAccess(ctx);
+        const stock = getStockFromSymbol(ctx, symbol);
+        shares = Math.round(shares);
+
+        let pos;
+        const sanitizedPosType = posType.toLowerCase();
+        if (sanitizedPosType.includes("l")) {
+          pos = PositionTypes.Long;
+        } else if (sanitizedPosType.includes("s")) {
+          pos = PositionTypes.Short;
+        } else {
+          return 0;
+        }
+
+        const res = getSellTransactionGain(stock, shares, pos);
+        if (res == null) {
+          return 0;
+        }
+
+        return res;
+      },
+    buy:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown, _shares: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        const shares = ctx.helper.number("shares", _shares);
+        checkTixApiAccess(ctx);
+        const stock = getStockFromSymbol(ctx, symbol);
+        const res = buyStock(stock, shares, workerScript, {});
+        return res ? stock.getAskPrice() : 0;
+      },
+    sell:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown, _shares: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        const shares = ctx.helper.number("shares", _shares);
+        checkTixApiAccess(ctx);
+        const stock = getStockFromSymbol(ctx, symbol);
+        const res = sellStock(stock, shares, workerScript, {});
+
+        return res ? stock.getBidPrice() : 0;
+      },
+    short:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown, _shares: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        const shares = ctx.helper.number("shares", _shares);
+        checkTixApiAccess(ctx);
+        if (player.bitNodeN !== 8) {
+          if (player.sourceFileLvl(8) <= 1) {
+            throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or you must have Source-File 8 Level 2.");
+          }
+        }
+        const stock = getStockFromSymbol(ctx, symbol);
+        const res = shortStock(stock, shares, workerScript, {});
+
+        return res ? stock.getBidPrice() : 0;
+      },
+    sellShort:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown, _shares: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        const shares = ctx.helper.number("shares", _shares);
+        checkTixApiAccess(ctx);
+        if (player.bitNodeN !== 8) {
+          if (player.sourceFileLvl(8) <= 1) {
+            throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or you must have Source-File 8 Level 2.");
+          }
+        }
+        const stock = getStockFromSymbol(ctx, symbol);
+        const res = sellShort(stock, shares, workerScript, {});
+
+        return res ? stock.getAskPrice() : 0;
+      },
+    placeOrder:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown, _shares: unknown, _price: unknown, _type: unknown, _pos: unknown): boolean => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        const shares = ctx.helper.number("shares", _shares);
+        const price = ctx.helper.number("price", _price);
+        const type = ctx.helper.string("type", _type);
+        const pos = ctx.helper.string("pos", _pos);
+        checkTixApiAccess(ctx);
+        if (player.bitNodeN !== 8) {
+          if (player.sourceFileLvl(8) <= 2) {
+            throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or you must have Source-File 8 Level 3.");
+          }
+        }
+        const stock = getStockFromSymbol(ctx, symbol);
+
+        let orderType;
+        let orderPos;
+        const ltype = type.toLowerCase();
+        if (ltype.includes("limit") && ltype.includes("buy")) {
+          orderType = OrderTypes.LimitBuy;
+        } else if (ltype.includes("limit") && ltype.includes("sell")) {
+          orderType = OrderTypes.LimitSell;
+        } else if (ltype.includes("stop") && ltype.includes("buy")) {
+          orderType = OrderTypes.StopBuy;
+        } else if (ltype.includes("stop") && ltype.includes("sell")) {
+          orderType = OrderTypes.StopSell;
+        } else {
+          throw ctx.makeRuntimeErrorMsg(`Invalid order type: ${type}`);
+        }
+
+        const lpos = pos.toLowerCase();
+        if (lpos.includes("l")) {
+          orderPos = PositionTypes.Long;
+        } else if (lpos.includes("s")) {
+          orderPos = PositionTypes.Short;
+        } else {
+          throw ctx.makeRuntimeErrorMsg(`Invalid position type: ${pos}`);
+        }
+
+        return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
+      },
+    cancelOrder:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown, _shares: unknown, _price: unknown, _type: unknown, _pos: unknown): boolean => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        const shares = ctx.helper.number("shares", _shares);
+        const price = ctx.helper.number("price", _price);
+        const type = ctx.helper.string("type", _type);
+        const pos = ctx.helper.string("pos", _pos);
+        checkTixApiAccess(ctx);
+        if (player.bitNodeN !== 8) {
+          if (player.sourceFileLvl(8) <= 2) {
+            throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or you must have Source-File 8 Level 3.");
+          }
+        }
+        const stock = getStockFromSymbol(ctx, symbol);
+        if (isNaN(shares) || isNaN(price)) {
+          throw ctx.makeRuntimeErrorMsg(`Invalid shares or price. Must be numeric. shares=${shares}, price=${price}`);
+        }
+        let orderType;
+        let orderPos;
+        const ltype = type.toLowerCase();
+        if (ltype.includes("limit") && ltype.includes("buy")) {
+          orderType = OrderTypes.LimitBuy;
+        } else if (ltype.includes("limit") && ltype.includes("sell")) {
+          orderType = OrderTypes.LimitSell;
+        } else if (ltype.includes("stop") && ltype.includes("buy")) {
+          orderType = OrderTypes.StopBuy;
+        } else if (ltype.includes("stop") && ltype.includes("sell")) {
+          orderType = OrderTypes.StopSell;
+        } else {
+          throw ctx.makeRuntimeErrorMsg(`Invalid order type: ${type}`);
+        }
+
+        const lpos = pos.toLowerCase();
+        if (lpos.includes("l")) {
+          orderPos = PositionTypes.Long;
+        } else if (lpos.includes("s")) {
+          orderPos = PositionTypes.Short;
+        } else {
+          throw ctx.makeRuntimeErrorMsg(`Invalid position type: ${pos}`);
+        }
+        const params = {
+          stock: stock,
+          shares: shares,
+          price: price,
+          type: orderType,
+          pos: orderPos,
+        };
+        return cancelOrder(params, workerScript);
+      },
+    getOrders: (ctx: NetscriptContext) => (): any => {
+      checkTixApiAccess(ctx);
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
-          throw helper.makeRuntimeErrorMsg(
-            "placeOrder",
-            "You must either be in BitNode-8 or you must have Source-File 8 Level 3.",
-          );
-        }
-      }
-      const stock = getStockFromSymbol(symbol, "placeOrder");
-
-      let orderType;
-      let orderPos;
-      const ltype = type.toLowerCase();
-      if (ltype.includes("limit") && ltype.includes("buy")) {
-        orderType = OrderTypes.LimitBuy;
-      } else if (ltype.includes("limit") && ltype.includes("sell")) {
-        orderType = OrderTypes.LimitSell;
-      } else if (ltype.includes("stop") && ltype.includes("buy")) {
-        orderType = OrderTypes.StopBuy;
-      } else if (ltype.includes("stop") && ltype.includes("sell")) {
-        orderType = OrderTypes.StopSell;
-      } else {
-        throw helper.makeRuntimeErrorMsg("placeOrder", `Invalid order type: ${type}`);
-      }
-
-      const lpos = pos.toLowerCase();
-      if (lpos.includes("l")) {
-        orderPos = PositionTypes.Long;
-      } else if (lpos.includes("s")) {
-        orderPos = PositionTypes.Short;
-      } else {
-        throw helper.makeRuntimeErrorMsg("placeOrder", `Invalid position type: ${pos}`);
-      }
-
-      return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
-    },
-    cancelOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
-      helper.updateDynamicRam("cancelOrder", getRamCost("stock", "cancelOrder"));
-      checkTixApiAccess("cancelOrder");
-      if (player.bitNodeN !== 8) {
-        if (player.sourceFileLvl(8) <= 2) {
-          throw helper.makeRuntimeErrorMsg(
-            "cancelOrder",
-            "You must either be in BitNode-8 or you must have Source-File 8 Level 3.",
-          );
-        }
-      }
-      const stock = getStockFromSymbol(symbol, "cancelOrder");
-      if (isNaN(shares) || isNaN(price)) {
-        throw helper.makeRuntimeErrorMsg(
-          "cancelOrder",
-          `Invalid shares or price. Must be numeric. shares=${shares}, price=${price}`,
-        );
-      }
-      let orderType;
-      let orderPos;
-      const ltype = type.toLowerCase();
-      if (ltype.includes("limit") && ltype.includes("buy")) {
-        orderType = OrderTypes.LimitBuy;
-      } else if (ltype.includes("limit") && ltype.includes("sell")) {
-        orderType = OrderTypes.LimitSell;
-      } else if (ltype.includes("stop") && ltype.includes("buy")) {
-        orderType = OrderTypes.StopBuy;
-      } else if (ltype.includes("stop") && ltype.includes("sell")) {
-        orderType = OrderTypes.StopSell;
-      } else {
-        throw helper.makeRuntimeErrorMsg("cancelOrder", `Invalid order type: ${type}`);
-      }
-
-      const lpos = pos.toLowerCase();
-      if (lpos.includes("l")) {
-        orderPos = PositionTypes.Long;
-      } else if (lpos.includes("s")) {
-        orderPos = PositionTypes.Short;
-      } else {
-        throw helper.makeRuntimeErrorMsg("cancelOrder", `Invalid position type: ${pos}`);
-      }
-      const params = {
-        stock: stock,
-        shares: shares,
-        price: price,
-        type: orderType,
-        pos: orderPos,
-      };
-      return cancelOrder(params, workerScript);
-    },
-    getOrders: function (): any {
-      helper.updateDynamicRam("getOrders", getRamCost("stock", "getOrders"));
-      checkTixApiAccess("getOrders");
-      if (player.bitNodeN !== 8) {
-        if (player.sourceFileLvl(8) <= 2) {
-          throw helper.makeRuntimeErrorMsg(
-            "getOrders",
-            "You must either be in BitNode-8 or have Source-File 8 Level 3.",
-          );
+          throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or have Source-File 8 Level 3.");
         }
       }
 
       const orders: any = {};
 
       const stockMarketOrders = StockMarket["Orders"];
-      for (const symbol in stockMarketOrders) {
+      for (const symbol of Object.keys(stockMarketOrders)) {
         const orderBook = stockMarketOrders[symbol];
         if (orderBook.constructor === Array && orderBook.length > 0) {
           orders[symbol] = [];
@@ -290,65 +317,95 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
       return orders;
     },
-    getVolatility: function (symbol: any): any {
-      helper.updateDynamicRam("getVolatility", getRamCost("stock", "getVolatility"));
-      if (!player.has4SDataTixApi) {
-        throw helper.makeRuntimeErrorMsg("getVolatility", "You don't have 4S Market Data TIX API Access!");
-      }
-      const stock = getStockFromSymbol(symbol, "getVolatility");
+    getVolatility:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        if (!player.has4SDataTixApi) {
+          throw ctx.makeRuntimeErrorMsg("You don't have 4S Market Data TIX API Access!");
+        }
+        const stock = getStockFromSymbol(ctx, symbol);
 
-      return stock.mv / 100; // Convert from percentage to decimal
-    },
-    getForecast: function (symbol: any): any {
-      helper.updateDynamicRam("getForecast", getRamCost("stock", "getForecast"));
-      if (!player.has4SDataTixApi) {
-        throw helper.makeRuntimeErrorMsg("getForecast", "You don't have 4S Market Data TIX API Access!");
-      }
-      const stock = getStockFromSymbol(symbol, "getForecast");
+        return stock.mv / 100; // Convert from percentage to decimal
+      },
+    getForecast:
+      (ctx: NetscriptContext) =>
+      (_symbol: unknown): number => {
+        const symbol = ctx.helper.string("symbol", _symbol);
+        if (!player.has4SDataTixApi) {
+          throw ctx.makeRuntimeErrorMsg("You don't have 4S Market Data TIX API Access!");
+        }
+        const stock = getStockFromSymbol(ctx, symbol);
 
-      let forecast = 50;
-      stock.b ? (forecast += stock.otlkMag) : (forecast -= stock.otlkMag);
-      return forecast / 100; // Convert from percentage to decimal
-    },
-    purchase4SMarketData: function () {
-      helper.updateDynamicRam("purchase4SMarketData", getRamCost("stock", "purchase4SMarketData"));
-      checkTixApiAccess("purchase4SMarketData");
-
+        let forecast = 50;
+        stock.b ? (forecast += stock.otlkMag) : (forecast -= stock.otlkMag);
+        return forecast / 100; // Convert from percentage to decimal
+      },
+    purchase4SMarketData: (ctx: NetscriptContext) => (): boolean => {
       if (player.has4SData) {
-        workerScript.log("stock.purchase4SMarketData", () => "Already purchased 4S Market Data.");
+        ctx.log(() => "Already purchased 4S Market Data.");
         return true;
       }
 
       if (player.money < getStockMarket4SDataCost()) {
-        workerScript.log("stock.purchase4SMarketData", () => "Not enough money to purchase 4S Market Data.");
+        ctx.log(() => "Not enough money to purchase 4S Market Data.");
         return false;
       }
 
       player.has4SData = true;
       player.loseMoney(getStockMarket4SDataCost(), "stock");
-      workerScript.log("stock.purchase4SMarketData", () => "Purchased 4S Market Data");
+      ctx.log(() => "Purchased 4S Market Data");
       return true;
     },
-    purchase4SMarketDataTixApi: function () {
-      helper.updateDynamicRam("purchase4SMarketDataTixApi", getRamCost("stock", "purchase4SMarketDataTixApi"));
-      checkTixApiAccess("purchase4SMarketDataTixApi");
+    purchase4SMarketDataTixApi: (ctx: NetscriptContext) => (): boolean => {
+      checkTixApiAccess(ctx);
 
       if (player.has4SDataTixApi) {
-        workerScript.log("stock.purchase4SMarketDataTixApi", () => "Already purchased 4S Market Data TIX API");
+        ctx.log(() => "Already purchased 4S Market Data TIX API");
         return true;
       }
 
       if (player.money < getStockMarket4STixApiCost()) {
-        workerScript.log(
-          "stock.purchase4SMarketDataTixApi",
-          () => "Not enough money to purchase 4S Market Data TIX API",
-        );
+        ctx.log(() => "Not enough money to purchase 4S Market Data TIX API");
         return false;
       }
 
       player.has4SDataTixApi = true;
       player.loseMoney(getStockMarket4STixApiCost(), "stock");
-      workerScript.log("stock.purchase4SMarketDataTixApi", () => "Purchased 4S Market Data TIX API");
+      ctx.log(() => "Purchased 4S Market Data TIX API");
+      return true;
+    },
+    purchaseWseAccount: (ctx: NetscriptContext) => (): boolean => {
+      if (player.hasWseAccount) {
+        ctx.log(() => "Already purchased WSE Account");
+        return true;
+      }
+
+      if (player.money < getStockMarketWseCost()) {
+        ctx.log(() => "Not enough money to purchase WSE Account Access");
+        return false;
+      }
+
+      player.hasWseAccount = true;
+      initStockMarketFn();
+      player.loseMoney(getStockMarketWseCost(), "stock");
+      ctx.log(() => "Purchased WSE Account Access");
+      return true;
+    },
+    purchaseTixApi: (ctx: NetscriptContext) => (): boolean => {
+      if (player.hasTixApiAccess) {
+        ctx.log(() => "Already purchased TIX API");
+        return true;
+      }
+
+      if (player.money < getStockMarketTixApiCost()) {
+        ctx.log(() => "Not enough money to purchase TIX API Access");
+        return false;
+      }
+
+      player.hasTixApiAccess = true;
+      player.loseMoney(getStockMarketTixApiCost(), "stock");
+      ctx.log(() => "Purchased TIX API");
       return true;
     },
   };

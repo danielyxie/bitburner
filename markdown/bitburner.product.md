@@ -16,9 +16,13 @@ interface Product
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [cmp](./bitburner.product.cmp.md) | number | Competition for the product |
-|  [dmd](./bitburner.product.dmd.md) | number | Demand for the product |
+|  [cityData](./bitburner.product.citydata.md) | { \[key: string\]: number\[\] } | Data refers to the production, sale, and quantity of the products These values are specific to a city For each city, the data is \[qty, prod, sell\] |
+|  [cmp](./bitburner.product.cmp.md) | number \| undefined | Competition for the product, only present if "Market Research - Competition" unlocked |
+|  [developmentProgress](./bitburner.product.developmentprogress.md) | number | Creation progress - A number between 0-100 representing percentage |
+|  [dmd](./bitburner.product.dmd.md) | number \| undefined | Demand for the product, only present if "Market Research - Demand" unlocked |
 |  [name](./bitburner.product.name.md) | string | Name of the product |
 |  [pCost](./bitburner.product.pcost.md) | number | Production cost |
+|  [properties](./bitburner.product.properties.md) | { \[key: string\]: number } | Product Properties. The data is {<!-- -->qlt, per, dur, rel, aes, fea<!-- -->} |
+|  [rat](./bitburner.product.rat.md) | number | Product Rating |
 |  [sCost](./bitburner.product.scost.md) | string \| number | Sell cost, can be "MP+5" |
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IBladeburner } from "../IBladeburner";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import Paper from "@mui/material/Paper";
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
     },
     input: {
-      backgroundColor: "#000",
+      backgroundColor: theme.colors.backgroundsecondary,
     },
     nopadding: {
       padding: theme.spacing(0),
@@ -56,6 +57,7 @@ export function Console(props: IProps): React.ReactElement {
   const classes = useStyles();
   const [command, setCommand] = useState("");
   const setRerender = useState(false)[1];
+  const consoleInput = useRef<HTMLInputElement>(null);
 
   function handleCommandChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setCommand(event.target.value);
@@ -75,7 +77,7 @@ export function Console(props: IProps): React.ReactElement {
   }, []);
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) {
+    if (event.key === KEY.ENTER) {
       event.preventDefault();
       if (command.length > 0) {
         props.bladeburner.postToConsole("> " + command);
@@ -87,7 +89,7 @@ export function Console(props: IProps): React.ReactElement {
 
     const consoleHistory = props.bladeburner.consoleHistory;
 
-    if (event.keyCode === 38) {
+    if (event.key === KEY.UP_ARROW) {
       // up
       let i = consoleHistoryIndex;
       const len = consoleHistory.length;
@@ -107,7 +109,7 @@ export function Console(props: IProps): React.ReactElement {
       setCommand(prevCommand);
     }
 
-    if (event.keyCode === 40) {
+    if (event.key === KEY.DOWN_ARROW) {
       const i = consoleHistoryIndex;
       const len = consoleHistory.length;
 
@@ -131,14 +133,23 @@ export function Console(props: IProps): React.ReactElement {
     }
   }
 
+  function handleClick(): void {
+    if (!consoleInput.current) return;
+    consoleInput.current.focus();
+  }
+
   return (
-    <Paper>
-      <Box sx={{
-        height: '60vh',
-        paddingBottom: '8px',
-        display: 'flex',
-        alignItems: 'stretch',
-      }}>
+    <Paper sx={{ p: 1 }}>
+      <Box
+        sx={{
+          height: "60vh",
+          paddingBottom: "8px",
+          display: "flex",
+          alignItems: "stretch",
+          whiteSpace: "pre-wrap",
+        }}
+        onClick={handleClick}
+      >
         <Box>
           <Logs entries={[...props.bladeburner.consoleLogs]} />
         </Box>
@@ -148,6 +159,7 @@ export function Console(props: IProps): React.ReactElement {
         autoFocus
         tabIndex={1}
         type="text"
+        inputRef={consoleInput}
         value={command}
         onChange={handleCommandChange}
         onKeyDown={handleKeyDown}
@@ -170,7 +182,7 @@ interface ILogProps {
   entries: string[];
 }
 
-function Logs({entries}: ILogProps): React.ReactElement {
+function Logs({ entries }: ILogProps): React.ReactElement {
   const scrollHook = useRef<HTMLUListElement>(null);
 
   // TODO: Text gets shifted up as new entries appear, if the user scrolled up it should attempt to keep the text focused
@@ -181,13 +193,11 @@ function Logs({entries}: ILogProps): React.ReactElement {
 
   useEffect(() => {
     scrollToBottom();
-  }, [entries]);
+  }, [entries.length]);
 
   return (
     <List sx={{ height: "100%", overflow: "auto", p: 1 }} ref={scrollHook}>
-      {entries && entries.map((log: any, i: number) => (
-        <Line key={i} content={log} />
-      ))}
+      {entries && entries.map((log: any, i: number) => <Line key={i} content={log} />)}
     </List>
   );
 }

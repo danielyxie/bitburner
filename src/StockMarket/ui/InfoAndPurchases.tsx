@@ -19,6 +19,7 @@ import IconButton from "@mui/material/IconButton";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckIcon from "@mui/icons-material/Check";
 import { StaticModal } from "../../ui/React/StaticModal";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 type IProps = {
   initStockMarket: () => void;
@@ -176,7 +177,7 @@ export function InfoAndPurchases(props: IProps): React.ReactElement {
     <>
       <Typography>Welcome to the World Stock Exchange (WSE)!</Typography>
       <Link href={documentationLink} target={"_blank"}>
-        Investopedia
+        <Typography>Investopedia</Typography>
       </Link>
       <br />
       <PurchaseWseAccountButton {...props} />
@@ -190,10 +191,11 @@ export function InfoAndPurchases(props: IProps): React.ReactElement {
       </Typography>
       <PurchaseTixApiAccessButton {...props} />
       <Typography variant="h5" color="primary">
-        Four Sigma (4S) Market Data Feed
+        {FactionNames.FourSigma} (4S) Market Data Feed
       </Typography>
       <Typography>
-        Four Sigma's (4S) Market Data Feed provides information about stocks that will help your trading strategies.
+        {FactionNames.FourSigma}'s (4S) Market Data Feed provides information about stocks that will help your trading
+        strategies.
         <IconButton onClick={() => setHelpOpen(true)}>
           <HelpIcon />
         </IconButton>

@@ -1,10 +1,10 @@
+import { FactionNames } from "../../Faction/data/FactionNames";
 import { Sleeve } from "./Sleeve";
 
 import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 
@@ -21,9 +21,6 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   // Helper function that helps filter out augs that are already owned
   // and augs that aren't allowed for sleeves
   function isAvailableForSleeve(aug: Augmentation): boolean {
-    if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-      return false;
-    }
     if (ownedAugNames.includes(aug.name)) {
       return false;
     }
@@ -34,7 +31,32 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
       return false;
     }
 
-    return true;
+    const validMults = [
+      "hacking_mult",
+      "strength_mult",
+      "defense_mult",
+      "dexterity_mult",
+      "agility_mult",
+      "charisma_mult",
+      "hacking_exp_mult",
+      "strength_exp_mult",
+      "defense_exp_mult",
+      "dexterity_exp_mult",
+      "agility_exp_mult",
+      "charisma_exp_mult",
+      "company_rep_mult",
+      "faction_rep_mult",
+      "crime_money_mult",
+      "crime_success_mult",
+      "work_money_mult",
+    ];
+    for (const mult of Object.keys(aug.mults)) {
+      if (validMults.includes(mult)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   // If player is in a gang, then we return all augs that the player
@@ -42,25 +64,23 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   if (p.inGang()) {
     const fac = p.getGangFaction();
 
-    for (const augName in Augmentations) {
-      const aug = Augmentations[augName];
+    for (const augName of Object.keys(StaticAugmentations)) {
+      const aug = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) {
         continue;
       }
 
-      if (fac.playerReputation > aug.baseRepRequirement) {
+      if (fac.playerReputation > aug.getCost(p).repCost) {
         availableAugs.push(aug);
       }
     }
-
-    return availableAugs;
   }
 
   for (const facName of p.factions) {
-    if (facName === "Bladeburners") {
+    if (facName === FactionNames.Bladeburners) {
       continue;
     }
-    if (facName === "Netburners") {
+    if (facName === FactionNames.Netburners) {
       continue;
     }
     const fac: Faction | null = Factions[facName];
@@ -69,12 +89,12 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
     }
 
     for (const augName of fac.augmentations) {
-      const aug: Augmentation = Augmentations[augName];
+      const aug: Augmentation = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) {
         continue;
       }
 
-      if (fac.playerReputation > aug.baseRepRequirement) {
+      if (fac.playerReputation > aug.getCost(p).repCost) {
         availableAugs.push(aug);
       }
     }

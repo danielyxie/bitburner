@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
+import { Box, Paper, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { interpolate } from "./Difficulty";
-import Typography from "@mui/material/Typography";
 
 interface Difficulty {
   [key: string]: number;
@@ -30,13 +32,17 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    if (event.key !== " ") return;
+    if (event.key !== KEY.SPACE) return;
     if (phase !== 2) {
       props.onFailure();
     } else {
       props.onSuccess();
     }
   }
+  const hasAugment = Player.hasAugmentation(AugmentationNames.MightOfAres, true);
+  const phaseZeroTime = Math.random() * 3250 + 1500 - (250 + difficulty.window);
+  const phaseOneTime = 250;
+  const timeUntilAttacking = phaseZeroTime + phaseOneTime;
 
   useEffect(() => {
     let id = window.setTimeout(() => {
@@ -44,23 +50,33 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
       id = window.setTimeout(() => {
         setPhase(2);
         id = window.setTimeout(() => setPhase(0), difficulty.window);
-      }, 250);
-    }, Math.random() * 3250 + 1500 - (250 + difficulty.window));
+      }, phaseOneTime);
+    }, phaseZeroTime);
     return () => {
       clearInterval(id);
     };
   }, []);
 
   return (
-    <Grid container spacing={3}>
+    <>
       <GameTimer millis={5000} onExpire={props.onFailure} />
-      <Grid item xs={12}>
+      <Paper sx={{ display: "grid", justifyItems: "center" }}>
         <Typography variant="h4">Slash when his guard is down!</Typography>
+
+        {hasAugment ? (
+          <Box sx={{ my: 1 }}>
+            <Typography variant="h5">Guard will drop in...</Typography>
+            <GameTimer millis={timeUntilAttacking} onExpire={() => null} noPaper />
+          </Box>
+        ) : (
+          <></>
+        )}
+
         {phase === 0 && <Typography variant="h4">Guarding ...</Typography>}
         {phase === 1 && <Typography variant="h4">Preparing?</Typography>}
         {phase === 2 && <Typography variant="h4">ATTACKING!</Typography>}
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
-      </Grid>
-    </Grid>
+      </Paper>
+    </>
   );
 }

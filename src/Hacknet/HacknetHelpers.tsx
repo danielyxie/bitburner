@@ -21,12 +21,11 @@ import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../InteractiveTuto
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetServer } from "../Server/AllServers";
 import { Server } from "../Server/Server";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 // Returns a boolean indicating whether the player has Hacknet Servers
 // (the upgraded form of Hacknet Nodes)
 export function hasHacknetServers(player: IPlayer): boolean {
-  return player.bitNodeN === 9 || SourceFileFlags[9] > 0;
+  return player.bitNodeN === 9 || player.sourceFileLvl(9) > 0;
 }
 
 export function purchaseHacknet(player: IPlayer): number {
@@ -421,7 +420,17 @@ function processAllHacknetServerEarnings(player: IPlayer, numCycles: number): nu
     hashes += h;
   }
 
-  player.hashManager.storeHashes(hashes);
+  const wastedHashes = player.hashManager.storeHashes(hashes);
+  if (wastedHashes > 0) {
+    const upgrade = HashUpgrades["Sell for Money"];
+    if (upgrade === null) throw new Error("Could not get the hash upgrade");
+    if (!upgrade.cost) throw new Error("Upgrade is not properly configured");
+
+    const multiplier = Math.floor(wastedHashes / upgrade.cost);
+    if (multiplier > 0) {
+      player.gainMoney(upgrade.value * multiplier, "hacknet");
+    }
+  }
 
   return hashes;
 }

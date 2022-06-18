@@ -24,7 +24,7 @@ export class HashManager {
   upgrades: IMap<number> = {};
 
   constructor() {
-    for (const name in HashUpgrades) {
+    for (const name of Object.keys(HashUpgrades)) {
       this.upgrades[name] = 0;
     }
   }
@@ -85,7 +85,7 @@ export class HashManager {
   }
 
   prestige(): void {
-    for (const name in HashUpgrades) {
+    for (const name of Object.keys(HashUpgrades)) {
       this.upgrades[name] = 0;
     }
     this.hashes = 0;
@@ -113,9 +113,17 @@ export class HashManager {
     this.hashes += cost;
   }
 
-  storeHashes(numHashes: number): void {
+  /**
+   * Stores the given hashes, capping at capacity
+   * @param numHashes The number of hashes to increment
+   * @returns The number of wasted hashes (over capacity)
+   */
+  storeHashes(numHashes: number): number {
     this.hashes += numHashes;
+    let wastedHashes = this.hashes;
     this.hashes = Math.min(this.hashes, this.capacity);
+    wastedHashes -= this.hashes;
+    return wastedHashes;
   }
 
   updateCapacity(newCap: number): void {

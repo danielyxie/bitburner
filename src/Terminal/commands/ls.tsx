@@ -1,9 +1,16 @@
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { toString } from "lodash";
 import React from "react";
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { getFirstParentDirectory, isValidDirectoryPath, evaluateDirectoryPath } from "../../Terminal/DirectoryHelpers";
+import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
+import { IRouter } from "../../ui/Router";
+import { ITerminal } from "../ITerminal";
+import * as libarg from "arg";
+import { showLiterature } from "../../Literature/LiteratureHelpers";
+import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
 
 export function ls(
   terminal: ITerminal,
@@ -12,17 +19,31 @@ export function ls(
   server: BaseServer,
   args: (string | number | boolean)[],
 ): void {
+  let flags;
+  try {
+    flags = libarg(
+      {
+        "-l": Boolean,
+        "--grep": String,
+        "-g": "--grep",
+      },
+      { argv: args },
+    );
+  } catch (e) {
+    // catch passing only -g / --grep with no string to use as the search
+    incorrectUsage();
+    return;
+  }
+  const filter = flags["--grep"];
+
   const numArgs = args.length;
   function incorrectUsage(): void {
-    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [| grep pattern]");
+    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [-l] [-g, --grep pattern]");
   }
 
-  if (numArgs > 4 || numArgs === 2) {
+  if (numArgs > 4) {
     return incorrectUsage();
   }
-
-  // Grep
-  let filter = ""; // Grep
 
   // Directory path
   let prefix = terminal.cwd();
@@ -30,26 +51,15 @@ export function ls(
     prefix += "/";
   }
 
-  // If there are 3+ arguments, then the last 3 must be for grep
-  if (numArgs >= 3) {
-    if (args[numArgs - 2] !== "grep" || args[numArgs - 3] !== "|") {
-      return incorrectUsage();
-    }
-    filter = args[numArgs - 1] + "";
+  // If first arg doesn't contain a - it must be the file/folder
+  const dir = args[0] && typeof args[0] == "string" && !args[0].startsWith("-") ? args[0] : "";
+  const newPath = evaluateDirectoryPath(dir + "", terminal.cwd());
+  prefix = newPath || "";
+  if (!prefix.endsWith("/")) {
+    prefix += "/";
   }
-
-  // If the second argument is not a pipe, then it must be for listing a directory
-  if (numArgs >= 1 && args[0] !== "|") {
-    const newPath = evaluateDirectoryPath(args[0] + "", terminal.cwd());
-    prefix = newPath ? newPath : "";
-    if (prefix != null) {
-      if (!prefix.endsWith("/")) {
-        prefix += "/";
-      }
-      if (!isValidDirectoryPath(prefix)) {
-        return incorrectUsage();
-      }
-    }
+  if (!isValidDirectoryPath(prefix)) {
+    return incorrectUsage();
   }
 
   // Root directory, which is the same as no 'prefix' at all
@@ -113,35 +123,161 @@ export function ls(
   allMessages.sort();
   folders.sort();
 
-  function postSegments(segments: string[], style?: any): void {
+  interface ClickableRowProps {
+    row: string;
+    prefix: string;
+    hostname: string;
+  }
+
+  function ClickableScriptRow({ row, prefix, hostname }: ClickableRowProps): React.ReactElement {
+    const classes = makeStyles((theme: Theme) =>
+      createStyles({
+        scriptLinksWrap: {
+          display: "inline-flex",
+          color: theme.palette.warning.main,
+        },
+        scriptLink: {
+          cursor: "pointer",
+          textDecorationLine: "underline",
+          paddingRight: "1.15em",
+          "&:last-child": { padding: 0 },
+        },
+      }),
+    )();
+
+    const rowSplit = row.split("~");
+    let rowSplitArray = rowSplit.map((x) => [x.trim(), x.replace(x.trim(), "")]);
+    rowSplitArray = rowSplitArray.filter((x) => !!x[0]);
+
+    function onScriptLinkClick(filename: string): void {
+      if (player.getCurrentServer().hostname !== hostname) {
+        return terminal.error(`File is not on this server, connect to ${hostname} and try again`);
+      }
+      if (filename.startsWith("/")) filename = filename.slice(1);
+      const filepath = terminal.getFilepath(`${prefix}${filename}`);
+      const code = toString(terminal.getScript(player, filepath)?.code);
+      router.toScriptEditor({ [filepath]: code });
+    }
+
+    return (
+      <span className={classes.scriptLinksWrap}>
+        {rowSplitArray.map((rowItem) => (
+          <span key={"script_" + rowItem[0]}>
+            <span className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem[0])}>
+              {rowItem[0]}
+            </span>
+            <span>{rowItem[1]}</span>
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  function ClickableMessageRow({ row, prefix, hostname }: ClickableRowProps): React.ReactElement {
+    const classes = makeStyles((theme: Theme) =>
+      createStyles({
+        linksWrap: {
+          display: "inline-flex",
+          color: theme.palette.primary.main,
+        },
+        link: {
+          cursor: "pointer",
+          textDecorationLine: "underline",
+          paddingRight: "1.15em",
+          "&:last-child": { padding: 0 },
+        },
+      }),
+    )();
+
+    const rowSplit = row.split("~");
+    let rowSplitArray = rowSplit.map((x) => [x.trim(), x.replace(x.trim(), "")]);
+    rowSplitArray = rowSplitArray.filter((x) => !!x[0]);
+
+    function onMessageLinkClick(filename: string): void {
+      if (player.getCurrentServer().hostname !== hostname) {
+        return terminal.error(`File is not on this server, connect to ${hostname} and try again`);
+      }
+      if (filename.startsWith("/")) filename = filename.slice(1);
+      const filepath = terminal.getFilepath(`${prefix}${filename}`);
+
+      if (filepath.endsWith(".lit")) {
+        showLiterature(filepath);
+      } else if (filepath.endsWith(".msg")) {
+        showMessage(filepath as MessageFilenames);
+      }
+    }
+
+    return (
+      <span className={classes.linksWrap}>
+        {rowSplitArray.map((rowItem) => (
+          <span key={"text_" + rowItem[0]}>
+            <span className={classes.link} onClick={() => onMessageLinkClick(rowItem[0])}>
+              {rowItem[0]}
+            </span>
+            <span>{rowItem[1]}</span>
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  enum FileType {
+    Folder,
+    Message,
+    TextFile,
+    Program,
+    Contract,
+    Script,
+  }
+
+  interface FileGroup {
+    type: FileType;
+    segments: string[];
+  }
+
+  function postSegments(group: FileGroup, flags: any): void {
+    const segments = group.segments;
+    const linked = group.type === FileType.Script || group.type === FileType.Message;
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
-    const filesPerRow = Math.floor(80 / maxLength);
+    const filesPerRow = flags["-l"] === true ? 1 : Math.ceil(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
       let row = "";
       for (let col = 0; col < filesPerRow; col++) {
         if (!(i < segments.length)) break;
         row += segments[i];
         row += " ".repeat(maxLength * (col + 1) - row.length);
+        if (linked) {
+          row += "~";
+        }
         i++;
       }
       i--;
-      if (!style) {
-        terminal.print(row);
-      } else {
-        terminal.printRaw(<span style={style}>{row}</span>);
+
+      switch (group.type) {
+        case FileType.Folder:
+          terminal.printRaw(<span style={{ color: "cyan" }}>{row}</span>);
+          break;
+        case FileType.Script:
+          terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
+          break;
+        case FileType.Message:
+          terminal.printRaw(<ClickableMessageRow row={row} prefix={prefix} hostname={server.hostname} />);
+          break;
+        default:
+          terminal.print(row);
       }
     }
   }
 
-  const groups = [
-    { segments: folders, style: { color: "cyan" } },
-    { segments: allMessages },
-    { segments: allTextFiles },
-    { segments: allPrograms },
-    { segments: allContracts },
-    { segments: allScripts, style: { color: "yellow", fontStyle: "bold" } },
+  const groups: FileGroup[] = [
+    { type: FileType.Folder, segments: folders },
+    { type: FileType.Message, segments: allMessages },
+    { type: FileType.TextFile, segments: allTextFiles },
+    { type: FileType.Program, segments: allPrograms },
+    { type: FileType.Contract, segments: allContracts },
+    { type: FileType.Script, segments: allScripts },
   ].filter((g) => g.segments.length > 0);
-  for (let i = 0; i < groups.length; i++) {
-    postSegments(groups[i].segments, groups[i].style);
+  for (const group of groups) {
+    postSegments(group, flags);
   }
 }

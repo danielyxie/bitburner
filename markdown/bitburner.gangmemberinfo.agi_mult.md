@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.agi\_mult property
 
+Agility multiplier from equipment
+
 <b>Signature:</b>
 
 ```typescript

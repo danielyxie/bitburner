@@ -4,7 +4,7 @@
 
 ## Singularity.getCrimeChance() method
 
-SF4.3 - Get chance to successfully commit a crime.
+Get chance to successfully commit a crime.
 
 <b>Signature:</b>
 
@@ -26,7 +26,7 @@ Chance of success at commiting the specified crime.
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
 This function returns your chance of success at commiting the specified crime.
 

@@ -13,30 +13,27 @@ Server RAM
 Perhaps the most important property of a server to make note of is its RAM,
 which refers to how much memory is available on that machine. RAM is
 important because it is required to run Scripts. More RAM allows
-the user to run more powerful and complicated scripts.
+the user to run more powerful and complicated scripts as well as executing
+a script with :ref:`more threads <gameplay_scripts_multithreadingscripts>`.
 
 The `free`, `scan-analyze`, and `analyze` Terminal commands
 can be used to check how much RAM a server has.
 
 Identifying Servers
 ^^^^^^^^^^^^^^^^^^^
-A server is identified by two properties: its IP address and its hostname.
-An IP address is a 32-bit number represented in dot-decimal notation.
-For example, "56.1.5.0" and "86.5.1.0" might be two IP addresses
-you see in the game. A hostname is a label assigned to a server.
+A server is identified by its hostname.
+A hostname is a label assigned to a server.
 A hostname will usually give you a general idea of what the server
 is. For example, the company Nova Medical might have a server with
 the hostname "nova-med".
 
-Hostnames and IP addresses are unique. This means that if one
-server has the IP address "1.1.1.1" and the hostname
-"some-server", then no other server in the game can have that
-IP address or that hostname.
+Hostnames are unique. This means that if one
+server has the the hostname "some-server", then no other server
+in the game can have that that hostname.
 
 There are many :ref:`Netscript Functions <netscriptfunctions>`
 and :ref:`terminal` commands in the game
-that will require you to target a specific server. This is done using
-either the IP address or the hostname of the server.
+that will require you to target a specific server by hostname.
 
 Player-owned Servers
 ^^^^^^^^^^^^^^^^^^^^

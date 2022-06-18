@@ -45,6 +45,8 @@ export class Corporation {
   upgrades: number[];
   upgradeMultipliers: number[];
 
+  avgProfit = 0;
+
   state = new CorporationState();
 
   constructor(params: IParams = {}) {
@@ -106,6 +108,8 @@ export class Corporation {
           this.expenses = this.expenses + ind.lastCycleExpenses;
         });
         const profit = this.revenue - this.expenses;
+        this.avgProfit =
+          (this.avgProfit * (CorporationConstants.AvgProfitLength - 1) + profit) / CorporationConstants.AvgProfitLength;
         const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
@@ -155,12 +159,12 @@ export class Corporation {
     if (this.unlockUpgrades[6] === 1) {
       upgrades += 0.1;
     }
-    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftCap + upgrades);
+    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftcap + upgrades);
   }
 
   determineValuation(): number {
     let val,
-      profit = this.revenue - this.expenses;
+      profit = this.avgProfit;
     if (this.public) {
       // Account for dividends
       if (this.dividendPercentage > 0) {
@@ -260,8 +264,8 @@ export class Corporation {
 
   //One time upgrades that unlock new features
   unlock(upgrade: CorporationUnlockUpgrade): void {
-    const upgN = upgrade[0],
-      price = upgrade[1];
+    const upgN = upgrade.index,
+      price = upgrade.price;
     while (this.unlockUpgrades.length <= upgN) {
       this.unlockUpgrades.push(0);
     }
@@ -282,10 +286,10 @@ export class Corporation {
 
   //Levelable upgrades
   upgrade(upgrade: CorporationUpgrade): void {
-    const upgN = upgrade[0],
-      basePrice = upgrade[1],
-      priceMult = upgrade[2],
-      upgradeAmt = upgrade[3]; //Amount by which the upgrade multiplier gets increased (additive)
+    const upgN = upgrade.index,
+      basePrice = upgrade.basePrice,
+      priceMult = upgrade.priceMult,
+      upgradeAmt = upgrade.benefit; //Amount by which the upgrade multiplier gets increased (additive)
     while (this.upgrades.length <= upgN) {
       this.upgrades.push(0);
     }
@@ -307,7 +311,7 @@ export class Corporation {
     if (upgN === 1) {
       for (let i = 0; i < this.divisions.length; ++i) {
         const industry = this.divisions[i];
-        for (const city in industry.warehouses) {
+        for (const city of Object.keys(industry.warehouses)) {
           const warehouse = industry.warehouses[city];
           if (warehouse === 0) continue;
           if (industry.warehouses.hasOwnProperty(city) && warehouse instanceof Warehouse) {

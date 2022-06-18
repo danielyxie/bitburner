@@ -1,6 +1,8 @@
+import { CityName } from "./../Locations/data/CityNames";
 import { Literature } from "./Literature";
 import { LiteratureNames } from "./data/LiteratureNames";
 import { IMap } from "../types";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 export const Literatures: IMap<Literature> = {};
 
@@ -19,7 +21,7 @@ export const Literatures: IMap<Literature> = {};
     "money on a server, and grow() increases the amount of money on a server by some percentage (multiplicatively)<br><br>" +
     "-Because hack() and grow() work by percentages, they are more effective if the target server has a high amount of money. " +
     "Therefore, you should try to increase the amount of money on a server (using grow()) to a certain amount before hacking it. Two " +
-    "import Netscript functions for this are getServerMoneyAvailable() and getServerMaxMoney()<br><br>" +
+    "important Netscript functions for this are getServerMoneyAvailable() and getServerMaxMoney()<br><br>" +
     "-Keep security level low. Security level affects everything when hacking. Two important Netscript functions " +
     "for this are getServerSecurityLevel() and getServerMinSecurityLevel()<br><br>" +
     "-Purchase additional servers by visiting 'Alpha Enterprises' in the city. They are relatively cheap " +
@@ -84,29 +86,29 @@ export const Literatures: IMap<Literature> = {};
     "Synthetic androids, or Synthoids for short, are genetically engineered robots and, short of Augmentations, " +
     "are composed entirely of organic substances. For this reason, Synthoids are virtually identical to " +
     "humans in form, composition, and appearance.<br><br>" +
-    "Synthoids were first designed and manufactured by OmniTek Incorporated sometime around the middle of the century. " +
+    `Synthoids were first designed and manufactured by ${FactionNames.OmniTekIncorporated} sometime around the middle of the century. ` +
     "Their original purpose was to be used for manual labor and as emergency responders for disasters. As such, they " +
     "were initially programmed only for their specific tasks. Each iteration that followed improved upon the " +
     "intelligence and capabilities of the Synthoids. By the 6th iteration, called MK-VI, the Synthoids were " +
-    "so smart and capable enough of making their own decisions that many argued OmniTek had created the first " +
+    `so smart and capable enough of making their own decisions that many argued ${FactionNames.OmniTekIncorporated} had created the first ` +
     "sentient AI. These MK-VI Synthoids were produced in mass quantities (estimates up to 50 billion) with the hopes of increasing society's " +
     "productivity and bolstering the global economy. Stemming from humanity's desire for technological advancement, optimism " +
     "and excitement about the future had never been higher.<br><br>" +
     "All of that excitement and optimism quickly turned to fear, panic, and dread in 2070, when a terrorist group " +
-    "called Ascendis Totalis hacked into OmniTek and uploaded a rogue AI into severeal of their Synthoid manufacturing facilities. " +
-    "This hack went undetected and for months OmniTek unknowingly churned out legions of Synthoids embedded with this " +
+    `called Ascendis Totalis hacked into ${FactionNames.OmniTekIncorporated} and uploaded a rogue AI into severeal of their Synthoid manufacturing facilities. ` +
+    `This hack went undetected and for months ${FactionNames.OmniTekIncorporated} unknowingly churned out legions of Synthoids embedded with this ` +
     "rogue AI. Then, on December 24th, 2070, Omnica activated dormant protocols in the rogue AI, causing all of the " +
     "infected Synthoids to immediately launch a military campaign to seek and destroy all of humanity.<br><br>" +
     "What ensued was the deadlist conflict in human history. This crisis, now commonly known as the Synthoid Uprising, " +
     "resulted in almost ten billion deaths over the course of a year. Despite the nations of the world banding together " +
     "to combat the threat, the MK-VI Synthoids were simply stronger, faster, more intelligent, and more adaptable than humans, " +
     "outsmarting them at every turn.<br><br>" +
-    "It wasn't until the sacrifice of an elite international military taskforce, called the Bladeburners, that humanity " +
-    "was finally able to defeat the Synthoids. The Bladeburners' final act was a suicide bombing mission that " +
+    `It wasn't until the sacrifice of an elite international military taskforce, called the ${FactionNames.Bladeburners}, that humanity ` +
+    `was finally able to defeat the Synthoids. The ${FactionNames.Bladeburners}' final act was a suicide bombing mission that ` +
     "destroyed a large portion of the MK-VI Synthoids, including many of its leaders. In the following " +
     "weeks militaries from around the world were able to round up and shut down the remaining rogue MK-VI Synthoids, ending " +
     "the Synthoid Uprising.<br><br>" +
-    "In the aftermath of the bloodshed, the Synthoid Accords were drawn up. These Accords banned OmniTek Incorporated " +
+    `In the aftermath of the bloodshed, the Synthoid Accords were drawn up. These Accords banned ${FactionNames.OmniTekIncorporated} ` +
     "from manufacturing any Synthoids beyond the MK-III series. They also banned any other corporation " +
     "from constructing androids with advanced, near-sentient AI. MK-VI Synthoids that did not have the rogue Ascendis Totalis " +
     "AI were allowed to continue their existence, but they were stripped of all rights and protections as they " +
@@ -114,7 +116,7 @@ export const Literatures: IMap<Literature> = {};
     "as working for any military/defense organization or conducting any bioengineering, computing, or robotics related research.<br><br>" +
     "Unfortunately, many believe that not all of the rogue MK-VI Synthoids from the Uprising were found and destroyed, " +
     "and that many of them are blending in as normal humans in society today. In response, many nations have created " +
-    "Bladeburner divisions, special military branches that are tasked with investigating and dealing with any Synthoid threads.<br><br>" +
+    `${FactionNames.Bladeburners} divisions, special military branches that are tasked with investigating and dealing with any Synthoid threats.<br><br>` +
     "To this day, tensions still exist between the remaining Synthoids and humans as a result of the Uprising.<br><br>" +
     "Nobody knows what happened to the terrorist group Ascendis Totalis.";
   Literatures[fn] = new Literature(title, fn, txt);
@@ -199,9 +201,9 @@ export const Literatures: IMap<Literature> = {};
   title = "Brighter than the Sun";
   fn = LiteratureNames.BrighterThanTheSun;
   txt =
-    "When people think about the corporations that dominate the East, they typically think of KuaiGong International, which " +
+    `When people think about the corporations that dominate the East, they typically think of ${FactionNames.KuaiGongInternational}, which ` +
     "holds a complete monopoly for manufacturing and commerce in Asia, or Global Pharmaceuticals, the world's largest " +
-    "drug company, or OmniTek Incorporated, the global leader in intelligent and autonomous robots. But there's one company " +
+    `drug company, or ${FactionNames.OmniTekIncorporated}, the global leader in intelligent and autonomous robots. But there's one company ` +
     "that has seen a rapid rise in the last year and is poised to dominate not only the East, but the entire world: TaiYang Digital.<br><br>" +
     "TaiYang Digital is a Chinese internet-technology corporation that provides services such as " +
     "online advertising, search engines, gaming, media, entertainment, and cloud computing/storage. Its name TaiYang comes from the Chinese word " +
@@ -213,7 +215,7 @@ export const Literatures: IMap<Literature> = {};
     "TaiYang Digital's meteoric rise is extremely surprising in modern society. This sort of growth is " +
     "something you'd commonly see in the first half of the century, especially for tech companies. However in " +
     "the last two decades the number of corporations has significantly declined as the largest entities " +
-    "quickly took over the economy. Corporations such as ECorp, MegaCorp, and KuaiGong have established " +
+    `quickly took over the economy. Corporations such as ${FactionNames.ECorp}, ${FactionNames.MegaCorp}, and ${FactionNames.KuaiGongInternational} have established ` +
     "such strong monopolies in their market sectors that they have effectively killed off all " +
     "of the smaller and new corporations that have tried to start up over the years. This is what makes " +
     "the rise of TaiYang Digital so impressive. And if TaiYang continues down this path, then they have " +
@@ -234,11 +236,11 @@ export const Literatures: IMap<Literature> = {};
     "And now democracy is dead, in the USA.";
   Literatures[fn] = new Literature(title, fn, txt);
 
-  title = "Figures Show Rising Crime Rates in Sector-12";
+  title = `Figures Show Rising Crime Rates in ${CityName.Sector12}`;
   fn = LiteratureNames.Sector12Crime;
   txt =
     "A recent study by analytics company Wilson Inc. shows a significant rise " +
-    "in criminal activity in Sector-12. Perhaps the most alarming part of the statistic " +
+    `in criminal activity in ${CityName.Sector12}. Perhaps the most alarming part of the statistic ` +
     "is that most of the rise is in violent crime such as homicide and assault. According " +
     "to the study, the city saw a total of 21,406 reported homicides in 2076, which is over " +
     "a 20% increase compared to 2075.<br><br>" +
@@ -246,7 +248,7 @@ export const Literatures: IMap<Literature> = {};
     "whether these figures indicate the beginning of a sustained increase in crime rates, or whether " +
     "the year was just an unfortunate outlier. He states that many intelligence and law enforcement " +
     "agents have noticed an increase in organized crime activites, and believes that these figures may " +
-    "be the result of an uprising from criminal organizations such as The Syndicate or the Slum Snakes.";
+    `be the result of an uprising from criminal organizations such as ${FactionNames.TheSyndicate} or the ${FactionNames.SlumSnakes}.`;
   Literatures[fn] = new Literature(title, fn, txt);
 
   title = "Man and the Machine";
@@ -276,15 +278,15 @@ export const Literatures: IMap<Literature> = {};
     "most radical of conspiracy theorists claiming that they control everything in the entire world. And while the world " +
     "may never know for sure, it is likely that many secret societies do actually exist, even today.<br><br>" +
     "However, the secret societies of the modern world are nothing like those that (supposedly) existed  " +
-    "decades and centuries ago. The Freemasons, Knights Templar, and Illuminati, while they may have been around " +
+    `decades and centuries ago. The Freemasons, Knights Templar, and ${FactionNames.Illuminati}, while they may have been around ` +
     "at the turn of the 21st century, almost assuredly do not exist today. The dominance of the Web in " +
     "our everyday lives and the fact that so much of the world is now digital has given rise to a new breed " +
     "of secret societies: Internet-based ones.<br><br>" +
     "Commonly called 'hacker groups', Internet-based secret societies have become well-known in today's " +
-    "world. Some of these, such as The Black Hand, are black hat groups that claim they are trying to " +
-    "help the oppressed by attacking the elite and powerful. Others, such as NiteSec, are hacktivist groups " +
+    `world. Some of these, such as ${FactionNames.TheBlackHand}, are black hat groups that claim they are trying to ` +
+    `help the oppressed by attacking the elite and powerful. Others, such as  ${FactionNames.NiteSec}, are hacktivist groups ` +
     "that try to push political and social agendas. Perhaps the most intriguing hacker group " +
-    "is the mysterious Bitrunners, whose purpose still remains unknown.";
+    `is the mysterious ${FactionNames.BitRunners}, whose purpose still remains unknown.`;
   Literatures[fn] = new Literature(title, fn, txt);
 
   title = "Space: The Failed Frontier";
@@ -309,11 +311,11 @@ export const Literatures: IMap<Literature> = {};
   fn = LiteratureNames.CodedIntelligence;
   txt =
     "Tremendous progress has been made in the field of Artificial Intelligence over the past few decades. " +
-    "Our autonomous vehicles and transporation systems. The electronic personal assistants that control our everyday lives. " +
+    "Our autonomous vehicles and transportation systems. The electronic personal assistants that control our everyday lives. " +
     "Medical, service, and manufacturing robots. All of these are examples of how far AI has come and how much it has " +
     "improved our daily lives. However, the question still remains of whether AI will ever be advanced enough to re-create " +
     "human intelligence.<br><br>" +
-    "We've certainly come close to artificial intelligence that is similar to humans. For example OmniTek Incorporated's " +
+    `We've certainly come close to artificial intelligence that is similar to humans. For example ${FactionNames.OmniTekIncorporated}'s ` +
     "CompanionBot, a robot meant to act as a comforting friend for lonely and grieving people, is eerily human-like " +
     "in its appearance, speech, mannerisms, and even movement. However its artificial intelligence isn't the same as " +
     "that of humans. Not yet. It doesn't have sentience or self-awareness or consciousness.<br><br>" +
@@ -340,9 +342,9 @@ export const Literatures: IMap<Literature> = {};
   fn = LiteratureNames.TensionsInTechRace;
   txt =
     "Have we entered a new Cold War? Is WWIII just beyond the horizon?<br><br>" +
-    "After rumors came out that OmniTek Incorporated had begun developing advanced robotic supersoldiers, " +
+    `After rumors came out that ${FactionNames.OmniTekIncorporated} had begun developing advanced robotic supersoldiers, ` +
     "geopolitical tensions quickly flared between the USA, Russia, and several Asian superpowers. " +
-    "In a rare show of cooperation between corporations, MegaCorp and ECorp have " +
+    `In a rare show of cooperation between corporations, ${FactionNames.MegaCorp} and ${FactionNames.ECorp} have ` +
     "reportedly launched hundreds of new surveillance and espionage satellites. " +
     "Defense contractors such as " +
     "DeltaOne and AeroCorp have been working with the CIA and NSA to prepare " +
@@ -381,13 +383,13 @@ export const Literatures: IMap<Literature> = {};
   txt =
     "WAKE UP SHEEPLE<br><br>" +
     "THE GOVERNMENT DOES NOT EXIST. CORPORATIONS DO NOT RUN SOCIETY<br><br>" +
-    "THE ILLUMINATI ARE THE SECRET RULERS OF THE WORLD!<br><br>" +
-    "Yes, the Illuminati of legends. The ancient secret society that controls the entire " +
+    `THE ${FactionNames.Illuminati.toUpperCase()} ARE THE SECRET RULERS OF THE WORLD!<br><br>` +
+    `Yes, the ${FactionNames.Illuminati} of legends. The ancient secret society that controls the entire ` +
     "world from the shadows with their invisible hand. The group of the rich and wealthy " +
     "that have penetrated every major government, financial agency, and corporation in the last " +
     "three hundred years.<br><br>" +
     "OPEN YOUR EYES<br><br>" +
-    "It was the Illuminati that brought an end to democracy in the world. They are the driving force " +
+    `It was the ${FactionNames.Illuminati} that brought an end to democracy in the world. They are the driving force ` +
     "behind everything that happens.<br><br>" +
     "THEY ARE ALL AROUND YOU<br><br>" +
     "After destabilizing the world's governments, they are now entering the final stage of their master plan. " +
@@ -404,8 +406,9 @@ export const Literatures: IMap<Literature> = {};
     "What will the fate of the human race be?<br><br>" +
     "We live in an era vastly different from that of 15 or even 20 years ago. We have gone " +
     "beyond the limits of humanity. We have stripped ourselves of the tyranny of flesh.<br><br>" +
-    "The Singularity is here. The merging of man and machine. This is where humanity evolves into ";
-  "something greater. This is our future.<br><br>" + "Embrace it, and you will obey a new god. The God in the Machine.";
+    "The Singularity is here. The merging of man and machine. This is where humanity evolves into " +
+    "something greater. This is our future.<br><br>" +
+    "Embrace it, and you will obey a new god. The God in the Machine.";
   Literatures[fn] = new Literature(title, fn, txt);
 
   title = "The New Triads";
@@ -415,15 +418,15 @@ export const Literatures: IMap<Literature> = {};
     "territories. They were often considered one of the first and biggest criminal secret societies. " +
     "While most of the branches of the Triads have been destroyed over the past few decades, the " +
     "crime faction has spawned and inspired a number of other Asian crime organizations over the past few years. " +
-    "The most notable of these is the Tetrads.<br><br>" +
-    "It is widely believed that the Tetrads are a rogue group that splintered off from the Triads sometime in the " +
-    "mid 21st century. The founders of the Tetrads, all of whom were ex-Triad members, believed that the " +
-    "Triads were losing their purpose and direction. The Tetrads started off as a small group that mainly engaged " +
+    `The most notable of these is the ${FactionNames.Tetrads}.<br><br>` +
+    `It is widely believed that the ${FactionNames.Tetrads} are a rogue group that splintered off from the Triads sometime in the ` +
+    `mid 21st century. The founders of the ${FactionNames.Tetrads}, all of whom were ex-Triad members, believed that the ` +
+    `Triads were losing their purpose and direction. The ${FactionNames.Tetrads} started off as a small group that mainly engaged ` +
     "in fraud and extortion. They were largely unknown until just a few years ago when they took over the illegal " +
     "drug trade in all of the major Asian cities. They quickly became the most powerful crime syndicate in the " +
     "continent.<br><br>" +
-    "Not much else is known about the Tetrads, or about the efforts the Asian governments and corporations are making " +
-    "to take down this large new crime organization. Many believe that the Tetrads have infiltrated the governments " +
+    `Not much else is known about the ${FactionNames.Tetrads}, or about the efforts the Asian governments and corporations are making ` +
+    `to take down this large new crime organization. Many believe that the ${FactionNames.Tetrads} have infiltrated the governments ` +
     "and powerful corporations in Asia, which has helped faciliate their recent rapid rise.";
   Literatures[fn] = new Literature(title, fn, txt);
 

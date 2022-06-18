@@ -8,24 +8,24 @@
 <b>Signature:</b>
 
 ```typescript
-interface RunningScript 
+export interface RunningScript 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [args](./bitburner.runningscript.args.md) | string\[\] |  |
-|  [filename](./bitburner.runningscript.filename.md) | string |  |
-|  [logs](./bitburner.runningscript.logs.md) | string\[\] |  |
-|  [offlineExpGained](./bitburner.runningscript.offlineexpgained.md) | number |  |
-|  [offlineMoneyMade](./bitburner.runningscript.offlinemoneymade.md) | number |  |
-|  [offlineRunningTime](./bitburner.runningscript.offlinerunningtime.md) | number |  |
-|  [onlineExpGained](./bitburner.runningscript.onlineexpgained.md) | number |  |
-|  [onlineMoneyMade](./bitburner.runningscript.onlinemoneymade.md) | number |  |
-|  [onlineRunningTime](./bitburner.runningscript.onlinerunningtime.md) | number |  |
-|  [pid](./bitburner.runningscript.pid.md) | number |  |
-|  [ramUsage](./bitburner.runningscript.ramusage.md) | number |  |
-|  [server](./bitburner.runningscript.server.md) | string |  |
-|  [threads](./bitburner.runningscript.threads.md) | number |  |
+|  [args](./bitburner.runningscript.args.md) | string\[\] | Arguments the script was called with |
+|  [filename](./bitburner.runningscript.filename.md) | string | Filename of the script |
+|  [logs](./bitburner.runningscript.logs.md) | string\[\] | Script logs as an array. The newest log entries are at the bottom. Timestamps, if enabled, are placed inside <code>[brackets]</code> at the start of each line. |
+|  [offlineExpGained](./bitburner.runningscript.offlineexpgained.md) | number | Total amount of hacking experience earned from this script when offline |
+|  [offlineMoneyMade](./bitburner.runningscript.offlinemoneymade.md) | number | Total amount of money made by this script when offline |
+|  [offlineRunningTime](./bitburner.runningscript.offlinerunningtime.md) | number | Number of seconds that the script has been running offline |
+|  [onlineExpGained](./bitburner.runningscript.onlineexpgained.md) | number | Total amount of hacking experience earned from this script when online |
+|  [onlineMoneyMade](./bitburner.runningscript.onlinemoneymade.md) | number | Total amount of money made by this script when online |
+|  [onlineRunningTime](./bitburner.runningscript.onlinerunningtime.md) | number | Number of seconds that this script has been running online |
+|  [pid](./bitburner.runningscript.pid.md) | number | Process ID. Must be an integer |
+|  [ramUsage](./bitburner.runningscript.ramusage.md) | number | How much RAM this script uses for ONE thread |
+|  [server](./bitburner.runningscript.server.md) | string | Hostname of the server on which this script runs |
+|  [threads](./bitburner.runningscript.threads.md) | number | Number of threads that this script runs with |
 

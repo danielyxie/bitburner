@@ -4,7 +4,7 @@
 
 ## SleeveWorkGains.workMoneyGain property
 
-money gained from work
+Money gained from work
 
 <b>Signature:</b>
 

@@ -19,5 +19,5 @@ List of active fragments placed on Stanek's Gift.
 
 ## Remarks
 
-RAM cost: cost: 5 GB
+RAM cost: 5 GB
 

@@ -42,6 +42,7 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
     costPerLevel: 50,
     desc:
       "Use hashes to increase the maximum amount of money on a single server by 2%. " +
+      "Note that a server's maximum money is soft capped above $10t. " +
       "This effect persists until you install Augmentations (since servers " +
       "are reset at that time).",
     hasTargetServer: true,

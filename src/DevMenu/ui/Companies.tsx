@@ -11,13 +11,14 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Companies as AllCompanies } from "../../Company/Companies";
 import MenuItem from "@mui/material/MenuItem";
 import { Adjuster } from "./Adjuster";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 const bigNumber = 1e12;
 
 export function Companies(): React.ReactElement {
-  const [company, setCompany] = useState("ECorp");
+  const [company, setCompany] = useState(FactionNames.ECorp as string);
   function setCompanyDropdown(event: SelectChangeEvent<string>): void {
-    setCompany(event.target.value as string);
+    setCompany(event.target.value );
   }
   function resetCompanyRep(): void {
     AllCompanies[company].playerReputation = 0;
@@ -46,25 +47,25 @@ export function Companies(): React.ReactElement {
   }
 
   function tonsOfRepCompanies(): void {
-    for (const c in AllCompanies) {
+    for (const c of Object.keys(AllCompanies)) {
       AllCompanies[c].playerReputation = bigNumber;
     }
   }
 
   function resetAllRepCompanies(): void {
-    for (const c in AllCompanies) {
+    for (const c of Object.keys(AllCompanies)) {
       AllCompanies[c].playerReputation = 0;
     }
   }
 
   function tonsOfFavorCompanies(): void {
-    for (const c in AllCompanies) {
+    for (const c of Object.keys(AllCompanies)) {
       AllCompanies[c].favor = bigNumber;
     }
   }
 
   function resetAllFavorCompanies(): void {
-    for (const c in AllCompanies) {
+    for (const c of Object.keys(AllCompanies)) {
       AllCompanies[c].favor = 0;
     }
   }

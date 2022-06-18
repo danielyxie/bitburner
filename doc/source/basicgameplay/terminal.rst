@@ -239,7 +239,7 @@ connect
 
     $ connect [hostname/ip]
 
-Connect to a remote server. The hostname or IP address of the remote server must
+Connect to a remote server. The hostname of the remote server must
 be given as the argument to this command. Note that only servers that are immediately
 adjacent to the current server in the network can be connected to. To see which
 servers can be connected to, use the 'scan' command.
@@ -335,7 +335,7 @@ Then to kill this script the same arguments would have to be used::
 
     $ kill foo.script 50e3 sigma-cosmetics
 
-If you are killing the script using its PID, then the PID argument must be numeric. 
+If you are killing the script using its PID, then the PID argument must be numeric.
 
 killall
 ^^^^^^^
@@ -347,7 +347,7 @@ Kills all scripts on the current server.
 ls
 ^^
 
-    $ ls [dir] [| grep pattern]
+    $ ls [dir] [--grep pattern]
 
 Prints files and directories on the current server to the Terminal screen.
 
@@ -358,19 +358,21 @@ followed by the files (also in alphabetical order).
 The :code:`dir` optional parameter allows you to specify the directory for which to display
 files.
 
-The :code:`| grep pattern` optional parameter allows you to only display files and directories
+The :code:`--grep pattern` optional parameter allows you to only display files and directories
 with a certain pattern in their names.
+
+The :code:`-l` optional parameter allows you to force each item onto a single line.
 
 Examples::
 
     // List files/directories with the '.script' extension in the current directory
-    $ ls | grep .script
+    $ ls -l --grep .script
 
     // List files/directories with the '.js' extension in the root directory
-    $ ls / | grep .js
+    $ ls / -l --grep .js
 
     // List files/directories with the word 'purchase' in the name, in the :code:`scripts` directory
-    $ ls scripts | grep purchase
+    $ ls scripts -l --grep purchase
 
 
 lscpu
@@ -425,14 +427,17 @@ nano
 
     $ nano [filename]
 
-Opens up the specified file in the Text Editor. Only scripts (.script, .ns, .js) and
+Opens up the specified file in the Text Editor. Only scripts (.script, .js) and
 text files (.txt) can be edited. If the file does not already exist, then a new
 empty file will be created.
 
 ps
 ^^
 
+    $ ps [-g, --grep pattern]
+
 Prints all scripts that are currently running on the current server.
+The :code:`-g, --grep pattern` option will only output running scripts where the name matches the provided pattern.
 
 rm
 ^^
@@ -539,28 +544,6 @@ Then in order to check its logs with 'tail' the same arguments must be used::
 
     $ tail foo.script 10 50000
 
-theme
-^^^^^
-
-    $ theme [preset] | [#background #text #highlight]
-
-Change the color of the game's user interface
-
-This command can be called with a preset theme. Currently, the supported presets are:
-
-* default
-* muted
-* solarized
-
-However, you can also specify your own color scheme using hex values.
-To do so, you must specify three hex color values for the background
-color, the text color, and the highlight color. These hex values must
-be preceded by a pound sign (#) and must be either 3 or 6 digits. Example::
-
-    $ theme #ffffff #385 #235012
-
-A color picker such as Google's can be used to get your desired hex color values
-
 top
 ^^^
 
@@ -592,7 +575,7 @@ wget
     $ wget [url] [target file]
 
 Retrieves data from a url and downloads it to a file on the current server.
-The data can only be downloaded to a script (.script, .ns, .js) or a text file
+The data can only be downloaded to a script (.script, .js) or a text file
 (.txt). If the target file already exists, it will be overwritten by this command.
 
 Note that will not be possible to download data from many websites because they

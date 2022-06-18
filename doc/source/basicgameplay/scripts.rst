@@ -106,7 +106,7 @@ Check how much RAM a script requires to run with n threads
 **nano [script]**
 
 Create/Edit a script. The name of the script must end with a valid
-extension: .script, .js, or .ns
+extension: .script, or .js
 
 **ps**
 

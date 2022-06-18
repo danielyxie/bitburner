@@ -5,17 +5,10 @@ import React from "react";
 import { Player } from "./Player";
 import { prestigeSourceFile } from "./Prestige";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
-import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SourceFiles } from "./SourceFile/SourceFiles";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { IRouter } from "./ui/Router";
-
-export let redPillFlag = false;
-
-export function setRedPillFlag(b: boolean): void {
-  redPillFlag = b;
-}
 
 function giveSourceFile(bitNodeNumber: number): void {
   const sourceFileKey = "SourceFile" + bitNodeNumber.toString();
@@ -39,7 +32,7 @@ function giveSourceFile(bitNodeNumber: number): void {
   if (alreadyOwned && ownedSourceFile) {
     if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
       dialogBoxCreate(
-        "The Source-File for the BitNode you just destroyed, " + sourceFile.name + ", " + "is already at max level!",
+        `The Source-File for the BitNode you just destroyed, ${sourceFile.name}, is already at max level!`,
       );
     } else {
       ++ownedSourceFile.lvl;
@@ -75,16 +68,13 @@ function giveSourceFile(bitNodeNumber: number): void {
 export function enterBitNode(router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number): void {
   if (!flume) {
     giveSourceFile(destroyedBitNode);
-  } else {
-    if (SourceFileFlags[5] === 0 && newBitNode !== 5) {
-      Player.intelligence = 0;
-      Player.intelligence_exp = 0;
-    }
+  } else if (Player.sourceFileLvl(5) === 0 && newBitNode !== 5) {
+    Player.intelligence = 0;
+    Player.intelligence_exp = 0;
   }
   if (newBitNode === 5 && Player.intelligence === 0) {
     Player.intelligence = 1;
   }
-  redPillFlag = false;
   // Set new Bit Node
   Player.bitNodeN = newBitNode;
 

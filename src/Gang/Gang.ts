@@ -25,8 +25,9 @@ import { GangMember } from "./GangMember";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { PowerMultiplier } from "./data/power";
+import { IGang } from "./IGang";
 
-export class Gang {
+export class Gang implements IGang {
   facName: string;
   members: GangMember[];
   wanted: number;
@@ -157,7 +158,7 @@ export class Gang {
 
     // Process power first
     const gangName = this.facName;
-    for (const name in AllGangs) {
+    for (const name of Object.keys(AllGangs)) {
       if (AllGangs.hasOwnProperty(name)) {
         if (name == gangName) {
           AllGangs[name].power += this.calculatePower();
@@ -190,7 +191,7 @@ export class Gang {
     }
 
     // Then process territory
-    const gangs = GangConstants.Names.filter((g) => AllGangs[g].territory > 0);
+    const gangs = GangConstants.Names.filter((g) => AllGangs[g].territory > 0 || g === gangName);
     if (gangs.length > 1) {
       for (let i = 0; i < gangs.length; ++i) {
         const others = gangs.filter((e) => {
@@ -224,9 +225,7 @@ export class Gang {
           if (AllGangs[otherGang].territory <= 0) return;
           const territoryGain = calculateTerritoryGain(thisGang, otherGang);
           AllGangs[thisGang].territory += territoryGain;
-          if (AllGangs[thisGang].territory > 1) AllGangs[thisGang].territory = 1;
           AllGangs[otherGang].territory -= territoryGain;
-          if (AllGangs[thisGang].territory < 0) AllGangs[thisGang].territory = 0;
           if (thisGang === gangName) {
             this.clash(true); // Player won
             AllGangs[otherGang].power *= 1 / 1.01;
@@ -239,9 +238,7 @@ export class Gang {
           if (AllGangs[thisGang].territory <= 0) return;
           const territoryGain = calculateTerritoryGain(otherGang, thisGang);
           AllGangs[thisGang].territory -= territoryGain;
-          if (AllGangs[otherGang].territory < 0) AllGangs[otherGang].territory = 0;
           AllGangs[otherGang].territory += territoryGain;
-          if (AllGangs[otherGang].territory > 1) AllGangs[otherGang].territory = 1;
           if (thisGang === gangName) {
             this.clash(false); // Player lost
           } else if (otherGang === gangName) {
@@ -251,6 +248,12 @@ export class Gang {
             AllGangs[thisGang].power *= 1 / 1.01;
           }
         }
+
+        const total = Object.values(AllGangs)
+          .map((g) => g.territory)
+          .reduce((p, c) => p + c, 0);
+        console.log(total);
+        Object.values(AllGangs).forEach((g) => (g.territory /= total));
       }
     }
   }
@@ -353,7 +356,7 @@ export class Gang {
       const res = member.ascend();
       this.respect = Math.max(1, this.respect - res.respect);
       if (workerScript) {
-        workerScript.log("gang.ascend", () => `Ascended Gang member ${member.name}`);
+        workerScript.log("gang.ascendMember", () => `Ascended Gang member ${member.name}`);
       }
       return res;
     } catch (e: any) {

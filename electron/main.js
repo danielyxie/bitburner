@@ -1,185 +1,43 @@
 /* eslint-disable no-process-exit */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, BrowserWindow, Menu, shell, dialog } = require("electron");
-const log = require('electron-log');
+const { app, dialog, BrowserWindow, ipcMain } = require("electron");
+const log = require("electron-log");
 const greenworks = require("./greenworks");
+const api = require("./api-server");
+const gameWindow = require("./gameWindow");
+const achievements = require("./achievements");
+const utils = require("./utils");
+const storage = require("./storage");
+const debounce = require("lodash/debounce");
+const Config = require("electron-config");
+const config = new Config();
+
+log.transports.file.level = config.get("file-log-level", "info");
+log.transports.console.level = config.get("console-log-level", "debug");
 
 log.catchErrors();
 log.info(`Started app: ${JSON.stringify(process.argv)}`);
 
-process.on('uncaughtException', function () {
+process.on("uncaughtException", function () {
   // The exception will already have been logged by electron-log
   process.exit(1);
 });
 
-if (greenworks.init()) {
-  log.info("Steam API has been initialized.");
-} else {
-  log.warn("Steam API has failed to initialize.");
-}
-
-const debug = false;
-
-let win = null;
-
-require("http")
-  .createServer(async function (req, res) {
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString(); // convert Buffer to string
-    });
-    req.on("end", () => {
-      const data = JSON.parse(body);
-      win.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`).then((result) => {
-        res.write(result);
-        res.end();
-      });
-    });
-  })
-  .listen(9990, "127.0.0.1");
-
-function createWindow(killall) {
-  win = new BrowserWindow({
-    show: false,
-    backgroundThrottling: false,
-    backgroundColor: "#000000",
-  });
-
-  win.removeMenu();
-  win.maximize();
-  noScripts = killall ? { query: { noScripts: killall } } : {};
-  win.loadFile("index.html", noScripts);
-  win.show();
-  if (debug) win.webContents.openDevTools();
-
-  win.webContents.on("new-window", function (e, url) {
-    // make sure local urls stay in electron perimeter
-    if (url.substr(0, "file://".length) === "file://") {
-      return;
-    }
-
-    // and open every other protocols on the browser
-    e.preventDefault();
-    shell.openExternal(url);
-  });
-  win.webContents.backgroundThrottling = false;
-
-  // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
-  // here. Hey if it works it works.
-  const achievements = greenworks.getAchievementNames();
-  const intervalID = setInterval(async () => {
-    try {
-      const achs = await win.webContents.executeJavaScript("document.achievements");
-      for (const ach of achs) {
-        if (!achievements.includes(ach)) continue;
-        greenworks.activateAchievement(ach, () => undefined);
-      }
-    } catch (error) {
-      // The interval properly did not properly get cleared after a window kill
-      log.warn('Clearing achievements timer');
-      clearInterval(intervalID);
-      return;
-    }
-  }, 1000);
-  win.achievementsIntervalID = intervalID;
-
-  const reloadAndKill = (killScripts = true) => {
-    log.info('Reloading & Killing all scripts...');
-    setStopProcessHandler(app, win, false);
-    if (intervalID) clearInterval(intervalID);
-    win.webContents.forcefullyCrashRenderer();
-    win.on('closed', () => {
-      // Wait for window to be closed before opening the new one to prevent race conditions
-      log.debug('Opening new window');
-      const newWindow = createWindow(killScripts);
-      setStopProcessHandler(app, newWindow, true);
-    })
-    win.close();
-  };
-  const promptForReload = () => {
-    win.off('unresponsive', promptForReload);
-    dialog.showMessageBox({
-      type: 'error',
-      title: 'Bitburner > Application Unresponsive',
-      message: 'The application is unresponsive, possibly due to an infinite loop in your scripts.',
-      detail:' Did you forget a ns.sleep(x)?\n\n' +
-        'The application will be restarted for you, do you want to kill all running scripts?',
-      buttons: ['Restart', 'Cancel'],
-      defaultId: 0,
-      checkboxLabel: 'Kill all running scripts',
-      checkboxChecked: true,
-      noLink: true,
-    }).then(({response, checkboxChecked}) => {
-      if (response === 0) {
-        reloadAndKill(checkboxChecked);
-      } else {
-        win.on('unresponsive', promptForReload)
-      }
-    });
+// We want to fail gracefully if we cannot connect to Steam
+try {
+  if (greenworks && greenworks.init()) {
+    log.info("Steam API has been initialized.");
+  } else {
+    const error = "Steam API has failed to initialize.";
+    log.warn(error);
+    global.greenworksError = error;
   }
-  win.on('unresponsive', promptForReload);
-
-  // Create the Application's main menu
-  Menu.setApplicationMenu(
-    Menu.buildFromTemplate([
-      {
-        label: "Edit",
-        submenu: [
-          { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-          { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-          { type: "separator" },
-          { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-          { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-          { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-          { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
-        ],
-      },
-      {
-        label: "reloads",
-        submenu: [
-          {
-            label: "reload",
-            accelerator: "f5",
-            click: () => {
-              win.loadFile("index.html");
-            },
-          },
-          {
-            label: "reload & kill all scripts",
-            click: reloadAndKill
-          },
-        ],
-      },
-      {
-        label: "fullscreen",
-        submenu: [
-          {
-            label: "toggle",
-            accelerator: "f9",
-            click: (() => {
-              let full = false;
-              return () => {
-                full = !full;
-                win.setFullScreen(full);
-              };
-            })(),
-          },
-        ],
-      },
-      {
-        label: "debug",
-        submenu: [
-          {
-            label: "activate",
-            click: () => win.webContents.openDevTools(),
-          },
-        ],
-      },
-    ]),
-  );
-
-  return win;
+} catch (ex) {
+  log.warn(ex.message);
+  global.greenworksError = ex.message;
 }
+
+let isRestoreDisabled = false;
 
 function setStopProcessHandler(app, window, enabled) {
   const closingWindowHandler = async (e) => {
@@ -187,59 +45,204 @@ function setStopProcessHandler(app, window, enabled) {
     e.preventDefault();
 
     // First we clear the achievement timer
-    if (window.achievementsIntervalID) {
-      clearInterval(window.achievementsIntervalID);
+    achievements.disableAchievementsInterval(window);
+
+    // Shutdown the http server
+    api.disable();
+
+    // Trigger debounced saves right now before closing
+    try {
+      await saveToDisk.flush();
+    } catch (error) {
+      log.error(error);
+    }
+    try {
+      await saveToCloud.flush();
+    } catch (error) {
+      log.error(error);
     }
 
+    // Because of a steam limitation, if the player has launched an external browser,
+    // steam will keep displaying the game as "Running" in their UI as long as the browser is up.
+    // So we'll alert the player to close their browser.
+    if (global.app_playerOpenedExternalLink) {
+      await dialog.showMessageBox({
+        title: "Bitburner",
+        message: "You may have to close your browser to properly exit the game.",
+        detail:
+          'Steam will keep tracking Bitburner as "Running" if any process started within the game is still running.' +
+          " This includes launching an external link, which opens up your browser.",
+        type: "warning",
+        buttons: ["OK"],
+      });
+    }
     // We'll try to execute javascript on the page to see if we're stuck
     let canRunJS = false;
-    win.webContents.executeJavaScript('window.stop(); document.close()', true)
-      .then(() => canRunJS = true);
+    window.webContents.executeJavaScript("window.stop(); document.close()", true).then(() => (canRunJS = true));
     setTimeout(() => {
       // Wait a few milliseconds to prevent a race condition before loading the exit screen
-      win.webContents.stop();
-      win.loadFile("exit.html")
+      window.webContents.stop();
+      window.loadFile("exit.html");
     }, 20);
 
     // Wait 200ms, if the promise has not yet resolved, let's crash the process since we're possibly in a stuck scenario
     setTimeout(() => {
       if (!canRunJS) {
         // We're stuck, let's crash the process
-        log.warn('Forcefully crashing the renderer process');
-        win.webContents.forcefullyCrashRenderer();
+        log.warn("Forcefully crashing the renderer process");
+        window.webContents.forcefullyCrashRenderer();
       }
 
-      log.debug('Destroying the window');
-      win.destroy();
+      log.debug("Destroying the window");
+      window.destroy();
     }, 200);
-  }
+  };
 
   const clearWindowHandler = () => {
     window = null;
   };
 
   const stopProcessHandler = () => {
-    log.info('Quitting the app...');
+    log.info("Quitting the app...");
     app.isQuiting = true;
     app.quit();
     process.exit(0);
   };
 
+  const receivedGameReadyHandler = async (event, arg) => {
+    if (!window) {
+      log.warn("Window was undefined in game info handler");
+      return;
+    }
+
+    log.debug("Received game information", arg);
+    window.gameInfo = { ...arg };
+    await storage.prepareSaveFolders(window);
+
+    const restoreNewest = config.get("onload-restore-newest", true);
+    if (restoreNewest && !isRestoreDisabled) {
+      try {
+        await storage.restoreIfNewerExists(window);
+      } catch (error) {
+        log.error("Could not restore newer file", error);
+      }
+    }
+  };
+
+  const receivedDisableRestoreHandler = async (event, arg) => {
+    if (!window) {
+      log.warn("Window was undefined in disable import handler");
+      return;
+    }
+
+    log.debug(`Disabling auto-restore for ${arg.duration}ms.`);
+    isRestoreDisabled = true;
+    setTimeout(() => {
+      isRestoreDisabled = false;
+      log.debug("Re-enabling auto-restore");
+    }, arg.duration);
+  };
+
+  const receivedGameSavedHandler = async (event, arg) => {
+    if (!window) {
+      log.warn("Window was undefined in game saved handler");
+      return;
+    }
+
+    const { save, ...other } = arg;
+    log.silly("Received game saved info", { ...other, save: `${save.length} bytes` });
+
+    if (storage.isAutosaveEnabled()) {
+      saveToDisk(save, arg.fileName);
+    }
+    if (storage.isCloudEnabled()) {
+      const minimumPlaytime = 1000 * 60 * 15;
+      const playtime = window.gameInfo.player.playtime;
+      log.silly(window.gameInfo);
+      if (playtime > minimumPlaytime) {
+        saveToCloud(save);
+      } else {
+        log.debug(`Auto-save to cloud disabled for save game under ${minimumPlaytime}ms (${playtime}ms)`);
+      }
+    }
+  };
+
+  const saveToCloud = debounce(
+    async (save) => {
+      log.debug("Saving to Steam Cloud ...");
+      try {
+        const playerId = window.gameInfo.player.identifier;
+        await storage.pushGameSaveToSteamCloud(save, playerId);
+        log.silly("Saved Game to Steam Cloud");
+      } catch (error) {
+        log.error(error);
+        utils.writeToast(window, "Could not save to Steam Cloud.", "error", 5000);
+      }
+    },
+    config.get("cloud-save-min-time", 1000 * 60 * 15),
+    { leading: true },
+  );
+
+  const saveToDisk = debounce(
+    async (save, fileName) => {
+      log.debug("Saving to Disk ...");
+      try {
+        const file = await storage.saveGameToDisk(window, { save, fileName });
+        log.silly(`Saved Game to '${file.replaceAll("\\", "\\\\")}'`);
+      } catch (error) {
+        log.error(error);
+        utils.writeToast(window, "Could not save to disk", "error", 5000);
+      }
+    },
+    config.get("disk-save-min-time", 1000 * 60 * 5),
+    { leading: true },
+  );
+
   if (enabled) {
-    log.debug('Adding closing handlers');
+    log.debug("Adding closing handlers");
+    ipcMain.on("push-game-ready", receivedGameReadyHandler);
+    ipcMain.on("push-game-saved", receivedGameSavedHandler);
+    ipcMain.on("push-disable-restore", receivedDisableRestoreHandler);
     window.on("closed", clearWindowHandler);
-    window.on("close", closingWindowHandler)
+    window.on("close", closingWindowHandler);
     app.on("window-all-closed", stopProcessHandler);
   } else {
-    log.debug('Removing closing handlers');
+    log.debug("Removing closing handlers");
+    ipcMain.removeAllListeners();
     window.removeListener("closed", clearWindowHandler);
     window.removeListener("close", closingWindowHandler);
     app.removeListener("window-all-closed", stopProcessHandler);
   }
 }
 
-app.whenReady().then(() => {
-  log.info('Application is ready!');
-  const win = createWindow(process.argv.includes("--no-scripts"));
-  setStopProcessHandler(app, win, true);
+async function startWindow(noScript) {
+  return gameWindow.createWindow(noScript);
+}
+
+global.app_handlers = {
+  stopProcess: setStopProcessHandler,
+  createWindow: startWindow,
+};
+
+app.whenReady().then(async () => {
+  log.info("Application is ready!");
+
+  if (process.argv.includes("--export-save")) {
+    const window = new BrowserWindow({ show: false });
+    await window.loadFile("export.html", false);
+    window.show();
+    setStopProcessHandler(app, window, true);
+    await utils.exportSave(window);
+  } else {
+    const window = await startWindow(process.argv.includes("--no-scripts"));
+    if (global.greenworksError) {
+      await dialog.showMessageBox(window, {
+        title: "Bitburner",
+        message: "Could not connect to Steam",
+        detail: `${global.greenworksError}\n\nYou won't be able to receive achievements until this is resolved and you restart the game.`,
+        type: "warning",
+        buttons: ["OK"],
+      });
+    }
+  }
 });

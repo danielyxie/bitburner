@@ -4,6 +4,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 
 import { evaluateDirectoryPath, removeTrailingSlash } from "../DirectoryHelpers";
+import { containsFiles } from "../DirectoryServerHelpers";
 
 export function cd(
   terminal: ITerminal,
@@ -29,12 +30,13 @@ export function cd(
         terminal.error("Invalid path. Failed to change directories");
         return;
       }
+      if (terminal.cwd().length > 1 && dir === "..") {
+        terminal.setcwd(evaledDir);
+        return;
+      }
 
       const server = player.getCurrentServer();
-      if (
-        !server.scripts.some((script) => script.filename.startsWith(evaledDir + "")) &&
-        !server.textFiles.some((file) => file.fn.startsWith(evaledDir + ""))
-      ) {
+      if (!containsFiles(server, evaledDir)) {
         terminal.error("Invalid path. Failed to change directories");
         return;
       }

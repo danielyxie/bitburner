@@ -1,6 +1,11 @@
 /**
  * @public
  */
+type FilenameOrPID = number | string;
+
+/**
+ * @public
+ */
 interface Player {
   hacking: number;
   hp: number;
@@ -88,25 +93,52 @@ interface Player {
   jobs: any;
   factions: string[];
   tor: boolean;
+  hasCorporation: boolean;
+  inBladeburner: boolean;
+  entropy: number;
 }
 
 /**
  * @public
  */
-interface RunningScript {
+export interface RunningScript {
+  /** Arguments the script was called with */
   args: string[];
+  /** Filename of the script */
   filename: string;
+  /**
+   * Script logs as an array. The newest log entries are at the bottom.
+   * Timestamps, if enabled, are placed inside `[brackets]` at the start of each line.
+   **/
   logs: string[];
+  /** Total amount of hacking experience earned from this script when offline */
   offlineExpGained: number;
+  /** Total amount of money made by this script when offline */
   offlineMoneyMade: number;
+  /** Number of seconds that the script has been running offline */
   offlineRunningTime: number;
+  /** Total amount of hacking experience earned from this script when online */
   onlineExpGained: number;
+  /** Total amount of money made by this script when online */
   onlineMoneyMade: number;
+  /** Number of seconds that this script has been running online */
   onlineRunningTime: number;
+  /** Process ID. Must be an integer */
   pid: number;
+  /** How much RAM this script uses for ONE thread */
   ramUsage: number;
+  /** Hostname of the server on which this script runs */
   server: string;
+  /** Number of threads that this script runs with */
   threads: number;
+}
+
+/**
+ * @public
+ */
+export interface RecentScript extends RunningScript {
+  /** Timestamp of when the script was killed */
+  timeOfDeath: Date;
 }
 
 /**
@@ -123,7 +155,7 @@ export interface CrimeStats {
   /** How much money is given */
   money: number;
   /** Name of crime */
-  name: number;
+  name: string;
   /** Milliseconds it takes to attempt the crime */
   time: number;
   /** Description of the crime activity */
@@ -161,65 +193,65 @@ export interface CrimeStats {
  * @public
  */
 export interface AugmentationStats {
-  /** Multipler to hacking skill */
+  /** Multiplier to hacking skill */
   hacking_mult?: number;
-  /** Multipler to strength skill */
+  /** Multiplier to strength skill */
   strength_mult?: number;
-  /** Multipler to defense skill */
+  /** Multiplier to defense skill */
   defense_mult?: number;
-  /** Multipler to dexterity skill */
+  /** Multiplier to dexterity skill */
   dexterity_mult?: number;
-  /** Multipler to agility skill */
+  /** Multiplier to agility skill */
   agility_mult?: number;
-  /** Multipler to charisma skill */
+  /** Multiplier to charisma skill */
   charisma_mult?: number;
-  /** Multipler to hacking experience gain rate */
+  /** Multiplier to hacking experience gain rate */
   hacking_exp_mult?: number;
-  /** Multipler to strength experience gain rate */
+  /** Multiplier to strength experience gain rate */
   strength_exp_mult?: number;
-  /** Multipler to defense experience gain rate */
+  /** Multiplier to defense experience gain rate */
   defense_exp_mult?: number;
-  /** Multipler to dexterity experience gain rate */
+  /** Multiplier to dexterity experience gain rate */
   dexterity_exp_mult?: number;
-  /** Multipler to agility experience gain rate */
+  /** Multiplier to agility experience gain rate */
   agility_exp_mult?: number;
-  /** Multipler to charisma experience gain rate */
+  /** Multiplier to charisma experience gain rate */
   charisma_exp_mult?: number;
-  /** Multipler to chance of successfully performing a hack */
+  /** Multiplier to chance of successfully performing a hack */
   hacking_chance_mult?: number;
-  /** Multipler to hacking speed */
+  /** Multiplier to hacking speed */
   hacking_speed_mult?: number;
-  /** Multipler to amount of money the player gains from hacking */
+  /** Multiplier to amount of money the player gains from hacking */
   hacking_money_mult?: number;
-  /** Multipler to amount of money injected into servers using grow */
+  /** Multiplier to amount of money injected into servers using grow */
   hacking_grow_mult?: number;
-  /** Multipler to amount of reputation gained when working */
+  /** Multiplier to amount of reputation gained when working */
   company_rep_mult?: number;
-  /** Multipler to amount of reputation gained when working */
+  /** Multiplier to amount of reputation gained when working */
   faction_rep_mult?: number;
-  /** Multipler to amount of money gained from crimes */
+  /** Multiplier to amount of money gained from crimes */
   crime_money_mult?: number;
-  /** Multipler to crime success rate */
+  /** Multiplier to crime success rate */
   crime_success_mult?: number;
-  /** Multipler to amount of money gained from working */
+  /** Multiplier to amount of money gained from working */
   work_money_mult?: number;
-  /** Multipler to amount of money produced by Hacknet Nodes */
+  /** Multiplier to amount of money produced by Hacknet Nodes */
   hacknet_node_money_mult?: number;
-  /** Multipler to cost of purchasing a Hacknet Node */
+  /** Multiplier to cost of purchasing a Hacknet Node */
   hacknet_node_purchase_cost_mult?: number;
-  /** Multipler to cost of ram for a Hacknet Node */
+  /** Multiplier to cost of ram for a Hacknet Node */
   hacknet_node_ram_cost_mult?: number;
-  /** Multipler to cost of core for a Hacknet Node */
+  /** Multiplier to cost of core for a Hacknet Node */
   hacknet_node_core_cost_mult?: number;
-  /** Multipler to cost of leveling up a Hacknet Node */
+  /** Multiplier to cost of leveling up a Hacknet Node */
   hacknet_node_level_cost_mult?: number;
-  /** Multipler to Bladeburner max stamina */
+  /** Multiplier to Bladeburner max stamina */
   bladeburner_max_stamina_mult?: number;
-  /** Multipler to Bladeburner stamina gain rate */
+  /** Multiplier to Bladeburner stamina gain rate */
   bladeburner_stamina_gain_mult?: number;
-  /** Multipler to effectiveness in Bladeburner Field Analysis */
+  /** Multiplier to effectiveness in Bladeburner Field Analysis */
   bladeburner_analysis_mult?: number;
-  /** Multipler to success chance in Bladeburner contracts/operations */
+  /** Multiplier to success chance in Bladeburner contracts/operations */
   bladeburner_success_chance_mult?: number;
 }
 
@@ -255,6 +287,24 @@ export interface AugmentPair {
 }
 
 /**
+ * @public
+ */
+export enum PositionTypes {
+  Long = "L",
+  Short = "S",
+}
+
+/**
+ * @public
+ */
+export enum OrderTypes {
+  LimitBuy = "Limit Buy Order",
+  LimitSell = "Limit Sell Order",
+  StopBuy = "Stop Buy Order",
+  StopSell = "Stop Sell Order",
+}
+
+/**
  * Value in map of {@link StockOrder}
  * @public
  */
@@ -264,17 +314,18 @@ export interface StockOrderObject {
   /** Price per share */
   price: number;
   /** Order type */
-  type: string;
+  type: OrderTypes;
   /** Order position */
-  position: string;
+  position: PositionTypes;
 }
 
 /**
  * Return value of {@link TIX.getOrders | getOrders}
+ *
+ * Keys are stock symbols, properties are arrays of {@link StockOrderObject}
  * @public
  */
 export interface StockOrder {
-  /** Stock Symbol */
   [key: string]: StockOrderObject[];
 }
 
@@ -326,6 +377,74 @@ export interface HacknetMultipliers {
 }
 
 /**
+ * Hacknet node related constants
+ * @public
+ */
+export interface HacknetNodeConstants {
+  /** Amount of money gained per level */
+  MoneyGainPerLevel: number;
+  /** Base cost for a new node */
+  BaseCost: number;
+  /** Base cost per level */
+  LevelBaseCost: number;
+  /** Base cost to incrase RAM */
+  RamBaseCost: number;
+  /** Base cost to increase cores */
+  CoreBaseCost: number;
+  /** Multiplier to purchase new node */
+  PurchaseNextMult: number;
+  /** Multiplier to increase node level */
+  UpgradeLevelMult: number;
+  /** Multiplier to increase RAM */
+  UpgradeRamMult: number;
+  /** Multiplier to increase cores */
+  UpgradeCoreMult: number;
+  /** Max node level */
+  MaxLevel: number;
+  /** Max amount of RAM in GB */
+  MaxRam: number;
+  /** Max number of cores */
+  MaxCores: number;
+}
+
+/**
+ * Hacknet server related constants
+ * @public
+ */
+export interface HacknetServerConstants {
+  /** Number of hashes calculated per level */
+  HashesPerLevel: number;
+  /** Base cost for a new server */
+  BaseCost: number;
+  /** Base cost to increase RAM */
+  RamBaseCost: number;
+  /** Base cost to increase cores */
+  CoreBaseCost: number;
+  /** Base cost to upgrade cache */
+  CacheBaseCost: number;
+  /** Multiplier to purchase a new server */
+  PurchaseMult: number;
+  /** Multiplier to increase server level */
+  UpgradeLevelMult: number;
+  /** Multiplier to increase RAM */
+  UpgradeRamMult: number;
+  /** Multiplier to increase cores */
+  UpgradeCoreMult: number;
+  /** Multiplier to upgrade cache */
+  UpgradeCacheMult: number;
+  /** Max number of servers */
+  MaxServers: number;
+  /** Max level for a server */
+  MaxLevel: number;
+  /** Max amount of RAM in GB */
+  MaxRam: number;
+  /** Max number of cores */
+  MaxCores: number;
+  /** Max cache size */
+  MaxCache: number;
+}
+
+/**
  * A single server.
  * @public
  */
@@ -351,7 +470,7 @@ export interface Server {
   /** IP Address. Must be unique */
   ip: string;
 
-  /** Flag indicating whether player is curently connected to this server */
+  /** Flag indicating whether player is currently connected to this server */
   isConnectedTo: boolean;
 
   /** RAM (GB) available on this server */
@@ -440,6 +559,8 @@ export interface BitNodeMultipliers {
   CompanyWorkExpGain: number;
   /** Influences how much money the player earns when completing working their job. */
   CompanyWorkMoney: number;
+  /** Influences the money gain from dividends of corporations created by the player. */
+  CorporationSoftcap: number;
   /** Influences the valuation of corporations created by the player. */
   CorporationValuation: number;
   /** Influences the base experience gained for each ability when the player commits a crime. */
@@ -462,6 +583,8 @@ export interface BitNodeMultipliers {
   FourSigmaMarketDataApiCost: number;
   /** Influences how much it costs to unlock the stock market's 4S Market Data (NOT API) */
   FourSigmaMarketDataCost: number;
+  /** Influences the respect gain and money gain of your gang. */
+  GangSoftcap: number;
   /** Influences the experienced gained when hacking a server. */
   HackExpGain: number;
   /** Influences how quickly the player's hacking level (not experience) scales */
@@ -482,13 +605,17 @@ export interface BitNodeMultipliers {
   PurchasedServerLimit: number;
   /** Influences the maximum allowed RAM for a purchased server */
   PurchasedServerMaxRam: number;
+  /** Influences cost of any purchased server at or above 128GB */
+  PurchasedServerSoftcap: number;
   /** Influences the minimum favor the player must have with a faction before they can donate to gain rep. */
   RepToDonateToFaction: number;
-  /** Influences how much money can be stolen from a server when a script performs a hack against it. */
+  /** Influences how much the money on a server can be reduced when a script performs a hack against it. */
   ScriptHackMoney: number;
+  /** Influences how much of the money stolen by a scripted hack will be added to the player's money. */
+  ScriptHackMoneyGain: number;
   /** Influences the growth percentage per cycle against a server. */
   ServerGrowthRate: number;
-  /** Influences the maxmimum money that a server can grow to. */
+  /** Influences the maximum money that a server can grow to. */
   ServerMaxMoney: number;
   /** Influences the initial money that a server starts with. */
   ServerStartingMoney: number;
@@ -498,6 +625,12 @@ export interface BitNodeMultipliers {
   ServerWeakenRate: number;
   /** Influences how quickly the player's strength level (not exp) scales */
   StrengthLevelMultiplier: number;
+  /** Influences the power of the gift */
+  StaneksGiftPowerMultiplier: number;
+  /** Influences the size of the gift */
+  StaneksGiftExtraSize: number;
+  /** Influences the hacking skill required to backdoor the world daemon. */
+  WorldDaemonDifficulty: number;
 }
 
 /**
@@ -509,9 +642,9 @@ export interface NodeStats {
   name: string;
   /** Node's level */
   level: number;
-  /** Node's RAM */
+  /** Node's RAM (GB) */
   ram: number;
-  /** Node's used RAM */
+  /** Node's used RAM (GB) */
   ramUsed: number;
   /** Node's number of cores */
   cores: number;
@@ -542,7 +675,7 @@ export interface PlayerSkills {
   dexterity: number;
   /** Agility level */
   agility: number;
-  /** Chraisma level */
+  /** Charisma level */
   charisma: number;
   /** Intelligence level */
   intelligence: number;
@@ -556,6 +689,10 @@ export interface CharacterMult {
   agility: number;
   /** Agility exp */
   agilityExp: number;
+  /** Charisma stat */
+  charisma: number;
+  /** Charisma exp */
+  charismaExp: number;
   /** Company reputation */
   companyRep: number;
   /** Money earned from crimes */
@@ -596,10 +733,10 @@ export interface CharacterInfo {
   factions: string[];
   /** Current health points */
   hp: number;
-  /** Array of all companies at which you have jobs */
-  company: string[];
+  /** Array of all jobs */
+  jobs: string[];
   /** Array of job positions for all companies you are employed at. Same order as 'jobs' */
-  jobTitle: string[];
+  jobTitles: string[];
   /** Maximum health points */
   maxHp: number;
   /** Boolean indicating whether or not you have a tor router */
@@ -624,25 +761,37 @@ export interface CharacterInfo {
   workRepGain: number;
   /** Money earned so far from work, if applicable */
   workMoneyGain: number;
+  /** total hacking exp */
+  hackingExp: number;
+  /** total strength exp */
+  strengthExp: number;
+  /** total defense exp */
+  defenseExp: number;
+  /** total dexterity exp */
+  dexterityExp: number;
+  /** total agility exp */
+  agilityExp: number;
+  /** total charisma exp */
+  charismaExp: number;
 }
 
 /**
  * @public
  */
 export interface SleeveWorkGains {
-  /** hacking exp gained from work */
+  /** Hacking exp gained from work */
   workHackExpGain: number;
-  /** strength exp gained from work */
+  /** Strength exp gained from work */
   workStrExpGain: number;
-  /** defense exp gained from work, */
+  /** Defense exp gained from work, */
   workDefExpGain: number;
-  /** dexterity exp gained from work */
+  /** Dexterity exp gained from work */
   workDexExpGain: number;
-  /** agility exp gained from work */
+  /** Agility exp gained from work */
   workAgiExpGain: number;
-  /** charisma exp gained from work */
+  /** Charisma exp gained from work */
   workChaExpGain: number;
-  /** money gained from work */
+  /** Money gained from work */
   workMoneyGain: number;
 }
 
@@ -674,7 +823,7 @@ export interface BladeburnerCurAction {
 export interface GangGenInfo {
   /** Name of faction that the gang belongs to ("Slum Snakes", etc.) */
   faction: string;
-  /** Boolean indicating whether or not its a hacking gang */
+  /** Indicating whether or not it's a hacking gang */
   isHacking: boolean;
   /** Money earned per game cycle */
   moneyGainRate: number;
@@ -684,17 +833,17 @@ export interface GangGenInfo {
   respect: number;
   /** Respect earned per game cycle */
   respectGainRate: number;
-  /** Amount of territory held. */
+  /** Amount of territory held */
   territory: number;
-  /** Clash chance. */
+  /** Clash chance */
   territoryClashChance: number;
   /** Gang's wanted level */
   wantedLevel: number;
   /** Wanted level gained/lost per game cycle (negative for losses) */
   wantedLevelGainRate: number;
-  /** Boolean indicating if territory warfare is enabled. */
+  /** Indicating if territory warfare is enabled */
   territoryWarfareEngaged: boolean;
-  /** Number indicating the current wanted penalty. */
+  /** Number indicating the current wanted penalty */
   wantedPenalty: number;
 }
 
@@ -742,7 +891,7 @@ export interface GangTaskStats {
   baseMoney: number;
   /** Hacking skill impact on task scaling */
   hackWeight: number;
-  /** Stength skill impact on task scaling */
+  /** Strength skill impact on task scaling */
   strWeight: number;
   /** Defense skill impact on task scaling */
   defWeight: number;
@@ -793,42 +942,75 @@ export interface GangTerritory {
  * @public
  */
 export interface GangMemberInfo {
+  /** Name of the gang member */
   name: string;
+  /** Currently assigned task */
   task: string;
   earnedRespect: number;
+
+  /** Hack skill level */
   hack: number;
+  /** Strength skill level */
   str: number;
+  /** Defense skill level */
   def: number;
+  /** Dexterity skill level */
   dex: number;
+  /** Agility skill level */
   agi: number;
+  /** Charisma skill level */
   cha: number;
 
+  /** Current hack experience */
   hack_exp: number;
+  /** Current strength experience */
   str_exp: number;
+  /** Current defense experience */
   def_exp: number;
+  /** Current dexterity experience */
   dex_exp: number;
+  /** Current agility experience */
   agi_exp: number;
+  /** Current charisma experience */
   cha_exp: number;
 
+  /** Hack multiplier from equipment */
   hack_mult: number;
+  /** Strength multiplier from equipment */
   str_mult: number;
+  /** Defense multiplier from equipment */
   def_mult: number;
+  /** Dexterity multiplier from equipment */
   dex_mult: number;
+  /** Agility multiplier from equipment */
   agi_mult: number;
+  /** Charisma multiplier from equipment */
   cha_mult: number;
 
+  /** Hack multiplier from ascensions */
   hack_asc_mult: number;
+  /** Strength multiplier from ascensions */
   str_asc_mult: number;
+  /** Defense multiplier from ascensions */
   def_asc_mult: number;
+  /** Dexterity multiplier from ascensions */
   dex_asc_mult: number;
+  /** Agility multiplier from ascensions */
   agi_asc_mult: number;
+  /** Charisma multiplier from ascensions */
   cha_asc_mult: number;
 
+  /** Total earned hack experience */
   hack_asc_points: number;
+  /** Total earned strength experience */
   str_asc_points: number;
+  /** Total earned defense experience */
   def_asc_points: number;
+  /** Total earned dexterity experience */
   dex_asc_points: number;
+  /** Total earned agility experience */
   agi_asc_points: number;
+  /** Total earned charisma experience */
   cha_asc_points: number;
 
   upgrades: string[];
@@ -845,17 +1027,17 @@ export interface GangMemberInfo {
 export interface GangMemberAscension {
   /** Amount of respect lost from ascending */
   respect: number;
-  /** Hacking multiplier gained from ascending.*/
+  /** Hacking multiplier gained from ascending */
   hack: number;
-  /** Strength multiplier gained from ascending.*/
+  /** Strength multiplier gained from ascending */
   str: number;
-  /** Defense multiplier gained from ascending.*/
+  /** Defense multiplier gained from ascending */
   def: number;
-  /** Dexterity multiplier gained from ascending.*/
+  /** Dexterity multiplier gained from ascending */
   dex: number;
-  /** Agility multiplier gained from ascending.*/
+  /** Agility multiplier gained from ascending */
   agi: number;
-  /** Charisma multiplier gained from ascending.*/
+  /** Charisma multiplier gained from ascending */
   cha: number;
 }
 
@@ -864,21 +1046,21 @@ export interface GangMemberAscension {
  * @public
  */
 export interface SleeveSkills {
-  /** current shock of the sleeve [0-100] */
+  /** Current shock of the sleeve [0-100] */
   shock: number;
-  /** current sync of the sleeve [0-100] */
+  /** Current sync of the sleeve [0-100] */
   sync: number;
-  /** current hacking skill of the sleeve */
+  /** Current hacking skill of the sleeve */
   hacking: number;
-  /** current strength of the sleeve */
+  /** Current strength of the sleeve */
   strength: number;
-  /** current defense of the sleeve */
+  /** Current defense of the sleeve */
   defense: number;
-  /** current dexterity of the sleeve */
+  /** Current dexterity of the sleeve */
   dexterity: number;
-  /** current agility of the sleeve */
+  /** Current agility of the sleeve */
   agility: number;
-  /** current charisma of the sleeve */
+  /** Current charisma of the sleeve */
   charisma: number;
 }
 
@@ -887,29 +1069,29 @@ export interface SleeveSkills {
  * @public
  */
 export interface SleeveInformation {
-  /** location of the sleeve */
+  /** Location of the sleeve */
   city: string;
-  /** current hp of the sleeve */
+  /** Current hp of the sleeve */
   hp: number;
-  /** max hp of the sleeve */
+  /** Max hp of the sleeve */
   maxHp: number;
-  /** jobs available to the sleeve */
+  /** Jobs available to the sleeve */
   jobs: string[];
-  /** job titles available to the sleeve */
+  /** Job titles available to the sleeve */
   jobTitle: string[];
-  /** does this sleeve have access to the tor router */
+  /** Does this sleeve have access to the tor router */
   tor: boolean;
-  /** sleeve multipliers */
+  /** Sleeve multipliers */
   mult: CharacterMult;
-  /** time spent on the current task in milliseconds */
+  /** Time spent on the current task in milliseconds */
   timeWorked: number;
-  /** earnings synchronized to other sleeves */
+  /** Earnings synchronized to other sleeves */
   earningsForSleeves: SleeveWorkGains;
-  /** earnings synchronized to the player */
+  /** Earnings synchronized to the player */
   earningsForPlayer: SleeveWorkGains;
-  /** earnings for this sleeve */
+  /** Earnings for this sleeve */
   earningsForTask: SleeveWorkGains;
-  /** faction or company reputation gained for the current task */
+  /** Faction or company reputation gained for the current task */
   workRepGain: number;
 }
 
@@ -918,16 +1100,90 @@ export interface SleeveInformation {
  * @public
  */
 export interface SleeveTask {
-  /** task type */
+  /** Task type */
   task: string;
-  /** crime currently attempting, if any */
+  /** Crime currently attempting, if any */
   crime: string;
-  /** location of the task, if any */
+  /** Location of the task, if any */
   location: string;
-  /** stat being trained at the gym, if any */
+  /** Stat being trained at the gym, if any */
   gymStatType: string;
-  /** faction work type being performed, if any */
+  /** Faction work type being performed, if any */
   factionWorkType: string;
+  /** Class being taken at university, if any */
+  className: string;
+}
+
+/**
+ * Object representing a port. A port is a serialized queue.
+ * @public
+ */
+export interface NetscriptPort {
+  /**
+   * Write data to a port.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns The data popped off the queue if it was full.
+   */
+  write(value: string | number): null | string | number;
+
+  /**
+   * Attempt to write data to the port.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns True if the data was added to the port, false if the port was full
+   */
+  tryWrite(value: string | number): boolean;
+
+  /**
+   * Shift an element out of the port.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * This function will remove the first element from the port and return it.
+   * If the port is empty, then the string “NULL PORT DATA” will be returned.
+   * @returns the data read.
+   */
+  read(): string | number;
+
+  /**
+   * Retrieve the first element from the port without removing it.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * This function is used to peek at the data from a port. It returns the
+   * first element in the specified port without removing that element. If
+   * the port is empty, the string “NULL PORT DATA” will be returned.
+   * @returns the data read
+   */
+  peek(): string | number;
+
+  /**
+   * Check if the port is full.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns true if the port is full, otherwise false
+   */
+  full(): boolean;
+
+  /**
+   * Check if the port is empty.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns true if the port is empty, otherwise false
+   */
+  empty(): boolean;
+
+  /**
+   * Empties all data from the port.
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  clear(): void;
 }
 
 /**
@@ -1045,7 +1301,7 @@ export interface TIX {
   getPurchaseCost(sym: string, shares: number, posType: string): number;
 
   /**
-   * Calculate profit of setting stocks.
+   * Calculate profit of selling stocks.
    * @remarks
    * RAM cost: 2 GB
    * Calculates and returns how much you would gain from selling a given number of shares of a stock.
@@ -1187,6 +1443,8 @@ export interface TIX {
    * @remarks
    * RAM cost: 2.5 GB
    * This is an object containing information for all the Limit and Stop Orders you have in the stock market.
+   * For each symbol you have a position in, the returned object will have a key with that symbol's name.
+   * The object's properties are each an array of {@link StockOrderObject}
    * The object has the following structure:
    *
    * ```ts
@@ -1289,20 +1547,34 @@ export interface TIX {
    * @returns True if you successfully purchased it or if you already have access, false otherwise.
    */
   purchase4SMarketDataTixApi(): boolean;
+
+  /**
+   * Purchase WSE Account.
+   * @remarks RAM cost: 2.5 GB
+   * @returns True if you successfully purchased it or if you already have access, false otherwise.
+   */
+  purchaseWseAccount(): boolean;
+
+  /**
+   * Purchase TIX API Access
+   * @remarks RAM cost: 2.5 GB
+   * @returns True if you successfully purchased it or if you already have access, false otherwise.
+   */
+  purchaseTixApi(): boolean;
 }
 
 /**
  * Singularity API
  * @remarks
- * This API requires Source-File 4 level 1 / 2 / 3 to use.
+ * This API requires Source-File 4 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on Source-File 4 levels.
  * @public
  */
 export interface Singularity {
   /**
-   * SF4.1 - Take university class.
+   * Take university class.
    *
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * This function will automatically set you to start taking a course at a university.
@@ -1315,16 +1587,17 @@ export interface Singularity {
    *
    * @param universityName - Name of university. You must be in the correct city for whatever university you specify.
    * @param courseName - Name of course.
+   * @param focus - Acquire player focus on this class. Optional. Defaults to true.
    * @returns True if actions is successfully started, false otherwise.
    */
-  universityCourse(universityName: string, courseName: string): boolean;
+  universityCourse(universityName: string, courseName: string, focus?: boolean): boolean;
 
   /**
-   * SF4.1 - Workout at the gym.
-   * 
+   * Workout at the gym.
+   *
    * @remarks
-   * RAM cost: 2 GB
-   * 
+   * RAM cost: 2 GB * 16/4/1
+   *
 
    * This function will automatically set you to start working out at a gym to train
    * a particular stat. If you are already in the middle of some “working” action
@@ -1336,14 +1609,15 @@ export interface Singularity {
    *
    * @param gymName - Name of gym. You must be in the correct city for whatever gym you specify.
    * @param stat - The stat you want to train.
+   * @param focus - Acquire player focus on this gym workout. Optional. Defaults to true.
    * @returns True if actions is successfully started, false otherwise.
    */
-  gymWorkout(gymName: string, stat: string): boolean;
+  gymWorkout(gymName: string, stat: string, focus?: boolean): boolean;
 
   /**
-   * SF4.1 - Travel to another city.
+   * Travel to another city.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * This function allows the player to travel to any city. The cost for using this
@@ -1355,23 +1629,23 @@ export interface Singularity {
   travelToCity(city: string): boolean;
 
   /**
-   * SF4.1 - Purchase the TOR router.
+   * Purchase the TOR router.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * This function allows you to automatically purchase a TOR router. The cost for
    * purchasing a TOR router using this function is the same as if you were to
    * manually purchase one.
    *
-   * @returns True if actions is successful, false otherwise.
+   * @returns True if actions is successful or you already own TOR router, false otherwise.
    */
   purchaseTor(): boolean;
 
   /**
-   * SF4.1 - Purchase a program from the dark web.
+   * Purchase a program from the dark web.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * This function allows you to automatically purchase programs. You MUST have a
@@ -1395,13 +1669,13 @@ export interface Singularity {
   purchaseProgram(programName: string): boolean;
 
   /**
-   * SF4.1 - Check if the player is busy.
+   * Check if the player is busy.
    * @remarks
-   * RAM cost: 0.5 GB
+   * RAM cost: 0.5 GB * 16/4/1
    *
    *
    * Returns a boolean indicating whether or not the player is currently performing an
-   * ‘action’. These actions include working for a company/faction, studying at a univeristy,
+   * ‘action’. These actions include working for a company/faction, studying at a university,
    * working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
    *
    * @returns True if the player is currently performing an ‘action’, false otherwise.
@@ -1409,9 +1683,9 @@ export interface Singularity {
   isBusy(): boolean;
 
   /**
-   * SF4.1 - Stop the current action.
+   * Stop the current action.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function is used to end whatever ‘action’ the player is currently performing.
@@ -1420,9 +1694,10 @@ export interface Singularity {
    * The actions that can be stopped with this function are:
    *
    * * Studying at a university
+   * * Working out at a gym
    * * Working for a company/faction
    * * Creating a program
-   * * Committing a Crime
+   * * Committing a crime
    *
    * This function will return true if the player’s action was ended.
    * It will return false if the player was not performing an action when this function was called.
@@ -1432,9 +1707,9 @@ export interface Singularity {
   stopAction(): boolean;
 
   /**
-   * SF4.2 - Upgrade home computer RAM.
+   * Upgrade home computer RAM.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will upgrade amount of RAM on the player’s home computer. The cost is
@@ -1447,9 +1722,9 @@ export interface Singularity {
   upgradeHomeRam(): boolean;
 
   /**
-   * SF4.2 - Upgrade home computer cores.
+   * Upgrade home computer cores.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will upgrade amount of cores on the player’s home computer. The cost is
@@ -1462,9 +1737,9 @@ export interface Singularity {
   upgradeHomeCores(): boolean;
 
   /**
-   * SF4.2 - Get the price of upgrading home RAM.
+   * Get the price of upgrading home RAM.
    * @remarks
-   * RAM cost: 1.5 GB
+   * RAM cost: 1.5 GB * 16/4/1
    *
    *
    * Returns the cost of upgrading the player’s home computer RAM.
@@ -1474,9 +1749,9 @@ export interface Singularity {
   getUpgradeHomeRamCost(): number;
 
   /**
-   * SF4.2 - Get the price of upgrading home cores.
+   * Get the price of upgrading home cores.
    * @remarks
-   * RAM cost: 1.5 GB
+   * RAM cost: 1.5 GB * 16/4/1
    *
    *
    * Returns the cost of upgrading the player’s home computer cores.
@@ -1486,9 +1761,9 @@ export interface Singularity {
   getUpgradeHomeCoresCost(): number;
 
   /**
-   * SF4.2 - Work for a company.
+   * Work for a company.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will automatically set you to start working at the company
@@ -1528,9 +1803,21 @@ export interface Singularity {
   workForCompany(companyName?: string, focus?: boolean): boolean;
 
   /**
-   * SF4.2 - Apply for a job at a company.
+   * Quit jobs by company.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
+   *
+   *
+   * This function will finish work with the company provided and quit any jobs.
+   *
+   * @param companyName - Name of the company.
+   */
+  quitJob(companyName?: string): void;
+
+  /**
+   * Apply for a job at a company.
+   * @remarks
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will automatically try to apply to the specified company
@@ -1549,9 +1836,9 @@ export interface Singularity {
   applyToCompany(companyName: string, field: string): boolean;
 
   /**
-   * SF4.2 - Get company reputation.
+   * Get company reputation.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function will return the amount of reputation you have at the specified company.
@@ -1563,9 +1850,9 @@ export interface Singularity {
   getCompanyRep(companyName: string): number;
 
   /**
-   * SF4.2 - Get company favor.
+   * Get company favor.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function will return the amount of favor you have at the specified company.
@@ -1577,9 +1864,9 @@ export interface Singularity {
   getCompanyFavor(companyName: string): number;
 
   /**
-   * SF4.2 - Get company favor gain.
+   * Get company favor gain.
    * @remarks
-   * RAM cost: 0.75 GB
+   * RAM cost: 0.75 GB * 16/4/1
    *
    *
    * This function will return the amount of favor you will gain for the specified
@@ -1591,9 +1878,9 @@ export interface Singularity {
   getCompanyFavorGain(companyName: string): number;
 
   /**
-   * SF4.2 - List all current faction invitations.
+   * List all current faction invitations.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * Returns an array with the name of all Factions you currently have oustanding invitations from.
@@ -1603,9 +1890,9 @@ export interface Singularity {
   checkFactionInvitations(): string[];
 
   /**
-   * SF4.2 - Join a faction.
+   * Join a faction.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will automatically accept an invitation from a faction and join it.
@@ -1616,9 +1903,9 @@ export interface Singularity {
   joinFaction(faction: string): boolean;
 
   /**
-   * SF4.2 - Work for a faction.
+   * Work for a faction.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will automatically set you to start working for the specified faction.
@@ -1659,9 +1946,9 @@ export interface Singularity {
   workForFaction(faction: string, workType: string, focus?: boolean): boolean;
 
   /**
-   * SF4.2 - Get faction reputation.
+   * Get faction reputation.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function returns the amount of reputation you have for the specified faction.
@@ -1672,9 +1959,9 @@ export interface Singularity {
   getFactionRep(faction: string): number;
 
   /**
-   * SF4.2 - Get faction favor.
+   * Get faction favor.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function returns the amount of favor you have for the specified faction.
@@ -1685,9 +1972,9 @@ export interface Singularity {
   getFactionFavor(faction: string): number;
 
   /**
-   * SF4.2 - Get faction favor gain.
+   * Get faction favor gain.
    * @remarks
-   * RAM cost: 0.75 GB
+   * RAM cost: 0.75 GB * 16/4/1
    *
    *
    * This function returns the amount of favor you will gain for the specified
@@ -1699,9 +1986,9 @@ export interface Singularity {
   getFactionFavorGain(faction: string): number;
 
   /**
-   * SF4.3 - Donate to a faction.
+   * Donate to a faction.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * Attempts to donate money to the specified faction in exchange for reputation.
@@ -1714,9 +2001,9 @@ export interface Singularity {
   donateToFaction(faction: string, amount: number): boolean;
 
   /**
-   * SF4.3 - Create a program.
+   * Create a program.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function will automatically set you to start working on creating the
@@ -1749,14 +2036,15 @@ export interface Singularity {
    * ns.createProgram(“relaysmtp.exe”);
    * ```
    * @param program - Name of program to create.
+   * @param focus - Acquire player focus on this program creation. Optional. Defaults to true.
    * @returns True if you successfully start working on the specified program, and false otherwise.
    */
-  createProgram(program: string): boolean;
+  createProgram(program: string, focus?: boolean): boolean;
 
   /**
-   * SF4.3 - Commit a crime.
+   * Commit a crime.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function is used to automatically attempt to commit crimes.
@@ -1765,9 +2053,9 @@ export interface Singularity {
    * function will automatically cancel that action and give you your
    * earnings.
    *
-   * This function returns the number of milliseconds it takes to attempt the 
-   * specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, 
-   * so running `commitCrime('rob store')` will return 60000).
+   * This function returns the number of milliseconds it takes to attempt the
+   * specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime,
+   * so running `commitCrime('rob store')` will return 60,000).
    *
    * Warning: I do not recommend using the time returned from this function to try
    * and schedule your crime attempts. Instead, I would use the isBusy Singularity
@@ -1776,14 +2064,14 @@ export interface Singularity {
    * guarantee that your browser will follow that time limit.
    *
    * @param crime - Name of crime to attempt.
-   * @returns True if you successfully start working on the specified program, and false otherwise.
+   * @returns The number of milliseconds it takes to attempt the specified crime.
    */
   commitCrime(crime: string): number;
 
   /**
-   * SF4.3 - Get chance to successfully commit a crime.
+   * Get chance to successfully commit a crime.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns your chance of success at commiting the specified crime.
@@ -1794,9 +2082,9 @@ export interface Singularity {
   getCrimeChance(crime: string): number;
 
   /**
-   * SF4.3 - Get stats related to a crime.
+   * Get stats related to a crime.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * Returns the stats of the crime.
@@ -1807,9 +2095,9 @@ export interface Singularity {
   getCrimeStats(crime: string): CrimeStats;
 
   /**
-   * SF4.3 - Get a list of owned augmentation.
+   * Get a list of owned augmentation.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns an array containing the names (as strings) of all Augmentations you have.
@@ -1820,9 +2108,9 @@ export interface Singularity {
   getOwnedAugmentations(purchased?: boolean): string[];
 
   /**
-   * SF4.3 - Get a list of augmentation available from a faction.
+   * Get a list of augmentation available from a faction.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * Returns an array containing the names (as strings) of all Augmentations
@@ -1834,9 +2122,9 @@ export interface Singularity {
   getAugmentationsFromFaction(faction: string): string[];
 
   /**
-   * SF4.3 - Get the pre-requisite of an augmentation.
+   * Get the pre-requisite of an augmentation.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation.
@@ -1848,10 +2136,10 @@ export interface Singularity {
   getAugmentationPrereq(augName: string): string[];
 
   /**
-   * SF4.3 - Get the price and reputation of an augmentation.
+   * Get the price and reputation of an augmentation.
    * @deprecated use getAugmentationPrice getAugmentationRepCost
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns an array with two elements that gives the cost for
@@ -1868,9 +2156,9 @@ export interface Singularity {
   getAugmentationCost(augName: string): [number, number];
 
   /**
-   * SF4.3 - Get price of an augmentation.
+   * Get price of an augmentation.
    * @remarks
-   * RAM cost: 2.5 GB
+   * RAM cost: 2.5 GB * 16/4/1
    *
    *
    * @param augName - Name of Augmentation.
@@ -1879,9 +2167,9 @@ export interface Singularity {
   getAugmentationPrice(augName: string): number;
 
   /**
-   * SF4.3 - Get reputation requirement of an augmentation.
+   * Get reputation requirement of an augmentation.
    * @remarks
-   * RAM cost: 2.5 GB
+   * RAM cost: 2.5 GB * 16/4/1
    *
    *
    * @param augName - Name of Augmentation.
@@ -1890,9 +2178,9 @@ export interface Singularity {
   getAugmentationRepReq(augName: string): number;
 
   /**
-   * SF4.3 - Purchase an augmentation
+   * Purchase an augmentation
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function will try to purchase the specified Augmentation through the given Faction.
@@ -1906,9 +2194,9 @@ export interface Singularity {
   purchaseAugmentation(faction: string, augmentation: string): boolean;
 
   /**
-   * SF4.3 - Get the stats of an augmentation.
+   * Get the stats of an augmentation.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns augmentation stats.
@@ -1919,23 +2207,23 @@ export interface Singularity {
   getAugmentationStats(name: string): AugmentationStats;
 
   /**
-   * SF4.3 - Install your purchased augmentations.
+   * Install your purchased augmentations.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
-   * This function will automatically install your Augmentations, resetting the game as usual.
+   * This function will automatically install your Augmentations, resetting the game as usual. If you do not own uninstalled Augmentations then the game will not reset.
    *
    * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.
    */
   installAugmentations(cbScript?: string): void;
 
   /**
-   * SF4.1 - Returns an object with the Player’s stats.
+   * Returns an object with the Player’s stats.
    * @deprecated use getPlayer
    *
    * @remarks
-   * RAM cost: 0.5 GB
+   * RAM cost: 0.5 GB * 16/4/1
    *
    *
    * @example
@@ -1948,11 +2236,11 @@ export interface Singularity {
   getStats(): PlayerSkills;
 
   /**
-   * SF4.1 - Returns an object with various information about your character.
+   * Returns an object with various information about your character.
    * @deprecated use getPlayer
    *
    * @remarks
-   * RAM cost: 0.5 GB
+   * RAM cost: 0.5 GB * 16/4/1
    *
    *
    * @returns Object with various information about your character.
@@ -1960,19 +2248,16 @@ export interface Singularity {
   getCharacterInformation(): CharacterInfo;
 
   /**
-   * SF4.1 - Hospitalize the player.
+   * Hospitalize the player.
    * @remarks
-   * RAM cost: 0.25 GB
-   *
-   *
-   * @returns The cost of the hospitalization.
+   * RAM cost: 0.25 GB * 16/4/1
    */
-  hospitalize(): number;
+  hospitalize(): void;
 
   /**
-   * SF4.3 - Soft reset the game.
+   * Soft reset the game.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function will perform a reset even if you don’t have any augmentation installed.
@@ -1982,9 +2267,9 @@ export interface Singularity {
   softReset(cbScript: string): void;
 
   /**
-   * SF4.3 - Go to a location.
+   * Go to a location.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * Move the player to a specific location.
@@ -1995,9 +2280,9 @@ export interface Singularity {
   goToLocation(locationName: string): boolean;
 
   /**
-   * SF4.1 - Get the current server.
+   * Get the current server.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * @returns Name of the current server.
@@ -2005,9 +2290,9 @@ export interface Singularity {
   getCurrentServer(): string;
 
   /**
-   * SF4.1 - Connect to a server.
+   * Connect to a server.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.
@@ -2017,9 +2302,9 @@ export interface Singularity {
   connect(hostname: string): boolean;
 
   /**
-   * SF4.1 - Run the hack command in the terminal.
+   * Run the hack command in the terminal.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * @returns Amount of money stolen by manual hacking.
@@ -2027,19 +2312,19 @@ export interface Singularity {
   manualHack(): Promise<number>;
 
   /**
-   * SF4.1 - Run the backdoor command in the terminal.
+   * Run the backdoor command in the terminal.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
-   * @returns True if the installation was successful.
+   * @returns Promise waiting for the installation to finish.
    */
   installBackdoor(): Promise<void>;
 
   /**
-   * SF4.2 - Check if the player is focused.
+   * Check if the player is focused.
    * @remarks
-   * RAM cost: 0.1 GB
+   * RAM cost: 0.1 GB * 16/4/1
    *
    *
    * @returns True if the player is focused.
@@ -2047,13 +2332,98 @@ export interface Singularity {
   isFocused(): boolean;
 
   /**
-   * SF4.2 - Set the players focus.
+   * Set the players focus.
    * @remarks
-   * RAM cost: 0.1 GB
+   * RAM cost: 0.1 GB * 16/4/1
    *
    * @returns True if the focus was changed.
    */
   setFocus(focus: boolean): boolean;
+
+  /**
+   * Get a list of programs offered on the dark web.
+   * @remarks
+   * RAM cost: 1 GB * 16/4/1
+   *
+   *
+   * This function allows the player to get a list of programs available for purchase
+   * on the dark web. Players MUST have purchased Tor to get the list of programs
+   * available. If Tor has not been purchased yet, this function will return an
+   * empty list.
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * getDarkwebPrograms();
+   * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * ns.getDarkwebPrograms();
+   * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+   * ```
+   * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
+   * been purchased
+   */
+  getDarkwebPrograms(): string[];
+
+  /**
+   * Check the price of an exploit on the dark web
+   * @remarks
+   * RAM cost: 0.5 GB * 16/4/1
+   *
+   *
+   * This function allows you to check the price of a darkweb exploit/program.
+   * You MUST have a TOR router in order to use this function. The price returned
+   * by this function is the same price you would see with buy -l from the terminal.
+   * Returns the cost of the program if it has not been purchased yet, 0 if it
+   * has already been purchased, or -1 if Tor has not been purchased (and thus
+   * the program/exploit is not available for purchase).
+   *
+   * If the program does not exist, an error is thrown.
+   *
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * getDarkwebProgramCost("brutessh.exe");
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * ns.getDarkwebProgramCost("brutessh.exe");
+   * ```
+   * @param programName - Name of program to check the price of
+   * @returns Price of the specified darkweb program
+   * (if not yet purchased), 0 if it has already been purchased, or -1 if Tor has not been
+   * purchased. Throws an error if the specified program/exploit does not exist
+   */
+  getDarkwebProgramCost(programName: string): number;
+
+  /**
+   * b1t_flum3 into a different BN.
+   * @remarks
+   * RAM cost: 16 GB * 16/4/1
+   *
+   * @param nextBN - BN number to jump to
+   * @param callbackScript - Name of the script to launch in the next BN.
+   */
+  b1tflum3(nextBN: number, callbackScript?: string): void;
+
+  /**
+   * Destroy the w0r1d_d43m0n and move on to the next BN.
+   * @remarks
+   * RAM cost: 32 GB * 16/4/1
+   *
+   * You must have the special augment installed and the required hacking level
+   *   OR
+   * Completed the final black op.
+   *
+   * @param nextBN - BN number to jump to
+   * @param callbackScript - Name of the script to launch in the next BN.
+   */
+  destroyW0r1dD43m0n(nextBN: number, callbackScript?: string): void;
 }
 
 /**
@@ -2305,18 +2675,18 @@ export interface Hacknet {
    *
    * @example
    * ```ts
-   * // NS1: 
+   * // NS1:
    * var upgradeName = "Sell for Corporation Funds";
    * if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
-   *    hacknet.spendHashes(upgName);
+   *    hacknet.spendHashes(upgradeName);
    * }
    * ```
    * @example
    * ```ts
-   * // NS2: 
+   * // NS2:
    * const upgradeName = "Sell for Corporation Funds";
    * if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {
-   *    ns.hacknet.spendHashes(upgName);
+   *    ns.hacknet.spendHashes(upgradeName);
    * }
    * ```
    * @param upgName - Name of the upgrade of Hacknet Node.
@@ -2371,7 +2741,7 @@ export interface Hacknet {
    * ```
    * @example
    * ```ts
-   * // NS2: 
+   * // NS2:
    * const upgrades = ns.hacknet.getHashUpgrades(); // ["Sell for Money","Sell for Corporation Funds",...]
    * ```
    * @returns An array containing the available upgrades
@@ -2390,7 +2760,7 @@ export interface Hacknet {
   getHashUpgradeLevel(upgName: string): number;
 
   /**
-   * Get the multipler to study.
+   * Get the multiplier to study.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -2401,7 +2771,7 @@ export interface Hacknet {
   getStudyMult(): number;
 
   /**
-   * Get the multipler to training.
+   * Get the multiplier to training.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -2516,13 +2886,24 @@ export interface Bladeburner {
    * @remarks
    * RAM cost: 4 GB
    *
-   * Returns the number of seconds it takes to complete the specified action
+   * Returns the number of milliseconds it takes to complete the specified action
    *
    * @param type - Type of action.
    * @param name - Name of action. Must be an exact match.
    * @returns Number of milliseconds it takes to complete the specified action.
    */
   getActionTime(type: string, name: string): number;
+
+  /**
+   * Get the time elapsed on current action.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   * Returns the number of milliseconds already spent on the current action.
+   *
+   * @returns Number of milliseconds already spent on the current action.
+   */
+  getActionCurrentTime(): number;
 
   /**
    * Get estimate success chance of an action.
@@ -2564,7 +2945,7 @@ export interface Bladeburner {
    *
    * Note that this is meant to be used for Contracts and Operations.
    * This function will return ‘Infinity’ for actions such as Training and Field Analysis.
-   * This function will return 1 for BlackOps not yet completed regardless of wether
+   * This function will return 1 for BlackOps not yet completed regardless of whether
    * the player has the required rank to attempt the mission or not.
    *
    * @param type - Type of action.
@@ -2604,7 +2985,7 @@ export interface Bladeburner {
   getActionCurrentLevel(type: string, name: string): number;
 
   /**
-   * Get wether an action is set to autolevel.
+   * Get whether an action is set to autolevel.
    * @remarks
    * RAM cost: 4 GB
    *
@@ -2876,7 +3257,7 @@ export interface Bladeburner {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Returns the amount of accumulated “bonus time” (seconds) for the Bladeburner mechanic.
+   * Returns the amount of accumulated “bonus time” (milliseconds) for the Bladeburner mechanic.
    *
    * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
    *
@@ -2890,19 +3271,19 @@ export interface Bladeburner {
 }
 
 /**
- * Coding Contact API
+ * Coding Contract API
  * @public
  */
 export interface CodingContract {
   /**
-   * Attemps a coding contract.
+   * Attempts a coding contract.
    * @remarks
    * RAM cost: 10 GB
    *
    * Attempts to solve the Coding Contract with the provided solution.
    *
    * @param answer - Solution for the contract.
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
@@ -2917,7 +3298,7 @@ export interface CodingContract {
    * Returns a name describing the type of problem posed by the Coding Contract.
    * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Name describing the type of problem posed by the Coding Contract.
    */
@@ -2930,7 +3311,7 @@ export interface CodingContract {
    *
    * Get the full text description for the problem posed by the Coding Contract.
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Contract’s text description.
    */
@@ -2958,7 +3339,7 @@ export interface CodingContract {
    *
    * Get the number of tries remaining on the contract before it self-destructs.
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns How many attempts are remaining for the contract;
    */
@@ -3213,7 +3594,7 @@ export interface Gang {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Returns the amount of accumulated “bonus time” (seconds) for the Gang mechanic.
+   * Returns the amount of accumulated “bonus time” (milliseconds) for the Gang mechanic.
    *
    * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
    *
@@ -3327,9 +3708,9 @@ export interface Sleeve {
    * @param sleeveNumber - Index of the sleeve to work for the faction.
    * @param factionName - Name of the faction to work for.
    * @param factionWorkType - Name of the action to perform for this faction.
-   * @returns True if the sleeve started working on this faction, false otherwise.
+   * @returns True if the sleeve started working on this faction, false otherwise, can also throw on errors
    */
-  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean;
+  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean | undefined;
 
   /**
    * Set a sleeve to work for a company.
@@ -3421,6 +3802,75 @@ export interface Sleeve {
    * @returns True if the aug was purchased and installed on the sleeve, false otherwise.
    */
   purchaseSleeveAug(sleeveNumber: number, augName: string): boolean;
+
+  /**
+   * Set a sleeve to perform bladeburner actions.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   * Return a boolean indicating whether or not the sleeve started working out.
+   *
+   * @param sleeveNumber - Index of the sleeve to workout at the gym.
+   * @param action - Name of the action to be performed.
+   * @param contract - Name of the contract if applicable.
+   * @returns True if the sleeve started working out, false otherwise.
+   */
+  setToBladeburnerAction(sleeveNumber: number, action: string, contract?: string): boolean;
+}
+
+/**
+ * Grafting API
+ * @remarks
+ * This API requires Source-File 10 to use.
+ * @public
+ */
+export interface Grafting {
+  /**
+   * Retrieve the grafting cost of an aug.
+   * @remarks
+   * RAM cost: 3.75 GB
+   *
+   * @param augName - Name of the aug to check the price of. Must be an exact match.
+   * @returns The cost required to graft the named augmentation.
+   * @throws Will error if an invalid Augmentation name is provided.
+   */
+  getAugmentationGraftPrice(augName: string): number;
+
+  /**
+   * Retrieves the time required to graft an aug.
+   * @remarks
+   * RAM cost: 3.75 GB
+   *
+   * @param augName - Name of the aug to check the grafting time of. Must be an exact match.
+   * @returns The time required, in millis, to graft the named augmentation.
+   * @throws Will error if an invalid Augmentation name is provided.
+   */
+  getAugmentationGraftTime(augName: string): number;
+
+  /**
+   * Retrieves a list of Augmentations that can be grafted.
+   * @remarks
+   * RAM cost: 5 GB
+   *
+   * Note that this function returns a list of currently graftable Augmentations,
+   * based off of the Augmentations that you already own.
+   *
+   * @returns An array of graftable Augmentations.
+   */
+  getGraftableAugmentations(): string[];
+
+  /**
+   * Begins grafting the named aug. You must be in New Tokyo to use this.
+   * @remarks
+   * RAM cost: 7.5 GB
+   *
+   * @param augName - The name of the aug to begin grafting. Must be an exact match.
+   * @param focus - Acquire player focus on this Augmentation grafting. Optional. Defaults to true.
+   * @returns True if the aug successfully began grafting, false otherwise (e.g. not enough money, or
+   * invalid Augmentation name provided).
+   * @throws Will error if called while you are not in New Tokyo.
+   */
+  graftAugmentation(augName: string, focus?: boolean): boolean;
 }
 
 /**
@@ -3445,12 +3895,40 @@ interface SkillsFormulas {
 }
 
 /**
+ * Reputation formulas
+ * @public
+ */
+interface ReputationFormulas {
+  /**
+   * Calculate the total required amount of faction reputation to reach a target favor.
+   * @param favor - target faction favor.
+   * @returns The calculated faction reputation required.
+   */
+  calculateFavorToRep(favor: number): number;
+  /**
+   * Calculate the resulting faction favor of a total amount of reputation.
+   * (Faction favor is gained whenever you install an Augmentation.)
+   * @param rep - amount of reputation.
+   * @returns The calculated faction favor.
+   */
+  calculateRepToFavor(rep: number): number;
+
+  /**
+   * Calculate how much rep would be gained.
+   * @param amount - Amount of money donated
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   */
+  repFromDonation(amount: number, player: Player): number;
+}
+
+/**
  * Hacking formulas
  * @public
  */
 interface HackingFormulas {
   /**
    * Calculate hack chance.
+   * (Ex: 0.25 would indicate a 25% chance of success.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack chance.
@@ -3467,6 +3945,7 @@ interface HackingFormulas {
   hackExp(server: Server, player: Player): number;
   /**
    * Calculate hack percent for one thread.
+   * (Ex: 0.25 would steal 25% of the server's current value.)
    * @remarks
    * Multiply by thread to get total percent hacked.
    * @param server - Server info from {@link NS.getServer | getServer}
@@ -3475,7 +3954,8 @@ interface HackingFormulas {
    */
   hackPercent(server: Server, player: Player): number;
   /**
-   * Calculate the percent a server would grow.
+   * Calculate the percent a server would grow to.
+   * (Ex: 3.0 would would grow the server to 300% of its current value.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param threads - Amount of thread.
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
@@ -3555,7 +4035,7 @@ interface HacknetNodesFormulas {
    * All constants used by the game.
    * @returns An object with all hacknet node constants used by the game.
    */
-  constants(): number;
+  constants(): HacknetNodeConstants;
 }
 
 /**
@@ -3622,7 +4102,7 @@ interface HacknetServersFormulas {
    * All constants used by the game.
    * @returns An object with all hacknet server constants used by the game.
    */
-  constants(): any;
+  constants(): HacknetServerConstants;
 }
 
 /**
@@ -3683,6 +4163,8 @@ interface GangFormulas {
  * @public
  */
 export interface Formulas {
+  /** Reputation formulas */
+  reputation: ReputationFormulas;
   /** Skills formulas */
   skills: SkillsFormulas;
   /** Hacking formulas */
@@ -3711,7 +4193,7 @@ export interface Fragment {
  */
 export interface ActiveFragment {
   id: number;
-  avgCharge: number;
+  highestCharge: number;
   numCharge: number;
   rotation: number;
   x: number;
@@ -3729,29 +4211,29 @@ interface Stanek {
    * RAM cost: 0.4 GB
    * @returns The width of the gift.
    */
-  width(): number;
+  giftWidth(): number;
   /**
    * Stanek's Gift height.
    * @remarks
    * RAM cost: 0.4 GB
    * @returns The height of the gift.
    */
-  height(): number;
+  giftHeight(): number;
 
   /**
-   * Charge a fragment, increasing it's power.
+   * Charge a fragment, increasing its power.
    * @remarks
    * RAM cost: 0.4 GB
    * @param rootX - rootX Root X against which to align the top left of the fragment.
    * @param rootY - rootY Root Y against which to align the top left of the fragment.
    * @returns Promise that lasts until the charge action is over.
    */
-  charge(rootX: number, rootY: number): Promise<void>;
+  chargeFragment(rootX: number, rootY: number): Promise<void>;
 
   /**
    * List possible fragments.
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    *
    * @returns List of possible fragments.
    */
@@ -3760,7 +4242,7 @@ interface Stanek {
   /**
    * List of fragments in Stanek's Gift.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @returns List of active fragments placed on Stanek's Gift.
    */
@@ -3769,14 +4251,14 @@ interface Stanek {
   /**
    * Clear the board of all fragments.
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    */
-  clear(): void;
+  clearGift(): void;
 
   /**
    * Check if fragment can be placed at specified location.
    * @remarks
-   * RAM cost: cost: 0.5 GB
+   * RAM cost: 0.5 GB
    *
    * @param rootX - rootX Root X against which to align the top left of the fragment.
    * @param rootY - rootY Root Y against which to align the top left of the fragment.
@@ -3784,11 +4266,11 @@ interface Stanek {
    * @param fragmentId - fragmentId ID of the fragment to place.
    * @returns true if the fragment can be placed at that position. false otherwise.
    */
-  canPlace(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  canPlaceFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
   /**
    * Place fragment on Stanek's Gift.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
@@ -3796,28 +4278,79 @@ interface Stanek {
    * @param fragmentId - ID of the fragment to place.
    * @returns true if the fragment can be placed at that position. false otherwise.
    */
-  place(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  placeFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
   /**
    * Get placed fragment at location.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
    * @returns The fragment at [rootX, rootY], if any.
    */
-  get(rootX: number, rootY: number): ActiveFragment | undefined;
+  getFragment(rootX: number, rootY: number): ActiveFragment | undefined;
 
   /**
    * Remove fragment at location.
    * @remarks
-   * RAM cost: cost: 0.15 GB
+   * RAM cost: 0.15 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
    * @returns The fragment at [rootX, rootY], if any.
    */
-  remove(rootX: number, rootY: number): boolean;
+  removeFragment(rootX: number, rootY: number): boolean;
+
+  /**
+   * Accept Stanek's Gift by joining the Church of the Machine God
+   * @remarks
+   * RAM cost: 2 GB
+   *
+   * @returns true if the player is a member of the church and has the gift installed,
+   * false otherwise.
+   */
+  acceptGift(): boolean;
+}
+
+/**
+ * @public
+ */
+export interface InfiltrationReward {
+  tradeRep: number;
+  sellCash: number;
+  SoARep: number;
+}
+
+/**
+ * @public
+ */
+export interface InfiltrationLocation {
+  location: any;
+  reward: InfiltrationReward;
+  difficulty: number;
+}
+
+/**
+ * Infiltration API.
+ * @public
+ */
+interface Infiltration {
+  /**
+   * Get all locations that can be infiltrated.
+   * @remarks
+   * RAM cost: 5 GB
+   *
+   * @returns all locations that can be infiltrated.
+   */
+  getPossibleLocations(): string[];
+  /**
+   * Get all infiltrations with difficulty, location and rewards.
+   * @remarks
+   * RAM cost: 15 GB
+   *
+   * @returns Infiltration data for given location.
+   */
+  getInfiltration(location: string): InfiltrationLocation;
 }
 
 /**
@@ -3828,11 +4361,76 @@ interface UserInterface {
   /**
    * Get the current theme
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    *
    * @returns An object containing the theme's colors
    */
   getTheme(): UserInterfaceTheme;
+
+  /**
+   * Sets the current theme
+   * @remarks
+   * RAM cost: 0 GB
+   * @example
+   * Usage example (NS2)
+   * ```ts
+   * const theme = ns.ui.getTheme();
+   * theme.primary = '#ff5500';
+   * ns.ui.setTheme(theme);
+   * ```
+   */
+  setTheme(newTheme: UserInterfaceTheme): void;
+
+  /**
+   * Resets the player's theme to the default values
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  resetTheme(): void;
+
+  /**
+   * Get the current styles
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns An object containing the player's styles
+   */
+  getStyles(): IStyleSettings;
+
+  /**
+   * Sets the current styles
+   * @remarks
+   * RAM cost: 0 GB
+   * @example
+   * Usage example (NS2)
+   * ```ts
+   * const styles = ns.ui.getStyles();
+   * styles.fontFamily = 'Comic Sans Ms';
+   * ns.ui.setStyles(styles);
+   * ```
+   */
+  setStyles(newStyles: IStyleSettings): void;
+
+  /**
+   * Resets the player's styles to the default values
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  resetStyles(): void;
+
+  /**
+   * Gets the current game information (version, commit, ...)
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  getGameInfo(): GameInfo;
+
+  /**
+   * Clear the Terminal window, as if the player ran `clear` in the terminal
+   * @remarks
+   * RAM cost: 0.2 GB
+   */
+  clearTerminal(): void;
 }
 
 /**
@@ -3855,14 +4453,14 @@ interface UserInterface {
  *  ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
  *  ns.stock.getPrice();
- *  // Some functions need to be await ed
+ *  // Some functions need to be awaited
  *  await ns.hack('n00dles');
  * }
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
  * <hr>
  */
-export interface NS extends Singularity {
+export interface NS {
   /**
    * Namespace for hacknet functions.
    * @remarks RAM cost: 4 GB
@@ -3912,6 +4510,11 @@ export interface NS extends Singularity {
    */
   readonly stanek: Stanek;
   /**
+   * Namespace for infiltration functions.
+   * RAM cost: 0 GB
+   */
+  readonly infiltration: Infiltration;
+  /**
    * Namespace for corporation functions.
    * RAM cost: 0 GB
    */
@@ -3922,6 +4525,19 @@ export interface NS extends Singularity {
    * RAM cost: 0 GB
    */
   readonly ui: UserInterface;
+
+  /**
+   * Namespace for singularity functions.
+   * RAM cost: 0 GB
+   */
+  readonly singularity: Singularity;
+
+  /**
+   * Namespace for grafting functions.
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  readonly grafting: Grafting;
 
   /**
    * Arguments passed into the script.
@@ -3957,13 +4573,11 @@ export interface NS extends Singularity {
    * ```ts
    * // NS1:
    * var earnedMoney = hack("foodnstuff");
-   * earnedMoney = earnedMoney + hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
    * @example
    * ```ts
    * // NS2:
    * let earnedMoney = await ns.hack("foodnstuff");
-   * earnedMoney += await ns.hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
    * @param host - Hostname of the target server to hack.
    * @param opts - Optional parameters for configuring function behavior.
@@ -3991,16 +4605,14 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * // NS1:
-   * var availableMoney = getServerMoneyAvailable("foodnstuff");
+   * var currentMoney = getServerMoneyAvailable("foodnstuff");
    * currentMoney = currentMoney * (1 + grow("foodnstuff"));
-   * currentMoney = currentMoney * (1 + grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
    * ```
    * @example
    * ```ts
    * // NS2:
-   * let availableMoney = ns.getServerMoneyAvailable("foodnstuff");
+   * let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
    * currentMoney *= (1 + await ns.grow("foodnstuff"));
-   * currentMoney *= (1 + await ns.grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
    * ```
    * @param host - Hostname of the target server to grow.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4026,14 +4638,12 @@ export interface NS extends Singularity {
    * // NS1:
    * var currentSecurity = getServerSecurityLevel("foodnstuff");
    * currentSecurity = currentSecurity - weaken("foodnstuff");
-   * currentSecurity = currentSecurity - weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
    * @example
    * ```ts
    * // NS2:
    * let currentSecurity = ns.getServerSecurityLevel("foodnstuff");
    * currentSecurity -= await ns.weaken("foodnstuff");
-   * currentSecurity -= await ns.weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
    * @param host - Hostname of the target server to weaken.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4079,31 +4689,28 @@ export interface NS extends Singularity {
   hackAnalyzeThreads(host: string, hackAmount: number): number;
 
   /**
-   * Get the percent of money stolen with a single thread.
+   * Get the part of money stolen with a single thread.
    * @remarks
    * RAM cost: 1 GB
    *
-   * Returns the percentage of the specified server’s money you will steal with a single hack.
-   * This value is returned in percentage form, not decimal
-   * (Netscript functions typically return in decimal form, but not this one).
-   * This percentage is influenced by the player's hacking skill.
+   * Returns the part of the specified server’s money you will steal with a single thread hack.
    *
    * @example
    * ```ts
    * // NS1:
    * //For example, assume the following returns 0.01:
    * var hackAmount = hackAnalyze("foodnstuff");
-   * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
+   * //This means that if hack the foodnstuff server using a single thread, then you will steal 1%, or 0.01 of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
    * ```
    * @example
    * ```ts
    * // NS2:
    * //For example, assume the following returns 0.01:
    * const hackAmount = ns.hackAnalyze("foodnstuff");
-   * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
+   * //This means that if hack the foodnstuff server using a single thread, then you will steal 1%, or 0.01 of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
    * ```
    * @param host - Hostname of the target server.
-   * @returns The percentage of money you will steal from the target server with a single hack.
+   * @returns The part of money you will steal from the target server with a single thread hack.
    */
   hackAnalyze(host: string): number;
 
@@ -4115,9 +4722,10 @@ export interface NS extends Singularity {
    * Returns the security increase that would occur if a hack with this many threads happened.
    *
    * @param threads - Amount of threads that will be used.
+   * @param hostname - Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
    * @returns The security increase.
    */
-  hackAnalyzeSecurity(threads: number): number;
+  hackAnalyzeSecurity(threads: number, hostname?: string): number;
 
   /**
    * Get the chance of successfully hacking a server.
@@ -4172,9 +4780,11 @@ export interface NS extends Singularity {
    * Returns the security increase that would occur if a grow with this many threads happened.
    *
    * @param threads - Amount of threads that will be used.
+   * @param hostname - Optional. Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
+   * @param cores - Optional. The number of cores of the server that would run grow.
    * @returns The security increase.
    */
-  growthAnalyzeSecurity(threads: number): number;
+  growthAnalyzeSecurity(threads: number, hostname?: string, cores?: number): number;
 
   /**
    * Suspends the script for n milliseconds.
@@ -4202,35 +4812,47 @@ export interface NS extends Singularity {
    * ```
    * @returns
    */
-  sleep(millis: number): Promise<void>;
+  sleep(millis: number): Promise<true>;
 
   /**
    * Suspends the script for n milliseconds. Doesn't block with concurrent calls.
+   * You should prefer 'sleep' over 'asleep' except when doing very complex UI work.
    * @remarks
    * RAM cost: 0 GB
    *
    * @param millis - Number of milliseconds to sleep.
    * @returns
    */
-  asleep(millis: number): Promise<void>;
+  asleep(millis: number): Promise<true>;
 
   /**
-   * Prints a value or a variable to the script’s logs.
+   * Prints one or move values or variables to the script’s logs.
    * @remarks
    * RAM cost: 0 GB
    *
-   * @param msg - Value to be printed.
+   * @param args - Value(s) to be printed.
    */
-  print(msg: any): void;
+  print(...args: any[]): void;
 
   /**
-   * Prints a value or a variable to the Terminal.
+   * Prints a formatted string to the script’s logs.
    * @remarks
    * RAM cost: 0 GB
    *
-   * @param msg - Value to be printed.
+   * see: https://github.com/alexei/sprintf.js
+   * @param format - format of the message
+   * @param args - Value(s) to be printed.
    */
-  tprint(msg: any): void;
+  printf(format: string, ...args: any[]): void;
+
+  /**
+   * Prints one or more values or variables to the Terminal.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param args - Value(s) to be printed.
+   */
+  tprint(...args: any[]): void;
 
   /**
    * Prints a raw value or a variable to the Terminal.
@@ -4304,10 +4926,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //Get logs from foo.script on the current server that was run with no args
    * getScriptLogs("foo.script");
-   * 
+   *
    * //Open logs from foo.script on the foodnstuff server that was run with no args
    * getScriptLogs("foo.script", "foodnstuff");
-   * 
+   *
    * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * getScriptLogs("foo.script", "foodnstuff", 1, "test");
    * ```
@@ -4316,10 +4938,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //Get logs from foo.script on the current server that was run with no args
    * ns.getScriptLogs("foo.script");
-   * 
+   *
    * //Open logs from foo.script on the foodnstuff server that was run with no args
    * ns.getScriptLogs("foo.script", "foodnstuff");
-   * 
+   *
    * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * ns.getScriptLogs("foo.script", "foodnstuff", 1, "test");
    * ```
@@ -4329,6 +4951,27 @@ export interface NS extends Singularity {
    * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
    */
   getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
+
+  /**
+   * Get an array of recently killed scripts across all servers.
+   * @remarks
+   * RAM cost: 0.2 GB
+   *
+   * The most recently killed script is the first element in the array.
+   * Note that there is a maximum number of recently killed scripts which are tracked.
+   * This is configurable in the game's options as `Recently killed scripts size`.
+   *
+   * @example
+   * ```ts
+   * let recentScripts = ns.getRecentScripts();
+   * let mostRecent = recentScripts.shift()
+   * if (mostRecent)
+   *   ns.tprint(mostRecent.logs.join('\n'))
+   * ```
+   *
+   * @returns Array with information about previously killed scripts.
+   */
+  getRecentScripts(): RecentScript[];
 
   /**
    * Open the tail window of a script.
@@ -4347,10 +4990,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //Open logs from foo.script on the current server that was run with no args
    * tail("foo.script");
-   * 
+   *
    * //Get logs from foo.script on the foodnstuff server that was run with no args
    * tail("foo.script", "foodnstuff");
-   * 
+   *
    * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * tail("foo.script", "foodnstuff", 1, "test");
    * ```
@@ -4359,18 +5002,33 @@ export interface NS extends Singularity {
    * // NS2:
    * //Open logs from foo.script on the current server that was run with no args
    * ns.tail("foo.script");
-   * 
+   *
    * //Get logs from foo.script on the foodnstuff server that was run with no args
    * ns.tail("foo.script", "foodnstuff");
-   * 
+   *
    * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * ns.tail("foo.script", "foodnstuff", 1, "test");
    * ```
-   * @param fn - Optional. Filename of the script being tailed. If omitted, the current script is tailed.
+   * @param fn - Optional. Filename or PID of the script being tailed. If omitted, the current script is tailed.
    * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.
    * @param args - Arguments for the script being tailed.
    */
-  tail(fn?: string, host?: string, ...args: any[]): void;
+  tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
+
+  /**
+   * Close the tail window of a script.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * Closes a script’s logs. This is functionally the same pressing the "Close" button on the tail window.
+   *
+   * If the function is called with no arguments, it will close the current script’s logs.
+   *
+   * Otherwise, the pid argument can be used to close the logs from another script.
+   *
+   * @param pid - Optional. PID of the script having its tail closed. If omitted, the current script is used.
+   */
+  closeTail(pid?: number): void;
 
   /**
    * Get the list of servers connected to a server.
@@ -4536,10 +5194,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:
    * run("foo.script");
-   * 
+   *
    * //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:
    * run("foo.script", 5);
-   * 
+   *
    * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:
    * run("foo.script", 1, 'foodnstuff');
    * ```
@@ -4548,10 +5206,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:
    * ns.run("foo.script");
-   * 
+   *
    * //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:
    * ns.run("foo.script", 5);
-   * 
+   *
    * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:
    * ns.run("foo.script", 1, 'foodnstuff');
    * ```
@@ -4560,7 +5218,7 @@ export interface NS extends Singularity {
    * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value.
    * @returns Returns the PID of a successfully started script, and 0 otherwise.
    */
-  run(script: string, numThreads?: number, ...args: string[]): number;
+  run(script: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
 
   /**
    * Start another script on any server.
@@ -4576,18 +5234,17 @@ export interface NS extends Singularity {
    * PID stands for Process ID. The PID is a unique identifier for each script.
    * The PID will always be a positive integer.
    *
-   * Running this function with a numThreads argument of 0 will return 0 without running the script.
-   * However, running this function with a negative numThreads argument will cause a runtime error.
+   * Running this function with 0 or a negative numThreads argument will cause a runtime error.
    *
    * @example
    * ```ts
    * // NS1:
    * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
    * exec("generic-hack.script", "foodnstuff");
-   * 
+   *
    * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
    * exec("generic-hack.script", "joesguns", 10);
-   * 
+   *
    * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
    * exec("foo.script", "foodnstuff", 5, 1, "test");
    * ```
@@ -4596,10 +5253,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
    * ns.exec("generic-hack.script", "foodnstuff");
-   * 
+   *
    * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
    * ns.exec("generic-hack.script", "joesguns", 10);
-   * 
+   *
    * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
    * ns.exec("foo.script", "foodnstuff", 5, 1, "test");
    * ```
@@ -4656,10 +5313,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
    * kill("foo.script", "foodnstuff");
-   * 
+   *
    * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
    * kill("foo.script", getHostname());
-   * 
+   *
    * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
    * kill("foo.script", getHostname(), 1, "foodnstuff");
    * ```
@@ -4668,10 +5325,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
    * ns.kill("foo.script", "foodnstuff");
-   * 
+   *
    * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
    * ns.kill("foo.script", getHostname());
-   * 
+   *
    * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
    * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
    * ```
@@ -4680,7 +5337,36 @@ export interface NS extends Singularity {
    * @param args - Arguments to identify which script to kill.
    * @returns True if the script is successfully killed, and false otherwise.
    */
-  kill(script: string | number, host: string, ...args: string[]): boolean;
+  kill(script: number): boolean;
+
+  /**
+   * {@inheritDoc NS.(kill:1)}
+   * @example
+   * ```ts
+   * // NS1:
+   * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+   * kill("foo.script", "foodnstuff");
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+   * kill("foo.script", getHostname());
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+   * kill("foo.script", getHostname(), 1, "foodnstuff");
+   * ```
+   * @example
+   * ```ts
+   * // NS2:
+   * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+   * ns.kill("foo.script", "foodnstuff");
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+   * ns.kill("foo.script", getHostname());
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+   * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
+   * ```
+   */
+  kill(script: string, host: string, ...args: string[]): boolean;
 
   /**
    * Terminate all scripts on a server.
@@ -4693,9 +5379,10 @@ export interface NS extends Singularity {
    * If no host is defined, it will kill all scripts, where the script is running.
    *
    * @param host - IP or hostname of the server on which to kill all scripts.
+   * @param safetyguard - Skips the script that calls this function
    * @returns True if any scripts were killed, and false otherwise.
    */
-  killall(host?: string): boolean;
+  killall(host?: string, safetyguard?: boolean): boolean;
 
   /**
    * Terminates the current script immediately.
@@ -4717,7 +5404,7 @@ export interface NS extends Singularity {
    * // NS1:
    * //Copies foo.lit from the helios server to the home computer:
    * scp("foo.lit", "helios", "home");
-   * 
+   *
    * //Tries to copy three files from rothman-uni to home computer:
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
    * scp(files, "rothman-uni", "home");
@@ -4727,7 +5414,7 @@ export interface NS extends Singularity {
    * // NS2:
    * //Copies foo.lit from the helios server to the home computer:
    * await ns.scp("foo.lit", "helios", "home");
-   * 
+   *
    * //Tries to copy three files from rothman-uni to home computer:
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
    * await ns.scp(files, "rothman-uni", "home");
@@ -4743,6 +5430,38 @@ export interface NS extends Singularity {
    * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
    * @param destination - Host of the destination server, which is the server to which the file will be copied.
    * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
+   */
+  scp(files: string | string[], destination: string): Promise<boolean>;
+
+  /**
+   * {@inheritDoc NS.(scp:1)}
+   * @example
+   * ```ts
+   * // NS1:
+   * //Copies foo.lit from the helios server to the home computer:
+   * scp("foo.lit", "helios", "home");
+   *
+   * //Tries to copy three files from rothman-uni to home computer:
+   * files = ["foo1.lit", "foo2.script", "foo3.script"];
+   * scp(files, "rothman-uni", "home");
+   * ```
+   * @example
+   * ```ts
+   * // NS2:
+   * //Copies foo.lit from the helios server to the home computer:
+   * await ns.scp("foo.lit", "helios", "home");
+   *
+   * //Tries to copy three files from rothman-uni to home computer:
+   * files = ["foo1.lit", "foo2.script", "foo3.script"];
+   * await ns.scp(files, "rothman-uni", "home");
+   * ```
+   * @example
+   * ```ts
+   * //ns2, copies files from home to a target server
+   * const server = ns.args[0];
+   * const files = ["hack.js","weaken.js","grow.js"];
+   * await ns.scp(files, "home", server);
+   * ```
    */
   scp(files: string | string[], source: string, destination: string): Promise<boolean>;
 
@@ -4770,8 +5489,8 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * // NS1:
-   * const scripts = ps("home");
-   * for (let i = 0; i < scripts.length; ++i) {
+   * var scripts = ps("home");
+   * for (var i = 0; i < scripts.length; ++i) {
    *     tprint(scripts[i].filename + ' ' + scripts[i].threads);
    *     tprint(scripts[i].args);
    * }
@@ -4780,8 +5499,8 @@ export interface NS extends Singularity {
    * ```ts
    * // NS2:
    * const ps = ns.ps("home");
-   * for (script of ps) {
-   *     ns.tprint(`${script.filename} ${ps[i].threads}`);
+   * for (let script of ps) {
+   *     ns.tprint(`${script.filename} ${script.threads}`);
    *     ns.tprint(script.args);
    * }
    * ```
@@ -4944,9 +5663,9 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.1 GB
    *
-   * Returns the server’s instrinsic “growth parameter”. This growth
-   * parameter is a number between 0 and 100 that represents how
-   * quickly the server’s money grows. This parameter affects the
+   * Returns the server’s intrinsic “growth parameter”. This growth
+   * parameter is a number typically between 0 and 100 that represents
+   * how quickly the server’s money grows. This parameter affects the
    * percentage by which the server’s money is increased when using the
    * grow function. A higher growth parameter will result in a
    * higher percentage increase from grow.
@@ -5019,7 +5738,7 @@ export interface NS extends Singularity {
    * const [totalRam, ramUsed] = ns.getServerRam("helios");
    * ```
    * @param host - Host of target server.
-   * @returns Array with total and used memory on the specified server.
+   * @returns Array with total and used memory on the specified server, in GB.
    */
   getServerRam(host: string): [number, number];
 
@@ -5029,7 +5748,7 @@ export interface NS extends Singularity {
    * RAM cost: 0.05 GB
    *
    * @param host - Hostname of the target server.
-   * @returns max ram
+   * @returns max ram (GB)
    */
   getServerMaxRam(host: string): number;
   /**
@@ -5038,7 +5757,7 @@ export interface NS extends Singularity {
    * RAM cost: 0.05 GB
    *
    * @param host - Hostname of the target server.
-   * @returns used ram
+   * @returns used ram (GB)
    */
   getServerUsedRam(host: string): number;
 
@@ -5087,7 +5806,7 @@ export interface NS extends Singularity {
    * // NS1:
    * //The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
    * fileExists("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
    * fileExists("ftpcrack.exe");
    * ```
@@ -5096,7 +5815,7 @@ export interface NS extends Singularity {
    * // NS2:
    * // The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
    * ns.fileExists("foo.script", "foodnstuff");
-   * 
+   *
    * // The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
    * ns.fileExists("ftpcrack.exe");
    * ```
@@ -5112,6 +5831,7 @@ export interface NS extends Singularity {
    * RAM cost: 0.1 GB
    *
    * Returns a boolean indicating whether the specified script is running on the target server.
+   * If you use a PID instead of a filename, the hostname and args parameters are unnecessary.
    * Remember that a script is uniquely identified by both its name and its arguments.
    *
    * @example
@@ -5119,10 +5839,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
    * isRunning("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
    * isRunning("foo.script", getHostname());
-   * 
+   *
    * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
    * isRunning("foo.script", "joesguns", 1, 5, "test");
    * ```
@@ -5131,30 +5851,34 @@ export interface NS extends Singularity {
    * // NS2:
    * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
    * ns.isRunning("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
    * ns.isRunning("foo.script", ns.getHostname());
-   * 
+   *
    * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
    * ns.isRunning("foo.script", "joesguns", 1, 5, "test");
    * ```
-   * @param script - Filename of script to check. This is case-sensitive.
+   * @param script - Filename or PID of script to check. This is case-sensitive.
    * @param host - Host of target server.
    * @param args - Arguments to specify/identify which scripts to search for.
    * @returns True if specified script is running on the target server, and false otherwise.
    */
-  isRunning(script: string, host: string, ...args: string[]): boolean;
+  isRunning(script: FilenameOrPID, host: string, ...args: string[]): boolean;
 
   /**
    * Get general info about a running script.
    * @remarks
    * RAM cost: 0.3 GB
    *
-   * Running with no args returns curent script.
+   * Running with no args returns current script.
+   * If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
    *
-   * @returns info about a running script
+   * @param filename - Optional. Filename or PID of the script.
+   * @param hostname - Optional. Name of host server the script is running on.
+   * @param args  - Arguments to identify the script
+   * @returns The info about the running script if found, and null otherwise.
    */
-  getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
+  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript | null;
 
   /**
    * Get cost of purchasing a server.
@@ -5177,7 +5901,7 @@ export interface NS extends Singularity {
    *     ns.tprint(i + " -- " + ns.getPurchasedServerCost(Math.pow(2, i)));
    * }
    * ```
-   * @param ram - Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
+   * @param ram - Amount of RAM of a potential purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
    * @returns The cost to purchase a server with the specified amount of ram.
    */
   getPurchasedServerCost(ram: number): number;
@@ -5225,7 +5949,7 @@ export interface NS extends Singularity {
    * }
    * ```
    * @param hostname - Host of the purchased server.
-   * @param ram - Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
+   * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
    * @returns The hostname of the newly purchased server.
    */
   purchaseServer(hostname: string, ram: number): string;
@@ -5266,7 +5990,7 @@ export interface NS extends Singularity {
    * Returns the maximum RAM that a purchased server can have.
    *
    * @remarks RAM cost: 0.05 GB
-   * @returns Returns the maximum RAM that a purchased server can have.
+   * @returns Returns the maximum RAM (in GB) that a purchased server can have.
    */
   getPurchasedServerMaxRam(): number;
 
@@ -5275,7 +5999,7 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0 GB
    *
-   * This function can be used to either write data to a text file (.txt).
+   * This function can be used to write data to a text file (.txt).
    *
    * This function will write data to that text file. If the specified text file does not exist,
    * then it will be created. The third argument mode, defines how the data will be written to
@@ -5284,11 +6008,11 @@ export interface NS extends Singularity {
    * then the data will be written in “append” mode which means that the data will be added at the
    * end of the text file.
    *
-   * @param handle - Port or text file that will be written to.
+   * @param handle - Filename of the text file that will be written to.
    * @param data - Data to write.
    * @param mode - Defines the write mode. Only valid when writing to text files.
    */
-  write(handle: string, data?: string[] | number, mode?: "w" | "a"): Promise<void>;
+  write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): Promise<void>;
 
   /**
    * Attempt to write to a port.
@@ -5303,20 +6027,20 @@ export interface NS extends Singularity {
    * @param data - Data to write.
    * @returns True if the data is successfully written to the port, and false otherwise.
    */
-  tryWritePort(port: number, data: string[] | number): Promise<boolean>;
+  tryWritePort(port: number, data: string | number): Promise<boolean>;
 
   /**
    * Read content of a file.
    * @remarks
    * RAM cost: 0 GB
    *
-   * This function is used to read data from a port or from a text file (.txt).
+   * This function is used to read data from a text file (.txt).
    *
    * This function will return the data in the specified text
    * file. If the text file does not exist, an empty string will be returned.
    *
-   * @param handle - Port or text file to read from.
-   * @returns Data in the specified text file or port.
+   * @param handle - Filename to read from.
+   * @returns Data in the specified text file.
    */
   read(handle: string): any;
 
@@ -5388,9 +6112,8 @@ export interface NS extends Singularity {
    *
    * @see https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports
    * @param port - Port number. Must be an integer between 1 and 20.
-   * @returns Data in the specified port.
    */
-  getPortHandle(port: number): any[];
+  getPortHandle(port: number): NetscriptPort;
 
   /**
    * Delete a file.
@@ -5422,7 +6145,7 @@ export interface NS extends Singularity {
    * // NS1:
    * //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
    * scriptRunning("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
    * scriptRunning("foo.script", getHostname());
    * ```
@@ -5431,7 +6154,7 @@ export interface NS extends Singularity {
    * // NS2:
    * //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
    * ns.scriptRunning("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
    * ns.scriptRunning("foo.script", ns.getHostname());
    * ```
@@ -5472,8 +6195,8 @@ export interface NS extends Singularity {
    * Returns 0 if the script does not exist.
    *
    * @param script - Filename of script. This is case-sensitive.
-   * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
-   * @returns Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.
+   * @param host - Host of target server the script is located on. This is optional, if it is not specified then the function will use the current server as the target server.
+   * @returns Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
    */
   getScriptRam(script: string, host?: string): number;
 
@@ -5487,8 +6210,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getHackTime(host: string): number;
@@ -5503,8 +6224,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getGrowTime(host: string): number;
@@ -5514,14 +6233,12 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.05 GB
    *
-   * Returns the amount of time in milliseconds it takes to execute the weaken() Netscript function on the target server.
+   * Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server.
    * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
-   * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
+   * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getWeakenTime(host: string): number;
 
@@ -5549,7 +6266,12 @@ export interface NS extends Singularity {
    * @param args - Arguments that the script is running with.
    * @returns Amount of income the specified script generates while online.
    */
-  getScriptIncome(script: string, host: string, ...args: string[]): number | [number, number];
+  getScriptIncome(): [number, number];
+
+  /**
+   * {@inheritDoc NS.(getScriptIncome:1)}
+   */
+  getScriptIncome(script: string, host: string, ...args: string[]): number;
 
   /**
    * Get the exp gain of a script.
@@ -5567,6 +6289,11 @@ export interface NS extends Singularity {
    * @param host - Server on which script is running.
    * @param args - Arguments that the script is running with.
    * @returns Amount of hacking experience the specified script generates while online.
+   */
+  getScriptExpGain(): number;
+
+  /**
+   * {@inheritDoc NS.(getScriptExpGain:1)}
    */
   getScriptExpGain(script: string, host: string, ...args: string[]): number;
 
@@ -5589,7 +6316,7 @@ export interface NS extends Singularity {
    * @param args - Formating arguments.
    * @returns Formated text.
    */
-  sprintf(format: string, ...args: string[]): string;
+  sprintf(format: string, ...args: any[]): string;
 
   /**
    * Format a string with an array of arguments.
@@ -5601,7 +6328,7 @@ export interface NS extends Singularity {
    * @param args - Formating arguments.
    * @returns Formated text.
    */
-  vsprintf(format: string, args: string[]): string;
+  vsprintf(format: string, args: any[]): string;
 
   /**
    * Format a number
@@ -5631,19 +6358,25 @@ export interface NS extends Singularity {
   tFormat(milliseconds: number, milliPrecision?: boolean): string;
 
   /**
-   * Prompt the player with a Yes/No modal.
+   * Prompt the player with an input modal.
    * @remarks
    * RAM cost: 0 GB
    *
-   * Prompts the player with a dialog box with two options: “Yes” and “No”.
-   * This function will return true if the player click “Yes” and false if
-   * the player clicks “No”. The script’s execution is halted until the player
-   * selects one of the options.
+   * Prompts the player with a dialog box. If `options.type` is undefined or "boolean",
+   * the player is shown "Yes" and "No" prompts, which return true and false respectively.
+   * Passing a type of "text" will give the player a text field and a value of "select"
+   * will show a drop-down field. Choosing type "select" will require an array or object
+   * to be passed via the `options.choices` property.
+   * The script’s execution is halted until the player selects one of the options.
    *
    * @param txt - Text to appear in the prompt dialog box.
-   * @returns True if the player click “Yes” and false if the player clicks “No”.
+   * @param options - Options to modify the prompt the player is shown.
+   * @returns True if the player click “Yes”; false if the player clicks “No”; or the value entered by the player.
    */
-  prompt(txt: string): Promise<boolean>;
+  prompt(
+    txt: string,
+    options?: { type?: "boolean" | "text" | "select" | undefined; choices?: string[] },
+  ): Promise<boolean | string>;
 
   /**
    * Open up a message box.
@@ -5655,9 +6388,9 @@ export interface NS extends Singularity {
    * Queue a toast (bottom-right notification).
    * @param msg - Message in the toast.
    * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
-   * @param duration - Duration of toast in ms, defaults to 2000
+   * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
    */
-  toast(msg: any, variant?: string, duration?: number): void;
+  toast(msg: any, variant?: ToastVariantValues, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -5712,7 +6445,7 @@ export interface NS extends Singularity {
    * RAM cost: 4 GB
    *
    * Returns an object containing the current BitNode multipliers.
-   * This function requires Source-File 5 in order to run.
+   * This function requires you to be in Bitnode 5 or have Source-File 5 in order to run.
    * The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%).
    * The multipliers represent the difference between the current BitNode and
    * the original BitNode (BitNode-1).
@@ -5773,6 +6506,26 @@ export interface NS extends Singularity {
   atExit(f: () => void): void;
 
   /**
+   * Move a file on the target server.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * NS2 exclusive
+   *
+   * Move the source file to the specified destination on the target server.
+   *
+   * This command only works for scripts and text files (.txt). It cannot, however,  be used
+   * to convert from script to text file, or vice versa.
+   *
+   * This function can also be used to rename files.
+   *
+   * @param host - Host of target server.
+   * @param source - Filename of the source file.
+   * @param destination - Filename of the destination file.
+   */
+  mv(host: string, source: string, destination: string): void;
+
+  /**
    * Parse command line flags.
    * @remarks
    * RAM cost: 0 GB
@@ -5788,7 +6541,7 @@ export interface NS extends Singularity {
    *     ['help', false], // a default boolean means this flag is a boolean
    * ]);
    * tprint(data);
-   * 
+   *
    * // example.ns
    * export async function main(ns) {
    *   const data = ns.flags([
@@ -5815,6 +6568,41 @@ export interface NS extends Singularity {
    * ```
    */
   flags(schema: [string, string | number | boolean | string[]][]): any;
+
+  /**
+   * Share your computer with your factions.
+   * @remarks
+   * RAM cost: 2.4 GB
+   *
+   * Increases your rep gain of hacking contracts while share is called.
+   * Scales with thread count.
+   */
+  share(): Promise<void>;
+
+  /**
+   * Calculate your share power. Based on all the active share calls.
+   * @remarks
+   * RAM cost: 0.2 GB
+   */
+  getSharePower(): number;
+
+  enums: NSEnums;
+}
+
+/** @public */
+export enum ToastVariant {
+  SUCCESS = "success",
+  WARNING = "warning",
+  ERROR = "error",
+  INFO = "info",
+}
+
+/** @public */
+export type ToastVariantValues = `${ToastVariant}`;
+
+/** @public */
+export interface NSEnums {
+  toast: typeof ToastVariant;
 }
 
 /**
@@ -5834,7 +6622,7 @@ export interface OfficeAPI {
    */
   assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
   /**
-   * Assign an employee to a job.
+   * Hire an employee.
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @returns The newly hired employee, if any
@@ -5848,7 +6636,7 @@ export interface OfficeAPI {
    */
   upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
   /**
-   * Assign an employee to a job.
+   * Throw a party for your employees
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param costPerEmployee - Amount to spend per employee.
@@ -5868,7 +6656,7 @@ export interface OfficeAPI {
    */
   hireAdVert(divisionName: string): void;
   /**
-   * Hire AdVert.
+   * Purchase a research
    * @param divisionName - Name of the division
    * @param researchName - Name of the research
    */
@@ -5888,6 +6676,49 @@ export interface OfficeAPI {
    * @returns Employee data
    */
   getEmployee(divisionName: string, cityName: string, employeeName: string): Employee;
+  /**
+   * Get the cost to Hire AdVert
+   * @param divisionName - Name of the division
+   * @returns Cost
+   */
+  getHireAdVertCost(divisionName: string): number;
+  /**
+   * Get the number of times you have Hired AdVert
+   * @param divisionName - Name of the division
+   * @returns Number of times you have Hired AdVert
+   */
+  getHireAdVertCount(adivisionName: string): number;
+  /**
+   * Get the cost to unlock research
+   * @param divisionName - Name of the division
+   * @param researchName - Name of the research
+   * @returns cost
+   */
+  getResearchCost(divisionName: string, researchName: string): number;
+  /**
+   * Gets if you have unlocked a research
+   * @param divisionName - Name of the division
+   * @param researchName - Name of the research
+   * @returns true is unlocked, false if not
+   */
+  hasResearched(divisionName: string, researchName: string): boolean;
+  /**
+   * Set the auto job assignment for a job
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param job - Name of the job
+   * @param amount - Number of employees to assign to that job
+   * @returns A promise that is fulfilled when the assignment is complete.
+   */
+  setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
+  /**
+   * Cost to Upgrade office size.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param size - Amount of positions to open
+   * @returns Cost of upgrading the office
+   */
+  getOfficeSizeUpgradeCost(divisionName: string, cityName: string, asize: number): number;
 }
 
 /**
@@ -5937,6 +6768,14 @@ export interface WarehouseAPI {
    */
   setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
   /**
+   * Set whether smart supply uses leftovers before buying
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param enabled - smart supply use leftovers enabled
+   */
+  setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName: string, enabled: boolean): void;
+  /**
    * Set material buy data
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
@@ -5944,6 +6783,14 @@ export interface WarehouseAPI {
    * @param amt - Amount of material to buy
    */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
+  /**
+   * Set material to bulk buy
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param amt - Amount of material to buy
+   */
+  bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
    * Get warehouse data
    * @param divisionName - Name of the division
@@ -6039,8 +6886,9 @@ export interface WarehouseAPI {
    * Upgrade warehouse
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
+   * @param amt - amount of upgrades defaults to 1
    */
-  upgradeWarehouse(divisionName: string, cityName: string): void;
+  upgradeWarehouse(divisionName: string, cityName: string, amt?: number): void;
   /**
    * Create a new product
    * @param divisionName - Name of the division
@@ -6056,6 +6904,40 @@ export interface WarehouseAPI {
     designInvest: number,
     marketingInvest: number,
   ): void;
+  /**
+   * Limit Material Production.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param qty - Amount to limit to
+   */
+  limitMaterialProduction(divisionName: string, cityName: string, materialName: string, qty: number): void;
+  /**
+   * Limit Product Production.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param productName - Name of the product
+   * @param qty - Amount to limit to
+   */
+  limitProductProduction(divisionName: string, cityName: string, productName: string, qty: number): void;
+  /**
+   * Gets the cost to purchase a warehouse
+   * @returns cost
+   */
+  getPurchaseWarehouseCost(): number;
+  /**
+   * Gets the cost to upgrade a warehouse to the next level
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param amt - amount of upgrades defaults to 1
+   * @returns cost to upgrade
+   */
+  getUpgradeWarehouseCost(adivisionName: any, acityName: any, amt?: number): number;
+  /**
+   * Check if you have a warehouse in city
+   * @returns true if warehouse is present, false if not
+   */
+  hasWarehouse(adivisionName: any, acityName: any): boolean;
 }
 
 /**
@@ -6063,6 +6945,74 @@ export interface WarehouseAPI {
  * @public
  */
 export interface Corporation extends WarehouseAPI, OfficeAPI {
+  /**
+   * Create a Corporation
+   * @param divisionName - Name of the division
+   * @param selfFund - If you should self fund, defaults to true, false will only work on Bitnode 3
+   * @returns true if created and false if not
+   */
+  createCorporation(corporationName: string, selfFund: boolean): boolean;
+  /**
+   * Check if you have a one time unlockable upgrade
+   * @param upgradeName - Name of the upgrade
+   * @returns true if unlocked and false if not
+   */
+  hasUnlockUpgrade(upgradeName: string): boolean;
+  /**
+   * Gets the cost to unlock a one time unlockable upgrade
+   * @param upgradeName - Name of the upgrade
+   * @returns cost of the upgrade
+   */
+  getUnlockUpgradeCost(upgradeName: string): number;
+  /**
+   * Get the level of a levelable upgrade
+   * @param upgradeName - Name of the upgrade
+   * @returns the level of the upgrade
+   */
+  getUpgradeLevel(upgradeName: string): number;
+  /**
+   * Gets the cost to unlock the next level of a levelable upgrade
+   * @param upgradeName - Name of the upgrade
+   * @returns cost of the upgrade
+   */
+  getUpgradeLevelCost(upgradeName: string): number;
+  /**
+   * Gets the cost to expand into a new industry
+   * @param industryName - Name of the industry
+   * @returns cost
+   */
+  getExpandIndustryCost(industryName: string): number;
+  /**
+   * Gets the cost to expand into a new city
+   * @returns cost
+   */
+  getExpandCityCost(): number;
+  /**
+   * Get an offer for investment based on you companies current valuation
+   * @returns An offer of investment
+   */
+  getInvestmentOffer(): InvestmentOffer;
+  /**
+   * Accept investment based on you companies current valuation
+   * @remarks
+   * Is based on current valuation and will not honer a specific Offer
+   * @returns An offer of investment
+   */
+  acceptInvestmentOffer(): boolean;
+  /**
+   * Go public
+   * @param numShares - number of shares you would like to issue for your IPO
+   * @returns true if you successfully go public, false if not
+   */
+  goPublic(numShares: number): boolean;
+  /**
+   * Bribe a faction
+   * @param factionName - Faction name
+   * @param amountCash - Amount of money to bribe
+   * @param amountShares - Amount of shares to bribe
+   * @returns True if successful, false if not
+   */
+  bribe(factionName: string, amountCash: number, amountShares: number): boolean;
   /**
    * Get corporation data
    * @returns Corporation data
@@ -6087,7 +7037,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    */
   expandCity(divisionName: string, cityName: string): void;
   /**
-   * Unlock an upgrade.
+   * Unlock an upgrade
    * @param upgradeName - Name of the upgrade
    */
   unlockUpgrade(upgradeName: string): void;
@@ -6101,6 +7051,28 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @param percent - Percent of profit to issue as dividends.
    */
   issueDividends(percent: number): void;
+  /**
+   * Buyback Shares
+   * @param amount - Amount of shares to buy back.
+   *
+   */
+  buyBackShares(amount: number): void;
+  /**
+   * Sell Shares
+   * @param amount -  Amount of shares to sell.
+   *
+   */
+  sellShares(amount: number): void;
+  /**
+   * Get bonus time.
+   *
+   * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
+   *
+   * “Bonus time” makes the game progress faster.
+   *
+   * @returns Bonus time for the Corporation mechanic in milliseconds.
+   */
+  getBonusTime(): number;
 }
 
 /**
@@ -6116,7 +7088,7 @@ interface CorporationInfo {
   revenue: number;
   /** Expenses per second this cycle */
   expenses: number;
-  /** Is the company is public */
+  /** Indicating if the company is public */
   public: boolean;
   /** Total number of shares issues by this corporation */
   totalShares: number;
@@ -6128,8 +7100,10 @@ interface CorporationInfo {
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;
-  /** State of the corporation, like PRODUCTION or EXPORT */
+  /** State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT. */
   state: string;
+  /** Array of all divisions */
+  divisions: Division[];
 }
 
 /**
@@ -6139,22 +7113,27 @@ interface CorporationInfo {
 interface Employee {
   /** Name of the employee */
   name: string;
-  /** Morale */
+  /** Morale of the employee */
   mor: number;
-  /** Happiness */
+  /** Happiness of the employee */
   hap: number;
-  /** Energy */
+  /** Energy of the employee */
   ene: number;
+  /** Intelligence of the employee */
   int: number;
+  /** Charisma of the employee */
   cha: number;
+  /** Experience of the employee */
   exp: number;
+  /** Creativity of the employee */
   cre: number;
+  /** Efficiency of the employee */
   eff: number;
-  /** Salary */
+  /** Salary of the employee */
   sal: number;
-  /** City */
+  /** Current Location (city) */
   loc: string;
-  /** Current job */
+  /** Current job position */
   pos: string;
 }
 
@@ -6165,14 +7144,24 @@ interface Employee {
 interface Product {
   /** Name of the product */
   name: string;
-  /** Demand for the product */
-  dmd: number;
-  /** Competition for the product */
-  cmp: number;
+  /** Demand for the product, only present if "Market Research - Demand" unlocked */
+  dmd: number | undefined;
+  /** Competition for the product, only present if "Market Research - Competition" unlocked */
+  cmp: number | undefined;
+  /** Product Rating */
+  rat: number;
+  /** Product Properties. The data is \{qlt, per, dur, rel, aes, fea\} */
+  properties: { [key: string]: number };
   /** Production cost */
   pCost: number;
   /** Sell cost, can be "MP+5" */
   sCost: string | number;
+  /** Data refers to the production, sale, and quantity of the products
+   * These values are specific to a city
+   * For each city, the data is [qty, prod, sell] */
+  cityData: { [key: string]: number[] };
+  /** Creation progress - A number between 0-100 representing percentage */
+  developmentProgress: number;
 }
 
 /**
@@ -6186,6 +7175,18 @@ interface Material {
   qty: number;
   /** Quality of the material */
   qlt: number;
+  /** Demand for the material, only present if "Market Research - Demand" unlocked */
+  dmd: number | undefined;
+  /** Competition for the material, only present if "Market Research - Competition" unlocked */
+  cmp: number | undefined;
+  /** Amount of material produced  */
+  prod: number;
+  /** Amount of material sold */
+  sell: number;
+  /** cost to buy material */
+  cost: number;
+  /** Sell cost, can be "MP+5" */
+  sCost: string | number;
 }
 
 /**
@@ -6201,6 +7202,8 @@ interface Warehouse {
   size: number;
   /** Used space in the warehouse */
   sizeUsed: number;
+  /** Smart Supply status in the warehouse */
+  smartSupplyEnabled: boolean;
 }
 
 /**
@@ -6224,8 +7227,10 @@ interface Office {
   maxMor: number;
   /** Name of all the employees */
   employees: string[];
-  /** Positions of the employees */
+  /** Production of the employees */
   employeeProd: EmployeeJobs;
+  /** Positions of the employees */
+  employeeJobs: EmployeeJobs;
 }
 
 /**
@@ -6249,7 +7254,7 @@ interface EmployeeJobs {
 interface Division {
   /** Name of the division */
   name: string;
-  /** Type of division, like Aggriculture */
+  /** Type of division, like Agriculture */
   type: string;
   /** Awareness of the division */
   awareness: number;
@@ -6271,6 +7276,23 @@ interface Division {
   upgrades: number[];
   /** Cities in which this division has expanded */
   cities: string[];
+  /** Products developed by this division */
+  products: string[];
+  /** Whether the industry this division is in is capable of making products */
+  makesProducts: boolean;
+}
+
+/**
+ * Corporation investment offer
+ * @public
+ */
+interface InvestmentOffer {
+  /** Amount of funds you will get from this investment */
+  funds: number;
+  /** Amount of share you will give in exchange for this investment */
+  shares: number;
+  /** Current round of funding (max 4) */
+  round: number;
 }
 
 /**
@@ -6312,4 +7334,34 @@ interface UserInterfaceTheme {
   backgroundprimary: string;
   backgroundsecondary: string;
   button: string;
+}
+
+/**
+ * Interface Styles
+ * @internal
+ */
+interface IStyleSettings {
+  fontFamily: string;
+  lineHeight: number;
+}
+
+/**
+ * Game Information
+ * @internal
+ */
+interface GameInfo {
+  version: string;
+  commit: string;
+  platform: string;
+}
+
+/**
+ * Used for autocompletion
+ * @public
+ */
+interface AutocompleteData {
+  servers: string[];
+  scripts: string[];
+  txts: string[];
+  flags(schema: [string, string | number | boolean | string[]][]): any;
 }

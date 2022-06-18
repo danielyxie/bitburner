@@ -3,6 +3,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Settings } from "../../Settings/Settings";
 
 export function mem(
   terminal: ITerminal,
@@ -38,6 +39,19 @@ export function mem(
     terminal.print(
       `This script requires ${numeralWrapper.formatRAM(ramUsage)} of RAM to run for ${numThreads} thread(s)`,
     );
+
+    const verboseEntries = script.ramUsageEntries?.sort((a, b) => b.cost - a.cost) ?? [];
+    const padding = Settings.UseIEC60027_2 ? 9 : 8;
+    for (const entry of verboseEntries) {
+      terminal.print(
+        `${numeralWrapper.formatRAM(entry.cost * numThreads).padStart(padding)} | ${entry.name} (${entry.type})`,
+      );
+    }
+
+    if (ramUsage > 0 && verboseEntries.length === 0) {
+      // Let's warn the user that he might need to save his script again to generate the detailed entries
+      terminal.warn("You might have to open & save this script to see the detailed RAM usage information.");
+    }
   } catch (e) {
     terminal.error(e + "");
   }

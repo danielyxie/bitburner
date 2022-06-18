@@ -3,7 +3,7 @@
  *
  * This subcomponent renders all of the buttons for applying to jobs at a company
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -36,6 +36,11 @@ export function CompanyLocation(props: IProps): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 200);
+    return () => clearInterval(id);
+  }, []);
   /**
    * We'll keep a reference to the Company that this component is being rendered for,
    * so we don't have to look it up every time
@@ -193,7 +198,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
             <Tooltip
               title={
                 <>
-                  You will have <Favor favor={company.favor + favorGain[0]} /> company favor upon resetting after
+                  You will have <Favor favor={company.favor + favorGain} /> company favor upon resetting after
                   installing Augmentations
                 </>
               }
@@ -221,108 +226,112 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           </Box>
           <Typography>-------------------------</Typography>
           <br />
-          <Button onClick={work}>Work</Button>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <Button onClick={() => setQuitOpen(true)}>Quit</Button>
-          <QuitJobModal
-            locName={props.locName}
-            company={company}
-            onQuit={rerender}
-            open={quitOpen}
-            onClose={() => setQuitOpen(false)}
-          />
         </>
       )}
-      <br />
-      {company.hasAgentPositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.AgentCompanyPositions[0]]}
-          onClick={applyForAgentJob}
-          text={"Apply for Agent Job"}
-        />
-      )}
-      {company.hasBusinessConsultantPositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]]}
-          onClick={applyForBusinessConsultantJob}
-          text={"Apply for Business Consultant Job"}
-        />
-      )}
-      {company.hasBusinessPositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.BusinessCompanyPositions[0]]}
-          onClick={applyForBusinessJob}
-          text={"Apply for Business Job"}
-        />
-      )}
-      {company.hasEmployeePositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.MiscCompanyPositions[1]]}
-          onClick={applyForEmployeeJob}
-          text={"Apply to be an Employee"}
-        />
-      )}
-      {company.hasEmployeePositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[1]]}
-          onClick={applyForPartTimeEmployeeJob}
-          text={"Apply to be a part-time Employee"}
-        />
-      )}
-      {company.hasITPositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.ITCompanyPositions[0]]}
-          onClick={applyForItJob}
-          text={"Apply for IT Job"}
-        />
-      )}
-      {company.hasSecurityPositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.SecurityCompanyPositions[2]]}
-          onClick={applyForSecurityJob}
-          text={"Apply for Security Job"}
-        />
-      )}
-      {company.hasSoftwareConsultantPositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]]}
-          onClick={applyForSoftwareConsultantJob}
-          text={"Apply for Software Consultant Job"}
-        />
-      )}
-      {company.hasSoftwarePositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.SoftwareCompanyPositions[0]]}
-          onClick={applyForSoftwareJob}
-          text={"Apply for Software Job"}
-        />
-      )}
-      {company.hasWaiterPositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.MiscCompanyPositions[0]]}
-          onClick={applyForWaiterJob}
-          text={"Apply to be a Waiter"}
-        />
-      )}
-      {company.hasWaiterPositions() && (
-        <ApplyToJobButton
-          company={company}
-          entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[0]]}
-          onClick={applyForPartTimeWaiterJob}
-          text={"Apply to be a part-time Waiter"}
-        />
-      )}
-      {location.infiltrationData != null && <Button onClick={startInfiltration}>Infiltrate Company</Button>}
+      <Box sx={{ display: "grid", width: "fit-content" }}>
+        {isEmployedHere && (
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            <Button onClick={work}>Work</Button>
+            <Button onClick={() => setQuitOpen(true)}>Quit</Button>
+            <QuitJobModal
+              locName={props.locName}
+              company={company}
+              onQuit={rerender}
+              open={quitOpen}
+              onClose={() => setQuitOpen(false)}
+            />
+          </Box>
+        )}
+        {company.hasAgentPositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.AgentCompanyPositions[0]]}
+            onClick={applyForAgentJob}
+            text={"Apply for Agent Job"}
+          />
+        )}
+        {company.hasBusinessConsultantPositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]]}
+            onClick={applyForBusinessConsultantJob}
+            text={"Apply for Business Consultant Job"}
+          />
+        )}
+        {company.hasBusinessPositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.BusinessCompanyPositions[0]]}
+            onClick={applyForBusinessJob}
+            text={"Apply for Business Job"}
+          />
+        )}
+        {company.hasEmployeePositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.MiscCompanyPositions[1]]}
+            onClick={applyForEmployeeJob}
+            text={"Apply to be an Employee"}
+          />
+        )}
+        {company.hasEmployeePositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[1]]}
+            onClick={applyForPartTimeEmployeeJob}
+            text={"Apply to be a part-time Employee"}
+          />
+        )}
+        {company.hasITPositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.ITCompanyPositions[0]]}
+            onClick={applyForItJob}
+            text={"Apply for IT Job"}
+          />
+        )}
+        {company.hasSecurityPositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.SecurityCompanyPositions[2]]}
+            onClick={applyForSecurityJob}
+            text={"Apply for Security Job"}
+          />
+        )}
+        {company.hasSoftwareConsultantPositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]]}
+            onClick={applyForSoftwareConsultantJob}
+            text={"Apply for Software Consultant Job"}
+          />
+        )}
+        {company.hasSoftwarePositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.SoftwareCompanyPositions[0]]}
+            onClick={applyForSoftwareJob}
+            text={"Apply for Software Job"}
+          />
+        )}
+        {company.hasWaiterPositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.MiscCompanyPositions[0]]}
+            onClick={applyForWaiterJob}
+            text={"Apply to be a Waiter"}
+          />
+        )}
+        {company.hasWaiterPositions() && (
+          <ApplyToJobButton
+            company={company}
+            entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[0]]}
+            onClick={applyForPartTimeWaiterJob}
+            text={"Apply to be a part-time Waiter"}
+          />
+        )}
+        {location.infiltrationData != null && <Button onClick={startInfiltration}>Infiltrate Company</Button>}
+      </Box>
     </>
   );
 }

@@ -66,7 +66,7 @@ export function StockTickers(props: IProps): React.ReactElement {
   }
 
   const tickers: React.ReactElement[] = [];
-  for (const stockMarketProp in props.stockMarket) {
+  for (const stockMarketProp of Object.keys(props.stockMarket)) {
     const val = props.stockMarket[stockMarketProp];
     if (val instanceof Stock) {
       // Skip if there's a filter and the stock isnt in that filter

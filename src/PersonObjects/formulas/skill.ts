@@ -13,10 +13,21 @@ export function calculateSkillProgress(exp: number, mult = 1): ISkillProgress {
   let baseExperience = calculateExp(currentSkill, mult);
   if (baseExperience < 0) baseExperience = 0;
 
-  let nextExperience = calculateExp(nextSkill, mult)
+  let nextExperience = calculateExp(nextSkill, mult);
   if (nextExperience < 0) nextExperience = 0;
 
   const normalize = (value: number): number => ((value - baseExperience) * 100) / (nextExperience - baseExperience);
+  let progress = nextExperience - baseExperience !== 0 ? normalize(exp) : 99.99;
+
+  // Clamp progress: When sleeves are working out, the player gets way too much progress
+  if (progress < 0) progress = 0;
+  if (progress > 100) progress = 100;
+
+  // Clamp floating point imprecisions
+  let currentExperience = exp - baseExperience;
+  let remainingExperience = nextExperience - exp;
+  if (currentExperience < 0) currentExperience = 0;
+  if (remainingExperience < 0) remainingExperience = 0;
 
   return {
     currentSkill,
@@ -24,8 +35,10 @@ export function calculateSkillProgress(exp: number, mult = 1): ISkillProgress {
     baseExperience,
     experience: exp,
     nextExperience,
-    progress: (nextExperience - baseExperience !== 0) ? normalize(exp) : 99.99
-  }
+    currentExperience,
+    remainingExperience,
+    progress,
+  };
 }
 
 export interface ISkillProgress {
@@ -34,13 +47,20 @@ export interface ISkillProgress {
   baseExperience: number;
   experience: number;
   nextExperience: number;
+  currentExperience: number;
+  remainingExperience: number;
   progress: number;
 }
 
 export function getEmptySkillProgress(): ISkillProgress {
   return {
-    currentSkill: 0, nextSkill: 0,
-    baseExperience: 0, experience: 0, nextExperience: 0,
+    currentSkill: 0,
+    nextSkill: 0,
+    baseExperience: 0,
+    experience: 0,
+    nextExperience: 0,
+    currentExperience: 0,
+    remainingExperience: 0,
     progress: 0,
   };
 }

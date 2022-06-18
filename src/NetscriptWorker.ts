@@ -3,6 +3,7 @@
  * that allows for scripts to run
  */
 import { killWorkerScript } from "./Netscript/killWorkerScript";
+import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
@@ -35,6 +36,7 @@ import { simple as walksimple } from "acorn-walk";
 import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 import { Player } from "./Player";
 import { Terminal } from "./Terminal";
+import { IPlayer } from "./PersonObjects/IPlayer";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -47,6 +49,9 @@ export function prestigeWorkerScripts(): void {
     ws.env.stopFlag = true;
     killWorkerScript(ws);
   }
+  for (const port of NetscriptPorts) {
+    port.clear();
+  }
 
   WorkerScriptStartStopEventEmitter.emit();
   workerScripts.clear();
@@ -55,7 +60,7 @@ export function prestigeWorkerScripts(): void {
 // JS script promises need a little massaging to have the same guarantees as netscript
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
-function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript> {
+function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Promise<void> {
   workerScript.running = true;
 
   // The name of the currently running netscript function, to prevent concurrent
@@ -75,18 +80,18 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
       // This is not a problem for legacy Netscript because it also checks the
       // stop flag in the evaluator.
       if (workerScript.env.stopFlag) {
-        throw workerScript;
+        throw new ScriptDeath(workerScript);
       }
 
       if (propName === "asleep") return f(...args); // OK for multiple simultaneous calls to sleep.
 
       const msg =
-        "Concurrent calls to Netscript functions not allowed! " +
+        "Concurrent calls to Netscript functions are not allowed! " +
         "Did you forget to await hack(), grow(), or some other " +
         "promise-returning function? (Currently running: %s tried to run: %s)";
       if (runningFn) {
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName));
-        throw workerScript;
+        throw new ScriptDeath(workerScript);
       }
       runningFn = propName;
 
@@ -112,22 +117,32 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
     };
   }
 
-  for (const prop in workerScript.env.vars) {
-    if (typeof workerScript.env.vars[prop] !== "function") continue;
-    workerScript.env.vars[prop] = wrap(prop, workerScript.env.vars[prop]);
+  function wrapObject(vars: any, ...tree: string[]): void {
+    for (const prop of Object.keys(vars)) {
+      switch (typeof vars[prop]) {
+        case "function": {
+          vars[prop] = wrap([...tree, prop].join("."), vars[prop]);
+          break;
+        }
+        case "object": {
+          if (Array.isArray(vars[prop])) continue;
+          wrapObject(vars[prop], ...tree, prop);
+          break;
+        }
+      }
+    }
   }
-  workerScript.env.vars.stanek.charge = wrap("stanek.prop", workerScript.env.vars.stanek.charge);
+  wrapObject(workerScript.env.vars);
 
   // Note: the environment that we pass to the JS script only needs to contain the functions visible
   // to that script, which env.vars does at this point.
-  return new Promise<WorkerScript>((resolve, reject) => {
-    executeJSScript(workerScript.getServer().scripts, workerScript)
+  return new Promise<void>((resolve, reject) => {
+    executeJSScript(player, workerScript.getServer().scripts, workerScript)
       .then(() => {
-        resolve(workerScript);
+        resolve();
       })
       .catch((e) => reject(e));
   }).catch((e) => {
-    console.log(e);
     if (e instanceof Error) {
       if (e instanceof SyntaxError) {
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");
@@ -137,20 +152,21 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
           e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
         );
       }
-      throw workerScript;
+      throw new ScriptDeath(workerScript);
     } else if (isScriptErrorMessage(e)) {
       workerScript.errorMessage = e;
-      throw workerScript;
-    } else if (e instanceof WorkerScript) {
+      throw new ScriptDeath(workerScript);
+    } else if (e instanceof ScriptDeath) {
       throw e;
     }
 
-    workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e);
-    throw workerScript; // Don't know what to do with it, let's rethrow.
+    // Don't know what to do with it, let's try making an error message out of it
+    workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, "" + e);
+    throw new ScriptDeath(workerScript);
   });
 }
 
-function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript> {
+function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   const code = workerScript.code;
   workerScript.running = true;
 
@@ -165,17 +181,19 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
-    return Promise.resolve(workerScript);
+    return Promise.resolve();
   }
 
   const interpreterInitialization = function (int: any, scope: any): void {
     //Add the Netscript environment
     const ns = NetscriptFunctions(workerScript);
-    for (const name in ns) {
+    for (const name of Object.keys(ns)) {
       const entry = ns[name];
       if (typeof entry === "function") {
         //Async functions need to be wrapped. See JS-Interpreter documentation
-        if (["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write"].includes(name)) {
+        if (
+          ["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write", "share", "wget"].includes(name)
+        ) {
           const tempWrapper = function (...args: any[]): void {
             const fnArgs = [];
 
@@ -196,7 +214,21 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
               })
               .catch(function (err: any) {
                 // workerscript is when you cancel a delay
-                if (!(err instanceof WorkerScript)) console.error(err);
+                if (!(err instanceof ScriptDeath)) {
+                  console.error(err);
+                  const errorTextArray = err.split("|DELIMITER|");
+                  const hostname = errorTextArray[1];
+                  const scriptName = errorTextArray[2];
+                  const errorMsg = errorTextArray[3];
+                  let msg = `${scriptName}@${hostname}<br>`;
+                  msg += "<br>";
+                  msg += errorMsg;
+                  dialogBoxCreate(msg);
+                  workerScript.env.stopFlag = true;
+                  workerScript.running = false;
+                  killWorkerScript(workerScript);
+                  return Promise.resolve();
+                }
               });
           };
           int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
@@ -258,14 +290,14 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
-    return Promise.resolve(workerScript);
+    return Promise.resolve();
   }
 
   return new Promise(function (resolve, reject) {
     function runInterpreter(): void {
       try {
         if (workerScript.env.stopFlag) {
-          return reject(workerScript);
+          return reject(new ScriptDeath(workerScript));
         }
 
         let more = true;
@@ -278,7 +310,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
         if (more) {
           setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
         } else {
-          resolve(workerScript);
+          resolve();
         }
       } catch (e: any) {
         e = e.toString();
@@ -286,7 +318,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           e = makeRuntimeRejectMsg(workerScript, e);
         }
         workerScript.errorMessage = e;
-        return reject(workerScript);
+        return reject(new ScriptDeath(workerScript));
       }
     }
 
@@ -295,11 +327,12 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     } catch (e: any) {
       if (isString(e)) {
         workerScript.errorMessage = e;
-        return reject(workerScript);
-      } else if (e instanceof WorkerScript) {
+        return reject(new ScriptDeath(workerScript));
+      } else if (e instanceof ScriptDeath) {
         return reject(e);
       } else {
-        return reject(workerScript);
+        console.error(e);
+        return reject(new ScriptDeath(workerScript));
       }
     }
   });
@@ -372,7 +405,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
         });
 
         //Now we have to generate the code that would create the namespace
-        generatedCode += "var " + namespace + ";\n" + "(function (namespace) {\n";
+        generatedCode += `var ${namespace};\n(function (namespace) {\n`;
 
         //Add the function declarations
         fnDeclarations.forEach((fn: any) => {
@@ -387,7 +420,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
         });
 
         //Finish
-        generatedCode += "})(" + namespace + " || " + "(" + namespace + " = {}));\n";
+        generatedCode += `})(${namespace} || (" + namespace + " = {}));\n`;
       } else {
         //import {...} from script
 
@@ -457,8 +490,13 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
  * @param {Server} server - Server on which the script is to be run
  * @returns {number} pid of started script
  */
-export function startWorkerScript(runningScript: RunningScript, server: BaseServer, parent?: WorkerScript): number {
-  if (createAndAddWorkerScript(runningScript, server, parent)) {
+export function startWorkerScript(
+  player: IPlayer,
+  runningScript: RunningScript,
+  server: BaseServer,
+  parent?: WorkerScript,
+): number {
+  if (createAndAddWorkerScript(player, runningScript, server, parent)) {
     // Push onto runningScripts.
     // This has to come after createAndAddWorkerScript() because that fn updates RAM usage
     server.runScript(runningScript);
@@ -478,7 +516,12 @@ export function startWorkerScript(runningScript: RunningScript, server: BaseServ
  * @param {Server} server - Server on which the script is to be run
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
-function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseServer, parent?: WorkerScript): boolean {
+function createAndAddWorkerScript(
+  player: IPlayer,
+  runningScriptObj: RunningScript,
+  server: BaseServer,
+  parent?: WorkerScript,
+): boolean {
   // Update server's ram usage
   let threads = 1;
   if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
@@ -489,7 +532,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   const oneRamUsage = getRamUsageFromRunningScript(runningScriptObj);
   const ramUsage = roundToTwo(oneRamUsage * threads);
   const ramAvailable = server.maxRam - server.ramUsed;
-  if (ramUsage > ramAvailable) {
+  if (ramUsage > ramAvailable + 0.001) {
     dialogBoxCreate(
       `Not enough RAM to run script ${runningScriptObj.filename} with args ` +
         `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
@@ -512,83 +555,85 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
 
   // Create the WorkerScript. NOTE: WorkerScript ctor will set the underlying
   // RunningScript's PID as well
-  const s = new WorkerScript(runningScriptObj, pid, NetscriptFunctions);
-  s.ramUsage = oneRamUsage;
+  const workerScript = new WorkerScript(runningScriptObj, pid, NetscriptFunctions);
+  workerScript.ramUsage = oneRamUsage;
 
   // Add the WorkerScript to the global pool
-  workerScripts.set(pid, s);
+  workerScripts.set(pid, workerScript);
   WorkerScriptStartStopEventEmitter.emit();
 
   // Start the script's execution
-  let p: Promise<WorkerScript> | null = null; // Script's resulting promise
-  if (s.name.endsWith(".js") || s.name.endsWith(".ns")) {
-    p = startNetscript2Script(s);
+  let scriptExecution: Promise<void> | null = null; // Script's resulting promise
+  if (workerScript.name.endsWith(".js") || workerScript.name.endsWith(".ns")) {
+    scriptExecution = startNetscript2Script(player, workerScript);
   } else {
-    p = startNetscript1Script(s);
-    if (!(p instanceof Promise)) {
+    scriptExecution = startNetscript1Script(workerScript);
+    if (!(scriptExecution instanceof Promise)) {
       return false;
     }
   }
 
   // Once the code finishes (either resolved or rejected, doesnt matter), set its
   // running status to false
-  p.then(function (w: WorkerScript) {
-    w.running = false;
-    w.env.stopFlag = true;
-    // On natural death, the earnings are transfered to the parent if it still exists.
-    if (parent !== undefined) {
-      if (parent.running) {
-        parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
-        parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
+  scriptExecution
+    .then(function () {
+      workerScript.running = false;
+      workerScript.env.stopFlag = true;
+      // On natural death, the earnings are transfered to the parent if it still exists.
+      if (parent !== undefined) {
+        if (parent.running) {
+          parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
+          parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
+        }
       }
-    }
 
-    killWorkerScript(s);
-    w.log("", () => "Script finished running");
-  }).catch(function (w) {
-    if (w instanceof Error) {
-      dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-      console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
-      return;
-    } else if (w instanceof WorkerScript) {
-      if (isScriptErrorMessage(w.errorMessage)) {
-        const errorTextArray = w.errorMessage.split("|DELIMITER|");
-        if (errorTextArray.length != 4) {
-          console.error("ERROR: Something wrong with Error text in evaluator...");
-          console.error("Error text: " + w.errorMessage);
-          return;
+      killWorkerScript(workerScript);
+      workerScript.log("", () => "Script finished running");
+    })
+    .catch(function (e) {
+      if (e instanceof Error) {
+        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+        console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
+        return;
+      } else if (e instanceof ScriptDeath) {
+        if (isScriptErrorMessage(workerScript.errorMessage)) {
+          const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
+          if (errorTextArray.length != 4) {
+            console.error("ERROR: Something wrong with Error text in evaluator...");
+            console.error("Error text: " + workerScript.errorMessage);
+            return;
+          }
+          const hostname = errorTextArray[1];
+          const scriptName = errorTextArray[2];
+          const errorMsg = errorTextArray[3];
+
+          let msg = `RUNTIME ERROR<br>${scriptName}@${hostname} (PID - ${workerScript.pid})<br>`;
+          if (workerScript.args.length > 0) {
+            msg += `Args: ${arrayToString(workerScript.args)}<br>`;
+          }
+          msg += "<br>";
+          msg += errorMsg;
+
+          dialogBoxCreate(msg);
+          workerScript.log("", () => "Script crashed with runtime error");
+        } else {
+          workerScript.log("", () => "Script killed");
+          return; // Already killed, so stop here
         }
-        const hostname = errorTextArray[1];
-        const scriptName = errorTextArray[2];
-        const errorMsg = errorTextArray[3];
-
-        let msg = `RUNTIME ERROR<br>${scriptName}@${hostname}<br>`;
-        if (w.args.length > 0) {
-          msg += `Args: ${arrayToString(w.args)}<br>`;
-        }
-        msg += "<br>";
-        msg += errorMsg;
-
-        dialogBoxCreate(msg);
-        w.log("", () => "Script crashed with runtime error");
+      } else if (isScriptErrorMessage(e)) {
+        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+        console.error(
+          "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
+            e.toString(),
+        );
+        return;
       } else {
-        w.log("", () => "Script killed");
-        return; // Already killed, so stop here
+        dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
+        console.error(e);
       }
-    } else if (isScriptErrorMessage(w)) {
-      dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-      console.error(
-        "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
-          w.toString(),
-      );
-      return;
-    } else {
-      dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-      console.error(w);
-    }
 
-    killWorkerScript(s);
-  });
+      killWorkerScript(workerScript);
+    });
 
   return true;
 }
@@ -607,10 +652,10 @@ export function updateOnlineScriptTimes(numCycles = 1): void {
  * Called when the game is loaded. Loads all running scripts (from all servers)
  * into worker scripts so that they will start running
  */
-export function loadAllRunningScripts(): void {
+export function loadAllRunningScripts(player: IPlayer): void {
   const skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
   if (skipScriptLoad) {
-    Terminal.warn('Skipped loading player scripts during startup');
+    Terminal.warn("Skipped loading player scripts during startup");
     console.info("Skipping the load of any scripts during startup");
   }
   for (const server of GetAllServers()) {
@@ -627,7 +672,14 @@ export function loadAllRunningScripts(): void {
       server.runningScripts.length = 0;
     } else {
       for (let j = 0; j < server.runningScripts.length; ++j) {
-        createAndAddWorkerScript(server.runningScripts[j], server);
+        const fileName = server.runningScripts[j].filename;
+        createAndAddWorkerScript(player, server.runningScripts[j], server);
+
+        if (!server.runningScripts[j]) {
+          // createAndAddWorkerScript can modify the server.runningScripts array if a script is invalid
+          console.error(`createAndAddWorkerScript removed ${fileName} from ${server}`);
+          continue;
+        }
 
         // Offline production
         scriptCalculateOfflineProduction(server.runningScripts[j]);
@@ -640,6 +692,7 @@ export function loadAllRunningScripts(): void {
  * Run a script from inside another script (run(), exec(), spawn(), etc.)
  */
 export function runScriptFromScript(
+  player: IPlayer,
   caller: string,
   server: BaseServer,
   scriptname: string,
@@ -687,7 +740,7 @@ export function runScriptFromScript(
     // Check for admin rights and that there is enough RAM availble to run
     const script = server.scripts[i];
     let ramUsage = script.ramUsage;
-    threads = Math.round(Number(threads));
+    threads = Math.floor(Number(threads));
     if (threads === 0) {
       return 0;
     }
@@ -697,26 +750,24 @@ export function runScriptFromScript(
     if (server.hasAdminRights == false) {
       workerScript.log(caller, () => `You do not have root access on '${server.hostname}'`);
       return 0;
-    } else if (ramUsage > ramAvailable) {
+    } else if (ramUsage > ramAvailable + 0.001) {
       workerScript.log(
         caller,
         () =>
           `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
       );
       return 0;
-    } else {
-      // Able to run script
-      workerScript.log(
-        caller,
-        () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
-      );
-      const runningScriptObj = new RunningScript(script, args);
-      runningScriptObj.threads = threads;
-      runningScriptObj.server = server.hostname;
-
-      return startWorkerScript(runningScriptObj, server, workerScript);
     }
-    break;
+    // Able to run script
+    workerScript.log(
+      caller,
+      () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
+    );
+    const runningScriptObj = new RunningScript(script, args);
+    runningScriptObj.threads = threads;
+    runningScriptObj.server = server.hostname;
+
+    return startWorkerScript(player, runningScriptObj, server, workerScript);
   }
 
   workerScript.log(caller, () => `Could not find script '${scriptname}' on '${server.hostname}'`);

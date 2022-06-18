@@ -29,6 +29,7 @@ import { GetServer } from "../../Server/AllServers";
 import { CorruptableText } from "../../ui/React/CorruptableText";
 import { use } from "../../ui/Context";
 import { serverMetadata } from "../../Server/data/servers";
+import { Tooltip } from "@mui/material";
 
 type IProps = {
   loc: Location;
@@ -92,8 +93,16 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
   return (
     <>
       <Button onClick={() => router.toCity()}>Return to World</Button>
-      <Typography variant="h4">
-        {backdoorInstalled && !Settings.DisableTextEffects ? <CorruptableText content={loc.name} /> : loc.name}
+      <Typography variant="h4" sx={{ mt: 1 }}>
+        {backdoorInstalled && !Settings.DisableTextEffects ? (
+          <Tooltip title={`Backdoor installed on ${loc.name}.`}>
+            <span>
+              <CorruptableText content={loc.name} />
+            </span>
+          </Tooltip>
+        ) : (
+          loc.name
+        )}
       </Typography>
       {locContent}
     </>

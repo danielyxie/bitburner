@@ -4,7 +4,7 @@
 
 ## SleeveInformation.earningsForTask property
 
-earnings for this sleeve
+Earnings for this sleeve
 
 <b>Signature:</b>
 

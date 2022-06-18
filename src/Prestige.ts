@@ -1,4 +1,6 @@
-import { Augmentations } from "./Augmentation/Augmentations";
+import { FactionNames } from "./Faction/data/FactionNames";
+import { CityName } from "./Locations/data/CityNames";
+import { StaticAugmentations } from "./Augmentation/StaticAugmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
@@ -10,7 +12,6 @@ import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
-import { initMessages } from "./Message/MessageHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { Router } from "./ui/GameRoot";
@@ -19,7 +20,6 @@ import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
 import { GetServer, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
 import { prestigeHomeComputer } from "./Server/ServerHelpers";
-import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
@@ -52,17 +52,17 @@ export function prestigeAugmentation(): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(homeComp);
+  prestigeHomeComputer(Player, homeComp);
 
-  if (augmentationExists(AugmentationNames.Neurolink) && Augmentations[AugmentationNames.Neurolink].owned) {
+  if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink)) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
     homeComp.programs.push(Programs.RelaySMTPProgram.name);
   }
-  if (augmentationExists(AugmentationNames.CashRoot) && Augmentations[AugmentationNames.CashRoot].owned) {
+  if (augmentationExists(AugmentationNames.CashRoot) && Player.hasAugmentation(AugmentationNames.CashRoot)) {
     Player.setMoney(1e6);
     homeComp.programs.push(Programs.BruteSSHProgram.name);
   }
-  if (augmentationExists(AugmentationNames.PCMatrix) && Augmentations[AugmentationNames.PCMatrix].owned) {
+  if (augmentationExists(AugmentationNames.PCMatrix) && Player.hasAugmentation(AugmentationNames.PCMatrix)) {
     homeComp.programs.push(Programs.DeepscanV1.name);
     homeComp.programs.push(Programs.AutoLink.name);
   }
@@ -75,14 +75,14 @@ export function prestigeAugmentation(): void {
   initForeignServers(Player.getHomeComputer());
 
   // Gain favor for Companies
-  for (const member in Companies) {
+  for (const member of Object.keys(Companies)) {
     if (Companies.hasOwnProperty(member)) {
       Companies[member].gainFavor();
     }
   }
 
   // Gain favor for factions
-  for (const member in Factions) {
+  for (const member of Object.keys(Factions)) {
     if (Factions.hasOwnProperty(member)) {
       Factions[member].gainFavor();
     }
@@ -103,8 +103,8 @@ export function prestigeAugmentation(): void {
   Player.reapplyAllSourceFiles();
   initCompanies();
 
-  // Messages
-  initMessages();
+  // Apply entropy from grafting
+  Player.applyEntropy(Player.entropy);
 
   // Gang
   const gang = Player.gang;
@@ -113,6 +113,20 @@ export function prestigeAugmentation(): void {
     if (faction instanceof Faction) {
       joinFaction(faction);
     }
+    const penalty = 0.95;
+    for (const m of gang.members) {
+      m.hack_asc_points *= penalty;
+      m.str_asc_points *= penalty;
+      m.def_asc_points *= penalty;
+      m.dex_asc_points *= penalty;
+      m.agi_asc_points *= penalty;
+      m.cha_asc_points *= penalty;
+    }
+  }
+
+  // BitNode 3: Corporatocracy
+  if (Player.bitNodeN === 3) {
+    homeComp.messages.push(LiteratureNames.CorporationManagementHandbook);
   }
 
   // Cancel Bladeburner action
@@ -124,7 +138,7 @@ export function prestigeAugmentation(): void {
   if (Player.bitNodeN === 8) {
     Player.money = BitNode8StartingMoney;
   }
-  if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
+  if (Player.bitNodeN === 8 || Player.sourceFileLvl(8) > 0) {
     Player.hasWseAccount = true;
     Player.hasTixApiAccess = true;
   }
@@ -136,7 +150,7 @@ export function prestigeAugmentation(): void {
   }
 
   // Red Pill
-  if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
+  if (augmentationExists(AugmentationNames.TheRedPill) && Player.hasAugmentation(AugmentationNames.TheRedPill)) {
     const WorldDaemon = GetServer(SpecialServers.WorldDaemon);
     const DaedalusServer = GetServer(SpecialServers.DaedalusServer);
     if (WorldDaemon && DaedalusServer) {
@@ -145,10 +159,8 @@ export function prestigeAugmentation(): void {
     }
   }
 
-  if (augmentationExists(AugmentationNames.StaneksGift1) && Augmentations[AugmentationNames.StaneksGift1].owned) {
-    // TODO(hydroflame): refactor faction names so we don't have to hard
-    // code strings.
-    joinFaction(Factions["Church of the Machine God"]);
+  if (augmentationExists(AugmentationNames.StaneksGift1) && Player.hasAugmentation(AugmentationNames.StaneksGift1)) {
+    joinFaction(Factions[FactionNames.ChurchOfTheMachineGod]);
   }
 
   staneksGift.prestigeAugmentation();
@@ -161,7 +173,6 @@ export function prestigeAugmentation(): void {
 // Prestige by destroying Bit Node and gaining a Source File
 export function prestigeSourceFile(flume: boolean): void {
   initBitNodeMultipliers(Player);
-  updateSourceFileFlags(Player);
 
   Player.prestigeSourceFile();
   prestigeWorkerScripts(); // Delete all Worker Scripts objects
@@ -180,14 +191,14 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(homeComp);
+  prestigeHomeComputer(Player, homeComp);
 
   // Re-create foreign servers
   initForeignServers(Player.getHomeComputer());
 
-  if (SourceFileFlags[9] >= 2) {
+  if (Player.sourceFileLvl(9) >= 2) {
     homeComp.setMaxRam(128);
-  } else if (SourceFileFlags[1] > 0) {
+  } else if (Player.sourceFileLvl(1) > 0) {
     homeComp.setMaxRam(32);
   } else {
     homeComp.setMaxRam(8);
@@ -195,14 +206,14 @@ export function prestigeSourceFile(flume: boolean): void {
   homeComp.cpuCores = 1;
 
   // Reset favor for Companies
-  for (const member in Companies) {
+  for (const member of Object.keys(Companies)) {
     if (Companies.hasOwnProperty(member)) {
       Companies[member].favor = 0;
     }
   }
 
   // Reset favor for factions
-  for (const member in Factions) {
+  for (const member of Object.keys(Factions)) {
     if (Factions.hasOwnProperty(member)) {
       Factions[member].favor = 0;
     }
@@ -214,17 +225,17 @@ export function prestigeSourceFile(flume: boolean): void {
   }
 
   // Delete all Augmentations
-  for (const name in Augmentations) {
-    if (Augmentations.hasOwnProperty(name)) {
-      delete Augmentations[name];
+  for (const name of Object.keys(StaticAugmentations)) {
+    if (StaticAugmentations.hasOwnProperty(name)) {
+      delete StaticAugmentations[name];
     }
   }
 
   // Give levels of NeuroFluxGoverner for Source-File 12. Must be done here before Augmentations are recalculated
-  if (SourceFileFlags[12] > 0) {
+  if (Player.sourceFileLvl(12) > 0) {
     Player.augmentations.push({
       name: AugmentationNames.NeuroFluxGovernor,
-      level: SourceFileFlags[12],
+      level: Player.sourceFileLvl(12),
     });
   }
 
@@ -234,10 +245,7 @@ export function prestigeSourceFile(flume: boolean): void {
   Player.reapplyAllSourceFiles();
   initCompanies();
 
-  // Messages
-  initMessages();
-
-  if (Player.sourceFileLvl(5) > 0) {
+  if (Player.sourceFileLvl(5) > 0 || Player.bitNodeN === 5) {
     homeComp.programs.push(Programs.Formulas.name);
   }
 
@@ -254,7 +262,7 @@ export function prestigeSourceFile(flume: boolean): void {
   if (Player.bitNodeN === 8) {
     Player.money = BitNode8StartingMoney;
   }
-  if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
+  if (Player.bitNodeN === 8 || Player.sourceFileLvl(8) > 0) {
     Player.hasWseAccount = true;
     Player.hasTixApiAccess = true;
   }
@@ -265,7 +273,7 @@ export function prestigeSourceFile(flume: boolean): void {
   }
 
   if (Player.bitNodeN === 13) {
-    dialogBoxCreate("Trouble is brewing in Chongqing");
+    dialogBoxCreate(`Trouble is brewing in ${CityName.Chongqing}`);
   }
 
   // Reset Stock market, gang, and corporation
@@ -282,7 +290,7 @@ export function prestigeSourceFile(flume: boolean): void {
   Player.bladeburner = null;
 
   // Source-File 9 (level 3) effect
-  if (SourceFileFlags[9] >= 3) {
+  if (Player.sourceFileLvl(9) >= 3) {
     const hserver = Player.createHacknetServer();
 
     hserver.level = 100;
@@ -299,7 +307,7 @@ export function prestigeSourceFile(flume: boolean): void {
   staneksGift.prestigeSourceFile();
 
   // Gain int exp
-  if (SourceFileFlags[5] !== 0 && !flume) Player.gainIntelligenceExp(300);
+  if (Player.sourceFileLvl(5) !== 0 && !flume) Player.gainIntelligenceExp(300);
 
   resetPidCounter();
 }

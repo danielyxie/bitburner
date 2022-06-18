@@ -23,7 +23,7 @@ export enum Page {
   Job,
   Milestones,
   Options,
-  Resleeves,
+  Grafting,
   Sleeves,
   Stats,
   StockMarket,
@@ -36,6 +36,9 @@ export enum Page {
   Loading,
   StaneksGift,
   Recovery,
+  Achievements,
+  ThemeBrowser,
+  ImportSave,
 }
 
 export interface ScriptEditorRouteOptions {
@@ -51,7 +54,9 @@ export interface IRouter {
   // toMission(): void;
   // toRedPill(): void;
   // toworkInProgress(): void;
+  isInitialized: boolean;
   page(): Page;
+  allowRouting(value: boolean): void;
   toActiveScripts(): void;
   toAugmentations(): void;
   toBitVerse(flume: boolean, quick: boolean): void;
@@ -61,7 +66,7 @@ export interface IRouter {
   toCorporation(): void;
   toCreateProgram(): void;
   toDevMenu(): void;
-  toFaction(faction?: Faction): void; // faction name
+  toFaction(faction: Faction, augPage?: boolean): void; // faction name
   toFactions(): void;
   toGameOptions(): void;
   toGang(): void;
@@ -69,7 +74,7 @@ export interface IRouter {
   toInfiltration(location: Location): void;
   toJob(): void;
   toMilestones(): void;
-  toResleeves(): void;
+  toGrafting(): void;
   toScriptEditor(files?: Record<string, string>, options?: ScriptEditorRouteOptions): void;
   toSleeves(): void;
   toStockMarket(): void;
@@ -80,4 +85,7 @@ export interface IRouter {
   toBladeburnerCinematic(): void;
   toLocation(location: Location): void;
   toStaneksGift(): void;
+  toAchievements(): void;
+  toThemeBrowser(): void;
+  toImportSave(base64Save: string, automatic?: boolean): void;
 }

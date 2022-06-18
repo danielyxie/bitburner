@@ -11,9 +11,21 @@ import acorn, { parse } from "acorn";
 import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
-import { Script } from "../Script/Script";
+import { Script } from "./Script";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
+import { IPlayer } from "../PersonObjects/IPlayer";
+
+export interface RamUsageEntry {
+  type: "ns" | "dom" | "fn" | "misc";
+  name: string;
+  cost: number;
+}
+
+export interface RamCalculation {
+  cost: number;
+  entries?: RamUsageEntry[];
+}
 
 // These special strings are used to reference the presence of a given logical
 // construct within a user script.
@@ -33,10 +45,11 @@ const memCheckGlobalKey = ".__GLOBAL__";
  *                                      keep track of what functions have/havent been accounted for
  */
 async function parseOnlyRamCalculate(
+  player: IPlayer,
   otherScripts: Script[],
   code: string,
   workerScript: WorkerScript,
-): Promise<number | RamCalculationErrorCode> {
+): Promise<RamCalculation> {
   try {
     /**
      * Maps dependent identifiers to their dependencies.
@@ -96,12 +109,12 @@ async function parseOnlyRamCalculate(
           }
         } catch (e) {
           console.error(`Error dynamically importing module from ${nextModule} for RAM calculations: ${e}`);
-          return RamCalculationErrorCode.URLImportError;
+          return { cost: RamCalculationErrorCode.URLImportError };
         }
       } else {
         if (!Array.isArray(otherScripts)) {
           console.warn(`parseOnlyRamCalculate() not called with array of scripts`);
-          return RamCalculationErrorCode.ImportError;
+          return { cost: RamCalculationErrorCode.ImportError };
         }
 
         let script = null;
@@ -109,13 +122,12 @@ async function parseOnlyRamCalculate(
         for (const s of otherScripts) {
           if (areImportsEquals(s.filename, fn)) {
             script = s;
-            console.log(`${s.filename} ${fn}`);
             break;
           }
         }
 
         if (script == null) {
-          return RamCalculationErrorCode.ImportError; // No such script on the server
+          return { cost: RamCalculationErrorCode.ImportError }; // No such script on the server
         }
 
         code = script.code;
@@ -127,6 +139,9 @@ async function parseOnlyRamCalculate(
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
     // are those that start with __SPECIAL_INITIAL_MODULE__.
     let ram = RamCostConstants.ScriptBaseRamCost;
+    const detailedCosts: RamUsageEntry[] = [
+      { type: "misc", name: "baseCost", cost: RamCostConstants.ScriptBaseRamCost },
+    ];
     const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule));
     const resolvedRefs = new Set();
     while (unresolvedRefs.length > 0) {
@@ -136,15 +151,19 @@ async function parseOnlyRamCalculate(
       // Check if this is one of the special keys, and add the appropriate ram cost if so.
       if (ref === "hacknet" && !resolvedRefs.has("hacknet")) {
         ram += RamCostConstants.ScriptHacknetNodesRamCost;
+        detailedCosts.push({ type: "ns", name: "hacknet", cost: RamCostConstants.ScriptHacknetNodesRamCost });
       }
       if (ref === "document" && !resolvedRefs.has("document")) {
         ram += RamCostConstants.ScriptDomRamCost;
+        detailedCosts.push({ type: "dom", name: "document", cost: RamCostConstants.ScriptDomRamCost });
       }
       if (ref === "window" && !resolvedRefs.has("window")) {
         ram += RamCostConstants.ScriptDomRamCost;
+        detailedCosts.push({ type: "dom", name: "window", cost: RamCostConstants.ScriptDomRamCost });
       }
       if (ref === "corporation" && !resolvedRefs.has("corporation")) {
         ram += RamCostConstants.ScriptCorporationRamCost;
+        detailedCosts.push({ type: "ns", name: "corporation", cost: RamCostConstants.ScriptCorporationRamCost });
       }
 
       resolvedRefs.add(ref);
@@ -170,6 +189,8 @@ async function parseOnlyRamCalculate(
         function applyFuncRam(cost: any): number {
           if (typeof cost === "number") {
             return cost;
+          } else if (typeof cost === "function") {
+            return cost(player);
           } else {
             return 0;
           }
@@ -184,34 +205,54 @@ async function parseOnlyRamCalculate(
 
         // This accounts for namespaces (Bladeburner, CodingCpntract, etc.)
         let func;
+        let refDetail = "n/a";
         if (ref in workerScript.env.vars.bladeburner) {
           func = workerScript.env.vars.bladeburner[ref];
+          refDetail = `bladeburner.${ref}`;
         } else if (ref in workerScript.env.vars.codingcontract) {
           func = workerScript.env.vars.codingcontract[ref];
+          refDetail = `codingcontract.${ref}`;
         } else if (ref in workerScript.env.vars.stanek) {
           func = workerScript.env.vars.stanek[ref];
+          refDetail = `stanek.${ref}`;
+        } else if (ref in workerScript.env.vars.infiltration) {
+          func = workerScript.env.vars.infiltration[ref];
+          refDetail = `infiltration.${ref}`;
         } else if (ref in workerScript.env.vars.gang) {
           func = workerScript.env.vars.gang[ref];
+          refDetail = `gang.${ref}`;
         } else if (ref in workerScript.env.vars.sleeve) {
           func = workerScript.env.vars.sleeve[ref];
+          refDetail = `sleeve.${ref}`;
         } else if (ref in workerScript.env.vars.stock) {
           func = workerScript.env.vars.stock[ref];
+          refDetail = `stock.${ref}`;
         } else if (ref in workerScript.env.vars.ui) {
           func = workerScript.env.vars.ui[ref];
+          refDetail = `ui.${ref}`;
+        } else if (ref in workerScript.env.vars.grafting) {
+          func = workerScript.env.vars.grafting[ref];
+          refDetail = `grafting.${ref}`;
+        } else if (ref in workerScript.env.vars.singularity) {
+          func = workerScript.env.vars.singularity[ref];
+          refDetail = `singularity.${ref}`;
         } else {
           func = workerScript.env.vars[ref];
+          refDetail = `${ref}`;
         }
-        ram += applyFuncRam(func);
+        const fnRam = applyFuncRam(func);
+        ram += fnRam;
+        detailedCosts.push({ type: "fn", name: refDetail, cost: fnRam });
       } catch (error) {
         continue;
       }
     }
-    return ram;
+    return { cost: ram, entries: detailedCosts.filter((e) => e.cost > 0) };
   } catch (error) {
     // console.info("parse or eval error: ", error);
     // This is not unexpected. The user may be editing a script, and it may be in
     // a transitory invalid state.
-    return RamCalculationErrorCode.SyntaxError;
+    return { cost: RamCalculationErrorCode.SyntaxError };
   }
 }
 
@@ -358,7 +399,8 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
           }
         },
         FunctionDeclaration: (node: any) => {
-          const key = currentModule + "." + node.id.name;
+          // node.id will be null when using 'export default'. Add a module name indicating the default export.
+          const key = currentModule + "." + (node.id === null ? "__SPECIAL_DEFAULT_EXPORT__" : node.id.name);
           walk.recursive(node, { key: key }, commonVisitors());
         },
       },
@@ -376,9 +418,10 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
  *                                  Used to account for imported scripts
  */
 export async function calculateRamUsage(
+  player: IPlayer,
   codeCopy: string,
   otherScripts: Script[],
-): Promise<RamCalculationErrorCode | number> {
+): Promise<RamCalculation> {
   // We don't need a real WorkerScript for this. Just an object that keeps
   // track of whatever's needed for RAM calculations
   const workerScript = {
@@ -389,12 +432,10 @@ export async function calculateRamUsage(
   } as WorkerScript;
 
   try {
-    return await parseOnlyRamCalculate(otherScripts, codeCopy, workerScript);
+    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);
-    return RamCalculationErrorCode.SyntaxError;
+    return { cost: RamCalculationErrorCode.SyntaxError };
   }
-
-  return RamCalculationErrorCode.SyntaxError;
 }

@@ -1,9 +1,12 @@
+import { FactionNames } from "../../Faction/data/FactionNames";
+
 export const GangConstants: {
   GangRespectToReputationRatio: number;
   MaximumGangMembers: number;
   CyclesPerTerritoryAndPowerUpdate: number;
   AscensionMultiplierRatio: number;
   Names: string[];
+  GangKarmaRequirement: number;
 } = {
   // Respect is divided by this to get rep gain
   GangRespectToReputationRatio: 75,
@@ -13,12 +16,13 @@ export const GangConstants: {
   AscensionMultiplierRatio: 0.15,
   // Names of possible Gangs
   Names: [
-    "Slum Snakes",
-    "Tetrads",
-    "The Syndicate",
-    "The Dark Army",
-    "Speakers for the Dead",
-    "NiteSec",
-    "The Black Hand",
+    FactionNames.SlumSnakes,
+    FactionNames.Tetrads,
+    FactionNames.TheSyndicate,
+    FactionNames.TheDarkArmy,
+    FactionNames.SpeakersForTheDead,
+    FactionNames.NiteSec,
+    FactionNames.TheBlackHand,
   ],
+  GangKarmaRequirement: -54000,
 };

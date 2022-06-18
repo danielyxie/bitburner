@@ -4,12 +4,12 @@
 
 ## NS.asleep() method
 
-Suspends the script for n milliseconds. Doesn't block with concurrent calls.
+Suspends the script for n milliseconds. Doesn't block with concurrent calls. You should prefer 'sleep' over 'asleep' except when doing very complex UI work.
 
 <b>Signature:</b>
 
 ```typescript
-asleep(millis: number): Promise<void>;
+asleep(millis: number): Promise<true>;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ asleep(millis: number): Promise<void>;
 
 <b>Returns:</b>
 
-Promise&lt;void&gt;
+Promise&lt;true&gt;
 
 
 ## Remarks

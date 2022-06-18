@@ -85,7 +85,7 @@ export class Warehouse {
   // Re-calculate how much space is being used by this Warehouse
   updateMaterialSizeUsed(): void {
     this.sizeUsed = 0;
-    for (const matName in this.materials) {
+    for (const matName of Object.keys(this.materials)) {
       const mat = this.materials[matName];
       if (MaterialSizes.hasOwnProperty(matName)) {
         this.sizeUsed += mat.qty * MaterialSizes[matName];

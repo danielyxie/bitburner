@@ -4,20 +4,18 @@
 
 ## Singularity.hospitalize() method
 
-SF4.1 - Hospitalize the player.
+Hospitalize the player.
 
 <b>Signature:</b>
 
 ```typescript
-hospitalize(): number;
+hospitalize(): void;
 ```
 <b>Returns:</b>
 
-number
-
-The cost of the hospitalization.
+void
 
 ## Remarks
 
-RAM cost: 0.25 GB
+RAM cost: 0.25 GB \* 16/4/1
 

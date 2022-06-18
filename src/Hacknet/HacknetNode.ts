@@ -18,8 +18,17 @@ import { HacknetNodeConstants } from "./data/Constants";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { ObjectValidator, minMax } from "../utils/Validator";
 
 export class HacknetNode implements IHacknetNode {
+  static validationData: ObjectValidator<HacknetNode> = {
+    cores: minMax(1, 1, HacknetNodeConstants.MaxCores),
+    level: minMax(1, 1, HacknetNodeConstants.MaxLevel),
+    ram: minMax(1, 1, HacknetNodeConstants.MaxRam),
+    onlineTimeSeconds: minMax(0, 0, Infinity),
+    totalMoneyGenerated: minMax(0, 0, Infinity),
+  };
+
   // Node's number of cores
   cores = 1;
 

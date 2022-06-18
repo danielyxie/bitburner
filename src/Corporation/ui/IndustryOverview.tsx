@@ -7,8 +7,8 @@ import { Industries } from "../IndustryData";
 import { IndustryUpgrades } from "../IndustryUpgrades";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
-import { MakeProductModal } from "./MakeProductModal";
-import { ResearchModal } from "./ResearchModal";
+import { MakeProductModal } from "./modals/MakeProductModal";
+import { ResearchModal } from "./modals/ResearchModal";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { StatsTable } from "../../ui/React/StatsTable";
@@ -215,7 +215,7 @@ function Upgrades(props: { office: OfficeSpace; rerender: () => void }): React.R
   const corp = useCorporation();
   const division = useDivision();
   const upgrades = [];
-  for (const index in IndustryUpgrades) {
+  for (const index of Object.keys(IndustryUpgrades)) {
     const upgrade = IndustryUpgrades[index];
 
     // AutoBrew research disables the Coffee upgrade

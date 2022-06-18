@@ -4,7 +4,7 @@
 
 ## AugmentationStats.charisma\_exp\_mult property
 
-Multipler to charisma experience gain rate
+Multiplier to charisma experience gain rate
 
 <b>Signature:</b>
 

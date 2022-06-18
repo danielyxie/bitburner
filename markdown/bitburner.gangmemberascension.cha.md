@@ -4,7 +4,7 @@
 
 ## GangMemberAscension.cha property
 
-Charisma multiplier gained from ascending.
+Charisma multiplier gained from ascending
 
 <b>Signature:</b>
 

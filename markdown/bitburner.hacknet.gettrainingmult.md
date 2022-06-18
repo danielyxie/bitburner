@@ -4,7 +4,7 @@
 
 ## Hacknet.getTrainingMult() method
 
-Get the multipler to training.
+Get the multiplier to training.
 
 <b>Signature:</b>
 

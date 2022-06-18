@@ -9,14 +9,14 @@ Open the tail window of a script.
 <b>Signature:</b>
 
 ```typescript
-tail(fn?: string, host?: string, ...args: any[]): void;
+tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | string | Optional. Filename of the script being tailed. If omitted, the current script is tailed. |
+|  fn | [FilenameOrPID](./bitburner.filenameorpid.md) | Optional. Filename or PID of the script being tailed. If omitted, the current script is tailed. |
 |  host | string | Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional. |
 |  args | any\[\] | Arguments for the script being tailed. |
 
@@ -38,23 +38,29 @@ Otherwise, the fn, hostname/ip, and args… arguments can be used to get the log
 
 
 ```ts
+// NS1:
 //Open logs from foo.script on the current server that was run with no args
 tail("foo.script");
+
+//Get logs from foo.script on the foodnstuff server that was run with no args
+tail("foo.script", "foodnstuff");
+
+//Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
+tail("foo.script", "foodnstuff", 1, "test");
 ```
 
 ## Example 2
 
 
 ```ts
+// NS2:
+//Open logs from foo.script on the current server that was run with no args
+ns.tail("foo.script");
+
 //Get logs from foo.script on the foodnstuff server that was run with no args
-tail("foo.script", "foodnstuff");
-```
+ns.tail("foo.script", "foodnstuff");
 
-## Example 3
-
-
-```ts
 //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
-tail("foo.script", "foodnstuff", 1, "test");
+ns.tail("foo.script", "foodnstuff", 1, "test");
 ```
 
