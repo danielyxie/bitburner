@@ -38,6 +38,10 @@ import { Player } from "./Player";
 import { Terminal } from "./Terminal";
 import { IPlayer } from "./PersonObjects/IPlayer";
 
+import { BasicSourceMapConsumer, IndexedSourceMapConsumer, SourceMapConsumer } from "source-map";
+// @ts-ignore The wasm file is used needed for the `source-map` library
+import arrayBuffer from "source-map/lib/mappings.wasm";
+
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
 for (let i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
@@ -142,17 +146,24 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
         resolve();
       })
       .catch((e) => reject(e));
-  }).catch((e) => {
+  }).catch(async (e) => {
     if (e instanceof Error) {
       if (e instanceof SyntaxError) {
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");
+        throw new ScriptDeath(workerScript);
       } else {
+        if (e.stack) {
+          e.stack = await getNewStack(e.stack, workerScript);
+          for (const script of workerScript.getServer().scripts) {
+            e.stack = await getNewStack(e.stack, script);
+          }
+        }
         workerScript.errorMessage = makeRuntimeRejectMsg(
           workerScript,
           e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
         );
+        throw new ScriptDeath(workerScript);
       }
-      throw new ScriptDeath(workerScript);
     } else if (isScriptErrorMessage(e)) {
       workerScript.errorMessage = e;
       throw new ScriptDeath(workerScript);
@@ -164,6 +175,90 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
     workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, "" + e);
     throw new ScriptDeath(workerScript);
   });
+}
+
+async function getNewStack(stack: string, script: WorkerScript | Script): Promise<string> {
+  try {
+    // @ts-ignore The function is missing from the type which has been added to the latest but no release has been made yet. Can be removed once they update.
+    SourceMapConsumer.initialize({
+      "lib/mappings.wasm": arrayBuffer,
+    });
+    const match = script.code.match("//# [s]ourceMappingURL=(.*)[\\s]*$");
+    if (match && match.length === 2) {
+      const mapUri = match[1];
+      const embeddedSourceMap = mapUri.match("data:application/json;(charset=[^;]+;)?base64,(.*)");
+      if (embeddedSourceMap && embeddedSourceMap[2]) {
+        const rawSourceMap = Buffer.from(embeddedSourceMap[2], "base64").toString("utf8");
+        return await SourceMapConsumer.with(rawSourceMap, null, (consumer) => {
+          const lines = stack.split("\n");
+          let newStack = "";
+          if (lines) {
+            for (const eLine of lines) {
+              let chromeMatch;
+              let otherMatch;
+              if ((chromeMatch = /(.*at\s.*\(|.*\s)(\S+)\:(\d+):(\d+)(\)?)/.exec(eLine))) {
+                newStack += mapStacktraceLine(
+                  eLine,
+                  script,
+                  consumer,
+                  chromeMatch[1],
+                  chromeMatch[2],
+                  chromeMatch[3],
+                  chromeMatch[4],
+                  chromeMatch[5],
+                );
+              } else if ((otherMatch = /(.*@)(.*):([0-9]+):([0-9]+)/.exec(eLine))) {
+                newStack += mapStacktraceLine(
+                  eLine,
+                  script,
+                  consumer,
+                  otherMatch[1],
+                  otherMatch[2],
+                  otherMatch[3],
+                  otherMatch[4],
+                  "",
+                );
+              } else {
+                newStack += eLine + "\n";
+              }
+            }
+          }
+          return newStack || stack;
+        });
+      }
+    }
+  } catch (e) {
+    // ignore any errors and just leave the stack trace alone
+  }
+  return stack;
+}
+
+function mapStacktraceLine(
+  eLine: string,
+  script: WorkerScript | Script,
+  consumer: BasicSourceMapConsumer | IndexedSourceMapConsumer,
+  beginning: string,
+  source: string,
+  lineNum: string,
+  col: string,
+  end: string,
+): string {
+  let scriptHostname: string;
+  let scriptName: string;
+  if (script instanceof WorkerScript) {
+    scriptHostname = script.hostname;
+    scriptName = script.name;
+  } else {
+    scriptHostname = script.server;
+    scriptName = script.filename;
+  }
+  if (source === scriptHostname + "/" + scriptName) {
+    const mapped = consumer.originalPositionFor({ line: parseInt(lineNum), column: parseInt(col) });
+    if (mapped.source) {
+      return beginning + mapped.source + ":" + mapped.line + ":" + mapped.column + end + "\n";
+    }
+  }
+  return eLine + "\n";
 }
 
 function startNetscript1Script(workerScript: WorkerScript): Promise<void> {

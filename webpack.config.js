@@ -127,9 +127,9 @@ module.exports = (env, argv) => {
       isFastRefresh && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
     target: "web",
-    // node: {
-    //   fs: "mock",
-    // },
+    node: {
+      fs: "empty",
+    },
     entry: entry,
     output: {
       path: path.resolve(__dirname, outputDirectory),
@@ -160,6 +160,11 @@ module.exports = (env, argv) => {
             outputPath: "images",
             publicPath: `${outputDirectory}/images`,
           },
+        },
+        {
+          test: /\.wasm$/,
+          type: "javascript/auto",
+          loader: "arraybuffer-loader",
         },
       ],
     },
