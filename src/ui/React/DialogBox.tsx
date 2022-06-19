@@ -11,3 +11,14 @@ export function dialogBoxCreate(txt: string | JSX.Element, styles?: SxProps): vo
     AlertEvents.emit(<Typography component="span" sx={styles} dangerouslySetInnerHTML={{ __html: txt }} />);
   }
 }
+
+export function dialogBoxCreateEscape(txt: string, escape: string, styles?: SxProps): void {
+  AlertEvents.emit(
+    <>
+      <Typography component="span" sx={styles} dangerouslySetInnerHTML={{ __html: txt }} />
+      <Typography component="span" sx={styles}>
+        {escape}
+      </Typography>
+    </>,
+  );
+}

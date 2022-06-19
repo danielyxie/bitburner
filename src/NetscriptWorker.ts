@@ -25,7 +25,7 @@ import { Settings } from "./Settings/Settings";
 
 import { generate } from "escodegen";
 
-import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { dialogBoxCreate, dialogBoxCreateEscape } from "./ui/React/DialogBox";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { roundToTwo } from "./utils/helpers/roundToTwo";
 import { isString } from "./utils/helpers/isString";
@@ -612,9 +612,8 @@ function createAndAddWorkerScript(
             msg += `Args: ${arrayToString(workerScript.args)}<br>`;
           }
           msg += "<br>";
-          msg += errorMsg;
 
-          dialogBoxCreate(msg);
+          dialogBoxCreateEscape(msg, errorMsg);
           workerScript.log("", () => "Script crashed with runtime error");
         } else {
           workerScript.log("", () => "Script killed");
