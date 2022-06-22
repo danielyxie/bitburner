@@ -35,7 +35,7 @@ export const TerminalHelpText: string[] = [
   "    rm [file]                            Delete a file from the server",
   "    run [name] [-t n] [--tail] [args...] Execute a program or script",
   "    scan                                 Prints all immediately-available network connections",
-  "    scan-analyze [d] [-a]                Prints info for all servers up to <i>d</i> nodes away",
+  "    scan-analyze [d] [-a]                Prints info for all servers up to d nodes away",
   "    scp [file ...] [server]              Copies a file to a destination server",
   "    sudov                                Shows whether you have root access on this computer",
   "    tail [script] [args...]              Displays dynamic logs for the specified script",
