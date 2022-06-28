@@ -460,7 +460,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
         <>
           <Typography>
             Your script is now running! It will continuously run in the background and will automatically stop if the
-            code ever completes (the n00dles.script will never complete because it runs an infinite loop). <br />
+            code ever completes (the {tutorialScriptName} will never complete because it runs an infinite loop). <br />
             <br />
             These scripts can passively earn you income and hacking experience. Your scripts will also earn money and
             experience while you are offline, although at a slightly slower rate. <br />
