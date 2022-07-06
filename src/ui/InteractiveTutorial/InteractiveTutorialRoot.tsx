@@ -58,11 +58,12 @@ export function InteractiveTutorialRoot(): React.ReactElement {
   const [language, setLanguage] = useState(Language.None);
   const classes = useStyles();
 
-  const tutorialScriptName = {
-    [Language.None]: "n00dles.script",
-    [Language.NS1]: "n00dles.script",
-    [Language.NS2]: "n00dles.js",
+  const tutorialScriptExtension = {
+    [Language.None]: ".script",
+    [Language.NS1]: ".script",
+    [Language.NS2]: ".js",
   }[language];
+  const tutorialScriptName = `n00dles${tutorialScriptExtension}`;
 
   const contents: { [number: string]: IContent | undefined } = {
     [iTutorialSteps.Start as number]: {
@@ -377,7 +378,9 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           </Typography>
           <Typography classes={{ root: classes.textfield }}>{"[home ~/]> nano"}</Typography>
 
-          <Typography>Scripts must end with the .script extension. Let's make a script now by entering </Typography>
+          <Typography>
+            Scripts must end with the {tutorialScriptExtension} extension. Let's make a script now by entering{" "}
+          </Typography>
           <Typography classes={{ root: classes.textfield }}>{`[home ~/]> nano ${tutorialScriptName}`}</Typography>
 
           <Typography>
@@ -457,7 +460,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
         <>
           <Typography>
             Your script is now running! It will continuously run in the background and will automatically stop if the
-            code ever completes (the n00dles.script will never complete because it runs an infinite loop). <br />
+            code ever completes (the {tutorialScriptName} will never complete because it runs an infinite loop). <br />
             <br />
             These scripts can passively earn you income and hacking experience. Your scripts will also earn money and
             experience while you are offline, although at a slightly slower rate. <br />
