@@ -4859,6 +4859,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
+   * see: https://github.com/alexei/sprintf.js
    * @param format - format of the message
    * @param msg - Value to be printed.
    */
