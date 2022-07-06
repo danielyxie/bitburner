@@ -580,7 +580,7 @@ function createNewUpdateText(): void {
     () =>
       dialogBoxCreate(
         "New update!<br>" +
-          "Please report any bugs/issues through the github repository " +
+          "Please report any bugs/issues through the GitHub repository " +
           "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
           CONSTANTS.LatestUpdate,
         resets,

@@ -417,7 +417,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
   {
     desc: (arr: number[][]): string => {
       return [
-        "Given the following array of array of numbers representing a list of",
+        "Given the following array of arrays of numbers representing a list of",
         "intervals, merge all overlapping intervals.\n\n",
         `[${convert2DArrayToString(arr)}]\n\n`,
         "Example:\n\n",
@@ -1546,7 +1546,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return [
         "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to",
         "earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk",
-        "begins with a length L, encoded as a single ASCII digit from 1 - 9, followed by the chunk data,",
+        "begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data,",
         "which is either:\n\n",
         "1. Exactly L characters, which are to be copied directly into the uncompressed data.\n",
         "2. A reference to an earlier part of the uncompressed data. To do this, the length is followed",
@@ -1581,7 +1581,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return [
         "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to",
         "earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk",
-        "begins with a length L, encoded as a single ASCII digit from 1 - 9, followed by the chunk data,",
+        "begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data,",
         "which is either:\n\n",
         "1. Exactly L characters, which are to be copied directly into the uncompressed data.\n",
         "2. A reference to an earlier part of the uncompressed data. To do this, the length is followed",
