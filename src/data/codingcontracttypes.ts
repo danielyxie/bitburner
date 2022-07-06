@@ -1282,14 +1282,15 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     numTries: 10,
     desc: (n: string): string => {
       return [
-        "You are given the following encoded binary String: \n",
+        "You are given the following encoded binary string: \n",
         `'${n}' \n`,
-        "Treat it as a Hammingcode with 1 'possible' error on an random Index.\n",
-        "Find the 'possible' wrong bit, fix it and extract the decimal value, which is hidden inside the string.\n\n",
-        "Note: The length of the binary string is dynamic, but it's encoding/decoding is following Hammings 'rule'\n",
-        "Note 2: Index 0 is an 'overall' parity bit. Watch the Hammingcode-video from 3Blue1Brown for more information\n",
-        "Note 3: There's a ~55% chance for an altered Bit. So... MAYBE there is an altered Bit 😉\n",
-        "Extranote for automation: return the decimal value as a string",
+        "The string is a Hamming code with 1 'possible' error on a random index.\n",
+        "If there is an error, find the bit that is an error and fix it.\n",
+        "Extract the encoded decimal value and return a string with that value.\n\n",
+        "NOTE: The length of the binary string is dynamic.\n",
+        "NOTE 2: Index 0 is an 'overall' parity bit. Watch the Hamming code video from 3Blue1Brown for more information.\n",
+        "NOTE 3: There's approximately a 55% chance for an altered bit. So... MAYBE there is an altered bit 😉\n",
+        "NOTE 4: Return the decimal value as a string.",
       ].join(" ");
     },
     gen: (): string => {
