@@ -272,18 +272,20 @@ const Engine: {
       const numCyclesOffline = Math.floor(timeOffline / CONSTANTS._idleSpeed);
 
       // Generate coding contracts
-      let numContracts = 0;
-      if (numCyclesOffline < 3000 * 100) {
-        // if we have less than 100 rolls, just roll them exactly.
-        for (let i = 0; i < numCyclesOffline / 3000; i++) {
-          if (Math.random() < 0.25) numContracts++;
+      if (Player.sourceFiles.length > 0) {
+        let numContracts = 0;
+        if (numCyclesOffline < 3000 * 100) {
+          // if we have less than 100 rolls, just roll them exactly.
+          for (let i = 0; i < numCyclesOffline / 3000; i++) {
+            if (Math.random() < 0.25) numContracts++;
+          }
+        } else {
+          // just average it.
+          numContracts = (numCyclesOffline / 3000) * 0.25;
         }
-      } else {
-        // just average it.
-        numContracts = (numCyclesOffline / 3000) * 0.25;
-      }
-      for (let i = 0; i < numContracts; i++) {
-        generateRandomContract();
+        for (let i = 0; i < numContracts; i++) {
+          generateRandomContract();
+        }
       }
 
       let offlineReputation = 0;

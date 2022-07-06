@@ -539,8 +539,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     stock: NetscriptStockMarket(Player, workerScript),
     grafting: NetscriptGrafting(Player),
     hacknet: NetscriptHacknet(Player, workerScript),
-    sprintf: sprintf,
-    vsprintf: vsprintf,
+    sprintf: () => sprintf,
+    vsprintf: () => vsprintf,
     scan:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname): string[] => {

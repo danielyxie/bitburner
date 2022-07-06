@@ -1854,7 +1854,11 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string, _sing = false): void {
-  if (this.isWorking == true && this.workType !== WorkType.Company && this.companyName == company) {
+  if (
+    this.isWorking === true &&
+    [WorkType.Company, WorkType.CompanyPartTime].includes(this.workType) &&
+    this.companyName === company
+  ) {
     this.finishWork(true);
   }
   delete this.jobs[company];
@@ -2287,7 +2291,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !fulcrumsecrettechonologiesFac.isMember &&
     !fulcrumsecrettechonologiesFac.alreadyInvited &&
     fulcrumSecretServer.backdoorInstalled &&
-    checkMegacorpRequirements(LocationName.AevumFulcrumTechnologies, 250e3)
+    checkMegacorpRequirements(LocationName.AevumFulcrumTechnologies)
   ) {
     invitedFactions.push(fulcrumsecrettechonologiesFac);
   }

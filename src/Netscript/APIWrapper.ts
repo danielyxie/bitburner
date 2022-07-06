@@ -95,7 +95,7 @@ function wrapFunction(
       boolean: helpers.boolean,
       getServer: (hostname: string) => helpers.getServer(hostname, ctx),
       checkSingularityAccess: () => helpers.checkSingularityAccess(functionName),
-      hack: helpers.hack,
+      hack: (hostname: any, manual: any, extra?: any) => helpers.hack(ctx, hostname, manual, extra),
       getValidPort: (port: any) => helpers.getValidPort(functionPath, port),
     },
   };
