@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 
+type IModelContentChangedEvent = monaco.editor.IModelContentChangedEvent;
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 type ITextModel = monaco.editor.ITextModel;
 import { OptionsModal } from "./OptionsModal";
@@ -90,6 +91,7 @@ class OpenScript {
   hostname: string;
   lastPosition: monaco.Position;
   model: ITextModel;
+  isDirty: boolean;
 
   constructor(fileName: string, code: string, hostname: string, lastPosition: monaco.Position, model: ITextModel) {
     this.fileName = fileName;
@@ -97,6 +99,7 @@ class OpenScript {
     this.hostname = hostname;
     this.lastPosition = lastPosition;
     this.model = model;
+    this.isDirty = false;
   }
 }
 
@@ -464,20 +467,22 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   // When the code is updated within the editor
-  function updateCode(newCode?: string): void {
+  function updateCode(newCode?: string, event?: IModelContentChangedEvent): void {
     if (newCode === undefined) return;
     updateRAM(newCode);
     if (editorRef.current === null) return;
     const newPos = editorRef.current.getPosition();
     if (newPos === null) return;
-    if (currentScript !== null) {
-      currentScript = { ...currentScript, code: newCode, lastPosition: newPos };
-      const curIndex = openScripts.findIndex(
-        (script) =>
-          currentScript !== null &&
-          script.fileName === currentScript.fileName &&
-          script.hostname === currentScript.hostname,
-      );
+
+    const curIndex = currentTabIndex();
+    if (curIndex !== undefined && currentScript !== null) {
+      // Called by user typing / cutting / pasting (isDirty = true)
+      // or replacing editor contents from file (isDirty = false).
+      // Only replacing editor contents from file (onTabUpdate) seems to cause isFlush flag to be true
+      // https://github.com/microsoft/monaco-editor/issues/432
+      const contentsDirty = event && event.isFlush ? false : true;
+      currentScript = { ...currentScript, code: newCode, lastPosition: newPos, isDirty: contentsDirty };
+
       const newArr = [...openScripts];
       const tempScript = currentScript;
       tempScript.code = newCode;
@@ -579,6 +584,7 @@ export function Root(props: IProps): React.ReactElement {
       return;
     }
 
+    const currIndex = currentTabIndex();
     const server = GetServer(currentScript.hostname);
     if (server === null) throw new Error("Server should not be null but it is.");
     if (isScriptFilename(currentScript.fileName)) {
@@ -592,6 +598,11 @@ export function Root(props: IProps): React.ReactElement {
             props.player.currentServer,
             server.scripts,
           );
+          currentScript.isDirty = false;
+          if (currIndex !== undefined) {
+            openScripts[currIndex].isDirty = false;
+          }
+          rerender();
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
           return;
         }
@@ -607,16 +618,32 @@ export function Root(props: IProps): React.ReactElement {
         server.scripts,
       );
       server.scripts.push(script);
+      currentScript.isDirty = false;
+      if (currIndex !== undefined) {
+        openScripts[currIndex].isDirty = false;
+      }
+      rerender();
     } else if (currentScript.fileName.endsWith(".txt")) {
       for (let i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === currentScript.fileName) {
           server.textFiles[i].write(currentScript.code);
+          currentScript.isDirty = false;
+          if (currIndex !== undefined) {
+            openScripts[currIndex].isDirty = false;
+          }
+          rerender();
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
           return;
         }
       }
+
       const textFile = new TextFile(currentScript.fileName, currentScript.code);
       server.textFiles.push(textFile);
+      currentScript.isDirty = false;
+      if (currIndex !== undefined) {
+        openScripts[currIndex].isDirty = false;
+      }
+      rerender();
     } else {
       dialogBoxCreate("Invalid filename. Must be either a script (.script or .js) or a text file (.txt)");
       return;
@@ -695,8 +722,7 @@ export function Root(props: IProps): React.ReactElement {
     const server = GetServer(closingScript.hostname);
     if (server === null) throw new Error(`Server '${closingScript.hostname}' should not be null, but it is.`);
 
-    const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
-    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex].code) {
+    if (closingScript.isDirty) {
       PromptEvent.emit({
         txt: `Do you want to save changes to ${closingScript.fileName} on ${closingScript.hostname}?`,
         resolve: (result: boolean | string) => {
@@ -747,10 +773,10 @@ export function Root(props: IProps): React.ReactElement {
 
   function onTabUpdate(index: number): void {
     const openScript = openScripts[index];
-    const serverScriptCode = getServerCode(index);
-    if (serverScriptCode === null) return;
+    const serverContents = isScriptFilename(openScript.fileName) ? getServerCode(index) : getServerText(index);
+    if (serverContents === null) return;
 
-    if (openScript.code !== serverScriptCode) {
+    if (openScript.code !== serverContents) {
       PromptEvent.emit({
         txt:
           "Do you want to overwrite the current editor content with the contents of " +
@@ -759,7 +785,7 @@ export function Root(props: IProps): React.ReactElement {
         resolve: (result: boolean | string) => {
           if (result) {
             // Save changes
-            openScript.code = serverScriptCode;
+            openScript.code = serverContents;
 
             // Switch to target tab
             onTabClick(index);
@@ -781,13 +807,17 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   function dirty(index: number): string {
+    const dirtyFlag = " *";
+    const cleanFlag = "";
     const openScript = openScripts[index];
-    const serverScriptCode = getServerCode(index);
-    if (serverScriptCode === null) return " *";
-
-    // The server code is stored with its starting & trailing whitespace removed
-    const openScriptFormatted = Script.formatCode(openScript.code);
-    return serverScriptCode !== openScriptFormatted ? " *" : "";
+    if (isScriptFilename(openScript.fileName)) {
+      const serverScriptCode = getServerCode(index);
+      if (serverScriptCode === null) return dirtyFlag;
+    } else {
+      const serverText = getServerText(index);
+      if (serverText === null) return dirtyFlag;
+    }
+    return openScript.isDirty ? dirtyFlag : cleanFlag;
   }
 
   function getServerCode(index: number): string | null {
@@ -798,6 +828,16 @@ export function Root(props: IProps): React.ReactElement {
     const serverScript = server.scripts.find((s) => s.filename === openScript.fileName);
     return serverScript?.code ?? null;
   }
+
+  function getServerText(index: number): string | null {
+    const openScript = openScripts[index];
+    const server = GetServer(openScript.hostname);
+    if (server === null) throw new Error(`Server '${openScript.hostname}' should not be null, but it is.`);
+
+    const serverText = server.textFiles.find((s) => s.fn === openScript.fileName);
+    return serverText?.text ?? null;
+  }
+
   function handleFilterChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setFilter(event.target.value);
   }
