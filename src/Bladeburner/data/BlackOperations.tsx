@@ -123,7 +123,7 @@ export const BlackOperations: {
     desc: (
       <>
         CODE RED SITUATION. Our intelligence tells us that VitaLife has discovered a new android cloning technology.
-        This technology is supposedly capable of cloning Synthoid, not only physically but also their advanced AI
+        This technology is supposedly capable of cloning Synthoids, not only physically but also their advanced AI
         modules. We do not believe that VitaLife is trying to use this technology illegally or maliciously, but if any
         Synthoids were able to infiltrate the corporation and take advantage of this technology then the results would
         be catastrophic.
@@ -256,8 +256,8 @@ export const BlackOperations: {
         ones from the Uprising.
         <br />
         <br />
-        {FactionNames.OmniTekIncorporated} has also told us they they believe someone has triggered this malfunction in
-        a large group of MK-VI Synthoids, and that these newly-radicalized Synthoids are now amassing in{" "}
+        {FactionNames.OmniTekIncorporated} has also told us they believe someone has triggered this malfunction in a
+        large group of MK-VI Synthoids, and that these newly-radicalized Synthoids are now amassing in{" "}
         {CityName.Volhaven} to form a terrorist group called Ultron.
         <br />
         <br />

@@ -164,6 +164,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         const augs = getFactionAugmentationsFiltered(player, fac);
 
+        if (!player.factions.includes(fac.name)) {
+          _ctx.log(() => `You can't purchase augmentations from '${facName}' because you aren't a member`);
+          return false;
+        }
+
         if (!augs.includes(augName)) {
           _ctx.log(() => `Faction '${facName}' does not have the '${augName}' augmentation.`);
           return false;

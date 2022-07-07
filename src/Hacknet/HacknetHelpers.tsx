@@ -426,7 +426,7 @@ function processAllHacknetServerEarnings(player: IPlayer, numCycles: number): nu
     if (upgrade === null) throw new Error("Could not get the hash upgrade");
     if (!upgrade.cost) throw new Error("Upgrade is not properly configured");
 
-    const multiplier = Math.floor(wastedHashes / upgrade.cost);
+    const multiplier = wastedHashes / upgrade.cost;
     if (multiplier > 0) {
       player.gainMoney(upgrade.value * multiplier, "hacknet");
     }

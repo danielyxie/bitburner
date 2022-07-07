@@ -71,7 +71,7 @@ export const CorporationUpgrades: Record<CorporationUpgradeIndex, CorporationUpg
     name: "Wilson Analytics",
     desc:
       "Purchase data and analysis from Wilson, a marketing research " +
-      "firm. Each level of this upgrades increases the effectiveness of your " +
+      "firm. Each level of this upgrade increases the effectiveness of your " +
       "advertising by 0.5% (additive).",
   },
 
