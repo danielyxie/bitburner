@@ -1291,8 +1291,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "Note 2: Index 0 is an 'overall' parity bit. Watch the Hamming code video from 3Blue1Brown for more information\n",
         "Note 3: There's a ~55% chance for an altered Bit. So... MAYBE there is an altered Bit 😉\n",
         "Note: The endianness of the encoded decimal value is reversed in relation to the endianness of the Hamming code. Where",
-	"the Hamming code is expressed as little-endian (LSB at index 0), the decimal value encoded in it is expressed as big-endian",
-	"(MSB at index 0).\n",
+        "the Hamming code is expressed as little-endian (LSB at index 0), the decimal value encoded in it is expressed as big-endian",
+        "(MSB at index 0).\n",
         "Extra note for automation: return the decimal value as a string",
       ].join(" ");
     },
