@@ -149,7 +149,7 @@ export function WorkInProgressRoot(): React.ReactElement {
   if (player.currentWork !== null) {
     if (isCrimeWork(player.currentWork)) {
       const crime = player.currentWork.getCrime();
-      const completion = Math.round(((player.currentWork.cyclesWorked * CONSTANTS._idleSpeed) / crime.time) * 100);
+      const completion = ((player.currentWork.cyclesWorked * CONSTANTS._idleSpeed) / crime.time) * 100;
 
       workInfo = {
         buttons: {

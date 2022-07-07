@@ -1206,6 +1206,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           _ctx.log(() => txt);
         }
 
+        if (player.currentWork !== null) {
+          player.finishNEWWork(true);
+        }
+
         // Set Location to slums
         player.gotoLocation(LocationName.Slums);
 
