@@ -20,6 +20,7 @@ import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
 import { StatsRow } from "./React/StatsRow";
 import { WorkType, ClassType } from "../utils/WorkType";
+import { isCrimeWork } from "../Work/CrimeWork";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -137,7 +138,37 @@ export function WorkInProgressRoot(): React.ReactElement {
     ),
   ];
 
-  let workInfo: IWorkInfo | null;
+  let workInfo: IWorkInfo = {
+    buttons: {
+      cancel: () => undefined,
+    },
+    title: "",
+    stopText: "",
+  };
+
+  if (player.currentWork !== null) {
+    if (isCrimeWork(player.currentWork)) {
+      const crime = player.currentWork.getCrime();
+      const completion = Math.round(((player.currentWork.cyclesWorked * CONSTANTS._idleSpeed) / crime.time) * 100);
+
+      workInfo = {
+        buttons: {
+          cancel: () => {
+            router.toLocation(Locations[LocationName.Slums]);
+            player.finishNEWWork(true);
+          },
+        },
+        title: `You are attempting to ${crime.type}`,
+
+        progress: {
+          remaining: crime.time - player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
+          percentage: completion,
+        },
+
+        stopText: "Cancel crime",
+      };
+    }
+  }
 
   switch (player.workType) {
     case WorkType.Faction: {
@@ -399,29 +430,6 @@ export function WorkInProgressRoot(): React.ReactElement {
       break;
     }
 
-    case WorkType.Crime: {
-      const completion = Math.round((player.timeWorked / player.timeNeededToCompleteWork) * 100);
-
-      workInfo = {
-        buttons: {
-          cancel: () => {
-            router.toLocation(Locations[LocationName.Slums]);
-            player.finishCrime(true);
-          },
-        },
-        title: `You are attempting to ${player.crimeType}`,
-
-        progress: {
-          remaining: player.timeNeededToCompleteWork - player.timeWorked,
-          percentage: completion,
-        },
-
-        stopText: "Cancel crime",
-      };
-
-      break;
-    }
-
     case WorkType.CreateProgram: {
       function cancel(): void {
         player.finishCreateProgramWork(true);
@@ -497,11 +505,12 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     default:
-      router.toTerminal();
-      workInfo = null;
+      if (player.currentWork === null) {
+        router.toTerminal();
+      }
   }
 
-  if (workInfo === null) {
+  if (workInfo.title === "") {
     return <></>;
   }
 

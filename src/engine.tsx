@@ -96,7 +96,11 @@ const Engine: {
 
     Terminal.process(Router, Player, numCycles);
 
-    Player.process(Router, numCycles);
+    if (Player.currentWork !== null) {
+      Player.processNEWWork(numCycles);
+    } else {
+      Player.process(Router, numCycles);
+    }
 
     // Update stock prices
     if (Player.hasWseAccount) {
@@ -293,7 +297,9 @@ const Engine: {
       Player.gainMoney(offlineHackingIncome, "hacking");
       // Process offline progress
       loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
-      if (Player.isWorking) {
+      if (Player.currentWork !== null) {
+        Player.processNEWWork(numCyclesOffline);
+      } else if (Player.isWorking) {
         Player.focus = true;
         switch (Player.workType) {
           case WorkType.Faction:
@@ -304,9 +310,6 @@ const Engine: {
             break;
           case WorkType.StudyClass:
             Player.takeClass(numCyclesOffline);
-            break;
-          case WorkType.Crime:
-            Player.commitCrime(numCyclesOffline);
             break;
           case WorkType.CompanyPartTime:
             Player.workPartTime(numCyclesOffline);

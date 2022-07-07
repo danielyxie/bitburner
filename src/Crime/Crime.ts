@@ -4,6 +4,7 @@ import { IPerson } from "../PersonObjects/IPerson";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType } from "../utils/WorkType";
+import { CrimeWork } from "../Work/CrimeWork";
 
 interface IConstructorParams {
   hacking_success_weight?: number;
@@ -100,19 +101,13 @@ export class Crime {
     if (div <= 0) {
       div = 1;
     }
-    p.startCrime(
-      router,
-      this.type,
-      this.hacking_exp / div,
-      this.strength_exp / div,
-      this.defense_exp / div,
-      this.dexterity_exp / div,
-      this.agility_exp / div,
-      this.charisma_exp / div,
-      this.money / div,
-      this.time,
-      workerScript,
+    p.startNEWWork(
+      new CrimeWork({
+        crimeType: this.type,
+        singularity: workerScript !== null,
+      }),
     );
+    router.toWork();
 
     return this.time;
   }

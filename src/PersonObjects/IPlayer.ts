@@ -32,6 +32,7 @@ import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
 import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
+import { Work } from "src/Work/Work";
 
 export interface IPlayer extends IPerson {
   bitNodeN: number;
@@ -124,15 +125,13 @@ export interface IPlayer extends IPerson {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  currentWork: Work | null;
   createProgramReqLvl: number;
   factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: CrimeType;
-  committingCrimeThruSingFn: boolean;
-  singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
   className: ClassType;
@@ -163,6 +162,9 @@ export interface IPlayer extends IPerson {
   entropy: number;
 
   // Methods
+  startNEWWork(w: Work): void;
+  processNEWWork(cycles: number): void;
+  finishNEWWork(cancelled: boolean): void;
   work(numCycles: number): boolean;
   workPartTime(numCycles: number): boolean;
   workForFaction(numCycles: number): boolean;
@@ -213,19 +215,6 @@ export interface IPlayer extends IPerson {
   startFactionWork(faction: Faction): void;
   startClass(costMult: number, expMult: number, className: ClassType): void;
   startCorporation(corpName: string, additionalShares?: number): void;
-  startCrime(
-    router: IRouter,
-    crimeType: CrimeType,
-    hackExp: number,
-    strExp: number,
-    defExp: number,
-    dexExp: number,
-    agiExp: number,
-    chaExp: number,
-    money: number,
-    time: number,
-    singParams: any,
-  ): void;
   startFactionFieldWork(faction: Faction): void;
   startFactionHackWork(faction: Faction): void;
   startFactionSecurityWork(faction: Faction): void;
@@ -251,7 +240,6 @@ export interface IPlayer extends IPerson {
   finishWork(cancelled: boolean, sing?: boolean): string;
   cancelationPenalty(): number;
   finishWorkPartTime(sing?: boolean): string;
-  finishCrime(cancelled: boolean): string;
   finishCreateProgramWork(cancelled: boolean): string;
   resetMultipliers(): void;
   prestigeAugmentation(): void;
@@ -270,7 +258,6 @@ export interface IPlayer extends IPerson {
   hospitalize(): void;
   createProgramWork(numCycles: number): boolean;
   takeClass(numCycles: number): boolean;
-  commitCrime(numCycles: number): boolean;
   checkForFactionInvitations(): Faction[];
   setBitNodeNumber(n: number): void;
   getMult(name: string): number;

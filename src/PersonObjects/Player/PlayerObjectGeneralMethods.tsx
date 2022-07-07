@@ -146,7 +146,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.className = ClassType.None;
-  this.crimeType = CrimeType.None;
 
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -614,10 +613,6 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
     } else if (this.workType === WorkType.StudyClass) {
       if (this.takeClass(numCycles)) {
         router.toCity();
-      }
-    } else if (this.workType === WorkType.Crime) {
-      if (this.commitCrime(numCycles)) {
-        router.toLocation(Locations[LocationName.Slums]);
       }
     } else if (this.workType === WorkType.CompanyPartTime) {
       if (this.workPartTime(numCycles)) {
@@ -1330,10 +1325,7 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
   if (!cancelled) {
     //Complete case
     this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
-    const lines = [
-      `You've finished creating ${programName}!`,
-      "The new program can be found on your home computer.",
-    ];
+    const lines = [`You've finished creating ${programName}!`, "The new program can be found on your home computer."];
     dialogBoxCreate(lines.join("<br>"));
     message = lines.join(" ");
 
@@ -1501,196 +1493,6 @@ export function finishClass(this: IPlayer, sing = false): string {
   return "";
 }
 
-//The EXP and $ gains are hardcoded. Time is in ms
-export function startCrime(
-  this: IPlayer,
-  router: IRouter,
-  crimeType: CrimeType,
-  hackExp: number,
-  strExp: number,
-  defExp: number,
-  dexExp: number,
-  agiExp: number,
-  chaExp: number,
-  money: number,
-  time: number,
-  workerscript: WorkerScript | null = null,
-): void {
-  this.crimeType = crimeType;
-
-  this.resetWorkStatus();
-  this.isWorking = true;
-  this.focus = true;
-  this.workType = WorkType.Crime;
-
-  if (workerscript !== null) {
-    this.committingCrimeThruSingFn = true;
-    this.singFnCrimeWorkerScript = workerscript;
-  }
-
-  this.workHackExpGained = hackExp * this.hacking_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workStrExpGained = strExp * this.strength_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workDefExpGained = defExp * this.defense_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workDexExpGained = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workAgiExpGained = agiExp * this.agility_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workChaExpGained = chaExp * this.charisma_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workMoneyGained = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
-
-  this.timeNeededToCompleteWork = time;
-  router.toWork();
-}
-
-export function commitCrime(this: IPlayer, numCycles: number): boolean {
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-
-  if (this.timeWorked >= this.timeNeededToCompleteWork) {
-    this.finishCrime(false);
-    return true;
-  }
-  return false;
-}
-
-export function finishCrime(this: IPlayer, cancelled: boolean): string {
-  //Determine crime success/failure
-  if (!cancelled) {
-    if (determineCrimeSuccess(this, this.crimeType)) {
-      //Handle Karma and crime statistics
-      let crime = null;
-      for (const i of Object.keys(Crimes)) {
-        if (Crimes[i].type == this.crimeType) {
-          crime = Crimes[i];
-          break;
-        }
-      }
-      if (crime == null) {
-        dialogBoxCreate(
-          `ERR: Unrecognized crime type (${this.crimeType}). This is probably a bug please contact the developer`,
-        );
-        return "";
-      }
-      this.gainMoney(this.workMoneyGained, "crime");
-      this.karma -= crime.karma;
-      this.numPeopleKilled += crime.kills;
-      if (crime.intelligence_exp > 0) {
-        this.gainIntelligenceExp(crime.intelligence_exp);
-      }
-
-      //On a crime success, gain 2x exp
-      this.workHackExpGained *= 2;
-      this.workStrExpGained *= 2;
-      this.workDefExpGained *= 2;
-      this.workDexExpGained *= 2;
-      this.workAgiExpGained *= 2;
-      this.workChaExpGained *= 2;
-      const ws = this.singFnCrimeWorkerScript;
-      if (this.committingCrimeThruSingFn && ws !== null) {
-        if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
-          ws.scriptRef.log(
-            "SUCCESS: Crime successful! Gained " +
-              numeralWrapper.formatMoney(this.workMoneyGained) +
-              ", " +
-              numeralWrapper.formatExp(this.workHackExpGained) +
-              " hack exp, " +
-              numeralWrapper.formatExp(this.workStrExpGained) +
-              " str exp, " +
-              numeralWrapper.formatExp(this.workDefExpGained) +
-              " def exp, " +
-              numeralWrapper.formatExp(this.workDexExpGained) +
-              " dex exp, " +
-              numeralWrapper.formatExp(this.workAgiExpGained) +
-              " agi exp, " +
-              numeralWrapper.formatExp(this.workChaExpGained) +
-              " cha exp.",
-          );
-        }
-      } else {
-        dialogBoxCreate(
-          <>
-            Crime successful!
-            <br />
-            <br />
-            You gained:
-            <br />
-            <Money money={this.workMoneyGained} />
-            <br />
-            {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
-            {numeralWrapper.formatExp(this.workStrExpGained)} strength experience
-            <br />
-            {numeralWrapper.formatExp(this.workDefExpGained)} defense experience
-            <br />
-            {numeralWrapper.formatExp(this.workDexExpGained)} dexterity experience
-            <br />
-            {numeralWrapper.formatExp(this.workAgiExpGained)} agility experience
-            <br />
-            {numeralWrapper.formatExp(this.workChaExpGained)} charisma experience
-          </>,
-        );
-      }
-    } else {
-      //Exp halved on failure
-      this.workHackExpGained /= 2;
-      this.workStrExpGained /= 2;
-      this.workDefExpGained /= 2;
-      this.workDexExpGained /= 2;
-      this.workAgiExpGained /= 2;
-      this.workChaExpGained /= 2;
-      const ws = this.singFnCrimeWorkerScript;
-      if (this.committingCrimeThruSingFn && ws !== null) {
-        if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
-          ws.scriptRef.log(
-            "FAIL: Crime failed! Gained " +
-              numeralWrapper.formatExp(this.workHackExpGained) +
-              " hack exp, " +
-              numeralWrapper.formatExp(this.workStrExpGained) +
-              " str exp, " +
-              numeralWrapper.formatExp(this.workDefExpGained) +
-              " def exp, " +
-              numeralWrapper.formatExp(this.workDexExpGained) +
-              " dex exp, " +
-              numeralWrapper.formatExp(this.workAgiExpGained) +
-              " agi exp, " +
-              numeralWrapper.formatExp(this.workChaExpGained) +
-              " cha exp.",
-          );
-        }
-      } else {
-        dialogBoxCreate(
-          <>
-            Crime failed!
-            <br />
-            <br />
-            You gained:
-            <br />
-            {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
-            {numeralWrapper.formatExp(this.workStrExpGained)} strength experience
-            <br />
-            {numeralWrapper.formatExp(this.workDefExpGained)} defense experience
-            <br />
-            {numeralWrapper.formatExp(this.workDexExpGained)} dexterity experience
-            <br />
-            {numeralWrapper.formatExp(this.workAgiExpGained)} agility experience
-            <br />
-            {numeralWrapper.formatExp(this.workChaExpGained)} charisma experience
-          </>,
-        );
-      }
-    }
-
-    this.gainHackingExp(this.workHackExpGained);
-    this.gainStrengthExp(this.workStrExpGained);
-    this.gainDefenseExp(this.workDefExpGained);
-    this.gainDexterityExp(this.workDexExpGained);
-    this.gainAgilityExp(this.workAgiExpGained);
-    this.gainCharismaExp(this.workChaExpGained);
-  }
-  this.committingCrimeThruSingFn = false;
-  this.singFnCrimeWorkerScript = null;
-  this.isWorking = false;
-  this.crimeType = CrimeType.None;
-  this.resetWorkStatus();
-  return "";
-}
-
 //Cancels the player's current "work" assignment and gives the proper rewards
 //Used only for Singularity functions, so no popups are created
 export function singularityStopWork(this: IPlayer): string {
@@ -1713,9 +1515,6 @@ export function singularityStopWork(this: IPlayer): string {
       break;
     case WorkType.CreateProgram:
       res = this.finishCreateProgramWork(true);
-      break;
-    case WorkType.Crime:
-      res = this.finishCrime(true);
       break;
     case WorkType.GraftAugmentation:
       res = this.finishGraftAugmentationWork(true, true);

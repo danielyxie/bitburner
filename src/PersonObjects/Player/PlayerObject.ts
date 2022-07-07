@@ -4,6 +4,7 @@ import * as corporationMethods from "./PlayerObjectCorporationMethods";
 import * as gangMethods from "./PlayerObjectGangMethods";
 import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
+import * as workMethods from "./PlayerObjectWorkMethods";
 
 import { IMap } from "../../types";
 import { Sleeve } from "../Sleeve/Sleeve";
@@ -40,6 +41,7 @@ import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { ITaskTracker } from "../ITaskTracker";
 import { CONSTANTS } from "../../Constants";
 import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../utils/WorkType";
+import { Work } from "src/Work/Work";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -136,15 +138,13 @@ export class PlayerObject implements IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  currentWork: Work | null;
   createProgramReqLvl: number;
   factionWorkType: PlayerFactionWorkType;
   createProgramName: string;
   timeWorkedCreateProgram: number;
   graftAugmentationName: string;
   timeWorkedGraftAugmentation: number;
-  crimeType: CrimeType;
-  committingCrimeThruSingFn: boolean;
-  singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
   className: ClassType;
@@ -175,6 +175,9 @@ export class PlayerObject implements IPlayer {
   entropy: number;
 
   // Methods
+  startNEWWork: (w: Work) => void;
+  processNEWWork: (cycles: number) => void;
+  finishNEWWork: (cancelled: boolean) => void;
   work: (numCycles: number) => boolean;
   workPartTime: (numCycles: number) => boolean;
   workForFaction: (numCycles: number) => boolean;
@@ -234,19 +237,6 @@ export class PlayerObject implements IPlayer {
   startFactionWork: (faction: Faction) => void;
   startClass: (costMult: number, expMult: number, className: ClassType) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
-  startCrime: (
-    router: IRouter,
-    crimeType: CrimeType,
-    hackExp: number,
-    strExp: number,
-    defExp: number,
-    dexExp: number,
-    agiExp: number,
-    chaExp: number,
-    money: number,
-    time: number,
-    singParams: any,
-  ) => void;
   startFactionFieldWork: (faction: Faction) => void;
   startFactionHackWork: (faction: Faction) => void;
   startFactionSecurityWork: (faction: Faction) => void;
@@ -276,7 +266,6 @@ export class PlayerObject implements IPlayer {
   finishWork: (cancelled: boolean, sing?: boolean) => string;
   cancelationPenalty: () => number;
   finishWorkPartTime: (sing?: boolean) => string;
-  finishCrime: (cancelled: boolean) => string;
   finishCreateProgramWork: (cancelled: boolean) => string;
   resetMultipliers: () => void;
   prestigeAugmentation: () => void;
@@ -296,7 +285,6 @@ export class PlayerObject implements IPlayer {
   hospitalize: () => void;
   createProgramWork: (numCycles: number) => boolean;
   takeClass: (numCycles: number) => boolean;
-  commitCrime: (numCycles: number) => boolean;
   checkForFactionInvitations: () => Faction[];
   setBitNodeNumber: (n: number) => void;
   getMult: (name: string) => number;
@@ -435,8 +423,6 @@ export class PlayerObject implements IPlayer {
 
     this.className = ClassType.None;
 
-    this.crimeType = CrimeType.None;
-
     this.timeWorked = 0; //in m;
     this.timeWorkedCreateProgram = 0;
     this.timeNeededToCompleteWork = 0;
@@ -495,6 +481,8 @@ export class PlayerObject implements IPlayer {
     this.achievements = [];
     this.terminalCommandHistory = [];
 
+    this.currentWork = null;
+
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
       "I-" +
@@ -532,6 +520,9 @@ export class PlayerObject implements IPlayer {
     this.processWorkEarnings = generalMethods.processWorkEarnings;
     this.startWork = generalMethods.startWork;
     this.cancelationPenalty = generalMethods.cancelationPenalty;
+    this.startNEWWork = workMethods.start;
+    this.processNEWWork = workMethods.process;
+    this.finishNEWWork = workMethods.finish;
     this.work = generalMethods.work;
     this.finishWork = generalMethods.finishWork;
     this.startWorkPartTime = generalMethods.startWorkPartTime;
@@ -563,9 +554,6 @@ export class PlayerObject implements IPlayer {
     this.startClass = generalMethods.startClass;
     this.takeClass = generalMethods.takeClass;
     this.finishClass = generalMethods.finishClass;
-    this.startCrime = generalMethods.startCrime;
-    this.commitCrime = generalMethods.commitCrime;
-    this.finishCrime = generalMethods.finishCrime;
     this.singularityStopWork = generalMethods.singularityStopWork;
     this.takeDamage = generalMethods.takeDamage;
     this.regenerateHp = generalMethods.regenerateHp;
@@ -623,8 +611,6 @@ export class PlayerObject implements IPlayer {
     this.getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
     this.createHacknetServer = serverMethods.createHacknetServer;
     this.factionWorkType = PlayerFactionWorkType.None;
-    this.committingCrimeThruSingFn = false;
-    this.singFnCrimeWorkerScript = null;
 
     this.getMult = generalMethods.getMult;
     this.setMult = generalMethods.setMult;
