@@ -324,6 +324,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     if (Settings.EnableBashHotkeys) {
       if (event.code === KEYCODE.C && event.ctrlKey && ref && ref.selectionStart === ref.selectionEnd) {
         event.preventDefault();
+        terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
         modifyInput("clearall");
       }
 
