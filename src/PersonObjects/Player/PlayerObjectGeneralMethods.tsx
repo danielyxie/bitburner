@@ -61,7 +61,6 @@ import { Money } from "../../ui/React/Money";
 import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
-import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { ITaskTracker } from "../ITaskTracker";
@@ -145,7 +144,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
-  this.className = ClassType.None;
 
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -546,7 +544,6 @@ export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: s
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.graftAugmentationName = "";
-  this.className = ClassType.None;
   this.workType = WorkType.None;
 }
 
@@ -568,7 +565,7 @@ export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
   this.gainDexterityExp(dexExpGain);
   this.gainAgilityExp(agiExpGain);
   this.gainCharismaExp(chaExpGain);
-  this.gainMoney(moneyGain, this.className ? "class" : "work");
+  this.gainMoney(moneyGain, "work");
   this.workHackExpGained += hackExpGain;
   this.workStrExpGained += strExpGain;
   this.workDefExpGained += defExpGain;
@@ -609,10 +606,6 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
     } else if (this.workType === WorkType.CreateProgram) {
       if (this.createProgramWork(numCycles)) {
         router.toTerminal();
-      }
-    } else if (this.workType === WorkType.StudyClass) {
-      if (this.takeClass(numCycles)) {
-        router.toCity();
       }
     } else if (this.workType === WorkType.CompanyPartTime) {
       if (this.workPartTime(numCycles)) {
@@ -1401,109 +1394,17 @@ export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean, s
   return `Grafting of ${augName} has ended.`;
 }
 
-/* Studying/Taking Classes */
-export function startClass(this: IPlayer, costMult: number, expMult: number, className: ClassType): void {
-  this.resetWorkStatus();
-  this.isWorking = true;
-  this.workType = WorkType.StudyClass;
-  this.workCostMult = costMult;
-  this.workExpMult = expMult;
-  this.className = className;
-  const earnings = calculateClassEarnings(this);
-  this.workMoneyLossRate = earnings.workMoneyLossRate;
-  this.workHackExpGainRate = earnings.workHackExpGainRate;
-  this.workStrExpGainRate = earnings.workStrExpGainRate;
-  this.workDefExpGainRate = earnings.workDefExpGainRate;
-  this.workDexExpGainRate = earnings.workDexExpGainRate;
-  this.workAgiExpGainRate = earnings.workAgiExpGainRate;
-  this.workChaExpGainRate = earnings.workChaExpGainRate;
-}
-
-export function takeClass(this: IPlayer, numCycles: number): boolean {
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-  const earnings = calculateClassEarnings(this);
-  this.workMoneyLossRate = earnings.workMoneyLossRate;
-  this.workHackExpGainRate = earnings.workHackExpGainRate;
-  this.workStrExpGainRate = earnings.workStrExpGainRate;
-  this.workDefExpGainRate = earnings.workDefExpGainRate;
-  this.workDexExpGainRate = earnings.workDexExpGainRate;
-  this.workAgiExpGainRate = earnings.workAgiExpGainRate;
-  this.workChaExpGainRate = earnings.workChaExpGainRate;
-  this.processWorkEarnings(numCycles);
-  return false;
-}
-
-//The 'sing' argument defines whether or not this function was called
-//through a Singularity Netscript function
-export function finishClass(this: IPlayer, sing = false): string {
-  this.gainIntelligenceExp(CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000));
-
-  if (this.workMoneyGained > 0) {
-    throw new Error("ERR: Somehow gained money while taking class");
-  }
-
-  this.updateSkillLevels();
-  if (!sing) {
-    dialogBoxCreate(
-      <>
-        After {this.className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}, <br />
-        you spent a total of <Money money={-this.workMoneyGained} />. <br />
-        <br />
-        You earned a total of: <br />
-        {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
-        {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
-        {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
-        {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
-        {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
-        {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp
-        <br />
-      </>,
-    );
-  }
-
-  this.isWorking = false;
-
-  if (sing) {
-    const res =
-      "After " +
-      this.className +
-      " for " +
-      convertTimeMsToTimeElapsedString(this.timeWorked) +
-      ", " +
-      "you spent a total of " +
-      numeralWrapper.formatMoney(this.workMoneyGained * -1) +
-      ". " +
-      "You earned a total of: " +
-      numeralWrapper.formatExp(this.workHackExpGained) +
-      " hacking exp, " +
-      numeralWrapper.formatExp(this.workStrExpGained) +
-      " strength exp, " +
-      numeralWrapper.formatExp(this.workDefExpGained) +
-      " defense exp, " +
-      numeralWrapper.formatExp(this.workDexExpGained) +
-      " dexterity exp, " +
-      numeralWrapper.formatExp(this.workAgiExpGained) +
-      " agility exp, and " +
-      numeralWrapper.formatExp(this.workChaExpGained) +
-      " charisma exp";
-    this.resetWorkStatus();
-    return res;
-  }
-  this.resetWorkStatus();
-  return "";
-}
-
 //Cancels the player's current "work" assignment and gives the proper rewards
 //Used only for Singularity functions, so no popups are created
 export function singularityStopWork(this: IPlayer): string {
+  if (this.currentWork !== null) {
+    this.finishNEWWork(true);
+  }
   if (!this.isWorking) {
     return "";
   }
   let res = ""; //Earnings text for work
   switch (this.workType) {
-    case WorkType.StudyClass:
-      res = this.finishClass(true);
-      break;
     case WorkType.Company:
       res = this.finishWork(true, true);
       break;

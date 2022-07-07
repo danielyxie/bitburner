@@ -21,6 +21,8 @@ import { ReputationRate } from "./React/ReputationRate";
 import { StatsRow } from "./React/StatsRow";
 import { WorkType, ClassType } from "../utils/WorkType";
 import { isCrimeWork } from "../Work/CrimeWork";
+import { isClassWork } from "../Work/ClassWork";
+import { WorkStats } from "src/Work/WorkStats";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -43,6 +45,89 @@ interface IWorkInfo {
   stopTooltip?: string | React.ReactElement;
 }
 
+export function ExpRows(total: WorkStats, rate: WorkStats): React.ReactElement[] {
+  return [
+    total.hackExp > 0 ? (
+      <StatsRow
+        name="Hacking Exp"
+        color={Settings.theme.hack}
+        data={{
+          content: `${numeralWrapper.formatExp(total.hackExp)} (${numeralWrapper.formatExp(
+            rate.hackExp * CYCLES_PER_SEC,
+          )} / sec)`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    total.strExp > 0 ? (
+      <StatsRow
+        name="Strength Exp"
+        color={Settings.theme.combat}
+        data={{
+          content: `${numeralWrapper.formatExp(total.strExp)} (${numeralWrapper.formatExp(
+            rate.strExp * CYCLES_PER_SEC,
+          )} / sec)`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    total.defExp > 0 ? (
+      <StatsRow
+        name="Defense Exp"
+        color={Settings.theme.combat}
+        data={{
+          content: `${numeralWrapper.formatExp(total.defExp)} (${numeralWrapper.formatExp(
+            rate.defExp * CYCLES_PER_SEC,
+          )} / sec)`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    total.dexExp > 0 ? (
+      <StatsRow
+        name="Dexterity Exp"
+        color={Settings.theme.combat}
+        data={{
+          content: `${numeralWrapper.formatExp(total.dexExp)} (${numeralWrapper.formatExp(
+            rate.dexExp * CYCLES_PER_SEC,
+          )} / sec)`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    total.agiExp > 0 ? (
+      <StatsRow
+        name="Agility Exp"
+        color={Settings.theme.combat}
+        data={{
+          content: `${numeralWrapper.formatExp(total.agiExp)} (${numeralWrapper.formatExp(
+            rate.agiExp * CYCLES_PER_SEC,
+          )} / sec)`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    total.chaExp > 0 ? (
+      <StatsRow
+        name="Charisma Exp"
+        color={Settings.theme.cha}
+        data={{
+          content: `${numeralWrapper.formatExp(total.chaExp)} (${numeralWrapper.formatExp(
+            rate.chaExp * CYCLES_PER_SEC,
+          )} / sec)`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+  ];
+}
+
 export function WorkInProgressRoot(): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -57,7 +142,7 @@ export function WorkInProgressRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
 
-  const expGains = [
+  let expGains = [
     player.workHackExpGained > 0 ? (
       <StatsRow
         name="Hacking Exp"
@@ -168,6 +253,54 @@ export function WorkInProgressRoot(): React.ReactElement {
         stopText: "Cancel crime",
       };
     }
+
+    if (isClassWork(player.currentWork)) {
+      const classWork = player.currentWork;
+      function cancel(): void {
+        player.finishNEWWork(true);
+        router.toCity();
+      }
+
+      function unfocus(): void {
+        router.toCity();
+        player.stopFocusing();
+      }
+
+      let stopText = "";
+      if (classWork.isGym()) {
+        stopText = "Stop training at gym";
+      } else {
+        stopText = "Stop taking course";
+      }
+
+      const rates = classWork.calculateRates(player);
+      expGains = ExpRows(classWork.earnings, rates);
+      workInfo = {
+        buttons: {
+          cancel: cancel,
+          unfocus: unfocus,
+        },
+        title: (
+          <>
+            You are currently <b>{classWork.getClass().youAreCurrently}</b>
+          </>
+        ),
+
+        gains: [
+          <StatsRow name="Total Cost" color={Settings.theme.money}>
+            <Typography>
+              <Money money={classWork.earnings.money} /> (<MoneyRate money={rates.money * CYCLES_PER_SEC} />)
+            </Typography>
+          </StatsRow>,
+          ...expGains,
+        ],
+        progress: {
+          elapsed: classWork.cyclesWorked * CONSTANTS._idleSpeed,
+        },
+
+        stopText: stopText,
+      };
+    }
   }
 
   switch (player.workType) {
@@ -235,60 +368,6 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
 
         stopText: "Stop Faction work",
-      };
-
-      break;
-    }
-
-    case WorkType.StudyClass: {
-      const className = player.className;
-      function cancel(): void {
-        player.finishClass(true);
-        router.toCity();
-      }
-
-      function unfocus(): void {
-        router.toCity();
-        player.stopFocusing();
-      }
-
-      let stopText = "";
-      if (
-        className === ClassType.GymStrength ||
-        className === ClassType.GymDefense ||
-        className === ClassType.GymDexterity ||
-        className === ClassType.GymAgility
-      ) {
-        stopText = "Stop training at gym";
-      } else {
-        stopText = "Stop taking course";
-      }
-
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently <b>{className}</b>
-          </>
-        ),
-
-        gains: [
-          <StatsRow name="Total Cost" color={Settings.theme.money}>
-            <Typography>
-              <Money money={-player.workMoneyGained} /> (<MoneyRate money={player.workMoneyLossRate * CYCLES_PER_SEC} />
-              )
-            </Typography>
-          </StatsRow>,
-          ...expGains,
-        ],
-        progress: {
-          elapsed: player.timeWorked,
-        },
-
-        stopText: stopText,
       };
 
       break;

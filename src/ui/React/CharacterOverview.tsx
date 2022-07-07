@@ -27,6 +27,8 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Box, Tooltip } from "@mui/material";
 
 import { WorkType } from "../../utils/WorkType";
+import { isClassWork } from "../../Work/ClassWork";
+import { CONSTANTS } from "../../Constants";
 
 interface IProps {
   save: () => void;
@@ -138,12 +140,16 @@ function Work(): React.ReactElement {
     player.startFocusing();
     router.toWork();
   };
-
-  if (!player.isWorking || player.focus) return <></>;
+  if ((!player.isWorking && player.currentWork === null) || player.focus) return <></>;
 
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
+  if (isClassWork(player.currentWork)) {
+    details = <>{player.currentWork.getClass().youAreCurrently}</>;
+    header = <>You are {player.currentWork.getClass().youAreCurrently}</>;
+    innerText = <>{convertTimeMsToTimeElapsedString(player.currentWork.cyclesWorked * CONSTANTS._idleSpeed)}</>;
+  }
   switch (player.workType) {
     case WorkType.CompanyPartTime:
     case WorkType.Company:
@@ -179,11 +185,6 @@ function Work(): React.ReactElement {
           +<Reputation reputation={player.workRepGained} /> rep
         </>
       );
-      break;
-    case WorkType.StudyClass:
-      details = <>{player.workType}</>;
-      header = <>You are {player.className}</>;
-      innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
       break;
     case WorkType.CreateProgram:
       details = <>Coding {player.createProgramName}</>;

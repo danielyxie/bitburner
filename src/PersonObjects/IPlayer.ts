@@ -134,7 +134,6 @@ export interface IPlayer extends IPerson {
   timeWorkedGraftAugmentation: number;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: ClassType;
   currentWorkFactionName: string;
   workType: WorkType;
   workCostMult: number;
@@ -213,7 +212,6 @@ export interface IPlayer extends IPerson {
   singularityStopWork(): string;
   startBladeburner(p: any): void;
   startFactionWork(faction: Faction): void;
-  startClass(costMult: number, expMult: number, className: ClassType): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startFactionFieldWork(faction: Faction): void;
   startFactionHackWork(faction: Faction): void;
@@ -236,7 +234,6 @@ export interface IPlayer extends IPerson {
   gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
   stopFocusing(): void;
   finishFactionWork(cancelled: boolean, sing?: boolean): string;
-  finishClass(sing?: boolean): string;
   finishWork(cancelled: boolean, sing?: boolean): string;
   cancelationPenalty(): number;
   finishWorkPartTime(sing?: boolean): string;
@@ -257,7 +254,6 @@ export interface IPlayer extends IPerson {
   processWorkEarnings(cycles: number): void;
   hospitalize(): void;
   createProgramWork(numCycles: number): boolean;
-  takeClass(numCycles: number): boolean;
   checkForFactionInvitations(): Faction[];
   setBitNodeNumber(n: number): void;
   getMult(name: string): number;

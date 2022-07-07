@@ -298,6 +298,7 @@ const Engine: {
       // Process offline progress
       loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
       if (Player.currentWork !== null) {
+        Player.focus = true;
         Player.processNEWWork(numCyclesOffline);
       } else if (Player.isWorking) {
         Player.focus = true;
@@ -307,9 +308,6 @@ const Engine: {
             break;
           case WorkType.CreateProgram:
             Player.createProgramWork(numCyclesOffline);
-            break;
-          case WorkType.StudyClass:
-            Player.takeClass(numCyclesOffline);
             break;
           case WorkType.CompanyPartTime:
             Player.workPartTime(numCyclesOffline);

@@ -70,7 +70,6 @@ interface Player {
   workMoneyGained: number;
   createProgramName: string;
   createProgramReqLvl: number;
-  className: string;
   work_money_mult: number;
   hacknet_node_money_mult: number;
   hacknet_node_purchase_cost_mult: number;

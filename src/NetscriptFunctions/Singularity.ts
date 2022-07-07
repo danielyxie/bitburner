@@ -49,7 +49,8 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { ClassType, WorkType } from "../utils/WorkType";
+import { WorkType } from "../utils/WorkType";
+import { ClassWork, ClassType } from "../Work/ClassWork";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -264,12 +265,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const className = _ctx.helper.string("className", _className);
         const focus = _ctx.helper.boolean(_focus);
         const wasFocusing = player.focus;
-        if (player.isWorking) {
+        if (player.currentWork) {
           const txt = player.singularityStopWork();
           _ctx.log(() => txt);
         }
 
-        let costMult, expMult;
         switch (universityName.toLowerCase()) {
           case LocationName.AevumSummitUniversity.toLowerCase():
             if (player.city != CityName.Aevum) {
@@ -277,8 +277,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.gotoLocation(LocationName.AevumSummitUniversity);
-            costMult = 4;
-            expMult = 3;
             break;
           case LocationName.Sector12RothmanUniversity.toLowerCase():
             if (player.city != CityName.Sector12) {
@@ -286,8 +284,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.Sector12RothmanUniversity;
-            costMult = 3;
-            expMult = 2;
             break;
           case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
             if (player.city != CityName.Volhaven) {
@@ -297,8 +293,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.VolhavenZBInstituteOfTechnology;
-            costMult = 5;
-            expMult = 4;
             break;
           default:
             _ctx.log(() => `Invalid university name: '${universityName}'.`);
@@ -329,7 +323,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             _ctx.log(() => `Invalid class name: ${className}.`);
             return false;
         }
-        player.startClass(costMult, expMult, task);
+        player.startNEWWork(
+          new ClassWork({
+            classType: task,
+            location: player.location,
+            singularity: true,
+          }),
+        );
         if (focus) {
           player.startFocusing();
           Router.toWork();
@@ -352,7 +352,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           const txt = player.singularityStopWork();
           _ctx.log(() => txt);
         }
-        let costMult, expMult;
         switch (gymName.toLowerCase()) {
           case LocationName.AevumCrushFitnessGym.toLowerCase():
             if (player.city != CityName.Aevum) {
@@ -363,8 +362,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.AevumCrushFitnessGym;
-            costMult = 3;
-            expMult = 2;
             break;
           case LocationName.AevumSnapFitnessGym.toLowerCase():
             if (player.city != CityName.Aevum) {
@@ -375,8 +372,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.AevumSnapFitnessGym;
-            costMult = 10;
-            expMult = 5;
             break;
           case LocationName.Sector12IronGym.toLowerCase():
             if (player.city != CityName.Sector12) {
@@ -387,8 +382,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.Sector12IronGym;
-            costMult = 1;
-            expMult = 1;
             break;
           case LocationName.Sector12PowerhouseGym.toLowerCase():
             if (player.city != CityName.Sector12) {
@@ -399,8 +392,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.Sector12PowerhouseGym;
-            costMult = 20;
-            expMult = 10;
             break;
           case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
             if (player.city != CityName.Volhaven) {
@@ -411,8 +402,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.VolhavenMilleniumFitnessGym;
-            costMult = 7;
-            expMult = 4;
             break;
           default:
             _ctx.log(() => `Invalid gym name: ${gymName}. gymWorkout() failed`);
@@ -422,19 +411,27 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         switch (stat.toLowerCase()) {
           case "strength".toLowerCase():
           case "str".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymStrength);
+            player.startNEWWork(
+              new ClassWork({ classType: ClassType.GymStrength, location: player.location, singularity: true }),
+            );
             break;
           case "defense".toLowerCase():
           case "def".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymDefense);
+            player.startNEWWork(
+              new ClassWork({ classType: ClassType.GymDefense, location: player.location, singularity: true }),
+            );
             break;
           case "dexterity".toLowerCase():
           case "dex".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymDexterity);
+            player.startNEWWork(
+              new ClassWork({ classType: ClassType.GymDexterity, location: player.location, singularity: true }),
+            );
             break;
           case "agility".toLowerCase():
           case "agi".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymAgility);
+            player.startNEWWork(
+              new ClassWork({ classType: ClassType.GymAgility, location: player.location, singularity: true }),
+            );
             break;
           default:
             _ctx.log(() => `Invalid stat: ${stat}.`);

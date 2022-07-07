@@ -8,18 +8,18 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Money } from "../ui/React/Money";
-import { CrimeType, WorkType } from "../utils/WorkType";
-import { Work } from "./Work";
+import { CrimeType } from "../utils/WorkType";
+import { Work, WorkType } from "./Work";
 
 interface CrimeWorkParams {
   crimeType: CrimeType;
   singularity: boolean;
 }
 
-export const isCrimeWork = (w: Work): w is CrimeWork => w.type === WorkType.Crime;
+export const isCrimeWork = (w: Work | null): w is CrimeWork => w !== null && w.type === WorkType.CRIME;
 
 export class CrimeWork extends Work {
-  type = WorkType.Crime;
+  type = WorkType.CRIME;
 
   crimeType: CrimeType;
   cyclesWorked: number;

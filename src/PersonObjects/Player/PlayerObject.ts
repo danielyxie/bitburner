@@ -10,7 +10,6 @@ import { IMap } from "../../types";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { Exploit } from "../../Exploits/Exploit";
-import { WorkerScript } from "../../Netscript/WorkerScript";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { Server } from "../../Server/Server";
 import { BaseServer } from "../../Server/BaseServer";
@@ -147,7 +146,6 @@ export class PlayerObject implements IPlayer {
   timeWorkedGraftAugmentation: number;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  className: ClassType;
   currentWorkFactionName: string;
   workType: WorkType;
   workCostMult: number;
@@ -235,7 +233,6 @@ export class PlayerObject implements IPlayer {
   singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
   startFactionWork: (faction: Faction) => void;
-  startClass: (costMult: number, expMult: number, className: ClassType) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
   startFactionFieldWork: (faction: Faction) => void;
   startFactionHackWork: (faction: Faction) => void;
@@ -262,7 +259,6 @@ export class PlayerObject implements IPlayer {
   gainCodingContractReward: (reward: ICodingContractReward, difficulty?: number) => string;
   stopFocusing: () => void;
   finishFactionWork: (cancelled: boolean, sing?: boolean) => string;
-  finishClass: (sing?: boolean) => string;
   finishWork: (cancelled: boolean, sing?: boolean) => string;
   cancelationPenalty: () => number;
   finishWorkPartTime: (sing?: boolean) => string;
@@ -284,7 +280,6 @@ export class PlayerObject implements IPlayer {
   processWorkEarnings: (cycles: number) => void;
   hospitalize: () => void;
   createProgramWork: (numCycles: number) => boolean;
-  takeClass: (numCycles: number) => boolean;
   checkForFactionInvitations: () => Faction[];
   setBitNodeNumber: (n: number) => void;
   getMult: (name: string) => number;
@@ -421,8 +416,6 @@ export class PlayerObject implements IPlayer {
     this.graftAugmentationName = "";
     this.timeWorkedGraftAugmentation = 0;
 
-    this.className = ClassType.None;
-
     this.timeWorked = 0; //in m;
     this.timeWorkedCreateProgram = 0;
     this.timeNeededToCompleteWork = 0;
@@ -551,9 +544,6 @@ export class PlayerObject implements IPlayer {
     this.startGraftAugmentationWork = generalMethods.startGraftAugmentationWork;
     this.graftAugmentationWork = generalMethods.craftAugmentationWork;
     this.finishGraftAugmentationWork = generalMethods.finishGraftAugmentationWork;
-    this.startClass = generalMethods.startClass;
-    this.takeClass = generalMethods.takeClass;
-    this.finishClass = generalMethods.finishClass;
     this.singularityStopWork = generalMethods.singularityStopWork;
     this.takeDamage = generalMethods.takeDamage;
     this.regenerateHp = generalMethods.regenerateHp;
