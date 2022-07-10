@@ -306,14 +306,8 @@ const Engine: {
           case WorkType.Faction:
             Player.workForFaction(numCyclesOffline);
             break;
-          case WorkType.CreateProgram:
-            Player.createProgramWork(numCyclesOffline);
-            break;
           case WorkType.CompanyPartTime:
             Player.workPartTime(numCyclesOffline);
-            break;
-          case WorkType.GraftAugmentation:
-            Player.graftAugmentationWork(numCyclesOffline);
             break;
           default:
             Player.work(numCyclesOffline);

@@ -19,14 +19,12 @@ interface CrimeWorkParams {
 export const isCrimeWork = (w: Work | null): w is CrimeWork => w !== null && w.type === WorkType.CRIME;
 
 export class CrimeWork extends Work {
-  type = WorkType.CRIME;
-
   crimeType: CrimeType;
   cyclesWorked: number;
   singularity: boolean;
 
   constructor(params?: CrimeWorkParams) {
-    super();
+    super(WorkType.CRIME);
     this.crimeType = params?.crimeType ?? CrimeType.Shoplift;
     this.singularity = params?.singularity ?? false;
     this.cyclesWorked = 0;

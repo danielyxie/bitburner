@@ -22,7 +22,9 @@ import { StatsRow } from "./React/StatsRow";
 import { WorkType, ClassType } from "../utils/WorkType";
 import { isCrimeWork } from "../Work/CrimeWork";
 import { isClassWork } from "../Work/ClassWork";
-import { WorkStats } from "src/Work/WorkStats";
+import { WorkStats } from "../Work/WorkStats";
+import { isCreateProgramWork } from "../Work/CreateProgramWork";
+import { isGraftingWork } from "../Work/GraftingWork";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -301,6 +303,76 @@ export function WorkInProgressRoot(): React.ReactElement {
         stopText: stopText,
       };
     }
+
+    if (isCreateProgramWork(player.currentWork)) {
+      const create = player.currentWork;
+      function cancel(): void {
+        player.finishNEWWork(true);
+        router.toTerminal();
+      }
+      function unfocus(): void {
+        router.toTerminal();
+        player.stopFocusing();
+      }
+
+      const completion = (create.unitCompleted / create.unitNeeded()) * 100;
+
+      workInfo = {
+        buttons: {
+          cancel: cancel,
+          unfocus: unfocus,
+        },
+        title: (
+          <>
+            You are currently working on coding <b>{create.programName}</b>
+          </>
+        ),
+
+        progress: {
+          elapsed: create.cyclesWorked * CONSTANTS._idleSpeed,
+          percentage: completion,
+        },
+
+        stopText: "Stop creating program",
+        stopTooltip: "Your work will be saved and you can return to complete the program later.",
+      };
+    }
+
+    if (isGraftingWork(player.currentWork)) {
+      const graft = player.currentWork;
+      function cancel(): void {
+        player.finishNEWWork(true);
+        router.toTerminal();
+      }
+      function unfocus(): void {
+        router.toTerminal();
+        player.stopFocusing();
+      }
+
+      workInfo = {
+        buttons: {
+          cancel: cancel,
+          unfocus: unfocus,
+        },
+        title: (
+          <>
+            You are currently working on grafting <b>{graft.augmentation}</b>
+          </>
+        ),
+
+        progress: {
+          elapsed: graft.cyclesWorked * CONSTANTS._idleSpeed,
+          percentage: (graft.unitCompleted / graft.unitNeeded()) * 100,
+        },
+
+        stopText: "Stop grafting",
+        stopTooltip: (
+          <>
+            If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned
+          </>
+        ),
+      };
+    }
   }
 
   switch (player.workType) {
@@ -504,80 +576,6 @@ export function WorkInProgressRoot(): React.ReactElement {
         stopTooltip:
           "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
           " and there will be no penalty because this is a part-time job.",
-      };
-
-      break;
-    }
-
-    case WorkType.CreateProgram: {
-      function cancel(): void {
-        player.finishCreateProgramWork(true);
-        router.toTerminal();
-      }
-      function unfocus(): void {
-        router.toTerminal();
-        player.stopFocusing();
-      }
-
-      const completion = (player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100;
-
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently working on coding <b>{player.createProgramName}</b>
-          </>
-        ),
-
-        progress: {
-          elapsed: player.timeWorked,
-          percentage: completion,
-        },
-
-        stopText: "Stop creating program",
-        stopTooltip: "Your work will be saved and you can return to complete the program later.",
-      };
-
-      break;
-    }
-
-    case WorkType.GraftAugmentation: {
-      function cancel(): void {
-        player.finishGraftAugmentationWork(true);
-        router.toTerminal();
-      }
-      function unfocus(): void {
-        router.toTerminal();
-        player.stopFocusing();
-      }
-
-      const completion = (player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100;
-
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently working on grafting <b>{player.graftAugmentationName}</b>
-          </>
-        ),
-
-        progress: {
-          elapsed: player.timeWorked,
-          percentage: completion,
-        },
-
-        stopText: "Stop grafting",
-        stopTooltip: (
-          <>
-            If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned
-          </>
-        ),
       };
 
       break;

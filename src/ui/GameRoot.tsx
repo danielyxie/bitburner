@@ -294,7 +294,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         Router[fnName] = _wrap(Router[fnName], (func, ...args) => {
           if (!allowRoutingCalls) {
             // Let's just log to console.
-            console.log(`Routing is currently disabled - Attempted router.${fnName}()`);
+            console.error(`Routing is currently disabled - Attempted router.${fnName}()`);
             return;
           }
 

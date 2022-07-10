@@ -68,8 +68,6 @@ interface Player {
   workChaExpGained: number;
   workRepGained: number;
   workMoneyGained: number;
-  createProgramName: string;
-  createProgramReqLvl: number;
   work_money_mult: number;
   hacknet_node_money_mult: number;
   hacknet_node_purchase_cost_mult: number;

@@ -126,12 +126,7 @@ export interface IPlayer extends IPerson {
   bladeburner_success_chance_mult: number;
 
   currentWork: Work | null;
-  createProgramReqLvl: number;
   factionWorkType: string;
-  createProgramName: string;
-  timeWorkedCreateProgram: number;
-  graftAugmentationName: string;
-  timeWorkedGraftAugmentation: number;
   timeNeededToCompleteWork: number;
   focus: boolean;
   currentWorkFactionName: string;
@@ -227,7 +222,6 @@ export interface IPlayer extends IPerson {
   quitJob(company: string, sing?: boolean): void;
   hasJob(): boolean;
   createHacknetServer(): HacknetServer;
-  startCreateProgramWork(programName: string, time: number, reqLevel: number): void;
   queueAugmentation(augmentationName: string): void;
   receiveInvite(factionName: string): void;
   updateSkillLevels(): void;
@@ -237,7 +231,6 @@ export interface IPlayer extends IPerson {
   finishWork(cancelled: boolean, sing?: boolean): string;
   cancelationPenalty(): number;
   finishWorkPartTime(sing?: boolean): string;
-  finishCreateProgramWork(cancelled: boolean): string;
   resetMultipliers(): void;
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
@@ -253,15 +246,11 @@ export interface IPlayer extends IPerson {
   getWorkMoneyGain(): number;
   processWorkEarnings(cycles: number): void;
   hospitalize(): void;
-  createProgramWork(numCycles: number): boolean;
   checkForFactionInvitations(): Faction[];
   setBitNodeNumber(n: number): void;
   getMult(name: string): number;
   setMult(name: string, mult: number): void;
   canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
-  startGraftAugmentationWork(augmentationName: string, time: number): void;
-  graftAugmentationWork(numCycles: number): boolean;
-  finishGraftAugmentationWork(cancelled: boolean, singularity?: boolean): string;
   applyEntropy(stacks?: number): void;
 }

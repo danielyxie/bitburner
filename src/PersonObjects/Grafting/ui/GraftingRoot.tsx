@@ -1,6 +1,7 @@
 import { CheckBox, CheckBoxOutlineBlank, Construction } from "@mui/icons-material";
 import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { GraftingWork } from "../../../Work/GraftingWork";
 import { Augmentation } from "../../../Augmentation/Augmentation";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
 import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
@@ -19,7 +20,7 @@ import { IPlayer } from "../../IPlayer";
 import { GraftableAugmentation } from "../GraftableAugmentation";
 import { calculateGraftingTimeWithBonus, getGraftingAvailableAugs } from "../GraftingHelpers";
 
-const GraftableAugmentations: IMap<GraftableAugmentation> = {};
+export const GraftableAugmentations: IMap<GraftableAugmentation> = {};
 
 const canGraft = (player: IPlayer, aug: GraftableAugmentation): boolean => {
   if (player.money < aug.cost) {
@@ -154,9 +155,13 @@ export const GraftingRoot = (): React.ReactElement => {
                 open={graftOpen}
                 onClose={() => setGraftOpen(false)}
                 onConfirm={() => {
-                  const graftableAug = GraftableAugmentations[selectedAug];
-                  player.loseMoney(graftableAug.cost, "augmentations");
-                  player.startGraftAugmentationWork(selectedAug, graftableAug.time);
+                  player.startNEWWork(
+                    new GraftingWork({
+                      augmentation: selectedAug,
+                      singularity: false,
+                      player: player,
+                    }),
+                  );
                   player.startFocusing();
                   router.toWork();
                 }}

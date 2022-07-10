@@ -38,7 +38,6 @@ export function SaveFile(): React.ReactElement {
 
   function doRestore(): void {
     const save = JSON.parse(saveFile);
-    console.log(Object.keys(save));
     // TODO: Continue here.
   }
 

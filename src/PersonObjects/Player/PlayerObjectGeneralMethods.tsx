@@ -66,9 +66,8 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 import { ITaskTracker } from "../ITaskTracker";
 import { IPerson } from "../IPerson";
 import { Player } from "../../Player";
-import { graftingIntBonus } from "../Grafting/GraftingHelpers";
 
-import { WorkType, PlayerFactionWorkType, ClassType, CrimeType } from "../../utils/WorkType";
+import { WorkType, PlayerFactionWorkType } from "../../utils/WorkType";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -143,7 +142,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.isWorking = false;
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
-  this.createProgramName = "";
 
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -537,13 +535,9 @@ export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: s
   this.workMoneyGained = 0;
 
   this.timeWorked = 0;
-  this.timeWorkedCreateProgram = 0;
-  this.timeWorkedGraftAugmentation = 0;
 
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
-  this.createProgramName = "";
-  this.graftAugmentationName = "";
   this.workType = WorkType.None;
 }
 
@@ -603,17 +597,9 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
       if (this.workForFaction(numCycles)) {
         router.toFaction(Factions[this.currentWorkFactionName]);
       }
-    } else if (this.workType === WorkType.CreateProgram) {
-      if (this.createProgramWork(numCycles)) {
-        router.toTerminal();
-      }
     } else if (this.workType === WorkType.CompanyPartTime) {
       if (this.workPartTime(numCycles)) {
         router.toCity();
-      }
-    } else if (this.workType === WorkType.GraftAugmentation) {
-      if (this.graftAugmentationWork(numCycles)) {
-        router.toGrafting();
       }
     } else if (this.work(numCycles)) {
       router.toCity();
@@ -1257,143 +1243,6 @@ export function getWorkRepGain(this: IPlayer): number {
 //     return t * this.faction_rep_mult;
 // }
 
-/* Creating a Program */
-export function startCreateProgramWork(this: IPlayer, programName: string, time: number, reqLevel: number): void {
-  this.resetWorkStatus();
-  this.isWorking = true;
-  this.workType = WorkType.CreateProgram;
-
-  //Time needed to complete work affected by hacking skill (linearly based on
-  //ratio of (your skill - required level) to MAX skill)
-  //var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking - reqLevel)) / CONSTANTS.MaxSkillLevel;
-  //if (timeMultiplier > 1) {timeMultiplier = 1;}
-  //if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
-  this.createProgramReqLvl = reqLevel;
-
-  this.timeNeededToCompleteWork = time;
-  //Check for incomplete program
-  for (let i = 0; i < this.getHomeComputer().programs.length; ++i) {
-    const programFile = this.getHomeComputer().programs[i];
-    if (programFile.startsWith(programName) && programFile.endsWith("%-INC")) {
-      const res = programFile.split("-");
-      if (res.length != 3) {
-        break;
-      }
-      const percComplete = Number(res[1].slice(0, -1));
-      if (isNaN(percComplete) || percComplete < 0 || percComplete >= 100) {
-        break;
-      }
-      this.timeWorkedCreateProgram = (percComplete / 100) * this.timeNeededToCompleteWork;
-      this.getHomeComputer().programs.splice(i, 1);
-    }
-  }
-
-  this.createProgramName = programName;
-}
-
-export function createProgramWork(this: IPlayer, numCycles: number): boolean {
-  let focusBonus = 1;
-  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
-    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
-  }
-  //Higher hacking skill will allow you to create programs faster
-  const reqLvl = this.createProgramReqLvl;
-  let skillMult = (this.hacking / reqLvl) * this.getIntelligenceBonus(3); //This should always be greater than 1;
-  skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
-  skillMult *= focusBonus;
-  //Skill multiplier directly applied to "time worked"
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-  this.timeWorkedCreateProgram += CONSTANTS._idleSpeed * numCycles * skillMult;
-
-  if (this.timeWorkedCreateProgram >= this.timeNeededToCompleteWork) {
-    this.finishCreateProgramWork(false);
-    return true;
-  }
-  return false;
-}
-
-export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
-  const programName = this.createProgramName;
-  let message = "";
-  if (!cancelled) {
-    //Complete case
-    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
-    const lines = [`You've finished creating ${programName}!`, "The new program can be found on your home computer."];
-    dialogBoxCreate(lines.join("<br>"));
-    message = lines.join(" ");
-
-    if (!this.getHomeComputer().programs.includes(programName)) {
-      this.getHomeComputer().programs.push(programName);
-    }
-  } else if (!this.getHomeComputer().programs.includes(programName)) {
-    //Incomplete case
-    const perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
-    const incompleteName = programName + "-" + perc + "%-INC";
-    this.getHomeComputer().programs.push(incompleteName);
-    message = `Cancelled creating program: ${programName} (${perc}% complete)`;
-  }
-
-  this.isWorking = false;
-  this.resetWorkStatus();
-  return message;
-}
-
-export function startGraftAugmentationWork(this: IPlayer, augmentationName: string, time: number): void {
-  this.resetWorkStatus();
-  this.isWorking = true;
-  this.workType = WorkType.GraftAugmentation;
-
-  this.timeNeededToCompleteWork = time;
-  this.graftAugmentationName = augmentationName;
-}
-
-export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean {
-  let focusBonus = 1;
-  if (!this.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
-    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
-  }
-
-  let skillMult = graftingIntBonus(this);
-  skillMult *= focusBonus;
-
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-  this.timeWorkedGraftAugmentation += CONSTANTS._idleSpeed * numCycles * skillMult;
-
-  if (this.timeWorkedGraftAugmentation >= this.timeNeededToCompleteWork) {
-    this.finishGraftAugmentationWork(false);
-    return true;
-  }
-  return false;
-}
-
-export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean, singularity = false): string {
-  const augName = this.graftAugmentationName;
-  if (cancelled === false) {
-    applyAugmentation({ name: augName, level: 1 });
-
-    if (!this.hasAugmentation(AugmentationNames.CongruityImplant)) {
-      this.entropy += 1;
-      this.applyEntropy(this.entropy);
-    }
-
-    dialogBoxCreate(
-      `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
-        (this.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."),
-    );
-  } else if (cancelled && singularity === false) {
-    dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
-  }
-
-  // Intelligence gain
-  if (!cancelled) {
-    this.gainIntelligenceExp((CONSTANTS.IntelligenceGraftBaseExpGain * this.timeWorked) / 10000);
-  }
-
-  this.isWorking = false;
-  this.resetWorkStatus();
-  return `Grafting of ${augName} has ended.`;
-}
-
 //Cancels the player's current "work" assignment and gives the proper rewards
 //Used only for Singularity functions, so no popups are created
 export function singularityStopWork(this: IPlayer): string {
@@ -1413,12 +1262,6 @@ export function singularityStopWork(this: IPlayer): string {
       break;
     case WorkType.Faction:
       res = this.finishFactionWork(true, true);
-      break;
-    case WorkType.CreateProgram:
-      res = this.finishCreateProgramWork(true);
-      break;
-    case WorkType.GraftAugmentation:
-      res = this.finishGraftAugmentationWork(true, true);
       break;
     default:
       console.error(`Unrecognized work type (${this.workType})`);

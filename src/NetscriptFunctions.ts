@@ -2418,8 +2418,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workChaExpGained: Player.workChaExpGained,
         workRepGained: Player.workRepGained,
         workMoneyGained: Player.workMoneyGained,
-        createProgramName: Player.createProgramName,
-        createProgramReqLvl: Player.createProgramReqLvl,
         work_money_mult: Player.work_money_mult,
         hacknet_node_money_mult: Player.hacknet_node_money_mult,
         hacknet_node_purchase_cost_mult: Player.hacknet_node_purchase_cost_mult,

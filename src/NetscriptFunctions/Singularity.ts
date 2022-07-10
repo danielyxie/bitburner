@@ -51,6 +51,7 @@ import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { WorkType } from "../utils/WorkType";
 import { ClassWork, ClassType } from "../Work/ClassWork";
+import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWork";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -528,7 +529,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         player.getHomeComputer().pushProgram(item.program);
         // Cancel if the program is in progress of writing
-        if (player.createProgramName === item.program) {
+        if (isCreateProgramWork(player.currentWork) && player.currentWork.programName === item.program) {
           player.isWorking = false;
           player.resetWorkStatus();
         }
@@ -1182,7 +1183,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           return false;
         }
 
-        player.startCreateProgramWork(p.name, create.time, create.level);
+        player.startNEWWork(
+          new CreateProgramWork({
+            programName: p.name,
+            singularity: true,
+            player: player,
+          }),
+        );
         if (focus) {
           player.startFocusing();
           Router.toWork();

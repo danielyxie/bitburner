@@ -199,7 +199,7 @@ class BitburnerSaveObject {
     try {
       parsedSave = JSON.parse(newSave);
     } catch (error) {
-      console.log(error); // We'll handle below
+      console.error(error); // We'll handle below
     }
 
     if (!parsedSave || parsedSave.ctor !== "BitburnerSaveObject" || !parsedSave.data) {

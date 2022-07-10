@@ -150,7 +150,7 @@ function initSaveFunctions(): void {
       try {
         saveObject.exportGame();
       } catch (error) {
-        console.log(error);
+        console.error(error);
         SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
       }
     },
@@ -199,7 +199,7 @@ function initElectronBridge(): void {
         bridge.send("save-completed");
       })
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
         SnackbarEvents.emit("Could not save game.", ToastVariant.ERROR, 2000);
       });
   });
@@ -207,7 +207,7 @@ function initElectronBridge(): void {
     try {
       window.appSaveFns.triggerGameExport();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
     }
   });
@@ -215,7 +215,7 @@ function initElectronBridge(): void {
     try {
       window.appSaveFns.triggerScriptsExport();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       SnackbarEvents.emit("Could not export scripts.", ToastVariant.ERROR, 2000);
     }
   });

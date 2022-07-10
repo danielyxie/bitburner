@@ -126,8 +126,6 @@ interface ClassWorkParams {
 export const isClassWork = (w: Work | null): w is ClassWork => w !== null && w.type === WorkType.CLASS;
 
 export class ClassWork extends Work {
-  type = WorkType.CLASS;
-
   classType: ClassType;
   location: LocationName;
   cyclesWorked: number;
@@ -135,7 +133,7 @@ export class ClassWork extends Work {
   earnings = newWorkStats();
 
   constructor(params?: ClassWorkParams) {
-    super();
+    super(WorkType.CLASS);
     this.classType = params?.classType ?? ClassType.StudyComputerScience;
     this.location = params?.location ?? LocationName.Sector12RothmanUniversity;
     this.singularity = params?.singularity ?? false;

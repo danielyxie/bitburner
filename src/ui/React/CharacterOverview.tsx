@@ -29,6 +29,8 @@ import { Box, Tooltip } from "@mui/material";
 import { WorkType } from "../../utils/WorkType";
 import { isClassWork } from "../../Work/ClassWork";
 import { CONSTANTS } from "../../Constants";
+import { isCreateProgramWork } from "../../Work/CreateProgramWork";
+import { isGraftingWork } from "../../Work/GraftingWork";
 
 interface IProps {
   save: () => void;
@@ -150,6 +152,26 @@ function Work(): React.ReactElement {
     header = <>You are {player.currentWork.getClass().youAreCurrently}</>;
     innerText = <>{convertTimeMsToTimeElapsedString(player.currentWork.cyclesWorked * CONSTANTS._idleSpeed)}</>;
   }
+  if (isCreateProgramWork(player.currentWork)) {
+    const create = player.currentWork;
+    details = <>Coding {create.programName}</>;
+    header = <>Creating a program</>;
+    innerText = (
+      <>
+        {create.programName} {((create.unitCompleted / create.unitNeeded()) * 100).toFixed(2)}%
+      </>
+    );
+  }
+  if (isGraftingWork(player.currentWork)) {
+    const graft = player.currentWork;
+    details = <>Grafting {graft.augmentation}</>;
+    header = <>Grafting an Augmentation</>;
+    innerText = (
+      <>
+        <strong>{((graft.unitCompleted / graft.unitNeeded()) * 100).toFixed(2)}%</strong> done
+      </>
+    );
+  }
   switch (player.workType) {
     case WorkType.CompanyPartTime:
     case WorkType.Company:
@@ -186,25 +208,6 @@ function Work(): React.ReactElement {
         </>
       );
       break;
-    case WorkType.CreateProgram:
-      details = <>Coding {player.createProgramName}</>;
-      header = <>Creating a program</>;
-      innerText = (
-        <>
-          {player.createProgramName}{" "}
-          {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
-        </>
-      );
-      break;
-    case WorkType.GraftAugmentation:
-      details = <>Grafting {player.graftAugmentationName}</>;
-      header = <>Grafting an Augmentation</>;
-      innerText = (
-        <>
-          <strong>{((player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}%</strong>{" "}
-          done
-        </>
-      );
   }
 
   return (

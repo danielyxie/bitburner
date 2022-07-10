@@ -46,7 +46,6 @@ export function GetServer(s: string): BaseServer | null {
     const server = AllServers[s];
     if (server) return server;
   }
-  console.log(AllServers);
 
   if (!isValidIPAddress(s)) {
     return GetServerByHostname(s);
