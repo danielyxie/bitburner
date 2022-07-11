@@ -39,7 +39,7 @@ import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { ITaskTracker } from "../ITaskTracker";
 import { CONSTANTS } from "../../Constants";
-import { WorkType, ClassType, CrimeType, PlayerFactionWorkType } from "../../utils/WorkType";
+import { WorkType, PlayerFactionWorkType } from "../../utils/WorkType";
 import { Work } from "src/Work/Work";
 
 export class PlayerObject implements IPlayer {

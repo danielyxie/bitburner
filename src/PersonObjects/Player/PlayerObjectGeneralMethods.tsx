@@ -14,8 +14,6 @@ import { CompanyPosition } from "../../Company/CompanyPosition";
 import * as posNames from "../../Company/data/companypositionnames";
 import { CONSTANTS } from "../../Constants";
 import { Programs } from "../../Programs/Programs";
-import { determineCrimeSuccess } from "../../Crime/CrimeHelpers";
-import { Crimes } from "../../Crime/Crimes";
 import { Exploit } from "../../Exploits/Exploit";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
@@ -46,7 +44,6 @@ import { applyExploit } from "../../Exploits/applyExploits";
 import { SourceFiles } from "../../SourceFile/SourceFiles";
 import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
 import { getHospitalizationCost } from "../../Hospital/Hospital";
-import { WorkerScript } from "../../Netscript/WorkerScript";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 
 import { numeralWrapper } from "../../ui/numeralFormat";

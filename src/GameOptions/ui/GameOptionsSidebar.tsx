@@ -4,7 +4,6 @@ import {
   Download,
   LibraryBooks,
   Palette,
-  Public,
   Reddit,
   Save,
   SystemUpdateAlt,

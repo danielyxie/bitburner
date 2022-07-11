@@ -26,12 +26,11 @@ import { IGang } from "../Gang/IGang";
 import { IBladeburner } from "../Bladeburner/IBladeburner";
 import { ICodingContractReward } from "../CodingContracts";
 import { IRouter } from "../ui/Router";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
-import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
+import { WorkType } from "../utils/WorkType";
 import { Work } from "src/Work/Work";
 
 export interface IPlayer extends IPerson {

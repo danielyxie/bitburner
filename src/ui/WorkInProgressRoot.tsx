@@ -19,7 +19,7 @@ import { ProgressBar } from "./React/Progress";
 import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
 import { StatsRow } from "./React/StatsRow";
-import { WorkType, ClassType } from "../utils/WorkType";
+import { WorkType } from "../utils/WorkType";
 import { isCrimeWork } from "../Work/CrimeWork";
 import { isClassWork } from "../Work/ClassWork";
 import { WorkStats } from "../Work/WorkStats";
