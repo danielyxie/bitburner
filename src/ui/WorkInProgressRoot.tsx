@@ -21,7 +21,7 @@ import { StatsRow } from "./React/StatsRow";
 import { WorkType } from "../utils/WorkType";
 import { isCrimeWork } from "../Work/CrimeWork";
 import { isClassWork } from "../Work/ClassWork";
-import { newWorkStats, WorkStats } from "../Work/WorkStats";
+import { WorkStats } from "../Work/WorkStats";
 import { isCreateProgramWork } from "../Work/CreateProgramWork";
 import { isGraftingWork } from "../Work/GraftingWork";
 import { isFactionWork } from "../Work/FactionWork";

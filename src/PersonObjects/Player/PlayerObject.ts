@@ -141,8 +141,6 @@ export class PlayerObject implements IPlayer {
   timeNeededToCompleteWork: number;
   focus: boolean;
   workType: WorkType;
-  workCostMult: number;
-  workExpMult: number;
   timeWorked: number;
   workMoneyGained: number;
   workMoneyGainRate: number;
@@ -365,8 +363,6 @@ export class PlayerObject implements IPlayer {
     this.isWorking = false;
     this.focus = false;
     this.workType = WorkType.None;
-    this.workCostMult = 1;
-    this.workExpMult = 1;
 
     this.workHackExpGainRate = 0;
     this.workStrExpGainRate = 0;

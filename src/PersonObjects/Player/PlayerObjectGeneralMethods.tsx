@@ -500,7 +500,7 @@ export function queryStatFromString(this: IPlayer, str: string): number {
 }
 
 /******* Working functions *******/
-export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: string, workType?: string): void {
+export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: string): void {
   if (this.workType !== WorkType.Faction && generalType === this.workType && group === this.companyName) return;
   if (generalType === this.workType) return;
   if (this.isWorking) this.singularityStopWork();

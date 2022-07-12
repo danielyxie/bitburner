@@ -128,8 +128,6 @@ export interface IPlayer extends IPerson {
   timeNeededToCompleteWork: number;
   focus: boolean;
   workType: WorkType;
-  workCostMult: number;
-  workExpMult: number;
   timeWorked: number;
   workMoneyGained: number;
   workMoneyGainRate: number;
