@@ -49,8 +49,6 @@ interface Player {
   crime_success_mult: number;
   isWorking: boolean;
   workType: string;
-  currentWorkFactionName: string;
-  currentWorkFactionDescription: string;
   workHackExpGainRate: number;
   workStrExpGainRate: number;
   workDefExpGainRate: number;

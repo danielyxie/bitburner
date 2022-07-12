@@ -125,14 +125,11 @@ export interface IPlayer extends IPerson {
   bladeburner_success_chance_mult: number;
 
   currentWork: Work | null;
-  factionWorkType: string;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  currentWorkFactionName: string;
   workType: WorkType;
   workCostMult: number;
   workExpMult: number;
-  currentWorkFactionDescription: string;
   timeWorked: number;
   workMoneyGained: number;
   workMoneyGainRate: number;
@@ -160,7 +157,6 @@ export interface IPlayer extends IPerson {
   finishNEWWork(cancelled: boolean): void;
   work(numCycles: number): boolean;
   workPartTime(numCycles: number): boolean;
-  workForFaction(numCycles: number): boolean;
   applyForAgentJob(sing?: boolean): boolean;
   applyForBusinessConsultantJob(sing?: boolean): boolean;
   applyForBusinessJob(sing?: boolean): boolean;
@@ -205,11 +201,7 @@ export interface IPlayer extends IPerson {
   setMoney(amt: number): void;
   singularityStopWork(): string;
   startBladeburner(p: any): void;
-  startFactionWork(faction: Faction): void;
   startCorporation(corpName: string, additionalShares?: number): void;
-  startFactionFieldWork(faction: Faction): void;
-  startFactionHackWork(faction: Faction): void;
-  startFactionSecurityWork(faction: Faction): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
   startWork(companyName: string): void;
@@ -226,7 +218,6 @@ export interface IPlayer extends IPerson {
   updateSkillLevels(): void;
   gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
   stopFocusing(): void;
-  finishFactionWork(cancelled: boolean, sing?: boolean): string;
   finishWork(cancelled: boolean, sing?: boolean): string;
   cancelationPenalty(): number;
   finishWorkPartTime(sing?: boolean): string;

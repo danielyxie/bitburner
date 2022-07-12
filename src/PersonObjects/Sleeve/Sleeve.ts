@@ -28,7 +28,6 @@ import { CONSTANTS } from "../../Constants";
 
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
-import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
@@ -37,6 +36,7 @@ import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviv
 import { BladeburnerConstants } from "../../Bladeburner/data/Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { capitalizeFirstLetter, capitalizeEachWord } from "../../utils/StringHelperFunctions";
+import { FactionWorkType } from "../../Work/data/FactionWorkType";
 
 export class Sleeve extends Person {
   /**
@@ -94,7 +94,7 @@ export class Sleeve extends Person {
   /**
    * Keeps track of what type of work sleeve is doing for faction, if applicable
    */
-  factionWorkType: FactionWorkType = FactionWorkType.None;
+  factionWorkType: FactionWorkType = FactionWorkType.HACKING;
 
   /**
    * Records experience gain rate for the current task
@@ -444,11 +444,11 @@ export class Sleeve extends Person {
       }
 
       switch (this.factionWorkType) {
-        case FactionWorkType.Hacking:
+        case FactionWorkType.HACKING:
           return this.getFactionHackingWorkRepGain() * (this.shock / 100) * favorMult;
-        case FactionWorkType.Field:
+        case FactionWorkType.FIELD:
           return this.getFactionFieldWorkRepGain() * (this.shock / 100) * favorMult;
-        case FactionWorkType.Security:
+        case FactionWorkType.SECURITY:
           return this.getFactionSecurityWorkRepGain() * (this.shock / 100) * favorMult;
         default:
           console.warn(`Invalid Sleeve.factionWorkType property in Sleeve.getRepGain(): ${this.factionWorkType}`);
@@ -660,7 +660,7 @@ export class Sleeve extends Person {
     this.currentTask = SleeveTaskType.Idle;
     this.currentTaskTime = 0;
     this.currentTaskMaxTime = 0;
-    this.factionWorkType = FactionWorkType.None;
+    this.factionWorkType = FactionWorkType.HACKING;
     this.crimeType = "";
     this.currentTaskLocation = "";
     this.gymStatType = "";
@@ -969,13 +969,13 @@ export class Sleeve extends Person {
       if (!factionInfo.offerHackingWork) {
         return false;
       }
-      this.factionWorkType = FactionWorkType.Hacking;
+      this.factionWorkType = FactionWorkType.HACKING;
       this.gainRatesForTask.hack = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     } else if (sanitizedWorkType.includes("field")) {
       if (!factionInfo.offerFieldWork) {
         return false;
       }
-      this.factionWorkType = FactionWorkType.Field;
+      this.factionWorkType = FactionWorkType.FIELD;
       this.gainRatesForTask.hack = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
       this.gainRatesForTask.str = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
       this.gainRatesForTask.def = 0.1 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -986,7 +986,7 @@ export class Sleeve extends Person {
       if (!factionInfo.offerSecurityWork) {
         return false;
       }
-      this.factionWorkType = FactionWorkType.Security;
+      this.factionWorkType = FactionWorkType.SECURITY;
       this.gainRatesForTask.hack = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
       this.gainRatesForTask.str = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
       this.gainRatesForTask.def = 0.15 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;

@@ -2399,8 +2399,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         crime_success_mult: Player.crime_success_mult,
         isWorking: Player.isWorking,
         workType: Player.workType,
-        currentWorkFactionName: Player.currentWorkFactionName,
-        currentWorkFactionDescription: Player.currentWorkFactionDescription,
         workHackExpGainRate: Player.workHackExpGainRate,
         workStrExpGainRate: Player.workStrExpGainRate,
         workDefExpGainRate: Player.workDefExpGainRate,

@@ -52,6 +52,8 @@ import { FactionNames } from "../Faction/data/FactionNames";
 import { WorkType } from "../utils/WorkType";
 import { ClassWork, ClassType } from "../Work/ClassWork";
 import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWork";
+import { FactionWork } from "../Work/FactionWork";
+import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -1033,7 +1035,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with hacking contracts.`);
               return false;
             }
-            player.startFactionHackWork(faction);
+            player.startNEWWork(
+              new FactionWork({
+                singularity: true,
+                factionWorkType: FactionWorkType.HACKING,
+                faction: faction.name,
+              }),
+            );
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1050,7 +1058,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with field missions.`);
               return false;
             }
-            player.startFactionFieldWork(faction);
+            player.startNEWWork(
+              new FactionWork({
+                singularity: true,
+                factionWorkType: FactionWorkType.FIELD,
+                faction: faction.name,
+              }),
+            );
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1067,7 +1081,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with security work.`);
               return false;
             }
-            player.startFactionSecurityWork(faction);
+            player.startNEWWork(
+              new FactionWork({
+                singularity: true,
+                factionWorkType: FactionWorkType.SECURITY,
+                faction: faction.name,
+              }),
+            );
             if (focus) {
               player.startFocusing();
               Router.toWork();

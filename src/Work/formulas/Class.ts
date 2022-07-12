@@ -35,7 +35,6 @@ export function calculateClassEarnings(player: IPlayer, work: ClassWork): WorkSt
   const chaExp = ((classs.earnings.chaExp * location.expMult) / gameCPS) * hashMult;
   return {
     money: cost,
-    reputation: 0,
     hackExp: hackExp * player.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain,
     strExp: strExp * player.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain,
     defExp: defExp * player.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain,

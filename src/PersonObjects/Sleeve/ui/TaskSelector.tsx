@@ -6,10 +6,10 @@ import { Crimes } from "../../../Crime/Crimes";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { CityName } from "../../../Locations/data/CityNames";
 import { Factions } from "../../../Faction/Factions";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FactionNames } from "../../../Faction/data/FactionNames";
+import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -254,13 +254,13 @@ function getABC(sleeve: Sleeve): [string, string, string] {
     case SleeveTaskType.Faction: {
       let workType = "";
       switch (sleeve.factionWorkType) {
-        case FactionWorkType.Hacking:
+        case FactionWorkType.HACKING:
           workType = "Hacking Contracts";
           break;
-        case FactionWorkType.Field:
+        case FactionWorkType.FIELD:
           workType = "Field Work";
           break;
-        case FactionWorkType.Security:
+        case FactionWorkType.SECURITY:
           workType = "Security Work";
           break;
       }

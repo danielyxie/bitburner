@@ -1,5 +1,5 @@
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -20,16 +20,14 @@ export class CreateProgramWork extends Work {
   programName: string;
   // amount of cycles spent doing this task
   cyclesWorked: number;
-  singularity: boolean;
   // amount of effective work completed on the program (time boosted by skills).
   unitCompleted: number;
 
   constructor(params?: CreateProgramWorkParams) {
-    super(WorkType.CREATE_PROGRAM);
+    super(WorkType.CREATE_PROGRAM, params?.singularity ?? true);
     this.cyclesWorked = 0;
     this.unitCompleted = 0;
     this.programName = params?.programName ?? "";
-    this.singularity = params?.singularity ?? false;
 
     if (params?.player) {
       const player = params.player;
@@ -109,15 +107,14 @@ export class CreateProgramWork extends Work {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("CreateProgramWork", this);
   }
 
   /**
    * Initiatizes a CreateProgramWork object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): CreateProgramWork {
+  static fromJSON(value: IReviverValue): CreateProgramWork {
     return Generic_fromJSON(CreateProgramWork, value.data);
   }
 }

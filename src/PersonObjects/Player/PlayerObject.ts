@@ -39,7 +39,7 @@ import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { ITaskTracker } from "../ITaskTracker";
 import { CONSTANTS } from "../../Constants";
-import { WorkType, PlayerFactionWorkType } from "../../utils/WorkType";
+import { WorkType } from "../../utils/WorkType";
 import { Work } from "src/Work/Work";
 
 export class PlayerObject implements IPlayer {
@@ -138,14 +138,11 @@ export class PlayerObject implements IPlayer {
   bladeburner_success_chance_mult: number;
 
   currentWork: Work | null;
-  factionWorkType: PlayerFactionWorkType;
   timeNeededToCompleteWork: number;
   focus: boolean;
-  currentWorkFactionName: string;
   workType: WorkType;
   workCostMult: number;
   workExpMult: number;
-  currentWorkFactionDescription: string;
   timeWorked: number;
   workMoneyGained: number;
   workMoneyGainRate: number;
@@ -173,7 +170,6 @@ export class PlayerObject implements IPlayer {
   finishNEWWork: (cancelled: boolean) => void;
   work: (numCycles: number) => boolean;
   workPartTime: (numCycles: number) => boolean;
-  workForFaction: (numCycles: number) => boolean;
   applyForAgentJob: (sing?: boolean) => boolean;
   applyForBusinessConsultantJob: (sing?: boolean) => boolean;
   applyForBusinessJob: (sing?: boolean) => boolean;
@@ -227,11 +223,7 @@ export class PlayerObject implements IPlayer {
   setMoney: (amt: number) => void;
   singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
-  startFactionWork: (faction: Faction) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
-  startFactionFieldWork: (faction: Faction) => void;
-  startFactionHackWork: (faction: Faction) => void;
-  startFactionSecurityWork: (faction: Faction) => void;
   startFocusing: () => void;
   startGang: (facName: string, isHacking: boolean) => void;
   startWork: (companyName: string) => void;
@@ -252,7 +244,6 @@ export class PlayerObject implements IPlayer {
   updateSkillLevels: () => void;
   gainCodingContractReward: (reward: ICodingContractReward, difficulty?: number) => string;
   stopFocusing: () => void;
-  finishFactionWork: (cancelled: boolean, sing?: boolean) => string;
   finishWork: (cancelled: boolean, sing?: boolean) => string;
   cancelationPenalty: () => number;
   finishWorkPartTime: (sing?: boolean) => string;
@@ -376,9 +367,6 @@ export class PlayerObject implements IPlayer {
     this.workType = WorkType.None;
     this.workCostMult = 1;
     this.workExpMult = 1;
-
-    this.currentWorkFactionName = "";
-    this.currentWorkFactionDescription = "";
 
     this.workHackExpGainRate = 0;
     this.workStrExpGainRate = 0;
@@ -505,12 +493,6 @@ export class PlayerObject implements IPlayer {
     this.finishWorkPartTime = generalMethods.finishWorkPartTime;
     this.startFocusing = generalMethods.startFocusing;
     this.stopFocusing = generalMethods.stopFocusing;
-    this.startFactionWork = generalMethods.startFactionWork;
-    this.startFactionHackWork = generalMethods.startFactionHackWork;
-    this.startFactionFieldWork = generalMethods.startFactionFieldWork;
-    this.startFactionSecurityWork = generalMethods.startFactionSecurityWork;
-    this.workForFaction = generalMethods.workForFaction;
-    this.finishFactionWork = generalMethods.finishFactionWork;
     this.getWorkMoneyGain = generalMethods.getWorkMoneyGain;
     this.getWorkHackExpGain = generalMethods.getWorkHackExpGain;
     this.getWorkStrExpGain = generalMethods.getWorkStrExpGain;
@@ -576,7 +558,6 @@ export class PlayerObject implements IPlayer {
     this.getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;
     this.getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
     this.createHacknetServer = serverMethods.createHacknetServer;
-    this.factionWorkType = PlayerFactionWorkType.None;
 
     this.getMult = generalMethods.getMult;
     this.setMult = generalMethods.setMult;

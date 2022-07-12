@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { Companies } from "../Company/Companies";
 import { Company } from "../Company/Company";
 import { CONSTANTS } from "../Constants";
-import { Factions } from "../Faction/Factions";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Locations } from "../Locations/Locations";
 import { Settings } from "../Settings/Settings";
@@ -22,9 +21,11 @@ import { StatsRow } from "./React/StatsRow";
 import { WorkType } from "../utils/WorkType";
 import { isCrimeWork } from "../Work/CrimeWork";
 import { isClassWork } from "../Work/ClassWork";
-import { WorkStats } from "../Work/WorkStats";
+import { newWorkStats, WorkStats } from "../Work/WorkStats";
 import { isCreateProgramWork } from "../Work/CreateProgramWork";
 import { isGraftingWork } from "../Work/GraftingWork";
+import { isFactionWork } from "../Work/FactionWork";
+import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -47,81 +48,69 @@ interface IWorkInfo {
   stopTooltip?: string | React.ReactElement;
 }
 
-export function ExpRows(total: WorkStats, rate: WorkStats): React.ReactElement[] {
+export function ExpRows(rate: WorkStats): React.ReactElement[] {
   return [
-    total.hackExp > 0 ? (
+    rate.hackExp > 0 ? (
       <StatsRow
         name="Hacking Exp"
         color={Settings.theme.hack}
         data={{
-          content: `${numeralWrapper.formatExp(total.hackExp)} (${numeralWrapper.formatExp(
-            rate.hackExp * CYCLES_PER_SEC,
-          )} / sec)`,
+          content: `${numeralWrapper.formatExp(rate.hackExp * CYCLES_PER_SEC)} / sec`,
         }}
       />
     ) : (
       <></>
     ),
-    total.strExp > 0 ? (
+    rate.strExp > 0 ? (
       <StatsRow
         name="Strength Exp"
         color={Settings.theme.combat}
         data={{
-          content: `${numeralWrapper.formatExp(total.strExp)} (${numeralWrapper.formatExp(
-            rate.strExp * CYCLES_PER_SEC,
-          )} / sec)`,
+          content: `${numeralWrapper.formatExp(rate.strExp * CYCLES_PER_SEC)} / sec`,
         }}
       />
     ) : (
       <></>
     ),
-    total.defExp > 0 ? (
+    rate.defExp > 0 ? (
       <StatsRow
         name="Defense Exp"
         color={Settings.theme.combat}
         data={{
-          content: `${numeralWrapper.formatExp(total.defExp)} (${numeralWrapper.formatExp(
-            rate.defExp * CYCLES_PER_SEC,
-          )} / sec)`,
+          content: `${numeralWrapper.formatExp(rate.defExp * CYCLES_PER_SEC)} / sec`,
         }}
       />
     ) : (
       <></>
     ),
-    total.dexExp > 0 ? (
+    rate.dexExp > 0 ? (
       <StatsRow
         name="Dexterity Exp"
         color={Settings.theme.combat}
         data={{
-          content: `${numeralWrapper.formatExp(total.dexExp)} (${numeralWrapper.formatExp(
-            rate.dexExp * CYCLES_PER_SEC,
-          )} / sec)`,
+          content: `${numeralWrapper.formatExp(rate.dexExp * CYCLES_PER_SEC)} / sec`,
         }}
       />
     ) : (
       <></>
     ),
-    total.agiExp > 0 ? (
+    rate.agiExp > 0 ? (
       <StatsRow
         name="Agility Exp"
         color={Settings.theme.combat}
         data={{
-          content: `${numeralWrapper.formatExp(total.agiExp)} (${numeralWrapper.formatExp(
-            rate.agiExp * CYCLES_PER_SEC,
-          )} / sec)`,
+          content: `${numeralWrapper.formatExp(rate.agiExp * CYCLES_PER_SEC)} / sec`,
         }}
       />
     ) : (
       <></>
     ),
-    total.chaExp > 0 ? (
+    rate.chaExp > 0 ? (
       <StatsRow
         name="Charisma Exp"
         color={Settings.theme.cha}
         data={{
-          content: `${numeralWrapper.formatExp(total.chaExp)} (${numeralWrapper.formatExp(
-            rate.chaExp * CYCLES_PER_SEC,
-          )} / sec)`,
+          content: `${numeralWrapper.formatExp(rate.chaExp * CYCLES_PER_SEC)} / sec`,
         }}
       />
     ) : (
@@ -276,7 +265,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       }
 
       const rates = classWork.calculateRates(player);
-      expGains = ExpRows(classWork.earnings, rates);
+      expGains = ExpRows(rates);
       workInfo = {
         buttons: {
           cancel: cancel,
@@ -373,18 +362,16 @@ export function WorkInProgressRoot(): React.ReactElement {
         ),
       };
     }
-  }
 
-  switch (player.workType) {
-    case WorkType.Faction: {
-      const faction = Factions[player.currentWorkFactionName];
+    if (isFactionWork(player.currentWork)) {
+      const faction = player.currentWork.getFaction();
       if (!faction) {
         workInfo = {
           buttons: {
             cancel: () => router.toFactions(),
           },
           title:
-            `You have not joined ${player.currentWorkFactionName || "(Faction not found)"} at this time,` +
+            `You have not joined ${player.currentWork.factionName || "(Faction not found)"} at this time,` +
             " please try again if you think this should have worked",
 
           stopText: "Back to Factions",
@@ -393,12 +380,20 @@ export function WorkInProgressRoot(): React.ReactElement {
 
       function cancel(): void {
         router.toFaction(faction);
-        player.finishFactionWork(true);
+        player.finishNEWWork(true);
       }
       function unfocus(): void {
         router.toFaction(faction);
         player.stopFocusing();
       }
+
+      const description = {
+        [FactionWorkType.HACKING]: "carrying out hacking contracts",
+        [FactionWorkType.FIELD]: "carrying out field missions",
+        [FactionWorkType.SECURITY]: "performing security detail",
+      };
+
+      const exp = player.currentWork.getExpRates(player);
 
       workInfo = {
         buttons: {
@@ -407,44 +402,27 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
         title: (
           <>
-            You are currently {player.currentWorkFactionDescription} for your faction <b>{faction.name}</b>
+            You are currently {description[player.currentWork.factionWorkType]} for <b>{faction.name}</b>
           </>
         ),
 
         description: (
           <>
-            Current Faction Reputation: <Reputation reputation={faction.playerReputation} />
+            Current Faction Reputation: <Reputation reputation={faction.playerReputation} /> (
+            <ReputationRate reputation={player.currentWork.getReputationRate(player) * CYCLES_PER_SEC} />)
           </>
         ),
-        gains: [
-          player.workMoneyGained > 0 ? (
-            <StatsRow name="Money" color={Settings.theme.money}>
-              <Typography>
-                <Money money={player.workMoneyGained} /> (
-                <MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
-              </Typography>
-            </StatsRow>
-          ) : (
-            <></>
-          ),
-          <StatsRow name="Faction Reputation" color={Settings.theme.rep}>
-            <Typography>
-              <Reputation reputation={player.workRepGained} /> (
-              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
-            </Typography>
-          </StatsRow>,
-          ...expGains,
-        ],
+        gains: ExpRows(exp),
         progress: {
-          elapsed: player.timeWorked,
+          elapsed: player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
         },
 
         stopText: "Stop Faction work",
       };
-
-      break;
     }
+  }
 
+  switch (player.workType) {
     case WorkType.Company: {
       const comp = Companies[player.companyName];
       if (comp == null || !(comp instanceof Company)) {

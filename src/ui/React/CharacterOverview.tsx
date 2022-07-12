@@ -31,6 +31,8 @@ import { isClassWork } from "../../Work/ClassWork";
 import { CONSTANTS } from "../../Constants";
 import { isCreateProgramWork } from "../../Work/CreateProgramWork";
 import { isGraftingWork } from "../../Work/GraftingWork";
+import { isFactionWork } from "../../Work/FactionWork";
+import { ReputationRate } from "./ReputationRate";
 
 interface IProps {
   save: () => void;
@@ -172,6 +174,22 @@ function Work(): React.ReactElement {
       </>
     );
   }
+
+  if (isFactionWork(player.currentWork)) {
+    const factionWork = player.currentWork;
+    header = (
+      <>
+        Working for <strong>{factionWork.factionName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        <Reputation reputation={factionWork.getFaction().playerReputation} /> rep
+        <br />(
+        <ReputationRate reputation={factionWork.getReputationRate(player) * (1000 / CONSTANTS._idleSpeed)} />)
+      </>
+    );
+  }
   switch (player.workType) {
     case WorkType.CompanyPartTime:
     case WorkType.Company:
@@ -183,23 +201,6 @@ function Work(): React.ReactElement {
       header = (
         <>
           Working at <strong>{player.companyName}</strong>
-        </>
-      );
-      innerText = (
-        <>
-          +<Reputation reputation={player.workRepGained} /> rep
-        </>
-      );
-      break;
-    case WorkType.Faction:
-      details = (
-        <>
-          {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
-        </>
-      );
-      header = (
-        <>
-          Working for <strong>{player.currentWorkFactionName}</strong>
         </>
       );
       innerText = (

@@ -29,11 +29,6 @@ import {
   ISkillProgress,
 } from "../formulas/skill";
 import { calculateIntelligenceBonus } from "../formulas/intelligence";
-import {
-  getHackingWorkRepGain,
-  getFactionSecurityWorkRepGain,
-  getFactionFieldWorkRepGain,
-} from "../formulas/reputation";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
 import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
@@ -64,7 +59,7 @@ import { ITaskTracker } from "../ITaskTracker";
 import { IPerson } from "../IPerson";
 import { Player } from "../../Player";
 
-import { WorkType, PlayerFactionWorkType } from "../../utils/WorkType";
+import { WorkType } from "../../utils/WorkType";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -137,8 +132,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   }
 
   this.isWorking = false;
-  this.currentWorkFactionName = "";
-  this.currentWorkFactionDescription = "";
 
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -509,8 +502,7 @@ export function queryStatFromString(this: IPlayer, str: string): number {
 /******* Working functions *******/
 export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: string, workType?: string): void {
   if (this.workType !== WorkType.Faction && generalType === this.workType && group === this.companyName) return;
-  if (generalType === this.workType && group === this.currentWorkFactionName && workType === this.factionWorkType)
-    return;
+  if (generalType === this.workType) return;
   if (this.isWorking) this.singularityStopWork();
   this.workHackExpGainRate = 0;
   this.workStrExpGainRate = 0;
@@ -533,8 +525,6 @@ export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: s
 
   this.timeWorked = 0;
 
-  this.currentWorkFactionName = "";
-  this.currentWorkFactionDescription = "";
   this.workType = WorkType.None;
 }
 
@@ -590,11 +580,7 @@ export function startWork(this: IPlayer, companyName: string): void {
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   // Working
   if (this.isWorking) {
-    if (this.workType === WorkType.Faction) {
-      if (this.workForFaction(numCycles)) {
-        router.toFaction(Factions[this.currentWorkFactionName]);
-      }
-    } else if (this.workType === WorkType.CompanyPartTime) {
+    if (this.workType === WorkType.CompanyPartTime) {
       if (this.workPartTime(numCycles)) {
         router.toCity();
       }
@@ -855,165 +841,6 @@ export function stopFocusing(this: IPlayer): void {
   this.focus = false;
 }
 
-/* Working for Faction */
-export function startFactionWork(this: IPlayer, faction: Faction): void {
-  //Update reputation gain rate to account for faction favor
-  let favorMult = 1 + faction.favor / 100;
-  if (isNaN(favorMult)) {
-    favorMult = 1;
-  }
-  this.workRepGainRate *= favorMult;
-  this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
-
-  this.isWorking = true;
-  this.workType = WorkType.Faction;
-  this.currentWorkFactionName = faction.name;
-
-  this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
-}
-
-export function startFactionHackWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Hacking);
-
-  this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workRepGainRate = getHackingWorkRepGain(this, faction);
-
-  this.factionWorkType = PlayerFactionWorkType.Hacking;
-  this.currentWorkFactionDescription = "carrying out hacking contracts";
-
-  this.startFactionWork(faction);
-}
-
-export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Field);
-
-  this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workStrExpGainRate = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDefExpGainRate = 0.1 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDexExpGainRate = 0.1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workAgiExpGainRate = 0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
-
-  this.factionWorkType = PlayerFactionWorkType.Field;
-  this.currentWorkFactionDescription = "carrying out field missions";
-
-  this.startFactionWork(faction);
-}
-
-export function startFactionSecurityWork(this: IPlayer, faction: Faction): void {
-  this.resetWorkStatus(WorkType.Faction, faction.name, PlayerFactionWorkType.Security);
-
-  this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workStrExpGainRate = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDefExpGainRate = 0.15 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDexExpGainRate = 0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workAgiExpGainRate = 0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workChaExpGainRate = 0.0 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
-
-  this.factionWorkType = PlayerFactionWorkType.Security;
-  this.currentWorkFactionDescription = "performing security detail";
-
-  this.startFactionWork(faction);
-}
-
-export function workForFaction(this: IPlayer, numCycles: number): boolean {
-  const faction = Factions[this.currentWorkFactionName];
-
-  if (!faction) {
-    return false;
-  }
-
-  //Constantly update the rep gain rate
-  switch (this.factionWorkType) {
-    case PlayerFactionWorkType.Hacking:
-      this.workRepGainRate = getHackingWorkRepGain(this, faction);
-      break;
-    case PlayerFactionWorkType.Field:
-      this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
-      break;
-    case PlayerFactionWorkType.Security:
-      this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
-      break;
-    default:
-      break;
-  }
-  this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
-
-  //Cap the number of cycles being processed to whatever would put you at limit (20 hours)
-  let overMax = false;
-  if (this.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer20Hours) {
-    overMax = true;
-    numCycles = Math.round((CONSTANTS.MillisecondsPer20Hours - this.timeWorked) / CONSTANTS._idleSpeed);
-  }
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-
-  this.processWorkEarnings(numCycles);
-
-  //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
-  if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
-    this.finishFactionWork(false);
-    return true;
-  }
-  return false;
-}
-
-export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = false): string {
-  const faction = Factions[this.currentWorkFactionName];
-  faction.playerReputation += this.workRepGained;
-
-  this.updateSkillLevels();
-  let res = "";
-
-  if (!sing) {
-    dialogBoxCreate(
-      <>
-        You worked for your faction {faction.name} for a total of {convertTimeMsToTimeElapsedString(this.timeWorked)}{" "}
-        <br />
-        <br />
-        You earned a total of: <br />
-        <Money money={this.workMoneyGained} />
-        <br />
-        <Reputation reputation={this.workRepGained} /> reputation for the faction <br />
-        {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
-        {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
-        {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
-        {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
-        {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
-        {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp
-        <br />
-      </>,
-    );
-  } else {
-    res =
-      "You worked for your faction " +
-      faction.name +
-      " for a total of " +
-      convertTimeMsToTimeElapsedString(this.timeWorked) +
-      ". " +
-      "You earned " +
-      numeralWrapper.formatReputation(this.workRepGained) +
-      " rep, " +
-      numeralWrapper.formatExp(this.workHackExpGained) +
-      " hacking exp, " +
-      numeralWrapper.formatExp(this.workStrExpGained) +
-      " str exp, " +
-      numeralWrapper.formatExp(this.workDefExpGained) +
-      " def exp, " +
-      numeralWrapper.formatExp(this.workDexExpGained) +
-      " dex exp, " +
-      numeralWrapper.formatExp(this.workAgiExpGained) +
-      " agi exp, and " +
-      numeralWrapper.formatExp(this.workChaExpGained) +
-      " cha exp.";
-  }
-
-  this.isWorking = false;
-  this.resetWorkStatus();
-  return res;
-}
-
 //Money gained per game cycle
 export function getWorkMoneyGain(this: IPlayer): number {
   // If player has SF-11, calculate salary multiplier from favor
@@ -1220,26 +1047,6 @@ export function getWorkRepGain(this: IPlayer): number {
   return jobPerformance * this.company_rep_mult * favorMult;
 }
 
-// export function getFactionSecurityWorkRepGain(this: IPlayer) {
-//     var t = 0.9 * (this.hacking  / CONSTANTS.MaxSkillLevel +
-//                    this.strength       / CONSTANTS.MaxSkillLevel +
-//                    this.defense        / CONSTANTS.MaxSkillLevel +
-//                    this.dexterity      / CONSTANTS.MaxSkillLevel +
-//                    this.agility        / CONSTANTS.MaxSkillLevel) / 4.5;
-//     return t * this.faction_rep_mult;
-// }
-
-// export function getFactionFieldWorkRepGain(this: IPlayer) {
-//     var t = 0.9 * (this.hacking  / CONSTANTS.MaxSkillLevel +
-//                    this.strength       / CONSTANTS.MaxSkillLevel +
-//                    this.defense        / CONSTANTS.MaxSkillLevel +
-//                    this.dexterity      / CONSTANTS.MaxSkillLevel +
-//                    this.agility        / CONSTANTS.MaxSkillLevel +
-//                    this.charisma       / CONSTANTS.MaxSkillLevel +
-//                    this.intelligence   / CONSTANTS.MaxSkillLevel) / 5.5;
-//     return t * this.faction_rep_mult;
-// }
-
 //Cancels the player's current "work" assignment and gives the proper rewards
 //Used only for Singularity functions, so no popups are created
 export function singularityStopWork(this: IPlayer): string {
@@ -1256,9 +1063,6 @@ export function singularityStopWork(this: IPlayer): string {
       break;
     case WorkType.CompanyPartTime:
       res = this.finishWorkPartTime(true);
-      break;
-    case WorkType.Faction:
-      res = this.finishFactionWork(true, true);
       break;
     default:
       console.error(`Unrecognized work type (${this.workType})`);

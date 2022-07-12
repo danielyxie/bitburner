@@ -1,5 +1,4 @@
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { FactionWorkType } from "../Faction/FactionWorkTypeEnum";
 import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
@@ -15,6 +14,7 @@ import {
 } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext): void {

@@ -303,9 +303,6 @@ const Engine: {
       } else if (Player.isWorking) {
         Player.focus = true;
         switch (Player.workType) {
-          case WorkType.Faction:
-            Player.workForFaction(numCyclesOffline);
-            break;
           case WorkType.CompanyPartTime:
             Player.workPartTime(numCyclesOffline);
             break;

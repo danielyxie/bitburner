@@ -1,5 +1,5 @@
 import React from "react";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { Crime } from "../Crime/Crime";
 import { CONSTANTS } from "../Constants";
 import { determineCrimeSuccess } from "../Crime/CrimeHelpers";
@@ -21,12 +21,10 @@ export const isCrimeWork = (w: Work | null): w is CrimeWork => w !== null && w.t
 export class CrimeWork extends Work {
   crimeType: CrimeType;
   cyclesWorked: number;
-  singularity: boolean;
 
   constructor(params?: CrimeWorkParams) {
-    super(WorkType.CRIME);
+    super(WorkType.CRIME, params?.singularity ?? true);
     this.crimeType = params?.crimeType ?? CrimeType.Shoplift;
-    this.singularity = params?.singularity ?? false;
     this.cyclesWorked = 0;
   }
 
@@ -121,15 +119,14 @@ export class CrimeWork extends Work {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("CrimeWork", this);
   }
 
   /**
    * Initiatizes a CrimeWork object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): CrimeWork {
+  static fromJSON(value: IReviverValue): CrimeWork {
     return Generic_fromJSON(CrimeWork, value.data);
   }
 }

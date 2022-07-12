@@ -87,6 +87,7 @@ import { BypassWrapper } from "./React/BypassWrapper";
 import _wrap from "lodash/wrap";
 import _functions from "lodash/functions";
 import { Apr1 } from "./Apr1";
+import { isFactionWork } from "../Work/FactionWork";
 
 const htmlLocation = location;
 
@@ -165,7 +166,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   const setRerender = useState(0)[1];
   const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
-    player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
+    isFactionWork(player.currentWork) ? Factions[player.currentWork.factionName] : (undefined as unknown as Faction),
   );
   if (faction === undefined && page === Page.Faction)
     throw new Error("Trying to go to a page without the proper setup");

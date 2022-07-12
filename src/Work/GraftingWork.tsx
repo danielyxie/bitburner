@@ -7,7 +7,7 @@ import { Work, WorkType } from "./Work";
 import { graftingIntBonus } from "../PersonObjects/Grafting/GraftingHelpers";
 import { applyAugmentation } from "../Augmentation/AugmentationHelpers";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { GraftableAugmentation } from "../PersonObjects/Grafting/GraftableAugmentation";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 
@@ -15,22 +15,21 @@ export const isGraftingWork = (w: Work | null): w is GraftingWork => w !== null 
 
 interface GraftingWorkParams {
   augmentation: string;
-  singularity: boolean;
   player: IPlayer;
+  singularity: boolean;
 }
 
 export class GraftingWork extends Work {
   augmentation: string;
-  singularity: boolean;
   cyclesWorked: number;
   unitCompleted: number;
 
   constructor(params?: GraftingWorkParams) {
-    super(WorkType.GRAFTING);
+    super(WorkType.GRAFTING, params?.singularity ?? true);
     this.cyclesWorked = 0;
     this.unitCompleted = 0;
     this.augmentation = params?.augmentation ?? AugmentationNames.Targeting1;
-    this.singularity = params?.singularity ?? false;
+
     if (params?.player) params.player.loseMoney(GraftableAugmentations[this.augmentation].cost, "augmentations");
   }
 
@@ -90,15 +89,14 @@ export class GraftingWork extends Work {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("GraftingWork", this);
   }
 
   /**
    * Initiatizes a GraftingWork object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): GraftingWork {
+  static fromJSON(value: IReviverValue): GraftingWork {
     return Generic_fromJSON(GraftingWork, value.data);
   }
 }

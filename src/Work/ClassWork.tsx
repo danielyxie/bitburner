@@ -1,5 +1,5 @@
 import React from "react";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { CONSTANTS } from "../Constants";
 import { LocationName } from "../Locations/data/LocationNames";
 import { numeralWrapper } from "../ui/numeralFormat";
@@ -129,14 +129,12 @@ export class ClassWork extends Work {
   classType: ClassType;
   location: LocationName;
   cyclesWorked: number;
-  singularity: boolean;
   earnings = newWorkStats();
 
   constructor(params?: ClassWorkParams) {
-    super(WorkType.CLASS);
+    super(WorkType.CLASS, params?.singularity ?? true);
     this.classType = params?.classType ?? ClassType.StudyComputerScience;
     this.location = params?.location ?? LocationName.Sector12RothmanUniversity;
-    this.singularity = params?.singularity ?? false;
     this.cyclesWorked = 0;
   }
 
@@ -186,15 +184,14 @@ export class ClassWork extends Work {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("ClassWork", this);
   }
 
   /**
    * Initiatizes a ClassWork object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): ClassWork {
+  static fromJSON(value: IReviverValue): ClassWork {
     return Generic_fromJSON(ClassWork, value.data);
   }
 }
