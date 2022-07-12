@@ -5,7 +5,7 @@
 Source-Files
 ============
 Source-Files are a type of persistent upgrade that is more powerful than Augmentations.
-Source-Files are received by destroying a BitNode. There are many different BitNodes
+Source-Files are received by :ref:`destroying a BitNode <gameplay_bitnodes_howtodestroy>`. There are many different BitNodes
 in the game and each BitNode will grant a different Source-File when it is destroyed.
 
 A Source-File can be upgraded by destroying its corresponding BitNode a second or
