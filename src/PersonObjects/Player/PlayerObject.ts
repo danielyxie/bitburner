@@ -17,7 +17,6 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { Faction } from "../../Faction/Faction";
 import { Company } from "../../Company/Company";
 import { Augmentation } from "../../Augmentation/Augmentation";
-import { IRouter } from "../../ui/Router";
 import { ICodingContractReward } from "../../CodingContracts";
 
 import { IPlayer } from "../IPlayer";
@@ -39,7 +38,6 @@ import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { ITaskTracker } from "../ITaskTracker";
 import { CONSTANTS } from "../../Constants";
-import { WorkType } from "../../utils/WorkType";
 import { Work } from "src/Work/Work";
 
 export class PlayerObject implements IPlayer {
@@ -63,7 +61,6 @@ export class PlayerObject implements IPlayer {
   hp: number;
   jobs: IMap<string>;
   init: () => void;
-  isWorking: boolean;
   karma: number;
   numPeopleKilled: number;
   location: LocationName;
@@ -138,27 +135,7 @@ export class PlayerObject implements IPlayer {
   bladeburner_success_chance_mult: number;
 
   currentWork: Work | null;
-  timeNeededToCompleteWork: number;
   focus: boolean;
-  workType: WorkType;
-  timeWorked: number;
-  workMoneyGained: number;
-  workMoneyGainRate: number;
-  workRepGained: number;
-  workRepGainRate: number;
-  workHackExpGained: number;
-  workHackExpGainRate: number;
-  workStrExpGained: number;
-  workStrExpGainRate: number;
-  workDefExpGained: number;
-  workDefExpGainRate: number;
-  workDexExpGained: number;
-  workDexExpGainRate: number;
-  workAgiExpGained: number;
-  workAgiExpGainRate: number;
-  workChaExpGained: number;
-  workChaExpGainRate: number;
-  workMoneyLossRate: number;
 
   entropy: number;
 
@@ -166,8 +143,6 @@ export class PlayerObject implements IPlayer {
   startNEWWork: (w: Work) => void;
   processNEWWork: (cycles: number) => void;
   finishNEWWork: (cancelled: boolean) => void;
-  work: (numCycles: number) => boolean;
-  workPartTime: (numCycles: number) => boolean;
   applyForAgentJob: (sing?: boolean) => boolean;
   applyForBusinessConsultantJob: (sing?: boolean) => boolean;
   applyForBusinessJob: (sing?: boolean) => boolean;
@@ -219,13 +194,10 @@ export class PlayerObject implements IPlayer {
   regenerateHp: (amt: number) => void;
   recordMoneySource: (amt: number, source: string) => void;
   setMoney: (amt: number) => void;
-  singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
   startFocusing: () => void;
   startGang: (facName: string, isHacking: boolean) => void;
-  startWork: (companyName: string) => void;
-  startWorkPartTime: (companyName: string) => void;
   takeDamage: (amt: number) => boolean;
   travel: (to: CityName) => boolean;
   giveExploit: (exploit: Exploit) => void;
@@ -235,31 +207,17 @@ export class PlayerObject implements IPlayer {
   getCasinoWinnings: () => number;
   quitJob: (company: string, sing?: boolean) => void;
   hasJob: () => boolean;
-  process: (router: IRouter, numCycles?: number) => void;
   createHacknetServer: () => HacknetServer;
   queueAugmentation: (augmentationName: string) => void;
   receiveInvite: (factionName: string) => void;
   updateSkillLevels: () => void;
   gainCodingContractReward: (reward: ICodingContractReward, difficulty?: number) => string;
   stopFocusing: () => void;
-  finishWork: (cancelled: boolean, sing?: boolean) => string;
-  cancelationPenalty: () => number;
-  finishWorkPartTime: (sing?: boolean) => string;
   resetMultipliers: () => void;
   prestigeAugmentation: () => void;
   prestigeSourceFile: () => void;
   calculateSkill: (exp: number, mult?: number) => number;
   calculateSkillProgress: (exp: number, mult?: number) => ISkillProgress;
-  resetWorkStatus: (generalType?: WorkType, group?: string, workType?: string) => void;
-  getWorkHackExpGain: () => number;
-  getWorkStrExpGain: () => number;
-  getWorkDefExpGain: () => number;
-  getWorkDexExpGain: () => number;
-  getWorkAgiExpGain: () => number;
-  getWorkChaExpGain: () => number;
-  getWorkRepGain: () => number;
-  getWorkMoneyGain: () => number;
-  processWorkEarnings: (cycles: number) => void;
   hospitalize: () => void;
   checkForFactionInvitations: () => Faction[];
   setBitNodeNumber: (n: number) => void;
@@ -360,31 +318,7 @@ export class PlayerObject implements IPlayer {
     this.crime_success_mult = 1;
 
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
-    this.isWorking = false;
     this.focus = false;
-    this.workType = WorkType.None;
-
-    this.workHackExpGainRate = 0;
-    this.workStrExpGainRate = 0;
-    this.workDefExpGainRate = 0;
-    this.workDexExpGainRate = 0;
-    this.workAgiExpGainRate = 0;
-    this.workChaExpGainRate = 0;
-    this.workRepGainRate = 0;
-    this.workMoneyGainRate = 0;
-    this.workMoneyLossRate = 0;
-
-    this.workHackExpGained = 0;
-    this.workStrExpGained = 0;
-    this.workDefExpGained = 0;
-    this.workDexExpGained = 0;
-    this.workAgiExpGained = 0;
-    this.workChaExpGained = 0;
-    this.workRepGained = 0;
-    this.workMoneyGained = 0;
-
-    this.timeWorked = 0; //in m;
-    this.timeNeededToCompleteWork = 0;
 
     this.work_money_mult = 1;
 
@@ -475,30 +409,11 @@ export class PlayerObject implements IPlayer {
     this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
     this.gainStats = generalMethods.gainStats;
     this.queryStatFromString = generalMethods.queryStatFromString;
-    this.resetWorkStatus = generalMethods.resetWorkStatus;
-    this.processWorkEarnings = generalMethods.processWorkEarnings;
-    this.startWork = generalMethods.startWork;
-    this.cancelationPenalty = generalMethods.cancelationPenalty;
     this.startNEWWork = workMethods.start;
     this.processNEWWork = workMethods.process;
     this.finishNEWWork = workMethods.finish;
-    this.work = generalMethods.work;
-    this.finishWork = generalMethods.finishWork;
-    this.startWorkPartTime = generalMethods.startWorkPartTime;
-    this.workPartTime = generalMethods.workPartTime;
-    this.finishWorkPartTime = generalMethods.finishWorkPartTime;
     this.startFocusing = generalMethods.startFocusing;
     this.stopFocusing = generalMethods.stopFocusing;
-    this.getWorkMoneyGain = generalMethods.getWorkMoneyGain;
-    this.getWorkHackExpGain = generalMethods.getWorkHackExpGain;
-    this.getWorkStrExpGain = generalMethods.getWorkStrExpGain;
-    this.getWorkDefExpGain = generalMethods.getWorkDefExpGain;
-    this.getWorkDexExpGain = generalMethods.getWorkDexExpGain;
-    this.getWorkAgiExpGain = generalMethods.getWorkAgiExpGain;
-    this.getWorkChaExpGain = generalMethods.getWorkChaExpGain;
-    this.getWorkRepGain = generalMethods.getWorkRepGain;
-    this.process = generalMethods.process;
-    this.singularityStopWork = generalMethods.singularityStopWork;
     this.takeDamage = generalMethods.takeDamage;
     this.regenerateHp = generalMethods.regenerateHp;
     this.hospitalize = generalMethods.hospitalize;

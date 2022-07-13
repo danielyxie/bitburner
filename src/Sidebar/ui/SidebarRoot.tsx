@@ -276,7 +276,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     //  Alt-g - Gang
     function handleShortcuts(this: Document, event: KeyboardEvent): any {
       if (Settings.DisableHotkeys) return;
-      if ((props.player.isWorking && props.player.focus) || props.router.page() === Page.BitVerse) return;
+      if ((props.player.currentWork && props.player.focus) || props.router.page() === Page.BitVerse) return;
       if (event.code === KEYCODE.T && event.altKey) {
         event.preventDefault();
         clickTerminal();

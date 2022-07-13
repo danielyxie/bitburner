@@ -60,6 +60,7 @@ import { IPerson } from "../IPerson";
 import { Player } from "../../Player";
 
 import { WorkType } from "../../utils/WorkType";
+import { isCompanyWork } from "../../Work/CompanyWork";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -131,28 +132,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
     }
   }
 
-  this.isWorking = false;
-
-  this.workHackExpGainRate = 0;
-  this.workStrExpGainRate = 0;
-  this.workDefExpGainRate = 0;
-  this.workDexExpGainRate = 0;
-  this.workAgiExpGainRate = 0;
-  this.workChaExpGainRate = 0;
-  this.workRepGainRate = 0;
-  this.workMoneyGainRate = 0;
-
-  this.workHackExpGained = 0;
-  this.workStrExpGained = 0;
-  this.workDefExpGained = 0;
-  this.workDexExpGained = 0;
-  this.workAgiExpGained = 0;
-  this.workChaExpGained = 0;
-  this.workRepGained = 0;
-  this.workMoneyGained = 0;
-
-  this.timeWorked = 0;
-
   this.lastUpdate = new Date().getTime();
 
   // Statistics Trackers
@@ -187,8 +166,6 @@ export function prestigeSourceFile(this: IPlayer): void {
       this.sleeves[i].sync = Math.max(25, this.sleeves[i].sync);
     }
   }
-
-  this.timeWorked = 0;
 
   // Gang
   this.gang = null;
@@ -499,576 +476,12 @@ export function queryStatFromString(this: IPlayer, str: string): number {
   return 0;
 }
 
-/******* Working functions *******/
-export function resetWorkStatus(this: IPlayer, generalType?: WorkType, group?: string): void {
-  if (this.workType !== WorkType.Faction && generalType === this.workType && group === this.companyName) return;
-  if (generalType === this.workType) return;
-  if (this.isWorking) this.singularityStopWork();
-  this.workHackExpGainRate = 0;
-  this.workStrExpGainRate = 0;
-  this.workDefExpGainRate = 0;
-  this.workDexExpGainRate = 0;
-  this.workAgiExpGainRate = 0;
-  this.workChaExpGainRate = 0;
-  this.workRepGainRate = 0;
-  this.workMoneyGainRate = 0;
-  this.workMoneyLossRate = 0;
-
-  this.workHackExpGained = 0;
-  this.workStrExpGained = 0;
-  this.workDefExpGained = 0;
-  this.workDexExpGained = 0;
-  this.workAgiExpGained = 0;
-  this.workChaExpGained = 0;
-  this.workRepGained = 0;
-  this.workMoneyGained = 0;
-
-  this.timeWorked = 0;
-
-  this.workType = WorkType.None;
-}
-
-export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
-  let focusBonus = 1;
-  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
-    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
-  }
-  const hackExpGain = focusBonus * this.workHackExpGainRate * numCycles;
-  const strExpGain = focusBonus * this.workStrExpGainRate * numCycles;
-  const defExpGain = focusBonus * this.workDefExpGainRate * numCycles;
-  const dexExpGain = focusBonus * this.workDexExpGainRate * numCycles;
-  const agiExpGain = focusBonus * this.workAgiExpGainRate * numCycles;
-  const chaExpGain = focusBonus * this.workChaExpGainRate * numCycles;
-  const moneyGain = (this.workMoneyGainRate - this.workMoneyLossRate) * numCycles;
-  this.gainHackingExp(hackExpGain);
-  this.gainStrengthExp(strExpGain);
-  this.gainDefenseExp(defExpGain);
-  this.gainDexterityExp(dexExpGain);
-  this.gainAgilityExp(agiExpGain);
-  this.gainCharismaExp(chaExpGain);
-  this.gainMoney(moneyGain, "work");
-  this.workHackExpGained += hackExpGain;
-  this.workStrExpGained += strExpGain;
-  this.workDefExpGained += defExpGain;
-  this.workDexExpGained += dexExpGain;
-  this.workAgiExpGained += agiExpGain;
-  this.workChaExpGained += chaExpGain;
-  this.workRepGained += focusBonus * this.workRepGainRate * numCycles;
-  this.workMoneyGained += focusBonus * this.workMoneyGainRate * numCycles;
-  this.workMoneyGained -= focusBonus * this.workMoneyLossRate * numCycles;
-}
-
-/* Working for Company */
-export function startWork(this: IPlayer, companyName: string): void {
-  this.resetWorkStatus(WorkType.Company, companyName);
-  this.isWorking = true;
-  this.companyName = companyName;
-  this.workType = WorkType.Company;
-
-  this.workHackExpGainRate = this.getWorkHackExpGain();
-  this.workStrExpGainRate = this.getWorkStrExpGain();
-  this.workDefExpGainRate = this.getWorkDefExpGain();
-  this.workDexExpGainRate = this.getWorkDexExpGain();
-  this.workAgiExpGainRate = this.getWorkAgiExpGain();
-  this.workChaExpGainRate = this.getWorkChaExpGain();
-  this.workRepGainRate = this.getWorkRepGain();
-  this.workMoneyGainRate = this.getWorkMoneyGain();
-
-  this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
-}
-
-export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
-  // Working
-  if (this.isWorking) {
-    if (this.workType === WorkType.CompanyPartTime) {
-      if (this.workPartTime(numCycles)) {
-        router.toCity();
-      }
-    } else if (this.work(numCycles)) {
-      router.toCity();
-    }
-  }
-}
-
-export function cancelationPenalty(this: IPlayer): number {
-  const data = serverMetadata.find((s) => s.specialName === this.companyName);
-  if (!data) return 0.5; // Does not have special server.
-  const server = GetServer(data.hostname);
-  if (server instanceof Server) {
-    if (server && server.backdoorInstalled) return 0.75;
-  }
-
-  return 0.5;
-}
-
-export function work(this: IPlayer, numCycles: number): boolean {
-  // Cap the number of cycles being processed to whatever would put you at
-  // the work time limit (8 hours)
-  let overMax = false;
-  if (this.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
-    overMax = true;
-    numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / CONSTANTS._idleSpeed);
-  }
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-
-  this.workRepGainRate = this.getWorkRepGain();
-  this.workMoneyGainRate = this.getWorkMoneyGain();
-  this.processWorkEarnings(numCycles);
-
-  const comp = Companies[this.companyName];
-  influenceStockThroughCompanyWork(comp, this.workRepGainRate, numCycles);
-
-  // If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
-  if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
-    this.finishWork(false);
-    return true;
-  }
-  return false;
-}
-
-export function finishWork(this: IPlayer, cancelled: boolean, sing = false): string {
-  //Since the work was cancelled early, player only gains half of what they've earned so far
-  if (cancelled) {
-    this.workRepGained *= this.cancelationPenalty();
-  }
-
-  const penaltyString = this.cancelationPenalty() === 0.5 ? "half" : "three-quarters";
-
-  const company = Companies[this.companyName];
-  company.playerReputation += this.workRepGained;
-
-  this.updateSkillLevels();
-
-  let content = (
-    <>
-      You earned a total of: <br />
-      <Money money={this.workMoneyGained} />
-      <br />
-      <Reputation reputation={this.workRepGained} /> reputation for the company <br />
-      {this.workHackExpGained > 0 && (
-        <>
-          {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
-        </>
-      )}
-      {this.workStrExpGained > 0 && (
-        <>
-          {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
-        </>
-      )}
-      {this.workDefExpGained > 0 && (
-        <>
-          {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
-        </>
-      )}
-      {this.workDexExpGained > 0 && (
-        <>
-          {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
-        </>
-      )}
-      {this.workAgiExpGained > 0 && (
-        <>
-          {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
-        </>
-      )}
-      {this.workChaExpGained > 0 && (
-        <>
-          {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp <br />
-        </>
-      )}
-      <br />
-    </>
-  );
-
-  if (cancelled) {
-    content = (
-      <>
-        You worked a short shift of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br />
-        <br />
-        Since you cancelled your work early, you only gained {penaltyString} of the reputation you earned. <br />
-        <br />
-        {content}
-      </>
-    );
-  } else {
-    content = (
-      <>
-        You worked a full shift of 8 hours! <br />
-        <br />
-        {content}
-      </>
-    );
-  }
-  if (!sing) {
-    dialogBoxCreate(content);
-  }
-
-  this.isWorking = false;
-  this.focus = false;
-
-  this.resetWorkStatus();
-  if (sing) {
-    const res =
-      "You worked a short shift of " +
-      convertTimeMsToTimeElapsedString(this.timeWorked) +
-      " and " +
-      "earned $" +
-      numeralWrapper.formatMoney(this.workMoneyGained) +
-      ", " +
-      numeralWrapper.formatReputation(this.workRepGained) +
-      " reputation, " +
-      numeralWrapper.formatExp(this.workHackExpGained) +
-      " hacking exp, " +
-      numeralWrapper.formatExp(this.workStrExpGained) +
-      " strength exp, " +
-      numeralWrapper.formatExp(this.workDefExpGained) +
-      " defense exp, " +
-      numeralWrapper.formatExp(this.workDexExpGained) +
-      " dexterity exp, " +
-      numeralWrapper.formatExp(this.workAgiExpGained) +
-      " agility exp, and " +
-      numeralWrapper.formatExp(this.workChaExpGained) +
-      " charisma exp.";
-
-    return res;
-  }
-
-  return "";
-}
-
-export function startWorkPartTime(this: IPlayer, companyName: string): void {
-  this.resetWorkStatus(WorkType.CompanyPartTime, companyName);
-  this.isWorking = true;
-  this.companyName = companyName;
-  this.workType = WorkType.CompanyPartTime;
-
-  this.workHackExpGainRate = this.getWorkHackExpGain();
-  this.workStrExpGainRate = this.getWorkStrExpGain();
-  this.workDefExpGainRate = this.getWorkDefExpGain();
-  this.workDexExpGainRate = this.getWorkDexExpGain();
-  this.workAgiExpGainRate = this.getWorkAgiExpGain();
-  this.workChaExpGainRate = this.getWorkChaExpGain();
-  this.workRepGainRate = this.getWorkRepGain();
-  this.workMoneyGainRate = this.getWorkMoneyGain();
-
-  this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
-}
-
-export function workPartTime(this: IPlayer, numCycles: number): boolean {
-  //Cap the number of cycles being processed to whatever would put you at the
-  //work time limit (8 hours)
-  let overMax = false;
-  if (this.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
-    overMax = true;
-    numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / CONSTANTS._idleSpeed);
-  }
-  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-
-  this.workRepGainRate = this.getWorkRepGain();
-  this.processWorkEarnings(numCycles);
-
-  //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
-  if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
-    this.finishWorkPartTime();
-    return true;
-  }
-  return false;
-}
-
-export function finishWorkPartTime(this: IPlayer, sing = false): string {
-  const company = Companies[this.companyName];
-  company.playerReputation += this.workRepGained;
-
-  this.updateSkillLevels();
-
-  const content = (
-    <>
-      You worked for {convertTimeMsToTimeElapsedString(this.timeWorked)}
-      <br />
-      <br />
-      You earned a total of: <br />
-      <Money money={this.workMoneyGained} />
-      <br />
-      <Reputation reputation={this.workRepGained} /> reputation for the company <br />
-      {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
-      {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
-      {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
-      {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
-      {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
-      {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp
-      <br />
-    </>
-  );
-  if (!sing) {
-    dialogBoxCreate(content);
-  }
-
-  this.isWorking = false;
-  this.resetWorkStatus();
-
-  if (sing) {
-    const res =
-      "You worked for " +
-      convertTimeMsToTimeElapsedString(this.timeWorked) +
-      " and " +
-      "earned a total of " +
-      "$" +
-      numeralWrapper.formatMoney(this.workMoneyGained) +
-      ", " +
-      numeralWrapper.formatReputation(this.workRepGained) +
-      " reputation, " +
-      numeralWrapper.formatExp(this.workHackExpGained) +
-      " hacking exp, " +
-      numeralWrapper.formatExp(this.workStrExpGained) +
-      " strength exp, " +
-      numeralWrapper.formatExp(this.workDefExpGained) +
-      " defense exp, " +
-      numeralWrapper.formatExp(this.workDexExpGained) +
-      " dexterity exp, " +
-      numeralWrapper.formatExp(this.workAgiExpGained) +
-      " agility exp, and " +
-      numeralWrapper.formatExp(this.workChaExpGained) +
-      " charisma exp";
-    return res;
-  }
-  return "";
-}
-
 export function startFocusing(this: IPlayer): void {
   this.focus = true;
 }
 
 export function stopFocusing(this: IPlayer): void {
   this.focus = false;
-}
-
-//Money gained per game cycle
-export function getWorkMoneyGain(this: IPlayer): number {
-  // If player has SF-11, calculate salary multiplier from favor
-  let bn11Mult = 1;
-  const company = Companies[this.companyName];
-  if (this.sourceFileLvl(11) > 0) {
-    bn11Mult = 1 + company.favor / 100;
-  }
-
-  // Get base salary
-  const companyPositionName = this.jobs[this.companyName];
-  const companyPosition = CompanyPositions[companyPositionName];
-  if (companyPosition == null) {
-    console.error(`Could not find CompanyPosition object for ${companyPositionName}. Work salary will be 0`);
-    return 0;
-  }
-
-  return (
-    companyPosition.baseSalary *
-    company.salaryMultiplier *
-    this.work_money_mult *
-    BitNodeMultipliers.CompanyWorkMoney *
-    bn11Mult
-  );
-}
-
-//Hack exp gained per game cycle
-export function getWorkHackExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
-  const companyPosition = CompanyPositions[companyPositionName];
-  if (company == null || companyPosition == null) {
-    console.error(
-      [
-        `Could not find Company object for ${this.companyName}`,
-        `or CompanyPosition object for ${companyPositionName}.`,
-        `Work hack exp gain will be 0`,
-      ].join(" "),
-    );
-    return 0;
-  }
-
-  return (
-    companyPosition.hackingExpGain *
-    company.expMultiplier *
-    this.hacking_exp_mult *
-    BitNodeMultipliers.CompanyWorkExpGain
-  );
-}
-
-//Str exp gained per game cycle
-export function getWorkStrExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
-  const companyPosition = CompanyPositions[companyPositionName];
-  if (company == null || companyPosition == null) {
-    console.error(
-      [
-        `Could not find Company object for ${this.companyName}`,
-        `or CompanyPosition object for ${companyPositionName}.`,
-        `Work str exp gain will be 0`,
-      ].join(" "),
-    );
-    return 0;
-  }
-
-  return (
-    companyPosition.strengthExpGain *
-    company.expMultiplier *
-    this.strength_exp_mult *
-    BitNodeMultipliers.CompanyWorkExpGain
-  );
-}
-
-//Def exp gained per game cycle
-export function getWorkDefExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
-  const companyPosition = CompanyPositions[companyPositionName];
-  if (company == null || companyPosition == null) {
-    console.error(
-      [
-        `Could not find Company object for ${this.companyName}`,
-        `or CompanyPosition object for ${companyPositionName}.`,
-        `Work def exp gain will be 0`,
-      ].join(" "),
-    );
-    return 0;
-  }
-
-  return (
-    companyPosition.defenseExpGain *
-    company.expMultiplier *
-    this.defense_exp_mult *
-    BitNodeMultipliers.CompanyWorkExpGain
-  );
-}
-
-//Dex exp gained per game cycle
-export function getWorkDexExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
-  const companyPosition = CompanyPositions[companyPositionName];
-  if (company == null || companyPosition == null) {
-    console.error(
-      [
-        `Could not find Company object for ${this.companyName}`,
-        `or CompanyPosition object for ${companyPositionName}.`,
-        `Work dex exp gain will be 0`,
-      ].join(" "),
-    );
-    return 0;
-  }
-
-  return (
-    companyPosition.dexterityExpGain *
-    company.expMultiplier *
-    this.dexterity_exp_mult *
-    BitNodeMultipliers.CompanyWorkExpGain
-  );
-}
-
-//Agi exp gained per game cycle
-export function getWorkAgiExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
-  const companyPosition = CompanyPositions[companyPositionName];
-  if (company == null || companyPosition == null) {
-    console.error(
-      [
-        `Could not find Company object for ${this.companyName}`,
-        `or CompanyPosition object for ${companyPositionName}.`,
-        `Work agi exp gain will be 0`,
-      ].join(" "),
-    );
-    return 0;
-  }
-
-  return (
-    companyPosition.agilityExpGain *
-    company.expMultiplier *
-    this.agility_exp_mult *
-    BitNodeMultipliers.CompanyWorkExpGain
-  );
-}
-
-//Charisma exp gained per game cycle
-export function getWorkChaExpGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
-  const companyPosition = CompanyPositions[companyPositionName];
-  if (company == null || companyPosition == null) {
-    console.error(
-      [
-        `Could not find Company object for ${this.companyName}`,
-        `or CompanyPosition object for ${companyPositionName}.`,
-        `Work cha exp gain will be 0`,
-      ].join(" "),
-    );
-    return 0;
-  }
-
-  return (
-    companyPosition.charismaExpGain *
-    company.expMultiplier *
-    this.charisma_exp_mult *
-    BitNodeMultipliers.CompanyWorkExpGain
-  );
-}
-
-//Reputation gained per game cycle
-export function getWorkRepGain(this: IPlayer): number {
-  const company = Companies[this.companyName];
-  const companyPositionName = this.jobs[this.companyName];
-  const companyPosition = CompanyPositions[companyPositionName];
-  if (company == null || companyPosition == null) {
-    console.error(
-      [
-        `Could not find Company object for ${this.companyName}`,
-        `or CompanyPosition object for ${companyPositionName}.`,
-        `Work rep gain will be 0`,
-      ].join(" "),
-    );
-    return 0;
-  }
-
-  let jobPerformance = companyPosition.calculateJobPerformance(
-    this.hacking,
-    this.strength,
-    this.defense,
-    this.dexterity,
-    this.agility,
-    this.charisma,
-  );
-
-  //Intelligence provides a flat bonus to job performance
-  jobPerformance += this.intelligence / CONSTANTS.MaxSkillLevel;
-
-  //Update reputation gain rate to account for company favor
-  let favorMult = 1 + company.favor / 100;
-  if (isNaN(favorMult)) {
-    favorMult = 1;
-  }
-  return jobPerformance * this.company_rep_mult * favorMult;
-}
-
-//Cancels the player's current "work" assignment and gives the proper rewards
-//Used only for Singularity functions, so no popups are created
-export function singularityStopWork(this: IPlayer): string {
-  if (this.currentWork !== null) {
-    this.finishNEWWork(true);
-  }
-  if (!this.isWorking) {
-    return "";
-  }
-  let res = ""; //Earnings text for work
-  switch (this.workType) {
-    case WorkType.Company:
-      res = this.finishWork(true, true);
-      break;
-    case WorkType.CompanyPartTime:
-      res = this.finishWorkPartTime(true);
-      break;
-    default:
-      console.error(`Unrecognized work type (${this.workType})`);
-      return "";
-  }
-  return res;
 }
 
 // Returns true if hospitalized, false otherwise
@@ -1155,7 +568,6 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   }
 
   this.jobs[company.name] = pos.name;
-  if (!this.isWorking || this.workType !== WorkType.Company) this.companyName = company.name;
 
   if (!sing) {
     dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
@@ -1204,12 +616,8 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string, _sing = false): void {
-  if (
-    this.isWorking === true &&
-    [WorkType.Company, WorkType.CompanyPartTime].includes(this.workType) &&
-    this.companyName === company
-  ) {
-    this.finishWork(true);
+  if (isCompanyWork(this.currentWork) && this.currentWork.companyName === company) {
+    this.finishNEWWork(true);
   }
   delete this.jobs[company];
   if (this.companyName === company) {
@@ -1299,7 +707,6 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
     this.companyName = company.name;
 
     if (!sing) {
@@ -1325,7 +732,6 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
     this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
@@ -1350,7 +756,6 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
     this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
@@ -1373,7 +778,6 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean 
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
     this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);

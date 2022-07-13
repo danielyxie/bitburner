@@ -134,87 +134,6 @@ export function WorkInProgressRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
 
-  let expGains = [
-    player.workHackExpGained > 0 ? (
-      <StatsRow
-        name="Hacking Exp"
-        color={Settings.theme.hack}
-        data={{
-          content: `${numeralWrapper.formatExp(player.workHackExpGained)} (${numeralWrapper.formatExp(
-            player.workHackExpGainRate * CYCLES_PER_SEC,
-          )} / sec)`,
-        }}
-      />
-    ) : (
-      <></>
-    ),
-    player.workStrExpGained > 0 ? (
-      <StatsRow
-        name="Strength Exp"
-        color={Settings.theme.combat}
-        data={{
-          content: `${numeralWrapper.formatExp(player.workStrExpGained)} (${numeralWrapper.formatExp(
-            player.workStrExpGainRate * CYCLES_PER_SEC,
-          )} / sec)`,
-        }}
-      />
-    ) : (
-      <></>
-    ),
-    player.workDefExpGained > 0 ? (
-      <StatsRow
-        name="Defense Exp"
-        color={Settings.theme.combat}
-        data={{
-          content: `${numeralWrapper.formatExp(player.workDefExpGained)} (${numeralWrapper.formatExp(
-            player.workDefExpGainRate * CYCLES_PER_SEC,
-          )} / sec)`,
-        }}
-      />
-    ) : (
-      <></>
-    ),
-    player.workDexExpGained > 0 ? (
-      <StatsRow
-        name="Dexterity Exp"
-        color={Settings.theme.combat}
-        data={{
-          content: `${numeralWrapper.formatExp(player.workDexExpGained)} (${numeralWrapper.formatExp(
-            player.workDexExpGainRate * CYCLES_PER_SEC,
-          )} / sec)`,
-        }}
-      />
-    ) : (
-      <></>
-    ),
-    player.workAgiExpGained > 0 ? (
-      <StatsRow
-        name="Agility Exp"
-        color={Settings.theme.combat}
-        data={{
-          content: `${numeralWrapper.formatExp(player.workAgiExpGained)} (${numeralWrapper.formatExp(
-            player.workAgiExpGainRate * CYCLES_PER_SEC,
-          )} / sec)`,
-        }}
-      />
-    ) : (
-      <></>
-    ),
-    player.workChaExpGained > 0 ? (
-      <StatsRow
-        name="Charisma Exp"
-        color={Settings.theme.cha}
-        data={{
-          content: `${numeralWrapper.formatExp(player.workChaExpGained)} (${numeralWrapper.formatExp(
-            player.workChaExpGainRate * CYCLES_PER_SEC,
-          )} / sec)`,
-        }}
-      />
-    ) : (
-      <></>
-    ),
-  ];
-
   let workInfo: IWorkInfo = {
     buttons: {
       cancel: () => undefined,
@@ -266,7 +185,6 @@ export function WorkInProgressRoot(): React.ReactElement {
       }
 
       const rates = classWork.calculateRates(player);
-      expGains = ExpRows(rates);
       workInfo = {
         buttons: {
           cancel: cancel,
@@ -284,7 +202,7 @@ export function WorkInProgressRoot(): React.ReactElement {
               <Money money={classWork.earnings.money} /> (<MoneyRate money={rates.money * CYCLES_PER_SEC} />)
             </Typography>
           </StatsRow>,
-          ...expGains,
+          ...ExpRows(rates),
         ],
         progress: {
           elapsed: classWork.cyclesWorked * CONSTANTS._idleSpeed,

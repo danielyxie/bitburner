@@ -52,7 +52,6 @@ export interface IPlayer extends IPerson {
   hp: number;
   jobs: IMap<string>;
   init: () => void;
-  isWorking: boolean;
   karma: number;
   numPeopleKilled: number;
   location: LocationName;
@@ -125,27 +124,7 @@ export interface IPlayer extends IPerson {
   bladeburner_success_chance_mult: number;
 
   currentWork: Work | null;
-  timeNeededToCompleteWork: number;
   focus: boolean;
-  workType: WorkType;
-  timeWorked: number;
-  workMoneyGained: number;
-  workMoneyGainRate: number;
-  workRepGained: number;
-  workRepGainRate: number;
-  workHackExpGained: number;
-  workHackExpGainRate: number;
-  workStrExpGained: number;
-  workStrExpGainRate: number;
-  workDefExpGained: number;
-  workDefExpGainRate: number;
-  workDexExpGained: number;
-  workDexExpGainRate: number;
-  workAgiExpGained: number;
-  workAgiExpGainRate: number;
-  workChaExpGained: number;
-  workChaExpGainRate: number;
-  workMoneyLossRate: number;
 
   entropy: number;
 
@@ -153,8 +132,6 @@ export interface IPlayer extends IPerson {
   startNEWWork(w: Work): void;
   processNEWWork(cycles: number): void;
   finishNEWWork(cancelled: boolean): void;
-  work(numCycles: number): boolean;
-  workPartTime(numCycles: number): boolean;
   applyForAgentJob(sing?: boolean): boolean;
   applyForBusinessConsultantJob(sing?: boolean): boolean;
   applyForBusinessJob(sing?: boolean): boolean;
@@ -193,17 +170,13 @@ export interface IPlayer extends IPerson {
   isAwareOfGang(): boolean;
   isQualified(company: Company, position: CompanyPosition): boolean;
   loseMoney(money: number, source: string): void;
-  process(router: IRouter, numCycles?: number): void;
   reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
   setMoney(amt: number): void;
-  singularityStopWork(): string;
   startBladeburner(p: any): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
-  startWork(companyName: string): void;
-  startWorkPartTime(companyName: string): void;
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
   giveAchievement(achievementId: string): void;
@@ -216,23 +189,10 @@ export interface IPlayer extends IPerson {
   updateSkillLevels(): void;
   gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
   stopFocusing(): void;
-  finishWork(cancelled: boolean, sing?: boolean): string;
-  cancelationPenalty(): number;
-  finishWorkPartTime(sing?: boolean): string;
   resetMultipliers(): void;
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
-  resetWorkStatus(generalType?: WorkType, group?: string, workType?: string): void;
-  getWorkHackExpGain(): number;
-  getWorkStrExpGain(): number;
-  getWorkDefExpGain(): number;
-  getWorkDexExpGain(): number;
-  getWorkAgiExpGain(): number;
-  getWorkChaExpGain(): number;
-  getWorkRepGain(): number;
-  getWorkMoneyGain(): number;
-  processWorkEarnings(cycles: number): void;
   hospitalize(): void;
   checkForFactionInvitations(): Faction[];
   setBitNodeNumber(n: number): void;

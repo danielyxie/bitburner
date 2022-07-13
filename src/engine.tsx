@@ -96,11 +96,7 @@ const Engine: {
 
     Terminal.process(Router, Player, numCycles);
 
-    if (Player.currentWork !== null) {
-      Player.processNEWWork(numCycles);
-    } else {
-      Player.process(Router, numCycles);
-    }
+    Player.processNEWWork(numCycles);
 
     // Update stock prices
     if (Player.hasWseAccount) {
@@ -300,15 +296,6 @@ const Engine: {
       if (Player.currentWork !== null) {
         Player.focus = true;
         Player.processNEWWork(numCyclesOffline);
-      } else if (Player.isWorking) {
-        Player.focus = true;
-        switch (Player.workType) {
-          case WorkType.CompanyPartTime:
-            Player.workPartTime(numCyclesOffline);
-            break;
-          default:
-            Player.work(numCyclesOffline);
-        }
       } else {
         for (let i = 0; i < Player.factions.length; i++) {
           const facName = Player.factions[i];

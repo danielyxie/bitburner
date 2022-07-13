@@ -47,25 +47,6 @@ interface Player {
   companyName: string;
   crime_money_mult: number;
   crime_success_mult: number;
-  isWorking: boolean;
-  workType: string;
-  workHackExpGainRate: number;
-  workStrExpGainRate: number;
-  workDefExpGainRate: number;
-  workDexExpGainRate: number;
-  workAgiExpGainRate: number;
-  workChaExpGainRate: number;
-  workRepGainRate: number;
-  workMoneyGainRate: number;
-  workMoneyLossRate: number;
-  workHackExpGained: number;
-  workStrExpGained: number;
-  workDefExpGained: number;
-  workDexExpGained: number;
-  workAgiExpGained: number;
-  workChaExpGained: number;
-  workRepGained: number;
-  workMoneyGained: number;
   work_money_mult: number;
   hacknet_node_money_mult: number;
   hacknet_node_purchase_cost_mult: number;
@@ -737,24 +718,6 @@ export interface CharacterInfo {
   tor: boolean;
   /** Object with many of the player's multipliers from Augmentations/Source Files */
   mult: CharacterMult;
-  /** Timed worked in ms */
-  timeWorked: number;
-  /** Hacking experience earned so far from work */
-  workHackExpGain: number;
-  /** Str experience earned so far from work */
-  workStrExpGain: number;
-  /** Def experience earned so far from work */
-  workDefExpGain: number;
-  /** Dex experience earned so far from work */
-  workDexExpGain: number;
-  /** Agi experience earned so far from work */
-  workAgiExpGain: number;
-  /** Cha experience earned so far from work */
-  workChaExpGain: number;
-  /** Reputation earned so far from work, if applicable */
-  workRepGain: number;
-  /** Money earned so far from work, if applicable */
-  workMoneyGain: number;
   /** total hacking exp */
   hackingExp: number;
   /** total strength exp */

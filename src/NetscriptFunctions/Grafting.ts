@@ -64,10 +64,6 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
         }
 
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          ctx.log(() => txt);
-        }
 
         const craftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
         if (player.money < craftableAug.cost) {

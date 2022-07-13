@@ -54,6 +54,7 @@ import { ClassWork, ClassType } from "../Work/ClassWork";
 import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWork";
 import { FactionWork } from "../Work/FactionWork";
 import { FactionWorkType } from "../Work/data/FactionWorkType";
+import { CompanyWork } from "../Work/CompanyWork";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -268,10 +269,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const className = _ctx.helper.string("className", _className);
         const focus = _ctx.helper.boolean(_focus);
         const wasFocusing = player.focus;
-        if (player.currentWork) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
         switch (universityName.toLowerCase()) {
           case LocationName.AevumSummitUniversity.toLowerCase():
@@ -351,10 +348,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const stat = _ctx.helper.string("stat", _stat);
         const focus = _ctx.helper.boolean(_focus);
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
+
         switch (gymName.toLowerCase()) {
           case LocationName.AevumCrushFitnessGym.toLowerCase():
             if (player.city != CityName.Aevum) {
@@ -532,8 +526,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         player.getHomeComputer().pushProgram(item.program);
         // Cancel if the program is in progress of writing
         if (isCreateProgramWork(player.currentWork) && player.currentWork.programName === item.program) {
-          player.isWorking = false;
-          player.resetWorkStatus();
+          player.finishNEWWork(true);
         }
 
         player.loseMoney(item.price, "other");
@@ -643,20 +636,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (_focus: unknown): boolean {
         _ctx.helper.checkSingularityAccess();
         const focus = _ctx.helper.boolean(_focus);
-        if (!player.isWorking) {
+        if (player.currentWork === null) {
           throw _ctx.helper.makeRuntimeErrorMsg("Not currently working");
         }
-        if (
-          !(
-            player.workType === WorkType.Faction ||
-            player.workType === WorkType.Company ||
-            player.workType === WorkType.CompanyPartTime ||
-            player.workType === WorkType.CreateProgram ||
-            player.workType === WorkType.StudyClass
-          )
-        ) {
-          throw _ctx.helper.makeRuntimeErrorMsg("Cannot change focus for current job");
-        }
+
         if (!player.focus && focus) {
           player.startFocusing();
           Router.toWork();
@@ -715,16 +698,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             strengthExp: player.strength_exp_mult,
             workMoney: player.work_money_mult,
           },
-          timeWorked: player.timeWorked,
           tor: player.hasTorRouter(),
-          workHackExpGain: player.workHackExpGained,
-          workStrExpGain: player.workStrExpGained,
-          workDefExpGain: player.workDefExpGained,
-          workDexExpGain: player.workDexExpGained,
-          workAgiExpGain: player.workAgiExpGained,
-          workChaExpGain: player.workChaExpGained,
-          workRepGain: player.workRepGained,
-          workMoneyGain: player.workMoneyGained,
           hackingExp: player.hacking_exp,
           strengthExp: player.strength_exp,
           defenseExp: player.defense_exp,
@@ -736,7 +710,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
     hospitalize: (_ctx: NetscriptContext) =>
       function (): void {
         _ctx.helper.checkSingularityAccess();
-        if (player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
+        if (player.currentWork || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
           _ctx.log(() => "Cannot go to the hospital because the player is busy.");
           return;
         }
@@ -745,21 +719,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
     isBusy: (_ctx: NetscriptContext) =>
       function (): boolean {
         _ctx.helper.checkSingularityAccess();
-        return player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
+        return player.currentWork !== null || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
       },
     stopAction: (_ctx: NetscriptContext) =>
       function (): boolean {
         _ctx.helper.checkSingularityAccess();
-        if (player.isWorking) {
-          if (player.focus) {
-            player.stopFocusing();
-            Router.toTerminal();
-          }
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-          return true;
-        }
-        return false;
+        const wasWorking = player.currentWork !== null;
+        player.finishNEWWork(true);
+        return wasWorking;
       },
     upgradeHomeCores: (_ctx: NetscriptContext) =>
       function (): boolean {
@@ -858,17 +825,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
 
         const wasFocused = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
-        if (companyPosition.isPartTimeJob()) {
-          player.startWorkPartTime(companyName);
-        } else {
-          player.startWork(companyName);
-        }
-
+        player.startNEWWork(
+          new CompanyWork({
+            singularity: true,
+            companyName: companyName,
+          }),
+        );
         if (focus) {
           player.startFocusing();
           Router.toWork();
@@ -1022,10 +985,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
 
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
         switch (type.toLowerCase()) {
           case "hacking":
@@ -1175,10 +1134,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const focus = _ctx.helper.boolean(_focus);
 
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
         const p = Object.values(Programs).find((p) => p.name.toLowerCase() === programName);
 
@@ -1224,11 +1179,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (_crimeRoughName: unknown): number {
         _ctx.helper.checkSingularityAccess();
         const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
-
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
         if (player.currentWork !== null) {
           player.finishNEWWork(true);
