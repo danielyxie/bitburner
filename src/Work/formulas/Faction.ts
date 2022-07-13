@@ -1,3 +1,4 @@
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -26,15 +27,26 @@ export const FactionWorkStats: Record<FactionWorkType, WorkStats> = {
 };
 
 export function calculateFactionExp(player: IPlayer, tpe: FactionWorkType): WorkStats {
+  let focusBonus = 1;
+  if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+    focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  }
   const baseStats = FactionWorkStats[tpe];
   return {
     money: 0,
-    hackExp: (baseStats.hackExp * player.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
-    strExp: (baseStats.strExp * player.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
-    defExp: (baseStats.defExp * player.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
-    dexExp: (baseStats.dexExp * player.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
-    agiExp: (baseStats.agiExp * player.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
-    chaExp: (baseStats.chaExp * player.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
+    reputation: 0,
+    hackExp:
+      (focusBonus * (baseStats.hackExp * player.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+    strExp:
+      (focusBonus * (baseStats.strExp * player.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+    defExp:
+      (focusBonus * (baseStats.defExp * player.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+    dexExp:
+      (focusBonus * (baseStats.dexExp * player.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+    agiExp:
+      (focusBonus * (baseStats.agiExp * player.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+    chaExp:
+      (focusBonus * (baseStats.chaExp * player.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
     intExp: 0,
   };
 }

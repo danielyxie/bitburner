@@ -18,14 +18,11 @@ interface CreateProgramWorkParams {
 
 export class CreateProgramWork extends Work {
   programName: string;
-  // amount of cycles spent doing this task
-  cyclesWorked: number;
   // amount of effective work completed on the program (time boosted by skills).
   unitCompleted: number;
 
   constructor(params?: CreateProgramWorkParams) {
     super(WorkType.CREATE_PROGRAM, params?.singularity ?? true);
-    this.cyclesWorked = 0;
     this.unitCompleted = 0;
     this.programName = params?.programName ?? "";
 

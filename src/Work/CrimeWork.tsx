@@ -20,12 +20,10 @@ export const isCrimeWork = (w: Work | null): w is CrimeWork => w !== null && w.t
 
 export class CrimeWork extends Work {
   crimeType: CrimeType;
-  cyclesWorked: number;
 
   constructor(params?: CrimeWorkParams) {
     super(WorkType.CRIME, params?.singularity ?? true);
     this.crimeType = params?.crimeType ?? CrimeType.Shoplift;
-    this.cyclesWorked = 0;
   }
 
   getCrime(): Crime {

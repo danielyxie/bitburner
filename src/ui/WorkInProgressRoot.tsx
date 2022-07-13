@@ -26,6 +26,7 @@ import { isCreateProgramWork } from "../Work/CreateProgramWork";
 import { isGraftingWork } from "../Work/GraftingWork";
 import { isFactionWork } from "../Work/FactionWork";
 import { FactionWorkType } from "../Work/data/FactionWorkType";
+import { isCompanyWork } from "../Work/CompanyWork";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -420,18 +421,16 @@ export function WorkInProgressRoot(): React.ReactElement {
         stopText: "Stop Faction work",
       };
     }
-  }
 
-  switch (player.workType) {
-    case WorkType.Company: {
-      const comp = Companies[player.companyName];
+    if (isCompanyWork(player.currentWork)) {
+      const comp = Companies[player.currentWork.companyName];
       if (comp == null || !(comp instanceof Company)) {
         workInfo = {
           buttons: {
             cancel: () => router.toTerminal(),
           },
           title:
-            `You cannot work for ${player.companyName || "(Company not found)"} at this time,` +
+            `You cannot work for ${player.currentWork.companyName || "(Company not found)"} at this time,` +
             " please try again if you think this should have worked",
 
           stopText: "Back to Terminal",
@@ -441,7 +440,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       const companyRep = comp.playerReputation;
 
       function cancel(): void {
-        player.finishWork(true);
+        player.finishNEWWork(true);
         router.toJob();
       }
       function unfocus(): void {
@@ -450,10 +449,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       }
 
       const position = player.jobs[player.companyName];
-
-      const penalty = player.cancelationPenalty();
-
-      const penaltyString = penalty === 0.5 ? "half" : "three-quarters";
+      const gains = player.currentWork.getGainRates(player);
 
       workInfo = {
         buttons: {
@@ -462,7 +458,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         },
         title: (
           <>
-            You are currently working as a <b>{position}</b> at <b>{player.companyName}</b>
+            You are currently working as a <b>{position}</b> at <b>{player.currentWork.companyName}</b>
           </>
         ),
 
@@ -474,95 +470,23 @@ export function WorkInProgressRoot(): React.ReactElement {
         gains: [
           <StatsRow name="Money" color={Settings.theme.money}>
             <Typography>
-              <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
+              <MoneyRate money={gains.money * CYCLES_PER_SEC} />
             </Typography>
           </StatsRow>,
           <StatsRow name="Company Reputation" color={Settings.theme.rep}>
             <Typography>
-              <Reputation reputation={player.workRepGained} /> (
-              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
+              <ReputationRate reputation={gains.reputation * CYCLES_PER_SEC} />
             </Typography>
           </StatsRow>,
-          ...expGains,
+          ...ExpRows(gains),
         ],
         progress: {
-          elapsed: player.timeWorked,
+          elapsed: player.currentWork.cyclesWorked * CYCLES_PER_SEC,
         },
 
         stopText: "Stop working",
-        stopTooltip:
-          "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
-          ` but you will only gain ${penaltyString} of the reputation you've earned so far.`,
       };
-
-      break;
     }
-
-    case WorkType.CompanyPartTime: {
-      function cancel(): void {
-        player.finishWorkPartTime(true);
-        router.toJob();
-      }
-      function unfocus(): void {
-        player.stopFocusing();
-        router.toJob();
-      }
-      const comp = Companies[player.companyName];
-      let companyRep = 0;
-      if (comp == null || !(comp instanceof Company)) {
-        throw new Error(`Could not find Company: ${player.companyName}`);
-      }
-      companyRep = comp.playerReputation;
-
-      const position = player.jobs[player.companyName];
-
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently working as a <b>{position}</b> at <b>{player.companyName}</b>
-          </>
-        ),
-
-        description: (
-          <>
-            Current Company Reputation: <Reputation reputation={companyRep} />
-          </>
-        ),
-        gains: [
-          <StatsRow name="Money" color={Settings.theme.money}>
-            <Typography>
-              <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />)
-            </Typography>
-          </StatsRow>,
-          <StatsRow name="Company Reputation" color={Settings.theme.rep}>
-            <Typography>
-              <Reputation reputation={player.workRepGained} /> (
-              <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />)
-            </Typography>
-          </StatsRow>,
-          ...expGains,
-        ],
-        progress: {
-          elapsed: player.timeWorked,
-        },
-
-        stopText: "Stop working",
-        stopTooltip:
-          "You will automatically finish after working for 8 hours. You can cancel earlier if you wish" +
-          " and there will be no penalty because this is a part-time job.",
-      };
-
-      break;
-    }
-
-    default:
-      if (player.currentWork === null) {
-        router.toTerminal();
-      }
   }
 
   if (workInfo.title === "") {

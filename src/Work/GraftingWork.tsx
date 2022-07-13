@@ -21,12 +21,10 @@ interface GraftingWorkParams {
 
 export class GraftingWork extends Work {
   augmentation: string;
-  cyclesWorked: number;
   unitCompleted: number;
 
   constructor(params?: GraftingWorkParams) {
     super(WorkType.GRAFTING, params?.singularity ?? true);
-    this.cyclesWorked = 0;
     this.unitCompleted = 0;
     this.augmentation = params?.augmentation ?? AugmentationNames.Targeting1;
 

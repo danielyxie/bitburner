@@ -29,13 +29,11 @@ export const isFactionWork = (w: Work | null): w is FactionWork => w !== null &&
 export class FactionWork extends Work {
   factionWorkType: FactionWorkType;
   factionName: string;
-  cyclesWorked: number;
 
   constructor(params?: FactionWorkParams) {
     super(WorkType.FACTION, params?.singularity ?? true);
     this.factionWorkType = params?.factionWorkType ?? FactionWorkType.HACKING;
     this.factionName = params?.faction ?? FactionNames.Sector12;
-    this.cyclesWorked = 0;
   }
 
   getFaction(): Faction {

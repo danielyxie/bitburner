@@ -4,6 +4,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 
 export interface WorkStats {
   money: number;
+  reputation: number;
   hackExp: number;
   strExp: number;
   defExp: number;
@@ -15,6 +16,7 @@ export interface WorkStats {
 
 interface newWorkStatsParams {
   money?: number;
+  reputation?: number;
   hackExp?: number;
   strExp?: number;
   defExp?: number;
@@ -27,6 +29,7 @@ interface newWorkStatsParams {
 export const newWorkStats = (params?: newWorkStatsParams): WorkStats => {
   return {
     money: params?.money ?? 0,
+    reputation: params?.reputation ?? 0,
     hackExp: params?.hackExp ?? 0,
     strExp: params?.strExp ?? 0,
     defExp: params?.defExp ?? 0,
@@ -40,6 +43,7 @@ export const newWorkStats = (params?: newWorkStatsParams): WorkStats => {
 export const sumWorkStats = (w0: WorkStats, w1: WorkStats): WorkStats => {
   return {
     money: w0.money + w1.money,
+    reputation: w0.reputation + w1.reputation,
     hackExp: w0.hackExp + w1.hackExp,
     strExp: w0.strExp + w1.strExp,
     defExp: w0.defExp + w1.defExp,
@@ -53,6 +57,7 @@ export const sumWorkStats = (w0: WorkStats, w1: WorkStats): WorkStats => {
 export const scaleWorkStats = (w: WorkStats, n: number): WorkStats => {
   return {
     money: w.money * n,
+    reputation: w.reputation * n,
     hackExp: w.hackExp * n,
     strExp: w.strExp * n,
     defExp: w.defExp * n,
@@ -64,19 +69,16 @@ export const scaleWorkStats = (w: WorkStats, n: number): WorkStats => {
 };
 
 export const applyWorkStats = (player: IPlayer, workStats: WorkStats, cycles: number, source: string): WorkStats => {
-  let focusBonus = 1;
-  if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
-    focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
-  }
   const gains = {
     money: workStats.money * cycles,
-    hackExp: focusBonus * workStats.hackExp * cycles,
-    strExp: focusBonus * workStats.strExp * cycles,
-    defExp: focusBonus * workStats.defExp * cycles,
-    dexExp: focusBonus * workStats.dexExp * cycles,
-    agiExp: focusBonus * workStats.agiExp * cycles,
-    chaExp: focusBonus * workStats.chaExp * cycles,
-    intExp: focusBonus * workStats.intExp * cycles,
+    reputation: 0,
+    hackExp: workStats.hackExp * cycles,
+    strExp: workStats.strExp * cycles,
+    defExp: workStats.defExp * cycles,
+    dexExp: workStats.dexExp * cycles,
+    agiExp: workStats.agiExp * cycles,
+    chaExp: workStats.chaExp * cycles,
+    intExp: workStats.intExp * cycles,
   };
   player.gainHackingExp(gains.hackExp);
   player.gainStrengthExp(gains.strExp);

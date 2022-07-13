@@ -26,13 +26,13 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Box, Tooltip } from "@mui/material";
 
-import { WorkType } from "../../utils/WorkType";
 import { isClassWork } from "../../Work/ClassWork";
 import { CONSTANTS } from "../../Constants";
 import { isCreateProgramWork } from "../../Work/CreateProgramWork";
 import { isGraftingWork } from "../../Work/GraftingWork";
 import { isFactionWork } from "../../Work/FactionWork";
 import { ReputationRate } from "./ReputationRate";
+import { isCompanyWork } from "../../Work/CompanyWork";
 
 interface IProps {
   save: () => void;
@@ -190,25 +190,25 @@ function Work(): React.ReactElement {
       </>
     );
   }
-  switch (player.workType) {
-    case WorkType.CompanyPartTime:
-    case WorkType.Company:
-      details = (
-        <>
-          {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
-        </>
-      );
-      header = (
-        <>
-          Working at <strong>{player.companyName}</strong>
-        </>
-      );
-      innerText = (
-        <>
-          +<Reputation reputation={player.workRepGained} /> rep
-        </>
-      );
-      break;
+  if (isCompanyWork(player.currentWork)) {
+    const companyWork = player.currentWork;
+    details = (
+      <>
+        {player.jobs[companyWork.companyName]} at <strong>{companyWork.companyName}</strong>
+      </>
+    );
+    header = (
+      <>
+        Working at <strong>{companyWork.companyName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        <Reputation reputation={companyWork.getCompany().playerReputation} /> rep
+        <br />(
+        <ReputationRate reputation={companyWork.getGainRates(player).reputation * (1000 / CONSTANTS._idleSpeed)} />)
+      </>
+    );
   }
 
   return (

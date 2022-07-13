@@ -128,14 +128,12 @@ export const isClassWork = (w: Work | null): w is ClassWork => w !== null && w.t
 export class ClassWork extends Work {
   classType: ClassType;
   location: LocationName;
-  cyclesWorked: number;
   earnings = newWorkStats();
 
   constructor(params?: ClassWorkParams) {
     super(WorkType.CLASS, params?.singularity ?? true);
     this.classType = params?.classType ?? ClassType.StudyComputerScience;
     this.location = params?.location ?? LocationName.Sector12RothmanUniversity;
-    this.cyclesWorked = 0;
   }
 
   isGym(): boolean {

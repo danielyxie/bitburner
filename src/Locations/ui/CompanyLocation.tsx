@@ -23,6 +23,7 @@ import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
 import { use } from "../../ui/Context";
 import { QuitJobModal } from "../../Company/ui/QuitJobModal";
+import { CompanyWork } from "../../Work/CompanyWork";
 
 type IProps = {
   locName: LocationName;
@@ -175,11 +176,12 @@ export function CompanyLocation(props: IProps): React.ReactElement {
 
     const pos = companyPosition;
     if (pos instanceof CompanyPosition) {
-      if (pos.isPartTimeJob() || pos.isSoftwareConsultantJob() || pos.isBusinessConsultantJob()) {
-        p.startWorkPartTime(props.locName);
-      } else {
-        p.startWork(props.locName);
-      }
+      p.startNEWWork(
+        new CompanyWork({
+          singularity: false,
+          companyName: props.locName,
+        }),
+      );
       p.startFocusing();
       router.toWork();
     }
