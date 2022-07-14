@@ -64,3 +64,7 @@ List of all Source-Files
 ||                                    || * Let the player start with Neuroflux Governor equal to the level of this                                                                                               |
 ||                                    || Source-File.                                                                                                                                                            |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|| BitNode-13: They're lunatics       || * This Source-File lets the Church of the Machine God appear in other BitNodes.                                                                                         |
+||                                    || * Each level of this Source-File increases the size of Stanek's Gift.                                                                                                   |
+||                                    ||                                                                                                                                                                         |
++-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
