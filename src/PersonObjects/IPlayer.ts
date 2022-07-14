@@ -30,6 +30,7 @@ import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
 import { Work } from "src/Work/Work";
+import { Multipliers } from "./Multipliers";
 
 export interface IPlayer extends IPerson {
   bitNodeN: number;
@@ -88,37 +89,7 @@ export interface IPlayer extends IPerson {
   charisma_exp: number;
   intelligence_exp: number;
 
-  // Multipliers
-  hacking_chance_mult: number;
-  hacking_speed_mult: number;
-  hacking_money_mult: number;
-  hacking_grow_mult: number;
-  hacking_mult: number;
-  hacking_exp_mult: number;
-  strength_mult: number;
-  strength_exp_mult: number;
-  defense_mult: number;
-  defense_exp_mult: number;
-  dexterity_mult: number;
-  dexterity_exp_mult: number;
-  agility_mult: number;
-  agility_exp_mult: number;
-  charisma_mult: number;
-  charisma_exp_mult: number;
-  hacknet_node_money_mult: number;
-  hacknet_node_purchase_cost_mult: number;
-  hacknet_node_ram_cost_mult: number;
-  hacknet_node_core_cost_mult: number;
-  hacknet_node_level_cost_mult: number;
-  company_rep_mult: number;
-  faction_rep_mult: number;
-  work_money_mult: number;
-  crime_success_mult: number;
-  crime_money_mult: number;
-  bladeburner_max_stamina_mult: number;
-  bladeburner_stamina_gain_mult: number;
-  bladeburner_analysis_mult: number;
-  bladeburner_success_chance_mult: number;
+  mults: Multipliers;
 
   currentWork: Work | null;
   focus: boolean;

@@ -16,6 +16,7 @@ import { StaticAugmentations } from "./StaticAugmentations";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { getBaseAugmentationPriceMultiplier, getGenericAugmentationPriceMultiplier } from "./AugmentationHelpers";
 import { initSoAAugmentations } from "./data/AugmentationCreator";
+import { Multipliers, defaultMultipliers } from "../PersonObjects/Multipliers";
 
 export interface AugmentationCosts {
   moneyCost: number;
@@ -32,48 +33,48 @@ export interface IConstructorParams {
   repCost: number;
   factions: string[];
 
-  hacking_mult?: number;
-  strength_mult?: number;
-  defense_mult?: number;
-  dexterity_mult?: number;
-  agility_mult?: number;
-  charisma_mult?: number;
-  hacking_exp_mult?: number;
-  strength_exp_mult?: number;
-  defense_exp_mult?: number;
-  dexterity_exp_mult?: number;
-  agility_exp_mult?: number;
-  charisma_exp_mult?: number;
-  hacking_chance_mult?: number;
-  hacking_speed_mult?: number;
-  hacking_money_mult?: number;
-  hacking_grow_mult?: number;
-  company_rep_mult?: number;
-  faction_rep_mult?: number;
-  crime_money_mult?: number;
-  crime_success_mult?: number;
-  work_money_mult?: number;
-  hacknet_node_money_mult?: number;
-  hacknet_node_purchase_cost_mult?: number;
-  hacknet_node_ram_cost_mult?: number;
-  hacknet_node_core_cost_mult?: number;
-  hacknet_node_level_cost_mult?: number;
-  bladeburner_max_stamina_mult?: number;
-  bladeburner_stamina_gain_mult?: number;
-  bladeburner_analysis_mult?: number;
-  bladeburner_success_chance_mult?: number;
+  hacking?: number;
+  strength?: number;
+  defense?: number;
+  dexterity?: number;
+  agility?: number;
+  charisma?: number;
+  hacking_exp?: number;
+  strength_exp?: number;
+  defense_exp?: number;
+  dexterity_exp?: number;
+  agility_exp?: number;
+  charisma_exp?: number;
+  hacking_chance?: number;
+  hacking_speed?: number;
+  hacking_money?: number;
+  hacking_grow?: number;
+  company_rep?: number;
+  faction_rep?: number;
+  crime_money?: number;
+  crime_success?: number;
+  work_money?: number;
+  hacknet_node_money?: number;
+  hacknet_node_purchase_cost?: number;
+  hacknet_node_ram_cost?: number;
+  hacknet_node_core_cost?: number;
+  hacknet_node_level_cost?: number;
+  bladeburner_max_stamina?: number;
+  bladeburner_stamina_gain?: number;
+  bladeburner_analysis?: number;
+  bladeburner_success_chance?: number;
   infiltration_base_rep_increase?: number;
-  infiltration_rep_mult?: number;
-  infiltration_trade_mult?: number;
-  infiltration_sell_mult?: number;
-  infiltration_timer_mult?: number;
-  infiltration_damage_reduction_mult?: number;
+  infiltration_rep?: number;
+  infiltration_trade?: number;
+  infiltration_sell?: number;
+  infiltration_timer?: number;
+  infiltration_damage_reduction?: number;
 
   startingMoney?: number;
   programs?: string[];
 }
 
-function generateStatsDescription(mults: IMap<number>, programs?: string[], startingMoney?: number): JSX.Element {
+function generateStatsDescription(mults: Multipliers, programs?: string[], startingMoney?: number): JSX.Element {
   const f = (x: number, decimals = 0): string => {
     // look, I don't know how to make a "smart decimals"
     // todo, make it smarter
@@ -84,323 +85,278 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
   let desc = <>Effects:</>;
 
   if (
-    mults.hacking_mult &&
-    mults.hacking_mult == mults.strength_mult &&
-    mults.hacking_mult == mults.defense_mult &&
-    mults.hacking_mult == mults.dexterity_mult &&
-    mults.hacking_mult == mults.agility_mult &&
-    mults.hacking_mult == mults.charisma_mult
+    mults.hacking !== 1 &&
+    mults.hacking == mults.strength &&
+    mults.hacking == mults.defense &&
+    mults.hacking == mults.dexterity &&
+    mults.hacking == mults.agility &&
+    mults.hacking == mults.charisma
   ) {
     desc = (
       <>
         {desc}
-        <br />+{f(mults.hacking_mult - 1)} all skills
+        <br />+{f(mults.hacking - 1)} all skills
       </>
     );
   } else {
-    if (mults.hacking_mult)
+    if (mults.hacking !== 1)
       desc = (
         <>
           {desc}
-          <br />+{f(mults.hacking_mult - 1)} hacking skill
+          <br />+{f(mults.hacking - 1)} hacking skill
         </>
       );
 
     if (
-      mults.strength_mult &&
-      mults.strength_mult == mults.defense_mult &&
-      mults.strength_mult == mults.dexterity_mult &&
-      mults.strength_mult == mults.agility_mult
+      mults.strength !== 1 &&
+      mults.strength == mults.defense &&
+      mults.strength == mults.dexterity &&
+      mults.strength == mults.agility
     ) {
       desc = (
         <>
           {desc}
-          <br />+{f(mults.strength_mult - 1)} combat skills
+          <br />+{f(mults.strength - 1)} combat skills
         </>
       );
     } else {
-      if (mults.strength_mult)
+      if (mults.strength !== 1)
         desc = (
           <>
             {desc}
-            <br />+{f(mults.strength_mult - 1)} strength skill
+            <br />+{f(mults.strength - 1)} strength skill
           </>
         );
-      if (mults.defense_mult)
+      if (mults.defense !== 1)
         desc = (
           <>
             {desc}
-            <br />+{f(mults.defense_mult - 1)} defense skill
+            <br />+{f(mults.defense - 1)} defense skill
           </>
         );
-      if (mults.dexterity_mult)
+      if (mults.dexterity !== 1)
         desc = (
           <>
             {desc}
-            <br />+{f(mults.dexterity_mult - 1)} dexterity skill
+            <br />+{f(mults.dexterity - 1)} dexterity skill
           </>
         );
-      if (mults.agility_mult)
+      if (mults.agility !== 1)
         desc = (
           <>
             {desc}
-            <br />+{f(mults.agility_mult - 1)} agility skill
+            <br />+{f(mults.agility - 1)} agility skill
           </>
         );
     }
-    if (mults.charisma_mult)
+    if (mults.charisma !== 1)
       desc = (
         <>
           {desc}
-          <br />+{f(mults.charisma_mult - 1)} charisma skill
+          <br />+{f(mults.charisma - 1)} charisma skill
         </>
       );
   }
 
   if (
-    mults.hacking_exp_mult &&
-    mults.hacking_exp_mult === mults.strength_exp_mult &&
-    mults.hacking_exp_mult === mults.defense_exp_mult &&
-    mults.hacking_exp_mult === mults.dexterity_exp_mult &&
-    mults.hacking_exp_mult === mults.agility_exp_mult &&
-    mults.hacking_exp_mult === mults.charisma_exp_mult
+    mults.hacking_exp !== 1 &&
+    mults.hacking_exp === mults.strength_exp &&
+    mults.hacking_exp === mults.defense_exp &&
+    mults.hacking_exp === mults.dexterity_exp &&
+    mults.hacking_exp === mults.agility_exp &&
+    mults.hacking_exp === mults.charisma_exp
   ) {
     desc = (
       <>
         {desc}
-        <br />+{f(mults.hacking_exp_mult - 1)} exp for all skills
+        <br />+{f(mults.hacking_exp - 1)} exp for all skills
       </>
     );
   } else {
-    if (mults.hacking_exp_mult)
+    if (mults.hacking_exp !== 1)
       desc = (
         <>
           {desc}
-          <br />+{f(mults.hacking_exp_mult - 1)} hacking exp
+          <br />+{f(mults.hacking_exp - 1)} hacking exp
         </>
       );
 
     if (
-      mults.strength_exp_mult &&
-      mults.strength_exp_mult === mults.defense_exp_mult &&
-      mults.strength_exp_mult === mults.dexterity_exp_mult &&
-      mults.strength_exp_mult === mults.agility_exp_mult
+      mults.strength_exp !== 1 &&
+      mults.strength_exp === mults.defense_exp &&
+      mults.strength_exp === mults.dexterity_exp &&
+      mults.strength_exp === mults.agility_exp
     ) {
       desc = (
         <>
           {desc}
-          <br />+{f(mults.strength_exp_mult - 1)} combat exp
+          <br />+{f(mults.strength_exp - 1)} combat exp
         </>
       );
     } else {
-      if (mults.strength_exp_mult)
+      if (mults.strength_exp !== 1)
         desc = (
           <>
             {desc}
-            <br />+{f(mults.strength_exp_mult - 1)} strength exp
+            <br />+{f(mults.strength_exp - 1)} strength exp
           </>
         );
-      if (mults.defense_exp_mult)
+      if (mults.defense_exp !== 1)
         desc = (
           <>
             {desc}
-            <br />+{f(mults.defense_exp_mult - 1)} defense exp
+            <br />+{f(mults.defense_exp - 1)} defense exp
           </>
         );
-      if (mults.dexterity_exp_mult)
+      if (mults.dexterity_exp !== 1)
         desc = (
           <>
             {desc}
-            <br />+{f(mults.dexterity_exp_mult - 1)} dexterity exp
+            <br />+{f(mults.dexterity_exp - 1)} dexterity exp
           </>
         );
-      if (mults.agility_exp_mult)
+      if (mults.agility_exp !== 1)
         desc = (
           <>
             {desc}
-            <br />+{f(mults.agility_exp_mult - 1)} agility exp
+            <br />+{f(mults.agility_exp - 1)} agility exp
           </>
         );
     }
-    if (mults.charisma_exp_mult)
+    if (mults.charisma_exp !== 1)
       desc = (
         <>
           {desc}
-          <br />+{f(mults.charisma_exp_mult - 1)} charisma exp
+          <br />+{f(mults.charisma_exp - 1)} charisma exp
         </>
       );
   }
 
-  if (mults.hacking_speed_mult)
+  if (mults.hacking_speed !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.hacking_speed_mult - 1)} faster hack(), grow(), and weaken()
+        <br />+{f(mults.hacking_speed - 1)} faster hack(), grow(), and weaken()
       </>
     );
-  if (mults.hacking_chance_mult)
+  if (mults.hacking_chance !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.hacking_chance_mult - 1)} hack() success chance
+        <br />+{f(mults.hacking_chance - 1)} hack() success chance
       </>
     );
-  if (mults.hacking_money_mult)
+  if (mults.hacking_money !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.hacking_money_mult - 1)} hack() power
+        <br />+{f(mults.hacking_money - 1)} hack() power
       </>
     );
-  if (mults.hacking_grow_mult)
+  if (mults.hacking_grow !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.hacking_grow_mult - 1)} grow() power
+        <br />+{f(mults.hacking_grow - 1)} grow() power
       </>
     );
 
-  if (mults.faction_rep_mult && mults.faction_rep_mult === mults.company_rep_mult) {
+  if (mults.faction_rep !== 1 && mults.faction_rep === mults.company_rep) {
     desc = (
       <>
         {desc}
-        <br />+{f(mults.faction_rep_mult - 1)} reputation from factions and companies
+        <br />+{f(mults.faction_rep - 1)} reputation from factions and companies
       </>
     );
   } else {
-    if (mults.faction_rep_mult)
+    if (mults.faction_rep !== 1)
       desc = (
         <>
           {desc}
-          <br />+{f(mults.faction_rep_mult - 1)} reputation from factions
+          <br />+{f(mults.faction_rep - 1)} reputation from factions
         </>
       );
-    if (mults.company_rep_mult)
+    if (mults.company_rep !== 1)
       desc = (
         <>
           {desc}
-          <br />+{f(mults.company_rep_mult - 1)} reputation from companies
+          <br />+{f(mults.company_rep - 1)} reputation from companies
         </>
       );
   }
 
-  if (mults.crime_money_mult)
+  if (mults.crime_money !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.crime_money_mult - 1)} crime money
+        <br />+{f(mults.crime_money - 1)} crime money
       </>
     );
-  if (mults.crime_success_mult)
+  if (mults.crime_success !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.crime_success_mult - 1)} crime success rate
+        <br />+{f(mults.crime_success - 1)} crime success rate
       </>
     );
-  if (mults.work_money_mult)
+  if (mults.work_money !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.work_money_mult - 1)} work money
-      </>
-    );
-
-  if (mults.hacknet_node_money_mult)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.hacknet_node_money_mult - 1)} hacknet production
-      </>
-    );
-  if (mults.hacknet_node_purchase_cost_mult)
-    desc = (
-      <>
-        {desc}
-        <br />-{f(-(mults.hacknet_node_purchase_cost_mult - 1))} hacknet nodes cost
-      </>
-    );
-  if (mults.hacknet_node_level_cost_mult)
-    desc = (
-      <>
-        {desc}
-        <br />-{f(-(mults.hacknet_node_level_cost_mult - 1))} hacknet nodes upgrade cost
+        <br />+{f(mults.work_money - 1)} work money
       </>
     );
 
-  if (mults.bladeburner_max_stamina_mult)
+  if (mults.hacknet_node_money !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.bladeburner_max_stamina_mult - 1)} Bladeburner Max Stamina
+        <br />+{f(mults.hacknet_node_money - 1)} hacknet production
       </>
     );
-  if (mults.bladeburner_stamina_gain_mult)
+  if (mults.hacknet_node_purchase_cost !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.bladeburner_stamina_gain_mult - 1)} Bladeburner Stamina gain
+        <br />-{f(-(mults.hacknet_node_purchase_cost - 1))} hacknet nodes cost
       </>
     );
-  if (mults.bladeburner_analysis_mult)
+  if (mults.hacknet_node_level_cost !== 1)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.bladeburner_analysis_mult - 1)} Bladeburner Field Analysis effectiveness
-      </>
-    );
-  if (mults.bladeburner_success_chance_mult)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.bladeburner_success_chance_mult - 1)} Bladeburner Contracts and Operations success chance
-      </>
-    );
-  if (mults.infiltration_base_rep_increase)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.infiltration_base_rep_increase - 1)} Infiltration {FactionNames.ShadowsOfAnarchy} Reputation
-        base reward
-      </>
-    );
-  if (mults.infiltration_rep_mult)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.infiltration_rep_mult - 1)} Infiltration {FactionNames.ShadowsOfAnarchy} Reputation reward
-      </>
-    );
-  if (mults.infiltration_trade_mult)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.infiltration_trade_mult - 1)} Infiltration Reputation for trading information
-      </>
-    );
-  if (mults.infiltration_sell_mult)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.infiltration_sell_mult - 1)} Infiltration cash reward for selling information
-      </>
-    );
-  if (mults.infiltration_timer_mult)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.infiltration_timer_mult - 1)} Infiltration time per minigame
-      </>
-    );
-  if (mults.infiltration_damage_reduction_mult)
-    desc = (
-      <>
-        {desc}
-        <br />
-        {f(mults.infiltration_damage_reduction_mult - 1)} Infiltration health lost per failed minigame
+        <br />-{f(-(mults.hacknet_node_level_cost - 1))} hacknet nodes upgrade cost
       </>
     );
 
+  if (mults.bladeburner_max_stamina !== 1)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.bladeburner_max_stamina - 1)} Bladeburner Max Stamina
+      </>
+    );
+  if (mults.bladeburner_stamina_gain !== 1)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.bladeburner_stamina_gain - 1)} Bladeburner Stamina gain
+      </>
+    );
+  if (mults.bladeburner_analysis !== 1)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.bladeburner_analysis - 1)} Bladeburner Field Analysis effectiveness
+      </>
+    );
+  if (mults.bladeburner_success_chance !== 1)
+    desc = (
+      <>
+        {desc}
+        <br />+{f(mults.bladeburner_success_chance - 1)} Bladeburner Contracts and Operations success chance
+      </>
+    );
   if (startingMoney)
     desc = (
       <>
@@ -445,7 +401,7 @@ export class Augmentation {
 
   // Multipliers given by this Augmentation.  Must match the property name in
   // The Player/Person classes
-  mults: IMap<number> = {};
+  mults: Multipliers = defaultMultipliers();
 
   // Factions that offer this aug.
   factions: string[] = [];
@@ -474,114 +430,95 @@ export class Augmentation {
     }
 
     // Set multipliers
-    if (params.hacking_mult) {
-      this.mults.hacking_mult = params.hacking_mult;
+    if (params.hacking) {
+      this.mults.hacking = params.hacking;
     }
-    if (params.strength_mult) {
-      this.mults.strength_mult = params.strength_mult;
+    if (params.strength) {
+      this.mults.strength = params.strength;
     }
-    if (params.defense_mult) {
-      this.mults.defense_mult = params.defense_mult;
+    if (params.defense) {
+      this.mults.defense = params.defense;
     }
-    if (params.dexterity_mult) {
-      this.mults.dexterity_mult = params.dexterity_mult;
+    if (params.dexterity) {
+      this.mults.dexterity = params.dexterity;
     }
-    if (params.agility_mult) {
-      this.mults.agility_mult = params.agility_mult;
+    if (params.agility) {
+      this.mults.agility = params.agility;
     }
-    if (params.charisma_mult) {
-      this.mults.charisma_mult = params.charisma_mult;
+    if (params.charisma) {
+      this.mults.charisma = params.charisma;
     }
-    if (params.hacking_exp_mult) {
-      this.mults.hacking_exp_mult = params.hacking_exp_mult;
+    if (params.hacking_exp) {
+      this.mults.hacking_exp = params.hacking_exp;
     }
-    if (params.strength_exp_mult) {
-      this.mults.strength_exp_mult = params.strength_exp_mult;
+    if (params.strength_exp) {
+      this.mults.strength_exp = params.strength_exp;
     }
-    if (params.defense_exp_mult) {
-      this.mults.defense_exp_mult = params.defense_exp_mult;
+    if (params.defense_exp) {
+      this.mults.defense_exp = params.defense_exp;
     }
-    if (params.dexterity_exp_mult) {
-      this.mults.dexterity_exp_mult = params.dexterity_exp_mult;
+    if (params.dexterity_exp) {
+      this.mults.dexterity_exp = params.dexterity_exp;
     }
-    if (params.agility_exp_mult) {
-      this.mults.agility_exp_mult = params.agility_exp_mult;
+    if (params.agility_exp) {
+      this.mults.agility_exp = params.agility_exp;
     }
-    if (params.charisma_exp_mult) {
-      this.mults.charisma_exp_mult = params.charisma_exp_mult;
+    if (params.charisma_exp) {
+      this.mults.charisma_exp = params.charisma_exp;
     }
-    if (params.hacking_chance_mult) {
-      this.mults.hacking_chance_mult = params.hacking_chance_mult;
+    if (params.hacking_chance) {
+      this.mults.hacking_chance = params.hacking_chance;
     }
-    if (params.hacking_speed_mult) {
-      this.mults.hacking_speed_mult = params.hacking_speed_mult;
+    if (params.hacking_speed) {
+      this.mults.hacking_speed = params.hacking_speed;
     }
-    if (params.hacking_money_mult) {
-      this.mults.hacking_money_mult = params.hacking_money_mult;
+    if (params.hacking_money) {
+      this.mults.hacking_money = params.hacking_money;
     }
-    if (params.hacking_grow_mult) {
-      this.mults.hacking_grow_mult = params.hacking_grow_mult;
+    if (params.hacking_grow) {
+      this.mults.hacking_grow = params.hacking_grow;
     }
-    if (params.company_rep_mult) {
-      this.mults.company_rep_mult = params.company_rep_mult;
+    if (params.company_rep) {
+      this.mults.company_rep = params.company_rep;
     }
-    if (params.faction_rep_mult) {
-      this.mults.faction_rep_mult = params.faction_rep_mult;
+    if (params.faction_rep) {
+      this.mults.faction_rep = params.faction_rep;
     }
-    if (params.crime_money_mult) {
-      this.mults.crime_money_mult = params.crime_money_mult;
+    if (params.crime_money) {
+      this.mults.crime_money = params.crime_money;
     }
-    if (params.crime_success_mult) {
-      this.mults.crime_success_mult = params.crime_success_mult;
+    if (params.crime_success) {
+      this.mults.crime_success = params.crime_success;
     }
-    if (params.work_money_mult) {
-      this.mults.work_money_mult = params.work_money_mult;
+    if (params.work_money) {
+      this.mults.work_money = params.work_money;
     }
-    if (params.hacknet_node_money_mult) {
-      this.mults.hacknet_node_money_mult = params.hacknet_node_money_mult;
+    if (params.hacknet_node_money) {
+      this.mults.hacknet_node_money = params.hacknet_node_money;
     }
-    if (params.hacknet_node_purchase_cost_mult) {
-      this.mults.hacknet_node_purchase_cost_mult = params.hacknet_node_purchase_cost_mult;
+    if (params.hacknet_node_purchase_cost) {
+      this.mults.hacknet_node_purchase_cost = params.hacknet_node_purchase_cost;
     }
-    if (params.hacknet_node_ram_cost_mult) {
-      this.mults.hacknet_node_ram_cost_mult = params.hacknet_node_ram_cost_mult;
+    if (params.hacknet_node_ram_cost) {
+      this.mults.hacknet_node_ram_cost = params.hacknet_node_ram_cost;
     }
-    if (params.hacknet_node_core_cost_mult) {
-      this.mults.hacknet_node_core_cost_mult = params.hacknet_node_core_cost_mult;
+    if (params.hacknet_node_core_cost) {
+      this.mults.hacknet_node_core_cost = params.hacknet_node_core_cost;
     }
-    if (params.hacknet_node_level_cost_mult) {
-      this.mults.hacknet_node_level_cost_mult = params.hacknet_node_level_cost_mult;
+    if (params.hacknet_node_level_cost) {
+      this.mults.hacknet_node_level_cost = params.hacknet_node_level_cost;
     }
-    if (params.bladeburner_max_stamina_mult) {
-      this.mults.bladeburner_max_stamina_mult = params.bladeburner_max_stamina_mult;
+    if (params.bladeburner_max_stamina) {
+      this.mults.bladeburner_max_stamina = params.bladeburner_max_stamina;
     }
-    if (params.bladeburner_stamina_gain_mult) {
-      this.mults.bladeburner_stamina_gain_mult = params.bladeburner_stamina_gain_mult;
+    if (params.bladeburner_stamina_gain) {
+      this.mults.bladeburner_stamina_gain = params.bladeburner_stamina_gain;
     }
-    if (params.bladeburner_analysis_mult) {
-      this.mults.bladeburner_analysis_mult = params.bladeburner_analysis_mult;
+    if (params.bladeburner_analysis) {
+      this.mults.bladeburner_analysis = params.bladeburner_analysis;
     }
-    if (params.bladeburner_success_chance_mult) {
-      this.mults.bladeburner_success_chance_mult = params.bladeburner_success_chance_mult;
-    }
-
-    if (params.infiltration_base_rep_increase) {
-      this.mults.infiltration_base_rep_increase = params.infiltration_base_rep_increase;
-    }
-    if (params.infiltration_rep_mult) {
-      this.mults.infiltration_rep_mult = params.infiltration_rep_mult;
-    }
-    if (params.infiltration_trade_mult) {
-      this.mults.infiltration_trade_mult = params.infiltration_trade_mult;
-    }
-    if (params.infiltration_sell_mult) {
-      this.mults.infiltration_sell_mult = params.infiltration_sell_mult;
-    }
-    if (params.infiltration_timer_mult) {
-      this.mults.infiltration_timer_mult = params.infiltration_timer_mult;
-    }
-    if (params.infiltration_damage_reduction_mult) {
-      this.mults.infiltration_damage_reduction_mult = params.infiltration_damage_reduction_mult;
+    if (params.bladeburner_success_chance) {
+      this.mults.bladeburner_success_chance = params.bladeburner_success_chance;
     }
 
     if (params.stats === undefined)

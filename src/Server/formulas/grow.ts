@@ -20,5 +20,5 @@ export function calculateServerGrowth(server: Server, threads: number, p: IPlaye
 
   //Apply serverGrowth for the calculated number of growth cycles
   const coreBonus = 1 + (cores - 1) / 16;
-  return Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * p.hacking_grow_mult * coreBonus);
+  return Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * p.mults.hacking_grow * coreBonus);
 }

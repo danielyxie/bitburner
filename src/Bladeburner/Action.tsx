@@ -274,7 +274,7 @@ export class Action implements IAction {
     }
 
     // Augmentation multiplier
-    competence *= Player.bladeburner_success_chance_mult;
+    competence *= Player.mults.bladeburner_success_chance;
 
     if (isNaN(competence)) {
       throw new Error("Competence calculated as NaN in Action.getSuccessChance()");

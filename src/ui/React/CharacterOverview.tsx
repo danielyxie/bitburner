@@ -293,27 +293,27 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
 
   const hackingProgress = player.calculateSkillProgress(
     player.hacking_exp,
-    player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+    player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
   );
   const strengthProgress = player.calculateSkillProgress(
     player.strength_exp,
-    player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+    player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
   );
   const defenseProgress = player.calculateSkillProgress(
     player.defense_exp,
-    player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+    player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
   );
   const dexterityProgress = player.calculateSkillProgress(
     player.dexterity_exp,
-    player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+    player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
   const agilityProgress = player.calculateSkillProgress(
     player.agility_exp,
-    player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+    player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
   );
   const charismaProgress = player.calculateSkillProgress(
     player.charisma_exp,
-    player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+    player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
   );
 
   return (

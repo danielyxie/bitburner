@@ -377,21 +377,21 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Hacking Chance",
-                  value: player.hacking_chance_mult,
+                  value: player.mults.hacking_chance,
                 },
                 {
                   mult: "Hacking Speed",
-                  value: player.hacking_speed_mult,
+                  value: player.mults.hacking_speed,
                 },
                 {
                   mult: "Hacking Money",
-                  value: player.hacking_money_mult,
-                  effValue: player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
+                  value: player.mults.hacking_money,
+                  effValue: player.mults.hacking_money * BitNodeMultipliers.ScriptHackMoney,
                 },
                 {
                   mult: "Hacking Growth",
-                  value: player.hacking_grow_mult,
-                  effValue: player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
+                  value: player.mults.hacking_grow,
+                  effValue: player.mults.hacking_grow * BitNodeMultipliers.ServerGrowthRate,
                 },
               ]}
               color={Settings.theme.hack}
@@ -400,13 +400,13 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Hacking Level",
-                  value: player.hacking_mult,
-                  effValue: player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+                  value: player.mults.hacking,
+                  effValue: player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
                 },
                 {
                   mult: "Hacking Experience",
-                  value: player.hacking_exp_mult,
-                  effValue: player.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
+                  value: player.mults.hacking_exp,
+                  effValue: player.mults.hacking_exp * BitNodeMultipliers.HackExpGain,
                 },
               ]}
               color={Settings.theme.hack}
@@ -415,12 +415,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Strength Level",
-                  value: player.strength_mult,
-                  effValue: player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+                  value: player.mults.strength,
+                  effValue: player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
                 },
                 {
                   mult: "Strength Experience",
-                  value: player.strength_exp_mult,
+                  value: player.mults.strength_exp,
                 },
               ]}
               color={Settings.theme.combat}
@@ -429,12 +429,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Defense Level",
-                  value: player.defense_mult,
-                  effValue: player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+                  value: player.mults.defense,
+                  effValue: player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
                 },
                 {
                   mult: "Defense Experience",
-                  value: player.defense_exp_mult,
+                  value: player.mults.defense_exp,
                 },
               ]}
               color={Settings.theme.combat}
@@ -443,12 +443,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Dexterity Level",
-                  value: player.dexterity_mult,
-                  effValue: player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+                  value: player.mults.dexterity,
+                  effValue: player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
                 },
                 {
                   mult: "Dexterity Experience",
-                  value: player.dexterity_exp_mult,
+                  value: player.mults.dexterity_exp,
                 },
               ]}
               color={Settings.theme.combat}
@@ -457,12 +457,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Agility Level",
-                  value: player.agility_mult,
-                  effValue: player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+                  value: player.mults.agility,
+                  effValue: player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
                 },
                 {
                   mult: "Agility Experience",
-                  value: player.agility_exp_mult,
+                  value: player.mults.agility_exp,
                 },
               ]}
               color={Settings.theme.combat}
@@ -471,12 +471,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Charisma Level",
-                  value: player.charisma_mult,
-                  effValue: player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+                  value: player.mults.charisma,
+                  effValue: player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
                 },
                 {
                   mult: "Charisma Experience",
-                  value: player.charisma_exp_mult,
+                  value: player.mults.charisma_exp,
                 },
               ]}
               color={Settings.theme.cha}
@@ -489,24 +489,24 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Hacknet Node Production",
-                  value: player.hacknet_node_money_mult,
-                  effValue: player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
+                  value: player.mults.hacknet_node_money,
+                  effValue: player.mults.hacknet_node_money * BitNodeMultipliers.HacknetNodeMoney,
                 },
                 {
                   mult: "Hacknet Node Purchase Cost",
-                  value: player.hacknet_node_purchase_cost_mult,
+                  value: player.mults.hacknet_node_purchase_cost,
                 },
                 {
                   mult: "Hacknet Node RAM Upgrade Cost",
-                  value: player.hacknet_node_ram_cost_mult,
+                  value: player.mults.hacknet_node_ram_cost,
                 },
                 {
                   mult: "Hacknet Node Core Purchase Cost",
-                  value: player.hacknet_node_core_cost_mult,
+                  value: player.mults.hacknet_node_core_cost,
                 },
                 {
                   mult: "Hacknet Node Level Upgrade Cost",
-                  value: player.hacknet_node_level_cost_mult,
+                  value: player.mults.hacknet_node_level_cost,
                 },
               ]}
               color={Settings.theme.primary}
@@ -515,19 +515,19 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Company Reputation Gain",
-                  value: player.company_rep_mult,
+                  value: player.mults.company_rep,
                   color: Settings.theme.rep,
                 },
                 {
                   mult: "Faction Reputation Gain",
-                  value: player.faction_rep_mult,
-                  effValue: player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
+                  value: player.mults.faction_rep,
+                  effValue: player.mults.faction_rep * BitNodeMultipliers.FactionWorkRepGain,
                   color: Settings.theme.rep,
                 },
                 {
                   mult: "Salary",
-                  value: player.work_money_mult,
-                  effValue: player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney,
+                  value: player.mults.work_money,
+                  effValue: player.mults.work_money * BitNodeMultipliers.CompanyWorkMoney,
                   color: Settings.theme.money,
                 },
               ]}
@@ -537,12 +537,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Crime Success Chance",
-                  value: player.crime_success_mult,
+                  value: player.mults.crime_success,
                 },
                 {
                   mult: "Crime Money",
-                  value: player.crime_money_mult,
-                  effValue: player.crime_money_mult * BitNodeMultipliers.CrimeMoney,
+                  value: player.mults.crime_money,
+                  effValue: player.mults.crime_money * BitNodeMultipliers.CrimeMoney,
                   color: Settings.theme.money,
                 },
               ]}
@@ -553,19 +553,19 @@ export function CharacterStats(): React.ReactElement {
                 rows={[
                   {
                     mult: "Bladeburner Success Chance",
-                    value: player.bladeburner_success_chance_mult,
+                    value: player.mults.bladeburner_success_chance,
                   },
                   {
                     mult: "Bladeburner Max Stamina",
-                    value: player.bladeburner_max_stamina_mult,
+                    value: player.mults.bladeburner_max_stamina,
                   },
                   {
                     mult: "Bladeburner Stamina Gain",
-                    value: player.bladeburner_stamina_gain_mult,
+                    value: player.mults.bladeburner_stamina_gain,
                   },
                   {
                     mult: "Bladeburner Field Analysis",
-                    value: player.bladeburner_analysis_mult,
+                    value: player.mults.bladeburner_analysis,
                   },
                 ]}
                 color={Settings.theme.primary}

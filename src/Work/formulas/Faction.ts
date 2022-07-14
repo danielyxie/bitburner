@@ -36,17 +36,17 @@ export function calculateFactionExp(player: IPlayer, tpe: FactionWorkType): Work
     money: 0,
     reputation: 0,
     hackExp:
-      (focusBonus * (baseStats.hackExp * player.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+      (focusBonus * (baseStats.hackExp * player.mults.hacking_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
     strExp:
-      (focusBonus * (baseStats.strExp * player.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+      (focusBonus * (baseStats.strExp * player.mults.strength_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
     defExp:
-      (focusBonus * (baseStats.defExp * player.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+      (focusBonus * (baseStats.defExp * player.mults.defense_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
     dexExp:
-      (focusBonus * (baseStats.dexExp * player.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+      (focusBonus * (baseStats.dexExp * player.mults.dexterity_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
     agiExp:
-      (focusBonus * (baseStats.agiExp * player.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+      (focusBonus * (baseStats.agiExp * player.mults.agility_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
     chaExp:
-      (focusBonus * (baseStats.chaExp * player.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+      (focusBonus * (baseStats.chaExp * player.mults.charisma_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
     intExp: 0,
   };
 }

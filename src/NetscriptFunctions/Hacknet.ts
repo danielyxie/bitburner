@@ -141,7 +141,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): I
         const i = ctx.helper.number("i", _i);
         const n = ctx.helper.number("n", _n);
         const node = getHacknetNode(ctx, i);
-        return node.calculateLevelUpgradeCost(n, player.hacknet_node_level_cost_mult);
+        return node.calculateLevelUpgradeCost(n, player.mults.hacknet_node_level_cost);
       },
     getRamUpgradeCost:
       (ctx: NetscriptContext) =>
@@ -149,7 +149,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): I
         const i = ctx.helper.number("i", _i);
         const n = ctx.helper.number("n", _n);
         const node = getHacknetNode(ctx, i);
-        return node.calculateRamUpgradeCost(n, player.hacknet_node_ram_cost_mult);
+        return node.calculateRamUpgradeCost(n, player.mults.hacknet_node_ram_cost);
       },
     getCoreUpgradeCost:
       (ctx: NetscriptContext) =>
@@ -157,7 +157,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): I
         const i = ctx.helper.number("i", _i);
         const n = ctx.helper.number("n", _n);
         const node = getHacknetNode(ctx, i);
-        return node.calculateCoreUpgradeCost(n, player.hacknet_node_core_cost_mult);
+        return node.calculateCoreUpgradeCost(n, player.mults.hacknet_node_core_cost);
       },
     getCacheUpgradeCost:
       (ctx: NetscriptContext) =>

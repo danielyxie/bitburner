@@ -42,45 +42,45 @@ export const calculateCompanyWorkStats = (player: IPlayer, company: Company): Wo
       focusBonus *
       companyPosition.baseSalary *
       company.salaryMultiplier *
-      player.work_money_mult *
+      player.mults.work_money *
       BitNodeMultipliers.CompanyWorkMoney *
       bn11Mult,
-    reputation: focusBonus * jobPerformance * player.company_rep_mult * favorMult,
+    reputation: focusBonus * jobPerformance * player.mults.company_rep * favorMult,
     hackExp:
       focusBonus *
       companyPosition.hackingExpGain *
       company.expMultiplier *
-      player.hacking_exp_mult *
+      player.mults.hacking_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     strExp:
       focusBonus *
       companyPosition.strengthExpGain *
       company.expMultiplier *
-      player.strength_exp_mult *
+      player.mults.strength_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     defExp:
       focusBonus *
       companyPosition.defenseExpGain *
       company.expMultiplier *
-      player.defense_exp_mult *
+      player.mults.defense_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     dexExp:
       focusBonus *
       companyPosition.dexterityExpGain *
       company.expMultiplier *
-      player.dexterity_exp_mult *
+      player.mults.dexterity_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     agiExp:
       focusBonus *
       companyPosition.agilityExpGain *
       company.expMultiplier *
-      player.agility_exp_mult *
+      player.mults.agility_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     chaExp:
       focusBonus *
       companyPosition.charismaExpGain *
       company.expMultiplier *
-      player.charisma_exp_mult *
+      player.mults.charisma_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     intExp: 0,
   };

@@ -36,12 +36,12 @@ export function calculateClassEarnings(player: IPlayer, work: ClassWork): WorkSt
   return {
     money: cost,
     reputation: 0,
-    hackExp: hackExp * player.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    strExp: strExp * player.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    defExp: defExp * player.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    dexExp: dexExp * player.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    agiExp: agiExp * player.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain,
-    chaExp: chaExp * player.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    hackExp: hackExp * player.mults.hacking_exp * BitNodeMultipliers.ClassGymExpGain,
+    strExp: strExp * player.mults.strength_exp * BitNodeMultipliers.ClassGymExpGain,
+    defExp: defExp * player.mults.defense_exp * BitNodeMultipliers.ClassGymExpGain,
+    dexExp: dexExp * player.mults.dexterity_exp * BitNodeMultipliers.ClassGymExpGain,
+    agiExp: agiExp * player.mults.agility_exp * BitNodeMultipliers.ClassGymExpGain,
+    chaExp: chaExp * player.mults.charisma_exp * BitNodeMultipliers.ClassGymExpGain,
     intExp: 0,
   };
 }

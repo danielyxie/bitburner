@@ -257,7 +257,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
 
   function getMaterial(divisionName: string, cityName: string, materialName: string): Material {
     const warehouse = getWarehouse(divisionName, cityName);
-    const matName = (materialName ).replace(/ /g, "");
+    const matName = materialName.replace(/ /g, "");
     const material = warehouse.materials[matName];
     if (material === undefined) throw new Error(`Invalid material name: '${materialName}'`);
     return material;
@@ -725,9 +725,11 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const employeeName = ctx.helper.string("employeeName", _employeeName);
         const job = ctx.helper.string("job", _job);
         const employee = getEmployee(divisionName, cityName, employeeName);
-        return netscriptDelay(["Training", "Unassigned"].includes(employee.pos) ? 0 : 1000, workerScript).then(function () {
-          return Promise.resolve(AssignJob(employee, job));
-        });
+        return netscriptDelay(["Training", "Unassigned"].includes(employee.pos) ? 0 : 1000, workerScript).then(
+          function () {
+            return Promise.resolve(AssignJob(employee, job));
+          },
+        );
       },
     hireEmployee:
       (ctx: NetscriptContext) =>
@@ -777,7 +779,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const office = getOffice(divisionName, cityName);
         const corporation = getCorporation();
         return netscriptDelay(
-          (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
+          (60 * 1000) / (player.mults.hacking_speed * calculateIntelligenceBonus(player.intelligence, 1)),
           workerScript,
         ).then(function () {
           return Promise.resolve(ThrowParty(corporation, office, costPerEmployee));
@@ -791,7 +793,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const cityName = ctx.helper.city("cityName", _cityName);
         const corporation = getCorporation();
         return netscriptDelay(
-          (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
+          (60 * 1000) / (player.mults.hacking_speed * calculateIntelligenceBonus(player.intelligence, 1)),
           workerScript,
         ).then(function () {
           return Promise.resolve(BuyCoffee(corporation, getDivision(divisionName), getOffice(divisionName, cityName)));

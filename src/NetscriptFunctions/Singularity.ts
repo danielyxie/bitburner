@@ -679,23 +679,23 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           jobTitles: Object.values(player.jobs),
           maxHp: player.max_hp,
           mult: {
-            agility: player.agility_mult,
-            agilityExp: player.agility_exp_mult,
+            agility: player.mults.agility,
+            agilityExp: player.mults.agility_exp,
             charisma: player.charisma,
             charismaExp: player.charisma_exp,
-            companyRep: player.company_rep_mult,
-            crimeMoney: player.crime_money_mult,
-            crimeSuccess: player.crime_success_mult,
-            defense: player.defense_mult,
-            defenseExp: player.defense_exp_mult,
-            dexterity: player.dexterity_mult,
-            dexterityExp: player.dexterity_exp_mult,
-            factionRep: player.faction_rep_mult,
-            hacking: player.hacking_mult,
-            hackingExp: player.hacking_exp_mult,
-            strength: player.strength_mult,
-            strengthExp: player.strength_exp_mult,
-            workMoney: player.work_money_mult,
+            companyRep: player.mults.company_rep,
+            crimeMoney: player.mults.crime_money,
+            crimeSuccess: player.mults.crime_success,
+            defense: player.mults.defense,
+            defenseExp: player.mults.defense_exp,
+            dexterity: player.mults.dexterity,
+            dexterityExp: player.mults.dexterity_exp,
+            factionRep: player.mults.faction_rep,
+            hacking: player.mults.hacking,
+            hackingExp: player.mults.hacking_exp,
+            strength: player.mults.strength,
+            strengthExp: player.mults.strength_exp,
+            workMoney: player.mults.work_money,
           },
           tor: player.hasTorRouter(),
           hackingExp: player.hacking_exp,
@@ -1115,7 +1115,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           );
           return false;
         }
-        const repGain = (amt / CONSTANTS.DonateMoneyToRepDivisor) * player.faction_rep_mult;
+        const repGain = (amt / CONSTANTS.DonateMoneyToRepDivisor) * player.mults.faction_rep;
         faction.playerReputation += repGain;
         player.loseMoney(amt, "other");
         _ctx.log(

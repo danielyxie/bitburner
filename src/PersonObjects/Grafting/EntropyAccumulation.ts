@@ -4,44 +4,44 @@ import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../IPlayer";
 
 export const calculateEntropy = (player: IPlayer, stacks = 1): IMap<number> => {
-  const multipliers: IMap<number> = {
-    hacking_chance_mult: player.hacking_chance_mult,
-    hacking_speed_mult: player.hacking_speed_mult,
-    hacking_money_mult: player.hacking_money_mult,
-    hacking_grow_mult: player.hacking_grow_mult,
+  const multipliers: Record<string, number> = {
+    hacking_chance: player.mults.hacking_chance,
+    hacking_speed: player.mults.hacking_speed,
+    hacking_money: player.mults.hacking_money,
+    hacking_grow: player.mults.hacking_grow,
 
-    hacking_mult: player.hacking_mult,
-    strength_mult: player.strength_mult,
-    defense_mult: player.defense_mult,
-    dexterity_mult: player.dexterity_mult,
-    agility_mult: player.agility_mult,
-    charisma_mult: player.charisma_mult,
+    hacking: player.mults.hacking,
+    strength: player.mults.strength,
+    defense: player.mults.defense,
+    dexterity: player.mults.dexterity,
+    agility: player.mults.agility,
+    charisma: player.mults.charisma,
 
-    hacking_exp_mult: player.hacking_exp_mult,
-    strength_exp_mult: player.strength_exp_mult,
-    defense_exp_mult: player.defense_exp_mult,
-    dexterity_exp_mult: player.dexterity_exp_mult,
-    agility_exp_mult: player.agility_exp_mult,
-    charisma_exp_mult: player.charisma_exp_mult,
+    hacking_exp: player.mults.hacking_exp,
+    strength_exp: player.mults.strength_exp,
+    defense_exp: player.mults.defense_exp,
+    dexterity_exp: player.mults.dexterity_exp,
+    agility_exp: player.mults.agility_exp,
+    charisma_exp: player.mults.charisma_exp,
 
-    company_rep_mult: player.company_rep_mult,
-    faction_rep_mult: player.faction_rep_mult,
+    company_rep: player.mults.company_rep,
+    faction_rep: player.mults.faction_rep,
 
-    crime_money_mult: player.crime_money_mult,
-    crime_success_mult: player.crime_success_mult,
+    crime_money: player.mults.crime_money,
+    crime_success: player.mults.crime_success,
 
-    hacknet_node_money_mult: player.hacknet_node_money_mult,
-    hacknet_node_purchase_cost_mult: player.hacknet_node_purchase_cost_mult,
-    hacknet_node_ram_cost_mult: player.hacknet_node_ram_cost_mult,
-    hacknet_node_core_cost_mult: player.hacknet_node_core_cost_mult,
-    hacknet_node_level_cost_mult: player.hacknet_node_level_cost_mult,
+    hacknet_node_money: player.mults.hacknet_node_money,
+    hacknet_node_purchase_cost: player.mults.hacknet_node_purchase_cost,
+    hacknet_node_ram_cost: player.mults.hacknet_node_ram_cost,
+    hacknet_node_core_cost: player.mults.hacknet_node_core_cost,
+    hacknet_node_level_cost: player.mults.hacknet_node_level_cost,
 
-    work_money_mult: player.work_money_mult,
+    work_money: player.mults.work_money,
 
-    bladeburner_max_stamina_mult: player.bladeburner_max_stamina_mult,
-    bladeburner_stamina_gain_mult: player.bladeburner_stamina_gain_mult,
-    bladeburner_analysis_mult: player.bladeburner_analysis_mult,
-    bladeburner_success_chance_mult: player.bladeburner_success_chance_mult,
+    bladeburner_max_stamina: player.mults.bladeburner_max_stamina,
+    bladeburner_stamina_gain: player.mults.bladeburner_stamina_gain,
+    bladeburner_analysis: player.mults.bladeburner_analysis,
+    bladeburner_success_chance: player.mults.bladeburner_success_chance,
   };
 
   for (const [mult, val] of Object.entries(multipliers)) {

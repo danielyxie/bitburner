@@ -39,6 +39,7 @@ import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { ITaskTracker } from "../ITaskTracker";
 import { CONSTANTS } from "../../Constants";
 import { Work } from "src/Work/Work";
+import { defaultMultipliers, Multipliers } from "../Multipliers";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -102,37 +103,7 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  // Multipliers
-  hacking_chance_mult: number;
-  hacking_speed_mult: number;
-  hacking_money_mult: number;
-  hacking_grow_mult: number;
-  hacking_mult: number;
-  hacking_exp_mult: number;
-  strength_mult: number;
-  strength_exp_mult: number;
-  defense_mult: number;
-  defense_exp_mult: number;
-  dexterity_mult: number;
-  dexterity_exp_mult: number;
-  agility_mult: number;
-  agility_exp_mult: number;
-  charisma_mult: number;
-  charisma_exp_mult: number;
-  hacknet_node_money_mult: number;
-  hacknet_node_purchase_cost_mult: number;
-  hacknet_node_ram_cost_mult: number;
-  hacknet_node_core_cost_mult: number;
-  hacknet_node_level_cost_mult: number;
-  company_rep_mult: number;
-  faction_rep_mult: number;
-  work_money_mult: number;
-  crime_success_mult: number;
-  crime_money_mult: number;
-  bladeburner_max_stamina_mult: number;
-  bladeburner_stamina_gain_mult: number;
-  bladeburner_analysis_mult: number;
-  bladeburner_success_chance_mult: number;
+  mults: Multipliers;
 
   currentWork: Work | null;
   focus: boolean;
@@ -246,12 +217,6 @@ export class PlayerObject implements IPlayer {
     //Special stats
     this.intelligence = 0;
 
-    //Hacking multipliers
-    this.hacking_chance_mult = 1;
-    this.hacking_speed_mult = 1;
-    this.hacking_money_mult = 1;
-    this.hacking_grow_mult = 1;
-
     //Experience and multipliers
     this.hacking_exp = 0;
     this.strength_exp = 0;
@@ -261,22 +226,7 @@ export class PlayerObject implements IPlayer {
     this.charisma_exp = 0;
     this.intelligence_exp = 0;
 
-    this.hacking_mult = 1;
-    this.strength_mult = 1;
-    this.defense_mult = 1;
-    this.dexterity_mult = 1;
-    this.agility_mult = 1;
-    this.charisma_mult = 1;
-
-    this.hacking_exp_mult = 1;
-    this.strength_exp_mult = 1;
-    this.defense_exp_mult = 1;
-    this.dexterity_exp_mult = 1;
-    this.agility_exp_mult = 1;
-    this.charisma_exp_mult = 1;
-
-    this.company_rep_mult = 1;
-    this.faction_rep_mult = 1;
+    this.mults = defaultMultipliers();
 
     //Money
     this.money = 1000 + CONSTANTS.Donations;
@@ -315,21 +265,6 @@ export class PlayerObject implements IPlayer {
     this.numPeopleKilled = 0;
     this.karma = 0;
 
-    this.crime_money_mult = 1;
-    this.crime_success_mult = 1;
-
-    //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
-    this.focus = false;
-
-    this.work_money_mult = 1;
-
-    //Hacknet Node multipliers
-    this.hacknet_node_money_mult = 1;
-    this.hacknet_node_purchase_cost_mult = 1;
-    this.hacknet_node_ram_cost_mult = 1;
-    this.hacknet_node_core_cost_mult = 1;
-    this.hacknet_node_level_cost_mult = 1;
-
     //Stock Market
     this.hasWseAccount = false;
     this.hasTixApiAccess = false;
@@ -344,10 +279,6 @@ export class PlayerObject implements IPlayer {
 
     //Bladeburner
     this.bladeburner = null;
-    this.bladeburner_max_stamina_mult = 1;
-    this.bladeburner_stamina_gain_mult = 1;
-    this.bladeburner_analysis_mult = 1; //Field Analysis Only
-    this.bladeburner_success_chance_mult = 1;
 
     // Sleeves & Re-sleeving
     this.sleeves = [];
@@ -375,6 +306,7 @@ export class PlayerObject implements IPlayer {
     this.achievements = [];
     this.terminalCommandHistory = [];
 
+    this.focus = false;
     this.currentWork = null;
 
     // Let's get a hash of some semi-random stuff so we have something unique.

@@ -52,6 +52,7 @@ import { IPerson } from "../IPerson";
 import { Player } from "../../Player";
 
 import { isCompanyWork } from "../../Work/CompanyWork";
+import { defaultMultipliers } from "../Multipliers";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -196,29 +197,33 @@ export function calculateSkillProgress(this: IPlayer, exp: number, mult = 1): IS
 export function updateSkillLevels(this: IPlayer): void {
   this.hacking = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)),
+    Math.floor(this.calculateSkill(this.hacking_exp, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
   );
   this.strength = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier)),
+    Math.floor(
+      this.calculateSkill(this.strength_exp, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
+    ),
   );
   this.defense = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier)),
+    Math.floor(this.calculateSkill(this.defense_exp, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
   );
   this.dexterity = Math.max(
     1,
     Math.floor(
-      this.calculateSkill(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier),
+      this.calculateSkill(this.dexterity_exp, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
     ),
   );
   this.agility = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier)),
+    Math.floor(this.calculateSkill(this.agility_exp, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
   );
   this.charisma = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier)),
+    Math.floor(
+      this.calculateSkill(this.charisma_exp, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
+    ),
   );
 
   if (this.intelligence > 0) {
@@ -233,43 +238,7 @@ export function updateSkillLevels(this: IPlayer): void {
 }
 
 export function resetMultipliers(this: IPlayer): void {
-  this.hacking_chance_mult = 1;
-  this.hacking_speed_mult = 1;
-  this.hacking_money_mult = 1;
-  this.hacking_grow_mult = 1;
-
-  this.hacking_mult = 1;
-  this.strength_mult = 1;
-  this.defense_mult = 1;
-  this.dexterity_mult = 1;
-  this.agility_mult = 1;
-  this.charisma_mult = 1;
-
-  this.hacking_exp_mult = 1;
-  this.strength_exp_mult = 1;
-  this.defense_exp_mult = 1;
-  this.dexterity_exp_mult = 1;
-  this.agility_exp_mult = 1;
-  this.charisma_exp_mult = 1;
-
-  this.company_rep_mult = 1;
-  this.faction_rep_mult = 1;
-
-  this.crime_money_mult = 1;
-  this.crime_success_mult = 1;
-
-  this.hacknet_node_money_mult = 1;
-  this.hacknet_node_purchase_cost_mult = 1;
-  this.hacknet_node_ram_cost_mult = 1;
-  this.hacknet_node_core_cost_mult = 1;
-  this.hacknet_node_level_cost_mult = 1;
-
-  this.work_money_mult = 1;
-
-  this.bladeburner_max_stamina_mult = 1;
-  this.bladeburner_stamina_gain_mult = 1;
-  this.bladeburner_analysis_mult = 1;
-  this.bladeburner_success_chance_mult = 1;
+  this.mults = defaultMultipliers();
 }
 
 export function hasProgram(this: IPlayer, programName: string): boolean {
@@ -345,7 +314,7 @@ export function gainHackingExp(this: IPerson, exp: number): void {
     this.hacking_exp = 0;
   }
 
-  this.hacking = calculateSkillF(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
+  this.hacking = calculateSkillF(this.hacking_exp, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier);
 }
 
 export function gainStrengthExp(this: IPerson, exp: number): void {
@@ -358,7 +327,7 @@ export function gainStrengthExp(this: IPerson, exp: number): void {
     this.strength_exp = 0;
   }
 
-  this.strength = calculateSkillF(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier);
+  this.strength = calculateSkillF(this.strength_exp, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier);
 }
 
 export function gainDefenseExp(this: IPerson, exp: number): void {
@@ -371,7 +340,7 @@ export function gainDefenseExp(this: IPerson, exp: number): void {
     this.defense_exp = 0;
   }
 
-  this.defense = calculateSkillF(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
+  this.defense = calculateSkillF(this.defense_exp, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier);
   const ratio = this.hp / this.max_hp;
   this.max_hp = Math.floor(10 + this.defense / 10);
   this.hp = Math.round(this.max_hp * ratio);
@@ -389,7 +358,7 @@ export function gainDexterityExp(this: IPerson, exp: number): void {
 
   this.dexterity = calculateSkillF(
     this.dexterity_exp,
-    this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+    this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
 }
 
@@ -403,7 +372,7 @@ export function gainAgilityExp(this: IPerson, exp: number): void {
     this.agility_exp = 0;
   }
 
-  this.agility = calculateSkillF(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier);
+  this.agility = calculateSkillF(this.agility_exp, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier);
 }
 
 export function gainCharismaExp(this: IPerson, exp: number): void {
@@ -416,7 +385,7 @@ export function gainCharismaExp(this: IPerson, exp: number): void {
     this.charisma_exp = 0;
   }
 
-  this.charisma = calculateSkillF(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier);
+  this.charisma = calculateSkillF(this.charisma_exp, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier);
 }
 
 export function gainIntelligenceExp(this: IPerson, exp: number): void {
@@ -431,12 +400,12 @@ export function gainIntelligenceExp(this: IPerson, exp: number): void {
 }
 
 export function gainStats(this: IPerson, retValue: ITaskTracker): void {
-  this.gainHackingExp(retValue.hack * this.hacking_exp_mult);
-  this.gainStrengthExp(retValue.str * this.strength_exp_mult);
-  this.gainDefenseExp(retValue.def * this.defense_exp_mult);
-  this.gainDexterityExp(retValue.dex * this.dexterity_exp_mult);
-  this.gainAgilityExp(retValue.agi * this.agility_exp_mult);
-  this.gainCharismaExp(retValue.cha * this.charisma_exp_mult);
+  this.gainHackingExp(retValue.hack * this.mults.hacking_exp);
+  this.gainStrengthExp(retValue.str * this.mults.strength_exp);
+  this.gainDefenseExp(retValue.def * this.mults.defense_exp);
+  this.gainDexterityExp(retValue.dex * this.mults.dexterity_exp);
+  this.gainAgilityExp(retValue.agi * this.mults.agility_exp);
+  this.gainCharismaExp(retValue.cha * this.mults.charisma_exp);
   this.gainIntelligenceExp(retValue.int);
 }
 

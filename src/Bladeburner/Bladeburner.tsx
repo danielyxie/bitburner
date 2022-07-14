@@ -1469,10 +1469,10 @@ export class Bladeburner implements IBladeburner {
       }
       case ActionTypes["Training"]: {
         this.stamina -= 0.5 * BladeburnerConstants.BaseStaminaLoss;
-        const strExpGain = 30 * person.strength_exp_mult,
-          defExpGain = 30 * person.defense_exp_mult,
-          dexExpGain = 30 * person.dexterity_exp_mult,
-          agiExpGain = 30 * person.agility_exp_mult,
+        const strExpGain = 30 * person.mults.strength_exp,
+          defExpGain = 30 * person.mults.defense_exp,
+          dexExpGain = 30 * person.mults.dexterity_exp,
+          agiExpGain = 30 * person.mults.agility_exp,
           staminaGain = 0.04 * this.skillMultipliers.stamina;
         retValue.str = strExpGain;
         retValue.def = defExpGain;
@@ -1504,12 +1504,12 @@ export class Bladeburner implements IBladeburner {
           0.04 * Math.pow(person.hacking, 0.3) +
           0.04 * Math.pow(person.intelligence, 0.9) +
           0.02 * Math.pow(person.charisma, 0.3);
-        eff *= person.bladeburner_analysis_mult;
+        eff *= person.mults.bladeburner_analysis;
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
         }
-        const hackingExpGain = 20 * person.hacking_exp_mult;
-        const charismaExpGain = 20 * person.charisma_exp_mult;
+        const hackingExpGain = 20 * person.mults.hacking_exp;
+        const charismaExpGain = 20 * person.mults.charisma_exp;
         const rankGain = 0.1 * BitNodeMultipliers.BladeburnerRank;
         retValue.hack = hackingExpGain;
         retValue.cha = charismaExpGain;
@@ -1647,7 +1647,7 @@ export class Bladeburner implements IBladeburner {
       if (bladeburnerFac.isMember) {
         const favorBonus = 1 + bladeburnerFac.favor / 100;
         bladeburnerFac.playerReputation +=
-          BladeburnerConstants.RankToFactionRepFactor * change * person.faction_rep_mult * favorBonus;
+          BladeburnerConstants.RankToFactionRepFactor * change * person.mults.faction_rep * favorBonus;
       }
     }
 
@@ -1695,7 +1695,7 @@ export class Bladeburner implements IBladeburner {
     const effAgility = player.agility * this.skillMultipliers.effAgi;
     const maxStaminaBonus = this.maxStamina / BladeburnerConstants.MaxStaminaToGainFactor;
     const gain = (BladeburnerConstants.StaminaGainPerSecond + maxStaminaBonus) * Math.pow(effAgility, 0.17);
-    return gain * (this.skillMultipliers.stamina * player.bladeburner_stamina_gain_mult);
+    return gain * (this.skillMultipliers.stamina * player.mults.bladeburner_stamina_gain);
   }
 
   calculateMaxStamina(player: IPlayer): void {
@@ -1703,7 +1703,7 @@ export class Bladeburner implements IBladeburner {
     const maxStamina =
       (Math.pow(effAgility, 0.8) + this.staminaBonus) *
       this.skillMultipliers.stamina *
-      player.bladeburner_max_stamina_mult;
+      player.mults.bladeburner_max_stamina;
     if (this.maxStamina !== maxStamina) {
       const oldMax = this.maxStamina;
       this.maxStamina = maxStamina;

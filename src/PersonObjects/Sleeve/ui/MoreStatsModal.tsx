@@ -54,32 +54,38 @@ export function MoreStatsModal(props: IProps): React.ReactElement {
       <br />
       <StatsTable
         rows={[
-          [<>Hacking Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.hacking_mult)],
-          [<>Hacking Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.hacking_exp_mult)],
-          [<>Strength Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.strength_mult)],
-          [<>Strength Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.strength_exp_mult)],
-          [<>Defense Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.defense_mult)],
-          [<>Defense Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.defense_exp_mult)],
-          [<>Dexterity Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.dexterity_mult)],
+          [<>Hacking Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.hacking)],
+          [<>Hacking Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.hacking_exp)],
+          [<>Strength Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.strength)],
+          [
+            <>Strength Experience multiplier:&nbsp;</>,
+            numeralWrapper.formatPercentage(props.sleeve.mults.strength_exp),
+          ],
+          [<>Defense Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.defense)],
+          [<>Defense Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.defense_exp)],
+          [<>Dexterity Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.dexterity)],
           [
             <>Dexterity Experience multiplier:&nbsp;</>,
-            numeralWrapper.formatPercentage(props.sleeve.dexterity_exp_mult),
+            numeralWrapper.formatPercentage(props.sleeve.mults.dexterity_exp),
           ],
-          [<>Agility Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.agility_mult)],
-          [<>Agility Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.agility_exp_mult)],
-          [<>Charisma Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.charisma_mult)],
-          [<>Charisma Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.charisma_exp_mult)],
+          [<>Agility Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.agility)],
+          [<>Agility Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.agility_exp)],
+          [<>Charisma Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.charisma)],
+          [
+            <>Charisma Experience multiplier:&nbsp;</>,
+            numeralWrapper.formatPercentage(props.sleeve.mults.charisma_exp),
+          ],
           [
             <>Faction Reputation Gain multiplier:&nbsp;</>,
-            numeralWrapper.formatPercentage(props.sleeve.faction_rep_mult),
+            numeralWrapper.formatPercentage(props.sleeve.mults.faction_rep),
           ],
           [
             <>Company Reputation Gain multiplier:&nbsp;</>,
-            numeralWrapper.formatPercentage(props.sleeve.company_rep_mult),
+            numeralWrapper.formatPercentage(props.sleeve.mults.company_rep),
           ],
-          [<>Salary multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.work_money_mult)],
-          [<>Crime Money multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.crime_money_mult)],
-          [<>Crime Success multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.crime_success_mult)],
+          [<>Salary multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.work_money)],
+          [<>Crime Money multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.crime_money)],
+          [<>Crime Success multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.crime_success)],
         ]}
         title="Multipliers:"
       />
