@@ -46,22 +46,22 @@ export class DummyGift implements IStaneksGift {
 
     return undefined;
   }
-  delete(): any {
+  delete(): boolean {
     throw new Error("unimplemented for dummy gift");
   }
-  clear(): any {
+  clear(): void {
     throw new Error("unimplemented for dummy gift");
   }
-  count(): any {
+  count(): number {
     throw new Error("unimplemented for dummy gift");
   }
-  inBonus(): any {
+  inBonus(): boolean {
     throw new Error("unimplemented for dummy gift");
   }
-  prestigeAugmentation(): any {
+  prestigeAugmentation(): void {
     throw new Error("unimplemented for dummy gift");
   }
-  prestigeSourceFile(): any {
+  prestigeSourceFile(): void {
     throw new Error("unimplemented for dummy gift");
   }
 }
