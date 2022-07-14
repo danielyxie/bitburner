@@ -1,4 +1,4 @@
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
 import { Industries, IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
 import { CorporationConstants } from "./data/Constants";
@@ -1438,15 +1438,14 @@ export class Industry implements IIndustry {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Industry", this);
   }
 
   /**
    * Initiatizes a Industry object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Industry {
+  static fromJSON(value: IReviverValue): Industry {
     return Generic_fromJSON(Industry, value.data);
   }
 }

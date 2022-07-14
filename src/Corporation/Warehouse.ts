@@ -3,7 +3,7 @@ import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
 import { MaterialSizes } from "./MaterialSizes";
 import { IMap } from "../types";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 
 interface IConstructorParams {
@@ -105,13 +105,12 @@ export class Warehouse {
   }
 
   // Serialize the current object to a JSON save state.
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Warehouse", this);
   }
 
   // Initiatizes a Warehouse object from a JSON save state.
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Warehouse {
+  static fromJSON(value: IReviverValue): Warehouse {
     return Generic_fromJSON(Warehouse, value.data);
   }
 }

@@ -7,7 +7,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Factions } from "../Faction/Factions";
 import { CalculateEffect } from "./formulas/effect";
 import { StaneksGiftEvents } from "./StaneksGiftEvents";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { CONSTANTS } from "../Constants";
 import { StanekConstants } from "./data/Constants";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -224,15 +224,14 @@ export class StaneksGift implements IStaneksGift {
   /**
    * Serialize Staneks Gift to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("StaneksGift", this);
   }
 
   /**
    * Initializes Staneks Gift from a JSON save state
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): StaneksGift {
+  static fromJSON(value: IReviverValue): StaneksGift {
     return Generic_fromJSON(StaneksGift, value.data);
   }
 }

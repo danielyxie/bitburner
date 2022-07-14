@@ -7,7 +7,7 @@ import { Factions } from "../Faction/Factions";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { AugmentationNames } from "./data/AugmentationNames";
@@ -610,13 +610,12 @@ export class Augmentation {
   }
 
   // Serialize the current object to a JSON save state.
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Augmentation", this);
   }
 
   // Initiatizes a Augmentation object from a JSON save state.
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Augmentation {
+  static fromJSON(value: IReviverValue): Augmentation {
     return Generic_fromJSON(Augmentation, value.data);
   }
 }

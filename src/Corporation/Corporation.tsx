@@ -11,7 +11,7 @@ import { LiteratureNames } from "../Literature/data/LiteratureNames";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { isString } from "../utils/helpers/isString";
 
 interface IParams {
@@ -433,15 +433,14 @@ export class Corporation {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Corporation", this);
   }
 
   /**
    * Initiatizes a Corporation object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Corporation {
+  static fromJSON(value: IReviverValue): Corporation {
     return Generic_fromJSON(Corporation, value.data);
   }
 }

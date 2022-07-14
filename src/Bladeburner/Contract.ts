@@ -1,6 +1,6 @@
 import { IBladeburner } from "./IBladeburner";
 import { Action, IActionParams } from "./Action";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export class Contract extends Action {
   constructor(params: IActionParams | null = null) {
@@ -11,12 +11,11 @@ export class Contract extends Action {
     return inst.skillMultipliers.successChanceContract;
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Contract", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Contract {
+  static fromJSON(value: IReviverValue): Contract {
     return Generic_fromJSON(Contract, value.data);
   }
 }

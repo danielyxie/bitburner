@@ -2,7 +2,7 @@ import { codingContractTypesMetadata, DescriptionFunc, GeneratorFunc, SolverFunc
 
 import { IMap } from "./types";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "./utils/JSONReviver";
 import { CodingContractEvent } from "./ui/React/CodingContractModal";
 
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
@@ -186,15 +186,14 @@ export class CodingContract {
   /**
    * Serialize the current file to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("CodingContract", this);
   }
 
   /**
    * Initiatizes a CodingContract from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): CodingContract {
+  static fromJSON(value: IReviverValue): CodingContract {
     return Generic_fromJSON(CodingContract, value.data);
   }
 }

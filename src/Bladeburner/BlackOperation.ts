@@ -1,5 +1,5 @@
 import { Operation, IOperationParams } from "./Operation";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export class BlackOperation extends Operation {
   constructor(params: IOperationParams | null = null) {
@@ -20,12 +20,11 @@ export class BlackOperation extends Operation {
     return 1;
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("BlackOperation", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Operation {
+  static fromJSON(value: IReviverValue): Operation {
     return Generic_fromJSON(BlackOperation, value.data);
   }
 }

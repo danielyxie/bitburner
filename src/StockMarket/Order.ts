@@ -5,7 +5,7 @@
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export class Order {
   readonly pos: PositionTypes;
@@ -46,15 +46,14 @@ export class Order {
   /**
    * Serialize the Order to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Order", this);
   }
 
   /**
    * Initializes a Order from a JSON save state
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Order {
+  static fromJSON(value: IReviverValue): Order {
     return Generic_fromJSON(Order, value.data);
   }
 }

@@ -1,5 +1,5 @@
 import { IActionIdentifier } from "./IActionIdentifier";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 interface IParams {
   name?: string;
@@ -15,12 +15,11 @@ export class ActionIdentifier implements IActionIdentifier {
     if (params.type) this.type = params.type;
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("ActionIdentifier", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): ActionIdentifier {
+  static fromJSON(value: IReviverValue): ActionIdentifier {
     return Generic_fromJSON(ActionIdentifier, value.data);
   }
 }

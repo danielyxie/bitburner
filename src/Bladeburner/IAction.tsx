@@ -1,3 +1,4 @@
+import { IReviverValue } from "../utils/JSONReviver";
 import { IPerson } from "../PersonObjects/IPerson";
 import { IBladeburner } from "./IBladeburner";
 
@@ -67,5 +68,5 @@ export interface IAction {
   getSuccessChance(inst: IBladeburner, person: IPerson, params: ISuccessChanceParams): number;
   getSuccessesNeededForNextLevel(baseSuccessesPerLevel: number): number;
   setMaxLevel(baseSuccessesPerLevel: number): void;
-  toJSON(): any;
+  toJSON(): IReviverValue;
 }

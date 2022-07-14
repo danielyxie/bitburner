@@ -32,7 +32,7 @@ import { Factions } from "../../Faction/Factions";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../utils/JSONReviver";
 import { BladeburnerConstants } from "../../Bladeburner/data/Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { capitalizeFirstLetter, capitalizeEachWord } from "../../utils/StringHelperFunctions";
@@ -1236,15 +1236,14 @@ export class Sleeve extends Person {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Sleeve", this);
   }
 
   /**
    * Initiatizes a Sleeve object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Sleeve {
+  static fromJSON(value: IReviverValue): Sleeve {
     return Generic_fromJSON(Sleeve, value.data);
   }
 }

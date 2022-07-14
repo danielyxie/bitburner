@@ -3,6 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { CorporationState } from "./CorporationState";
+import { IReviverValue } from "../utils/JSONReviver";
 
 export interface ICorporation {
   name: string;
@@ -54,6 +55,6 @@ export interface ICorporation {
   getSalesMultiplier(): number;
   getScientificResearchMultiplier(): number;
   getStarterGuide(player: IPlayer): void;
-  toJSON(): any;
+  toJSON(): IReviverValue;
   getDividends(): number;
 }

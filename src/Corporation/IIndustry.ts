@@ -4,6 +4,7 @@ import { ICorporation } from "./ICorporation";
 import { OfficeSpace } from "./OfficeSpace";
 import { Product } from "./Product";
 import { IndustryUpgrade } from "./IndustryUpgrades";
+import { IReviverValue } from "../utils/JSONReviver";
 
 export interface IIndustry {
   name: string;
@@ -73,5 +74,5 @@ export interface IIndustry {
   getSalesMultiplier(): number;
   getScientificResearchMultiplier(): number;
   getStorageMultiplier(): number;
-  toJSON(): any;
+  toJSON(): IReviverValue;
 }

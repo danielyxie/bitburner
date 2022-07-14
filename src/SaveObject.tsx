@@ -21,7 +21,7 @@ import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 import * as ExportBonus from "./ExportBonus";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "./utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "./utils/JSONReviver";
 import { save } from "./db";
 import { v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
@@ -234,11 +234,11 @@ class BitburnerSaveObject {
     return Promise.resolve(data);
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("BitburnerSaveObject", this);
   }
 
-  static fromJSON(value: { data: any }): BitburnerSaveObject {
+  static fromJSON(value: IReviverValue): BitburnerSaveObject {
     return Generic_fromJSON(BitburnerSaveObject, value.data);
   }
 }

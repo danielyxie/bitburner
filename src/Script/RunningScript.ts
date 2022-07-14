@@ -8,7 +8,7 @@ import { Settings } from "../Settings/Settings";
 import { IMap } from "../types";
 import { Terminal } from "../Terminal";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { formatTime } from "../utils/helpers/formatTime";
 
 export class RunningScript {
@@ -123,13 +123,12 @@ export class RunningScript {
   }
 
   // Serialize the current object to a JSON save state
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("RunningScript", this);
   }
 
   // Initializes a RunningScript Object from a JSON save state
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): RunningScript {
+  static fromJSON(value: IReviverValue): RunningScript {
     return Generic_fromJSON(RunningScript, value.data);
   }
 }

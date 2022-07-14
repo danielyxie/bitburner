@@ -7,7 +7,7 @@
 import { calculateRamUsage, RamUsageEntry } from "./RamCalculations";
 import { ScriptUrl } from "./ScriptUrl";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
@@ -133,13 +133,12 @@ export class Script {
   }
 
   // Serialize the current object to a JSON save state
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Script", this);
   }
 
   // Initializes a Script Object from a JSON save state
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Script {
+  static fromJSON(value: IReviverValue): Script {
     const s = Generic_fromJSON(Script, value.data);
     // Force the url to blank from the save data. Urls are not valid outside the current browser page load.
     s.url = "";

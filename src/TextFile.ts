@@ -1,6 +1,6 @@
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { BaseServer } from "./Server/BaseServer";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "./utils/JSONReviver";
 import { removeLeadingSlash, isInRootDirectory } from "./Terminal/DirectoryHelpers";
 
 /**
@@ -86,7 +86,7 @@ export class TextFile {
   /**
    * Serialize the current file to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("TextFile", this);
   }
 
@@ -100,8 +100,7 @@ export class TextFile {
   /**
    * Initiatizes a TextFile from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): TextFile {
+  static fromJSON(value: IReviverValue): TextFile {
     return Generic_fromJSON(TextFile, value.data);
   }
 }
@@ -121,7 +120,7 @@ export function getTextFile(fn: string, server: BaseServer): TextFile | null {
     filename = removeLeadingSlash(filename);
   }
 
-  for (const file of server.textFiles ) {
+  for (const file of server.textFiles) {
     if (file.fn === filename) {
       return file;
     }

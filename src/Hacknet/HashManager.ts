@@ -10,7 +10,7 @@ import { HashUpgrades } from "./HashUpgrades";
 import { HashUpgrade } from "./HashUpgrade";
 
 import { IMap } from "../types";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export class HashManager {
   // Max number of hashes this can hold. Equal to the sum of capacities of
@@ -157,13 +157,12 @@ export class HashManager {
   }
 
   //Serialize the current object to a JSON save state.
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("HashManager", this);
   }
 
   // Initiatizes a HashManager object from a JSON save state.
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): HashManager {
+  static fromJSON(value: IReviverValue): HashManager {
     return Generic_fromJSON(HashManager, value.data);
   }
 }
