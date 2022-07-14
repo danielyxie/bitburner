@@ -107,6 +107,7 @@ export class Crime {
         singularity: workerScript !== null,
       }),
     );
+    p.focus = true;
     router.toWork();
 
     return this.time;

@@ -153,6 +153,10 @@ export function WorkInProgressRoot(): React.ReactElement {
             router.toLocation(Locations[LocationName.Slums]);
             player.finishNEWWork(true);
           },
+          unfocus: () => {
+            router.toCity();
+            player.stopFocusing();
+          },
         },
         title: `You are attempting to ${crime.type}`,
 

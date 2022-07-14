@@ -33,6 +33,7 @@ import { isGraftingWork } from "../../Work/GraftingWork";
 import { isFactionWork } from "../../Work/FactionWork";
 import { ReputationRate } from "./ReputationRate";
 import { isCompanyWork } from "../../Work/CompanyWork";
+import { isCrimeWork } from "../../Work/CrimeWork";
 
 interface IProps {
   save: () => void;
@@ -149,6 +150,14 @@ function Work(): React.ReactElement {
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
+  if (isCrimeWork(player.currentWork)) {
+    const crime = player.currentWork.getCrime();
+    const perc = ((player.currentWork.cyclesWorked * CONSTANTS._idleSpeed) / crime.time) * 100;
+
+    details = <>{player.currentWork.crimeType}</>;
+    header = <>You are attempting to {player.currentWork.crimeType}</>;
+    innerText = <>{perc.toFixed(2)}%</>;
+  }
   if (isClassWork(player.currentWork)) {
     details = <>{player.currentWork.getClass().youAreCurrently}</>;
     header = <>You are {player.currentWork.getClass().youAreCurrently}</>;
