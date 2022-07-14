@@ -97,7 +97,7 @@ export function ProgramsRoot(): React.ReactElement {
                   sx={{ my: 1, width: "100%" }}
                   onClick={(event) => {
                     if (!event.isTrusted) return;
-                    player.startNEWWork(
+                    player.startWork(
                       new CreateProgramWork({ player: player, singularity: false, programName: program.name }),
                     );
                     player.startFocusing();

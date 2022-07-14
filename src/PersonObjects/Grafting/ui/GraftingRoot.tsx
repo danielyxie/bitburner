@@ -155,7 +155,7 @@ export const GraftingRoot = (): React.ReactElement => {
                 open={graftOpen}
                 onClose={() => setGraftOpen(false)}
                 onConfirm={() => {
-                  player.startNEWWork(
+                  player.startWork(
                     new GraftingWork({
                       augmentation: selectedAug,
                       singularity: false,

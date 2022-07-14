@@ -1,5 +1,3 @@
-import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 export interface WorkStats {

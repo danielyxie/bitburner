@@ -152,7 +152,7 @@ function Work(): React.ReactElement {
   let innerText = <></>;
   if (isCrimeWork(player.currentWork)) {
     const crime = player.currentWork.getCrime();
-    const perc = ((player.currentWork.cyclesWorked * CONSTANTS._idleSpeed) / crime.time) * 100;
+    const perc = (player.currentWork.unitCompleted / crime.time) * 100;
 
     details = <>{player.currentWork.crimeType}</>;
     header = <>You are attempting to {player.currentWork.crimeType}</>;

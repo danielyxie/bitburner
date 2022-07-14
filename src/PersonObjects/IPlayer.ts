@@ -25,12 +25,10 @@ import { ICorporation } from "../Corporation/ICorporation";
 import { IGang } from "../Gang/IGang";
 import { IBladeburner } from "../Bladeburner/IBladeburner";
 import { ICodingContractReward } from "../CodingContracts";
-import { IRouter } from "../ui/Router";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
-import { WorkType } from "../utils/WorkType";
 import { Work } from "src/Work/Work";
 
 export interface IPlayer extends IPerson {
@@ -51,7 +49,6 @@ export interface IPlayer extends IPerson {
   hasWseAccount: boolean;
   hp: number;
   jobs: IMap<string>;
-  init: () => void;
   karma: number;
   numPeopleKilled: number;
   location: LocationName;
@@ -129,9 +126,10 @@ export interface IPlayer extends IPerson {
   entropy: number;
 
   // Methods
-  startNEWWork(w: Work): void;
-  processNEWWork(cycles: number): void;
-  finishNEWWork(cancelled: boolean): void;
+  init: () => void;
+  startWork(w: Work): void;
+  processWork(cycles: number): void;
+  finishWork(cancelled: boolean): void;
   applyForAgentJob(sing?: boolean): boolean;
   applyForBusinessConsultantJob(sing?: boolean): boolean;
   applyForBusinessJob(sing?: boolean): boolean;
@@ -201,4 +199,5 @@ export interface IPlayer extends IPerson {
   canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
   applyEntropy(stacks?: number): void;
+  focusPenalty(): number;
 }

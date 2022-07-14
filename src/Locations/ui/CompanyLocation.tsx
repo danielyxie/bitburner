@@ -176,7 +176,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
 
     const pos = companyPosition;
     if (pos instanceof CompanyPosition) {
-      p.startNEWWork(
+      p.startWork(
         new CompanyWork({
           singularity: false,
           companyName: props.locName,

@@ -5,9 +5,7 @@ import { CONSTANTS } from "../Constants";
 import { determineCrimeSuccess } from "../Crime/CrimeHelpers";
 import { Crimes } from "../Crime/Crimes";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { numeralWrapper } from "../ui/numeralFormat";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Money } from "../ui/React/Money";
 import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
 
@@ -20,10 +18,12 @@ export const isCrimeWork = (w: Work | null): w is CrimeWork => w !== null && w.t
 
 export class CrimeWork extends Work {
   crimeType: CrimeType;
+  unitCompleted: number;
 
   constructor(params?: CrimeWorkParams) {
     super(WorkType.CRIME, params?.singularity ?? true);
     this.crimeType = params?.crimeType ?? CrimeType.Shoplift;
+    this.unitCompleted = 0;
   }
 
   getCrime(): Crime {
@@ -35,11 +35,15 @@ export class CrimeWork extends Work {
   process(player: IPlayer, cycles = 1): boolean {
     this.cyclesWorked += cycles;
     const time = Object.values(Crimes).find((c) => c.type === this.crimeType)?.time ?? 0;
-    return this.cyclesWorked * CONSTANTS._idleSpeed >= time;
+    this.unitCompleted += CONSTANTS._idleSpeed * cycles;
+    if (this.unitCompleted >= time) {
+      this.commit(player);
+      this.unitCompleted -= time;
+    }
+    return false;
   }
 
-  finish(player: IPlayer, cancelled: boolean): void {
-    if (cancelled) return;
+  commit(player: IPlayer): void {
     let crime = null;
     for (const i of Object.keys(Crimes)) {
       if (Crimes[i].type == this.crimeType) {
@@ -53,6 +57,7 @@ export class CrimeWork extends Work {
       );
       return;
     }
+    const focusPenalty = player.focusPenalty();
     // exp times 2 because were trying to maintain the same numbers as before the conversion
     // Technically the definition of Crimes should have the success numbers and failure should divide by 4
     let hackExp = crime.hacking_exp * 2;
@@ -64,9 +69,9 @@ export class CrimeWork extends Work {
     let karma = crime.karma;
     const success = determineCrimeSuccess(player, crime.type);
     if (success) {
-      player.gainMoney(crime.money, "crime");
+      player.gainMoney(crime.money * focusPenalty, "crime");
       player.numPeopleKilled += crime.kills;
-      player.gainIntelligenceExp(crime.intelligence_exp);
+      player.gainIntelligenceExp(crime.intelligence_exp * focusPenalty);
     } else {
       hackExp /= 4;
       StrExp /= 4;
@@ -76,42 +81,17 @@ export class CrimeWork extends Work {
       ChaExp /= 4;
       karma /= 4;
     }
+    player.gainHackingExp(hackExp * focusPenalty);
+    player.gainStrengthExp(StrExp * focusPenalty);
+    player.gainDefenseExp(DefExp * focusPenalty);
+    player.gainDexterityExp(DexExp * focusPenalty);
+    player.gainAgilityExp(AgiExp * focusPenalty);
+    player.gainCharismaExp(ChaExp * focusPenalty);
+    player.karma -= karma * focusPenalty;
+  }
 
-    player.gainHackingExp(hackExp);
-    player.gainStrengthExp(StrExp);
-    player.gainDefenseExp(DefExp);
-    player.gainDexterityExp(DexExp);
-    player.gainAgilityExp(AgiExp);
-    player.gainCharismaExp(ChaExp);
-    player.karma -= karma;
-
-    if (!this.singularity) {
-      dialogBoxCreate(
-        <>
-          Crime {success ? "successful" : "failed"}!
-          <br />
-          <br />
-          You gained:
-          {success && (
-            <>
-              <br />
-              <Money money={crime.money} />
-            </>
-          )}
-          <br />
-          {numeralWrapper.formatExp(hackExp)} hacking experience <br />
-          {numeralWrapper.formatExp(StrExp)} strength experience
-          <br />
-          {numeralWrapper.formatExp(DefExp)} defense experience
-          <br />
-          {numeralWrapper.formatExp(DexExp)} dexterity experience
-          <br />
-          {numeralWrapper.formatExp(AgiExp)} agility experience
-          <br />
-          {numeralWrapper.formatExp(ChaExp)} charisma experience
-        </>,
-      );
-    }
+  finish(player: IPlayer, cancelled: boolean): void {
+    if (cancelled) return;
   }
 
   /**

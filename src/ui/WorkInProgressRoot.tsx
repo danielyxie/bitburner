@@ -18,7 +18,6 @@ import { ProgressBar } from "./React/Progress";
 import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
 import { StatsRow } from "./React/StatsRow";
-import { WorkType } from "../utils/WorkType";
 import { isCrimeWork } from "../Work/CrimeWork";
 import { isClassWork } from "../Work/ClassWork";
 import { WorkStats } from "../Work/WorkStats";
@@ -145,13 +144,13 @@ export function WorkInProgressRoot(): React.ReactElement {
   if (player.currentWork !== null) {
     if (isCrimeWork(player.currentWork)) {
       const crime = player.currentWork.getCrime();
-      const completion = ((player.currentWork.cyclesWorked * CONSTANTS._idleSpeed) / crime.time) * 100;
+      const completion = (player.currentWork.unitCompleted / crime.time) * 100;
 
       workInfo = {
         buttons: {
           cancel: () => {
             router.toLocation(Locations[LocationName.Slums]);
-            player.finishNEWWork(true);
+            player.finishWork(true);
           },
           unfocus: () => {
             router.toCity();
@@ -161,18 +160,18 @@ export function WorkInProgressRoot(): React.ReactElement {
         title: `You are attempting to ${crime.type}`,
 
         progress: {
-          remaining: crime.time - player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
+          remaining: crime.time - player.currentWork.unitCompleted,
           percentage: completion,
         },
 
-        stopText: "Cancel crime",
+        stopText: "Stop commiting crime",
       };
     }
 
     if (isClassWork(player.currentWork)) {
       const classWork = player.currentWork;
       function cancel(): void {
-        player.finishNEWWork(true);
+        player.finishWork(true);
         router.toCity();
       }
 
@@ -219,7 +218,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     if (isCreateProgramWork(player.currentWork)) {
       const create = player.currentWork;
       function cancel(): void {
-        player.finishNEWWork(true);
+        player.finishWork(true);
         router.toTerminal();
       }
       function unfocus(): void {
@@ -253,7 +252,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     if (isGraftingWork(player.currentWork)) {
       const graft = player.currentWork;
       function cancel(): void {
-        player.finishNEWWork(true);
+        player.finishWork(true);
         router.toTerminal();
       }
       function unfocus(): void {
@@ -303,7 +302,7 @@ export function WorkInProgressRoot(): React.ReactElement {
 
       function cancel(): void {
         router.toFaction(faction);
-        player.finishNEWWork(true);
+        player.finishWork(true);
       }
       function unfocus(): void {
         router.toFaction(faction);
@@ -362,7 +361,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       const companyRep = comp.playerReputation;
 
       function cancel(): void {
-        player.finishNEWWork(true);
+        player.finishWork(true);
         router.toJob();
       }
       function unfocus(): void {

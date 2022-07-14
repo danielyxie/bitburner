@@ -24,7 +24,7 @@ type IProps = {
 
 export function GymLocation(props: IProps): React.ReactElement {
   function train(stat: ClassType): void {
-    props.p.startNEWWork(
+    props.p.startWork(
       new ClassWork({
         classType: stat,
         location: props.loc.name,

@@ -49,7 +49,6 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { WorkType } from "../utils/WorkType";
 import { ClassWork, ClassType } from "../Work/ClassWork";
 import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWork";
 import { FactionWork } from "../Work/FactionWork";
@@ -323,7 +322,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             _ctx.log(() => `Invalid class name: ${className}.`);
             return false;
         }
-        player.startNEWWork(
+        player.startWork(
           new ClassWork({
             classType: task,
             location: player.location,
@@ -408,25 +407,25 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         switch (stat.toLowerCase()) {
           case "strength".toLowerCase():
           case "str".toLowerCase():
-            player.startNEWWork(
+            player.startWork(
               new ClassWork({ classType: ClassType.GymStrength, location: player.location, singularity: true }),
             );
             break;
           case "defense".toLowerCase():
           case "def".toLowerCase():
-            player.startNEWWork(
+            player.startWork(
               new ClassWork({ classType: ClassType.GymDefense, location: player.location, singularity: true }),
             );
             break;
           case "dexterity".toLowerCase():
           case "dex".toLowerCase():
-            player.startNEWWork(
+            player.startWork(
               new ClassWork({ classType: ClassType.GymDexterity, location: player.location, singularity: true }),
             );
             break;
           case "agility".toLowerCase():
           case "agi".toLowerCase():
-            player.startNEWWork(
+            player.startWork(
               new ClassWork({ classType: ClassType.GymAgility, location: player.location, singularity: true }),
             );
             break;
@@ -526,7 +525,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         player.getHomeComputer().pushProgram(item.program);
         // Cancel if the program is in progress of writing
         if (isCreateProgramWork(player.currentWork) && player.currentWork.programName === item.program) {
-          player.finishNEWWork(true);
+          player.finishWork(true);
         }
 
         player.loseMoney(item.price, "other");
@@ -725,7 +724,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (): boolean {
         _ctx.helper.checkSingularityAccess();
         const wasWorking = player.currentWork !== null;
-        player.finishNEWWork(true);
+        player.finishWork(true);
         return wasWorking;
       },
     upgradeHomeCores: (_ctx: NetscriptContext) =>
@@ -826,7 +825,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         const wasFocused = player.focus;
 
-        player.startNEWWork(
+        player.startWork(
           new CompanyWork({
             singularity: true,
             companyName: companyName,
@@ -994,7 +993,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with hacking contracts.`);
               return false;
             }
-            player.startNEWWork(
+            player.startWork(
               new FactionWork({
                 singularity: true,
                 factionWorkType: FactionWorkType.HACKING,
@@ -1017,7 +1016,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with field missions.`);
               return false;
             }
-            player.startNEWWork(
+            player.startWork(
               new FactionWork({
                 singularity: true,
                 factionWorkType: FactionWorkType.FIELD,
@@ -1040,7 +1039,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with security work.`);
               return false;
             }
-            player.startNEWWork(
+            player.startWork(
               new FactionWork({
                 singularity: true,
                 factionWorkType: FactionWorkType.SECURITY,
@@ -1158,7 +1157,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           return false;
         }
 
-        player.startNEWWork(
+        player.startWork(
           new CreateProgramWork({
             programName: p.name,
             singularity: true,
@@ -1181,7 +1180,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
 
         if (player.currentWork !== null) {
-          player.finishNEWWork(true);
+          player.finishWork(true);
         }
 
         // Set Location to slums

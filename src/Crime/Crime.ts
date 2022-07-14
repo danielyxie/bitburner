@@ -101,7 +101,7 @@ export class Crime {
     if (div <= 0) {
       div = 1;
     }
-    p.startNEWWork(
+    p.startWork(
       new CrimeWork({
         crimeType: this.type,
         singularity: workerScript !== null,

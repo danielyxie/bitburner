@@ -11,7 +11,7 @@ export function process(this: IPlayer, cycles = 1): void {
   if (this.currentWork === null) return;
   const finished = this.currentWork.process(this, cycles);
   if (finished) {
-    this.finishNEWWork(false);
+    this.finishWork(false);
   }
 }
 export function finish(this: IPlayer, cancelled: boolean): void {

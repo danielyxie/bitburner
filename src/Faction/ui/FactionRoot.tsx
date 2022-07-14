@@ -69,7 +69,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   }
 
   function startFieldWork(faction: Faction): void {
-    player.startNEWWork(
+    player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,
@@ -80,7 +80,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   }
 
   function startHackingContracts(faction: Faction): void {
-    player.startNEWWork(
+    player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,
@@ -91,7 +91,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   }
 
   function startSecurityWork(faction: Faction): void {
-    player.startNEWWork(
+    player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,

@@ -37,21 +37,13 @@ import { SpecialServers } from "../../Server/data/SpecialServers";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
 import { applyExploit } from "../../Exploits/applyExploits";
 import { SourceFiles } from "../../SourceFile/SourceFiles";
-import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
 import { getHospitalizationCost } from "../../Hospital/Hospital";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { IRouter } from "../../ui/Router";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 
-import { Reputation } from "../../ui/React/Reputation";
-import { Money } from "../../ui/React/Money";
-
-import React from "react";
-import { serverMetadata } from "../../Server/data/servers";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
@@ -59,7 +51,6 @@ import { ITaskTracker } from "../ITaskTracker";
 import { IPerson } from "../IPerson";
 import { Player } from "../../Player";
 
-import { WorkType } from "../../utils/WorkType";
 import { isCompanyWork } from "../../Work/CompanyWork";
 
 export function init(this: IPlayer): void {
@@ -617,7 +608,7 @@ export function getNextCompanyPosition(
 
 export function quitJob(this: IPlayer, company: string, _sing = false): void {
   if (isCompanyWork(this.currentWork) && this.currentWork.companyName === company) {
-    this.finishNEWWork(true);
+    this.finishWork(true);
   }
   delete this.jobs[company];
   if (this.companyName === company) {
@@ -1486,4 +1477,12 @@ export function sourceFileLvl(this: IPlayer, n: number): number {
   const sf = this.sourceFiles.find((sf) => sf.n === n);
   if (!sf) return 0;
   return sf.lvl;
+}
+
+export function focusPenalty(this: IPlayer): number {
+  let focus = 1;
+  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
+    focus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  }
+  return focus;
 }

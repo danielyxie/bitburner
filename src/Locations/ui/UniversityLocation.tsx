@@ -25,7 +25,7 @@ export function UniversityLocation(props: IProps): React.ReactElement {
   const router = use.Router();
 
   function take(classType: ClassType): void {
-    player.startNEWWork(
+    player.startWork(
       new ClassWork({
         classType: classType,
         location: props.loc.name,

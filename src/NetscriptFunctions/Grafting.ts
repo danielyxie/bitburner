@@ -76,7 +76,7 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
           return false;
         }
 
-        player.startNEWWork(
+        player.startWork(
           new GraftingWork({
             singularity: true,
             augmentation: augName,

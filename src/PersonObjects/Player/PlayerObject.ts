@@ -140,9 +140,9 @@ export class PlayerObject implements IPlayer {
   entropy: number;
 
   // Methods
-  startNEWWork: (w: Work) => void;
-  processNEWWork: (cycles: number) => void;
-  finishNEWWork: (cancelled: boolean) => void;
+  startWork: (w: Work) => void;
+  processWork: (cycles: number) => void;
+  finishWork: (cancelled: boolean) => void;
   applyForAgentJob: (sing?: boolean) => boolean;
   applyForBusinessConsultantJob: (sing?: boolean) => boolean;
   applyForBusinessJob: (sing?: boolean) => boolean;
@@ -226,6 +226,7 @@ export class PlayerObject implements IPlayer {
   canAccessCotMG: () => boolean;
   sourceFileLvl: (n: number) => number;
   applyEntropy: (stacks?: number) => void;
+  focusPenalty: () => number;
 
   constructor() {
     //Skills and stats
@@ -409,9 +410,9 @@ export class PlayerObject implements IPlayer {
     this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
     this.gainStats = generalMethods.gainStats;
     this.queryStatFromString = generalMethods.queryStatFromString;
-    this.startNEWWork = workMethods.start;
-    this.processNEWWork = workMethods.process;
-    this.finishNEWWork = workMethods.finish;
+    this.startWork = workMethods.start;
+    this.processWork = workMethods.process;
+    this.finishWork = workMethods.finish;
     this.startFocusing = generalMethods.startFocusing;
     this.stopFocusing = generalMethods.stopFocusing;
     this.takeDamage = generalMethods.takeDamage;
@@ -477,6 +478,7 @@ export class PlayerObject implements IPlayer {
     this.sourceFileLvl = generalMethods.sourceFileLvl;
 
     this.applyEntropy = augmentationMethods.applyEntropy;
+    this.focusPenalty = generalMethods.focusPenalty;
   }
 
   whoAmI(): string {

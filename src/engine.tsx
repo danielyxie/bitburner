@@ -50,8 +50,6 @@ import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
 import { Button, Typography } from "@mui/material";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
-import { WorkType } from "./utils/WorkType";
-
 const Engine: {
   _lastUpdate: number;
   updateGame: (numCycles?: number) => void;
@@ -96,7 +94,7 @@ const Engine: {
 
     Terminal.process(Router, Player, numCycles);
 
-    Player.processNEWWork(numCycles);
+    Player.processWork(numCycles);
 
     // Update stock prices
     if (Player.hasWseAccount) {
@@ -295,7 +293,7 @@ const Engine: {
       loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
       if (Player.currentWork !== null) {
         Player.focus = true;
-        Player.processNEWWork(numCyclesOffline);
+        Player.processWork(numCyclesOffline);
       } else {
         for (let i = 0; i < Player.factions.length; i++) {
           const facName = Player.factions[i];
