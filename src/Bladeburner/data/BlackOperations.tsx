@@ -256,8 +256,8 @@ export const BlackOperations: {
         ones from the Uprising.
         <br />
         <br />
-        {FactionNames.OmniTekIncorporated} has also told us they they believe someone has triggered this malfunction in
-        a large group of MK-VI Synthoids, and that these newly-radicalized Synthoids are now amassing in{" "}
+        {FactionNames.OmniTekIncorporated} has also told us they believe someone has triggered this malfunction in a
+        large group of MK-VI Synthoids, and that these newly-radicalized Synthoids are now amassing in{" "}
         {CityName.Volhaven} to form a terrorist group called Ultron.
         <br />
         <br />

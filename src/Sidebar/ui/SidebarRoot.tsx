@@ -272,6 +272,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     //  Alt-a - Augmentations
     //  Alt-u - Tutorial
     //  Alt-o - Options
+    //  Alt-b - Bladeburner
+    //  Alt-g - Gang
     function handleShortcuts(this: Document, event: KeyboardEvent): any {
       if (Settings.DisableHotkeys) return;
       if ((props.player.isWorking && props.player.focus) || props.router.page() === Page.BitVerse) return;
@@ -315,6 +317,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       } else if (event.code === KEYCODE.U && event.altKey) {
         event.preventDefault();
         clickTutorial();
+      } else if (event.code === KEYCODE.O && event.altKey) {
+        event.preventDefault();
+        clickOptions();
       } else if (event.code === KEYCODE.B && event.altKey && props.player.bladeburner) {
         event.preventDefault();
         clickBladeburner();

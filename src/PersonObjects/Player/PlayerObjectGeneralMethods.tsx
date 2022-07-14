@@ -1326,10 +1326,16 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
 
 export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
   const programName = this.createProgramName;
+  let message = "";
   if (!cancelled) {
     //Complete case
     this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
-    dialogBoxCreate(`You've finished creating ${programName}!<br>The new program can be found on your home computer.`);
+    const lines = [
+      `You've finished creating ${programName}!`,
+      "The new program can be found on your home computer.",
+    ];
+    dialogBoxCreate(lines.join("<br>"));
+    message = lines.join(" ");
 
     if (!this.getHomeComputer().programs.includes(programName)) {
       this.getHomeComputer().programs.push(programName);
@@ -1339,12 +1345,12 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
     const perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
     const incompleteName = programName + "-" + perc + "%-INC";
     this.getHomeComputer().programs.push(incompleteName);
+    message = `Cancelled creating program: ${programName} (${perc}% complete)`;
   }
 
   this.isWorking = false;
-
   this.resetWorkStatus();
-  return "You've finished creating " + programName + "! The new program can be found on your home computer.";
+  return message;
 }
 
 export function startGraftAugmentationWork(this: IPlayer, augmentationName: string, time: number): void {
