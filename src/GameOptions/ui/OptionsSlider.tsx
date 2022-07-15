@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 interface IProps {
   initialValue: number;
-  callback: (event: any, newValue: number | number[]) => void;
+  callback: (event: Event | React.SyntheticEvent<Element, Event>, newValue: number | number[]) => void;
   step: number;
   min: number;
   max: number;
