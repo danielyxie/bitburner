@@ -55,8 +55,12 @@ export function download(
       try {
         exportScripts(fn, server);
         return;
-      } catch (error: any) {
-        return terminal.error(error.message);
+      } catch (e: unknown) {
+        let msg = String(e);
+        if (e !== null && typeof e == "object" && e.hasOwnProperty("message")) {
+          msg = String((e as { message: unknown }).message);
+        }
+        return terminal.error(msg);
       }
     } else if (isScriptFilename(fn)) {
       // Download a single script

@@ -56,7 +56,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       router.toBladeburner();
     } else if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
       // Apply for Bladeburner division
-      p.startBladeburner({ new: true });
+      p.startBladeburner();
       dialogBoxCreate("You have been accepted into the Bladeburner division!");
       setRerender((old) => !old);
 

@@ -72,9 +72,11 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = tru
   if (typeof workerScript.atExit === "function") {
     try {
       workerScript.atExit();
-    } catch (e: any) {
+    } catch (e: unknown) {
       dialogBoxCreate(
-        `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args} ${e}`,
+        `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${
+          workerScript.scriptRef.args
+        } ${String(e)}`,
       );
     }
     workerScript.atExit = undefined;

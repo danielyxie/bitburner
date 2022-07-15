@@ -44,6 +44,7 @@ import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 import { TextField, Tooltip } from "@mui/material";
+import { ExternalAPI } from "../../Netscript/APIWrapper";
 
 interface IProps {
   // Map of filename -> code
@@ -58,18 +59,19 @@ interface IProps {
 let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
-  const ns = NetscriptFunctions({} as WorkerScript);
+  const ns = NetscriptFunctions({ args: [] } as unknown as WorkerScript);
 
   // Populates symbols for text editor
-  function populate(ns: any): string[] {
+  function populate(ns: ExternalAPI): string[] {
     let symbols: string[] = [];
     const keys = Object.keys(ns);
     for (const key of keys) {
-      if (typeof ns[key] === "object") {
+      const x = ns[key];
+      if (typeof x === "object") {
         symbols.push(key);
-        symbols = symbols.concat(populate(ns[key]));
+        symbols = symbols.concat(populate(x));
       }
-      if (typeof ns[key] === "function") {
+      if (typeof x === "function") {
         symbols.push(key);
       }
     }
@@ -693,7 +695,7 @@ export function Root(props: IProps): React.ReactElement {
     if (server === null) throw new Error(`Server '${closingScript.hostname}' should not be null, but it is.`);
 
     const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
-    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex ].code) {
+    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex].code) {
       PromptEvent.emit({
         txt: `Do you want to save changes to ${closingScript.fileName} on ${closingScript.hostname}?`,
         resolve: (result: boolean | string) => {

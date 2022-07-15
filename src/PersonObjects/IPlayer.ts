@@ -142,7 +142,7 @@ export interface IPlayer extends IPerson {
   reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
   setMoney(amt: number): void;
-  startBladeburner(p: any): void;
+  startBladeburner(): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;

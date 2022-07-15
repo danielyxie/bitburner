@@ -178,7 +178,7 @@ export class Bladeburner implements IBladeburner {
             return this.resetAction();
           }
           this.actionTimeToComplete = action.getActionTime(this, person);
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -195,7 +195,7 @@ export class Bladeburner implements IBladeburner {
             return this.resetAction();
           }
           this.actionTimeToComplete = action.getActionTime(this, person);
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -213,7 +213,7 @@ export class Bladeburner implements IBladeburner {
             throw new Error("action should not be null");
           }
           this.actionTimeToComplete = testBlackOp.action.getActionTime(this, person);
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -264,7 +264,7 @@ export class Bladeburner implements IBladeburner {
       for (let i = 0; i < arrayOfCommands.length; ++i) {
         this.executeConsoleCommand(player, arrayOfCommands[i]);
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
       exceptionAlert(e);
     }
   }
@@ -1367,7 +1367,7 @@ export class Bladeburner implements IBladeburner {
           if (action.autoLevel) {
             action.level = action.maxLevel;
           } // Autolevel
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -1462,7 +1462,7 @@ export class Bladeburner implements IBladeburner {
               this.log(`${person.whoAmI()}:  You lost ${formatNumber(losses, 0)} team members during ${action.name}`);
             }
           }
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -2154,7 +2154,8 @@ export class Bladeburner implements IBladeburner {
         () => `Starting bladeburner action with type '${type}' and name '${name}'`,
       );
       return true;
-    } catch (e: any) {
+    } catch (e: unknown) {
+      console.error(e);
       this.resetAction();
       workerScript.log("bladeburner.startAction", () => errorLogText);
       return false;

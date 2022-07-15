@@ -186,7 +186,7 @@ async function parseOnlyRamCalculate(
       // Check if this identifier is a function in the workerScript environment.
       // If it is, then we need to get its RAM cost.
       try {
-        function applyFuncRam(cost: any): number {
+        function applyFuncRam(cost: number | ((p: IPlayer) => number)): number {
           if (typeof cost === "number") {
             return cost;
           } else if (typeof cost === "function") {
@@ -282,7 +282,7 @@ export function checkInfiniteLoop(code: string): number {
     ast,
     {},
     {
-      WhileStatement: (node: acorn.Node, st: any, walkDeeper: walk.WalkerCallback<any>) => {
+      WhileStatement: (node: acorn.Node, st: unknown, walkDeeper: walk.WalkerCallback<any>) => {
         if (nodeHasTrueTest((node as any).test) && !hasAwait(node)) {
           missingAwaitLine = (code.slice(0, node.start).match(/\n/g) || []).length + 1;
         } else {

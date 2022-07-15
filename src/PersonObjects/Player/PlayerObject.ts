@@ -165,7 +165,7 @@ export class PlayerObject implements IPlayer {
   regenerateHp: (amt: number) => void;
   recordMoneySource: (amt: number, source: string) => void;
   setMoney: (amt: number) => void;
-  startBladeburner: (p: any) => void;
+  startBladeburner: () => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
   startFocusing: () => void;
   startGang: (facName: string, isHacking: boolean) => void;

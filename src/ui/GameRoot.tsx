@@ -112,13 +112,15 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const uninitialized = (): any => {
+const uninitialized = (): void => {
   throw new Error("Router called before initialization");
 };
 
 export let Router: IRouter = {
   isInitialized: false,
-  page: uninitialized,
+  page: () => {
+    throw new Error("Router called before initialization");
+  },
   allowRouting: uninitialized,
   toActiveScripts: uninitialized,
   toAugmentations: uninitialized,

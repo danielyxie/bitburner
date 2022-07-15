@@ -70,10 +70,10 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
   // We need to go through the environment and wrap each function in such a way that it
   // can be called at most once at a time. This will prevent situations where multiple
   // hack promises are outstanding, for example.
-  function wrap(propName: string, f: (...args: any[]) => Promise<void>): (...args: any[]) => Promise<void> {
+  function wrap(propName: string, f: (...args: unknown[]) => Promise<void>): (...args: unknown[]) => Promise<void> {
     // This function unfortunately cannot be an async function, because we don't
     // know if the original one was, and there's no way to tell.
-    return function (...args: any[]) {
+    return async function (...args: unknown[]) {
       // Wrap every netscript function with a check for the stop flag.
       // This prevents cases where we never stop because we are only calling
       // netscript functions that don't check this.
@@ -101,7 +101,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
       let result;
       try {
         result = f(...args);
-      } catch (e: any) {
+      } catch (e: unknown) {
         runningFn = null;
         throw e;
       }
@@ -176,15 +176,15 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
     const importProcessingRes = processNetscript1Imports(code, workerScript);
     codeWithImports = importProcessingRes.code;
     codeLineOffset = importProcessingRes.lineOffset;
-  } catch (e: any) {
-    dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + e);
+  } catch (e: unknown) {
+    dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + String(e));
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
     return Promise.resolve();
   }
 
-  const interpreterInitialization = function (int: any, scope: any): void {
+  const interpreterInitialization = function (int: Interpreter, scope: unknown): void {
     //Add the Netscript environment
     const ns = NetscriptFunctions(workerScript);
     for (const name of Object.keys(ns)) {
@@ -212,9 +212,8 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
               .then(function (res: any) {
                 cb(res);
               })
-              .catch(function (err: any) {
-                // workerscript is when you cancel a delay
-                if (!(err instanceof ScriptDeath)) {
+              .catch(function (err: unknown) {
+                if (typeof err === "string") {
                   console.error(err);
                   const errorTextArray = err.split("|DELIMITER|");
                   const hostname = errorTextArray[1];
@@ -282,11 +281,11 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
     int.setProperty(scope, "args", int.nativeToPseudo(workerScript.args));
   };
 
-  let interpreter: any;
+  let interpreter: Interpreter;
   try {
     interpreter = new Interpreter(codeWithImports, interpreterInitialization, codeLineOffset);
-  } catch (e: any) {
-    dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + e);
+  } catch (e: unknown) {
+    dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + String(e));
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
@@ -312,8 +311,8 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
         } else {
           resolve();
         }
-      } catch (e: any) {
-        e = e.toString();
+      } catch (_e: unknown) {
+        let e = String(_e);
         if (!isScriptErrorMessage(e)) {
           e = makeRuntimeRejectMsg(workerScript, e);
         }
@@ -324,7 +323,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
 
     try {
       runInterpreter();
-    } catch (e: any) {
+    } catch (e: unknown) {
       if (isString(e)) {
         workerScript.errorMessage = e;
         return reject(new ScriptDeath(workerScript));

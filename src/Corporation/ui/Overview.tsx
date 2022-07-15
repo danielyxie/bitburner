@@ -38,7 +38,7 @@ export function Overview({ rerender }: IProps): React.ReactElement {
   const corp = useCorporation();
   const profit: number = corp.revenue - corp.expenses;
 
-  const multRows: any[][] = [];
+  const multRows: string[][] = [];
   function appendMult(name: string, value: number): void {
     if (value === 1) return;
     multRows.push([name, numeralWrapper.format(value, "0.000")]);

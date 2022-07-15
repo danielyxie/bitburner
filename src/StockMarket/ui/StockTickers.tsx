@@ -15,6 +15,8 @@ import { PositionTypes } from "../data/PositionTypes";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { EventEmitter } from "../../utils/EventEmitter";
+import { WorkerScript } from "../../Netscript/WorkerScript";
+import { ICancelOrderParams } from "../StockMarket";
 
 type txFn = (stock: Stock, shares: number) => boolean;
 type placeOrderFn = (
@@ -28,7 +30,7 @@ type placeOrderFn = (
 type IProps = {
   buyStockLong: txFn;
   buyStockShort: txFn;
-  cancelOrder: (params: any) => void;
+  cancelOrder: (params: ICancelOrderParams, workerScript?: WorkerScript) => void;
   eventEmitterForReset?: EventEmitter<[]>;
   p: IPlayer;
   placeOrder: placeOrderFn;

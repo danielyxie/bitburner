@@ -1940,8 +1940,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           // Coerce 'data' to be a string
           try {
             data = String(data);
-          } catch (e: any) {
-            throw ctx.makeRuntimeErrorMsg(`Invalid data (${e}). Data being written must be convertible to a string`);
+          } catch (e: unknown) {
+            throw ctx.makeRuntimeErrorMsg(`Invalid data (${String(e)}). Data being written must be convertible to a string`);
           }
 
           const server = workerScript.getServer();
@@ -2470,7 +2470,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           }
         }
       },
-    flags: Flags(workerScript.args),
+    flags: Flags(workerScript.args.map((a) => String(a))),
   };
 
   // add undocumented functions

@@ -25,12 +25,10 @@ export class HospitalLocation extends React.Component<IProps, IState> {
   /**
    * Stores button styling that sets them all to block display
    */
-  btnStyle: any;
+  btnStyle = { display: "block" };
 
   constructor(props: IProps) {
     super(props);
-
-    this.btnStyle = { display: "block" };
 
     this.getCost = this.getCost.bind(this);
     this.getHealed = this.getHealed.bind(this);

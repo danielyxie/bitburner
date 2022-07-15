@@ -4,9 +4,10 @@ import type { BaseServer } from "../Server/BaseServer";
 import type { WorkerScript } from "./WorkerScript";
 import { makeRuntimeRejectMsg } from "../NetscriptEvaluator";
 import { Player } from "../Player";
-import { CityName } from "src/Locations/data/CityNames";
+import { CityName } from "../Locations/data/CityNames";
+import { BasicHGWOptions } from "../ScriptEditor/NetscriptDefinitions";
 
-type ExternalFunction = (...args: any[]) => any;
+type ExternalFunction = (...args: unknown[]) => unknown;
 export type ExternalAPI = {
   [string: string]: ExternalAPI | ExternalFunction;
 };
@@ -45,11 +46,11 @@ type NetscriptHelpers = {
   checkSingularityAccess: (func: string) => void;
   hack: (
     ctx: NetscriptContext,
-    hostname: any,
-    manual: any,
-    { threads: requestedThreads, stock }?: any,
+    hostname: string,
+    manual: boolean,
+    { threads: requestedThreads, stock }?: BasicHGWOptions,
   ) => Promise<number>;
-  getValidPort: (funcName: string, port: any) => IPort;
+  getValidPort: (funcName: string, port: number) => IPort;
 };
 
 type WrappedNetscriptHelpers = {
@@ -60,13 +61,13 @@ type WrappedNetscriptHelpers = {
   boolean: (v: unknown) => boolean;
   getServer: (hostname: string) => BaseServer;
   checkSingularityAccess: () => void;
-  hack: (hostname: any, manual: any, { threads: requestedThreads, stock }?: any) => Promise<number>;
-  getValidPort: (port: any) => IPort;
+  hack: (hostname: string, manual: boolean, { threads: requestedThreads, stock }?: BasicHGWOptions) => Promise<number>;
+  getValidPort: (port: number) => IPort;
 };
 
 function wrapFunction(
   helpers: NetscriptHelpers,
-  wrappedAPI: any,
+  wrappedAPI: ExternalAPI,
   workerScript: WorkerScript,
   func: (_ctx: NetscriptContext) => (...args: unknown[]) => unknown,
   ...tree: string[]
@@ -93,8 +94,8 @@ function wrapFunction(
       boolean: helpers.boolean,
       getServer: (hostname: string) => helpers.getServer(hostname, ctx),
       checkSingularityAccess: () => helpers.checkSingularityAccess(functionName),
-      hack: (hostname: any, manual: any, extra?: any) => helpers.hack(ctx, hostname, manual, extra),
-      getValidPort: (port: any) => helpers.getValidPort(functionPath, port),
+      hack: (hostname: string, manual: boolean, extra?: BasicHGWOptions) => helpers.hack(ctx, hostname, manual, extra),
+      getValidPort: (port: number) => helpers.getValidPort(functionPath, port),
     },
   };
   function wrappedFunction(...args: unknown[]): unknown {
@@ -136,7 +137,7 @@ export function wrapAPI(
   return wrappedAPI;
 }
 
-function setNestedProperty(root: any, value: any, ...tree: string[]): any {
+function setNestedProperty(root: any, value: any, ...tree: string[]): void {
   let target = root;
   const key = tree.pop();
   if (typeof key !== "string") {
