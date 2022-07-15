@@ -322,7 +322,6 @@ function LogWindow(props: IProps): React.ReactElement {
                   (line: string, i: number): JSX.Element => (
                     <React.Fragment key={i}>
                       <ANSIITypography text={line} color={lineColor(line)} />
-                      <br />
                     </React.Fragment>
                   ),
                 )}
