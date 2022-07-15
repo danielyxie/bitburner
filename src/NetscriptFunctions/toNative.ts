@@ -20,9 +20,11 @@ export function toNative(pseudoObj: any): any {
   if (pseudoObj.hasOwnProperty("class") && pseudoObj.class === "Array") {
     nativeObj = [];
     const length = defaultInterpreter.getProperty(pseudoObj, "length");
-    for (let i = 0; i < length; i++) {
-      if (defaultInterpreter.hasProperty(pseudoObj, i)) {
-        nativeObj[i] = toNative(defaultInterpreter.getProperty(pseudoObj, i));
+    if (typeof length === "number") {
+      for (let i = 0; i < length; i++) {
+        if (defaultInterpreter.hasProperty(pseudoObj, i)) {
+          nativeObj[i] = toNative(defaultInterpreter.getProperty(pseudoObj, i));
+        }
       }
     }
   } else {

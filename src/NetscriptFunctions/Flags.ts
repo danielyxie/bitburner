@@ -1,5 +1,5 @@
 import { toNative } from "./toNative";
-import * as libarg from "arg";
+import libarg from "arg";
 
 export function Flags(vargs: string[]): any {
   return () =>
