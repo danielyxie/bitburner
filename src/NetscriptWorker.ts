@@ -73,7 +73,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
   function wrap(propName: string, f: (...args: unknown[]) => Promise<void>): (...args: unknown[]) => Promise<void> {
     // This function unfortunately cannot be an async function, because we don't
     // know if the original one was, and there's no way to tell.
-    return async function (...args: unknown[]) {
+    return function (...args: unknown[]) {
       // Wrap every netscript function with a check for the stop flag.
       // This prevents cases where we never stop because we are only calling
       // netscript functions that don't check this.
