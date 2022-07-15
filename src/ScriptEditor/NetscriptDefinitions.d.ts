@@ -825,13 +825,7 @@ export interface GangOtherInfoObject {
  * @public
  */
 export interface GangOtherInfo {
-  "Slum Snakes": GangOtherInfoObject;
-  Tetrads: GangOtherInfoObject;
-  "The Syndicate": GangOtherInfoObject;
-  "The Dark Army": GangOtherInfoObject;
-  "Speakers for the Dead": GangOtherInfoObject;
-  NiteSec: GangOtherInfoObject;
-  "The Black Hand": GangOtherInfoObject;
+  [key: string]: GangOtherInfoObject;
 }
 
 /**
