@@ -5,17 +5,21 @@ interface IError {
   lineNumber?: number;
 }
 
-export function exceptionAlert(e: IError | string): void {
+export const isIError = (v: unknown): v is IError => {
+  if (typeof v !== "object" || v == null) return false;
+  return v.hasOwnProperty("fileName") && v.hasOwnProperty("lineNumber");
+};
+
+export function exceptionAlert(e: unknown): void {
   console.error(e);
   let msg = "";
   let file = "UNKNOWN FILE NAME";
   let line = "UNKNOWN LINE NUMBER";
-  const isError = (e: IError | string): e is IError => e.hasOwnProperty("fileName");
-  if (isError(e)) {
+  if (isIError(e)) {
     file = e.fileName ?? file;
     line = e.lineNumber?.toString() ?? line;
   } else {
-    msg = e;
+    msg = String(e);
   }
   dialogBoxCreate(
     "Caught an exception: " +

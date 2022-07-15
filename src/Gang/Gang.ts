@@ -10,7 +10,7 @@ import { Factions } from "../Faction/Factions";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 
-import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { exceptionAlert, isIError } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 import { GangMemberUpgrade } from "./GangMemberUpgrade";
@@ -99,7 +99,7 @@ export class Gang implements IGang {
       this.processExperienceGains(cycles);
       this.processTerritoryAndPowerGains(cycles);
       this.storedCycles -= cycles;
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(`Exception caught when processing Gang: ${e}`);
     }
   }
@@ -358,7 +358,7 @@ export class Gang implements IGang {
         workerScript.log("gang.ascendMember", () => `Ascended Gang member ${member.name}`);
       }
       return res;
-    } catch (e: any) {
+    } catch (e: unknown) {
       if (workerScript == null) {
         exceptionAlert(e);
       }
