@@ -29,5 +29,5 @@ Number of milliseconds it takes to complete the specified action.
 
 RAM cost: 4 GB
 
-Returns the number of seconds it takes to complete the specified action
+Returns the number of milliseconds it takes to complete the specified action
 

@@ -9,7 +9,7 @@ Open the tail window of a script.
 <b>Signature:</b>
 
 ```typescript
-tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
+tail(fn?: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): void;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
 |  --- | --- | --- |
 |  fn | [FilenameOrPID](./bitburner.filenameorpid.md) | Optional. Filename or PID of the script being tailed. If omitted, the current script is tailed. |
 |  host | string | Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional. |
-|  args | any\[\] | Arguments for the script being tailed. |
+|  args | (string \| number \| boolean)\[\] | Arguments for the script being tailed. |
 
 <b>Returns:</b>
 
