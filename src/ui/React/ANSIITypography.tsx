@@ -56,11 +56,12 @@ const lineClass = (classes: Record<string, string>, s: string): string => {
 };
 
 interface IProps {
-  text: string;
+  text: unknown;
   color: "primary" | "error" | "success" | "info" | "warn";
 }
 
 export const ANSIITypography = React.memo((props: IProps): React.ReactElement => {
+  const text = String(props.text);
   const classes = useStyles();
   const parts = [];
 
@@ -70,7 +71,7 @@ export const ANSIITypography = React.memo((props: IProps): React.ReactElement =>
     index: 0,
     groups: { code: null },
   };
-  const matches = [INITIAL, ...props.text.matchAll(ANSI_ESCAPE), null];
+  const matches = [INITIAL, ...text.matchAll(ANSI_ESCAPE), null];
   if (matches.length > 2) {
     matches.slice(0, -1).forEach((m, i) => {
       const n = matches[i + 1];
@@ -78,8 +79,8 @@ export const ANSIITypography = React.memo((props: IProps): React.ReactElement =>
         return;
       }
       const startIndex = m.index + m[0].length;
-      const stopIndex = n ? n.index : props.text.length;
-      const partText = props.text.slice(startIndex, stopIndex);
+      const stopIndex = n ? n.index : text.length;
+      const partText = text.slice(startIndex, stopIndex);
       if (startIndex !== stopIndex) {
         // Don't generate "empty" spans
         parts.push({ code: m.groups.code, text: partText });
@@ -88,7 +89,7 @@ export const ANSIITypography = React.memo((props: IProps): React.ReactElement =>
   }
   if (parts.length === 0) {
     // For example, if the string was empty or there were no escape sequence matches
-    parts.push({ code: null, text: props.text });
+    parts.push({ code: null, text: text });
   }
   return (
     <Typography classes={{ root: lineClass(classes, props.color) }} paragraph={false}>
