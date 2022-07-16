@@ -3080,28 +3080,30 @@ export interface Bladeburner {
    * @remarks
    * RAM cost: 4 GB
    *
-   * This function returns the number of skill points needed to upgrade the specified skill.
+   * This function returns the number of skill points needed to upgrade the specified skill the specified number of times.
    *
    * The function returns -1 if an invalid skill name is passed in.
    *
    * @param skillName - Name of skill. Case-sensitive and must be an exact match
+   * @param count - Number of times to upgrade the skill. Defaults to 1 if not specified.
    * @returns Number of skill points needed to upgrade the specified skill.
    */
-  getSkillUpgradeCost(name: string): number;
+  getSkillUpgradeCost(name: string, count?: number): number;
 
   /**
    * Upgrade skill.
    * @remarks
    * RAM cost: 4 GB
    *
-   * Attempts to upgrade the specified Bladeburner skill.
+   * Attempts to upgrade the specified Bladeburner skill the specified number of times.
    *
    * Returns true if the skill is successfully upgraded, and false otherwise.
    *
    * @param skillName - Name of skill to be upgraded. Case-sensitive and must be an exact match
+   * @param count - Number of times to upgrade the skill. Defaults to 1 if not specified.
    * @returns true if the skill is successfully upgraded, and false otherwise.
    */
-  upgradeSkill(name: string): boolean;
+  upgradeSkill(name: string, count?: number): boolean;
 
   /**
    * Get team size.
