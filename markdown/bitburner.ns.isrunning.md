@@ -9,7 +9,7 @@ Check if a script is running.
 <b>Signature:</b>
 
 ```typescript
-isRunning(script: FilenameOrPID, host: string, ...args: string[]): boolean;
+isRunning(script: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): boolean;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ isRunning(script: FilenameOrPID, host: string, ...args: string[]): boolean;
 |  --- | --- | --- |
 |  script | [FilenameOrPID](./bitburner.filenameorpid.md) | Filename or PID of script to check. This is case-sensitive. |
 |  host | string | Host of target server. |
-|  args | string\[\] | Arguments to specify/identify which scripts to search for. |
+|  args | (string \| number \| boolean)\[\] | Arguments to specify/identify which scripts to search for. |
 
 <b>Returns:</b>
 
