@@ -17,7 +17,7 @@ import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { createTaskTracker, ITaskTracker } from "../PersonObjects/ITaskTracker";
 import { IPerson } from "../PersonObjects/IPerson";
-import { IRouter, Page } from "../ui/Router";
+import { IRouter } from "../ui/Router";
 import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -35,7 +35,6 @@ import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { BlackOperationNames } from "./data/BlackOperationNames";
 import { KEY } from "../utils/helpers/keyCodes";
 
 interface BlackOpsAttempt {
@@ -237,13 +236,13 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  upgradeSkill(skill: Skill): void {
+  upgradeSkill(skill: Skill, count = 1): void {
     // This does NOT handle deduction of skill points
     const skillName = skill.name;
     if (this.skills[skillName]) {
-      ++this.skills[skillName];
+      this.skills[skillName] += count;
     } else {
-      this.skills[skillName] = 1;
+      this.skills[skillName] = count;
     }
     if (isNaN(this.skills[skillName]) || this.skills[skillName] < 0) {
       throw new Error("Level of Skill " + skillName + " is invalid: " + this.skills[skillName]);
@@ -2277,7 +2276,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number {
+  getSkillUpgradeCostNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): number {
     if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
       workerScript.log("bladeburner.getSkillUpgradeCost", () => `Invalid skill: '${skillName}'`);
       return -1;
@@ -2285,13 +2284,13 @@ export class Bladeburner implements IBladeburner {
 
     const skill = Skills[skillName];
     if (this.skills[skillName] == null) {
-      return skill.calculateCost(0);
+      return skill.calculateCost(0, count);
     } else {
-      return skill.calculateCost(this.skills[skillName]);
+      return skill.calculateCost(this.skills[skillName], count);
     }
   }
 
-  upgradeSkillNetscriptFn(skillName: string, workerScript: WorkerScript): boolean {
+  upgradeSkillNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): boolean {
     const errorLogText = `Invalid skill: '${skillName}'`;
     if (!Skills.hasOwnProperty(skillName)) {
       workerScript.log("bladeburner.upgradeSkill", () => errorLogText);
@@ -2303,10 +2302,10 @@ export class Bladeburner implements IBladeburner {
     if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
       currentLevel = this.skills[skillName];
     }
-    const cost = skill.calculateCost(currentLevel);
+    const cost = skill.calculateCost(currentLevel, count);
 
-    if (skill.maxLvl && currentLevel >= skill.maxLvl) {
-      workerScript.log("bladeburner.upgradeSkill", () => `Skill '${skillName}' is already maxed.`);
+    if (skill.maxLvl && currentLevel + count > skill.maxLvl) {
+      workerScript.log("bladeburner.upgradeSkill", () => `Skill '${skillName}' cannot be upgraded ${count} time(s).`);
       return false;
     }
 
@@ -2314,13 +2313,13 @@ export class Bladeburner implements IBladeburner {
       workerScript.log(
         "bladeburner.upgradeSkill",
         () =>
-          `You do not have enough skill points to upgrade ${skillName} (You have ${this.skillPoints}, you need ${cost})`,
+          `You do not have enough skill points to upgrade ${skillName} ${count} time(s). (You have ${this.skillPoints}, you need ${cost})`,
       );
       return false;
     }
 
     this.skillPoints -= cost;
-    this.upgradeSkill(skill);
+    this.upgradeSkill(skill, count);
     workerScript.log("bladeburner.upgradeSkill", () => `'${skillName}' upgraded to level ${this.skills[skillName]}`);
     return true;
   }

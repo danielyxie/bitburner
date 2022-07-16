@@ -36,7 +36,7 @@ function toNumber(n: number | IMinMaxRange): number {
       return n;
     }
     case "object": {
-      const range = n ;
+      const range = n;
       value = getRandomInt(range.min, range.max);
       break;
     }
