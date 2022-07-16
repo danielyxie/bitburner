@@ -157,11 +157,11 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const canOpenSleeves = props.player.sleeves.length > 0;
 
-  const canCorporation = !!(props.player.corporation as any);
-  const canGang = !!(props.player.gang as any);
+  const canCorporation = !!props.player.corporation;
+  const canGang = !!props.player.gang;
   const canJob = props.player.companyName !== "";
   const canStockMarket = props.player.hasWseAccount;
-  const canBladeburner = !!(props.player.bladeburner as any);
+  const canBladeburner = !!props.player.bladeburner;
   const canStaneksGift = props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
 
   function clickTerminal(): void {

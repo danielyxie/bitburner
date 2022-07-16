@@ -485,9 +485,6 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
  * Used to start a RunningScript (by creating and starting its
  * corresponding WorkerScript), and add the RunningScript to the server on which
  * it is active
- * @param {RunningScript} runningScriptObj - Script that's being run
- * @param {Server} server - Server on which the script is to be run
- * @returns {number} pid of started script
  */
 export function startWorkerScript(
   player: IPlayer,

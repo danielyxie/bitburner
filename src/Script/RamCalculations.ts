@@ -15,6 +15,7 @@ import { Script } from "./Script";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { Node } from "../NetscriptJSEvaluator";
 
 export interface RamUsageEntry {
   type: "ns" | "dom" | "fn" | "misc";
@@ -282,11 +283,11 @@ export function checkInfiniteLoop(code: string): number {
     ast,
     {},
     {
-      WhileStatement: (node: acorn.Node, st: unknown, walkDeeper: walk.WalkerCallback<any>) => {
-        if (nodeHasTrueTest((node as any).test) && !hasAwait(node)) {
+      WhileStatement: (node: Node, st: unknown, walkDeeper: walk.WalkerCallback<any>) => {
+        if (nodeHasTrueTest(node.test) && !hasAwait(node)) {
           missingAwaitLine = (code.slice(0, node.start).match(/\n/g) || []).length + 1;
         } else {
-          (node as any).body && walkDeeper((node as any).body, st);
+          node.body && walkDeeper(node.body, st);
         }
       },
     },
@@ -295,13 +296,20 @@ export function checkInfiniteLoop(code: string): number {
   return missingAwaitLine;
 }
 
+interface ParseDepsResult {
+  dependencyMap: {
+    [key: string]: Set<string> | undefined;
+  };
+  additionalModules: string[];
+}
+
 /**
  * Helper function that parses a single script. It returns a map of all dependencies,
  * which are items in the code's AST that potentially need to be evaluated
  * for RAM usage calculations. It also returns an array of additional modules
  * that need to be parsed (i.e. are 'import'ed scripts).
  */
-function parseOnlyCalculateDeps(code: string, currentModule: string): any {
+function parseOnlyCalculateDeps(code: string, currentModule: string): ParseDepsResult {
   const ast = parse(code, { sourceType: "module", ecmaVersion: "latest" });
   // Everything from the global scope goes in ".". Everything else goes in ".function", where only
   // the outermost layer of functions counts.
@@ -330,52 +338,56 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
   //A list of identifiers that resolve to "native Javascript code"
   const objectPrototypeProperties = Object.getOwnPropertyNames(Object.prototype);
 
+  interface State {
+    key: string;
+  }
+
   // If we discover a dependency identifier, state.key is the dependent identifier.
   // walkDeeper is for doing recursive walks of expressions in composites that we handle.
-  function commonVisitors(): any {
+  function commonVisitors(): walk.RecursiveVisitors<State> {
     return {
-      Identifier: (node: any, st: any) => {
+      Identifier: (node: Node, st: State) => {
         if (objectPrototypeProperties.includes(node.name)) {
           return;
         }
         addRef(st.key, node.name);
       },
-      WhileStatement: (node: any, st: any, walkDeeper: any) => {
+      WhileStatement: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         addRef(st.key, specialReferenceWHILE);
         node.test && walkDeeper(node.test, st);
         node.body && walkDeeper(node.body, st);
       },
-      DoWhileStatement: (node: any, st: any, walkDeeper: any) => {
+      DoWhileStatement: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         addRef(st.key, specialReferenceWHILE);
         node.test && walkDeeper(node.test, st);
         node.body && walkDeeper(node.body, st);
       },
-      ForStatement: (node: any, st: any, walkDeeper: any) => {
+      ForStatement: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         addRef(st.key, specialReferenceFOR);
         node.init && walkDeeper(node.init, st);
         node.test && walkDeeper(node.test, st);
         node.update && walkDeeper(node.update, st);
         node.body && walkDeeper(node.body, st);
       },
-      IfStatement: (node: any, st: any, walkDeeper: any) => {
+      IfStatement: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         addRef(st.key, specialReferenceIF);
         node.test && walkDeeper(node.test, st);
         node.consequent && walkDeeper(node.consequent, st);
         node.alternate && walkDeeper(node.alternate, st);
       },
-      MemberExpression: (node: any, st: any, walkDeeper: any) => {
+      MemberExpression: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         node.object && walkDeeper(node.object, st);
         node.property && walkDeeper(node.property, st);
       },
     };
   }
 
-  walk.recursive(
+  walk.recursive<State>(
     ast,
     { key: globalKey },
     Object.assign(
       {
-        ImportDeclaration: (node: any, st: any) => {
+        ImportDeclaration: (node: Node, st: State) => {
           const importModuleName = node.source.value;
           additionalModules.push(importModuleName);
 
@@ -398,7 +410,7 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
             }
           }
         },
-        FunctionDeclaration: (node: any) => {
+        FunctionDeclaration: (node: Node) => {
           // node.id will be null when using 'export default'. Add a module name indicating the default export.
           const key = currentModule + "." + (node.id === null ? "__SPECIAL_DEFAULT_EXPORT__" : node.id.name);
           walk.recursive(node, { key: key }, commonVisitors());
