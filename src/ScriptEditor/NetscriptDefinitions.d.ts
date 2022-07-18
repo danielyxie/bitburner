@@ -627,13 +627,13 @@ export interface NodeStats {
   /** Node's RAM (GB) */
   ram: number;
   /** Node's used RAM (GB) */
-  ramUsed: number;
+  ramUsed?: number;
   /** Node's number of cores */
   cores: number;
   /** Cache level. Only applicable for Hacknet Servers */
-  cache: number;
+  cache?: number;
   /** Hash Capacity provided by this Node. Only applicable for Hacknet Servers */
-  hashCapacity: number;
+  hashCapacity?: number;
   /** Node's production per second */
   production: number;
   /** Number of seconds since Node has been purchased */

@@ -74,11 +74,10 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): I
         const i = ctx.helper.number("i", _i);
         const node = getHacknetNode(ctx, i);
         const hasUpgraded = hasHacknetServers(player);
-        const res: any = {
+        const res: NodeStats = {
           name: node instanceof HacknetServer ? node.hostname : node.name,
           level: node.level,
           ram: node instanceof HacknetServer ? node.maxRam : node.ram,
-          ramUsed: node instanceof HacknetServer ? node.ramUsed : undefined,
           cores: node.cores,
           production: node instanceof HacknetServer ? node.hashRate : node.moneyGainRatePerSecond,
           timeOnline: node.onlineTimeSeconds,
@@ -88,6 +87,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): I
         if (hasUpgraded && node instanceof HacknetServer) {
           res.cache = node.cache;
           res.hashCapacity = node.hashCapacity;
+          res.ramUsed = node.ramUsed;
         }
 
         return res;
