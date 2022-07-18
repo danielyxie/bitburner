@@ -38,7 +38,7 @@ export function PromptManager(): React.ReactElement {
     setPrompt(null);
   }
 
-  const types: { [key: string]: any } = {
+  const types: { [key: string]: (props: IContentProps) => React.ReactElement } = {
     text: PromptMenuText,
     select: PromptMenuSelect,
   };
