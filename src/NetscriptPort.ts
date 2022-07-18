@@ -1,10 +1,10 @@
 import { Settings } from "./Settings/Settings";
 
 export interface IPort {
-  write: (value: any) => any;
-  tryWrite: (value: any) => boolean;
-  read: () => any;
-  peek: () => any;
+  write: (value: unknown) => unknown;
+  tryWrite: (value: unknown) => boolean;
+  read: () => unknown;
+  peek: () => unknown;
   full: () => boolean;
   empty: () => boolean;
   clear: () => void;
