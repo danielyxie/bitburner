@@ -4,7 +4,7 @@ import { serverMetadata } from "./data/servers";
 
 import { HacknetServer } from "../Hacknet/HacknetServer";
 
-import { IMap } from "../types";
+import { IMap, IMinMaxRange } from "../types";
 import { createRandomIp } from "../utils/IPAddress";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Reviver } from "../utils/JSONReviver";
@@ -111,8 +111,6 @@ interface IServerParams {
   organizationName: string;
   requiredHackingSkill?: number;
   serverGrowth?: number;
-
-  [key: string]: any;
 }
 
 export function initForeignServers(homeComputer: Server): void {
@@ -123,23 +121,9 @@ export function initForeignServers(homeComputer: Server): void {
     networkLayers.push([]);
   }
 
-  // Essentially any property that is of type 'number | IMinMaxRange'
-  const propertiesToPatternMatch: string[] = [
-    "hackDifficulty",
-    "moneyAvailable",
-    "requiredHackingSkill",
-    "serverGrowth",
-  ];
-
-  const toNumber = (value: any): any => {
-    switch (typeof value) {
-      case "number":
-        return value;
-      case "object":
-        return getRandomInt(value.min, value.max);
-      default:
-        throw Error(`Do not know how to convert the type '${typeof value}' to a number`);
-    }
+  const toNumber = (value: number | IMinMaxRange): number => {
+    if (typeof value === "number") return value;
+    else return getRandomInt(value.min, value.max);
   };
 
   for (const metadata of serverMetadata) {
@@ -154,11 +138,10 @@ export function initForeignServers(homeComputer: Server): void {
       serverParams.maxRam = Math.pow(2, toNumber(metadata.maxRamExponent));
     }
 
-    for (const prop of propertiesToPatternMatch) {
-      if (metadata[prop] !== undefined) {
-        serverParams[prop] = toNumber(metadata[prop]);
-      }
-    }
+    if (metadata.hackDifficulty) serverParams.hackDifficulty = toNumber(metadata.hackDifficulty);
+    if (metadata.moneyAvailable) serverParams.moneyAvailable = toNumber(metadata.moneyAvailable);
+    if (metadata.requiredHackingSkill) serverParams.requiredHackingSkill = toNumber(metadata.requiredHackingSkill);
+    if (metadata.serverGrowth) serverParams.serverGrowth = toNumber(metadata.serverGrowth);
 
     const server = new Server(serverParams);
     for (const filename of metadata.literature || []) {
