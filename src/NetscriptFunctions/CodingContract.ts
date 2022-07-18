@@ -88,7 +88,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
         const hostname = ctx.helper.string("hostname", _hostname);
         const contract = getCodingContract(ctx, "getData", hostname, filename);
         const data = contract.getData();
-        if (data.constructor === Array) {
+        if (Array.isArray(data)) {
           // For two dimensional arrays, we have to copy the internal arrays using
           // slice() as well. As of right now, no contract has arrays that have
           // more than two dimensions

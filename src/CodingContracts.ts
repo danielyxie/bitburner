@@ -106,7 +106,7 @@ export interface ICodingContractReward {
  */
 export class CodingContract {
   /* Relevant data for the contract's problem */
-  data: any;
+  data: unknown;
 
   /* Contract's filename */
   fn: string;
@@ -137,7 +137,7 @@ export class CodingContract {
     this.reward = reward;
   }
 
-  getData(): any {
+  getData(): unknown {
     return this.data;
   }
 
