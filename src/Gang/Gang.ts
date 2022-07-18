@@ -10,7 +10,7 @@ import { Factions } from "../Faction/Factions";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 
-import { exceptionAlert, isIError } from "../utils/helpers/exceptionAlert";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 import { GangMemberUpgrade } from "./GangMemberUpgrade";

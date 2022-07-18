@@ -11,10 +11,6 @@ import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StaticAugmentations } from "../StaticAugmentations";
 
-interface IAugmentedStats {
-  [index: string]: number;
-}
-
 function calculateAugmentedStats(): Multipliers {
   let augP: Multipliers = defaultMultipliers();
   for (const aug of Player.queuedAugmentations) {

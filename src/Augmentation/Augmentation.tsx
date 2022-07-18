@@ -1,6 +1,5 @@
 // Class definition for a single Augmentation object
 import * as React from "react";
-import { IMap } from "../types";
 
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";

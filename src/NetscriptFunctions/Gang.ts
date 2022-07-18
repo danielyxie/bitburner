@@ -17,7 +17,6 @@ import {
   GangMemberAscension,
   EquipmentStats,
   GangTaskStats,
-  GangTerritory,
   GangOtherInfoObject,
 } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";

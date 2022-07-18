@@ -7,7 +7,7 @@ import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
 import { IPerson } from "./IPerson";
-import { defaultMultipliers, mergeMultipliers, Multipliers } from "./Multipliers";
+import { defaultMultipliers, mergeMultipliers } from "./Multipliers";
 
 // Base class representing a person-like object
 export abstract class Person implements IPerson {

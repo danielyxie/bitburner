@@ -8,8 +8,6 @@ import { ResearchMap } from "./ResearchMap";
 
 import { IMap } from "../types";
 
-import { numeralWrapper } from "../ui/numeralFormat";
-
 interface IConstructorParams {
   children?: Node[];
   cost: number;
