@@ -85,7 +85,7 @@ export interface Multipliers {
  */
 export interface RunningScript {
   /** Arguments the script was called with */
-  args: string[];
+  args: (string | number | boolean)[];
   /** Filename of the script */
   filename: string;
   /**
@@ -321,7 +321,7 @@ export interface ProcessInfo {
   /** Number of threads script is running with */
   threads: number;
   /** Script's arguments */
-  args: string[];
+  args: (string | number | boolean)[];
   /** Process ID */
   pid: number;
 }

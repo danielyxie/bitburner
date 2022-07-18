@@ -10,10 +10,11 @@ import { Terminal } from "../Terminal";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { formatTime } from "../utils/helpers/formatTime";
+import { ScriptArg } from "../Netscript/ScriptArg";
 
 export class RunningScript {
   // Script arguments
-  args: any[] = [];
+  args: ScriptArg[] = [];
 
   // Map of [key: hostname] -> Hacking data. Used for offline progress calculations.
   // Hacking data format: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
@@ -62,7 +63,7 @@ export class RunningScript {
   // Script urls for the current running script for translating urls back to file names in errors
   dependencies: ScriptUrl[] = [];
 
-  constructor(script: Script | null = null, args: any[] = []) {
+  constructor(script: Script | null = null, args: ScriptArg[] = []) {
     if (script == null) {
       return;
     }
