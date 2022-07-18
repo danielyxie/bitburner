@@ -163,7 +163,7 @@ export function initForeignServers(homeComputer: Server): void {
     server2.serversOnNetwork.push(server1.hostname);
   };
 
-  const getRandomArrayItem = (arr: any[]): any => arr[Math.floor(Math.random() * arr.length)];
+  const getRandomArrayItem = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
   const linkNetworkLayers = (network1: Server[], selectServer: () => Server): void => {
     for (const server of network1) {
