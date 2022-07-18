@@ -11,10 +11,10 @@ export interface IPort {
 }
 
 export function NetscriptPort(): IPort {
-  const data: any[] = [];
+  const data: unknown[] = [];
 
   return {
-    write: (value: any): any => {
+    write: (value: unknown): unknown => {
       data.push(value);
       if (data.length > Settings.MaxPortCapacity) {
         return data.shift();
@@ -22,7 +22,7 @@ export function NetscriptPort(): IPort {
       return null;
     },
 
-    tryWrite: (value: any): boolean => {
+    tryWrite: (value: unknown): boolean => {
       if (data.length >= Settings.MaxPortCapacity) {
         return false;
       }
@@ -30,14 +30,14 @@ export function NetscriptPort(): IPort {
       return true;
     },
 
-    read: (): any => {
+    read: (): unknown => {
       if (data.length === 0) {
         return "NULL PORT DATA";
       }
       return data.shift();
     },
 
-    peek: (): any => {
+    peek: (): unknown => {
       if (data.length === 0) {
         return "NULL PORT DATA";
       } else {
