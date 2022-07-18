@@ -91,7 +91,7 @@ export function EarningsElement(props: IProps): React.ReactElement {
   const classes = useStyles();
   const player = use.Player();
 
-  let data: any[][] = [];
+  let data: (string | JSX.Element)[][] = [];
   if (props.sleeve.currentTask === SleeveTaskType.Crime) {
     data = [
       [
