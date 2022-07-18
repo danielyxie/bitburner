@@ -301,8 +301,10 @@ export async function determineAllPossibilitiesForTabCompletion(
       servers: GetAllServers().map((server) => server.hostname),
       scripts: currServ.scripts.map((script) => script.filename),
       txts: currServ.textFiles.map((txt) => txt.fn),
-      flags: (schema: any) => {
-        pos2 = schema.map((f: any) => {
+      flags: (schema: unknown) => {
+        if (!Array.isArray(schema)) throw new Error("flags require an array of array");
+        pos2 = schema.map((f: unknown) => {
+          if (!Array.isArray(f)) throw new Error("flags require an array of array");
           if (f[0].length === 1) return "-" + f[0];
           return "--" + f[0];
         });
