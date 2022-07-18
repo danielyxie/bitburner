@@ -10,7 +10,7 @@ export interface INetscriptHelper {
   number(funcName: string, argName: string, v: unknown): number;
   city(funcName: string, argName: string, v: unknown): CityName;
   boolean(v: unknown): boolean;
-  getServer(ip: any, ctx: NetscriptContext): BaseServer;
+  getServer(ip: string, ctx: NetscriptContext): BaseServer;
   checkSingularityAccess(func: string): void;
   hack(ctx: NetscriptContext, hostname: string, manual: boolean): Promise<number>;
   getValidPort(funcName: string, port: number): IPort;
