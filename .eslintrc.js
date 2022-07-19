@@ -29,12 +29,12 @@ module.exports = {
         allowExpressions: true,
       },
     ],
-    "no-constant-condition": [
-      "error",
-      {
-        checkLoops: false,
-      },
-    ],
+    // "no-constant-condition": [
+    //   "error",
+    //   {
+    //     checkLoops: false,
+    //   },
+    // ],
     "no-empty": [
       "off",
       {
