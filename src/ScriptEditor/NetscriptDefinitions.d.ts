@@ -1,4 +1,20 @@
 /**
+ * Coding contract data will differ depending on coding contract.
+ * @public
+ */
+type CodingContractData = any;
+
+/**
+ * @public
+ */
+type PortData = string | number;
+
+/**
+ * @public
+ */
+type ScriptArg = string | number | boolean;
+
+/**
  * @public
  */
 type FilenameOrPID = number | string;
@@ -35,7 +51,7 @@ interface Player {
   totalPlaytime: number;
   playtimeSinceLastAug: number;
   playtimeSinceLastBitnode: number;
-  jobs: any;
+  jobs: Record<string, string>;
   factions: string[];
   tor: boolean;
   hasCorporation: boolean;
@@ -3287,7 +3303,7 @@ export interface CodingContract {
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns The specified contract’s data, data type depends on contract type.;
    */
-  getData(filename: string, host?: string): any;
+  getData(filename: string, host?: string): CodingContractData;
 
   /**
    * Get the number of attempt remaining.
@@ -4281,8 +4297,16 @@ export interface InfiltrationReward {
 /**
  * @public
  */
+export interface ILocation {
+  city: CityName | null;
+  name: string;
+}
+
+/**
+ * @public
+ */
 export interface InfiltrationLocation {
-  location: any;
+  location: ILocation;
   reward: InfiltrationReward;
   difficulty: number;
 }
@@ -6004,7 +6028,7 @@ export interface NS {
    * @param handle - Filename to read from.
    * @returns Data in the specified text file.
    */
-  read(handle: string): any;
+  read(handle: string): PortData;
 
   /**
    * Get a copy of the data from a port without popping it.
@@ -6018,7 +6042,7 @@ export interface NS {
    * @param port - Port to peek. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
    */
-  peek(port: number): any;
+  peek(port: number): PortData;
 
   /**
    * Clear data from a file.
@@ -6050,7 +6074,7 @@ export interface NS {
    * Write data to that netscript port.
    * @returns The data popped off the queue if it was full.
    */
-  writePort(port: number, data: string | number): Promise<any>;
+  writePort(port: number, data: string | number): Promise<PortData>;
   /**
    * Read data from a port.
    * @remarks
@@ -6061,7 +6085,7 @@ export interface NS {
    * If the queue is empty, then the string “NULL PORT DATA” will be returned.
    * @returns the data read.
    */
-  readPort(port: number): any;
+  readPort(port: number): PortData;
 
   /**
    * Get all data on a port.
@@ -6347,7 +6371,7 @@ export interface NS {
    * Open up a message box.
    * @param msg - Message to alert.
    */
-  alert(msg: any): void;
+  alert(msg: string): void;
 
   /**
    * Queue a toast (bottom-right notification).
@@ -6355,7 +6379,7 @@ export interface NS {
    * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
    * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
    */
-  toast(msg: any, variant?: ToastVariantValues, duration?: number | null): void;
+  toast(msg: string, variant?: ToastVariantValues, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -6532,7 +6556,7 @@ export interface NS {
    * // {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":true}
    * ```
    */
-  flags(schema: [string, string | number | boolean | string[]][]): any;
+  flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
 
   /**
    * Share your computer with your factions.
@@ -6897,12 +6921,12 @@ export interface WarehouseAPI {
    * @param amt - amount of upgrades defaults to 1
    * @returns cost to upgrade
    */
-  getUpgradeWarehouseCost(adivisionName: any, acityName: any, amt?: number): number;
+  getUpgradeWarehouseCost(adivisionName: string, acityName: string, amt?: number): number;
   /**
    * Check if you have a warehouse in city
    * @returns true if warehouse is present, false if not
    */
-  hasWarehouse(adivisionName: any, acityName: any): boolean;
+  hasWarehouse(adivisionName: string, acityName: string): boolean;
 }
 
 /**
@@ -7328,5 +7352,5 @@ interface AutocompleteData {
   servers: string[];
   scripts: string[];
   txts: string[];
-  flags(schema: [string, string | number | boolean | string[]][]): any;
+  flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
 }
