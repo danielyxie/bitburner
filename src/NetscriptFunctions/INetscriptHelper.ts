@@ -8,12 +8,24 @@ import { FormulaGang } from "../Gang/formulas/formulas";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 import { BasicHGWOptions } from "../ScriptEditor/NetscriptDefinitions";
+import { ScriptArg } from "../Netscript/ScriptArg";
+
+export type ScriptIdentifier =
+  | number
+  | {
+      fn: string;
+      hostname: string;
+      args: ScriptArg[];
+    };
 
 export interface INetscriptHelper {
   updateDynamicRam(functionName: string, ram: number): void;
   makeRuntimeErrorMsg(functionName: string, message: string): string;
   string(funcName: string, argName: string, v: unknown): string;
   number(funcName: string, argName: string, v: unknown): number;
+  ustring(funcName: string, argName: string, v: unknown): string | undefined;
+  unumber(funcName: string, argName: string, v: unknown): number | undefined;
+  scriptIdentifier(funcName: string, fn: unknown, hostname: unknown, args: unknown): ScriptIdentifier;
   city(funcName: string, argName: string, v: unknown): CityName;
   boolean(v: unknown): boolean;
   getServer(ip: string, ctx: NetscriptContext): BaseServer;

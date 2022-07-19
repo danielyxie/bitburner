@@ -5,6 +5,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Bladeburner as INetscriptBladeburner, BladeburnerCurAction } from "../ScriptEditor/NetscriptDefinitions";
 import { IAction } from "src/Bladeburner/IAction";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { BlackOperation } from "../Bladeburner/BlackOperation";
 
 export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript): InternalAPI<INetscriptBladeburner> {
   const checkBladeburnerAccess = function (ctx: NetscriptContext, skipjoined = false): void {
@@ -75,7 +76,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
       (_blackOpName: unknown): number => {
         const blackOpName = ctx.helper.string("blackOpName", _blackOpName);
         checkBladeburnerAccess(ctx);
-        const action: any = getBladeburnerActionObject(ctx, "blackops", blackOpName);
+        const action = getBladeburnerActionObject(ctx, "blackops", blackOpName);
+        if (!(action instanceof BlackOperation)) throw new Error("action was not a black operation");
         return action.reqdRank;
       },
     getGeneralActionNames: (ctx: NetscriptContext) => (): string[] => {

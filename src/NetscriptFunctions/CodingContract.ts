@@ -25,7 +25,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
     attempt:
       (ctx: NetscriptContext) =>
       (
-        answer: any,
+        _answer: unknown,
         _filename: unknown,
         _hostname: unknown = workerScript.hostname,
         { returnReward }: CodingAttemptOptions = { returnReward: false },
@@ -36,10 +36,11 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
 
         // Convert answer to string. If the answer is a 2D array, then we have to
         // manually add brackets for the inner arrays
+        let answer = "";
         if (is2DArray(answer)) {
           const answerComponents = [];
           for (let i = 0; i < answer.length; ++i) {
-            answerComponents.push(["[", answer[i].toString(), "]"].join(""));
+            answerComponents.push(["[", String(answer[i]), "]"].join(""));
           }
 
           answer = answerComponents.join(",");
@@ -83,7 +84,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
       },
     getData:
       (ctx: NetscriptContext) =>
-      (_filename: unknown, _hostname: unknown = workerScript.hostname): any => {
+      (_filename: unknown, _hostname: unknown = workerScript.hostname): unknown => {
         const filename = ctx.helper.string("filename", _filename);
         const hostname = ctx.helper.string("hostname", _hostname);
         const contract = getCodingContract(ctx, "getData", hostname, filename);

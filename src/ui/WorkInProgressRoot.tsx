@@ -375,7 +375,7 @@ export function WorkInProgressRoot(): React.ReactElement {
 
     const position = player.jobs[player.currentWork.companyName];
     const gains = player.currentWork.getGainRates(player);
-
+    console.log(player.currentWork.cyclesWorked);
     workInfo = {
       buttons: {
         cancel: cancel,
@@ -406,7 +406,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         ...ExpRows(gains),
       ],
       progress: {
-        elapsed: player.currentWork.cyclesWorked * CYCLES_PER_SEC,
+        elapsed: player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
       },
 
       stopText: "Stop working",

@@ -108,11 +108,12 @@ import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 import { recentScripts } from "./Netscript/RecentScripts";
 import { CityName } from "./Locations/data/CityNames";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
-import { INetscriptHelper } from "./NetscriptFunctions/INetscriptHelper";
+import { INetscriptHelper, ScriptIdentifier } from "./NetscriptFunctions/INetscriptHelper";
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { GangMember } from "./Gang/GangMember";
 import { GangMemberTask } from "./Gang/GangMemberTask";
+import { ScriptArg } from "./Netscript/ScriptArg";
 
 interface NS extends INS {
   [key: string]: any;
@@ -183,11 +184,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
    *      exists, or the current running script if the first argument 'fn'
    *      is not specified.
    */
-  const getRunningScript = function (
+  const getRunningScriptByArgs = function (
     ctx: NetscriptContext,
     fn: string,
     hostname: string,
-    scriptArgs: any,
+    scriptArgs: ScriptArg[],
   ): RunningScript | null {
     if (!Array.isArray(scriptArgs)) {
       throw makeRuntimeRejectMsg(
@@ -217,6 +218,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (runningScript) return runningScript;
     }
     return null;
+  };
+
+  const getRunningScript = (ctx: NetscriptContext, ident: ScriptIdentifier): RunningScript | null => {
+    if (typeof ident === "number") {
+      return getRunningScriptByPid(ident);
+    } else {
+      return getRunningScriptByArgs(ctx, ident.fn, ident.hostname, ident.args);
+    }
   };
 
   /**
@@ -253,12 +262,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
    * @param {any[]} scriptArgs - Running script's arguments
    * @returns {string} Error message to print to logs
    */
-  const getCannotFindRunningScriptErrorMessage = function (fn: string, hostname: string, scriptArgs: any): string {
-    if (!Array.isArray(scriptArgs)) {
-      scriptArgs = [];
-    }
+  const getCannotFindRunningScriptErrorMessage = function (ident: ScriptIdentifier): string {
+    if (typeof ident === "number") return `Cannot find running script with pid: ${ident}`;
 
-    return `Cannot find running script ${fn} on server ${hostname} with args: ${arrayToString(scriptArgs)}`;
+    return `Cannot find running script ${ident.fn} on server ${ident.hostname} with args: ${arrayToString(ident.args)}`;
   };
 
   /**
@@ -360,7 +367,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     ctx: NetscriptContext,
     hostname: string,
     manual: boolean,
-    { threads: requestedThreads, stock }: any = {},
+    { threads: requestedThreads, stock }: BasicHGWOptions = {},
   ): Promise<number> {
     if (hostname === undefined) {
       throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
@@ -458,7 +465,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     });
   };
 
-  const argsToString = function (args: any[]): string {
+  const argsToString = function (args: unknown[]): string {
     let out = "";
     for (let arg of args) {
       arg = toNative(arg);
@@ -476,23 +483,52 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     return true;
   };
 
+  const helperString = (funcName: string, argName: string, v: unknown): string => {
+    if (typeof v === "string") return v;
+    if (typeof v === "number") return v + ""; // cast to string;
+    throw makeRuntimeErrorMsg(funcName, `'${argName}' should be a string.`);
+  };
+  const helperNumber = (funcName: string, argName: string, v: unknown): number => {
+    if (typeof v === "string") {
+      const x = parseFloat(v);
+      if (!isNaN(x)) return x; // otherwise it wasn't even a string representing a number.
+    } else if (typeof v === "number") {
+      if (isNaN(v)) throw makeRuntimeErrorMsg(funcName, `'${argName}' is NaN.`);
+      return v;
+    }
+    throw makeRuntimeErrorMsg(funcName, `'${argName}' should be a number.`);
+  };
+
   const helper: INetscriptHelper = {
     updateDynamicRam: updateDynamicRam,
     makeRuntimeErrorMsg: makeRuntimeErrorMsg,
-    string: (funcName: string, argName: string, v: unknown): string => {
-      if (typeof v === "string") return v;
-      if (typeof v === "number") return v + ""; // cast to string;
-      throw makeRuntimeErrorMsg(funcName, `${argName} should be a string.`);
+    string: helperString,
+    number: helperNumber,
+    ustring: (funcName: string, argName: string, v: unknown): string | undefined => {
+      if (v === undefined) return undefined;
+      return helperString(funcName, argName, v);
     },
-    number: (funcName: string, argName: string, v: unknown): number => {
-      if (typeof v === "string") {
-        const x = parseFloat(v);
-        if (!isNaN(x)) return x; // otherwise it wasn't even a string representing a number.
-      } else if (typeof v === "number") {
-        if (isNaN(v)) throw makeRuntimeErrorMsg(funcName, `${argName} is NaN.`);
-        return v;
+    unumber: (funcName: string, argName: string, v: unknown): number | undefined => {
+      if (v === undefined) return undefined;
+      return helperNumber(funcName, argName, v);
+    },
+    scriptIdentifier: (funcName: string, _fn: unknown, _hostname: unknown, _args: unknown): ScriptIdentifier => {
+      const isScriptArgs = (_args: unknown): _args is ScriptArg[] =>
+        Array.isArray(_args) &&
+        _args.every((a) => typeof a === "string" || typeof a === "number" || typeof a === "boolean");
+
+      if (_fn === undefined) return workerScript.pid;
+      if (typeof _fn === "number") return _fn;
+      if (typeof _fn === "string") {
+        const hostname = _hostname != undefined ? helperString(funcName, "hostname", _hostname) : workerScript.hostname;
+        if (!isScriptArgs(_args)) throw makeRuntimeErrorMsg(funcName, "'args' is not an array of script args");
+        return {
+          fn: _fn,
+          hostname: hostname,
+          args: _args,
+        };
       }
-      throw makeRuntimeErrorMsg(funcName, `${argName} should be a number.`);
+      throw new Error("not implemented");
     },
     boolean: (v: unknown): boolean => {
       return !!v; // Just convert it to boolean.
@@ -863,7 +899,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     print:
       (ctx: NetscriptContext) =>
-      (...args: any[]): void => {
+      (...args: unknown[]): void => {
         if (args.length === 0) {
           throw ctx.makeRuntimeErrorMsg("Takes at least 1 argument.");
         }
@@ -871,7 +907,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     printf:
       (ctx: NetscriptContext) =>
-      (_format: unknown, ...args: any[]): void => {
+      (_format: unknown, ...args: unknown[]): void => {
         const format = ctx.helper.string("format", _format);
         if (typeof format !== "string") {
           throw ctx.makeRuntimeErrorMsg("First argument must be string for the format.");
@@ -880,7 +916,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     tprint:
       (ctx: NetscriptContext) =>
-      (...args: any[]): void => {
+      (...args: unknown[]): void => {
         if (args.length === 0) {
           throw ctx.makeRuntimeErrorMsg("Takes at least 1 argument.");
         }
@@ -905,7 +941,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     tprintf:
       (ctx: NetscriptContext) =>
-      (_format: unknown, ...args: any[]): void => {
+      (_format: unknown, ...args: unknown[]): void => {
         const format = ctx.helper.string("format", _format);
         const str = vsprintf(format, args);
 
@@ -972,10 +1008,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     getScriptLogs:
       (ctx: NetscriptContext) =>
-      (fn: any, hostname: any, ...scriptArgs: any[]): string[] => {
-        const runningScriptObj = getRunningScript(ctx, fn, hostname, scriptArgs);
+      (fn: unknown, hostname: unknown, ...scriptArgs: unknown[]): string[] => {
+        const ident = ctx.helper.scriptIdentifier(fn, hostname, scriptArgs);
+        const runningScriptObj = getRunningScript(ctx, ident);
         if (runningScriptObj == null) {
-          ctx.log(() => getCannotFindRunningScriptErrorMessage(fn, hostname, scriptArgs));
+          ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
           return [];
         }
 
@@ -983,22 +1020,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     tail:
       (ctx: NetscriptContext) =>
-      (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void => {
-        let runningScriptObj;
-        if (fn === undefined) {
-          runningScriptObj = workerScript.scriptRef;
-        } else if (typeof fn === "number") {
-          runningScriptObj = getRunningScriptByPid(fn);
-        } else {
-          runningScriptObj = getRunningScript(ctx, fn, hostname, scriptArgs);
-        }
+      (fn: unknown, hostname: unknown, ...scriptArgs: unknown[]): void => {
+        const ident = ctx.helper.scriptIdentifier(fn, hostname, scriptArgs);
+        const runningScriptObj = getRunningScript(ctx, ident);
         if (runningScriptObj == null) {
-          ctx.log(() => getCannotFindRunningScriptErrorMessage(fn, hostname, scriptArgs));
+          ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
           return;
         }
 
         LogBoxEvents.emit(runningScriptObj);
       },
+
     closeTail:
       (ctx: NetscriptContext) =>
       (_pid: unknown = workerScript.scriptRef.pid): void => {
@@ -1211,22 +1243,23 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     kill:
       (ctx: NetscriptContext) =>
-      (filename: any, hostname?: any, ...scriptArgs: any[]): boolean => {
+      (filename: unknown, hostname: unknown, ...scriptArgs: unknown[]): boolean => {
+        const ident = ctx.helper.scriptIdentifier(filename, hostname, scriptArgs);
         let res;
-        const killByPid = typeof filename === "number";
+        const killByPid = typeof ident === "number";
         if (killByPid) {
           // Kill by pid
-          res = killWorkerScript(filename);
+          res = killWorkerScript(ident);
         } else {
           // Kill by filename/hostname
           if (filename === undefined || hostname === undefined) {
             throw ctx.makeRuntimeErrorMsg("Usage: kill(scriptname, server, [arg1], [arg2]...)");
           }
 
-          const server = safeGetServer(hostname, ctx);
-          const runningScriptObj = getRunningScript(ctx, filename, hostname, scriptArgs);
+          const server = safeGetServer(ident.hostname, ctx);
+          const runningScriptObj = getRunningScriptByArgs(ctx, ident.fn, ident.hostname, ident.args);
           if (runningScriptObj == null) {
-            ctx.log(() => getCannotFindRunningScriptErrorMessage(filename, hostname, scriptArgs));
+            ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
             return false;
           }
 
@@ -1235,14 +1268,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         if (res) {
           if (killByPid) {
-            ctx.log(() => `Killing script with PID ${filename}`);
+            ctx.log(() => `Killing script with PID ${ident}`);
           } else {
             ctx.log(() => `Killing '${filename}' on '${hostname}' with args: ${arrayToString(scriptArgs)}.`);
           }
           return true;
         } else {
           if (killByPid) {
-            ctx.log(() => `No script with PID ${filename}`);
+            ctx.log(() => `No script with PID ${ident}`);
           } else {
             ctx.log(() => `No such script '${filename}' on '${hostname}' with args: ${arrayToString(scriptArgs)}`);
           }
@@ -1281,8 +1314,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     scp:
       (ctx: NetscriptContext) =>
-      async (scriptname: any, _hostname1: unknown, hostname2?: any): Promise<boolean> => {
+      async (scriptname: any, _hostname1: unknown, _hostname2?: unknown): Promise<boolean> => {
         const hostname1 = ctx.helper.string("hostname1", _hostname1);
+        const hostname2 = ctx.helper.ustring("hostname2", _hostname2);
         if (scriptname && scriptname.constructor === Array) {
           // Recursively call scp on all elements of array
           const scripts: string[] = scriptname;
@@ -1292,7 +1326,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           let res = true;
           await Promise.all(
             scripts.map(async function (script) {
-              if (!(await NetscriptFunctions(workerScript).scp(script, hostname1, hostname2))) {
+              if (!(await NetscriptFunctions(workerScript).scp(script, hostname1, hostname2 as any))) {
                 res = false;
               }
             }),
@@ -1785,15 +1819,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     isRunning:
       (ctx: NetscriptContext) =>
-      (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): boolean => {
-        if (fn === undefined || hostname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
-        }
-        if (typeof fn === "number") {
-          return getRunningScriptByPid(fn) != null;
-        } else {
-          return getRunningScript(ctx, fn, hostname, scriptArgs) != null;
-        }
+      (fn: unknown, hostname: unknown, ...scriptArgs: unknown[]): boolean => {
+        const ident = ctx.helper.scriptIdentifier(fn, hostname, scriptArgs);
+        return getRunningScript(ctx, ident) !== null;
       },
     getPurchasedServerLimit: () => (): number => {
       return getPurchaseServerLimit();
@@ -1948,7 +1976,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     writePort:
       (ctx: NetscriptContext) =>
-      (_port: unknown, data: any = ""): Promise<any> => {
+      (_port: unknown, data: unknown = ""): Promise<any> => {
         const port = ctx.helper.number("port", _port);
         if (typeof data !== "string" && typeof data !== "number") {
           throw ctx.makeRuntimeErrorMsg(`Trying to write invalid data to a port: only strings and numbers are valid.`);
@@ -1958,7 +1986,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     write:
       (ctx: NetscriptContext) =>
-      (_port: unknown, data: any = "", _mode: unknown = "a"): Promise<void> => {
+      (_port: unknown, data: unknown = "", _mode: unknown = "a"): Promise<void> => {
         const port = ctx.helper.string("port", _port);
         const mode = ctx.helper.string("mode", _mode);
         if (isString(port)) {
@@ -1990,23 +2018,23 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
             let script = workerScript.getScriptOnServer(fn, server);
             if (script == null) {
               // Create a new script
-              script = new Script(Player, fn, data, server.hostname, server.scripts);
+              script = new Script(Player, fn, String(data), server.hostname, server.scripts);
               server.scripts.push(script);
               return script.updateRamUsage(Player, server.scripts);
             }
-            mode === "w" ? (script.code = data) : (script.code += data);
+            mode === "w" ? (script.code = String(data)) : (script.code += data);
             return script.updateRamUsage(Player, server.scripts);
           } else {
             // Write to text file
             const txtFile = getTextFile(fn, server);
             if (txtFile == null) {
-              createTextFile(fn, data, server);
+              createTextFile(fn, String(data), server);
               return Promise.resolve();
             }
             if (mode === "w") {
-              txtFile.write(data);
+              txtFile.write(String(data));
             } else {
-              txtFile.append(data);
+              txtFile.append(String(data));
             }
           }
           return Promise.resolve();
@@ -2016,7 +2044,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     tryWritePort:
       (ctx: NetscriptContext) =>
-      (_port: unknown, data: any = ""): Promise<any> => {
+      (_port: unknown, data: unknown = ""): Promise<any> => {
         let port = ctx.helper.number("port", _port);
         if (typeof data !== "string" && typeof data !== "number") {
           throw makeRuntimeErrorMsg(
@@ -2043,7 +2071,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     readPort:
       (ctx: NetscriptContext) =>
-      (_port: unknown): any => {
+      (_port: unknown): unknown => {
         const port = ctx.helper.number("port", _port);
         // Read from port
         const iport = helper.getValidPort("readPort", port);
@@ -2083,7 +2111,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     peek:
       (ctx: NetscriptContext) =>
-      (_port: unknown): any => {
+      (_port: unknown): unknown => {
         const port = ctx.helper.number("port", _port);
         const iport = helper.getValidPort("peek", port);
         const x = iport.peek();
@@ -2125,12 +2153,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     rm:
       (ctx: NetscriptContext) =>
-      (_fn: unknown, hostname: any): boolean => {
+      (_fn: unknown, _hostname: unknown = workerScript.hostname): boolean => {
         const fn = ctx.helper.string("fn", _fn);
-
-        if (hostname == null || hostname === "") {
-          hostname = workerScript.hostname;
-        }
+        const hostname = ctx.helper.string("hostname", _hostname);
         const s = safeGetServer(hostname, ctx);
 
         const status = s.removeFile(fn);
@@ -2187,15 +2212,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     getRunningScript:
       (ctx: NetscriptContext) =>
-      (fn: any, hostname: any, ...args: any[]): IRunningScriptDef | null => {
-        let runningScript;
-        if (fn === undefined && hostname === undefined && args.length === 0) {
-          runningScript = workerScript.scriptRef;
-        } else if (typeof fn === "number") {
-          runningScript = getRunningScriptByPid(fn);
-        } else {
-          runningScript = getRunningScript(ctx, fn, hostname, args);
-        }
+      (fn: unknown, hostname: unknown, ...args: unknown[]): IRunningScriptDef | null => {
+        const ident = ctx.helper.scriptIdentifier(fn, hostname, args);
+        const runningScript = getRunningScript(ctx, ident);
         if (runningScript === null) return null;
         return createPublicRunningScript(runningScript);
       },
@@ -2248,18 +2267,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (ctx: NetscriptContext) =>
       (scriptname?: any, hostname?: any, ...args: any[]): any => {
         if (scriptname === undefined) {
-          const res = [];
-
           // First element is total income of all currently running scripts
           let total = 0;
           for (const script of workerScripts.values()) {
             total += script.scriptRef.onlineMoneyMade / script.scriptRef.onlineRunningTime;
           }
-          res.push(total);
 
-          // Second element is total income you've earned from scripts since you installed Augs
-          res.push(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug / 1000));
-          return res;
+          return [total, Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug / 1000)];
         } else {
           // Get income for a particular script
           const server = safeGetServer(hostname, ctx);
@@ -2320,9 +2334,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     toast:
       (ctx: NetscriptContext) =>
-      (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, duration: any = 2000): void => {
+      (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, _duration: unknown = 2000): void => {
         const message = ctx.helper.string("message", _message);
         const variant = ctx.helper.string("variant", _variant);
+        const duration = ctx.helper.number("duration", _duration);
         if (!checkEnum(ToastVariant, variant))
           throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
         SnackbarEvents.emit(message, variant, duration);
@@ -2435,7 +2450,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     atExit:
       (ctx: NetscriptContext) =>
-      (f: any): void => {
+      (f: unknown): void => {
         if (typeof f !== "function") {
           throw ctx.makeRuntimeErrorMsg("argument should be function");
         }
@@ -2514,7 +2529,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     ...base,
     ...NetscriptExtra(Player),
   };
-  function getFunctionNames(obj: any, prefix: string): string[] {
+  function getFunctionNames(obj: object, prefix: string): string[] {
     const functionNames: string[] = [];
     for (const [key, value] of Object.entries(obj)) {
       if (key === "args") {

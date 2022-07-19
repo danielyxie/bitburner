@@ -9,7 +9,7 @@ import { BasicHGWOptions } from "../ScriptEditor/NetscriptDefinitions";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Server } from "../Server/Server";
 import { FormulaGang } from "../Gang/formulas/formulas";
-import { INetscriptHelper } from "../NetscriptFunctions/INetscriptHelper";
+import { INetscriptHelper, ScriptIdentifier } from "../NetscriptFunctions/INetscriptHelper";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 
@@ -45,6 +45,9 @@ type WrappedNetscriptHelpers = {
   makeRuntimeErrorMsg: (msg: string) => string;
   string: (argName: string, v: unknown) => string;
   number: (argName: string, v: unknown) => number;
+  ustring: (argName: string, v: unknown) => string | undefined;
+  unumber: (argName: string, v: unknown) => number | undefined;
+  scriptIdentifier: (fn: unknown, hostname: unknown, args: unknown) => ScriptIdentifier;
   city: (argName: string, v: unknown) => CityName;
   boolean: (v: unknown) => boolean;
   getServer: (hostname: string) => BaseServer;
@@ -54,8 +57,8 @@ type WrappedNetscriptHelpers = {
   player(p: unknown): IPlayer;
   server(s: unknown): Server;
   gang(g: unknown): FormulaGang;
-  gangMember(m: unknown): GangMember;
-  gangTask(t: unknown): GangMemberTask;
+  gangMember: (m: unknown) => GangMember;
+  gangTask: (t: unknown) => GangMemberTask;
 };
 
 function wrapFunction(
@@ -83,6 +86,10 @@ function wrapFunction(
       makeRuntimeErrorMsg: (msg: string) => helpers.makeRuntimeErrorMsg(functionPath, msg),
       string: (argName: string, v: unknown) => helpers.string(functionPath, argName, v),
       number: (argName: string, v: unknown) => helpers.number(functionPath, argName, v),
+      ustring: (argName: string, v: unknown) => helpers.string(functionPath, argName, v),
+      unumber: (argName: string, v: unknown) => helpers.number(functionPath, argName, v),
+      scriptIdentifier: (fn: unknown, hostname: unknown, args: unknown) =>
+        helpers.scriptIdentifier(functionPath, fn, hostname, args),
       city: (argName: string, v: unknown) => helpers.city(functionPath, argName, v),
       boolean: helpers.boolean,
       getServer: (hostname: string) => helpers.getServer(hostname, ctx),
