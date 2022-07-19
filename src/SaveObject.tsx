@@ -455,10 +455,8 @@ function evaluateVersionCompatibility(ver: string | number): void {
       // 2.0.0 work rework
       AwardNFG(10);
       const create = anyPlayer["createProgramName"];
-      console.log(create);
       if (create) Player.getHomeComputer().pushProgram(create);
       const graft = anyPlayer["graftAugmentationName"];
-      console.log(graft);
       if (graft) Player.augmentations.push({ name: graft, level: 1 });
     }
   }
