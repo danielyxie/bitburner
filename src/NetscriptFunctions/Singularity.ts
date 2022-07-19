@@ -795,13 +795,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
     workForCompany: (_ctx: NetscriptContext) =>
       function (_companyName: unknown, _focus: unknown = true): boolean {
         _ctx.helper.checkSingularityAccess();
-        let companyName = _ctx.helper.string("companyName", _companyName);
+        const companyName = _ctx.helper.string("companyName", _companyName);
         const focus = _ctx.helper.boolean(_focus);
-
-        // Sanitize input
-        if (companyName == null) {
-          companyName = player.companyName;
-        }
 
         // Make sure its a valid company
         if (companyName == null || companyName === "" || !(Companies[companyName] instanceof Company)) {
@@ -838,7 +833,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           player.stopFocusing();
           Router.toTerminal();
         }
-        _ctx.log(() => `Began working at '${player.companyName}' as a '${companyPositionName}'`);
+        _ctx.log(() => `Began working at '${companyName}' as a '${companyPositionName}'`);
         return true;
       },
     applyToCompany: (_ctx: NetscriptContext) =>

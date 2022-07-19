@@ -141,273 +141,276 @@ export function WorkInProgressRoot(): React.ReactElement {
     stopText: "",
   };
 
-  if (player.currentWork !== null) {
-    if (isCrimeWork(player.currentWork)) {
-      const crime = player.currentWork.getCrime();
-      const completion = (player.currentWork.unitCompleted / crime.time) * 100;
+  if (player.currentWork === null) {
+    setTimeout(() => router.toTerminal());
+    return <></>;
+  }
 
+  if (isCrimeWork(player.currentWork)) {
+    const crime = player.currentWork.getCrime();
+    const completion = (player.currentWork.unitCompleted / crime.time) * 100;
+
+    workInfo = {
+      buttons: {
+        cancel: () => {
+          router.toLocation(Locations[LocationName.Slums]);
+          player.finishWork(true);
+        },
+        unfocus: () => {
+          router.toCity();
+          player.stopFocusing();
+        },
+      },
+      title: `You are attempting to ${crime.type}`,
+
+      progress: {
+        remaining: crime.time - player.currentWork.unitCompleted,
+        percentage: completion,
+      },
+
+      stopText: "Stop commiting crime",
+    };
+  }
+
+  if (isClassWork(player.currentWork)) {
+    const classWork = player.currentWork;
+    function cancel(): void {
+      player.finishWork(true);
+      router.toCity();
+    }
+
+    function unfocus(): void {
+      router.toCity();
+      player.stopFocusing();
+    }
+
+    let stopText = "";
+    if (classWork.isGym()) {
+      stopText = "Stop training at gym";
+    } else {
+      stopText = "Stop taking course";
+    }
+
+    const rates = classWork.calculateRates(player);
+    workInfo = {
+      buttons: {
+        cancel: cancel,
+        unfocus: unfocus,
+      },
+      title: (
+        <>
+          You are currently <b>{classWork.getClass().youAreCurrently}</b>
+        </>
+      ),
+
+      gains: [
+        <StatsRow name="Total Cost" color={Settings.theme.money}>
+          <Typography>
+            <Money money={classWork.earnings.money} /> (<MoneyRate money={rates.money * CYCLES_PER_SEC} />)
+          </Typography>
+        </StatsRow>,
+        ...ExpRows(rates),
+      ],
+      progress: {
+        elapsed: classWork.cyclesWorked * CONSTANTS._idleSpeed,
+      },
+
+      stopText: stopText,
+    };
+  }
+
+  if (isCreateProgramWork(player.currentWork)) {
+    const create = player.currentWork;
+    function cancel(): void {
+      player.finishWork(true);
+      router.toTerminal();
+    }
+    function unfocus(): void {
+      router.toTerminal();
+      player.stopFocusing();
+    }
+
+    const completion = (create.unitCompleted / create.unitNeeded()) * 100;
+
+    workInfo = {
+      buttons: {
+        cancel: cancel,
+        unfocus: unfocus,
+      },
+      title: (
+        <>
+          You are currently working on coding <b>{create.programName}</b>
+        </>
+      ),
+
+      progress: {
+        elapsed: create.cyclesWorked * CONSTANTS._idleSpeed,
+        percentage: completion,
+      },
+
+      stopText: "Stop creating program",
+      stopTooltip: "Your work will be saved and you can return to complete the program later.",
+    };
+  }
+
+  if (isGraftingWork(player.currentWork)) {
+    const graft = player.currentWork;
+    function cancel(): void {
+      player.finishWork(true);
+      router.toTerminal();
+    }
+    function unfocus(): void {
+      router.toTerminal();
+      player.stopFocusing();
+    }
+
+    workInfo = {
+      buttons: {
+        cancel: cancel,
+        unfocus: unfocus,
+      },
+      title: (
+        <>
+          You are currently working on grafting <b>{graft.augmentation}</b>
+        </>
+      ),
+
+      progress: {
+        elapsed: graft.cyclesWorked * CONSTANTS._idleSpeed,
+        percentage: (graft.unitCompleted / graft.unitNeeded()) * 100,
+      },
+
+      stopText: "Stop grafting",
+      stopTooltip: (
+        <>
+          If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned
+        </>
+      ),
+    };
+  }
+
+  if (isFactionWork(player.currentWork)) {
+    const faction = player.currentWork.getFaction();
+    if (!faction) {
       workInfo = {
         buttons: {
-          cancel: () => {
-            router.toLocation(Locations[LocationName.Slums]);
-            player.finishWork(true);
-          },
-          unfocus: () => {
-            router.toCity();
-            player.stopFocusing();
-          },
+          cancel: () => router.toFactions(),
         },
-        title: `You are attempting to ${crime.type}`,
+        title:
+          `You have not joined ${player.currentWork.factionName || "(Faction not found)"} at this time,` +
+          " please try again if you think this should have worked",
 
-        progress: {
-          remaining: crime.time - player.currentWork.unitCompleted,
-          percentage: completion,
-        },
-
-        stopText: "Stop commiting crime",
+        stopText: "Back to Factions",
       };
     }
 
-    if (isClassWork(player.currentWork)) {
-      const classWork = player.currentWork;
-      function cancel(): void {
-        player.finishWork(true);
-        router.toCity();
-      }
+    function cancel(): void {
+      router.toFaction(faction);
+      player.finishWork(true);
+    }
+    function unfocus(): void {
+      router.toFaction(faction);
+      player.stopFocusing();
+    }
 
-      function unfocus(): void {
-        router.toCity();
-        player.stopFocusing();
-      }
+    const description = {
+      [FactionWorkType.HACKING]: "carrying out hacking contracts",
+      [FactionWorkType.FIELD]: "carrying out field missions",
+      [FactionWorkType.SECURITY]: "performing security detail",
+    };
 
-      let stopText = "";
-      if (classWork.isGym()) {
-        stopText = "Stop training at gym";
-      } else {
-        stopText = "Stop taking course";
-      }
+    const exp = player.currentWork.getExpRates(player);
 
-      const rates = classWork.calculateRates(player);
+    workInfo = {
+      buttons: {
+        cancel: cancel,
+        unfocus: unfocus,
+      },
+      title: (
+        <>
+          You are currently {description[player.currentWork.factionWorkType]} for <b>{faction.name}</b>
+        </>
+      ),
+
+      description: (
+        <>
+          Current Faction Reputation: <Reputation reputation={faction.playerReputation} /> (
+          <ReputationRate reputation={player.currentWork.getReputationRate(player) * CYCLES_PER_SEC} />)
+        </>
+      ),
+      gains: ExpRows(exp),
+      progress: {
+        elapsed: player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
+      },
+
+      stopText: "Stop Faction work",
+    };
+  }
+
+  if (isCompanyWork(player.currentWork)) {
+    const comp = Companies[player.currentWork.companyName];
+    if (comp == null || !(comp instanceof Company)) {
       workInfo = {
         buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
+          cancel: () => router.toTerminal(),
         },
-        title: (
-          <>
-            You are currently <b>{classWork.getClass().youAreCurrently}</b>
-          </>
-        ),
+        title:
+          `You cannot work for ${player.currentWork.companyName || "(Company not found)"} at this time,` +
+          " please try again if you think this should have worked",
 
-        gains: [
-          <StatsRow name="Total Cost" color={Settings.theme.money}>
-            <Typography>
-              <Money money={classWork.earnings.money} /> (<MoneyRate money={rates.money * CYCLES_PER_SEC} />)
-            </Typography>
-          </StatsRow>,
-          ...ExpRows(rates),
-        ],
-        progress: {
-          elapsed: classWork.cyclesWorked * CONSTANTS._idleSpeed,
-        },
-
-        stopText: stopText,
+        stopText: "Back to Terminal",
       };
     }
 
-    if (isCreateProgramWork(player.currentWork)) {
-      const create = player.currentWork;
-      function cancel(): void {
-        player.finishWork(true);
-        router.toTerminal();
-      }
-      function unfocus(): void {
-        router.toTerminal();
-        player.stopFocusing();
-      }
+    const companyRep = comp.playerReputation;
 
-      const completion = (create.unitCompleted / create.unitNeeded()) * 100;
-
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently working on coding <b>{create.programName}</b>
-          </>
-        ),
-
-        progress: {
-          elapsed: create.cyclesWorked * CONSTANTS._idleSpeed,
-          percentage: completion,
-        },
-
-        stopText: "Stop creating program",
-        stopTooltip: "Your work will be saved and you can return to complete the program later.",
-      };
+    function cancel(): void {
+      player.finishWork(true);
+      router.toJob(Locations[comp.name]);
+    }
+    function unfocus(): void {
+      player.stopFocusing();
+      router.toJob(Locations[comp.name]);
     }
 
-    if (isGraftingWork(player.currentWork)) {
-      const graft = player.currentWork;
-      function cancel(): void {
-        player.finishWork(true);
-        router.toTerminal();
-      }
-      function unfocus(): void {
-        router.toTerminal();
-        player.stopFocusing();
-      }
+    const position = player.jobs[player.currentWork.companyName];
+    const gains = player.currentWork.getGainRates(player);
 
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently working on grafting <b>{graft.augmentation}</b>
-          </>
-        ),
+    workInfo = {
+      buttons: {
+        cancel: cancel,
+        unfocus: unfocus,
+      },
+      title: (
+        <>
+          You are currently working as a <b>{position}</b> at <b>{player.currentWork.companyName}</b>
+        </>
+      ),
 
-        progress: {
-          elapsed: graft.cyclesWorked * CONSTANTS._idleSpeed,
-          percentage: (graft.unitCompleted / graft.unitNeeded()) * 100,
-        },
+      description: (
+        <>
+          Current Company Reputation: <Reputation reputation={companyRep} />
+        </>
+      ),
+      gains: [
+        <StatsRow name="Money" color={Settings.theme.money}>
+          <Typography>
+            <MoneyRate money={gains.money * CYCLES_PER_SEC} />
+          </Typography>
+        </StatsRow>,
+        <StatsRow name="Company Reputation" color={Settings.theme.rep}>
+          <Typography>
+            <ReputationRate reputation={gains.reputation * CYCLES_PER_SEC} />
+          </Typography>
+        </StatsRow>,
+        ...ExpRows(gains),
+      ],
+      progress: {
+        elapsed: player.currentWork.cyclesWorked * CYCLES_PER_SEC,
+      },
 
-        stopText: "Stop grafting",
-        stopTooltip: (
-          <>
-            If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned
-          </>
-        ),
-      };
-    }
-
-    if (isFactionWork(player.currentWork)) {
-      const faction = player.currentWork.getFaction();
-      if (!faction) {
-        workInfo = {
-          buttons: {
-            cancel: () => router.toFactions(),
-          },
-          title:
-            `You have not joined ${player.currentWork.factionName || "(Faction not found)"} at this time,` +
-            " please try again if you think this should have worked",
-
-          stopText: "Back to Factions",
-        };
-      }
-
-      function cancel(): void {
-        router.toFaction(faction);
-        player.finishWork(true);
-      }
-      function unfocus(): void {
-        router.toFaction(faction);
-        player.stopFocusing();
-      }
-
-      const description = {
-        [FactionWorkType.HACKING]: "carrying out hacking contracts",
-        [FactionWorkType.FIELD]: "carrying out field missions",
-        [FactionWorkType.SECURITY]: "performing security detail",
-      };
-
-      const exp = player.currentWork.getExpRates(player);
-
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently {description[player.currentWork.factionWorkType]} for <b>{faction.name}</b>
-          </>
-        ),
-
-        description: (
-          <>
-            Current Faction Reputation: <Reputation reputation={faction.playerReputation} /> (
-            <ReputationRate reputation={player.currentWork.getReputationRate(player) * CYCLES_PER_SEC} />)
-          </>
-        ),
-        gains: ExpRows(exp),
-        progress: {
-          elapsed: player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
-        },
-
-        stopText: "Stop Faction work",
-      };
-    }
-
-    if (isCompanyWork(player.currentWork)) {
-      const comp = Companies[player.currentWork.companyName];
-      if (comp == null || !(comp instanceof Company)) {
-        workInfo = {
-          buttons: {
-            cancel: () => router.toTerminal(),
-          },
-          title:
-            `You cannot work for ${player.currentWork.companyName || "(Company not found)"} at this time,` +
-            " please try again if you think this should have worked",
-
-          stopText: "Back to Terminal",
-        };
-      }
-
-      const companyRep = comp.playerReputation;
-
-      function cancel(): void {
-        player.finishWork(true);
-        router.toJob();
-      }
-      function unfocus(): void {
-        player.stopFocusing();
-        router.toJob();
-      }
-
-      const position = player.jobs[player.companyName];
-      const gains = player.currentWork.getGainRates(player);
-
-      workInfo = {
-        buttons: {
-          cancel: cancel,
-          unfocus: unfocus,
-        },
-        title: (
-          <>
-            You are currently working as a <b>{position}</b> at <b>{player.currentWork.companyName}</b>
-          </>
-        ),
-
-        description: (
-          <>
-            Current Company Reputation: <Reputation reputation={companyRep} />
-          </>
-        ),
-        gains: [
-          <StatsRow name="Money" color={Settings.theme.money}>
-            <Typography>
-              <MoneyRate money={gains.money * CYCLES_PER_SEC} />
-            </Typography>
-          </StatsRow>,
-          <StatsRow name="Company Reputation" color={Settings.theme.rep}>
-            <Typography>
-              <ReputationRate reputation={gains.reputation * CYCLES_PER_SEC} />
-            </Typography>
-          </StatsRow>,
-          ...ExpRows(gains),
-        ],
-        progress: {
-          elapsed: player.currentWork.cyclesWorked * CYCLES_PER_SEC,
-        },
-
-        stopText: "Stop working",
-      };
-    }
+      stopText: "Stop working",
+    };
   }
 
   if (workInfo.title === "") {

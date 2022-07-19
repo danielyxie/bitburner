@@ -27,7 +27,6 @@ interface Player {
   money: number;
   city: string;
   location: string;
-  companyName: string;
   hasWseAccount: boolean;
   hasTixApiAccess: boolean;
   has4SData: boolean;
@@ -1758,7 +1757,7 @@ export interface Singularity {
    * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.
    * @returns True if the player starts working, and false otherwise.
    */
-  workForCompany(companyName?: string, focus?: boolean): boolean;
+  workForCompany(companyName: string, focus?: boolean): boolean;
 
   /**
    * Quit jobs by company.

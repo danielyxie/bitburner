@@ -249,22 +249,7 @@ export function CharacterStats(): React.ReactElement {
                   </IconButton>
                 </>
               </StatsRow>
-              {player.companyName ? (
-                <>
-                  <StatsRow
-                    name="Last Employer"
-                    color={Settings.theme.primary}
-                    data={{ content: player.companyName }}
-                  />
-                  <StatsRow
-                    name="Last Job"
-                    color={Settings.theme.primary}
-                    data={{ content: player.jobs[player.companyName] }}
-                  />
-                </>
-              ) : (
-                <></>
-              )}
+
               {player.jobs && Object.keys(player.jobs).length !== 0 ? (
                 <StatsRow name="All Employers" color={Settings.theme.primary} data={{}}>
                   <>

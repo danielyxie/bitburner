@@ -1941,7 +1941,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           try {
             data = String(data);
           } catch (e: unknown) {
-            throw ctx.makeRuntimeErrorMsg(`Invalid data (${String(e)}). Data being written must be convertible to a string`);
+            throw ctx.makeRuntimeErrorMsg(
+              `Invalid data (${String(e)}). Data being written must be convertible to a string`,
+            );
           }
 
           const server = workerScript.getServer();
@@ -2378,7 +2380,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         money: Player.money,
         city: Player.city,
         location: Player.location,
-        companyName: Player.companyName,
         hasWseAccount: Player.hasWseAccount,
         hasTixApiAccess: Player.hasTixApiAccess,
         has4SData: Player.has4SData,

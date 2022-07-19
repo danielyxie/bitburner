@@ -35,7 +35,6 @@ import { Multipliers } from "./Multipliers";
 export interface IPlayer extends IPerson {
   bitNodeN: number;
   city: CityName;
-  companyName: string;
   corporation: ICorporation | null;
   gang: IGang | null;
   bladeburner: IBladeburner | null;
@@ -165,8 +164,6 @@ export interface IPlayer extends IPerson {
   hospitalize(): void;
   checkForFactionInvitations(): Faction[];
   setBitNodeNumber(n: number): void;
-  getMult(name: string): number;
-  setMult(name: string, mult: number): void;
   canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
   applyEntropy(stacks?: number): void;

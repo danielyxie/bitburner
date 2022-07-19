@@ -99,7 +99,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.city = CityName.Sector12;
   this.location = LocationName.TravelAgency;
 
-  this.companyName = "";
   this.jobs = {};
 
   this.purchasedServers = [];
@@ -542,10 +541,7 @@ export function getNextCompanyPosition(
   company: Company,
   entryPosType: CompanyPosition,
 ): CompanyPosition | null {
-  let currCompany = null;
-  if (this.companyName !== "") {
-    currCompany = Companies[this.companyName];
-  }
+  const currCompany = Companies[company.name];
 
   //Not employed at this company, so return the entry position
   if (currCompany == null || currCompany.name != company.name) {
@@ -555,7 +551,7 @@ export function getNextCompanyPosition(
   //If the entry pos type and the player's current position have the same type,
   //return the player's "nextCompanyPosition". Otherwise return the entryposType
   //Employed at this company, so just return the next position if it exists.
-  const currentPositionName = this.jobs[this.companyName];
+  const currentPositionName = this.jobs[company.name];
   if (!currentPositionName) return entryPosType;
   const currentPosition = CompanyPositions[currentPositionName];
   if (
@@ -581,9 +577,6 @@ export function quitJob(this: IPlayer, company: string): void {
     this.finishWork(true);
   }
   delete this.jobs[company];
-  if (this.companyName === company) {
-    this.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
-  }
 }
 
 /**
@@ -668,7 +661,6 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    this.companyName = company.name;
 
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed at " + this.location);
@@ -693,7 +685,6 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
     }
@@ -717,7 +708,6 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
     }
@@ -739,7 +729,6 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean 
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
-    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);
     }
@@ -1432,16 +1421,6 @@ export function getIntelligenceBonus(this: IPlayer, weight: number): number {
 
 export function getCasinoWinnings(this: IPlayer): number {
   return this.moneySourceA.casino;
-}
-
-export function getMult(this: IPlayer, name: string): number {
-  if (!this.hasOwnProperty(name)) return 1;
-  return (this as any)[name];
-}
-
-export function setMult(this: IPlayer, name: string, mult: number): void {
-  if (!this.hasOwnProperty(name)) return;
-  (this as any)[name] = mult;
 }
 
 export function canAccessCotMG(this: IPlayer): boolean {

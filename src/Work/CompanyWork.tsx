@@ -23,7 +23,6 @@ export class CompanyWork extends Work {
   constructor(params?: CompanyWorkParams) {
     super(WorkType.COMPANY, params?.singularity ?? false);
     this.companyName = params?.companyName ?? LocationName.NewTokyoNoodleBar;
-    console.log(Companies);
   }
 
   getCompany(): Company {

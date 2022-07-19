@@ -56,6 +56,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 import { hash } from "../../hash/hash";
+import { Locations } from "../../Locations/Locations";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -159,7 +160,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const canCorporation = !!props.player.corporation;
   const canGang = !!props.player.gang;
-  const canJob = props.player.companyName !== "";
+  const canJob = Object.values(props.player.jobs).length > 0;
   const canStockMarket = props.player.hasWseAccount;
   const canBladeburner = !!props.player.bladeburner;
   const canStaneksGift = props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
@@ -218,7 +219,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   }
 
   function clickJob(): void {
-    props.router.toJob();
+    props.router.toJob(Locations[Object.keys(props.player.jobs)[0]]);
   }
 
   function clickStockMarket(): void {

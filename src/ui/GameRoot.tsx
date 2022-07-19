@@ -242,8 +242,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toStockMarket: () => setPage(Page.StockMarket),
     toTerminal: () => setPage(Page.Terminal),
     toTutorial: () => setPage(Page.Tutorial),
-    toJob: () => {
-      setLocation(Locations[player.companyName]);
+    toJob: (location: Location) => {
+      setLocation(location);
       setPage(Page.Job);
     },
     toCity: () => {

@@ -23,7 +23,7 @@ import * as ExportBonus from "./ExportBonus";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "./utils/JSONReviver";
 import { save } from "./db";
-import { v1APIBreak } from "./utils/v1APIBreak";
+import { AwardNFG, v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
 import { LocationName } from "./Locations/data/LocationNames";
@@ -354,15 +354,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
   }
   if (typeof ver === "number") {
     if (ver < 2) {
-      // Give 10 neuroflux because v1 API break.
-      const nf = Player.augmentations.find((a) => a.name === AugmentationNames.NeuroFluxGovernor);
-      if (nf) {
-        nf.level += 10;
-      } else {
-        const nf = new PlayerOwnedAugmentation(AugmentationNames.NeuroFluxGovernor);
-        nf.level = 10;
-        Player.augmentations.push(nf);
-      }
+      AwardNFG(10);
       Player.reapplyAllAugmentations(true);
       Player.reapplyAllSourceFiles();
     }
@@ -458,6 +450,16 @@ function evaluateVersionCompatibility(ver: string | number): void {
         });
         AddToAllServers(darkweb);
       }
+    }
+    if (ver < 21) {
+      // 2.0.0 work rework
+      AwardNFG(10);
+      const create = anyPlayer["createProgramName"];
+      console.log(create);
+      if (create) Player.getHomeComputer().pushProgram(create);
+      const graft = anyPlayer["graftAugmentationName"];
+      console.log(graft);
+      if (graft) Player.augmentations.push({ name: graft, level: 1 });
     }
   }
 }

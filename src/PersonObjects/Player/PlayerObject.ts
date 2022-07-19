@@ -46,7 +46,6 @@ export class PlayerObject implements IPlayer {
   augmentations: IPlayerOwnedAugmentation[];
   bitNodeN: number;
   city: CityName;
-  companyName: string;
   corporation: ICorporation | null;
   gang: IGang | null;
   bladeburner: IBladeburner | null;
@@ -192,8 +191,6 @@ export class PlayerObject implements IPlayer {
   hospitalize: () => void;
   checkForFactionInvitations: () => Faction[];
   setBitNodeNumber: (n: number) => void;
-  getMult: (name: string) => number;
-  setMult: (name: string, mult: number) => void;
   canAccessCotMG: () => boolean;
   sourceFileLvl: (n: number) => number;
   applyEntropy: (stacks?: number) => void;
@@ -239,9 +236,6 @@ export class PlayerObject implements IPlayer {
     // Map of company name (key) -> name of company position (value. Just the name, not the CompanyPosition object)
     // The CompanyPosition name must match a key value in CompanyPositions
     this.jobs = {};
-
-    // Company at which player is CURRENTLY working (only valid when the player is actively working)
-    this.companyName = ""; // Name of Company. Must match a key value in Companies ma;
 
     // Servers
     this.currentServer = ""; //hostname of Server currently being accessed through termina;
@@ -402,9 +396,6 @@ export class PlayerObject implements IPlayer {
     this.getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;
     this.getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
     this.createHacknetServer = serverMethods.createHacknetServer;
-
-    this.getMult = generalMethods.getMult;
-    this.setMult = generalMethods.setMult;
 
     this.canAccessCotMG = generalMethods.canAccessCotMG;
     this.sourceFileLvl = generalMethods.sourceFileLvl;
