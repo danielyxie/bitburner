@@ -138,6 +138,9 @@ export function NetscriptStanek(
             !player.queuedAugmentations.some((a) => a.name === AugmentationNames.StaneksGift1)
           ) {
             applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
+            _ctx.log(
+              () => `'${FactionNames.ChurchOfTheMachineGod}' joined and '${AugmentationNames.StaneksGift1}' installed.`,
+            );
           }
         }
         //Return true iff the player is in CotMG and has the first Stanek aug installed

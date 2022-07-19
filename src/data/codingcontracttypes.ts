@@ -1424,8 +1424,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       if (ans == "[]") {
         //Helper function to get neighbourhood of a vertex
         function neighbourhood(vertex: number): number[] {
-          const adjLeft = data[1].filter(([a, _]) => a == vertex).map(([_, b]) => b);
-          const adjRight = data[1].filter(([_, b]) => b == vertex).map(([a, _]) => a);
+          const adjLeft = data[1].filter(([a]) => a == vertex).map(([, b]) => b);
+          const adjRight = data[1].filter(([, b]) => b == vertex).map(([a]) => a);
           return adjLeft.concat(adjRight);
         }
 

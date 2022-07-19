@@ -128,9 +128,8 @@ function PromptMenuSelect({ prompt, resolve }: IContentProps): React.ReactElemen
   };
 
   const getItems = (choices: string[]): React.ReactElement[] => {
-    const content = [];
+    const content: React.ReactElement[] = [];
     for (const i of choices) {
-      // @ts-ignore
       content.push(
         <MenuItem key={i} value={i}>
           {i}

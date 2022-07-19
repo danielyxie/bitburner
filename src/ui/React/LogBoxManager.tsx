@@ -14,7 +14,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { workerScripts } from "../../Netscript/WorkerScripts";
 import { startWorkerScript } from "../../NetscriptWorker";
 import { GetServer } from "../../Server/AllServers";
-import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
@@ -97,7 +96,7 @@ interface IProps {
   onClose: () => void;
 }
 
-const useStyles = makeStyles((_theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     logs: {
       overflowY: "scroll",

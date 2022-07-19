@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    // "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -21,29 +21,7 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   extends: ["plugin:@typescript-eslint/recommended"],
   rules: {
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/explicit-function-return-type": [
-      "error",
-      {
-        allowExpressions: true,
-      },
-    ],
-    // "no-constant-condition": [
-    //   "error",
-    //   {
-    //     checkLoops: false,
-    //   },
-    // ],
-    "no-empty": [
-      "off",
-      {
-        allowEmptyCatch: false,
-      },
-    ],
-    "no-inner-declarations": ["off", "both"],
-    "no-prototype-builtins": ["off"],
-    "no-useless-escape": ["off"],
     "@typescript-eslint/no-explicit-any": "off",
   },
 };

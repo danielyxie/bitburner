@@ -575,7 +575,7 @@ export function getNextCompanyPosition(
   return entryPosType;
 }
 
-export function quitJob(this: IPlayer, company: string, _sing = false): void {
+export function quitJob(this: IPlayer, company: string): void {
   if (isCompanyWork(this.currentWork) && this.currentWork.companyName === company) {
     this.finishWork(true);
   }

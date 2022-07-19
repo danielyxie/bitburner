@@ -77,7 +77,7 @@ interface IBNMultTableProps {
 
 const BNMultTable = (props: IBNMultTableProps): React.ReactElement => {
   const rowsArray = Object.entries(props.rowData)
-    .filter(([key, _value]) => props.mults[key] !== defaultMultipliers[key])
+    .filter(([key]) => props.mults[key] !== defaultMultipliers[key])
     .map(([key, value]) => (
       <StatsRow
         key={uniqueId()}
