@@ -232,7 +232,6 @@ export function CharacterStats(): React.ReactElement {
     const mults = getBitNodeMultipliers(n, Math.min(player.sourceFileLvl(n) + 1, maxSfLevel));
     showBitNodeMults = !isEqual(mults, defaultMultipliers);
   }
-
   return (
     <Container maxWidth="lg" disableGutters sx={{ mx: 0 }}>
       <Typography variant="h4">Stats</Typography>

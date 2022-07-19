@@ -53,6 +53,7 @@ import { Player } from "../../Player";
 
 import { isCompanyWork } from "../../Work/CompanyWork";
 import { defaultMultipliers } from "../Multipliers";
+import { serverMetadata } from "../../Server/data/servers";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -842,8 +843,13 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   // the requirements for the specified company. There are two requirements:
   //      1. High enough reputation
   //      2. Player is employed at the company
-  function checkMegacorpRequirements(companyName: string, repNeeded = CONSTANTS.CorpFactionRepRequirement): boolean {
-    return allCompanies.includes(companyName) && getCompanyRep(companyName) > repNeeded;
+  function checkMegacorpRequirements(companyName: string): boolean {
+    const serverMeta = serverMetadata.find((s) => s.specialName === companyName);
+    const server = GetServer(serverMeta ? serverMeta.hostname : "");
+    const bonus = (server as Server).backdoorInstalled ? -100e3 : 0;
+    return (
+      allCompanies.includes(companyName) && getCompanyRep(companyName) > CONSTANTS.CorpFactionRepRequirement + bonus
+    );
   }
 
   //Illuminati

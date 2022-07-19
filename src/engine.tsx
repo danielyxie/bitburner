@@ -250,6 +250,7 @@ const Engine: {
     startExploits();
     setupUncaughtPromiseHandler();
     // Load game from save or create new game
+
     if (loadGame(saveString)) {
       ThemeEvents.emit();
 

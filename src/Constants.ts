@@ -104,7 +104,7 @@ export const CONSTANTS: {
   MilliPerCycle: 200,
 
   // How much reputation is needed to join a megacorporation's faction
-  CorpFactionRepRequirement: 200e3,
+  CorpFactionRepRequirement: 400e3,
 
   // Base RAM costs
   BaseCostFor1GBOfRamHome: 32000,
