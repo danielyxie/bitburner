@@ -499,6 +499,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     throw makeRuntimeErrorMsg(funcName, `'${argName}' should be a number.`);
   };
 
+  const isScriptArgs = (_args: unknown): _args is ScriptArg[] =>
+    Array.isArray(_args) &&
+    _args.every((a) => typeof a === "string" || typeof a === "number" || typeof a === "boolean");
+
+  const helperScriptArgs = (funcName: string, args: unknown): ScriptArg[] => {
+    if (!isScriptArgs(args)) throw makeRuntimeErrorMsg(funcName, "'args' is not an array of script args");
+    return args as ScriptArg[];
+  };
+
   const helper: INetscriptHelper = {
     updateDynamicRam: updateDynamicRam,
     makeRuntimeErrorMsg: makeRuntimeErrorMsg,
@@ -512,11 +521,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (v === undefined) return undefined;
       return helperNumber(funcName, argName, v);
     },
+    scriptArgs: helperScriptArgs,
     scriptIdentifier: (funcName: string, _fn: unknown, _hostname: unknown, _args: unknown): ScriptIdentifier => {
-      const isScriptArgs = (_args: unknown): _args is ScriptArg[] =>
-        Array.isArray(_args) &&
-        _args.every((a) => typeof a === "string" || typeof a === "number" || typeof a === "boolean");
-
       if (_fn === undefined) return workerScript.pid;
       if (typeof _fn === "number") return _fn;
       if (typeof _fn === "string") {
@@ -1181,9 +1187,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     run:
       (ctx: NetscriptContext) =>
-      (_scriptname: unknown, _threads: unknown = 1, ...args: any[]): number => {
+      (_scriptname: unknown, _threads: unknown = 1, ..._args: unknown[]): number => {
         const scriptname = ctx.helper.string("scriptname", _scriptname);
         const threads = ctx.helper.number("threads", _threads);
+        const args = ctx.helper.scriptArgs(_args);
         if (scriptname === undefined) {
           throw ctx.makeRuntimeErrorMsg("Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
         }
@@ -1199,10 +1206,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     exec:
       (ctx: NetscriptContext) =>
-      (_scriptname: unknown, _hostname: unknown, _threads: unknown = 1, ...args: any[]): number => {
+      (_scriptname: unknown, _hostname: unknown, _threads: unknown = 1, ..._args: unknown[]): number => {
         const scriptname = ctx.helper.string("scriptname", _scriptname);
         const hostname = ctx.helper.string("hostname", _hostname);
         const threads = ctx.helper.number("threads", _threads);
+        const args = ctx.helper.scriptArgs(_args);
         if (scriptname === undefined || hostname === undefined) {
           throw ctx.makeRuntimeErrorMsg("Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
         }
@@ -1214,9 +1222,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     spawn:
       (ctx: NetscriptContext) =>
-      (_scriptname: unknown, _threads: unknown = 1, ...args: any[]): void => {
+      (_scriptname: unknown, _threads: unknown = 1, ..._args: unknown[]): void => {
         const scriptname = ctx.helper.string("scriptname", _scriptname);
         const threads = ctx.helper.number("threads", _threads);
+        const args = ctx.helper.scriptArgs(_args);
         if (!scriptname || !threads) {
           throw ctx.makeRuntimeErrorMsg("Usage: spawn(scriptname, threads)");
         }
@@ -1314,12 +1323,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     scp:
       (ctx: NetscriptContext) =>
-      async (scriptname: any, _hostname1: unknown, _hostname2?: unknown): Promise<boolean> => {
+      async (_scriptname: unknown, _hostname1: unknown, _hostname2?: unknown): Promise<boolean> => {
         const hostname1 = ctx.helper.string("hostname1", _hostname1);
         const hostname2 = ctx.helper.ustring("hostname2", _hostname2);
-        if (scriptname && scriptname.constructor === Array) {
+        if (Array.isArray(_scriptname)) {
           // Recursively call scp on all elements of array
-          const scripts: string[] = scriptname;
+          const scripts: string[] = _scriptname;
           if (scripts.length === 0) {
             throw ctx.makeRuntimeErrorMsg("No scripts to copy");
           }
@@ -1334,13 +1343,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           return Promise.resolve(res);
         }
 
+        const scriptName = ctx.helper.string("scriptName", _scriptname);
+
         // Invalid file type
-        if (!isValidFilePath(scriptname)) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid filename: '${scriptname}'`);
+        if (!isValidFilePath(scriptName)) {
+          throw ctx.makeRuntimeErrorMsg(`Invalid filename: '${scriptName}'`);
         }
 
         // Invalid file name
-        if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith("txt")) {
+        if (!scriptName.endsWith(".lit") && !isScriptFilename(scriptName) && !scriptName.endsWith("txt")) {
           throw ctx.makeRuntimeErrorMsg("Only works for scripts, .lit and .txt files");
         }
 
@@ -1349,14 +1360,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         if (hostname2 != null) {
           // 3 Argument version: scriptname, source, destination
-          if (scriptname === undefined || hostname1 === undefined || hostname2 === undefined) {
+          if (scriptName === undefined || hostname1 === undefined || hostname2 === undefined) {
             throw ctx.makeRuntimeErrorMsg("Takes 2 or 3 arguments");
           }
           destServer = safeGetServer(hostname2, ctx);
           currServ = safeGetServer(hostname1, ctx);
         } else if (hostname1 != null) {
           // 2 Argument version: scriptname, destination
-          if (scriptname === undefined || hostname1 === undefined) {
+          if (scriptName === undefined || hostname1 === undefined) {
             throw ctx.makeRuntimeErrorMsg("Takes 2 or 3 arguments");
           }
           destServer = safeGetServer(hostname1, ctx);
@@ -1371,76 +1382,76 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
 
         // Scp for lit files
-        if (scriptname.endsWith(".lit")) {
+        if (scriptName.endsWith(".lit")) {
           let found = false;
           for (let i = 0; i < currServ.messages.length; ++i) {
-            if (currServ.messages[i] == scriptname) {
+            if (currServ.messages[i] == scriptName) {
               found = true;
               break;
             }
           }
 
           if (!found) {
-            ctx.log(() => `File '${scriptname}' does not exist.`);
+            ctx.log(() => `File '${scriptName}' does not exist.`);
             return Promise.resolve(false);
           }
 
           for (let i = 0; i < destServer.messages.length; ++i) {
-            if (destServer.messages[i] === scriptname) {
-              ctx.log(() => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
+            if (destServer.messages[i] === scriptName) {
+              ctx.log(() => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
               return Promise.resolve(true); // Already exists
             }
           }
-          destServer.messages.push(scriptname);
-          ctx.log(() => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
+          destServer.messages.push(scriptName);
+          ctx.log(() => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
           return Promise.resolve(true);
         }
 
         // Scp for text files
-        if (scriptname.endsWith(".txt")) {
+        if (scriptName.endsWith(".txt")) {
           let txtFile;
           for (let i = 0; i < currServ.textFiles.length; ++i) {
-            if (currServ.textFiles[i].fn === scriptname) {
+            if (currServ.textFiles[i].fn === scriptName) {
               txtFile = currServ.textFiles[i];
               break;
             }
           }
           if (txtFile === undefined) {
-            ctx.log(() => `File '${scriptname}' does not exist.`);
+            ctx.log(() => `File '${scriptName}' does not exist.`);
             return Promise.resolve(false);
           }
 
           for (let i = 0; i < destServer.textFiles.length; ++i) {
-            if (destServer.textFiles[i].fn === scriptname) {
+            if (destServer.textFiles[i].fn === scriptName) {
               // Overwrite
               destServer.textFiles[i].text = txtFile.text;
-              ctx.log(() => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
+              ctx.log(() => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
               return Promise.resolve(true);
             }
           }
           const newFile = new TextFile(txtFile.fn, txtFile.text);
           destServer.textFiles.push(newFile);
-          ctx.log(() => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
+          ctx.log(() => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
           return Promise.resolve(true);
         }
 
         // Scp for script files
         let sourceScript = null;
         for (let i = 0; i < currServ.scripts.length; ++i) {
-          if (scriptname == currServ.scripts[i].filename) {
+          if (scriptName == currServ.scripts[i].filename) {
             sourceScript = currServ.scripts[i];
             break;
           }
         }
         if (sourceScript == null) {
-          ctx.log(() => `File '${scriptname}' does not exist.`);
+          ctx.log(() => `File '${scriptName}' does not exist.`);
           return Promise.resolve(false);
         }
 
         // Overwrite script if it already exists
         for (let i = 0; i < destServer.scripts.length; ++i) {
-          if (scriptname == destServer.scripts[i].filename) {
-            ctx.log(() => `WARNING: File '${scriptname}' overwritten on '${destServer?.hostname}'`);
+          if (scriptName == destServer.scripts[i].filename) {
+            ctx.log(() => `WARNING: File '${scriptName}' overwritten on '${destServer?.hostname}'`);
             const oldScript = destServer.scripts[i];
             // If it's the exact same file don't actually perform the
             // copy to avoid recompiling uselessly. Players tend to scp
@@ -1454,12 +1465,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
 
         // Create new script if it does not already exist
-        const newScript = new Script(Player, scriptname);
+        const newScript = new Script(Player, scriptName);
         newScript.code = sourceScript.code;
         newScript.ramUsage = sourceScript.ramUsage;
         newScript.server = destServer.hostname;
         destServer.scripts.push(newScript);
-        ctx.log(() => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
+        ctx.log(() => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
         return new Promise((resolve) => {
           if (destServer === null) {
             resolve(false);
@@ -2263,47 +2274,43 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         return calculateWeakenTime(server, Player) * 1000;
       },
+    getTotalScriptIncome: () => (): [number, number] => {
+      // First element is total income of all currently running scripts
+      let total = 0;
+      for (const script of workerScripts.values()) {
+        total += script.scriptRef.onlineMoneyMade / script.scriptRef.onlineRunningTime;
+      }
+
+      return [total, Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug / 1000)];
+    },
     getScriptIncome:
       (ctx: NetscriptContext) =>
-      (scriptname?: any, hostname?: any, ...args: any[]): any => {
-        if (scriptname === undefined) {
-          // First element is total income of all currently running scripts
-          let total = 0;
-          for (const script of workerScripts.values()) {
-            total += script.scriptRef.onlineMoneyMade / script.scriptRef.onlineRunningTime;
-          }
-
-          return [total, Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug / 1000)];
-        } else {
-          // Get income for a particular script
-          const server = safeGetServer(hostname, ctx);
-          const runningScriptObj = findRunningScript(scriptname, args, server);
-          if (runningScriptObj == null) {
-            ctx.log(() => `No such script '${scriptname}' on '${server.hostname}' with args: ${arrayToString(args)}`);
-            return -1;
-          }
-          return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
+      (fn: unknown, hostname: unknown, ...args: unknown[]): number => {
+        const ident = ctx.helper.scriptIdentifier(fn, hostname, args);
+        const runningScript = getRunningScript(ctx, ident);
+        if (runningScript == null) {
+          ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
+          return -1;
         }
+        return runningScript.onlineMoneyMade / runningScript.onlineRunningTime;
       },
+    getTotalScriptExpGain: () => (): number => {
+      let total = 0;
+      for (const ws of workerScripts.values()) {
+        total += ws.scriptRef.onlineExpGained / ws.scriptRef.onlineRunningTime;
+      }
+      return total;
+    },
     getScriptExpGain:
       (ctx: NetscriptContext) =>
-      (scriptname?: any, hostname?: any, ...args: any[]): number => {
-        if (scriptname === undefined) {
-          let total = 0;
-          for (const ws of workerScripts.values()) {
-            total += ws.scriptRef.onlineExpGained / ws.scriptRef.onlineRunningTime;
-          }
-          return total;
-        } else {
-          // Get income for a particular script
-          const server = safeGetServer(hostname, ctx);
-          const runningScriptObj = findRunningScript(scriptname, args, server);
-          if (runningScriptObj == null) {
-            ctx.log(() => `No such script '${scriptname}' on '${server.hostname}' with args: ${arrayToString(args)}`);
-            return -1;
-          }
-          return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
+      (fn: unknown, hostname: unknown, ...args: unknown[]): number => {
+        const ident = ctx.helper.scriptIdentifier(fn, hostname, args);
+        const runningScript = getRunningScript(ctx, ident);
+        if (runningScript == null) {
+          ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
+          return -1;
         }
+        return runningScript.onlineExpGained / runningScript.onlineRunningTime;
       },
     nFormat:
       (ctx: NetscriptContext) =>

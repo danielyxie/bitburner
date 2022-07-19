@@ -12,6 +12,7 @@ import { FormulaGang } from "../Gang/formulas/formulas";
 import { INetscriptHelper, ScriptIdentifier } from "../NetscriptFunctions/INetscriptHelper";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
+import { ScriptArg } from "./ScriptArg";
 
 type ExternalFunction = (...args: unknown[]) => unknown;
 export type ExternalAPI = {
@@ -47,6 +48,7 @@ type WrappedNetscriptHelpers = {
   number: (argName: string, v: unknown) => number;
   ustring: (argName: string, v: unknown) => string | undefined;
   unumber: (argName: string, v: unknown) => number | undefined;
+  scriptArgs(args: unknown): ScriptArg[];
   scriptIdentifier: (fn: unknown, hostname: unknown, args: unknown) => ScriptIdentifier;
   city: (argName: string, v: unknown) => CityName;
   boolean: (v: unknown) => boolean;
@@ -88,6 +90,7 @@ function wrapFunction(
       number: (argName: string, v: unknown) => helpers.number(functionPath, argName, v),
       ustring: (argName: string, v: unknown) => helpers.string(functionPath, argName, v),
       unumber: (argName: string, v: unknown) => helpers.number(functionPath, argName, v),
+      scriptArgs: (v: unknown) => helpers.scriptArgs(functionPath, v),
       scriptIdentifier: (fn: unknown, hostname: unknown, args: unknown) =>
         helpers.scriptIdentifier(functionPath, fn, hostname, args),
       city: (argName: string, v: unknown) => helpers.city(functionPath, argName, v),

@@ -6203,6 +6203,19 @@ export interface NS {
   getWeakenTime(host: string): number;
 
   /**
+   * Get the income of all script.
+   * @remarks
+   * RAM cost: 0.1 GB
+   *
+   * @returns an array of two values.
+   * The first value is the total income (dollar / second) of all of your active scripts
+   * (scripts that are currently running on any server).
+   * The second value is the total income (dollar / second) that you’ve earned from scripts
+   * since you last installed Augmentations.
+   */
+  getTotalScriptIncome(): [number, number];
+
+  /**
    * Get the income of a script.
    * @remarks
    * RAM cost: 0.1 GB
@@ -6214,24 +6227,21 @@ export interface NS {
    * in order to use this function to get that script’s income you must specify
    * those same arguments in the same order in this function call.
    *
-   * This function can also be called with no arguments.
-   * If called with no arguments, then this function will return an array of two values.
-   * The first value is the total income (dollar / second) of all of your active scripts
-   * (scripts that are currently running on any server).
-   * The second value is the total income (dollar / second) that you’ve earned from scripts
-   * since you last installed Augmentations.
-   *
    * @param script - Filename of script.
    * @param host - Server on which script is running.
    * @param args - Arguments that the script is running with.
    * @returns Amount of income the specified script generates while online.
    */
-  getScriptIncome(): [number, number];
+  getScriptIncome(script: string, host: string, ...args: (string | number | boolean)[]): number;
 
   /**
-   * {@inheritDoc NS.(getScriptIncome:1)}
+   * Get the exp gain of all script.
+   * @remarks
+   * RAM cost: 0.1 GB
+   *
+   * @returns total experience gain rate of all of your active scripts.
    */
-  getScriptIncome(script: string, host: string, ...args: (string | number | boolean)[]): number;
+  getTotalScriptExpGain(): number;
 
   /**
    * Get the exp gain of a script.
@@ -6249,11 +6259,6 @@ export interface NS {
    * @param host - Server on which script is running.
    * @param args - Arguments that the script is running with.
    * @returns Amount of hacking experience the specified script generates while online.
-   */
-  getScriptExpGain(): number;
-
-  /**
-   * {@inheritDoc NS.(getScriptExpGain:1)}
    */
   getScriptExpGain(script: string, host: string, ...args: (string | number | boolean)[]): number;
 

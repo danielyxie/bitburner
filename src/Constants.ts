@@ -256,8 +256,13 @@ v2.0.0 - 2022-07-19 Work rework
   * Backdooring company server reduces faction requirement to 300k.
   * All work generally no longer keep track of cumulative gains like exp and reputation since it's applied instantly.
   * getPlayer returns way less fields but does return the new 'currentWork' field.
+
+  API breaks
+
   * workForCompany argument 'companyName' is now not-optional
   * commitCrime now has 'focus' optional parameter
+  * using getScriptIncome to get total income has been separated to getTotalScriptIncome.
+  * using getScriptExpGain to get total income has been separated to getTotalScriptExpGain.
 
   Multipliers
 

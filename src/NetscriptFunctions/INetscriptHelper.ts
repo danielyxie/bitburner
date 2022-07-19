@@ -25,6 +25,7 @@ export interface INetscriptHelper {
   number(funcName: string, argName: string, v: unknown): number;
   ustring(funcName: string, argName: string, v: unknown): string | undefined;
   unumber(funcName: string, argName: string, v: unknown): number | undefined;
+  scriptArgs(funcName: string, args: unknown): ScriptArg[];
   scriptIdentifier(funcName: string, fn: unknown, hostname: unknown, args: unknown): ScriptIdentifier;
   city(funcName: string, argName: string, v: unknown): CityName;
   boolean(v: unknown): boolean;
