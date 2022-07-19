@@ -57,6 +57,7 @@ import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions"
 import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
+import { FormulaGang as FormulaGang } from "./Gang/formulas/formulas";
 
 import { BaseServer } from "./Server/BaseServer";
 import { NetscriptGang } from "./NetscriptFunctions/Gang";
@@ -108,6 +109,10 @@ import { recentScripts } from "./Netscript/RecentScripts";
 import { CityName } from "./Locations/data/CityNames";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptHelper } from "./NetscriptFunctions/INetscriptHelper";
+import { IPlayer } from "./PersonObjects/IPlayer";
+import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
+import { GangMember } from "./Gang/GangMember";
+import { GangMemberTask } from "./Gang/GangMemberTask";
 
 interface NS extends INS {
   [key: string]: any;
@@ -463,6 +468,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     return out;
   };
 
+  const roughlyIs = (expect: object, actual: unknown): boolean => {
+    if (typeof actual !== "object" || actual == null) return false;
+    const expects = Object.keys(expect);
+    const actuals = Object.keys(actual);
+    for (const expect of expects) if (!actuals.includes(expect)) return false;
+    return true;
+  };
+
   const helper: INetscriptHelper = {
     updateDynamicRam: updateDynamicRam,
     makeRuntimeErrorMsg: makeRuntimeErrorMsg,
@@ -513,6 +526,28 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg(funcName, `Could not find port: ${port}. This is a bug. Report to dev.`);
       }
       return iport;
+    },
+    player(funcName: string, p: unknown): IPlayer {
+      if (!roughlyIs(new PlayerObject(), p)) throw makeRuntimeErrorMsg(funcName, `player should be a Player.`);
+      return p as IPlayer;
+    },
+    server(funcName: string, s: unknown): Server {
+      if (!roughlyIs(new Server(), s)) throw makeRuntimeErrorMsg(funcName, `server should be a Server.`);
+      return s as Server;
+    },
+    gang(funcName: string, g: unknown): FormulaGang {
+      if (!roughlyIs({ respect: 0, territory: 0, wantedLevel: 0 }, g))
+        throw makeRuntimeErrorMsg(funcName, `gang should be a Gang.`);
+      return g as FormulaGang;
+    },
+    gangMember(funcName: string, m: unknown): GangMember {
+      if (!roughlyIs(new GangMember(), m)) throw makeRuntimeErrorMsg(funcName, `member should be a GangMember.`);
+      return m as GangMember;
+    },
+    gangTask(funcName: string, t: unknown): GangMemberTask {
+      if (!roughlyIs(new GangMemberTask("", "", false, false, {}), t))
+        throw makeRuntimeErrorMsg(funcName, `task should be a GangMemberTask.`);
+      return t as GangMemberTask;
     },
   };
 

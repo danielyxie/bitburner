@@ -7070,7 +7070,7 @@ interface CorporationInfo {
  * Employee in an office
  * @public
  */
-interface Employee {
+export interface Employee {
   /** Name of the employee */
   name: string;
   /** Morale of the employee */
@@ -7170,7 +7170,7 @@ interface Warehouse {
  * Office for a division in a city.
  * @public
  */
-interface Office {
+export interface Office {
   /** City of the office */
   loc: string;
   /** Maximum number of employee */

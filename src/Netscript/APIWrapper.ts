@@ -6,6 +6,12 @@ import { makeRuntimeRejectMsg } from "../NetscriptEvaluator";
 import { Player } from "../Player";
 import { CityName } from "../Locations/data/CityNames";
 import { BasicHGWOptions } from "../ScriptEditor/NetscriptDefinitions";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { Server } from "../Server/Server";
+import { FormulaGang } from "../Gang/formulas/formulas";
+import { INetscriptHelper } from "../NetscriptFunctions/INetscriptHelper";
+import { GangMember } from "../Gang/GangMember";
+import { GangMemberTask } from "../Gang/GangMemberTask";
 
 type ExternalFunction = (...args: unknown[]) => unknown;
 export type ExternalAPI = {
@@ -35,24 +41,6 @@ export type NetscriptContext = {
   helper: WrappedNetscriptHelpers;
 };
 
-type NetscriptHelpers = {
-  updateDynamicRam: (fnName: string, ramCost: number) => void;
-  makeRuntimeErrorMsg: (caller: string, msg: string) => string;
-  string: (funcName: string, argName: string, v: unknown) => string;
-  number: (funcName: string, argName: string, v: unknown) => number;
-  city: (funcName: string, argName: string, v: unknown) => CityName;
-  boolean: (v: unknown) => boolean;
-  getServer: (hostname: string, ctx: NetscriptContext) => BaseServer;
-  checkSingularityAccess: (func: string) => void;
-  hack: (
-    ctx: NetscriptContext,
-    hostname: string,
-    manual: boolean,
-    { threads: requestedThreads, stock }?: BasicHGWOptions,
-  ) => Promise<number>;
-  getValidPort: (funcName: string, port: number) => IPort;
-};
-
 type WrappedNetscriptHelpers = {
   makeRuntimeErrorMsg: (msg: string) => string;
   string: (argName: string, v: unknown) => string;
@@ -63,10 +51,15 @@ type WrappedNetscriptHelpers = {
   checkSingularityAccess: () => void;
   hack: (hostname: string, manual: boolean, { threads: requestedThreads, stock }?: BasicHGWOptions) => Promise<number>;
   getValidPort: (port: number) => IPort;
+  player(p: unknown): IPlayer;
+  server(s: unknown): Server;
+  gang(g: unknown): FormulaGang;
+  gangMember(m: unknown): GangMember;
+  gangTask(t: unknown): GangMemberTask;
 };
 
 function wrapFunction(
-  helpers: NetscriptHelpers,
+  helpers: INetscriptHelper,
   wrappedAPI: ExternalAPI,
   workerScript: WorkerScript,
   func: (_ctx: NetscriptContext) => (...args: unknown[]) => unknown,
@@ -96,6 +89,11 @@ function wrapFunction(
       checkSingularityAccess: () => helpers.checkSingularityAccess(functionName),
       hack: (hostname: string, manual: boolean, extra?: BasicHGWOptions) => helpers.hack(ctx, hostname, manual, extra),
       getValidPort: (port: number) => helpers.getValidPort(functionPath, port),
+      player: (p: unknown) => helpers.player(functionPath, p),
+      server: (s: unknown) => helpers.server(functionPath, s),
+      gang: (g: unknown) => helpers.gang(functionPath, g),
+      gangMember: (m: unknown) => helpers.gangMember(functionPath, m),
+      gangTask: (t: unknown) => helpers.gangTask(functionPath, t),
     },
   };
   function wrappedFunction(...args: unknown[]): unknown {
@@ -111,7 +109,7 @@ function wrapFunction(
 }
 
 export function wrapAPI(
-  helpers: NetscriptHelpers,
+  helpers: INetscriptHelper,
   wrappedAPI: ExternalAPI,
   workerScript: WorkerScript,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

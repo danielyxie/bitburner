@@ -27,7 +27,11 @@ import {
   calculateWeakenTime,
 } from "../Hacking";
 import { Programs } from "../Programs/Programs";
-import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
+import {
+  Formulas as IFormulas,
+  HacknetNodeConstants as DefHacknetNodeConstants,
+  HacknetServerConstants as DefHacknetServerConstants,
+} from "../ScriptEditor/NetscriptDefinitions";
 import {
   calculateRespectGain,
   calculateWantedLevelGain,
@@ -64,8 +68,9 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
         },
       repFromDonation:
         (ctx: NetscriptContext) =>
-        (_amount: unknown, player: any): number => {
+        (_amount: unknown, _player: unknown): number => {
           const amount = ctx.helper.number("amount", _amount);
+          const player = ctx.helper.player(_player);
           checkFormulasAccess(ctx);
           return repFromDonation(amount, player);
         },
@@ -91,25 +96,33 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
     hacking: {
       hackChance:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = ctx.helper.server(_server);
+          const player = ctx.helper.player(_player);
           checkFormulasAccess(ctx);
           return calculateHackingChance(server, player);
         },
       hackExp:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = ctx.helper.server(_server);
+          const player = ctx.helper.player(_player);
           checkFormulasAccess(ctx);
           return calculateHackingExpGain(server, player);
         },
       hackPercent:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = ctx.helper.server(_server);
+          const player = ctx.helper.player(_player);
           checkFormulasAccess(ctx);
           return calculatePercentMoneyHacked(server, player);
         },
       growPercent:
         (ctx: NetscriptContext) =>
-        (server: any, _threads: unknown, player: any, _cores: unknown = 1): number => {
+        (_server: unknown, _threads: unknown, _player: unknown, _cores: unknown = 1): number => {
+          const server = ctx.helper.server(_server);
+          const player = ctx.helper.player(_player);
           const threads = ctx.helper.number("threads", _threads);
           const cores = ctx.helper.number("cores", _cores);
           checkFormulasAccess(ctx);
@@ -117,19 +130,25 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
         },
       hackTime:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = ctx.helper.server(_server);
+          const player = ctx.helper.player(_player);
           checkFormulasAccess(ctx);
           return calculateHackingTime(server, player) * 1000;
         },
       growTime:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = ctx.helper.server(_server);
+          const player = ctx.helper.player(_player);
           checkFormulasAccess(ctx);
           return calculateGrowTime(server, player) * 1000;
         },
       weakenTime:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = ctx.helper.server(_server);
+          const player = ctx.helper.player(_player);
           checkFormulasAccess(ctx);
           return calculateWeakenTime(server, player) * 1000;
         },
@@ -180,7 +199,7 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
           checkFormulasAccess(ctx);
           return calculateNodeCost(n, mult);
         },
-      constants: (ctx: NetscriptContext) => (): any => {
+      constants: (ctx: NetscriptContext) => (): DefHacknetNodeConstants => {
         checkFormulasAccess(ctx);
         return Object.assign({}, HacknetNodeConstants);
       },
@@ -255,7 +274,7 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
           checkFormulasAccess(ctx);
           return HScalculateServerCost(n, mult);
         },
-      constants: (ctx: NetscriptContext) => (): any => {
+      constants: (ctx: NetscriptContext) => (): DefHacknetServerConstants => {
         checkFormulasAccess(ctx);
         return Object.assign({}, HacknetServerConstants);
       },
@@ -263,25 +282,35 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
     gang: {
       wantedPenalty:
         (ctx: NetscriptContext) =>
-        (gang: any): number => {
+        (_gang: unknown): number => {
+          const gang = ctx.helper.gang(_gang);
           checkFormulasAccess(ctx);
           return calculateWantedPenalty(gang);
         },
       respectGain:
         (ctx: NetscriptContext) =>
-        (gang: any, member: any, task: any): number => {
+        (_gang: unknown, _member: unknown, _task: unknown): number => {
+          const gang = ctx.helper.gang(_gang);
+          const member = ctx.helper.gangMember(_member);
+          const task = ctx.helper.gangTask(_task);
           checkFormulasAccess(ctx);
           return calculateRespectGain(gang, member, task);
         },
       wantedLevelGain:
         (ctx: NetscriptContext) =>
-        (gang: any, member: any, task: any): number => {
+        (_gang: unknown, _member: unknown, _task: unknown): number => {
+          const gang = ctx.helper.gang(_gang);
+          const member = ctx.helper.gangMember(_member);
+          const task = ctx.helper.gangTask(_task);
           checkFormulasAccess(ctx);
           return calculateWantedLevelGain(gang, member, task);
         },
       moneyGain:
         (ctx: NetscriptContext) =>
-        (gang: any, member: any, task: any): number => {
+        (_gang: unknown, _member: unknown, _task: unknown): number => {
+          const gang = ctx.helper.gang(_gang);
+          const member = ctx.helper.gangMember(_member);
+          const task = ctx.helper.gangTask(_task);
           checkFormulasAccess(ctx);
           return calculateMoneyGain(gang, member, task);
         },

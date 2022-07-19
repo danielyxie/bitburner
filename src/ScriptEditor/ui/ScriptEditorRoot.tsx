@@ -193,9 +193,9 @@ export function Root(props: IProps): React.ReactElement {
     // setup monaco-vim
     if (options.vim && editor && !vimEditor) {
       try {
-        // This library is not typed
         // @ts-expect-error
         window.require(["monaco-vim"], function (MonacoVim: any) {
+          console.log(MonacoVim);
           setVimEditor(MonacoVim.initVimMode(editor, vimStatusRef.current));
           MonacoVim.VimMode.Vim.defineEx("write", "w", function () {
             // your own implementation on what you want to do when :w is pressed
@@ -212,7 +212,7 @@ export function Root(props: IProps): React.ReactElement {
 
           // Setup "go to next tab" and "go to previous tab". This is a little more involved
           // since these aren't Ex commands (they run in normal mode, not after typing `:`)
-          MonacoVim.VimMode.Vim.defineAction("nextTabs", function (_cm: any, args: { repeat?: number }) {
+          MonacoVim.VimMode.Vim.defineAction("nextTabs", function (_cm: unknown, args: { repeat?: number }) {
             const nTabs = args.repeat ?? 1;
             // Go to the next tab (to the right). Wraps around when at the rightmost tab
             const currIndex = currentTabIndex();
@@ -221,7 +221,7 @@ export function Root(props: IProps): React.ReactElement {
               onTabClick(nextIndex);
             }
           });
-          MonacoVim.VimMode.Vim.defineAction("prevTabs", function (_cm: any, args: { repeat?: number }) {
+          MonacoVim.VimMode.Vim.defineAction("prevTabs", function (_cm: unknown, args: { repeat?: number }) {
             const nTabs = args.repeat ?? 1;
             // Go to the previous tab (to the left). Wraps around when at the leftmost tab
             const currIndex = currentTabIndex();
