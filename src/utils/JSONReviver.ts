@@ -60,7 +60,7 @@ export function Generic_toJSON(ctorName: string, obj: Record<string, any>, keys?
     keys = Object.keys(obj); // Only "own" properties are included
   }
 
-  const data: any = {};
+  const data: Record<string, unknown> = {};
   for (let index = 0; index < keys.length; ++index) {
     const key = keys[index];
     data[key] = obj[key];
