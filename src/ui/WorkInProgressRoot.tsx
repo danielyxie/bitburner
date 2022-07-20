@@ -375,7 +375,6 @@ export function WorkInProgressRoot(): React.ReactElement {
 
     const position = player.jobs[player.currentWork.companyName];
     const gains = player.currentWork.getGainRates(player);
-    console.log(player.currentWork.cyclesWorked);
     workInfo = {
       buttons: {
         cancel: cancel,

@@ -137,6 +137,8 @@ export function prestigeAugmentation(this: PlayerObject): void {
   // Reapply augs, re-calculate skills and reset HP
   this.reapplyAllAugmentations(true);
   this.hp = this.max_hp;
+
+  this.finishWork(true);
 }
 
 export function prestigeSourceFile(this: IPlayer): void {
