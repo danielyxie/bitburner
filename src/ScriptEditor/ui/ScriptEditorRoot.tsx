@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import Editor, { Monaco } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
+import type { Monaco } from "@monaco-editor/react";
 
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 type ITextModel = monaco.editor.ITextModel;
@@ -195,7 +196,6 @@ export function Root(props: IProps): React.ReactElement {
       try {
         // @ts-expect-error
         window.require(["monaco-vim"], function (MonacoVim: any) {
-          console.log(MonacoVim);
           setVimEditor(MonacoVim.initVimMode(editor, vimStatusRef.current));
           MonacoVim.VimMode.Vim.defineEx("write", "w", function () {
             // your own implementation on what you want to do when :w is pressed

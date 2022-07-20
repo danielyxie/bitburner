@@ -58,7 +58,7 @@ export interface IPlayer extends IPerson {
   moneySourceB: MoneySourceTracker;
   playtimeSinceLastAug: number;
   playtimeSinceLastBitnode: number;
-  purchasedServers: any[];
+  purchasedServers: string[];
   queuedAugmentations: IPlayerOwnedAugmentation[];
   scriptProdSinceLastAug: number;
   sleeves: Sleeve[];
