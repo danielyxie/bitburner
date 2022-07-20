@@ -122,29 +122,24 @@ export function wrapAPI(
   helpers: INetscriptHelper,
   wrappedAPI: ExternalAPI,
   workerScript: WorkerScript,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   namespace: object,
   ...tree: string[]
 ): WrappedNetscriptAPI {
-  if (typeof namespace !== "object") throw new Error("Invalid namespace?");
   for (const [key, value] of Object.entries(namespace)) {
-    switch (typeof value) {
-      case "function": {
-        wrapFunction(helpers, wrappedAPI, workerScript, value, ...tree, key);
-        break;
-      }
-      case "object": {
-        wrapAPI(helpers, wrappedAPI, workerScript, value, ...tree, key);
-        break;
-      }
-      default: {
-        setNestedProperty(wrappedAPI, value, ...tree, key);
-      }
+    if (typeof value === "function") {
+      wrapFunction(helpers, wrappedAPI, workerScript, value, ...tree, key);
+    } else if (Array.isArray(value)) {
+      setNestedProperty(wrappedAPI, value, key);
+    } else if (typeof value === "object") {
+      wrapAPI(helpers, wrappedAPI, workerScript, value, ...tree, key);
+    } else {
+      setNestedProperty(wrappedAPI, value, ...tree, key);
     }
   }
   return wrappedAPI;
 }
 
+// TODO: This doesn't even work properly.
 function setNestedProperty(root: object, value: unknown, ...tree: string[]): void {
   let target = root;
   const key = tree.pop();

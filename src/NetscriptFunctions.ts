@@ -2596,5 +2596,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const possibleLogs = Object.fromEntries([...getFunctionNames(ns, "")].map((a) => [a, true]));
 
   const wrappedNS = wrapAPI(helper, {}, workerScript, ns) as unknown as INS;
+  (wrappedNS as any).args = ns.args;
+  (wrappedNS as any).enums = ns.enums;
   return wrappedNS;
 }
