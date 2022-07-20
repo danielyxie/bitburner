@@ -34,7 +34,7 @@ export function exportScripts(pattern: string, server: BaseServer): void {
   // Return an error if no files matched, rather than an empty zip folder
   if (Object.keys(zip.files).length == 0) throw new Error(`No files match the pattern ${pattern}`);
   const zipFn = `bitburner${isScriptFilename(pattern) ? "Scripts" : pattern === "*.txt" ? "Texts" : "Files"}.zip`;
-  zip.generateAsync({ type: "blob" }).then((content: any) => FileSaver.saveAs(content, zipFn));
+  zip.generateAsync({ type: "blob" }).then((content: Blob) => FileSaver.saveAs(content, zipFn));
 }
 
 export function download(

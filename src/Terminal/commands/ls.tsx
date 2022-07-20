@@ -8,18 +8,17 @@ import { BaseServer } from "../../Server/BaseServer";
 import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
 import { IRouter } from "../../ui/Router";
 import { ITerminal } from "../ITerminal";
-import * as libarg from "arg";
+import libarg from "arg";
 import { showLiterature } from "../../Literature/LiteratureHelpers";
 import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
+import { ScriptArg } from "../../Netscript/ScriptArg";
 
-export function ls(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  args: (string | number | boolean)[],
-): void {
-  let flags;
+export function ls(terminal: ITerminal, router: IRouter, player: IPlayer, server: BaseServer, args: ScriptArg[]): void {
+  interface LSFlags {
+    ["-l"]: boolean;
+    ["--grep"]: string;
+  }
+  let flags: LSFlags;
   try {
     flags = libarg(
       {
@@ -235,7 +234,7 @@ export function ls(
     segments: string[];
   }
 
-  function postSegments(group: FileGroup, flags: any): void {
+  function postSegments(group: FileGroup, flags: LSFlags): void {
     const segments = group.segments;
     const linked = group.type === FileType.Script || group.type === FileType.Message;
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
