@@ -31,7 +31,7 @@ declare global {
     };
     electronBridge: {
       send: (channel: string, data?: unknown) => void;
-      receive: (channel: string, func: (...args: any[]) => void) => void;
+      receive: (channel: string, func: (...args: unknown[]) => void) => void;
     };
   }
   interface Document {
@@ -185,11 +185,14 @@ function initElectronBridge(): void {
     const data = window.appSaveFns.getSaveData();
     bridge.send("get-save-data-response", data);
   });
-  bridge.receive("get-save-info-request", async (save: string) => {
+  bridge.receive("get-save-info-request", async (save: unknown) => {
+    if (typeof save !== "string") throw new Error("Error while trying to get save info");
     const data = await window.appSaveFns.getSaveInfo(save);
     bridge.send("get-save-info-response", data);
   });
-  bridge.receive("push-save-request", ({ save, automatic = false }: { save: string; automatic: boolean }) => {
+  bridge.receive("push-save-request", (params: unknown) => {
+    if (typeof params !== "object") throw new Error("Error trying to push save request");
+    const { save, automatic = false } = params as { save: string; automatic: boolean };
     window.appSaveFns.pushSaveData(save, automatic);
   });
   bridge.receive("trigger-save", () => {

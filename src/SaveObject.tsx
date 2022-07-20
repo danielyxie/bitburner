@@ -49,7 +49,6 @@ export interface SaveData {
 
 export interface ImportData {
   base64: string;
-  parsed: any;
   playerData?: ImportPlayerData;
 }
 
@@ -208,7 +207,6 @@ class BitburnerSaveObject {
 
     const data: ImportData = {
       base64: base64Save,
-      parsed: parsedSave,
     };
 
     const importedPlayer = PlayerObject.fromJSON(JSON.parse(parsedSave.data.PlayerSave));
@@ -260,14 +258,19 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
 
       // The "companyName" property of all Companies is renamed to "name"
+      interface Company0_41_2 {
+        name: string | number;
+        companyName: string;
+        companyPositions: Record<number, boolean>;
+      }
       for (const companyName of Object.keys(Companies)) {
-        const company: any = Companies[companyName];
+        const company = Companies[companyName] as unknown as Company0_41_2;
         if (company.name == 0 && company.companyName != null) {
           company.name = company.companyName;
         }
 
         if (company.companyPositions instanceof Array) {
-          const pos: any = {};
+          const pos: Record<number, boolean> = {};
 
           for (let i = 0; i < company.companyPositions.length; ++i) {
             pos[company.companyPositions[i]] = true;

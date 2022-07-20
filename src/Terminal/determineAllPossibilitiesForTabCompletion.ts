@@ -309,9 +309,9 @@ export async function determineAllPossibilitiesForTabCompletion(
           return "--" + f[0];
         });
         try {
-          return flagFunc(schema);
+          return flagFunc()(schema);
         } catch (err) {
-          return undefined;
+          return {};
         }
       },
     };
