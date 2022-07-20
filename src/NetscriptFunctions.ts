@@ -531,7 +531,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     bladeburner: NetscriptBladeburner(Player, workerScript),
     codingcontract: NetscriptCodingContract(Player, workerScript),
     sleeve: NetscriptSleeve(Player),
-    corporation: NetscriptCorporation(Player, workerScript),
+    corporation: NetscriptCorporation(Player),
     stanek: NetscriptStanek(Player, workerScript, helper),
     infiltration: NetscriptInfiltration(Player),
     ui: NetscriptUserInterface(),

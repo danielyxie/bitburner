@@ -6623,9 +6623,8 @@ export interface OfficeAPI {
    * @param cityName - Name of the city
    * @param employeeName - name of the employee
    * @param job - Name of the job.
-   * @returns A promise that is fulfilled when the assignment is complete.
    */
-  assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
+  assignJob(divisionName: string, cityName: string, employeeName: string, job: string): void;
   /**
    * Hire an employee.
    * @param divisionName - Name of the division
@@ -6645,16 +6644,16 @@ export interface OfficeAPI {
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param costPerEmployee - Amount to spend per employee.
-   * @returns Amount of happiness increased.
+   * @returns Multiplier for happiness and morale, or zero on failure
    */
-  throwParty(divisionName: string, cityName: string, costPerEmployee: number): Promise<number>;
+  throwParty(divisionName: string, cityName: string, costPerEmployee: number): number;
   /**
    * Buy coffee for your employees
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
-   * @returns A promise that is fulfilled when the coffee is served.
+   * @returns true if buying coffee was successful, false otherwise
    */
-  buyCoffee(divisionName: string, cityName: string): Promise<void>;
+  buyCoffee(divisionName: string, cityName: string): boolean;
   /**
    * Hire AdVert.
    * @param divisionName - Name of the division
@@ -6713,9 +6712,9 @@ export interface OfficeAPI {
    * @param cityName - Name of the city
    * @param job - Name of the job
    * @param amount - Number of employees to assign to that job
-   * @returns A promise that is fulfilled when the assignment is complete.
+   * @returns true if the employee count reached the target amount, false if not
    */
-  setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
+  setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): boolean;
   /**
    * Cost to Upgrade office size.
    * @param divisionName - Name of the division
@@ -7234,6 +7233,8 @@ interface Office {
   minHap: number;
   /** Maximum happiness of the employees */
   maxHap: number;
+  /** Minimum morale of the employees */
+  minMor: number;
   /** Maximum morale of the employees */
   maxMor: number;
   /** Name of all the employees */
