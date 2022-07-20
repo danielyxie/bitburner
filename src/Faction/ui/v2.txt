@@ -1,3 +1,6 @@
+- getScriptExp
+- getScriptIncome
+- commitCrime
 - Change scp to be (files, destination, source)
 - Remove top level sing
 - Rename stock.buy and stock.sell

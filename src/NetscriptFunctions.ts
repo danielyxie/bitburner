@@ -639,8 +639,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const singularity = NetscriptSingularity(Player, workerScript);
 
   const base: InternalAPI<INS> = {
-    ...singularity,
-
     args: workerScript.args as unknown as any,
     enums: {
       toast: ToastVariant,
@@ -1366,9 +1364,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     scp:
       (ctx: NetscriptContext) =>
-      async (_scriptname: unknown, _hostname1: unknown, _hostname2?: unknown): Promise<boolean> => {
-        const hostname1 = ctx.helper.string("hostname1", _hostname1);
-        const hostname2 = ctx.helper.ustring("hostname2", _hostname2);
+      async (
+        _scriptname: unknown,
+        _destination: unknown,
+        _source: unknown = workerScript.hostname,
+      ): Promise<boolean> => {
+        const destination = ctx.helper.string("destination", _destination);
+        const source = ctx.helper.string("source", _source);
         if (Array.isArray(_scriptname)) {
           // Recursively call scp on all elements of array
           const scripts: string[] = _scriptname;
@@ -1378,7 +1380,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           let res = true;
           await Promise.all(
             scripts.map(async function (script) {
-              if (!(await NetscriptFunctions(workerScript).scp(script, hostname1, hostname2 as any))) {
+              if (!(await NetscriptFunctions(workerScript).scp(script, destination, source))) {
                 res = false;
               }
             }),
@@ -1398,31 +1400,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           throw ctx.makeRuntimeErrorMsg("Only works for scripts, .lit and .txt files");
         }
 
-        let destServer: BaseServer | null;
-        let currServ: BaseServer | null;
-
-        if (hostname2 != null) {
-          // 3 Argument version: scriptname, source, destination
-          if (scriptName === undefined || hostname1 === undefined || hostname2 === undefined) {
-            throw ctx.makeRuntimeErrorMsg("Takes 2 or 3 arguments");
-          }
-          destServer = safeGetServer(hostname2, ctx);
-          currServ = safeGetServer(hostname1, ctx);
-        } else if (hostname1 != null) {
-          // 2 Argument version: scriptname, destination
-          if (scriptName === undefined || hostname1 === undefined) {
-            throw ctx.makeRuntimeErrorMsg("Takes 2 or 3 arguments");
-          }
-          destServer = safeGetServer(hostname1, ctx);
-          currServ = GetServer(workerScript.hostname);
-          if (currServ == null) {
-            throw ctx.makeRuntimeErrorMsg(
-              "Could not find server hostname for this script. This is a bug. Report to dev.",
-            );
-          }
-        } else {
-          throw ctx.makeRuntimeErrorMsg("Takes 2 or 3 arguments");
-        }
+        const destServer = safeGetServer(destination, ctx);
+        const currServ = safeGetServer(source, ctx);
 
         // Scp for lit files
         if (scriptName.endsWith(".lit")) {
