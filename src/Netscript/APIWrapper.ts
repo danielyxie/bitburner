@@ -123,44 +123,44 @@ export function wrapAPI(
   wrappedAPI: ExternalAPI,
   workerScript: WorkerScript,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  namespace: any,
+  namespace: object,
   ...tree: string[]
 ): WrappedNetscriptAPI {
   if (typeof namespace !== "object") throw new Error("Invalid namespace?");
-  for (const property of Object.getOwnPropertyNames(namespace)) {
-    switch (typeof namespace[property]) {
+  for (const [key, value] of Object.entries(namespace)) {
+    switch (typeof value) {
       case "function": {
-        wrapFunction(helpers, wrappedAPI, workerScript, namespace[property], ...tree, property);
+        wrapFunction(helpers, wrappedAPI, workerScript, value, ...tree, key);
         break;
       }
       case "object": {
-        wrapAPI(helpers, wrappedAPI, workerScript, namespace[property], ...tree, property);
+        wrapAPI(helpers, wrappedAPI, workerScript, value, ...tree, key);
         break;
       }
       default: {
-        setNestedProperty(wrappedAPI, namespace[property], ...tree, property);
+        setNestedProperty(wrappedAPI, value, ...tree, key);
       }
     }
   }
   return wrappedAPI;
 }
 
-function setNestedProperty(root: any, value: any, ...tree: string[]): void {
+function setNestedProperty(root: object, value: unknown, ...tree: string[]): void {
   let target = root;
   const key = tree.pop();
-  if (typeof key !== "string") {
+  if (!key) {
     throw new Error("Failure occured while wrapping netscript api (setNestedProperty)");
   }
-  for (const branch of tree) {
-    if (target[branch] === undefined) {
-      target[branch] = {};
+  for (let branch of Object.values(target)) {
+    if (branch === undefined) {
+      branch = {};
     }
-    target = target[branch];
+    target = branch;
   }
-  target[key] = value;
+  Object.assign(target, { [key]: value });
 }
 
-function getNestedProperty(root: any, ...tree: string[]): any {
+function getNestedProperty(root: any, ...tree: string[]): unknown {
   let target = root;
   for (const branch of tree) {
     if (target[branch] === undefined) {
