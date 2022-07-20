@@ -67,23 +67,16 @@ export class Script {
   download(): void {
     const filename = this.filename;
     const file = new Blob([this.code], { type: "text/plain" });
-    const navigator = window.navigator as any;
-    if (navigator.msSaveOrOpenBlob) {
-      // IE10+
-      navigator.msSaveOrOpenBlob(file, filename);
-    } else {
-      // Others
-      const a = document.createElement("a"),
-        url = URL.createObjectURL(file);
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 0);
-    }
+    const a = document.createElement("a"),
+      url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
   }
 
   /**

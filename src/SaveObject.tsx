@@ -402,7 +402,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
     }
     if (ver < 15) {
-      (Settings as any).EditorTheme = { ...defaultMonacoTheme };
+      Settings.EditorTheme = { ...defaultMonacoTheme };
     }
     //Fix contract names
     if (ver < 16) {
@@ -605,23 +605,17 @@ function createBetaUpdateText(): void {
 
 function download(filename: string, content: string): void {
   const file = new Blob([content], { type: "text/plain" });
-  const navigator = window.navigator as any;
-  if (navigator.msSaveOrOpenBlob) {
-    // IE10+
-    navigator.msSaveOrOpenBlob(file, filename);
-  } else {
-    // Others
-    const a = document.createElement("a"),
-      url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function () {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 0);
-  }
+
+  const a = document.createElement("a"),
+    url = URL.createObjectURL(file);
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () {
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }, 0);
 }
 
 Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;

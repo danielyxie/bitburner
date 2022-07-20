@@ -1661,15 +1661,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (_hostname: unknown = workerScript.hostname): IServerDef => {
         const hostname = ctx.helper.string("hostname", _hostname);
         const server = safeGetServer(hostname, ctx);
-        const copy = Object.assign({}, server) as any;
+        const copy = Object.assign({}, server) as Server;
         // These fields should be hidden.
-        copy.contracts = undefined;
-        copy.messages = undefined;
-        copy.runningScripts = undefined;
-        copy.scripts = undefined;
-        copy.textFiles = undefined;
-        copy.programs = undefined;
-        copy.serversOnNetwork = undefined;
+        copy.contracts = [];
+        copy.messages = [];
+        copy.runningScripts = [];
+        copy.scripts = [];
+        copy.textFiles = [];
+        copy.programs = [];
+        copy.serversOnNetwork = [];
         if (!copy.baseDifficulty) copy.baseDifficulty = 0;
         if (!copy.hackDifficulty) copy.hackDifficulty = 0;
         if (!copy.minDifficulty) copy.minDifficulty = 0;

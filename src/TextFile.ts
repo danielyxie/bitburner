@@ -47,26 +47,17 @@ export class TextFile {
    * Serves the file to the user as a downloadable resource through the browser.
    */
   download(): void {
-    const filename: string = this.fn;
     const file: Blob = new Blob([this.text], { type: "text/plain" });
-    /* tslint:disable-next-line:strict-boolean-expressions */
-    const navigator = window.navigator as any;
-    if (navigator.msSaveOrOpenBlob) {
-      // IE10+
-      navigator.msSaveOrOpenBlob(file, filename);
-    } else {
-      // Others
-      const a: HTMLAnchorElement = document.createElement("a");
-      const url: string = URL.createObjectURL(file);
-      a.href = url;
-      a.download = this.fn;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 0);
-    }
+    const a: HTMLAnchorElement = document.createElement("a");
+    const url: string = URL.createObjectURL(file);
+    a.href = url;
+    a.download = this.fn;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
   }
 
   /**
