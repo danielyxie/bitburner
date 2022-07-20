@@ -110,7 +110,6 @@ import { CityName } from "./Locations/data/CityNames";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptHelper, ScriptIdentifier } from "./NetscriptFunctions/INetscriptHelper";
 import { IPlayer } from "./PersonObjects/IPlayer";
-import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { GangMember } from "./Gang/GangMember";
 import { GangMemberTask } from "./Gang/GangMemberTask";
 import { ScriptArg } from "./Netscript/ScriptArg";

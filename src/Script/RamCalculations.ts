@@ -145,6 +145,7 @@ async function parseOnlyRamCalculate(
     ];
     const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule));
     const resolvedRefs = new Set();
+    const loadedFns: Record<string, boolean> = {};
     while (unresolvedRefs.length > 0) {
       const ref = unresolvedRefs.shift();
       if (ref === undefined) throw new Error("ref should not be undefined");
@@ -198,53 +199,35 @@ async function parseOnlyRamCalculate(
         }
 
         // Only count each function once
-        if (workerScript.loadedFns[ref]) {
+        if (loadedFns[ref]) {
           continue;
-        } else {
-          workerScript.loadedFns[ref] = true;
         }
+        loadedFns[ref] = true;
 
-        // This accounts for namespaces (Bladeburner, CodingCpntract, etc.)
-        let func;
-        let refDetail = "n/a";
-        if (ref in workerScript.env.vars.bladeburner) {
-          func = workerScript.env.vars.bladeburner[ref];
-          refDetail = `bladeburner.${ref}`;
-        } else if (ref in workerScript.env.vars.codingcontract) {
-          func = workerScript.env.vars.codingcontract[ref];
-          refDetail = `codingcontract.${ref}`;
-        } else if (ref in workerScript.env.vars.stanek) {
-          func = workerScript.env.vars.stanek[ref];
-          refDetail = `stanek.${ref}`;
-        } else if (ref in workerScript.env.vars.infiltration) {
-          func = workerScript.env.vars.infiltration[ref];
-          refDetail = `infiltration.${ref}`;
-        } else if (ref in workerScript.env.vars.gang) {
-          func = workerScript.env.vars.gang[ref];
-          refDetail = `gang.${ref}`;
-        } else if (ref in workerScript.env.vars.sleeve) {
-          func = workerScript.env.vars.sleeve[ref];
-          refDetail = `sleeve.${ref}`;
-        } else if (ref in workerScript.env.vars.stock) {
-          func = workerScript.env.vars.stock[ref];
-          refDetail = `stock.${ref}`;
-        } else if (ref in workerScript.env.vars.ui) {
-          func = workerScript.env.vars.ui[ref];
-          refDetail = `ui.${ref}`;
-        } else if (ref in workerScript.env.vars.grafting) {
-          func = workerScript.env.vars.grafting[ref];
-          refDetail = `grafting.${ref}`;
-        } else if (ref in workerScript.env.vars.singularity) {
-          func = workerScript.env.vars.singularity[ref];
-          refDetail = `singularity.${ref}`;
-        } else {
-          func = workerScript.env.vars[ref];
-          refDetail = `${ref}`;
-        }
-        const fnRam = applyFuncRam(func);
+        // This accounts for namespaces (Bladeburner, CodingContract, etc.)
+        const findFunc = (
+          prefix: string,
+          obj: object,
+          ref: string,
+        ): { func: (p: IPlayer) => number | number; refDetail: string } | undefined => {
+          if (!obj) return;
+          const elem = Object.entries(obj).find(([key]) => key === ref);
+          if (elem !== undefined && (typeof elem[1] === "function" || typeof elem[1] === "number")) {
+            return { func: elem[1], refDetail: `${prefix}${ref}` };
+          }
+          for (const [key, value] of Object.entries(obj)) {
+            const found = findFunc(`${key}.`, value, ref);
+            if (found) return found;
+          }
+          return undefined;
+        };
+
+        const details = findFunc("", RamCosts, ref);
+        const fnRam = applyFuncRam(details?.func ?? 0);
         ram += fnRam;
-        detailedCosts.push({ type: "fn", name: refDetail, cost: fnRam });
+        detailedCosts.push({ type: "fn", name: details?.refDetail ?? "", cost: fnRam });
       } catch (error) {
+        console.log(error);
         continue;
       }
     }

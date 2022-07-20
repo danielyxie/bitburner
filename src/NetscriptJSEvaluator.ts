@@ -84,6 +84,12 @@ export async function executeJSScript(
       `${script.filename} cannot be run because it does not have a main function.`,
     );
   }
+  if (!ns) {
+    throw makeRuntimeRejectMsg(
+      workerScript,
+      `${script.filename} cannot be run because the NS object hasn't been constructed properly.`,
+    );
+  }
   return loadedModule.main(ns);
 }
 

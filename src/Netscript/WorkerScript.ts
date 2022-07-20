@@ -142,11 +142,10 @@ export class WorkerScript {
     }
     this.scriptRef = runningScriptObj;
     this.args = runningScriptObj.args.slice();
-    this.env = new Environment(null);
+    this.env = new Environment();
     if (typeof nsFuncsGenerator === "function") {
       this.env.vars = nsFuncsGenerator(this);
     }
-    this.env.set("args", runningScriptObj.args.slice());
   }
 
   /**
