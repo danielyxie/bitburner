@@ -17,7 +17,7 @@ import { TextFile } from "../../TextFile";
 import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { NetscriptFunctions } from "../../NetscriptFunctions";
@@ -319,19 +319,29 @@ export function Root(props: IProps): React.ReactElement {
   // https://github.com/threehams/typescript-error-guide/blob/master/stories/components/Editor.tsx#L11-L39
   // https://blog.checklyhq.com/customizing-monaco/
   // Before the editor is mounted
-  function beforeMount(monaco: any): void {
+  function beforeMount(monaco: Monaco): void {
     if (symbolsLoaded) return;
-    // Setup monaco auto completion
+    // Setup monaco auto completion for ns1
     symbolsLoaded = true;
     monaco.languages.registerCompletionItemProvider("javascript", {
-      provideCompletionItems: () => {
-        const suggestions = [];
+      provideCompletionItems: (
+        model: monaco.editor.ITextModel,
+        position: monaco.Position,
+      ): monaco.languages.CompletionList => {
+        const word = model.getWordAtPosition(position);
+        const suggestions: monaco.languages.CompletionItem[] = [];
         for (const symbol of symbols) {
           suggestions.push({
             label: symbol,
             kind: monaco.languages.CompletionItemKind.Function,
             insertText: symbol,
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range: {
+              startLineNumber: position.lineNumber,
+              startColumn: word?.startColumn ?? 0,
+              endLineNumber: position.lineNumber,
+              endColumn: position.column,
+            },
           });
         }
         return { suggestions: suggestions };
@@ -340,24 +350,32 @@ export function Root(props: IProps): React.ReactElement {
 
     (async function () {
       // We have to improve the default js language otherwise theme sucks
-      const l = await monaco.languages
-        .getLanguages()
-        .find((l: any) => l.id === "javascript")
-        .loader();
+      // https://github.com/microsoft/monaco-editor/issues/1927#issuecomment-692909147
+      // We should make a copy of javascript with our changes and make that a new custom language.
+      const js = monaco.languages.getLanguages().find(({ id }) => id === "javascript");
+      if (js === undefined) throw new Error("The javascript language isn't loaded in Monaco.");
+      // Define a new type in order to more properly cast what's coming out of monaco.
+      type ActualLanguage = monaco.languages.ILanguageExtensionPoint & {
+        loader: () => Promise<{ language: monaco.languages.IMonarchLanguage }>;
+      };
+      const hasLoader = (js: monaco.languages.ILanguageExtensionPoint): js is ActualLanguage =>
+        js.hasOwnProperty("loader");
+      if (!hasLoader(js)) throw new Error("js extension point has no load entrypoint.");
+      const { language } = await js.loader();
       // replaced the bare tokens with regexes surrounded by \b, e.g. \b{token}\b which matches a word-break on either side
       // this prevents the highlighter from highlighting pieces of variables that start with a reserved token name
-      l.language.tokenizer.root.unshift([new RegExp("\\bns\\b"), { token: "ns" }]);
+      language.tokenizer.root.unshift([new RegExp("\\bns\\b"), { token: "ns" }]);
       for (const symbol of symbols)
-        l.language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
+        language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
       const otherKeywords = ["let", "const", "var", "function"];
       const otherKeyvars = ["true", "false", "null", "undefined"];
       otherKeywords.forEach((k) =>
-        l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]),
+        language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]),
       );
       otherKeyvars.forEach((k) =>
-        l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]),
+        language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]),
       );
-      l.language.tokenizer.root.unshift([new RegExp("\\bthis\\b"), { token: "this" }]);
+      language.tokenizer.root.unshift([new RegExp("\\bthis\\b"), { token: "this" }]);
     })();
 
     const source = (libSource + "").replace(/export /g, "");
@@ -632,7 +650,7 @@ export function Root(props: IProps): React.ReactElement {
     return result;
   }
 
-  function onDragEnd(result: any): void {
+  function onDragEnd(result: DropResult): void {
     // Dropped outside of the list
     if (!result.destination) {
       result;

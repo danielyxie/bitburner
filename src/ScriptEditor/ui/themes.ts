@@ -2,17 +2,14 @@ import * as monaco from "monaco-editor";
 import type { Monaco } from "@monaco-editor/react";
 
 export interface IScriptEditorTheme {
-  [key: string]: any;
   base: "vs" | "vs-dark" | "hc-black";
   inherit: boolean;
   common: {
-    [key: string]: string;
     accent: string;
     bg: string;
     fg: string;
   };
   syntax: {
-    [key: string]: string;
     tag: string;
     entity: string;
     string: string;
@@ -24,16 +21,13 @@ export interface IScriptEditorTheme {
     error: string;
   };
   ui: {
-    [key: string]: any;
     line: string;
     panel: {
-      [key: string]: string;
       bg: string;
       selected: string;
       border: string;
     };
     selection: {
-      [key: string]: string;
       bg: string;
     };
   };
