@@ -10,6 +10,7 @@ import { ScriptUrl } from "./ScriptUrl";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { ScriptModule } from "./ScriptModule";
 
 let globalModuleSequenceNumber = 0;
 
@@ -30,7 +31,7 @@ export class Script {
 
   // The dynamic module generated for this script when it is run.
   // This is only applicable for NetscriptJS
-  module: any = "";
+  module: Promise<ScriptModule> | null = null;
 
   // The timestamp when when the script was last updated.
   moduleSequenceNumber: number;
@@ -53,7 +54,7 @@ export class Script {
     this.code = code;
     this.ramUsage = 0;
     this.server = server; // hostname of server this script is on
-    this.module = "";
+    this.module = null;
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     if (this.code !== "" && player !== null) {
       this.updateRamUsage(player, otherScripts);
@@ -90,7 +91,7 @@ export class Script {
    * to exec it.
    */
   markUpdated(): void {
-    this.module = "";
+    this.module = null;
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
   }
 

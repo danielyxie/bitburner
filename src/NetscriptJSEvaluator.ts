@@ -73,6 +73,9 @@ export async function executeJSScript(
 
   const ns = workerScript.env.vars;
 
+  if (!loadedModule) {
+    throw makeRuntimeRejectMsg(workerScript, `${script.filename} cannot be run because the script module won't load`);
+  }
   // TODO: putting await in a non-async function yields unhelpful
   // "SyntaxError: unexpected reserved word" with no line number information.
   if (!loadedModule.main) {
@@ -100,7 +103,7 @@ function isDependencyOutOfDate(filename: string, scripts: Script[], scriptModule
  * @param {Script[]} scripts
  */
 function shouldCompile(script: Script, scripts: Script[]): boolean {
-  if (script.module === "") return true;
+  if (!script.module) return true;
   return script.dependencies.some((dep) => isDependencyOutOfDate(dep.filename, scripts, script.moduleSequenceNumber));
 }
 

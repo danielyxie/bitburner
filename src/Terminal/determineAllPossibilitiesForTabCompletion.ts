@@ -289,7 +289,7 @@ export async function determineAllPossibilitiesForTabCompletion(
       await compile(p, script, currServ.scripts);
     }
     const loadedModule = await script.module;
-    if (!loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
+    if (!loadedModule || !loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
 
     const runArgs = { "--tail": Boolean, "-t": Number };
     const flags = libarg(runArgs, {
@@ -317,7 +317,9 @@ export async function determineAllPossibilitiesForTabCompletion(
     };
     let pos: string[] = [];
     let pos2: string[] = [];
-    pos = pos.concat(loadedModule.autocomplete(autocompleteData, flags._));
+    const options = loadedModule.autocomplete(autocompleteData, flags._);
+    if (!Array.isArray(options)) throw new Error("autocomplete did not return list of strings");
+    pos = pos.concat(options.map((x) => String(x)));
     return pos.concat(pos2);
   }
   const pos = await scriptAutocomplete();

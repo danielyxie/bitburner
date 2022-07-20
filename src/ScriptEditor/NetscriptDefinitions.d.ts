@@ -2037,9 +2037,10 @@ export interface Singularity {
    * guarantee that your browser will follow that time limit.
    *
    * @param crime - Name of crime to attempt.
+   * @param focus - Acquire player focus on this program creation. Optional. Defaults to true.
    * @returns The number of milliseconds it takes to attempt the specified crime.
    */
-  commitCrime(crime: string): number;
+  commitCrime(crime: string, focus?: boolean): number;
 
   /**
    * Get chance to successfully commit a crime.
