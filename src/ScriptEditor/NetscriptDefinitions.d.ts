@@ -2141,6 +2141,17 @@ export interface Singularity {
   getAugmentationPrice(augName: string): number;
 
   /**
+   * Get base price of an augmentation.
+   * @remarks
+   * RAM cost: 2.5 GB * 16/4/1
+   *
+   *
+   * @param augName - Name of Augmentation.
+   * @returns Base price of the augmentation, before price multiplier.
+   */
+  getAugmentationBasePrice(augName: string): number;
+
+  /**
    * Get reputation requirement of an augmentation.
    * @remarks
    * RAM cost: 2.5 GB * 16/4/1

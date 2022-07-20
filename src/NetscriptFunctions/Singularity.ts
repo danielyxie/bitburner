@@ -137,6 +137,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const aug = getAugmentation(_ctx, augName);
         return aug.prereqs.slice();
       },
+    getAugmentationBasePrice: (_ctx: NetscriptContext) =>
+      function (_augName: unknown): number {
+        _ctx.helper.checkSingularityAccess();
+        const augName = _ctx.helper.string("augName", _augName);
+        const aug = getAugmentation(_ctx, augName);
+        return aug.baseCost * BitNodeMultipliers.AugmentationMoneyCost;
+      },
     getAugmentationPrice: (_ctx: NetscriptContext) =>
       function (_augName: unknown): number {
         _ctx.helper.checkSingularityAccess();

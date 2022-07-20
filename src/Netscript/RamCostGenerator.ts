@@ -195,6 +195,7 @@ const singularity = {
   getAugmentationCost: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationPrereq: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationPrice: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost / 2),
+  getAugmentationBasePrice: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost / 2),
   getAugmentationRepReq: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost / 2),
   getAugmentationStats: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   purchaseAugmentation: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
