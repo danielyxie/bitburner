@@ -84,8 +84,8 @@ export interface IBladeburner {
   getActionEstimatedSuccessChanceNetscriptFn(person: IPerson, type: string, name: string): [number, number] | string;
   getActionCountRemainingNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
   getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number;
-  getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number;
-  upgradeSkillNetscriptFn(skillName: string, workerScript: WorkerScript): boolean;
+  getSkillUpgradeCostNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): number;
+  upgradeSkillNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): boolean;
   getTeamSizeNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
   setTeamSizeNetscriptFn(type: string, name: string, size: number, workerScript: WorkerScript): number;
   joinBladeburnerFactionNetscriptFn(workerScript: WorkerScript): boolean;

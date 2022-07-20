@@ -21,7 +21,7 @@ Bonus time for the Gang mechanic in milliseconds.
 
 RAM cost: 0 GB
 
-Returns the amount of accumulated “bonus time” (seconds) for the Gang mechanic.
+Returns the amount of accumulated “bonus time” (milliseconds) for the Gang mechanic.
 
 “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
 

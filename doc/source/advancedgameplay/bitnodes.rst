@@ -35,6 +35,8 @@ Furthermore, some BitNodes introduce new content and mechanics. For example ther
 BitNode that grants access to the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_.
 There is another BitNode in which you can manage a gang to earn money and reputation.
 
+.. _gameplay_bitnodes_howtodestroy:
+
 How to destroy a BitNode
 ^^^^^^^^^^^^^^^^^^^^^^^^
 Initially, the only way to destroy a BitNode is to join the Daedalus :ref:`Daedalus <gameplay_factions>`.

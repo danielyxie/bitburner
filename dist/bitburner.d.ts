@@ -313,13 +313,24 @@ export declare interface Bladeburner {
      * @remarks
      * RAM cost: 4 GB
      *
-     * Returns the number of seconds it takes to complete the specified action
+     * Returns the number of milliseconds it takes to complete the specified action
      *
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Number of milliseconds it takes to complete the specified action.
      */
     getActionTime(type: string, name: string): number;
+
+    /**
+     * Get the time elapsed on current action.
+     * @remarks
+     * RAM cost: 4 GB
+     *
+     * Returns the number of milliseconds already spent on the current action.
+     *
+     * @returns Number of milliseconds already spent on the current action.
+     */
+    getActionCurrentTime(): number;
 
     /**
      * Get estimate success chance of an action.
@@ -496,28 +507,30 @@ export declare interface Bladeburner {
      * @remarks
      * RAM cost: 4 GB
      *
-     * This function returns the number of skill points needed to upgrade the specified skill.
+     * This function returns the number of skill points needed to upgrade the specified skill the specified number of times.
      *
      * The function returns -1 if an invalid skill name is passed in.
      *
      * @param skillName - Name of skill. Case-sensitive and must be an exact match
+     * @param count - Number of times to upgrade the skill. Defaults to 1 if not specified.
      * @returns Number of skill points needed to upgrade the specified skill.
      */
-    getSkillUpgradeCost(name: string): number;
+    getSkillUpgradeCost(name: string, count?: number): number;
 
     /**
      * Upgrade skill.
      * @remarks
      * RAM cost: 4 GB
      *
-     * Attempts to upgrade the specified Bladeburner skill.
+     * Attempts to upgrade the specified Bladeburner skill the specified number of times.
      *
      * Returns true if the skill is successfully upgraded, and false otherwise.
      *
      * @param skillName - Name of skill to be upgraded. Case-sensitive and must be an exact match
+     * @param count - Number of times to upgrade the skill. Defaults to 1 if not specified.
      * @returns true if the skill is successfully upgraded, and false otherwise.
      */
-    upgradeSkill(name: string): boolean;
+    upgradeSkill(name: string, count?: number): boolean;
 
     /**
      * Get team size.
@@ -673,7 +686,7 @@ export declare interface Bladeburner {
      * @remarks
      * RAM cost: 0 GB
      *
-     * Returns the amount of accumulated “bonus time” (seconds) for the Bladeburner mechanic.
+     * Returns the amount of accumulated “bonus time” (milliseconds) for the Bladeburner mechanic.
      *
      * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
      *
@@ -1483,7 +1496,7 @@ export declare interface Gang {
      * @remarks
      * RAM cost: 0 GB
      *
-     * Returns the amount of accumulated “bonus time” (seconds) for the Gang mechanic.
+     * Returns the amount of accumulated “bonus time” (milliseconds) for the Gang mechanic.
      *
      * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
      *
@@ -3059,6 +3072,7 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
+     * see: https://github.com/alexei/sprintf.js
      * @param format - format of the message
      * @param msg - Value to be printed.
      */
@@ -3150,7 +3164,7 @@ export declare interface NS {
      * @param args - Arguments to identify which scripts to get logs for.
      * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
      */
-    getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
+    getScriptLogs(fn?: string, host?: string, ...args: (string | number | boolean)[]): string[];
 
     /**
      * Get an array of recently killed scripts across all servers.
@@ -3213,7 +3227,7 @@ export declare interface NS {
      * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.
      * @param args - Arguments for the script being tailed.
      */
-    tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
+    tail(fn?: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): void;
 
     /**
      * Close the tail window of a script.
@@ -3418,7 +3432,7 @@ export declare interface NS {
      * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value.
      * @returns Returns the PID of a successfully started script, and 0 otherwise.
      */
-    run(script: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
+    run(script: string, numThreads?: number, ...args: (string | number | boolean)[]): number;
 
     /**
      * Start another script on any server.
@@ -3466,7 +3480,7 @@ export declare interface NS {
      * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.
      * @returns Returns the PID of a successfully started script, and 0 otherwise.
      */
-    exec(script: string, host: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
+    exec(script: string, host: string, numThreads?: number, ...args: (string | number | boolean)[]): number;
 
     /**
      * Terminate current script and start another in 10s.
@@ -3496,7 +3510,7 @@ export declare interface NS {
      * @param numThreads - Number of threads to spawn new script with. Will be rounded to nearest integer.
      * @param args - Additional arguments to pass into the new script that is being run.
      */
-    spawn(script: string, numThreads?: number, ...args: string[]): void;
+    spawn(script: string, numThreads?: number, ...args: (string | number | boolean)[]): void;
 
     /**
      * Terminate another script.
@@ -3566,7 +3580,7 @@ export declare interface NS {
      * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
      * ```
      */
-    kill(script: string, host: string, ...args: string[]): boolean;
+    kill(script: string, host: string, ...args: (string | number | boolean)[]): boolean;
 
     /**
      * Terminate all scripts on a server.
@@ -4063,7 +4077,7 @@ export declare interface NS {
      * @param args - Arguments to specify/identify which scripts to search for.
      * @returns True if specified script is running on the target server, and false otherwise.
      */
-    isRunning(script: FilenameOrPID, host: string, ...args: string[]): boolean;
+    isRunning(script: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): boolean;
 
     /**
      * Get general info about a running script.
@@ -4078,7 +4092,11 @@ export declare interface NS {
      * @param args  - Arguments to identify the script
      * @returns The info about the running script if found, and null otherwise.
      */
-    getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript | null;
+    getRunningScript(
+    filename?: FilenameOrPID,
+    hostname?: string,
+    ...args: (string | number | boolean)[]
+    ): RunningScript | null;
 
     /**
      * Get cost of purchasing a server.
@@ -4404,13 +4422,13 @@ export declare interface NS {
      * Get the execution time of a hack() call.
      * @remarks
      * RAM cost: 0.05 GB
-     *When `hack` completes an amount of money is stolen depending on the player's skills.
+     *
+     * When `hack` completes an amount of money is stolen depending on the player's skills.
      * Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server.
-     * The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
      * The required time is increased by the security level of the target server and decreased by the player's hacking level.
      *
      * @param host - Host of target server.
-     * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
+     * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function.
      */
     getHackTime(host: string): number;
 
@@ -4420,11 +4438,10 @@ export declare interface NS {
      * RAM cost: 0.05 GB
      *
      * Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server.
-     * The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
      * The required time is increased by the security level of the target server and decreased by the player's hacking level.
      *
      * @param host - Host of target server.
-     * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
+     * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function.
      */
     getGrowTime(host: string): number;
 
@@ -4434,11 +4451,10 @@ export declare interface NS {
      * RAM cost: 0.05 GB
      *
      * Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server.
-     * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
      * The required time is increased by the security level of the target server and decreased by the player's hacking level.
      *
      * @param host - Host of target server.
-     * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function. Returns Infinity if called on a Hacknet Server.
+     * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function.
      */
     getWeakenTime(host: string): number;
 
@@ -4471,7 +4487,7 @@ export declare interface NS {
     /**
      * {@inheritDoc NS.(getScriptIncome:1)}
      */
-    getScriptIncome(script: string, host: string, ...args: string[]): number;
+    getScriptIncome(script: string, host: string, ...args: (string | number | boolean)[]): number;
 
     /**
      * Get the exp gain of a script.
@@ -4495,7 +4511,7 @@ export declare interface NS {
     /**
      * {@inheritDoc NS.(getScriptExpGain:1)}
      */
-    getScriptExpGain(script: string, host: string, ...args: string[]): number;
+    getScriptExpGain(script: string, host: string, ...args: (string | number | boolean)[]): number;
 
     /**
      * Returns the amount of time in milliseconds that have passed since you last installed Augmentations.
@@ -6439,6 +6455,8 @@ export declare interface SleeveTask {
     gymStatType: string;
     /** Faction work type being performed, if any */
     factionWorkType: string;
+    /** Class being taken at university, if any */
+    className: string;
 }
 
 /**

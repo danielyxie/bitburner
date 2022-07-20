@@ -27,3 +27,5 @@ void
 
 RAM cost: 0 GB
 
+see: https://github.com/alexei/sprintf.js
+

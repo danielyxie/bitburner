@@ -9,7 +9,7 @@ Get the income of a script.
 <b>Signature:</b>
 
 ```typescript
-getScriptIncome(script: string, host: string, ...args: string[]): number;
+getScriptIncome(script: string, host: string, ...args: (string | number | boolean)[]): number;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ getScriptIncome(script: string, host: string, ...args: string[]): number;
 |  --- | --- | --- |
 |  script | string | Filename of script. |
 |  host | string | Server on which script is running. |
-|  args | string\[\] | Arguments that the script is running with. |
+|  args | (string \| number \| boolean)\[\] | Arguments that the script is running with. |
 
 <b>Returns:</b>
 

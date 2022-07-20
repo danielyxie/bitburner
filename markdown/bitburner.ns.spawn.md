@@ -9,7 +9,7 @@ Terminate current script and start another in 10s.
 <b>Signature:</b>
 
 ```typescript
-spawn(script: string, numThreads?: number, ...args: string[]): void;
+spawn(script: string, numThreads?: number, ...args: (string | number | boolean)[]): void;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ spawn(script: string, numThreads?: number, ...args: string[]): void;
 |  --- | --- | --- |
 |  script | string | Filename of script to execute. |
 |  numThreads | number | Number of threads to spawn new script with. Will be rounded to nearest integer. |
-|  args | string\[\] | Additional arguments to pass into the new script that is being run. |
+|  args | (string \| number \| boolean)\[\] | Additional arguments to pass into the new script that is being run. |
 
 <b>Returns:</b>
 

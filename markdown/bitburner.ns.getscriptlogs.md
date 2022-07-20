@@ -9,7 +9,7 @@ Get all the logs of a script.
 <b>Signature:</b>
 
 ```typescript
-getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
+getScriptLogs(fn?: string, host?: string, ...args: (string | number | boolean)[]): string[];
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
 |  --- | --- | --- |
 |  fn | string | Optional. Filename of script to get logs from. |
 |  host | string | Optional. Hostname of the server that the script is on. |
-|  args | any\[\] | Arguments to identify which scripts to get logs for. |
+|  args | (string \| number \| boolean)\[\] | Arguments to identify which scripts to get logs for. |
 
 <b>Returns:</b>
 
