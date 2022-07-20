@@ -88,8 +88,8 @@ function wrapFunction(
       makeRuntimeErrorMsg: (msg: string) => helpers.makeRuntimeErrorMsg(functionPath, msg),
       string: (argName: string, v: unknown) => helpers.string(functionPath, argName, v),
       number: (argName: string, v: unknown) => helpers.number(functionPath, argName, v),
-      ustring: (argName: string, v: unknown) => helpers.string(functionPath, argName, v),
-      unumber: (argName: string, v: unknown) => helpers.number(functionPath, argName, v),
+      ustring: (argName: string, v: unknown) => helpers.ustring(functionPath, argName, v),
+      unumber: (argName: string, v: unknown) => helpers.unumber(functionPath, argName, v),
       scriptArgs: (v: unknown) => helpers.scriptArgs(functionPath, v),
       scriptIdentifier: (fn: unknown, hostname: unknown, args: unknown) =>
         helpers.scriptIdentifier(functionPath, fn, hostname, args),
