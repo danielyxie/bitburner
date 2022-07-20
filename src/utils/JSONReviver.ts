@@ -55,7 +55,7 @@ export namespace Reviver {
 // Returns:    The structure (which will then be turned into a string
 //             as part of the JSON.stringify algorithm)
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function Generic_toJSON(ctorName: string, obj: any, keys?: string[]): IReviverValue {
+export function Generic_toJSON(ctorName: string, obj: Record<string, any>, keys?: string[]): IReviverValue {
   if (!keys) {
     keys = Object.keys(obj); // Only "own" properties are included
   }

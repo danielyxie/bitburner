@@ -97,7 +97,7 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(router: IRouter, p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
+  commit(p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
     if (div <= 0) {
       div = 1;
     }
@@ -107,8 +107,6 @@ export class Crime {
         singularity: workerScript !== null,
       }),
     );
-    p.focus = true;
-    router.toWork();
 
     return this.time;
   }

@@ -1170,9 +1170,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         return true;
       },
     commitCrime: (_ctx: NetscriptContext) =>
-      function (_crimeRoughName: unknown): number {
+      function (_crimeRoughName: unknown, _focus: unknown = true): number {
         _ctx.helper.checkSingularityAccess();
         const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
+        const focus = _ctx.helper.boolean(_focus);
+        const wasFocusing = player.focus;
 
         if (player.currentWork !== null) {
           player.finishWork(true);
@@ -1187,7 +1189,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           throw _ctx.helper.makeRuntimeErrorMsg(`Invalid crime: '${crimeRoughName}'`);
         }
         _ctx.log(() => `Attempting to commit ${crime.name}...`);
-        return crime.commit(Router, player, 1, workerScript);
+        if (focus) {
+          player.startFocusing();
+          Router.toWork();
+        } else if (wasFocusing) {
+          player.stopFocusing();
+          Router.toTerminal();
+        }
+        return crime.commit(player, 1, workerScript);
       },
     getCrimeChance: (_ctx: NetscriptContext) =>
       function (_crimeRoughName: unknown): number {
