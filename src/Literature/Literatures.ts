@@ -244,7 +244,7 @@ export const Literatures: IMap<Literature> = {};
     "is that most of the rise is in violent crime such as homicide and assault. According " +
     "to the study, the city saw a total of 21,406 reported homicides in 2076, which is over " +
     "a 20% increase compared to 2075.<br><br>" +
-    "CIA director David Glarow says its too early to know " +
+    "CIA director David Glarow says it's too early to know " +
     "whether these figures indicate the beginning of a sustained increase in crime rates, or whether " +
     "the year was just an unfortunate outlier. He states that many intelligence and law enforcement " +
     "agents have noticed an increase in organized crime activites, and believes that these figures may " +
@@ -319,7 +319,7 @@ export const Literatures: IMap<Literature> = {};
     "CompanionBot, a robot meant to act as a comforting friend for lonely and grieving people, is eerily human-like " +
     "in its appearance, speech, mannerisms, and even movement. However its artificial intelligence isn't the same as " +
     "that of humans. Not yet. It doesn't have sentience or self-awareness or consciousness.<br><br>" +
-    "Many neuroscientists believe that we won't ever reach the point of creating artificial human intelligence. 'At the end of the " +
+    "Many neuroscientists believe that we won't ever reach the point of creating artificial human intelligence. 'At the end of " +
     "the day, AI comes down to 1's and 0's, while the human brain does not. We'll never see AI that is identical to that of " +
     "humans.'";
   Literatures[fn] = new Literature(title, fn, txt);

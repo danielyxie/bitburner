@@ -66,7 +66,7 @@ export function ActiveFragmentSummary(props: IProps): React.ReactElement {
           </TableRow>
           {summary.map((entry) => {
             return (
-              <TableRow>
+              <TableRow key={entry.type}>
                 <TableCell sx={{ borderBottom: "none", p: 0, m: 0 }}>
                   <Typography>
                     {entry.coordinate.map((coord) => {

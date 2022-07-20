@@ -150,7 +150,7 @@ export const FactionInfos: IMap<FactionInfo> = {
   [FactionNames.BachmanAssociates]: new FactionInfo({
     infoText: (
       <>
-        Where Law and Business meet - thats where we are.
+        Where Law and Business meet - that's where we are.
         <br />
         <br />
         Legal Insight - Business Instinct - Innovative Experience.

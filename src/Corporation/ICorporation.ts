@@ -19,8 +19,8 @@ export interface ICorporation {
   shareSalesUntilPriceUpdate: number;
   shareSaleCooldown: number;
   issueNewSharesCooldown: number;
-  dividendPercentage: number;
-  dividendTaxPercentage: number;
+  dividendRate: number;
+  dividendTax: number;
   issuedShares: number;
   sharePrice: number;
   storedCycles: number;
@@ -54,6 +54,7 @@ export interface ICorporation {
   getSalesMultiplier(): number;
   getScientificResearchMultiplier(): number;
   getStarterGuide(player: IPlayer): void;
+  updateDividendTax(): void;
+  getCycleDividends(): number;
   toJSON(): any;
-  getDividends(): number;
 }

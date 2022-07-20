@@ -104,7 +104,7 @@ export function FAQModal({ open, onClose }: IProps): React.ReactElement {
         <Typography variant="h4">What is Memory?</Typography>
         <br />
         <Typography>
-          Sleeve memory dictates what a sleeve's synchronization will be when its reset by switching BitNodes. For
+          Sleeve memory dictates what a sleeve's synchronization will be when it's reset by switching BitNodes. For
           example, if a sleeve has a memory of 25, then when you switch BitNodes its synchronization will initially be
           set to 25, rather than 1.
         </Typography>

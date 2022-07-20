@@ -19,6 +19,7 @@ import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
 import { Settings } from "../../Settings/Settings";
+import { ANSIITypography } from "./ANSIITypography";
 
 let layerCounter = 0;
 
@@ -185,20 +186,20 @@ function LogWindow(props: IProps): React.ReactElement {
     setMinimized(!minimized);
   }
 
-  function lineColor(s: string): string {
+  function lineColor(s: string): "error" | "success" | "warn" | "info" | "primary" {
     if (s.match(/(^\[[^\]]+\] )?ERROR/) || s.match(/(^\[[^\]]+\] )?FAIL/)) {
-      return Settings.theme.error;
+      return "error";
     }
     if (s.match(/(^\[[^\]]+\] )?SUCCESS/)) {
-      return Settings.theme.success;
+      return "success";
     }
     if (s.match(/(^\[[^\]]+\] )?WARN/)) {
-      return Settings.theme.warning;
+      return "warn";
     }
     if (s.match(/(^\[[^\]]+\] )?INFO/)) {
-      return Settings.theme.info;
+      return "info";
     }
-    return Settings.theme.primary;
+    return "primary";
   }
 
   // And trigger fakeDrag when the window is resized
@@ -319,10 +320,9 @@ function LogWindow(props: IProps): React.ReactElement {
               <span style={{ display: "flex", flexDirection: "column" }}>
                 {script.logs.map(
                   (line: string, i: number): JSX.Element => (
-                    <Typography key={i} sx={{ color: lineColor(line) }}>
-                      {line}
-                      <br />
-                    </Typography>
+                    <React.Fragment key={i}>
+                      <ANSIITypography text={line} color={lineColor(line)} />
+                    </React.Fragment>
                   ),
                 )}
               </span>

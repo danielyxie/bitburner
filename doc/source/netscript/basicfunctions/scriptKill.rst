@@ -15,4 +15,4 @@ scriptKill() Netscript Function
 
     .. code-block:: javascript
 
-        scriptKill("demo.script"); // returns: true
+        scriptKill("demo.script", "home"); // returns: true

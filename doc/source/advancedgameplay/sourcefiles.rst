@@ -5,7 +5,7 @@
 Source-Files
 ============
 Source-Files are a type of persistent upgrade that is more powerful than Augmentations.
-Source-Files are received by destroying a BitNode. There are many different BitNodes
+Source-Files are received by :ref:`destroying a BitNode <gameplay_bitnodes_howtodestroy>`. There are many different BitNodes
 in the game and each BitNode will grant a different Source-File when it is destroyed.
 
 A Source-File can be upgraded by destroying its corresponding BitNode a second or
@@ -63,4 +63,8 @@ List of all Source-Files
 || BitNode-12: The Recursion          || * There is no maximum level for this Source-File.                                                                                                                       |
 ||                                    || * Let the player start with Neuroflux Governor equal to the level of this                                                                                               |
 ||                                    || Source-File.                                                                                                                                                            |
++-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|| BitNode-13: They're lunatics       || * This Source-File lets the Church of the Machine God appear in other BitNodes.                                                                                         |
+||                                    || * Each level of this Source-File increases the size of Stanek's Gift.                                                                                                   |
+||                                    ||                                                                                                                                                                         |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+

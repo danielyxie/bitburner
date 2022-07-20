@@ -22,7 +22,7 @@ export function Augmentations(props: IProps): React.ReactElement {
   const [augmentation, setAugmentation] = useState("Augmented Targeting I");
 
   function setAugmentationDropdown(event: SelectChangeEvent<string>): void {
-    setAugmentation(event.target.value );
+    setAugmentation(event.target.value);
   }
   function queueAug(): void {
     props.player.queueAugmentation(augmentation);

@@ -16,6 +16,7 @@ export interface SleeveTask
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [className](./bitburner.sleevetask.classname.md) | string | Class being taken at university, if any |
 |  [crime](./bitburner.sleevetask.crime.md) | string | Crime currently attempting, if any |
 |  [factionWorkType](./bitburner.sleevetask.factionworktype.md) | string | Faction work type being performed, if any |
 |  [gymStatType](./bitburner.sleevetask.gymstattype.md) | string | Stat being trained at the gym, if any |
