@@ -25,7 +25,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
     attempt:
       (ctx: NetscriptContext) =>
       (
-        _answer: unknown,
+        answer: unknown,
         _filename: unknown,
         _hostname: unknown = workerScript.hostname,
         { returnReward }: CodingAttemptOptions = { returnReward: false },
@@ -36,23 +36,23 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
 
         // Convert answer to string. If the answer is a 2D array, then we have to
         // manually add brackets for the inner arrays
-        let answer = "";
+        let answerStr = "";
         if (is2DArray(answer)) {
           const answerComponents = [];
           for (let i = 0; i < answer.length; ++i) {
             answerComponents.push(["[", String(answer[i]), "]"].join(""));
           }
 
-          answer = answerComponents.join(",");
+          answerStr = answerComponents.join(",");
         } else {
-          answer = String(answer);
+          answerStr = String(answer);
         }
 
         const creward = contract.reward;
         if (creward === null) throw new Error("Somehow solved a contract that didn't have a reward");
 
         const serv = ctx.helper.getServer(hostname);
-        if (contract.isSolution(answer)) {
+        if (contract.isSolution(answerStr)) {
           const reward = player.gainCodingContractReward(creward, contract.getDifficulty());
           ctx.log(() => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`);
           serv.removeContract(filename);
