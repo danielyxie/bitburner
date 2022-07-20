@@ -73,7 +73,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
       new FactionWork({
         singularity: false,
         faction: faction.name,
-        factionWorkType: FactionWorkType.HACKING,
+        factionWorkType: FactionWorkType.FIELD,
       }),
     );
     startWork();
@@ -95,7 +95,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
       new FactionWork({
         singularity: false,
         faction: faction.name,
-        factionWorkType: FactionWorkType.HACKING,
+        factionWorkType: FactionWorkType.SECURITY,
       }),
     );
     startWork();
