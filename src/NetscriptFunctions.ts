@@ -476,10 +476,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   };
 
   const roughlyIs = (expect: object, actual: unknown): boolean => {
+    console.log(expect);
+    console.log(actual);
+
     if (typeof actual !== "object" || actual == null) return false;
     const expects = Object.keys(expect);
     const actuals = Object.keys(actual);
-    for (const expect of expects) if (!actuals.includes(expect)) return false;
+    for (const expect of expects)
+      if (!actuals.includes(expect)) {
+        console.log(expect);
+        return false;
+      }
     return true;
   };
 
@@ -570,7 +577,44 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return iport;
     },
     player(funcName: string, p: unknown): IPlayer {
-      if (!roughlyIs(new PlayerObject(), p)) throw makeRuntimeErrorMsg(funcName, `player should be a Player.`);
+      const fakePlayer = {
+        hacking: undefined,
+        hp: undefined,
+        max_hp: undefined,
+        strength: undefined,
+        defense: undefined,
+        dexterity: undefined,
+        agility: undefined,
+        charisma: undefined,
+        intelligence: undefined,
+        hacking_exp: undefined,
+        strength_exp: undefined,
+        defense_exp: undefined,
+        dexterity_exp: undefined,
+        agility_exp: undefined,
+        charisma_exp: undefined,
+        hacking_chance_mult: undefined,
+        mults: undefined,
+        numPeopleKilled: undefined,
+        money: undefined,
+        city: undefined,
+        location: undefined,
+        hasWseAccount: undefined,
+        hasTixApiAccess: undefined,
+        has4SData: undefined,
+        has4SDataTixApi: undefined,
+        bitNodeN: undefined,
+        totalPlaytime: undefined,
+        playtimeSinceLastAug: undefined,
+        playtimeSinceLastBitnode: undefined,
+        jobs: undefined,
+        factions: undefined,
+        tor: undefined,
+        inBladeburner: undefined,
+        hasCorporation: undefined,
+        entropy: undefined,
+      };
+      if (!roughlyIs(fakePlayer, p)) throw makeRuntimeErrorMsg(funcName, `player should be a Player.`);
       return p as IPlayer;
     },
     server(funcName: string, s: unknown): Server {
