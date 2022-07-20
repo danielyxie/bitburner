@@ -1,6 +1,4 @@
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { netscriptDelay } from "../NetscriptEvaluator";
 
 import { OfficeSpace } from "../Corporation/OfficeSpace";
 import { Employee } from "../Corporation/Employee";
@@ -35,11 +33,12 @@ import {
   SetSmartSupply,
   BuyMaterial,
   AssignJob,
+  AutoAssignJob,
   UpgradeOfficeSize,
-  ThrowParty,
   PurchaseWarehouse,
   UpgradeWarehouse,
   BuyCoffee,
+  ThrowParty,
   HireAdVert,
   MakeProduct,
   Research,
@@ -60,17 +59,15 @@ import {
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
-import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 import { Industry } from "../Corporation/Industry";
 import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/IndustryData";
 import { CorporationConstants } from "../Corporation/data/Constants";
-import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 
-export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript): InternalAPI<NSCorporation> {
+export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
     if (!player.canAccessCorporation() || player.hasCorporation()) return false;
     if (!corporationName) return false;
@@ -303,7 +300,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
       lastCycleExpenses: division.lastCycleExpenses,
       thisCycleRevenue: division.thisCycleRevenue,
       thisCycleExpenses: division.thisCycleExpenses,
-      upgrades: division.upgrades.slice(),
+      upgrades: [0, division.numAdVerts],
       cities: cities,
       products: division.products === undefined ? [] : Object.keys(division.products),
       makesProducts: division.makesProducts,
@@ -659,8 +656,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const division = getDivision(divisionName);
-        const upgrade = IndustryUpgrades[1];
-        return upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
+        return division.getAdVertCost();
       },
     getHireAdVertCount:
       (ctx: NetscriptContext) =>
@@ -668,7 +664,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const division = getDivision(divisionName);
-        return division.upgrades[1];
+        return division.numAdVerts;
       },
     getResearchCost:
       (ctx: NetscriptContext) =>
@@ -685,20 +681,6 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const researchName = ctx.helper.string("researchName", _researchName);
         return hasResearched(getDivision(divisionName), researchName);
-      },
-    setAutoJobAssignment:
-      (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown, _job: unknown, _amount: unknown): Promise<boolean> => {
-        checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const amount = ctx.helper.number("amount", _amount);
-        const job = ctx.helper.string("job", _job);
-        const office = getOffice(divisionName, cityName);
-        if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-        return netscriptDelay(1000, workerScript).then(function () {
-          return Promise.resolve(office.setEmployeeToJob(job, amount));
-        });
       },
     getOfficeSizeUpgradeCost:
       (ctx: NetscriptContext) =>
@@ -719,18 +701,31 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
       },
     assignJob:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown, _employeeName: unknown, _job: unknown): Promise<void> => {
+      (_divisionName: unknown, _cityName: unknown, _employeeName: unknown, _job: unknown): void => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
         const employeeName = ctx.helper.string("employeeName", _employeeName);
         const job = ctx.helper.string("job", _job);
-        const employee = getEmployee(divisionName, cityName, employeeName);
-        return netscriptDelay(["Training", "Unassigned"].includes(employee.pos) ? 0 : 1000, workerScript).then(
-          function () {
-            return Promise.resolve(AssignJob(employee, job));
-          },
-        );
+
+        if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
+        const office = getOffice(divisionName, cityName);
+
+        AssignJob(office, employeeName, job);
+      },
+    setAutoJobAssignment:
+      (ctx: NetscriptContext) =>
+      (_divisionName: unknown, _cityName: unknown, _job: unknown, _amount: unknown): boolean => {
+        checkAccess(ctx, 8);
+        const divisionName = ctx.helper.string("divisionName", _divisionName);
+        const cityName = ctx.helper.city("cityName", _cityName);
+        const amount = ctx.helper.number("amount", _amount);
+        const job = ctx.helper.string("job", _job);
+
+        if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
+        const office = getOffice(divisionName, cityName);
+
+        return AutoAssignJob(office, job, amount);
       },
     hireEmployee:
       (ctx: NetscriptContext) =>
@@ -770,35 +765,32 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
       },
     throwParty:
       (ctx: NetscriptContext) =>
-      async (_divisionName: unknown, _cityName: unknown, _costPerEmployee: unknown): Promise<number> => {
+      (_divisionName: unknown, _cityName: unknown, _costPerEmployee: unknown): number => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
         const costPerEmployee = ctx.helper.number("costPerEmployee", _costPerEmployee);
-        if (costPerEmployee < 0)
+
+        if (costPerEmployee < 0) {
           throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
-        const office = getOffice(divisionName, cityName);
+        }
+
         const corporation = getCorporation();
-        return netscriptDelay(
-          (60 * 1000) / (player.mults.hacking_speed * calculateIntelligenceBonus(player.intelligence, 1)),
-          workerScript,
-        ).then(function () {
-          return Promise.resolve(ThrowParty(corporation, office, costPerEmployee));
-        });
+        const office = getOffice(divisionName, cityName);
+
+        return ThrowParty(corporation, office, costPerEmployee);
       },
     buyCoffee:
       (ctx: NetscriptContext) =>
-      async (_divisionName: unknown, _cityName: unknown): Promise<void> => {
+      (_divisionName: unknown, _cityName: unknown): boolean => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
+
         const corporation = getCorporation();
-        return netscriptDelay(
-          (60 * 1000) / (player.mults.hacking_speed * calculateIntelligenceBonus(player.intelligence, 1)),
-          workerScript,
-        ).then(function () {
-          return Promise.resolve(BuyCoffee(corporation, getDivision(divisionName), getOffice(divisionName, cityName)));
-        });
+        const office = getOffice(divisionName, cityName);
+
+        return BuyCoffee(corporation, office);
       },
     hireAdVert:
       (ctx: NetscriptContext) =>
@@ -806,7 +798,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const corporation = getCorporation();
-        HireAdVert(corporation, getDivision(divisionName), getOffice(divisionName, "Sector-12"));
+        HireAdVert(corporation, getDivision(divisionName));
       },
     research:
       (ctx: NetscriptContext) =>
@@ -830,6 +822,7 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
           maxEne: office.maxEne,
           minHap: office.minHap,
           maxHap: office.maxHap,
+          minMor: office.minMor,
           maxMor: office.maxMor,
           employees: office.employees.map((e) => e.name),
           employeeProd: {
