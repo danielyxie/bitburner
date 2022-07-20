@@ -263,6 +263,11 @@ v2.0.0 - 2022-07-19 Work rework
   * commitCrime now has 'focus' optional parameter
   * using getScriptIncome to get total income has been separated to getTotalScriptIncome.
   * using getScriptExpGain to get total income has been separated to getTotalScriptExpGain.
+  * scp has it's 2 last argument reversed, the signature is now (files, destination, optional_source)
+  * ns.connect and other singularity function are no longer available at the top level.
+    They were already hidden from documentation but now they're gone.
+  * stock.buy and stock.sell were renamed to stock.buyStock and stock.sellStock because 'buy' and 'sell'
+    are very common tokens.
 
   Multipliers
 

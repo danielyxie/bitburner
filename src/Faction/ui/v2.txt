@@ -1,8 +1,1 @@
-- getScriptExp
-- getScriptIncome
-- commitCrime
-- Change scp to be (files, destination, source)
-- Remove top level sing
-- Rename stock.buy and stock.sell
-- https://github.com/danielyxie/bitburner/pull/3802
 - https://github.com/danielyxie/bitburner/pull/3812

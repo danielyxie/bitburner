@@ -1304,7 +1304,7 @@ export interface TIX {
    * @param shares - Number of shares to purchased. Must be positive. Will be rounded to nearest integer.
    * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
    */
-  buy(sym: string, shares: number): number;
+  buyStock(sym: string, shares: number): number;
 
   /**
    * Sell stocks.
@@ -1328,7 +1328,7 @@ export interface TIX {
    * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.
    * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.
    */
-  sell(sym: string, shares: number): number;
+  sellStock(sym: string, shares: number): number;
 
   /**
    * Short stocks.
@@ -5399,67 +5399,35 @@ export interface NS {
    * ```ts
    * // NS1:
    * //Copies foo.lit from the helios server to the home computer:
-   * scp("foo.lit", "helios", "home");
+   * scp("foo.lit", "home", "helios");
    *
    * //Tries to copy three files from rothman-uni to home computer:
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
-   * scp(files, "rothman-uni", "home");
+   * scp(files, "home", "rothman-uni");
    * ```
    * @example
    * ```ts
    * // NS2:
    * //Copies foo.lit from the helios server to the home computer:
-   * await ns.scp("foo.lit", "helios", "home");
+   * await ns.scp("foo.lit", "home", "helios" );
    *
    * //Tries to copy three files from rothman-uni to home computer:
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
-   * await ns.scp(files, "rothman-uni", "home");
+   * await ns.scp(files,  "home", "rothman-uni");
    * ```
    * @example
    * ```ts
    * //ns2, copies files from home to a target server
    * const server = ns.args[0];
    * const files = ["hack.js","weaken.js","grow.js"];
-   * await ns.scp(files, "home", server);
+   * await ns.scp(files, server, "home");
    * ```
    * @param files - Filename or an array of filenames of script/literature files to copy.
    * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
    * @param destination - Host of the destination server, which is the server to which the file will be copied.
    * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
    */
-  scp(files: string | string[], destination: string): Promise<boolean>;
-
-  /**
-   * {@inheritDoc NS.(scp:1)}
-   * @example
-   * ```ts
-   * // NS1:
-   * //Copies foo.lit from the helios server to the home computer:
-   * scp("foo.lit", "helios", "home");
-   *
-   * //Tries to copy three files from rothman-uni to home computer:
-   * files = ["foo1.lit", "foo2.script", "foo3.script"];
-   * scp(files, "rothman-uni", "home");
-   * ```
-   * @example
-   * ```ts
-   * // NS2:
-   * //Copies foo.lit from the helios server to the home computer:
-   * await ns.scp("foo.lit", "helios", "home");
-   *
-   * //Tries to copy three files from rothman-uni to home computer:
-   * files = ["foo1.lit", "foo2.script", "foo3.script"];
-   * await ns.scp(files, "rothman-uni", "home");
-   * ```
-   * @example
-   * ```ts
-   * //ns2, copies files from home to a target server
-   * const server = ns.args[0];
-   * const files = ["hack.js","weaken.js","grow.js"];
-   * await ns.scp(files, "home", server);
-   * ```
-   */
-  scp(files: string | string[], source: string, destination: string): Promise<boolean>;
+  scp(files: string | string[], destination: string, source?: string): Promise<boolean>;
 
   /**
    * List files on a server.
@@ -7051,9 +7019,9 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   levelUpgrade(upgradeName: string): void;
   /**
    * Issue dividends
-   * @param percent - Percent of profit to issue as dividends.
+   * @param rate - Fraction of profit to issue as dividends.
    */
-  issueDividends(percent: number): void;
+  issueDividends(rate: number): void;
   /**
    * Buyback Shares
    * @param amount - Amount of shares to buy back.
@@ -7103,6 +7071,12 @@ interface CorporationInfo {
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;
+  /** Fraction of profits issued as dividends */
+  dividendRate: number;
+  /** Tax applied on your earnings as a shareholder */
+  dividendTax: number;
+  /** Your earnings as a shareholder per second this cycle */
+  dividendEarnings: number;
   /** State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT. */
   state: string;
   /** Array of all divisions */

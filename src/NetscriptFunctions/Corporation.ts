@@ -922,14 +922,15 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
       },
     issueDividends:
       (ctx: NetscriptContext) =>
-      (_percent: unknown): void => {
+      (_rate: unknown): void => {
         checkAccess(ctx);
-        const percent = ctx.helper.number("percent", _percent);
-        if (percent < 0 || percent > 100)
-          throw new Error("Invalid value for percent field! Must be numeric, greater than 0, and less than 100");
+        const rate = ctx.helper.number("rate", _rate);
+        const max = CorporationConstants.DividendMaxRate;
+        if (rate < 0 || rate > max)
+          throw new Error(`Invalid value for rate field! Must be numeric, greater than 0, and less than ${max}`);
         const corporation = getCorporation();
         if (!corporation.public) throw ctx.makeRuntimeErrorMsg(`Your company has not gone public!`);
-        IssueDividends(corporation, percent);
+        IssueDividends(corporation, rate);
       },
 
     // If you modify these objects you will affect them for real, it's not
@@ -956,6 +957,9 @@ export function NetscriptCorporation(player: IPlayer, workerScript: WorkerScript
         shareSaleCooldown: corporation.shareSaleCooldown,
         issuedShares: corporation.issuedShares,
         sharePrice: corporation.sharePrice,
+        dividendRate: corporation.dividendRate,
+        dividendTax: corporation.dividendTax,
+        dividendEarnings: corporation.getCycleDividends() / CorporationConstants.SecsPerMarketCycle,
         state: corporation.state.getState(),
         divisions: corporation.divisions.map((division): NSDivision => getSafeDivision(division)),
       };

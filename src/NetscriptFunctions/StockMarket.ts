@@ -144,7 +144,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
         return res;
       },
-    buy:
+    buyStock:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
         const symbol = ctx.helper.string("symbol", _symbol);
@@ -154,7 +154,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         const res = buyStock(stock, shares, workerScript, {});
         return res ? stock.getAskPrice() : 0;
       },
-    sell:
+    sellStock:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
         const symbol = ctx.helper.string("symbol", _symbol);
