@@ -45,12 +45,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
  *                                      keep track of what functions have/havent been accounted for
  */
-async function parseOnlyRamCalculate(
-  player: IPlayer,
-  otherScripts: Script[],
-  code: string,
-  workerScript: WorkerScript,
-): Promise<RamCalculation> {
+async function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: string): Promise<RamCalculation> {
   try {
     /**
      * Maps dependent identifiers to their dependencies.
@@ -417,17 +412,8 @@ export async function calculateRamUsage(
   codeCopy: string,
   otherScripts: Script[],
 ): Promise<RamCalculation> {
-  // We don't need a real WorkerScript for this. Just an object that keeps
-  // track of whatever's needed for RAM calculations
-  const workerScript = {
-    loadedFns: {},
-    env: {
-      vars: RamCosts,
-    },
-  } as WorkerScript;
-
   try {
-    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript);
+    return await parseOnlyRamCalculate(player, otherScripts, codeCopy);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);
