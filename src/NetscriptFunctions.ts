@@ -1315,7 +1315,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
             return false;
           }
 
-          res = killWorkerScript(runningScriptObj, server.hostname);
+          res = killWorkerScript({ runningScript: runningScriptObj, hostname: server.hostname });
         }
 
         if (res) {
@@ -1348,7 +1348,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         for (let i = server.runningScripts.length - 1; i >= 0; --i) {
           if (safetyguard === true && server.runningScripts[i].pid == workerScript.pid) continue;
-          killWorkerScript(server.runningScripts[i], server.hostname, false);
+          killWorkerScript({ runningScript: server.runningScripts[i], hostname: server.hostname });
           ++scriptsKilled;
         }
         WorkerScriptStartStopEventEmitter.emit();
@@ -2241,7 +2241,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         let suc = false;
         for (let i = 0; i < server.runningScripts.length; i++) {
           if (server.runningScripts[i].filename == scriptname) {
-            killWorkerScript(server.runningScripts[i], server.hostname);
+            killWorkerScript({ runningScript: server.runningScripts[i], hostname: server.hostname });
             suc = true;
             i--;
           }

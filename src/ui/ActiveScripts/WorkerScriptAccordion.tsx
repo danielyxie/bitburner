@@ -53,7 +53,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   function logClickHandler(): void {
     LogBoxEvents.emit(scriptRef);
   }
-  const killScript = killWorkerScript.bind(null, scriptRef as any, scriptRef.server);
+  const killScript = killWorkerScript.bind(null, { runningScript: scriptRef, hostname: scriptRef.server });
 
   function killScriptClickHandler(): void {
     killScript();

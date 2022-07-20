@@ -151,7 +151,7 @@ function LogWindow(props: IProps): React.ReactElement {
   }, []);
 
   function kill(): void {
-    killWorkerScript(script, script.server, true);
+    killWorkerScript({ runningScript: script, hostname: script.server });
   }
 
   function run(): void {
