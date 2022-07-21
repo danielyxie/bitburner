@@ -38,6 +38,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     return {
       shock: 100 - sl.shock,
       sync: sl.sync,
+      memory: sl.memory,
       hacking: sl.hacking,
       strength: sl.strength,
       defense: sl.defense,
