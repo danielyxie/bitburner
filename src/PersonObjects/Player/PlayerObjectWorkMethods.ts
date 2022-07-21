@@ -18,4 +18,5 @@ export function finish(this: IPlayer, cancelled: boolean): void {
   if (this.currentWork === null) return;
   this.currentWork.finish(this, cancelled);
   this.currentWork = null;
+  this.focus = false;
 }

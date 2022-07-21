@@ -467,6 +467,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const argsToString = function (args: unknown[]): string {
     let out = "";
     for (let arg of args) {
+      if (arg === null) {
+        out += "null";
+        continue;
+      }
+      if (arg === undefined) {
+        out += "undefined";
+        continue;
+      }
       arg = toNative(arg);
       out += typeof arg === "object" ? JSON.stringify(arg) : `${arg}`;
     }
