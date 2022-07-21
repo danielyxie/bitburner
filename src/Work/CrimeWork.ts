@@ -35,7 +35,7 @@ export class CrimeWork extends Work {
     this.cyclesWorked += cycles;
     const time = Object.values(Crimes).find((c) => c.type === this.crimeType)?.time ?? 0;
     this.unitCompleted += CONSTANTS._idleSpeed * cycles;
-    if (this.unitCompleted >= time) {
+    while (this.unitCompleted >= time) {
       this.commit(player);
       this.unitCompleted -= time;
     }
