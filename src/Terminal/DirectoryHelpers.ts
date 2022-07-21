@@ -314,7 +314,7 @@ export function areFilesEqual(f0: string, f1: string): boolean {
 }
 
 export function areImportsEquals(f0: string, f1: string): boolean {
-  if (!f0.endsWith(".ns") && !f0.endsWith(".js")) f0 = f0 + ".js";
-  if (!f1.endsWith(".ns") && !f1.endsWith(".js")) f1 = f1 + ".js";
+  if (!f0.endsWith(".js")) f0 = f0 + ".js";
+  if (!f1.endsWith(".js")) f1 = f1 + ".js";
   return areFilesEqual(f0, f1);
 }

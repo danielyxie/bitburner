@@ -13,9 +13,7 @@ import { RunningScript } from "../Script/RunningScript";
 
 import {
   AugmentationStats,
-  CharacterInfo,
   CrimeStats,
-  PlayerSkills,
   Singularity as ISingularity,
   SourceFileLvl,
 } from "../ScriptEditor/NetscriptDefinitions";
@@ -674,62 +672,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         return false;
       },
-    getStats: (_ctx: NetscriptContext) =>
-      function (): PlayerSkills {
-        _ctx.helper.checkSingularityAccess();
-        _ctx.log(() => `getStats is deprecated, please use getplayer`);
-
-        return {
-          hacking: player.hacking,
-          strength: player.strength,
-          defense: player.defense,
-          dexterity: player.dexterity,
-          agility: player.agility,
-          charisma: player.charisma,
-          intelligence: player.intelligence,
-        };
-      },
-    getCharacterInformation: (_ctx: NetscriptContext) =>
-      function (): CharacterInfo {
-        _ctx.helper.checkSingularityAccess();
-        _ctx.log(() => `getCharacterInformation is deprecated, please use getplayer`);
-
-        return {
-          bitnode: player.bitNodeN,
-          city: player.city,
-          factions: player.factions.slice(),
-          hp: player.hp,
-          jobs: Object.keys(player.jobs),
-          jobTitles: Object.values(player.jobs),
-          maxHp: player.max_hp,
-          mult: {
-            agility: player.mults.agility,
-            agilityExp: player.mults.agility_exp,
-            charisma: player.charisma,
-            charismaExp: player.charisma_exp,
-            companyRep: player.mults.company_rep,
-            crimeMoney: player.mults.crime_money,
-            crimeSuccess: player.mults.crime_success,
-            defense: player.mults.defense,
-            defenseExp: player.mults.defense_exp,
-            dexterity: player.mults.dexterity,
-            dexterityExp: player.mults.dexterity_exp,
-            factionRep: player.mults.faction_rep,
-            hacking: player.mults.hacking,
-            hackingExp: player.mults.hacking_exp,
-            strength: player.mults.strength,
-            strengthExp: player.mults.strength_exp,
-            workMoney: player.mults.work_money,
-          },
-          tor: player.hasTorRouter(),
-          hackingExp: player.hacking_exp,
-          strengthExp: player.strength_exp,
-          defenseExp: player.defense_exp,
-          dexterityExp: player.dexterity_exp,
-          agilityExp: player.agility_exp,
-          charismaExp: player.charisma_exp,
-        };
-      },
     hospitalize: (_ctx: NetscriptContext) =>
       function (): void {
         _ctx.helper.checkSingularityAccess();
@@ -1213,6 +1155,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           throw _ctx.helper.makeRuntimeErrorMsg(`Invalid crime: '${crimeRoughName}'`);
         }
         _ctx.log(() => `Attempting to commit ${crime.name}...`);
+        const crimeTime = crime.commit(player, 1, workerScript);
         if (focus) {
           player.startFocusing();
           Router.toWork();
@@ -1220,7 +1163,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           player.stopFocusing();
           Router.toTerminal();
         }
-        return crime.commit(player, 1, workerScript);
+        return crimeTime;
       },
     getCrimeChance: (_ctx: NetscriptContext) =>
       function (_crimeRoughName: unknown): number {

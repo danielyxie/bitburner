@@ -658,27 +658,6 @@ export interface NodeStats {
 }
 
 /**
- * Short summary of the players skills.
- * @public
- */
-export interface PlayerSkills {
-  /** Hacking level */
-  hacking: number;
-  /** Strength level */
-  strength: number;
-  /** Defense level */
-  defense: number;
-  /** Dexterity level */
-  dexterity: number;
-  /** Agility level */
-  agility: number;
-  /** Charisma level */
-  charisma: number;
-  /** Intelligence level */
-  intelligence: number;
-}
-
-/**
  * @public
  */
 export interface CharacterMult {
@@ -716,42 +695,6 @@ export interface CharacterMult {
   strengthExp: number;
   /** Money earned from jobs */
   workMoney: number;
-}
-
-/**
- * @public
- */
-export interface CharacterInfo {
-  /** Current BitNode number */
-  bitnode: number;
-  /** Name of city you are currently in */
-  city: string;
-  /** Array of factions you are currently a member of */
-  factions: string[];
-  /** Current health points */
-  hp: number;
-  /** Array of all jobs */
-  jobs: string[];
-  /** Array of job positions for all companies you are employed at. Same order as 'jobs' */
-  jobTitles: string[];
-  /** Maximum health points */
-  maxHp: number;
-  /** Boolean indicating whether or not you have a tor router */
-  tor: boolean;
-  /** Object with many of the player's multipliers from Augmentations/Source Files */
-  mult: CharacterMult;
-  /** total hacking exp */
-  hackingExp: number;
-  /** total strength exp */
-  strengthExp: number;
-  /** total defense exp */
-  defenseExp: number;
-  /** total dexterity exp */
-  dexterityExp: number;
-  /** total agility exp */
-  agilityExp: number;
-  /** total charisma exp */
-  charismaExp: number;
 }
 
 /**
@@ -2215,35 +2158,6 @@ export interface Singularity {
    * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.
    */
   installAugmentations(cbScript?: string): void;
-
-  /**
-   * Returns an object with the Player’s stats.
-   * @deprecated use getPlayer
-   *
-   * @remarks
-   * RAM cost: 0.5 GB * 16/4/1
-   *
-   *
-   * @example
-   * ```ts
-   * res = getStats();
-   * print('My charisma level is: ' + res.charisma);
-   * ```
-   * @returns Object with the Player’s stats.
-   */
-  getStats(): PlayerSkills;
-
-  /**
-   * Returns an object with various information about your character.
-   * @deprecated use getPlayer
-   *
-   * @remarks
-   * RAM cost: 0.5 GB * 16/4/1
-   *
-   *
-   * @returns Object with various information about your character.
-   */
-  getCharacterInformation(): CharacterInfo;
 
   /**
    * Hospitalize the player.
@@ -6407,7 +6321,7 @@ export interface NS {
    * RAM cost: 0 GB
    *
    * Retrieves data from a URL and downloads it to a file on the specified server.
-   * The data can only be downloaded to a script (.script, .ns, .js) or a text file (.txt).
+   * The data can only be downloaded to a script (.script, .js) or a text file (.txt).
    * If the file already exists, it will be overwritten by this command.
    * Note that it will not be possible to download data from many websites because they
    * do not allow cross-origin resource sharing (CORS).
@@ -6540,7 +6454,7 @@ export interface NS {
    * ]);
    * tprint(data);
    *
-   * // example.ns
+   * // example.js
    * export async function main(ns) {
    *   const data = ns.flags([
    *     ['delay', 0], // a default number means this flag is a number

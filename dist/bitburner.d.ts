@@ -4614,7 +4614,7 @@ export declare interface NS {
      * RAM cost: 0 GB
      *
      * Retrieves data from a URL and downloads it to a file on the specified server.
-     * The data can only be downloaded to a script (.script, .ns, .js) or a text file (.txt).
+     * The data can only be downloaded to a script (.script or .js) or a text file (.txt).
      * If the file already exists, it will be overwritten by this command.
      * Note that it will not be possible to download data from many websites because they
      * do not allow cross-origin resource sharing (CORS).
@@ -4758,7 +4758,7 @@ export declare interface NS {
      * ]);
      * tprint(data);
      *
-     * // example.ns
+     * // example.js
      * export async function main(ns) {
      *   const data = ns.flags([
      *     ['delay', 0], // a default number means this flag is a number

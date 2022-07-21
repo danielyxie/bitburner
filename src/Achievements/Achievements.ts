@@ -270,8 +270,7 @@ export const achievements: IMap<Achievement> = {
   NS2: {
     ...achievementData["NS2"],
     Icon: "ns2",
-    Condition: () =>
-      Player.getHomeComputer().scripts.some((s) => s.filename.endsWith(".js") || s.filename.endsWith(".ns")),
+    Condition: () => Player.getHomeComputer().scripts.some((s) => s.filename.endsWith(".js")),
   },
   FROZE: {
     ...achievementData["FROZE"],

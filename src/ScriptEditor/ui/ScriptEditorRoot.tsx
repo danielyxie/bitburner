@@ -436,7 +436,7 @@ export function Root(props: IProps): React.ReactElement {
 
   function infLoop(newCode: string): void {
     if (editorRef.current === null || currentScript === null) return;
-    if (!currentScript.fileName.endsWith(".ns") && !currentScript.fileName.endsWith(".js")) return;
+    if (!currentScript.fileName.endsWith(".js")) return;
     const awaitWarning = checkInfiniteLoop(newCode);
     if (awaitWarning !== -1) {
       const newDecorations = editorRef.current.deltaDecorations(decorations, [
@@ -531,7 +531,7 @@ export function Root(props: IProps): React.ReactElement {
       const textFile = new TextFile(scriptToSave.fileName, scriptToSave.code);
       server.textFiles.push(textFile);
     } else {
-      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or a text file (.txt)");
+      dialogBoxCreate("Invalid filename. Must be either a script (.script or .js) or a text file (.txt)");
       return;
     }
 
@@ -618,7 +618,7 @@ export function Root(props: IProps): React.ReactElement {
       const textFile = new TextFile(currentScript.fileName, currentScript.code);
       server.textFiles.push(textFile);
     } else {
-      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or a text file (.txt)");
+      dialogBoxCreate("Invalid filename. Must be either a script (.script or .js) or a text file (.txt)");
       return;
     }
 

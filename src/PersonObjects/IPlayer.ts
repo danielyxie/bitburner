@@ -29,7 +29,7 @@ import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
-import { Work } from "src/Work/Work";
+import { Work } from "../Work/Work";
 import { Multipliers } from "./Multipliers";
 
 export interface IPlayer extends IPerson {

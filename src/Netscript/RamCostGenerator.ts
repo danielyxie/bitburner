@@ -163,8 +163,6 @@ const singularity = {
   installBackdoor: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   getDarkwebProgramCost: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   getDarkwebPrograms: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
-  getStats: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
-  getCharacterInformation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   hospitalize: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   isBusy: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   stopAction: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 2),

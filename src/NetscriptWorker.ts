@@ -566,7 +566,7 @@ function createAndAddWorkerScript(
 
   // Start the script's execution
   let scriptExecution: Promise<void> | null = null; // Script's resulting promise
-  if (workerScript.name.endsWith(".js") || workerScript.name.endsWith(".ns")) {
+  if (workerScript.name.endsWith(".js")) {
     scriptExecution = startNetscript2Script(player, workerScript);
   } else {
     scriptExecution = startNetscript1Script(workerScript);
