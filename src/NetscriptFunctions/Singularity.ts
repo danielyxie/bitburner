@@ -271,11 +271,17 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           _ctx.log(() => `No location named ${locationName}`);
           return false;
         }
-        if (player.city !== location.city) {
+        if (location.city && player.city !== location.city) {
           _ctx.log(() => `No location named ${locationName} in ${player.city}`);
           return false;
         }
-        Router.toLocation(location);
+        if (location.name === LocationName.TravelAgency) {
+          Router.toTravel();
+        } else if (location.name === LocationName.WorldStockExchange) {
+          Router.toStockMarket();
+        } else {
+          Router.toLocation(location);
+        }
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
         return true;
       },
