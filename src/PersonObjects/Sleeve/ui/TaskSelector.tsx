@@ -265,8 +265,20 @@ function getABC(sleeve: Sleeve): [string, string, string] {
       return ["Commit Crime", sleeve.crimeType, "------"];
     case SleeveTaskType.Class:
       return ["Take University Course", sleeve.className, sleeve.currentTaskLocation];
-    case SleeveTaskType.Gym:
-      return ["Workout at Gym", sleeve.gymStatType, sleeve.currentTaskLocation];
+    case SleeveTaskType.Gym: {
+      switch (sleeve.gymStatType) {
+        case "none":
+          return ["Idle", "------", "------"];
+        case "str":
+          return ["Workout at Gym", "Train Strength", sleeve.currentTaskLocation];
+        case "def":
+          return ["Workout at Gym", "Train Defense", sleeve.currentTaskLocation];
+        case "dex":
+          return ["Workout at Gym", "Train Dexterity", sleeve.currentTaskLocation];
+        case "agi":
+          return ["Workout at Gym", "Train Agility", sleeve.currentTaskLocation];
+      }
+    }
     case SleeveTaskType.Bladeburner:
       return ["Perform Bladeburner Actions", sleeve.bbAction, sleeve.bbContract];
     case SleeveTaskType.Recovery:
