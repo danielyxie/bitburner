@@ -17,7 +17,7 @@ interface EditorParameters {
 }
 
 function isNs2(filename: string): boolean {
-  return filename.endsWith(".ns") || filename.endsWith(".js");
+  return filename.endsWith(".js");
 }
 
 const newNs2Template = `/** @param {NS} ns */
@@ -137,7 +137,7 @@ export function commonEditor(
       }
 
       throw new Error(
-        `Invalid file. Only scripts (.script, .ns, .js), or text files (.txt) can be edited with ${command}`,
+        `Invalid file. Only scripts (.script or .js), or text files (.txt) can be edited with ${command}`,
       );
     });
 

@@ -4,7 +4,6 @@ import {
   Download,
   LibraryBooks,
   Palette,
-  Public,
   Reddit,
   Save,
   SystemUpdateAlt,
@@ -75,8 +74,8 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
       const data = await saveObject.getImportDataFromString(base64Save);
       setImportData(data);
       setImportSaveOpen(true);
-    } catch (ex: any) {
-      SnackbarEvents.emit(ex.toString(), ToastVariant.ERROR, 5000);
+    } catch (e: unknown) {
+      SnackbarEvents.emit(String(e), ToastVariant.ERROR, 5000);
     }
   }
 
@@ -85,8 +84,8 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
 
     try {
       await saveObject.importGame(importData.base64);
-    } catch (ex: any) {
-      SnackbarEvents.emit(ex.toString(), ToastVariant.ERROR, 5000);
+    } catch (e: unknown) {
+      SnackbarEvents.emit(String(e), ToastVariant.ERROR, 5000);
     }
 
     setImportSaveOpen(false);
@@ -276,14 +275,6 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
             sx={{ gridArea: "reddit" }}
           >
             Reddit
-          </Button>
-          <Button
-            startIcon={<Public />}
-            href="https://plaza.dsolver.ca/games/bitburner"
-            target="_blank"
-            sx={{ gridArea: "plaza" }}
-          >
-            Incremental game plaza
           </Button>
         </Box>
 

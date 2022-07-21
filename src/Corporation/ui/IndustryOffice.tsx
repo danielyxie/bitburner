@@ -5,7 +5,9 @@ import React, { useState } from "react";
 import { OfficeSpace } from "../OfficeSpace";
 import { Employee } from "../Employee";
 import { EmployeePositions } from "../EmployeePositions";
+import { BuyCoffee } from "../Actions";
 
+import { MoneyCost } from "./MoneyCost";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { UpgradeOfficeSizeModal } from "./modals/UpgradeOfficeSizeModal";
@@ -17,6 +19,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Tooltip from "@mui/material/Tooltip";
@@ -31,14 +34,6 @@ import { Box } from "@mui/material";
 interface IProps {
   office: OfficeSpace;
   rerender: () => void;
-}
-
-function countEmployee(employees: Employee[], job: string): number {
-  let n = 0;
-  for (let i = 0; i < employees.length; ++i) {
-    if (employees[i].pos === job) n++;
-  }
-  return n;
 }
 
 interface ISwitchProps {
@@ -115,14 +110,14 @@ function ManualManagement(props: IProps): React.ReactElement {
         {positionNames[i]}
       </MenuItem>,
     );
-    if (emp != null && emp.pos === positionNames[i]) {
-      employeePositionSelectorInitialValue = positionNames[i];
+    if (emp != null && emp.nextPos === positionNames[i]) {
+      employeePositionSelectorInitialValue = emp.nextPos;
     }
   }
 
   function employeePositionSelectorOnChange(e: SelectChangeEvent<string>): void {
     if (employee === null) return;
-    employee.pos = e.target.value;
+    props.office.assignSingleJob(employee, e.target.value);
     props.rerender();
   }
 
@@ -178,41 +173,53 @@ interface IAutoAssignProps {
   rerender: () => void;
 }
 
+function EmployeeCount(props: { num: number; next: number }): React.ReactElement {
+  return (
+    <Typography display="flex" alignItems="center" justifyContent="flex-end">
+      {props.num === props.next ? null : props.num}
+      {props.num === props.next ? null : <ArrowForwardIcon fontSize="inherit" />}
+      {props.next}
+    </Typography>
+  );
+}
+
 function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
-  const corp = useCorporation();
-  const division = useDivision();
-  const numJob = countEmployee(props.office.employees, props.job);
-  const numUnassigned = countEmployee(props.office.employees, EmployeePositions.Unassigned);
+  const currJob = props.office.employeeJobs[props.job];
+  const nextJob = props.office.employeeNextJobs[props.job];
+  const nextUna = props.office.employeeNextJobs[EmployeePositions.Unassigned];
+
   function assignEmployee(): void {
-    if (numUnassigned <= 0) {
+    if (nextUna <= 0) {
       console.warn("Cannot assign employee. No unassigned employees available");
       return;
     }
 
-    props.office.assignEmployeeToJob(props.job);
-    props.office.calculateEmployeeProductivity(corp, division);
+    props.office.autoAssignJob(props.job, nextJob + 1);
     props.rerender();
   }
 
   function unassignEmployee(): void {
-    props.office.unassignEmployeeFromJob(props.job);
-    props.office.calculateEmployeeProductivity(corp, division);
+    props.office.autoAssignJob(props.job, nextJob - 1);
     props.rerender();
   }
+
   return (
     <TableRow>
       <TableCell>
         <Tooltip title={props.desc}>
-          <Typography>
-            {props.job} ({numJob})
-          </Typography>
+          <Typography>{props.job}</Typography>
         </Tooltip>
       </TableCell>
       <TableCell>
-        <IconButton disabled={numUnassigned === 0} onClick={assignEmployee}>
+        <EmployeeCount num={currJob} next={nextJob} />
+      </TableCell>
+      <TableCell width="1px">
+        <IconButton disabled={nextUna === 0} onClick={assignEmployee}>
           <ArrowDropUpIcon />
         </IconButton>
-        <IconButton disabled={numJob === 0} onClick={unassignEmployee}>
+      </TableCell>
+      <TableCell width="1px">
+        <IconButton disabled={nextJob === 0} onClick={unassignEmployee}>
           <ArrowDropDownIcon />
         </IconButton>
       </TableCell>
@@ -223,7 +230,6 @@ function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
 function AutoManagement(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const numUnassigned = countEmployee(props.office.employees, EmployeePositions.Unassigned);
   const vechain = corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
 
   // Calculate average morale, happiness,  energy, and salary.
@@ -247,168 +253,164 @@ function AutoManagement(props: IProps): React.ReactElement {
     avgEnergy = totalEnergy / props.office.employees.length;
   }
 
+  const currUna = props.office.employeeJobs[EmployeePositions.Unassigned];
+  const nextUna = props.office.employeeNextJobs[EmployeePositions.Unassigned];
+
   return (
-    <>
-      <Table padding="none">
-        <TableBody>
-          <TableRow>
-            <TableCell>
-              <Typography>Unassigned Employees:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{numUnassigned}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Typography>Avg Employee Morale:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{numeralWrapper.format(avgMorale, "0.000")}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Typography>Avg Employee Happiness:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{numeralWrapper.format(avgHappiness, "0.000")}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Typography>Avg Employee Energy:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{numeralWrapper.format(avgEnergy, "0.000")}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Typography>Total Employee Salary:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>
-                <Money money={totalSalary} />
-              </Typography>
-            </TableCell>
-          </TableRow>
-          {vechain && (
-            <>
-              <TableRow>
-                <TableCell>
-                  <Tooltip
-                    title={
-                      <Typography>
-                        The base amount of material this office can produce. Does not include production multipliers
-                        from upgrades and materials. This value is based off the productivity of your Operations,
-                        Engineering, and Management employees
-                      </Typography>
-                    }
-                  >
-                    <Typography>Material Production:</Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Typography>
-                    {numeralWrapper.format(division.getOfficeProductivity(props.office), "0.000")}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Tooltip
-                    title={
-                      <Typography>
-                        The base amount of any given Product this office can produce. Does not include production
-                        multipliers from upgrades and materials. This value is based off the productivity of your
-                        Operations, Engineering, and Management employees
-                      </Typography>
-                    }
-                  >
-                    <Typography>Product Production:</Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Typography>
-                    {numeralWrapper.format(
-                      division.getOfficeProductivity(props.office, {
-                        forProduct: true,
-                      }),
-                      "0.000",
-                    )}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Tooltip
-                    title={<Typography>The effect this office's 'Business' employees has on boosting sales</Typography>}
-                  >
-                    <Typography> Business Multiplier:</Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Typography>x{numeralWrapper.format(division.getBusinessFactor(props.office), "0.000")}</Typography>
-                </TableCell>
-              </TableRow>
-            </>
-          )}
-        </TableBody>
-      </Table>
+    <Table padding="none">
+      <TableBody>
+        <TableRow>
+          <TableCell>
+            <Typography>Unassigned Employees:</Typography>
+          </TableCell>
+          <TableCell>
+            <EmployeeCount num={currUna} next={nextUna} />
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Avg Employee Morale:</Typography>
+          </TableCell>
+          <TableCell align="right">
+            <Typography>{numeralWrapper.format(avgMorale, "0.000")}</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Avg Employee Happiness:</Typography>
+          </TableCell>
+          <TableCell align="right">
+            <Typography>{numeralWrapper.format(avgHappiness, "0.000")}</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Avg Employee Energy:</Typography>
+          </TableCell>
+          <TableCell align="right">
+            <Typography>{numeralWrapper.format(avgEnergy, "0.000")}</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Total Employee Salary:</Typography>
+          </TableCell>
+          <TableCell>
+            <Typography align="right">
+              <Money money={totalSalary} />
+            </Typography>
+          </TableCell>
+        </TableRow>
+        {vechain && (
+          <>
+            <TableRow>
+              <TableCell>
+                <Tooltip
+                  title={
+                    <Typography>
+                      The base amount of material this office can produce. Does not include production multipliers from
+                      upgrades and materials. This value is based off the productivity of your Operations, Engineering,
+                      and Management employees
+                    </Typography>
+                  }
+                >
+                  <Typography>Material Production:</Typography>
+                </Tooltip>
+              </TableCell>
+              <TableCell>
+                <Typography align="right">
+                  {numeralWrapper.format(division.getOfficeProductivity(props.office), "0.000")}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Tooltip
+                  title={
+                    <Typography>
+                      The base amount of any given Product this office can produce. Does not include production
+                      multipliers from upgrades and materials. This value is based off the productivity of your
+                      Operations, Engineering, and Management employees
+                    </Typography>
+                  }
+                >
+                  <Typography>Product Production:</Typography>
+                </Tooltip>
+              </TableCell>
+              <TableCell>
+                <Typography align="right">
+                  {numeralWrapper.format(
+                    division.getOfficeProductivity(props.office, {
+                      forProduct: true,
+                    }),
+                    "0.000",
+                  )}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Tooltip
+                  title={<Typography>The effect this office's 'Business' employees has on boosting sales</Typography>}
+                >
+                  <Typography> Business Multiplier:</Typography>
+                </Tooltip>
+              </TableCell>
+              <TableCell align="right">
+                <Typography>x{numeralWrapper.format(division.getBusinessFactor(props.office), "0.000")}</Typography>
+              </TableCell>
+            </TableRow>
+          </>
+        )}
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Operations}
+          desc={"Manages supply chain operations. Improves the amount of Materials and Products you produce."}
+        />
 
-      <Table padding="none">
-        <TableBody>
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Operations}
-            desc={"Manages supply chain operations. Improves the amount of Materials and Products you produce."}
-          />
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Engineer}
+          desc={
+            "Develops and maintains products and production systems. Increases the quality of everything you produce. Also increases the amount you produce (not as much as Operations, however)"
+          }
+        />
 
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Engineer}
-            desc={
-              "Develops and maintains products and production systems. Increases the quality of everything you produce. Also increases the amount you produce (not as much as Operations, however)"
-            }
-          />
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Business}
+          desc={"Handles sales and finances. Improves the amount of Materials and Products you can sell."}
+        />
 
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Business}
-            desc={"Handles sales and finances. Improves the amount of Materials and Products you can sell."}
-          />
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Management}
+          desc={
+            "Leads and oversees employees and office operations. Improves the effectiveness of Engineer and Operations employees."
+          }
+        />
 
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Management}
-            desc={
-              "Leads and oversees employees and office operations. Improves the effectiveness of Engineer and Operations employees."
-            }
-          />
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.RandD}
+          desc={"Research new innovative ways to improve the company. Generates Scientific Research."}
+        />
 
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.RandD}
-            desc={"Research new innovative ways to improve the company. Generates Scientific Research."}
-          />
-
-          <AutoAssignJob
-            rerender={props.rerender}
-            office={props.office}
-            job={EmployeePositions.Training}
-            desc={
-              "Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations."
-            }
-          />
-        </TableBody>
-      </Table>
-    </>
+        <AutoAssignJob
+          rerender={props.rerender}
+          office={props.office}
+          job={EmployeePositions.Training}
+          desc={
+            "Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations."
+          }
+        />
+      </TableBody>
+    </Table>
   );
 }
 
@@ -454,14 +456,40 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             onClose={() => setUpgradeOfficeSizeOpen(false)}
           />
 
+          {!division.hasResearch("AutoBrew") && (
+            <>
+              <Tooltip
+                title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
+              >
+                <span>
+                  <Button
+                    disabled={corp.funds < props.office.getCoffeeCost() || props.office.coffeeMult > 0}
+                    onClick={() => BuyCoffee(corp, props.office)}
+                  >
+                    {props.office.coffeeMult > 0 ? (
+                      "Buying coffee..."
+                    ) : (
+                      <span>
+                        Buy Coffee - <MoneyCost money={props.office.getCoffeeCost()} corp={corp} />
+                      </span>
+                    )}
+                  </Button>
+                </span>
+              </Tooltip>
+            </>
+          )}
+
           {!division.hasResearch("AutoPartyManager") && (
             <>
               <Tooltip
                 title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
               >
                 <span>
-                  <Button disabled={corp.funds < 0} onClick={() => setThrowPartyOpen(true)}>
-                    Throw Party
+                  <Button
+                    disabled={corp.funds < 0 || props.office.partyMult > 0}
+                    onClick={() => setThrowPartyOpen(true)}
+                  >
+                    {props.office.partyMult > 0 ? "Throwing Party..." : "Throw Party"}
                   </Button>
                 </span>
               </Tooltip>

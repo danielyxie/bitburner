@@ -23,39 +23,57 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [locale, setLocale] = useState(Settings.Locale);
 
-  function handleExecTimeChange(event: any, newValue: number | number[]): void {
+  function handleExecTimeChange(
+    _event: Event | React.SyntheticEvent<Element, Event>,
+    newValue: number | number[],
+  ): void {
     setExecTime(newValue as number);
     Settings.CodeInstructionRunTime = newValue as number;
   }
 
-  function handleRecentScriptsSizeChange(event: any, newValue: number | number[]): void {
+  function handleRecentScriptsSizeChange(
+    _event: Event | React.SyntheticEvent<Element, Event>,
+    newValue: number | number[],
+  ): void {
     setRecentScriptsSize(newValue as number);
     Settings.MaxRecentScriptsCapacity = newValue as number;
   }
 
-  function handleLogSizeChange(event: any, newValue: number | number[]): void {
+  function handleLogSizeChange(
+    _event: Event | React.SyntheticEvent<Element, Event>,
+    newValue: number | number[],
+  ): void {
     setLogSize(newValue as number);
     Settings.MaxLogCapacity = newValue as number;
   }
 
-  function handlePortSizeChange(event: any, newValue: number | number[]): void {
+  function handlePortSizeChange(
+    _event: Event | React.SyntheticEvent<Element, Event>,
+    newValue: number | number[],
+  ): void {
     setPortSize(newValue as number);
     Settings.MaxPortCapacity = newValue as number;
   }
 
-  function handleTerminalSizeChange(event: any, newValue: number | number[]): void {
+  function handleTerminalSizeChange(
+    _event: Event | React.SyntheticEvent<Element, Event>,
+    newValue: number | number[],
+  ): void {
     setTerminalSize(newValue as number);
     Settings.MaxTerminalCapacity = newValue as number;
   }
 
-  function handleAutosaveIntervalChange(event: any, newValue: number | number[]): void {
+  function handleAutosaveIntervalChange(
+    _event: Event | React.SyntheticEvent<Element, Event>,
+    newValue: number | number[],
+  ): void {
     setAutosaveInterval(newValue as number);
     Settings.AutosaveInterval = newValue as number;
   }
 
   function handleLocaleChange(event: SelectChangeEvent<string>): void {
-    setLocale(event.target.value as string);
-    Settings.Locale = event.target.value as string;
+    setLocale(event.target.value);
+    Settings.Locale = event.target.value;
   }
 
   function handleTimestampFormatChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -178,12 +196,6 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
               lagging a lot. You'll have to restart your script every time you launch the game.
             </>
           }
-        />
-        <OptionSwitch
-          checked={Settings.InfinityLoopSafety}
-          onChange={(newValue) => (Settings.InfinityLoopSafety = newValue)}
-          text="Script infinite loop safety net"
-          tooltip={<>If this is set the game will attempt to automatically kill scripts stuck in infinite loops.</>}
         />
       </GameOptionsPage>
     ),

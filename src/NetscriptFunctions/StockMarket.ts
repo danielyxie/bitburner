@@ -13,7 +13,7 @@ import {
   getStockMarketTixApiCost,
 } from "../StockMarket/StockMarketCosts";
 import { Stock } from "../StockMarket/Stock";
-import { TIX } from "../ScriptEditor/NetscriptDefinitions";
+import { StockOrder, TIX } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 
 export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript): InternalAPI<TIX> {
@@ -144,7 +144,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
         return res;
       },
-    buy:
+    buyStock:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
         const symbol = ctx.helper.string("symbol", _symbol);
@@ -154,7 +154,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         const res = buyStock(stock, shares, workerScript, {});
         return res ? stock.getAskPrice() : 0;
       },
-    sell:
+    sellStock:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
         const symbol = ctx.helper.string("symbol", _symbol);
@@ -289,7 +289,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         };
         return cancelOrder(params, workerScript);
       },
-    getOrders: (ctx: NetscriptContext) => (): any => {
+    getOrders: (ctx: NetscriptContext) => (): StockOrder => {
       checkTixApiAccess(ctx);
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -297,7 +297,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         }
       }
 
-      const orders: any = {};
+      const orders: StockOrder = {};
 
       const stockMarketOrders = StockMarket["Orders"];
       for (const symbol of Object.keys(stockMarketOrders)) {

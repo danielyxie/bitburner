@@ -7,6 +7,7 @@ import { SpecialServers } from "../Server/data/SpecialServers";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 import { DarkWebItem } from "./DarkWebItem";
+import { isCreateProgramWork } from "../Work/CreateProgramWork";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {
@@ -74,9 +75,8 @@ export function buyDarkwebItem(itemName: string): void {
 
   Player.getHomeComputer().pushProgram(item.program);
   // Cancel if the program is in progress of writing
-  if (Player.createProgramName === item.program) {
-    Player.isWorking = false;
-    Player.resetWorkStatus();
+  if (isCreateProgramWork(Player.currentWork) && Player.currentWork.programName === item.program) {
+    Player.finishWork(true);
   }
 
   Terminal.print(

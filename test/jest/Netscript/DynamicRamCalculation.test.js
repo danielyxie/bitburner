@@ -13,6 +13,11 @@ const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 
 describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
   // Creates a mock RunningScript object
+  /**
+   *
+   * @param {string} code
+   * @returns
+   */
   async function createRunningScript(code) {
     const script = new Script();
     script.code = code;
@@ -24,12 +29,23 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
   }
 
   // Tests numeric equality, allowing for floating point imprecision
+  /**
+   *
+   * @param {number} val
+   * @param {number} expected
+   */
   function testEquality(val, expected) {
     expect(val).toBeGreaterThanOrEqual(expected - 100 * Number.EPSILON);
     expect(val).toBeLessThanOrEqual(expected + 100 * Number.EPSILON);
   }
 
   // Runs a Netscript function and properly catches it if it returns promise
+
+  /**
+   *
+   * @param {(...args: unknown[]) => unknown} fn
+   * @param  {unknown[]} args
+   */
   function runPotentiallyAsyncFunction(fn, ...args) {
     const res = fn(...args);
     if (res instanceof Promise) {
@@ -93,7 +109,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
         runPotentiallyAsyncFunction(curr, ...args);
       } catch (e) {}
     } else {
-      throw new Error(`Invalid function specified: [${fnDesc}]`);
+      throw new Error(`Invalid function specified: [${fnDesc.toString()}]`);
     }
 
     const fnName = fnDesc[fnDesc.length - 1];
@@ -607,13 +623,13 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("stock.buy()", async function () {
-      const f = ["stock", "buy"];
+    it("stock.buyStock()", async function () {
+      const f = ["stock", "buyStock"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("stock.sell()", async function () {
-      const f = ["stock", "sell"];
+    it("stock.sellStock()", async function () {
+      const f = ["stock", "sellStock"];
       await testNonzeroDynamicRamCost(f);
     });
 
@@ -665,187 +681,187 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
   describe("Singularity Functions", function () {
     it("universityCourse()", async function () {
-      const f = ["universityCourse"];
+      const f = ["singularity", "universityCourse"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("gymWorkout()", async function () {
-      const f = ["gymWorkout"];
+      const f = ["singularity", "gymWorkout"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("travelToCity()", async function () {
-      const f = ["travelToCity"];
+      const f = ["singularity", "travelToCity"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseTor()", async function () {
-      const f = ["purchaseTor"];
+      const f = ["singularity", "purchaseTor"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseProgram()", async function () {
-      const f = ["purchaseProgram"];
+      const f = ["singularity", "purchaseProgram"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getStats()", async function () {
-      const f = ["getStats"];
+      const f = ["singularity", "getStats"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getDarkwebProgramCost()", async function () {
-      const f = ["getDarkwebProgramCost"];
+      const f = ["singularity", "getDarkwebProgramCost"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getDarkwebPrograms()", async function () {
-      const f = ["getDarkwebPrograms"];
+      const f = ["singularity", "getDarkwebPrograms"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getCharacterInformation()", async function () {
-      const f = ["getCharacterInformation"];
+      const f = ["singularity", "getCharacterInformation"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("isBusy()", async function () {
-      const f = ["isBusy"];
+      const f = ["singularity", "isBusy"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("stopAction()", async function () {
-      const f = ["stopAction"];
+      const f = ["singularity", "stopAction"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("upgradeHomeRam()", async function () {
-      const f = ["upgradeHomeRam"];
+      const f = ["singularity", "upgradeHomeRam"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getUpgradeHomeRamCost()", async function () {
-      const f = ["getUpgradeHomeRamCost"];
+      const f = ["singularity", "getUpgradeHomeRamCost"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("workForCompany()", async function () {
-      const f = ["workForCompany"];
+      const f = ["singularity", "workForCompany"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("applyToCompany()", async function () {
-      const f = ["applyToCompany"];
+      const f = ["singularity", "applyToCompany"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getCompanyRep()", async function () {
-      const f = ["getCompanyRep"];
+      const f = ["singularity", "getCompanyRep"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getCompanyFavor()", async function () {
-      const f = ["getCompanyFavor"];
+      const f = ["singularity", "getCompanyFavor"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getCompanyFavorGain()", async function () {
-      const f = ["getCompanyFavorGain"];
+      const f = ["singularity", "getCompanyFavorGain"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("checkFactionInvitations()", async function () {
-      const f = ["checkFactionInvitations"];
+      const f = ["singularity", "checkFactionInvitations"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("joinFaction()", async function () {
-      const f = ["joinFaction"];
+      const f = ["singularity", "joinFaction"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("workForFaction()", async function () {
-      const f = ["workForFaction"];
+      const f = ["singularity", "workForFaction"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getFactionRep()", async function () {
-      const f = ["getFactionRep"];
+      const f = ["singularity", "getFactionRep"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getFactionFavor()", async function () {
-      const f = ["getFactionFavor"];
+      const f = ["singularity", "getFactionFavor"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getFactionFavorGain()", async function () {
-      const f = ["getFactionFavorGain"];
+      const f = ["singularity", "getFactionFavorGain"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("donateToFaction()", async function () {
-      const f = ["donateToFaction"];
+      const f = ["singularity", "donateToFaction"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("createProgram()", async function () {
-      const f = ["createProgram"];
+      const f = ["singularity", "createProgram"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("commitCrime()", async function () {
-      const f = ["commitCrime"];
+      const f = ["singularity", "commitCrime"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getCrimeChance()", async function () {
-      const f = ["getCrimeChance"];
+      const f = ["singularity", "getCrimeChance"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getOwnedAugmentations()", async function () {
-      const f = ["getOwnedAugmentations"];
+      const f = ["singularity", "getOwnedAugmentations"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getOwnedSourceFiles()", async function () {
-      const f = ["getOwnedSourceFiles"];
+      const f = ["singularity", "getOwnedSourceFiles"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationsFromFaction()", async function () {
-      const f = ["getAugmentationsFromFaction"];
+      const f = ["singularity", "getAugmentationsFromFaction"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationCost()", async function () {
-      const f = ["getAugmentationCost"];
+      const f = ["singularity", "getAugmentationCost"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationPrereq()", async function () {
-      const f = ["getAugmentationPrereq"];
+      const f = ["singularity", "getAugmentationPrereq"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationPrice()", async function () {
-      const f = ["getAugmentationPrice"];
+      const f = ["singularity", "getAugmentationPrice"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationRepReq()", async function () {
-      const f = ["getAugmentationRepReq"];
+      const f = ["singularity", "getAugmentationRepReq"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseAugmentation()", async function () {
-      const f = ["purchaseAugmentation"];
+      const f = ["singularity", "purchaseAugmentation"];
       await testNonzeroDynamicRamCost(f);
     });
 
     it("installAugmentations()", async function () {
-      const f = ["installAugmentations"];
+      const f = ["singularity", "installAugmentations"];
       await testNonzeroDynamicRamCost(f);
     });
   });

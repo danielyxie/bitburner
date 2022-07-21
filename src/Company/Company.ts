@@ -4,7 +4,7 @@ import { favorToRep, repToFavor } from "../Faction/formulas/favor";
 
 import { IMap } from "../types";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export interface IConstructorParams {
   name: string;
@@ -151,15 +151,14 @@ export class Company {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Company", this);
   }
 
   /**
    * Initiatizes a Company from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Company {
+  static fromJSON(value: IReviverValue): Company {
     return Generic_fromJSON(Company, value.data);
   }
 }

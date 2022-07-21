@@ -133,8 +133,37 @@ export class Skill {
     }
   }
 
-  calculateCost(currentLevel: number): number {
-    return Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
+  calculateCost(currentLevel: number, count = 1): number {
+    //Recursive mode does not handle invalid inputs properly, but it should never
+    //be possible for it to run with them. For the sake of not crashing the game,
+    const recursiveMode = (currentLevel: number, count: number): number => {
+      if (count <= 1) {
+        return Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
+      } else {
+        const thisUpgrade = Math.floor(
+          (this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost,
+        );
+        return this.calculateCost(currentLevel + 1, count - 1) + thisUpgrade;
+      }
+    };
+
+    //Count must be a positive integer.
+    if (count < 0 || count % 1 != 0) {
+      throw new Error(`${count} is an invalid number of upgrades`);
+    }
+    //Use recursive mode if count is small
+    if (count <= 100) {
+      return recursiveMode(currentLevel, count);
+    }
+    //Use optimized mode if count is large
+    else {
+      //unFloored is roughly equivalent to
+      //(this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost
+      //being repeated for increasing currentLevel
+      const preMult = (count * (2 * this.baseCost + this.costInc * (2 * currentLevel + count + 1))) / 2;
+      const unFloored = preMult * BitNodeMultipliers.BladeburnerSkillCost - count / 2;
+      return Math.floor(unFloored);
+    }
   }
 
   getMultiplier(name: string): number {

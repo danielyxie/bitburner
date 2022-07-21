@@ -6,10 +6,10 @@ import { Crimes } from "../../../Crime/Crimes";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { CityName } from "../../../Locations/data/CityNames";
 import { Factions } from "../../../Faction/Factions";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FactionNames } from "../../../Faction/data/FactionNames";
+import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -44,7 +44,7 @@ interface ITaskDetails {
 
 function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
   // Array of all companies that other sleeves are working at
-  const forbiddenCompanies = [];
+  const forbiddenCompanies: string[] = [];
   for (const otherSleeve of player.sleeves) {
     if (sleeve === otherSleeve) {
       continue;
@@ -54,13 +54,8 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
     }
   }
   const allJobs: string[] = Object.keys(player.jobs);
-  for (let i = 0; i < allJobs.length; ++i) {
-    if (!forbiddenCompanies.includes(allJobs[i])) {
-      allJobs[i];
-    }
-  }
 
-  return allJobs;
+  return allJobs.filter((company) => !forbiddenCompanies.includes(company));
 }
 
 function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
@@ -240,7 +235,7 @@ const canDo: {
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
   "Workout at Gym": (player: IPlayer, sleeve: Sleeve) =>
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
-  "Perform Bladeburner Actions": (player: IPlayer, _: Sleeve) => player.inBladeburner(),
+  "Perform Bladeburner Actions": (player: IPlayer) => player.inBladeburner(),
   "Shock Recovery": (player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
   Synchronize: (player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
 };
@@ -254,13 +249,13 @@ function getABC(sleeve: Sleeve): [string, string, string] {
     case SleeveTaskType.Faction: {
       let workType = "";
       switch (sleeve.factionWorkType) {
-        case FactionWorkType.Hacking:
+        case FactionWorkType.HACKING:
           workType = "Hacking Contracts";
           break;
-        case FactionWorkType.Field:
+        case FactionWorkType.FIELD:
           workType = "Field Work";
           break;
-        case FactionWorkType.Security:
+        case FactionWorkType.SECURITY:
           workType = "Security Work";
           break;
       }

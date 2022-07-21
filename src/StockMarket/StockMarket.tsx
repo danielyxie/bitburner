@@ -68,7 +68,7 @@ export function placeOrder(
 
   // Process to see if it should be executed immediately
   const processOrderRefs = {
-    stockMarket: StockMarket as IStockMarket,
+    stockMarket: StockMarket,
     symbolToStockMap: SymbolToStockMap,
   };
   processOrders(stock, order.type, order.pos, processOrderRefs);
@@ -77,7 +77,7 @@ export function placeOrder(
 }
 
 // Returns true if successfully cancels an order, false otherwise
-interface ICancelOrderParams {
+export interface ICancelOrderParams {
   order?: Order;
   pos?: PositionTypes;
   price?: number;

@@ -19,7 +19,7 @@ export const CorporationConstants: {
   BribeThreshold: number;
   BribeToRepRatio: number;
   ProductProductionCostRatio: number;
-  DividendMaxPercentage: number;
+  DividendMaxRate: number;
   EmployeeSalaryMultiplier: number;
   CyclesPerEmployeeRaise: number;
   EmployeeRaiseAmount: number;
@@ -61,7 +61,7 @@ export const CorporationConstants: {
 
   ProductProductionCostRatio: 5, //Ratio of material cost of a product to its production cost
 
-  DividendMaxPercentage: 1,
+  DividendMaxRate: 1,
 
   EmployeeSalaryMultiplier: 3, // Employee stats multiplied by this to determine initial salary
   CyclesPerEmployeeRaise: 400, // All employees get a raise every X market cycles

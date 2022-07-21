@@ -1,9 +1,9 @@
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IPerson } from "../PersonObjects/IPerson";
-import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType } from "../utils/WorkType";
+import { CrimeWork } from "../Work/CrimeWork";
 
 interface IConstructorParams {
   hacking_success_weight?: number;
@@ -96,22 +96,15 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(router: IRouter, p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
+  commit(p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
     if (div <= 0) {
       div = 1;
     }
-    p.startCrime(
-      router,
-      this.type,
-      this.hacking_exp / div,
-      this.strength_exp / div,
-      this.defense_exp / div,
-      this.dexterity_exp / div,
-      this.agility_exp / div,
-      this.charisma_exp / div,
-      this.money / div,
-      this.time,
-      workerScript,
+    p.startWork(
+      new CrimeWork({
+        crimeType: this.type,
+        singularity: workerScript !== null,
+      }),
     );
 
     return this.time;
@@ -128,7 +121,7 @@ export class Crime {
       CONSTANTS.IntelligenceCrimeWeight * p.intelligence;
     chance /= CONSTANTS.MaxSkillLevel;
     chance /= this.difficulty;
-    chance *= p.crime_success_mult;
+    chance *= p.mults.crime_success;
     chance *= p.getIntelligenceBonus(1);
 
     return Math.min(chance, 1);

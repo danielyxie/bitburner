@@ -21,7 +21,7 @@ To automatically enter commands in the terminal (only works if looking at the te
     terminalInput[handler].onChange({target:terminalInput});
 
     // Simulate an enter press
-    terminalInput[handler].onKeyDown({keyCode:13,preventDefault:()=>null});
+    terminalInput[handler].onKeyDown({key:'Enter',preventDefault:()=>null});
 
 
 To add lines to the terminal (only works if looking at the terminal):

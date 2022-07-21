@@ -16,6 +16,7 @@ interface UserInterface
 
 |  Method | Description |
 |  --- | --- |
+|  [clearTerminal()](./bitburner.userinterface.clearterminal.md) | Clear the Terminal window, as if the player ran <code>clear</code> in the terminal |
 |  [getGameInfo()](./bitburner.userinterface.getgameinfo.md) | Gets the current game information (version, commit, ...) |
 |  [getStyles()](./bitburner.userinterface.getstyles.md) | Get the current styles |
 |  [getTheme()](./bitburner.userinterface.gettheme.md) | Get the current theme |

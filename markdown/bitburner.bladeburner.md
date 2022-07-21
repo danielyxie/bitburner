@@ -23,6 +23,7 @@ You have to be employed in the Bladeburner division and be in BitNode-7 or have 
 |  [getActionAutolevel(type, name)](./bitburner.bladeburner.getactionautolevel.md) | Get whether an action is set to autolevel. |
 |  [getActionCountRemaining(type, name)](./bitburner.bladeburner.getactioncountremaining.md) | Get action count remaining. |
 |  [getActionCurrentLevel(type, name)](./bitburner.bladeburner.getactioncurrentlevel.md) | Get the current level of an action. |
+|  [getActionCurrentTime()](./bitburner.bladeburner.getactioncurrenttime.md) | Get the time elapsed on current action. |
 |  [getActionEstimatedSuccessChance(type, name)](./bitburner.bladeburner.getactionestimatedsuccesschance.md) | Get estimate success chance of an action. |
 |  [getActionMaxLevel(type, name)](./bitburner.bladeburner.getactionmaxlevel.md) | Get the maximum level of an action. |
 |  [getActionRepGain(type, name, level)](./bitburner.bladeburner.getactionrepgain.md) | Get the reputation gain of an action. |
@@ -42,7 +43,7 @@ You have to be employed in the Bladeburner division and be in BitNode-7 or have 
 |  [getSkillLevel(name)](./bitburner.bladeburner.getskilllevel.md) | Get skill level. |
 |  [getSkillNames()](./bitburner.bladeburner.getskillnames.md) | List all skills. |
 |  [getSkillPoints()](./bitburner.bladeburner.getskillpoints.md) | Get bladeburner skill points. |
-|  [getSkillUpgradeCost(name)](./bitburner.bladeburner.getskillupgradecost.md) | Get cost to upgrade skill. |
+|  [getSkillUpgradeCost(name, count)](./bitburner.bladeburner.getskillupgradecost.md) | Get cost to upgrade skill. |
 |  [getStamina()](./bitburner.bladeburner.getstamina.md) | Get bladeburner stamina. |
 |  [getTeamSize(type, name)](./bitburner.bladeburner.getteamsize.md) | Get team size. |
 |  [joinBladeburnerDivision()](./bitburner.bladeburner.joinbladeburnerdivision.md) | Join the bladeburner division. |
@@ -53,5 +54,5 @@ You have to be employed in the Bladeburner division and be in BitNode-7 or have 
 |  [startAction(type, name)](./bitburner.bladeburner.startaction.md) | Start an action. |
 |  [stopBladeburnerAction()](./bitburner.bladeburner.stopbladeburneraction.md) | Stop current action. |
 |  [switchCity(name)](./bitburner.bladeburner.switchcity.md) | Travel to another city in bladeburner. |
-|  [upgradeSkill(name)](./bitburner.bladeburner.upgradeskill.md) | Upgrade skill. |
+|  [upgradeSkill(name, count)](./bitburner.bladeburner.upgradeskill.md) | Upgrade skill. |
 

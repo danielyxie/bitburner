@@ -1,6 +1,6 @@
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { BaseServer } from "./Server/BaseServer";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "./utils/JSONReviver";
 import { removeLeadingSlash, isInRootDirectory } from "./Terminal/DirectoryHelpers";
 
 /**
@@ -47,26 +47,17 @@ export class TextFile {
    * Serves the file to the user as a downloadable resource through the browser.
    */
   download(): void {
-    const filename: string = this.fn;
     const file: Blob = new Blob([this.text], { type: "text/plain" });
-    /* tslint:disable-next-line:strict-boolean-expressions */
-    const navigator = window.navigator as any;
-    if (navigator.msSaveOrOpenBlob) {
-      // IE10+
-      navigator.msSaveOrOpenBlob(file, filename);
-    } else {
-      // Others
-      const a: HTMLAnchorElement = document.createElement("a");
-      const url: string = URL.createObjectURL(file);
-      a.href = url;
-      a.download = this.fn;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 0);
-    }
+    const a: HTMLAnchorElement = document.createElement("a");
+    const url: string = URL.createObjectURL(file);
+    a.href = url;
+    a.download = this.fn;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
   }
 
   /**
@@ -86,7 +77,7 @@ export class TextFile {
   /**
    * Serialize the current file to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("TextFile", this);
   }
 
@@ -100,8 +91,7 @@ export class TextFile {
   /**
    * Initiatizes a TextFile from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): TextFile {
+  static fromJSON(value: IReviverValue): TextFile {
     return Generic_fromJSON(TextFile, value.data);
   }
 }
@@ -121,7 +111,7 @@ export function getTextFile(fn: string, server: BaseServer): TextFile | null {
     filename = removeLeadingSlash(filename);
   }
 
-  for (const file of server.textFiles as TextFile[]) {
+  for (const file of server.textFiles) {
     if (file.fn === filename) {
       return file;
     }

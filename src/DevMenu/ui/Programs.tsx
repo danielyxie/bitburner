@@ -19,7 +19,7 @@ interface IProps {
 export function Programs(props: IProps): React.ReactElement {
   const [program, setProgram] = useState("NUKE.exe");
   function setProgramDropdown(event: SelectChangeEvent<string>): void {
-    setProgram(event.target.value as string);
+    setProgram(event.target.value);
   }
   function addProgram(): void {
     if (!props.player.hasProgram(program)) {

@@ -7,6 +7,8 @@ import { IPerson } from "../PersonObjects/IPerson";
 import { ITaskTracker } from "../PersonObjects/ITaskTracker";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
+import { Contract } from "./Contract";
+import { Operation } from "./Operation";
 
 export interface IBladeburner {
   numHosp: number;
@@ -31,17 +33,23 @@ export interface IBladeburner {
 
   action: IActionIdentifier;
 
-  cities: any;
+  cities: Record<string, City>;
   city: string;
-  skills: any;
-  skillMultipliers: any;
+  skills: Record<string, number>;
+  skillMultipliers: Record<string, number>;
   staminaBonus: number;
   maxStamina: number;
   stamina: number;
-  contracts: any;
-  operations: any;
-  blackops: any;
-  logging: any;
+  contracts: Record<string, Contract>;
+  operations: Record<string, Operation>;
+  blackops: Record<string, boolean>;
+  logging: {
+    general: boolean;
+    contracts: boolean;
+    ops: boolean;
+    blackops: boolean;
+    events: boolean;
+  };
   automateEnabled: boolean;
   automateActionHigh: IActionIdentifier;
   automateThreshHigh: number;
@@ -76,8 +84,8 @@ export interface IBladeburner {
   getActionEstimatedSuccessChanceNetscriptFn(person: IPerson, type: string, name: string): [number, number] | string;
   getActionCountRemainingNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
   getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number;
-  getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number;
-  upgradeSkillNetscriptFn(skillName: string, workerScript: WorkerScript): boolean;
+  getSkillUpgradeCostNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): number;
+  upgradeSkillNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): boolean;
   getTeamSizeNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
   setTeamSizeNetscriptFn(type: string, name: string, size: number, workerScript: WorkerScript): number;
   joinBladeburnerFactionNetscriptFn(workerScript: WorkerScript): boolean;

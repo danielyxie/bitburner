@@ -10,9 +10,11 @@ import { Order } from "../Order";
 import { Stock } from "../Stock";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { ICancelOrderParams } from "../StockMarket";
+import { WorkerScript } from "../../Netscript/WorkerScript";
 
 type IProps = {
-  cancelOrder: (params: any) => void;
+  cancelOrder: (params: ICancelOrderParams, workerScript?: WorkerScript) => void;
   orders: Order[];
   p: IPlayer;
   stock: Stock;

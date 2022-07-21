@@ -1,7 +1,7 @@
 import { IBladeburner } from "./IBladeburner";
 import { BladeburnerConstants } from "./data/Constants";
 import { Action, IActionParams } from "./Action";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export interface IOperationParams extends IActionParams {
   reqdRank?: number;
@@ -44,12 +44,11 @@ export class Operation extends Action {
     return 1;
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Operation", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Operation {
+  static fromJSON(value: IReviverValue): Operation {
     return Generic_fromJSON(Operation, value.data);
   }
 }

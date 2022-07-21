@@ -9,7 +9,7 @@ Terminate all scripts on a server.
 <b>Signature:</b>
 
 ```typescript
-killall(host?: string): boolean;
+killall(host?: string, safetyguard?: boolean): boolean;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ killall(host?: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  host | string | IP or hostname of the server on which to kill all scripts. |
+|  safetyguard | boolean | Skips the script that calls this function |
 
 <b>Returns:</b>
 

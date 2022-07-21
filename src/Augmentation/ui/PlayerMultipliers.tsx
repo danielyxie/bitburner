@@ -4,24 +4,18 @@
 import { DoubleArrow } from "@mui/icons-material";
 import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import * as React from "react";
+import { Multipliers, defaultMultipliers, mergeMultipliers } from "../../PersonObjects/Multipliers";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Player } from "../../Player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StaticAugmentations } from "../StaticAugmentations";
 
-interface IAugmentedStats {
-  [index: string]: number;
-}
-
-function calculateAugmentedStats(): IAugmentedStats {
-  const augP: IAugmentedStats = {};
+function calculateAugmentedStats(): Multipliers {
+  let augP: Multipliers = defaultMultipliers();
   for (const aug of Player.queuedAugmentations) {
     const augObj = StaticAugmentations[aug.name];
-    for (const mult of Object.keys(augObj.mults)) {
-      const v = augP[mult] ? augP[mult] : 1;
-      augP[mult] = v * augObj.mults[mult];
-    }
+    augP = mergeMultipliers(augP, augObj.mults);
   }
   return augP;
 }
@@ -98,35 +92,35 @@ export function PlayerMultipliers(): React.ReactElement {
     ...[
       {
         mult: "Hacking Chance",
-        current: Player.hacking_chance_mult,
-        augmented: Player.hacking_chance_mult * mults.hacking_chance_mult,
+        current: Player.mults.hacking_chance,
+        augmented: Player.mults.hacking_chance * mults.hacking_chance,
       },
       {
         mult: "Hacking Speed",
-        current: Player.hacking_speed_mult,
-        augmented: Player.hacking_speed_mult * mults.hacking_speed_mult,
+        current: Player.mults.hacking_speed,
+        augmented: Player.mults.hacking_speed * mults.hacking_speed,
       },
       {
         mult: "Hacking Money",
-        current: Player.hacking_money_mult,
-        augmented: Player.hacking_money_mult * mults.hacking_money_mult,
+        current: Player.mults.hacking_money,
+        augmented: Player.mults.hacking_money * mults.hacking_money,
         bnMult: BitNodeMultipliers.ScriptHackMoney,
       },
       {
         mult: "Hacking Growth",
-        current: Player.hacking_grow_mult,
-        augmented: Player.hacking_grow_mult * mults.hacking_grow_mult,
+        current: Player.mults.hacking_grow,
+        augmented: Player.mults.hacking_grow * mults.hacking_grow,
       },
       {
         mult: "Hacking Level",
-        current: Player.hacking_mult,
-        augmented: Player.hacking_mult * mults.hacking_mult,
+        current: Player.mults.hacking,
+        augmented: Player.mults.hacking * mults.hacking,
         bnMult: BitNodeMultipliers.HackingLevelMultiplier,
       },
       {
         mult: "Hacking Experience",
-        current: Player.hacking_exp_mult,
-        augmented: Player.hacking_exp_mult * mults.hacking_exp_mult,
+        current: Player.mults.hacking_exp,
+        augmented: Player.mults.hacking_exp * mults.hacking_exp,
         bnMult: BitNodeMultipliers.HackExpGain,
       },
     ].map((data: MultiplierListItemData) =>
@@ -137,47 +131,47 @@ export function PlayerMultipliers(): React.ReactElement {
     ...[
       {
         mult: "Strength Level",
-        current: Player.strength_mult,
-        augmented: Player.strength_mult * mults.strength_mult,
+        current: Player.mults.strength,
+        augmented: Player.mults.strength * mults.strength,
         bnMult: BitNodeMultipliers.StrengthLevelMultiplier,
       },
       {
         mult: "Strength Experience",
-        current: Player.strength_exp_mult,
-        augmented: Player.strength_exp_mult * mults.strength_exp_mult,
+        current: Player.mults.strength_exp,
+        augmented: Player.mults.strength_exp * mults.strength_exp,
       },
       {
         mult: "Defense Level",
-        current: Player.defense_mult,
-        augmented: Player.defense_mult * mults.defense_mult,
+        current: Player.mults.defense,
+        augmented: Player.mults.defense * mults.defense,
         bnMult: BitNodeMultipliers.DefenseLevelMultiplier,
       },
       {
         mult: "Defense Experience",
-        current: Player.defense_exp_mult,
-        augmented: Player.defense_exp_mult * mults.defense_exp_mult,
+        current: Player.mults.defense_exp,
+        augmented: Player.mults.defense_exp * mults.defense_exp,
       },
       {
         mult: "Dexterity Level",
-        current: Player.dexterity_mult,
-        augmented: Player.dexterity_mult * mults.dexterity_mult,
+        current: Player.mults.dexterity,
+        augmented: Player.mults.dexterity * mults.dexterity,
         bnMult: BitNodeMultipliers.DexterityLevelMultiplier,
       },
       {
         mult: "Dexterity Experience",
-        current: Player.dexterity_exp_mult,
-        augmented: Player.dexterity_exp_mult * mults.dexterity_exp_mult,
+        current: Player.mults.dexterity_exp,
+        augmented: Player.mults.dexterity_exp * mults.dexterity_exp,
       },
       {
         mult: "Agility Level",
-        current: Player.agility_mult,
-        augmented: Player.agility_mult * mults.agility_mult,
+        current: Player.mults.agility,
+        augmented: Player.mults.agility * mults.agility,
         bnMult: BitNodeMultipliers.AgilityLevelMultiplier,
       },
       {
         mult: "Agility Experience",
-        current: Player.agility_exp_mult,
-        augmented: Player.agility_exp_mult * mults.agility_exp_mult,
+        current: Player.mults.agility_exp,
+        augmented: Player.mults.agility_exp * mults.agility_exp,
       },
     ].map((data: MultiplierListItemData) =>
       Object.defineProperty(data, "color", {
@@ -186,73 +180,73 @@ export function PlayerMultipliers(): React.ReactElement {
     ),
     {
       mult: "Charisma Level",
-      current: Player.charisma_mult,
-      augmented: Player.charisma_mult * mults.charisma_mult,
+      current: Player.mults.charisma,
+      augmented: Player.mults.charisma * mults.charisma,
       bnMult: BitNodeMultipliers.CharismaLevelMultiplier,
       color: Settings.theme.cha,
     },
     {
       mult: "Charisma Experience",
-      current: Player.charisma_exp_mult,
-      augmented: Player.charisma_exp_mult * mults.charisma_exp_mult,
+      current: Player.mults.charisma_exp,
+      augmented: Player.mults.charisma_exp * mults.charisma_exp,
       color: Settings.theme.cha,
     },
   ];
   const rightColData: MultiplierListItemData[] = [
     {
       mult: "Hacknet Node Production",
-      current: Player.hacknet_node_money_mult,
-      augmented: Player.hacknet_node_money_mult * mults.hacknet_node_money_mult,
+      current: Player.mults.hacknet_node_money,
+      augmented: Player.mults.hacknet_node_money * mults.hacknet_node_money,
       bnMult: BitNodeMultipliers.HacknetNodeMoney,
     },
     {
       mult: "Hacknet Node Purchase Cost",
-      current: Player.hacknet_node_purchase_cost_mult,
-      augmented: Player.hacknet_node_purchase_cost_mult * mults.hacknet_node_purchase_cost_mult,
+      current: Player.mults.hacknet_node_purchase_cost,
+      augmented: Player.mults.hacknet_node_purchase_cost * mults.hacknet_node_purchase_cost,
     },
     {
       mult: "Hacknet Node RAM Upgrade Cost",
-      current: Player.hacknet_node_ram_cost_mult,
-      augmented: Player.hacknet_node_ram_cost_mult * mults.hacknet_node_ram_cost_mult,
+      current: Player.mults.hacknet_node_ram_cost,
+      augmented: Player.mults.hacknet_node_ram_cost * mults.hacknet_node_ram_cost,
     },
     {
       mult: "Hacknet Node Core Purchase Cost",
-      current: Player.hacknet_node_core_cost_mult,
-      augmented: Player.hacknet_node_core_cost_mult * mults.hacknet_node_core_cost_mult,
+      current: Player.mults.hacknet_node_core_cost,
+      augmented: Player.mults.hacknet_node_core_cost * mults.hacknet_node_core_cost,
     },
     {
       mult: "Hacknet Node Level Upgrade Cost",
-      current: Player.hacknet_node_level_cost_mult,
-      augmented: Player.hacknet_node_level_cost_mult * mults.hacknet_node_level_cost_mult,
+      current: Player.mults.hacknet_node_level_cost,
+      augmented: Player.mults.hacknet_node_level_cost * mults.hacknet_node_level_cost,
     },
     {
       mult: "Company Reputation Gain",
-      current: Player.company_rep_mult,
-      augmented: Player.company_rep_mult * mults.company_rep_mult,
+      current: Player.mults.company_rep,
+      augmented: Player.mults.company_rep * mults.company_rep,
     },
     {
       mult: "Faction Reputation Gain",
-      current: Player.faction_rep_mult,
-      augmented: Player.faction_rep_mult * mults.faction_rep_mult,
+      current: Player.mults.faction_rep,
+      augmented: Player.mults.faction_rep * mults.faction_rep,
       bnMult: BitNodeMultipliers.FactionWorkRepGain,
     },
     {
       mult: "Salary",
-      current: Player.work_money_mult,
-      augmented: Player.work_money_mult * mults.work_money_mult,
+      current: Player.mults.work_money,
+      augmented: Player.mults.work_money * mults.work_money,
       bnMult: BitNodeMultipliers.CompanyWorkMoney,
       color: Settings.theme.money,
     },
     {
       mult: "Crime Success Chance",
-      current: Player.crime_success_mult,
-      augmented: Player.crime_success_mult * mults.crime_success_mult,
+      current: Player.mults.crime_success,
+      augmented: Player.mults.crime_success * mults.crime_success,
       color: Settings.theme.combat,
     },
     {
       mult: "Crime Money",
-      current: Player.crime_money_mult,
-      augmented: Player.crime_money_mult * mults.crime_money_mult,
+      current: Player.mults.crime_money,
+      augmented: Player.mults.crime_money * mults.crime_money,
       bnMult: BitNodeMultipliers.CrimeMoney,
       color: Settings.theme.money,
     },
@@ -262,23 +256,23 @@ export function PlayerMultipliers(): React.ReactElement {
     rightColData.push(
       {
         mult: "Bladeburner Success Chance",
-        current: Player.bladeburner_success_chance_mult,
-        augmented: Player.bladeburner_success_chance_mult * mults.bladeburner_success_chance_mult,
+        current: Player.mults.bladeburner_success_chance,
+        augmented: Player.mults.bladeburner_success_chance * mults.bladeburner_success_chance,
       },
       {
         mult: "Bladeburner Max Stamina",
-        current: Player.bladeburner_max_stamina_mult,
-        augmented: Player.bladeburner_max_stamina_mult * mults.bladeburner_max_stamina_mult,
+        current: Player.mults.bladeburner_max_stamina,
+        augmented: Player.mults.bladeburner_max_stamina * mults.bladeburner_max_stamina,
       },
       {
         mult: "Bladeburner Stamina Gain",
-        current: Player.bladeburner_stamina_gain_mult,
-        augmented: Player.bladeburner_stamina_gain_mult * mults.bladeburner_stamina_gain_mult,
+        current: Player.mults.bladeburner_stamina_gain,
+        augmented: Player.mults.bladeburner_stamina_gain * mults.bladeburner_stamina_gain,
       },
       {
         mult: "Bladeburner Field Analysis",
-        current: Player.bladeburner_analysis_mult,
-        augmented: Player.bladeburner_analysis_mult * mults.bladeburner_analysis_mult,
+        current: Player.mults.bladeburner_analysis,
+        augmented: Player.mults.bladeburner_analysis * mults.bladeburner_analysis,
       },
     );
   }

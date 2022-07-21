@@ -84,7 +84,7 @@ export function mv(
 
       script.filename = destPath;
     } else if (srcFile instanceof TextFile) {
-      const textFile = srcFile as TextFile;
+      const textFile = srcFile;
       if (!dest.endsWith(".txt")) {
         terminal.error(`Source and destination files must have the same type`);
         return;

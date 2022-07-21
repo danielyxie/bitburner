@@ -1,4 +1,4 @@
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 // Array of all valid states
 const AllCorporationStates: string[] = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
@@ -28,13 +28,12 @@ export class CorporationState {
   }
 
   // Serialize the current object to a JSON save state.
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("CorporationState", this);
   }
 
   // Initiatizes a CorporationState object from a JSON save state.
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): CorporationState {
+  static fromJSON(value: IReviverValue): CorporationState {
     return Generic_fromJSON(CorporationState, value.data);
   }
 }

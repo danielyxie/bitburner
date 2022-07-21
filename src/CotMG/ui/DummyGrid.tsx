@@ -3,7 +3,7 @@ import * as React from "react";
 import { ActiveFragment } from "../ActiveFragment";
 import { DummyGift } from "../DummyGift";
 import { Grid } from "./Grid";
-import { calculateGrid, zeros } from "../Helper";
+import { zeros } from "../Helper";
 
 interface IProps {
   width: number;
@@ -13,15 +13,13 @@ interface IProps {
 
 export function DummyGrid(props: IProps): React.ReactElement {
   const gift = new DummyGift(props.width, props.height, props.fragments);
-  const activeGrid = calculateGrid(gift);
-  const ghostGrid = zeros([props.width, props.height]);
+  const ghostGrid = zeros(props.width, props.height);
   return (
     <Box>
       <Table sx={{ width: props.width, height: props.height }}>
         <Grid
           width={props.width}
           height={props.height}
-          activeGrid={activeGrid}
           ghostGrid={ghostGrid}
           gift={gift}
           enter={() => undefined}

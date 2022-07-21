@@ -100,9 +100,11 @@ describe("Terminal Directory Tests", function () {
       expect(isValidDirectoryName(".a1")).toEqual(true);
       expect(isValidDirectoryName("._foo")).toEqual(true);
       expect(isValidDirectoryName("_foo")).toEqual(true);
-      expect(isValidDirectoryName("foo.dir")).toEqual(true);
-      expect(isValidDirectoryName("foov1.0.0.1")).toEqual(true);
-      expect(isValidDirectoryName("foov1..0..0..1")).toEqual(true);
+      // the changes made to support this broke mv
+      // see https://github.com/danielyxie/bitburner/pull/3653 if you try to re support
+      // expect(isValidDirectoryName("foo.dir")).toEqual(true);
+      // expect(isValidDirectoryName("foov1.0.0.1")).toEqual(true);
+      // expect(isValidDirectoryName("foov1..0..0..1")).toEqual(true);
       expect(isValidDirectoryName("foov1-0-0-1")).toEqual(true);
       expect(isValidDirectoryName("foov1-0-0-1-")).toEqual(true);
       expect(isValidDirectoryName("foov1--0--0--1--")).toEqual(true);

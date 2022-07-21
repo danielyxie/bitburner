@@ -5,6 +5,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Bladeburner as INetscriptBladeburner, BladeburnerCurAction } from "../ScriptEditor/NetscriptDefinitions";
 import { IAction } from "src/Bladeburner/IAction";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { BlackOperation } from "../Bladeburner/BlackOperation";
 
 export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript): InternalAPI<INetscriptBladeburner> {
   const checkBladeburnerAccess = function (ctx: NetscriptContext, skipjoined = false): void {
@@ -75,7 +76,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
       (_blackOpName: unknown): number => {
         const blackOpName = ctx.helper.string("blackOpName", _blackOpName);
         checkBladeburnerAccess(ctx);
-        const action: any = getBladeburnerActionObject(ctx, "blackops", blackOpName);
+        const action = getBladeburnerActionObject(ctx, "blackops", blackOpName);
+        if (!(action instanceof BlackOperation)) throw new Error("action was not a black operation");
         return action.reqdRank;
       },
     getGeneralActionNames: (ctx: NetscriptContext) => (): string[] => {
@@ -100,8 +102,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.startActionNetscriptFn(player, type, name, workerScript);
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     stopBladeburnerAction: (ctx: NetscriptContext) => (): void => {
@@ -133,8 +135,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
           } else {
             return time;
           }
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     getActionCurrentTime: (ctx: NetscriptContext) => (): number => {
@@ -146,8 +148,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
           Math.min(bladeburner.actionTimeCurrent + bladeburner.actionTimeOverflow, bladeburner.actionTimeToComplete) *
           1000;
         return timecomputed;
-      } catch (e: any) {
-        throw ctx.makeRuntimeErrorMsg(e);
+      } catch (e: unknown) {
+        throw ctx.makeRuntimeErrorMsg(String(e));
       }
     },
     getActionEstimatedSuccessChance:
@@ -167,8 +169,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
           } else {
             return chance;
           }
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     getActionRepGain:
@@ -198,8 +200,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getActionCountRemainingNetscriptFn(type, name, workerScript);
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     getActionMaxLevel:
@@ -273,34 +275,36 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getSkillLevelNetscriptFn(skillName, workerScript);
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     getSkillUpgradeCost:
       (ctx: NetscriptContext) =>
-      (_skillName: unknown): number => {
+      (_skillName: unknown, _count: unknown = 1): number => {
         const skillName = ctx.helper.string("skillName", _skillName);
+        const count = ctx.helper.number("count", _count);
         checkBladeburnerAccess(ctx);
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.getSkillUpgradeCostNetscriptFn(skillName, workerScript);
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+          return bladeburner.getSkillUpgradeCostNetscriptFn(skillName, count, workerScript);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     upgradeSkill:
       (ctx: NetscriptContext) =>
-      (_skillName: unknown): boolean => {
+      (_skillName: unknown, _count: unknown = 1): boolean => {
         const skillName = ctx.helper.string("skillName", _skillName);
+        const count = ctx.helper.number("count", _count);
         checkBladeburnerAccess(ctx);
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.upgradeSkillNetscriptFn(skillName, workerScript);
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+          return bladeburner.upgradeSkillNetscriptFn(skillName, count, workerScript);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     getTeamSize:
@@ -313,8 +317,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getTeamSizeNetscriptFn(type, name, workerScript);
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     setTeamSize:
@@ -328,8 +332,8 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.setTeamSizeNetscriptFn(type, name, size, workerScript);
-        } catch (e: any) {
-          throw ctx.makeRuntimeErrorMsg(e);
+        } catch (e: unknown) {
+          throw ctx.makeRuntimeErrorMsg(String(e));
         }
       },
     getCityEstimatedPopulation:

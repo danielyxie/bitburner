@@ -1,4 +1,4 @@
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { IBladeburner } from "./IBladeburner";
 import { IActionIdentifier } from "./IActionIdentifier";
 import { ActionIdentifier } from "./ActionIdentifier";
@@ -17,7 +17,7 @@ import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { createTaskTracker, ITaskTracker } from "../PersonObjects/ITaskTracker";
 import { IPerson } from "../PersonObjects/IPerson";
-import { IRouter, Page } from "../ui/Router";
+import { IRouter } from "../ui/Router";
 import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -35,7 +35,6 @@ import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { BlackOperationNames } from "./data/BlackOperationNames";
 import { KEY } from "../utils/helpers/keyCodes";
 
 interface BlackOpsAttempt {
@@ -70,17 +69,17 @@ export class Bladeburner implements IBladeburner {
     type: ActionTypes["Idle"],
   });
 
-  cities: any = {};
+  cities: Record<string, City> = {};
   city: string = BladeburnerConstants.CityNames[2];
-  skills: any = {};
-  skillMultipliers: any = {};
+  skills: Record<string, number> = {};
+  skillMultipliers: Record<string, number> = {};
   staminaBonus = 0;
   maxStamina = 0;
   stamina = 0;
-  contracts: any = {};
-  operations: any = {};
-  blackops: any = {};
-  logging: any = {
+  contracts: Record<string, Contract> = {};
+  operations: Record<string, Operation> = {};
+  blackops: Record<string, boolean> = {};
+  logging = {
     general: true,
     contracts: true,
     ops: true,
@@ -179,7 +178,7 @@ export class Bladeburner implements IBladeburner {
             return this.resetAction();
           }
           this.actionTimeToComplete = action.getActionTime(this, person);
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -196,7 +195,7 @@ export class Bladeburner implements IBladeburner {
             return this.resetAction();
           }
           this.actionTimeToComplete = action.getActionTime(this, person);
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -214,7 +213,7 @@ export class Bladeburner implements IBladeburner {
             throw new Error("action should not be null");
           }
           this.actionTimeToComplete = testBlackOp.action.getActionTime(this, person);
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -237,13 +236,13 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  upgradeSkill(skill: Skill): void {
+  upgradeSkill(skill: Skill, count = 1): void {
     // This does NOT handle deduction of skill points
     const skillName = skill.name;
     if (this.skills[skillName]) {
-      ++this.skills[skillName];
+      this.skills[skillName] += count;
     } else {
-      this.skills[skillName] = 1;
+      this.skills[skillName] = count;
     }
     if (isNaN(this.skills[skillName]) || this.skills[skillName] < 0) {
       throw new Error("Level of Skill " + skillName + " is invalid: " + this.skills[skillName]);
@@ -265,7 +264,7 @@ export class Bladeburner implements IBladeburner {
       for (let i = 0; i < arrayOfCommands.length; ++i) {
         this.executeConsoleCommand(player, arrayOfCommands[i]);
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
       exceptionAlert(e);
     }
   }
@@ -477,54 +476,54 @@ export class Bladeburner implements IBladeburner {
           this.postToConsole("Effects: ");
           const multKeys = Object.keys(this.skillMultipliers);
           for (let i = 0; i < multKeys.length; ++i) {
-            let mult = this.skillMultipliers[multKeys[i]];
+            const mult = this.skillMultipliers[multKeys[i]];
             if (mult && mult !== 1) {
-              mult = formatNumber(mult, 3);
+              const mults = formatNumber(mult, 3);
               switch (multKeys[i]) {
                 case "successChanceAll":
-                  this.postToConsole("Total Success Chance: x" + mult);
+                  this.postToConsole("Total Success Chance: x" + mults);
                   break;
                 case "successChanceStealth":
-                  this.postToConsole("Stealth Success Chance: x" + mult);
+                  this.postToConsole("Stealth Success Chance: x" + mults);
                   break;
                 case "successChanceKill":
-                  this.postToConsole("Retirement Success Chance: x" + mult);
+                  this.postToConsole("Retirement Success Chance: x" + mults);
                   break;
                 case "successChanceContract":
-                  this.postToConsole("Contract Success Chance: x" + mult);
+                  this.postToConsole("Contract Success Chance: x" + mults);
                   break;
                 case "successChanceOperation":
-                  this.postToConsole("Operation Success Chance: x" + mult);
+                  this.postToConsole("Operation Success Chance: x" + mults);
                   break;
                 case "successChanceEstimate":
-                  this.postToConsole("Synthoid Data Estimate: x" + mult);
+                  this.postToConsole("Synthoid Data Estimate: x" + mults);
                   break;
                 case "actionTime":
-                  this.postToConsole("Action Time: x" + mult);
+                  this.postToConsole("Action Time: x" + mults);
                   break;
                 case "effHack":
-                  this.postToConsole("Hacking Skill: x" + mult);
+                  this.postToConsole("Hacking Skill: x" + mults);
                   break;
                 case "effStr":
-                  this.postToConsole("Strength: x" + mult);
+                  this.postToConsole("Strength: x" + mults);
                   break;
                 case "effDef":
-                  this.postToConsole("Defense: x" + mult);
+                  this.postToConsole("Defense: x" + mults);
                   break;
                 case "effDex":
-                  this.postToConsole("Dexterity: x" + mult);
+                  this.postToConsole("Dexterity: x" + mults);
                   break;
                 case "effAgi":
-                  this.postToConsole("Agility: x" + mult);
+                  this.postToConsole("Agility: x" + mults);
                   break;
                 case "effCha":
-                  this.postToConsole("Charisma: x" + mult);
+                  this.postToConsole("Charisma: x" + mults);
                   break;
                 case "effInt":
-                  this.postToConsole("Intelligence: x" + mult);
+                  this.postToConsole("Intelligence: x" + mults);
                   break;
                 case "stamina":
-                  this.postToConsole("Stamina: x" + mult);
+                  this.postToConsole("Stamina: x" + mults);
                   break;
                 default:
                   console.warn(`Unrecognized SkillMult Key: ${multKeys[i]}`);
@@ -795,21 +794,9 @@ export class Bladeburner implements IBladeburner {
     let i = 0;
     while (i < command.length) {
       const c = command.charAt(i);
-      if (c === '"') {
-        // Double quotes
-        const endQuote = command.indexOf('"', i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
-          args.push(command.substr(i + 1, endQuote - i - 1));
-          if (endQuote === command.length - 1) {
-            start = i = endQuote + 1;
-          } else {
-            start = i = endQuote + 2; // Skip the space
-          }
-          continue;
-        }
-      } else if (c === "'") {
-        // Single quotes, same thing as above
-        const endQuote = command.indexOf("'", i + 1);
+      if (c === '"' || c === "'") {
+        // Double quotes or Single quotes
+        const endQuote = command.indexOf(c, i + 1);
         if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
           args.push(command.substr(i + 1, endQuote - i - 1));
           if (endQuote === command.length - 1) {
@@ -1368,7 +1355,7 @@ export class Bladeburner implements IBladeburner {
           if (action.autoLevel) {
             action.level = action.maxLevel;
           } // Autolevel
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
@@ -1463,17 +1450,17 @@ export class Bladeburner implements IBladeburner {
               this.log(`${person.whoAmI()}:  You lost ${formatNumber(losses, 0)} team members during ${action.name}`);
             }
           }
-        } catch (e: any) {
+        } catch (e: unknown) {
           exceptionAlert(e);
         }
         break;
       }
       case ActionTypes["Training"]: {
         this.stamina -= 0.5 * BladeburnerConstants.BaseStaminaLoss;
-        const strExpGain = 30 * person.strength_exp_mult,
-          defExpGain = 30 * person.defense_exp_mult,
-          dexExpGain = 30 * person.dexterity_exp_mult,
-          agiExpGain = 30 * person.agility_exp_mult,
+        const strExpGain = 30 * person.mults.strength_exp,
+          defExpGain = 30 * person.mults.defense_exp,
+          dexExpGain = 30 * person.mults.dexterity_exp,
+          agiExpGain = 30 * person.mults.agility_exp,
           staminaGain = 0.04 * this.skillMultipliers.stamina;
         retValue.str = strExpGain;
         retValue.def = defExpGain;
@@ -1505,12 +1492,12 @@ export class Bladeburner implements IBladeburner {
           0.04 * Math.pow(person.hacking, 0.3) +
           0.04 * Math.pow(person.intelligence, 0.9) +
           0.02 * Math.pow(person.charisma, 0.3);
-        eff *= person.bladeburner_analysis_mult;
+        eff *= person.mults.bladeburner_analysis;
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
         }
-        const hackingExpGain = 20 * person.hacking_exp_mult;
-        const charismaExpGain = 20 * person.charisma_exp_mult;
+        const hackingExpGain = 20 * person.mults.hacking_exp;
+        const charismaExpGain = 20 * person.mults.charisma_exp;
         const rankGain = 0.1 * BitNodeMultipliers.BladeburnerRank;
         retValue.hack = hackingExpGain;
         retValue.cha = charismaExpGain;
@@ -1648,7 +1635,7 @@ export class Bladeburner implements IBladeburner {
       if (bladeburnerFac.isMember) {
         const favorBonus = 1 + bladeburnerFac.favor / 100;
         bladeburnerFac.playerReputation +=
-          BladeburnerConstants.RankToFactionRepFactor * change * person.faction_rep_mult * favorBonus;
+          BladeburnerConstants.RankToFactionRepFactor * change * person.mults.faction_rep * favorBonus;
       }
     }
 
@@ -1686,9 +1673,6 @@ export class Bladeburner implements IBladeburner {
       // Operation Daedalus
       if (action == null) {
         throw new Error("Failed to get BlackOperation Object for: " + this.action.name);
-      } else if (action.name === BlackOperationNames.OperationDaedalus && this.blackops[action.name]) {
-        this.resetAction();
-        router.toBitVerse(false, false);
       } else if (this.action.type != ActionTypes["BlackOperation"] && this.action.type != ActionTypes["BlackOp"]) {
         this.startAction(player, this.action); // Repeat action
       }
@@ -1699,7 +1683,7 @@ export class Bladeburner implements IBladeburner {
     const effAgility = player.agility * this.skillMultipliers.effAgi;
     const maxStaminaBonus = this.maxStamina / BladeburnerConstants.MaxStaminaToGainFactor;
     const gain = (BladeburnerConstants.StaminaGainPerSecond + maxStaminaBonus) * Math.pow(effAgility, 0.17);
-    return gain * (this.skillMultipliers.stamina * player.bladeburner_stamina_gain_mult);
+    return gain * (this.skillMultipliers.stamina * player.mults.bladeburner_stamina_gain);
   }
 
   calculateMaxStamina(player: IPlayer): void {
@@ -1707,7 +1691,7 @@ export class Bladeburner implements IBladeburner {
     const maxStamina =
       (Math.pow(effAgility, 0.8) + this.staminaBonus) *
       this.skillMultipliers.stamina *
-      player.bladeburner_max_stamina_mult;
+      player.mults.bladeburner_max_stamina;
     if (this.maxStamina !== maxStamina) {
       const oldMax = this.maxStamina;
       this.maxStamina = maxStamina;
@@ -1991,13 +1975,8 @@ export class Bladeburner implements IBladeburner {
     // Edge race condition when the engine checks the processing counters and attempts to route before the router is initialized.
     if (!router.isInitialized) return;
 
-    // Edge case condition...if Operation Daedalus is complete trigger the BitNode
-    if (router.page() !== Page.BitVerse && this.blackops.hasOwnProperty(BlackOperationNames.OperationDaedalus)) {
-      return router.toBitVerse(false, false);
-    }
-
     // If the Player starts doing some other actions, set action to idle and alert
-    if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true) && player.isWorking) {
+    if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true) && player.currentWork) {
       if (this.action.type !== ActionTypes["Idle"]) {
         let msg = "Your Bladeburner action was cancelled because you started doing something else.";
         if (this.automateEnabled) {
@@ -2029,12 +2008,12 @@ export class Bladeburner implements IBladeburner {
       this.stamina = Math.min(this.maxStamina, this.stamina);
 
       // Count increase for contracts/operations
-      for (const contract of Object.values(this.contracts) as Contract[]) {
+      for (const contract of Object.values(this.contracts)) {
         const growthF = Growths[contract.name];
         if (growthF === undefined) throw new Error(`growth formula for action '${contract.name}' is undefined`);
         contract.count += (seconds * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
       }
-      for (const op of Object.values(this.operations) as Operation[]) {
+      for (const op of Object.values(this.operations)) {
         const growthF = Growths[op.name];
         if (growthF === undefined) throw new Error(`growth formula for action '${op.name}' is undefined`);
         if (growthF !== undefined) {
@@ -2163,7 +2142,8 @@ export class Bladeburner implements IBladeburner {
         () => `Starting bladeburner action with type '${type}' and name '${name}'`,
       );
       return true;
-    } catch (e: any) {
+    } catch (e: unknown) {
+      console.error(e);
       this.resetAction();
       workerScript.log("bladeburner.startAction", () => errorLogText);
       return false;
@@ -2285,7 +2265,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number {
+  getSkillUpgradeCostNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): number {
     if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
       workerScript.log("bladeburner.getSkillUpgradeCost", () => `Invalid skill: '${skillName}'`);
       return -1;
@@ -2293,13 +2273,13 @@ export class Bladeburner implements IBladeburner {
 
     const skill = Skills[skillName];
     if (this.skills[skillName] == null) {
-      return skill.calculateCost(0);
+      return skill.calculateCost(0, count);
     } else {
-      return skill.calculateCost(this.skills[skillName]);
+      return skill.calculateCost(this.skills[skillName], count);
     }
   }
 
-  upgradeSkillNetscriptFn(skillName: string, workerScript: WorkerScript): boolean {
+  upgradeSkillNetscriptFn(skillName: string, count: number, workerScript: WorkerScript): boolean {
     const errorLogText = `Invalid skill: '${skillName}'`;
     if (!Skills.hasOwnProperty(skillName)) {
       workerScript.log("bladeburner.upgradeSkill", () => errorLogText);
@@ -2311,10 +2291,10 @@ export class Bladeburner implements IBladeburner {
     if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
       currentLevel = this.skills[skillName];
     }
-    const cost = skill.calculateCost(currentLevel);
+    const cost = skill.calculateCost(currentLevel, count);
 
-    if (skill.maxLvl && currentLevel >= skill.maxLvl) {
-      workerScript.log("bladeburner.upgradeSkill", () => `Skill '${skillName}' is already maxed.`);
+    if (skill.maxLvl && currentLevel + count > skill.maxLvl) {
+      workerScript.log("bladeburner.upgradeSkill", () => `Skill '${skillName}' cannot be upgraded ${count} time(s).`);
       return false;
     }
 
@@ -2322,13 +2302,13 @@ export class Bladeburner implements IBladeburner {
       workerScript.log(
         "bladeburner.upgradeSkill",
         () =>
-          `You do not have enough skill points to upgrade ${skillName} (You have ${this.skillPoints}, you need ${cost})`,
+          `You do not have enough skill points to upgrade ${skillName} ${count} time(s). (You have ${this.skillPoints}, you need ${cost})`,
       );
       return false;
     }
 
     this.skillPoints -= cost;
-    this.upgradeSkill(skill);
+    this.upgradeSkill(skill, count);
     workerScript.log("bladeburner.upgradeSkill", () => `'${skillName}' upgraded to level ${this.skills[skillName]}`);
     return true;
   }
@@ -2418,15 +2398,14 @@ export class Bladeburner implements IBladeburner {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Bladeburner", this);
   }
 
   /**
    * Initiatizes a Bladeburner object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Bladeburner {
+  static fromJSON(value: IReviverValue): Bladeburner {
     return Generic_fromJSON(Bladeburner, value.data);
   }
 }

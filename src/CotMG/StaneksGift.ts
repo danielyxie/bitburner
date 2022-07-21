@@ -7,7 +7,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Factions } from "../Faction/Factions";
 import { CalculateEffect } from "./formulas/effect";
 import { StaneksGiftEvents } from "./StaneksGiftEvents";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { CONSTANTS } from "../Constants";
 import { StanekConstants } from "./data/Constants";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -38,7 +38,7 @@ export class StaneksGift implements IStaneksGift {
     }
 
     const cotmg = Factions[FactionNames.ChurchOfTheMachineGod];
-    cotmg.playerReputation += (player.faction_rep_mult * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
+    cotmg.playerReputation += (player.mults.faction_rep * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 
   inBonus(): boolean {
@@ -146,66 +146,66 @@ export class StaneksGift implements IStaneksGift {
       const power = this.effect(aFrag);
       switch (fragment.type) {
         case FragmentType.HackingChance:
-          p.hacking_chance_mult *= power;
+          p.mults.hacking_chance *= power;
           break;
         case FragmentType.HackingSpeed:
-          p.hacking_speed_mult *= power;
+          p.mults.hacking_speed *= power;
           break;
         case FragmentType.HackingMoney:
-          p.hacking_money_mult *= power;
+          p.mults.hacking_money *= power;
           break;
         case FragmentType.HackingGrow:
-          p.hacking_grow_mult *= power;
+          p.mults.hacking_grow *= power;
           break;
         case FragmentType.Hacking:
-          p.hacking_mult *= power;
-          p.hacking_exp_mult *= power;
+          p.mults.hacking *= power;
+          p.mults.hacking_exp *= power;
           break;
         case FragmentType.Strength:
-          p.strength_mult *= power;
-          p.strength_exp_mult *= power;
+          p.mults.strength *= power;
+          p.mults.strength_exp *= power;
           break;
         case FragmentType.Defense:
-          p.defense_mult *= power;
-          p.defense_exp_mult *= power;
+          p.mults.defense *= power;
+          p.mults.defense_exp *= power;
           break;
         case FragmentType.Dexterity:
-          p.dexterity_mult *= power;
-          p.dexterity_exp_mult *= power;
+          p.mults.dexterity *= power;
+          p.mults.dexterity_exp *= power;
           break;
         case FragmentType.Agility:
-          p.agility_mult *= power;
-          p.agility_exp_mult *= power;
+          p.mults.agility *= power;
+          p.mults.agility_exp *= power;
           break;
         case FragmentType.Charisma:
-          p.charisma_mult *= power;
-          p.charisma_exp_mult *= power;
+          p.mults.charisma *= power;
+          p.mults.charisma_exp *= power;
           break;
         case FragmentType.HacknetMoney:
-          p.hacknet_node_money_mult *= power;
+          p.mults.hacknet_node_money *= power;
           break;
         case FragmentType.HacknetCost:
-          p.hacknet_node_purchase_cost_mult /= power;
-          p.hacknet_node_ram_cost_mult /= power;
-          p.hacknet_node_core_cost_mult /= power;
-          p.hacknet_node_level_cost_mult /= power;
+          p.mults.hacknet_node_purchase_cost /= power;
+          p.mults.hacknet_node_ram_cost /= power;
+          p.mults.hacknet_node_core_cost /= power;
+          p.mults.hacknet_node_level_cost /= power;
           break;
         case FragmentType.Rep:
-          p.company_rep_mult *= power;
-          p.faction_rep_mult *= power;
+          p.mults.company_rep *= power;
+          p.mults.faction_rep *= power;
           break;
         case FragmentType.WorkMoney:
-          p.work_money_mult *= power;
+          p.mults.work_money *= power;
           break;
         case FragmentType.Crime:
-          p.crime_success_mult *= power;
-          p.crime_money_mult *= power;
+          p.mults.crime_success *= power;
+          p.mults.crime_money *= power;
           break;
         case FragmentType.Bladeburner:
-          p.bladeburner_max_stamina_mult *= power;
-          p.bladeburner_stamina_gain_mult *= power;
-          p.bladeburner_analysis_mult *= power;
-          p.bladeburner_success_chance_mult *= power;
+          p.mults.bladeburner_max_stamina *= power;
+          p.mults.bladeburner_stamina_gain *= power;
+          p.mults.bladeburner_analysis *= power;
+          p.mults.bladeburner_success_chance *= power;
           break;
       }
     }
@@ -224,15 +224,14 @@ export class StaneksGift implements IStaneksGift {
   /**
    * Serialize Staneks Gift to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("StaneksGift", this);
   }
 
   /**
    * Initializes Staneks Gift from a JSON save state
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): StaneksGift {
+  static fromJSON(value: IReviverValue): StaneksGift {
     return Generic_fromJSON(StaneksGift, value.data);
   }
 }

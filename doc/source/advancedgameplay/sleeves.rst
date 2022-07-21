@@ -39,7 +39,7 @@ There are two methods of obtaining Duplicate Sleeves:
 
 1. Destroy BitNode-10. Each completion give you one additional Duplicate Sleeve
 2. Purchase Duplicate Sleeves from :ref:`the faction The Covenant <gameplay_factions>`.
-   This is only available in BitNodes-10. Sleeves purchased this way are **permanent** (they persist
+   This is only available in BitNode-10. Sleeves purchased this way are **permanent** (they persist
    through BitNodes). You can purchase up to 5 Duplicate Sleeves from The Covenant.
 
 Synchronization
@@ -86,8 +86,7 @@ switching BitNodes. For example, if a sleeve has a memory of 10, then when you
 switch BitNodes its synchronization will initially be set to 10, rather than 1.
 
 Memory can only be increased by purchasing upgrades from The Covenant. Just like
-the ability to purchase additional sleeves, this is only available in BitNodes-10
-and above, and is only available after defeating BitNode-10 at least once.
+the ability to purchase additional sleeves, this is only available in BitNode-10.
 
 Memory is a persistent stat, meaning it never gets reset back to 1.
 The maximum possible value for a sleeve's memory is 100.

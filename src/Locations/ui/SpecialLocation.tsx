@@ -56,7 +56,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       router.toBladeburner();
     } else if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
       // Apply for Bladeburner division
-      p.startBladeburner({ new: true });
+      p.startBladeburner();
       dialogBoxCreate("You have been accepted into the Bladeburner division!");
       setRerender((old) => !old);
 
@@ -137,7 +137,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return (
         <>
           <Typography>
-            <i>A business man is yelling at a clerk. You should come back later.</i>
+            <i>A businessman is yelling at a clerk. You should come back later.</i>
           </Typography>
         </>
       );
@@ -232,7 +232,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         <>
           <Typography>
             <i>
-              Allison "Mother" Stanek: I see you've taken to my creation. So much so it could hardly be recognized as
+              Allison "Mother" Stanek: I see you've taken to my creation. So much that it could hardly be recognized as
               one of my own after your tinkering with it. I see you follow the ways of the Machine God as I do, and your
               mastery of the gift clearly demonstrates that. My hopes are climbing by the day for you.
             </i>

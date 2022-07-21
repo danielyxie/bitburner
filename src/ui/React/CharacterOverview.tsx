@@ -26,7 +26,14 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Box, Tooltip } from "@mui/material";
 
-import { WorkType } from "../../utils/WorkType";
+import { isClassWork } from "../../Work/ClassWork";
+import { CONSTANTS } from "../../Constants";
+import { isCreateProgramWork } from "../../Work/CreateProgramWork";
+import { isGraftingWork } from "../../Work/GraftingWork";
+import { isFactionWork } from "../../Work/FactionWork";
+import { ReputationRate } from "./ReputationRate";
+import { isCompanyWork } from "../../Work/CompanyWork";
+import { isCrimeWork } from "../../Work/CrimeWork";
 
 interface IProps {
   save: () => void;
@@ -138,72 +145,79 @@ function Work(): React.ReactElement {
     player.startFocusing();
     router.toWork();
   };
-
-  if (!player.isWorking || player.focus) return <></>;
+  if (player.currentWork === null || player.focus) return <></>;
 
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
-  switch (player.workType) {
-    case WorkType.CompanyPartTime:
-    case WorkType.Company:
-      details = (
-        <>
-          {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
-        </>
-      );
-      header = (
-        <>
-          Working at <strong>{player.companyName}</strong>
-        </>
-      );
-      innerText = (
-        <>
-          +<Reputation reputation={player.workRepGained} /> rep
-        </>
-      );
-      break;
-    case WorkType.Faction:
-      details = (
-        <>
-          {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
-        </>
-      );
-      header = (
-        <>
-          Working for <strong>{player.currentWorkFactionName}</strong>
-        </>
-      );
-      innerText = (
-        <>
-          +<Reputation reputation={player.workRepGained} /> rep
-        </>
-      );
-      break;
-    case WorkType.StudyClass:
-      details = <>{player.workType}</>;
-      header = <>You are {player.className}</>;
-      innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
-      break;
-    case WorkType.CreateProgram:
-      details = <>Coding {player.createProgramName}</>;
-      header = <>Creating a program</>;
-      innerText = (
-        <>
-          {player.createProgramName}{" "}
-          {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
-        </>
-      );
-      break;
-    case WorkType.GraftAugmentation:
-      details = <>Grafting {player.graftAugmentationName}</>;
-      header = <>Grafting an Augmentation</>;
-      innerText = (
-        <>
-          <strong>{((player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}%</strong>{" "}
-          done
-        </>
-      );
+  if (isCrimeWork(player.currentWork)) {
+    const crime = player.currentWork.getCrime();
+    const perc = (player.currentWork.unitCompleted / crime.time) * 100;
+
+    details = <>{player.currentWork.crimeType}</>;
+    header = <>You are attempting to {player.currentWork.crimeType}</>;
+    innerText = <>{perc.toFixed(2)}%</>;
+  }
+  if (isClassWork(player.currentWork)) {
+    details = <>{player.currentWork.getClass().youAreCurrently}</>;
+    header = <>You are {player.currentWork.getClass().youAreCurrently}</>;
+    innerText = <>{convertTimeMsToTimeElapsedString(player.currentWork.cyclesWorked * CONSTANTS._idleSpeed)}</>;
+  }
+  if (isCreateProgramWork(player.currentWork)) {
+    const create = player.currentWork;
+    details = <>Coding {create.programName}</>;
+    header = <>Creating a program</>;
+    innerText = (
+      <>
+        {create.programName} {((create.unitCompleted / create.unitNeeded()) * 100).toFixed(2)}%
+      </>
+    );
+  }
+  if (isGraftingWork(player.currentWork)) {
+    const graft = player.currentWork;
+    details = <>Grafting {graft.augmentation}</>;
+    header = <>Grafting an Augmentation</>;
+    innerText = (
+      <>
+        <strong>{((graft.unitCompleted / graft.unitNeeded()) * 100).toFixed(2)}%</strong> done
+      </>
+    );
+  }
+
+  if (isFactionWork(player.currentWork)) {
+    const factionWork = player.currentWork;
+    header = (
+      <>
+        Working for <strong>{factionWork.factionName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        <Reputation reputation={factionWork.getFaction().playerReputation} /> rep
+        <br />(
+        <ReputationRate reputation={factionWork.getReputationRate(player) * (1000 / CONSTANTS._idleSpeed)} />)
+      </>
+    );
+  }
+  if (isCompanyWork(player.currentWork)) {
+    const companyWork = player.currentWork;
+    details = (
+      <>
+        {player.jobs[companyWork.companyName]} at <strong>{companyWork.companyName}</strong>
+      </>
+    );
+    header = (
+      <>
+        Working at <strong>{companyWork.companyName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        <Reputation reputation={companyWork.getCompany().playerReputation} /> rep
+        <br />(
+        <ReputationRate reputation={companyWork.getGainRates(player).reputation * (1000 / CONSTANTS._idleSpeed)} />)
+      </>
+    );
   }
 
   return (
@@ -279,27 +293,27 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
 
   const hackingProgress = player.calculateSkillProgress(
     player.hacking_exp,
-    player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+    player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
   );
   const strengthProgress = player.calculateSkillProgress(
     player.strength_exp,
-    player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+    player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
   );
   const defenseProgress = player.calculateSkillProgress(
     player.defense_exp,
-    player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+    player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
   );
   const dexterityProgress = player.calculateSkillProgress(
     player.dexterity_exp,
-    player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+    player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
   const agilityProgress = player.calculateSkillProgress(
     player.agility_exp,
-    player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+    player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
   );
   const charismaProgress = player.calculateSkillProgress(
     player.charisma_exp,
-    player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+    player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
   );
 
   return (

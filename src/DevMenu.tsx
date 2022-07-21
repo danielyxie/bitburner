@@ -22,6 +22,7 @@ import { StockMarket } from "./DevMenu/ui/StockMarket";
 import { Sleeves } from "./DevMenu/ui/Sleeves";
 import { Stanek } from "./DevMenu/ui/Stanek";
 import { TimeSkip } from "./DevMenu/ui/TimeSkip";
+import { SaveFile } from "./DevMenu/ui/SaveFile";
 import { Achievements } from "./DevMenu/ui/Achievements";
 import { Entropy } from "./DevMenu/ui/Entropy";
 import Typography from "@mui/material/Typography";
@@ -65,6 +66,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
       <TimeSkip player={props.player} engine={props.engine} />
       <Achievements player={props.player} engine={props.engine} />
       <Entropy player={props.player} engine={props.engine} />
+      <SaveFile />
     </>
   );
 }

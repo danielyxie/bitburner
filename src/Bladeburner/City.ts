@@ -1,6 +1,6 @@
 import { BladeburnerConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { addOffset } from "../utils/helpers/addOffset";
 
 interface IChangePopulationByCountParams {
@@ -177,15 +177,14 @@ export class City {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("City", this);
   }
 
   /**
    * Initiatizes a City object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): City {
+  static fromJSON(value: IReviverValue): City {
     return Generic_fromJSON(City, value.data);
   }
 }

@@ -74,7 +74,7 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
           <CopyableText value={props.action.name} />
           <StartButton
             bladeburner={props.bladeburner}
-            type={ActionTypes[props.action.name as string]}
+            type={ActionTypes[props.action.name]}
             name={props.action.name}
             rerender={rerender}
           />

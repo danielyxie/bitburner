@@ -9,7 +9,7 @@ Upgrade skill.
 <b>Signature:</b>
 
 ```typescript
-upgradeSkill(name: string): boolean;
+upgradeSkill(name: string, count?: number): boolean;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ upgradeSkill(name: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
+|  count | number | Number of times to upgrade the skill. Defaults to 1 if not specified. |
 
 <b>Returns:</b>
 
@@ -28,7 +29,7 @@ true if the skill is successfully upgraded, and false otherwise.
 
 RAM cost: 4 GB
 
-Attempts to upgrade the specified Bladeburner skill.
+Attempts to upgrade the specified Bladeburner skill the specified number of times.
 
 Returns true if the skill is successfully upgraded, and false otherwise.
 

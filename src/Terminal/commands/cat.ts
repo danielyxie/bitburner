@@ -25,11 +25,10 @@ export function cat(
     !filename.endsWith(".lit") &&
     !filename.endsWith(".txt") &&
     !filename.endsWith(".script") &&
-    !filename.endsWith(".js") &&
-    !filename.endsWith(".ns")
+    !filename.endsWith(".js")
   ) {
     terminal.error(
-      "Only .msg, .txt, .lit, .script, .js, and .ns files are viewable with cat (filename must end with .msg, .txt, .lit, .script, .js, or .ns)",
+      "Only .msg, .txt, .lit, .script and .js files are viewable with cat (filename must end with .msg, .txt, .lit, .script or .js)",
     );
     return;
   }
@@ -55,7 +54,7 @@ export function cat(
       txt.show();
       return;
     }
-  } else if (filename.endsWith(".script") || filename.endsWith(".js") || filename.endsWith(".ns")) {
+  } else if (filename.endsWith(".script") || filename.endsWith(".js")) {
     const script = terminal.getScript(player, relative_filename);
     if (script != null) {
       dialogBoxCreate(`${script.filename}<br /><br />${script.code}`);

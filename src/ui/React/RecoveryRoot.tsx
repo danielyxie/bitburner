@@ -34,11 +34,13 @@ export function RecoveryRoot({ router, softReset, errorData, resetError }: IProp
   Settings.AutosaveInterval = 0;
 
   useEffect(() => {
-    load().then((content) => {
-      const epochTime = Math.round(Date.now() / 1000);
-      const filename = `RECOVERY_BITBURNER_${epochTime}.json`;
-      download(filename, content);
-    });
+    load()
+      .then((content) => {
+        const epochTime = Math.round(Date.now() / 1000);
+        const filename = `RECOVERY_BITBURNER_${epochTime}.json`;
+        download(filename, content);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   return (

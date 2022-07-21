@@ -32,8 +32,5 @@ export function applyEntropy(this: IPlayer, stacks = 1): void {
   this.reapplyAllAugmentations();
   this.reapplyAllSourceFiles();
 
-  const newMultipliers = calculateEntropy(this, stacks);
-  for (const [mult, val] of Object.entries(newMultipliers)) {
-    this.setMult(mult, val);
-  }
+  this.mults = calculateEntropy(this, stacks);
 }

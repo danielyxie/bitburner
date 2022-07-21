@@ -2,9 +2,8 @@
 // (top-left panel in the Industry UI)
 import React, { useState } from "react";
 
-import { OfficeSpace } from "../OfficeSpace";
 import { Industries } from "../IndustryData";
-import { IndustryUpgrades } from "../IndustryUpgrades";
+import { HireAdVert } from "../Actions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { MakeProductModal } from "./modals/MakeProductModal";
@@ -87,7 +86,12 @@ function MakeProductButton(): React.ReactElement {
     </>
   );
 }
-function Text(): React.ReactElement {
+
+interface IProps {
+  rerender: () => void;
+}
+
+export function IndustryOverview(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
   const [helpOpen, setHelpOpen] = useState(false);
@@ -113,15 +117,15 @@ function Text(): React.ReactElement {
   }
 
   return (
-    <>
+    <Paper>
       <Typography>
         Industry: {division.type} (Corp Funds: <Money money={corp.funds} />)
       </Typography>
       <br />
       <StatsTable
         rows={[
-          ["Awareness:", numeralWrapper.format(division.awareness, "0.000")],
-          ["Popularity:", numeralWrapper.format(division.popularity, "0.000")],
+          ["Awareness:", numeralWrapper.formatReallyBigNumber(division.awareness)],
+          ["Popularity:", numeralWrapper.formatReallyBigNumber(division.popularity)],
         ]}
       />
       {advertisingInfo !== false && (
@@ -131,15 +135,15 @@ function Text(): React.ReactElement {
               <Typography>Total multiplier for this industrys sales due to its awareness and popularity</Typography>
               <StatsTable
                 rows={[
-                  ["Awareness Bonus:", "x" + numeralWrapper.format(Math.pow(awarenessFac, 0.85), "0.000")],
-                  ["Popularity Bonus:", "x" + numeralWrapper.format(Math.pow(popularityFac, 0.85), "0.000")],
-                  ["Ratio Multiplier:", "x" + numeralWrapper.format(Math.pow(ratioFac, 0.85), "0.000")],
+                  ["Awareness Bonus:", "x" + numeralWrapper.formatReallyBigNumber(Math.pow(awarenessFac, 0.85))],
+                  ["Popularity Bonus:", "x" + numeralWrapper.formatReallyBigNumber(Math.pow(popularityFac, 0.85))],
+                  ["Ratio Multiplier:", "x" + numeralWrapper.formatReallyBigNumber(Math.pow(ratioFac, 0.85))],
                 ]}
               />
             </>
           }
         >
-          <Typography>Advertising Multiplier: x{numeralWrapper.format(totalAdvertisingFac, "0.000")}</Typography>
+          <Typography>Advertising Multiplier: x{numeralWrapper.formatReallyBigNumber(totalAdvertisingFac)}</Typography>
         </Tooltip>
       )}
       <br />
@@ -160,7 +164,7 @@ function Text(): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>Production Multiplier: {numeralWrapper.format(division.prodMult, "0.00")}</Typography>
+          <Typography>Production Multiplier: {numeralWrapper.formatReallyBigNumber(division.prodMult)}</Typography>
         </Tooltip>
         <IconButton onClick={() => setHelpOpen(true)}>
           <HelpIcon />
@@ -191,7 +195,6 @@ function Text(): React.ReactElement {
           </Typography>
         </StaticModal>
       </Box>
-
       <Box display="flex" alignItems="center">
         <Tooltip
           title={
@@ -200,83 +203,37 @@ function Text(): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>Scientific Research: {numeralWrapper.format(division.sciResearch.qty, "0.000a")}</Typography>
+          <Typography>Scientific Research: {numeralWrapper.formatReallyBigNumber(division.sciResearch.qty)}</Typography>
         </Tooltip>
         <Button sx={{ mx: 1 }} onClick={() => setResearchOpen(true)}>
           Research
         </Button>
         <ResearchModal open={researchOpen} onClose={() => setResearchOpen(false)} industry={division} />
       </Box>
-    </>
-  );
-}
-
-function Upgrades(props: { office: OfficeSpace; rerender: () => void }): React.ReactElement {
-  const corp = useCorporation();
-  const division = useDivision();
-  const upgrades = [];
-  for (const index of Object.keys(IndustryUpgrades)) {
-    const upgrade = IndustryUpgrades[index];
-
-    // AutoBrew research disables the Coffee upgrade
-    if (division.hasResearch("AutoBrew") && upgrade[4] === "Coffee") {
-      continue;
-    }
-
-    const i = upgrade[0];
-    const baseCost = upgrade[1];
-    const priceMult = upgrade[2];
-    let cost = 0;
-    switch (i) {
-      case 0: //Coffee, cost is static per employee
-        cost = props.office.employees.length * baseCost;
-        break;
-      default:
-        cost = baseCost * Math.pow(priceMult, division.upgrades[i]);
-        break;
-    }
-
-    function onClick(): void {
-      if (corp.funds < cost) return;
-      corp.funds = corp.funds - cost;
-      division.upgrade(upgrade, {
-        corporation: corp,
-        office: props.office,
-      });
-      props.rerender();
-    }
-
-    upgrades.push(
-      <Tooltip key={index} title={upgrade[5]}>
-        <span>
-          <Button disabled={corp.funds < cost} onClick={onClick}>
-            {upgrade[4]} -&nbsp;
-            <MoneyCost money={cost} corp={corp} />
-          </Button>
-        </span>
-      </Tooltip>,
-    );
-  }
-
-  return <>{upgrades}</>;
-}
-
-interface IProps {
-  currentCity: string;
-  office: OfficeSpace;
-  rerender: () => void;
-}
-
-export function IndustryOverview(props: IProps): React.ReactElement {
-  const division = useDivision();
-
-  return (
-    <Paper>
-      <Text />
       <br />
-      <Typography>Purchases & Upgrades</Typography>
-      <Upgrades office={props.office} rerender={props.rerender} /> <br />
-      {division.makesProducts && <MakeProductButton />}
+      <Box display="flex" alignItems="center">
+        <Tooltip
+          title={
+            <Typography>
+              Hire AdVert.Inc to advertise your company. Each level of this upgrade grants your company a static
+              increase of 3 and 1 to its awareness and popularity, respectively. It will then increase your company's
+              awareness by 1%, and its popularity by a random percentage between 1% and 3%. These effects are increased
+              by other upgrades that increase the power of your advertising.
+            </Typography>
+          }
+        >
+          <Button
+            disabled={division.getAdVertCost() > corp.funds}
+            onClick={function () {
+              HireAdVert(corp, division);
+              props.rerender();
+            }}
+          >
+            Hire AdVert -&nbsp; <MoneyCost money={division.getAdVertCost()} corp={corp} />
+          </Button>
+        </Tooltip>
+        {division.makesProducts && <MakeProductButton />}
+      </Box>
     </Paper>
   );
 }

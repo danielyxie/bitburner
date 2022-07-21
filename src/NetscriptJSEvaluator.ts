@@ -12,6 +12,9 @@ import { Script } from "./Script/Script";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
 import { IPlayer } from "./PersonObjects/IPlayer";
 
+// Acorn type def is straight up incomplete so we have to fill with our own.
+export type Node = any;
+
 // Makes a blob that contains the code of a given script.
 function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
@@ -70,12 +73,21 @@ export async function executeJSScript(
 
   const ns = workerScript.env.vars;
 
+  if (!loadedModule) {
+    throw makeRuntimeRejectMsg(workerScript, `${script.filename} cannot be run because the script module won't load`);
+  }
   // TODO: putting await in a non-async function yields unhelpful
   // "SyntaxError: unexpected reserved word" with no line number information.
   if (!loadedModule.main) {
     throw makeRuntimeRejectMsg(
       workerScript,
       `${script.filename} cannot be run because it does not have a main function.`,
+    );
+  }
+  if (!ns) {
+    throw makeRuntimeRejectMsg(
+      workerScript,
+      `${script.filename} cannot be run because the NS object hasn't been constructed properly.`,
     );
   }
   return loadedModule.main(ns);
@@ -97,7 +109,7 @@ function isDependencyOutOfDate(filename: string, scripts: Script[], scriptModule
  * @param {Script[]} scripts
  */
 function shouldCompile(script: Script, scripts: Script[]): boolean {
-  if (script.module === "") return true;
+  if (!script.module) return true;
   return script.dependencies.some((dep) => isDependencyOutOfDate(dep.filename, scripts, script.moduleSequenceNumber));
 }
 
@@ -144,36 +156,39 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     // Where the blob URL contains the script content.
 
     // Parse the code into an ast tree
-    const ast: any = parse(script.code, { sourceType: "module", ecmaVersion: "latest", ranges: true });
-
-    const importNodes: Array<any> = [];
+    const ast = parse(script.code, { sourceType: "module", ecmaVersion: "latest", ranges: true });
+    interface importNode {
+      filename: string;
+      start: number;
+      end: number;
+    }
+    const importNodes: importNode[] = [];
     // Walk the nodes of this tree and find any import declaration statements.
     walk.simple(ast, {
-      ImportDeclaration(node: any) {
+      ImportDeclaration(node: Node) {
         // Push this import onto the stack to replace
+        if (!node.source) return;
         importNodes.push({
           filename: node.source.value,
           start: node.source.range[0] + 1,
           end: node.source.range[1] - 1,
         });
       },
-      ExportNamedDeclaration(node: any) {
-        if (node.source) {
-          importNodes.push({
-            filename: node.source.value,
-            start: node.source.range[0] + 1,
-            end: node.source.range[1] - 1,
-          });
-        }
+      ExportNamedDeclaration(node: Node) {
+        if (!node.source) return;
+        importNodes.push({
+          filename: node.source.value,
+          start: node.source.range[0] + 1,
+          end: node.source.range[1] - 1,
+        });
       },
-      ExportAllDeclaration(node: any) {
-        if (node.source) {
-          importNodes.push({
-            filename: node.source.value,
-            start: node.source.range[0] + 1,
-            end: node.source.range[1] - 1,
-          });
-        }
+      ExportAllDeclaration(node: Node) {
+        if (!node.source) return;
+        importNodes.push({
+          filename: node.source.value,
+          start: node.source.range[0] + 1,
+          end: node.source.range[1] - 1,
+        });
       },
     });
     // Sort the nodes from last start index to first. This replaces the last import with a blob first,

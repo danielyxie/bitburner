@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Table } from "../../ui/React/Table";
 import { Grid } from "./Grid";
-import { zeros, calculateGrid } from "../Helper";
+import { zeros } from "../Helper";
 import { ActiveFragmentSummary } from "./ActiveFragmentSummary";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
@@ -18,8 +18,7 @@ interface IProps {
 }
 
 export function MainBoard(props: IProps): React.ReactElement {
-  const [grid, setGrid] = React.useState(calculateGrid(props.gift));
-  const [ghostGrid, setGhostGrid] = React.useState(zeros([props.gift.width(), props.gift.height()]));
+  const [ghostGrid, setGhostGrid] = React.useState(zeros(props.gift.width(), props.gift.height()));
   const [pos, setPos] = React.useState([0, 0]);
   const [rotation, setRotation] = React.useState(0);
   const [selectedFragment, setSelectedFragment] = React.useState(NoneFragment);
@@ -27,7 +26,7 @@ export function MainBoard(props: IProps): React.ReactElement {
   function moveGhost(worldX: number, worldY: number, rotation: number): void {
     setPos([worldX, worldY]);
     if (selectedFragment.type === FragmentType.None || selectedFragment.type === FragmentType.Delete) return;
-    const newgrid = zeros([props.gift.width(), props.gift.height()]);
+    const newgrid = zeros(props.gift.width(), props.gift.height());
     for (let y = 0; y < selectedFragment.height(rotation); y++) {
       for (let x = 0; x < selectedFragment.width(rotation); x++) {
         if (!selectedFragment.fullAt(x, y, rotation)) continue;
@@ -54,17 +53,15 @@ export function MainBoard(props: IProps): React.ReactElement {
       if (!props.gift.canPlace(worldX, worldY, rotation, selectedFragment)) return;
       props.gift.place(worldX, worldY, rotation, selectedFragment);
     }
-    setGrid(calculateGrid(props.gift));
   }
 
   function clear(): void {
     props.gift.clear();
-    setGrid(zeros([props.gift.width(), props.gift.height()]));
   }
 
   function updateSelectedFragment(fragment: Fragment): void {
     setSelectedFragment(fragment);
-    const newgrid = zeros([props.gift.width(), props.gift.height()]);
+    const newgrid = zeros(props.gift.width(), props.gift.height());
     setGhostGrid(newgrid);
   }
 
@@ -92,7 +89,6 @@ export function MainBoard(props: IProps): React.ReactElement {
           <Grid
             width={props.gift.width()}
             height={props.gift.height()}
-            activeGrid={grid}
             ghostGrid={ghostGrid}
             gift={props.gift}
             enter={(i, j) => moveGhost(i, j, rotation)}

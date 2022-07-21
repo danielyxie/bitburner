@@ -24,7 +24,7 @@ import { IMap } from "../types";
 import * as data from "./AchievementData.json";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
-import { ClassType } from "../utils/WorkType";
+import { isClassWork } from "../Work/ClassWork";
 
 // Unable to correctly cast the JSON data into AchievementDataJson type otherwise...
 const achievementData = (<AchievementDataJson>(<unknown>data)).achievements;
@@ -270,8 +270,7 @@ export const achievements: IMap<Achievement> = {
   NS2: {
     ...achievementData["NS2"],
     Icon: "ns2",
-    Condition: () =>
-      Player.getHomeComputer().scripts.some((s) => s.filename.endsWith(".js") || s.filename.endsWith(".ns")),
+    Condition: () => Player.getHomeComputer().scripts.some((s) => s.filename.endsWith(".js")),
   },
   FROZE: {
     ...achievementData["FROZE"],
@@ -391,10 +390,7 @@ export const achievements: IMap<Achievement> = {
   WORKOUT: {
     ...achievementData["WORKOUT"],
     Icon: "WORKOUT",
-    Condition: () =>
-      [ClassType.GymStrength, ClassType.GymDefense, ClassType.GymDexterity, ClassType.GymAgility].includes(
-        Player.className,
-      ),
+    Condition: () => isClassWork(Player.currentWork),
   },
   TOR: {
     ...achievementData["TOR"],

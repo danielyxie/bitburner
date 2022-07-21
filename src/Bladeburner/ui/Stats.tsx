@@ -173,13 +173,13 @@ export function Stats(props: IProps): React.ReactElement {
         <Typography>Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}</Typography>
         <br />
         <Typography>
-          Aug. Success Chance mult: {formatNumber(props.player.bladeburner_success_chance_mult * 100, 1)}%
+          Aug. Success Chance mult: {formatNumber(props.player.mults.bladeburner_success_chance * 100, 1)}%
           <br />
-          Aug. Max Stamina mult: {formatNumber(props.player.bladeburner_max_stamina_mult * 100, 1)}%
+          Aug. Max Stamina mult: {formatNumber(props.player.mults.bladeburner_max_stamina * 100, 1)}%
           <br />
-          Aug. Stamina Gain mult: {formatNumber(props.player.bladeburner_stamina_gain_mult * 100, 1)}%
+          Aug. Stamina Gain mult: {formatNumber(props.player.mults.bladeburner_stamina_gain * 100, 1)}%
           <br />
-          Aug. Field Analysis mult: {formatNumber(props.player.bladeburner_analysis_mult * 100, 1)}%
+          Aug. Field Analysis mult: {formatNumber(props.player.mults.bladeburner_analysis * 100, 1)}%
         </Typography>
       </Box>
     </Paper>

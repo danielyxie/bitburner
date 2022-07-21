@@ -5,7 +5,7 @@ import { numeralWrapper } from "../../../ui/numeralFormat";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { NumberInput } from "../../../ui/React/NumberInput";
 import Box from "@mui/material/Box";
 import { KEY } from "../../../utils/helpers/keyCodes";
 
@@ -18,39 +18,34 @@ interface IProps {
 // Create a popup that lets the player manage exports
 export function GoPublicModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  const [shares, setShares] = useState("");
+  const [shares, setShares] = useState<number>(NaN);
   const initialSharePrice = corp.determineValuation() / corp.totalShares;
 
   function goPublic(): void {
-    const numShares = parseFloat(shares);
     const initialSharePrice = corp.determineValuation() / corp.totalShares;
-    if (isNaN(numShares)) {
+    if (isNaN(shares)) {
       dialogBoxCreate("Invalid value for number of issued shares");
       return;
     }
-    if (numShares > corp.numShares) {
+    if (shares > corp.numShares) {
       dialogBoxCreate("Error: You don't have that many shares to issue!");
       return;
     }
     corp.public = true;
     corp.sharePrice = initialSharePrice;
-    corp.issuedShares = numShares;
-    corp.numShares -= numShares;
-    corp.addFunds(numShares * initialSharePrice);
+    corp.issuedShares = shares;
+    corp.numShares -= shares;
+    corp.addFunds(shares * initialSharePrice);
     props.rerender();
     dialogBoxCreate(
       `You took your ${corp.name} public and earned ` +
-        `${numeralWrapper.formatMoney(numShares * initialSharePrice)} in your IPO`,
+        `${numeralWrapper.formatMoney(shares * initialSharePrice)} in your IPO`,
     );
     props.onClose();
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === KEY.ENTER) goPublic();
-  }
-
-  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setShares(event.target.value);
   }
 
   return (
@@ -64,19 +59,8 @@ export function GoPublicModal(props: IProps): React.ReactElement {
         You have a total of {numeralWrapper.format(corp.numShares, "0.000a")} of shares that you can issue.
       </Typography>
       <Box display="flex" alignItems="center">
-        <TextField
-          value={shares}
-          onChange={onChange}
-          autoFocus
-          type="number"
-          placeholder="Shares to issue"
-          onKeyDown={onKeyDown}
-        />
-        <Button
-          disabled={parseFloat(shares) < 0 || parseFloat(shares) > corp.numShares}
-          sx={{ mx: 1 }}
-          onClick={goPublic}
-        >
+        <NumberInput onChange={setShares} autoFocus placeholder="Shares to issue" onKeyDown={onKeyDown} />
+        <Button disabled={shares < 0 || shares > corp.numShares} sx={{ mx: 1 }} onClick={goPublic}>
           Go Public
         </Button>
       </Box>

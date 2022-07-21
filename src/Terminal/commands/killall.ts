@@ -7,7 +7,7 @@ import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptS
 
 export function killall(terminal: ITerminal, router: IRouter, player: IPlayer, server: BaseServer): void {
   for (let i = server.runningScripts.length - 1; i >= 0; --i) {
-    killWorkerScript(server.runningScripts[i], server.hostname, false);
+    killWorkerScript({ runningScript: server.runningScripts[i], hostname: server.hostname });
   }
   WorkerScriptStartStopEventEmitter.emit();
   terminal.print("Killing all running scripts");

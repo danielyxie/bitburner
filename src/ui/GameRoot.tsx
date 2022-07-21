@@ -8,7 +8,6 @@ import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Location } from "../Locations/Location";
-import { Locations } from "../Locations/Locations";
 import { ITutorial, iTutorialStart } from "../InteractiveTutorial";
 import { InteractiveTutorialRoot } from "./InteractiveTutorial/InteractiveTutorialRoot";
 import { ITutorialEvents } from "./InteractiveTutorial/ITutorialEvents";
@@ -87,6 +86,7 @@ import { BypassWrapper } from "./React/BypassWrapper";
 import _wrap from "lodash/wrap";
 import _functions from "lodash/functions";
 import { Apr1 } from "./Apr1";
+import { isFactionWork } from "../Work/FactionWork";
 
 const htmlLocation = location;
 
@@ -111,13 +111,15 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const uninitialized = (): any => {
+const uninitialized = (): void => {
   throw new Error("Router called before initialization");
 };
 
 export let Router: IRouter = {
   isInitialized: false,
-  page: uninitialized,
+  page: () => {
+    throw new Error("Router called before initialization");
+  },
   allowRouting: uninitialized,
   toActiveScripts: uninitialized,
   toAugmentations: uninitialized,
@@ -154,7 +156,7 @@ export let Router: IRouter = {
 
 function determineStartPage(player: IPlayer): Page {
   if (RecoveryMode) return Page.Recovery;
-  if (player.isWorking) return Page.Work;
+  if (player.currentWork !== null) return Page.Work;
   return Page.Terminal;
 }
 
@@ -165,7 +167,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   const setRerender = useState(0)[1];
   const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
-    player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
+    isFactionWork(player.currentWork) ? Factions[player.currentWork.factionName] : (undefined as unknown as Faction),
   );
   if (faction === undefined && page === Page.Faction)
     throw new Error("Trying to go to a page without the proper setup");
@@ -239,8 +241,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toStockMarket: () => setPage(Page.StockMarket),
     toTerminal: () => setPage(Page.Terminal),
     toTutorial: () => setPage(Page.Tutorial),
-    toJob: () => {
-      setLocation(Locations[player.companyName]);
+    toJob: (location: Location) => {
+      setLocation(location);
       setPage(Page.Job);
     },
     toCity: () => {
@@ -294,7 +296,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         Router[fnName] = _wrap(Router[fnName], (func, ...args) => {
           if (!allowRoutingCalls) {
             // Let's just log to console.
-            console.log(`Routing is currently disabled - Attempted router.${fnName}()`);
+            console.error(`Routing is currently disabled - Attempted router.${fnName}()`);
             return;
           }
 

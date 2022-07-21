@@ -22,9 +22,11 @@ getHackTime(host: string): number;
 
 number
 
-Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
+Returns the amount of time in milliseconds it takes to execute the hack Netscript function.
 
 ## Remarks
 
-RAM cost: 0.05 GB When `hack` completes an amount of money is stolen depending on the player's skills. Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels. The required time is increased by the security level of the target server and decreased by the player's hacking level.
+RAM cost: 0.05 GB
+
+When `hack` completes an amount of money is stolen depending on the player's skills. Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server. The required time is increased by the security level of the target server and decreased by the player's hacking level.
 

@@ -5,10 +5,10 @@
  *  - Adds brackets around the array
  *  - Adds quotation marks around strings
  */
-export function arrayToString<T>(a: T[]): string {
-  const vals: any[] = [];
+export function arrayToString(a: unknown[]): string {
+  const vals: unknown[] = [];
   for (let i = 0; i < a.length; ++i) {
-    let elem: any = a[i];
+    let elem: unknown = a[i];
     if (Array.isArray(elem)) {
       elem = arrayToString(elem);
     } else if (typeof elem === "string") {

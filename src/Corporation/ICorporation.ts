@@ -3,6 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { CorporationState } from "./CorporationState";
+import { IReviverValue } from "../utils/JSONReviver";
 
 export interface ICorporation {
   name: string;
@@ -19,8 +20,8 @@ export interface ICorporation {
   shareSalesUntilPriceUpdate: number;
   shareSaleCooldown: number;
   issueNewSharesCooldown: number;
-  dividendPercentage: number;
-  dividendTaxPercentage: number;
+  dividendRate: number;
+  dividendTax: number;
   issuedShares: number;
   sharePrice: number;
   storedCycles: number;
@@ -54,6 +55,7 @@ export interface ICorporation {
   getSalesMultiplier(): number;
   getScientificResearchMultiplier(): number;
   getStarterGuide(player: IPlayer): void;
-  toJSON(): any;
-  getDividends(): number;
+  updateDividendTax(): void;
+  getCycleDividends(): number;
+  toJSON(): IReviverValue;
 }

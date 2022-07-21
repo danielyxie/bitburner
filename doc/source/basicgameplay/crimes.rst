@@ -26,4 +26,16 @@ Harder crimes are typically more profitable, and also give more EXP.
 
 Crime details
 ^^^^^^^^^^^^^
-TODO
+Available crimes, and their descriptions, which all begin with "attempt to..."
+Shoplift	…shoplift from a low-end retailer
+Rob store 	…commit armed robbery on a high-end store
+Mug someone 	…mug a random person on the street
+Larceny 	…rob property from someone's house
+Deal Drugs 	…deal drugs
+Bond Forgery 	…forge corporate bonds
+Traffick illegal Arms 	…smuggle illegal arms into the city
+Homicide 	…murder a random person on the street
+Grand theft Auto 	…commit grand theft auto
+Kidnap and Ransom 	…kidnap and ransom a high-profile-target
+Assassinate 	…assassinate a high-profile target
+Heist 	…pull off the ultimate heist

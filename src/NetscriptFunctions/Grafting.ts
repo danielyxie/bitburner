@@ -7,6 +7,7 @@ import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../Per
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../ui/GameRoot";
+import { GraftingWork } from "../Work/GraftingWork";
 
 export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
   const checkGraftingAPIAccess = (ctx: NetscriptContext): void => {
@@ -63,10 +64,6 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
         }
 
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          ctx.log(() => txt);
-        }
 
         const craftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
         if (player.money < craftableAug.cost) {
@@ -79,8 +76,13 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
           return false;
         }
 
-        player.loseMoney(craftableAug.cost, "augmentations");
-        player.startGraftAugmentationWork(augName, craftableAug.time);
+        player.startWork(
+          new GraftingWork({
+            singularity: true,
+            augmentation: augName,
+            player: player,
+          }),
+        );
 
         if (focus) {
           player.startFocusing();

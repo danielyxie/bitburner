@@ -19,22 +19,22 @@ export class DummyGift implements IStaneksGift {
   height(): number {
     return this._height;
   }
-  charge(): any {
+  charge(): void {
     throw new Error("unimplemented for dummy gift");
   }
-  process(): any {
+  process(): void {
     throw new Error("unimplemented for dummy gift");
   }
-  effect(): any {
+  effect(): number {
     throw new Error("unimplemented for dummy gift");
   }
-  canPlace(): any {
+  canPlace(): boolean {
     throw new Error("unimplemented for dummy gift");
   }
-  place(): any {
+  place(): boolean {
     throw new Error("unimplemented for dummy gift");
   }
-  findFragment(): any {
+  findFragment(): ActiveFragment | undefined {
     throw new Error("unimplemented for dummy gift");
   }
   fragmentAt(worldX: number, worldY: number): ActiveFragment | undefined {
@@ -46,22 +46,22 @@ export class DummyGift implements IStaneksGift {
 
     return undefined;
   }
-  delete(): any {
+  delete(): boolean {
     throw new Error("unimplemented for dummy gift");
   }
-  clear(): any {
+  clear(): void {
     throw new Error("unimplemented for dummy gift");
   }
-  count(): any {
+  count(): number {
     throw new Error("unimplemented for dummy gift");
   }
-  inBonus(): any {
+  inBonus(): boolean {
     throw new Error("unimplemented for dummy gift");
   }
-  prestigeAugmentation(): any {
+  prestigeAugmentation(): void {
     throw new Error("unimplemented for dummy gift");
   }
-  prestigeSourceFile(): any {
+  prestigeSourceFile(): void {
     throw new Error("unimplemented for dummy gift");
   }
 }

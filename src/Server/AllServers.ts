@@ -4,7 +4,7 @@ import { serverMetadata } from "./data/servers";
 
 import { HacknetServer } from "../Hacknet/HacknetServer";
 
-import { IMap } from "../types";
+import { IMap, IMinMaxRange } from "../types";
 import { createRandomIp } from "../utils/IPAddress";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Reviver } from "../utils/JSONReviver";
@@ -77,7 +77,12 @@ export function DeleteServer(serverkey: string): void {
 }
 
 export function ipExists(ip: string): boolean {
-  return AllServers[ip] != null;
+  for (const hostName in AllServers) {
+    if (AllServers[hostName].ip === ip) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function createUniqueRandomIp(): string {
@@ -111,8 +116,6 @@ interface IServerParams {
   organizationName: string;
   requiredHackingSkill?: number;
   serverGrowth?: number;
-
-  [key: string]: any;
 }
 
 export function initForeignServers(homeComputer: Server): void {
@@ -123,23 +126,9 @@ export function initForeignServers(homeComputer: Server): void {
     networkLayers.push([]);
   }
 
-  // Essentially any property that is of type 'number | IMinMaxRange'
-  const propertiesToPatternMatch: string[] = [
-    "hackDifficulty",
-    "moneyAvailable",
-    "requiredHackingSkill",
-    "serverGrowth",
-  ];
-
-  const toNumber = (value: any): any => {
-    switch (typeof value) {
-      case "number":
-        return value;
-      case "object":
-        return getRandomInt(value.min, value.max);
-      default:
-        throw Error(`Do not know how to convert the type '${typeof value}' to a number`);
-    }
+  const toNumber = (value: number | IMinMaxRange): number => {
+    if (typeof value === "number") return value;
+    else return getRandomInt(value.min, value.max);
   };
 
   for (const metadata of serverMetadata) {
@@ -154,11 +143,10 @@ export function initForeignServers(homeComputer: Server): void {
       serverParams.maxRam = Math.pow(2, toNumber(metadata.maxRamExponent));
     }
 
-    for (const prop of propertiesToPatternMatch) {
-      if (metadata[prop] !== undefined) {
-        serverParams[prop] = toNumber(metadata[prop]);
-      }
-    }
+    if (metadata.hackDifficulty) serverParams.hackDifficulty = toNumber(metadata.hackDifficulty);
+    if (metadata.moneyAvailable) serverParams.moneyAvailable = toNumber(metadata.moneyAvailable);
+    if (metadata.requiredHackingSkill) serverParams.requiredHackingSkill = toNumber(metadata.requiredHackingSkill);
+    if (metadata.serverGrowth) serverParams.serverGrowth = toNumber(metadata.serverGrowth);
 
     const server = new Server(serverParams);
     for (const filename of metadata.literature || []) {
@@ -180,7 +168,7 @@ export function initForeignServers(homeComputer: Server): void {
     server2.serversOnNetwork.push(server1.hostname);
   };
 
-  const getRandomArrayItem = (arr: any[]): any => arr[Math.floor(Math.random() * arr.length)];
+  const getRandomArrayItem = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
   const linkNetworkLayers = (network1: Server[], selectServer: () => Server): void => {
     for (const server of network1) {

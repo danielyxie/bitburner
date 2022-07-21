@@ -1,9 +1,8 @@
 import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { EmployeePositions } from "./EmployeePositions";
 import { ICorporation } from "./ICorporation";
-import { OfficeSpace } from "./OfficeSpace";
 import { IIndustry } from "./IIndustry";
 
 interface IParams {
@@ -34,6 +33,7 @@ export class Employee {
   cyclesUntilRaise = CorporationConstants.CyclesPerEmployeeRaise;
   loc: string;
   pos: string;
+  nextPos: string;
 
   constructor(params: IParams = {}) {
     this.name = params.name ? params.name : "Bobby";
@@ -52,12 +52,13 @@ export class Employee {
 
     this.loc = params.loc ? params.loc : "";
     this.pos = EmployeePositions.Unassigned;
+    this.nextPos = this.pos;
   }
 
   //Returns the amount the employee needs to be paid
-  process(marketCycles = 1, office: OfficeSpace): number {
-    const gain = 0.003 * marketCycles,
-      det = gain * Math.random();
+  process(marketCycles = 1): number {
+    const gain = 0.003 * marketCycles;
+    const det = gain * Math.random();
     this.exp += gain;
 
     //Training
@@ -72,12 +73,6 @@ export class Employee {
     this.ene -= det;
     this.hap -= det;
 
-    if (this.ene < office.minEne) {
-      this.ene = office.minEne;
-    }
-    if (this.hap < office.minHap) {
-      this.hap = office.minHap;
-    }
     const salary = this.sal * marketCycles * CorporationConstants.SecsPerMarketCycle;
     return salary;
   }
@@ -118,22 +113,11 @@ export class Employee {
     return prodBase * prodMult;
   }
 
-  //Process benefits from having an office party thrown
-  throwParty(money: number): number {
-    const mult = 1 + money / 10e6;
-    this.mor *= mult;
-    this.mor = Math.min(100, this.mor);
-    this.hap *= mult;
-    this.hap = Math.min(100, this.hap);
-    return mult;
-  }
-
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Employee", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Employee {
+  static fromJSON(value: IReviverValue): Employee {
     return Generic_fromJSON(Employee, value.data);
   }
 }

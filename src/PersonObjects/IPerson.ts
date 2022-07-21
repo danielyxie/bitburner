@@ -3,6 +3,7 @@
 
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { ITaskTracker } from "./ITaskTracker";
+import { Multipliers } from "./Multipliers";
 
 export interface IPerson {
   // Stats
@@ -25,27 +26,7 @@ export interface IPerson {
   charisma_exp: number;
   intelligence_exp: number;
 
-  // Multipliers
-  hacking_exp_mult: number;
-  strength_exp_mult: number;
-  defense_exp_mult: number;
-  dexterity_exp_mult: number;
-  agility_exp_mult: number;
-  charisma_exp_mult: number;
-  hacking_mult: number;
-  strength_mult: number;
-  defense_mult: number;
-  dexterity_mult: number;
-  agility_mult: number;
-  charisma_mult: number;
-
-  company_rep_mult: number;
-  faction_rep_mult: number;
-
-  crime_money_mult: number;
-  crime_success_mult: number;
-
-  bladeburner_analysis_mult: number;
+  mults: Multipliers;
 
   augmentations: IPlayerOwnedAugmentation[];
 

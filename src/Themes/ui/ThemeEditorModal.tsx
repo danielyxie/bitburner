@@ -94,7 +94,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
   }
 
   function onColorChange(name: string, value: string): void {
-    setCustomTheme((old: any) => {
+    setCustomTheme((old: { [key: string]: string | undefined }) => {
       old[name] = value;
       return old;
     });

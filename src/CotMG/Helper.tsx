@@ -13,18 +13,18 @@ export function loadStaneksGift(saveString: string): void {
   }
 }
 
-export function zeros(dimensions: number[]): any {
+export function zeros(width: number, height: number): number[][] {
   const array = [];
 
-  for (let i = 0; i < dimensions[0]; ++i) {
-    array.push(dimensions.length == 1 ? 0 : zeros(dimensions.slice(1)));
+  for (let i = 0; i < width; ++i) {
+    array.push(Array(height).fill(0));
   }
 
   return array;
 }
 
 export function calculateGrid(gift: IStaneksGift): number[][] {
-  const newgrid = zeros([gift.width(), gift.height()]) as unknown as number[][];
+  const newgrid = zeros(gift.width(), gift.height()) as unknown as number[][];
   for (let i = 0; i < gift.width(); i++) {
     for (let j = 0; j < gift.height(); j++) {
       const fragment = gift.fragmentAt(i, j);

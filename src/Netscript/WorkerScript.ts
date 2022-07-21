@@ -14,12 +14,15 @@ import { Script } from "../Script/Script";
 import { GetServer } from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
 import { IMap } from "../types";
+import { NS } from "../ScriptEditor/NetscriptDefinitions";
+import { ScriptDeath } from "./ScriptDeath";
+import { ScriptArg } from "./ScriptArg";
 
 export class WorkerScript {
   /**
    * Script's arguments
    */
-  args: any[];
+  args: ScriptArg[];
 
   /**
    * Copy of the script's code
@@ -35,7 +38,7 @@ export class WorkerScript {
   /**
    * Holds the Promise reject() function while the script is "blocked" by an async op
    */
-  delayReject?: (reason?: any) => void;
+  delayReject?: (reason?: ScriptDeath) => void;
 
   /**
    * Stores names of all functions that have logging disabled
@@ -109,14 +112,9 @@ export class WorkerScript {
   /**
    * Function called when the script ends.
    */
-  atExit: any;
+  atExit?: () => void;
 
-  /**
-   * Once this counter reaches it's limit the script crashes. It is reset when a promise completes.
-   */
-  infiniteLoopSafetyCounter = 0;
-
-  constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
+  constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => NS) {
     this.name = runningScriptObj.filename;
     this.hostname = runningScriptObj.server;
 
@@ -144,11 +142,10 @@ export class WorkerScript {
     }
     this.scriptRef = runningScriptObj;
     this.args = runningScriptObj.args.slice();
-    this.env = new Environment(null);
+    this.env = new Environment();
     if (typeof nsFuncsGenerator === "function") {
       this.env.vars = nsFuncsGenerator(this);
     }
-    this.env.set("args", runningScriptObj.args.slice());
   }
 
   /**

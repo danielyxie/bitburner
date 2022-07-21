@@ -6,7 +6,7 @@ import { getRandomInt } from "../../../utils/helpers/getRandomInt";
 import { CorporationConstants } from "../../data/Constants";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import { NumberInput } from "../../../ui/React/NumberInput";
 import Button from "@mui/material/Button";
 import { KEY } from "../../../utils/helpers/keyCodes";
 
@@ -54,15 +54,15 @@ interface IProps {
 // This is created when the player clicks the "Issue New Shares" buttons in the overview panel
 export function IssueNewSharesModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  const [shares, setShares] = useState<number | null>(null);
+  const [shares, setShares] = useState<number>(NaN);
   const maxNewSharesUnrounded = Math.round(corp.totalShares * 0.2);
   const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 1e6);
 
   const newShares = Math.round((shares || 0) / 10e6) * 10e6;
-  const disabled = shares === null || isNaN(newShares) || newShares < 10e6 || newShares > maxNewShares;
+  const disabled = isNaN(shares) || isNaN(newShares) || newShares < 10e6 || newShares > maxNewShares;
 
   function issueNewShares(): void {
-    if (shares === null) return;
+    if (isNaN(shares)) return;
     if (disabled) return;
 
     const newSharePrice = Math.round(corp.sharePrice * 0.9);
@@ -97,11 +97,6 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
     if (event.key === KEY.ENTER) issueNewShares();
   }
 
-  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setShares(null);
-    else setShares(parseFloat(event.target.value));
-  }
-
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
@@ -124,7 +119,7 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
         you cannot buy them back.
       </Typography>
       <EffectText shares={shares} />
-      <TextField autoFocus placeholder="# New Shares" onChange={onChange} onKeyDown={onKeyDown} />
+      <NumberInput autoFocus placeholder="# New Shares" onChange={setShares} onKeyDown={onKeyDown} />
       <Button disabled={disabled} onClick={issueNewShares} sx={{ mx: 1 }}>
         Issue New Shares
       </Button>

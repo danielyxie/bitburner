@@ -1,6 +1,10 @@
 import { IPlayer } from "../PersonObjects/IPlayer";
 
-import { Infiltration as IInfiltration, InfiltrationLocation } from "../ScriptEditor/NetscriptDefinitions";
+import {
+  Infiltration as IInfiltration,
+  InfiltrationLocation,
+  PossibleInfiltrationLocation,
+} from "../ScriptEditor/NetscriptDefinitions";
 import { Location } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
 import { calculateDifficulty, calculateReward } from "../Infiltration/formulas/game";
@@ -31,7 +35,7 @@ export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltratio
     const reward = calculateReward(player, startingSecurityLevel);
     const maxLevel = location.infiltrationData.maxClearanceLevel;
     return {
-      location: location,
+      location: JSON.parse(JSON.stringify(location)),
       reward: {
         tradeRep: calculateTradeInformationRepReward(player, reward, maxLevel, difficulty),
         sellCash: calculateSellInformationCashReward(player, reward, maxLevel, difficulty),
@@ -41,8 +45,11 @@ export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltratio
     };
   };
   return {
-    getPossibleLocations: () => (): string[] => {
-      return getLocationsWithInfiltrations.map((l) => l + "");
+    getPossibleLocations: () => (): PossibleInfiltrationLocation[] => {
+      return getLocationsWithInfiltrations.map((l) => ({
+        city: l.city ?? "",
+        name: String(l.name),
+      }));
     },
     getInfiltration:
       (ctx: NetscriptContext) =>

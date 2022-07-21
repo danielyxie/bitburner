@@ -1,10 +1,10 @@
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { FactionWorkType } from "../Faction/FactionWorkTypeEnum";
 import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";
+import { Augmentation } from "../Augmentation/Augmentation";
 
 import {
   AugmentPair,
@@ -15,6 +15,7 @@ import {
 } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext): void {
@@ -38,6 +39,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     return {
       shock: 100 - sl.shock,
       sync: sl.sync,
+      memory: sl.memory,
       hacking: sl.hacking,
       strength: sl.strength,
       defense: sl.defense,
@@ -190,6 +192,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
           location: sl.currentTaskLocation,
           gymStatType: sl.gymStatType,
           factionWorkType: FactionWorkType[sl.factionWorkType],
+          className: sl.className,
         };
       },
     getInformation:
@@ -209,23 +212,23 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
           maxHp: sl.max_hp,
 
           mult: {
-            agility: sl.agility_mult,
-            agilityExp: sl.agility_exp_mult,
-            charisma: sl.charisma_mult,
-            charismaExp: sl.charisma_exp_mult,
-            companyRep: sl.company_rep_mult,
-            crimeMoney: sl.crime_money_mult,
-            crimeSuccess: sl.crime_success_mult,
-            defense: sl.defense_mult,
-            defenseExp: sl.defense_exp_mult,
-            dexterity: sl.dexterity_mult,
-            dexterityExp: sl.dexterity_exp_mult,
-            factionRep: sl.faction_rep_mult,
-            hacking: sl.hacking_mult,
-            hackingExp: sl.hacking_exp_mult,
-            strength: sl.strength_mult,
-            strengthExp: sl.strength_exp_mult,
-            workMoney: sl.work_money_mult,
+            agility: sl.mults.agility,
+            agilityExp: sl.mults.agility_exp,
+            charisma: sl.mults.charisma,
+            charismaExp: sl.mults.charisma_exp,
+            companyRep: sl.mults.company_rep,
+            crimeMoney: sl.mults.crime_money,
+            crimeSuccess: sl.mults.crime_success,
+            defense: sl.mults.defense,
+            defenseExp: sl.mults.defense_exp,
+            dexterity: sl.mults.dexterity,
+            dexterityExp: sl.mults.dexterity_exp,
+            factionRep: sl.mults.faction_rep,
+            hacking: sl.mults.hacking,
+            hackingExp: sl.mults.hacking_exp,
+            strength: sl.mults.strength,
+            strengthExp: sl.mults.strength_exp,
+            workMoney: sl.mults.work_money,
           },
 
           timeWorked: sl.currentTaskTime,
@@ -310,6 +313,22 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
 
         return player.sleeves[sleeveNumber].tryBuyAugmentation(player, aug);
       },
+    getSleeveAugmentationPrice:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown): number => {
+        checkSleeveAPIAccess(ctx);
+        const augName = ctx.helper.string("augName", _augName);
+        const aug: Augmentation = StaticAugmentations[augName];
+        return aug.baseCost;
+      },
+    getSleeveAugmentationRepReq:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown, _basePrice = false): number => {
+        checkSleeveAPIAccess(ctx);
+        const augName = ctx.helper.string("augName", _augName);
+        const aug: Augmentation = StaticAugmentations[augName];
+        return aug.getCost(player).repCost;
+      },
     setToBladeburnerAction:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, _action: unknown, _contract?: unknown): boolean => {
@@ -331,9 +350,13 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
               continue;
             }
             const other = player.sleeves[i];
-            if (other.currentTask === SleeveTaskType.Bladeburner && other.bbAction === action) {
+            if (
+              other.currentTask === SleeveTaskType.Bladeburner &&
+              other.bbAction === action &&
+              other.bbContract === contract
+            ) {
               throw ctx.helper.makeRuntimeErrorMsg(
-                `Sleeve ${sleeveNumber} cannot take of contracts because Sleeve ${i} is already performing that action.`,
+                `Sleeve ${sleeveNumber} cannot take on contracts because Sleeve ${i} is already performing that action.`,
               );
             }
           }

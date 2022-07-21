@@ -12,9 +12,9 @@ import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { Script } from "./Script";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { Node } from "../NetscriptJSEvaluator";
 
 export interface RamUsageEntry {
   type: "ns" | "dom" | "fn" | "misc";
@@ -44,12 +44,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
  *                                      keep track of what functions have/havent been accounted for
  */
-async function parseOnlyRamCalculate(
-  player: IPlayer,
-  otherScripts: Script[],
-  code: string,
-  workerScript: WorkerScript,
-): Promise<RamCalculation> {
+async function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: string): Promise<RamCalculation> {
   try {
     /**
      * Maps dependent identifiers to their dependencies.
@@ -144,6 +139,7 @@ async function parseOnlyRamCalculate(
     ];
     const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule));
     const resolvedRefs = new Set();
+    const loadedFns: Record<string, boolean> = {};
     while (unresolvedRefs.length > 0) {
       const ref = unresolvedRefs.shift();
       if (ref === undefined) throw new Error("ref should not be undefined");
@@ -186,7 +182,7 @@ async function parseOnlyRamCalculate(
       // Check if this identifier is a function in the workerScript environment.
       // If it is, then we need to get its RAM cost.
       try {
-        function applyFuncRam(cost: any): number {
+        function applyFuncRam(cost: number | ((p: IPlayer) => number)): number {
           if (typeof cost === "number") {
             return cost;
           } else if (typeof cost === "function") {
@@ -197,53 +193,35 @@ async function parseOnlyRamCalculate(
         }
 
         // Only count each function once
-        if (workerScript.loadedFns[ref]) {
+        if (loadedFns[ref]) {
           continue;
-        } else {
-          workerScript.loadedFns[ref] = true;
         }
+        loadedFns[ref] = true;
 
-        // This accounts for namespaces (Bladeburner, CodingCpntract, etc.)
-        let func;
-        let refDetail = "n/a";
-        if (ref in workerScript.env.vars.bladeburner) {
-          func = workerScript.env.vars.bladeburner[ref];
-          refDetail = `bladeburner.${ref}`;
-        } else if (ref in workerScript.env.vars.codingcontract) {
-          func = workerScript.env.vars.codingcontract[ref];
-          refDetail = `codingcontract.${ref}`;
-        } else if (ref in workerScript.env.vars.stanek) {
-          func = workerScript.env.vars.stanek[ref];
-          refDetail = `stanek.${ref}`;
-        } else if (ref in workerScript.env.vars.infiltration) {
-          func = workerScript.env.vars.infiltration[ref];
-          refDetail = `infiltration.${ref}`;
-        } else if (ref in workerScript.env.vars.gang) {
-          func = workerScript.env.vars.gang[ref];
-          refDetail = `gang.${ref}`;
-        } else if (ref in workerScript.env.vars.sleeve) {
-          func = workerScript.env.vars.sleeve[ref];
-          refDetail = `sleeve.${ref}`;
-        } else if (ref in workerScript.env.vars.stock) {
-          func = workerScript.env.vars.stock[ref];
-          refDetail = `stock.${ref}`;
-        } else if (ref in workerScript.env.vars.ui) {
-          func = workerScript.env.vars.ui[ref];
-          refDetail = `ui.${ref}`;
-        } else if (ref in workerScript.env.vars.grafting) {
-          func = workerScript.env.vars.grafting[ref];
-          refDetail = `grafting.${ref}`;
-        } else if (ref in workerScript.env.vars.singularity) {
-          func = workerScript.env.vars.singularity[ref];
-          refDetail = `singularity.${ref}`;
-        } else {
-          func = workerScript.env.vars[ref];
-          refDetail = `${ref}`;
-        }
-        const fnRam = applyFuncRam(func);
+        // This accounts for namespaces (Bladeburner, CodingContract, etc.)
+        const findFunc = (
+          prefix: string,
+          obj: object,
+          ref: string,
+        ): { func: (p: IPlayer) => number | number; refDetail: string } | undefined => {
+          if (!obj) return;
+          const elem = Object.entries(obj).find(([key]) => key === ref);
+          if (elem !== undefined && (typeof elem[1] === "function" || typeof elem[1] === "number")) {
+            return { func: elem[1], refDetail: `${prefix}${ref}` };
+          }
+          for (const [key, value] of Object.entries(obj)) {
+            const found = findFunc(`${key}.`, value, ref);
+            if (found) return found;
+          }
+          return undefined;
+        };
+
+        const details = findFunc("", RamCosts, ref);
+        const fnRam = applyFuncRam(details?.func ?? 0);
         ram += fnRam;
-        detailedCosts.push({ type: "fn", name: refDetail, cost: fnRam });
+        detailedCosts.push({ type: "fn", name: details?.refDetail ?? "", cost: fnRam });
       } catch (error) {
+        console.log(error);
         continue;
       }
     }
@@ -282,11 +260,11 @@ export function checkInfiniteLoop(code: string): number {
     ast,
     {},
     {
-      WhileStatement: (node: acorn.Node, st: any, walkDeeper: walk.WalkerCallback<any>) => {
-        if (nodeHasTrueTest((node as any).test) && !hasAwait(node)) {
+      WhileStatement: (node: Node, st: unknown, walkDeeper: walk.WalkerCallback<any>) => {
+        if (nodeHasTrueTest(node.test) && !hasAwait(node)) {
           missingAwaitLine = (code.slice(0, node.start).match(/\n/g) || []).length + 1;
         } else {
-          (node as any).body && walkDeeper((node as any).body, st);
+          node.body && walkDeeper(node.body, st);
         }
       },
     },
@@ -295,13 +273,20 @@ export function checkInfiniteLoop(code: string): number {
   return missingAwaitLine;
 }
 
+interface ParseDepsResult {
+  dependencyMap: {
+    [key: string]: Set<string> | undefined;
+  };
+  additionalModules: string[];
+}
+
 /**
  * Helper function that parses a single script. It returns a map of all dependencies,
  * which are items in the code's AST that potentially need to be evaluated
  * for RAM usage calculations. It also returns an array of additional modules
  * that need to be parsed (i.e. are 'import'ed scripts).
  */
-function parseOnlyCalculateDeps(code: string, currentModule: string): any {
+function parseOnlyCalculateDeps(code: string, currentModule: string): ParseDepsResult {
   const ast = parse(code, { sourceType: "module", ecmaVersion: "latest" });
   // Everything from the global scope goes in ".". Everything else goes in ".function", where only
   // the outermost layer of functions counts.
@@ -330,52 +315,56 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
   //A list of identifiers that resolve to "native Javascript code"
   const objectPrototypeProperties = Object.getOwnPropertyNames(Object.prototype);
 
+  interface State {
+    key: string;
+  }
+
   // If we discover a dependency identifier, state.key is the dependent identifier.
   // walkDeeper is for doing recursive walks of expressions in composites that we handle.
-  function commonVisitors(): any {
+  function commonVisitors(): walk.RecursiveVisitors<State> {
     return {
-      Identifier: (node: any, st: any) => {
+      Identifier: (node: Node, st: State) => {
         if (objectPrototypeProperties.includes(node.name)) {
           return;
         }
         addRef(st.key, node.name);
       },
-      WhileStatement: (node: any, st: any, walkDeeper: any) => {
+      WhileStatement: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         addRef(st.key, specialReferenceWHILE);
         node.test && walkDeeper(node.test, st);
         node.body && walkDeeper(node.body, st);
       },
-      DoWhileStatement: (node: any, st: any, walkDeeper: any) => {
+      DoWhileStatement: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         addRef(st.key, specialReferenceWHILE);
         node.test && walkDeeper(node.test, st);
         node.body && walkDeeper(node.body, st);
       },
-      ForStatement: (node: any, st: any, walkDeeper: any) => {
+      ForStatement: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         addRef(st.key, specialReferenceFOR);
         node.init && walkDeeper(node.init, st);
         node.test && walkDeeper(node.test, st);
         node.update && walkDeeper(node.update, st);
         node.body && walkDeeper(node.body, st);
       },
-      IfStatement: (node: any, st: any, walkDeeper: any) => {
+      IfStatement: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         addRef(st.key, specialReferenceIF);
         node.test && walkDeeper(node.test, st);
         node.consequent && walkDeeper(node.consequent, st);
         node.alternate && walkDeeper(node.alternate, st);
       },
-      MemberExpression: (node: any, st: any, walkDeeper: any) => {
+      MemberExpression: (node: Node, st: State, walkDeeper: walk.WalkerCallback<State>) => {
         node.object && walkDeeper(node.object, st);
         node.property && walkDeeper(node.property, st);
       },
     };
   }
 
-  walk.recursive(
+  walk.recursive<State>(
     ast,
     { key: globalKey },
     Object.assign(
       {
-        ImportDeclaration: (node: any, st: any) => {
+        ImportDeclaration: (node: Node, st: State) => {
           const importModuleName = node.source.value;
           additionalModules.push(importModuleName);
 
@@ -398,7 +387,7 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
             }
           }
         },
-        FunctionDeclaration: (node: any) => {
+        FunctionDeclaration: (node: Node) => {
           // node.id will be null when using 'export default'. Add a module name indicating the default export.
           const key = currentModule + "." + (node.id === null ? "__SPECIAL_DEFAULT_EXPORT__" : node.id.name);
           walk.recursive(node, { key: key }, commonVisitors());
@@ -422,17 +411,8 @@ export async function calculateRamUsage(
   codeCopy: string,
   otherScripts: Script[],
 ): Promise<RamCalculation> {
-  // We don't need a real WorkerScript for this. Just an object that keeps
-  // track of whatever's needed for RAM calculations
-  const workerScript = {
-    loadedFns: {},
-    env: {
-      vars: RamCosts,
-    },
-  } as WorkerScript;
-
   try {
-    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript);
+    return await parseOnlyRamCalculate(player, otherScripts, codeCopy);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);

@@ -13,10 +13,9 @@ import { RunningScript } from "../Script/RunningScript";
 
 import {
   AugmentationStats,
-  CharacterInfo,
   CrimeStats,
-  PlayerSkills,
   Singularity as ISingularity,
+  SourceFileLvl,
 } from "../ScriptEditor/NetscriptDefinitions";
 
 import { findCrime } from "../Crime/CrimeHelpers";
@@ -49,7 +48,11 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { ClassType, WorkType } from "../utils/WorkType";
+import { ClassWork, ClassType } from "../Work/ClassWork";
+import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWork";
+import { FactionWork } from "../Work/FactionWork";
+import { FactionWorkType } from "../Work/data/FactionWorkType";
+import { CompanyWork } from "../Work/CompanyWork";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -110,6 +113,16 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         return res;
       },
+    getOwnedSourceFiles: () => (): SourceFileLvl[] => {
+      const res: SourceFileLvl[] = [];
+      for (let i = 0; i < player.sourceFiles.length; ++i) {
+        res.push({
+          n: player.sourceFiles[i].n,
+          lvl: player.sourceFiles[i].lvl,
+        });
+      }
+      return res;
+    },
     getAugmentationsFromFaction: (_ctx: NetscriptContext) =>
       function (_facName: unknown): string[] {
         _ctx.helper.checkSingularityAccess();
@@ -132,6 +145,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
         return aug.prereqs.slice();
+      },
+    getAugmentationBasePrice: (_ctx: NetscriptContext) =>
+      function (_augName: unknown): number {
+        _ctx.helper.checkSingularityAccess();
+        const augName = _ctx.helper.string("augName", _augName);
+        const aug = getAugmentation(_ctx, augName);
+        return aug.baseCost * BitNodeMultipliers.AugmentationMoneyCost;
       },
     getAugmentationPrice: (_ctx: NetscriptContext) =>
       function (_augName: unknown): number {
@@ -163,6 +183,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const aug = getAugmentation(_ctx, augName);
 
         const augs = getFactionAugmentationsFiltered(player, fac);
+
+        if (!player.factions.includes(fac.name)) {
+          _ctx.log(() => `You can't purchase augmentations from '${facName}' because you aren't a member`);
+          return false;
+        }
 
         if (!augs.includes(augName)) {
           _ctx.log(() => `Faction '${facName}' does not have the '${augName}' augmentation.`);
@@ -244,11 +269,17 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           _ctx.log(() => `No location named ${locationName}`);
           return false;
         }
-        if (player.city !== location.city) {
+        if (location.city && player.city !== location.city) {
           _ctx.log(() => `No location named ${locationName} in ${player.city}`);
           return false;
         }
-        Router.toLocation(location);
+        if (location.name === LocationName.TravelAgency) {
+          Router.toTravel();
+        } else if (location.name === LocationName.WorldStockExchange) {
+          Router.toStockMarket();
+        } else {
+          Router.toLocation(location);
+        }
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
         return true;
       },
@@ -259,12 +290,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const className = _ctx.helper.string("className", _className);
         const focus = _ctx.helper.boolean(_focus);
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
-        let costMult, expMult;
         switch (universityName.toLowerCase()) {
           case LocationName.AevumSummitUniversity.toLowerCase():
             if (player.city != CityName.Aevum) {
@@ -272,8 +298,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.gotoLocation(LocationName.AevumSummitUniversity);
-            costMult = 4;
-            expMult = 3;
             break;
           case LocationName.Sector12RothmanUniversity.toLowerCase():
             if (player.city != CityName.Sector12) {
@@ -281,8 +305,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.Sector12RothmanUniversity;
-            costMult = 3;
-            expMult = 2;
             break;
           case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
             if (player.city != CityName.Volhaven) {
@@ -292,8 +314,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.VolhavenZBInstituteOfTechnology;
-            costMult = 5;
-            expMult = 4;
             break;
           default:
             _ctx.log(() => `Invalid university name: '${universityName}'.`);
@@ -324,7 +344,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             _ctx.log(() => `Invalid class name: ${className}.`);
             return false;
         }
-        player.startClass(costMult, expMult, task);
+        player.startWork(
+          new ClassWork({
+            classType: task,
+            location: player.location,
+            singularity: true,
+          }),
+        );
         if (focus) {
           player.startFocusing();
           Router.toWork();
@@ -343,11 +369,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const stat = _ctx.helper.string("stat", _stat);
         const focus = _ctx.helper.boolean(_focus);
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
-        let costMult, expMult;
+
         switch (gymName.toLowerCase()) {
           case LocationName.AevumCrushFitnessGym.toLowerCase():
             if (player.city != CityName.Aevum) {
@@ -358,8 +380,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.AevumCrushFitnessGym;
-            costMult = 3;
-            expMult = 2;
             break;
           case LocationName.AevumSnapFitnessGym.toLowerCase():
             if (player.city != CityName.Aevum) {
@@ -370,8 +390,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.AevumSnapFitnessGym;
-            costMult = 10;
-            expMult = 5;
             break;
           case LocationName.Sector12IronGym.toLowerCase():
             if (player.city != CityName.Sector12) {
@@ -382,8 +400,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.Sector12IronGym;
-            costMult = 1;
-            expMult = 1;
             break;
           case LocationName.Sector12PowerhouseGym.toLowerCase():
             if (player.city != CityName.Sector12) {
@@ -394,8 +410,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.Sector12PowerhouseGym;
-            costMult = 20;
-            expMult = 10;
             break;
           case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
             if (player.city != CityName.Volhaven) {
@@ -406,8 +420,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               return false;
             }
             player.location = LocationName.VolhavenMilleniumFitnessGym;
-            costMult = 7;
-            expMult = 4;
             break;
           default:
             _ctx.log(() => `Invalid gym name: ${gymName}. gymWorkout() failed`);
@@ -417,19 +429,27 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         switch (stat.toLowerCase()) {
           case "strength".toLowerCase():
           case "str".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymStrength);
+            player.startWork(
+              new ClassWork({ classType: ClassType.GymStrength, location: player.location, singularity: true }),
+            );
             break;
           case "defense".toLowerCase():
           case "def".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymDefense);
+            player.startWork(
+              new ClassWork({ classType: ClassType.GymDefense, location: player.location, singularity: true }),
+            );
             break;
           case "dexterity".toLowerCase():
           case "dex".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymDexterity);
+            player.startWork(
+              new ClassWork({ classType: ClassType.GymDexterity, location: player.location, singularity: true }),
+            );
             break;
           case "agility".toLowerCase():
           case "agi".toLowerCase():
-            player.startClass(costMult, expMult, ClassType.GymAgility);
+            player.startWork(
+              new ClassWork({ classType: ClassType.GymAgility, location: player.location, singularity: true }),
+            );
             break;
           default:
             _ctx.log(() => `Invalid stat: ${stat}.`);
@@ -526,9 +546,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         player.getHomeComputer().pushProgram(item.program);
         // Cancel if the program is in progress of writing
-        if (player.createProgramName === item.program) {
-          player.isWorking = false;
-          player.resetWorkStatus();
+        if (isCreateProgramWork(player.currentWork) && player.currentWork.programName === item.program) {
+          player.finishWork(true);
         }
 
         player.loseMoney(item.price, "other");
@@ -598,38 +617,37 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const server = player.getCurrentServer();
         return _ctx.helper.hack(server.hostname, true);
       },
-    installBackdoor: (_ctx: NetscriptContext) =>
-      function (): Promise<void> {
-        _ctx.helper.checkSingularityAccess();
-        const baseserver = player.getCurrentServer();
-        if (!(baseserver instanceof Server)) {
-          _ctx.log(() => "cannot backdoor this kind of server");
-          return Promise.resolve();
+    installBackdoor: (_ctx: NetscriptContext) => async (): Promise<void> => {
+      _ctx.helper.checkSingularityAccess();
+      const baseserver = player.getCurrentServer();
+      if (!(baseserver instanceof Server)) {
+        _ctx.log(() => "cannot backdoor this kind of server");
+        return Promise.resolve();
+      }
+      const server = baseserver;
+      const installTime = (calculateHackingTime(server, player) / 4) * 1000;
+
+      // No root access or skill level too low
+      const canHack = netscriptCanHack(server, player);
+      if (!canHack.res) {
+        throw _ctx.helper.makeRuntimeErrorMsg(canHack.msg || "");
+      }
+
+      _ctx.log(
+        () => `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`,
+      );
+
+      return netscriptDelay(installTime, workerScript).then(function () {
+        _ctx.log(() => `Successfully installed backdoor on '${server.hostname}'`);
+
+        server.backdoorInstalled = true;
+
+        if (SpecialServers.WorldDaemon === server.hostname) {
+          Router.toBitVerse(false, false);
         }
-        const server = baseserver as Server;
-        const installTime = (calculateHackingTime(server, player) / 4) * 1000;
-
-        // No root access or skill level too low
-        const canHack = netscriptCanHack(server, player);
-        if (!canHack.res) {
-          throw _ctx.helper.makeRuntimeErrorMsg(canHack.msg || "");
-        }
-
-        _ctx.log(
-          () => `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`,
-        );
-
-        return netscriptDelay(installTime, workerScript).then(function () {
-          _ctx.log(() => `Successfully installed backdoor on '${server.hostname}'`);
-
-          server.backdoorInstalled = true;
-
-          if (SpecialServers.WorldDaemon === server.hostname) {
-            Router.toBitVerse(false, false);
-          }
-          return Promise.resolve();
-        });
-      },
+        return Promise.resolve();
+      });
+    },
     isFocused: (_ctx: NetscriptContext) =>
       function (): boolean {
         _ctx.helper.checkSingularityAccess();
@@ -639,20 +657,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (_focus: unknown): boolean {
         _ctx.helper.checkSingularityAccess();
         const focus = _ctx.helper.boolean(_focus);
-        if (!player.isWorking) {
+        if (player.currentWork === null) {
           throw _ctx.helper.makeRuntimeErrorMsg("Not currently working");
         }
-        if (
-          !(
-            player.workType === WorkType.Faction ||
-            player.workType === WorkType.Company ||
-            player.workType === WorkType.CompanyPartTime ||
-            player.workType === WorkType.CreateProgram ||
-            player.workType === WorkType.StudyClass
-          )
-        ) {
-          throw _ctx.helper.makeRuntimeErrorMsg("Cannot change focus for current job");
-        }
+
         if (!player.focus && focus) {
           player.startFocusing();
           Router.toWork();
@@ -664,75 +672,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         return false;
       },
-    getStats: (_ctx: NetscriptContext) =>
-      function (): PlayerSkills {
-        _ctx.helper.checkSingularityAccess();
-        _ctx.log(() => `getStats is deprecated, please use getplayer`);
-
-        return {
-          hacking: player.hacking,
-          strength: player.strength,
-          defense: player.defense,
-          dexterity: player.dexterity,
-          agility: player.agility,
-          charisma: player.charisma,
-          intelligence: player.intelligence,
-        };
-      },
-    getCharacterInformation: (_ctx: NetscriptContext) =>
-      function (): CharacterInfo {
-        _ctx.helper.checkSingularityAccess();
-        _ctx.log(() => `getCharacterInformation is deprecated, please use getplayer`);
-
-        return {
-          bitnode: player.bitNodeN,
-          city: player.city,
-          factions: player.factions.slice(),
-          hp: player.hp,
-          jobs: Object.keys(player.jobs),
-          jobTitles: Object.values(player.jobs),
-          maxHp: player.max_hp,
-          mult: {
-            agility: player.agility_mult,
-            agilityExp: player.agility_exp_mult,
-            charisma: player.charisma,
-            charismaExp: player.charisma_exp,
-            companyRep: player.company_rep_mult,
-            crimeMoney: player.crime_money_mult,
-            crimeSuccess: player.crime_success_mult,
-            defense: player.defense_mult,
-            defenseExp: player.defense_exp_mult,
-            dexterity: player.dexterity_mult,
-            dexterityExp: player.dexterity_exp_mult,
-            factionRep: player.faction_rep_mult,
-            hacking: player.hacking_mult,
-            hackingExp: player.hacking_exp_mult,
-            strength: player.strength_mult,
-            strengthExp: player.strength_exp_mult,
-            workMoney: player.work_money_mult,
-          },
-          timeWorked: player.timeWorked,
-          tor: player.hasTorRouter(),
-          workHackExpGain: player.workHackExpGained,
-          workStrExpGain: player.workStrExpGained,
-          workDefExpGain: player.workDefExpGained,
-          workDexExpGain: player.workDexExpGained,
-          workAgiExpGain: player.workAgiExpGained,
-          workChaExpGain: player.workChaExpGained,
-          workRepGain: player.workRepGained,
-          workMoneyGain: player.workMoneyGained,
-          hackingExp: player.hacking_exp,
-          strengthExp: player.strength_exp,
-          defenseExp: player.defense_exp,
-          dexterityExp: player.dexterity_exp,
-          agilityExp: player.agility_exp,
-          charismaExp: player.charisma_exp,
-        };
-      },
     hospitalize: (_ctx: NetscriptContext) =>
       function (): void {
         _ctx.helper.checkSingularityAccess();
-        if (player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
+        if (player.currentWork || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
           _ctx.log(() => "Cannot go to the hospital because the player is busy.");
           return;
         }
@@ -741,21 +684,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
     isBusy: (_ctx: NetscriptContext) =>
       function (): boolean {
         _ctx.helper.checkSingularityAccess();
-        return player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
+        return player.currentWork !== null || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
       },
     stopAction: (_ctx: NetscriptContext) =>
       function (): boolean {
         _ctx.helper.checkSingularityAccess();
-        if (player.isWorking) {
-          if (player.focus) {
-            player.stopFocusing();
-            Router.toTerminal();
-          }
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-          return true;
-        }
-        return false;
+        const wasWorking = player.currentWork !== null;
+        player.finishWork(true);
+        return wasWorking;
       },
     upgradeHomeCores: (_ctx: NetscriptContext) =>
       function (): boolean {
@@ -825,13 +761,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
     workForCompany: (_ctx: NetscriptContext) =>
       function (_companyName: unknown, _focus: unknown = true): boolean {
         _ctx.helper.checkSingularityAccess();
-        let companyName = _ctx.helper.string("companyName", _companyName);
+        const companyName = _ctx.helper.string("companyName", _companyName);
         const focus = _ctx.helper.boolean(_focus);
-
-        // Sanitize input
-        if (companyName == null) {
-          companyName = player.companyName;
-        }
 
         // Make sure its a valid company
         if (companyName == null || companyName === "" || !(Companies[companyName] instanceof Company)) {
@@ -854,17 +785,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
 
         const wasFocused = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
-        if (companyPosition.isPartTimeJob()) {
-          player.startWorkPartTime(companyName);
-        } else {
-          player.startWork(companyName);
-        }
-
+        player.startWork(
+          new CompanyWork({
+            singularity: true,
+            companyName: companyName,
+          }),
+        );
         if (focus) {
           player.startFocusing();
           Router.toWork();
@@ -872,7 +799,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           player.stopFocusing();
           Router.toTerminal();
         }
-        _ctx.log(() => `Began working at '${player.companyName}' as a '${companyPositionName}'`);
+        _ctx.log(() => `Began working at '${companyName}' as a '${companyPositionName}'`);
         return true;
       },
     applyToCompany: (_ctx: NetscriptContext) =>
@@ -1018,10 +945,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
 
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
         switch (type.toLowerCase()) {
           case "hacking":
@@ -1031,7 +954,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with hacking contracts.`);
               return false;
             }
-            player.startFactionHackWork(faction);
+            player.startWork(
+              new FactionWork({
+                singularity: true,
+                factionWorkType: FactionWorkType.HACKING,
+                faction: faction.name,
+              }),
+            );
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1048,7 +977,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with field missions.`);
               return false;
             }
-            player.startFactionFieldWork(faction);
+            player.startWork(
+              new FactionWork({
+                singularity: true,
+                factionWorkType: FactionWorkType.FIELD,
+                faction: faction.name,
+              }),
+            );
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1065,7 +1000,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               _ctx.log(() => `Faction '${faction.name}' do not need help with security work.`);
               return false;
             }
-            player.startFactionSecurityWork(faction);
+            player.startWork(
+              new FactionWork({
+                singularity: true,
+                factionWorkType: FactionWorkType.SECURITY,
+                faction: faction.name,
+              }),
+            );
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1135,7 +1076,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           );
           return false;
         }
-        const repGain = (amt / CONSTANTS.DonateMoneyToRepDivisor) * player.faction_rep_mult;
+        const repGain = (amt / CONSTANTS.DonateMoneyToRepDivisor) * player.mults.faction_rep;
         faction.playerReputation += repGain;
         player.loseMoney(amt, "other");
         _ctx.log(
@@ -1153,10 +1094,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const focus = _ctx.helper.boolean(_focus);
 
         const wasFocusing = player.focus;
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
-        }
 
         const p = Object.values(Programs).find((p) => p.name.toLowerCase() === programName);
 
@@ -1181,7 +1118,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           return false;
         }
 
-        player.startCreateProgramWork(p.name, create.time, create.level);
+        player.startWork(
+          new CreateProgramWork({
+            programName: p.name,
+            singularity: true,
+            player: player,
+          }),
+        );
         if (focus) {
           player.startFocusing();
           Router.toWork();
@@ -1193,13 +1136,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         return true;
       },
     commitCrime: (_ctx: NetscriptContext) =>
-      function (_crimeRoughName: unknown): number {
+      function (_crimeRoughName: unknown, _focus: unknown = true): number {
         _ctx.helper.checkSingularityAccess();
         const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
+        const focus = _ctx.helper.boolean(_focus);
+        const wasFocusing = player.focus;
 
-        if (player.isWorking) {
-          const txt = player.singularityStopWork();
-          _ctx.log(() => txt);
+        if (player.currentWork !== null) {
+          player.finishWork(true);
         }
 
         // Set Location to slums
@@ -1211,7 +1155,15 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           throw _ctx.helper.makeRuntimeErrorMsg(`Invalid crime: '${crimeRoughName}'`);
         }
         _ctx.log(() => `Attempting to commit ${crime.name}...`);
-        return crime.commit(Router, player, 1, workerScript);
+        const crimeTime = crime.commit(player, 1, workerScript);
+        if (focus) {
+          player.startFocusing();
+          Router.toWork();
+        } else if (wasFocusing) {
+          player.stopFocusing();
+          Router.toTerminal();
+        }
+        return crimeTime;
       },
     getCrimeChance: (_ctx: NetscriptContext) =>
       function (_crimeRoughName: unknown): number {
