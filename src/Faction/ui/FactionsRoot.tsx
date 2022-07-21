@@ -232,7 +232,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
         sx={{
           gap: 1,
           gridTemplateColumns: (invitations.length > 0 ? "1fr " : "") + "2fr",
-          [theme.breakpoints.down("lg")]: { gridTemplateColumns: "1fr", "& > span:nth-child(1)": { order: 1 } },
+          [theme.breakpoints.down("lg")]: { gridTemplateColumns: "1fr", "& > span:nth-of-type(1)": { order: 1 } },
           gridTemplateRows: "minmax(0, 1fr)",
           "& > span > .MuiBox-root": {
             display: "grid",

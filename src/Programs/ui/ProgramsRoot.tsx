@@ -87,37 +87,39 @@ export function ProgramsRoot(): React.ReactElement {
               sx={{ p: 1, opacity: player.hasProgram(program.name) ? 0.75 : 1 }}
               key={program.name}
             >
-              <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                {(player.hasProgram(program.name) && <Check sx={{ mr: 1 }} />) ||
-                  (create.req(player) && <Create sx={{ mr: 1 }} />) || <Lock sx={{ mr: 1 }} />}
-                {program.name}
-              </Typography>
-              {!player.hasProgram(program.name) && create.req(player) && (
-                <Button
-                  sx={{ my: 1, width: "100%" }}
-                  onClick={(event) => {
-                    if (!event.isTrusted) return;
-                    player.startWork(
-                      new CreateProgramWork({ player: player, singularity: false, programName: program.name }),
-                    );
-                    player.startFocusing();
-                    router.toWork();
-                  }}
-                >
-                  Create program
-                </Button>
-              )}
-              {player.hasProgram(program.name) || getHackingLevelRemaining(create.level) === 0 || (
-                <Typography color={Settings.theme.hack}>
-                  <b>Unlocks in:</b> {getHackingLevelRemaining(create.level)} hacking levels
+              <>
+                <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+                  {(player.hasProgram(program.name) && <Check sx={{ mr: 1 }} />) ||
+                    (create.req(player) && <Create sx={{ mr: 1 }} />) || <Lock sx={{ mr: 1 }} />}
+                  {program.name}
                 </Typography>
-              )}
-              {curCompletion !== -1 && (
-                <Typography color={Settings.theme.infolight}>
-                  <b>Current completion:</b> {curCompletion}%
-                </Typography>
-              )}
-              <Typography>{create.tooltip}</Typography>
+                {!player.hasProgram(program.name) && create.req(player) && (
+                  <Button
+                    sx={{ my: 1, width: "100%" }}
+                    onClick={(event) => {
+                      if (!event.isTrusted) return;
+                      player.startWork(
+                        new CreateProgramWork({ player: player, singularity: false, programName: program.name }),
+                      );
+                      player.startFocusing();
+                      router.toWork();
+                    }}
+                  >
+                    Create program
+                  </Button>
+                )}
+                {player.hasProgram(program.name) || getHackingLevelRemaining(create.level) === 0 || (
+                  <Typography color={Settings.theme.hack}>
+                    <b>Unlocks in:</b> {getHackingLevelRemaining(create.level)} hacking levels
+                  </Typography>
+                )}
+                {curCompletion !== -1 && (
+                  <Typography color={Settings.theme.infolight}>
+                    <b>Current completion:</b> {curCompletion}%
+                  </Typography>
+                )}
+                <Typography>{create.tooltip}</Typography>
+              </>
             </Box>
           );
         })}

@@ -15,7 +15,6 @@ export function process(this: IPlayer, cycles = 1): void {
   }
 }
 export function finish(this: IPlayer, cancelled: boolean): void {
-  console.error("finishing");
   if (this.currentWork === null) return;
   this.currentWork.finish(this, cancelled);
   this.currentWork = null;
