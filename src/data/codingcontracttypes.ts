@@ -1654,7 +1654,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
-    desc: (data: [string, number]): string => {
+    desc: (_data: unknown): string => {
+      if (!Array.isArray(_data)) throw new Error("data should be array of string");
+      const data = _data as [string, number];
       return [
         "Caesar cipher is one of the simplest encryption technique.",
         "It is a type of substitution cipher in which each letter in the plaintext ",
@@ -1707,7 +1709,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     name: "Encryption I: Caesar Cipher",
     numTries: 10,
-    solver: (data: [string, number], ans: string): boolean => {
+    solver: (_data: unknown, ans: string): boolean => {
+      if (!Array.isArray(_data)) throw new Error("data should be array of string");
+      const data = _data as [string, number];
       // data = [plaintext, shift value]
       // build char array, shifting via map and join to final results
       const cipher = [...data[0]]
@@ -1717,7 +1721,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
-    desc: (data: [string, string]): string => {
+    desc: (_data: unknown): string => {
+      if (!Array.isArray(_data)) throw new Error("data should be array of string");
+      const data = _data as [string, string];
       return [
         "Vigenère cipher is a type of polyalphabetic substitution. It uses ",
         "the Vigenère square to encrypt and decrypt plaintext with a keyword.\n\n",
@@ -1872,7 +1878,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     name: "Encryption II: Vigenère Cipher",
     numTries: 10,
-    solver: (data: [string, string], ans: string): boolean => {
+    solver: (_data: unknown, ans: string): boolean => {
+      if (!Array.isArray(_data)) throw new Error("data should be array of string");
+      const data = _data as [string, string];
       // data = [plaintext, keyword]
       // build char array, shifting via map and corresponding keyword letter and join to final results
       const cipher = [...data[0]]
