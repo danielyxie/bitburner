@@ -1023,6 +1023,8 @@ export interface SleeveSkills {
   shock: number;
   /** Current sync of the sleeve [0-100] */
   sync: number;
+  /** Current memory of the sleeve [1-100] */
+  memory: number;
   /** Current hacking skill of the sleeve */
   hacking: number;
   /** Current strength of the sleeve */
