@@ -9,7 +9,7 @@ import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
+import { NumberInput } from "../../../ui/React/NumberInput";
 import Box from "@mui/material/Box";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
@@ -27,12 +27,10 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
     return true;
   });
   const corp = useCorporation();
-  const [money, setMoney] = useState<number | null>(0);
-  const [stock, setStock] = useState<number | null>(0);
+  const [money, setMoney] = useState<number>(NaN);
+  const [stock, setStock] = useState<number>(NaN);
   const [selectedFaction, setSelectedFaction] = useState(factions.length > 0 ? factions[0] : "");
   const disabled =
-    money === null ||
-    stock === null ||
     (money === 0 && stock === 0) ||
     isNaN(money) ||
     isNaN(stock) ||
@@ -40,14 +38,6 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
     stock < 0 ||
     corp.funds < money ||
     stock > corp.numShares;
-
-  function onMoneyChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setMoney(parseFloat(event.target.value));
-  }
-
-  function onStockChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setStock(parseFloat(event.target.value));
-  }
 
   function changeFaction(event: SelectChangeEvent<string>): void {
     setSelectedFaction(event.target.value);
@@ -110,8 +100,8 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
         </Select>
       </Box>
       <Typography>{getRepText(money ? money : 0, stock ? stock : 0)}</Typography>
-      <TextField onChange={onMoneyChange} placeholder="Corporation funds" />
-      <TextField sx={{ mx: 1 }} onChange={onStockChange} placeholder="Stock Shares" />
+      <NumberInput onChange={setMoney} placeholder="Corporation funds" />
+      <NumberInput sx={{ mx: 1 }} onChange={setStock} placeholder="Stock Shares" />
       <Button disabled={disabled} sx={{ mx: 1 }} onClick={() => bribe(money ? money : 0, stock ? stock : 0)}>
         Bribe
       </Button>
