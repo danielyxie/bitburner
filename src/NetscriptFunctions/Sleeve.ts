@@ -4,6 +4,7 @@ import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";
+import { Augmentation } from "../Augmentation/Augmentation";
 
 import {
   AugmentPair,
@@ -310,6 +311,22 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
         }
 
         return player.sleeves[sleeveNumber].tryBuyAugmentation(player, aug);
+      },
+    getSleeveAugmentationPrice:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown): number => {
+        checkSleeveAPIAccess(ctx);
+        const augName = ctx.helper.string("augName", _augName);
+        const aug: Augmentation = StaticAugmentations[augName];
+        return aug.baseCost;
+      },
+    getSleeveAugmentationRepReq:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown, _basePrice = false): number => {
+        checkSleeveAPIAccess(ctx);
+        const augName = ctx.helper.string("augName", _augName);
+        const aug: Augmentation = StaticAugmentations[augName];
+        return aug.getCost(player).repCost;
       },
     setToBladeburnerAction:
       (ctx: NetscriptContext) =>

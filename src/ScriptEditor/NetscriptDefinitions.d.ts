@@ -3780,6 +3780,28 @@ export interface Sleeve {
   getSleeveAugmentations(sleeveNumber: number): string[];
 
   /**
+   * Get price of an augmentation.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   *
+   * @param augName - Name of Augmentation.
+   * @returns Price of the augmentation.
+   */
+  getSleeveAugmentationPrice(augName: string): number;
+
+  /**
+   * Get reputation requirement of an augmentation.
+   * @remarks
+   * RAM cost: 4 GB
+   *
+   *
+   * @param augName - Name of Augmentation.
+   * @returns Reputation requirement of the augmentation.
+   */
+  getSleeveAugmentationRepReq(augName: string): number;
+
+  /**
    * List purchasable augs for a sleeve.
    * @remarks
    * RAM cost: 4 GB
