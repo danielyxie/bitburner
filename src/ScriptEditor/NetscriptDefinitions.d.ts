@@ -1,4 +1,12 @@
 /**
+ * @public
+ */
+export interface PossibleInfiltrationLocation[] {
+  city: string;
+  name: string;
+}
+
+/**
  * Coding contract data will differ depending on coding contract.
  * @public
  */
@@ -4289,7 +4297,7 @@ interface Infiltration {
    *
    * @returns all locations that can be infiltrated.
    */
-  getPossibleLocations(): string[];
+  getPossibleLocations(): PossibleInfiltrationLocation[];
   /**
    * Get all infiltrations with difficulty, location and rewards.
    * @remarks

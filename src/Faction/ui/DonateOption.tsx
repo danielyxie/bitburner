@@ -56,7 +56,7 @@ export function DonateOption(props: IProps): React.ReactElement {
   }
 
   function Status(): React.ReactElement {
-    if (donateAmt === null) return <></>;
+    if (isNaN(donateAmt)) return <></>;
     if (!canDonate()) {
       if (props.p.money < donateAmt) return <Typography>Insufficient funds</Typography>;
       return <Typography>Invalid donate amount entered!</Typography>;
