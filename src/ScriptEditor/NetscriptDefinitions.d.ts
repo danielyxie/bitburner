@@ -1,7 +1,7 @@
 /**
  * @public
  */
-export interface PossibleInfiltrationLocation[] {
+export interface PossibleInfiltrationLocation {
   city: string;
   name: string;
 }
