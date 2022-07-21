@@ -33,9 +33,10 @@ export function NetscriptExtra(player: IPlayer): InternalAPI<INetscriptExtra> {
       (ctx: NetscriptContext) =>
       (doc: unknown): void => {
         // reset both fields first
-        const d = doc as any;
+        type temporary = { completely_unused_field: unknown };
+        const d = doc as temporary;
         d.completely_unused_field = undefined;
-        const real_document: any = document;
+        const real_document = document as unknown as temporary;
         real_document.completely_unused_field = undefined;
         // set one to true and check that it affected the other.
         real_document.completely_unused_field = true;

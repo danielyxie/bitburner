@@ -1,8 +1,8 @@
 import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 import { CONSTANTS } from "../../../Constants";
 import { Crimes } from "../../../Crime/Crimes";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import { use } from "../../../ui/Context";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { ProgressBar } from "../../../ui/React/Progress";
@@ -75,13 +75,13 @@ export function SleeveElem(props: IProps): React.ReactElement {
     case SleeveTaskType.Faction: {
       let doing = "nothing";
       switch (props.sleeve.factionWorkType) {
-        case FactionWorkType.Field:
+        case FactionWorkType.FIELD:
           doing = "Field work";
           break;
-        case FactionWorkType.Hacking:
+        case FactionWorkType.HACKING:
           doing = "Hacking contracts";
           break;
-        case FactionWorkType.Security:
+        case FactionWorkType.SECURITY:
           doing = "Security work";
           break;
       }

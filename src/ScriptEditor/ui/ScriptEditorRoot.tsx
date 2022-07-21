@@ -58,7 +58,7 @@ interface IProps {
 let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
-  const ns = NetscriptFunctions({} as WorkerScript);
+  const ns = NetscriptFunctions({ args: [] } as unknown as WorkerScript);
 
   // Populates symbols for text editor
   function populate(ns: any): string[] {
@@ -202,11 +202,14 @@ export function Root(props: IProps): React.ReactElement {
           MonacoVim.VimMode.Vim.defineEx("quit", "q", function () {
             props.router.toTerminal();
           });
-          // "wqriteandquit" is not a typo, prefix must be found in full string
-          MonacoVim.VimMode.Vim.defineEx("wqriteandquit", "wq", function () {
+
+          const saveNQuit = (): void => {
             save();
             props.router.toTerminal();
-          });
+          };
+          // "wqriteandquit" &  "xriteandquit" are not typos, prefix must be found in full string
+          MonacoVim.VimMode.Vim.defineEx("wqriteandquit", "wq", saveNQuit);
+          MonacoVim.VimMode.Vim.defineEx("xriteandquit", "x", saveNQuit);
 
           // Setup "go to next tab" and "go to previous tab". This is a little more involved
           // since these aren't Ex commands (they run in normal mode, not after typing `:`)

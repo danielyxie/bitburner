@@ -35,7 +35,7 @@ export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): s
   return "|DELIMITER|" + server.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
 }
 
-export function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThreads: number): number {
+export function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThreads?: number): number {
   const threads = ctx.workerScript.scriptRef.threads;
   if (!requestedThreads) {
     return isNaN(threads) || threads < 1 ? 1 : threads;

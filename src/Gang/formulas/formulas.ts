@@ -2,17 +2,17 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { GangMember } from "../GangMember";
 import { GangMemberTask } from "../GangMemberTask";
 
-interface Gang {
+export interface FormulaGang {
   respect: number;
   territory: number;
   wantedLevel: number;
 }
 
-export function calculateWantedPenalty(gang: Gang): number {
+export function calculateWantedPenalty(gang: FormulaGang): number {
   return gang.respect / (gang.respect + gang.wantedLevel);
 }
 
-export function calculateRespectGain(gang: Gang, member: GangMember, task: GangMemberTask): number {
+export function calculateRespectGain(gang: FormulaGang, member: GangMember, task: GangMemberTask): number {
   if (task.baseRespect === 0) return 0;
   let statWeight =
     (task.hackWeight / 100) * member.hack +
@@ -30,7 +30,7 @@ export function calculateRespectGain(gang: Gang, member: GangMember, task: GangM
   return Math.pow(11 * task.baseRespect * statWeight * territoryMult * respectMult, territoryPenalty);
 }
 
-export function calculateWantedLevelGain(gang: Gang, member: GangMember, task: GangMemberTask): number {
+export function calculateWantedLevelGain(gang: FormulaGang, member: GangMember, task: GangMemberTask): number {
   if (task.baseWanted === 0) return 0;
   let statWeight =
     (task.hackWeight / 100) * member.hack +
@@ -53,7 +53,7 @@ export function calculateWantedLevelGain(gang: Gang, member: GangMember, task: G
   return Math.min(100, calc);
 }
 
-export function calculateMoneyGain(gang: Gang, member: GangMember, task: GangMemberTask): number {
+export function calculateMoneyGain(gang: FormulaGang, member: GangMember, task: GangMemberTask): number {
   if (task.baseMoney === 0) return 0;
   let statWeight =
     (task.hackWeight / 100) * member.hack +

@@ -17,6 +17,7 @@ import {
   GangMemberAscension,
   EquipmentStats,
   GangTaskStats,
+  GangOtherInfoObject,
 } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 
@@ -91,7 +92,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): Inte
     },
     getOtherGangInformation: (ctx: NetscriptContext) => (): GangOtherInfo => {
       checkGangApiAccess(ctx);
-      const cpy: any = {};
+      const cpy: Record<string, GangOtherInfoObject> = {};
       for (const gang of Object.keys(AllGangs)) {
         cpy[gang] = Object.assign({}, AllGangs[gang]);
       }
@@ -232,7 +233,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): Inte
     },
     getEquipmentCost:
       (ctx: NetscriptContext) =>
-      (_equipName: any): number => {
+      (_equipName: unknown): number => {
         const equipName = ctx.helper.string("equipName", _equipName);
         checkGangApiAccess(ctx);
         const gang = player.gang;

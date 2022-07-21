@@ -20,32 +20,32 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       }
       const incMult = 1 + mult / 100;
       const decMult = 1 - mult / 100;
-      Player.hacking_chance_mult *= incMult;
-      Player.hacking_speed_mult *= incMult;
-      Player.hacking_money_mult *= incMult;
-      Player.hacking_grow_mult *= incMult;
-      Player.hacking_mult *= incMult;
-      Player.strength_mult *= incMult;
-      Player.defense_mult *= incMult;
-      Player.dexterity_mult *= incMult;
-      Player.agility_mult *= incMult;
-      Player.charisma_mult *= incMult;
-      Player.hacking_exp_mult *= incMult;
-      Player.strength_exp_mult *= incMult;
-      Player.defense_exp_mult *= incMult;
-      Player.dexterity_exp_mult *= incMult;
-      Player.agility_exp_mult *= incMult;
-      Player.charisma_exp_mult *= incMult;
-      Player.company_rep_mult *= incMult;
-      Player.faction_rep_mult *= incMult;
-      Player.crime_money_mult *= incMult;
-      Player.crime_success_mult *= incMult;
-      Player.hacknet_node_money_mult *= incMult;
-      Player.hacknet_node_purchase_cost_mult *= decMult;
-      Player.hacknet_node_ram_cost_mult *= decMult;
-      Player.hacknet_node_core_cost_mult *= decMult;
-      Player.hacknet_node_level_cost_mult *= decMult;
-      Player.work_money_mult *= incMult;
+      Player.mults.hacking_chance *= incMult;
+      Player.mults.hacking_speed *= incMult;
+      Player.mults.hacking_money *= incMult;
+      Player.mults.hacking_grow *= incMult;
+      Player.mults.hacking *= incMult;
+      Player.mults.strength *= incMult;
+      Player.mults.defense *= incMult;
+      Player.mults.dexterity *= incMult;
+      Player.mults.agility *= incMult;
+      Player.mults.charisma *= incMult;
+      Player.mults.hacking_exp *= incMult;
+      Player.mults.strength_exp *= incMult;
+      Player.mults.defense_exp *= incMult;
+      Player.mults.dexterity_exp *= incMult;
+      Player.mults.agility_exp *= incMult;
+      Player.mults.charisma_exp *= incMult;
+      Player.mults.company_rep *= incMult;
+      Player.mults.faction_rep *= incMult;
+      Player.mults.crime_money *= incMult;
+      Player.mults.crime_success *= incMult;
+      Player.mults.hacknet_node_money *= incMult;
+      Player.mults.hacknet_node_purchase_cost *= decMult;
+      Player.mults.hacknet_node_ram_cost *= decMult;
+      Player.mults.hacknet_node_core_cost *= decMult;
+      Player.mults.hacknet_node_level_cost *= decMult;
+      Player.mults.work_money *= incMult;
       break;
     }
     case 2: {
@@ -55,9 +55,9 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 24 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.crime_money_mult *= incMult;
-      Player.crime_success_mult *= incMult;
-      Player.charisma_mult *= incMult;
+      Player.mults.crime_money *= incMult;
+      Player.mults.crime_success *= incMult;
+      Player.mults.charisma *= incMult;
       break;
     }
     case 3: {
@@ -67,8 +67,8 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 8 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.charisma_mult *= incMult;
-      Player.work_money_mult *= incMult;
+      Player.mults.charisma *= incMult;
+      Player.mults.work_money *= incMult;
       break;
     }
     case 4: {
@@ -83,12 +83,12 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 8 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.hacking_chance_mult *= incMult;
-      Player.hacking_speed_mult *= incMult;
-      Player.hacking_money_mult *= incMult;
-      Player.hacking_grow_mult *= incMult;
-      Player.hacking_mult *= incMult;
-      Player.hacking_exp_mult *= incMult;
+      Player.mults.hacking_chance *= incMult;
+      Player.mults.hacking_speed *= incMult;
+      Player.mults.hacking_money *= incMult;
+      Player.mults.hacking_grow *= incMult;
+      Player.mults.hacking *= incMult;
+      Player.mults.hacking_exp *= incMult;
       break;
     }
     case 6: {
@@ -98,14 +98,14 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 8 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.strength_exp_mult *= incMult;
-      Player.defense_exp_mult *= incMult;
-      Player.dexterity_exp_mult *= incMult;
-      Player.agility_exp_mult *= incMult;
-      Player.strength_mult *= incMult;
-      Player.defense_mult *= incMult;
-      Player.dexterity_mult *= incMult;
-      Player.agility_mult *= incMult;
+      Player.mults.strength_exp *= incMult;
+      Player.mults.defense_exp *= incMult;
+      Player.mults.dexterity_exp *= incMult;
+      Player.mults.agility_exp *= incMult;
+      Player.mults.strength *= incMult;
+      Player.mults.defense *= incMult;
+      Player.mults.dexterity *= incMult;
+      Player.mults.agility *= incMult;
       break;
     }
     case 7: {
@@ -115,10 +115,10 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 8 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.bladeburner_max_stamina_mult *= incMult;
-      Player.bladeburner_stamina_gain_mult *= incMult;
-      Player.bladeburner_analysis_mult *= incMult;
-      Player.bladeburner_success_chance_mult *= incMult;
+      Player.mults.bladeburner_max_stamina *= incMult;
+      Player.mults.bladeburner_stamina_gain *= incMult;
+      Player.mults.bladeburner_analysis *= incMult;
+      Player.mults.bladeburner_success_chance *= incMult;
       break;
     }
     case 8: {
@@ -128,7 +128,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 12 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.hacking_grow_mult *= incMult;
+      Player.mults.hacking_grow *= incMult;
       break;
     }
     case 9: {
@@ -139,11 +139,11 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       }
       const incMult = 1 + mult / 100;
       const decMult = 1 - mult / 100;
-      Player.hacknet_node_core_cost_mult *= decMult;
-      Player.hacknet_node_level_cost_mult *= decMult;
-      Player.hacknet_node_money_mult *= incMult;
-      Player.hacknet_node_purchase_cost_mult *= decMult;
-      Player.hacknet_node_ram_cost_mult *= decMult;
+      Player.mults.hacknet_node_core_cost *= decMult;
+      Player.mults.hacknet_node_level_cost *= decMult;
+      Player.mults.hacknet_node_money *= incMult;
+      Player.mults.hacknet_node_purchase_cost *= decMult;
+      Player.mults.hacknet_node_ram_cost *= decMult;
       break;
     }
     case 10: {
@@ -158,8 +158,8 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 32 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.work_money_mult *= incMult;
-      Player.company_rep_mult *= incMult;
+      Player.mults.work_money *= incMult;
+      Player.mults.company_rep *= incMult;
       break;
     }
     case 12: // The Recursion

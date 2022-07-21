@@ -62,11 +62,15 @@ export class HashUpgrade {
   // Functions that returns the UI element to display the effect of this upgrade.
   effectText: (level: number) => JSX.Element | null = () => null;
 
-  getCost(levels: number): number {
+  getCost(currentLevel: number, count = 1): number {
     if (typeof this.cost === "number") {
-      return this.cost;
+      return this.cost * count;
     }
 
-    return Math.round((levels + 1) * this.costPerLevel);
+    //This formula is equivalent to
+    //(currentLevel + 1) * this.costPerLevel
+    //being performed repeatedly
+    const collapsedSum = 0.5 * count * (count + 2 * currentLevel + 1);
+    return this.costPerLevel * collapsedSum;
   }
 }

@@ -3,7 +3,7 @@ export type ObjectValidator<T> = {
 };
 
 interface ParameterValidatorObject<Type, Key extends keyof Type> {
-  default?: any;
+  default?: unknown;
   min?: number;
   max?: number;
   func?: (obj: Type, validator: ObjectValidator<Type>, key: Key) => void;
@@ -26,7 +26,7 @@ export function validateObject<Type extends Record<string, unknown>, Key extends
         paramValidator.func(obj, validator, key);
       } else {
         if (typeof obj[key] !== typeof paramValidator.default) {
-          obj[key] = paramValidator.default;
+          obj[key] = paramValidator.default as Type[Key];
         }
         if (typeof obj[key] === "number" && paramValidator.min !== undefined) {
           if (obj[key] < paramValidator.min) obj[key] = paramValidator.min as Type[Key];

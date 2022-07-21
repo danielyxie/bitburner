@@ -8,8 +8,6 @@ import { ResearchMap } from "./ResearchMap";
 
 import { IMap } from "../types";
 
-import { numeralWrapper } from "../ui/numeralFormat";
-
 interface IConstructorParams {
   children?: Node[];
   cost: number;
@@ -60,40 +58,6 @@ export class Node {
     n.parent = this;
   }
 
-  // Return an object that describes a TreantJS-compatible markup/config for this Node
-  // See: http://fperucic.github.io/treant-js/
-  createTreantMarkup(): any {
-    const childrenArray = [];
-    for (let i = 0; i < this.children.length; ++i) {
-      childrenArray.push(this.children[i].createTreantMarkup());
-    }
-
-    // Determine what css class this Node should have in the diagram
-    let htmlClass = "tooltip";
-    if (this.researched) {
-      htmlClass += " researched";
-    } else if (this.parent && this.parent.researched === false) {
-      htmlClass += " locked";
-    } else {
-      htmlClass += " unlocked";
-    }
-
-    const research: Research | null = ResearchMap[this.text];
-    const sanitizedName: string = this.text.replace(/\s/g, "");
-    return {
-      children: childrenArray,
-      HTMLclass: htmlClass,
-      innerHTML:
-        `<div id="${sanitizedName}-corp-research-click-listener">` +
-        `${this.text}<br>${numeralWrapper.format(this.cost, "0,0")} Scientific Research` +
-        `<span class="tooltiptext">` +
-        `${research.desc}` +
-        `</span>` +
-        `</div>`,
-      text: { name: this.text },
-    };
-  }
-
   // Recursive function for finding a Node with the specified text
   findNode(text: string): Node | null {
     // Is this the Node?
@@ -126,23 +90,6 @@ export class ResearchTree {
 
   // Root Node
   root: Node | null = null;
-
-  // Return an object that contains a Tree markup for TreantJS (using the JSON approach)
-  // See: http://fperucic.github.io/treant-js/
-  createTreantMarkup(): any {
-    if (this.root == null) {
-      return {};
-    }
-
-    const treeMarkup = this.root.createTreantMarkup();
-
-    return {
-      chart: {
-        container: "",
-      },
-      nodeStructure: treeMarkup,
-    };
-  }
 
   // Gets an array with the 'text' values of ALL Nodes in the Research Tree
   getAllNodes(): string[] {
@@ -236,7 +183,20 @@ export class ResearchTree {
         continue;
       }
 
-      const mult: any = (research as any)[propName];
+      const mult =
+        {
+          advertisingMult: research.advertisingMult,
+          employeeChaMult: research.employeeChaMult,
+          employeeCreMult: research.employeeCreMult,
+          employeeEffMult: research.employeeEffMult,
+          employeeIntMult: research.employeeIntMult,
+          productionMult: research.productionMult,
+          productProductionMult: research.productProductionMult,
+          salesMult: research.salesMult,
+          sciResearchMult: research.sciResearchMult,
+          storageMult: research.storageMult,
+        }[propName] ?? null;
+
       if (mult == null) {
         console.warn(`Invalid propName specified in ResearchTree.getMultiplierHelper: ${propName}`);
         continue;

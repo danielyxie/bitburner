@@ -5,7 +5,7 @@ import { use } from "../../../ui/Context";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { NumberInput } from "../../../ui/React/NumberInput";
 import { BuyBackShares } from "../../Actions";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { KEY } from "../../../utils/helpers/keyCodes";
@@ -21,12 +21,7 @@ interface IProps {
 export function BuybackSharesModal(props: IProps): React.ReactElement {
   const player = use.Player();
   const corp = useCorporation();
-  const [shares, setShares] = useState<number | null>(null);
-
-  function changeShares(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setShares(null);
-    else setShares(Math.round(parseFloat(event.target.value)));
-  }
+  const [shares, setShares] = useState<number>(NaN);
 
   const currentStockPrice = corp.sharePrice;
   const buybackPrice = currentStockPrice * 1.1;
@@ -87,13 +82,7 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
       </Typography>
       <CostIndicator />
       <br />
-      <TextField
-        autoFocus={true}
-        type="number"
-        placeholder="Shares to buyback"
-        onChange={changeShares}
-        onKeyDown={onKeyDown}
-      />
+      <NumberInput autoFocus={true} placeholder="Shares to buyback" onChange={setShares} onKeyDown={onKeyDown} />
       <Button disabled={disabled} onClick={buy}>
         Buy shares
       </Button>

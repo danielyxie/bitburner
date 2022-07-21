@@ -20,84 +20,108 @@ export function SlumsLocation(): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Shoplift.commit(router, player);
+    Crimes.Shoplift.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function robStore(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.RobStore.commit(router, player);
+    Crimes.RobStore.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function mug(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Mug.commit(router, player);
+    Crimes.Mug.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function larceny(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Larceny.commit(router, player);
+    Crimes.Larceny.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function dealDrugs(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.DealDrugs.commit(router, player);
+    Crimes.DealDrugs.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function bondForgery(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.BondForgery.commit(router, player);
+    Crimes.BondForgery.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function traffickArms(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.TraffickArms.commit(router, player);
+    Crimes.TraffickArms.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function homicide(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Homicide.commit(router, player);
+    Crimes.Homicide.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function grandTheftAuto(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.GrandTheftAuto.commit(router, player);
+    Crimes.GrandTheftAuto.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function kidnap(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Kidnap.commit(router, player);
+    Crimes.Kidnap.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function assassinate(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Assassination.commit(router, player);
+    Crimes.Assassination.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   function heist(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Heist.commit(router, player);
+    Crimes.Heist.commit(player);
+    router.toWork();
+    player.focus = true;
   }
 
   const shopliftChance = Crimes.Shoplift.successRate(player);

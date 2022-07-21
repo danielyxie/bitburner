@@ -1,5 +1,4 @@
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { FactionWorkType } from "../Faction/FactionWorkTypeEnum";
 import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
@@ -15,6 +14,7 @@ import {
 } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext): void {
@@ -210,23 +210,23 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
           maxHp: sl.max_hp,
 
           mult: {
-            agility: sl.agility_mult,
-            agilityExp: sl.agility_exp_mult,
-            charisma: sl.charisma_mult,
-            charismaExp: sl.charisma_exp_mult,
-            companyRep: sl.company_rep_mult,
-            crimeMoney: sl.crime_money_mult,
-            crimeSuccess: sl.crime_success_mult,
-            defense: sl.defense_mult,
-            defenseExp: sl.defense_exp_mult,
-            dexterity: sl.dexterity_mult,
-            dexterityExp: sl.dexterity_exp_mult,
-            factionRep: sl.faction_rep_mult,
-            hacking: sl.hacking_mult,
-            hackingExp: sl.hacking_exp_mult,
-            strength: sl.strength_mult,
-            strengthExp: sl.strength_exp_mult,
-            workMoney: sl.work_money_mult,
+            agility: sl.mults.agility,
+            agilityExp: sl.mults.agility_exp,
+            charisma: sl.mults.charisma,
+            charismaExp: sl.mults.charisma_exp,
+            companyRep: sl.mults.company_rep,
+            crimeMoney: sl.mults.crime_money,
+            crimeSuccess: sl.mults.crime_success,
+            defense: sl.mults.defense,
+            defenseExp: sl.mults.defense_exp,
+            dexterity: sl.mults.dexterity,
+            dexterityExp: sl.mults.dexterity_exp,
+            factionRep: sl.mults.faction_rep,
+            hacking: sl.mults.hacking,
+            hackingExp: sl.mults.hacking_exp,
+            strength: sl.mults.strength,
+            strengthExp: sl.mults.strength_exp,
+            workMoney: sl.mults.work_money,
           },
 
           timeWorked: sl.currentTaskTime,

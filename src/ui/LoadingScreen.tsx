@@ -51,7 +51,7 @@ export function LoadingScreen(): React.ReactElement {
         .then((saveString) => {
           try {
             Engine.load(saveString);
-          } catch (err: any) {
+          } catch (err: unknown) {
             ActivateRecoveryMode();
             setLoaded(true);
             throw err;

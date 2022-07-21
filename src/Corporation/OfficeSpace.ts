@@ -2,7 +2,7 @@ import { EmployeePositions } from "./EmployeePositions";
 import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { generateRandomString } from "../utils/StringHelperFunctions";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { Employee } from "./Employee";
 import { IIndustry } from "./IIndustry";
 import { ICorporation } from "./ICorporation";
@@ -277,12 +277,11 @@ export class OfficeSpace {
     return false;
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("OfficeSpace", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): OfficeSpace {
+  static fromJSON(value: IReviverValue): OfficeSpace {
     return Generic_fromJSON(OfficeSpace, value.data);
   }
 }

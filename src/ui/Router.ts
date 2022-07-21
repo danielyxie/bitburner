@@ -72,7 +72,7 @@ export interface IRouter {
   toGang(): void;
   toHacknetNodes(): void;
   toInfiltration(location: Location): void;
-  toJob(): void;
+  toJob(location: Location): void;
   toMilestones(): void;
   toGrafting(): void;
   toScriptEditor(files?: Record<string, string>, options?: ScriptEditorRouteOptions): void;

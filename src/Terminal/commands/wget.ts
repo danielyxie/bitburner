@@ -25,12 +25,12 @@ export function wget(
   }
   $.get(
     url,
-    function (data: any) {
+    function (data: unknown) {
       let res;
       if (isScriptFilename(target)) {
-        res = server.writeToScriptFile(player, target, data);
+        res = server.writeToScriptFile(player, target, String(data));
       } else {
-        res = server.writeToTextFile(target, data);
+        res = server.writeToTextFile(target, String(data));
       }
       if (!res.success) {
         return terminal.error("wget failed");

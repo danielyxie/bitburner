@@ -21,9 +21,9 @@ import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 import * as ExportBonus from "./ExportBonus";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "./utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "./utils/JSONReviver";
 import { save } from "./db";
-import { v1APIBreak } from "./utils/v1APIBreak";
+import { AwardNFG, v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
 import { LocationName } from "./Locations/data/LocationNames";
@@ -49,7 +49,6 @@ export interface SaveData {
 
 export interface ImportData {
   base64: string;
-  parsed: any;
   playerData?: ImportPlayerData;
 }
 
@@ -199,7 +198,7 @@ class BitburnerSaveObject {
     try {
       parsedSave = JSON.parse(newSave);
     } catch (error) {
-      console.log(error); // We'll handle below
+      console.error(error); // We'll handle below
     }
 
     if (!parsedSave || parsedSave.ctor !== "BitburnerSaveObject" || !parsedSave.data) {
@@ -208,7 +207,6 @@ class BitburnerSaveObject {
 
     const data: ImportData = {
       base64: base64Save,
-      parsed: parsedSave,
     };
 
     const importedPlayer = PlayerObject.fromJSON(JSON.parse(parsedSave.data.PlayerSave));
@@ -234,11 +232,11 @@ class BitburnerSaveObject {
     return Promise.resolve(data);
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("BitburnerSaveObject", this);
   }
 
-  static fromJSON(value: { data: any }): BitburnerSaveObject {
+  static fromJSON(value: IReviverValue): BitburnerSaveObject {
     return Generic_fromJSON(BitburnerSaveObject, value.data);
   }
 }
@@ -260,14 +258,19 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
 
       // The "companyName" property of all Companies is renamed to "name"
+      interface Company0_41_2 {
+        name: string | number;
+        companyName: string;
+        companyPositions: Record<number, boolean>;
+      }
       for (const companyName of Object.keys(Companies)) {
-        const company: any = Companies[companyName];
+        const company = Companies[companyName] as unknown as Company0_41_2;
         if (company.name == 0 && company.companyName != null) {
           company.name = company.companyName;
         }
 
         if (company.companyPositions instanceof Array) {
-          const pos: any = {};
+          const pos: Record<number, boolean> = {};
 
           for (let i = 0; i < company.companyPositions.length; ++i) {
             pos[company.companyPositions[i]] = true;
@@ -354,15 +357,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
   }
   if (typeof ver === "number") {
     if (ver < 2) {
-      // Give 10 neuroflux because v1 API break.
-      const nf = Player.augmentations.find((a) => a.name === AugmentationNames.NeuroFluxGovernor);
-      if (nf) {
-        nf.level += 10;
-      } else {
-        const nf = new PlayerOwnedAugmentation(AugmentationNames.NeuroFluxGovernor);
-        nf.level = 10;
-        Player.augmentations.push(nf);
-      }
+      AwardNFG(10);
       Player.reapplyAllAugmentations(true);
       Player.reapplyAllSourceFiles();
     }
@@ -407,7 +402,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
     }
     if (ver < 15) {
-      (Settings as any).EditorTheme = { ...defaultMonacoTheme };
+      Settings.EditorTheme = { ...defaultMonacoTheme };
     }
     //Fix contract names
     if (ver < 16) {
@@ -458,6 +453,14 @@ function evaluateVersionCompatibility(ver: string | number): void {
         });
         AddToAllServers(darkweb);
       }
+    }
+    if (ver < 21) {
+      // 2.0.0 work rework
+      AwardNFG(10);
+      const create = anyPlayer["createProgramName"];
+      if (create) Player.getHomeComputer().pushProgram(create);
+      const graft = anyPlayer["graftAugmentationName"];
+      if (graft) Player.augmentations.push({ name: graft, level: 1 });
     }
   }
 }
@@ -602,23 +605,17 @@ function createBetaUpdateText(): void {
 
 function download(filename: string, content: string): void {
   const file = new Blob([content], { type: "text/plain" });
-  const navigator = window.navigator as any;
-  if (navigator.msSaveOrOpenBlob) {
-    // IE10+
-    navigator.msSaveOrOpenBlob(file, filename);
-  } else {
-    // Others
-    const a = document.createElement("a"),
-      url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function () {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 0);
-  }
+
+  const a = document.createElement("a"),
+    url = URL.createObjectURL(file);
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () {
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }, 0);
 }
 
 Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;

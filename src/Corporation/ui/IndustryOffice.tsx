@@ -177,7 +177,7 @@ function EmployeeCount(props: { num: number; next: number }): React.ReactElement
   return (
     <Typography display="flex" alignItems="center" justifyContent="flex-end">
       {props.num === props.next ? null : props.num}
-      {props.num === props.next ? null : <ArrowForwardIcon fontSize="inherit"/>}
+      {props.num === props.next ? null : <ArrowForwardIcon fontSize="inherit" />}
       {props.next}
     </Typography>
   );

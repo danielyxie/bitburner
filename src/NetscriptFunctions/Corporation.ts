@@ -19,6 +19,7 @@ import {
   WarehouseAPI,
   OfficeAPI,
   InvestmentOffer,
+  Office as NSOffice,
 } from "../ScriptEditor/NetscriptDefinitions";
 
 import {
@@ -728,7 +729,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       },
     hireEmployee:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown): any => {
+      (_divisionName: unknown, _cityName: unknown): NSEmployee | undefined => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
@@ -809,7 +810,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       },
     getOffice:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown): any => {
+      (_divisionName: unknown, _cityName: unknown): NSOffice => {
         checkAccess(ctx, 8);
         const divisionName = ctx.helper.string("divisionName", _divisionName);
         const cityName = ctx.helper.city("cityName", _cityName);
@@ -831,6 +832,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
             Management: office.employeeProd[EmployeePositions.Management],
             "Research & Development": office.employeeProd[EmployeePositions.RandD],
             Training: office.employeeProd[EmployeePositions.Training],
+            Unassigned: 0,
           },
           employeeJobs: {
             Operations: office.employeeJobs[EmployeePositions.Operations],

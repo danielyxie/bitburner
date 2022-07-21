@@ -1,15 +1,15 @@
+import * as monaco from "monaco-editor";
+import type { Monaco } from "@monaco-editor/react";
+
 export interface IScriptEditorTheme {
-  [key: string]: any;
-  base: string;
+  base: "vs" | "vs-dark" | "hc-black";
   inherit: boolean;
   common: {
-    [key: string]: string;
     accent: string;
     bg: string;
     fg: string;
   };
   syntax: {
-    [key: string]: string;
     tag: string;
     entity: string;
     string: string;
@@ -21,16 +21,13 @@ export interface IScriptEditorTheme {
     error: string;
   };
   ui: {
-    [key: string]: any;
     line: string;
     panel: {
-      [key: string]: string;
       bg: string;
       selected: string;
       border: string;
     };
     selection: {
-      [key: string]: string;
       bg: string;
     };
   };
@@ -85,7 +82,7 @@ export const sanitizeTheme = (theme: IScriptEditorTheme): void => {
         continue;
     }
 
-    const repairBlock = (block: { [key: string]: any }): void => {
+    const repairBlock = (block: { [key: string]: object | string }): void => {
       for (const [k, v] of Object.entries(block)) {
         if (typeof v === "object") {
           repairBlock(v as { [key: string]: string });
@@ -96,7 +93,7 @@ export const sanitizeTheme = (theme: IScriptEditorTheme): void => {
   }
 };
 
-export function makeTheme(theme: IScriptEditorTheme): any {
+export function makeTheme(theme: IScriptEditorTheme): monaco.editor.IStandaloneThemeData {
   const themeRules = [
     {
       token: "",
@@ -211,7 +208,7 @@ export function makeTheme(theme: IScriptEditorTheme): any {
   return { base: theme.base, inherit: theme.inherit, rules: themeRules, colors: themeColors };
 }
 
-export async function loadThemes(monaco: { editor: any }): Promise<void> {
+export async function loadThemes(monaco: Monaco): Promise<void> {
   monaco.editor.defineTheme("monokai", {
     base: "vs-dark",
     inherit: true,

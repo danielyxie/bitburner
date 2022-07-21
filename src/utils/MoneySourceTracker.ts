@@ -50,12 +50,11 @@ export class MoneySourceTracker {
   }
 
   // Serialize the current object to a JSON save state.
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("MoneySourceTracker", this);
   }
 
   // Initiatizes a MoneySourceTracker object from a JSON save state.
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static fromJSON(value: IReviverValue): MoneySourceTracker {
     return Generic_fromJSON(MoneySourceTracker, value.data);
   }

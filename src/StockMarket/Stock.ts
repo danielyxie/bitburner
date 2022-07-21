@@ -1,5 +1,5 @@
 import { IMinMaxRange } from "../types";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 export const StockForecastInfluenceLimit = 5;
@@ -308,15 +308,14 @@ export class Stock {
   /**
    * Serialize the Stock to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Stock", this);
   }
 
   /**
    * Initializes a Stock from a JSON save state
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Stock {
+  static fromJSON(value: IReviverValue): Stock {
     return Generic_fromJSON(Stock, value.data);
   }
 }

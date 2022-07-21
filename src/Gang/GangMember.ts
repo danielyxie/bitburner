@@ -5,7 +5,7 @@ import { GangMemberUpgrades } from "./GangMemberUpgrades";
 import { IAscensionResult } from "./IAscensionResult";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IGang } from "./IGang";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import {
   calculateRespectGain,
   calculateMoneyGain,
@@ -320,15 +320,14 @@ export class GangMember {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("GangMember", this);
   }
 
   /**
    * Initiatizes a GangMember object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): GangMember {
+  static fromJSON(value: IReviverValue): GangMember {
     return Generic_fromJSON(GangMember, value.data);
   }
 }

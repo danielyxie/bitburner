@@ -13,7 +13,7 @@ interface IProps {
 
 export function DummyGrid(props: IProps): React.ReactElement {
   const gift = new DummyGift(props.width, props.height, props.fragments);
-  const ghostGrid = zeros([props.width, props.height]);
+  const ghostGrid = zeros(props.width, props.height);
   return (
     <Box>
       <Table sx={{ width: props.width, height: props.height }}>

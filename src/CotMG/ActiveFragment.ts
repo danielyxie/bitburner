@@ -1,5 +1,5 @@
 import { Fragment, FragmentById } from "./Fragment";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export interface IActiveFragmentParams {
   x: number;
@@ -74,15 +74,14 @@ export class ActiveFragment {
   /**
    * Serialize an active fragment to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("ActiveFragment", this);
   }
 
   /**
    * Initializes an acive fragment from a JSON save state
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): ActiveFragment {
+  static fromJSON(value: IReviverValue): ActiveFragment {
     return Generic_fromJSON(ActiveFragment, value.data);
   }
 }

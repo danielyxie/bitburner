@@ -56,6 +56,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 import { hash } from "../../hash/hash";
+import { Locations } from "../../Locations/Locations";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -157,11 +158,11 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const canOpenSleeves = props.player.sleeves.length > 0;
 
-  const canCorporation = !!(props.player.corporation as any);
-  const canGang = !!(props.player.gang as any);
-  const canJob = props.player.companyName !== "";
+  const canCorporation = !!props.player.corporation;
+  const canGang = !!props.player.gang;
+  const canJob = Object.values(props.player.jobs).length > 0;
   const canStockMarket = props.player.hasWseAccount;
-  const canBladeburner = !!(props.player.bladeburner as any);
+  const canBladeburner = !!props.player.bladeburner;
   const canStaneksGift = props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
 
   function clickTerminal(): void {
@@ -218,7 +219,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   }
 
   function clickJob(): void {
-    props.router.toJob();
+    props.router.toJob(Locations[Object.keys(props.player.jobs)[0]]);
   }
 
   function clickStockMarket(): void {
@@ -274,9 +275,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     //  Alt-o - Options
     //  Alt-b - Bladeburner
     //  Alt-g - Gang
-    function handleShortcuts(this: Document, event: KeyboardEvent): any {
+    function handleShortcuts(this: Document, event: KeyboardEvent): void {
       if (Settings.DisableHotkeys) return;
-      if ((props.player.isWorking && props.player.focus) || props.router.page() === Page.BitVerse) return;
+      if ((props.player.currentWork && props.player.focus) || props.router.page() === Page.BitVerse) return;
       if (event.code === KEYCODE.T && event.altKey) {
         event.preventDefault();
         clickTerminal();

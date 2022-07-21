@@ -296,7 +296,7 @@ export function prestigeSourceFile(flume: boolean): void {
     hserver.level = 100;
     hserver.cores = 10;
     hserver.cache = 5;
-    hserver.updateHashRate(Player.hacknet_node_money_mult);
+    hserver.updateHashRate(Player.mults.hacknet_node_money);
     hserver.updateHashCapacity();
     updateHashManagerCapacity(Player);
   }

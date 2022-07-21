@@ -12,8 +12,8 @@ export function SkillPage(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   const mults = props.bladeburner.skillMultipliers;
 
-  function valid(mult: any): boolean {
-    return mult && mult !== 1;
+  function valid(mult: number | undefined): boolean {
+    return mult !== undefined && mult !== 1;
   }
 
   return (

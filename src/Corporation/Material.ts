@@ -1,4 +1,4 @@
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { Export } from "./Export";
 
 interface IConstructorParams {
@@ -229,13 +229,12 @@ export class Material {
   }
 
   // Serialize the current object to a JSON save state.
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Material", this);
   }
 
   // Initiatizes a Material object from a JSON save state.
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Material {
+  static fromJSON(value: IReviverValue): Material {
     return Generic_fromJSON(Material, value.data);
   }
 }

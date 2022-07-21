@@ -4,6 +4,7 @@ import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
 import { GetServer } from "../Server/AllServers";
 import { FactionNames } from "../Faction/data/FactionNames";
+import { Server } from "../Server/Server";
 
 function allFactionAugs(p: IPlayer, f: Faction): boolean {
   const factionAugs = f.augmentations.slice().filter((aug) => aug !== "NeuroFlux Governor");
@@ -24,7 +25,7 @@ export const Milestones: Milestone[] = [
     fulfilled: (): boolean => {
       const server = GetServer("CSEC");
       if (!server || !server.hasOwnProperty("hasAdminRights")) return false;
-      return (server as any).hasAdminRights;
+      return server instanceof Server && server.hasAdminRights;
     },
   },
   {
@@ -32,7 +33,7 @@ export const Milestones: Milestone[] = [
     fulfilled: (): boolean => {
       const server = GetServer("CSEC");
       if (!server || !server.hasOwnProperty("backdoorInstalled")) return false;
-      return (server as any).backdoorInstalled;
+      return server instanceof Server && server.backdoorInstalled;
     },
   },
   {

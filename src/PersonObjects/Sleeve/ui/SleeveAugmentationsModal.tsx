@@ -54,7 +54,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
         canPurchase={(player, aug) => {
           return player.money > aug.baseCost;
         }}
-        purchaseAugmentation={(player, aug, _showModal) => {
+        purchaseAugmentation={(player, aug) => {
           props.sleeve.tryBuyAugmentation(player, aug);
           rerender();
         }}

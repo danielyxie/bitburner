@@ -6,7 +6,7 @@ import { ProductRatingWeights, IProductRatingWeight } from "./ProductRatingWeigh
 import { createCityMap } from "../Locations/createCityMap";
 import { IMap } from "../types";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 interface IConstructorParams {
@@ -265,13 +265,12 @@ export class Product {
   }
 
   // Serialize the current object to a JSON save state.
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Product", this);
   }
 
   // Initiatizes a Product object from a JSON save state.
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Product {
+  static fromJSON(value: IReviverValue): Product {
     return Generic_fromJSON(Product, value.data);
   }
 }

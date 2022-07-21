@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import Draggable from "react-draggable";
+import Draggable, { DraggableEvent } from "react-draggable";
 import { ResizableBox } from "react-resizable";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
@@ -14,12 +14,12 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { workerScripts } from "../../Netscript/WorkerScripts";
 import { startWorkerScript } from "../../NetscriptWorker";
 import { GetServer } from "../../Server/AllServers";
-import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
 import { Settings } from "../../Settings/Settings";
 import { ANSIITypography } from "./ANSIITypography";
+import { ScriptArg } from "../../Netscript/ScriptArg";
 
 let layerCounter = 0;
 
@@ -42,7 +42,7 @@ export function LogBoxManager(): React.ReactElement {
   useEffect(
     () =>
       LogBoxEvents.subscribe((script: RunningScript) => {
-        const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
+        const id = script.server + "-" + script.filename + script.args.map((x: ScriptArg): string => `${x}`).join("-");
         if (logs.find((l) => l.id === id)) return;
         logs.push({
           id: id,
@@ -96,7 +96,7 @@ interface IProps {
   onClose: () => void;
 }
 
-const useStyles = makeStyles((_theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     logs: {
       overflowY: "scroll",
@@ -151,7 +151,7 @@ function LogWindow(props: IProps): React.ReactElement {
   }, []);
 
   function kill(): void {
-    killWorkerScript(script, script.server, true);
+    killWorkerScript({ runningScript: script, hostname: script.server });
   }
 
   function run(): void {
@@ -175,7 +175,7 @@ function LogWindow(props: IProps): React.ReactElement {
 
   function title(full = false): string {
     const maxLength = 30;
-    const t = `${script.filename} ${script.args.map((x: any): string => `${x}`).join(" ")}`;
+    const t = `${script.filename} ${script.args.map((x: ScriptArg): string => `${x}`).join(" ")}`;
     if (full || t.length <= maxLength) {
       return t;
     }
@@ -234,8 +234,12 @@ function LogWindow(props: IProps): React.ReactElement {
     node.setState(state);
   };
 
-  const boundToBody = (e: any): void | false => {
-    if (e.clientX < 0 || e.clientY < 0 || e.clientX > innerWidth || e.clientY > innerHeight) return false;
+  const boundToBody = (e: DraggableEvent): void | false => {
+    if (
+      e instanceof MouseEvent &&
+      (e.clientX < 0 || e.clientY < 0 || e.clientX > innerWidth || e.clientY > innerHeight)
+    )
+      return false;
   };
 
   // Max [width, height]

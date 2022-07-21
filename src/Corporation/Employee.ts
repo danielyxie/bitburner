@@ -1,6 +1,6 @@
 import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { EmployeePositions } from "./EmployeePositions";
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
@@ -113,12 +113,11 @@ export class Employee {
     return prodBase * prodMult;
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Employee", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Employee {
+  static fromJSON(value: IReviverValue): Employee {
     return Generic_fromJSON(Employee, value.data);
   }
 }

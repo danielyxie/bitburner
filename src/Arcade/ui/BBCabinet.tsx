@@ -9,7 +9,7 @@ const style = {
   width: "1060px",
   height: "800px",
   border: "0px",
-} as any;
+};
 
 export function BBCabinetRoot(): React.ReactElement {
   const player = use.Player();

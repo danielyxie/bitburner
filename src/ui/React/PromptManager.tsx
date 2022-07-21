@@ -38,7 +38,7 @@ export function PromptManager(): React.ReactElement {
     setPrompt(null);
   }
 
-  const types: { [key: string]: any } = {
+  const types: { [key: string]: (props: IContentProps) => React.ReactElement } = {
     text: PromptMenuText,
     select: PromptMenuSelect,
   };
@@ -128,9 +128,8 @@ function PromptMenuSelect({ prompt, resolve }: IContentProps): React.ReactElemen
   };
 
   const getItems = (choices: string[]): React.ReactElement[] => {
-    const content = [];
+    const content: React.ReactElement[] = [];
     for (const i of choices) {
-      // @ts-ignore
       content.push(
         <MenuItem key={i} value={i}>
           {i}

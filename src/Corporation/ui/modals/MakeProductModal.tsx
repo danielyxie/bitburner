@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { KEY } from "../../../utils/helpers/keyCodes";
+import { NumberInput } from "../../../ui/React/NumberInput";
 
 interface IProps {
   open: boolean;
@@ -34,8 +35,8 @@ export function MakeProductModal(props: IProps): React.ReactElement {
   const allCities = Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] !== 0);
   const [city, setCity] = useState(allCities.length > 0 ? allCities[0] : "");
   const [name, setName] = useState("");
-  const [design, setDesign] = useState<number | null>(null);
-  const [marketing, setMarketing] = useState<number | null>(null);
+  const [design, setDesign] = useState<number>(NaN);
+  const [marketing, setMarketing] = useState<number>(NaN);
   if (division.hasMaximumNumberProducts()) return <></>;
 
   let createProductPopupText = <></>;
@@ -138,7 +139,7 @@ export function MakeProductModal(props: IProps): React.ReactElement {
   );
 
   function makeProduct(): void {
-    if (design === null || marketing === null) return;
+    if (isNaN(design) || isNaN(marketing)) return;
     try {
       MakeProduct(corp, division, city, name, design, marketing);
     } catch (err) {
@@ -153,16 +154,6 @@ export function MakeProductModal(props: IProps): React.ReactElement {
 
   function onProductNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setName(event.target.value);
-  }
-
-  function onDesignChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setDesign(null);
-    else setDesign(parseFloat(event.target.value));
-  }
-
-  function onMarketingChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setMarketing(null);
-    else setMarketing(parseFloat(event.target.value));
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -181,13 +172,8 @@ export function MakeProductModal(props: IProps): React.ReactElement {
       </Select>
       <TextField onChange={onProductNameChange} placeholder={productPlaceholder(division.type)} />
       <br />
-      <TextField onChange={onDesignChange} autoFocus={true} type="number" placeholder={"Design investment"} />
-      <TextField
-        onChange={onMarketingChange}
-        onKeyDown={onKeyDown}
-        type="number"
-        placeholder={"Marketing investment"}
-      />
+      <NumberInput onChange={setDesign} autoFocus={true} placeholder={"Design investment"} />
+      <NumberInput onChange={setMarketing} onKeyDown={onKeyDown} placeholder={"Marketing investment"} />
       <Button onClick={makeProduct}>Develop Product</Button>
     </Modal>
   );
