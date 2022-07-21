@@ -17,6 +17,7 @@ import {
   CrimeStats,
   PlayerSkills,
   Singularity as ISingularity,
+  SourceFileLvl,
 } from "../ScriptEditor/NetscriptDefinitions";
 
 import { findCrime } from "../Crime/CrimeHelpers";
@@ -114,6 +115,16 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         return res;
       },
+    getOwnedSourceFiles: () => (): SourceFileLvl[] => {
+      const res: SourceFileLvl[] = [];
+      for (let i = 0; i < player.sourceFiles.length; ++i) {
+        res.push({
+          n: player.sourceFiles[i].n,
+          lvl: player.sourceFiles[i].lvl,
+        });
+      }
+      return res;
+    },
     getAugmentationsFromFaction: (_ctx: NetscriptContext) =>
       function (_facName: unknown): string[] {
         _ctx.helper.checkSingularityAccess();

@@ -2082,6 +2082,17 @@ export interface Singularity {
   getOwnedAugmentations(purchased?: boolean): string[];
 
   /**
+   * Get a list of acquired Source-Files.
+   * @remarks
+   * RAM cost: 5 GB
+   *
+   * Returns an array of source files
+   *
+   * @returns Array containing an object with number and level of the source file.
+   */
+  getOwnedSourceFiles(): SourceFileLvl[];
+
+  /**
    * Get a list of augmentation available from a faction.
    * @remarks
    * RAM cost: 5 GB * 16/4/1
@@ -6445,17 +6456,6 @@ export interface NS {
    * @returns Object containing the current BitNode multipliers.
    */
   getBitNodeMultipliers(): BitNodeMultipliers;
-
-  /**
-   * Get a list of acquired Source-Files.
-   * @remarks
-   * RAM cost: 5 GB
-   *
-   * Returns an array of source files
-   *
-   * @returns Array containing an object with number and level of the source file.
-   */
-  getOwnedSourceFiles(): SourceFileLvl[];
 
   /**
    * Get information about the player.

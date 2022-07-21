@@ -457,13 +457,13 @@ describe("Stock Market Tests", function () {
 
       it("should trigger a price update when it has enough cycles", function () {
         // Get the initial prices
-        const initialValues: IMap<Stock> = {};
+        const initialValues: IMap<any> = {};
         for (const stockName in StockMarket) {
           const stock = StockMarket[stockName];
           if (!(stock instanceof Stock)) {
             continue;
           }
-          initialValues[stock.symbol] = stock;
+          initialValues[stock.symbol] = { ...stock };
         }
 
         // Don't know or care how many exact cycles are required

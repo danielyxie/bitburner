@@ -62,7 +62,6 @@ export const RamCostConstants: IMap<number> = {
   ScriptGetFavorToDonate: 0.1,
   ScriptCodingContractBaseRamCost: 10,
   ScriptSleeveBaseRamCost: 4,
-  ScriptGetOwnedSourceFiles: 5,
   ScriptClearTerminalCost: 0.2,
 
   ScriptSingularityFn1RamCost: 2,
@@ -191,6 +190,7 @@ const singularity = {
   getCrimeChance: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getCrimeStats: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getOwnedAugmentations: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getOwnedSourceFiles: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationsFromFaction: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationCost: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationPrereq: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
@@ -519,7 +519,6 @@ const SourceRamCosts = {
   getFavorToDonate: RamCostConstants.ScriptGetFavorToDonate,
   getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   mv: 0,
-  getOwnedSourceFiles: RamCostConstants.ScriptGetOwnedSourceFiles,
   tail: 0,
   toast: 0,
   closeTail: 0,

@@ -2425,16 +2425,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getFavorToDonate: () => (): number => {
       return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
     },
-    getOwnedSourceFiles: () => (): SourceFileLvl[] => {
-      const res: SourceFileLvl[] = [];
-      for (let i = 0; i < Player.sourceFiles.length; ++i) {
-        res.push({
-          n: Player.sourceFiles[i].n,
-          lvl: Player.sourceFiles[i].lvl,
-        });
-      }
-      return res;
-    },
     getPlayer: () => (): INetscriptPlayer => {
       const data = {
         hacking: Player.hacking,
