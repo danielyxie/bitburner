@@ -467,7 +467,7 @@ export function updateHashManagerCapacity(player: IPlayer): void {
   player.hashManager.updateCapacity(total);
 }
 
-export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget: string): boolean {
+export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget: string, count = 1): boolean {
   if (!(player.hashManager instanceof HashManager)) {
     console.error(`Player does not have a HashManager`);
     return false;
@@ -475,21 +475,21 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
 
   // HashManager handles the transaction. This just needs to actually implement
   // the effects of the upgrade
-  if (player.hashManager.upgrade(upgName)) {
+  if (player.hashManager.upgrade(upgName, count)) {
     const upg = HashUpgrades[upgName];
 
     switch (upgName) {
       case "Sell for Money": {
-        player.gainMoney(upg.value, "hacknet");
+        player.gainMoney(upg.value * count, "hacknet");
         break;
       }
       case "Sell for Corporation Funds": {
         const corp = player.corporation;
         if (corp === null) {
-          player.hashManager.refundUpgrade(upgName);
+          player.hashManager.refundUpgrade(upgName, count);
           return false;
         }
-        corp.funds = corp.funds + upg.value;
+        corp.funds = corp.funds + upg.value * count;
         break;
       }
       case "Reduce Minimum Security": {
@@ -497,13 +497,13 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
           const target = GetServer(upgTarget);
           if (target == null) {
             console.error(`Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`);
-            return false;
+            throw new Error(`'${upgTarget}' is not a server.`);
           }
           if (!(target instanceof Server)) throw new Error(`'${upgTarget}' is not a normal server.`);
 
-          target.changeMinimumSecurity(upg.value, true);
+          target.changeMinimumSecurity(upg.value ** count, true);
         } catch (e) {
-          player.hashManager.refundUpgrade(upgName);
+          player.hashManager.refundUpgrade(upgName, count);
           return false;
         }
         break;
@@ -513,13 +513,16 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
           const target = GetServer(upgTarget);
           if (target == null) {
             console.error(`Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`);
-            return false;
+            throw new Error(`'${upgTarget}' is not a server.`);
           }
           if (!(target instanceof Server)) throw new Error(`'${upgTarget}' is not a normal server.`);
 
-          target.changeMaximumMoney(upg.value);
+          //Manually loop the change so as to properly handle the softcap
+          for (let i = 0; i < count; i++) {
+            target.changeMaximumMoney(upg.value);
+          }
         } catch (e) {
-          player.hashManager.refundUpgrade(upgName);
+          player.hashManager.refundUpgrade(upgName, count);
           return false;
         }
         break;
@@ -536,11 +539,11 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
         // This will throw if player doesn't have a corporation
         const corp = player.corporation;
         if (corp === null) {
-          player.hashManager.refundUpgrade(upgName);
+          player.hashManager.refundUpgrade(upgName, count);
           return false;
         }
         for (const division of corp.divisions) {
-          division.sciResearch.qty += upg.value;
+          division.sciResearch.qty += upg.value * count;
         }
         break;
       }
@@ -548,30 +551,31 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
         // This will throw if player isnt in Bladeburner
         const bladeburner = player.bladeburner;
         if (bladeburner === null) {
-          player.hashManager.refundUpgrade(upgName);
+          player.hashManager.refundUpgrade(upgName, count);
           return false;
         }
-        bladeburner.changeRank(player, upg.value);
+        bladeburner.changeRank(player, upg.value * count);
         break;
       }
       case "Exchange for Bladeburner SP": {
         // This will throw if player isnt in Bladeburner
         const bladeburner = player.bladeburner;
         if (bladeburner === null) {
-          player.hashManager.refundUpgrade(upgName);
+          player.hashManager.refundUpgrade(upgName, count);
           return false;
         }
 
-        bladeburner.skillPoints += upg.value;
+        bladeburner.skillPoints += upg.value * count;
         break;
       }
       case "Generate Coding Contract": {
-        generateRandomContract();
+        for (let i = 0; i < count; i++) {
+          generateRandomContract();
+        }
         break;
       }
       default:
         console.warn(`Unrecognized upgrade name ${upgName}. Upgrade has no effect`);
-        player.hashManager.refundUpgrade(upgName);
         return false;
     }
 

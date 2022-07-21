@@ -73,7 +73,7 @@ export class HashManager {
   /**
    * Get the cost (in hashes) of an upgrade
    */
-  getUpgradeCost(upgName: string): number {
+  getUpgradeCost(upgName: string, count = 1): number {
     const upg = this.getUpgrade(upgName);
     const currLevel = this.upgrades[upgName];
     if (upg == null || currLevel == null) {
@@ -81,7 +81,7 @@ export class HashManager {
       return Infinity;
     }
 
-    return upg.getCost(currLevel);
+    return upg.getCost(currLevel, count);
   }
 
   prestige(): void {
@@ -97,11 +97,11 @@ export class HashManager {
   /**
    * Reverts an upgrade and refunds the hashes used to buy it
    */
-  refundUpgrade(upgName: string): void {
+  refundUpgrade(upgName: string, count = 1): void {
     const upg = HashUpgrades[upgName];
 
     // Reduce the level first, so we get the right cost
-    --this.upgrades[upgName];
+    this.upgrades[upgName] -= count;
 
     const currLevel = this.upgrades[upgName];
     if (upg == null || currLevel == null || currLevel < 0) {
@@ -109,7 +109,7 @@ export class HashManager {
       return;
     }
 
-    const cost = upg.getCost(currLevel);
+    const cost = upg.getCost(currLevel, count);
     this.hashes += cost;
   }
 
@@ -137,21 +137,21 @@ export class HashManager {
    * Returns boolean indicating whether or not the upgrade was successfully purchased
    * Note that this does NOT actually implement the effect
    */
-  upgrade(upgName: string): boolean {
+  upgrade(upgName: string, count = 1): boolean {
     const upg = HashUpgrades[upgName];
     if (upg == null) {
       console.error(`Invalid Upgrade Name given to HashManager.upgrade(): ${upgName}`);
       return false;
     }
 
-    const cost = this.getUpgradeCost(upgName);
+    const cost = this.getUpgradeCost(upgName, count);
 
     if (this.hashes < cost) {
       return false;
     }
 
     this.hashes -= cost;
-    ++this.upgrades[upgName];
+    this.upgrades[upgName] += count;
 
     return true;
   }

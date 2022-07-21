@@ -2675,9 +2675,10 @@ export interface Hacknet {
    * }
    * ```
    * @param upgName - Name of the upgrade of Hacknet Node.
+   * @param count - Number of upgrades to buy at once. Defaults to 1 if not specified.
    * @returns Number of hashes required for the specified upgrade.
    */
-  hashCost(upgName: string): number;
+  hashCost(upgName: string, count?: number): number;
 
   /**
    * Purchase a hash upgrade.
@@ -2707,9 +2708,11 @@ export interface Hacknet {
    * ```
    * @param upgName - Name of the upgrade of Hacknet Node.
    * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.
+   * @param count - Number of upgrades to buy at once. Defaults to 1 if not specified.
+   * For compatability reasons, upgTarget must be specified, even if it is not used, in order to specify count.
    * @returns True if the upgrade is successfully purchased, and false otherwise..
    */
-  spendHashes(upgName: string, upgTarget?: string): boolean;
+  spendHashes(upgName: string, upgTarget?: string, count?: number): boolean;
 
   /**
    * Get the list of hash upgrades
