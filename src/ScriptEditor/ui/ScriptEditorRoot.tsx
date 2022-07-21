@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { Monaco } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
-import type { Monaco } from "@monaco-editor/react";
 
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 type ITextModel = monaco.editor.ITextModel;
@@ -17,7 +16,7 @@ import { TextFile } from "../../TextFile";
 import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { NetscriptFunctions } from "../../NetscriptFunctions";
@@ -45,7 +44,6 @@ import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 import { TextField, Tooltip } from "@mui/material";
-import { ExternalAPI } from "../../Netscript/APIWrapper";
 
 interface IProps {
   // Map of filename -> code
@@ -60,19 +58,18 @@ interface IProps {
 let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
-  const ns = NetscriptFunctions({ args: [] } as unknown as WorkerScript);
+  const ns = NetscriptFunctions({} as WorkerScript);
 
   // Populates symbols for text editor
-  function populate(ns: ExternalAPI): string[] {
+  function populate(ns: any): string[] {
     let symbols: string[] = [];
     const keys = Object.keys(ns);
     for (const key of keys) {
-      const x = ns[key];
-      if (typeof x === "object") {
+      if (typeof ns[key] === "object") {
         symbols.push(key);
-        symbols = symbols.concat(populate(x));
+        symbols = symbols.concat(populate(ns[key]));
       }
-      if (typeof x === "function") {
+      if (typeof ns[key] === "function") {
         symbols.push(key);
       }
     }
@@ -194,6 +191,7 @@ export function Root(props: IProps): React.ReactElement {
     // setup monaco-vim
     if (options.vim && editor && !vimEditor) {
       try {
+        // This library is not typed
         // @ts-expect-error
         window.require(["monaco-vim"], function (MonacoVim: any) {
           setVimEditor(MonacoVim.initVimMode(editor, vimStatusRef.current));
@@ -204,15 +202,18 @@ export function Root(props: IProps): React.ReactElement {
           MonacoVim.VimMode.Vim.defineEx("quit", "q", function () {
             props.router.toTerminal();
           });
-          // "wqriteandquit" is not a typo, prefix must be found in full string
-          MonacoVim.VimMode.Vim.defineEx("wqriteandquit", "wq", function () {
+
+          const saveNQuit = (): void => {
             save();
             props.router.toTerminal();
-          });
+          };
+          // "wqriteandquit" &  "xriteandquit" are not typos, prefix must be found in full string
+          MonacoVim.VimMode.Vim.defineEx("wqriteandquit", "wq", saveNQuit);
+          MonacoVim.VimMode.Vim.defineEx("xriteandquit", "x", saveNQuit);
 
           // Setup "go to next tab" and "go to previous tab". This is a little more involved
           // since these aren't Ex commands (they run in normal mode, not after typing `:`)
-          MonacoVim.VimMode.Vim.defineAction("nextTabs", function (_cm: unknown, args: { repeat?: number }) {
+          MonacoVim.VimMode.Vim.defineAction("nextTabs", function (_cm: any, args: { repeat?: number }) {
             const nTabs = args.repeat ?? 1;
             // Go to the next tab (to the right). Wraps around when at the rightmost tab
             const currIndex = currentTabIndex();
@@ -221,7 +222,7 @@ export function Root(props: IProps): React.ReactElement {
               onTabClick(nextIndex);
             }
           });
-          MonacoVim.VimMode.Vim.defineAction("prevTabs", function (_cm: unknown, args: { repeat?: number }) {
+          MonacoVim.VimMode.Vim.defineAction("prevTabs", function (_cm: any, args: { repeat?: number }) {
             const nTabs = args.repeat ?? 1;
             // Go to the previous tab (to the left). Wraps around when at the leftmost tab
             const currIndex = currentTabIndex();
@@ -319,29 +320,19 @@ export function Root(props: IProps): React.ReactElement {
   // https://github.com/threehams/typescript-error-guide/blob/master/stories/components/Editor.tsx#L11-L39
   // https://blog.checklyhq.com/customizing-monaco/
   // Before the editor is mounted
-  function beforeMount(monaco: Monaco): void {
+  function beforeMount(monaco: any): void {
     if (symbolsLoaded) return;
-    // Setup monaco auto completion for ns1
+    // Setup monaco auto completion
     symbolsLoaded = true;
     monaco.languages.registerCompletionItemProvider("javascript", {
-      provideCompletionItems: (
-        model: monaco.editor.ITextModel,
-        position: monaco.Position,
-      ): monaco.languages.CompletionList => {
-        const word = model.getWordAtPosition(position);
-        const suggestions: monaco.languages.CompletionItem[] = [];
+      provideCompletionItems: () => {
+        const suggestions = [];
         for (const symbol of symbols) {
           suggestions.push({
             label: symbol,
             kind: monaco.languages.CompletionItemKind.Function,
             insertText: symbol,
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-            range: {
-              startLineNumber: position.lineNumber,
-              startColumn: word?.startColumn ?? 0,
-              endLineNumber: position.lineNumber,
-              endColumn: position.column,
-            },
           });
         }
         return { suggestions: suggestions };
@@ -350,32 +341,24 @@ export function Root(props: IProps): React.ReactElement {
 
     (async function () {
       // We have to improve the default js language otherwise theme sucks
-      // https://github.com/microsoft/monaco-editor/issues/1927#issuecomment-692909147
-      // We should make a copy of javascript with our changes and make that a new custom language.
-      const js = monaco.languages.getLanguages().find(({ id }) => id === "javascript");
-      if (js === undefined) throw new Error("The javascript language isn't loaded in Monaco.");
-      // Define a new type in order to more properly cast what's coming out of monaco.
-      type ActualLanguage = monaco.languages.ILanguageExtensionPoint & {
-        loader: () => Promise<{ language: monaco.languages.IMonarchLanguage }>;
-      };
-      const hasLoader = (js: monaco.languages.ILanguageExtensionPoint): js is ActualLanguage =>
-        js.hasOwnProperty("loader");
-      if (!hasLoader(js)) throw new Error("js extension point has no load entrypoint.");
-      const { language } = await js.loader();
+      const l = await monaco.languages
+        .getLanguages()
+        .find((l: any) => l.id === "javascript")
+        .loader();
       // replaced the bare tokens with regexes surrounded by \b, e.g. \b{token}\b which matches a word-break on either side
       // this prevents the highlighter from highlighting pieces of variables that start with a reserved token name
-      language.tokenizer.root.unshift([new RegExp("\\bns\\b"), { token: "ns" }]);
+      l.language.tokenizer.root.unshift([new RegExp("\\bns\\b"), { token: "ns" }]);
       for (const symbol of symbols)
-        language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
       const otherKeywords = ["let", "const", "var", "function"];
       const otherKeyvars = ["true", "false", "null", "undefined"];
       otherKeywords.forEach((k) =>
-        language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]),
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]),
       );
       otherKeyvars.forEach((k) =>
-        language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]),
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]),
       );
-      language.tokenizer.root.unshift([new RegExp("\\bthis\\b"), { token: "this" }]);
+      l.language.tokenizer.root.unshift([new RegExp("\\bthis\\b"), { token: "this" }]);
     })();
 
     const source = (libSource + "").replace(/export /g, "");
@@ -650,7 +633,7 @@ export function Root(props: IProps): React.ReactElement {
     return result;
   }
 
-  function onDragEnd(result: DropResult): void {
+  function onDragEnd(result: any): void {
     // Dropped outside of the list
     if (!result.destination) {
       result;
