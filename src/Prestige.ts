@@ -15,6 +15,7 @@ import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { Router } from "./ui/GameRoot";
+import { recentScripts } from "./Netscript/RecentScripts";
 import { resetPidCounter } from "./Netscript/Pid";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
@@ -309,5 +310,7 @@ export function prestigeSourceFile(flume: boolean): void {
   // Gain int exp
   if (Player.sourceFileLvl(5) !== 0 && !flume) Player.gainIntelligenceExp(300);
 
+  // Clear recent scripts
+  recentScripts.splice(0, recentScripts.length);
   resetPidCounter();
 }
