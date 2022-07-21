@@ -858,16 +858,16 @@ export class Sleeve extends Person {
         case "none": // Note : due to the way Sleeve.workOutAtGym() is currently designed, this should never happend.
           break;
         case "str":
-          this.gainRatesForTask.str = baseGymExp * totalExpMultiplier * this.strength_exp_mult;
+          this.gainRatesForTask.str = baseGymExp * totalExpMultiplier * this.mults.strength_exp;
           break;
         case "def":
-          this.gainRatesForTask.def = baseGymExp * totalExpMultiplier * this.defense_exp_mult;
+          this.gainRatesForTask.def = baseGymExp * totalExpMultiplier * this.mults.defense_exp;
           break;
         case "dex":
-          this.gainRatesForTask.dex = baseGymExp * totalExpMultiplier * this.dexterity_exp_mult;
+          this.gainRatesForTask.dex = baseGymExp * totalExpMultiplier * this.mults.dexterity_exp;
           break;
         case "agi":
-          this.gainRatesForTask.agi = baseGymExp * totalExpMultiplier * this.agility_exp_mult;
+          this.gainRatesForTask.agi = baseGymExp * totalExpMultiplier * this.mults.agility_exp;
           break;
       }
       return;
