@@ -1,12 +1,20 @@
 import { KEY } from "../utils/helpers/keyCodes";
 import { substituteAliases } from "../Alias";
-// Helper function that checks if an argument (which is a string) is a valid number
-function isNumber(str: string): boolean {
-  if (typeof str != "string") {
-    return false;
-  } // Only process strings
-  return !isNaN(str as unknown as number) && !isNaN(parseFloat(str));
+// Helper function to parse individual arguments into number/boolean/string as appropriate
+function parseArg(arg: string): string | number | boolean {
+  // Handles all numbers including hexadecimal, octal, and binary representations, returning NaN on an unparseable string
+  const asNumber = Number(arg);
+  if (!isNaN(asNumber)) {
+    return asNumber;
+  }
+
+  if (arg === "true" || arg === "false") {
+    return arg === "true";
+  }
+
+  return arg;
 }
+
 export function ParseCommands(commands: string): string[] {
   // Sanitize input
   commands = commands.trim();
@@ -33,98 +41,48 @@ export function ParseCommands(commands: string): string[] {
 }
 
 export function ParseCommand(command: string): (string | number | boolean)[] {
-  // This will be used to keep track of whether we're in a quote. This is for situations
-  // like the alias command:
-  //      alias run="run NUKE.exe"
-  // We want the run="run NUKE.exe" to be parsed as a single command, so this flag
-  // will keep track of whether we have a quote in
-  let inQuote = ``;
-
-  // Returns an array with the command and its arguments in each index
-  // Properly handles quotation marks (e.g. `run foo.script "the sun"` will return [run, foo.script, the sun])
+  let idx = 0;
   const args = [];
-  let start = 0,
-    i = 0;
-  let prevChar = ""; // Previous character
-  while (i < command.length) {
-    let escaped = false; // Check for escaped quotation marks
-    if (i >= 1) {
-      prevChar = command.charAt(i - 1);
-      if (prevChar === "\\") {
-        escaped = true;
-      }
-    }
 
-    const c = command.charAt(i);
-    if (c === KEY.DOUBLE_QUOTE) {
-      // Double quotes
-      if (!escaped && prevChar === KEY.SPACE) {
-        const endQuote = command.indexOf(KEY.DOUBLE_QUOTE, i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
-          args.push(command.substr(i + 1, endQuote - i - 1));
-          if (endQuote === command.length - 1) {
-            start = i = endQuote + 1;
-          } else {
-            start = i = endQuote + 2; // Skip the space
-          }
-          continue;
-        }
-      } else if (inQuote === ``) {
-        inQuote = KEY.DOUBLE_QUOTE;
-      } else if (inQuote === KEY.DOUBLE_QUOTE) {
-        inQuote = ``;
-      }
-    } else if (c === KEY.QUOTE) {
-      // Single quotes, same thing as above
-      if (!escaped && prevChar === KEY.SPACE) {
-        const endQuote = command.indexOf(KEY.QUOTE, i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
-          args.push(command.substr(i + 1, endQuote - i - 1));
-          if (endQuote === command.length - 1) {
-            start = i = endQuote + 1;
-          } else {
-            start = i = endQuote + 2; // Skip the space
-          }
-          continue;
-        }
-      } else if (inQuote === ``) {
-        inQuote = KEY.QUOTE;
-      } else if (inQuote === KEY.QUOTE) {
-        inQuote = ``;
-      }
-    } else if (c === KEY.SPACE && inQuote === ``) {
-      const arg = command.substr(start, i - start);
+  let lastQuote = "";
 
-      // If this is a number, convert it from a string to number
-      if (isNumber(arg)) {
-        args.push(parseFloat(arg));
-      } else if (arg === "true") {
-        args.push(true);
-      } else if (arg === "false") {
-        args.push(false);
+  let arg = "";
+  while (idx < command.length) {
+    const c = command.charAt(idx);
+
+    // If the current character is a backslash, add the next character verbatim to the argument
+    if (c === "\\") {
+      arg += command.charAt(++idx);
+      // If the current character is a single- or double-quote mark, add it to the current argument.
+    } else if (c === KEY.DOUBLE_QUOTE || c === KEY.QUOTE) {
+      // If we're currently in a quoted string argument and this quote mark is the same as the beginning,
+      // the string is done
+      if (lastQuote !== "" && c === lastQuote) {
+        lastQuote = "";
+        // Otherwise if we're not in a string argument, we've begun one
+      } else if (lastQuote === "") {
+        lastQuote = c;
+        // Otherwise if we're in a string argument, add the current character to it
       } else {
-        args.push(arg);
+        arg += c;
       }
+      // If the current character is a space and we are not inside a string, parse the current argument
+      // and start a new one
+    } else if (c === KEY.SPACE && lastQuote === "") {
+      args.push(parseArg(arg));
 
-      start = i + 1;
+      arg = "";
+    } else {
+      // Add the current character to the current argument
+      arg += c;
     }
-    ++i;
+
+    idx++;
   }
 
-  // Add the last argument
-  if (start !== i) {
-    const arg = command.substr(start, i - start);
-
-    // If this is a number, convert it from string to number
-    if (isNumber(arg)) {
-      args.push(parseFloat(arg));
-    } else if (arg === "true") {
-      args.push(true);
-    } else if (arg === "false") {
-      args.push(false);
-    } else {
-      args.push(arg);
-    }
+  // Add the last arg (if any)
+  if (arg !== "") {
+    args.push(parseArg(arg));
   }
 
   return args;
