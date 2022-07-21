@@ -128,6 +128,9 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       case "clearbefore": // Deletes everything before cursor
         saveValue(inputText.substr(start), () => moveTextCursor("home"));
         break;
+      case "clearall": // Deletes everything in the input
+        saveValue("");
+        break;
     }
   }
 
@@ -196,6 +199,8 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   });
 
   async function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): Promise<void> {
+    const ref = terminalInput.current;
+
     // Run command.
     if (event.key === KEY.ENTER && value !== "") {
       event.preventDefault();
@@ -282,7 +287,6 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       }
       const prevCommand = terminal.commandHistory[terminal.commandHistoryIndex];
       saveValue(prevCommand);
-      const ref = terminalInput.current;
       if (ref) {
         setTimeout(function () {
           ref.selectionStart = ref.selectionEnd = 10000;
@@ -318,6 +322,12 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
     // Extra Bash Emulation Hotkeys, must be enabled through options
     if (Settings.EnableBashHotkeys) {
+      if (event.code === KEYCODE.C && event.ctrlKey && ref && ref.selectionStart === ref.selectionEnd) {
+        event.preventDefault();
+        terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
+        modifyInput("clearall");
+      }
+
       if (event.code === KEYCODE.A && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("home");
