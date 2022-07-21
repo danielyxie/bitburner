@@ -58,7 +58,7 @@ interface IProps {
 let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
-  const ns = NetscriptFunctions({} as WorkerScript);
+  const ns = NetscriptFunctions({ args: [] } as unknown as WorkerScript);
 
   // Populates symbols for text editor
   function populate(ns: any): string[] {

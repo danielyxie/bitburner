@@ -637,7 +637,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   };
 
   const singularity = NetscriptSingularity(Player, workerScript);
-
   const base: InternalAPI<INS> = {
     args: workerScript.args as unknown as any,
     enums: {

@@ -794,7 +794,7 @@ export class Bladeburner implements IBladeburner {
     let i = 0;
     while (i < command.length) {
       const c = command.charAt(i);
-      if ((c === '"')||(c === "'")) {
+      if (c === '"' || c === "'") {
         // Double quotes or Single quotes
         const endQuote = command.indexOf(c, i + 1);
         if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {

@@ -1,4 +1,3 @@
-import React from "react";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { Crime } from "../Crime/Crime";
 import { CONSTANTS } from "../Constants";
