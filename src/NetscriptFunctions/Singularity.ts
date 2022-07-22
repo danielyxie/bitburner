@@ -10,7 +10,7 @@ import { killWorkerScript } from "../Netscript/killWorkerScript";
 import { CONSTANTS } from "../Constants";
 import { isString } from "../utils/helpers/isString";
 import { RunningScript } from "../Script/RunningScript";
-import { calculateAchievements } from "../Achievements/Achievements.ts";
+import { calculateAchievements } from "../Achievements/Achievements";
 
 import {
   AugmentationStats,
@@ -1275,7 +1275,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           return;
         }
         
-        wd.backdoorInstalled = true
+        wd.backdoorInstalled = true;
         calculateAchievements();
         enterBitNode(Router, false, player.bitNodeN, nextBN);
         if (callbackScript)
