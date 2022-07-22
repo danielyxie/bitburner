@@ -1251,12 +1251,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const nextBN = _ctx.helper.number("nextBN", _nextBN);
         const callbackScript = _ctx.helper.string("callbackScript", _callbackScript);
+        
+        const wd = GetServer(SpecialServers.WorldDaemon);
+        if (!(wd instanceof Server))
+          throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
+        
         _ctx.helper.checkSingularityAccess();
 
         const hackingRequirements = (): boolean => {
-          const wd = GetServer(SpecialServers.WorldDaemon);
-          if (!(wd instanceof Server))
-            throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
           if (player.hacking < wd.requiredHackingSkill) return false;
           if (!wd.hasAdminRights) return false;
           return true;
@@ -1271,7 +1273,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           _ctx.log(() => "Requirements not met to destroy the world daemon");
           return;
         }
-
+        
+        wd.backdoorInstalled = true
         enterBitNode(Router, false, player.bitNodeN, nextBN);
         if (callbackScript)
           setTimeout(() => {
