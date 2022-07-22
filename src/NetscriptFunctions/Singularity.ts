@@ -1284,4 +1284,3 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
   };
 }
-
