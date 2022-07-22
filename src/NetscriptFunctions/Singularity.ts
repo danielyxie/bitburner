@@ -1276,7 +1276,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
         
         wd.backdoorInstalled = true
-        calculateAchievements()
+        calculateAchievements();
         enterBitNode(Router, false, player.bitNodeN, nextBN);
         if (callbackScript)
           setTimeout(() => {
