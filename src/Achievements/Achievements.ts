@@ -25,6 +25,7 @@ import * as data from "./AchievementData.json";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { isClassWork } from "../Work/ClassWork";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 // Unable to correctly cast the JSON data into AchievementDataJson type otherwise...
 const achievementData = (<AchievementDataJson>(<unknown>data)).achievements;
@@ -380,7 +381,10 @@ export const achievements: IMap<Achievement> = {
   DONATION: {
     ...achievementData["DONATION"],
     Icon: "donation",
-    Condition: () => Object.values(Factions).some((f) => f.favor >= 150),
+    Condition: () =>
+      Object.values(Factions).some(
+        (f) => f.favor >= Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction),
+      ),
   },
   TRAVEL: {
     ...achievementData["TRAVEL"],
