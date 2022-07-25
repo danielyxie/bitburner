@@ -174,7 +174,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
               <b>Reputation:</b> <Reputation reputation={props.faction.playerReputation} />
             </Typography>
             <Typography>
-              <b>Favor:</b> <Favor favor={Math.floor(props.faction.favor)} />
+              <b>Favor:</b> <Favor favor={numeralWrapper.formatFavor(Math.floor(props.faction.favor))} />
             </Typography>
           </Box>
           <Box sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
@@ -183,7 +183,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
               Sort by Reputation
             </Button>
             <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}>
-              Sort by Default Order
+              Sort by Default Order Sort by Default Order
             </Button>
             <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Purchasable)}>
               Sort by Purchasable
