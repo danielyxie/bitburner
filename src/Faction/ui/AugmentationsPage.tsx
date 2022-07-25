@@ -183,7 +183,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
               Sort by Reputation
             </Button>
             <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}>
-              Sort by Default Order Sort by Default Order
+              Sort by Default Order
             </Button>
             <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Purchasable)}>
               Sort by Purchasable
