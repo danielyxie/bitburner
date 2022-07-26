@@ -270,6 +270,24 @@ v2.0.0 - 2022-07-19 Work rework
     are very common tokens.
   * corporation.bribe no longer allows to give shares as bribe.
 
+  Netscript
+
+  * Add getAugmentationBasePrice
+  * Add getSleeveAugmentationPrice
+  * Add getSleeveAugmentationRepReq
+  * Fix getInfiltrationLocations
+  * Singularity.goToLocation support for non-city-specific locations (@Ansopedian)
+  * All corporation functions are synchronous. Job assignment only works on the following cycle. (@stalefishies)
+  * Add batch functionality to NS spendHashes API (@undeemiss)
+  * Fix #3661 Add missing memory property to Sleeve API (@borisflagell)
+  * FIX#3732 Cannot assign two sleeve on "Take on contracts" regardless of contract type. (@borisflagell)
+
+  Corporation
+
+  * Dividend fixes and exposing dividends info via scripts (@stalefishies)
+  * Add big number format support in some Corporation's modal (@borisflagell)
+  * Fix #3261 Industry overview number formatting (@nickofolas)
+
   Multipliers
 
   * The main player object was also plagues with a million fields all called '*_mult'. Representing the different multipliers
@@ -277,6 +295,15 @@ v2.0.0 - 2022-07-19 Work rework
 
   Misc. 
 
+  * #3596 Enhanced terminal command parsing (@RevanProdigalKnight)
+  * Fix #3366 Sleeve UI would sometimes displays the wrong stat while working out. (@borisflagell)
+  * Two new encryption themed contracts - caesar and vigenere (@Markus-D-M)
+  * Fixes #3132 several Sleeve can no longer works concurrently in the same company (@borisflagell)
+  * FIX #3514 Clear recently killed tab on BN end event (@Daniel-Barbera)
+  * HammingCodes description and implementation fixes (@s2ks)
+  * FIX #3794 Sleeve were getting less shocked when hospitalized (was positive, should have detrimental) (@borisflagell)
+  * Fix #3803 Servers can no longer have duplicate IPs (@crimsonhawk47)
+  * Fix #3854 ctrl+c does not clear terminal input (@evil-tim)
   * Nerf noodle bar, obviously.
 
 `,

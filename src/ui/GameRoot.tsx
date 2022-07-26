@@ -87,6 +87,7 @@ import _wrap from "lodash/wrap";
 import _functions from "lodash/functions";
 import { Apr1 } from "./Apr1";
 import { isFactionWork } from "../Work/FactionWork";
+import { V2Modal } from "../utils/V2Modal";
 
 const htmlLocation = location;
 
@@ -558,6 +559,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             </SnackbarProvider>
           </BypassWrapper>
         </ErrorBoundary>
+        <V2Modal />
       </Context.Router.Provider>
     </Context.Player.Provider>
   );

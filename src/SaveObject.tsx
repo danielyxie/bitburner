@@ -35,6 +35,7 @@ import { FactionNames } from "./Faction/data/FactionNames";
 import { Faction } from "./Faction/Faction";
 import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
 import { SpecialServers } from "./Server/data/SpecialServers";
+import { v2APIBreak } from "./utils/v2APIBreak";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -461,6 +462,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
       if (create) Player.getHomeComputer().pushProgram(create);
       const graft = anyPlayer["graftAugmentationName"];
       if (graft) Player.augmentations.push({ name: graft, level: 1 });
+      v2APIBreak();
     }
   }
 }
