@@ -7,6 +7,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
+import { newWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 
 interface CrimeWorkParams {
   crimeType: CrimeType;
@@ -42,14 +43,22 @@ export class CrimeWork extends Work {
     return false;
   }
 
+  earnings(): WorkStats {
+    const crime = this.getCrime();
+    return newWorkStats({
+      money: crime.money,
+      hackExp: crime.hacking_exp * 2,
+      strExp: crime.strength_exp * 2,
+      defExp: crime.defense_exp * 2,
+      dexExp: crime.dexterity_exp * 2,
+      agiExp: crime.agility_exp * 2,
+      chaExp: crime.charisma_exp * 2,
+      intExp: crime.intelligence_exp * 2,
+    });
+  }
+
   commit(player: IPlayer): void {
-    let crime = null;
-    for (const i of Object.keys(Crimes)) {
-      if (Crimes[i].type == this.crimeType) {
-        crime = Crimes[i];
-        break;
-      }
-    }
+    const crime = this.getCrime();
     if (crime == null) {
       dialogBoxCreate(
         `ERR: Unrecognized crime type (${this.crimeType}). This is probably a bug please contact the developer`,
@@ -59,33 +68,23 @@ export class CrimeWork extends Work {
     const focusPenalty = player.focusPenalty();
     // exp times 2 because were trying to maintain the same numbers as before the conversion
     // Technically the definition of Crimes should have the success numbers and failure should divide by 4
-    let hackExp = crime.hacking_exp * 2;
-    let StrExp = crime.strength_exp * 2;
-    let DefExp = crime.defense_exp * 2;
-    let DexExp = crime.dexterity_exp * 2;
-    let AgiExp = crime.agility_exp * 2;
-    let ChaExp = crime.charisma_exp * 2;
+    let gains = scaleWorkStats(this.earnings(), focusPenalty);
     let karma = crime.karma;
     const success = determineCrimeSuccess(player, crime.type);
     if (success) {
-      player.gainMoney(crime.money * focusPenalty, "crime");
+      player.gainMoney(gains.money, "crime");
       player.numPeopleKilled += crime.kills;
-      player.gainIntelligenceExp(crime.intelligence_exp * focusPenalty);
+      player.gainIntelligenceExp(gains.intExp);
     } else {
-      hackExp /= 4;
-      StrExp /= 4;
-      DefExp /= 4;
-      DexExp /= 4;
-      AgiExp /= 4;
-      ChaExp /= 4;
+      gains = scaleWorkStats(gains, 0.25);
       karma /= 4;
     }
-    player.gainHackingExp(hackExp * focusPenalty);
-    player.gainStrengthExp(StrExp * focusPenalty);
-    player.gainDefenseExp(DefExp * focusPenalty);
-    player.gainDexterityExp(DexExp * focusPenalty);
-    player.gainAgilityExp(AgiExp * focusPenalty);
-    player.gainCharismaExp(ChaExp * focusPenalty);
+    player.gainHackingExp(gains.hackExp);
+    player.gainStrengthExp(gains.strExp);
+    player.gainDefenseExp(gains.defExp);
+    player.gainDexterityExp(gains.dexExp);
+    player.gainAgilityExp(gains.agiExp);
+    player.gainCharismaExp(gains.chaExp);
     player.karma -= karma * focusPenalty;
   }
 

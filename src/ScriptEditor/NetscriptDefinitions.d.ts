@@ -4471,7 +4471,7 @@ export interface NS {
   readonly infiltration: Infiltration;
   /**
    * Namespace for corporation functions.
-   * RAM cost: 0 GB
+   * RAM cost: 1022.4 GB
    */
   readonly corporation: Corporation;
 

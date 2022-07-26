@@ -27,8 +27,8 @@ export class GraftingWork extends Work {
     super(WorkType.GRAFTING, params?.singularity ?? true);
     this.unitCompleted = 0;
     this.augmentation = params?.augmentation ?? AugmentationNames.Targeting1;
-
-    if (params?.player) params.player.loseMoney(GraftableAugmentations[this.augmentation].cost, "augmentations");
+    const gAugs = GraftableAugmentations();
+    if (params?.player) params.player.loseMoney(gAugs[this.augmentation].cost, "augmentations");
   }
 
   unitNeeded(): number {

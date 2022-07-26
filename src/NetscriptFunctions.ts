@@ -84,7 +84,6 @@ import {
   Infiltration as IInfiltration,
   RunningScript as IRunningScript,
   RecentScript as IRecentScript,
-  SourceFileLvl,
   BasicHGWOptions,
   ProcessInfo,
   HackingMultipliers,
@@ -2470,6 +2469,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         inBladeburner: Player.inBladeburner(),
         hasCorporation: Player.hasCorporation(),
         entropy: Player.entropy,
+        currentWork: Player.currentWork,
       };
       Object.assign(data.jobs, Player.jobs);
       return data;

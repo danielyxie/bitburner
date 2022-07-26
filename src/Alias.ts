@@ -36,16 +36,18 @@ export function printAliases(): void {
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global = false): boolean {
-  const re = /^([\w|!%,@-]+)=(("(.+)")|('(.+)'))$/;
+  console.log(dec);
+  const re = /^([\w|!%,@-]+)=(.+)$/;
   const matches = dec.match(re);
-  if (matches == null || matches.length != 7) {
+  console.log(matches);
+  if (matches == null || matches.length != 3) {
     return false;
   }
 
   if (global) {
-    addGlobalAlias(matches[1], matches[4] || matches[6]);
+    addGlobalAlias(matches[1], matches[2]);
   } else {
-    addAlias(matches[1], matches[4] || matches[6]);
+    addAlias(matches[1], matches[2]);
   }
   return true;
 }

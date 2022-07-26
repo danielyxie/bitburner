@@ -1,0 +1,93 @@
+v2.0.0 Migration Guide
+======================
+
+In v2.0.0 a few more API have been broken.
+
+Working
+-------
+
+    Working has been rebuilt from the grounds up. The motivation for that change is that all
+    different types of work all required different cached variables on the main Player object.
+    This caused a lot of bugs and crashes. It's been reworked in such a way as to prevent bugs
+    and make it nearly trivial to add new kinds of work.
+    All work type give their reward immediately. No need to stop work to bank rewards like reputation.
+    Faction and Company work no longer have a time limit.
+    Company work no longer reduces rep gain by half for quitting early.
+    Company faction require 400k rep to join (from 200k)
+    Backdooring company server reduces faction requirement to 300k.
+    All types of work generally no longer keep track of cumulative gains like exp and reputation since it's applied instantly.
+
+commitCrime
+-----------
+
+    crime now loops, meaning after finishing one shoplift you start the next one with no input. While the signature
+    has not changed its behavior has. It also has a new 'focus' parameters.
+
+getPlayer
+---------
+
+    The following work-related fields are not longer included: 
+
+    * workChaExpGained
+    * currentWorkFactionName
+    * workDexExpGained
+    * workHackExpGained
+    * createProgramReqLvl
+    * workStrExpGained
+    * companyName
+    * crimeType
+    * workRepGained
+    * workChaExpGainRate
+    * workType
+    * workStrExpGainRate
+    * isWorking
+    * workRepGainRate
+    * workDefExpGained
+    * currentWorkFactionDescription
+    * workHackExpGainRate
+    * workAgiExpGainRate
+    * workDexExpGainRate
+    * workMoneyGained
+    * workMoneyLossRate
+    * workMoneyGainRate
+    * createProgramName
+    * workDefExpGainRate
+    * workAgiExpGained
+    * className
+
+    The reason for that is that these fields are all, in one way or another, included in the new work field 'currentWork'.
+    Some of these values are also irrelevant.
+    'currentWork' will be one of many different kind of value. For example when creating a program it will have a programName field.
+    One field that all kinds of work have in common is 'type' which denotes the current kind of work.
+
+    All fields ending in _mult have been moved to the 'mults' struct.
+    For example: getPlayer().hacking_skill_mult is now getPlayer().mults.hacking_skill
+
+workForCompany
+--------------
+
+    The argument 'companyName' is now not-optional.
+
+
+getScriptIncome & getScriptExpGain
+----------------------------------
+
+    Those 2 functions used to have a call where no arguments would return the total for all scripts. This caused weird signature.
+    If you want to get the total income/exp for all scripts used the new getTotalScriptIncome / getTotalScriptExpGain instead.
+
+scp
+---
+
+    scp has it's 2 last argument reversed, the signature is now scp(files, destination, optional_source)
+
+Singularity
+-----------
+
+    A while ago top level singularity function were deprecated in favor of the singularity namespace.
+    This means calls like 'ns.connect' need to be changed to 'ns.singularity.connect'
+
+
+stock.buy and stock.sell
+------------------------
+    These 2 functions were renamed to stock.buyStock and stock.sellStock because 'buy' and 'sell'
+    are very common tokens that would trick the ram calculation.

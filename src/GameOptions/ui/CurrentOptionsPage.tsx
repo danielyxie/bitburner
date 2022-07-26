@@ -107,12 +107,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             step={25}
             min={0}
             max={500}
-            tooltip={
-              <>
-                The maximum number of lines a script's logs can hold. Setting this too high can cause the game to use a
-                lot of memory if you have many scripts running.
-              </>
-            }
+            tooltip={<>The maximum number of recently killed scripts the game will keep.</>}
           />
           <OptionsSlider
             label="Netscript log size"

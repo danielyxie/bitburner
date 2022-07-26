@@ -51,7 +51,7 @@ export function buyStock(
   }
   if (stock == null || isNaN(shares)) {
     if (workerScript) {
-      workerScript.log("stock.buy", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
+      workerScript.log("stock.buyStock", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
     }
@@ -67,7 +67,7 @@ export function buyStock(
   if (Player.money < totalPrice) {
     if (workerScript) {
       workerScript.log(
-        "stock.buy",
+        "stock.buyStock",
         () =>
           `You do not have enough money to purchase this position. You need ${numeralWrapper.formatMoney(totalPrice)}.`,
       );
@@ -86,7 +86,7 @@ export function buyStock(
   if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
     if (workerScript) {
       workerScript.log(
-        "stock.buy",
+        "stock.buyStock",
         () =>
           `Purchasing '${shares + stock.playerShares + stock.playerShortShares}' shares would exceed ${
             stock.symbol
@@ -119,7 +119,7 @@ export function buyStock(
     } for ${numeralWrapper.formatMoney(totalPrice)}. Paid ${numeralWrapper.formatMoney(
       CONSTANTS.StockMarketCommission,
     )} in commission fees.`;
-    workerScript.log("stock.buy", () => resultTxt);
+    workerScript.log("stock.buyStock", () => resultTxt);
   } else if (opts.suppressDialog !== true) {
     dialogBoxCreate(
       <>
@@ -149,7 +149,7 @@ export function sellStock(
   // Sanitize/Validate arguments
   if (stock == null || shares < 0 || isNaN(shares)) {
     if (workerScript) {
-      workerScript.log("stock.sell", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
+      workerScript.log("stock.sellStock", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate(
         "Failed to sell stock. This is probably due to an invalid quantity. Otherwise, this may be a bug, contact developer",
@@ -195,7 +195,7 @@ export function sellStock(
     const resultTxt =
       `Sold ${numeralWrapper.formatShares(shares)} shares of ${stock.symbol}. ` +
       `After commissions, you gained a total of ${numeralWrapper.formatMoney(gains)}.`;
-    workerScript.log("stock.sell", () => resultTxt);
+    workerScript.log("stock.sellStock", () => resultTxt);
   } else if (opts.suppressDialog !== true) {
     dialogBoxCreate(
       <>
