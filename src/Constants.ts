@@ -268,6 +268,7 @@ v2.0.0 - 2022-07-19 Work rework
     They were already hidden from documentation but now they're gone.
   * stock.buy and stock.sell were renamed to stock.buyStock and stock.sellStock because 'buy' and 'sell'
     are very common tokens.
+  * corporation.bribe no longer allows to give shares as bribe.
 
   Multipliers
 

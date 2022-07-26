@@ -96,4 +96,4 @@ stock.buy and stock.sell
 corporation.bribe
 -----------------
 
-    The ability to give stocks as bribe has been removed. The signature is now bribe(faction, money)
+    The ability to give shares as bribe has been removed. The signature is now bribe(faction, money)
