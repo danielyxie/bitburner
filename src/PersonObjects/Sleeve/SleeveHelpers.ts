@@ -7,6 +7,7 @@ import { Augmentation } from "../../Augmentation/Augmentation";
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
+import { Multipliers } from "../Multipliers";
 
 export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentation[] {
   // You can only purchase Augmentations that are actually available from
@@ -31,7 +32,8 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
       return false;
     }
 
-    const validMults = [
+    type MultKey = keyof Multipliers;
+    const validMults: MultKey[] = [
       "hacking",
       "strength",
       "defense",
@@ -50,8 +52,8 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
       "crime_success",
       "work_money",
     ];
-    for (const mult of Object.keys(aug.mults)) {
-      if (validMults.includes(mult)) {
+    for (const mult of validMults) {
+      if (aug.mults[mult] !== 1) {
         return true;
       }
     }
