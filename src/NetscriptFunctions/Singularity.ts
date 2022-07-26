@@ -1278,5 +1278,9 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             runAfterReset(callbackScript);
           }, 0);
       },
+    getCurrentWork: () => (): any | null => {
+      if (!player.currentWork) return null;
+      return player.currentWork.APICopy();
+    },
   };
 }

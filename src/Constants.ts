@@ -272,10 +272,11 @@ v2.0.0 - 2022-07-19 Work rework
 
   Netscript
 
-  * Add getAugmentationBasePrice
-  * Add getSleeveAugmentationPrice
-  * Add getSleeveAugmentationRepReq
-  * Fix getInfiltrationLocations
+  * Add singularity.getCurrentWork
+  * Add singularity.getAugmentationBasePrice
+  * Add sleeve.getSleeveAugmentationPrice
+  * Add sleeve.getSleeveAugmentationRepReq
+  * Fix infiltration.getInfiltrationLocations
   * Singularity.goToLocation support for non-city-specific locations (@Ansopedian)
   * All corporation functions are synchronous. Job assignment only works on the following cycle. (@stalefishies)
   * Add batch functionality to NS spendHashes API (@undeemiss)

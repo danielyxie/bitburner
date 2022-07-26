@@ -203,6 +203,7 @@ const singularity = {
   setFocus: SF4Cost(0.1),
   b1tflum3: SF4Cost(16),
   destroyW0r1dD43m0n: SF4Cost(32),
+  getCurrentWork: SF4Cost(0.5),
 };
 
 // Gang API

@@ -12,18 +12,18 @@ import { Work, WorkType } from "./Work";
 import { applyWorkStats, newWorkStats, sumWorkStats, WorkStats } from "./WorkStats";
 
 export enum ClassType {
-  StudyComputerScience = "StudyComputerScience",
-  DataStructures = "DataStructures",
-  Networks = "Networks",
-  Algorithms = "Algorithms",
+  StudyComputerScience = "STUDYCOMPUTERSCIENCE",
+  DataStructures = "DATASTRUCTURES",
+  Networks = "NETWORKS",
+  Algorithms = "ALGORITHMS",
 
-  Management = "Management",
-  Leadership = "Leadership",
+  Management = "MANAGEMENT",
+  Leadership = "LEADERSHIP",
 
-  GymStrength = "GymStrength",
-  GymDefense = "GymDefense",
-  GymDexterity = "GymDexterity",
-  GymAgility = "GymAgility",
+  GymStrength = "GYMSTRENGTH",
+  GymDefense = "GYMDEFENSE",
+  GymDexterity = "GYMDEXTERITY",
+  GymAgility = "GYMAGILITY",
 }
 
 export interface Class {
@@ -177,6 +177,15 @@ export class ClassWork extends Work {
         </>,
       );
     }
+  }
+
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      classType: this.classType,
+      location: this.location,
+    };
   }
 
   /**

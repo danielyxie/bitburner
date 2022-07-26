@@ -2344,6 +2344,15 @@ export interface Singularity {
    * @param callbackScript - Name of the script to launch in the next BN.
    */
   destroyW0r1dD43m0n(nextBN: number, callbackScript?: string): void;
+
+  /**
+   * Get the current work the player is doing.
+   * @remarks
+   * RAM cost: 0.5 GB * 16/4/1
+   *
+   * @returns - An object representing the current work. Fields depend on the kind of work.
+   */
+  getCurrentWork(): any | null;
 }
 
 /**

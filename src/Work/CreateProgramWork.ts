@@ -101,6 +101,14 @@ export class CreateProgramWork extends Work {
     }
   }
 
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      programName: this.programName,
+    };
+  }
+
   /**
    * Serialize the current object to a JSON save state.
    */

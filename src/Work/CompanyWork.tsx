@@ -54,6 +54,14 @@ export class CompanyWork extends Work {
     );
   }
 
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      companyName: this.companyName,
+    };
+  }
+
   /**
    * Serialize the current object to a JSON save state.
    */

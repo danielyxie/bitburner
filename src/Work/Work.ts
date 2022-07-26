@@ -14,6 +14,7 @@ export abstract class Work {
 
   abstract process(player: IPlayer, cycles: number): boolean;
   abstract finish(player: IPlayer, cancelled: boolean): void;
+  abstract APICopy(): Record<string, unknown>;
   abstract toJSON(): IReviverValue;
 }
 

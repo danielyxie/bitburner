@@ -84,6 +84,14 @@ export class GraftingWork extends Work {
     }
   }
 
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      augmentation: this.augmentation,
+    };
+  }
+
   /**
    * Serialize the current object to a JSON save state.
    */

@@ -83,6 +83,15 @@ export class FactionWork extends Work {
     }
   }
 
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      factionWorkType: this.factionWorkType,
+      factionName: this.factionName,
+    };
+  }
+
   /**
    * Serialize the current object to a JSON save state.
    */

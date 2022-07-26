@@ -9,6 +9,51 @@ import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
 import { newWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 
+enum newCrimeType {
+  SHOPLIFT = "SHOPLIFT",
+  ROBSTORE = "ROBSTORE",
+  MUG = "MUG",
+  LARCENY = "LARCENY",
+  DRUGS = "DRUGS",
+  BONDFORGERY = "BONDFORGERY",
+  TRAFFICKARMS = "TRAFFICKARMS",
+  HOMICIDE = "HOMICIDE",
+  GRANDTHEFTAUTO = "GRANDTHEFTAUTO",
+  KIDNAP = "KIDNAP",
+  ASSASSINATION = "ASSASSINATION",
+  HEIST = "HEIST",
+}
+
+const convertCrimeType = (crimeType: CrimeType): newCrimeType => {
+  switch (crimeType) {
+    case CrimeType.Shoplift:
+      return newCrimeType.SHOPLIFT;
+    case CrimeType.RobStore:
+      return newCrimeType.ROBSTORE;
+    case CrimeType.Mug:
+      return newCrimeType.MUG;
+    case CrimeType.Larceny:
+      return newCrimeType.LARCENY;
+    case CrimeType.Drugs:
+      return newCrimeType.DRUGS;
+    case CrimeType.BondForgery:
+      return newCrimeType.BONDFORGERY;
+    case CrimeType.TraffickArms:
+      return newCrimeType.TRAFFICKARMS;
+    case CrimeType.Homicide:
+      return newCrimeType.HOMICIDE;
+    case CrimeType.GrandTheftAuto:
+      return newCrimeType.GRANDTHEFTAUTO;
+    case CrimeType.Kidnap:
+      return newCrimeType.KIDNAP;
+    case CrimeType.Assassination:
+      return newCrimeType.ASSASSINATION;
+    case CrimeType.Heist:
+      return newCrimeType.HEIST;
+  }
+  return newCrimeType.SHOPLIFT;
+};
+
 interface CrimeWorkParams {
   crimeType: CrimeType;
   singularity: boolean;
@@ -72,7 +117,7 @@ export class CrimeWork extends Work {
     let karma = crime.karma;
     const success = determineCrimeSuccess(player, crime.type);
     if (success) {
-      player.gainMoney(gains.money, "crime");
+      player.gainMoney(gains.money * player.mults.crime_money, "crime");
       player.numPeopleKilled += crime.kills;
       player.gainIntelligenceExp(gains.intExp);
     } else {
@@ -88,8 +133,16 @@ export class CrimeWork extends Work {
     player.karma -= karma * focusPenalty;
   }
 
-  finish(player: IPlayer, cancelled: boolean): void {
-    if (cancelled) return;
+  finish(): void {
+    /** nothing to do */
+  }
+
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      crimeType: convertCrimeType(this.crimeType),
+    };
   }
 
   /**

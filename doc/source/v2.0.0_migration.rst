@@ -57,8 +57,7 @@ getPlayer
 
     The reason for that is that these fields are all, in one way or another, included in the new work field 'currentWork'.
     Some of these values are also irrelevant.
-    'currentWork' will be one of many different kind of value. For example when creating a program it will have a programName field.
-    One field that all kinds of work have in common is 'type' which denotes the current kind of work.
+    Take a look at the new singularity.getCurrentWork function.
 
     All fields ending in _mult have been moved to the 'mults' struct.
     For example: getPlayer().hacking_skill_mult is now getPlayer().mults.hacking_skill
