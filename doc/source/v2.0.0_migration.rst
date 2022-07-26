@@ -89,5 +89,11 @@ Singularity
 
 stock.buy and stock.sell
 ------------------------
+    
     These 2 functions were renamed to stock.buyStock and stock.sellStock because 'buy' and 'sell'
     are very common tokens that would trick the ram calculation.
+
+corporation.bribe
+-----------------
+
+    The ability to give stocks as bribe has been removed. The signature is now bribe(faction, money)

@@ -203,23 +203,21 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
     return division.researched[researchName] === undefined ? false : (division.researched[researchName] as boolean);
   }
 
-  function bribe(factionName: string, amountCash: number, amountShares: number): boolean {
+  function bribe(factionName: string, amountCash: number): boolean {
     if (!player.factions.includes(factionName)) throw new Error("Invalid faction name");
-    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0)
+    if (isNaN(amountCash) || amountCash < 0)
       throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
 
     const corporation = getCorporation();
     if (corporation.funds < amountCash) return false;
-    if (corporation.numShares < amountShares) return false;
     const faction = Factions[factionName];
     const info = faction.getInfo();
     if (!info.offersWork()) return false;
     if (player.hasGangWith(factionName)) return false;
 
-    const repGain = (amountCash + amountShares * corporation.sharePrice) / CorporationConstants.BribeToRepRatio;
+    const repGain = amountCash / CorporationConstants.BribeToRepRatio;
     faction.playerReputation += repGain;
     corporation.funds = corporation.funds - amountCash;
-    corporation.numShares -= amountShares;
 
     return true;
   }
@@ -1034,12 +1032,11 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       },
     bribe:
       (ctx: NetscriptContext) =>
-      (_factionName: unknown, _amountCash: unknown, _amountShares: unknown): boolean => {
+      (_factionName: unknown, _amountCash: unknown): boolean => {
         checkAccess(ctx);
         const factionName = ctx.helper.string("factionName", _factionName);
         const amountCash = ctx.helper.number("amountCash", _amountCash);
-        const amountShares = ctx.helper.number("amountShares", _amountShares);
-        return bribe(factionName, amountCash, amountShares);
+        return bribe(factionName, amountCash);
       },
     getBonusTime: (ctx: NetscriptContext) => (): number => {
       checkAccess(ctx);

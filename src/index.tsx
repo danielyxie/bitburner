@@ -40,3 +40,9 @@ function rerender(): void {
     throw new Error("You accidentally called window.print instead of ns.print");
   };
 })();
+
+(function () {
+  window.prompt = () => {
+    throw new Error("You accidentally called window.prompt instead of ns.prompt");
+  };
+})();
