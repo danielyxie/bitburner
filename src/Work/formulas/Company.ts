@@ -27,15 +27,15 @@ export const calculateCompanyWorkStats = (player: IPlayer, company: Company): Wo
   }
 
   let jobPerformance = companyPosition.calculateJobPerformance(
-    player.hacking,
-    player.strength,
-    player.defense,
-    player.dexterity,
-    player.agility,
-    player.charisma,
+    player.skills.hacking,
+    player.skills.strength,
+    player.skills.defense,
+    player.skills.dexterity,
+    player.skills.agility,
+    player.skills.charisma,
   );
 
-  jobPerformance += player.intelligence / CONSTANTS.MaxSkillLevel;
+  jobPerformance += player.skills.intelligence / CONSTANTS.MaxSkillLevel;
 
   return {
     money:

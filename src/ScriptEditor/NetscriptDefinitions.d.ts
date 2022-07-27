@@ -1,6 +1,27 @@
 /**
  * @public
  */
+export interface HP {
+  current: number;
+  max: number;
+}
+
+/**
+ * @public
+ */
+export interface Skills {
+  hacking: number;
+  strength: number;
+  defense: number;
+  dexterity: number;
+  agility: number;
+  charisma: number;
+  intelligence: number;
+}
+
+/**
+ * @public
+ */
 export interface PossibleInfiltrationLocation {
   city: string;
   name: string;
@@ -31,21 +52,9 @@ type FilenameOrPID = number | string;
  * @public
  */
 interface Player {
-  hacking: number;
-  hp: number;
-  max_hp: number;
-  strength: number;
-  defense: number;
-  dexterity: number;
-  agility: number;
-  charisma: number;
-  intelligence: number;
-  hacking_exp: number;
-  strength_exp: number;
-  defense_exp: number;
-  dexterity_exp: number;
-  agility_exp: number;
-  charisma_exp: number;
+  hp: HP;
+  skills: Skills;
+  exp: Skills;
   mults: Multipliers;
   numPeopleKilled: number;
   money: number;

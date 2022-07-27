@@ -112,13 +112,13 @@ export class Crime {
 
   successRate(p: IPerson): number {
     let chance: number =
-      this.hacking_success_weight * p.hacking +
-      this.strength_success_weight * p.strength +
-      this.defense_success_weight * p.defense +
-      this.dexterity_success_weight * p.dexterity +
-      this.agility_success_weight * p.agility +
-      this.charisma_success_weight * p.charisma +
-      CONSTANTS.IntelligenceCrimeWeight * p.intelligence;
+      this.hacking_success_weight * p.skills.hacking +
+      this.strength_success_weight * p.skills.strength +
+      this.defense_success_weight * p.skills.defense +
+      this.dexterity_success_weight * p.skills.dexterity +
+      this.agility_success_weight * p.skills.agility +
+      this.charisma_success_weight * p.skills.charisma +
+      CONSTANTS.IntelligenceCrimeWeight * p.skills.intelligence;
     chance /= CONSTANTS.MaxSkillLevel;
     chance /= this.difficulty;
     chance *= p.mults.crime_success;

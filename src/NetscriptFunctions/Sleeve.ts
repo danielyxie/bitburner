@@ -40,12 +40,12 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
       shock: 100 - sl.shock,
       sync: sl.sync,
       memory: sl.memory,
-      hacking: sl.hacking,
-      strength: sl.strength,
-      defense: sl.defense,
-      dexterity: sl.dexterity,
-      agility: sl.agility,
-      charisma: sl.charisma,
+      hacking: sl.skills.hacking,
+      strength: sl.skills.strength,
+      defense: sl.skills.defense,
+      dexterity: sl.skills.dexterity,
+      agility: sl.skills.agility,
+      charisma: sl.skills.charisma,
     };
   };
 
@@ -206,10 +206,10 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
         return {
           tor: false,
           city: sl.city,
-          hp: sl.hp,
+          hp: sl.hp.current,
           jobs: Object.keys(player.jobs), // technically sleeves have the same jobs as the player.
           jobTitle: Object.values(player.jobs),
-          maxHp: sl.max_hp,
+          maxHp: sl.hp.max,
 
           mult: {
             agility: sl.mults.agility,

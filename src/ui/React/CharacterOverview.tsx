@@ -44,8 +44,8 @@ function Intelligence(): React.ReactElement {
   const theme = useTheme();
   const player = use.Player();
   const classes = useStyles();
-  if (player.intelligence === 0) return <></>;
-  const progress = player.calculateSkillProgress(player.intelligence_exp);
+  if (player.skills.intelligence === 0) return <></>;
+  const progress = player.calculateSkillProgress(player.exp.intelligence);
 
   return (
     <>
@@ -54,7 +54,9 @@ function Intelligence(): React.ReactElement {
           <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
         </TableCell>
         <TableCell align="right" classes={{ root: classes.cell }}>
-          <Typography classes={{ root: classes.int }}>{numeralWrapper.formatSkill(player.intelligence)}</Typography>
+          <Typography classes={{ root: classes.int }}>
+            {numeralWrapper.formatSkill(player.skills.intelligence)}
+          </Typography>
         </TableCell>
         <TableCell align="right" classes={{ root: classes.cell }}>
           <Typography id="overview-int-hook" classes={{ root: classes.int }}>
@@ -292,27 +294,27 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   const theme = useTheme();
 
   const hackingProgress = player.calculateSkillProgress(
-    player.hacking_exp,
+    player.exp.hacking,
     player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
   );
   const strengthProgress = player.calculateSkillProgress(
-    player.strength_exp,
+    player.exp.strength,
     player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
   );
   const defenseProgress = player.calculateSkillProgress(
-    player.defense_exp,
+    player.exp.defense,
     player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
   );
   const dexterityProgress = player.calculateSkillProgress(
-    player.dexterity_exp,
+    player.exp.dexterity,
     player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
   const agilityProgress = player.calculateSkillProgress(
-    player.agility_exp,
+    player.exp.agility,
     player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
   );
   const charismaProgress = player.calculateSkillProgress(
-    player.charisma_exp,
+    player.exp.charisma,
     player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
   );
 
@@ -326,7 +328,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.hp }}>
-                {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
+                {numeralWrapper.formatHp(player.hp.current)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.hp.max)}
               </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
@@ -355,7 +357,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.hack }}>{numeralWrapper.formatSkill(player.hacking)}</Typography>
+              <Typography classes={{ root: classes.hack }}>
+                {numeralWrapper.formatSkill(player.skills.hacking)}
+              </Typography>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -379,7 +383,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.strength)}</Typography>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.strength)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
@@ -398,7 +404,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.defense)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
@@ -417,7 +425,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.dexterity)}</Typography>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.dexterity)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
@@ -436,7 +446,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.agility)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
               <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
@@ -455,7 +467,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
+              <Typography classes={{ root: classes.cha }}>
+                {numeralWrapper.formatSkill(player.skills.charisma)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>

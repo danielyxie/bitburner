@@ -47,9 +47,9 @@ function giveSourceFile(bitNodeNumber: number): void {
   } else {
     const playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
     Player.sourceFiles.push(playerSrcFile);
-    if (bitNodeNumber === 5 && Player.intelligence === 0) {
+    if (bitNodeNumber === 5 && Player.skills.intelligence === 0) {
       // Artificial Intelligence
-      Player.intelligence = 1;
+      Player.skills.intelligence = 1;
     }
     dialogBoxCreate(
       <>
@@ -69,11 +69,11 @@ export function enterBitNode(router: IRouter, flume: boolean, destroyedBitNode: 
   if (!flume) {
     giveSourceFile(destroyedBitNode);
   } else if (Player.sourceFileLvl(5) === 0 && newBitNode !== 5) {
-    Player.intelligence = 0;
-    Player.intelligence_exp = 0;
+    Player.skills.intelligence = 0;
+    Player.exp.intelligence = 0;
   }
-  if (newBitNode === 5 && Player.intelligence === 0) {
-    Player.intelligence = 1;
+  if (newBitNode === 5 && Player.skills.intelligence === 0) {
+    Player.skills.intelligence = 1;
   }
   // Set new Bit Node
   Player.bitNodeN = newBitNode;

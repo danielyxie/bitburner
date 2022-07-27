@@ -289,27 +289,27 @@ export class Sleeve extends Person {
     // Also the player does not earn anything
     if (fromOtherSleeve) {
       if (exp.hack > 0) {
-        this.hacking_exp += exp.hack;
+        this.exp.hacking += exp.hack;
       }
 
       if (exp.str > 0) {
-        this.strength_exp += exp.str;
+        this.exp.strength += exp.str;
       }
 
       if (exp.def > 0) {
-        this.defense_exp += exp.def;
+        this.exp.defense += exp.def;
       }
 
       if (exp.dex > 0) {
-        this.dexterity_exp += exp.dex;
+        this.exp.dexterity += exp.dex;
       }
 
       if (exp.agi > 0) {
-        this.agility_exp += exp.agi;
+        this.exp.agility += exp.agi;
       }
 
       if (exp.cha > 0) {
-        this.charisma_exp += exp.cha;
+        this.exp.charisma += exp.cha;
       }
 
       return createTaskTracker();
@@ -469,12 +469,12 @@ export class Sleeve extends Person {
       }
 
       const jobPerformance: number = companyPosition.calculateJobPerformance(
-        this.hacking,
-        this.strength,
-        this.defense,
-        this.dexterity,
-        this.agility,
-        this.charisma,
+        this.skills.hacking,
+        this.skills.strength,
+        this.skills.defense,
+        this.skills.dexterity,
+        this.skills.agility,
+        this.skills.charisma,
       );
       const favorMult = 1 + company.favor / 100;
 
@@ -485,12 +485,12 @@ export class Sleeve extends Person {
   }
 
   installAugmentation(aug: Augmentation): void {
-    this.hacking_exp = 0;
-    this.strength_exp = 0;
-    this.defense_exp = 0;
-    this.dexterity_exp = 0;
-    this.agility_exp = 0;
-    this.charisma_exp = 0;
+    this.exp.hacking = 0;
+    this.exp.strength = 0;
+    this.exp.defense = 0;
+    this.exp.dexterity = 0;
+    this.exp.agility = 0;
+    this.exp.charisma = 0;
     this.applyAugmentation(aug);
     this.augmentations.push({ name: aug.name, level: 1 });
     this.updateStatLevels();
@@ -509,12 +509,12 @@ export class Sleeve extends Person {
    */
   prestige(p: IPlayer): void {
     // Reset exp
-    this.hacking_exp = 0;
-    this.strength_exp = 0;
-    this.defense_exp = 0;
-    this.dexterity_exp = 0;
-    this.agility_exp = 0;
-    this.charisma_exp = 0;
+    this.exp.hacking = 0;
+    this.exp.strength = 0;
+    this.exp.defense = 0;
+    this.exp.dexterity = 0;
+    this.exp.agility = 0;
+    this.exp.charisma = 0;
 
     // Reset task-related stuff
     this.resetTaskStatus(p);
@@ -1232,10 +1232,10 @@ export class Sleeve extends Person {
       return false;
     }
 
-    this.hp -= amt;
-    if (this.hp <= 0) {
+    this.hp.current -= amt;
+    if (this.hp.current <= 0) {
       this.shock = Math.min(1, this.shock - 0.5);
-      this.hp = this.max_hp;
+      this.hp.current = this.hp.max;
       return true;
     } else {
       return false;

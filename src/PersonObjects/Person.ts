@@ -8,32 +8,30 @@ import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
 import { IPerson } from "./IPerson";
 import { defaultMultipliers, mergeMultipliers } from "./Multipliers";
+import { Skills } from "./Skills";
+import { HP } from "./HP";
 
 // Base class representing a person-like object
 export abstract class Person implements IPerson {
-  /**
-   * Stats
-   */
-  hacking = 1;
-  strength = 1;
-  defense = 1;
-  dexterity = 1;
-  agility = 1;
-  charisma = 1;
-  intelligence = 0;
-  hp = 10;
-  max_hp = 10;
-
-  /**
-   * Experience
-   */
-  hacking_exp = 0;
-  strength_exp = 0;
-  defense_exp = 0;
-  dexterity_exp = 0;
-  agility_exp = 0;
-  charisma_exp = 0;
-  intelligence_exp = 0;
+  hp: HP = { current: 10, max: 10 };
+  skills: Skills = {
+    hacking: 1,
+    strength: 1,
+    defense: 1,
+    dexterity: 1,
+    agility: 1,
+    charisma: 1,
+    intelligence: 1,
+  };
+  exp: Skills = {
+    hacking: 0,
+    strength: 0,
+    defense: 0,
+    dexterity: 0,
+    agility: 0,
+    charisma: 0,
+    intelligence: 0,
+  };
 
   mults = defaultMultipliers();
 
@@ -81,12 +79,12 @@ export abstract class Person implements IPerson {
   getFactionFieldWorkRepGain(): number {
     const t =
       (0.9 *
-        (this.hacking / CONSTANTS.MaxSkillLevel +
-          this.strength / CONSTANTS.MaxSkillLevel +
-          this.defense / CONSTANTS.MaxSkillLevel +
-          this.dexterity / CONSTANTS.MaxSkillLevel +
-          this.agility / CONSTANTS.MaxSkillLevel +
-          this.charisma / CONSTANTS.MaxSkillLevel)) /
+        (this.skills.hacking / CONSTANTS.MaxSkillLevel +
+          this.skills.strength / CONSTANTS.MaxSkillLevel +
+          this.skills.defense / CONSTANTS.MaxSkillLevel +
+          this.skills.dexterity / CONSTANTS.MaxSkillLevel +
+          this.skills.agility / CONSTANTS.MaxSkillLevel +
+          this.skills.charisma / CONSTANTS.MaxSkillLevel)) /
       5.5;
     return t * this.mults.faction_rep;
   }
@@ -96,7 +94,7 @@ export abstract class Person implements IPerson {
    * when doing Hacking Work for a faction
    */
   getFactionHackingWorkRepGain(): number {
-    return (this.hacking / CONSTANTS.MaxSkillLevel) * this.mults.faction_rep;
+    return (this.skills.hacking / CONSTANTS.MaxSkillLevel) * this.mults.faction_rep;
   }
 
   /**
@@ -106,11 +104,11 @@ export abstract class Person implements IPerson {
   getFactionSecurityWorkRepGain(): number {
     const t =
       (0.9 *
-        (this.hacking / CONSTANTS.MaxSkillLevel +
-          this.strength / CONSTANTS.MaxSkillLevel +
-          this.defense / CONSTANTS.MaxSkillLevel +
-          this.dexterity / CONSTANTS.MaxSkillLevel +
-          this.agility / CONSTANTS.MaxSkillLevel)) /
+        (this.skills.hacking / CONSTANTS.MaxSkillLevel +
+          this.skills.strength / CONSTANTS.MaxSkillLevel +
+          this.skills.defense / CONSTANTS.MaxSkillLevel +
+          this.skills.dexterity / CONSTANTS.MaxSkillLevel +
+          this.skills.agility / CONSTANTS.MaxSkillLevel)) /
       4.5;
     return t * this.mults.faction_rep;
   }
@@ -126,44 +124,44 @@ export abstract class Person implements IPerson {
    * Update all stat levels
    */
   updateStatLevels(): void {
-    this.hacking = Math.max(
+    this.skills.hacking = Math.max(
       1,
-      Math.floor(this.calculateStat(this.hacking_exp, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
+      Math.floor(this.calculateStat(this.exp.hacking, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
     );
-    this.strength = Math.max(
+    this.skills.strength = Math.max(
       1,
       Math.floor(
-        this.calculateStat(this.strength_exp, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
+        this.calculateStat(this.exp.strength, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
       ),
     );
-    this.defense = Math.max(
+    this.skills.defense = Math.max(
       1,
-      Math.floor(this.calculateStat(this.defense_exp, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
+      Math.floor(this.calculateStat(this.exp.defense, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
     );
-    this.dexterity = Math.max(
+    this.skills.dexterity = Math.max(
       1,
       Math.floor(
-        this.calculateStat(this.dexterity_exp, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
+        this.calculateStat(this.exp.dexterity, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
       ),
     );
-    this.agility = Math.max(
+    this.skills.agility = Math.max(
       1,
-      Math.floor(this.calculateStat(this.agility_exp, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
+      Math.floor(this.calculateStat(this.exp.agility, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
     );
-    this.charisma = Math.max(
+    this.skills.charisma = Math.max(
       1,
       Math.floor(
-        this.calculateStat(this.charisma_exp, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
+        this.calculateStat(this.exp.charisma, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
       ),
     );
 
-    const ratio: number = this.hp / this.max_hp;
-    this.max_hp = Math.floor(10 + this.defense / 10);
-    this.hp = Math.round(this.max_hp * ratio);
+    const ratio: number = this.hp.current / this.hp.max;
+    this.hp.max = Math.floor(10 + this.skills.defense / 10);
+    this.hp.current = Math.round(this.hp.max * ratio);
   }
 
   getIntelligenceBonus(weight: number): number {
-    return calculateIntelligenceBonus(this.intelligence, weight);
+    return calculateIntelligenceBonus(this.skills.intelligence, weight);
   }
 
   abstract takeDamage(amt: number): boolean;

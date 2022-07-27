@@ -403,10 +403,10 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         if (player.bladeburner instanceof Bladeburner) {
           return true; // Already member
         } else if (
-          player.strength >= 100 &&
-          player.defense >= 100 &&
-          player.dexterity >= 100 &&
-          player.agility >= 100
+          player.skills.strength >= 100 &&
+          player.skills.defense >= 100 &&
+          player.skills.dexterity >= 100 &&
+          player.skills.agility >= 100
         ) {
           player.bladeburner = new Bladeburner(player);
           ctx.log(() => "You have been accepted into the Bladeburner division");

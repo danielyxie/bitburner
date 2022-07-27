@@ -29,38 +29,40 @@ export function StatsElement(props: IProps): React.ReactElement {
           name="HP"
           color={Settings.theme.hp}
           data={{
-            content: `${numeralWrapper.formatHp(props.sleeve.hp)} / ${numeralWrapper.formatHp(props.sleeve.max_hp)}`,
+            content: `${numeralWrapper.formatHp(props.sleeve.hp.current)} / ${numeralWrapper.formatHp(
+              props.sleeve.hp.max,
+            )}`,
           }}
         />
         <StatsRow
           name="Hacking"
           color={Settings.theme.hack}
-          data={{ level: props.sleeve.hacking, exp: props.sleeve.hacking_exp }}
+          data={{ level: props.sleeve.skills.hacking, exp: props.sleeve.exp.hacking }}
         />
         <StatsRow
           name="Strength"
           color={Settings.theme.combat}
-          data={{ level: props.sleeve.strength, exp: props.sleeve.strength_exp }}
+          data={{ level: props.sleeve.skills.strength, exp: props.sleeve.exp.strength }}
         />
         <StatsRow
           name="Defense"
           color={Settings.theme.combat}
-          data={{ level: props.sleeve.defense, exp: props.sleeve.defense_exp }}
+          data={{ level: props.sleeve.skills.defense, exp: props.sleeve.exp.defense }}
         />
         <StatsRow
           name="Dexterity"
           color={Settings.theme.combat}
-          data={{ level: props.sleeve.dexterity, exp: props.sleeve.dexterity_exp }}
+          data={{ level: props.sleeve.skills.dexterity, exp: props.sleeve.exp.dexterity }}
         />
         <StatsRow
           name="Agility"
           color={Settings.theme.combat}
-          data={{ level: props.sleeve.agility, exp: props.sleeve.agility_exp }}
+          data={{ level: props.sleeve.skills.agility, exp: props.sleeve.exp.agility }}
         />
         <StatsRow
           name="Charisma"
           color={Settings.theme.cha}
-          data={{ level: props.sleeve.charisma, exp: props.sleeve.charisma_exp }}
+          data={{ level: props.sleeve.skills.charisma, exp: props.sleeve.exp.charisma }}
         />
         <TableRow>
           <TableCell classes={{ root: classes.cellNone }}>

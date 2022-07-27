@@ -60,7 +60,16 @@ getPlayer
     Take a look at the new singularity.getCurrentWork function.
 
     All fields ending in _mult have been moved to the 'mults' struct.
-    For example: getPlayer().hacking_skill_mult is now getPlayer().mults.hacking_skill
+    For example: getPlayer().hacking_skill_mult => getPlayer().mults.hacking_skill
+
+    skills have been moved to the skills struct
+    For example: getPlayer().hacking => getPlayer().skills.hacking
+
+    exp have been moved to the exp struct
+    For example: getPlayer().hacking_exp => getPlayer().exp.hacking
+
+    hp have been moved to the hp struct
+    For example: getPlayer().max_hp => getPlayer().hp.max or hp.current
 
 workForCompany
 --------------

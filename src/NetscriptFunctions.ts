@@ -941,7 +941,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     share: (ctx: NetscriptContext) => async (): Promise<void> => {
       ctx.log(() => "Sharing this computer.");
-      const end = StartSharing(workerScript.scriptRef.threads * calculateIntelligenceBonus(Player.intelligence, 2));
+      const end = StartSharing(
+        workerScript.scriptRef.threads * calculateIntelligenceBonus(Player.skills.intelligence, 2),
+      );
       return netscriptDelay(10000, workerScript).finally(function () {
         ctx.log(() => "Finished sharing this computer.");
         end();
@@ -1614,8 +1616,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     getHackingLevel: (ctx: NetscriptContext) => (): number => {
       Player.updateSkillLevels();
-      ctx.log(() => `returned ${Player.hacking}`);
-      return Player.hacking;
+      ctx.log(() => `returned ${Player.skills.hacking}`);
+      return Player.skills.hacking;
     },
     getHackingMultipliers: () => (): HackingMultipliers => {
       return {
@@ -2434,21 +2436,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     getPlayer: () => (): INetscriptPlayer => {
       const data = {
-        hacking: Player.hacking,
         hp: Player.hp,
-        max_hp: Player.max_hp,
-        strength: Player.strength,
-        defense: Player.defense,
-        dexterity: Player.dexterity,
-        agility: Player.agility,
-        charisma: Player.charisma,
-        intelligence: Player.intelligence,
-        hacking_exp: Player.hacking_exp,
-        strength_exp: Player.strength_exp,
-        defense_exp: Player.defense_exp,
-        dexterity_exp: Player.dexterity_exp,
-        agility_exp: Player.agility_exp,
-        charisma_exp: Player.charisma_exp,
+        skills: Player.skills,
+        exp: Player.exp,
         hacking_chance_mult: Player.mults.hacking_chance,
         mults: JSON.parse(JSON.stringify(Player.mults)),
         numPeopleKilled: Player.numPeopleKilled,
@@ -2469,7 +2459,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         inBladeburner: Player.inBladeburner(),
         hasCorporation: Player.hasCorporation(),
         entropy: Player.entropy,
-        currentWork: Player.currentWork,
       };
       Object.assign(data.jobs, Player.jobs);
       return data;

@@ -36,7 +36,7 @@ export function netscriptCanHack(server: Server, p: IPlayer): IReturnStatus {
   }
 
   const s = server;
-  if (s.requiredHackingSkill > p.hacking) {
+  if (s.requiredHackingSkill > p.skills.hacking) {
     return {
       res: false,
       msg: `Cannot hack ${server.hostname} server because your hacking skill is not high enough`,

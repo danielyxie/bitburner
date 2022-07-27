@@ -86,6 +86,22 @@ const getPlayerFields = [
   "workDefExpGainRate",
   "workAgiExpGained",
   "className",
+  "hacking",
+  "strength",
+  "defense",
+  "dexterity",
+  "agility",
+  "charisma",
+  "intelligence",
+  "hacking_exp",
+  "strength_exp",
+  "defense_exp",
+  "dexterity_exp",
+  "agility_exp",
+  "charisma_exp",
+  "intelligence_exp",
+  "hp",
+  "max_hp",
 ];
 
 const mults = [
@@ -188,7 +204,7 @@ export const v2APIBreak = () => {
   for (const f of getPlayerFields) {
     rules.push({
       match: new RegExp(f, "g"),
-      reason: `The work system is completely reworked and ns.getPlayer().${f} no longer exists. This data is likely available inside ns.getPlayer().currentWork`,
+      reason: `The work system is completely reworked and ns.getPlayer().${f} no longer exists. This data is likely available inside ns.getPlayer().currentWork, skills, exp, or hp`,
       offenders: [],
     });
   }

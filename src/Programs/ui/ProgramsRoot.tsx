@@ -48,7 +48,7 @@ export function ProgramsRoot(): React.ReactElement {
   }, []);
 
   const getHackingLevelRemaining = (lvl: number): number => {
-    return Math.ceil(Math.max(lvl - (player.hacking + player.intelligence / 2), 0));
+    return Math.ceil(Math.max(lvl - (player.skills.hacking + player.skills.intelligence / 2), 0));
   };
 
   const getProgCompletion = (name: string): number => {

@@ -293,38 +293,38 @@ export function CharacterStats(): React.ReactElement {
               <StatsRow
                 name="Hacking"
                 color={Settings.theme.hack}
-                data={{ level: player.hacking, exp: player.hacking_exp }}
+                data={{ level: player.skills.hacking, exp: player.exp.hacking }}
               />
               <StatsRow
                 name="Strength"
                 color={Settings.theme.combat}
-                data={{ level: player.strength, exp: player.strength_exp }}
+                data={{ level: player.skills.strength, exp: player.exp.strength }}
               />
               <StatsRow
                 name="Defense"
                 color={Settings.theme.combat}
-                data={{ level: player.defense, exp: player.defense_exp }}
+                data={{ level: player.skills.defense, exp: player.exp.defense }}
               />
               <StatsRow
                 name="Dexterity"
                 color={Settings.theme.combat}
-                data={{ level: player.dexterity, exp: player.dexterity_exp }}
+                data={{ level: player.skills.dexterity, exp: player.exp.dexterity }}
               />
               <StatsRow
                 name="Agility"
                 color={Settings.theme.combat}
-                data={{ level: player.agility, exp: player.agility_exp }}
+                data={{ level: player.skills.agility, exp: player.exp.agility }}
               />
               <StatsRow
                 name="Charisma"
                 color={Settings.theme.cha}
-                data={{ level: player.charisma, exp: player.charisma_exp }}
+                data={{ level: player.skills.charisma, exp: player.exp.charisma }}
               />
-              {player.intelligence > 0 && (player.bitNodeN === 5 || player.sourceFileLvl(5) > 0) && (
+              {player.skills.intelligence > 0 && (player.bitNodeN === 5 || player.sourceFileLvl(5) > 0) && (
                 <StatsRow
                   name="Intelligence"
                   color={Settings.theme.int}
-                  data={{ level: player.intelligence, exp: player.intelligence_exp }}
+                  data={{ level: player.skills.intelligence, exp: player.exp.intelligence }}
                 />
               )}
             </TableBody>

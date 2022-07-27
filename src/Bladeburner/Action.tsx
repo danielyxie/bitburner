@@ -167,8 +167,8 @@ export class Action implements IAction {
     let baseTime = difficulty / BladeburnerConstants.DifficultyToTimeFactor;
     const skillFac = inst.skillMultipliers.actionTime; // Always < 1
 
-    const effAgility = person.agility * inst.skillMultipliers.effAgi;
-    const effDexterity = person.dexterity * inst.skillMultipliers.effDex;
+    const effAgility = person.skills.agility * inst.skillMultipliers.effAgi;
+    const effDexterity = person.skills.dexterity * inst.skillMultipliers.effDex;
     const statFac =
       0.5 *
       (Math.pow(effAgility, BladeburnerConstants.EffAgiExponentialFactor) +

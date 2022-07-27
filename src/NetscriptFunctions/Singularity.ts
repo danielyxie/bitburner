@@ -1257,7 +1257,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           const wd = GetServer(SpecialServers.WorldDaemon);
           if (!(wd instanceof Server))
             throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
-          if (player.hacking < wd.requiredHackingSkill) return false;
+          if (player.skills.hacking < wd.requiredHackingSkill) return false;
           if (!wd.hasAdminRights) return false;
           return true;
         };

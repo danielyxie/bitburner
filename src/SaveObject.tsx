@@ -218,7 +218,7 @@ class BitburnerSaveObject {
       totalPlaytime: importedPlayer.totalPlaytime,
 
       money: importedPlayer.money,
-      hacking: importedPlayer.hacking,
+      hacking: importedPlayer.skills.hacking,
 
       augmentations: importedPlayer.augmentations?.reduce<number>((total, current) => (total += current.level), 0) ?? 0,
       factions: importedPlayer.factions?.length ?? 0,
@@ -462,6 +462,22 @@ function evaluateVersionCompatibility(ver: string | number): void {
       if (create) Player.getHomeComputer().pushProgram(create);
       const graft = anyPlayer["graftAugmentationName"];
       if (graft) Player.augmentations.push({ name: graft, level: 1 });
+    }
+    if (ver < 22) {
+      // reset HP correctly to avoid crash
+      anyPlayer.hp = { current: 1, max: 1 };
+      for (const sleeve of anyPlayer.sleeves) {
+        sleeve.hp = { current: 1, max: 1 };
+      }
+
+      // transfer over old exp to new struct
+      anyPlayer.exp.hacking = anyPlayer.hacking_exp;
+      anyPlayer.exp.strength = anyPlayer.strength_exp;
+      anyPlayer.exp.defense = anyPlayer.defense_exp;
+      anyPlayer.exp.dexterity = anyPlayer.dexterity_exp;
+      anyPlayer.exp.agility = anyPlayer.agility_exp;
+      anyPlayer.exp.charisma = anyPlayer.charisma_exp;
+      anyPlayer.exp.intelligence = anyPlayer.intelligence_exp;
       v2APIBreak();
     }
   }

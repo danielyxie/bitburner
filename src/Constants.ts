@@ -89,7 +89,7 @@ export const CONSTANTS: {
   LatestUpdate: string;
 } = {
   VersionString: "2.0.0",
-  VersionNumber: 21,
+  VersionNumber: 22,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -255,7 +255,7 @@ v2.0.0 - 2022-07-19 Work rework
   * Company faction require 400k rep to join (from 200k)
   * Backdooring company server reduces faction requirement to 300k.
   * All work generally no longer keep track of cumulative gains like exp and reputation since it's applied instantly.
-  * getPlayer returns way less fields but does return the new 'currentWork' field.
+  * getPlayer returns way less fields but does return the new 'currentWork' field, some fields are moved around.
 
   API breaks
 

@@ -15,13 +15,13 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 
 function requireHackingLevel(lvl: number) {
   return function (p: IPlayer) {
-    return p.hacking + p.intelligence / 2 >= lvl;
+    return p.skills.hacking + p.skills.intelligence / 2 >= lvl;
   };
 }
 
 function bitFlumeRequirements() {
   return function (p: IPlayer) {
-    return p.sourceFiles.length > 0 && p.hacking >= 1;
+    return p.sourceFiles.length > 0 && p.skills.hacking >= 1;
   };
 }
 
@@ -308,11 +308,12 @@ export const programsMetadata: IProgramCreationParams[] = [
     create: null,
     run: (router: IRouter, terminal: ITerminal, player: IPlayer): void => {
       const numAugReq = BitNodeMultipliers.DaedalusAugsRequirement;
-      const fulfilled = player.augmentations.length >= numAugReq && player.money > 1e11 && player.hacking >= 2500;
+      const fulfilled =
+        player.augmentations.length >= numAugReq && player.money > 1e11 && player.skills.hacking >= 2500;
       if (!fulfilled) {
         terminal.print(`Augmentations: ${player.augmentations.length} / ${numAugReq}`);
         terminal.print(`Money: ${numeralWrapper.formatMoney(player.money)} / $100b`);
-        terminal.print(`Hacking skill: ${player.hacking} / 2500`);
+        terminal.print(`Hacking skill: ${player.skills.hacking} / 2500`);
         return;
       }
 

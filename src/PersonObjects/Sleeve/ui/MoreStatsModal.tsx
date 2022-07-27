@@ -20,33 +20,33 @@ export function MoreStatsModal(props: IProps): React.ReactElement {
         rows={[
           [
             <>Hacking:&nbsp;</>,
-            props.sleeve.hacking,
-            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.hacking_exp)} exp)</>,
+            props.sleeve.skills.hacking,
+            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.exp.hacking)} exp)</>,
           ],
           [
             <>Strength:&nbsp;</>,
-            props.sleeve.strength,
-            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.strength_exp)} exp)</>,
+            props.sleeve.skills.strength,
+            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.exp.strength)} exp)</>,
           ],
           [
             <>Defense:&nbsp;</>,
-            props.sleeve.defense,
-            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.defense_exp)} exp)</>,
+            props.sleeve.skills.defense,
+            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.exp.defense)} exp)</>,
           ],
           [
             <>Dexterity:&nbsp;</>,
-            props.sleeve.dexterity,
-            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.dexterity_exp)} exp)</>,
+            props.sleeve.skills.dexterity,
+            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.exp.dexterity)} exp)</>,
           ],
           [
             <>Agility:&nbsp;</>,
-            props.sleeve.agility,
-            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.agility_exp)} exp)</>,
+            props.sleeve.skills.agility,
+            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.exp.agility)} exp)</>,
           ],
           [
             <>Charisma:&nbsp;</>,
-            props.sleeve.charisma,
-            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.charisma_exp)} exp)</>,
+            props.sleeve.skills.charisma,
+            <>&nbsp;({numeralWrapper.formatExp(props.sleeve.exp.charisma)} exp)</>,
           ],
         ]}
         title="Stats:"
