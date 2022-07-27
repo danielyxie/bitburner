@@ -138,7 +138,8 @@ const mults = [
 ];
 
 interface IRule {
-  match: RegExp;
+  matchJS: RegExp;
+  matchScript?: RegExp;
   reason: string;
   offenders: IFileLine[];
 }
@@ -148,38 +149,45 @@ export const v2APIBreak = () => {
   if (!home) throw new Error("'home' server was not found.");
   const rules: IRule[] = [
     {
-      match: /ns\.workForCompany/g,
+      matchJS: /ns\.workForCompany/g,
+      matchScript: /workForCompany/g,
       reason: "workForCompany argument companyName is now not-optional.",
       offenders: [],
     },
     {
-      match: /ns\.getScriptExpGain/g,
+      matchJS: /ns\.getScriptExpGain/g,
+      matchScript: /getScriptExpGain/g,
       reason: "getScriptExpGain with 0 argument no longer returns the sum of all scripts. Use getTotalScriptExpGain",
       offenders: [],
     },
     {
-      match: /ns\.getScriptExpGain/g,
+      matchJS: /ns\.getScriptExpGain/g,
+      matchScript: /getScriptExpGain/g,
       reason: "getScriptIncome with 0 argument no longer returns the sum of all scripts. Use getTotalScriptIncome",
       offenders: [],
     },
     {
-      match: /ns\.scp/g,
+      matchJS: /ns\.scp/g,
+      matchScript: /scp/g,
       reason:
         "scp arguments were switch, it is now scp(files, destination, optionally_source). If you were using 2 argument (not 3) this doesn't affect you.",
       offenders: [],
     },
     {
-      match: /ns\.stock\.buy/g,
+      matchJS: /ns\.stock\.buy/g,
+      matchScript: /stock\.buy/g,
       reason: "buy is a very common word so in order to avoid ram costs it was renamed ns.stock.buyStock",
       offenders: [],
     },
     {
-      match: /ns\.stock\.sell/g,
+      matchJS: /ns\.stock\.sell/g,
+      matchScript: /stock\.sell/g,
       reason: "sell is a very common word so in order to avoid ram costs it was renamed ns.stock.sellStock",
       offenders: [],
     },
     {
-      match: /ns\.corporation\.bribe/g,
+      matchJS: /ns\.corporation\.bribe/g,
+      matchScript: /corporation\.bribe/g,
       reason: "bribe no longer allows you to give shares of the corporation, only money",
       offenders: [],
     },
@@ -187,7 +195,7 @@ export const v2APIBreak = () => {
 
   for (const fn of singularity) {
     rules.push({
-      match: new RegExp(`ns.${fn}`, "g"),
+      matchJS: new RegExp(`ns.${fn}`, "g"),
       reason: `ns.${fn} was moved to ns.singularity.${fn}`,
       offenders: [],
     });
@@ -195,7 +203,7 @@ export const v2APIBreak = () => {
 
   for (const mult of mults) {
     rules.push({
-      match: new RegExp(mult, "g"),
+      matchJS: new RegExp(mult, "g"),
       reason: `ns.getPlayer().${mult} was moved to ns.getPlayer().mults.${mult.slice(0, mult.length - 5)}`,
       offenders: [],
     });
@@ -203,7 +211,7 @@ export const v2APIBreak = () => {
 
   for (const f of getPlayerFields) {
     rules.push({
-      match: new RegExp(f, "g"),
+      matchJS: new RegExp(f, "g"),
       reason: `The work system is completely reworked and ns.getPlayer().${f} no longer exists. This data is likely available inside ns.getPlayer().currentWork, skills, exp, or hp`,
       offenders: [],
     });
@@ -245,7 +253,7 @@ const formatRules = (rules: IRule[]): string => {
     "This file contains the list of potential API break. A pattern was used to look through all your files and note the spots where you might have a problem. Not everything here is broken.";
   for (const rule of rules) {
     if (rule.offenders.length === 0) continue;
-    txt += String(rule.match) + "\n";
+    txt += String(rule.matchJS) + "\n";
     txt += rule.reason + "\n\n";
     txt += formatOffenders(rule.offenders);
     txt += "\n\n";
@@ -258,7 +266,8 @@ const processScript = (rules: IRule[], script: Script) => {
   for (let i = 0; i < lines.length; i++) {
     for (const rule of rules) {
       const line = lines[i];
-      if (line.match(rule.match)) {
+      const match = script.filename.endsWith(".script") ? rule.matchScript ?? rule.matchJS : rule.matchJS;
+      if (line.match(match)) {
         rule.offenders.push({
           file: script.filename,
           line: i + 1,
