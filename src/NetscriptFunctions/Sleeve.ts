@@ -206,10 +206,9 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
         return {
           tor: false,
           city: sl.city,
-          hp: sl.hp.current,
+          hp: sl.hp,
           jobs: Object.keys(player.jobs), // technically sleeves have the same jobs as the player.
           jobTitle: Object.values(player.jobs),
-          maxHp: sl.hp.max,
 
           mult: {
             agility: sl.mults.agility,
@@ -323,7 +322,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
       },
     getSleeveAugmentationRepReq:
       (ctx: NetscriptContext) =>
-      (_augName: unknown, _basePrice = false): number => {
+      (_augName: unknown): number => {
         checkSleeveAPIAccess(ctx);
         const augName = ctx.helper.string("augName", _augName);
         const aug: Augmentation = StaticAugmentations[augName];

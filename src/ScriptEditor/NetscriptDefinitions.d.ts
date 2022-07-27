@@ -1006,10 +1006,8 @@ export interface SleeveSkills {
 export interface SleeveInformation {
   /** Location of the sleeve */
   city: string;
-  /** Current hp of the sleeve */
-  hp: number;
-  /** Max hp of the sleeve */
-  maxHp: number;
+  /** hp of the sleeve */
+  hp: HP;
   /** Jobs available to the sleeve */
   jobs: string[];
   /** Job titles available to the sleeve */
