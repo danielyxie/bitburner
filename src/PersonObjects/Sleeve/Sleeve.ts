@@ -521,8 +521,6 @@ export class Sleeve extends Person {
     this.shock = 1;
     this.storedCycles = 0;
     this.sync = Math.max(this.memory, 1);
-
-    this.logs = [];
   }
 
   /**

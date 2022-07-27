@@ -166,7 +166,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const safeGetServer = function (hostname: string, ctx: NetscriptContext): BaseServer {
     const server = GetServer(hostname);
     if (server == null) {
-      throw ctx.makeRuntimeErrorMsg(`Invalid hostname: ${hostname}`);
+      const str = hostname === "" ? "'' (empty string)" : "'" + hostname + "'";
+      throw ctx.makeRuntimeErrorMsg(`Invalid hostname: ${str}`);
     }
     return server;
   };
