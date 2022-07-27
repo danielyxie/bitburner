@@ -117,11 +117,6 @@ export class Sleeve extends Person {
   bbContract = "";
 
   /**
-   * Keeps track of events/notifications for this sleeve
-   */
-  logs: string[] = [];
-
-  /**
    * Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs
    */
   memory = 1;
@@ -496,14 +491,6 @@ export class Sleeve extends Person {
     this.updateStatLevels();
   }
 
-  log(entry: string): void {
-    const MaxLogSize = 50;
-    this.logs.push(entry);
-    if (this.logs.length > MaxLogSize) {
-      this.logs.shift();
-    }
-  }
-
   /**
    * Called on every sleeve for a Source File Prestige
    */
@@ -543,12 +530,12 @@ export class Sleeve extends Person {
    * Returns an object containing the amount of experience that should be
    * transferred to all other sleeves
    */
-  process(p: IPlayer, numCycles = 1): ITaskTracker | null {
+  process(p: IPlayer, numCycles = 1): void {
     // Only process once every second (5 cycles)
     const CyclesPerSecond = 1000 / CONSTANTS.MilliPerCycle;
     this.storedCycles += numCycles;
     if (this.storedCycles < CyclesPerSecond) {
-      return null;
+      return;
     }
 
     let cyclesUsed = this.storedCycles;
@@ -570,18 +557,17 @@ export class Sleeve extends Person {
     // Shock gradually goes towards 100
     this.shock = Math.min(100, this.shock + 0.0001 * cyclesUsed);
 
-    let retValue: ITaskTracker = createTaskTracker();
     switch (this.currentTask) {
       case SleeveTaskType.Idle:
         break;
       case SleeveTaskType.Class:
       case SleeveTaskType.Gym:
         this.updateTaskGainRates(p);
-        retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
+        this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
         this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
         break;
       case SleeveTaskType.Faction: {
-        retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
+        this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
         this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
 
         // Gain faction reputation
@@ -603,7 +589,7 @@ export class Sleeve extends Person {
         break;
       }
       case SleeveTaskType.Company: {
-        retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
+        this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
         this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
 
         const company: Company = Companies[this.currentTaskLocation];
@@ -629,7 +615,7 @@ export class Sleeve extends Person {
 
     if (this.currentTaskMaxTime !== 0 && this.currentTaskTime >= this.currentTaskMaxTime) {
       if (this.currentTask === SleeveTaskType.Crime || this.currentTask === SleeveTaskType.Bladeburner) {
-        retValue = this.finishTask(p);
+        this.finishTask(p);
       } else {
         this.finishTask(p);
       }
@@ -639,7 +625,7 @@ export class Sleeve extends Person {
 
     this.storedCycles -= cyclesUsed;
 
-    return retValue;
+    return;
   }
 
   /**
