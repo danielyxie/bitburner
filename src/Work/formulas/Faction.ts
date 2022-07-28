@@ -1,7 +1,6 @@
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { IPerson } from "../../PersonObjects/IPerson";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { FactionWorkType } from "../data/FactionWorkType";
 import { newWorkStats, WorkStats } from "../WorkStats";
 
@@ -26,27 +25,17 @@ export const FactionWorkStats: Record<FactionWorkType, WorkStats> = {
   }),
 };
 
-export function calculateFactionExp(player: IPlayer, tpe: FactionWorkType): WorkStats {
-  let focusBonus = 1;
-  if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
-    focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
-  }
+export function calculateFactionExp(person: IPerson, tpe: FactionWorkType): WorkStats {
   const baseStats = FactionWorkStats[tpe];
   return {
     money: 0,
     reputation: 0,
-    hackExp:
-      (focusBonus * (baseStats.hackExp * player.mults.hacking_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
-    strExp:
-      (focusBonus * (baseStats.strExp * player.mults.strength_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
-    defExp:
-      (focusBonus * (baseStats.defExp * player.mults.defense_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
-    dexExp:
-      (focusBonus * (baseStats.dexExp * player.mults.dexterity_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
-    agiExp:
-      (focusBonus * (baseStats.agiExp * player.mults.agility_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
-    chaExp:
-      (focusBonus * (baseStats.chaExp * player.mults.charisma_exp * BitNodeMultipliers.FactionWorkExpGain)) / gameCPS,
+    hackExp: (baseStats.hackExp * person.mults.hacking_exp * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
+    strExp: (baseStats.strExp * person.mults.strength_exp * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
+    defExp: (baseStats.defExp * person.mults.defense_exp * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
+    dexExp: (baseStats.dexExp * person.mults.dexterity_exp * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
+    agiExp: (baseStats.agiExp * person.mults.agility_exp * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
+    chaExp: (baseStats.chaExp * person.mults.charisma_exp * BitNodeMultipliers.FactionWorkExpGain) / gameCPS,
     intExp: 0,
   };
 }

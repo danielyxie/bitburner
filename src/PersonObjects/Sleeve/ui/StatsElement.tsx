@@ -13,6 +13,9 @@ import { use } from "../../../ui/Context";
 
 import { Sleeve } from "../Sleeve";
 import { SleeveTaskType } from "../SleeveTaskTypesEnum";
+import { isSleeveClassWork } from "../Work/SleeveClassWork";
+import { isSleeveFactionWork } from "../Work/SleeveFactionWork";
+import { isSleeveCompanyWork } from "../Work/SleeveCompanyWork";
 
 interface IProps {
   sleeve: Sleeve;
@@ -124,13 +127,52 @@ export function EarningsElement(props: IProps): React.ReactElement {
       data.push([`Reputation:`, <ReputationRate reputation={5 * repGain} />]);
     }
   }
+  if (isSleeveClassWork(props.sleeve.currentWork)) {
+    const rates = props.sleeve.currentWork.calculateRates(player, props.sleeve);
+    data = [
+      [`Money:`, <MoneyRate money={5 * rates.money} />],
+      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp)} / sec`],
+      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp)} / sec`],
+      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp)} / sec`],
+      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp)} / sec`],
+      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp)} / sec`],
+      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp)} / sec`],
+    ];
+  }
+  if (isSleeveFactionWork(props.sleeve.currentWork)) {
+    const rates = props.sleeve.currentWork.getExpRates(props.sleeve);
+    const repGain = props.sleeve.currentWork.getReputationRate(props.sleeve);
+    data = [
+      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp)} / sec`],
+      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp)} / sec`],
+      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp)} / sec`],
+      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp)} / sec`],
+      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp)} / sec`],
+      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp)} / sec`],
+      [`Reputation:`, <ReputationRate reputation={5 * repGain} />],
+    ];
+  }
+
+  if (isSleeveCompanyWork(props.sleeve.currentWork)) {
+    const rates = props.sleeve.currentWork.getGainRates(player, props.sleeve);
+    data = [
+      [`Money:`, <MoneyRate money={5 * rates.money} />],
+      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp)} / sec`],
+      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp)} / sec`],
+      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp)} / sec`],
+      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp)} / sec`],
+      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp)} / sec`],
+      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp)} / sec`],
+      [`Reputation:`, <ReputationRate reputation={5 * rates.reputation} />],
+    ];
+  }
 
   return (
     <Table sx={{ display: "table", mb: 1, width: "100%", lineHeight: 0 }}>
       <TableBody>
         <TableRow>
           <TableCell classes={{ root: classes.cellNone }}>
-            <Typography variant="h6">Earnings</Typography>
+            <Typography variant="h6">Earnings {props.sleeve.storedCycles > 50 ? "(overclock)" : ""}</Typography>
           </TableCell>
         </TableRow>
         {data.map(([a, b]) => (

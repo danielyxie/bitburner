@@ -14,6 +14,13 @@ import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
 import { EarningsElement, StatsElement } from "./StatsElement";
 import { TaskSelector } from "./TaskSelector";
 import { TravelModal } from "./TravelModal";
+import { isSleeveClassWork } from "../Work/SleeveClassWork";
+import { isSleeveSynchroWork } from "../Work/SleeveSynchroWork";
+import { isSleeveRecoveryWork } from "../Work/SleeveRecoveryWork";
+import { isSleeveFactionWork } from "../Work/SleeveFactionWork";
+import { isSleeveCompanyWork } from "../Work/SleeveCompanyWork";
+import { isSleeveBladeburnerGeneralWork } from "../Work/SleeveBladeburnerGeneralActionWork";
+import { isSleeveInfiltrateWork } from "../Work/SleeveInfiltrateWork";
 
 interface IProps {
   sleeve: Sleeve;
@@ -69,29 +76,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
     case SleeveTaskType.Idle:
       desc = <>This sleeve is currently idle</>;
       break;
-    case SleeveTaskType.Company:
-      desc = <>This sleeve is currently working your job at {props.sleeve.currentTaskLocation}.</>;
-      break;
-    case SleeveTaskType.Faction: {
-      let doing = "nothing";
-      switch (props.sleeve.factionWorkType) {
-        case FactionWorkType.FIELD:
-          doing = "Field work";
-          break;
-        case FactionWorkType.HACKING:
-          doing = "Hacking contracts";
-          break;
-        case FactionWorkType.SECURITY:
-          doing = "Security work";
-          break;
-      }
-      desc = (
-        <>
-          This sleeve is currently doing {doing} for {props.sleeve.currentTaskLocation}.
-        </>
-      );
-      break;
-    }
     case SleeveTaskType.Crime: {
       const crime = Object.values(Crimes).find((crime) => crime.name === props.sleeve.crimeType);
       if (!crime) throw new Error("crime should not be undefined");
@@ -105,9 +89,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
     }
     case SleeveTaskType.Class:
       desc = <>This sleeve is currently studying/taking a course at {props.sleeve.currentTaskLocation}.</>;
-      break;
-    case SleeveTaskType.Gym:
-      desc = <>This sleeve is currently working out at {props.sleeve.currentTaskLocation}.</>;
       break;
     case SleeveTaskType.Bladeburner: {
       let message = "";
@@ -123,24 +104,73 @@ export function SleeveElem(props: IProps): React.ReactElement {
       );
       break;
     }
-    case SleeveTaskType.Recovery:
-      desc = (
-        <>
-          This sleeve is currently set to focus on shock recovery. This causes the Sleeve's shock to decrease at a
-          faster rate.
-        </>
-      );
-      break;
-    case SleeveTaskType.Synchro:
-      desc = (
-        <>
-          This sleeve is currently set to synchronize with the original consciousness. This causes the Sleeve's
-          synchronization to increase.
-        </>
-      );
-      break;
+
     default:
       console.error(`Invalid/Unrecognized taskValue in updateSleeveTaskDescription(): ${abc[0]}`);
+  }
+
+  if (isSleeveClassWork(props.sleeve.currentWork)) {
+    if (props.sleeve.currentWork.isGym())
+      desc = <>This sleeve is currently working out at {props.sleeve.currentWork.location}.</>;
+    else desc = <>This sleeve is currently studying at {props.sleeve.currentWork.location}.</>;
+  }
+  if (isSleeveSynchroWork(props.sleeve.currentWork)) {
+    desc = (
+      <>
+        This sleeve is currently set to synchronize with the original consciousness. This causes the Sleeve's
+        synchronization to increase.
+      </>
+    );
+  }
+  if (isSleeveRecoveryWork(props.sleeve.currentWork)) {
+    desc = (
+      <>
+        This sleeve is currently set to focus on shock recovery. This causes the Sleeve's shock to decrease at a faster
+        rate.
+      </>
+    );
+  }
+  if (isSleeveFactionWork(props.sleeve.currentWork)) {
+    let doing = "nothing";
+    switch (props.sleeve.currentWork.factionWorkType) {
+      case FactionWorkType.FIELD:
+        doing = "Field work";
+        break;
+      case FactionWorkType.HACKING:
+        doing = "Hacking contracts";
+        break;
+      case FactionWorkType.SECURITY:
+        doing = "Security work";
+        break;
+    }
+    desc = (
+      <>
+        This sleeve is currently doing {doing} for {props.sleeve.currentWork.factionName}.
+      </>
+    );
+  }
+  if (isSleeveCompanyWork(props.sleeve.currentWork)) {
+    desc = <>This sleeve is currently working your job at {props.sleeve.currentWork.companyName}.</>;
+  }
+
+  if (isSleeveBladeburnerGeneralWork(props.sleeve.currentWork)) {
+    const w = props.sleeve.currentWork;
+    desc = (
+      <>
+        This sleeve is currently attempting to perform {w.action}. (
+        {((100 * w.cyclesWorked) / w.cyclesNeeded(player, props.sleeve)).toFixed(2)}%)
+      </>
+    );
+  }
+
+  if (isSleeveInfiltrateWork(props.sleeve.currentWork)) {
+    const w = props.sleeve.currentWork;
+    desc = (
+      <>
+        This sleeve is currently attempting to infiltrate synthoids communities. (
+        {((100 * w.cyclesWorked) / w.cyclesNeeded()).toFixed(2)}%)
+      </>
+    );
   }
 
   return (

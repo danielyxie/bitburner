@@ -10,6 +10,8 @@ import { applyWorkStats, WorkStats } from "./WorkStats";
 import { Company } from "../Company/Company";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
+import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { CONSTANTS } from "../Constants";
 
 interface CompanyWorkParams {
   companyName: string;
@@ -32,14 +34,18 @@ export class CompanyWork extends Work {
   }
 
   getGainRates(player: IPlayer): WorkStats {
-    return calculateCompanyWorkStats(player, this.getCompany());
+    let focusBonus = 1;
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    }
+    return calculateCompanyWorkStats(player, player, this.getCompany());
   }
 
   process(player: IPlayer, cycles: number): boolean {
     this.cyclesWorked += cycles;
     const company = this.getCompany();
     const gains = this.getGainRates(player);
-    applyWorkStats(player, gains, cycles, "work");
+    applyWorkStats(player, player, gains, cycles, "work");
     company.playerReputation += gains.reputation * cycles;
     influenceStockThroughCompanyWork(company, gains.reputation, cycles);
     return false;
