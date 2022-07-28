@@ -1016,36 +1016,13 @@ export interface SleeveInformation {
   tor: boolean;
   /** Sleeve multipliers */
   mult: CharacterMult;
-  /** Time spent on the current task in milliseconds */
-  timeWorked: number;
-  /** Earnings synchronized to other sleeves */
-  earningsForSleeves: SleeveWorkGains;
-  /** Earnings synchronized to the player */
-  earningsForPlayer: SleeveWorkGains;
-  /** Earnings for this sleeve */
-  earningsForTask: SleeveWorkGains;
-  /** Faction or company reputation gained for the current task */
-  workRepGain: number;
 }
 
 /**
  * Object representing a sleeve current task.
  * @public
  */
-export interface SleeveTask {
-  /** Task type */
-  task: string;
-  /** Crime currently attempting, if any */
-  crime: string;
-  /** Location of the task, if any */
-  location: string;
-  /** Stat being trained at the gym, if any */
-  gymStatType: string;
-  /** Faction work type being performed, if any */
-  factionWorkType: string;
-  /** Class being taken at university, if any */
-  className: string;
-}
+export type SleeveTask = any;
 
 /**
  * Object representing a port. A port is a serialized queue.
@@ -1310,7 +1287,7 @@ export interface TIX {
    * @param shares - Number of shares to short. Must be positive. Will be rounded to nearest integer.
    * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
    */
-  short(sym: string, shares: number): number;
+  buyShort(sym: string, shares: number): number;
 
   /**
    * Sell short stock.

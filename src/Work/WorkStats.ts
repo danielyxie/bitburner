@@ -1,3 +1,4 @@
+import { IPerson } from "src/PersonObjects/IPerson";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 export interface WorkStats {
@@ -52,9 +53,10 @@ export const sumWorkStats = (w0: WorkStats, w1: WorkStats): WorkStats => {
   };
 };
 
-export const scaleWorkStats = (w: WorkStats, n: number): WorkStats => {
+export const scaleWorkStats = (w: WorkStats, n: number, scaleMoney = true): WorkStats => {
+  const m = scaleMoney ? n : 1;
   return {
-    money: w.money * n,
+    money: w.money * m,
     reputation: w.reputation * n,
     hackExp: w.hackExp * n,
     strExp: w.strExp * n,
@@ -66,9 +68,33 @@ export const scaleWorkStats = (w: WorkStats, n: number): WorkStats => {
   };
 };
 
-export const applyWorkStats = (player: IPlayer, workStats: WorkStats, cycles: number, source: string): WorkStats => {
+export const applyWorkStats = (
+  player: IPlayer,
+  target: IPerson,
+  workStats: WorkStats,
+  cycles: number,
+  source: string,
+): WorkStats => {
+  const expStats = applyWorkStatsExp(target, workStats, cycles);
   const gains = {
     money: workStats.money * cycles,
+    reputation: 0,
+    hackExp: expStats.hackExp,
+    strExp: expStats.strExp,
+    defExp: expStats.defExp,
+    dexExp: expStats.dexExp,
+    agiExp: expStats.agiExp,
+    chaExp: expStats.chaExp,
+    intExp: expStats.intExp,
+  };
+  player.gainMoney(gains.money, source);
+
+  return gains;
+};
+
+export const applyWorkStatsExp = (target: IPerson, workStats: WorkStats, cycles: number): WorkStats => {
+  const gains = {
+    money: 0,
     reputation: 0,
     hackExp: workStats.hackExp * cycles,
     strExp: workStats.strExp * cycles,
@@ -78,13 +104,12 @@ export const applyWorkStats = (player: IPlayer, workStats: WorkStats, cycles: nu
     chaExp: workStats.chaExp * cycles,
     intExp: workStats.intExp * cycles,
   };
-  player.gainHackingExp(gains.hackExp);
-  player.gainStrengthExp(gains.strExp);
-  player.gainDefenseExp(gains.defExp);
-  player.gainDexterityExp(gains.dexExp);
-  player.gainAgilityExp(gains.agiExp);
-  player.gainCharismaExp(gains.chaExp);
-  player.gainIntelligenceExp(gains.intExp);
-  player.gainMoney(gains.money, source);
+  target.gainHackingExp(gains.hackExp);
+  target.gainStrengthExp(gains.strExp);
+  target.gainDefenseExp(gains.defExp);
+  target.gainDexterityExp(gains.dexExp);
+  target.gainAgilityExp(gains.agiExp);
+  target.gainCharismaExp(gains.chaExp);
+  target.gainIntelligenceExp(gains.intExp);
   return gains;
 };

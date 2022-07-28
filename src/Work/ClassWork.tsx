@@ -147,13 +147,13 @@ export class ClassWork extends Work {
   }
 
   calculateRates(player: IPlayer): WorkStats {
-    return calculateClassEarningsRate(player, this);
+    return calculateClassEarningsRate(player, player, this.classType, this.location);
   }
 
   process(player: IPlayer, cycles: number): boolean {
     this.cyclesWorked += cycles;
     const rate = this.calculateRates(player);
-    const earnings = applyWorkStats(player, rate, cycles, "class");
+    const earnings = applyWorkStats(player, player, rate, cycles, "class");
     this.earnings = sumWorkStats(this.earnings, earnings);
     return false;
   }

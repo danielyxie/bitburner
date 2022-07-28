@@ -186,6 +186,12 @@ export const v2APIBreak = () => {
       offenders: [],
     },
     {
+      matchJS: /ns\.stock\.short/g,
+      matchScript: /stock\.short/g,
+      reason: "short is a very common word so in order to avoid ram costs it was renamed ns.stock.buyShort",
+      offenders: [],
+    },
+    {
       matchJS: /ns\.corporation\.bribe/g,
       matchScript: /corporation\.bribe/g,
       reason: "bribe no longer allows you to give shares of the corporation, only money",

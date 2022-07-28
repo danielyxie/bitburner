@@ -36,6 +36,8 @@ import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { KEY } from "../utils/helpers/keyCodes";
+import { isSleeveInfiltrateWork } from "../PersonObjects/Sleeve/Work/SleeveInfiltrateWork";
+import { isSleeveSupportWork } from "../PersonObjects/Sleeve/Work/SleeveSupportWork";
 
 interface BlackOpsAttempt {
   error?: string;
@@ -1124,7 +1126,7 @@ export class Bladeburner implements IBladeburner {
       const losses = getRandomInt(0, max);
       this.teamSize -= losses;
       if (this.teamSize < this.sleeveSize) {
-        const sup = player.sleeves.filter((x) => x.bbAction == "Support main sleeve");
+        const sup = player.sleeves.filter((x) => isSleeveSupportWork(x.currentWork));
         for (let i = 0; i > this.teamSize - this.sleeveSize; i--) {
           const r = Math.floor(Math.random() * sup.length);
           sup[r].takeDamage(sup[r].hp.max);
@@ -1438,7 +1440,7 @@ export class Bladeburner implements IBladeburner {
             const losses = getRandomInt(1, teamLossMax);
             this.teamSize -= losses;
             if (this.teamSize < this.sleeveSize) {
-              const sup = player.sleeves.filter((x) => x.bbAction == "Support main sleeve");
+              const sup = player.sleeves.filter((x) => isSleeveSupportWork(x.currentWork));
               for (let i = 0; i > this.teamSize - this.sleeveSize; i--) {
                 const r = Math.floor(Math.random() * sup.length);
                 sup[r].takeDamage(sup[r].hp.max);
@@ -1452,7 +1454,7 @@ export class Bladeburner implements IBladeburner {
             }
           }
         } catch (e: unknown) {
-          exceptionAlert(e);
+          exceptionAlert(String(e));
         }
         break;
       }
@@ -1602,7 +1604,7 @@ export class Bladeburner implements IBladeburner {
   }
 
   infiltrateSynthoidCommunities(p: IPlayer): void {
-    const infilSleeves = p.sleeves.filter((s) => s.bbAction === "Infiltrate synthoids").length;
+    const infilSleeves = p.sleeves.filter((s) => isSleeveInfiltrateWork(s.currentWork)).length;
     const amt = Math.pow(infilSleeves, -0.5) / 2;
     for (const contract of Object.keys(this.contracts)) {
       this.contracts[contract].count += amt;

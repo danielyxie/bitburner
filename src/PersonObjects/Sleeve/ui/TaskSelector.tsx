@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Sleeve } from "../Sleeve";
 import { IPlayer } from "../../IPlayer";
-import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 import { Crimes } from "../../../Crime/Crimes";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { CityName } from "../../../Locations/data/CityNames";
@@ -9,7 +8,9 @@ import { Factions } from "../../../Faction/Factions";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FactionNames } from "../../../Faction/data/FactionNames";
-import { FactionWorkType } from "../../../Work/data/FactionWorkType";
+import { isSleeveFactionWork } from "../Work/SleeveFactionWork";
+import { isSleeveCompanyWork } from "../Work/SleeveCompanyWork";
+import { isSleeveBladeburnerWork } from "../Work/SleeveBladeburnerWork";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -49,8 +50,8 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
     if (sleeve === otherSleeve) {
       continue;
     }
-    if (otherSleeve.currentTask === SleeveTaskType.Company) {
-      forbiddenCompanies.push(otherSleeve.currentTaskLocation);
+    if (isSleeveCompanyWork(otherSleeve.currentWork)) {
+      forbiddenCompanies.push(otherSleeve.currentWork.companyName);
     }
   }
   const allJobs: string[] = Object.keys(player.jobs);
@@ -68,8 +69,8 @@ function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
     if (sleeve === otherSleeve) {
       continue;
     }
-    if (otherSleeve.currentTask === SleeveTaskType.Faction) {
-      forbiddenFactions.push(otherSleeve.currentTaskLocation);
+    if (isSleeveFactionWork(otherSleeve.currentWork)) {
+      forbiddenFactions.push(otherSleeve.currentWork.factionName);
     }
   }
 
@@ -98,8 +99,9 @@ function possibleContracts(player: IPlayer, sleeve: Sleeve): string[] {
     if (sleeve === otherSleeve) {
       continue;
     }
-    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner && otherSleeve.bbAction == "Take on contracts") {
-      contracts = contracts.filter((x) => x != otherSleeve.bbContract);
+    if (isSleeveBladeburnerWork(otherSleeve.currentWork) && otherSleeve.currentWork.actionType === "Contracts") {
+      const w = otherSleeve.currentWork;
+      contracts = contracts.filter((x) => x != w.actionName);
     }
   }
   if (contracts.length === 0) {
@@ -241,51 +243,37 @@ const canDo: {
 };
 
 function getABC(sleeve: Sleeve): [string, string, string] {
-  switch (sleeve.currentTask) {
-    case SleeveTaskType.Idle:
-      return ["------", "------", "------"];
-    case SleeveTaskType.Company:
-      return ["Work for Company", sleeve.currentTaskLocation, "------"];
-    case SleeveTaskType.Faction: {
-      let workType = "";
-      switch (sleeve.factionWorkType) {
-        case FactionWorkType.HACKING:
-          workType = "Hacking Contracts";
-          break;
-        case FactionWorkType.FIELD:
-          workType = "Field Work";
-          break;
-        case FactionWorkType.SECURITY:
-          workType = "Security Work";
-          break;
-      }
-      return ["Work for Faction", sleeve.currentTaskLocation, workType];
-    }
-    case SleeveTaskType.Crime:
-      return ["Commit Crime", sleeve.crimeType, "------"];
-    case SleeveTaskType.Class:
-      return ["Take University Course", sleeve.className, sleeve.currentTaskLocation];
-    case SleeveTaskType.Gym: {
-      switch (sleeve.gymStatType) {
-        case "none":
-          return ["Idle", "------", "------"];
-        case "str":
-          return ["Workout at Gym", "Train Strength", sleeve.currentTaskLocation];
-        case "def":
-          return ["Workout at Gym", "Train Defense", sleeve.currentTaskLocation];
-        case "dex":
-          return ["Workout at Gym", "Train Dexterity", sleeve.currentTaskLocation];
-        case "agi":
-          return ["Workout at Gym", "Train Agility", sleeve.currentTaskLocation];
-      }
-    }
-    case SleeveTaskType.Bladeburner:
-      return ["Perform Bladeburner Actions", sleeve.bbAction, sleeve.bbContract];
-    case SleeveTaskType.Recovery:
-      return ["Shock Recovery", "------", "------"];
-    case SleeveTaskType.Synchro:
-      return ["Synchronize", "------", "------"];
-  }
+  return ["------", "------", "------"];
+
+  // switch (sleeve.currentTask) {
+  //   case SleeveTaskType.Idle:
+  //   case SleeveTaskType.Company:
+  //   case SleeveTaskType.Faction: {
+  //   }
+  //   case SleeveTaskType.Crime:
+  //     return ["Commit Crime", sleeve.crimeType, "------"];
+  //   case SleeveTaskType.Class:
+  //   case SleeveTaskType.Gym: {
+  //     switch (sleeve.gymStatType) {
+  //       case "none":
+  //         return ["Idle", "------", "------"];
+  //       case "str":
+  //         return ["Workout at Gym", "Train Strength", sleeve.currentTaskLocation];
+  //       case "def":
+  //         return ["Workout at Gym", "Train Defense", sleeve.currentTaskLocation];
+  //       case "dex":
+  //         return ["Workout at Gym", "Train Dexterity", sleeve.currentTaskLocation];
+  //       case "agi":
+  //         return ["Workout at Gym", "Train Agility", sleeve.currentTaskLocation];
+  //     }
+  //   }
+  //   case SleeveTaskType.Bladeburner:
+  //     return ["Perform Bladeburner Actions", sleeve.bbAction, sleeve.bbContract];
+  //   case SleeveTaskType.Recovery:
+  //     return ["Shock Recovery", "------", "------"];
+  //   case SleeveTaskType.Synchro:
+  //     return ["Synchronize", "------", "------"];
+  // }
 }
 
 export function TaskSelector(props: IProps): React.ReactElement {

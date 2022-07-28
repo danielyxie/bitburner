@@ -165,7 +165,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
         return res ? stock.getBidPrice() : 0;
       },
-    short:
+    buyShort:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
         const symbol = ctx.helper.string("symbol", _symbol);

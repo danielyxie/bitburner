@@ -5,7 +5,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
-import { applyWorkStats, WorkStats } from "./WorkStats";
+import { applyWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
 import {
@@ -58,7 +58,12 @@ export class FactionWork extends Work {
   }
 
   getExpRates(player: IPlayer): WorkStats {
-    return calculateFactionExp(player, this.factionWorkType);
+    let focusBonus = 1;
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    }
+    const rate = calculateFactionExp(player, this.factionWorkType);
+    return scaleWorkStats(rate, focusBonus, false);
   }
 
   process(player: IPlayer, cycles: number): boolean {
@@ -66,7 +71,7 @@ export class FactionWork extends Work {
     this.getFaction().playerReputation += this.getReputationRate(player) * cycles;
 
     const rate = this.getExpRates(player);
-    applyWorkStats(player, rate, cycles, "class");
+    applyWorkStats(player, player, rate, cycles, "class");
 
     return false;
   }
