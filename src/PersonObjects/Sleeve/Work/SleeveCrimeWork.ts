@@ -38,12 +38,16 @@ export class SleeveCrimeWork extends Work {
     });
   }
 
+  cyclesNeeded(): number {
+    return this.getCrime().time / CONSTANTS._idleSpeed;
+  }
+
   process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
     this.cyclesWorked += cycles;
 
     const crime = this.getCrime();
     const gains = this.getExp();
-    if (this.cyclesWorked >= crime.time / CONSTANTS._idleSpeed) {
+    if (this.cyclesWorked >= this.cyclesNeeded()) {
       if (Math.random() < crime.successRate(sleeve)) {
         applyWorkStats(player, sleeve, gains, 1, "sleeves");
 
@@ -51,7 +55,7 @@ export class SleeveCrimeWork extends Work {
       } else {
         applyWorkStats(player, sleeve, scaleWorkStats(gains, 0.25), 1, "sleeves");
       }
-      this.cyclesWorked -= crime.time / CONSTANTS._idleSpeed;
+      this.cyclesWorked -= this.cyclesNeeded();
     }
     return 0;
   }

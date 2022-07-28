@@ -1,5 +1,4 @@
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { CityName } from "../Locations/data/CityNames";
@@ -15,7 +14,9 @@ import {
 } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
-import { FactionWorkType } from "../Work/data/FactionWorkType";
+import { isSleeveBladeburnerWork } from "../PersonObjects/Sleeve/Work/SleeveBladeburnerWork";
+import { isSleeveFactionWork } from "../PersonObjects/Sleeve/Work/SleeveFactionWork";
+import { isSleeveCompanyWork } from "../PersonObjects/Sleeve/Work/SleeveCompanyWork";
 
 export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext): void {
@@ -120,7 +121,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
             continue;
           }
           const other = player.sleeves[i];
-          if (other.currentTask === SleeveTaskType.Company && other.currentTaskLocation === companyName) {
+          if (isSleeveCompanyWork(other.currentWork) && other.currentWork.companyName === companyName) {
             throw ctx.makeRuntimeErrorMsg(
               `Sleeve ${sleeveNumber} cannot work for company ${companyName} because Sleeve ${i} is already working for them.`,
             );
@@ -144,7 +145,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
             continue;
           }
           const other = player.sleeves[i];
-          if (other.currentTask === SleeveTaskType.Faction && other.currentTaskLocation === factionName) {
+          if (isSleeveFactionWork(other.currentWork) && other.currentWork.factionName === factionName) {
             throw ctx.makeRuntimeErrorMsg(
               `Sleeve ${sleeveNumber} cannot work for faction ${factionName} because Sleeve ${i} is already working for them.`,
             );
@@ -223,36 +224,6 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
             strengthExp: sl.mults.strength_exp,
             workMoney: sl.mults.work_money,
           },
-
-          timeWorked: sl.currentTaskTime,
-          earningsForSleeves: {
-            workHackExpGain: sl.earningsForSleeves.hack,
-            workStrExpGain: sl.earningsForSleeves.str,
-            workDefExpGain: sl.earningsForSleeves.def,
-            workDexExpGain: sl.earningsForSleeves.dex,
-            workAgiExpGain: sl.earningsForSleeves.agi,
-            workChaExpGain: sl.earningsForSleeves.cha,
-            workMoneyGain: sl.earningsForSleeves.money,
-          },
-          earningsForPlayer: {
-            workHackExpGain: sl.earningsForPlayer.hack,
-            workStrExpGain: sl.earningsForPlayer.str,
-            workDefExpGain: sl.earningsForPlayer.def,
-            workDexExpGain: sl.earningsForPlayer.dex,
-            workAgiExpGain: sl.earningsForPlayer.agi,
-            workChaExpGain: sl.earningsForPlayer.cha,
-            workMoneyGain: sl.earningsForPlayer.money,
-          },
-          earningsForTask: {
-            workHackExpGain: sl.earningsForTask.hack,
-            workStrExpGain: sl.earningsForTask.str,
-            workDefExpGain: sl.earningsForTask.def,
-            workDexExpGain: sl.earningsForTask.dex,
-            workAgiExpGain: sl.earningsForTask.agi,
-            workChaExpGain: sl.earningsForTask.cha,
-            workMoneyGain: sl.earningsForTask.money,
-          },
-          workRepGain: sl.getRepGain(player),
         };
       },
     getSleeveAugmentations:
@@ -343,11 +314,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
               continue;
             }
             const other = player.sleeves[i];
-            if (
-              other.currentTask === SleeveTaskType.Bladeburner &&
-              other.bbAction === action &&
-              other.bbContract === contract
-            ) {
+            if (isSleeveBladeburnerWork(other.currentWork) && other.currentWork.actionName === contract) {
               throw ctx.helper.makeRuntimeErrorMsg(
                 `Sleeve ${sleeveNumber} cannot take on contracts because Sleeve ${i} is already performing that action.`,
               );

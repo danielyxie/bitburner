@@ -2,13 +2,10 @@ import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 import { CONSTANTS } from "../../../Constants";
-import { Crimes } from "../../../Crime/Crimes";
 import { use } from "../../../ui/Context";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { ProgressBar } from "../../../ui/React/Progress";
 import { Sleeve } from "../Sleeve";
-import { SleeveTaskType } from "../SleeveTaskTypesEnum";
-import { MoreEarningsModal } from "./MoreEarningsModal";
 import { MoreStatsModal } from "./MoreStatsModal";
 import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
 import { EarningsElement, StatsElement } from "./StatsElement";
@@ -32,7 +29,6 @@ interface IProps {
 export function SleeveElem(props: IProps): React.ReactElement {
   const player = use.Player();
   const [statsOpen, setStatsOpen] = useState(false);
-  const [earningsOpen, setEarningsOpen] = useState(false);
   const [travelOpen, setTravelOpen] = useState(false);
   const [augmentationsOpen, setAugmentationsOpen] = useState(false);
 
@@ -161,7 +157,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
           <StatsElement sleeve={props.sleeve} />
           <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%" }}>
             <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
-            <Button onClick={() => setEarningsOpen(true)}>More Earnings Info</Button>
             <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
               <span>
                 <Button
@@ -196,20 +191,28 @@ export function SleeveElem(props: IProps): React.ReactElement {
           </Button>
           <Typography>{desc}</Typography>
           <Typography>
-            {(props.sleeve.currentTask === SleeveTaskType.Crime ||
-              props.sleeve.currentTask === SleeveTaskType.Bladeburner) &&
-              props.sleeve.currentTaskMaxTime > 0 && (
-                <ProgressBar
-                  variant="determinate"
-                  value={(props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime) * 100}
-                  color="primary"
-                />
-              )}
+            {isSleeveCrimeWork(props.sleeve.currentWork) && (
+              <ProgressBar
+                variant="determinate"
+                value={(props.sleeve.currentWork.cyclesWorked / props.sleeve.currentWork.cyclesNeeded()) * 100}
+                color="primary"
+              />
+            )}
+            {isSleeveBladeburnerWork(props.sleeve.currentWork) && (
+              <ProgressBar
+                variant="determinate"
+                value={
+                  (props.sleeve.currentWork.cyclesWorked /
+                    props.sleeve.currentWork.cyclesNeeded(player, props.sleeve)) *
+                  100
+                }
+                color="primary"
+              />
+            )}
           </Typography>
         </span>
       </Paper>
       <MoreStatsModal open={statsOpen} onClose={() => setStatsOpen(false)} sleeve={props.sleeve} />
-      <MoreEarningsModal open={earningsOpen} onClose={() => setEarningsOpen(false)} sleeve={props.sleeve} />
       <TravelModal
         open={travelOpen}
         onClose={() => setTravelOpen(false)}

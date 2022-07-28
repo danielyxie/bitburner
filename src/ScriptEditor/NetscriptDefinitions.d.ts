@@ -1022,7 +1022,7 @@ export interface SleeveInformation {
  * Object representing a sleeve current task.
  * @public
  */
-export interface SleeveTask = any;
+export type SleeveTask = any;
 
 /**
  * Object representing a port. A port is a serialized queue.

@@ -5,7 +5,6 @@ import { Work, WorkType } from "./Work";
 import { CONSTANTS } from "../../../Constants";
 import { GeneralActions } from "../../../Bladeburner/data/GeneralActions";
 import { applyWorkStatsExp, WorkStats } from "../../../Work/WorkStats";
-import { Contracts } from "src/Bladeburner/data/Contracts";
 
 interface SleeveBladeburnerWorkParams {
   type: string;
