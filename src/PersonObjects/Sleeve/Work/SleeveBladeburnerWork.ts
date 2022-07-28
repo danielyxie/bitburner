@@ -1,7 +1,7 @@
 import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
-import { Work, WorkType } from "./Work";
+import { applySleeveGains, Work, WorkType } from "./Work";
 import { CONSTANTS } from "../../../Constants";
 import { GeneralActions } from "../../../Bladeburner/data/GeneralActions";
 import { applyWorkStatsExp, WorkStats } from "../../../Work/WorkStats";
@@ -42,7 +42,7 @@ export class SleeveBladeburnerWork extends Work {
       if (this.actionType === "General") {
         exp = GeneralActions[this.actionName]?.exp;
         if (!exp) throw new Error(`Somehow there was no exp for action ${this.actionType} ${this.actionName}`);
-        applyWorkStatsExp(sleeve, exp, 1);
+        applySleeveGains(player, sleeve, exp, 1);
       }
       this.cyclesWorked -= this.cyclesNeeded(player, sleeve);
     }

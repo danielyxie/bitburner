@@ -1,6 +1,6 @@
 import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
-import { Work, WorkType } from "./Work";
+import { applySleeveGains, Work, WorkType } from "./Work";
 import { ClassType } from "../../../Work/ClassWork";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { calculateClassEarnings } from "../../../Work/formulas/Class";
@@ -39,11 +39,8 @@ export class SleeveClassWork extends Work {
   }
 
   process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
-    let rate = this.calculateRates(player, sleeve);
-    applyWorkStatsExp(sleeve, rate, cycles);
-    rate = scaleWorkStats(rate, sleeve.syncBonus(), false);
-    applyWorkStats(player, player, rate, cycles, "sleeves");
-    player.sleeves.filter((s) => s != sleeve).forEach((s) => applyWorkStatsExp(s, rate, cycles));
+    const rate = this.calculateRates(player, sleeve);
+    applySleeveGains(player, sleeve, rate, cycles);
     return 0;
   }
   APICopy(): Record<string, unknown> {

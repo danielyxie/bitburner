@@ -1,6 +1,15 @@
 import { IPlayer } from "../../IPlayer";
 import { IReviverValue } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
+import { applyWorkStats, applyWorkStatsExp, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+
+export const applySleeveGains = (player: IPlayer, sleeve: Sleeve, rawStats: WorkStats, cycles = 1): void => {
+  const shockedStats = scaleWorkStats(rawStats, sleeve.shockBonus(), rawStats.money > 0);
+  applyWorkStatsExp(sleeve, shockedStats, cycles);
+  const syncStats = scaleWorkStats(shockedStats, sleeve.syncBonus(), rawStats.money > 0);
+  applyWorkStats(player, player, syncStats, cycles, "sleeves");
+  player.sleeves.filter((s) => s != sleeve).forEach((s) => applyWorkStatsExp(s, syncStats, cycles));
+};
 
 export abstract class Work {
   type: WorkType;

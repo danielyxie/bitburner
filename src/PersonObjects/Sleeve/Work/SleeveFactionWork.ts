@@ -1,7 +1,7 @@
 import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
-import { Work, WorkType } from "./Work";
+import { applySleeveGains, Work, WorkType } from "./Work";
 import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 import { FactionNames } from "../../../Faction/data/FactionNames";
 import { Factions } from "../../../Faction/Factions";
@@ -60,11 +60,8 @@ export class SleeveFactionWork extends Work {
       }
     }
 
-    let exp = this.getExpRates(sleeve);
-    applyWorkStatsExp(sleeve, exp, cycles);
-    exp = scaleWorkStats(exp, sleeve.syncBonus());
-    applyWorkStatsExp(player, exp, cycles);
-    player.sleeves.filter((s) => s != sleeve).forEach((s) => applyWorkStatsExp(s, exp, cycles));
+    const exp = this.getExpRates(sleeve);
+    applySleeveGains(player, sleeve, exp, cycles);
     const rep = this.getReputationRate(sleeve);
     this.getFaction().playerReputation += rep;
     return 0;

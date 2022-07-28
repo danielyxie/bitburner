@@ -1,11 +1,11 @@
 import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
-import { Work, WorkType } from "./Work";
+import { applySleeveGains, Work, WorkType } from "./Work";
 import { CrimeType } from "../../../utils/WorkType";
 import { Crimes } from "../../../Crime/Crimes";
 import { Crime } from "../../../Crime/Crime";
-import { applyWorkStats, newWorkStats, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { applyWorkStats, applyWorkStatsExp, newWorkStats, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { CONSTANTS } from "../../../Constants";
 
 export const isSleeveCrimeWork = (w: Work | null): w is SleeveCrimeWork => w !== null && w.type === WorkType.CRIME;
@@ -46,15 +46,15 @@ export class SleeveCrimeWork extends Work {
     this.cyclesWorked += cycles;
 
     const crime = this.getCrime();
-    const gains = this.getExp();
+    let gains = this.getExp();
     if (this.cyclesWorked >= this.cyclesNeeded()) {
       if (Math.random() < crime.successRate(sleeve)) {
-        applyWorkStats(player, sleeve, gains, 1, "sleeves");
-
         player.karma -= crime.karma * sleeve.syncBonus();
       } else {
-        applyWorkStats(player, sleeve, scaleWorkStats(gains, 0.25), 1, "sleeves");
+        gains.money = 0;
+        gains = scaleWorkStats(gains, 0.25);
       }
+      applySleeveGains(player, sleeve, gains, cycles);
       this.cyclesWorked -= this.cyclesNeeded();
     }
     return 0;
