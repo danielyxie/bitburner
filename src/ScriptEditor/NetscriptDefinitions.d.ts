@@ -60,10 +60,6 @@ interface Player {
   money: number;
   city: string;
   location: string;
-  hasWseAccount: boolean;
-  hasTixApiAccess: boolean;
-  has4SData: boolean;
-  has4SDataTixApi: boolean;
   bitNodeN: number;
   totalPlaytime: number;
   playtimeSinceLastAug: number;
@@ -1101,6 +1097,26 @@ export interface NetscriptPort {
  * @public
  */
 export interface TIX {
+  /**
+   * Returns true if the player has access to a WSE Account
+   * @remarks RAM cost: 0.05 GB
+   */
+  hasWSEAccount(): boolean;
+  /**
+   * Returns true if the player has access to the TIX API
+   * @remarks RAM cost: 0.05 GB
+   */
+  hasTIXAPIAccess(): boolean;
+  /**
+   * Returns true if the player has access to the 4S Data
+   * @remarks RAM cost: 0.05 GB
+   */
+  has4SData(): boolean;
+  /**
+   * Returns true if the player has access to the 4SData TIX API
+   * @remarks RAM cost: 0.05 GB
+   */
+  has4SDataTIXAPI(): boolean;
   /**
    * Returns an array of the symbols of the tradable stocks
    *

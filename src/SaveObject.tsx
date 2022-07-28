@@ -480,6 +480,9 @@ function evaluateVersionCompatibility(ver: string | number): void {
       anyPlayer.exp.intelligence = anyPlayer.intelligence_exp;
       v2APIBreak();
     }
+    if (ver < 23) {
+      anyPlayer.currentWork = null;
+    }
   }
 }
 

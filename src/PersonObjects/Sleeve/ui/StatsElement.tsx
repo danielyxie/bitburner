@@ -12,7 +12,6 @@ import { ReputationRate } from "../../../ui/React/ReputationRate";
 import { use } from "../../../ui/Context";
 
 import { Sleeve } from "../Sleeve";
-import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 import { isSleeveClassWork } from "../Work/SleeveClassWork";
 import { isSleeveFactionWork } from "../Work/SleeveFactionWork";
 import { isSleeveCompanyWork } from "../Work/SleeveCompanyWork";

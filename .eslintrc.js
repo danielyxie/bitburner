@@ -21,6 +21,14 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   extends: ["plugin:@typescript-eslint/recommended"],
   rules: {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^__",
+        varsIgnorePattern: "^__",
+        caughtErrorsIgnorePattern: "^__",
+      },
+    ],
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-explicit-any": "off",
   },

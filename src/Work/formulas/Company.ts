@@ -4,7 +4,6 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { WorkStats } from "../WorkStats";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { IPerson } from "src/PersonObjects/IPerson";
 
 export const calculateCompanyWorkStats = (player: IPlayer, worker: IPerson, company: Company): WorkStats => {

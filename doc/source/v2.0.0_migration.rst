@@ -71,6 +71,8 @@ getPlayer
     hp have been moved to the hp struct
     For example: getPlayer().max_hp => getPlayer().hp.max or hp.current
 
+    hasWseAccount, hasTixApiAccess, has4SData, has4SDataTixApi have been removed and replaced with similar stock functions
+
 workForCompany
 --------------
 

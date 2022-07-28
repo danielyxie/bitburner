@@ -39,6 +39,18 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
   };
 
   return {
+    hasWSEAccount: () => (): boolean => {
+      return player.hasWseAccount;
+    },
+    hasTIXAPIAccess: () => (): boolean => {
+      return player.hasTixApiAccess;
+    },
+    has4SData: () => (): boolean => {
+      return player.has4SData;
+    },
+    has4SDataTIXAPI: () => (): boolean => {
+      return player.has4SDataTixApi;
+    },
     getSymbols: (ctx: NetscriptContext) => (): string[] => {
       checkTixApiAccess(ctx);
       return Object.values(StockSymbols);

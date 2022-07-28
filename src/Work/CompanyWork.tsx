@@ -6,7 +6,7 @@ import { influenceStockThroughCompanyWork } from "../StockMarket/PlayerInfluenci
 import { LocationName } from "../Locations/data/LocationNames";
 import { calculateCompanyWorkStats } from "./formulas/Company";
 import { Companies } from "../Company/Companies";
-import { applyWorkStats, WorkStats } from "./WorkStats";
+import { applyWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 import { Company } from "../Company/Company";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
@@ -38,7 +38,7 @@ export class CompanyWork extends Work {
     if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
       focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    return calculateCompanyWorkStats(player, player, this.getCompany());
+    return scaleWorkStats(calculateCompanyWorkStats(player, player, this.getCompany()), focusBonus);
   }
 
   process(player: IPlayer, cycles: number): boolean {

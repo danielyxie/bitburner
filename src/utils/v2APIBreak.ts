@@ -102,6 +102,10 @@ const getPlayerFields = [
   "intelligence_exp",
   "hp",
   "max_hp",
+  "hasWseAccount",
+  "hasTixApiAccess",
+  "has4SData",
+  "has4SDataTixApi",
 ];
 
 const mults = [

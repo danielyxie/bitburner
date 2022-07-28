@@ -5,7 +5,7 @@ import { applySleeveGains, Work, WorkType } from "./Work";
 import { CrimeType } from "../../../utils/WorkType";
 import { Crimes } from "../../../Crime/Crimes";
 import { Crime } from "../../../Crime/Crime";
-import { applyWorkStats, applyWorkStatsExp, newWorkStats, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { newWorkStats, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { CONSTANTS } from "../../../Constants";
 
 export const isSleeveCrimeWork = (w: Work | null): w is SleeveCrimeWork => w !== null && w.type === WorkType.CRIME;

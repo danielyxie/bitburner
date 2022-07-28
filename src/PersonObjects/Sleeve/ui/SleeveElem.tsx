@@ -35,7 +35,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
   const [abc, setABC] = useState(["------", "------", "------"]);
 
   function setTask(): void {
-    props.sleeve.resetTaskStatus(player); // sets to idle
     switch (abc[0]) {
       case "------":
         break;

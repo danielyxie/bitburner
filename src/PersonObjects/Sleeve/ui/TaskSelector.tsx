@@ -11,6 +11,14 @@ import { FactionNames } from "../../../Faction/data/FactionNames";
 import { isSleeveFactionWork } from "../Work/SleeveFactionWork";
 import { isSleeveCompanyWork } from "../Work/SleeveCompanyWork";
 import { isSleeveBladeburnerWork } from "../Work/SleeveBladeburnerWork";
+import { isSleeveRecoveryWork } from "../Work/SleeveRecoveryWork";
+import { isSleeveSynchroWork } from "../Work/SleeveSynchroWork";
+import { isSleeveClassWork } from "../Work/SleeveClassWork";
+import { isSleeveInfiltrateWork } from "../Work/SleeveInfiltrateWork";
+import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
+import { ClassType } from "../../../Work/ClassWork";
+import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
+import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -243,37 +251,88 @@ const canDo: {
 };
 
 function getABC(sleeve: Sleeve): [string, string, string] {
-  return ["------", "------", "------"];
+  const w = sleeve.currentWork;
+  if (w === null) {
+    return ["------", "------", "------"];
+  }
 
-  // switch (sleeve.currentTask) {
-  //   case SleeveTaskType.Idle:
-  //   case SleeveTaskType.Company:
-  //   case SleeveTaskType.Faction: {
-  //   }
-  //   case SleeveTaskType.Crime:
-  //     return ["Commit Crime", sleeve.crimeType, "------"];
-  //   case SleeveTaskType.Class:
-  //   case SleeveTaskType.Gym: {
-  //     switch (sleeve.gymStatType) {
-  //       case "none":
-  //         return ["Idle", "------", "------"];
-  //       case "str":
-  //         return ["Workout at Gym", "Train Strength", sleeve.currentTaskLocation];
-  //       case "def":
-  //         return ["Workout at Gym", "Train Defense", sleeve.currentTaskLocation];
-  //       case "dex":
-  //         return ["Workout at Gym", "Train Dexterity", sleeve.currentTaskLocation];
-  //       case "agi":
-  //         return ["Workout at Gym", "Train Agility", sleeve.currentTaskLocation];
-  //     }
-  //   }
-  //   case SleeveTaskType.Bladeburner:
-  //     return ["Perform Bladeburner Actions", sleeve.bbAction, sleeve.bbContract];
-  //   case SleeveTaskType.Recovery:
-  //     return ["Shock Recovery", "------", "------"];
-  //   case SleeveTaskType.Synchro:
-  //     return ["Synchronize", "------", "------"];
-  // }
+  if (isSleeveCompanyWork(w)) {
+    return ["Work for Company", w.companyName, "------"];
+  }
+  if (isSleeveFactionWork(w)) {
+    let workType = "";
+    switch (w.factionWorkType) {
+      case FactionWorkType.HACKING:
+        workType = "Hacking Contracts";
+        break;
+      case FactionWorkType.FIELD:
+        workType = "Field Work";
+        break;
+      case FactionWorkType.SECURITY:
+        workType = "Security Work";
+        break;
+    }
+    return ["Work for Faction", w.factionName, workType];
+  }
+  if (isSleeveBladeburnerWork(w)) {
+    if (w.actionType === "Contracts") {
+      return ["Perform Bladeburner Actions", "Take on contracts", w.actionName];
+    }
+    switch (w.actionName) {
+      case "Field Analysis":
+        return ["Perform Bladeburner Actions", "Field Analysis", "------"];
+      case "Diplomacy":
+        return ["Perform Bladeburner Actions", "Diplomacy", "------"];
+      case "Recruitment":
+        return ["Perform Bladeburner Actions", "Recruitment", "------"];
+    }
+  }
+
+  if (isSleeveClassWork(w)) {
+    switch (w.classType) {
+      case ClassType.StudyComputerScience:
+        return ["Take University Course", "Study Computer Science", w.location];
+      case ClassType.DataStructures:
+        return ["Take University Course", "Data Structures", w.location];
+      case ClassType.Networks:
+        return ["Take University Course", "Networks", w.location];
+      case ClassType.Algorithms:
+        return ["Take University Course", "Algorithms", w.location];
+      case ClassType.Management:
+        return ["Take University Course", "Management", w.location];
+      case ClassType.Leadership:
+        return ["Take University Course", "Leadership", w.location];
+      case ClassType.GymStrength:
+        return ["Workout at Gym", "Train Strength", w.location];
+      case ClassType.GymDefense:
+        return ["Workout at Gym", "Train Defense", w.location];
+      case ClassType.GymDexterity:
+        return ["Workout at Gym", "Train Dexterity", w.location];
+      case ClassType.GymAgility:
+        return ["Workout at Gym", "Train Agility", w.location];
+    }
+  }
+  if (isSleeveCrimeWork(w)) {
+    return [
+      "Commit Crime",
+      Object.values(Crimes).find((crime) => crime.type === w.crimeType)?.name ?? "Shoplift",
+      "------",
+    ];
+  }
+  if (isSleeveSupportWork(w)) {
+    return ["Perform Bladeburner Actions", "Support main sleeve", "------"];
+  }
+  if (isSleeveInfiltrateWork(w)) {
+    return ["Perform Bladeburner Actions", "Infiltrate synthoids", "------"];
+  }
+  if (isSleeveRecoveryWork(w)) {
+    return ["Shock Recovery", "------", "------"];
+  }
+  if (isSleeveSynchroWork(w)) {
+    return ["Synchronize", "------", "------"];
+  }
+
+  return ["------", "------", "------"];
 }
 
 export function TaskSelector(props: IProps): React.ReactElement {

@@ -89,7 +89,7 @@ export const CONSTANTS: {
   LatestUpdate: string;
 } = {
   VersionString: "2.0.0",
-  VersionNumber: 22,
+  VersionNumber: 23,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -269,6 +269,7 @@ v2.0.0 - 2022-07-19 Work rework
   * stock.buy and stock.sell were renamed to stock.buyStock and stock.sellStock because 'buy' and 'sell'
     are very common tokens.
   * corporation.bribe no longer allows to give shares as bribe.
+  * hasWseAccount, hasTixApiAccess, has4SData, has4SDataTixApi have been removed and replaced with similar stock functions.
 
   Netscript
 

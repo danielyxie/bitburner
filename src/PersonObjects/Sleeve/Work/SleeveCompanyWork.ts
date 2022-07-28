@@ -6,7 +6,7 @@ import { LocationName } from "../../../Locations/data/LocationNames";
 import { Companies } from "../../../Company/Companies";
 import { Company } from "../../../Company/Company";
 import { calculateCompanyWorkStats } from "../../../Work/formulas/Company";
-import { applyWorkStats, applyWorkStatsExp, WorkStats } from "../../../Work/WorkStats";
+import { WorkStats } from "../../../Work/WorkStats";
 import { influenceStockThroughCompanyWork } from "../../../StockMarket/PlayerInfluencing";
 
 interface SleeveCompanyWorkParams {

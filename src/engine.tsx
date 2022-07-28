@@ -33,7 +33,6 @@ import { Settings } from "./Settings/Settings";
 import { ThemeEvents } from "./Themes/ui/Theme";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
-import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
@@ -121,20 +120,7 @@ const Engine: {
 
     // Sleeves
     for (let i = 0; i < Player.sleeves.length; ++i) {
-      if (Player.sleeves[i] instanceof Sleeve) {
-        const expForOtherSleeves = Player.sleeves[i].process(Player, numCycles);
-
-        // This sleeve earns experience for other sleeves
-        if (expForOtherSleeves == null) {
-          continue;
-        }
-        for (let j = 0; j < Player.sleeves.length; ++j) {
-          if (j === i) {
-            continue;
-          }
-          Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCycles, true);
-        }
-      }
+      Player.sleeves[i].process(Player, numCycles);
     }
 
     // Counters
@@ -359,20 +345,7 @@ const Engine: {
 
       // Sleeves offline progress
       for (let i = 0; i < Player.sleeves.length; ++i) {
-        if (Player.sleeves[i] instanceof Sleeve) {
-          const expForOtherSleeves = Player.sleeves[i].process(Player, numCyclesOffline);
-
-          // This sleeve earns experience for other sleeves
-          if (expForOtherSleeves == null) {
-            continue;
-          }
-          for (let j = 0; j < Player.sleeves.length; ++j) {
-            if (j === i) {
-              continue;
-            }
-            Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCyclesOffline, true);
-          }
-        }
+        Player.sleeves[i].process(Player, numCyclesOffline);
       }
 
       // Update total playtime

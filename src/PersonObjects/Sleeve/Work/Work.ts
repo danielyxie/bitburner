@@ -21,7 +21,7 @@ export abstract class Work {
   abstract process(player: IPlayer, sleeve: Sleeve, cycles: number): number;
   abstract APICopy(): Record<string, unknown>;
   abstract toJSON(): IReviverValue;
-  finish(_player: IPlayer): void {
+  finish(__player: IPlayer): void {
     /* left for children to implement */
   }
 }

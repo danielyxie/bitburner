@@ -26,7 +26,7 @@ export function TravelModal(props: IProps): React.ReactElement {
     }
     props.sleeve.city = city as CityName;
     player.loseMoney(CONSTANTS.TravelCost, "sleeve");
-    props.sleeve.resetTaskStatus(player);
+    props.sleeve.stopWork(player);
     props.rerender();
     props.onClose();
   }

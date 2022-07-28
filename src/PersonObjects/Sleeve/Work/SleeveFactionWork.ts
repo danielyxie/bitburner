@@ -6,13 +6,13 @@ import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 import { FactionNames } from "../../../Faction/data/FactionNames";
 import { Factions } from "../../../Faction/Factions";
 import { calculateFactionExp } from "../../../Work/formulas/Faction";
-import { applyWorkStatsExp, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { Faction } from "../../../Faction/Faction";
 import {
   getFactionFieldWorkRepGain,
   getFactionSecurityWorkRepGain,
   getHackingWorkRepGain,
 } from "../../../PersonObjects/formulas/reputation";
+import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 
 interface SleeveFactionWorkParams {
   factionWorkType: FactionWorkType;

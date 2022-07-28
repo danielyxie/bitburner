@@ -5,7 +5,7 @@ import { ClassType } from "../../../Work/ClassWork";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { calculateClassEarnings } from "../../../Work/formulas/Class";
 import { Sleeve } from "../Sleeve";
-import { applyWorkStats, applyWorkStatsExp, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 
 export const isSleeveClassWork = (w: Work | null): w is SleeveClassWork => w !== null && w.type === WorkType.CLASS;
 
