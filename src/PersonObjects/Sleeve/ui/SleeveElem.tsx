@@ -19,8 +19,10 @@ import { isSleeveSynchroWork } from "../Work/SleeveSynchroWork";
 import { isSleeveRecoveryWork } from "../Work/SleeveRecoveryWork";
 import { isSleeveFactionWork } from "../Work/SleeveFactionWork";
 import { isSleeveCompanyWork } from "../Work/SleeveCompanyWork";
-import { isSleeveBladeburnerGeneralWork } from "../Work/SleeveBladeburnerGeneralActionWork";
 import { isSleeveInfiltrateWork } from "../Work/SleeveInfiltrateWork";
+import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
+import { isSleeveBladeburnerWork } from "../Work/SleeveBladeburnerWork";
+import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
 
 interface IProps {
   sleeve: Sleeve;
@@ -71,42 +73,17 @@ export function SleeveElem(props: IProps): React.ReactElement {
     props.rerender();
   }
 
-  let desc = <></>;
-  switch (props.sleeve.currentTask) {
-    case SleeveTaskType.Idle:
-      desc = <>This sleeve is currently idle</>;
-      break;
-    case SleeveTaskType.Crime: {
-      const crime = Object.values(Crimes).find((crime) => crime.name === props.sleeve.crimeType);
-      if (!crime) throw new Error("crime should not be undefined");
-      desc = (
-        <>
-          This sleeve is currently attempting to {crime.type} (Success Rate:{" "}
-          {numeralWrapper.formatPercentage(crime.successRate(props.sleeve))}).
-        </>
-      );
-      break;
-    }
-    case SleeveTaskType.Class:
-      desc = <>This sleeve is currently studying/taking a course at {props.sleeve.currentTaskLocation}.</>;
-      break;
-    case SleeveTaskType.Bladeburner: {
-      let message = "";
-      if (props.sleeve.bbContract !== "------") {
-        message = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
-      } else if (props.sleeve.currentTaskLocation !== "") {
-        message = props.sleeve.currentTaskLocation;
-      }
-      desc = (
-        <>
-          This sleeve is currently attempting to {props.sleeve.bbAction}. {message}
-        </>
-      );
-      break;
-    }
+  let desc = <>This sleeve is currently idle</>;
 
-    default:
-      console.error(`Invalid/Unrecognized taskValue in updateSleeveTaskDescription(): ${abc[0]}`);
+  if (isSleeveCrimeWork(props.sleeve.currentWork)) {
+    const w = props.sleeve.currentWork;
+    const crime = w.getCrime();
+    desc = (
+      <>
+        This sleeve is currently attempting to {crime.type} (Success Rate:{" "}
+        {numeralWrapper.formatPercentage(crime.successRate(props.sleeve))}).
+      </>
+    );
   }
 
   if (isSleeveClassWork(props.sleeve.currentWork)) {
@@ -153,11 +130,11 @@ export function SleeveElem(props: IProps): React.ReactElement {
     desc = <>This sleeve is currently working your job at {props.sleeve.currentWork.companyName}.</>;
   }
 
-  if (isSleeveBladeburnerGeneralWork(props.sleeve.currentWork)) {
+  if (isSleeveBladeburnerWork(props.sleeve.currentWork)) {
     const w = props.sleeve.currentWork;
     desc = (
       <>
-        This sleeve is currently attempting to perform {w.action}. (
+        This sleeve is currently attempting to perform {w.actionName}. (
         {((100 * w.cyclesWorked) / w.cyclesNeeded(player, props.sleeve)).toFixed(2)}%)
       </>
     );
@@ -171,6 +148,10 @@ export function SleeveElem(props: IProps): React.ReactElement {
         {((100 * w.cyclesWorked) / w.cyclesNeeded()).toFixed(2)}%)
       </>
     );
+  }
+
+  if (isSleeveSupportWork(props.sleeve.currentWork)) {
+    desc = <>This sleeve is currently supporting you in your bladeburner activities.</>;
   }
 
   return (

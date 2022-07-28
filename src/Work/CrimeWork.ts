@@ -26,29 +26,29 @@ enum newCrimeType {
 
 const convertCrimeType = (crimeType: CrimeType): newCrimeType => {
   switch (crimeType) {
-    case CrimeType.Shoplift:
+    case CrimeType.SHOPLIFT:
       return newCrimeType.SHOPLIFT;
-    case CrimeType.RobStore:
+    case CrimeType.ROB_STORE:
       return newCrimeType.ROBSTORE;
-    case CrimeType.Mug:
+    case CrimeType.MUG:
       return newCrimeType.MUG;
-    case CrimeType.Larceny:
+    case CrimeType.LARCENY:
       return newCrimeType.LARCENY;
-    case CrimeType.Drugs:
+    case CrimeType.DRUGS:
       return newCrimeType.DRUGS;
-    case CrimeType.BondForgery:
+    case CrimeType.BOND_FORGERY:
       return newCrimeType.BONDFORGERY;
-    case CrimeType.TraffickArms:
+    case CrimeType.TRAFFIC_ARMS:
       return newCrimeType.TRAFFICKARMS;
-    case CrimeType.Homicide:
+    case CrimeType.HOMICIDE:
       return newCrimeType.HOMICIDE;
-    case CrimeType.GrandTheftAuto:
+    case CrimeType.GRAND_THEFT_AUTO:
       return newCrimeType.GRANDTHEFTAUTO;
-    case CrimeType.Kidnap:
+    case CrimeType.KIDNAP:
       return newCrimeType.KIDNAP;
-    case CrimeType.Assassination:
+    case CrimeType.ASSASSINATION:
       return newCrimeType.ASSASSINATION;
-    case CrimeType.Heist:
+    case CrimeType.HEIST:
       return newCrimeType.HEIST;
   }
   return newCrimeType.SHOPLIFT;
@@ -67,7 +67,7 @@ export class CrimeWork extends Work {
 
   constructor(params?: CrimeWorkParams) {
     super(WorkType.CRIME, params?.singularity ?? true);
-    this.crimeType = params?.crimeType ?? CrimeType.Shoplift;
+    this.crimeType = params?.crimeType ?? CrimeType.SHOPLIFT;
     this.unitCompleted = 0;
   }
 

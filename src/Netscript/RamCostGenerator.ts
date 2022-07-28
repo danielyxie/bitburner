@@ -136,7 +136,7 @@ const stock = {
   getSaleGain: RamCostConstants.ScriptGetStockRamCost,
   buyStock: RamCostConstants.ScriptBuySellStockRamCost,
   sellStock: RamCostConstants.ScriptBuySellStockRamCost,
-  short: RamCostConstants.ScriptBuySellStockRamCost,
+  buyShort: RamCostConstants.ScriptBuySellStockRamCost,
   sellShort: RamCostConstants.ScriptBuySellStockRamCost,
   placeOrder: RamCostConstants.ScriptBuySellStockRamCost,
   cancelOrder: RamCostConstants.ScriptBuySellStockRamCost,

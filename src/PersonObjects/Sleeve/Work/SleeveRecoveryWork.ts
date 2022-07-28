@@ -13,7 +13,7 @@ export class SleeveRecoveryWork extends Work {
 
   process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
     sleeve.shock = Math.min(100, sleeve.shock + 0.0002 * cycles);
-    if (sleeve.shock >= 100) sleeve.currentWork = null;
+    if (sleeve.shock >= 100) sleeve.stopWork(player);
     return 0;
   }
 

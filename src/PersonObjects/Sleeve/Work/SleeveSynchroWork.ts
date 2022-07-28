@@ -13,7 +13,7 @@ export class SleeveSynchroWork extends Work {
 
   process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
     sleeve.sync = Math.min(100, sleeve.sync + player.getIntelligenceBonus(0.5) * 0.0002 * cycles);
-    if (sleeve.sync >= 100) sleeve.currentWork = null;
+    if (sleeve.sync >= 100) sleeve.stopWork(player);
     return 0;
   }
 

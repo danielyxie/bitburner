@@ -95,10 +95,10 @@ Singularity
     This means calls like 'ns.connect' need to be changed to 'ns.singularity.connect'
 
 
-stock.buy and stock.sell
-------------------------
+stock.buy, stock.sell, stock.short
+----------------------------------
     
-    These 2 functions were renamed to stock.buyStock and stock.sellStock because 'buy' and 'sell'
+    These functions were renamed to stock.buyStock, stock.sellStock, and stock.buyShort because 'buy', 'sell', and 'short'
     are very common tokens that would trick the ram calculation.
 
 corporation.bribe

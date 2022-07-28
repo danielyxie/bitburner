@@ -180,20 +180,14 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
       },
     getTask:
       (ctx: NetscriptContext) =>
-      (_sleeveNumber: unknown): SleeveTask => {
+      (_sleeveNumber: unknown): SleeveTask | null => {
         const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
         const sl = player.sleeves[sleeveNumber];
-        return {
-          task: SleeveTaskType[sl.currentTask],
-          crime: sl.crimeType,
-          location: sl.currentTaskLocation,
-          gymStatType: sl.gymStatType,
-          factionWorkType: FactionWorkType[sl.factionWorkType],
-          className: sl.className,
-        };
+        if (sl.currentWork === null) return null;
+        return sl.currentWork.APICopy();
       },
     getInformation:
       (ctx: NetscriptContext) =>

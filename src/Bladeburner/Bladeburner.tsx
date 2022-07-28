@@ -1452,7 +1452,7 @@ export class Bladeburner implements IBladeburner {
             }
           }
         } catch (e: unknown) {
-          exceptionAlert(e);
+          exceptionAlert(String(e));
         }
         break;
       }

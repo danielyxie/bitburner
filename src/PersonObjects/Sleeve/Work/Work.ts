@@ -12,6 +12,9 @@ export abstract class Work {
   abstract process(player: IPlayer, sleeve: Sleeve, cycles: number): number;
   abstract APICopy(): Record<string, unknown>;
   abstract toJSON(): IReviverValue;
+  finish(_player: IPlayer): void {
+    /* left for children to implement */
+  }
 }
 
 export enum WorkType {
@@ -21,8 +24,7 @@ export enum WorkType {
   CLASS = "CLASS",
   RECOVERY = "RECOVERY",
   SYNCHRO = "SYNCHRO",
-  BLADEBURNER_GENERAL = "BLADEBURNER_GENERAL",
+  BLADEBURNER = "BLADEBURNER",
   INFILTRATE = "INFILTRATE",
-  BLADEBURNER_SUPPORT = "SUPPORT",
-  BLADEBURNER_CONTRACTS = "CONTRACTS",
+  SUPPORT = "SUPPORT",
 }

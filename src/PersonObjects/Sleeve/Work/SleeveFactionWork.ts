@@ -55,7 +55,7 @@ export class SleeveFactionWork extends Work {
   process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
     if (player.gang) {
       if (this.factionName === player.gang.facName) {
-        sleeve.currentWork = null;
+        sleeve.stopWork(player);
         return 0;
       }
     }
