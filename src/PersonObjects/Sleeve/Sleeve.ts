@@ -158,6 +158,7 @@ export class Sleeve extends Person {
     this.exp.dexterity = 0;
     this.exp.agility = 0;
     this.exp.charisma = 0;
+    this.updateStatLevels();
 
     // Reset task-related stuff
     this.stopWork(p);
