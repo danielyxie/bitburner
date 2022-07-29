@@ -4,7 +4,7 @@ import { Sleeve } from "../Sleeve";
 import { Work, WorkType } from "./Work";
 import { CONSTANTS } from "../../../Constants";
 
-const infiltrateCycles = 600000 / CONSTANTS._idleSpeed;
+const infiltrateCycles = 60000 / CONSTANTS._idleSpeed;
 
 export const isSleeveInfiltrateWork = (w: Work | null): w is SleeveInfiltrateWork =>
   w !== null && w.type === WorkType.INFILTRATE;
