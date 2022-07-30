@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     link: {
       textDecoration: "underline solid green 0.1rem",
-    }
+    },
   }),
 );
 
