@@ -4,6 +4,9 @@ import ReactDOM from "react-dom";
 import { TTheme as Theme, ThemeEvents, refreshTheme } from "./Themes/ui/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import { initElectron } from "./Electron";
+
+import { RFA } from "./RemoteFileAPI/RemoteFileAPI";
+
 initElectron();
 globalThis["React"] = React;
 globalThis["ReactDOM"] = ReactDOM;
@@ -13,6 +16,9 @@ ReactDOM.render(
   </Theme>,
   document.getElementById("root"),
 );
+
+console.log("[RFA] Fix this hack ASAP");
+RFA.enable();
 
 function rerender(): void {
   refreshTheme();
