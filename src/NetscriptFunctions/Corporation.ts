@@ -871,6 +871,31 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
   return {
     ...warehouseAPI,
     ...officeAPI,
+  getMaterialNames:
+    (ctx: NetscriptContext) => 
+    (): string[] =>{
+      return CorporationConstants.AllMaterials;
+  },
+  getIndustryTypes:
+    (ctx: NetscriptContext) => 
+    (): string[] =>{
+      return CorporationConstants.AllIndustryTypes;
+  },
+  getUnlockables:
+    (ctx: NetscriptContext) => 
+    (): string[] =>{
+      return CorporationConstants.AllUnlocks;
+  },
+  getUpgradeNames:
+    (ctx: NetscriptContext) => 
+    (): string[] =>{
+      return CorporationConstants.AllUpgrades;
+  },
+  getResarchNames:
+    (ctx: NetscriptContext) => 
+    (): string[] =>{
+      return CorporationConstants.AllResearch;
+  },
     expandIndustry:
       (ctx: NetscriptContext) =>
       (_industryName: unknown, _divisionName: unknown): void => {
