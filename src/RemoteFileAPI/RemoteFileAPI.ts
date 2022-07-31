@@ -5,8 +5,10 @@ import { Remote }  from "./Remote";
 let server: Remote;
 
 export function newRemoteFileApiConnection() : void {
-    if(server == undefined)
+    if(server == undefined) {
         server = new Remote("localhost", Settings.RemoteFileApiPort);
+        server.startConnection();
+    }
     else {
         server.stopConnection();
         server = new Remote("localhost", Settings.RemoteFileApiPort);

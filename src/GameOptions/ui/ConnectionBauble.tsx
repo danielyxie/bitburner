@@ -16,7 +16,7 @@ export class ConnectionBauble extends React.Component<baubleProps> {
   constructor(props: baubleProps) {
     super(props);
     this.state = {
-      connection: false,
+      connection: props.callback(),
       callback: props.callback
     };
   }
