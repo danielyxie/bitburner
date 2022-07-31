@@ -5,7 +5,7 @@ import { TTheme as Theme, ThemeEvents, refreshTheme } from "./Themes/ui/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import { initElectron } from "./Electron";
 
-import { RFA } from "./RemoteFileAPI/RemoteFileAPI";
+import { newRemoteFileApiConnection } from "./RemoteFileAPI/RemoteFileAPI";
 
 initElectron();
 globalThis["React"] = React;
@@ -17,8 +17,7 @@ ReactDOM.render(
   document.getElementById("root"),
 );
 
-console.log("[RFA] Fix this hack ASAP");
-RFA.enable();
+newRemoteFileApiConnection();
 
 function rerender(): void {
   refreshTheme();

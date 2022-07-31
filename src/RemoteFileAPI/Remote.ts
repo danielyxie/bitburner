@@ -13,36 +13,18 @@ export class Remote {
         this.port = port;
     }
 
+    public stopConnection() : void {
+        this.connection?.close();
+    }
+
     public startConnection() : void {
-        this.startConnectionRecurse(1, 5);
-    }
-
-    handleCloseEvent():void {
-        delete this.connection;
-        RFALogger.log("Connection closed.");
-    }
-
-    startConnectionRecurse(retryN : number, retryMax : number) : void {
         RFALogger.log("Trying to connect.");
         this.connection = new WebSocket(this.protocol + "://" + this.ipaddr + ":" + this.port);
 
-        this.connection.addEventListener("error", (e:Event) => {
-            if(!this.connection) return;
-
-            // When having trouble connecting, try again.
-            if (this.connection.readyState === 3) {
-                RFALogger.log(`Connection lost, retrying (try #${retryN}).`);
-                if (retryN <= retryMax) this.startConnectionRecurse(retryN + 1, retryMax);
-                return;
-            }
-
-            // Else handle the error normally
-            RFALogger.error(e);
-        });
-
+        this.connection.addEventListener("error", (e:Event) => RFALogger.error(e));
         this.connection.addEventListener("message", handleMessageEvent);
         this.connection.addEventListener("open", () => RFALogger.log("Connection established: ", this.ipaddr, ":", this.port));
-        this.connection.addEventListener("close", this.handleCloseEvent);
+        this.connection.addEventListener("close", () => RFALogger.log("Connection closed"));
     }
 }
 

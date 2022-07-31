@@ -1,16 +1,19 @@
+import { Settings } from "../Settings/Settings";
 import { Remote }  from "./Remote";
 
-class RemoteFileAPI {
-    server : Remote;
 
-    constructor(){
-        this.server = new Remote("localhost", 12525);
-        return;
-    }
+let server: Remote;
 
-    enable() : void {
-        this.server.startConnection();
+export function newRemoteFileApiConnection() : void {
+    if(server == undefined)
+        server = new Remote("localhost", Settings.RemoteFileApiPort);
+    else {
+        server.stopConnection();
+        server = new Remote("localhost", Settings.RemoteFileApiPort);
+        server.startConnection();
     }
 }
 
-export const RFA = new RemoteFileAPI;
+export function isRemoteFileApiConnectionLive() : boolean {
+    return server.connection != undefined && server.connection.readyState == 1;
+}

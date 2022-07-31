@@ -77,22 +77,8 @@ export const RFARequestHandler: Record<string, (message: RFAMessage) => void | R
         return new RFAMessage({ result: "OK", id: msg.id });
     },
 
-    getFileNames: function (msg: RFAMessage): RFAMessage {
+   getFileNames: function (msg: RFAMessage): RFAMessage {
         if (!isFileServer(msg.params)) return error("getFileNames message misses parameters", msg);
-
-        const server = GetServer(msg.params.server);
-        if (server == null) return error("Server hostname invalid", msg);
-
-        const fileList: FileContent[] = [
-            ...server.textFiles.map((txt): FileContent => { return { filename: txt.filename, content: txt.text } }),
-            ...server.scripts.map((scr): FileContent => { return { filename: scr.filename, content: scr.code } })
-        ];
-
-        return new RFAMessage({ result: JSON.stringify(fileList), id: msg.id });
-    },
-
-    getAllFiles: function (msg: RFAMessage): RFAMessage {
-        if (!isFileServer(msg.params)) return error("getAllFiles message misses parameters", msg);
 
         const server = GetServer(msg.params.server);
         if (server == null) return error("Server hostname invalid", msg);
@@ -103,6 +89,20 @@ export const RFARequestHandler: Record<string, (message: RFAMessage) => void | R
         ];
 
         return new RFAMessage({ result: JSON.stringify(fileNameList), id: msg.id });
+    },
+
+    getAllFiles: function (msg: RFAMessage): RFAMessage {
+        if (!isFileServer(msg.params)) return error("getAllFiles message misses parameters", msg);
+
+        const server = GetServer(msg.params.server);
+        if (server == null) return error("Server hostname invalid", msg);
+
+        const fileList: FileContent[] = [
+            ...server.textFiles.map((txt): FileContent => { return { filename: txt.filename, content: txt.text } }),
+            ...server.scripts.map((scr): FileContent => { return { filename: scr.filename, content: scr.code } })
+        ];
+
+        return new RFAMessage({ result: JSON.stringify(fileList), id: msg.id });
     },
 
     calculateRam: function (msg: RFAMessage): RFAMessage {
