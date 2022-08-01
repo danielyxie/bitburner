@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(0),
       height: "100%",
     },
+    link: {
+      textDecoration: "underline solid green 0.1rem",
+    },
   }),
 );
 
@@ -128,7 +131,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
                 <ListItem key={i} classes={{ root: classes.nopadding }}>
                   <Typography>{item.dashes}&gt;&nbsp;</Typography>
                   <MuiLink
-                    classes={{ root: classes.preformatted }}
+                    classes={{ root: `${classes.preformatted} ${classes.link}` }}
                     color={"secondary"}
                     paragraph={false}
                     onClick={() => terminal.connectToServer(player, item.hostname)}
