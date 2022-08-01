@@ -6800,6 +6800,7 @@ export declare interface TIX {
     /**
      * Short stocks.
      * @remarks
+     * @deprecated use sellShort
      * RAM cost: 2.5 GB
      * Attempts to purchase a short position of a stock using a Market Order.
      *
