@@ -33,10 +33,11 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
         const hostname = ctx.helper.string("hostname", _hostname);
         const contract = getCodingContract(ctx, "attempt", hostname, filename);
 
+        if (typeof answer !== "number" && typeof answer !== "string" && !Array.isArray(answer))
+          throw new Error("The answer provided was not a number, string, or array");
+
         // Convert answer to string.
         const answerStr = JSON.stringify(answer);
-        if (answerStr === undefined) throw new Error("The provided answer could not be stringified");
-
         const creward = contract.reward;
         if (creward === null) throw new Error("Somehow solved a contract that didn't have a reward");
 
