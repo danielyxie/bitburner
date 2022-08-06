@@ -11,6 +11,12 @@ export class Environment {
   stopFlag = false;
 
   /**
+   * The currently running function
+   */
+
+  runningFn = "";
+
+  /**
    * Environment variables (currently only Netscript functions)
    */
   vars: NS | null = null;

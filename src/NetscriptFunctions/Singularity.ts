@@ -637,7 +637,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         () => `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`,
       );
 
-      return netscriptDelay(installTime, workerScript).then(function () {
+      return netscriptDelay("singularity.installBackdoor", installTime, workerScript).then(function () {
         _ctx.log(() => `Successfully installed backdoor on '${server.hostname}'`);
 
         server.backdoorInstalled = true;

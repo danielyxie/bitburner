@@ -4,20 +4,21 @@ import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { NetscriptContext } from "./Netscript/APIWrapper";
 
-export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
+export function netscriptDelay(fnName: string, time: number, workerScript: WorkerScript): Promise<void> {
   // Cancel any pre-existing netscriptDelay'ed function call
-  // TODO: the rejection almost certainly ends up in the uncaught rejection handler.
-  //       Maybe reject with a stack-trace'd error message?
+  // TODO: This can probably be removed. Concurrency check should error out before this in APIWrapper.ts
   if (workerScript.delayReject) workerScript.delayReject();
 
   return new Promise(function (resolve, reject) {
     workerScript.delay = window.setTimeout(() => {
       workerScript.delay = null;
       workerScript.delayReject = undefined;
+      workerScript.env.runningFn = "";
       if (workerScript.env.stopFlag) reject(new ScriptDeath(workerScript));
       else resolve();
     }, time);
     workerScript.delayReject = reject;
+    workerScript.env.runningFn = fnName;
   });
 }
 

@@ -13,6 +13,8 @@ import { INetscriptHelper, ScriptIdentifier } from "../NetscriptFunctions/INetsc
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 import { ScriptArg } from "./ScriptArg";
+import { ScriptDeath } from "./ScriptDeath";
+import { sprintf } from "sprintf-js";
 
 type ExternalFunction = (...args: unknown[]) => unknown;
 export type ExternalAPI = {
@@ -63,6 +65,22 @@ type WrappedNetscriptHelpers = {
   gangTask: (t: unknown) => GangMemberTask;
 };
 
+function checkEnv(ctx: NetscriptContext) {
+  if (ctx.workerScript.env.stopFlag) throw new ScriptDeath(ctx.workerScript);
+  if (ctx.workerScript.env.runningFn && ctx.function !== "asleep") {
+    if (ctx.workerScript.delayReject) ctx.workerScript.delayReject();
+    const msg =
+      "Concurrent calls to Netscript functions are not allowed!\n" +
+      "Did you forget to await hack(), grow(), or some other\n" +
+      "promise-returning function? (Currently running: %s tried to run: %s)";
+    ctx.workerScript.errorMessage = makeRuntimeRejectMsg(
+      ctx.workerScript,
+      sprintf(msg, ctx.workerScript.env.runningFn, ctx.function),
+    );
+    throw new ScriptDeath(ctx.workerScript);
+  }
+}
+
 function wrapFunction(
   helpers: INetscriptHelper,
   wrappedAPI: ExternalAPI,
@@ -107,10 +125,11 @@ function wrapFunction(
     },
   };
   function wrappedFunction(...args: unknown[]): unknown {
+    checkEnv(ctx);
     helpers.updateDynamicRam(ctx.function, getRamCost(Player, ...tree, ctx.function));
     return func(ctx)(...args);
   }
-  const parent = getNestedProperty(wrappedAPI, ...tree);
+  const parent = getNestedProperty(wrappedAPI, tree);
   Object.defineProperty(parent, functionName, {
     value: wrappedFunction,
     writable: true,
@@ -129,7 +148,7 @@ export function wrapAPI(
     if (typeof value === "function") {
       wrapFunction(helpers, wrappedAPI, workerScript, value, ...tree, key);
     } else if (Array.isArray(value)) {
-      setNestedProperty(wrappedAPI, value, key);
+      setNestedProperty(wrappedAPI, value.slice(), key);
     } else if (typeof value === "object") {
       wrapAPI(helpers, wrappedAPI, workerScript, value, ...tree, key);
     } else {
@@ -139,28 +158,21 @@ export function wrapAPI(
   return wrappedAPI;
 }
 
-// TODO: This doesn't even work properly.
-function setNestedProperty(root: object, value: unknown, ...tree: string[]): void {
+function setNestedProperty(root: any, value: unknown, ...tree: string[]): void {
   let target = root;
   const key = tree.pop();
-  if (!key) {
-    throw new Error("Failure occured while wrapping netscript api (setNestedProperty)");
+  if (!key) throw new Error("Failure occured while wrapping netscript api (setNestedProperty)");
+  for (const branch of tree) {
+    target[branch] ??= {};
+    target = target[branch];
   }
-  for (let branch of Object.values(target)) {
-    if (branch === undefined) {
-      branch = {};
-    }
-    target = branch;
-  }
-  Object.assign(target, { [key]: value });
+  target[key] = value;
 }
 
-function getNestedProperty(root: any, ...tree: string[]): unknown {
+function getNestedProperty(root: any, tree: string[]): unknown {
   let target = root;
   for (const branch of tree) {
-    if (target[branch] === undefined) {
-      target[branch] = {};
-    }
+    target[branch] ??= {};
     target = target[branch];
   }
   return target;
