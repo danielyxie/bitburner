@@ -57,7 +57,7 @@ export function NetscriptStanek(
         }
         //Charge the fragment
         const time = staneksGift.inBonus() ? 200 : 1000;
-        return netscriptDelay(time, workerScript).then(function () {
+        return netscriptDelay("stanek.charge", time, workerScript).then(function () {
           staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
           _ctx.log(() => `Charged fragment with ${_ctx.workerScript.scriptRef.threads} threads.`);
           return Promise.resolve();

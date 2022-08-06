@@ -29,7 +29,6 @@ import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { roundToTwo } from "./utils/helpers/roundToTwo";
 import { isString } from "./utils/helpers/isString";
-import { sprintf } from "sprintf-js";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
@@ -63,83 +62,6 @@ export function prestigeWorkerScripts(): void {
 // that resolves or rejects when the corresponding worker script is done.
 function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Promise<void> {
   workerScript.running = true;
-
-  // The name of the currently running netscript function, to prevent concurrent
-  // calls to hack, grow, etc.
-  let runningFn: string | null = null;
-
-  // We need to go through the environment and wrap each function in such a way that it
-  // can be called at most once at a time. This will prevent situations where multiple
-  // hack promises are outstanding, for example.
-  function wrap(propName: string, f: (...args: unknown[]) => Promise<void>): (...args: unknown[]) => Promise<void> {
-    // This function unfortunately cannot be an async function, because we don't
-    // know if the original one was, and there's no way to tell.
-    return function (...args: unknown[]) {
-      // Wrap every netscript function with a check for the stop flag.
-      // This prevents cases where we never stop because we are only calling
-      // netscript functions that don't check this.
-      // This is not a problem for legacy Netscript because it also checks the
-      // stop flag in the evaluator.
-      if (workerScript.env.stopFlag) {
-        throw new ScriptDeath(workerScript);
-      }
-
-      if (propName === "asleep") return f(...args); // OK for multiple simultaneous calls to sleep.
-
-      const msg =
-        "Concurrent calls to Netscript functions are not allowed! " +
-        "Did you forget to await hack(), grow(), or some other " +
-        "promise-returning function? (Currently running: %s tried to run: %s)";
-      if (runningFn) {
-        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName));
-        throw new ScriptDeath(workerScript);
-      }
-      runningFn = propName;
-
-      // If the function throws an error, clear the runningFn flag first, and then re-throw it
-      // This allows people to properly catch errors thrown by NS functions without getting
-      // the concurrent call error above
-      let result;
-      try {
-        result = f(...args);
-      } catch (e: unknown) {
-        runningFn = null;
-        throw e;
-      }
-
-      if (result && result.finally !== undefined) {
-        return result.finally(function () {
-          runningFn = null;
-        });
-      } else {
-        runningFn = null;
-        return result;
-      }
-    };
-  }
-
-  function wrapObject(vars: unknown, ...tree: string[]): void {
-    const isObject = (x: unknown): x is { [key: string]: unknown } => typeof x === "object";
-    if (!isObject(vars)) throw new Error("wrong argument sent to wrapObject");
-    for (const prop of Object.keys(vars)) {
-      let e = vars[prop];
-      switch (typeof e) {
-        case "function": {
-          e = wrap([...tree, prop].join("."), e as any);
-          break;
-        }
-        case "object": {
-          if (Array.isArray(e)) continue;
-          wrapObject(e, ...tree, prop);
-          break;
-        }
-      }
-    }
-  }
-  wrapObject(workerScript.env.vars);
-
-  // Note: the environment that we pass to the JS script only needs to contain the functions visible
-  // to that script, which env.vars does at this point.
   return new Promise<void>((resolve, reject) => {
     executeJSScript(player, workerScript.getServer().scripts, workerScript)
       .then(() => {

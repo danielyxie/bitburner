@@ -394,7 +394,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         )} (t=${numeralWrapper.formatThreads(threads)})`,
     );
 
-    return netscriptDelay(hackingTime * 1000, workerScript).then(function () {
+    return netscriptDelay("hack", hackingTime * 1000, workerScript).then(function () {
       const hackChance = calculateHackingChance(server, Player);
       const rand = Math.random();
       let expGainedOnSuccess = calculateHackingExpGain(server, Player) * threads;
@@ -757,7 +757,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
         }
         ctx.log(() => `Sleeping for ${time} milliseconds`);
-        return netscriptDelay(time, workerScript).then(function () {
+        return netscriptDelay("sleep", time, workerScript).then(function () {
           return Promise.resolve(true);
         });
       },
@@ -798,7 +798,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
               true,
             )} (t=${numeralWrapper.formatThreads(threads)}).`,
         );
-        return netscriptDelay(growTime * 1000, workerScript).then(function () {
+        return netscriptDelay("grow", growTime * 1000, workerScript).then(function () {
           const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
           processSingleServerGrowth(server, threads, Player, host.cpuCores);
           const moneyAfter = server.moneyAvailable;
@@ -892,7 +892,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
               true,
             )} (t=${numeralWrapper.formatThreads(threads)})`,
         );
-        return netscriptDelay(weakenTime * 1000, workerScript).then(function () {
+        return netscriptDelay("weaken", weakenTime * 1000, workerScript).then(function () {
           const host = GetServer(workerScript.hostname);
           if (host === null) {
             ctx.log(() => "Server is null, did it die?");
@@ -926,7 +926,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const end = StartSharing(
         workerScript.scriptRef.threads * calculateIntelligenceBonus(Player.skills.intelligence, 2),
       );
-      return netscriptDelay(10000, workerScript).finally(function () {
+      return netscriptDelay("share", 10000, workerScript).finally(function () {
         ctx.log(() => "Finished sharing this computer.");
         end();
       });
