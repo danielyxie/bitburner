@@ -24,9 +24,9 @@ type WrappedNetscriptAPI = {
 };
 
 export type NetscriptContext = {
-  log: (message: () => string) => void;
   workerScript: WorkerScript;
   function: string;
+  functionPath: string;
 };
 
 function wrapFunction(
@@ -41,11 +41,9 @@ function wrapFunction(
     throw helpers.makeRuntimeRejectMsg(workerScript, "Failure occured while wrapping netscript api");
   }
   const ctx = {
-    log: (message: () => string) => {
-      workerScript.log(functionPath, message);
-    },
     workerScript,
     function: functionName,
+    functionPath,
   };
   function wrappedFunction(...args: unknown[]): unknown {
     helpers.checkEnvFlags(ctx);

@@ -12,6 +12,7 @@ import { CONSTANTS } from "../Constants";
 import { hash } from "../hash/hash";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { Terminal } from "../../src/Terminal";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
 export function NetscriptUserInterface(): InternalAPI<IUserInterface> {
   return {
@@ -43,9 +44,9 @@ export function NetscriptUserInterface(): InternalAPI<IUserInterface> {
         if (errors.length === 0) {
           Object.assign(Settings.theme, currentTheme);
           ThemeEvents.emit();
-          ctx.log(() => `Successfully set theme`);
+          helpers.log(ctx, () => `Successfully set theme`);
         } else {
-          ctx.log(() => `Failed to set theme. Errors: ${errors.join(", ")}`);
+          helpers.log(ctx, () => `Failed to set theme. Errors: ${errors.join(", ")}`);
         }
       },
 
@@ -66,22 +67,22 @@ export function NetscriptUserInterface(): InternalAPI<IUserInterface> {
         if (errors.length === 0) {
           Object.assign(Settings.styles, currentStyles);
           ThemeEvents.emit();
-          ctx.log(() => `Successfully set styles`);
+          helpers.log(ctx, () => `Successfully set styles`);
         } else {
-          ctx.log(() => `Failed to set styles. Errors: ${errors.join(", ")}`);
+          helpers.log(ctx, () => `Failed to set styles. Errors: ${errors.join(", ")}`);
         }
       },
 
     resetTheme: (ctx: NetscriptContext) => (): void => {
       Settings.theme = { ...defaultTheme };
       ThemeEvents.emit();
-      ctx.log(() => `Reinitialized theme to default`);
+      helpers.log(ctx, () => `Reinitialized theme to default`);
     },
 
     resetStyles: (ctx: NetscriptContext) => (): void => {
       Settings.styles = { ...defaultStyles };
       ThemeEvents.emit();
-      ctx.log(() => `Reinitialized styles to default`);
+      helpers.log(ctx, () => `Reinitialized styles to default`);
     },
 
     getGameInfo: () => (): GameInfo => {
@@ -99,7 +100,7 @@ export function NetscriptUserInterface(): InternalAPI<IUserInterface> {
     },
 
     clearTerminal: (ctx: NetscriptContext) => (): void => {
-      ctx.log(() => `Clearing terminal`);
+      helpers.log(ctx, () => `Clearing terminal`);
       Terminal.clear();
     },
   };

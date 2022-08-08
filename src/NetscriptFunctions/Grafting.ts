@@ -61,7 +61,7 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
           throw helpers.makeRuntimeErrorMsg(ctx, "You must be in New Tokyo to begin grafting an Augmentation.");
         }
         if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
-          ctx.log(() => `Invalid aug: ${augName}`);
+          helpers.log(ctx, () => `Invalid aug: ${augName}`);
           return false;
         }
 
@@ -69,12 +69,12 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
 
         const craftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
         if (player.money < craftableAug.cost) {
-          ctx.log(() => `You don't have enough money to craft ${augName}`);
+          helpers.log(ctx, () => `You don't have enough money to craft ${augName}`);
           return false;
         }
 
         if (!hasAugmentationPrereqs(craftableAug.augmentation)) {
-          ctx.log(() => `You don't have the pre-requisites for ${augName}`);
+          helpers.log(ctx, () => `You don't have the pre-requisites for ${augName}`);
           return false;
         }
 
@@ -94,7 +94,7 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
           Router.toTerminal();
         }
 
-        ctx.log(() => `Began grafting Augmentation ${augName}.`);
+        helpers.log(ctx, () => `Began grafting Augmentation ${augName}.`);
         return true;
       },
   };

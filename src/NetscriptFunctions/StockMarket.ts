@@ -371,69 +371,69 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       },
     purchase4SMarketData: (ctx: NetscriptContext) => (): boolean => {
       if (player.has4SData) {
-        ctx.log(() => "Already purchased 4S Market Data.");
+        helpers.log(ctx, () => "Already purchased 4S Market Data.");
         return true;
       }
 
       if (player.money < getStockMarket4SDataCost()) {
-        ctx.log(() => "Not enough money to purchase 4S Market Data.");
+        helpers.log(ctx, () => "Not enough money to purchase 4S Market Data.");
         return false;
       }
 
       player.has4SData = true;
       player.loseMoney(getStockMarket4SDataCost(), "stock");
-      ctx.log(() => "Purchased 4S Market Data");
+      helpers.log(ctx, () => "Purchased 4S Market Data");
       return true;
     },
     purchase4SMarketDataTixApi: (ctx: NetscriptContext) => (): boolean => {
       checkTixApiAccess(ctx);
 
       if (player.has4SDataTixApi) {
-        ctx.log(() => "Already purchased 4S Market Data TIX API");
+        helpers.log(ctx, () => "Already purchased 4S Market Data TIX API");
         return true;
       }
 
       if (player.money < getStockMarket4STixApiCost()) {
-        ctx.log(() => "Not enough money to purchase 4S Market Data TIX API");
+        helpers.log(ctx, () => "Not enough money to purchase 4S Market Data TIX API");
         return false;
       }
 
       player.has4SDataTixApi = true;
       player.loseMoney(getStockMarket4STixApiCost(), "stock");
-      ctx.log(() => "Purchased 4S Market Data TIX API");
+      helpers.log(ctx, () => "Purchased 4S Market Data TIX API");
       return true;
     },
     purchaseWseAccount: (ctx: NetscriptContext) => (): boolean => {
       if (player.hasWseAccount) {
-        ctx.log(() => "Already purchased WSE Account");
+        helpers.log(ctx, () => "Already purchased WSE Account");
         return true;
       }
 
       if (player.money < getStockMarketWseCost()) {
-        ctx.log(() => "Not enough money to purchase WSE Account Access");
+        helpers.log(ctx, () => "Not enough money to purchase WSE Account Access");
         return false;
       }
 
       player.hasWseAccount = true;
       initStockMarketFn();
       player.loseMoney(getStockMarketWseCost(), "stock");
-      ctx.log(() => "Purchased WSE Account Access");
+      helpers.log(ctx, () => "Purchased WSE Account Access");
       return true;
     },
     purchaseTixApi: (ctx: NetscriptContext) => (): boolean => {
       if (player.hasTixApiAccess) {
-        ctx.log(() => "Already purchased TIX API");
+        helpers.log(ctx, () => "Already purchased TIX API");
         return true;
       }
 
       if (player.money < getStockMarketTixApiCost()) {
-        ctx.log(() => "Not enough money to purchase TIX API Access");
+        helpers.log(ctx, () => "Not enough money to purchase TIX API Access");
         return false;
       }
 
       player.hasTixApiAccess = true;
       player.loseMoney(getStockMarketTixApiCost(), "stock");
-      ctx.log(() => "Purchased TIX API");
+      helpers.log(ctx, () => "Purchased TIX API");
       return true;
     },
   };

@@ -55,6 +55,7 @@ export const helpers = {
   gang,
   gangMember,
   gangTask,
+  log,
 };
 
 export type ScriptIdentifier =  //This was previously in INetscriptHelper.ts, may move to its own file or a generic types file.
@@ -341,7 +342,8 @@ async function hack(
     throw makeRuntimeErrorMsg(ctx, canHack.msg || "");
   }
 
-  ctx.log(
+  log(
+    ctx,
     () =>
       `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(
         hackingTime * 1000,
@@ -390,7 +392,8 @@ async function hack(
       Player.gainHackingExp(expGainedOnSuccess);
       if (manual) Player.gainIntelligenceExp(0.005);
       ws.scriptRef.onlineExpGained += expGainedOnSuccess;
-      ctx.log(
+      log(
+        ctx,
         () =>
           `Successfully hacked '${server.hostname}' for ${numeralWrapper.formatMoney(
             moneyGained,
@@ -408,7 +411,8 @@ async function hack(
       // Player only gains 25% exp for failure?
       Player.gainHackingExp(expGainedOnFailure);
       ws.scriptRef.onlineExpGained += expGainedOnFailure;
-      ctx.log(
+      log(
+        ctx,
         () =>
           `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.formatExp(
             expGainedOnFailure,
@@ -498,4 +502,7 @@ function gangTask(ctx: NetscriptContext, t: unknown): GangMemberTask {
   if (!roughlyIs(new GangMemberTask("", "", false, false, {}), t))
     throw makeRuntimeErrorMsg(ctx, `task should be a GangMemberTask.`);
   return t as GangMemberTask;
+}
+function log(ctx: NetscriptContext, message: () => string) {
+  ctx.workerScript.log(ctx.functionPath, message);
 }

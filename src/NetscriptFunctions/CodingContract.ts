@@ -55,16 +55,17 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
         const serv = helpers.getServer(ctx, hostname);
         if (contract.isSolution(answerStr)) {
           const reward = player.gainCodingContractReward(creward, contract.getDifficulty());
-          ctx.log(() => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`);
+          helpers.log(ctx, () => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`);
           serv.removeContract(filename);
           return returnReward ? reward : true;
         } else {
           ++contract.tries;
           if (contract.tries >= contract.getMaxNumTries()) {
-            ctx.log(() => `Coding Contract attempt '${filename}' failed. Contract is now self-destructing`);
+            helpers.log(ctx, () => `Coding Contract attempt '${filename}' failed. Contract is now self-destructing`);
             serv.removeContract(filename);
           } else {
-            ctx.log(
+            helpers.log(
+              ctx,
               () =>
                 `Coding Contract attempt '${filename}' failed. ${
                   contract.getMaxNumTries() - contract.tries

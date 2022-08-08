@@ -185,12 +185,12 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const augs = getFactionAugmentationsFiltered(player, fac);
 
         if (!player.factions.includes(fac.name)) {
-          ctx.log(() => `You can't purchase augmentations from '${facName}' because you aren't a member`);
+          helpers.log(ctx, () => `You can't purchase augmentations from '${facName}' because you aren't a member`);
           return false;
         }
 
         if (!augs.includes(augName)) {
-          ctx.log(() => `Faction '${facName}' does not have the '${augName}' augmentation.`);
+          helpers.log(ctx, () => `Faction '${facName}' does not have the '${augName}' augmentation.`);
           return false;
         }
 
@@ -198,25 +198,25 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         if (!isNeuroflux) {
           for (let j = 0; j < player.queuedAugmentations.length; ++j) {
             if (player.queuedAugmentations[j].name === aug.name) {
-              ctx.log(() => `You already have the '${augName}' augmentation.`);
+              helpers.log(ctx, () => `You already have the '${augName}' augmentation.`);
               return false;
             }
           }
           for (let j = 0; j < player.augmentations.length; ++j) {
             if (player.augmentations[j].name === aug.name) {
-              ctx.log(() => `You already have the '${augName}' augmentation.`);
+              helpers.log(ctx, () => `You already have the '${augName}' augmentation.`);
               return false;
             }
           }
         }
 
         if (fac.playerReputation < aug.getCost(player).repCost) {
-          ctx.log(() => `You do not have enough reputation with '${fac.name}'.`);
+          helpers.log(ctx, () => `You do not have enough reputation with '${fac.name}'.`);
           return false;
         }
 
         const res = purchaseAugmentation(aug, fac, true);
-        ctx.log(() => res);
+        helpers.log(ctx, () => res);
         if (isString(res) && res.startsWith("You purchased")) {
           player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 10);
           return true;
@@ -229,7 +229,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         helpers.checkSingularityAccess(ctx);
         const cbScript = helpers.string(ctx, "cbScript", _cbScript);
 
-        ctx.log(() => "Soft resetting. This will cause this script to be killed");
+        helpers.log(ctx, () => "Soft resetting. This will cause this script to be killed");
         setTimeout(() => {
           installAugmentations(true);
           runAfterReset(cbScript);
@@ -245,11 +245,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const cbScript = helpers.string(ctx, "cbScript", _cbScript);
 
         if (player.queuedAugmentations.length === 0) {
-          ctx.log(() => "You do not have any Augmentations to be installed.");
+          helpers.log(ctx, () => "You do not have any Augmentations to be installed.");
           return false;
         }
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 10);
-        ctx.log(() => "Installing Augmentations. This will cause this script to be killed");
+        helpers.log(ctx, () => "Installing Augmentations. This will cause this script to be killed");
         setTimeout(() => {
           installAugmentations();
           runAfterReset(cbScript);
@@ -266,11 +266,11 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const locationName = helpers.string(ctx, "locationName", _locationName);
         const location = Object.values(Locations).find((l) => l.name === locationName);
         if (!location) {
-          ctx.log(() => `No location named ${locationName}`);
+          helpers.log(ctx, () => `No location named ${locationName}`);
           return false;
         }
         if (location.city && player.city !== location.city) {
-          ctx.log(() => `No location named ${locationName} in ${player.city}`);
+          helpers.log(ctx, () => `No location named ${locationName} in ${player.city}`);
           return false;
         }
         if (location.name === LocationName.TravelAgency) {
@@ -294,21 +294,28 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         switch (universityName.toLowerCase()) {
           case LocationName.AevumSummitUniversity.toLowerCase():
             if (player.city != CityName.Aevum) {
-              ctx.log(() => `You cannot study at 'Summit University' because you are not in '${CityName.Aevum}'.`);
+              helpers.log(
+                ctx,
+                () => `You cannot study at 'Summit University' because you are not in '${CityName.Aevum}'.`,
+              );
               return false;
             }
             player.gotoLocation(LocationName.AevumSummitUniversity);
             break;
           case LocationName.Sector12RothmanUniversity.toLowerCase():
             if (player.city != CityName.Sector12) {
-              ctx.log(() => `You cannot study at 'Rothman University' because you are not in '${CityName.Sector12}'.`);
+              helpers.log(
+                ctx,
+                () => `You cannot study at 'Rothman University' because you are not in '${CityName.Sector12}'.`,
+              );
               return false;
             }
             player.location = LocationName.Sector12RothmanUniversity;
             break;
           case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
             if (player.city != CityName.Volhaven) {
-              ctx.log(
+              helpers.log(
+                ctx,
                 () => `You cannot study at 'ZB Institute of Technology' because you are not in '${CityName.Volhaven}'.`,
               );
               return false;
@@ -316,7 +323,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             player.location = LocationName.VolhavenZBInstituteOfTechnology;
             break;
           default:
-            ctx.log(() => `Invalid university name: '${universityName}'.`);
+            helpers.log(ctx, () => `Invalid university name: '${universityName}'.`);
             return false;
         }
 
@@ -341,7 +348,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             task = ClassType.Leadership;
             break;
           default:
-            ctx.log(() => `Invalid class name: ${className}.`);
+            helpers.log(ctx, () => `Invalid class name: ${className}.`);
             return false;
         }
         player.startWork(
@@ -358,7 +365,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           player.stopFocusing();
           Router.toTerminal();
         }
-        ctx.log(() => `Started ${task} at ${universityName}`);
+        helpers.log(ctx, () => `Started ${task} at ${universityName}`);
         return true;
       },
 
@@ -373,7 +380,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         switch (gymName.toLowerCase()) {
           case LocationName.AevumCrushFitnessGym.toLowerCase():
             if (player.city != CityName.Aevum) {
-              ctx.log(
+              helpers.log(
+                ctx,
                 () =>
                   `You cannot workout at '${LocationName.AevumCrushFitnessGym}' because you are not in '${CityName.Aevum}'.`,
               );
@@ -383,7 +391,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             break;
           case LocationName.AevumSnapFitnessGym.toLowerCase():
             if (player.city != CityName.Aevum) {
-              ctx.log(
+              helpers.log(
+                ctx,
                 () =>
                   `You cannot workout at '${LocationName.AevumSnapFitnessGym}' because you are not in '${CityName.Aevum}'.`,
               );
@@ -393,7 +402,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             break;
           case LocationName.Sector12IronGym.toLowerCase():
             if (player.city != CityName.Sector12) {
-              ctx.log(
+              helpers.log(
+                ctx,
                 () =>
                   `You cannot workout at '${LocationName.Sector12IronGym}' because you are not in '${CityName.Sector12}'.`,
               );
@@ -403,7 +413,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             break;
           case LocationName.Sector12PowerhouseGym.toLowerCase():
             if (player.city != CityName.Sector12) {
-              ctx.log(
+              helpers.log(
+                ctx,
                 () =>
                   `You cannot workout at '${LocationName.Sector12PowerhouseGym}' because you are not in '${CityName.Sector12}'.`,
               );
@@ -413,7 +424,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             break;
           case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
             if (player.city != CityName.Volhaven) {
-              ctx.log(
+              helpers.log(
+                ctx,
                 () =>
                   `You cannot workout at '${LocationName.VolhavenMilleniumFitnessGym}' because you are not in '${CityName.Volhaven}'.`,
               );
@@ -422,7 +434,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             player.location = LocationName.VolhavenMilleniumFitnessGym;
             break;
           default:
-            ctx.log(() => `Invalid gym name: ${gymName}. gymWorkout() failed`);
+            helpers.log(ctx, () => `Invalid gym name: ${gymName}. gymWorkout() failed`);
             return false;
         }
 
@@ -452,7 +464,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             );
             break;
           default:
-            ctx.log(() => `Invalid stat: ${stat}.`);
+            helpers.log(ctx, () => `Invalid stat: ${stat}.`);
             return false;
         }
         if (focus) {
@@ -462,7 +474,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           player.stopFocusing();
           Router.toTerminal();
         }
-        ctx.log(() => `Started training ${stat} at ${gymName}`);
+        helpers.log(ctx, () => `Started training ${stat} at ${gymName}`);
         return true;
       },
 
@@ -479,12 +491,12 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           case CityName.Ishima:
           case CityName.Volhaven:
             if (player.money < CONSTANTS.TravelCost) {
-              ctx.log(() => "Not enough money to travel.");
+              helpers.log(ctx, () => "Not enough money to travel.");
               return false;
             }
             player.loseMoney(CONSTANTS.TravelCost, "other");
             player.city = cityName;
-            ctx.log(() => `Traveled to ${cityName}`);
+            helpers.log(ctx, () => `Traveled to ${cityName}`);
             player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
             return true;
           default:
@@ -497,12 +509,12 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         helpers.checkSingularityAccess(ctx);
 
         if (player.hasTorRouter()) {
-          ctx.log(() => "You already have a TOR router!");
+          helpers.log(ctx, () => "You already have a TOR router!");
           return true;
         }
 
         if (player.money < CONSTANTS.TorRouterCost) {
-          ctx.log(() => "You cannot afford to purchase a Tor router.");
+          helpers.log(ctx, () => "You cannot afford to purchase a Tor router.");
           return false;
         }
         player.loseMoney(CONSTANTS.TorRouterCost, "other");
@@ -513,7 +525,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         player.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
         darkweb.serversOnNetwork.push(player.getHomeComputer().hostname);
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 500);
-        ctx.log(() => "You have purchased a Tor router!");
+        helpers.log(ctx, () => "You have purchased a Tor router!");
         return true;
       },
     purchaseProgram: (ctx: NetscriptContext) =>
@@ -522,25 +534,26 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const programName = helpers.string(ctx, "programName", _programName).toLowerCase();
 
         if (!player.hasTorRouter()) {
-          ctx.log(() => "You do not have the TOR router.");
+          helpers.log(ctx, () => "You do not have the TOR router.");
           return false;
         }
 
         const item = Object.values(DarkWebItems).find((i) => i.program.toLowerCase() === programName);
         if (item == null) {
-          ctx.log(() => `Invalid program name: '${programName}.`);
+          helpers.log(ctx, () => `Invalid program name: '${programName}.`);
           return false;
         }
 
         if (player.money < item.price) {
-          ctx.log(
+          helpers.log(
+            ctx,
             () => `Not enough money to purchase '${item.program}'. Need ${numeralWrapper.formatMoney(item.price)}`,
           );
           return false;
         }
 
         if (player.hasProgram(item.program)) {
-          ctx.log(() => `You already have the '${item.program}' program`);
+          helpers.log(ctx, () => `You already have the '${item.program}' program`);
           return true;
         }
 
@@ -551,7 +564,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
 
         player.loseMoney(item.price, "other");
-        ctx.log(
+        helpers.log(
+          ctx,
           () => `You have purchased the '${item.program}' program. The new program can be found on your home computer.`,
         );
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 5000);
@@ -621,7 +635,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       helpers.checkSingularityAccess(ctx);
       const baseserver = player.getCurrentServer();
       if (!(baseserver instanceof Server)) {
-        ctx.log(() => "cannot backdoor this kind of server");
+        helpers.log(ctx, () => "cannot backdoor this kind of server");
         return Promise.resolve();
       }
       const server = baseserver;
@@ -633,12 +647,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         throw helpers.makeRuntimeErrorMsg(ctx, canHack.msg || "");
       }
 
-      ctx.log(
+      helpers.log(
+        ctx,
         () => `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`,
       );
 
       return helpers.netscriptDelay(ctx, installTime).then(function () {
-        ctx.log(() => `Successfully installed backdoor on '${server.hostname}'`);
+        helpers.log(ctx, () => `Successfully installed backdoor on '${server.hostname}'`);
 
         server.backdoorInstalled = true;
 
@@ -676,7 +691,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       function (): void {
         helpers.checkSingularityAccess(ctx);
         if (player.currentWork || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
-          ctx.log(() => "Cannot go to the hospital because the player is busy.");
+          helpers.log(ctx, () => "Cannot go to the hospital because the player is busy.");
           return;
         }
         player.hospitalize();
@@ -700,13 +715,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         // Check if we're at max cores
         const homeComputer = player.getHomeComputer();
         if (homeComputer.cpuCores >= 8) {
-          ctx.log(() => `Your home computer is at max cores.`);
+          helpers.log(ctx, () => `Your home computer is at max cores.`);
           return false;
         }
 
         const cost = player.getUpgradeHomeCoresCost();
         if (player.money < cost) {
-          ctx.log(() => `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
+          helpers.log(ctx, () => `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
           return false;
         }
 
@@ -714,7 +729,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         player.loseMoney(cost, "servers");
 
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 2);
-        ctx.log(() => `Purchased an additional core for home computer! It now has ${homeComputer.cpuCores} cores.`);
+        helpers.log(
+          ctx,
+          () => `Purchased an additional core for home computer! It now has ${homeComputer.cpuCores} cores.`,
+        );
         return true;
       },
     getUpgradeHomeCoresCost: (ctx: NetscriptContext) =>
@@ -730,13 +748,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         // Check if we're at max RAM
         const homeComputer = player.getHomeComputer();
         if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
-          ctx.log(() => `Your home computer is at max RAM.`);
+          helpers.log(ctx, () => `Your home computer is at max RAM.`);
           return false;
         }
 
         const cost = player.getUpgradeHomeRamCost();
         if (player.money < cost) {
-          ctx.log(() => `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
+          helpers.log(ctx, () => `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
           return false;
         }
 
@@ -744,7 +762,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         player.loseMoney(cost, "servers");
 
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 2);
-        ctx.log(
+        helpers.log(
+          ctx,
           () =>
             `Purchased additional RAM for home computer! It now has ${numeralWrapper.formatRAM(
               homeComputer.maxRam,
@@ -766,13 +785,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         // Make sure its a valid company
         if (companyName == null || companyName === "" || !(Companies[companyName] instanceof Company)) {
-          ctx.log(() => `Invalid company: '${companyName}'`);
+          helpers.log(ctx, () => `Invalid company: '${companyName}'`);
           return false;
         }
 
         // Make sure player is actually employed at the comapny
         if (!Object.keys(player.jobs).includes(companyName)) {
-          ctx.log(() => `You do not have a job at '${companyName}'`);
+          helpers.log(ctx, () => `You do not have a job at '${companyName}'`);
           return false;
         }
 
@@ -780,7 +799,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const companyPositionName = player.jobs[companyName];
         const companyPosition = CompanyPositions[companyPositionName];
         if (companyPositionName === "" || !(companyPosition instanceof CompanyPosition)) {
-          ctx.log(() => "You do not have a job");
+          helpers.log(ctx, () => "You do not have a job");
           return false;
         }
 
@@ -799,7 +818,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           player.stopFocusing();
           Router.toTerminal();
         }
-        ctx.log(() => `Began working at '${companyName}' as a '${companyPositionName}'`);
+        helpers.log(ctx, () => `Began working at '${companyName}' as a '${companyPositionName}'`);
         return true;
       },
     applyToCompany: (ctx: NetscriptContext) =>
@@ -852,19 +871,19 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             res = player.applyForPartTimeWaiterJob(true);
             break;
           default:
-            ctx.log(() => `Invalid job: '${field}'.`);
+            helpers.log(ctx, () => `Invalid job: '${field}'.`);
             return false;
         }
         // TODO https://github.com/danielyxie/bitburner/issues/1378
         // The player object's applyForJob function can return string with special error messages
         // if (isString(res)) {
-        //   ctx.log("applyToCompany",()=> res);
+        //   helpers.log(ctx,"applyToCompany",()=> res);
         //   return false;
         // }
         if (res) {
-          ctx.log(() => `You were offered a new job at '${companyName}' as a '${player.jobs[companyName]}'`);
+          helpers.log(ctx, () => `You were offered a new job at '${companyName}' as a '${player.jobs[companyName]}'`);
         } else {
-          ctx.log(() => `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`);
+          helpers.log(ctx, () => `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`);
         }
         return res;
       },
@@ -908,7 +927,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         getFaction(ctx, facName);
 
         if (!player.factionInvitations.includes(facName)) {
-          ctx.log(() => `You have not been invited by faction '${facName}'`);
+          helpers.log(ctx, () => `You have not been invited by faction '${facName}'`);
           return false;
         }
         const fac = Factions[facName];
@@ -922,7 +941,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           }
         }
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 5);
-        ctx.log(() => `Joined the '${facName}' faction.`);
+        helpers.log(ctx, () => `Joined the '${facName}' faction.`);
         return true;
       },
     workForFaction: (ctx: NetscriptContext) =>
@@ -935,12 +954,12 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         // if the player is in a gang and the target faction is any of the gang faction, fail
         if (player.inGang() && faction.name === player.getGangFaction().name) {
-          ctx.log(() => `You can't work for '${facName}' because youre managing a gang for it`);
+          helpers.log(ctx, () => `You can't work for '${facName}' because youre managing a gang for it`);
           return false;
         }
 
         if (!player.factions.includes(facName)) {
-          ctx.log(() => `You are not a member of '${facName}'`);
+          helpers.log(ctx, () => `You are not a member of '${facName}'`);
           return false;
         }
 
@@ -951,7 +970,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           case "hacking contracts":
           case "hackingcontracts":
             if (!FactionInfos[faction.name].offerHackingWork) {
-              ctx.log(() => `Faction '${faction.name}' do not need help with hacking contracts.`);
+              helpers.log(ctx, () => `Faction '${faction.name}' do not need help with hacking contracts.`);
               return false;
             }
             player.startWork(
@@ -968,13 +987,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               player.stopFocusing();
               Router.toTerminal();
             }
-            ctx.log(() => `Started carrying out hacking contracts for '${faction.name}'`);
+            helpers.log(ctx, () => `Started carrying out hacking contracts for '${faction.name}'`);
             return true;
           case "field":
           case "fieldwork":
           case "field work":
             if (!FactionInfos[faction.name].offerFieldWork) {
-              ctx.log(() => `Faction '${faction.name}' do not need help with field missions.`);
+              helpers.log(ctx, () => `Faction '${faction.name}' do not need help with field missions.`);
               return false;
             }
             player.startWork(
@@ -991,13 +1010,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               player.stopFocusing();
               Router.toTerminal();
             }
-            ctx.log(() => `Started carrying out field missions for '${faction.name}'`);
+            helpers.log(ctx, () => `Started carrying out field missions for '${faction.name}'`);
             return true;
           case "security":
           case "securitywork":
           case "security work":
             if (!FactionInfos[faction.name].offerSecurityWork) {
-              ctx.log(() => `Faction '${faction.name}' do not need help with security work.`);
+              helpers.log(ctx, () => `Faction '${faction.name}' do not need help with security work.`);
               return false;
             }
             player.startWork(
@@ -1014,10 +1033,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               player.stopFocusing();
               Router.toTerminal();
             }
-            ctx.log(() => `Started carrying out security work for '${faction.name}'`);
+            helpers.log(ctx, () => `Started carrying out security work for '${faction.name}'`);
             return true;
           default:
-            ctx.log(() => `Invalid work type: '${type}`);
+            helpers.log(ctx, () => `Invalid work type: '${type}`);
             return false;
         }
       },
@@ -1049,28 +1068,32 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const amt = helpers.number(ctx, "amt", _amt);
         const faction = getFaction(ctx, facName);
         if (!player.factions.includes(faction.name)) {
-          ctx.log(() => `You can't donate to '${facName}' because you aren't a member`);
+          helpers.log(ctx, () => `You can't donate to '${facName}' because you aren't a member`);
           return false;
         }
         if (player.inGang() && faction.name === player.getGangFaction().name) {
-          ctx.log(() => `You can't donate to '${facName}' because youre managing a gang for it`);
+          helpers.log(ctx, () => `You can't donate to '${facName}' because youre managing a gang for it`);
           return false;
         }
         if (faction.name === FactionNames.ChurchOfTheMachineGod || faction.name === FactionNames.Bladeburners) {
-          ctx.log(() => `You can't donate to '${facName}' because they do not accept donations`);
+          helpers.log(ctx, () => `You can't donate to '${facName}' because they do not accept donations`);
           return false;
         }
         if (typeof amt !== "number" || amt <= 0 || isNaN(amt)) {
-          ctx.log(() => `Invalid donation amount: '${amt}'.`);
+          helpers.log(ctx, () => `Invalid donation amount: '${amt}'.`);
           return false;
         }
         if (player.money < amt) {
-          ctx.log(() => `You do not have enough money to donate ${numeralWrapper.formatMoney(amt)} to '${facName}'`);
+          helpers.log(
+            ctx,
+            () => `You do not have enough money to donate ${numeralWrapper.formatMoney(amt)} to '${facName}'`,
+          );
           return false;
         }
         const repNeededToDonate = Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
         if (faction.favor < repNeededToDonate) {
-          ctx.log(
+          helpers.log(
+            ctx,
             () =>
               `You do not have enough favor to donate to this faction. Have ${faction.favor}, need ${repNeededToDonate}`,
           );
@@ -1079,7 +1102,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const repGain = (amt / CONSTANTS.DonateMoneyToRepDivisor) * player.mults.faction_rep;
         faction.playerReputation += repGain;
         player.loseMoney(amt, "other");
-        ctx.log(
+        helpers.log(
+          ctx,
           () =>
             `${numeralWrapper.formatMoney(amt)} donated to '${facName}' for ${numeralWrapper.formatReputation(
               repGain,
@@ -1098,23 +1122,23 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const p = Object.values(Programs).find((p) => p.name.toLowerCase() === programName);
 
         if (p == null) {
-          ctx.log(() => `The specified program does not exist: '${programName}`);
+          helpers.log(ctx, () => `The specified program does not exist: '${programName}`);
           return false;
         }
 
         if (player.hasProgram(p.name)) {
-          ctx.log(() => `You already have the '${p.name}' program`);
+          helpers.log(ctx, () => `You already have the '${p.name}' program`);
           return false;
         }
 
         const create = p.create;
         if (create === null) {
-          ctx.log(() => `You cannot create the '${p.name}' program`);
+          helpers.log(ctx, () => `You cannot create the '${p.name}' program`);
           return false;
         }
 
         if (!create.req(player)) {
-          ctx.log(() => `Hacking level is too low to create '${p.name}' (level ${create.level} req)`);
+          helpers.log(ctx, () => `Hacking level is too low to create '${p.name}' (level ${create.level} req)`);
           return false;
         }
 
@@ -1132,7 +1156,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           player.stopFocusing();
           Router.toTerminal();
         }
-        ctx.log(() => `Began creating program: '${programName}'`);
+        helpers.log(ctx, () => `Began creating program: '${programName}'`);
         return true;
       },
     commitCrime: (ctx: NetscriptContext) =>
@@ -1154,7 +1178,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           // couldn't find crime
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeRoughName}'`);
         }
-        ctx.log(() => `Attempting to commit ${crime.name}...`);
+        helpers.log(ctx, () => `Attempting to commit ${crime.name}...`);
         const crimeTime = crime.commit(player, 1, workerScript);
         if (focus) {
           player.startFocusing();
@@ -1195,7 +1219,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         // If we don't have Tor, log it and return [] (empty list)
         if (!player.hasTorRouter()) {
-          ctx.log(() => "You do not have the TOR router.");
+          helpers.log(ctx, () => "You do not have the TOR router.");
           return [];
         }
         return Object.values(DarkWebItems).map((p) => p.program);
@@ -1207,7 +1231,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
         // If we don't have Tor, log it and return -1
         if (!player.hasTorRouter()) {
-          ctx.log(() => "You do not have the TOR router.");
+          helpers.log(ctx, () => "You do not have the TOR router.");
           // returning -1 rather than throwing an error to be consistent with purchaseProgram
           // which returns false if tor has
           return -1;
@@ -1228,7 +1252,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         }
 
         if (player.hasProgram(item.program)) {
-          ctx.log(() => `You already have the '${item.program}' program`);
+          helpers.log(ctx, () => `You already have the '${item.program}' program`);
           return 0;
         }
         return item.price;
@@ -1269,7 +1293,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         };
 
         if (!hackingRequirements() && !bladeburnerRequirements()) {
-          ctx.log(() => "Requirements not met to destroy the world daemon");
+          helpers.log(ctx, () => "Requirements not met to destroy the world daemon");
           return;
         }
 

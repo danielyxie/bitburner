@@ -131,7 +131,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
           const time = bladeburner.getActionTimeNetscriptFn(player, type, name);
           if (typeof time === "string") {
             const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-            ctx.log(() => errorLogText);
+            helpers.log(ctx, () => errorLogText);
             return -1;
           } else {
             return time;
@@ -165,7 +165,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
           const chance = bladeburner.getActionEstimatedSuccessChanceNetscriptFn(player, type, name);
           if (typeof chance === "string") {
             const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-            ctx.log(() => errorLogText);
+            helpers.log(ctx, () => errorLogText);
             return [-1, -1];
           } else {
             return chance;
@@ -410,11 +410,11 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
           player.skills.agility >= 100
         ) {
           player.bladeburner = new Bladeburner(player);
-          ctx.log(() => "You have been accepted into the Bladeburner division");
+          helpers.log(ctx, () => "You have been accepted into the Bladeburner division");
 
           return true;
         } else {
-          ctx.log(() => "You do not meet the requirements for joining the Bladeburner division");
+          helpers.log(ctx, () => "You do not meet the requirements for joining the Bladeburner division");
           return false;
         }
       }

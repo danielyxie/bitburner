@@ -32,7 +32,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
   const checkSleeveNumber = function (ctx: NetscriptContext, sleeveNumber: number): void {
     if (sleeveNumber >= player.sleeves.length || sleeveNumber < 0) {
       const msg = `Invalid sleeve number: ${sleeveNumber}`;
-      ctx.log(() => msg);
+      helpers.log(ctx, () => msg);
       throw helpers.makeRuntimeErrorMsg(ctx, msg);
     }
   };

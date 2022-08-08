@@ -55,20 +55,20 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript): In
         const time = staneksGift.inBonus() ? 200 : 1000;
         return helpers.netscriptDelay(ctx, time).then(function () {
           staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
-          ctx.log(() => `Charged fragment with ${ctx.workerScript.scriptRef.threads} threads.`);
+          helpers.log(ctx, () => `Charged fragment with ${ctx.workerScript.scriptRef.threads} threads.`);
           return Promise.resolve();
         });
       },
     fragmentDefinitions: (ctx: NetscriptContext) =>
       function (): IFragment[] {
         checkStanekAPIAccess(ctx);
-        ctx.log(() => `Returned ${Fragments.length} fragments`);
+        helpers.log(ctx, () => `Returned ${Fragments.length} fragments`);
         return Fragments.map((f) => f.copy());
       },
     activeFragments: (ctx: NetscriptContext) =>
       function (): IActiveFragment[] {
         checkStanekAPIAccess(ctx);
-        ctx.log(() => `Returned ${staneksGift.fragments.length} fragments`);
+        helpers.log(ctx, () => `Returned ${staneksGift.fragments.length} fragments`);
         return staneksGift.fragments.map((af) => {
           return { ...af.copy(), ...af.fragment().copy() };
         });
@@ -76,7 +76,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript): In
     clearGift: (ctx: NetscriptContext) =>
       function (): void {
         checkStanekAPIAccess(ctx);
-        ctx.log(() => `Cleared Stanek's Gift.`);
+        helpers.log(ctx, () => `Cleared Stanek's Gift.`);
         staneksGift.clear();
       },
     canPlaceFragment: (ctx: NetscriptContext) =>
@@ -134,7 +134,8 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript): In
             !player.queuedAugmentations.some((a) => a.name === AugmentationNames.StaneksGift1)
           ) {
             applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
-            ctx.log(
+            helpers.log(
+              ctx,
               () => `'${FactionNames.ChurchOfTheMachineGod}' joined and '${AugmentationNames.StaneksGift1}' installed.`,
             );
           }
