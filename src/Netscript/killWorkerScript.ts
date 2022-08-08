@@ -79,7 +79,6 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript): void {
  */
 function removeWorkerScript(workerScript: WorkerScript): void {
   const ip = workerScript.hostname;
-  const name = workerScript.name;
 
   // Get the server on which the script runs
   const server = GetServer(ip);
