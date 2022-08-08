@@ -17,8 +17,12 @@ export function KillScriptsModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <Typography>Forcefully kill all running scripts? This will also save your game and reload the game.</Typography>
-      <Button onClick={onClick}>KILL</Button>
+      <Typography>Do you want to delete all running scripts forcefully?</Typography>
+      <Typography sx={{ mb: 2 }}>This will also save your game and reload the game.</Typography>
+      <Button onClick={onClick}>Yes</Button>
+      <Button sx={{ float: "right" }} onClick={props.onClose}>
+        No
+      </Button>
     </Modal>
   );
 }
