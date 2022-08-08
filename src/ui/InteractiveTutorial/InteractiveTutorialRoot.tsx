@@ -376,12 +376,12 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             <br />
             To create a new script or edit an existing one, you can use{" "}
           </Typography>
-          <Typography classes={{ root: classes.textfield }}>{"[home ~/]> nano"}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> nano"}</Typography>
 
           <Typography>
             Scripts must end with the {tutorialScriptExtension} extension. Let's make a script now by entering{" "}
           </Typography>
-          <Typography classes={{ root: classes.textfield }}>{`[home ~/]> nano ${tutorialScriptName}`}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{`[n00dles ~/]> nano ${tutorialScriptName}`}</Typography>
 
           <Typography>
             after the hack command finishes running (Sidenote: Pressing ctrl + c will end a command like hack early)
@@ -439,7 +439,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             <br />
             To check how much RAM is available on this machine, enter
           </Typography>
-          <Typography classes={{ root: classes.textfield }}>{"[home ~/]> free"}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> free"}</Typography>
         </>
       ),
       canNext: false,
@@ -448,9 +448,9 @@ export function InteractiveTutorialRoot(): React.ReactElement {
       content: (
         <>
           <Typography>
-            We have 8GB of free RAM on this machine, which is enough to run our script. Let's run our script using
+            We have 4GB of free RAM on this machine, which is enough to run our script. Let's run our script using
           </Typography>
-          <Typography classes={{ root: classes.textfield }}>{`[home ~/]> run ${tutorialScriptName}`}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{`[n00dles ~/]> run ${tutorialScriptName}`}</Typography>
         </>
       ),
       canNext: false,
@@ -497,7 +497,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             One last thing about scripts, each active script contains logs that detail what it's doing. We can check
             these logs using the tail command. Do that now for the script we just ran by typing{" "}
           </Typography>
-          <Typography classes={{ root: classes.textfield }}>{`[home ~/]> tail ${tutorialScriptName}`}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{`[n00dles ~/]> tail ${tutorialScriptName}`}</Typography>
         </>
       ),
       canNext: false,
