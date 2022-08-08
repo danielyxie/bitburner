@@ -74,7 +74,10 @@ export async function executeJSScript(
   const ns = workerScript.env.vars;
 
   if (!loadedModule) {
-    throw helpers.makeRuntimeRejectMsg(workerScript, `${script.filename} cannot be run because the script module won't load`);
+    throw helpers.makeRuntimeRejectMsg(
+      workerScript,
+      `${script.filename} cannot be run because the script module won't load`,
+    );
   }
   // TODO: putting await in a non-async function yields unhelpful
   // "SyntaxError: unexpected reserved word" with no line number information.
