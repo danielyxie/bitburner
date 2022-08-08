@@ -473,15 +473,11 @@ function server(ctx: NetscriptContext, s: unknown): Server {
 }
 
 function roughlyIs(expect: object, actual: unknown): boolean {
-  console.log(expect);
-  console.log(actual);
-
   if (typeof actual !== "object" || actual == null) return false;
   const expects = Object.keys(expect);
   const actuals = Object.keys(actual);
   for (const expect of expects)
     if (!actuals.includes(expect)) {
-      console.log(expect);
       return false;
     }
   return true;
@@ -503,6 +499,7 @@ function gangTask(ctx: NetscriptContext, t: unknown): GangMemberTask {
     throw makeRuntimeErrorMsg(ctx, `task should be a GangMemberTask.`);
   return t as GangMemberTask;
 }
+
 function log(ctx: NetscriptContext, message: () => string) {
   ctx.workerScript.log(ctx.functionPath, message);
 }
