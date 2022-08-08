@@ -10,7 +10,7 @@ import { defaultTheme } from "../Themes/Themes";
 import { defaultStyles } from "../Themes/Styles";
 import { CONSTANTS } from "../Constants";
 import { hash } from "../hash/hash";
-import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { Terminal } from "../../src/Terminal";
 
 export function NetscriptUserInterface(): InternalAPI<IUserInterface> {

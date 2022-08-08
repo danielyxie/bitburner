@@ -3,7 +3,8 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { is2DArray } from "../utils/helpers/is2DArray";
 import { CodingContract } from "../CodingContracts";
 import { CodingAttemptOptions, CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
-import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
 export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScript): InternalAPI<ICodingContract> {
   const getCodingContract = function (
@@ -12,10 +13,10 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
     hostname: string,
     filename: string,
   ): CodingContract {
-    const server = ctx.helper.getServer(hostname);
+    const server = helpers.getServer(ctx, hostname);
     const contract = server.getContract(filename);
     if (contract == null) {
-      throw ctx.makeRuntimeErrorMsg(`Cannot find contract '${filename}' on server '${hostname}'`);
+      throw helpers.makeRuntimeErrorMsg(ctx, `Cannot find contract '${filename}' on server '${hostname}'`);
     }
 
     return contract;
@@ -30,8 +31,8 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
         _hostname: unknown = workerScript.hostname,
         { returnReward }: CodingAttemptOptions = { returnReward: false },
       ): boolean | string => {
-        const filename = ctx.helper.string("filename", _filename);
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const filename = helpers.string(ctx, "filename", _filename);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "attempt", hostname, filename);
 
         // Convert answer to string. If the answer is a 2D array, then we have to
@@ -51,7 +52,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
         const creward = contract.reward;
         if (creward === null) throw new Error("Somehow solved a contract that didn't have a reward");
 
-        const serv = ctx.helper.getServer(hostname);
+        const serv = helpers.getServer(ctx, hostname);
         if (contract.isSolution(answerStr)) {
           const reward = player.gainCodingContractReward(creward, contract.getDifficulty());
           ctx.log(() => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`);
@@ -77,16 +78,16 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
     getContractType:
       (ctx: NetscriptContext) =>
       (_filename: unknown, _hostname: unknown = workerScript.hostname): string => {
-        const filename = ctx.helper.string("filename", _filename);
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const filename = helpers.string(ctx, "filename", _filename);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "getContractType", hostname, filename);
         return contract.getType();
       },
     getData:
       (ctx: NetscriptContext) =>
       (_filename: unknown, _hostname: unknown = workerScript.hostname): unknown => {
-        const filename = ctx.helper.string("filename", _filename);
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const filename = helpers.string(ctx, "filename", _filename);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "getData", hostname, filename);
         const data = contract.getData();
         if (Array.isArray(data)) {
@@ -108,16 +109,16 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
     getDescription:
       (ctx: NetscriptContext) =>
       (_filename: unknown, _hostname: unknown = workerScript.hostname): string => {
-        const filename = ctx.helper.string("filename", _filename);
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const filename = helpers.string(ctx, "filename", _filename);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "getDescription", hostname, filename);
         return contract.getDescription();
       },
     getNumTriesRemaining:
       (ctx: NetscriptContext) =>
       (_filename: unknown, _hostname: unknown = workerScript.hostname): number => {
-        const filename = ctx.helper.string("filename", _filename);
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const filename = helpers.string(ctx, "filename", _filename);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "getNumTriesRemaining", hostname, filename);
         return contract.getMaxNumTries() - contract.tries;
       },

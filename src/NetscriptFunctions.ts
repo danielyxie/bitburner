@@ -16,7 +16,7 @@ import {
   calculateWeakenTime,
 } from "./Hacking";
 
-import { netscriptCanGrow, netscriptCanHack, netscriptCanWeaken } from "./Hacking/netscriptCanHack";
+import { netscriptCanGrow, netscriptCanWeaken } from "./Hacking/netscriptCanHack";
 
 import { HacknetServer } from "./Hacknet/HacknetServer";
 
@@ -40,7 +40,7 @@ import {
 } from "./Server/ServerHelpers";
 import { getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam } from "./Server/ServerPurchases";
 import { Server } from "./Server/Server";
-import { influenceStockThroughServerHack, influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
+import { influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
 
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
@@ -49,7 +49,7 @@ import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
-import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
+import { helpers, ScriptIdentifier } from "./Netscript/NetscriptHelpers";
 
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
@@ -57,7 +57,6 @@ import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions"
 import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
-import { FormulaGang as FormulaGang } from "./Gang/formulas/formulas";
 
 import { BaseServer } from "./Server/BaseServer";
 import { NetscriptGang } from "./NetscriptFunctions/Gang";
@@ -105,12 +104,7 @@ import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 import { recentScripts } from "./Netscript/RecentScripts";
-import { CityName } from "./Locations/data/CityNames";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
-import { INetscriptHelper, ScriptIdentifier } from "./NetscriptFunctions/INetscriptHelper";
-import { IPlayer } from "./PersonObjects/IPlayer";
-import { GangMember } from "./Gang/GangMember";
-import { GangMemberTask } from "./Gang/GangMemberTask";
 import { ScriptArg } from "./Netscript/ScriptArg";
 
 interface NS extends INS {
@@ -122,56 +116,6 @@ interface NS extends INS {
 }
 
 export function NetscriptFunctions(workerScript: WorkerScript): NS {
-  const updateDynamicRam = function (fnName: string, ramCost: number): void {
-    if (workerScript.dynamicLoadedFns[fnName]) {
-      return;
-    }
-    workerScript.dynamicLoadedFns[fnName] = true;
-
-    let threads = workerScript.scriptRef.threads;
-    if (typeof threads !== "number") {
-      console.warn(`WorkerScript detected NaN for threadcount for ${workerScript.name} on ${workerScript.hostname}`);
-      threads = 1;
-    }
-    workerScript.dynamicRamUsage += ramCost;
-    if (workerScript.dynamicRamUsage > 1.01 * workerScript.ramUsage) {
-      throw makeRuntimeRejectMsg(
-        workerScript,
-        `Dynamic RAM usage calculated to be greater than initial RAM usage on fn: ${fnName}.
-        This is probably because you somehow circumvented the static RAM calculation.
-
-        Threads: ${threads}
-        Dynamic RAM Usage: ${numeralWrapper.formatRAM(workerScript.dynamicRamUsage)}
-        Static RAM Usage: ${numeralWrapper.formatRAM(workerScript.ramUsage)}
-
-        One of these could be the reason:
-        * Using eval() to get a reference to a ns function
-        &nbsp;&nbsp;const myScan = eval('ns.scan');
-
-        * Using map access to do the same
-        &nbsp;&nbsp;const myScan = ns['scan'];
-
-        Sorry :(`,
-      );
-    }
-  };
-
-  /**
-   * Gets the Server for a specific hostname/ip, throwing an error
-   * if the server doesn't exist.
-   * @param {string} hostname - Hostname or IP of the server
-   * @param {string} callingFnName - Name of calling function. For logging purposes
-   * @returns {BaseServer} The specified server as a BaseServer
-   */
-  const safeGetServer = function (hostname: string, ctx: NetscriptContext): BaseServer {
-    const server = GetServer(hostname);
-    if (server == null) {
-      const str = hostname === "" ? "'' (empty string)" : "'" + hostname + "'";
-      throw ctx.makeRuntimeErrorMsg(`Invalid hostname: ${str}`);
-    }
-    return server;
-  };
-
   /**
    * Searches for and returns the RunningScript object for the specified script.
    * If the 'fn' argument is not specified, this returns the current RunningScript.
@@ -190,7 +134,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     scriptArgs: ScriptArg[],
   ): RunningScript | null {
     if (!Array.isArray(scriptArgs)) {
-      throw makeRuntimeRejectMsg(
+      throw helpers.makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${ctx.function}(). ` +
           `This is probably a bug. Please report to game developer`,
@@ -202,7 +146,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (hostname == null) {
         hostname = workerScript.hostname;
       }
-      const server = safeGetServer(hostname, ctx);
+      const server = helpers.getServer(ctx, hostname);
 
       return findRunningScript(fn, scriptArgs, server);
     }
@@ -223,7 +167,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     if (typeof ident === "number") {
       return getRunningScriptByPid(ident);
     } else {
-      return getRunningScriptByArgs(ctx, ident.fn, ident.hostname, ident.args);
+      return getRunningScriptByArgs(ctx, ident.scriptname, ident.hostname, ident.args);
     }
   };
 
@@ -264,7 +208,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const getCannotFindRunningScriptErrorMessage = function (ident: ScriptIdentifier): string {
     if (typeof ident === "number") return `Cannot find running script with pid: ${ident}`;
 
-    return `Cannot find running script ${ident.fn} on server ${ident.hostname} with args: ${arrayToString(ident.args)}`;
+    return `Cannot find running script ${ident.scriptname} on server ${ident.hostname} with args: ${arrayToString(
+      ident.args,
+    )}`;
   };
 
   /**
@@ -281,187 +227,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     } else {
       return false;
     }
-  };
-
-  const makeRuntimeErrorMsg = function (caller: string, msg: string): string {
-    const errstack = new Error().stack;
-    if (errstack === undefined) throw new Error("how did we not throw an error?");
-    const stack = errstack.split("\n").slice(1);
-    const scripts = workerScript.getServer().scripts;
-    const userstack = [];
-    for (const stackline of stack) {
-      let filename;
-      for (const script of scripts) {
-        if (script.url && stackline.includes(script.url)) {
-          filename = script.filename;
-        }
-        for (const dependency of script.dependencies) {
-          if (stackline.includes(dependency.url)) {
-            filename = dependency.filename;
-          }
-        }
-      }
-      if (!filename) continue;
-
-      interface ILine {
-        line: string;
-        func: string;
-      }
-
-      function parseChromeStackline(line: string): ILine | null {
-        const lineRe = /.*:(\d+):\d+.*/;
-        const funcRe = /.*at (.+) \(.*/;
-
-        const lineMatch = line.match(lineRe);
-        const funcMatch = line.match(funcRe);
-        if (lineMatch && funcMatch) {
-          return { line: lineMatch[1], func: funcMatch[1] };
-        }
-        return null;
-      }
-      let call = { line: "-1", func: "unknown" };
-      const chromeCall = parseChromeStackline(stackline);
-      if (chromeCall) {
-        call = chromeCall;
-      }
-
-      function parseFirefoxStackline(line: string): ILine | null {
-        const lineRe = /.*:(\d+):\d+$/;
-        const lineMatch = line.match(lineRe);
-
-        const lio = line.lastIndexOf("@");
-
-        if (lineMatch && lio !== -1) {
-          return { line: lineMatch[1], func: line.slice(0, lio) };
-        }
-        return null;
-      }
-
-      const firefoxCall = parseFirefoxStackline(stackline);
-      if (firefoxCall) {
-        call = firefoxCall;
-      }
-
-      userstack.push(`${filename}:L${call.line}@${call.func}`);
-    }
-
-    workerScript.log(caller, () => msg);
-    let rejectMsg = `${caller}: ${msg}`;
-    if (userstack.length !== 0) rejectMsg += `<br><br>Stack:<br>${userstack.join("<br>")}`;
-    return makeRuntimeRejectMsg(workerScript, rejectMsg);
-  };
-
-  const checkSingularityAccess = function (func: string): void {
-    if (Player.bitNodeN !== 4) {
-      if (Player.sourceFileLvl(4) === 0) {
-        throw makeRuntimeErrorMsg(
-          func,
-          `This singularity function requires Source-File 4 to run. A power up you obtain later in the game. It will be very obvious when and how you can obtain it.`,
-        );
-      }
-    }
-  };
-
-  const hack = async function (
-    ctx: NetscriptContext,
-    hostname: string,
-    manual: boolean,
-    { threads: requestedThreads, stock }: BasicHGWOptions = {},
-  ): Promise<number> {
-    if (hostname === undefined) {
-      throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
-    }
-    const threads = resolveNetscriptRequestedThreads(ctx, requestedThreads);
-    const server = safeGetServer(hostname, ctx);
-    if (!(server instanceof Server)) {
-      throw ctx.makeRuntimeErrorMsg("Cannot be executed on this server.");
-    }
-
-    // Calculate the hacking time
-    const hackingTime = calculateHackingTime(server, Player); // This is in seconds
-
-    // No root access or skill level too low
-    const canHack = netscriptCanHack(server, Player);
-    if (!canHack.res) {
-      throw ctx.makeRuntimeErrorMsg(canHack.msg || "");
-    }
-
-    ctx.log(
-      () =>
-        `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(
-          hackingTime * 1000,
-          true,
-        )} (t=${numeralWrapper.formatThreads(threads)})`,
-    );
-
-    return netscriptDelay("hack", hackingTime * 1000, workerScript).then(function () {
-      const hackChance = calculateHackingChance(server, Player);
-      const rand = Math.random();
-      let expGainedOnSuccess = calculateHackingExpGain(server, Player) * threads;
-      const expGainedOnFailure = expGainedOnSuccess / 4;
-      if (rand < hackChance) {
-        // Success!
-        const percentHacked = calculatePercentMoneyHacked(server, Player);
-        let maxThreadNeeded = Math.ceil(1 / percentHacked);
-        if (isNaN(maxThreadNeeded)) {
-          // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
-          maxThreadNeeded = 1e6;
-        }
-
-        let moneyDrained = Math.floor(server.moneyAvailable * percentHacked) * threads;
-
-        // Over-the-top safety checks
-        if (moneyDrained <= 0) {
-          moneyDrained = 0;
-          expGainedOnSuccess = expGainedOnFailure;
-        }
-        if (moneyDrained > server.moneyAvailable) {
-          moneyDrained = server.moneyAvailable;
-        }
-        server.moneyAvailable -= moneyDrained;
-        if (server.moneyAvailable < 0) {
-          server.moneyAvailable = 0;
-        }
-
-        let moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
-        if (manual) {
-          moneyGained = moneyDrained * BitNodeMultipliers.ManualHackMoney;
-        }
-
-        Player.gainMoney(moneyGained, "hacking");
-        workerScript.scriptRef.onlineMoneyMade += moneyGained;
-        Player.scriptProdSinceLastAug += moneyGained;
-        workerScript.scriptRef.recordHack(server.hostname, moneyGained, threads);
-        Player.gainHackingExp(expGainedOnSuccess);
-        if (manual) Player.gainIntelligenceExp(0.005);
-        workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-        ctx.log(
-          () =>
-            `Successfully hacked '${server.hostname}' for ${numeralWrapper.formatMoney(
-              moneyGained,
-            )} and ${numeralWrapper.formatExp(expGainedOnSuccess)} exp (t=${numeralWrapper.formatThreads(threads)})`,
-        );
-        server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
-        if (stock) {
-          influenceStockThroughServerHack(server, moneyDrained);
-        }
-        if (manual) {
-          server.backdoorInstalled = true;
-        }
-        return Promise.resolve(moneyGained);
-      } else {
-        // Player only gains 25% exp for failure?
-        Player.gainHackingExp(expGainedOnFailure);
-        workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-        ctx.log(
-          () =>
-            `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.formatExp(
-              expGainedOnFailure,
-            )} exp (t=${numeralWrapper.formatThreads(threads)})`,
-        );
-        return Promise.resolve(0);
-      }
-    });
   };
 
   const argsToString = function (args: unknown[]): string {
@@ -482,149 +247,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     return out;
   };
 
-  const roughlyIs = (expect: object, actual: unknown): boolean => {
-    console.log(expect);
-    console.log(actual);
-
-    if (typeof actual !== "object" || actual == null) return false;
-    const expects = Object.keys(expect);
-    const actuals = Object.keys(actual);
-    for (const expect of expects)
-      if (!actuals.includes(expect)) {
-        console.log(expect);
-        return false;
-      }
-    return true;
-  };
-
-  const helperString = (funcName: string, argName: string, v: unknown): string => {
-    if (typeof v === "string") return v;
-    if (typeof v === "number") return v + ""; // cast to string;
-    throw makeRuntimeErrorMsg(funcName, `'${argName}' should be a string.`);
-  };
-  const helperNumber = (funcName: string, argName: string, v: unknown): number => {
-    if (typeof v === "string") {
-      const x = parseFloat(v);
-      if (!isNaN(x)) return x; // otherwise it wasn't even a string representing a number.
-    } else if (typeof v === "number") {
-      if (isNaN(v)) throw makeRuntimeErrorMsg(funcName, `'${argName}' is NaN.`);
-      return v;
-    }
-    throw makeRuntimeErrorMsg(funcName, `'${argName}' should be a number.`);
-  };
-
-  const isScriptArgs = (_args: unknown): _args is ScriptArg[] =>
-    Array.isArray(_args) &&
-    _args.every((a) => typeof a === "string" || typeof a === "number" || typeof a === "boolean");
-
-  const helperScriptArgs = (funcName: string, args: unknown): ScriptArg[] => {
-    if (!isScriptArgs(args)) throw makeRuntimeErrorMsg(funcName, "'args' is not an array of script args");
-    return args as ScriptArg[];
-  };
-
-  const helper: INetscriptHelper = {
-    updateDynamicRam: updateDynamicRam,
-    makeRuntimeErrorMsg: makeRuntimeErrorMsg,
-    string: helperString,
-    number: helperNumber,
-    ustring: (funcName: string, argName: string, v: unknown): string | undefined => {
-      if (v === undefined) return undefined;
-      return helperString(funcName, argName, v);
-    },
-    unumber: (funcName: string, argName: string, v: unknown): number | undefined => {
-      if (v === undefined) return undefined;
-      return helperNumber(funcName, argName, v);
-    },
-    scriptArgs: helperScriptArgs,
-    scriptIdentifier: (funcName: string, _fn: unknown, _hostname: unknown, _args: unknown): ScriptIdentifier => {
-      if (_fn === undefined) return workerScript.pid;
-      if (typeof _fn === "number") return _fn;
-      if (typeof _fn === "string") {
-        const hostname = _hostname != undefined ? helperString(funcName, "hostname", _hostname) : workerScript.hostname;
-        if (!isScriptArgs(_args)) throw makeRuntimeErrorMsg(funcName, "'args' is not an array of script args");
-        return {
-          fn: _fn,
-          hostname: hostname,
-          args: _args,
-        };
-      }
-      throw new Error("not implemented");
-    },
-    boolean: (v: unknown): boolean => {
-      return !!v; // Just convert it to boolean.
-    },
-    city: (funcName: string, argName: string, v: unknown): CityName => {
-      if (typeof v !== "string") throw makeRuntimeErrorMsg(funcName, `${argName} should be a city name.`);
-      const s = v as CityName;
-      if (!Object.values(CityName).includes(s))
-        throw makeRuntimeErrorMsg(funcName, `${argName} should be a city name.`);
-      return s;
-    },
-    getServer: safeGetServer,
-    checkSingularityAccess: checkSingularityAccess,
-    hack: hack,
-    getValidPort: (funcName: string, port: number): IPort => {
-      if (isNaN(port)) {
-        throw makeRuntimeErrorMsg(
-          funcName,
-          `Invalid argument. Must be a port number between 1 and ${CONSTANTS.NumNetscriptPorts}, is ${port}`,
-        );
-      }
-      port = Math.round(port);
-      if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-        throw makeRuntimeErrorMsg(
-          funcName,
-          `Trying to use an invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
-        );
-      }
-      const iport = NetscriptPorts[port - 1];
-      if (iport == null || !(iport instanceof Object)) {
-        throw makeRuntimeErrorMsg(funcName, `Could not find port: ${port}. This is a bug. Report to dev.`);
-      }
-      return iport;
-    },
-    player(funcName: string, p: unknown): IPlayer {
-      const fakePlayer = {
-        hp: undefined,
-        mults: undefined,
-        numPeopleKilled: undefined,
-        money: undefined,
-        city: undefined,
-        location: undefined,
-        bitNodeN: undefined,
-        totalPlaytime: undefined,
-        playtimeSinceLastAug: undefined,
-        playtimeSinceLastBitnode: undefined,
-        jobs: undefined,
-        factions: undefined,
-        tor: undefined,
-        inBladeburner: undefined,
-        hasCorporation: undefined,
-        entropy: undefined,
-      };
-      if (!roughlyIs(fakePlayer, p)) throw makeRuntimeErrorMsg(funcName, `player should be a Player.`);
-      return p as IPlayer;
-    },
-    server(funcName: string, s: unknown): Server {
-      if (!roughlyIs(new Server(), s)) throw makeRuntimeErrorMsg(funcName, `server should be a Server.`);
-      return s as Server;
-    },
-    gang(funcName: string, g: unknown): FormulaGang {
-      if (!roughlyIs({ respect: 0, territory: 0, wantedLevel: 0 }, g))
-        throw makeRuntimeErrorMsg(funcName, `gang should be a Gang.`);
-      return g as FormulaGang;
-    },
-    gangMember(funcName: string, m: unknown): GangMember {
-      if (!roughlyIs(new GangMember(), m)) throw makeRuntimeErrorMsg(funcName, `member should be a GangMember.`);
-      return m as GangMember;
-    },
-    gangTask(funcName: string, t: unknown): GangMemberTask {
-      if (!roughlyIs(new GangMemberTask("", "", false, false, {}), t))
-        throw makeRuntimeErrorMsg(funcName, `task should be a GangMemberTask.`);
-      return t as GangMemberTask;
-    },
-  };
-
   const singularity = NetscriptSingularity(Player, workerScript);
   const base: InternalAPI<INS> = {
     args: workerScript.args as unknown as any,
@@ -638,10 +260,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     codingcontract: NetscriptCodingContract(Player, workerScript),
     sleeve: NetscriptSleeve(Player),
     corporation: NetscriptCorporation(Player),
-    stanek: NetscriptStanek(Player, workerScript, helper),
+    stanek: NetscriptStanek(Player, workerScript),
     infiltration: NetscriptInfiltration(Player),
     ui: NetscriptUserInterface(),
-    formulas: NetscriptFormulas(Player, helper),
+    formulas: NetscriptFormulas(Player),
     stock: NetscriptStockMarket(Player, workerScript),
     grafting: NetscriptGrafting(Player),
     hacknet: NetscriptHacknet(Player, workerScript),
@@ -650,8 +272,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     scan:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname): string[] => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         const out = [];
         for (let i = 0; i < server.serversOnNetwork.length; i++) {
           const s = getServerOnNetwork(server, i);
@@ -666,23 +288,24 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     hack:
       (ctx: NetscriptContext) =>
       (_hostname: unknown, { threads: requestedThreads, stock }: BasicHGWOptions = {}): Promise<number> => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        return hack(ctx, hostname, false, { threads: requestedThreads, stock: stock });
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        return helpers.hack(ctx, hostname, false, { threads: requestedThreads, stock: stock });
       },
     hackAnalyzeThreads:
       (ctx: NetscriptContext) =>
       (_hostname: unknown, _hackAmount: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const hackAmount = ctx.helper.number("hackAmount", _hackAmount);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const hackAmount = helpers.number(ctx, "hackAmount", _hackAmount);
 
         // Check argument validity
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return -1;
         }
         if (isNaN(hackAmount)) {
-          throw ctx.makeRuntimeErrorMsg(
+          throw helpers.makeRuntimeErrorMsg(
+            ctx,
             `Invalid hackAmount argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric.`,
           );
         }
@@ -704,9 +327,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     hackAnalyze:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
 
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 0;
@@ -717,10 +340,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     hackAnalyzeSecurity:
       (ctx: NetscriptContext) =>
       (_threads: unknown, _hostname?: unknown): number => {
-        let threads = ctx.helper.number("threads", _threads);
+        let threads = helpers.number(ctx, "threads", _threads);
         if (_hostname) {
-          const hostname = ctx.helper.string("hostname", _hostname);
-          const server = safeGetServer(hostname, ctx);
+          const hostname = helpers.string(ctx, "hostname", _hostname);
+          const server = helpers.getServer(ctx, hostname);
           if (!(server instanceof Server)) {
             ctx.log(() => "Cannot be executed on this server.");
             return 0;
@@ -739,9 +362,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     hackAnalyzeChance:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
 
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 0;
@@ -752,28 +375,31 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     sleep:
       (ctx: NetscriptContext) =>
       async (_time: unknown = 0): Promise<true> => {
-        const time = ctx.helper.number("time", _time);
+        const time = helpers.number(ctx, "time", _time);
         if (time === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
         }
         ctx.log(() => `Sleeping for ${time} milliseconds`);
-        return netscriptDelay("sleep", time, workerScript).then(function () {
+        return helpers.netscriptDelay(ctx, time).then(function () {
           return Promise.resolve(true);
         });
       },
     asleep: (ctx: NetscriptContext) =>
       function (_time: unknown = 0): Promise<true> {
-        const time = ctx.helper.number("time", _time);
+        const time = helpers.number(ctx, "time", _time);
         ctx.log(() => `Sleeping for ${time} milliseconds`);
         return new Promise((resolve) => setTimeout(() => resolve(true), time));
       },
     grow:
       (ctx: NetscriptContext) =>
       async (_hostname: unknown, { threads: requestedThreads, stock }: BasicHGWOptions = {}): Promise<number> => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const threads = resolveNetscriptRequestedThreads(ctx, requestedThreads ?? workerScript.scriptRef.threads);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const threads = helpers.resolveNetscriptRequestedThreads(
+          ctx,
+          requestedThreads ?? workerScript.scriptRef.threads,
+        );
 
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return Promise.resolve(0);
@@ -787,7 +413,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         // No root access or skill level too low
         const canHack = netscriptCanGrow(server);
         if (!canHack.res) {
-          throw ctx.makeRuntimeErrorMsg(canHack.msg || "");
+          throw helpers.makeRuntimeErrorMsg(ctx, canHack.msg || "");
         }
 
         const growTime = calculateGrowTime(server, Player);
@@ -798,7 +424,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
               true,
             )} (t=${numeralWrapper.formatThreads(threads)}).`,
         );
-        return netscriptDelay("grow", growTime * 1000, workerScript).then(function () {
+        return helpers.netscriptDelay(ctx, growTime * 1000).then(function () {
           const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
           processSingleServerGrowth(server, threads, Player, host.cpuCores);
           const moneyAfter = server.moneyAvailable;
@@ -825,18 +451,18 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     growthAnalyze:
       (ctx: NetscriptContext) =>
       (_hostname: unknown, _growth: unknown, _cores: unknown = 1): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const growth = ctx.helper.number("growth", _growth);
-        const cores = ctx.helper.number("cores", _cores);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const growth = helpers.number(ctx, "growth", _growth);
+        const cores = helpers.number(ctx, "cores", _cores);
 
         // Check argument validity
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 0;
         }
         if (typeof growth !== "number" || isNaN(growth) || growth < 1 || !isFinite(growth)) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
         }
 
         return numCycleForGrowth(server, Number(growth), Player, cores);
@@ -844,11 +470,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     growthAnalyzeSecurity:
       (ctx: NetscriptContext) =>
       (_threads: unknown, _hostname?: unknown, _cores?: unknown): number => {
-        let threads = ctx.helper.number("threads", _threads);
+        let threads = helpers.number(ctx, "threads", _threads);
         if (_hostname) {
-          const cores = ctx.helper.number("cores", _cores) || 1;
-          const hostname = ctx.helper.string("hostname", _hostname);
-          const server = safeGetServer(hostname, ctx);
+          const cores = helpers.number(ctx, "cores", _cores) || 1;
+          const hostname = helpers.string(ctx, "hostname", _hostname);
+          const server = helpers.getServer(ctx, hostname);
 
           if (!(server instanceof Server)) {
             ctx.log(() => "Cannot be executed on this server.");
@@ -867,12 +493,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     weaken:
       (ctx: NetscriptContext) =>
       async (_hostname: unknown, { threads: requestedThreads }: BasicHGWOptions = {}): Promise<number> => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const threads = resolveNetscriptRequestedThreads(ctx, requestedThreads ?? workerScript.scriptRef.threads);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const threads = helpers.resolveNetscriptRequestedThreads(
+          ctx,
+          requestedThreads ?? workerScript.scriptRef.threads,
+        );
         if (hostname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
         }
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return Promise.resolve(0);
@@ -881,7 +510,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         // No root access or skill level too low
         const canHack = netscriptCanWeaken(server);
         if (!canHack.res) {
-          throw ctx.makeRuntimeErrorMsg(canHack.msg || "");
+          throw helpers.makeRuntimeErrorMsg(ctx, canHack.msg || "");
         }
 
         const weakenTime = calculateWeakenTime(server, Player);
@@ -892,7 +521,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
               true,
             )} (t=${numeralWrapper.formatThreads(threads)})`,
         );
-        return netscriptDelay("weaken", weakenTime * 1000, workerScript).then(function () {
+        return helpers.netscriptDelay(ctx, weakenTime * 1000).then(function () {
           const host = GetServer(workerScript.hostname);
           if (host === null) {
             ctx.log(() => "Server is null, did it die?");
@@ -916,8 +545,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     weakenAnalyze:
       (ctx: NetscriptContext) =>
       (_threads: unknown, _cores: unknown = 1): number => {
-        const threads = ctx.helper.number("threads", _threads);
-        const cores = ctx.helper.number("cores", _cores);
+        const threads = helpers.number(ctx, "threads", _threads);
+        const cores = helpers.number(ctx, "cores", _cores);
         const coreBonus = 1 + (cores - 1) / 16;
         return CONSTANTS.ServerWeakenAmount * threads * coreBonus * BitNodeMultipliers.ServerWeakenRate;
       },
@@ -926,7 +555,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const end = StartSharing(
         workerScript.scriptRef.threads * calculateIntelligenceBonus(Player.skills.intelligence, 2),
       );
-      return netscriptDelay("share", 10000, workerScript).finally(function () {
+      return helpers.netscriptDelay(ctx, 10000).finally(function () {
         ctx.log(() => "Finished sharing this computer.");
         end();
       });
@@ -938,16 +567,16 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (ctx: NetscriptContext) =>
       (...args: unknown[]): void => {
         if (args.length === 0) {
-          throw ctx.makeRuntimeErrorMsg("Takes at least 1 argument.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Takes at least 1 argument.");
         }
         workerScript.print(argsToString(args));
       },
     printf:
       (ctx: NetscriptContext) =>
       (_format: unknown, ...args: unknown[]): void => {
-        const format = ctx.helper.string("format", _format);
+        const format = helpers.string(ctx, "format", _format);
         if (typeof format !== "string") {
-          throw ctx.makeRuntimeErrorMsg("First argument must be string for the format.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "First argument must be string for the format.");
         }
         workerScript.print(vsprintf(format, args));
       },
@@ -955,7 +584,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (ctx: NetscriptContext) =>
       (...args: unknown[]): void => {
         if (args.length === 0) {
-          throw ctx.makeRuntimeErrorMsg("Takes at least 1 argument.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Takes at least 1 argument.");
         }
         const str = argsToString(args);
         if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
@@ -979,7 +608,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     tprintf:
       (ctx: NetscriptContext) =>
       (_format: unknown, ...args: unknown[]): void => {
-        const format = ctx.helper.string("format", _format);
+        const format = helpers.string(ctx, "format", _format);
         const str = vsprintf(format, args);
 
         if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
@@ -1006,14 +635,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     disableLog:
       (ctx: NetscriptContext) =>
       (_fn: unknown): void => {
-        const fn = ctx.helper.string("fn", _fn);
+        const fn = helpers.string(ctx, "fn", _fn);
         if (fn === "ALL") {
           for (const fn of Object.keys(possibleLogs)) {
             workerScript.disableLogs[fn] = true;
           }
           ctx.log(() => `Disabled logging for all functions`);
         } else if (possibleLogs[fn] === undefined) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid argument: ${fn}.`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${fn}.`);
         } else {
           workerScript.disableLogs[fn] = true;
           ctx.log(() => `Disabled logging for ${fn}`);
@@ -1022,14 +651,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     enableLog:
       (ctx: NetscriptContext) =>
       (_fn: unknown): void => {
-        const fn = ctx.helper.string("fn", _fn);
+        const fn = helpers.string(ctx, "fn", _fn);
         if (fn === "ALL") {
           for (const fn of Object.keys(possibleLogs)) {
             delete workerScript.disableLogs[fn];
           }
           ctx.log(() => `Enabled logging for all functions`);
         } else if (possibleLogs[fn] === undefined) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid argument: ${fn}.`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${fn}.`);
         }
         delete workerScript.disableLogs[fn];
         ctx.log(() => `Enabled logging for ${fn}`);
@@ -1037,16 +666,16 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     isLogEnabled:
       (ctx: NetscriptContext) =>
       (_fn: unknown): boolean => {
-        const fn = ctx.helper.string("fn", _fn);
+        const fn = helpers.string(ctx, "fn", _fn);
         if (possibleLogs[fn] === undefined) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid argument: ${fn}.`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${fn}.`);
         }
         return !workerScript.disableLogs[fn];
       },
     getScriptLogs:
       (ctx: NetscriptContext) =>
-      (fn: unknown, hostname: unknown, ...scriptArgs: unknown[]): string[] => {
-        const ident = ctx.helper.scriptIdentifier(fn, hostname, scriptArgs);
+      (scriptID: unknown, hostname: unknown, ...scriptArgs: unknown[]): string[] => {
+        const ident = helpers.scriptIdentifier(ctx, scriptID, hostname, scriptArgs);
         const runningScriptObj = getRunningScript(ctx, ident);
         if (runningScriptObj == null) {
           ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
@@ -1057,8 +686,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     tail:
       (ctx: NetscriptContext) =>
-      (fn: unknown, hostname: unknown, ...scriptArgs: unknown[]): void => {
-        const ident = ctx.helper.scriptIdentifier(fn, hostname, scriptArgs);
+      (scriptID: unknown, hostname: unknown, ...scriptArgs: unknown[]): void => {
+        const ident = helpers.scriptIdentifier(ctx, scriptID, hostname, scriptArgs);
         const runningScriptObj = getRunningScript(ctx, ident);
         if (runningScriptObj == null) {
           ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
@@ -1071,16 +700,16 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     closeTail:
       (ctx: NetscriptContext) =>
       (_pid: unknown = workerScript.scriptRef.pid): void => {
-        const pid = ctx.helper.number("pid", _pid);
+        const pid = helpers.number(ctx, "pid", _pid);
         //Emit an event to tell the game to close the tail window if it exists
         LogBoxCloserEvents.emit(pid);
       },
     nuke:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
 
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return false;
@@ -1090,10 +719,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           return true;
         }
         if (!Player.hasProgram(Programs.NukeProgram.name)) {
-          throw ctx.makeRuntimeErrorMsg("You do not have the NUKE.exe virus!");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You do not have the NUKE.exe virus!");
         }
         if (server.openPortCount < server.numOpenPortsRequired) {
-          throw ctx.makeRuntimeErrorMsg("Not enough ports opened to use NUKE.exe virus.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Not enough ports opened to use NUKE.exe virus.");
         }
         server.hasAdminRights = true;
         ctx.log(() => `Executed NUKE.exe virus on '${server.hostname}' to gain root access.`);
@@ -1102,14 +731,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     brutessh:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return false;
         }
         if (!Player.hasProgram(Programs.BruteSSHProgram.name)) {
-          throw ctx.makeRuntimeErrorMsg("You do not have the BruteSSH.exe program!");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You do not have the BruteSSH.exe program!");
         }
         if (!server.sshPortOpen) {
           ctx.log(() => `Executed BruteSSH.exe on '${server.hostname}' to open SSH port (22).`);
@@ -1123,17 +752,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     ftpcrack:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         if (hostname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
         }
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return false;
         }
         if (!Player.hasProgram(Programs.FTPCrackProgram.name)) {
-          throw ctx.makeRuntimeErrorMsg("You do not have the FTPCrack.exe program!");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You do not have the FTPCrack.exe program!");
         }
         if (!server.ftpPortOpen) {
           ctx.log(() => `Executed FTPCrack.exe on '${server.hostname}' to open FTP port (21).`);
@@ -1147,17 +776,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     relaysmtp:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         if (hostname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
         }
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return false;
         }
         if (!Player.hasProgram(Programs.RelaySMTPProgram.name)) {
-          throw ctx.makeRuntimeErrorMsg("You do not have the relaySMTP.exe program!");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You do not have the relaySMTP.exe program!");
         }
         if (!server.smtpPortOpen) {
           ctx.log(() => `Executed relaySMTP.exe on '${server.hostname}' to open SMTP port (25).`);
@@ -1171,17 +800,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     httpworm:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         if (hostname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Takes 1 argument");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument");
         }
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return false;
         }
         if (!Player.hasProgram(Programs.HTTPWormProgram.name)) {
-          throw ctx.makeRuntimeErrorMsg("You do not have the HTTPWorm.exe program!");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You do not have the HTTPWorm.exe program!");
         }
         if (!server.httpPortOpen) {
           ctx.log(() => `Executed HTTPWorm.exe on '${server.hostname}' to open HTTP port (80).`);
@@ -1195,17 +824,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     sqlinject:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         if (hostname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Takes 1 argument.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
         }
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return false;
         }
         if (!Player.hasProgram(Programs.SQLInjectProgram.name)) {
-          throw ctx.makeRuntimeErrorMsg("You do not have the SQLInject.exe program!");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You do not have the SQLInject.exe program!");
         }
         if (!server.sqlPortOpen) {
           ctx.log(() => `Executed SQLInject.exe on '${server.hostname}' to open SQL port (1433).`);
@@ -1219,18 +848,18 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     run:
       (ctx: NetscriptContext) =>
       (_scriptname: unknown, _threads: unknown = 1, ..._args: unknown[]): number => {
-        const scriptname = ctx.helper.string("scriptname", _scriptname);
-        const threads = ctx.helper.number("threads", _threads);
-        const args = ctx.helper.scriptArgs(_args);
+        const scriptname = helpers.string(ctx, "scriptname", _scriptname);
+        const threads = helpers.number(ctx, "threads", _threads);
+        const args = helpers.scriptArgs(ctx, _args);
         if (scriptname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
         }
         if (isNaN(threads) || threads <= 0) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid thread count. Must be numeric and > 0, is ${threads}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid thread count. Must be numeric and > 0, is ${threads}`);
         }
         const scriptServer = GetServer(workerScript.hostname);
         if (scriptServer == null) {
-          throw ctx.makeRuntimeErrorMsg("Could not find server. This is a bug. Report to dev.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Could not find server. This is a bug. Report to dev.");
         }
 
         return runScriptFromScript(Player, "run", scriptServer, scriptname, args, workerScript, threads);
@@ -1238,37 +867,37 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     exec:
       (ctx: NetscriptContext) =>
       (_scriptname: unknown, _hostname: unknown, _threads: unknown = 1, ..._args: unknown[]): number => {
-        const scriptname = ctx.helper.string("scriptname", _scriptname);
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const threads = ctx.helper.number("threads", _threads);
-        const args = ctx.helper.scriptArgs(_args);
+        const scriptname = helpers.string(ctx, "scriptname", _scriptname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const threads = helpers.number(ctx, "threads", _threads);
+        const args = helpers.scriptArgs(ctx, _args);
         if (scriptname === undefined || hostname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
         }
         if (isNaN(threads) || threads <= 0) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid thread count. Must be numeric and > 0, is ${threads}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid thread count. Must be numeric and > 0, is ${threads}`);
         }
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         return runScriptFromScript(Player, "exec", server, scriptname, args, workerScript, threads);
       },
     spawn:
       (ctx: NetscriptContext) =>
       (_scriptname: unknown, _threads: unknown = 1, ..._args: unknown[]): void => {
-        const scriptname = ctx.helper.string("scriptname", _scriptname);
-        const threads = ctx.helper.number("threads", _threads);
-        const args = ctx.helper.scriptArgs(_args);
+        const scriptname = helpers.string(ctx, "scriptname", _scriptname);
+        const threads = helpers.number(ctx, "threads", _threads);
+        const args = helpers.scriptArgs(ctx, _args);
         if (!scriptname || !threads) {
-          throw ctx.makeRuntimeErrorMsg("Usage: spawn(scriptname, threads)");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Usage: spawn(scriptname, threads)");
         }
 
         const spawnDelay = 10;
         setTimeout(() => {
           if (isNaN(threads) || threads <= 0) {
-            throw ctx.makeRuntimeErrorMsg(`Invalid thread count. Must be numeric and > 0, is ${threads}`);
+            throw helpers.makeRuntimeErrorMsg(ctx, `Invalid thread count. Must be numeric and > 0, is ${threads}`);
           }
           const scriptServer = GetServer(workerScript.hostname);
           if (scriptServer == null) {
-            throw ctx.makeRuntimeErrorMsg("Could not find server. This is a bug. Report to dev");
+            throw helpers.makeRuntimeErrorMsg(ctx, "Could not find server. This is a bug. Report to dev");
           }
 
           return runScriptFromScript(Player, "spawn", scriptServer, scriptname, args, workerScript, threads);
@@ -1283,8 +912,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
     kill:
       (ctx: NetscriptContext) =>
-      (filename: unknown, hostname: unknown, ...scriptArgs: unknown[]): boolean => {
-        const ident = ctx.helper.scriptIdentifier(filename, hostname, scriptArgs);
+      (scriptID: unknown, hostname: unknown, ...scriptArgs: unknown[]): boolean => {
+        const ident = helpers.scriptIdentifier(ctx, scriptID, hostname, scriptArgs);
         let res;
         const killByPid = typeof ident === "number";
         if (killByPid) {
@@ -1292,12 +921,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           res = killWorkerScript(ident);
         } else {
           // Kill by filename/hostname
-          if (filename === undefined || hostname === undefined) {
-            throw ctx.makeRuntimeErrorMsg("Usage: kill(scriptname, server, [arg1], [arg2]...)");
+          if (scriptID === undefined || hostname === undefined) {
+            throw helpers.makeRuntimeErrorMsg(ctx, "Usage: kill(scriptname, server, [arg1], [arg2]...)");
           }
 
-          const server = safeGetServer(ident.hostname, ctx);
-          const runningScriptObj = getRunningScriptByArgs(ctx, ident.fn, ident.hostname, ident.args);
+          const server = helpers.getServer(ctx, ident.hostname);
+          const runningScriptObj = getRunningScriptByArgs(ctx, ident.scriptname, ident.hostname, ident.args);
           if (runningScriptObj == null) {
             ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
             return false;
@@ -1310,14 +939,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           if (killByPid) {
             ctx.log(() => `Killing script with PID ${ident}`);
           } else {
-            ctx.log(() => `Killing '${filename}' on '${hostname}' with args: ${arrayToString(scriptArgs)}.`);
+            ctx.log(() => `Killing '${scriptID}' on '${hostname}' with args: ${arrayToString(scriptArgs)}.`);
           }
           return true;
         } else {
           if (killByPid) {
             ctx.log(() => `No script with PID ${ident}`);
           } else {
-            ctx.log(() => `No such script '${filename}' on '${hostname}' with args: ${arrayToString(scriptArgs)}`);
+            ctx.log(() => `No such script '${scriptID}' on '${hostname}' with args: ${arrayToString(scriptArgs)}`);
           }
           return false;
         }
@@ -1325,12 +954,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     killall:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname, _safetyguard: unknown = true): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const safetyguard = helper.boolean(_safetyguard);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const safetyguard = !!_safetyguard;
         if (hostname === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Usage: killall(hostname, [safetyguard boolean])");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Usage: killall(hostname, [safetyguard boolean])");
         }
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
 
         let scriptsKilled = 0;
 
@@ -1359,13 +988,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         _destination: unknown,
         _source: unknown = workerScript.hostname,
       ): Promise<boolean> => {
-        const destination = ctx.helper.string("destination", _destination);
-        const source = ctx.helper.string("source", _source);
+        const destination = helpers.string(ctx, "destination", _destination);
+        const source = helpers.string(ctx, "source", _source);
         if (Array.isArray(_scriptname)) {
           // Recursively call scp on all elements of array
           const scripts: string[] = _scriptname;
           if (scripts.length === 0) {
-            throw ctx.makeRuntimeErrorMsg("No scripts to copy");
+            throw helpers.makeRuntimeErrorMsg(ctx, "No scripts to copy");
           }
           let res = true;
           await Promise.all(
@@ -1378,20 +1007,20 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           return Promise.resolve(res);
         }
 
-        const scriptName = ctx.helper.string("scriptName", _scriptname);
+        const scriptName = helpers.string(ctx, "scriptName", _scriptname);
 
         // Invalid file type
         if (!isValidFilePath(scriptName)) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid filename: '${scriptName}'`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: '${scriptName}'`);
         }
 
         // Invalid file name
         if (!scriptName.endsWith(".lit") && !isScriptFilename(scriptName) && !scriptName.endsWith("txt")) {
-          throw ctx.makeRuntimeErrorMsg("Only works for scripts, .lit and .txt files");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Only works for scripts, .lit and .txt files");
         }
 
-        const destServer = safeGetServer(destination, ctx);
-        const currServ = safeGetServer(source, ctx);
+        const destServer = helpers.getServer(ctx, destination);
+        const currServ = helpers.getServer(ctx, source);
 
         // Scp for lit files
         if (scriptName.endsWith(".lit")) {
@@ -1494,10 +1123,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     ls:
       (ctx: NetscriptContext) =>
       (_hostname: unknown, _grep: unknown = ""): string[] => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const grep = ctx.helper.string("grep", _grep);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const grep = helpers.string(ctx, "grep", _grep);
 
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
 
         // Get the grep filter, if one exists
         let filter = "";
@@ -1568,8 +1197,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     ps:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname): ProcessInfo[] => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         const processes = [];
         for (const script of server.runningScripts) {
           processes.push({
@@ -1584,15 +1213,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     hasRootAccess:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
 
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         return server.hasAdminRights;
       },
     getHostname: (ctx: NetscriptContext) => (): string => {
       const scriptServer = GetServer(workerScript.hostname);
       if (scriptServer == null) {
-        throw ctx.makeRuntimeErrorMsg("Could not find server. This is a bug. Report to dev.");
+        throw helpers.makeRuntimeErrorMsg(ctx, "Could not find server. This is a bug. Report to dev.");
       }
       return scriptServer.hostname;
     },
@@ -1620,7 +1249,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     getBitNodeMultipliers: (ctx: NetscriptContext) => (): IBNMults => {
       if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5) {
-        throw ctx.makeRuntimeErrorMsg("Requires Source-File 5 to run.");
+        throw helpers.makeRuntimeErrorMsg(ctx, "Requires Source-File 5 to run.");
       }
       const copy = Object.assign({}, BitNodeMultipliers);
       return copy;
@@ -1628,8 +1257,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServer:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname): IServerDef => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         const copy = Object.assign({}, server) as Server;
         // These fields should be hidden.
         copy.contracts = [];
@@ -1653,8 +1282,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerMoneyAvailable:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 0;
@@ -1673,8 +1302,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerSecurityLevel:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 1;
@@ -1690,9 +1319,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerBaseSecurityLevel:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         ctx.log(() => `getServerBaseSecurityLevel is deprecated because it's not useful.`);
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 1;
@@ -1708,8 +1337,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerMinSecurityLevel:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 1;
@@ -1723,8 +1352,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerRequiredHackingLevel:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 1;
@@ -1738,8 +1367,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerMaxMoney:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 0;
@@ -1753,8 +1382,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerGrowth:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 1;
@@ -1768,8 +1397,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerNumPortsRequired:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "Cannot be executed on this server.");
           return 5;
@@ -1783,9 +1412,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerRam:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): [number, number] => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         ctx.log(() => `getServerRam is deprecated in favor of getServerMaxRam / getServerUsedRam`);
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         ctx.log(
           () => `returned [${numeralWrapper.formatRAM(server.maxRam)}, ${numeralWrapper.formatRAM(server.ramUsed)}]`,
         );
@@ -1794,34 +1423,34 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServerMaxRam:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         ctx.log(() => `returned ${numeralWrapper.formatRAM(server.maxRam)}`);
         return server.maxRam;
       },
     getServerUsedRam:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         ctx.log(() => `returned ${numeralWrapper.formatRAM(server.ramUsed)}`);
         return server.ramUsed;
       },
     serverExists:
       (ctx: NetscriptContext) =>
       (_hostname: unknown): boolean => {
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         return GetServer(hostname) !== null;
       },
     fileExists:
       (ctx: NetscriptContext) =>
       (_filename: unknown, _hostname: unknown = workerScript.hostname): boolean => {
-        const filename = ctx.helper.string("filename", _filename);
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const filename = helpers.string(ctx, "filename", _filename);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         if (filename === undefined) {
-          throw ctx.makeRuntimeErrorMsg("Usage: fileExists(scriptname, [server])");
+          throw helpers.makeRuntimeErrorMsg(ctx, "Usage: fileExists(scriptname, [server])");
         }
-        const server = safeGetServer(hostname, ctx);
+        const server = helpers.getServer(ctx, hostname);
         for (let i = 0; i < server.scripts.length; ++i) {
           if (filename == server.scripts[i].filename) {
             return true;
@@ -1843,7 +1472,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     isRunning:
       (ctx: NetscriptContext) =>
       (fn: unknown, hostname: unknown, ...scriptArgs: unknown[]): boolean => {
-        const ident = ctx.helper.scriptIdentifier(fn, hostname, scriptArgs);
+        const ident = helpers.scriptIdentifier(ctx, fn, hostname, scriptArgs);
         return getRunningScript(ctx, ident) !== null;
       },
     getPurchasedServerLimit: () => (): number => {
@@ -1855,7 +1484,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getPurchasedServerCost:
       (ctx: NetscriptContext) =>
       (_ram: unknown): number => {
-        const ram = ctx.helper.number("ram", _ram);
+        const ram = helpers.number(ctx, "ram", _ram);
 
         const cost = getPurchaseServerCost(ram);
         if (cost === Infinity) {
@@ -1868,8 +1497,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     purchaseServer:
       (ctx: NetscriptContext) =>
       (_name: unknown, _ram: unknown): string => {
-        const name = ctx.helper.string("name", _name);
-        const ram = ctx.helper.number("ram", _ram);
+        const name = helpers.string(ctx, "name", _name);
+        const ram = helpers.number(ctx, "ram", _ram);
         let hostnameStr = String(name);
         hostnameStr = hostnameStr.replace(/\s+/g, "");
         if (hostnameStr == "") {
@@ -1924,7 +1553,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     deleteServer:
       (ctx: NetscriptContext) =>
       (_name: unknown): boolean => {
-        const name = ctx.helper.string("name", _name);
+        const name = helpers.string(ctx, "name", _name);
         let hostnameStr = String(name);
         hostnameStr = hostnameStr.replace(/\s\s+/g, "");
         const server = GetServer(hostnameStr);
@@ -2000,23 +1629,26 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     writePort:
       (ctx: NetscriptContext) =>
       (_port: unknown, data: unknown = ""): Promise<any> => {
-        const port = ctx.helper.number("port", _port);
+        const port = helpers.number(ctx, "port", _port);
         if (typeof data !== "string" && typeof data !== "number") {
-          throw ctx.makeRuntimeErrorMsg(`Trying to write invalid data to a port: only strings and numbers are valid.`);
+          throw helpers.makeRuntimeErrorMsg(
+            ctx,
+            `Trying to write invalid data to a port: only strings and numbers are valid.`,
+          );
         }
-        const iport = helper.getValidPort("writePort", port);
+        const iport = helpers.getValidPort(ctx, port);
         return Promise.resolve(iport.write(data));
       },
     write:
       (ctx: NetscriptContext) =>
       (_port: unknown, data: unknown = "", _mode: unknown = "a"): Promise<void> => {
-        const port = ctx.helper.string("port", _port);
-        const mode = ctx.helper.string("mode", _mode);
+        const port = helpers.string(ctx, "port", _port);
+        const mode = helpers.string(ctx, "mode", _mode);
         if (isString(port)) {
           // Write to script or text file
           let fn = port;
           if (!isValidFilePath(fn)) {
-            throw ctx.makeRuntimeErrorMsg(`Invalid filepath: ${fn}`);
+            throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
           }
 
           if (fn.lastIndexOf("/") === 0) {
@@ -2027,14 +1659,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           try {
             data = String(data);
           } catch (e: unknown) {
-            throw ctx.makeRuntimeErrorMsg(
+            throw helpers.makeRuntimeErrorMsg(
+              ctx,
               `Invalid data (${String(e)}). Data being written must be convertible to a string`,
             );
           }
 
           const server = workerScript.getServer();
           if (server == null) {
-            throw ctx.makeRuntimeErrorMsg("Error getting Server. This is a bug. Report to dev.");
+            throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
           }
           if (isScriptFilename(fn)) {
             // Write to script
@@ -2062,55 +1695,55 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           }
           return Promise.resolve();
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid argument: ${port}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
         }
       },
     tryWritePort:
       (ctx: NetscriptContext) =>
       (_port: unknown, data: unknown = ""): Promise<any> => {
-        let port = ctx.helper.number("port", _port);
+        let port = helpers.number(ctx, "port", _port);
         if (typeof data !== "string" && typeof data !== "number") {
-          throw makeRuntimeErrorMsg(
-            "tryWritePort",
+          throw helpers.makeRuntimeErrorMsg(
+            ctx,
             `Trying to write invalid data to a port: only strings and numbers are valid.`,
           );
         }
         if (!isNaN(port)) {
           port = Math.round(port);
           if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-            throw makeRuntimeErrorMsg(
-              "tryWritePort",
+            throw helpers.makeRuntimeErrorMsg(
+              ctx,
               `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
             );
           }
           const iport = NetscriptPorts[port - 1];
           if (iport == null || !(iport instanceof Object)) {
-            throw ctx.makeRuntimeErrorMsg(`Could not find port: ${port}. This is a bug. Report to dev.`);
+            throw helpers.makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
           }
           return Promise.resolve(iport.tryWrite(data));
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid argument: ${port}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
         }
       },
     readPort:
       (ctx: NetscriptContext) =>
       (_port: unknown): unknown => {
-        const port = ctx.helper.number("port", _port);
+        const port = helpers.number(ctx, "port", _port);
         // Read from port
-        const iport = helper.getValidPort("readPort", port);
+        const iport = helpers.getValidPort(ctx, port);
         const x = iport.read();
         return x;
       },
     read:
       (ctx: NetscriptContext) =>
       (_port: unknown): string => {
-        const port = ctx.helper.string("port", _port);
+        const port = helpers.string(ctx, "port", _port);
         if (isString(port)) {
           // Read from script or text file
           const fn = port;
           const server = GetServer(workerScript.hostname);
           if (server == null) {
-            throw ctx.makeRuntimeErrorMsg("Error getting Server. This is a bug. Report to dev.");
+            throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
           }
           if (isScriptFilename(fn)) {
             // Read from script
@@ -2129,57 +1762,57 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
             }
           }
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid argument: ${port}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
         }
       },
     peek:
       (ctx: NetscriptContext) =>
       (_port: unknown): unknown => {
-        const port = ctx.helper.number("port", _port);
-        const iport = helper.getValidPort("peek", port);
+        const port = helpers.number(ctx, "port", _port);
+        const iport = helpers.getValidPort(ctx, port);
         const x = iport.peek();
         return x;
       },
     clear:
       (ctx: NetscriptContext) =>
       (_file: unknown): void => {
-        const file = ctx.helper.string("file", _file);
+        const file = helpers.string(ctx, "file", _file);
         if (isString(file)) {
           // Clear text file
           const fn = file;
           const server = GetServer(workerScript.hostname);
           if (server == null) {
-            throw ctx.makeRuntimeErrorMsg("Error getting Server. This is a bug. Report to dev.");
+            throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
           }
           const txtFile = getTextFile(fn, server);
           if (txtFile != null) {
             txtFile.write("");
           }
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid argument: ${file}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${file}`);
         }
       },
     clearPort:
       (ctx: NetscriptContext) =>
       (_port: unknown): void => {
-        const port = ctx.helper.number("port", _port);
+        const port = helpers.number(ctx, "port", _port);
         // Clear port
-        const iport = helper.getValidPort("clearPort", port);
+        const iport = helpers.getValidPort(ctx, port);
         iport.clear();
       },
     getPortHandle:
       (ctx: NetscriptContext) =>
       (_port: unknown): IPort => {
-        const port = ctx.helper.number("port", _port);
-        const iport = helper.getValidPort("getPortHandle", port);
+        const port = helpers.number(ctx, "port", _port);
+        const iport = helpers.getValidPort(ctx, port);
         return iport;
       },
     rm:
       (ctx: NetscriptContext) =>
       (_fn: unknown, _hostname: unknown = workerScript.hostname): boolean => {
-        const fn = ctx.helper.string("fn", _fn);
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const s = safeGetServer(hostname, ctx);
+        const fn = helpers.string(ctx, "fn", _fn);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const s = helpers.getServer(ctx, hostname);
 
         const status = s.removeFile(fn);
         if (!status.res) {
@@ -2191,9 +1824,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     scriptRunning:
       (ctx: NetscriptContext) =>
       (_scriptname: unknown, _hostname: unknown): boolean => {
-        const scriptname = ctx.helper.string("scriptname", _scriptname);
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const scriptname = helpers.string(ctx, "scriptname", _scriptname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         for (let i = 0; i < server.runningScripts.length; ++i) {
           if (server.runningScripts[i].filename == scriptname) {
             return true;
@@ -2204,9 +1837,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     scriptKill:
       (ctx: NetscriptContext) =>
       (_scriptname: unknown, _hostname: unknown): boolean => {
-        const scriptname = ctx.helper.string("scriptname", _scriptname);
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const scriptname = helpers.string(ctx, "scriptname", _scriptname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         let suc = false;
         for (let i = 0; i < server.runningScripts.length; i++) {
           if (server.runningScripts[i].filename == scriptname) {
@@ -2223,9 +1856,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getScriptRam:
       (ctx: NetscriptContext) =>
       (_scriptname: unknown, _hostname: unknown = workerScript.hostname): number => {
-        const scriptname = ctx.helper.string("scriptname", _scriptname);
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const scriptname = helpers.string(ctx, "scriptname", _scriptname);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         for (let i = 0; i < server.scripts.length; ++i) {
           if (server.scripts[i].filename == scriptname) {
             return server.scripts[i].ramUsage;
@@ -2236,7 +1869,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getRunningScript:
       (ctx: NetscriptContext) =>
       (fn: unknown, hostname: unknown, ...args: unknown[]): IRunningScriptDef | null => {
-        const ident = ctx.helper.scriptIdentifier(fn, hostname, args);
+        const ident = helpers.scriptIdentifier(ctx, fn, hostname, args);
         const runningScript = getRunningScript(ctx, ident);
         if (runningScript === null) return null;
         return createPublicRunningScript(runningScript);
@@ -2244,8 +1877,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getHackTime:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "invalid for this kind of server");
           return Infinity;
@@ -2259,8 +1892,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getGrowTime:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "invalid for this kind of server");
           return Infinity;
@@ -2274,8 +1907,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getWeakenTime:
       (ctx: NetscriptContext) =>
       (_hostname: unknown = workerScript.hostname): number => {
-        const hostname = ctx.helper.string("hostname", _hostname);
-        const server = safeGetServer(hostname, ctx);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
+        const server = helpers.getServer(ctx, hostname);
         if (!(server instanceof Server)) {
           ctx.log(() => "invalid for this kind of server");
           return Infinity;
@@ -2298,7 +1931,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getScriptIncome:
       (ctx: NetscriptContext) =>
       (fn: unknown, hostname: unknown, ...args: unknown[]): number => {
-        const ident = ctx.helper.scriptIdentifier(fn, hostname, args);
+        const ident = helpers.scriptIdentifier(ctx, fn, hostname, args);
         const runningScript = getRunningScript(ctx, ident);
         if (runningScript == null) {
           ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
@@ -2316,7 +1949,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getScriptExpGain:
       (ctx: NetscriptContext) =>
       (fn: unknown, hostname: unknown, ...args: unknown[]): number => {
-        const ident = ctx.helper.scriptIdentifier(fn, hostname, args);
+        const ident = helpers.scriptIdentifier(ctx, fn, hostname, args);
         const runningScript = getRunningScript(ctx, ident);
         if (runningScript == null) {
           ctx.log(() => getCannotFindRunningScriptErrorMessage(ident));
@@ -2327,8 +1960,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     nFormat:
       (ctx: NetscriptContext) =>
       (_n: unknown, _format: unknown): string => {
-        const n = ctx.helper.number("n", _n);
-        const format = ctx.helper.string("format", _format);
+        const n = helpers.number(ctx, "n", _n);
+        const format = helpers.string(ctx, "format", _format);
         if (isNaN(n)) {
           return "";
         }
@@ -2338,8 +1971,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     tFormat:
       (ctx: NetscriptContext) =>
       (_milliseconds: unknown, _milliPrecision: unknown = false): string => {
-        const milliseconds = ctx.helper.number("milliseconds", _milliseconds);
-        const milliPrecision = helper.boolean(_milliPrecision);
+        const milliseconds = helpers.number(ctx, "milliseconds", _milliseconds);
+        const milliPrecision = !!_milliPrecision;
         return convertTimeMsToTimeElapsedString(milliseconds, milliPrecision);
       },
     getTimeSinceLastAug: () => (): number => {
@@ -2348,15 +1981,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     alert:
       (ctx: NetscriptContext) =>
       (_message: unknown): void => {
-        const message = ctx.helper.string("message", _message);
+        const message = helpers.string(ctx, "message", _message);
         dialogBoxCreate(message);
       },
     toast:
       (ctx: NetscriptContext) =>
       (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, _duration: unknown = 2000): void => {
-        const message = ctx.helper.string("message", _message);
-        const variant = ctx.helper.string("variant", _variant);
-        const duration = ctx.helper.number("duration", _duration);
+        const message = helpers.string(ctx, "message", _message);
+        const variant = helpers.string(ctx, "variant", _variant);
+        const duration = helpers.number(ctx, "duration", _duration);
         if (!checkEnum(ToastVariant, variant))
           throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
         SnackbarEvents.emit(message, variant, duration);
@@ -2364,7 +1997,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     prompt:
       (ctx: NetscriptContext) =>
       (_txt: unknown, options?: { type?: string; options?: string[] }): Promise<boolean | string> => {
-        const txt = ctx.helper.string("txt", _txt);
+        const txt = helpers.string(ctx, "txt", _txt);
 
         return new Promise(function (resolve) {
           PromptEvent.emit({
@@ -2377,14 +2010,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     wget:
       (ctx: NetscriptContext) =>
       async (_url: unknown, _target: unknown, _hostname: unknown = workerScript.hostname): Promise<boolean> => {
-        const url = ctx.helper.string("url", _url);
-        const target = ctx.helper.string("target", _target);
-        const hostname = ctx.helper.string("hostname", _hostname);
+        const url = helpers.string(ctx, "url", _url);
+        const target = helpers.string(ctx, "target", _target);
+        const hostname = helpers.string(ctx, "hostname", _hostname);
         if (!isScriptFilename(target) && !target.endsWith(".txt")) {
           ctx.log(() => `Invalid target file: '${target}'. Must be a script or text file.`);
           return Promise.resolve(false);
         }
-        const s = safeGetServer(hostname, ctx);
+        const s = helpers.getServer(ctx, hostname);
         return new Promise(function (resolve) {
           $.get(
             url,
@@ -2445,7 +2078,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       (ctx: NetscriptContext) =>
       (f: unknown): void => {
         if (typeof f !== "function") {
-          throw ctx.makeRuntimeErrorMsg("argument should be function");
+          throw helpers.makeRuntimeErrorMsg(ctx, "argument should be function");
         }
         workerScript.atExit = () => {
           f();
@@ -2454,30 +2087,29 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     mv:
       (ctx: NetscriptContext) =>
       (_host: unknown, _source: unknown, _destination: unknown): void => {
-        const host = ctx.helper.string("host", _host);
-        const source = ctx.helper.string("source", _source);
-        const destination = ctx.helper.string("destination", _destination);
+        const host = helpers.string(ctx, "host", _host);
+        const source = helpers.string(ctx, "source", _source);
+        const destination = helpers.string(ctx, "destination", _destination);
 
-        if (!isValidFilePath(source)) throw ctx.makeRuntimeErrorMsg(`Invalid filename: '${source}'`);
-        if (!isValidFilePath(destination)) throw ctx.makeRuntimeErrorMsg(`Invalid filename: '${destination}'`);
+        if (!isValidFilePath(source)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: '${source}'`);
+        if (!isValidFilePath(destination)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: '${destination}'`);
 
         const source_is_txt = source.endsWith(".txt");
         const dest_is_txt = destination.endsWith(".txt");
 
         if (!isScriptFilename(source) && !source_is_txt)
-          throw ctx.makeRuntimeErrorMsg(`'mv' can only be used on scripts and text files (.txt)`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `'mv' can only be used on scripts and text files (.txt)`);
         if (source_is_txt != dest_is_txt)
-          throw ctx.makeRuntimeErrorMsg(`Source and destination files must have the same type`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Source and destination files must have the same type`);
 
         if (source === destination) {
           return;
         }
 
-        // This will throw if the server is not found, we do not need to validate result.
-        const destServer: BaseServer | null = safeGetServer(host, ctx);
+        const destServer = helpers.getServer(ctx, host);
 
         if (!source_is_txt && destServer.isRunning(source))
-          throw ctx.makeRuntimeErrorMsg(`Cannot use 'mv' on a script that is running`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Cannot use 'mv' on a script that is running`);
 
         interface File {
           filename: string;
@@ -2496,7 +2128,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           }
         }
 
-        if (source_file == null) throw ctx.makeRuntimeErrorMsg(`Source file ${source} does not exist`);
+        if (source_file == null) throw helpers.makeRuntimeErrorMsg(ctx, `Source file ${source} does not exist`);
 
         if (dest_file != null) {
           if (dest_file instanceof TextFile && source_file instanceof TextFile) {
@@ -2538,7 +2170,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
   const possibleLogs = Object.fromEntries([...getFunctionNames(ns, "")].map((a) => [a, true]));
 
-  const wrappedNS = wrapAPI(helper, {}, workerScript, ns) as unknown as INS;
+  const wrappedNS = wrapAPI({}, workerScript, ns) as unknown as INS;
   (wrappedNS as any).args = ns.args;
   (wrappedNS as any).enums = ns.enums;
   return wrappedNS;

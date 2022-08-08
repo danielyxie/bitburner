@@ -11,7 +11,6 @@ import { generateNextPid } from "./Netscript/Pid";
 
 import { CONSTANTS } from "./Constants";
 import { Interpreter } from "./ThirdParty/JSInterpreter";
-import { isScriptErrorMessage, makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript, Node } from "./NetscriptJSEvaluator";
 import { NetscriptPort, IPort } from "./NetscriptPort";
@@ -37,6 +36,7 @@ import { Player } from "./Player";
 import { Terminal } from "./Terminal";
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { ScriptArg } from "./Netscript/ScriptArg";
+import { helpers } from "./Netscript/NetscriptHelpers";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -71,15 +71,18 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
   }).catch((e) => {
     if (e instanceof Error) {
       if (e instanceof SyntaxError) {
-        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");
+        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
+          workerScript,
+          e.message + " (sorry we can't be more helpful)",
+        );
       } else {
-        workerScript.errorMessage = makeRuntimeRejectMsg(
+        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
           workerScript,
           e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
         );
       }
       throw new ScriptDeath(workerScript);
-    } else if (isScriptErrorMessage(e)) {
+    } else if (helpers.isScriptErrorMessage(e)) {
       workerScript.errorMessage = e;
       throw new ScriptDeath(workerScript);
     } else if (e instanceof ScriptDeath) {
@@ -87,7 +90,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
     }
 
     // Don't know what to do with it, let's try making an error message out of it
-    workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, "" + e);
+    workerScript.errorMessage = helpers.makeRuntimeRejectMsg(workerScript, "" + e);
     throw new ScriptDeath(workerScript);
   });
 }
@@ -241,8 +244,8 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
         }
       } catch (_e: unknown) {
         let e = String(_e);
-        if (!isScriptErrorMessage(e)) {
-          e = makeRuntimeRejectMsg(workerScript, e);
+        if (!helpers.isScriptErrorMessage(e)) {
+          e = helpers.makeRuntimeRejectMsg(workerScript, e);
         }
         workerScript.errorMessage = e;
         return reject(new ScriptDeath(workerScript));
@@ -520,7 +523,7 @@ function createAndAddWorkerScript(
         console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
         return;
       } else if (e instanceof ScriptDeath) {
-        if (isScriptErrorMessage(workerScript.errorMessage)) {
+        if (helpers.isScriptErrorMessage(workerScript.errorMessage)) {
           const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
           if (errorTextArray.length != 4) {
             console.error("ERROR: Something wrong with Error text in evaluator...");
@@ -544,7 +547,7 @@ function createAndAddWorkerScript(
           workerScript.log("", () => "Script killed");
           return; // Already killed, so stop here
         }
-      } else if (isScriptErrorMessage(e)) {
+      } else if (helpers.isScriptErrorMessage(e)) {
         dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
         console.error(
           "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +

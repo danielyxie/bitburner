@@ -14,7 +14,8 @@ import {
 } from "../StockMarket/StockMarketCosts";
 import { Stock } from "../StockMarket/Stock";
 import { StockOrder, TIX } from "../ScriptEditor/NetscriptDefinitions";
-import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
 export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript): InternalAPI<TIX> {
   /**
@@ -22,17 +23,17 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
    */
   const checkTixApiAccess = function (ctx: NetscriptContext): void {
     if (!player.hasWseAccount) {
-      throw ctx.makeRuntimeErrorMsg(`You don't have WSE Access! Cannot use ${ctx.function}()`);
+      throw helpers.makeRuntimeErrorMsg(ctx, `You don't have WSE Access! Cannot use ${ctx.function}()`);
     }
     if (!player.hasTixApiAccess) {
-      throw ctx.makeRuntimeErrorMsg(`You don't have TIX API Access! Cannot use ${ctx.function}()`);
+      throw helpers.makeRuntimeErrorMsg(ctx, `You don't have TIX API Access! Cannot use ${ctx.function}()`);
     }
   };
 
   const getStockFromSymbol = function (ctx: NetscriptContext, symbol: string): Stock {
     const stock = SymbolToStockMap[symbol];
     if (stock == null) {
-      throw ctx.makeRuntimeErrorMsg(`Invalid stock symbol: '${symbol}'`);
+      throw helpers.makeRuntimeErrorMsg(ctx, `Invalid stock symbol: '${symbol}'`);
     }
 
     return stock;
@@ -58,7 +59,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     getPrice:
       (ctx: NetscriptContext) =>
       (_symbol: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
 
@@ -67,7 +68,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     getAskPrice:
       (ctx: NetscriptContext) =>
       (_symbol: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
 
@@ -76,7 +77,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     getBidPrice:
       (ctx: NetscriptContext) =>
       (_symbol: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
 
@@ -85,18 +86,18 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     getPosition:
       (ctx: NetscriptContext) =>
       (_symbol: unknown): [number, number, number, number] => {
-        const symbol = ctx.helper.string("symbol", _symbol);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
         checkTixApiAccess(ctx);
         const stock = SymbolToStockMap[symbol];
         if (stock == null) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid stock symbol: ${symbol}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid stock symbol: ${symbol}`);
         }
         return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
       },
     getMaxShares:
       (ctx: NetscriptContext) =>
       (_symbol: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
 
@@ -105,9 +106,9 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     getPurchaseCost:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown, _posType: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
-        let shares = ctx.helper.number("shares", _shares);
-        const posType = ctx.helper.string("posType", _posType);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
+        let shares = helpers.number(ctx, "shares", _shares);
+        const posType = helpers.string(ctx, "posType", _posType);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
         shares = Math.round(shares);
@@ -132,9 +133,9 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     getSaleGain:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown, _posType: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
-        let shares = ctx.helper.number("shares", _shares);
-        const posType = ctx.helper.string("posType", _posType);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
+        let shares = helpers.number(ctx, "shares", _shares);
+        const posType = helpers.string(ctx, "posType", _posType);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
         shares = Math.round(shares);
@@ -159,8 +160,8 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     buyStock:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
-        const shares = ctx.helper.number("shares", _shares);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
+        const shares = helpers.number(ctx, "shares", _shares);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
         const res = buyStock(stock, shares, workerScript, {});
@@ -169,8 +170,8 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     sellStock:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
-        const shares = ctx.helper.number("shares", _shares);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
+        const shares = helpers.number(ctx, "shares", _shares);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
         const res = sellStock(stock, shares, workerScript, {});
@@ -180,12 +181,15 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     buyShort:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
-        const shares = ctx.helper.number("shares", _shares);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
+        const shares = helpers.number(ctx, "shares", _shares);
         checkTixApiAccess(ctx);
         if (player.bitNodeN !== 8) {
           if (player.sourceFileLvl(8) <= 1) {
-            throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or you must have Source-File 8 Level 2.");
+            throw helpers.makeRuntimeErrorMsg(
+              ctx,
+              "You must either be in BitNode-8 or you must have Source-File 8 Level 2.",
+            );
           }
         }
         const stock = getStockFromSymbol(ctx, symbol);
@@ -196,12 +200,15 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     sellShort:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
-        const shares = ctx.helper.number("shares", _shares);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
+        const shares = helpers.number(ctx, "shares", _shares);
         checkTixApiAccess(ctx);
         if (player.bitNodeN !== 8) {
           if (player.sourceFileLvl(8) <= 1) {
-            throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or you must have Source-File 8 Level 2.");
+            throw helpers.makeRuntimeErrorMsg(
+              ctx,
+              "You must either be in BitNode-8 or you must have Source-File 8 Level 2.",
+            );
           }
         }
         const stock = getStockFromSymbol(ctx, symbol);
@@ -212,15 +219,18 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     placeOrder:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown, _price: unknown, _type: unknown, _pos: unknown): boolean => {
-        const symbol = ctx.helper.string("symbol", _symbol);
-        const shares = ctx.helper.number("shares", _shares);
-        const price = ctx.helper.number("price", _price);
-        const type = ctx.helper.string("type", _type);
-        const pos = ctx.helper.string("pos", _pos);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
+        const shares = helpers.number(ctx, "shares", _shares);
+        const price = helpers.number(ctx, "price", _price);
+        const type = helpers.string(ctx, "type", _type);
+        const pos = helpers.string(ctx, "pos", _pos);
         checkTixApiAccess(ctx);
         if (player.bitNodeN !== 8) {
           if (player.sourceFileLvl(8) <= 2) {
-            throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or you must have Source-File 8 Level 3.");
+            throw helpers.makeRuntimeErrorMsg(
+              ctx,
+              "You must either be in BitNode-8 or you must have Source-File 8 Level 3.",
+            );
           }
         }
         const stock = getStockFromSymbol(ctx, symbol);
@@ -237,7 +247,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         } else if (ltype.includes("stop") && ltype.includes("sell")) {
           orderType = OrderTypes.StopSell;
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid order type: ${type}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid order type: ${type}`);
         }
 
         const lpos = pos.toLowerCase();
@@ -246,7 +256,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         } else if (lpos.includes("s")) {
           orderPos = PositionTypes.Short;
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid position type: ${pos}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid position type: ${pos}`);
         }
 
         return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
@@ -254,20 +264,26 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     cancelOrder:
       (ctx: NetscriptContext) =>
       (_symbol: unknown, _shares: unknown, _price: unknown, _type: unknown, _pos: unknown): boolean => {
-        const symbol = ctx.helper.string("symbol", _symbol);
-        const shares = ctx.helper.number("shares", _shares);
-        const price = ctx.helper.number("price", _price);
-        const type = ctx.helper.string("type", _type);
-        const pos = ctx.helper.string("pos", _pos);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
+        const shares = helpers.number(ctx, "shares", _shares);
+        const price = helpers.number(ctx, "price", _price);
+        const type = helpers.string(ctx, "type", _type);
+        const pos = helpers.string(ctx, "pos", _pos);
         checkTixApiAccess(ctx);
         if (player.bitNodeN !== 8) {
           if (player.sourceFileLvl(8) <= 2) {
-            throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or you must have Source-File 8 Level 3.");
+            throw helpers.makeRuntimeErrorMsg(
+              ctx,
+              "You must either be in BitNode-8 or you must have Source-File 8 Level 3.",
+            );
           }
         }
         const stock = getStockFromSymbol(ctx, symbol);
         if (isNaN(shares) || isNaN(price)) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid shares or price. Must be numeric. shares=${shares}, price=${price}`);
+          throw helpers.makeRuntimeErrorMsg(
+            ctx,
+            `Invalid shares or price. Must be numeric. shares=${shares}, price=${price}`,
+          );
         }
         let orderType;
         let orderPos;
@@ -281,7 +297,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         } else if (ltype.includes("stop") && ltype.includes("sell")) {
           orderType = OrderTypes.StopSell;
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid order type: ${type}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid order type: ${type}`);
         }
 
         const lpos = pos.toLowerCase();
@@ -290,7 +306,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         } else if (lpos.includes("s")) {
           orderPos = PositionTypes.Short;
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid position type: ${pos}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid position type: ${pos}`);
         }
         const params = {
           stock: stock,
@@ -305,7 +321,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       checkTixApiAccess(ctx);
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
-          throw ctx.makeRuntimeErrorMsg("You must either be in BitNode-8 or have Source-File 8 Level 3.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You must either be in BitNode-8 or have Source-File 8 Level 3.");
         }
       }
 
@@ -332,9 +348,9 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     getVolatility:
       (ctx: NetscriptContext) =>
       (_symbol: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
         if (!player.has4SDataTixApi) {
-          throw ctx.makeRuntimeErrorMsg("You don't have 4S Market Data TIX API Access!");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You don't have 4S Market Data TIX API Access!");
         }
         const stock = getStockFromSymbol(ctx, symbol);
 
@@ -343,9 +359,9 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     getForecast:
       (ctx: NetscriptContext) =>
       (_symbol: unknown): number => {
-        const symbol = ctx.helper.string("symbol", _symbol);
+        const symbol = helpers.string(ctx, "symbol", _symbol);
         if (!player.has4SDataTixApi) {
-          throw ctx.makeRuntimeErrorMsg("You don't have 4S Market Data TIX API Access!");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You don't have 4S Market Data TIX API Access!");
         }
         const stock = getStockFromSymbol(ctx, symbol);
 

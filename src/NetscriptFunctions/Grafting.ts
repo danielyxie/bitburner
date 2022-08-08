@@ -8,11 +8,13 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../ui/GameRoot";
 import { GraftingWork } from "../Work/GraftingWork";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
 export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
   const checkGraftingAPIAccess = (ctx: NetscriptContext): void => {
     if (!player.canAccessGrafting()) {
-      throw ctx.makeRuntimeErrorMsg(
+      throw helpers.makeRuntimeErrorMsg(
+        ctx,
         "You do not currently have access to the Grafting API. This is either because you are not in BitNode 10 or because you do not have Source-File 10",
       );
     }
@@ -22,10 +24,10 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
     getAugmentationGraftPrice:
       (ctx: NetscriptContext) =>
       (_augName: unknown): number => {
-        const augName = ctx.helper.string("augName", _augName);
+        const augName = helpers.string(ctx, "augName", _augName);
         checkGraftingAPIAccess(ctx);
         if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid aug: ${augName}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
         }
         const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
         return graftableAug.cost;
@@ -34,10 +36,10 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
     getAugmentationGraftTime:
       (ctx: NetscriptContext) =>
       (_augName: string): number => {
-        const augName = ctx.helper.string("augName", _augName);
+        const augName = helpers.string(ctx, "augName", _augName);
         checkGraftingAPIAccess(ctx);
         if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid aug: ${augName}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
         }
         const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
         return calculateGraftingTimeWithBonus(player, graftableAug);
@@ -52,11 +54,11 @@ export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
     graftAugmentation:
       (ctx: NetscriptContext) =>
       (_augName: string, _focus: unknown = true): boolean => {
-        const augName = ctx.helper.string("augName", _augName);
-        const focus = ctx.helper.boolean(_focus);
+        const augName = helpers.string(ctx, "augName", _augName);
+        const focus = !!_focus;
         checkGraftingAPIAccess(ctx);
         if (player.city !== CityName.NewTokyo) {
-          throw ctx.makeRuntimeErrorMsg("You must be in New Tokyo to begin grafting an Augmentation.");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You must be in New Tokyo to begin grafting an Augmentation.");
         }
         if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
           ctx.log(() => `Invalid aug: ${augName}`);
