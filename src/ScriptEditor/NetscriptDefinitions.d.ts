@@ -6924,27 +6924,27 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * Get list of materials
    * @returns material names
    */
-  getMaterialNames():string[];
+  getMaterialNames(): string[];
   /**
    * Get list of industry types
    * @returns industry names
    */
-  getIndustryTypes():string[];
+  getIndustryTypes(): string[];
   /**
    * Get list of one-time unlockable upgrades
    * @returns unlockable upgrades names
    */
-  getUnlockables():string[];
+  getUnlockables(): string[];
   /**
    * Get list of upgrade names
    * @returns upgrade names
    */
-  getUpgradeNames():string[];
+  getUpgradeNames(): string[];
   /**
    * Get list of research names
    * @returns research names
    */
-  getResarchNames():string[];
+  getResearchNames(): string[];
   /**
    * Accept investment based on you companies current valuation
    * @remarks

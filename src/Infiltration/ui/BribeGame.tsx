@@ -151,7 +151,7 @@ const positive = [
   "patient",
   "dynamic",
   "loyal",
-  "straightforward"
+  "straightforward",
 ];
 
 const negative = [

@@ -873,31 +873,21 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   return {
     ...warehouseAPI,
     ...officeAPI,
-  getMaterialNames:
-    (ctx: NetscriptContext) => 
-    (): string[] =>{
+    getMaterialNames: () => (): string[] => {
       return CorporationConstants.AllMaterials;
-  },
-  getIndustryTypes:
-    (ctx: NetscriptContext) => 
-    (): string[] =>{
+    },
+    getIndustryTypes: () => (): string[] => {
       return CorporationConstants.AllIndustryTypes;
-  },
-  getUnlockables:
-    (ctx: NetscriptContext) => 
-    (): string[] =>{
+    },
+    getUnlockables: () => (): string[] => {
       return CorporationConstants.AllUnlocks;
-  },
-  getUpgradeNames:
-    (ctx: NetscriptContext) => 
-    (): string[] =>{
+    },
+    getUpgradeNames: () => (): string[] => {
       return CorporationConstants.AllUpgrades;
-  },
-  getResarchNames:
-    (ctx: NetscriptContext) => 
-    (): string[] =>{
+    },
+    getResearchNames: () => (): string[] => {
       return CorporationConstants.AllResearch;
-  },
+    },
     expandIndustry:
       (ctx: NetscriptContext) =>
       (_industryName: unknown, _divisionName: unknown): void => {
