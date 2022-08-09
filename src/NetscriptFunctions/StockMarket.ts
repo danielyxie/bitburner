@@ -1,5 +1,4 @@
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
 import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder, initStockMarketFn } from "../StockMarket/StockMarket";
 import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/StockMarketHelpers";
@@ -17,7 +16,7 @@ import { StockOrder, TIX } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript): InternalAPI<TIX> {
+export function NetscriptStockMarket(): InternalAPI<TIX> {
   /**
    * Checks if the player has TIX API access. Throws an error if the player does not
    */
@@ -164,7 +163,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         const shares = helpers.number(ctx, "shares", _shares);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
-        const res = buyStock(stock, shares, workerScript, {});
+        const res = buyStock(stock, shares, ctx.workerScript, {});
         return res ? stock.getAskPrice() : 0;
       },
     sellStock:
@@ -174,7 +173,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         const shares = helpers.number(ctx, "shares", _shares);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
-        const res = sellStock(stock, shares, workerScript, {});
+        const res = sellStock(stock, shares, ctx.workerScript, {});
 
         return res ? stock.getBidPrice() : 0;
       },
@@ -193,7 +192,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
           }
         }
         const stock = getStockFromSymbol(ctx, symbol);
-        const res = shortStock(stock, shares, workerScript, {});
+        const res = shortStock(stock, shares, ctx.workerScript, {});
 
         return res ? stock.getBidPrice() : 0;
       },
@@ -212,7 +211,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
           }
         }
         const stock = getStockFromSymbol(ctx, symbol);
-        const res = sellShort(stock, shares, workerScript, {});
+        const res = sellShort(stock, shares, ctx.workerScript, {});
 
         return res ? stock.getAskPrice() : 0;
       },
@@ -259,7 +258,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid position type: ${pos}`);
         }
 
-        return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
+        return placeOrder(stock, shares, price, orderType, orderPos, ctx.workerScript);
       },
     cancelOrder:
       (ctx: NetscriptContext) =>
@@ -315,7 +314,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
           type: orderType,
           pos: orderPos,
         };
-        return cancelOrder(params, workerScript);
+        return cancelOrder(params, ctx.workerScript);
       },
     getOrders: (ctx: NetscriptContext) => (): StockOrder => {
       checkTixApiAccess(ctx);

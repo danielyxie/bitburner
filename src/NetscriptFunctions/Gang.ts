@@ -1,11 +1,10 @@
 import { FactionNames } from "../Faction/data/FactionNames";
 import { GangConstants } from "../Gang/data/Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { Gang } from "../Gang/Gang";
 import { AllGangs } from "../Gang/AllGangs";
 import { GangMemberTasks } from "../Gang/GangMemberTasks";
 import { GangMemberUpgrades } from "../Gang/GangMemberUpgrades";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 import { helpers } from "../Netscript/NetscriptHelpers";
@@ -22,7 +21,7 @@ import {
 } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 
-export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): InternalAPI<IGang> {
+export function NetscriptGang(): InternalAPI<IGang> {
   const checkGangApiAccess = function (ctx: NetscriptContext): void {
     const gang = player.gang;
     if (gang === null) throw new Error("Must have joined gang");
@@ -170,9 +169,9 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): Inte
         if (gang === null) throw new Error("Should not be called without Gang");
         const recruited = gang.recruitMember(memberName);
         if (recruited) {
-          workerScript.log("gang.recruitMember", () => `Successfully recruited Gang Member '${memberName}'`);
+          ctx.workerScript.log("gang.recruitMember", () => `Successfully recruited Gang Member '${memberName}'`);
         } else {
-          workerScript.log("gang.recruitMember", () => `Failed to recruit Gang Member '${memberName}'`);
+          ctx.workerScript.log("gang.recruitMember", () => `Failed to recruit Gang Member '${memberName}'`);
         }
 
         return recruited;
@@ -195,7 +194,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): Inte
         const gang = player.gang;
         if (gang === null) throw new Error("Should not be called without Gang");
         if (!gang.getAllTaskNames().includes(taskName)) {
-          workerScript.log(
+          ctx.workerScript.log(
             "gang.setMemberTask",
             () =>
               `Failed to assign Gang Member '${memberName}' to Invalid task '${taskName}'. '${memberName}' is now Unassigned`,
@@ -204,12 +203,12 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): Inte
         }
         const success = member.assignToTask(taskName);
         if (success) {
-          workerScript.log(
+          ctx.workerScript.log(
             "gang.setMemberTask",
             () => `Successfully assigned Gang Member '${memberName}' to '${taskName}' task`,
           );
         } else {
-          workerScript.log(
+          ctx.workerScript.log(
             "gang.setMemberTask",
             () =>
               `Failed to assign Gang Member '${memberName}' to '${taskName}' task. '${memberName}' is now Unassigned`,
@@ -277,9 +276,9 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): Inte
         if (!equipment) return false;
         const res = member.buyUpgrade(equipment, player, gang);
         if (res) {
-          workerScript.log("gang.purchaseEquipment", () => `Purchased '${equipName}' for Gang member '${memberName}'`);
+          ctx.workerScript.log("gang.purchaseEquipment", () => `Purchased '${equipName}' for Gang member '${memberName}'`);
         } else {
-          workerScript.log(
+          ctx.workerScript.log(
             "gang.purchaseEquipment",
             () => `Failed to purchase '${equipName}' for Gang member '${memberName}'`,
           );
@@ -296,7 +295,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): Inte
         if (gang === null) throw new Error("Should not be called without Gang");
         const member = getGangMember(ctx, memberName);
         if (!member.canAscend()) return;
-        return gang.ascendMember(member, workerScript);
+        return gang.ascendMember(member, ctx.workerScript);
       },
     getAscensionResult:
       (ctx: NetscriptContext) =>
@@ -321,10 +320,10 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript): Inte
         if (gang === null) throw new Error("Should not be called without Gang");
         if (engage) {
           gang.territoryWarfareEngaged = true;
-          workerScript.log("gang.setTerritoryWarfare", () => "Engaging in Gang Territory Warfare");
+          ctx.workerScript.log("gang.setTerritoryWarfare", () => "Engaging in Gang Territory Warfare");
         } else {
           gang.territoryWarfareEngaged = false;
-          workerScript.log("gang.setTerritoryWarfare", () => "Disengaging in Gang Territory Warfare");
+          ctx.workerScript.log("gang.setTerritoryWarfare", () => "Disengaging in Gang Territory Warfare");
         }
       },
     getChanceToWinClash:

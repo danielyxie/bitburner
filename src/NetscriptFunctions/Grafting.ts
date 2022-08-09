@@ -4,13 +4,13 @@ import { hasAugmentationPrereqs } from "../Faction/FactionHelpers";
 import { CityName } from "../Locations/data/CityNames";
 import { GraftableAugmentation } from "../PersonObjects/Grafting/GraftableAugmentation";
 import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../PersonObjects/Grafting/GraftingHelpers";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../ui/GameRoot";
 import { GraftingWork } from "../Work/GraftingWork";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptGrafting(player: IPlayer): InternalAPI<IGrafting> {
+export function NetscriptGrafting(): InternalAPI<IGrafting> {
   const checkGraftingAPIAccess = (ctx: NetscriptContext): void => {
     if (!player.canAccessGrafting()) {
       throw helpers.makeRuntimeErrorMsg(

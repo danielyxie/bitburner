@@ -2,6 +2,8 @@ import { getRamCost } from "./RamCostGenerator";
 import type { WorkerScript } from "./WorkerScript";
 import { Player } from "../Player";
 import { helpers } from "./NetscriptHelpers";
+import { ScriptArg } from "./ScriptArg";
+import { NSEnums } from "src/ScriptEditor/NetscriptDefinitions";
 
 type ExternalFunction = (...args: unknown[]) => unknown;
 export type ExternalAPI = {
@@ -13,6 +15,10 @@ type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: Netscri
 export type InternalAPI<API> = {
   [Property in keyof API]: API[Property] extends ExternalFunction
     ? InternalFunction<API[Property]>
+    : API[Property] extends NSEnums
+    ? NSEnums
+    : API[Property] extends ScriptArg[]
+    ? ScriptArg[]
     : API[Property] extends object
     ? InternalAPI<API[Property]>
     : never;

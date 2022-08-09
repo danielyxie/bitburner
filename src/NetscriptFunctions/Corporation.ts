@@ -1,4 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 
 import { OfficeSpace } from "../Corporation/OfficeSpace";
 import { Employee } from "../Corporation/Employee";
@@ -68,7 +68,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation> {
+export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
     if (!player.canAccessCorporation() || player.hasCorporation()) return false;
     if (!corporationName) return false;

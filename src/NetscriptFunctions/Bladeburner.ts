@@ -1,5 +1,4 @@
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { Bladeburner } from "../Bladeburner/Bladeburner";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Bladeburner as INetscriptBladeburner, BladeburnerCurAction } from "../ScriptEditor/NetscriptDefinitions";
@@ -8,7 +7,7 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperation } from "../Bladeburner/BlackOperation";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript): InternalAPI<INetscriptBladeburner> {
+export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
   const checkBladeburnerAccess = function (ctx: NetscriptContext, skipjoined = false): void {
     const bladeburner = player.bladeburner;
     if (bladeburner === null) throw new Error("Must have joined bladeburner");
@@ -102,7 +101,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.startActionNetscriptFn(player, type, name, workerScript);
+          return bladeburner.startActionNetscriptFn(player, type, name, ctx.workerScript);
         } catch (e: unknown) {
           throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
@@ -200,7 +199,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.getActionCountRemainingNetscriptFn(type, name, workerScript);
+          return bladeburner.getActionCountRemainingNetscriptFn(type, name, ctx.workerScript);
         } catch (e: unknown) {
           throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
@@ -275,7 +274,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.getSkillLevelNetscriptFn(skillName, workerScript);
+          return bladeburner.getSkillLevelNetscriptFn(skillName, ctx.workerScript);
         } catch (e: unknown) {
           throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
@@ -289,7 +288,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.getSkillUpgradeCostNetscriptFn(skillName, count, workerScript);
+          return bladeburner.getSkillUpgradeCostNetscriptFn(skillName, count, ctx.workerScript);
         } catch (e: unknown) {
           throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
@@ -303,7 +302,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.upgradeSkillNetscriptFn(skillName, count, workerScript);
+          return bladeburner.upgradeSkillNetscriptFn(skillName, count, ctx.workerScript);
         } catch (e: unknown) {
           throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
@@ -317,7 +316,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.getTeamSizeNetscriptFn(type, name, workerScript);
+          return bladeburner.getTeamSizeNetscriptFn(type, name, ctx.workerScript);
         } catch (e: unknown) {
           throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
@@ -332,7 +331,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
         const bladeburner = player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
-          return bladeburner.setTeamSizeNetscriptFn(type, name, size, workerScript);
+          return bladeburner.setTeamSizeNetscriptFn(type, name, size, ctx.workerScript);
         } catch (e: unknown) {
           throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
@@ -394,7 +393,7 @@ export function NetscriptBladeburner(player: IPlayer, workerScript: WorkerScript
       checkBladeburnerAccess(ctx, true);
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-      return bladeburner.joinBladeburnerFactionNetscriptFn(workerScript);
+      return bladeburner.joinBladeburnerFactionNetscriptFn(ctx.workerScript);
     },
     joinBladeburnerDivision: (ctx: NetscriptContext) => (): boolean => {
       if (player.bitNodeN === 7 || player.sourceFileLvl(7) > 0) {

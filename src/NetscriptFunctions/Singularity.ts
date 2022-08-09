@@ -1,5 +1,4 @@
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player} from "../Player";
 import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
 import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";
@@ -54,7 +53,7 @@ import { FactionWork } from "../Work/FactionWork";
 import { FactionWorkType } from "../Work/data/FactionWorkType";
 import { CompanyWork } from "../Work/CompanyWork";
 
-export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
+export function NetscriptSingularity(): InternalAPI<ISingularity> {
   const getAugmentation = function (ctx: NetscriptContext, name: string): Augmentation {
     if (!augmentationExists(name)) {
       throw helpers.makeRuntimeErrorMsg(ctx, `Invalid augmentation: '${name}'`);
@@ -235,9 +234,9 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           runAfterReset(cbScript);
         }, 0);
 
-        // Prevent workerScript from "finishing execution naturally"
-        workerScript.running = false;
-        killWorkerScript(workerScript);
+        // Prevent ctx.workerScript from "finishing execution naturally"
+        ctx.workerScript.running = false;
+        killWorkerScript(ctx.workerScript);
       },
     installAugmentations: (ctx: NetscriptContext) =>
       function (_cbScript: unknown = ""): boolean {
@@ -255,8 +254,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           runAfterReset(cbScript);
         }, 0);
 
-        workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
-        killWorkerScript(workerScript);
+        ctx.workerScript.running = false; // Prevent ctx.workerScript from "finishing execution naturally"
+        killWorkerScript(ctx.workerScript);
         return true;
       },
 
@@ -1179,7 +1178,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeRoughName}'`);
         }
         helpers.log(ctx, () => `Attempting to commit ${crime.name}...`);
-        const crimeTime = crime.commit(player, 1, workerScript);
+        const crimeTime = crime.commit(player, 1, ctx.workerScript);
         if (focus) {
           player.startFocusing();
           Router.toWork();

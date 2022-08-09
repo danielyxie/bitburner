@@ -1,4 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { calculateServerGrowth } from "../Server/formulas/grow";
 import {
   calculateMoneyGainRate,
@@ -44,7 +44,7 @@ import { repFromDonation } from "../Faction/formulas/donation";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptFormulas(player: IPlayer): InternalAPI<IFormulas> {
+export function NetscriptFormulas(): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
     if (!player.hasProgram(Programs.Formulas.name)) {
       throw helpers.makeRuntimeErrorMsg(ctx, `Requires Formulas.exe to run.`);

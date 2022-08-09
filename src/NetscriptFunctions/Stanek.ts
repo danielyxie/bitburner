@@ -1,5 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { WorkerScript } from "../Netscript/WorkerScript";
+import { Player as player } from "../Player";
 
 import { staneksGift } from "../CotMG/Helper";
 import { Fragments, FragmentById } from "../CotMG/Fragment";
@@ -18,7 +17,7 @@ import { joinFaction } from "../Faction/FactionHelpers";
 import { Factions } from "../Faction/Factions";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript): InternalAPI<IStanek> {
+export function NetscriptStanek(): InternalAPI<IStanek> {
   function checkStanekAPIAccess(ctx: NetscriptContext): void {
     if (!player.hasAugmentation(AugmentationNames.StaneksGift1, true)) {
       throw helpers.makeRuntimeErrorMsg(ctx, "Stanek's Gift is not installed");
@@ -54,7 +53,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript): In
         //Charge the fragment
         const time = staneksGift.inBonus() ? 200 : 1000;
         return helpers.netscriptDelay(ctx, time).then(function () {
-          staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
+          staneksGift.charge(player, fragment, ctx.workerScript.scriptRef.threads);
           helpers.log(ctx, () => `Charged fragment with ${ctx.workerScript.scriptRef.threads} threads.`);
           return Promise.resolve();
         });

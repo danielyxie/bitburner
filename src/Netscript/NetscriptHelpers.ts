@@ -26,6 +26,8 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { FormulaGang } from "../Gang/formulas/formulas";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
+import { RunningScript } from "../Script/RunningScript";
+import { toNative } from "../NetscriptFunctions/toNative";
 
 //Helpers that are not specific to use in WorkerScripts/NetscriptContexts should be in src/utils/helpers instead
 
@@ -34,6 +36,7 @@ export const helpers = {
   string,
   number,
   scriptArgs,
+  argsToString,
   isScriptErrorMessage,
   //Error checking and generation
   makeRuntimeRejectMsg,
@@ -56,6 +59,7 @@ export const helpers = {
   gangMember,
   gangTask,
   log,
+  getRunningScriptByArgs,
 };
 
 export type ScriptIdentifier =  //This was previously in INetscriptHelper.ts, may move to its own file or a generic types file.
@@ -66,12 +70,14 @@ export type ScriptIdentifier =  //This was previously in INetscriptHelper.ts, ma
       args: ScriptArg[];
     };
 
+/** If v is a number or string, returns the string representation. Error for other non-strings. */
 function string(ctx: NetscriptContext, argName: string, v: unknown): string {
   if (typeof v === "string") return v;
   if (typeof v === "number") return v + ""; // cast to string;
   throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string.`);
 }
 
+/** Validates v as non-NaN number, or as a string representation of a number, and returns that number. Error on NaN or non-number. */
 function number(ctx: NetscriptContext, argName: string, v: unknown): number {
   if (typeof v === "string") {
     const x = parseFloat(v);
@@ -83,11 +89,13 @@ function number(ctx: NetscriptContext, argName: string, v: unknown): number {
   throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number.`);
 }
 
+/** Validates args as a ScriptArg[]. Throws an error if it is not. */
 function scriptArgs(ctx: NetscriptContext, args: unknown) {
   if (!isScriptArgs(args)) throw makeRuntimeErrorMsg(ctx, "'args' is not an array of script args");
   return args;
 }
 
+/** Determines if the given msg string is an error created by makeRuntimeRejectMsg. */
 function isScriptErrorMessage(msg: string): boolean {
   if (!isString(msg)) {
     return false;
@@ -96,6 +104,26 @@ function isScriptErrorMessage(msg: string): boolean {
   return splitMsg.length == 4;
 }
 
+/** Used to convert multiple arguments for tprint or print into a single string. */
+function argsToString(args: unknown[]): string {
+  let out = "";
+  for (let arg of args) {
+    if (arg === null) {
+      out += "null";
+      continue;
+    }
+    if (arg === undefined) {
+      out += "undefined";
+      continue;
+    }
+    arg = toNative(arg);
+    out += typeof arg === "object" ? JSON.stringify(arg) : `${arg}`;
+  }
+
+  return out;
+}
+
+/** Creates an error message string containing hostname, scriptname, and the error message msg */
 function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): string {
   for (const scriptUrl of workerScript.scriptRef.dependencies) {
     msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
@@ -104,6 +132,7 @@ function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): string {
   return "|DELIMITER|" + workerScript.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
 }
 
+/** Creates an error message string with a stack trace. */
 function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   const errstack = new Error().stack;
   if (errstack === undefined) throw new Error("how did we not throw an error?");
@@ -174,6 +203,7 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   return makeRuntimeRejectMsg(workerScript, rejectMsg);
 }
 
+/** Validate requested number of threads for h/g/w options */
 function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThreads?: number): number {
   const threads = ctx.workerScript.scriptRef.threads;
   if (!requestedThreads) {
@@ -195,6 +225,7 @@ function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThread
   return requestedThreadsAsInt;
 }
 
+/** Validate singularity access by throwing an error if the player does not have access. */
 function checkSingularityAccess(ctx: NetscriptContext): void {
   if (Player.bitNodeN !== 4 && Player.sourceFileLvl(4) === 0) {
     throw makeRuntimeErrorMsg(
@@ -205,6 +236,7 @@ function checkSingularityAccess(ctx: NetscriptContext): void {
   }
 }
 
+/** Create an error if a script is dead or if concurrent ns function calls are made */
 function checkEnvFlags(ctx: NetscriptContext): void {
   const ws = ctx.workerScript;
   if (ws.env.stopFlag) throw new ScriptDeath(ws);
@@ -502,4 +534,43 @@ function gangTask(ctx: NetscriptContext, t: unknown): GangMemberTask {
 
 function log(ctx: NetscriptContext, message: () => string) {
   ctx.workerScript.log(ctx.functionPath, message);
+}
+
+/**
+ * Searches for and returns the RunningScript object for the specified script.
+ * If the 'fn' argument is not specified, this returns the current RunningScript.
+ * @param {string} fn - Filename of script
+ * @param {string} hostname - Hostname/ip of the server on which the script resides
+ * @param {any[]} scriptArgs - Running script's arguments
+ * @returns {RunningScript}
+ *      Running script identified by the parameters, or null if no such script
+ *      exists, or the current running script if the first argument 'fn'
+ *      is not specified.
+ */
+function getRunningScriptByArgs(
+  ctx: NetscriptContext,
+  fn: string,
+  hostname: string,
+  scriptArgs: ScriptArg[],
+): RunningScript | null {
+  if (!Array.isArray(scriptArgs)) {
+    throw helpers.makeRuntimeRejectMsg(
+      ctx.workerScript,
+      `Invalid scriptArgs argument passed into getRunningScript() from ${ctx.function}(). ` +
+        `This is probably a bug. Please report to game developer`,
+    );
+  }
+
+  if (fn != null && typeof fn === "string") {
+    // Get Logs of another script
+    if (hostname == null) {
+      hostname = ctx.workerScript.hostname;
+    }
+    const server = helpers.getServer(ctx, hostname);
+
+    return findRunningScript(fn, scriptArgs, server);
+  }
+
+  // If no arguments are specified, return the current RunningScript
+  return ctx.workerScript.scriptRef;
 }

@@ -1,5 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { WorkerScript } from "../Netscript/WorkerScript";
+import { Player as player } from "../Player";
 import { HacknetServerConstants } from "../Hacknet/data/Constants";
 import {
   getCostOfNextHacknetNode,
@@ -23,7 +22,7 @@ import { Hacknet as IHacknet, NodeStats } from "../ScriptEditor/NetscriptDefinit
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): InternalAPI<IHacknet> {
+export function NetscriptHacknet(): InternalAPI<IHacknet> {
   // Utility function to get Hacknet Node object
   const getHacknetNode = function (ctx: NetscriptContext, i: number): HacknetNode | HacknetServer {
     if (i < 0 || i >= player.hacknetNodes.length) {
@@ -128,7 +127,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): I
         }
         const node = getHacknetNode(ctx, i);
         if (!(node instanceof HacknetServer)) {
-          workerScript.log("hacknet.upgradeCache", () => "Can only be called on hacknet servers");
+          helpers.log(ctx, () => "Can only be called on hacknet servers");
           return false;
         }
         const res = purchaseCacheUpgrade(player, node, n);
@@ -171,7 +170,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript): I
         }
         const node = getHacknetNode(ctx, i);
         if (!(node instanceof HacknetServer)) {
-          workerScript.log("hacknet.getCacheUpgradeCost", () => "Can only be called on hacknet servers");
+          helpers.log(ctx, () => "Can only be called on hacknet servers");
           return -1;
         }
         return node.calculateCacheUpgradeCost(n);

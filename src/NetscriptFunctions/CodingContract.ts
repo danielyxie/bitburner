@@ -1,12 +1,11 @@
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { is2DArray } from "../utils/helpers/is2DArray";
 import { CodingContract } from "../CodingContracts";
 import { CodingAttemptOptions, CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScript): InternalAPI<ICodingContract> {
+export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
   const getCodingContract = function (
     ctx: NetscriptContext,
     func: string,
@@ -28,7 +27,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
       (
         answer: unknown,
         _filename: unknown,
-        _hostname: unknown = workerScript.hostname,
+        _hostname: unknown = ctx.workerScript.hostname,
         { returnReward }: CodingAttemptOptions = { returnReward: false },
       ): boolean | string => {
         const filename = helpers.string(ctx, "filename", _filename);
@@ -78,7 +77,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
       },
     getContractType:
       (ctx: NetscriptContext) =>
-      (_filename: unknown, _hostname: unknown = workerScript.hostname): string => {
+      (_filename: unknown, _hostname: unknown = ctx.workerScript.hostname): string => {
         const filename = helpers.string(ctx, "filename", _filename);
         const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "getContractType", hostname, filename);
@@ -86,7 +85,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
       },
     getData:
       (ctx: NetscriptContext) =>
-      (_filename: unknown, _hostname: unknown = workerScript.hostname): unknown => {
+      (_filename: unknown, _hostname: unknown = ctx.workerScript.hostname): unknown => {
         const filename = helpers.string(ctx, "filename", _filename);
         const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "getData", hostname, filename);
@@ -109,7 +108,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
       },
     getDescription:
       (ctx: NetscriptContext) =>
-      (_filename: unknown, _hostname: unknown = workerScript.hostname): string => {
+      (_filename: unknown, _hostname: unknown = ctx.workerScript.hostname): string => {
         const filename = helpers.string(ctx, "filename", _filename);
         const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "getDescription", hostname, filename);
@@ -117,7 +116,7 @@ export function NetscriptCodingContract(player: IPlayer, workerScript: WorkerScr
       },
     getNumTriesRemaining:
       (ctx: NetscriptContext) =>
-      (_filename: unknown, _hostname: unknown = workerScript.hostname): number => {
+      (_filename: unknown, _hostname: unknown = ctx.workerScript.hostname): number => {
         const filename = helpers.string(ctx, "filename", _filename);
         const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "getNumTriesRemaining", hostname, filename);

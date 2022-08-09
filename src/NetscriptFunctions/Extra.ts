@@ -1,4 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { Exploit } from "../Exploits/Exploit";
 import * as bcrypt from "bcryptjs";
 import { Apr1Events as devMenu } from "../ui/Apr1";
@@ -16,7 +16,7 @@ export interface INetscriptExtra {
   rainbow(guess: string): void;
 }
 
-export function NetscriptExtra(player: IPlayer): InternalAPI<INetscriptExtra> {
+export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
   return {
     heart: {
       // Easter egg function

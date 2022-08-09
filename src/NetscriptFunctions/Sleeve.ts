@@ -1,4 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { CityName } from "../Locations/data/CityNames";
@@ -19,7 +19,7 @@ import { isSleeveFactionWork } from "../PersonObjects/Sleeve/Work/SleeveFactionW
 import { isSleeveCompanyWork } from "../PersonObjects/Sleeve/Work/SleeveCompanyWork";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
+export function NetscriptSleeve(): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext): void {
     if (player.bitNodeN !== 10 && !player.sourceFileLvl(10)) {
       throw helpers.makeRuntimeErrorMsg(

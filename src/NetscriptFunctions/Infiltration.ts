@@ -1,4 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 
 import {
   Infiltration as IInfiltration,
@@ -20,7 +20,7 @@ import { checkEnum } from "../utils/helpers/checkEnum";
 import { LocationName } from "../Locations/data/LocationNames";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltration> {
+export function NetscriptInfiltration(): InternalAPI<IInfiltration> {
   const getLocationsWithInfiltrations = Object.values(Locations).filter(
     (location: Location) => location.infiltrationData,
   );
