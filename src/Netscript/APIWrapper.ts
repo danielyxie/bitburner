@@ -4,10 +4,11 @@ import { Player } from "../Player";
 import { helpers } from "./NetscriptHelpers";
 import { ScriptArg } from "./ScriptArg";
 import { NSEnums } from "src/ScriptEditor/NetscriptDefinitions";
+import { NSFull } from "src/NetscriptFunctions";
 
 type ExternalFunction = (...args: unknown[]) => unknown;
 export type ExternalAPI = {
-  [string: string]: ExternalAPI | ExternalFunction;
+  [string: string]: ExternalAPI | ExternalFunction | ScriptArg[];
 };
 
 type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: NetscriptContext) => F;
@@ -65,18 +66,23 @@ function wrapFunction(
 }
 
 export function wrapAPI(
-  wrappedAPI: ExternalAPI,
   workerScript: WorkerScript,
   namespace: object,
-  ...tree: string[]
-): WrappedNetscriptAPI {
+  args: ScriptArg[]
+): NSFull {
+  const wrappedAPI = wrapAPILayer({},workerScript,namespace);
+  wrappedAPI.args=args;
+  return wrappedAPI as unknown as NSFull;
+}
+
+export function wrapAPILayer(wrappedAPI:ExternalAPI,workerScript:WorkerScript,namespace:object,...tree:string[]){
   for (const [key, value] of Object.entries(namespace)) {
     if (typeof value === "function") {
       wrapFunction(wrappedAPI, workerScript, value, ...tree, key);
     } else if (Array.isArray(value)) {
       setNestedProperty(wrappedAPI, value.slice(), key);
     } else if (typeof value === "object") {
-      wrapAPI(wrappedAPI, workerScript, value, ...tree, key);
+      wrapAPILayer(wrappedAPI, workerScript, value, ...tree, key);
     } else {
       setNestedProperty(wrappedAPI, value, ...tree, key);
     }

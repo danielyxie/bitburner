@@ -79,11 +79,12 @@ import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 import { recentScripts } from "./Netscript/RecentScripts";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { ScriptArg } from "./Netscript/ScriptArg";
+import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 
-export function NetscriptFunctions(workerScript: WorkerScript): NS {
-  const wrappedNS = wrapAPI({}, workerScript, ns) as unknown as NS;
-  (wrappedNS.args as ScriptArg[]) = workerScript.args;
-  return wrappedNS;
+export type NSFull = NS & INetscriptExtra;
+
+export function NetscriptFunctions(workerScript: WorkerScript): NSFull {
+  return wrapAPI(workerScript, ns, workerScript.args.slice());
 }
 
 const base: InternalAPI<NS> = {
