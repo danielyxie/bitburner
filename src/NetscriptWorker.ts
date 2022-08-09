@@ -37,6 +37,7 @@ import { Terminal } from "./Terminal";
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { ScriptArg } from "./Netscript/ScriptArg";
 import { helpers } from "./Netscript/NetscriptHelpers";
+import { NS } from "./ScriptEditor/NetscriptDefinitions";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -114,8 +115,11 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   }
 
   const interpreterInitialization = function (int: Interpreter, scope: unknown): void {
+    interface NS1 extends NS {
+      [key: string]: any;
+    }
     //Add the Netscript environment
-    const ns = NetscriptFunctions(workerScript);
+    const ns = NetscriptFunctions(workerScript) as NS1;
     for (const name of Object.keys(ns)) {
       const entry = ns[name];
       if (typeof entry === "function") {
@@ -167,7 +171,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
           name === "vsprintf" ||
           name === "scp" ||
           name == "write" ||
-          name === "tryWrite" ||
+          name === "tryWritePort" ||
           name === "run" ||
           name === "exec"
         ) {

@@ -1,4 +1,4 @@
-import { Player as player} from "../Player";
+import { Player as player } from "../Player";
 import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
 import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";

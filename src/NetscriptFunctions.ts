@@ -1,12 +1,8 @@
 import $ from "jquery";
 import { vsprintf, sprintf } from "sprintf-js";
-
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
-
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-
 import { CONSTANTS } from "./Constants";
-
 import {
   calculateHackingChance,
   calculateHackingExpGain,
@@ -15,22 +11,14 @@ import {
   calculateGrowTime,
   calculateWeakenTime,
 } from "./Hacking";
-
 import { netscriptCanGrow, netscriptCanWeaken } from "./Hacking/netscriptCanHack";
-
-import { HacknetServer } from "./Hacknet/HacknetServer";
-
 import { Terminal } from "./Terminal";
-
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
-import { findRunningScript, findRunningScriptByPid } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/isScriptFilename";
 import { PromptEvent } from "./ui/React/PromptManager";
-
-import { GetServer, GetAllServers, DeleteServer, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
-import { RunningScript } from "./Script/RunningScript";
+import { GetServer, DeleteServer, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
 import {
   getServerOnNetwork,
   numCycleForGrowth,
@@ -41,24 +29,18 @@ import {
 import { getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam } from "./Server/ServerPurchases";
 import { Server } from "./Server/Server";
 import { influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
-
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
-
 import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
-import { helpers, ScriptIdentifier } from "./Netscript/NetscriptHelpers";
-
+import { helpers } from "./Netscript/NetscriptHelpers";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
-
 import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
-
-import { BaseServer } from "./Server/BaseServer";
 import { NetscriptGang } from "./NetscriptFunctions/Gang";
 import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
@@ -73,15 +55,9 @@ import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
 import { NetscriptGrafting } from "./NetscriptFunctions/Grafting";
 import { IPort } from "./NetscriptPort";
-
 import {
-  NS as INS,
+  NS,
   Player as INetscriptPlayer,
-  Gang as IGang,
-  Bladeburner as IBladeburner,
-  Stanek as IStanek,
-  Infiltration as IInfiltration,
-  RunningScript as IRunningScript,
   RecentScript as IRecentScript,
   BasicHGWOptions,
   ProcessInfo,
@@ -90,11 +66,8 @@ import {
   BitNodeMultipliers as IBNMults,
   Server as IServerDef,
   RunningScript as IRunningScriptDef,
-  // ToastVariant,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
-
-import { toNative } from "./NetscriptFunctions/toNative";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
@@ -107,163 +80,13 @@ import { recentScripts } from "./Netscript/RecentScripts";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { ScriptArg } from "./Netscript/ScriptArg";
 
-interface NS extends INS {
-  [key: string]: any;
-  gang: IGang;
-  bladeburner: IBladeburner;
-  stanek: IStanek;
-  infiltration: IInfiltration;
-}
-
-const argsToString = function (args: unknown[]): string {
-  let out = "";
-  for (let arg of args) {
-    if (arg === null) {
-      out += "null";
-      continue;
-    }
-    if (arg === undefined) {
-      out += "undefined";
-      continue;
-    }
-    arg = toNative(arg);
-    out += typeof arg === "object" ? JSON.stringify(arg) : `${arg}`;
-  }
-
-  return out;
-};
-
-function getFunctionNames(obj: object, prefix: string): string[] {
-  const functionNames: string[] = [];
-  for (const [key, value] of Object.entries(obj)) {
-    if (key === "args") {
-      continue;
-    } else if (typeof value == "function") {
-      functionNames.push(prefix + key);
-    } else if (typeof value == "object") {
-      functionNames.push(...getFunctionNames(value, key + "."));
-    }
-  }
-  return functionNames;
-}
-const getRunningScriptByPid = function (pid: number): RunningScript | null {
-  for (const server of GetAllServers()) {
-    const runningScript = findRunningScriptByPid(pid, server);
-    if (runningScript) return runningScript;
-  }
-  return null;
-};
-
-const getRunningScript = (ctx: NetscriptContext, ident: ScriptIdentifier): RunningScript | null => {
-  if (typeof ident === "number") {
-    return getRunningScriptByPid(ident);
-  } else {
-    return getRunningScriptByArgs(ctx, ident.scriptname, ident.hostname, ident.args);
-  }
-};
-
-/**
- * Searches for and returns the RunningScript object for the specified script.
- * If the 'fn' argument is not specified, this returns the current RunningScript.
- * @param {string} fn - Filename of script
- * @param {string} hostname - Hostname/ip of the server on which the script resides
- * @param {any[]} scriptArgs - Running script's arguments
- * @returns {RunningScript}
- *      Running script identified by the parameters, or null if no such script
- *      exists, or the current running script if the first argument 'fn'
- *      is not specified.
- */
-const getRunningScriptByArgs = function (
-  ctx: NetscriptContext,
-  fn: string,
-  hostname: string,
-  scriptArgs: ScriptArg[],
-): RunningScript | null {
-  if (!Array.isArray(scriptArgs)) {
-    throw helpers.makeRuntimeRejectMsg(
-      ctx.workerScript,
-      `Invalid scriptArgs argument passed into getRunningScript() from ${ctx.function}(). ` +
-        `This is probably a bug. Please report to game developer`,
-    );
-  }
-
-  if (fn != null && typeof fn === "string") {
-    // Get Logs of another script
-    if (hostname == null) {
-      hostname = ctx.workerScript.hostname;
-    }
-    const server = helpers.getServer(ctx, hostname);
-
-    return findRunningScript(fn, scriptArgs, server);
-  }
-
-  // If no arguments are specified, return the current RunningScript
-  return ctx.workerScript.scriptRef;
-};
-/**
- * Helper function for getting the error log message when the user specifies
- * a nonexistent running script
- * @param {string} fn - Filename of script
- * @param {string} hostname - Hostname/ip of the server on which the script resides
- * @param {any[]} scriptArgs - Running script's arguments
- * @returns {string} Error message to print to logs
- */
-const getCannotFindRunningScriptErrorMessage = function (ident: ScriptIdentifier): string {
-  if (typeof ident === "number") return `Cannot find running script with pid: ${ident}`;
-
-  return `Cannot find running script ${ident.scriptname} on server ${ident.hostname} with args: ${arrayToString(
-    ident.args,
-  )}`;
-};
-/**
- * Sanitizes a `RunningScript` to remove sensitive information, making it suitable for
- * return through an NS function.
- * @see NS.getRecentScripts
- * @see NS.getRunningScript
- * @param runningScript Existing, internal RunningScript
- * @returns A sanitized, NS-facing copy of the RunningScript
- */
-const createPublicRunningScript = function (runningScript: RunningScript): IRunningScript {
-  return {
-    args: runningScript.args.slice(),
-    filename: runningScript.filename,
-    logs: runningScript.logs.slice(),
-    offlineExpGained: runningScript.offlineExpGained,
-    offlineMoneyMade: runningScript.offlineMoneyMade,
-    offlineRunningTime: runningScript.offlineRunningTime,
-    onlineExpGained: runningScript.onlineExpGained,
-    onlineMoneyMade: runningScript.onlineMoneyMade,
-    onlineRunningTime: runningScript.onlineRunningTime,
-    pid: runningScript.pid,
-    ramUsage: runningScript.ramUsage,
-    server: runningScript.server,
-    threads: runningScript.threads,
-  };
-};
-/**
- * Used to fail a function if the function's target is a Hacknet Server.
- * This is used for functions that should run on normal Servers, but not Hacknet Servers
- * @param {Server} server - Target server
- * @param {string} callingFn - Name of calling function. For logging purposes
- * @returns {boolean} True if the server is a Hacknet Server, false otherwise
- */
-const failOnHacknetServer = function (ctx:NetscriptContext, server: BaseServer, callingFn = ""): boolean {
-  if (server instanceof HacknetServer) {
-    ctx.workerScript.log(callingFn, () => `Does not work on Hacknet Servers`);
-    return true;
-  } else {
-    return false;
-  }
-};
-
 export function NetscriptFunctions(workerScript: WorkerScript): NS {
-
-  const wrappedNS = wrapAPI({}, workerScript, ns) as unknown as INS;
+  const wrappedNS = wrapAPI({}, workerScript, ns) as unknown as NS;
   (wrappedNS.args as ScriptArg[]) = workerScript.args;
   return wrappedNS;
 }
 
-const base: InternalAPI<INS> = {
+const base: InternalAPI<NS> = {
   args: [],
   enums: {
     toast: ToastVariant,
@@ -586,7 +409,7 @@ const base: InternalAPI<INS> = {
       if (args.length === 0) {
         throw helpers.makeRuntimeErrorMsg(ctx, "Takes at least 1 argument.");
       }
-      ctx.workerScript.print(argsToString(args));
+      ctx.workerScript.print(helpers.argsToString(args));
     },
   printf:
     (ctx: NetscriptContext) =>
@@ -603,7 +426,7 @@ const base: InternalAPI<INS> = {
       if (args.length === 0) {
         throw helpers.makeRuntimeErrorMsg(ctx, "Takes at least 1 argument.");
       }
-      const str = argsToString(args);
+      const str = helpers.argsToString(args);
       if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
         Terminal.error(`${ctx.workerScript.scriptRef.filename}: ${str}`);
         return;
@@ -693,9 +516,9 @@ const base: InternalAPI<INS> = {
     (ctx: NetscriptContext) =>
     (scriptID: unknown, hostname: unknown, ...scriptArgs: unknown[]): string[] => {
       const ident = helpers.scriptIdentifier(ctx, scriptID, hostname, scriptArgs);
-      const runningScriptObj = getRunningScript(ctx, ident);
+      const runningScriptObj = helpers.getRunningScript(ctx, ident);
       if (runningScriptObj == null) {
-        helpers.log(ctx, () => getCannotFindRunningScriptErrorMessage(ident));
+        helpers.log(ctx, () => helpers.getCannotFindRunningScriptErrorMessage(ident));
         return [];
       }
 
@@ -705,9 +528,9 @@ const base: InternalAPI<INS> = {
     (ctx: NetscriptContext) =>
     (scriptID: unknown, hostname: unknown, ...scriptArgs: unknown[]): void => {
       const ident = helpers.scriptIdentifier(ctx, scriptID, hostname, scriptArgs);
-      const runningScriptObj = getRunningScript(ctx, ident);
+      const runningScriptObj = helpers.getRunningScript(ctx, ident);
       if (runningScriptObj == null) {
-        helpers.log(ctx, () => getCannotFindRunningScriptErrorMessage(ident));
+        helpers.log(ctx, () => helpers.getCannotFindRunningScriptErrorMessage(ident));
         return;
       }
 
@@ -943,9 +766,9 @@ const base: InternalAPI<INS> = {
         }
 
         const server = helpers.getServer(ctx, ident.hostname);
-        const runningScriptObj = getRunningScriptByArgs(ctx, ident.scriptname, ident.hostname, ident.args);
+        const runningScriptObj = helpers.getRunningScriptByArgs(ctx, ident.scriptname, ident.hostname, ident.args);
         if (runningScriptObj == null) {
-          helpers.log(ctx, () => getCannotFindRunningScriptErrorMessage(ident));
+          helpers.log(ctx, () => helpers.getCannotFindRunningScriptErrorMessage(ident));
           return false;
         }
 
@@ -1214,7 +1037,7 @@ const base: InternalAPI<INS> = {
   getRecentScripts: () => (): IRecentScript[] => {
     return recentScripts.map((rs) => ({
       timeOfDeath: rs.timeOfDeath,
-      ...createPublicRunningScript(rs.runningScript),
+      ...helpers.createPublicRunningScript(rs.runningScript),
     }));
   },
   ps:
@@ -1311,7 +1134,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 0;
       }
-      if (failOnHacknetServer(ctx, server, "getServerMoneyAvailable")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getServerMoneyAvailable")) {
         return 0;
       }
       if (server.hostname == "home") {
@@ -1331,7 +1154,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (failOnHacknetServer(ctx, server, "getServerSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getServerSecurityLevel")) {
         return 1;
       }
       helpers.log(
@@ -1350,7 +1173,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (failOnHacknetServer(ctx, server, "getServerBaseSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getServerBaseSecurityLevel")) {
         return 1;
       }
       helpers.log(
@@ -1368,7 +1191,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (failOnHacknetServer(ctx, server, "getServerMinSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getServerMinSecurityLevel")) {
         return 1;
       }
       helpers.log(
@@ -1386,7 +1209,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (failOnHacknetServer(ctx, server, "getServerRequiredHackingLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getServerRequiredHackingLevel")) {
         return 1;
       }
       helpers.log(
@@ -1404,7 +1227,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 0;
       }
-      if (failOnHacknetServer(ctx, server, "getServerMaxMoney")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getServerMaxMoney")) {
         return 0;
       }
       helpers.log(ctx, () => `returned ${numeralWrapper.formatMoney(server.moneyMax)} for '${server.hostname}'`);
@@ -1419,7 +1242,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (failOnHacknetServer(ctx, server, "getServerGrowth")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getServerGrowth")) {
         return 1;
       }
       helpers.log(ctx, () => `returned ${server.serverGrowth} for '${server.hostname}'`);
@@ -1434,7 +1257,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 5;
       }
-      if (failOnHacknetServer(ctx, server, "getServerNumPortsRequired")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getServerNumPortsRequired")) {
         return 5;
       }
       helpers.log(ctx, () => `returned ${server.numOpenPortsRequired} for '${server.hostname}'`);
@@ -1505,7 +1328,7 @@ const base: InternalAPI<INS> = {
     (ctx: NetscriptContext) =>
     (fn: unknown, hostname: unknown, ...scriptArgs: unknown[]): boolean => {
       const ident = helpers.scriptIdentifier(ctx, fn, hostname, scriptArgs);
-      return getRunningScript(ctx, ident) !== null;
+      return helpers.getRunningScript(ctx, ident) !== null;
     },
   getPurchasedServerLimit: () => (): number => {
     return getPurchaseServerLimit();
@@ -1907,9 +1730,9 @@ const base: InternalAPI<INS> = {
     (ctx: NetscriptContext) =>
     (fn: unknown, hostname: unknown, ...args: unknown[]): IRunningScriptDef | null => {
       const ident = helpers.scriptIdentifier(ctx, fn, hostname, args);
-      const runningScript = getRunningScript(ctx, ident);
+      const runningScript = helpers.getRunningScript(ctx, ident);
       if (runningScript === null) return null;
-      return createPublicRunningScript(runningScript);
+      return helpers.createPublicRunningScript(runningScript);
     },
   getHackTime:
     (ctx: NetscriptContext) =>
@@ -1920,7 +1743,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (failOnHacknetServer(ctx, server, "getHackTime")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getHackTime")) {
         return Infinity;
       }
 
@@ -1935,7 +1758,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (failOnHacknetServer(ctx, server, "getGrowTime")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getGrowTime")) {
         return Infinity;
       }
 
@@ -1950,7 +1773,7 @@ const base: InternalAPI<INS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (failOnHacknetServer(ctx, server, "getWeakenTime")) {
+      if (helpers.failOnHacknetServer(ctx, server, "getWeakenTime")) {
         return Infinity;
       }
 
@@ -1969,9 +1792,9 @@ const base: InternalAPI<INS> = {
     (ctx: NetscriptContext) =>
     (fn: unknown, hostname: unknown, ...args: unknown[]): number => {
       const ident = helpers.scriptIdentifier(ctx, fn, hostname, args);
-      const runningScript = getRunningScript(ctx, ident);
+      const runningScript = helpers.getRunningScript(ctx, ident);
       if (runningScript == null) {
-        helpers.log(ctx, () => getCannotFindRunningScriptErrorMessage(ident));
+        helpers.log(ctx, () => helpers.getCannotFindRunningScriptErrorMessage(ident));
         return -1;
       }
       return runningScript.onlineMoneyMade / runningScript.onlineRunningTime;
@@ -1987,9 +1810,9 @@ const base: InternalAPI<INS> = {
     (ctx: NetscriptContext) =>
     (fn: unknown, hostname: unknown, ...args: unknown[]): number => {
       const ident = helpers.scriptIdentifier(ctx, fn, hostname, args);
-      const runningScript = getRunningScript(ctx, ident);
+      const runningScript = helpers.getRunningScript(ctx, ident);
       if (runningScript == null) {
-        helpers.log(ctx, () => getCannotFindRunningScriptErrorMessage(ident));
+        helpers.log(ctx, () => helpers.getCannotFindRunningScriptErrorMessage(ident));
         return -1;
       }
       return runningScript.onlineExpGained / runningScript.onlineRunningTime;
@@ -2192,4 +2015,4 @@ const ns = {
   ...NetscriptExtra(),
 };
 
-const possibleLogs = Object.fromEntries([...getFunctionNames(ns, "")].map((a) => [a, true]));
+const possibleLogs = Object.fromEntries([...helpers.getFunctionNames(ns, "")].map((a) => [a, true]));

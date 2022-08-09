@@ -1,6 +1,6 @@
 import { NetscriptContext } from "./APIWrapper";
 import { WorkerScript } from "./WorkerScript";
-import { GetServer } from "../Server/AllServers";
+import { GetAllServers, GetServer } from "../Server/AllServers";
 import { Player } from "../Player";
 import { ScriptDeath } from "./ScriptDeath";
 import { isString } from "../utils/helpers/isString";
@@ -28,24 +28,24 @@ import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 import { RunningScript } from "../Script/RunningScript";
 import { toNative } from "../NetscriptFunctions/toNative";
-
-//Helpers that are not specific to use in WorkerScripts/NetscriptContexts should be in src/utils/helpers instead
+import { ScriptIdentifier } from "./ScriptIdentifier";
+import { findRunningScript, findRunningScriptByPid } from "../Script/ScriptHelpers";
+import { RunningScript as IRunningScript } from "../ScriptEditor/NetscriptDefinitions";
+import { arrayToString } from "../utils/helpers/arrayToString";
+import { HacknetServer } from "../Hacknet/HacknetServer";
+import { BaseServer } from "../Server/BaseServer";
 
 export const helpers = {
-  //Type checking, conversion, validation
   string,
   number,
   scriptArgs,
   argsToString,
   isScriptErrorMessage,
-  //Error checking and generation
   makeRuntimeRejectMsg,
   makeRuntimeErrorMsg,
   resolveNetscriptRequestedThreads,
-  //Checking for API access or flags that would prevent a function from running
   checkEnvFlags,
   checkSingularityAccess,
-  //Functionality
   netscriptDelay,
   updateDynamicRam,
   city,
@@ -59,25 +59,22 @@ export const helpers = {
   gangMember,
   gangTask,
   log,
+  getFunctionNames,
+  getRunningScript,
   getRunningScriptByArgs,
+  getCannotFindRunningScriptErrorMessage,
+  createPublicRunningScript,
+  failOnHacknetServer,
 };
 
-export type ScriptIdentifier =  //This was previously in INetscriptHelper.ts, may move to its own file or a generic types file.
-  | number
-  | {
-      scriptname: string;
-      hostname: string;
-      args: ScriptArg[];
-    };
-
-/** If v is a number or string, returns the string representation. Error for other non-strings. */
+/** Convert a provided value v for argument argName to string. If it wasn't originally a string or number, throw. */
 function string(ctx: NetscriptContext, argName: string, v: unknown): string {
   if (typeof v === "string") return v;
   if (typeof v === "number") return v + ""; // cast to string;
   throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string.`);
 }
 
-/** Validates v as non-NaN number, or as a string representation of a number, and returns that number. Error on NaN or non-number. */
+/** Convert provided value v for argument argName to number. Throw if could not convert to a non-NaN number. */
 function number(ctx: NetscriptContext, argName: string, v: unknown): number {
   if (typeof v === "string") {
     const x = parseFloat(v);
@@ -89,7 +86,7 @@ function number(ctx: NetscriptContext, argName: string, v: unknown): number {
   throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number.`);
 }
 
-/** Validates args as a ScriptArg[]. Throws an error if it is not. */
+/** Returns args back if it is a ScriptArg[]. Throws an error if it is not. */
 function scriptArgs(ctx: NetscriptContext, args: unknown) {
   if (!isScriptArgs(args)) throw makeRuntimeErrorMsg(ctx, "'args' is not an array of script args");
   return args;
@@ -104,7 +101,7 @@ function isScriptErrorMessage(msg: string): boolean {
   return splitMsg.length == 4;
 }
 
-/** Used to convert multiple arguments for tprint or print into a single string. */
+/** Convert multiple arguments for tprint or print into a single string. */
 function argsToString(args: unknown[]): string {
   let out = "";
   for (let arg of args) {
@@ -253,6 +250,7 @@ function checkEnvFlags(ctx: NetscriptContext): void {
   }
 }
 
+/** Set a timeout for performing a task, mark the script as busy in the meantime. */
 function netscriptDelay(ctx: NetscriptContext, time: number): Promise<void> {
   const ws = ctx.workerScript;
   return new Promise(function (resolve, reject) {
@@ -268,6 +266,7 @@ function netscriptDelay(ctx: NetscriptContext, time: number): Promise<void> {
   });
 }
 
+/** Adds to dynamic ram cost when calling new ns functions from a script */
 function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
   const ws = ctx.workerScript;
   const fnName = ctx.function;
@@ -302,6 +301,7 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
   }
 }
 
+/** Validates the input v as being a CityName. Throws an error if it is not. */
 function city(ctx: NetscriptContext, argName: string, v: unknown): CityName {
   if (typeof v !== "string") throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
   const s = v as CityName;
@@ -573,4 +573,93 @@ function getRunningScriptByArgs(
 
   // If no arguments are specified, return the current RunningScript
   return ctx.workerScript.scriptRef;
+}
+
+/** Provides an array of all function names on a nested object */
+function getFunctionNames(obj: object, prefix: string): string[] {
+  const functionNames: string[] = [];
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === "args") {
+      continue;
+    } else if (typeof value == "function") {
+      functionNames.push(prefix + key);
+    } else if (typeof value == "object") {
+      functionNames.push(...getFunctionNames(value, key + "."));
+    }
+  }
+  return functionNames;
+}
+
+function getRunningScriptByPid(pid: number): RunningScript | null {
+  for (const server of GetAllServers()) {
+    const runningScript = findRunningScriptByPid(pid, server);
+    if (runningScript) return runningScript;
+  }
+  return null;
+}
+
+function getRunningScript(ctx: NetscriptContext, ident: ScriptIdentifier): RunningScript | null {
+  if (typeof ident === "number") {
+    return getRunningScriptByPid(ident);
+  } else {
+    return getRunningScriptByArgs(ctx, ident.scriptname, ident.hostname, ident.args);
+  }
+}
+
+/**
+ * Helper function for getting the error log message when the user specifies
+ * a nonexistent running script
+ * @param {string} fn - Filename of script
+ * @param {string} hostname - Hostname/ip of the server on which the script resides
+ * @param {any[]} scriptArgs - Running script's arguments
+ * @returns {string} Error message to print to logs
+ */
+function getCannotFindRunningScriptErrorMessage(ident: ScriptIdentifier): string {
+  if (typeof ident === "number") return `Cannot find running script with pid: ${ident}`;
+
+  return `Cannot find running script ${ident.scriptname} on server ${ident.hostname} with args: ${arrayToString(
+    ident.args,
+  )}`;
+}
+
+/**
+ * Sanitizes a `RunningScript` to remove sensitive information, making it suitable for
+ * return through an NS function.
+ * @see NS.getRecentScripts
+ * @see NS.getRunningScript
+ * @param runningScript Existing, internal RunningScript
+ * @returns A sanitized, NS-facing copy of the RunningScript
+ */
+function createPublicRunningScript(runningScript: RunningScript): IRunningScript {
+  return {
+    args: runningScript.args.slice(),
+    filename: runningScript.filename,
+    logs: runningScript.logs.slice(),
+    offlineExpGained: runningScript.offlineExpGained,
+    offlineMoneyMade: runningScript.offlineMoneyMade,
+    offlineRunningTime: runningScript.offlineRunningTime,
+    onlineExpGained: runningScript.onlineExpGained,
+    onlineMoneyMade: runningScript.onlineMoneyMade,
+    onlineRunningTime: runningScript.onlineRunningTime,
+    pid: runningScript.pid,
+    ramUsage: runningScript.ramUsage,
+    server: runningScript.server,
+    threads: runningScript.threads,
+  };
+}
+
+/**
+ * Used to fail a function if the function's target is a Hacknet Server.
+ * This is used for functions that should run on normal Servers, but not Hacknet Servers
+ * @param {Server} server - Target server
+ * @param {string} callingFn - Name of calling function. For logging purposes
+ * @returns {boolean} True if the server is a Hacknet Server, false otherwise
+ */
+function failOnHacknetServer(ctx: NetscriptContext, server: BaseServer, callingFn = ""): boolean {
+  if (server instanceof HacknetServer) {
+    ctx.workerScript.log(callingFn, () => `Does not work on Hacknet Servers`);
+    return true;
+  } else {
+    return false;
+  }
 }
