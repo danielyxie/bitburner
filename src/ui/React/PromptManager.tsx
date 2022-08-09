@@ -139,6 +139,10 @@ function PromptMenuSelect({ prompt, resolve }: IContentProps): React.ReactElemen
     return content;
   };
 
+  if (!Array.isArray(prompt?.options?.choices)) {
+    return <Typography>Error: Please provide an array of string choices</Typography>;
+  }
+
   return (
     <>
       <div style={{ display: "flex", alignItems: "center", paddingTop: "10px" }}>
