@@ -376,7 +376,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             <br />
             To create a new script or edit an existing one, you can use{" "}
           </Typography>
-          <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> nano"}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{"[home ~/]> nano"}</Typography>
 
           <Typography>
             Scripts must end with the {tutorialScriptExtension} extension. Let's make a script now by entering{" "}
