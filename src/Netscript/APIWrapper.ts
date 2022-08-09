@@ -65,17 +65,18 @@ function wrapFunction(
   });
 }
 
-export function wrapAPI(
-  workerScript: WorkerScript,
-  namespace: object,
-  args: ScriptArg[]
-): NSFull {
-  const wrappedAPI = wrapAPILayer({},workerScript,namespace);
-  wrappedAPI.args=args;
+export function wrapAPI(workerScript: WorkerScript, namespace: object, args: ScriptArg[]): NSFull {
+  const wrappedAPI = wrapAPILayer({}, workerScript, namespace);
+  wrappedAPI.args = args;
   return wrappedAPI as unknown as NSFull;
 }
 
-export function wrapAPILayer(wrappedAPI:ExternalAPI,workerScript:WorkerScript,namespace:object,...tree:string[]){
+export function wrapAPILayer(
+  wrappedAPI: ExternalAPI,
+  workerScript: WorkerScript,
+  namespace: object,
+  ...tree: string[]
+) {
   for (const [key, value] of Object.entries(namespace)) {
     if (typeof value === "function") {
       wrapFunction(wrappedAPI, workerScript, value, ...tree, key);
