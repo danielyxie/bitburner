@@ -4281,7 +4281,7 @@ export interface InfiltrationReward {
  * @public
  */
 export interface ILocation {
-  city: CityName | null;
+  city: string;
   name: string;
 }
 
