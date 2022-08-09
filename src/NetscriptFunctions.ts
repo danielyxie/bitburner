@@ -78,7 +78,6 @@ import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligenc
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 import { recentScripts } from "./Netscript/RecentScripts";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
-import { ScriptArg } from "./Netscript/ScriptArg";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 
 export type NSFull = NS & INetscriptExtra;
