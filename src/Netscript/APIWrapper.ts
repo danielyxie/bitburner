@@ -7,8 +7,9 @@ import { NSEnums } from "src/ScriptEditor/NetscriptDefinitions";
 import { NSFull } from "src/NetscriptFunctions";
 
 type ExternalFunction = (...args: unknown[]) => unknown;
-export type ExternalAPI = {
-  [string: string]: ExternalAPI | ExternalFunction | ScriptArg[];
+
+export type ExternalAPILayer = {
+  [key: string]: ExternalAPILayer | ExternalFunction | ScriptArg[];
 };
 
 type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: NetscriptContext) => F;
@@ -25,11 +26,6 @@ export type InternalAPI<API> = {
     : never;
 };
 
-type WrappedNetscriptFunction = (...args: unknown[]) => unknown;
-type WrappedNetscriptAPI = {
-  readonly [string: string]: WrappedNetscriptAPI | WrappedNetscriptFunction;
-};
-
 export type NetscriptContext = {
   workerScript: WorkerScript;
   function: string;
@@ -37,7 +33,7 @@ export type NetscriptContext = {
 };
 
 function wrapFunction(
-  wrappedAPI: ExternalAPI,
+  wrappedAPI: ExternalAPILayer,
   workerScript: WorkerScript,
   func: (_ctx: NetscriptContext) => (...args: unknown[]) => unknown,
   ...tree: string[]
@@ -72,7 +68,7 @@ export function wrapAPI(workerScript: WorkerScript, namespace: object, args: Scr
 }
 
 export function wrapAPILayer(
-  wrappedAPI: ExternalAPI,
+  wrappedAPI: ExternalAPILayer,
   workerScript: WorkerScript,
   namespace: object,
   ...tree: string[]
