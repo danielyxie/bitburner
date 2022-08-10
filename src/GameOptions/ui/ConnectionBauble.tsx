@@ -17,30 +17,25 @@ export class ConnectionBauble extends React.Component<baubleProps> {
     super(props);
     this.state = {
       connection: props.callback(),
-      callback: props.callback
+      callback: props.callback,
     };
   }
 
-  componentDidMount() : void {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
+  componentDidMount(): void {
+    this.timerID = setInterval(() => this.tick(), 1000);
   }
 
-  componentWillUnmount() : void {
+  componentWillUnmount(): void {
     clearInterval(this.timerID);
   }
 
-  tick() : void {
+  tick(): void {
     this.setState({
-      connection: this.state.callback()
+      connection: this.state.callback(),
     });
   }
 
-  render() : string {
-    return (
-      this.state.connection? "Connected" : "Disconnected"
-    );
+  render(): string {
+    return this.state.connection ? "Connected" : "Disconnected";
   }
 }

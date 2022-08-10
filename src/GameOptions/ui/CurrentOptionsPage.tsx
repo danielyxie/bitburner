@@ -370,27 +370,26 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             </>
           }
         />
-        <Tooltip title={
-          <Typography>
-            This port number is used to connect to a Remote File API port,
-            please ensure that it matches with the port the Remote File API server is publishing on (12525 by default).
-            Click the reconnect button to try and re-establish connection.
-            The little colored bauble shows whether the connection is live or not.
-        </Typography>
-      }>
-        <TextField
+        <Tooltip
+          title={
+            <Typography>
+              This port number is used to connect to a Remote File API port, please ensure that it matches with the port
+              the Remote File API server is publishing on (12525 by default). Click the reconnect button to try and
+              re-establish connection. The little colored bauble shows whether the connection is live or not.
+            </Typography>
+          }
+        >
+          <TextField
             InputProps={{
               startAdornment: (
-                <Typography
-                  color={remoteFileApiPort > 0 && remoteFileApiPort <= 65535? "success" : "error"}
-                >
+                <Typography color={remoteFileApiPort > 0 && remoteFileApiPort <= 65535 ? "success" : "error"}>
                   Remote File API port:
                 </Typography>
               ),
               endAdornment: (
                 <Box>
                   <Button onClick={newRemoteFileApiConnection}>Reconnect</Button>
-                  <ConnectionBauble callback={isRemoteFileApiConnectionLive}/>
+                  <ConnectionBauble callback={isRemoteFileApiConnectionLive} />
                 </Box>
               ),
             }}
@@ -398,7 +397,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             onChange={handleRemoteFileApiPortChange}
             placeholder="12525"
           />
-          </Tooltip>
+        </Tooltip>
       </GameOptionsPage>
     ),
   };
