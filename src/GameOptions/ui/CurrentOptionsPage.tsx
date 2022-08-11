@@ -9,7 +9,7 @@ import { GameOptionsTab } from "../GameOptionsTab";
 import { GameOptionsPage } from "./GameOptionsPage";
 import { OptionsSlider } from "./OptionsSlider";
 import Button from "@mui/material/Button";
-import { ConnectionBaub, ConnectionBauble } from "./ConnectionBauble";
+import { ConnectionBauble } from "./ConnectionBauble";
 
 interface IProps {
   currentTab: GameOptionsTab;
