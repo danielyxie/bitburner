@@ -593,6 +593,7 @@ export function Root(props: IProps): React.ReactElement {
             server.scripts,
           );
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+          rerender();
           return;
         }
       }
@@ -612,6 +613,7 @@ export function Root(props: IProps): React.ReactElement {
         if (server.textFiles[i].fn === currentScript.fileName) {
           server.textFiles[i].write(currentScript.code);
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+          rerender();
           return;
         }
       }
@@ -623,6 +625,7 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+    rerender();
   }
 
   function reorder(list: Array<OpenScript>, startIndex: number, endIndex: number): OpenScript[] {
