@@ -10,7 +10,6 @@ import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventE
 import { RunningScript } from "../Script/RunningScript";
 import { GetServer } from "../Server/AllServers";
 
-import { compareArrays } from "../utils/helpers/compareArrays";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
 import { Player } from "../Player";
@@ -33,13 +32,8 @@ export function killWorkerScript(params: killScriptParams): boolean {
 
     // If for some reason that doesn't work, we'll try the old way
     for (const ws of workerScripts.values()) {
-      if (
-        ws.name == params.runningScript.filename &&
-        ws.hostname == params.hostname &&
-        compareArrays(ws.args, params.runningScript.args)
-      ) {
+      if (ws.scriptRef === params.runningScript) {
         stopAndCleanUpWorkerScript(ws);
-
         return true;
       }
     }
@@ -52,7 +46,6 @@ function killWorkerScriptByPid(pid: number): boolean {
   const ws = workerScripts.get(pid);
   if (ws instanceof WorkerScript) {
     stopAndCleanUpWorkerScript(ws);
-
     return true;
   }
 
@@ -86,7 +79,6 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript): void {
  */
 function removeWorkerScript(workerScript: WorkerScript): void {
   const ip = workerScript.hostname;
-  const name = workerScript.name;
 
   // Get the server on which the script runs
   const server = GetServer(ip);
@@ -98,7 +90,7 @@ function removeWorkerScript(workerScript: WorkerScript): void {
   // Delete the RunningScript object from that server
   for (let i = 0; i < server.runningScripts.length; ++i) {
     const runningScript = server.runningScripts[i];
-    if (runningScript.filename === name && compareArrays(runningScript.args, workerScript.args)) {
+    if (runningScript === workerScript.scriptRef) {
       server.runningScripts.splice(i, 1);
       break;
     }

@@ -5,7 +5,7 @@
 import * as walk from "acorn-walk";
 import { parse } from "acorn";
 
-import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
+import { helpers } from "./Netscript/NetscriptHelpers";
 import { ScriptUrl } from "./Script/ScriptUrl";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
@@ -74,18 +74,21 @@ export async function executeJSScript(
   const ns = workerScript.env.vars;
 
   if (!loadedModule) {
-    throw makeRuntimeRejectMsg(workerScript, `${script.filename} cannot be run because the script module won't load`);
+    throw helpers.makeRuntimeRejectMsg(
+      workerScript,
+      `${script.filename} cannot be run because the script module won't load`,
+    );
   }
   // TODO: putting await in a non-async function yields unhelpful
   // "SyntaxError: unexpected reserved word" with no line number information.
   if (!loadedModule.main) {
-    throw makeRuntimeRejectMsg(
+    throw helpers.makeRuntimeRejectMsg(
       workerScript,
       `${script.filename} cannot be run because it does not have a main function.`,
     );
   }
   if (!ns) {
-    throw makeRuntimeRejectMsg(
+    throw helpers.makeRuntimeRejectMsg(
       workerScript,
       `${script.filename} cannot be run because the NS object hasn't been constructed properly.`,
     );

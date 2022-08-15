@@ -1,4 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 
 import { OfficeSpace } from "../Corporation/OfficeSpace";
 import { Employee } from "../Corporation/Employee";
@@ -65,9 +65,10 @@ import { CorporationConstants } from "../Corporation/data/Constants";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation> {
+export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
     if (!player.canAccessCorporation() || player.hasCorporation()) return false;
     if (!corporationName) return false;
@@ -101,7 +102,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
   }
 
   function getUpgradeLevel(ctx: NetscriptContext, _upgradeName: string): number {
-    const upgradeName = ctx.helper.string("upgradeName", _upgradeName);
+    const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
     const corporation = getCorporation();
     const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade.name === upgradeName);
     if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
@@ -110,7 +111,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
   }
 
   function getUpgradeLevelCost(ctx: NetscriptContext, _upgradeName: string): number {
-    const upgradeName = ctx.helper.string("upgradeName", _upgradeName);
+    const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
     const corporation = getCorporation();
     const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade.name === upgradeName);
     if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
@@ -274,10 +275,11 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
   }
 
   function checkAccess(ctx: NetscriptContext, api?: number): void {
-    if (player.corporation === null) throw ctx.makeRuntimeErrorMsg("Must own a corporation.");
+    if (player.corporation === null) throw helpers.makeRuntimeErrorMsg(ctx, "Must own a corporation.");
     if (!api) return;
 
-    if (!player.corporation.unlockUpgrades[api]) throw ctx.makeRuntimeErrorMsg("You do not have access to this API.");
+    if (!player.corporation.unlockUpgrades[api])
+      throw helpers.makeRuntimeErrorMsg(ctx, "You do not have access to this API.");
   }
 
   function getSafeDivision(division: Industry): NSDivision {
@@ -314,11 +316,11 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _amt: unknown = 1): number => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const amt = ctx.helper.number("amount", _amt);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const amt = helpers.number(ctx, "amount", _amt);
         if (amt < 1) {
-          throw ctx.makeRuntimeErrorMsg("You must provide a positive number");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You must provide a positive number");
         }
         const warehouse = getWarehouse(divisionName, cityName);
         return UpgradeWarehouseCost(warehouse, amt);
@@ -327,8 +329,8 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown): boolean => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
         const division = getDivision(divisionName);
         if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
         const warehouse = division.warehouses[cityName];
@@ -338,8 +340,8 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown): NSWarehouse => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
         const warehouse = getWarehouse(divisionName, cityName);
         return {
           level: warehouse.level,
@@ -353,9 +355,9 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _materialName: unknown): NSMaterial => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const materialName = ctx.helper.string("materialName", _materialName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
         const material = getMaterial(divisionName, cityName, materialName);
         const corporation = getCorporation();
         return {
@@ -374,8 +376,8 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _productName: unknown): NSProduct => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const productName = ctx.helper.string("productName", _productName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const productName = helpers.string(ctx, "productName", _productName);
         const product = getProduct(divisionName, productName);
         const corporation = getCorporation();
         return {
@@ -401,8 +403,8 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
         const corporation = getCorporation();
         PurchaseWarehouse(corporation, getDivision(divisionName), cityName);
       },
@@ -410,12 +412,12 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _amt: unknown = 1): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const amt = ctx.helper.number("amount", _amt);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const amt = helpers.number(ctx, "amount", _amt);
         const corporation = getCorporation();
         if (amt < 1) {
-          throw ctx.makeRuntimeErrorMsg("You must provide a positive number");
+          throw helpers.makeRuntimeErrorMsg(ctx, "You must provide a positive number");
         }
         UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName), amt);
       },
@@ -423,11 +425,11 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _amt: unknown, _price: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const amt = ctx.helper.string("amt", _amt);
-        const price = ctx.helper.string("price", _price);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const amt = helpers.string(ctx, "amt", _amt);
+        const price = helpers.string(ctx, "price", _price);
         const material = getMaterial(divisionName, cityName, materialName);
         SellMaterial(material, amt, price);
       },
@@ -442,12 +444,12 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
         _all: unknown,
       ): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const productName = ctx.helper.string("productName", _productName);
-        const amt = ctx.helper.string("amt", _amt);
-        const price = ctx.helper.string("price", _price);
-        const all = ctx.helper.boolean(_all);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const productName = helpers.string(ctx, "productName", _productName);
+        const amt = helpers.string(ctx, "amt", _amt);
+        const price = helpers.string(ctx, "price", _price);
+        const all = !!_all;
         const product = getProduct(divisionName, productName);
         SellProduct(product, cityName, amt, price, all);
       },
@@ -455,44 +457,44 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _productName: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const productName = ctx.helper.string("productName", _productName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const productName = helpers.string(ctx, "productName", _productName);
         getDivision(divisionName).discontinueProduct(getProduct(divisionName, productName));
       },
     setSmartSupply:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _enabled: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const enabled = ctx.helper.boolean(_enabled);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const enabled = !!_enabled;
         const warehouse = getWarehouse(divisionName, cityName);
         if (!hasUnlockUpgrade("Smart Supply"))
-          throw ctx.makeRuntimeErrorMsg(`You have not purchased the Smart Supply upgrade!`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `You have not purchased the Smart Supply upgrade!`);
         SetSmartSupply(warehouse, enabled);
       },
     setSmartSupplyUseLeftovers:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _enabled: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const enabled = ctx.helper.boolean(_enabled);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const enabled = !!_enabled;
         const warehouse = getWarehouse(divisionName, cityName);
         const material = getMaterial(divisionName, cityName, materialName);
         if (!hasUnlockUpgrade("Smart Supply"))
-          throw ctx.makeRuntimeErrorMsg(`You have not purchased the Smart Supply upgrade!`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `You have not purchased the Smart Supply upgrade!`);
         SetSmartSupplyUseLeftovers(warehouse, material, enabled);
       },
     buyMaterial:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _amt: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const amt = ctx.helper.number("amt", _amt);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const amt = helpers.number(ctx, "amt", _amt);
         if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
         const material = getMaterial(divisionName, cityName, materialName);
         BuyMaterial(material, amt);
@@ -501,13 +503,13 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _amt: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         if (!hasResearched(getDivision(divisionName), "Bulk Purchasing"))
           throw new Error(`You have not researched Bulk Purchasing in ${divisionName}`);
         const corporation = getCorporation();
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const amt = ctx.helper.number("amt", _amt);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const amt = helpers.number(ctx, "amt", _amt);
         const warehouse = getWarehouse(divisionName, cityName);
         const material = getMaterial(divisionName, cityName, materialName);
         BulkPurchase(corporation, warehouse, material, amt);
@@ -522,11 +524,11 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
         _marketingInvest: unknown,
       ): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const productName = ctx.helper.string("productName", _productName);
-        const designInvest = ctx.helper.number("designInvest", _designInvest);
-        const marketingInvest = ctx.helper.number("marketingInvest", _marketingInvest);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const productName = helpers.string(ctx, "productName", _productName);
+        const designInvest = helpers.number(ctx, "designInvest", _designInvest);
+        const marketingInvest = helpers.number(ctx, "marketingInvest", _marketingInvest);
         const corporation = getCorporation();
         MakeProduct(corporation, getDivision(divisionName), cityName, productName, designInvest, marketingInvest);
       },
@@ -534,10 +536,10 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _productName: unknown, _cityName: unknown, _qty: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const productName = ctx.helper.string("productName", _productName);
-        const qty = ctx.helper.number("qty", _qty);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const productName = helpers.string(ctx, "productName", _productName);
+        const qty = helpers.number(ctx, "qty", _qty);
         LimitProductProduction(getProduct(divisionName, productName), cityName, qty);
       },
     exportMaterial:
@@ -551,12 +553,12 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
         _amt: unknown,
       ): void => {
         checkAccess(ctx, 7);
-        const sourceDivision = ctx.helper.string("sourceDivision", _sourceDivision);
-        const sourceCity = ctx.helper.string("sourceCity", _sourceCity);
-        const targetDivision = ctx.helper.string("targetDivision", _targetDivision);
-        const targetCity = ctx.helper.string("targetCity", _targetCity);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const amt = ctx.helper.string("amt", _amt);
+        const sourceDivision = helpers.string(ctx, "sourceDivision", _sourceDivision);
+        const sourceCity = helpers.string(ctx, "sourceCity", _sourceCity);
+        const targetDivision = helpers.string(ctx, "targetDivision", _targetDivision);
+        const targetCity = helpers.string(ctx, "targetCity", _targetCity);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const amt = helpers.string(ctx, "amt", _amt);
         ExportMaterial(
           targetDivision,
           targetCity,
@@ -576,12 +578,12 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
         _amt: unknown,
       ): void => {
         checkAccess(ctx, 7);
-        const sourceDivision = ctx.helper.string("sourceDivision", _sourceDivision);
-        const sourceCity = ctx.helper.string("sourceCity", _sourceCity);
-        const targetDivision = ctx.helper.string("targetDivision", _targetDivision);
-        const targetCity = ctx.helper.string("targetCity", _targetCity);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const amt = ctx.helper.string("amt", _amt);
+        const sourceDivision = helpers.string(ctx, "sourceDivision", _sourceDivision);
+        const sourceCity = helpers.string(ctx, "sourceCity", _sourceCity);
+        const targetDivision = helpers.string(ctx, "targetDivision", _targetDivision);
+        const targetCity = helpers.string(ctx, "targetCity", _targetCity);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const amt = helpers.string(ctx, "amt", _amt);
         CancelExportMaterial(
           targetDivision,
           targetCity,
@@ -593,56 +595,56 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _qty: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const qty = ctx.helper.number("qty", _qty);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const qty = helpers.number(ctx, "qty", _qty);
         LimitMaterialProduction(getMaterial(divisionName, cityName, materialName), qty);
       },
     setMaterialMarketTA1:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _on: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const on = ctx.helper.boolean(_on);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const on = !!_on;
         if (!getDivision(divisionName).hasResearch("Market-TA.I"))
-          throw ctx.makeRuntimeErrorMsg(`You have not researched MarketTA.I for division: ${divisionName}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `You have not researched MarketTA.I for division: ${divisionName}`);
         SetMaterialMarketTA1(getMaterial(divisionName, cityName, materialName), on);
       },
     setMaterialMarketTA2:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _on: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const materialName = ctx.helper.string("materialName", _materialName);
-        const on = ctx.helper.boolean(_on);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        const on = !!_on;
         if (!getDivision(divisionName).hasResearch("Market-TA.II"))
-          throw ctx.makeRuntimeErrorMsg(`You have not researched MarketTA.II for division: ${divisionName}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `You have not researched MarketTA.II for division: ${divisionName}`);
         SetMaterialMarketTA2(getMaterial(divisionName, cityName, materialName), on);
       },
     setProductMarketTA1:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _productName: unknown, _on: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const productName = ctx.helper.string("productName", _productName);
-        const on = ctx.helper.boolean(_on);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const productName = helpers.string(ctx, "productName", _productName);
+        const on = !!_on;
         if (!getDivision(divisionName).hasResearch("Market-TA.I"))
-          throw ctx.makeRuntimeErrorMsg(`You have not researched MarketTA.I for division: ${divisionName}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `You have not researched MarketTA.I for division: ${divisionName}`);
         SetProductMarketTA1(getProduct(divisionName, productName), on);
       },
     setProductMarketTA2:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _productName: unknown, _on: unknown): void => {
         checkAccess(ctx, 7);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const productName = ctx.helper.string("productName", _productName);
-        const on = ctx.helper.boolean(_on);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const productName = helpers.string(ctx, "productName", _productName);
+        const on = !!_on;
         if (!getDivision(divisionName).hasResearch("Market-TA.II"))
-          throw ctx.makeRuntimeErrorMsg(`You have not researched MarketTA.II for division: ${divisionName}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `You have not researched MarketTA.II for division: ${divisionName}`);
         SetProductMarketTA2(getProduct(divisionName, productName), on);
       },
   };
@@ -652,7 +654,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown): number => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const division = getDivision(divisionName);
         return division.getAdVertCost();
       },
@@ -660,7 +662,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown): number => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const division = getDivision(divisionName);
         return division.numAdVerts;
       },
@@ -668,25 +670,25 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _researchName: unknown): number => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const researchName = ctx.helper.string("researchName", _researchName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const researchName = helpers.string(ctx, "researchName", _researchName);
         return getResearchCost(getDivision(divisionName), researchName);
       },
     hasResearched:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _researchName: unknown): boolean => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const researchName = ctx.helper.string("researchName", _researchName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const researchName = helpers.string(ctx, "researchName", _researchName);
         return hasResearched(getDivision(divisionName), researchName);
       },
     getOfficeSizeUpgradeCost:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _size: unknown): number => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const size = ctx.helper.number("size", _size);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const size = helpers.number(ctx, "size", _size);
         if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
         const office = getOffice(divisionName, cityName);
         const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
@@ -701,10 +703,10 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _employeeName: unknown, _job: unknown): void => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const employeeName = ctx.helper.string("employeeName", _employeeName);
-        const job = ctx.helper.string("job", _job);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const employeeName = helpers.string(ctx, "employeeName", _employeeName);
+        const job = helpers.string(ctx, "job", _job);
 
         if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
         const office = getOffice(divisionName, cityName);
@@ -715,10 +717,10 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _job: unknown, _amount: unknown): boolean => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const amount = ctx.helper.number("amount", _amount);
-        const job = ctx.helper.string("job", _job);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const amount = helpers.number(ctx, "amount", _amount);
+        const job = helpers.string(ctx, "job", _job);
 
         if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
         const office = getOffice(divisionName, cityName);
@@ -729,8 +731,8 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown): NSEmployee | undefined => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
         const office = getOffice(divisionName, cityName);
         const employee = office.hireRandomEmployee();
         if (employee === undefined) return undefined;
@@ -753,9 +755,9 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _size: unknown): void => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const size = ctx.helper.number("size", _size);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const size = helpers.number(ctx, "size", _size);
         if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
         const office = getOffice(divisionName, cityName);
         const corporation = getCorporation();
@@ -765,9 +767,9 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _costPerEmployee: unknown): number => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const costPerEmployee = ctx.helper.number("costPerEmployee", _costPerEmployee);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const costPerEmployee = helpers.number(ctx, "costPerEmployee", _costPerEmployee);
 
         if (costPerEmployee < 0) {
           throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
@@ -782,8 +784,8 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown): boolean => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
 
         const corporation = getCorporation();
         const office = getOffice(divisionName, cityName);
@@ -794,7 +796,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown): void => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const corporation = getCorporation();
         HireAdVert(corporation, getDivision(divisionName));
       },
@@ -802,16 +804,16 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _researchName: unknown): void => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const researchName = ctx.helper.string("researchName", _researchName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const researchName = helpers.string(ctx, "researchName", _researchName);
         Research(getDivision(divisionName), researchName);
       },
     getOffice:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown): NSOffice => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
         const office = getOffice(divisionName, cityName);
         return {
           loc: office.loc,
@@ -847,9 +849,9 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _employeeName: unknown): NSEmployee => {
         checkAccess(ctx, 8);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
-        const employeeName = ctx.helper.string("employeeName", _employeeName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
+        const employeeName = helpers.string(ctx, "employeeName", _employeeName);
         const employee = getEmployee(divisionName, cityName, employeeName);
         return {
           name: employee.name,
@@ -871,12 +873,27 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
   return {
     ...warehouseAPI,
     ...officeAPI,
+    getMaterialNames: () => (): string[] => {
+      return CorporationConstants.AllMaterials;
+    },
+    getIndustryTypes: () => (): string[] => {
+      return CorporationConstants.AllIndustryTypes;
+    },
+    getUnlockables: () => (): string[] => {
+      return CorporationConstants.AllUnlocks;
+    },
+    getUpgradeNames: () => (): string[] => {
+      return CorporationConstants.AllUpgrades;
+    },
+    getResearchNames: () => (): string[] => {
+      return CorporationConstants.AllResearch;
+    },
     expandIndustry:
       (ctx: NetscriptContext) =>
       (_industryName: unknown, _divisionName: unknown): void => {
         checkAccess(ctx);
-        const industryName = ctx.helper.string("industryName", _industryName);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
+        const industryName = helpers.string(ctx, "industryName", _industryName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const corporation = getCorporation();
         NewIndustry(corporation, industryName, divisionName);
       },
@@ -884,8 +901,8 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown): void => {
         checkAccess(ctx);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
-        const cityName = ctx.helper.city("cityName", _cityName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
+        const cityName = helpers.city(ctx, "cityName", _cityName);
         if (!CorporationConstants.Cities.includes(cityName)) throw new Error("Invalid city name");
         const corporation = getCorporation();
         const division = getDivision(divisionName);
@@ -895,7 +912,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_upgradeName: unknown): void => {
         checkAccess(ctx);
-        const upgradeName = ctx.helper.string("upgradeName", _upgradeName);
+        const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
         const corporation = getCorporation();
         const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade.name === upgradeName);
         if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
@@ -905,7 +922,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_upgradeName: unknown): void => {
         checkAccess(ctx);
-        const upgradeName = ctx.helper.string("upgradeName", _upgradeName);
+        const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
         const corporation = getCorporation();
         const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade.name === upgradeName);
         if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
@@ -915,12 +932,12 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_rate: unknown): void => {
         checkAccess(ctx);
-        const rate = ctx.helper.number("rate", _rate);
+        const rate = helpers.number(ctx, "rate", _rate);
         const max = CorporationConstants.DividendMaxRate;
         if (rate < 0 || rate > max)
           throw new Error(`Invalid value for rate field! Must be numeric, greater than 0, and less than ${max}`);
         const corporation = getCorporation();
-        if (!corporation.public) throw ctx.makeRuntimeErrorMsg(`Your company has not gone public!`);
+        if (!corporation.public) throw helpers.makeRuntimeErrorMsg(ctx, `Your company has not gone public!`);
         IssueDividends(corporation, rate);
       },
 
@@ -930,7 +947,7 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_divisionName: unknown): NSDivision => {
         checkAccess(ctx);
-        const divisionName = ctx.helper.string("divisionName", _divisionName);
+        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const division = getDivision(divisionName);
         return getSafeDivision(division);
       },
@@ -958,43 +975,43 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
     createCorporation:
       (ctx: NetscriptContext) =>
       (_corporationName: unknown, _selfFund: unknown = true): boolean => {
-        const corporationName = ctx.helper.string("corporationName", _corporationName);
-        const selfFund = ctx.helper.boolean(_selfFund);
+        const corporationName = helpers.string(ctx, "corporationName", _corporationName);
+        const selfFund = !_selfFund;
         return createCorporation(corporationName, selfFund);
       },
     hasUnlockUpgrade:
       (ctx: NetscriptContext) =>
       (_upgradeName: unknown): boolean => {
         checkAccess(ctx);
-        const upgradeName = ctx.helper.string("upgradeName", _upgradeName);
+        const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
         return hasUnlockUpgrade(upgradeName);
       },
     getUnlockUpgradeCost:
       (ctx: NetscriptContext) =>
       (_upgradeName: unknown): number => {
         checkAccess(ctx);
-        const upgradeName = ctx.helper.string("upgradeName", _upgradeName);
+        const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
         return getUnlockUpgradeCost(upgradeName);
       },
     getUpgradeLevel:
       (ctx: NetscriptContext) =>
       (_upgradeName: unknown): number => {
         checkAccess(ctx);
-        const upgradeName = ctx.helper.string("upgradeName", _upgradeName);
+        const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
         return getUpgradeLevel(ctx, upgradeName);
       },
     getUpgradeLevelCost:
       (ctx: NetscriptContext) =>
       (_upgradeName: unknown): number => {
         checkAccess(ctx);
-        const upgradeName = ctx.helper.string("upgradeName", _upgradeName);
+        const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
         return getUpgradeLevelCost(ctx, upgradeName);
       },
     getExpandIndustryCost:
       (ctx: NetscriptContext) =>
       (_industryName: unknown): number => {
         checkAccess(ctx);
-        const industryName = ctx.helper.string("industryName", _industryName);
+        const industryName = helpers.string(ctx, "industryName", _industryName);
         return getExpandIndustryCost(industryName);
       },
     getExpandCityCost: (ctx: NetscriptContext) => (): number => {
@@ -1013,29 +1030,29 @@ export function NetscriptCorporation(player: IPlayer): InternalAPI<NSCorporation
       (ctx: NetscriptContext) =>
       (_numShares: unknown): boolean => {
         checkAccess(ctx);
-        const numShares = ctx.helper.number("numShares", _numShares);
+        const numShares = helpers.number(ctx, "numShares", _numShares);
         return goPublic(numShares);
       },
     sellShares:
       (ctx: NetscriptContext) =>
       (_numShares: unknown): number => {
         checkAccess(ctx);
-        const numShares = ctx.helper.number("numShares", _numShares);
+        const numShares = helpers.number(ctx, "numShares", _numShares);
         return SellShares(getCorporation(), player, numShares);
       },
     buyBackShares:
       (ctx: NetscriptContext) =>
       (_numShares: unknown): boolean => {
         checkAccess(ctx);
-        const numShares = ctx.helper.number("numShares", _numShares);
+        const numShares = helpers.number(ctx, "numShares", _numShares);
         return BuyBackShares(getCorporation(), player, numShares);
       },
     bribe:
       (ctx: NetscriptContext) =>
       (_factionName: unknown, _amountCash: unknown): boolean => {
         checkAccess(ctx);
-        const factionName = ctx.helper.string("factionName", _factionName);
-        const amountCash = ctx.helper.number("amountCash", _amountCash);
+        const factionName = helpers.string(ctx, "factionName", _factionName);
+        const amountCash = helpers.number(ctx, "amountCash", _amountCash);
         return bribe(factionName, amountCash);
       },
     getBonusTime: (ctx: NetscriptContext) => (): number => {

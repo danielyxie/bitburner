@@ -346,6 +346,11 @@ const grafting = {
 };
 
 const corporation = {
+  getMaterialNames: 0,
+  getIndustryTypes: 0,
+  getUnlockables: 0,
+  getUpgradeNames: 0,
+  getResearchNames: 0,
   createCorporation: 0,
   hasUnlockUpgrade: 0,
   getUnlockUpgradeCost: 0,

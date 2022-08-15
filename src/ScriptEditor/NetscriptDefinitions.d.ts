@@ -4281,7 +4281,7 @@ export interface InfiltrationReward {
  * @public
  */
 export interface ILocation {
-  city: CityName | null;
+  city: string;
   name: string;
 }
 
@@ -6920,6 +6920,31 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @returns An offer of investment
    */
   getInvestmentOffer(): InvestmentOffer;
+  /**
+   * Get list of materials
+   * @returns material names
+   */
+  getMaterialNames(): string[];
+  /**
+   * Get list of industry types
+   * @returns industry names
+   */
+  getIndustryTypes(): string[];
+  /**
+   * Get list of one-time unlockable upgrades
+   * @returns unlockable upgrades names
+   */
+  getUnlockables(): string[];
+  /**
+   * Get list of upgrade names
+   * @returns upgrade names
+   */
+  getUpgradeNames(): string[];
+  /**
+   * Get list of research names
+   * @returns research names
+   */
+  getResearchNames(): string[];
   /**
    * Accept investment based on you companies current valuation
    * @remarks
