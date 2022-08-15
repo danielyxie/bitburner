@@ -11,7 +11,6 @@ import { generateNextPid } from "./Netscript/Pid";
 
 import { CONSTANTS } from "./Constants";
 import { Interpreter } from "./ThirdParty/JSInterpreter";
-import { isScriptErrorMessage, makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript, Node } from "./NetscriptJSEvaluator";
 import { NetscriptPort, IPort } from "./NetscriptPort";
@@ -29,7 +28,6 @@ import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { roundToTwo } from "./utils/helpers/roundToTwo";
 import { isString } from "./utils/helpers/isString";
-import { sprintf } from "sprintf-js";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
@@ -38,6 +36,8 @@ import { Player } from "./Player";
 import { Terminal } from "./Terminal";
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { ScriptArg } from "./Netscript/ScriptArg";
+import { helpers } from "./Netscript/NetscriptHelpers";
+import { NS } from "./ScriptEditor/NetscriptDefinitions";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -63,83 +63,6 @@ export function prestigeWorkerScripts(): void {
 // that resolves or rejects when the corresponding worker script is done.
 function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Promise<void> {
   workerScript.running = true;
-
-  // The name of the currently running netscript function, to prevent concurrent
-  // calls to hack, grow, etc.
-  let runningFn: string | null = null;
-
-  // We need to go through the environment and wrap each function in such a way that it
-  // can be called at most once at a time. This will prevent situations where multiple
-  // hack promises are outstanding, for example.
-  function wrap(propName: string, f: (...args: unknown[]) => Promise<void>): (...args: unknown[]) => Promise<void> {
-    // This function unfortunately cannot be an async function, because we don't
-    // know if the original one was, and there's no way to tell.
-    return function (...args: unknown[]) {
-      // Wrap every netscript function with a check for the stop flag.
-      // This prevents cases where we never stop because we are only calling
-      // netscript functions that don't check this.
-      // This is not a problem for legacy Netscript because it also checks the
-      // stop flag in the evaluator.
-      if (workerScript.env.stopFlag) {
-        throw new ScriptDeath(workerScript);
-      }
-
-      if (propName === "asleep") return f(...args); // OK for multiple simultaneous calls to sleep.
-
-      const msg =
-        "Concurrent calls to Netscript functions are not allowed! " +
-        "Did you forget to await hack(), grow(), or some other " +
-        "promise-returning function? (Currently running: %s tried to run: %s)";
-      if (runningFn) {
-        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName));
-        throw new ScriptDeath(workerScript);
-      }
-      runningFn = propName;
-
-      // If the function throws an error, clear the runningFn flag first, and then re-throw it
-      // This allows people to properly catch errors thrown by NS functions without getting
-      // the concurrent call error above
-      let result;
-      try {
-        result = f(...args);
-      } catch (e: unknown) {
-        runningFn = null;
-        throw e;
-      }
-
-      if (result && result.finally !== undefined) {
-        return result.finally(function () {
-          runningFn = null;
-        });
-      } else {
-        runningFn = null;
-        return result;
-      }
-    };
-  }
-
-  function wrapObject(vars: unknown, ...tree: string[]): void {
-    const isObject = (x: unknown): x is { [key: string]: unknown } => typeof x === "object";
-    if (!isObject(vars)) throw new Error("wrong argument sent to wrapObject");
-    for (const prop of Object.keys(vars)) {
-      let e = vars[prop];
-      switch (typeof e) {
-        case "function": {
-          e = wrap([...tree, prop].join("."), e as any);
-          break;
-        }
-        case "object": {
-          if (Array.isArray(e)) continue;
-          wrapObject(e, ...tree, prop);
-          break;
-        }
-      }
-    }
-  }
-  wrapObject(workerScript.env.vars);
-
-  // Note: the environment that we pass to the JS script only needs to contain the functions visible
-  // to that script, which env.vars does at this point.
   return new Promise<void>((resolve, reject) => {
     executeJSScript(player, workerScript.getServer().scripts, workerScript)
       .then(() => {
@@ -149,15 +72,18 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
   }).catch((e) => {
     if (e instanceof Error) {
       if (e instanceof SyntaxError) {
-        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");
+        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
+          workerScript,
+          e.message + " (sorry we can't be more helpful)",
+        );
       } else {
-        workerScript.errorMessage = makeRuntimeRejectMsg(
+        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
           workerScript,
           e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
         );
       }
       throw new ScriptDeath(workerScript);
-    } else if (isScriptErrorMessage(e)) {
+    } else if (helpers.isScriptErrorMessage(e)) {
       workerScript.errorMessage = e;
       throw new ScriptDeath(workerScript);
     } else if (e instanceof ScriptDeath) {
@@ -165,7 +91,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
     }
 
     // Don't know what to do with it, let's try making an error message out of it
-    workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, "" + e);
+    workerScript.errorMessage = helpers.makeRuntimeRejectMsg(workerScript, "" + e);
     throw new ScriptDeath(workerScript);
   });
 }
@@ -189,8 +115,11 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   }
 
   const interpreterInitialization = function (int: Interpreter, scope: unknown): void {
+    interface NS1 extends NS {
+      [key: string]: any;
+    }
     //Add the Netscript environment
-    const ns = NetscriptFunctions(workerScript);
+    const ns = NetscriptFunctions(workerScript) as NS1;
     for (const name of Object.keys(ns)) {
       const entry = ns[name];
       if (typeof entry === "function") {
@@ -242,7 +171,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
           name === "vsprintf" ||
           name === "scp" ||
           name == "write" ||
-          name === "tryWrite" ||
+          name === "tryWritePort" ||
           name === "run" ||
           name === "exec"
         ) {
@@ -319,8 +248,8 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
         }
       } catch (_e: unknown) {
         let e = String(_e);
-        if (!isScriptErrorMessage(e)) {
-          e = makeRuntimeRejectMsg(workerScript, e);
+        if (!helpers.isScriptErrorMessage(e)) {
+          e = helpers.makeRuntimeRejectMsg(workerScript, e);
         }
         workerScript.errorMessage = e;
         return reject(new ScriptDeath(workerScript));
@@ -598,7 +527,7 @@ function createAndAddWorkerScript(
         console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
         return;
       } else if (e instanceof ScriptDeath) {
-        if (isScriptErrorMessage(workerScript.errorMessage)) {
+        if (helpers.isScriptErrorMessage(workerScript.errorMessage)) {
           const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
           if (errorTextArray.length != 4) {
             console.error("ERROR: Something wrong with Error text in evaluator...");
@@ -622,7 +551,7 @@ function createAndAddWorkerScript(
           workerScript.log("", () => "Script killed");
           return; // Already killed, so stop here
         }
-      } else if (isScriptErrorMessage(e)) {
+      } else if (helpers.isScriptErrorMessage(e)) {
         dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
         console.error(
           "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
