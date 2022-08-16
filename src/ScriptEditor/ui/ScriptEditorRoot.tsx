@@ -142,25 +142,6 @@ export function Root(props: IProps): React.ReactElement {
     if (currentScript === undefined) currentScript = null;
   }
 
-  const [dimensions, setDimensions] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
-  });
-  useEffect(() => {
-    const debouncedHandleResize = debounce(function handleResize() {
-      setDimensions({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      });
-    }, 250);
-
-    window.addEventListener("resize", debouncedHandleResize);
-
-    return () => {
-      window.removeEventListener("resize", debouncedHandleResize);
-    };
-  }, []);
-
   useEffect(() => {
     if (currentScript !== null) {
       updateRAM(currentScript.code);
@@ -815,7 +796,6 @@ export function Root(props: IProps): React.ReactElement {
   //  5px padding for top of editor
   //  44px bottom tool bar + 16px margin
   //  + vim bar 34px
-  const editorHeight = dimensions.height - (130 + (options.vim ? 34 : 0));
   const tabsMaxWidth = 1640;
   const tabMargin = 5;
   const tabMaxWidth = filteredOpenScripts.length ? tabsMaxWidth / filteredOpenScripts.length - tabMargin : 0;
@@ -951,7 +931,7 @@ export function Root(props: IProps): React.ReactElement {
           beforeMount={beforeMount}
           onMount={onMount}
           loading={<Typography>Loading script editor!</Typography>}
-          height={`${editorHeight}px`}
+          height={`calc(100vh - ${130 + (options.vim ? 34 : 0)}px)`}
           defaultLanguage="javascript"
           defaultValue={""}
           onChange={updateCode}

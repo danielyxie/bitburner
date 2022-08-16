@@ -104,10 +104,10 @@ const useStyles = makeStyles((theme: Theme) =>
       "scrollbar-width": "none" /* for Firefox */,
       margin: theme.spacing(0),
       flexGrow: 1,
-      display: "block",
       padding: "8px",
       minHeight: "100vh",
       boxSizing: "border-box",
+      width: "1px",
     },
   }),
 );
