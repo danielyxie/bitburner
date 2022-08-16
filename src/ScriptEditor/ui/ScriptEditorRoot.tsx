@@ -90,6 +90,7 @@ class OpenScript {
   hostname: string;
   lastPosition: monaco.Position;
   model: ITextModel;
+  isTxt: boolean;
 
   constructor(fileName: string, code: string, hostname: string, lastPosition: monaco.Position, model: ITextModel) {
     this.fileName = fileName;
@@ -97,6 +98,7 @@ class OpenScript {
     this.hostname = hostname;
     this.lastPosition = lastPosition;
     this.model = model;
+    this.isTxt = fileName.endsWith(".txt");
   }
 }
 
@@ -234,10 +236,7 @@ export function Root(props: IProps): React.ReactElement {
   // Generates a new model for the script
   function regenerateModel(script: OpenScript): void {
     if (monacoRef.current !== null) {
-      script.model = monacoRef.current.editor.createModel(
-        script.code,
-        script.fileName.endsWith(".txt") ? "plaintext" : "javascript",
-      );
+      script.model = monacoRef.current.editor.createModel(script.code, script.isTxt ? "plaintext" : "javascript");
     }
   }
 
@@ -252,7 +251,7 @@ export function Root(props: IProps): React.ReactElement {
   );
 
   async function updateRAM(newCode: string): Promise<void> {
-    if (currentScript != null && currentScript.fileName.endsWith(".txt")) {
+    if (currentScript != null && currentScript.isTxt) {
       debouncedSetRAM("N/A", [["N/A", ""]]);
       return;
     }
@@ -405,7 +404,7 @@ export function Root(props: IProps): React.ReactElement {
             monacoRef.current.editor.createModel(code, filename.endsWith(".txt") ? "plaintext" : "javascript"),
           );
           openScripts.push(newScript);
-          currentScript = { ...newScript };
+          currentScript = newScript;
           editorRef.current.setModel(newScript.model);
           updateRAM(newScript.code);
         }
@@ -500,7 +499,7 @@ export function Root(props: IProps): React.ReactElement {
         server.scripts,
       );
       server.scripts.push(script);
-    } else if (scriptToSave.fileName.endsWith(".txt")) {
+    } else if (scriptToSave.isTxt) {
       for (let i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === scriptToSave.fileName) {
           server.textFiles[i].write(scriptToSave.code);
@@ -574,6 +573,7 @@ export function Root(props: IProps): React.ReactElement {
             server.scripts,
           );
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+          rerender();
           return;
         }
       }
@@ -588,11 +588,12 @@ export function Root(props: IProps): React.ReactElement {
         server.scripts,
       );
       server.scripts.push(script);
-    } else if (currentScript.fileName.endsWith(".txt")) {
+    } else if (currentScript.isTxt) {
       for (let i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === currentScript.fileName) {
           server.textFiles[i].write(currentScript.code);
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+          rerender();
           return;
         }
       }
@@ -604,6 +605,7 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+    rerender();
   }
 
   function reorder(list: Array<OpenScript>, startIndex: number, endIndex: number): OpenScript[] {
@@ -763,21 +765,20 @@ export function Root(props: IProps): React.ReactElement {
 
   function dirty(index: number): string {
     const openScript = openScripts[index];
-    const serverScriptCode = getServerCode(index);
-    if (serverScriptCode === null) return " *";
-
-    // The server code is stored with its starting & trailing whitespace removed
-    const openScriptFormatted = Script.formatCode(openScript.code);
-    return serverScriptCode !== openScriptFormatted ? " *" : "";
+    const serverData = getServerCode(index);
+    if (serverData === null) return " *";
+    // For scripts, server code is stored with its starting & trailing whitespace removed
+    const code = openScript.isTxt ? openScript.code : Script.formatCode(openScript.code);
+    return serverData !== code ? " *" : "";
   }
-
   function getServerCode(index: number): string | null {
     const openScript = openScripts[index];
     const server = GetServer(openScript.hostname);
     if (server === null) throw new Error(`Server '${openScript.hostname}' should not be null, but it is.`);
-
-    const serverScript = server.scripts.find((s) => s.filename === openScript.fileName);
-    return serverScript?.code ?? null;
+    const data = openScript.isTxt
+      ? server.textFiles.find((t) => t.filename === openScript.fileName)?.text
+      : server.scripts.find((s) => s.filename === openScript.fileName)?.code;
+    return data ?? null;
   }
   function handleFilterChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setFilter(event.target.value);
@@ -790,12 +791,6 @@ export function Root(props: IProps): React.ReactElement {
     (script) => script.hostname.includes(filter) || script.fileName.includes(filter),
   );
 
-  // Toolbars are roughly 112px:
-  //  8px body margin top
-  //  38.5px filename tabs
-  //  5px padding for top of editor
-  //  44px bottom tool bar + 16px margin
-  //  + vim bar 34px
   const tabsMaxWidth = 1640;
   const tabMargin = 5;
   const tabMaxWidth = filteredOpenScripts.length ? tabsMaxWidth / filteredOpenScripts.length - tabMargin : 0;
