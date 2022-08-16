@@ -451,18 +451,8 @@ export function Root(props: IProps): React.ReactElement {
     const newPos = editorRef.current.getPosition();
     if (newPos === null) return;
     if (currentScript !== null) {
-      currentScript = { ...currentScript, code: newCode, lastPosition: newPos };
-      const curIndex = openScripts.findIndex(
-        (script) =>
-          currentScript !== null &&
-          script.fileName === currentScript.fileName &&
-          script.hostname === currentScript.hostname,
-      );
-      const newArr = [...openScripts];
-      const tempScript = currentScript;
-      tempScript.code = newCode;
-      newArr[curIndex] = tempScript;
-      openScripts = [...newArr];
+      currentScript.code = newCode;
+      currentScript.lastPosition = newPos;
     }
     try {
       infLoop(newCode);
@@ -608,24 +598,15 @@ export function Root(props: IProps): React.ReactElement {
     rerender();
   }
 
-  function reorder(list: Array<OpenScript>, startIndex: number, endIndex: number): OpenScript[] {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
+  function reorder(list: OpenScript[], startIndex: number, endIndex: number): void {
+    const [removed] = list.splice(startIndex, 1);
+    list.splice(endIndex, 0, removed);
   }
 
   function onDragEnd(result: any): void {
     // Dropped outside of the list
-    if (!result.destination) {
-      result;
-      return;
-    }
-
-    const items = reorder(openScripts, result.source.index, result.destination.index);
-
-    openScripts = items;
+    if (!result.destination) return;
+    reorder(openScripts, result.source.index, result.destination.index);
   }
 
   function currentTabIndex(): number | undefined {
@@ -650,17 +631,17 @@ export function Root(props: IProps): React.ReactElement {
       }
     }
 
-    currentScript = { ...openScripts[index] };
+    currentScript = openScripts[index];
 
     if (editorRef.current !== null && openScripts[index] !== null) {
-      if (openScripts[index].model === undefined || openScripts[index].model.isDisposed()) {
-        regenerateModel(openScripts[index]);
+      if (currentScript.model === undefined || currentScript.model.isDisposed()) {
+        regenerateModel(currentScript);
       }
-      editorRef.current.setModel(openScripts[index].model);
+      editorRef.current.setModel(currentScript.model);
 
-      editorRef.current.setPosition(openScripts[index].lastPosition);
-      editorRef.current.revealLineInCenter(openScripts[index].lastPosition.lineNumber);
-      updateRAM(openScripts[index].code);
+      editorRef.current.setPosition(currentScript.lastPosition);
+      editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
+      updateRAM(currentScript.code);
       editorRef.current.focus();
     }
   }
@@ -668,18 +649,10 @@ export function Root(props: IProps): React.ReactElement {
   function onTabClose(index: number): void {
     // See if the script on the server is up to date
     const closingScript = openScripts[index];
-    const savedScriptIndex = openScripts.findIndex(
-      (script) => script.fileName === closingScript.fileName && script.hostname === closingScript.hostname,
-    );
-    let savedScriptCode = "";
-    if (savedScriptIndex !== -1) {
-      savedScriptCode = openScripts[savedScriptIndex].code;
-    }
-    const server = GetServer(closingScript.hostname);
-    if (server === null) throw new Error(`Server '${closingScript.hostname}' should not be null, but it is.`);
+    const savedScriptCode = closingScript.code;
+    const wasCurrentScript = openScripts[index] === currentScript;
 
-    const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
-    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex].code) {
+    if (dirty(index)) {
       PromptEvent.emit({
         txt: `Do you want to save changes to ${closingScript.fileName} on ${closingScript.hostname}?`,
         resolve: (result: boolean | string) => {
@@ -693,30 +666,19 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     if (openScripts.length > 1) {
-      openScripts = openScripts.filter((value, i) => i !== index);
-
-      let indexOffset = -1;
-      if (openScripts[index + indexOffset] === undefined) {
-        indexOffset = 1;
-        if (openScripts[index + indexOffset] === undefined) {
-          indexOffset = 0;
-        }
-      }
+      openScripts.splice(index, 1);
+      const indexOffset = openScripts.length === index ? -1 : 0;
 
       // Change current script if we closed it
-      currentScript = openScripts[index + indexOffset];
+      currentScript = wasCurrentScript ? openScripts[index + indexOffset] : (currentScript as OpenScript);
       if (editorRef.current !== null) {
-        if (
-          openScripts[index + indexOffset].model === undefined ||
-          openScripts[index + indexOffset].model === null ||
-          openScripts[index + indexOffset].model.isDisposed()
-        ) {
-          regenerateModel(openScripts[index + indexOffset]);
+        if (currentScript.model.isDisposed() || !currentScript.model) {
+          regenerateModel(currentScript);
         }
 
-        editorRef.current.setModel(openScripts[index + indexOffset].model);
-        editorRef.current.setPosition(openScripts[index + indexOffset].lastPosition);
-        editorRef.current.revealLineInCenter(openScripts[index + indexOffset].lastPosition.lineNumber);
+        editorRef.current.setModel(currentScript.model);
+        editorRef.current.setPosition(currentScript.lastPosition);
+        editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
         editorRef.current.focus();
       }
       rerender();
