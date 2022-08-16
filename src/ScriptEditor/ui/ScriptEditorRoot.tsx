@@ -136,8 +136,8 @@ export function Root(props: IProps): React.ReactElement {
   const [ramInfoOpen, setRamInfoOpen] = useState(false);
 
   // Prevent Crash if script is open on deleted server
-  for (let i=openScripts.length-1;i>=0;i--){
-    GetServer(openScripts[i].hostname) === null && openScripts.splice(i,1);
+  for (let i = openScripts.length - 1; i >= 0; i--) {
+    GetServer(openScripts[i].hostname) === null && openScripts.splice(i, 1);
   }
   if (currentScript && GetServer(currentScript.hostname) === null) {
     currentScript = openScripts[0];
@@ -669,11 +669,11 @@ export function Root(props: IProps): React.ReactElement {
     if (openScripts.length === 0) {
       currentScript = null;
       props.router.toTerminal();
-      return;    
+      return;
     }
-    
+
     // Change current script if we closed it
-    if(wasCurrentScript){
+    if (wasCurrentScript) {
       //Keep the same index unless we were on the last script
       const indexOffset = openScripts.length === index ? -1 : 0;
       currentScript = openScripts[index + indexOffset];
