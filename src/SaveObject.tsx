@@ -402,6 +402,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
         delete anyPlayer.resleeves;
       }
     }
+
     if (ver < 15) {
       Settings.EditorTheme = { ...defaultMonacoTheme };
     }
@@ -420,6 +421,23 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
     }
 
+    const v22PlayerBreak = () => {
+      // reset HP correctly to avoid crash
+      anyPlayer.hp = { current: 1, max: 1 };
+      for (const sleeve of anyPlayer.sleeves) {
+        sleeve.hp = { current: 1, max: 1 };
+      }
+
+      // transfer over old exp to new struct
+      anyPlayer.exp.hacking = anyPlayer.hacking_exp;
+      anyPlayer.exp.strength = anyPlayer.strength_exp;
+      anyPlayer.exp.defense = anyPlayer.defense_exp;
+      anyPlayer.exp.dexterity = anyPlayer.dexterity_exp;
+      anyPlayer.exp.agility = anyPlayer.agility_exp;
+      anyPlayer.exp.charisma = anyPlayer.charisma_exp;
+      anyPlayer.exp.intelligence = anyPlayer.intelligence_exp;
+    };
+
     // Fix bugged NFG accumulation in owned augmentations
     if (ver < 17) {
       let ownedNFGs = [...Player.augmentations];
@@ -436,9 +454,11 @@ function evaluateVersionCompatibility(ver: string | number): void {
         newNFG,
       ];
 
+      v22PlayerBreak();
       Player.reapplyAllAugmentations(true);
       Player.reapplyAllSourceFiles();
     }
+
     if (ver < 20) {
       // Create the darkweb for everyone but it won't be linked
       const dw = GetServer(SpecialServers.DarkWeb);
@@ -464,20 +484,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
       if (graft) Player.augmentations.push({ name: graft, level: 1 });
     }
     if (ver < 22) {
-      // reset HP correctly to avoid crash
-      anyPlayer.hp = { current: 1, max: 1 };
-      for (const sleeve of anyPlayer.sleeves) {
-        sleeve.hp = { current: 1, max: 1 };
-      }
-
-      // transfer over old exp to new struct
-      anyPlayer.exp.hacking = anyPlayer.hacking_exp;
-      anyPlayer.exp.strength = anyPlayer.strength_exp;
-      anyPlayer.exp.defense = anyPlayer.defense_exp;
-      anyPlayer.exp.dexterity = anyPlayer.dexterity_exp;
-      anyPlayer.exp.agility = anyPlayer.agility_exp;
-      anyPlayer.exp.charisma = anyPlayer.charisma_exp;
-      anyPlayer.exp.intelligence = anyPlayer.intelligence_exp;
+      v22PlayerBreak();
       v2APIBreak();
     }
     if (ver < 23) {
