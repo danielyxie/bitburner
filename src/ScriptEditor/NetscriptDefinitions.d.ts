@@ -3851,6 +3851,31 @@ interface SkillsFormulas {
 }
 
 /**
+ * @public
+ */
+export interface WorkStats {
+  money: number;
+  reputation: number;
+  hackExp: number;
+  strExp: number;
+  defExp: number;
+  dexExp: number;
+  agiExp: number;
+  chaExp: number;
+  intExp: number;
+}
+
+/**
+ * Work formulas
+ * @public
+ */
+interface WorkFormulas {
+  crimeGains(crimeType: string): WorkStats;
+  classGains(player: Player, classType: string, locationName: string): WorkStats;
+  factionGains(player: Player, workType: string, favor: number): WorkStats;
+}
+
+/**
  * Reputation formulas
  * @public
  */
@@ -4131,6 +4156,8 @@ export interface Formulas {
   hacknetServers: HacknetServersFormulas;
   /** Gang formulas */
   gang: GangFormulas;
+  /** Work formulas */
+  work: WorkFormulas;
 }
 
 /**

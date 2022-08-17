@@ -295,9 +295,9 @@ const Engine: {
           // No rep for gangs.
           if (Player.getGangName() === facName) continue;
 
-          const hRep = getHackingWorkRepGain(Player, faction);
-          const sRep = getFactionSecurityWorkRepGain(Player, faction);
-          const fRep = getFactionFieldWorkRepGain(Player, faction);
+          const hRep = getHackingWorkRepGain(Player, faction.favor);
+          const sRep = getFactionSecurityWorkRepGain(Player, faction.favor);
+          const fRep = getFactionFieldWorkRepGain(Player, faction.favor);
           // can be infinite, doesn't matter.
           const reputationRate = Math.max(hRep, sRep, fRep) / Player.factions.length;
 

@@ -43,6 +43,14 @@ import { favorToRep as calculateFavorToRep, repToFavor as calculateRepToFavor } 
 import { repFromDonation } from "../Faction/formulas/donation";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
+import { WorkStats } from "../Work/WorkStats";
+import { calculateCrimeWorkStats } from "../Work/formulas/Crime";
+import { Crimes } from "../Crime/Crimes";
+import { calculateClassEarnings } from "../Work/formulas/Class";
+import { ClassType } from "../Work/ClassWork";
+import { LocationName } from "../Locations/data/LocationNames";
+import { calculateFactionExp, calculateFactionRep } from "../Work/formulas/Faction";
+import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 export function NetscriptFormulas(): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
@@ -325,6 +333,39 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
           checkFormulasAccess(ctx);
           return calculateAscensionMult(points);
         },
+    },
+    work: {
+      crimeGains:
+        (ctx: NetscriptContext) =>
+        (_crimeType: unknown): WorkStats => {
+          const crimeType = helpers.string(ctx, "crimeType", _crimeType);
+          const crime = Object.values(Crimes).find((c) => String(c.type) === crimeType);
+          if (!crime) throw new Error(`Invalid crime type: ${crimeType}`);
+          return calculateCrimeWorkStats(crime);
+        },
+      classGains:
+        (ctx: NetscriptContext) =>
+        (_player: unknown, _classType: unknown, _locationName: unknown): WorkStats => {
+          const target = helpers.player(ctx, _player);
+          const classType = helpers.string(ctx, "classType", _classType);
+          const locationName = helpers.string(ctx, "locationName", _locationName);
+          return calculateClassEarnings(player, target, classType as ClassType, locationName as LocationName);
+        },
+      factionGains:
+        (ctx: NetscriptContext) =>
+        (_player: unknown, _workType: unknown, _favor: unknown): WorkStats => {
+          const player = helpers.player(ctx, _player);
+          const workType = helpers.string(ctx, "_workType", _workType) as FactionWorkType;
+          const favor = helpers.number(ctx, "favor", _favor);
+          const exp = calculateFactionExp(player, workType);
+          const rep = calculateFactionRep(player, workType, favor);
+          exp.reputation = rep;
+          return exp;
+        },
+      // companyGains: (ctx: NetscriptContext) =>_player: unknown (): WorkStats {
+      //     const player = helpers.player(ctx, _player);
+
+      // },
     },
   };
 }

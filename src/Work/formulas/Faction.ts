@@ -3,6 +3,11 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
 import { FactionWorkType } from "../data/FactionWorkType";
 import { newWorkStats, WorkStats } from "../WorkStats";
+import {
+  getFactionFieldWorkRepGain,
+  getFactionSecurityWorkRepGain,
+  getHackingWorkRepGain,
+} from "../../PersonObjects/formulas/reputation";
 
 const gameCPS = 1000 / CONSTANTS._idleSpeed; // 5 cycles per second
 
@@ -23,6 +28,15 @@ export const FactionWorkStats: Record<FactionWorkType, WorkStats> = {
     dexExp: 15,
     agiExp: 15,
   }),
+};
+
+export const calculateFactionRep = (person: IPerson, tpe: FactionWorkType, favor: number): number => {
+  const repFormulas = {
+    [FactionWorkType.HACKING]: getHackingWorkRepGain,
+    [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
+    [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
+  };
+  return repFormulas[tpe](person, favor);
 };
 
 export function calculateFactionExp(person: IPerson, tpe: FactionWorkType): WorkStats {

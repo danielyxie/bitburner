@@ -1207,6 +1207,8 @@ export declare interface Formulas {
     hacknetServers: HacknetServersFormulas;
     /** Gang formulas */
     gang: GangFormulas;
+    /** Work formulas */
+    work: WorkFormulas;
 }
 
 /**
@@ -7324,6 +7326,31 @@ export declare interface WarehouseAPI {
      * @returns true if warehouse is present, false if not
      */
     hasWarehouse(adivisionName: string, acityName: string): boolean;
+}
+
+/**
+ * Work formulas
+ * @public
+ */
+export declare interface WorkFormulas {
+    crimeGains(crimeType: string): WorkStats;
+    classGains(player: Player, classType: string, locationName: string): WorkStats;
+    factionGains(player: Player, workType: string, favor: number): WorkStats;
+}
+
+/**
+ * @public
+ */
+export declare interface WorkStats {
+    money: number;
+    reputation: number;
+    hackExp: number;
+    strExp: number;
+    defExp: number;
+    dexExp: number;
+    agiExp: number;
+    chaExp: number;
+    intExp: number;
 }
 
 export { }
