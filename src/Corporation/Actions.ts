@@ -13,8 +13,6 @@ import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { Cities } from "../Locations/Cities";
 import { EmployeePositions } from "./EmployeePositions";
-import { Employee } from "./Employee";
-import { IndustryUpgrades } from "./IndustryUpgrades";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
 
@@ -84,12 +82,12 @@ export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgr
   }
 }
 
-export function IssueDividends(corporation: ICorporation, percent: number): void {
-  if (isNaN(percent) || percent < 0 || percent > CorporationConstants.DividendMaxPercentage) {
-    throw new Error(`Invalid value. Must be an integer between 0 and ${CorporationConstants.DividendMaxPercentage}`);
+export function IssueDividends(corporation: ICorporation, rate: number): void {
+  if (isNaN(rate) || rate < 0 || rate > CorporationConstants.DividendMaxRate) {
+    throw new Error(`Invalid value. Must be an number between 0 and ${CorporationConstants.DividendMaxRate}`);
   }
 
-  corporation.dividendPercentage = percent * 100;
+  corporation.dividendRate = rate;
 }
 
 export function SellMaterial(mat: Material, amt: string, price: string): void {
@@ -304,9 +302,19 @@ export function BuyBackShares(corporation: ICorporation, player: IPlayer, numSha
   return true;
 }
 
-export function AssignJob(employee: Employee, job: string): void {
+export function AssignJob(office: OfficeSpace, employeeName: string, job: string): void {
+  const employee = office.employees.find((e) => e.name === employeeName);
+
+  if (!employee) throw new Error(`Could not find employee '${name}'.`);
   if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-  employee.pos = job;
+
+  office.assignSingleJob(employee, job);
+}
+
+export function AutoAssignJob(office: OfficeSpace, job: string, count: number): boolean {
+  if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
+
+  return office.autoAssignJob(job, count);
 }
 
 export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size: number): void {
@@ -323,14 +331,31 @@ export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size:
   corp.funds = corp.funds - cost;
 }
 
-export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
-  const totalCost = costPerEmployee * office.employees.length;
-  if (corp.funds < totalCost) return 0;
-  corp.funds = corp.funds - totalCost;
-  let mult = 0;
-  for (let i = 0; i < office.employees.length; ++i) {
-    mult = office.employees[i].throwParty(costPerEmployee);
+export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
+  const cost = office.getCoffeeCost();
+  if (corp.funds < cost) {
+    return false;
   }
+
+  if (!office.setCoffee()) {
+    return false;
+  }
+  corp.funds -= cost;
+
+  return true;
+}
+
+export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
+  const mult = 1 + costPerEmployee / 10e6;
+  const cost = costPerEmployee * office.employees.length;
+  if (corp.funds < cost) {
+    return 0;
+  }
+
+  if (!office.setParty(mult)) {
+    return 0;
+  }
+  corp.funds -= cost;
 
   return mult;
 }
@@ -362,26 +387,11 @@ export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, wareho
   corp.funds = corp.funds - sizeUpgradeCost;
 }
 
-export function BuyCoffee(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
-  const upgrade = IndustryUpgrades[0];
-  const cost = office.employees.length * upgrade[1];
+export function HireAdVert(corp: ICorporation, division: IIndustry): void {
+  const cost = division.getAdVertCost();
   if (corp.funds < cost) return;
   corp.funds = corp.funds - cost;
-  division.upgrade(upgrade, {
-    corporation: corp,
-    office: office,
-  });
-}
-
-export function HireAdVert(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
-  const upgrade = IndustryUpgrades[1];
-  const cost = upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
-  if (corp.funds < cost) return;
-  corp.funds = corp.funds - cost;
-  division.upgrade(upgrade, {
-    corporation: corp,
-    office: office,
-  });
+  division.applyAdVert(corp);
 }
 
 export function MakeProduct(

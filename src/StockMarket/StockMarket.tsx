@@ -77,7 +77,7 @@ export function placeOrder(
 }
 
 // Returns true if successfully cancels an order, false otherwise
-interface ICancelOrderParams {
+export interface ICancelOrderParams {
   order?: Order;
   pos?: PositionTypes;
   price?: number;

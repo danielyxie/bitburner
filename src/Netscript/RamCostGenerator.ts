@@ -62,7 +62,6 @@ export const RamCostConstants: IMap<number> = {
   ScriptGetFavorToDonate: 0.1,
   ScriptCodingContractBaseRamCost: 10,
   ScriptSleeveBaseRamCost: 4,
-  ScriptGetOwnedSourceFiles: 5,
   ScriptClearTerminalCost: 0.2,
 
   ScriptSingularityFn1RamCost: 2,
@@ -127,6 +126,10 @@ const hacknet = {
 
 // Stock API
 const stock = {
+  hasWSEAccount: 0.05,
+  hasTIXAPIAccess: 0.05,
+  has4SData: 0.05,
+  has4SDataTIXAPI: 0.05,
   getSymbols: RamCostConstants.ScriptGetStockRamCost,
   getPrice: RamCostConstants.ScriptGetStockRamCost,
   getAskPrice: RamCostConstants.ScriptGetStockRamCost,
@@ -135,9 +138,9 @@ const stock = {
   getMaxShares: RamCostConstants.ScriptGetStockRamCost,
   getPurchaseCost: RamCostConstants.ScriptGetStockRamCost,
   getSaleGain: RamCostConstants.ScriptGetStockRamCost,
-  buy: RamCostConstants.ScriptBuySellStockRamCost,
-  sell: RamCostConstants.ScriptBuySellStockRamCost,
-  short: RamCostConstants.ScriptBuySellStockRamCost,
+  buyStock: RamCostConstants.ScriptBuySellStockRamCost,
+  sellStock: RamCostConstants.ScriptBuySellStockRamCost,
+  buyShort: RamCostConstants.ScriptBuySellStockRamCost,
   sellShort: RamCostConstants.ScriptBuySellStockRamCost,
   placeOrder: RamCostConstants.ScriptBuySellStockRamCost,
   cancelOrder: RamCostConstants.ScriptBuySellStockRamCost,
@@ -164,8 +167,6 @@ const singularity = {
   installBackdoor: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   getDarkwebProgramCost: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   getDarkwebPrograms: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
-  getStats: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
-  getCharacterInformation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   hospitalize: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   isBusy: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   stopAction: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 2),
@@ -191,10 +192,12 @@ const singularity = {
   getCrimeChance: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getCrimeStats: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getOwnedAugmentations: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getOwnedSourceFiles: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationsFromFaction: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationCost: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationPrereq: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   getAugmentationPrice: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost / 2),
+  getAugmentationBasePrice: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost / 2),
   getAugmentationRepReq: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost / 2),
   getAugmentationStats: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   purchaseAugmentation: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
@@ -204,6 +207,7 @@ const singularity = {
   setFocus: SF4Cost(0.1),
   b1tflum3: SF4Cost(16),
   destroyW0r1dD43m0n: SF4Cost(32),
+  getCurrentWork: SF4Cost(0.5),
 };
 
 // Gang API
@@ -302,6 +306,8 @@ const sleeve = {
   getSleevePurchasableAugs: RamCostConstants.ScriptSleeveBaseRamCost,
   purchaseSleeveAug: RamCostConstants.ScriptSleeveBaseRamCost,
   setToBladeburnerAction: RamCostConstants.ScriptSleeveBaseRamCost,
+  getSleeveAugmentationPrice: RamCostConstants.ScriptSleeveBaseRamCost,
+  getSleeveAugmentationRepReq: RamCostConstants.ScriptSleeveBaseRamCost,
 };
 
 // Stanek API
@@ -340,6 +346,11 @@ const grafting = {
 };
 
 const corporation = {
+  getMaterialNames: 0,
+  getIndustryTypes: 0,
+  getUnlockables: 0,
+  getUpgradeNames: 0,
+  getResearchNames: 0,
   createCorporation: 0,
   hasUnlockUpgrade: 0,
   getUnlockUpgradeCost: 0,
@@ -505,7 +516,9 @@ const SourceRamCosts = {
   getHackTime: RamCostConstants.ScriptGetHackTimeRamCost,
   getGrowTime: RamCostConstants.ScriptGetHackTimeRamCost,
   getWeakenTime: RamCostConstants.ScriptGetHackTimeRamCost,
+  getTotalScriptIncome: RamCostConstants.ScriptGetScriptRamCost,
   getScriptIncome: RamCostConstants.ScriptGetScriptRamCost,
+  getTotalScriptExpGain: RamCostConstants.ScriptGetScriptRamCost,
   getScriptExpGain: RamCostConstants.ScriptGetScriptRamCost,
   getRunningScript: RamCostConstants.ScriptGetRunningScriptRamCost,
   nFormat: 0,
@@ -516,7 +529,6 @@ const SourceRamCosts = {
   getFavorToDonate: RamCostConstants.ScriptGetFavorToDonate,
   getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   mv: 0,
-  getOwnedSourceFiles: RamCostConstants.ScriptGetOwnedSourceFiles,
   tail: 0,
   toast: 0,
   closeTail: 0,

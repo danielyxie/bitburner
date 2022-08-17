@@ -6,11 +6,11 @@ import { use } from "../../../ui/Context";
 import { useCorporation } from "../Context";
 import { ICorporation } from "../../ICorporation";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Money } from "../../../ui/React/Money";
 import { SellShares } from "../../Actions";
 import { KEY } from "../../../utils/helpers/keyCodes";
+import { NumberInput } from "../../../ui/React/NumberInput";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -22,14 +22,9 @@ interface IProps {
 export function SellSharesModal(props: IProps): React.ReactElement {
   const player = use.Player();
   const corp = useCorporation();
-  const [shares, setShares] = useState<number | null>(null);
+  const [shares, setShares] = useState<number>(NaN);
 
-  const disabled = shares === null || isNaN(shares) || shares <= 0 || shares > corp.numShares;
-
-  function changeShares(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setShares(null);
-    else setShares(Math.round(parseFloat(event.target.value)));
-  }
+  const disabled = isNaN(shares) || shares <= 0 || shares > corp.numShares;
 
   function ProfitIndicator(props: { shares: number | null; corp: ICorporation }): React.ReactElement {
     if (props.shares === null) return <></>;
@@ -88,12 +83,11 @@ export function SellSharesModal(props: IProps): React.ReactElement {
         The current price of your company's stock is {numeralWrapper.formatMoney(corp.sharePrice)}
       </Typography>
       <br />
-      <TextField
+      <NumberInput
         variant="standard"
         autoFocus
-        type="number"
         placeholder="Shares to sell"
-        onChange={changeShares}
+        onChange={setShares}
         onKeyDown={onKeyDown}
       />
       <Button disabled={disabled} onClick={sell} sx={{ mx: 1 }}>

@@ -2,7 +2,7 @@ import { EmployeePositions } from "./EmployeePositions";
 import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { generateRandomString } from "../utils/StringHelperFunctions";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { Employee } from "./Employee";
 import { IIndustry } from "./IIndustry";
 import { ICorporation } from "./ICorporation";
@@ -15,11 +15,22 @@ interface IParams {
 export class OfficeSpace {
   loc: string;
   size: number;
+
   minEne = 0;
-  maxEne = 100;
   minHap = 0;
+  minMor = 0;
+
+  maxEne = 100;
   maxHap = 100;
   maxMor = 100;
+
+  autoCoffee = false;
+  autoParty = false;
+  coffeeMult = 0;
+  partyMult = 0;
+  coffeeEmployees = 0;
+  partyEmployees = 0;
+
   employees: Employee[] = [];
   employeeProd: { [key: string]: number } = {
     [EmployeePositions.Operations]: 0,
@@ -37,7 +48,15 @@ export class OfficeSpace {
     [EmployeePositions.RandD]: 0,
     [EmployeePositions.Training]: 0,
     [EmployeePositions.Unassigned]: 0,
-    total: 0,
+  };
+  employeeNextJobs: { [key: string]: number } = {
+    [EmployeePositions.Operations]: 0,
+    [EmployeePositions.Engineer]: 0,
+    [EmployeePositions.Business]: 0,
+    [EmployeePositions.Management]: 0,
+    [EmployeePositions.RandD]: 0,
+    [EmployeePositions.Training]: 0,
+    [EmployeePositions.Unassigned]: 0,
   };
 
   constructor(params: IParams = {}) {
@@ -58,12 +77,18 @@ export class OfficeSpace {
       }
     }
 
+    // Update employee jobs and job counts
+    for (const employee of this.employees) {
+      employee.pos = employee.nextPos;
+    }
     this.calculateTotalEmployees();
+    this.calculateNextEmployees();
 
     // Process Office properties
     this.maxEne = 100;
     this.maxHap = 100;
     this.maxMor = 100;
+
     if (industry.hasResearch("Go-Juice")) {
       this.maxEne += 10;
     }
@@ -72,6 +97,12 @@ export class OfficeSpace {
     }
     if (industry.hasResearch("Sti.mu")) {
       this.maxMor += 10;
+    }
+    if (industry.hasResearch("AutoBrew")) {
+      this.autoCoffee = true;
+    }
+    if (industry.hasResearch("AutoPartyManager")) {
+      this.autoParty = true;
     }
 
     // Calculate changes in Morale/Happiness/Energy for Employees
@@ -82,35 +113,56 @@ export class OfficeSpace {
       perfMult = Math.pow(1.01, marketCycles);
     }
 
-    const hasAutobrew = industry.hasResearch("AutoBrew");
-    const hasAutoparty = industry.hasResearch("AutoPartyManager");
+    let totalSalary = 0;
+    for (const employee of this.employees) {
+      const salary = employee.process(marketCycles);
+      totalSalary += salary;
 
-    let salaryPaid = 0;
-    for (let i = 0; i < this.employees.length; ++i) {
-      const emp = this.employees[i];
-      if (hasAutoparty) {
-        emp.mor = this.maxMor;
-        emp.hap = this.maxHap;
+      if (this.autoCoffee) {
+        employee.ene = this.maxEne;
+      } else if (this.coffeeMult > 1) {
+        const mult = 1 + ((this.coffeeMult - 1) * this.employees.length) / this.coffeeEmployees;
+        employee.ene *= mult;
       } else {
-        emp.mor *= perfMult;
-        emp.hap *= perfMult;
-        emp.mor = Math.min(emp.mor, this.maxMor);
-        emp.hap = Math.min(emp.hap, this.maxHap);
+        employee.ene *= perfMult;
       }
 
-      if (hasAutobrew) {
-        emp.ene = this.maxEne;
+      if (this.autoParty) {
+        employee.mor = this.maxMor;
+        employee.hap = this.maxHap;
+      } else if (this.partyMult > 1) {
+        const mult = 1 + ((this.partyMult - 1) * this.employees.length) / this.partyEmployees;
+        employee.mor *= mult;
+        employee.hap *= mult;
       } else {
-        emp.ene *= perfMult;
-        emp.ene = Math.min(emp.ene, this.maxEne);
+        employee.mor *= perfMult;
+        employee.hap *= perfMult;
       }
 
-      const salary = emp.process(marketCycles, this);
-      salaryPaid += salary;
+      employee.ene = Math.max(Math.min(employee.ene, this.maxEne), this.minEne);
+      employee.mor = Math.max(Math.min(employee.mor, this.maxMor), this.minMor);
+      employee.hap = Math.max(Math.min(employee.hap, this.maxHap), this.minHap);
     }
 
+    this.coffeeMult = 0;
+    this.partyMult = 0;
+    this.coffeeEmployees = 0;
+    this.partyEmployees = 0;
+
     this.calculateEmployeeProductivity(corporation, industry);
-    return salaryPaid;
+    return totalSalary;
+  }
+
+  calculateNextEmployees(): void {
+    //Reset
+    for (const name of Object.keys(this.employeeNextJobs)) {
+      this.employeeNextJobs[name] = 0;
+    }
+
+    for (let i = 0; i < this.employees.length; ++i) {
+      const employee = this.employees[i];
+      this.employeeNextJobs[employee.nextPos]++;
+    }
   }
 
   calculateTotalEmployees(): void {
@@ -123,7 +175,6 @@ export class OfficeSpace {
       const employee = this.employees[i];
       this.employeeJobs[employee.pos]++;
     }
-    this.employeeJobs.total = this.employees.length;
   }
 
   calculateEmployeeProductivity(corporation: ICorporation, industry: IIndustry): void {
@@ -173,53 +224,64 @@ export class OfficeSpace {
     emp.name = name;
     this.employees.push(emp);
 
+    this.calculateTotalEmployees();
+    this.calculateNextEmployees();
     return emp;
   }
 
-  //Finds the first unassigned employee and assigns its to the specified job
-  assignEmployeeToJob(job: string): boolean {
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].pos === EmployeePositions.Unassigned) {
-        this.employees[i].pos = job;
-        return true;
-      }
-    }
-    return false;
+  assignSingleJob(employee: Employee, job: string): void {
+    employee.nextPos = job;
+    this.calculateNextEmployees();
   }
 
-  //Finds the first employee with the given job and unassigns it
-  unassignEmployeeFromJob(job: string): boolean {
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].pos === job) {
-        this.employees[i].pos = EmployeePositions.Unassigned;
-        return true;
-      }
-    }
-    return false;
-  }
-
-  setEmployeeToJob(job: string, amount: number): boolean {
-    let jobCount = this.employees.reduce((acc, employee) => (employee.pos === job ? acc + 1 : acc), 0);
+  autoAssignJob(job: string, target: number): boolean {
+    let count = this.employeeNextJobs[job];
 
     for (const employee of this.employees) {
-      if (jobCount == amount) return true;
-      if (employee.pos === EmployeePositions.Unassigned && jobCount <= amount) {
-        employee.pos = job;
-        jobCount++;
-      } else if (employee.pos === job && jobCount >= amount) {
-        employee.pos = EmployeePositions.Unassigned;
-        jobCount--;
+      if (count === target) {
+        break;
+      } else if (employee.nextPos === EmployeePositions.Unassigned && count <= target) {
+        employee.nextPos = job;
+        count++;
+      } else if (employee.nextPos === job && count >= target) {
+        employee.nextPos = EmployeePositions.Unassigned;
+        count--;
       }
     }
-    return jobCount === amount;
+
+    this.calculateNextEmployees();
+    return count === target;
   }
 
-  toJSON(): any {
+  getCoffeeCost(): number {
+    return 500e3 * this.employees.length;
+  }
+
+  setCoffee(mult = 1.05): boolean {
+    if (mult > 1 && this.coffeeMult === 0 && !this.autoCoffee && this.employees.length > 0) {
+      this.coffeeMult = mult;
+      this.coffeeEmployees = this.employees.length;
+      return true;
+    }
+
+    return false;
+  }
+
+  setParty(mult: number): boolean {
+    if (mult > 1 && this.partyMult === 0 && !this.autoParty && this.employees.length > 0) {
+      this.partyMult = mult;
+      this.partyEmployees = this.employees.length;
+      return true;
+    }
+
+    return false;
+  }
+
+  toJSON(): IReviverValue {
     return Generic_toJSON("OfficeSpace", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): OfficeSpace {
+  static fromJSON(value: IReviverValue): OfficeSpace {
     return Generic_fromJSON(OfficeSpace, value.data);
   }
 }

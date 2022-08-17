@@ -16,34 +16,34 @@ export interface AugmentationStats
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [agility\_exp\_mult?](./bitburner.augmentationstats.agility_exp_mult.md) | number | <i>(Optional)</i> Multiplier to agility experience gain rate |
-|  [agility\_mult?](./bitburner.augmentationstats.agility_mult.md) | number | <i>(Optional)</i> Multiplier to agility skill |
-|  [bladeburner\_analysis\_mult?](./bitburner.augmentationstats.bladeburner_analysis_mult.md) | number | <i>(Optional)</i> Multiplier to effectiveness in Bladeburner Field Analysis |
-|  [bladeburner\_max\_stamina\_mult?](./bitburner.augmentationstats.bladeburner_max_stamina_mult.md) | number | <i>(Optional)</i> Multiplier to Bladeburner max stamina |
-|  [bladeburner\_stamina\_gain\_mult?](./bitburner.augmentationstats.bladeburner_stamina_gain_mult.md) | number | <i>(Optional)</i> Multiplier to Bladeburner stamina gain rate |
-|  [bladeburner\_success\_chance\_mult?](./bitburner.augmentationstats.bladeburner_success_chance_mult.md) | number | <i>(Optional)</i> Multiplier to success chance in Bladeburner contracts/operations |
-|  [charisma\_exp\_mult?](./bitburner.augmentationstats.charisma_exp_mult.md) | number | <i>(Optional)</i> Multiplier to charisma experience gain rate |
-|  [charisma\_mult?](./bitburner.augmentationstats.charisma_mult.md) | number | <i>(Optional)</i> Multiplier to charisma skill |
-|  [company\_rep\_mult?](./bitburner.augmentationstats.company_rep_mult.md) | number | <i>(Optional)</i> Multiplier to amount of reputation gained when working |
-|  [crime\_money\_mult?](./bitburner.augmentationstats.crime_money_mult.md) | number | <i>(Optional)</i> Multiplier to amount of money gained from crimes |
-|  [crime\_success\_mult?](./bitburner.augmentationstats.crime_success_mult.md) | number | <i>(Optional)</i> Multiplier to crime success rate |
-|  [defense\_exp\_mult?](./bitburner.augmentationstats.defense_exp_mult.md) | number | <i>(Optional)</i> Multiplier to defense experience gain rate |
-|  [defense\_mult?](./bitburner.augmentationstats.defense_mult.md) | number | <i>(Optional)</i> Multiplier to defense skill |
-|  [dexterity\_exp\_mult?](./bitburner.augmentationstats.dexterity_exp_mult.md) | number | <i>(Optional)</i> Multiplier to dexterity experience gain rate |
-|  [dexterity\_mult?](./bitburner.augmentationstats.dexterity_mult.md) | number | <i>(Optional)</i> Multiplier to dexterity skill |
-|  [faction\_rep\_mult?](./bitburner.augmentationstats.faction_rep_mult.md) | number | <i>(Optional)</i> Multiplier to amount of reputation gained when working |
-|  [hacking\_chance\_mult?](./bitburner.augmentationstats.hacking_chance_mult.md) | number | <i>(Optional)</i> Multiplier to chance of successfully performing a hack |
-|  [hacking\_exp\_mult?](./bitburner.augmentationstats.hacking_exp_mult.md) | number | <i>(Optional)</i> Multiplier to hacking experience gain rate |
-|  [hacking\_grow\_mult?](./bitburner.augmentationstats.hacking_grow_mult.md) | number | <i>(Optional)</i> Multiplier to amount of money injected into servers using grow |
-|  [hacking\_money\_mult?](./bitburner.augmentationstats.hacking_money_mult.md) | number | <i>(Optional)</i> Multiplier to amount of money the player gains from hacking |
-|  [hacking\_mult?](./bitburner.augmentationstats.hacking_mult.md) | number | <i>(Optional)</i> Multiplier to hacking skill |
-|  [hacking\_speed\_mult?](./bitburner.augmentationstats.hacking_speed_mult.md) | number | <i>(Optional)</i> Multiplier to hacking speed |
-|  [hacknet\_node\_core\_cost\_mult?](./bitburner.augmentationstats.hacknet_node_core_cost_mult.md) | number | <i>(Optional)</i> Multiplier to cost of core for a Hacknet Node |
-|  [hacknet\_node\_level\_cost\_mult?](./bitburner.augmentationstats.hacknet_node_level_cost_mult.md) | number | <i>(Optional)</i> Multiplier to cost of leveling up a Hacknet Node |
-|  [hacknet\_node\_money\_mult?](./bitburner.augmentationstats.hacknet_node_money_mult.md) | number | <i>(Optional)</i> Multiplier to amount of money produced by Hacknet Nodes |
-|  [hacknet\_node\_purchase\_cost\_mult?](./bitburner.augmentationstats.hacknet_node_purchase_cost_mult.md) | number | <i>(Optional)</i> Multiplier to cost of purchasing a Hacknet Node |
-|  [hacknet\_node\_ram\_cost\_mult?](./bitburner.augmentationstats.hacknet_node_ram_cost_mult.md) | number | <i>(Optional)</i> Multiplier to cost of ram for a Hacknet Node |
-|  [strength\_exp\_mult?](./bitburner.augmentationstats.strength_exp_mult.md) | number | <i>(Optional)</i> Multiplier to strength experience gain rate |
-|  [strength\_mult?](./bitburner.augmentationstats.strength_mult.md) | number | <i>(Optional)</i> Multiplier to strength skill |
-|  [work\_money\_mult?](./bitburner.augmentationstats.work_money_mult.md) | number | <i>(Optional)</i> Multiplier to amount of money gained from working |
+|  [agility\_exp?](./bitburner.augmentationstats.agility_exp.md) | number | <i>(Optional)</i> Multiplier to agility experience gain rate |
+|  [agility?](./bitburner.augmentationstats.agility.md) | number | <i>(Optional)</i> Multiplier to agility skill |
+|  [bladeburner\_analysis?](./bitburner.augmentationstats.bladeburner_analysis.md) | number | <i>(Optional)</i> Multiplier to effectiveness in Bladeburner Field Analysis |
+|  [bladeburner\_max\_stamina?](./bitburner.augmentationstats.bladeburner_max_stamina.md) | number | <i>(Optional)</i> Multiplier to Bladeburner max stamina |
+|  [bladeburner\_stamina\_gain?](./bitburner.augmentationstats.bladeburner_stamina_gain.md) | number | <i>(Optional)</i> Multiplier to Bladeburner stamina gain rate |
+|  [bladeburner\_success\_chance?](./bitburner.augmentationstats.bladeburner_success_chance.md) | number | <i>(Optional)</i> Multiplier to success chance in Bladeburner contracts/operations |
+|  [charisma\_exp?](./bitburner.augmentationstats.charisma_exp.md) | number | <i>(Optional)</i> Multiplier to charisma experience gain rate |
+|  [charisma?](./bitburner.augmentationstats.charisma.md) | number | <i>(Optional)</i> Multiplier to charisma skill |
+|  [company\_rep?](./bitburner.augmentationstats.company_rep.md) | number | <i>(Optional)</i> Multiplier to amount of reputation gained when working |
+|  [crime\_money?](./bitburner.augmentationstats.crime_money.md) | number | <i>(Optional)</i> Multiplier to amount of money gained from crimes |
+|  [crime\_success?](./bitburner.augmentationstats.crime_success.md) | number | <i>(Optional)</i> Multiplier to crime success rate |
+|  [defense\_exp?](./bitburner.augmentationstats.defense_exp.md) | number | <i>(Optional)</i> Multiplier to defense experience gain rate |
+|  [defense?](./bitburner.augmentationstats.defense.md) | number | <i>(Optional)</i> Multiplier to defense skill |
+|  [dexterity\_exp?](./bitburner.augmentationstats.dexterity_exp.md) | number | <i>(Optional)</i> Multiplier to dexterity experience gain rate |
+|  [dexterity?](./bitburner.augmentationstats.dexterity.md) | number | <i>(Optional)</i> Multiplier to dexterity skill |
+|  [faction\_rep?](./bitburner.augmentationstats.faction_rep.md) | number | <i>(Optional)</i> Multiplier to amount of reputation gained when working |
+|  [hacking\_chance?](./bitburner.augmentationstats.hacking_chance.md) | number | <i>(Optional)</i> Multiplier to chance of successfully performing a hack |
+|  [hacking\_exp?](./bitburner.augmentationstats.hacking_exp.md) | number | <i>(Optional)</i> Multiplier to hacking experience gain rate |
+|  [hacking\_grow?](./bitburner.augmentationstats.hacking_grow.md) | number | <i>(Optional)</i> Multiplier to amount of money injected into servers using grow |
+|  [hacking\_money?](./bitburner.augmentationstats.hacking_money.md) | number | <i>(Optional)</i> Multiplier to amount of money the player gains from hacking |
+|  [hacking\_speed?](./bitburner.augmentationstats.hacking_speed.md) | number | <i>(Optional)</i> Multiplier to hacking speed |
+|  [hacking?](./bitburner.augmentationstats.hacking.md) | number | <i>(Optional)</i> Multiplier to hacking skill |
+|  [hacknet\_node\_core\_cost?](./bitburner.augmentationstats.hacknet_node_core_cost.md) | number | <i>(Optional)</i> Multiplier to cost of core for a Hacknet Node |
+|  [hacknet\_node\_level\_cost?](./bitburner.augmentationstats.hacknet_node_level_cost.md) | number | <i>(Optional)</i> Multiplier to cost of leveling up a Hacknet Node |
+|  [hacknet\_node\_money?](./bitburner.augmentationstats.hacknet_node_money.md) | number | <i>(Optional)</i> Multiplier to amount of money produced by Hacknet Nodes |
+|  [hacknet\_node\_purchase\_cost?](./bitburner.augmentationstats.hacknet_node_purchase_cost.md) | number | <i>(Optional)</i> Multiplier to cost of purchasing a Hacknet Node |
+|  [hacknet\_node\_ram\_cost?](./bitburner.augmentationstats.hacknet_node_ram_cost.md) | number | <i>(Optional)</i> Multiplier to cost of ram for a Hacknet Node |
+|  [strength\_exp?](./bitburner.augmentationstats.strength_exp.md) | number | <i>(Optional)</i> Multiplier to strength experience gain rate |
+|  [strength?](./bitburner.augmentationstats.strength.md) | number | <i>(Optional)</i> Multiplier to strength skill |
+|  [work\_money?](./bitburner.augmentationstats.work_money.md) | number | <i>(Optional)</i> Multiplier to amount of money gained from working |
 

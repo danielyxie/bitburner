@@ -8,16 +8,13 @@ import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
 
-import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { GetServer } from "../../Server/AllServers";
-import { Server } from "../../Server/Server";
 
 import { Money } from "../../ui/React/Money";
 import { IRouter } from "../../ui/Router";
-import { serverMetadata } from "../../Server/data/servers";
 import { Box } from "@mui/material";
-import { ClassType } from "../../utils/WorkType";
+import { ClassWork, ClassType, Classes } from "../../Work/ClassWork";
+import { calculateCost } from "../../Work/formulas/Class";
 
 type IProps = {
   loc: Location;
@@ -26,51 +23,32 @@ type IProps = {
 };
 
 export function GymLocation(props: IProps): React.ReactElement {
-  function calculateCost(): number {
-    const serverMeta = serverMetadata.find((s) => s.specialName === props.loc.name);
-    const server = GetServer(serverMeta ? serverMeta.hostname : "");
-    if (server == null || !server.hasOwnProperty("backdoorInstalled")) return props.loc.costMult;
-    const discount = (server as Server).backdoorInstalled ? 0.9 : 1;
-    return props.loc.costMult * discount;
-  }
-
   function train(stat: ClassType): void {
-    const loc = props.loc;
-    props.p.startClass(calculateCost(), loc.expMult, stat);
+    props.p.startWork(
+      new ClassWork({
+        classType: stat,
+        location: props.loc.name,
+        singularity: false,
+      }),
+    );
     props.p.startFocusing();
     props.router.toWork();
   }
 
-  function trainStrength(): void {
-    train(ClassType.GymStrength);
-  }
-
-  function trainDefense(): void {
-    train(ClassType.GymDefense);
-  }
-
-  function trainDexterity(): void {
-    train(ClassType.GymDexterity);
-  }
-
-  function trainAgility(): void {
-    train(ClassType.GymAgility);
-  }
-
-  const cost = CONSTANTS.ClassGymBaseCost * calculateCost();
+  const cost = calculateCost(Classes[ClassType.GymStrength], props.loc);
 
   return (
     <Box sx={{ display: "grid", width: "fit-content" }}>
-      <Button onClick={trainStrength}>
+      <Button onClick={() => train(ClassType.GymStrength)}>
         Train Strength (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={trainDefense}>
+      <Button onClick={() => train(ClassType.GymDefense)}>
         Train Defense (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={trainDexterity}>
+      <Button onClick={() => train(ClassType.GymDexterity)}>
         Train Dexterity (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={trainAgility}>
+      <Button onClick={() => train(ClassType.GymAgility)}>
         Train Agility (<Money money={cost} player={props.p} /> / sec)
       </Button>
     </Box>

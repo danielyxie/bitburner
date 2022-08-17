@@ -2,50 +2,17 @@
 // a Sleeve. Used for functions that need to take in both.
 
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import { HP } from "./HP";
 import { ITaskTracker } from "./ITaskTracker";
+import { Multipliers } from "./Multipliers";
+import { Skills } from "./Skills";
 
 export interface IPerson {
-  // Stats
-  hacking: number;
-  strength: number;
-  defense: number;
-  dexterity: number;
-  agility: number;
-  charisma: number;
-  intelligence: number;
-  hp: number;
-  max_hp: number;
+  hp: HP;
+  skills: Skills;
+  exp: Skills;
 
-  // Experience
-  hacking_exp: number;
-  strength_exp: number;
-  defense_exp: number;
-  dexterity_exp: number;
-  agility_exp: number;
-  charisma_exp: number;
-  intelligence_exp: number;
-
-  // Multipliers
-  hacking_exp_mult: number;
-  strength_exp_mult: number;
-  defense_exp_mult: number;
-  dexterity_exp_mult: number;
-  agility_exp_mult: number;
-  charisma_exp_mult: number;
-  hacking_mult: number;
-  strength_mult: number;
-  defense_mult: number;
-  dexterity_mult: number;
-  agility_mult: number;
-  charisma_mult: number;
-
-  company_rep_mult: number;
-  faction_rep_mult: number;
-
-  crime_money_mult: number;
-  crime_success_mult: number;
-
-  bladeburner_analysis_mult: number;
+  mults: Multipliers;
 
   augmentations: IPlayerOwnedAugmentation[];
 

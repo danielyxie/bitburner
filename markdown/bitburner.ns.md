@@ -43,7 +43,7 @@ export async function main(ns) {
 |  [args](./bitburner.ns.args.md) | (string \| number \| boolean)\[\] | Arguments passed into the script. |
 |  [bladeburner](./bitburner.ns.bladeburner.md) | [Bladeburner](./bitburner.bladeburner.md) | Namespace for bladeburner functions. |
 |  [codingcontract](./bitburner.ns.codingcontract.md) | [CodingContract](./bitburner.codingcontract.md) | Namespace for codingcontract functions. |
-|  [corporation](./bitburner.ns.corporation.md) | [Corporation](./bitburner.corporation.md) | Namespace for corporation functions. RAM cost: 0 GB |
+|  [corporation](./bitburner.ns.corporation.md) | [Corporation](./bitburner.corporation.md) | Namespace for corporation functions. RAM cost: 1022.4 GB |
 |  [enums](./bitburner.ns.enums.md) | [NSEnums](./bitburner.nsenums.md) |  |
 |  [formulas](./bitburner.ns.formulas.md) | [Formulas](./bitburner.formulas.md) | Namespace for formulas functions. |
 |  [gang](./bitburner.ns.gang.md) | [Gang](./bitburner.gang.md) | Namespace for gang functions. |
@@ -84,7 +84,6 @@ export async function main(ns) {
 |  [getHacknetMultipliers()](./bitburner.ns.gethacknetmultipliers.md) | Get hacknet related multipliers. |
 |  [getHackTime(host)](./bitburner.ns.gethacktime.md) | Get the execution time of a hack() call. |
 |  [getHostname()](./bitburner.ns.gethostname.md) | Returns a string with the hostname of the server that the script is running on. |
-|  [getOwnedSourceFiles()](./bitburner.ns.getownedsourcefiles.md) | Get a list of acquired Source-Files. |
 |  [getPlayer()](./bitburner.ns.getplayer.md) | Get information about the player. |
 |  [getPortHandle(port)](./bitburner.ns.getporthandle.md) | Get all data on a port. |
 |  [getPurchasedServerCost(ram)](./bitburner.ns.getpurchasedservercost.md) | Get cost of purchasing a server. |
@@ -93,10 +92,8 @@ export async function main(ns) {
 |  [getPurchasedServers()](./bitburner.ns.getpurchasedservers.md) | Returns an array with the hostnames of all of the servers you have purchased. |
 |  [getRecentScripts()](./bitburner.ns.getrecentscripts.md) | Get an array of recently killed scripts across all servers. |
 |  [getRunningScript(filename, hostname, args)](./bitburner.ns.getrunningscript.md) | Get general info about a running script. |
-|  [getScriptExpGain()](./bitburner.ns.getscriptexpgain.md) | Get the exp gain of a script. |
-|  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain_1.md) | Get the exp gain of a script. |
-|  [getScriptIncome()](./bitburner.ns.getscriptincome.md) | Get the income of a script. |
-|  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome_1.md) | Get the income of a script. |
+|  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain.md) | Get the exp gain of a script. |
+|  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome.md) | Get the income of a script. |
 |  [getScriptLogs(fn, host, args)](./bitburner.ns.getscriptlogs.md) | Get all the logs of a script. |
 |  [getScriptName()](./bitburner.ns.getscriptname.md) | Returns the current script name. |
 |  [getScriptRam(script, host)](./bitburner.ns.getscriptram.md) | Get the ram cost of a script. |
@@ -114,6 +111,8 @@ export async function main(ns) {
 |  [getServerUsedRam(host)](./bitburner.ns.getserverusedram.md) | Get the used RAM on a server. |
 |  [getSharePower()](./bitburner.ns.getsharepower.md) | Calculate your share power. Based on all the active share calls. |
 |  [getTimeSinceLastAug()](./bitburner.ns.gettimesincelastaug.md) | Returns the amount of time in milliseconds that have passed since you last installed Augmentations. |
+|  [getTotalScriptExpGain()](./bitburner.ns.gettotalscriptexpgain.md) | Get the exp gain of all script. |
+|  [getTotalScriptIncome()](./bitburner.ns.gettotalscriptincome.md) | Get the income of all script. |
 |  [getWeakenTime(host)](./bitburner.ns.getweakentime.md) | Get the execution time of a weaken() call. |
 |  [grow(host, opts)](./bitburner.ns.grow.md) | Spoof money in a servers bank account, increasing the amount available. |
 |  [growthAnalyze(host, growthAmount, cores)](./bitburner.ns.growthanalyze.md) | Calculate the number of grow thread needed to grow a server by a certain multiplier. |
@@ -146,8 +145,7 @@ export async function main(ns) {
 |  [rm(name, host)](./bitburner.ns.rm.md) | Delete a file. |
 |  [run(script, numThreads, args)](./bitburner.ns.run.md) | Start another script on the current server. |
 |  [scan(host)](./bitburner.ns.scan.md) | Get the list of servers connected to a server. |
-|  [scp(files, destination)](./bitburner.ns.scp.md) | Copy file between servers. |
-|  [scp(files, source, destination)](./bitburner.ns.scp_1.md) | Copy file between servers. |
+|  [scp(files, destination, source)](./bitburner.ns.scp.md) | Copy file between servers. |
 |  [scriptKill(script, host)](./bitburner.ns.scriptkill.md) | Kill all scripts with a filename. |
 |  [scriptRunning(script, host)](./bitburner.ns.scriptrunning.md) | Check if any script with a filename is running. |
 |  [serverExists(host)](./bitburner.ns.serverexists.md) | Returns a boolean denoting whether or not the specified server exists. |

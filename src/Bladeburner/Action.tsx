@@ -1,7 +1,7 @@
 import { Player } from "../Player";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { addOffset } from "../utils/helpers/addOffset";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { BladeburnerConstants } from "./data/Constants";
 import { IBladeburner } from "./IBladeburner";
 import { IAction, ISuccessChanceParams } from "./IAction";
@@ -167,8 +167,8 @@ export class Action implements IAction {
     let baseTime = difficulty / BladeburnerConstants.DifficultyToTimeFactor;
     const skillFac = inst.skillMultipliers.actionTime; // Always < 1
 
-    const effAgility = person.agility * inst.skillMultipliers.effAgi;
-    const effDexterity = person.dexterity * inst.skillMultipliers.effDex;
+    const effAgility = person.skills.agility * inst.skillMultipliers.effAgi;
+    const effDexterity = person.skills.dexterity * inst.skillMultipliers.effDex;
     const statFac =
       0.5 *
       (Math.pow(effAgility, BladeburnerConstants.EffAgiExponentialFactor) +
@@ -274,7 +274,7 @@ export class Action implements IAction {
     }
 
     // Augmentation multiplier
-    competence *= Player.bladeburner_success_chance_mult;
+    competence *= Player.mults.bladeburner_success_chance;
 
     if (isNaN(competence)) {
       throw new Error("Competence calculated as NaN in Action.getSuccessChance()");
@@ -292,12 +292,11 @@ export class Action implements IAction {
     }
   }
 
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Action", this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Action {
+  static fromJSON(value: IReviverValue): Action {
     return Generic_fromJSON(Action, value.data);
   }
 }

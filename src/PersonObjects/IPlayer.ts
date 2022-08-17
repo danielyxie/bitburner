@@ -25,18 +25,18 @@ import { ICorporation } from "../Corporation/ICorporation";
 import { IGang } from "../Gang/IGang";
 import { IBladeburner } from "../Bladeburner/IBladeburner";
 import { ICodingContractReward } from "../CodingContracts";
-import { IRouter } from "../ui/Router";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
-import { WorkType, ClassType, CrimeType } from "../utils/WorkType";
+import { Work } from "../Work/Work";
+import { Multipliers } from "./Multipliers";
+import { Skills } from "./Skills";
+import { HP } from "./HP";
 
 export interface IPlayer extends IPerson {
   bitNodeN: number;
   city: CityName;
-  companyName: string;
   corporation: ICorporation | null;
   gang: IGang | null;
   bladeburner: IBladeburner | null;
@@ -49,20 +49,16 @@ export interface IPlayer extends IPerson {
   hashManager: HashManager;
   hasTixApiAccess: boolean;
   hasWseAccount: boolean;
-  hp: number;
   jobs: IMap<string>;
-  init: () => void;
-  isWorking: boolean;
   karma: number;
   numPeopleKilled: number;
   location: LocationName;
-  max_hp: number;
   readonly money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
   playtimeSinceLastAug: number;
   playtimeSinceLastBitnode: number;
-  purchasedServers: any[];
+  purchasedServers: string[];
   queuedAugmentations: IPlayerOwnedAugmentation[];
   scriptProdSinceLastAug: number;
   sleeves: Sleeve[];
@@ -74,98 +70,22 @@ export interface IPlayer extends IPerson {
   lastUpdate: number;
   totalPlaytime: number;
 
-  // Stats
-  hacking: number;
-  strength: number;
-  defense: number;
-  dexterity: number;
-  agility: number;
-  charisma: number;
-  intelligence: number;
+  hp: HP;
+  skills: Skills;
+  exp: Skills;
 
-  // Experience
-  hacking_exp: number;
-  strength_exp: number;
-  defense_exp: number;
-  dexterity_exp: number;
-  agility_exp: number;
-  charisma_exp: number;
-  intelligence_exp: number;
+  mults: Multipliers;
 
-  // Multipliers
-  hacking_chance_mult: number;
-  hacking_speed_mult: number;
-  hacking_money_mult: number;
-  hacking_grow_mult: number;
-  hacking_mult: number;
-  hacking_exp_mult: number;
-  strength_mult: number;
-  strength_exp_mult: number;
-  defense_mult: number;
-  defense_exp_mult: number;
-  dexterity_mult: number;
-  dexterity_exp_mult: number;
-  agility_mult: number;
-  agility_exp_mult: number;
-  charisma_mult: number;
-  charisma_exp_mult: number;
-  hacknet_node_money_mult: number;
-  hacknet_node_purchase_cost_mult: number;
-  hacknet_node_ram_cost_mult: number;
-  hacknet_node_core_cost_mult: number;
-  hacknet_node_level_cost_mult: number;
-  company_rep_mult: number;
-  faction_rep_mult: number;
-  work_money_mult: number;
-  crime_success_mult: number;
-  crime_money_mult: number;
-  bladeburner_max_stamina_mult: number;
-  bladeburner_stamina_gain_mult: number;
-  bladeburner_analysis_mult: number;
-  bladeburner_success_chance_mult: number;
-
-  createProgramReqLvl: number;
-  factionWorkType: string;
-  createProgramName: string;
-  timeWorkedCreateProgram: number;
-  graftAugmentationName: string;
-  timeWorkedGraftAugmentation: number;
-  crimeType: CrimeType;
-  committingCrimeThruSingFn: boolean;
-  singFnCrimeWorkerScript: WorkerScript | null;
-  timeNeededToCompleteWork: number;
+  currentWork: Work | null;
   focus: boolean;
-  className: ClassType;
-  currentWorkFactionName: string;
-  workType: WorkType;
-  workCostMult: number;
-  workExpMult: number;
-  currentWorkFactionDescription: string;
-  timeWorked: number;
-  workMoneyGained: number;
-  workMoneyGainRate: number;
-  workRepGained: number;
-  workRepGainRate: number;
-  workHackExpGained: number;
-  workHackExpGainRate: number;
-  workStrExpGained: number;
-  workStrExpGainRate: number;
-  workDefExpGained: number;
-  workDefExpGainRate: number;
-  workDexExpGained: number;
-  workDexExpGainRate: number;
-  workAgiExpGained: number;
-  workAgiExpGainRate: number;
-  workChaExpGained: number;
-  workChaExpGainRate: number;
-  workMoneyLossRate: number;
 
   entropy: number;
 
   // Methods
-  work(numCycles: number): boolean;
-  workPartTime(numCycles: number): boolean;
-  workForFaction(numCycles: number): boolean;
+  init: () => void;
+  startWork(w: Work): void;
+  processWork(cycles: number): void;
+  finishWork(cancelled: boolean): void;
   applyForAgentJob(sing?: boolean): boolean;
   applyForBusinessConsultantJob(sing?: boolean): boolean;
   applyForBusinessJob(sing?: boolean): boolean;
@@ -204,35 +124,13 @@ export interface IPlayer extends IPerson {
   isAwareOfGang(): boolean;
   isQualified(company: Company, position: CompanyPosition): boolean;
   loseMoney(money: number, source: string): void;
-  process(router: IRouter, numCycles?: number): void;
   reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
   setMoney(amt: number): void;
-  singularityStopWork(): string;
-  startBladeburner(p: any): void;
-  startFactionWork(faction: Faction): void;
-  startClass(costMult: number, expMult: number, className: ClassType): void;
+  startBladeburner(): void;
   startCorporation(corpName: string, additionalShares?: number): void;
-  startCrime(
-    router: IRouter,
-    crimeType: CrimeType,
-    hackExp: number,
-    strExp: number,
-    defExp: number,
-    dexExp: number,
-    agiExp: number,
-    chaExp: number,
-    money: number,
-    time: number,
-    singParams: any,
-  ): void;
-  startFactionFieldWork(faction: Faction): void;
-  startFactionHackWork(faction: Faction): void;
-  startFactionSecurityWork(faction: Faction): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
-  startWork(companyName: string): void;
-  startWorkPartTime(companyName: string): void;
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
   giveAchievement(achievementId: string): void;
@@ -240,45 +138,20 @@ export interface IPlayer extends IPerson {
   quitJob(company: string, sing?: boolean): void;
   hasJob(): boolean;
   createHacknetServer(): HacknetServer;
-  startCreateProgramWork(programName: string, time: number, reqLevel: number): void;
   queueAugmentation(augmentationName: string): void;
   receiveInvite(factionName: string): void;
   updateSkillLevels(): void;
   gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
   stopFocusing(): void;
-  finishFactionWork(cancelled: boolean, sing?: boolean): string;
-  finishClass(sing?: boolean): string;
-  finishWork(cancelled: boolean, sing?: boolean): string;
-  cancelationPenalty(): number;
-  finishWorkPartTime(sing?: boolean): string;
-  finishCrime(cancelled: boolean): string;
-  finishCreateProgramWork(cancelled: boolean): string;
   resetMultipliers(): void;
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
-  resetWorkStatus(generalType?: WorkType, group?: string, workType?: string): void;
-  getWorkHackExpGain(): number;
-  getWorkStrExpGain(): number;
-  getWorkDefExpGain(): number;
-  getWorkDexExpGain(): number;
-  getWorkAgiExpGain(): number;
-  getWorkChaExpGain(): number;
-  getWorkRepGain(): number;
-  getWorkMoneyGain(): number;
-  processWorkEarnings(cycles: number): void;
   hospitalize(): void;
-  createProgramWork(numCycles: number): boolean;
-  takeClass(numCycles: number): boolean;
-  commitCrime(numCycles: number): boolean;
   checkForFactionInvitations(): Faction[];
   setBitNodeNumber(n: number): void;
-  getMult(name: string): number;
-  setMult(name: string, mult: number): void;
   canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
-  startGraftAugmentationWork(augmentationName: string, time: number): void;
-  graftAugmentationWork(numCycles: number): boolean;
-  finishGraftAugmentationWork(cancelled: boolean, singularity?: boolean): string;
   applyEntropy(stacks?: number): void;
+  focusPenalty(): number;
 }

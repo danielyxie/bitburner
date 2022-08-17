@@ -10,78 +10,64 @@ import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventE
 import { RunningScript } from "../Script/RunningScript";
 import { GetServer } from "../Server/AllServers";
 
-import { compareArrays } from "../utils/helpers/compareArrays";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
 import { Player } from "../Player";
 
-export function killWorkerScript(runningScriptObj: RunningScript, hostname: string, rerenderUi?: boolean): boolean;
-export function killWorkerScript(workerScript: WorkerScript): boolean;
-export function killWorkerScript(pid: number): boolean;
-export function killWorkerScript(
-  script: RunningScript | WorkerScript | number,
-  hostname?: string,
-  rerenderUi?: boolean,
-): boolean {
-  if (rerenderUi == null || typeof rerenderUi !== "boolean") {
-    rerenderUi = true;
-  }
+export type killScriptParams = WorkerScript | number | { runningScript: RunningScript; hostname: string };
 
-  if (script instanceof WorkerScript) {
-    stopAndCleanUpWorkerScript(script);
+export function killWorkerScript(params: killScriptParams): boolean {
+  if (params instanceof WorkerScript) {
+    stopAndCleanUpWorkerScript(params);
 
     return true;
-  } else if (script instanceof RunningScript && typeof hostname === "string") {
+  } else if (typeof params === "number") {
+    return killWorkerScriptByPid(params);
+  } else {
     // Try to kill by PID
-    const res = killWorkerScriptByPid(script.pid, rerenderUi);
+    const res = killWorkerScriptByPid(params.runningScript.pid);
     if (res) {
       return res;
     }
 
     // If for some reason that doesn't work, we'll try the old way
     for (const ws of workerScripts.values()) {
-      if (ws.name == script.filename && ws.hostname == hostname && compareArrays(ws.args, script.args)) {
-        stopAndCleanUpWorkerScript(ws, rerenderUi);
-
+      if (ws.scriptRef === params.runningScript) {
+        stopAndCleanUpWorkerScript(ws);
         return true;
       }
     }
 
     return false;
-  } else if (typeof script === "number") {
-    return killWorkerScriptByPid(script, rerenderUi);
-  } else {
-    console.error(`killWorkerScript() called with invalid argument:`);
-    console.error(script);
-    return false;
   }
 }
 
-function killWorkerScriptByPid(pid: number, rerenderUi = true): boolean {
+function killWorkerScriptByPid(pid: number): boolean {
   const ws = workerScripts.get(pid);
   if (ws instanceof WorkerScript) {
-    stopAndCleanUpWorkerScript(ws, rerenderUi);
-
+    stopAndCleanUpWorkerScript(ws);
     return true;
   }
 
   return false;
 }
 
-function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
+function stopAndCleanUpWorkerScript(workerScript: WorkerScript): void {
   if (typeof workerScript.atExit === "function") {
     try {
       workerScript.atExit();
-    } catch (e: any) {
+    } catch (e: unknown) {
       dialogBoxCreate(
-        `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args} ${e}`,
+        `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${
+          workerScript.scriptRef.args
+        } ${String(e)}`,
       );
     }
     workerScript.atExit = undefined;
   }
   workerScript.env.stopFlag = true;
   killNetscriptDelay(workerScript);
-  removeWorkerScript(workerScript, rerenderUi);
+  removeWorkerScript(workerScript);
 }
 
 /**
@@ -91,9 +77,8 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = tru
  * @param {WorkerScript} - Identifier for WorkerScript. Either the object itself, or
  *                                  its index in the global workerScripts array
  */
-function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
+function removeWorkerScript(workerScript: WorkerScript): void {
   const ip = workerScript.hostname;
-  const name = workerScript.name;
 
   // Get the server on which the script runs
   const server = GetServer(ip);
@@ -105,7 +90,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
   // Delete the RunningScript object from that server
   for (let i = 0; i < server.runningScripts.length; ++i) {
     const runningScript = server.runningScripts[i];
-    if (runningScript.filename === name && compareArrays(runningScript.args, workerScript.args)) {
+    if (runningScript === workerScript.scriptRef) {
       server.runningScripts.splice(i, 1);
       break;
     }
@@ -125,9 +110,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
   // }
   AddRecentScript(workerScript);
 
-  if (rerenderUi) {
-    WorkerScriptStartStopEventEmitter.emit();
-  }
+  WorkerScriptStartStopEventEmitter.emit();
 }
 
 /**

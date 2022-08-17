@@ -9,7 +9,7 @@ Throw a party for your employees
 <b>Signature:</b>
 
 ```typescript
-throwParty(divisionName: string, cityName: string, costPerEmployee: number): Promise<number>;
+throwParty(divisionName: string, cityName: string, costPerEmployee: number): number;
 ```
 
 ## Parameters
@@ -22,7 +22,7 @@ throwParty(divisionName: string, cityName: string, costPerEmployee: number): Pro
 
 <b>Returns:</b>
 
-Promise&lt;number&gt;
+number
 
-Amount of happiness increased.
+Multiplier for happiness and morale, or zero on failure
 

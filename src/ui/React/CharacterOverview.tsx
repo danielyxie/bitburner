@@ -26,7 +26,14 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Box, Tooltip } from "@mui/material";
 
-import { WorkType } from "../../utils/WorkType";
+import { isClassWork } from "../../Work/ClassWork";
+import { CONSTANTS } from "../../Constants";
+import { isCreateProgramWork } from "../../Work/CreateProgramWork";
+import { isGraftingWork } from "../../Work/GraftingWork";
+import { isFactionWork } from "../../Work/FactionWork";
+import { ReputationRate } from "./ReputationRate";
+import { isCompanyWork } from "../../Work/CompanyWork";
+import { isCrimeWork } from "../../Work/CrimeWork";
 
 interface IProps {
   save: () => void;
@@ -37,8 +44,8 @@ function Intelligence(): React.ReactElement {
   const theme = useTheme();
   const player = use.Player();
   const classes = useStyles();
-  if (player.intelligence === 0) return <></>;
-  const progress = player.calculateSkillProgress(player.intelligence_exp);
+  if (player.skills.intelligence === 0) return <></>;
+  const progress = player.calculateSkillProgress(player.exp.intelligence);
 
   return (
     <>
@@ -47,7 +54,9 @@ function Intelligence(): React.ReactElement {
           <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
         </TableCell>
         <TableCell align="right" classes={{ root: classes.cell }}>
-          <Typography classes={{ root: classes.int }}>{numeralWrapper.formatSkill(player.intelligence)}</Typography>
+          <Typography classes={{ root: classes.int }}>
+            {numeralWrapper.formatSkill(player.skills.intelligence)}
+          </Typography>
         </TableCell>
         <TableCell align="right" classes={{ root: classes.cell }}>
           <Typography id="overview-int-hook" classes={{ root: classes.int }}>
@@ -138,72 +147,79 @@ function Work(): React.ReactElement {
     player.startFocusing();
     router.toWork();
   };
-
-  if (!player.isWorking || player.focus) return <></>;
+  if (player.currentWork === null || player.focus) return <></>;
 
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
-  switch (player.workType) {
-    case WorkType.CompanyPartTime:
-    case WorkType.Company:
-      details = (
-        <>
-          {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
-        </>
-      );
-      header = (
-        <>
-          Working at <strong>{player.companyName}</strong>
-        </>
-      );
-      innerText = (
-        <>
-          +<Reputation reputation={player.workRepGained} /> rep
-        </>
-      );
-      break;
-    case WorkType.Faction:
-      details = (
-        <>
-          {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
-        </>
-      );
-      header = (
-        <>
-          Working for <strong>{player.currentWorkFactionName}</strong>
-        </>
-      );
-      innerText = (
-        <>
-          +<Reputation reputation={player.workRepGained} /> rep
-        </>
-      );
-      break;
-    case WorkType.StudyClass:
-      details = <>{player.workType}</>;
-      header = <>You are {player.className}</>;
-      innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
-      break;
-    case WorkType.CreateProgram:
-      details = <>Coding {player.createProgramName}</>;
-      header = <>Creating a program</>;
-      innerText = (
-        <>
-          {player.createProgramName}{" "}
-          {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
-        </>
-      );
-      break;
-    case WorkType.GraftAugmentation:
-      details = <>Grafting {player.graftAugmentationName}</>;
-      header = <>Grafting an Augmentation</>;
-      innerText = (
-        <>
-          <strong>{((player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}%</strong>{" "}
-          done
-        </>
-      );
+  if (isCrimeWork(player.currentWork)) {
+    const crime = player.currentWork.getCrime();
+    const perc = (player.currentWork.unitCompleted / crime.time) * 100;
+
+    details = <>{player.currentWork.crimeType}</>;
+    header = <>You are attempting to {player.currentWork.crimeType}</>;
+    innerText = <>{perc.toFixed(2)}%</>;
+  }
+  if (isClassWork(player.currentWork)) {
+    details = <>{player.currentWork.getClass().youAreCurrently}</>;
+    header = <>You are {player.currentWork.getClass().youAreCurrently}</>;
+    innerText = <>{convertTimeMsToTimeElapsedString(player.currentWork.cyclesWorked * CONSTANTS._idleSpeed)}</>;
+  }
+  if (isCreateProgramWork(player.currentWork)) {
+    const create = player.currentWork;
+    details = <>Coding {create.programName}</>;
+    header = <>Creating a program</>;
+    innerText = (
+      <>
+        {create.programName} {((create.unitCompleted / create.unitNeeded()) * 100).toFixed(2)}%
+      </>
+    );
+  }
+  if (isGraftingWork(player.currentWork)) {
+    const graft = player.currentWork;
+    details = <>Grafting {graft.augmentation}</>;
+    header = <>Grafting an Augmentation</>;
+    innerText = (
+      <>
+        <strong>{((graft.unitCompleted / graft.unitNeeded()) * 100).toFixed(2)}%</strong> done
+      </>
+    );
+  }
+
+  if (isFactionWork(player.currentWork)) {
+    const factionWork = player.currentWork;
+    header = (
+      <>
+        Working for <strong>{factionWork.factionName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        <Reputation reputation={factionWork.getFaction().playerReputation} /> rep
+        <br />(
+        <ReputationRate reputation={factionWork.getReputationRate(player) * (1000 / CONSTANTS._idleSpeed)} />)
+      </>
+    );
+  }
+  if (isCompanyWork(player.currentWork)) {
+    const companyWork = player.currentWork;
+    details = (
+      <>
+        {player.jobs[companyWork.companyName]} at <strong>{companyWork.companyName}</strong>
+      </>
+    );
+    header = (
+      <>
+        Working at <strong>{companyWork.companyName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        <Reputation reputation={companyWork.getCompany().playerReputation} /> rep
+        <br />(
+        <ReputationRate reputation={companyWork.getGainRates(player).reputation * (1000 / CONSTANTS._idleSpeed)} />)
+      </>
+    );
   }
 
   return (
@@ -278,28 +294,28 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   const theme = useTheme();
 
   const hackingProgress = player.calculateSkillProgress(
-    player.hacking_exp,
-    player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+    player.exp.hacking,
+    player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
   );
   const strengthProgress = player.calculateSkillProgress(
-    player.strength_exp,
-    player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+    player.exp.strength,
+    player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
   );
   const defenseProgress = player.calculateSkillProgress(
-    player.defense_exp,
-    player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+    player.exp.defense,
+    player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
   );
   const dexterityProgress = player.calculateSkillProgress(
-    player.dexterity_exp,
-    player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+    player.exp.dexterity,
+    player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
   const agilityProgress = player.calculateSkillProgress(
-    player.agility_exp,
-    player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+    player.exp.agility,
+    player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
   );
   const charismaProgress = player.calculateSkillProgress(
-    player.charisma_exp,
-    player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+    player.exp.charisma,
+    player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
   );
 
   return (
@@ -312,7 +328,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.hp }}>
-                {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
+                {numeralWrapper.formatHp(player.hp.current)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.hp.max)}
               </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
@@ -341,7 +357,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.hack }}>{numeralWrapper.formatSkill(player.hacking)}</Typography>
+              <Typography classes={{ root: classes.hack }}>
+                {numeralWrapper.formatSkill(player.skills.hacking)}
+              </Typography>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -365,7 +383,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.strength)}</Typography>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.strength)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
@@ -384,7 +404,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.defense)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
@@ -403,7 +425,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.dexterity)}</Typography>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.dexterity)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
@@ -422,7 +446,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.agility)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
               <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
@@ -441,7 +467,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
+              <Typography classes={{ root: classes.cha }}>
+                {numeralWrapper.formatSkill(player.skills.charisma)}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>

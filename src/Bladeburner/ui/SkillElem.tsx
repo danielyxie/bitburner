@@ -9,9 +9,10 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import { Skill } from "../Skill";
 
 interface IProps {
-  skill: any;
+  skill: Skill;
   bladeburner: IBladeburner;
   onUpgrade: () => void;
 }

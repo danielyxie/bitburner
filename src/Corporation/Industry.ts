@@ -1,4 +1,4 @@
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
 import { Industries, IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
 import { CorporationConstants } from "./data/Constants";
@@ -14,7 +14,6 @@ import { MaterialSizes } from "./MaterialSizes";
 import { Warehouse } from "./Warehouse";
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
-import { IndustryUpgrade, IndustryUpgrades } from "./IndustryUpgrades";
 
 interface IParams {
   name?: string;
@@ -59,9 +58,6 @@ export class Industry implements IIndustry {
   thisCycleRevenue: number;
   thisCycleExpenses: number;
 
-  //Upgrades
-  upgrades: number[] = Array(Object.keys(IndustryUpgrades).length).fill(0);
-
   state = "START";
   newInd = true;
 
@@ -80,6 +76,8 @@ export class Industry implements IIndustry {
     [CityName.Ishima]: 0,
     [CityName.Volhaven]: 0,
   };
+
+  numAdVerts = 0;
 
   constructor(params: IParams = {}) {
     this.name = params.name ? params.name : "";
@@ -1004,23 +1002,9 @@ export class Industry implements IIndustry {
           const office = this.offices[city];
           if (office === 0) continue;
 
-          // Designing/Creating a Product is based mostly off Engineers
-          const engrProd = office.employeeProd[EmployeePositions.Engineer];
-          const mgmtProd = office.employeeProd[EmployeePositions.Management];
-          const opProd = office.employeeProd[EmployeePositions.Operations];
-          const total = engrProd + mgmtProd + opProd;
-          if (total <= 0) {
-            break;
-          }
-
-          // Management is a multiplier for the production from Engineers
-          const mgmtFactor = 1 + mgmtProd / (1.2 * total);
-
-          const progress = (Math.pow(engrProd, 0.34) + Math.pow(opProd, 0.2)) * mgmtFactor;
-
-          prod.createProduct(marketCycles, progress);
+          prod.createProduct(marketCycles, office.employeeProd);
           if (prod.prog >= 100) {
-            prod.finishProduct(office.employeeProd, this);
+            prod.finishProduct(this);
           }
           break;
         }
@@ -1262,38 +1246,19 @@ export class Industry implements IIndustry {
     }
   }
 
-  upgrade(upgrade: IndustryUpgrade, refs: { corporation: ICorporation; office: OfficeSpace }): void {
-    const corporation = refs.corporation;
-    const office = refs.office;
-    const upgN = upgrade[0];
-    while (this.upgrades.length <= upgN) {
-      this.upgrades.push(0);
-    }
-    ++this.upgrades[upgN];
+  getAdVertCost(): number {
+    return 1e9 * Math.pow(1.06, this.numAdVerts);
+  }
 
-    switch (upgN) {
-      case 0: {
-        //Coffee, 5% energy per employee
-        for (let i = 0; i < office.employees.length; ++i) {
-          office.employees[i].ene = Math.min(office.employees[i].ene * 1.05, office.maxEne);
-        }
-        break;
-      }
-      case 1: {
-        //AdVert.Inc,
-        const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
-        const awareness = (this.awareness + 3 * advMult) * (1.01 * advMult);
-        this.awareness = Math.min(awareness, Number.MAX_VALUE);
+  applyAdVert(corporation: ICorporation): void {
+    const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
+    const awareness = (this.awareness + 3 * advMult) * (1.01 * advMult);
+    this.awareness = Math.min(awareness, Number.MAX_VALUE);
 
-        const popularity = (this.popularity + 1 * advMult) * ((1 + getRandomInt(1, 3) / 100) * advMult);
-        this.popularity = Math.min(popularity, Number.MAX_VALUE);
-        break;
-      }
-      default: {
-        console.error(`Un-implemented function index: ${upgN}`);
-        break;
-      }
-    }
+    const popularity = (this.popularity + 1 * advMult) * ((1 + getRandomInt(1, 3) / 100) * advMult);
+    this.popularity = Math.min(popularity, Number.MAX_VALUE);
+
+    ++this.numAdVerts;
   }
 
   // Returns how much of a material can be produced based of office productivity (employee stats)
@@ -1438,15 +1403,14 @@ export class Industry implements IIndustry {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Industry", this);
   }
 
   /**
    * Initiatizes a Industry object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Industry {
+  static fromJSON(value: IReviverValue): Industry {
     return Generic_fromJSON(Industry, value.data);
   }
 }

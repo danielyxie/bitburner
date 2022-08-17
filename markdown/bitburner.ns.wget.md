@@ -30,7 +30,7 @@ True if the data was successfully retrieved from the URL, false otherwise.
 
 RAM cost: 0 GB
 
-Retrieves data from a URL and downloads it to a file on the specified server. The data can only be downloaded to a script (.script, .ns, .js) or a text file (.txt). If the file already exists, it will be overwritten by this command. Note that it will not be possible to download data from many websites because they do not allow cross-origin resource sharing (CORS).
+Retrieves data from a URL and downloads it to a file on the specified server. The data can only be downloaded to a script (.script, .js) or a text file (.txt). If the file already exists, it will be overwritten by this command. Note that it will not be possible to download data from many websites because they do not allow cross-origin resource sharing (CORS).
 
 IMPORTANT: This is an asynchronous function that returns a Promise. The Promise’s resolved value will be a boolean indicating whether or not the data was successfully retrieved from the URL. Because the function is async and returns a Promise, it is recommended you use wget in NetscriptJS (Netscript 2.0).
 

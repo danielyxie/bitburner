@@ -2,8 +2,8 @@ import { Slider, Tooltip, Typography, Box } from "@mui/material";
 import React, { useState } from "react";
 
 interface IProps {
-  initialValue: any;
-  callback: (event: any, newValue: number | number[]) => void;
+  initialValue: number;
+  callback: (event: Event | React.SyntheticEvent<Element, Event>, newValue: number | number[]) => void;
   step: number;
   min: number;
   max: number;
@@ -16,7 +16,7 @@ export const OptionsSlider = (props: IProps): React.ReactElement => {
   const [value, setValue] = useState(props.initialValue);
 
   const onChange = (_evt: Event, newValue: number | Array<number>): void => {
-    setValue(newValue);
+    if (typeof newValue === "number") setValue(newValue);
   };
 
   return (

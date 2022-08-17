@@ -23,7 +23,7 @@ export class GraftableAugmentation {
 
   get time(): number {
     // Time = 1 hour * log_2(sum(aug multipliers) || 1) + 30 minutes
-    const antiLog = Math.max(sum(Object.values(this.augmentation.mults)), 1);
+    const antiLog = Math.max(sum(Object.values(this.augmentation.mults).filter((x) => x !== 1)), 1);
 
     const mult = Math.log2(antiLog);
     return (CONSTANTS.AugmentationGraftingTimeBase * mult + CONSTANTS.MillisecondsPerHalfHour) / 2;

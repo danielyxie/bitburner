@@ -7,6 +7,6 @@ export let Player = new PlayerObject();
 
 export function loadPlayer(saveString: string): void {
   Player = JSON.parse(saveString, Reviver);
-  Player.money = parseFloat(Player.money as any);
+  Player.money = parseFloat(Player.money + "");
   Player.exploits = sanitizeExploits(Player.exploits);
 }

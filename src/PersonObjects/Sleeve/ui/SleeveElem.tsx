@@ -1,19 +1,25 @@
 import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 import { CONSTANTS } from "../../../Constants";
-import { Crimes } from "../../../Crime/Crimes";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import { use } from "../../../ui/Context";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { ProgressBar } from "../../../ui/React/Progress";
 import { Sleeve } from "../Sleeve";
-import { SleeveTaskType } from "../SleeveTaskTypesEnum";
-import { MoreEarningsModal } from "./MoreEarningsModal";
 import { MoreStatsModal } from "./MoreStatsModal";
 import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
 import { EarningsElement, StatsElement } from "./StatsElement";
 import { TaskSelector } from "./TaskSelector";
 import { TravelModal } from "./TravelModal";
+import { isSleeveClassWork } from "../Work/SleeveClassWork";
+import { isSleeveSynchroWork } from "../Work/SleeveSynchroWork";
+import { isSleeveRecoveryWork } from "../Work/SleeveRecoveryWork";
+import { isSleeveFactionWork } from "../Work/SleeveFactionWork";
+import { isSleeveCompanyWork } from "../Work/SleeveCompanyWork";
+import { isSleeveInfiltrateWork } from "../Work/SleeveInfiltrateWork";
+import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
+import { isSleeveBladeburnerWork } from "../Work/SleeveBladeburnerWork";
+import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
 
 interface IProps {
   sleeve: Sleeve;
@@ -23,14 +29,12 @@ interface IProps {
 export function SleeveElem(props: IProps): React.ReactElement {
   const player = use.Player();
   const [statsOpen, setStatsOpen] = useState(false);
-  const [earningsOpen, setEarningsOpen] = useState(false);
   const [travelOpen, setTravelOpen] = useState(false);
   const [augmentationsOpen, setAugmentationsOpen] = useState(false);
 
   const [abc, setABC] = useState(["------", "------", "------"]);
 
   function setTask(): void {
-    props.sleeve.resetTaskStatus(player); // sets to idle
     switch (abc[0]) {
       case "------":
         break;
@@ -64,83 +68,85 @@ export function SleeveElem(props: IProps): React.ReactElement {
     props.rerender();
   }
 
-  let desc = <></>;
-  switch (props.sleeve.currentTask) {
-    case SleeveTaskType.Idle:
-      desc = <>This sleeve is currently idle</>;
-      break;
-    case SleeveTaskType.Company:
-      desc = <>This sleeve is currently working your job at {props.sleeve.currentTaskLocation}.</>;
-      break;
-    case SleeveTaskType.Faction: {
-      let doing = "nothing";
-      switch (props.sleeve.factionWorkType) {
-        case FactionWorkType.Field:
-          doing = "Field work";
-          break;
-        case FactionWorkType.Hacking:
-          doing = "Hacking contracts";
-          break;
-        case FactionWorkType.Security:
-          doing = "Security work";
-          break;
-      }
-      desc = (
-        <>
-          This sleeve is currently doing {doing} for {props.sleeve.currentTaskLocation}.
-        </>
-      );
-      break;
+  let desc = <>This sleeve is currently idle</>;
+
+  if (isSleeveCrimeWork(props.sleeve.currentWork)) {
+    const w = props.sleeve.currentWork;
+    const crime = w.getCrime();
+    desc = (
+      <>
+        This sleeve is currently attempting to {crime.type} (Success Rate:{" "}
+        {numeralWrapper.formatPercentage(crime.successRate(props.sleeve))}).
+      </>
+    );
+  }
+
+  if (isSleeveClassWork(props.sleeve.currentWork)) {
+    if (props.sleeve.currentWork.isGym())
+      desc = <>This sleeve is currently working out at {props.sleeve.currentWork.location}.</>;
+    else desc = <>This sleeve is currently studying at {props.sleeve.currentWork.location}.</>;
+  }
+  if (isSleeveSynchroWork(props.sleeve.currentWork)) {
+    desc = (
+      <>
+        This sleeve is currently set to synchronize with the original consciousness. This causes the Sleeve's
+        synchronization to increase.
+      </>
+    );
+  }
+  if (isSleeveRecoveryWork(props.sleeve.currentWork)) {
+    desc = (
+      <>
+        This sleeve is currently set to focus on shock recovery. This causes the Sleeve's shock to decrease at a faster
+        rate.
+      </>
+    );
+  }
+  if (isSleeveFactionWork(props.sleeve.currentWork)) {
+    let doing = "nothing";
+    switch (props.sleeve.currentWork.factionWorkType) {
+      case FactionWorkType.FIELD:
+        doing = "Field work";
+        break;
+      case FactionWorkType.HACKING:
+        doing = "Hacking contracts";
+        break;
+      case FactionWorkType.SECURITY:
+        doing = "Security work";
+        break;
     }
-    case SleeveTaskType.Crime: {
-      const crime = Object.values(Crimes).find((crime) => crime.name === props.sleeve.crimeType);
-      if (!crime) throw new Error("crime should not be undefined");
-      desc = (
-        <>
-          This sleeve is currently attempting to {crime.type} (Success Rate:{" "}
-          {numeralWrapper.formatPercentage(crime.successRate(props.sleeve))}).
-        </>
-      );
-      break;
-    }
-    case SleeveTaskType.Class:
-      desc = <>This sleeve is currently studying/taking a course at {props.sleeve.currentTaskLocation}.</>;
-      break;
-    case SleeveTaskType.Gym:
-      desc = <>This sleeve is currently working out at {props.sleeve.currentTaskLocation}.</>;
-      break;
-    case SleeveTaskType.Bladeburner: {
-      let message = "";
-      if (props.sleeve.bbContract !== "------") {
-        message = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
-      } else if (props.sleeve.currentTaskLocation !== "") {
-        message = props.sleeve.currentTaskLocation;
-      }
-      desc = (
-        <>
-          This sleeve is currently attempting to {props.sleeve.bbAction}. {message}
-        </>
-      );
-      break;
-    }
-    case SleeveTaskType.Recovery:
-      desc = (
-        <>
-          This sleeve is currently set to focus on shock recovery. This causes the Sleeve's shock to decrease at a
-          faster rate.
-        </>
-      );
-      break;
-    case SleeveTaskType.Synchro:
-      desc = (
-        <>
-          This sleeve is currently set to synchronize with the original consciousness. This causes the Sleeve's
-          synchronization to increase.
-        </>
-      );
-      break;
-    default:
-      console.error(`Invalid/Unrecognized taskValue in updateSleeveTaskDescription(): ${abc[0]}`);
+    desc = (
+      <>
+        This sleeve is currently doing {doing} for {props.sleeve.currentWork.factionName}.
+      </>
+    );
+  }
+  if (isSleeveCompanyWork(props.sleeve.currentWork)) {
+    desc = <>This sleeve is currently working your job at {props.sleeve.currentWork.companyName}.</>;
+  }
+
+  if (isSleeveBladeburnerWork(props.sleeve.currentWork)) {
+    const w = props.sleeve.currentWork;
+    desc = (
+      <>
+        This sleeve is currently attempting to perform {w.actionName}. (
+        {((100 * w.cyclesWorked) / w.cyclesNeeded(player, props.sleeve)).toFixed(2)}%)
+      </>
+    );
+  }
+
+  if (isSleeveInfiltrateWork(props.sleeve.currentWork)) {
+    const w = props.sleeve.currentWork;
+    desc = (
+      <>
+        This sleeve is currently attempting to infiltrate synthoids communities. (
+        {((100 * w.cyclesWorked) / w.cyclesNeeded()).toFixed(2)}%)
+      </>
+    );
+  }
+
+  if (isSleeveSupportWork(props.sleeve.currentWork)) {
+    desc = <>This sleeve is currently supporting you in your bladeburner activities.</>;
   }
 
   return (
@@ -150,7 +156,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
           <StatsElement sleeve={props.sleeve} />
           <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%" }}>
             <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
-            <Button onClick={() => setEarningsOpen(true)}>More Earnings Info</Button>
             <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
               <span>
                 <Button
@@ -185,20 +190,28 @@ export function SleeveElem(props: IProps): React.ReactElement {
           </Button>
           <Typography>{desc}</Typography>
           <Typography>
-            {(props.sleeve.currentTask === SleeveTaskType.Crime ||
-              props.sleeve.currentTask === SleeveTaskType.Bladeburner) &&
-              props.sleeve.currentTaskMaxTime > 0 && (
-                <ProgressBar
-                  variant="determinate"
-                  value={(props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime) * 100}
-                  color="primary"
-                />
-              )}
+            {isSleeveCrimeWork(props.sleeve.currentWork) && (
+              <ProgressBar
+                variant="determinate"
+                value={(props.sleeve.currentWork.cyclesWorked / props.sleeve.currentWork.cyclesNeeded()) * 100}
+                color="primary"
+              />
+            )}
+            {isSleeveBladeburnerWork(props.sleeve.currentWork) && (
+              <ProgressBar
+                variant="determinate"
+                value={
+                  (props.sleeve.currentWork.cyclesWorked /
+                    props.sleeve.currentWork.cyclesNeeded(player, props.sleeve)) *
+                  100
+                }
+                color="primary"
+              />
+            )}
           </Typography>
         </span>
       </Paper>
       <MoreStatsModal open={statsOpen} onClose={() => setStatsOpen(false)} sleeve={props.sleeve} />
-      <MoreEarningsModal open={earningsOpen} onClose={() => setEarningsOpen(false)} sleeve={props.sleeve} />
       <TravelModal
         open={travelOpen}
         onClose={() => setTravelOpen(false)}

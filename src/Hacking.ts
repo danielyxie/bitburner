@@ -9,10 +9,13 @@ import { Server } from "./Server/Server";
 export function calculateHackingChance(server: Server, player: IPlayer): number {
   const hackFactor = 1.75;
   const difficultyMult = (100 - server.hackDifficulty) / 100;
-  const skillMult = hackFactor * player.hacking;
+  const skillMult = hackFactor * player.skills.hacking;
   const skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
   const chance =
-    skillChance * difficultyMult * player.hacking_chance_mult * calculateIntelligenceBonus(player.intelligence, 1);
+    skillChance *
+    difficultyMult *
+    player.mults.hacking_chance *
+    calculateIntelligenceBonus(player.skills.intelligence, 1);
   if (chance > 1) {
     return 1;
   }
@@ -36,7 +39,7 @@ export function calculateHackingExpGain(server: Server, player: IPlayer): number
   let expGain = baseExpGain;
   expGain += server.baseDifficulty * diffFactor;
 
-  return expGain * player.hacking_exp_mult * BitNodeMultipliers.HackExpGain;
+  return expGain * player.mults.hacking_exp * BitNodeMultipliers.HackExpGain;
 }
 
 /**
@@ -48,9 +51,9 @@ export function calculatePercentMoneyHacked(server: Server, player: IPlayer): nu
   const balanceFactor = 240;
 
   const difficultyMult = (100 - server.hackDifficulty) / 100;
-  const skillMult = (player.hacking - (server.requiredHackingSkill - 1)) / player.hacking;
+  const skillMult = (player.skills.hacking - (server.requiredHackingSkill - 1)) / player.skills.hacking;
   const percentMoneyHacked =
-    (difficultyMult * skillMult * player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney) / balanceFactor;
+    (difficultyMult * skillMult * player.mults.hacking_money * BitNodeMultipliers.ScriptHackMoney) / balanceFactor;
   if (percentMoneyHacked < 0) {
     return 0;
   }
@@ -72,12 +75,12 @@ export function calculateHackingTime(server: Server, player: IPlayer): number {
   const diffFactor = 2.5;
   let skillFactor = diffFactor * difficultyMult + baseDiff;
   // tslint:disable-next-line
-  skillFactor /= player.hacking + baseSkill;
+  skillFactor /= player.skills.hacking + baseSkill;
 
   const hackTimeMultiplier = 5;
   const hackingTime =
     (hackTimeMultiplier * skillFactor) /
-    (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1));
+    (player.mults.hacking_speed * calculateIntelligenceBonus(player.skills.intelligence, 1));
 
   return hackingTime;
 }

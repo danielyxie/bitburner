@@ -518,7 +518,7 @@ export class Terminal implements ITerminal {
       const d = depthQueue.pop();
       if (d === undefined) continue;
       const isHacknet = s instanceof HacknetServer;
-      if (!all && (s as any).purchasedByPlayer && s.hostname != "home") {
+      if (!all && s.purchasedByPlayer && s.hostname != "home") {
         continue; // Purchased server
       } else if (visited[s.hostname] || d > depth) {
         continue; // Already visited or out-of-depth
@@ -548,12 +548,14 @@ export class Terminal implements ITerminal {
       if (s.hasAdminRights) {
         c = "YES";
       }
-      this.print(
-        `${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + (s as any).requiredHackingSkill : ""}`,
-      );
+      if (s instanceof Server) {
+        this.print(
+          `${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`,
+        );
 
-      if (s.hasOwnProperty("numOpenPortsRequired")) {
-        this.print(dashes + "Number of open ports required to NUKE: " + (s as any).numOpenPortsRequired);
+        if (s.hasOwnProperty("numOpenPortsRequired")) {
+          this.print(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
+        }
       }
       this.print(dashes + "RAM: " + numeralWrapper.formatRAM(s.maxRam));
       this.print(" ");

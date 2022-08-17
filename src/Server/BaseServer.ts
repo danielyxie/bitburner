@@ -13,6 +13,7 @@ import { isScriptFilename } from "../Script/isScriptFilename";
 import { createRandomIp } from "../utils/IPAddress";
 import { compareArrays } from "../utils/helpers/compareArrays";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { ScriptArg } from "../Netscript/ScriptArg";
 
 interface IConstructorParams {
   adminRights?: boolean;
@@ -126,7 +127,7 @@ export class BaseServer {
    * @returns RunningScript for the specified active script
    *          Returns null if no such script can be found
    */
-  getRunningScript(scriptName: string, scriptArgs: any[]): RunningScript | null {
+  getRunningScript(scriptName: string, scriptArgs: ScriptArg[]): RunningScript | null {
     for (const rs of this.runningScripts) {
       if (rs.filename === scriptName && compareArrays(rs.args, scriptArgs)) {
         return rs;

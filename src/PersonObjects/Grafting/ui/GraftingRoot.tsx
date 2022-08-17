@@ -1,6 +1,7 @@
 import { CheckBox, CheckBoxOutlineBlank, Construction } from "@mui/icons-material";
 import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { GraftingWork } from "../../../Work/GraftingWork";
 import { Augmentation } from "../../../Augmentation/Augmentation";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
 import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
@@ -10,7 +11,6 @@ import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
 import { PurchaseAugmentationsOrderSetting } from "../../../Settings/SettingEnums";
 import { Settings } from "../../../Settings/Settings";
-import { IMap } from "../../../types";
 import { use } from "../../../ui/Context";
 import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
@@ -19,7 +19,15 @@ import { IPlayer } from "../../IPlayer";
 import { GraftableAugmentation } from "../GraftableAugmentation";
 import { calculateGraftingTimeWithBonus, getGraftingAvailableAugs } from "../GraftingHelpers";
 
-const GraftableAugmentations: IMap<GraftableAugmentation> = {};
+export const GraftableAugmentations = (): Record<string, GraftableAugmentation> => {
+  const gAugs: Record<string, GraftableAugmentation> = {};
+  for (const aug of Object.values(StaticAugmentations)) {
+    const name = aug.name;
+    const graftableAug = new GraftableAugmentation(aug);
+    gAugs[name] = graftableAug;
+  }
+  return gAugs;
+};
 
 const canGraft = (player: IPlayer, aug: GraftableAugmentation): boolean => {
   if (player.money < aug.cost) {
@@ -55,11 +63,7 @@ export const GraftingRoot = (): React.ReactElement => {
   const player = use.Player();
   const router = use.Router();
 
-  for (const aug of Object.values(StaticAugmentations)) {
-    const name = aug.name;
-    const graftableAug = new GraftableAugmentation(aug);
-    GraftableAugmentations[name] = graftableAug;
-  }
+  const graftableAugmentations = useState(GraftableAugmentations())[0];
 
   const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs(player)[0]);
   const [graftOpen, setGraftOpen] = useState(false);
@@ -74,7 +78,7 @@ export const GraftingRoot = (): React.ReactElement => {
     const augs = getGraftingAvailableAugs(player);
     switch (Settings.PurchaseAugmentationsOrder) {
       case PurchaseAugmentationsOrderSetting.Cost:
-        return augs.sort((a, b) => GraftableAugmentations[a].cost - GraftableAugmentations[b].cost);
+        return augs.sort((a, b) => graftableAugmentations[a].cost - graftableAugmentations[b].cost);
       default:
         return augs;
     }
@@ -125,7 +129,7 @@ export const GraftingRoot = (): React.ReactElement => {
                 <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
                   <Typography
                     sx={{
-                      color: canGraft(player, GraftableAugmentations[k])
+                      color: canGraft(player, graftableAugmentations[k])
                         ? Settings.theme.primary
                         : Settings.theme.disabled,
                     }}
@@ -142,11 +146,11 @@ export const GraftingRoot = (): React.ReactElement => {
               <Button
                 onClick={() => setGraftOpen(true)}
                 sx={{ width: "100%" }}
-                disabled={!canGraft(player, GraftableAugmentations[selectedAug])}
+                disabled={!canGraft(player, graftableAugmentations[selectedAug])}
               >
                 Graft Augmentation (
                 <Typography>
-                  <Money money={GraftableAugmentations[selectedAug].cost} player={player} />
+                  <Money money={graftableAugmentations[selectedAug].cost} player={player} />
                 </Typography>
                 )
               </Button>
@@ -154,9 +158,13 @@ export const GraftingRoot = (): React.ReactElement => {
                 open={graftOpen}
                 onClose={() => setGraftOpen(false)}
                 onConfirm={() => {
-                  const graftableAug = GraftableAugmentations[selectedAug];
-                  player.loseMoney(graftableAug.cost, "augmentations");
-                  player.startGraftAugmentationWork(selectedAug, graftableAug.time);
+                  player.startWork(
+                    new GraftingWork({
+                      augmentation: selectedAug,
+                      singularity: false,
+                      player: player,
+                    }),
+                  );
                   player.startFocusing();
                   router.toWork();
                 }}
@@ -178,7 +186,7 @@ export const GraftingRoot = (): React.ReactElement => {
                 <Typography color={Settings.theme.info}>
                   <b>Time to Graft:</b>{" "}
                   {convertTimeMsToTimeElapsedString(
-                    calculateGraftingTimeWithBonus(player, GraftableAugmentations[selectedAug]),
+                    calculateGraftingTimeWithBonus(player, graftableAugmentations[selectedAug]),
                   )}
                   {/* Use formula so the displayed creation time is accurate to player bonus */}
                 </Typography>

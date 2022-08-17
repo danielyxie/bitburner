@@ -3,6 +3,7 @@ import { GangMember } from "./GangMember";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IAscensionResult } from "./IAscensionResult";
+import { IReviverValue } from "src/utils/JSONReviver";
 
 export interface IGang {
   facName: string;
@@ -42,5 +43,5 @@ export interface IGang {
   getDiscount(): number;
   getAllTaskNames(): string[];
   getUpgradeCost(upg: GangMemberUpgrade): number;
-  toJSON(): any;
+  toJSON(): IReviverValue;
 }

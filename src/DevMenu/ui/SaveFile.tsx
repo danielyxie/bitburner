@@ -24,8 +24,8 @@ export function SaveFile(): React.ReactElement {
       const base64Save = await saveObject.getImportStringFromFile(event.target.files);
       const save = atob(base64Save);
       setSaveFile(save);
-    } catch (ex: any) {
-      SnackbarEvents.emit(ex.toString(), ToastVariant.ERROR, 5000);
+    } catch (e: unknown) {
+      SnackbarEvents.emit(String(e), ToastVariant.ERROR, 5000);
     }
   }
 
@@ -38,8 +38,8 @@ export function SaveFile(): React.ReactElement {
 
   function doRestore(): void {
     const save = JSON.parse(saveFile);
-    console.log(Object.keys(save));
     // TODO: Continue here.
+    console.error(save);
   }
 
   return (

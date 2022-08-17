@@ -7,9 +7,10 @@
 import { calculateRamUsage, RamUsageEntry } from "./RamCalculations";
 import { ScriptUrl } from "./ScriptUrl";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { ScriptModule } from "./ScriptModule";
 
 let globalModuleSequenceNumber = 0;
 
@@ -30,7 +31,7 @@ export class Script {
 
   // The dynamic module generated for this script when it is run.
   // This is only applicable for NetscriptJS
-  module: any = "";
+  module: Promise<ScriptModule> | null = null;
 
   // The timestamp when when the script was last updated.
   moduleSequenceNumber: number;
@@ -53,7 +54,7 @@ export class Script {
     this.code = code;
     this.ramUsage = 0;
     this.server = server; // hostname of server this script is on
-    this.module = "";
+    this.module = null;
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     if (this.code !== "" && player !== null) {
       this.updateRamUsage(player, otherScripts);
@@ -66,23 +67,16 @@ export class Script {
   download(): void {
     const filename = this.filename;
     const file = new Blob([this.code], { type: "text/plain" });
-    const navigator = window.navigator as any;
-    if (navigator.msSaveOrOpenBlob) {
-      // IE10+
-      navigator.msSaveOrOpenBlob(file, filename);
-    } else {
-      // Others
-      const a = document.createElement("a"),
-        url = URL.createObjectURL(file);
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 0);
-    }
+    const a = document.createElement("a"),
+      url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
   }
 
   /**
@@ -90,7 +84,7 @@ export class Script {
    * to exec it.
    */
   markUpdated(): void {
-    this.module = "";
+    this.module = null;
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
   }
 
@@ -133,13 +127,12 @@ export class Script {
   }
 
   // Serialize the current object to a JSON save state
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Script", this);
   }
 
   // Initializes a Script Object from a JSON save state
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Script {
+  static fromJSON(value: IReviverValue): Script {
     const s = Generic_fromJSON(Script, value.data);
     // Force the url to blank from the save data. Urls are not valid outside the current browser page load.
     s.url = "";

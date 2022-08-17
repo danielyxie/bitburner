@@ -11,7 +11,7 @@ import { LiteratureNames } from "../Literature/data/LiteratureNames";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { isString } from "../utils/helpers/isString";
 
 interface IParams {
@@ -35,8 +35,8 @@ export class Corporation {
   shareSalesUntilPriceUpdate = CorporationConstants.SHARESPERPRICEUPDATE;
   shareSaleCooldown = 0; // Game cycles until player can sell shares again
   issueNewSharesCooldown = 0; // Game cycles until player can issue shares again
-  dividendPercentage = 0;
-  dividendTaxPercentage = 50;
+  dividendRate = 0;
+  dividendTax = 1 - BitNodeMultipliers.CorporationSoftcap + 0.15;
   issuedShares = 0;
   sharePrice = 0;
   storedCycles = 0;
@@ -121,18 +121,19 @@ export class Corporation {
         }
 
         // Process dividends
-        if (this.dividendPercentage > 0 && cycleProfit > 0) {
+        this.updateDividendTax();
+        if (this.dividendRate > 0 && cycleProfit > 0) {
           // Validate input again, just to be safe
           if (
-            isNaN(this.dividendPercentage) ||
-            this.dividendPercentage < 0 ||
-            this.dividendPercentage > CorporationConstants.DividendMaxPercentage * 100
+            isNaN(this.dividendRate) ||
+            this.dividendRate < 0 ||
+            this.dividendRate > CorporationConstants.DividendMaxRate
           ) {
-            console.error(`Invalid Corporation dividend percentage: ${this.dividendPercentage}`);
+            console.error(`Invalid Corporation dividend rate: ${this.dividendRate}`);
           } else {
-            const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
+            const totalDividends = this.dividendRate * cycleProfit;
             const retainedEarnings = cycleProfit - totalDividends;
-            player.gainMoney(this.getDividends(), "corporation");
+            player.gainMoney(this.getCycleDividends(), "corporation");
             this.addFunds(retainedEarnings);
           }
         } else {
@@ -146,20 +147,23 @@ export class Corporation {
     }
   }
 
-  getDividends(): number {
-    const profit = this.revenue - this.expenses;
-    const cycleProfit = profit * CorporationConstants.SecsPerMarketCycle;
-    const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
-    const dividendsPerShare = totalDividends / this.totalShares;
-    const dividends = this.numShares * dividendsPerShare;
-    let upgrades = -0.15;
+  updateDividendTax(): void {
+    this.dividendTax = 1 - BitNodeMultipliers.CorporationSoftcap + 0.15;
     if (this.unlockUpgrades[5] === 1) {
-      upgrades += 0.05;
+      this.dividendTax -= 0.05;
     }
     if (this.unlockUpgrades[6] === 1) {
-      upgrades += 0.1;
+      this.dividendTax -= 0.1;
     }
-    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftcap + upgrades);
+  }
+
+  getCycleDividends(): number {
+    const profit = this.revenue - this.expenses;
+    const cycleProfit = profit * CorporationConstants.SecsPerMarketCycle;
+    const totalDividends = this.dividendRate * cycleProfit;
+    const dividendsPerShare = totalDividends / this.totalShares;
+    const dividends = this.numShares * dividendsPerShare;
+    return Math.pow(dividends, 1 - this.dividendTax);
   }
 
   determineValuation(): number {
@@ -167,8 +171,8 @@ export class Corporation {
       profit = this.avgProfit;
     if (this.public) {
       // Account for dividends
-      if (this.dividendPercentage > 0) {
-        profit *= (100 - this.dividendPercentage) / 100;
+      if (this.dividendRate > 0) {
+        profit *= 1 - this.dividendRate;
       }
 
       val = this.funds + profit * 85e3;
@@ -277,11 +281,7 @@ export class Corporation {
     this.funds = this.funds - price;
 
     // Apply effects for one-time upgrades
-    if (upgN === 5) {
-      this.dividendTaxPercentage -= 5;
-    } else if (upgN === 6) {
-      this.dividendTaxPercentage -= 10;
-    }
+    this.updateDividendTax();
   }
 
   //Levelable upgrades
@@ -433,15 +433,14 @@ export class Corporation {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Corporation", this);
   }
 
   /**
    * Initiatizes a Corporation object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Corporation {
+  static fromJSON(value: IReviverValue): Corporation {
     return Generic_fromJSON(Corporation, value.data);
   }
 }

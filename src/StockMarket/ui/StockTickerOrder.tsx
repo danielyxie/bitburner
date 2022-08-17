@@ -11,9 +11,11 @@ import { Money } from "../../ui/React/Money";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { ICancelOrderParams } from "../StockMarket";
+import { WorkerScript } from "../../Netscript/WorkerScript";
 
 type IProps = {
-  cancelOrder: (params: any) => void;
+  cancelOrder: (params: ICancelOrderParams, workerScript?: WorkerScript) => void;
   order: Order;
 };
 

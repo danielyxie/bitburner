@@ -1,11 +1,13 @@
 import React from "react";
+import { newWorkStats, WorkStats } from "../../Work/WorkStats";
 
-interface IContract {
+interface IGeneral {
   desc: JSX.Element;
+  exp: WorkStats;
 }
 
 export const GeneralActions: {
-  [key: string]: IContract | undefined;
+  [key: string]: IGeneral | undefined;
 } = {
   Training: {
     desc: (
@@ -14,6 +16,12 @@ export const GeneralActions: {
         all combat stats and also increases your max stamina.
       </>
     ),
+    exp: newWorkStats({
+      strExp: 30,
+      defExp: 30,
+      dexExp: 30,
+      agiExp: 30,
+    }),
   },
 
   "Field Analysis": {
@@ -27,6 +35,10 @@ export const GeneralActions: {
         Does NOT require stamina.
       </>
     ),
+    exp: newWorkStats({
+      hackExp: 20,
+      chaExp: 20,
+    }),
   },
 
   Recruitment: {
@@ -38,6 +50,9 @@ export const GeneralActions: {
         Does NOT require stamina.
       </>
     ),
+    exp: newWorkStats({
+      chaExp: 120,
+    }),
   },
 
   Diplomacy: {
@@ -50,6 +65,9 @@ export const GeneralActions: {
         Does NOT require stamina.
       </>
     ),
+    exp: newWorkStats({
+      chaExp: 120,
+    }),
   },
 
   "Hyperbolic Regeneration Chamber": {
@@ -61,6 +79,7 @@ export const GeneralActions: {
         <br />
       </>
     ),
+    exp: newWorkStats(),
   },
   "Incite Violence": {
     desc: (
@@ -69,5 +88,12 @@ export const GeneralActions: {
         additional contracts and operations, at the cost of increased Chaos.
       </>
     ),
+    exp: newWorkStats({
+      strExp: 10,
+      defExp: 10,
+      dexExp: 10,
+      agiExp: 10,
+      chaExp: 10,
+    }),
   },
 };

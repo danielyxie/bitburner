@@ -1,9 +1,9 @@
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IPerson } from "../PersonObjects/IPerson";
-import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType } from "../utils/WorkType";
+import { CrimeWork } from "../Work/CrimeWork";
 
 interface IConstructorParams {
   hacking_success_weight?: number;
@@ -96,22 +96,15 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(router: IRouter, p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
+  commit(p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
     if (div <= 0) {
       div = 1;
     }
-    p.startCrime(
-      router,
-      this.type,
-      this.hacking_exp / div,
-      this.strength_exp / div,
-      this.defense_exp / div,
-      this.dexterity_exp / div,
-      this.agility_exp / div,
-      this.charisma_exp / div,
-      this.money / div,
-      this.time,
-      workerScript,
+    p.startWork(
+      new CrimeWork({
+        crimeType: this.type,
+        singularity: workerScript !== null,
+      }),
     );
 
     return this.time;
@@ -119,16 +112,16 @@ export class Crime {
 
   successRate(p: IPerson): number {
     let chance: number =
-      this.hacking_success_weight * p.hacking +
-      this.strength_success_weight * p.strength +
-      this.defense_success_weight * p.defense +
-      this.dexterity_success_weight * p.dexterity +
-      this.agility_success_weight * p.agility +
-      this.charisma_success_weight * p.charisma +
-      CONSTANTS.IntelligenceCrimeWeight * p.intelligence;
+      this.hacking_success_weight * p.skills.hacking +
+      this.strength_success_weight * p.skills.strength +
+      this.defense_success_weight * p.skills.defense +
+      this.dexterity_success_weight * p.skills.dexterity +
+      this.agility_success_weight * p.skills.agility +
+      this.charisma_success_weight * p.skills.charisma +
+      CONSTANTS.IntelligenceCrimeWeight * p.skills.intelligence;
     chance /= CONSTANTS.MaxSkillLevel;
     chance /= this.difficulty;
-    chance *= p.crime_success_mult;
+    chance *= p.mults.crime_success;
     chance *= p.getIntelligenceBonus(1);
 
     return Math.min(chance, 1);

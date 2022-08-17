@@ -38,7 +38,7 @@ export function Overview({ rerender }: IProps): React.ReactElement {
   const corp = useCorporation();
   const profit: number = corp.revenue - corp.expenses;
 
-  const multRows: any[][] = [];
+  const multRows: string[][] = [];
   function appendMult(name: string, value: number): void {
     if (value === 1) return;
     multRows.push([name, numeralWrapper.format(value, "0.000")]);
@@ -275,17 +275,18 @@ interface IDividendsStatsProps {
 }
 function DividendsStats({ profit }: IDividendsStatsProps): React.ReactElement {
   const corp = useCorporation();
-  if (corp.dividendPercentage <= 0 || profit <= 0) return <></>;
-  const totalDividends = (corp.dividendPercentage / 100) * profit;
+  if (corp.dividendRate <= 0 || profit <= 0) return <></>;
+  const totalDividends = corp.dividendRate * profit;
   const retainedEarnings = profit - totalDividends;
   const dividendsPerShare = totalDividends / corp.totalShares;
+  const playerEarnings = corp.getCycleDividends() / CorporationConstants.SecsPerMarketCycle;
   return (
     <StatsTable
       rows={[
         ["Retained Profits (after dividends):", <MoneyRate money={retainedEarnings} />],
-        ["Dividend Percentage:", numeralWrapper.format(corp.dividendPercentage / 100, "0%")],
+        ["Dividend Percentage:", numeralWrapper.format(corp.dividendRate, "0%")],
         ["Dividends per share:", <MoneyRate money={dividendsPerShare} />],
-        ["Your earnings as a shareholder:", <MoneyRate money={corp.getDividends()} />],
+        ["Your earnings as a shareholder:", <MoneyRate money={playerEarnings} />],
       ]}
     />
   );

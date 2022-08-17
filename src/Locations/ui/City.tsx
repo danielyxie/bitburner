@@ -77,7 +77,9 @@ function LocationLetter(location: Location): React.ReactElement {
 
 function ASCIICity(props: IProps): React.ReactElement {
   const locationLettersRegex = /[A-Z]/g;
-  const letterMap: any = {
+  const letterMap: {
+    [key: string]: number;
+  } = {
     A: 0,
     B: 1,
     C: 2,
@@ -106,10 +108,10 @@ function ASCIICity(props: IProps): React.ReactElement {
     Z: 25,
   };
 
-  const lineElems = (s: string): JSX.Element[] => {
-    const elems: any[] = [];
-    const matches: any[] = [];
-    let match: any;
+  const lineElems = (s: string): (string | React.ReactElement)[] => {
+    const elems: (string | React.ReactElement)[] = [];
+    const matches: RegExpExecArray[] = [];
+    let match: RegExpExecArray | null = null;
     while ((match = locationLettersRegex.exec(s)) !== null) {
       matches.push(match);
     }

@@ -24,7 +24,6 @@ export function AlertManager(): React.ReactElement {
         setAlerts((old) => {
           const hash = getMessageHash(text);
           if (old.some((a) => a.hash === hash)) {
-            console.log("Duplicate message");
             return old;
           }
           return [

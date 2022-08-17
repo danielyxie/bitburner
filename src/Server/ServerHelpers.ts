@@ -58,7 +58,7 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
   const cycles =
     Math.log(growth) /
     (Math.log(ajdGrowthRate) *
-      p.hacking_grow_mult *
+      p.mults.hacking_grow *
       serverGrowthPercentage *
       BitNodeMultipliers.ServerGrowthRate *
       coreBonus);
@@ -130,7 +130,7 @@ export function numCycleForGrowthCorrected(
   const serverGrowthPercentage = server.serverGrowth / 100.0;
   const coreMultiplier = 1 + (cores - 1) / 16;
   const threadMultiplier =
-    serverGrowthPercentage * p.hacking_grow_mult * coreMultiplier * BitNodeMultipliers.ServerGrowthRate;
+    serverGrowthPercentage * p.mults.hacking_grow * coreMultiplier * BitNodeMultipliers.ServerGrowthRate;
 
   /* To understand what is done below we need to do some math. I hope the explanation is clear enough.
    * First of, the names will be shortened for ease of manipulation:

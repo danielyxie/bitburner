@@ -30,6 +30,7 @@ secrets that you've been searching for.
     Tools & Resources <toolsandresources>
     Changelog <changelog>
     v1.0.0 script migration guide <v1.0.0_migration.rst>
+    v2.0.0 script migration guide <v2.0.0_migration.rst>
     404 <404.rst>
     Donate <https://paypal.me/danielyxie>
 

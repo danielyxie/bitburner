@@ -19,13 +19,17 @@ export const CorporationConstants: {
   BribeThreshold: number;
   BribeToRepRatio: number;
   ProductProductionCostRatio: number;
-  DividendMaxPercentage: number;
+  DividendMaxRate: number;
   EmployeeSalaryMultiplier: number;
   CyclesPerEmployeeRaise: number;
   EmployeeRaiseAmount: number;
   BaseMaxProducts: number;
   AllCorporationStates: string[];
   AllMaterials: string[];
+  AllIndustryTypes: string[];
+  AllUnlocks: string[];
+  AllUpgrades: string[];
+  AllResearch: string[];
   FundingRoundShares: number[];
   FundingRoundMultiplier: number[];
   AvgProfitLength: number;
@@ -61,7 +65,7 @@ export const CorporationConstants: {
 
   ProductProductionCostRatio: 5, //Ratio of material cost of a product to its production cost
 
-  DividendMaxPercentage: 1,
+  DividendMaxRate: 1,
 
   EmployeeSalaryMultiplier: 3, // Employee stats multiplied by this to determine initial salary
   CyclesPerEmployeeRaise: 400, // All employees get a raise every X market cycles
@@ -81,6 +85,70 @@ export const CorporationConstants: {
     "Robots",
     "AI Cores",
     "Real Estate",
+  ],
+  AllIndustryTypes: [
+    "Energy",
+    "Utilities",
+    "Agriculture",
+    "Fishing",
+    "Mining",
+    "Food",
+    "Tobacco",
+    "Chemical",
+    "Pharmaceutical",
+    "Hardware",
+    "Robotics",
+    "Software",
+    "Healthcare",
+    "RealEstate",
+  ],
+  AllUnlocks: [
+    "Export",
+    "Smart Supply",
+    "Market Research - Demand",
+    "Market Data - Competition",
+    "VeChain",
+    "Shady Accounting",
+    "Government Partnership",
+    "Warehouse API",
+    "Office API",
+  ],
+  AllUpgrades: [
+    "Smart Factories",
+    "Smart Storage",
+    "DreamSense",
+    "Wilson Analytics",
+    "Nuoptimal Nootropic Injector Implants",
+    "Speech Processor Implants",
+    "Neural Accelerators",
+    "FocusWires",
+    "ABC SalesBots",
+    "Project Insight",
+  ],
+  AllResearch: [
+    "Hi-Tech R&D Laboratory",
+    "AutoBrew",
+    "AutoPartyManager",
+    "Automatic Drug Administration",
+    "Bulk Purchasing",
+    "CPH4 Injections",
+    "Drones",
+    "Drones - Assembly",
+    "Drones - Transport",
+    "Go-Juice",
+    "HRBuddy-Recruitment",
+    "HRBuddy-Training",
+    "JoyWire",
+    "Market-TA.I",
+    "Market-TA.II",
+    "Overclock",
+    "Self-Correcting Assemblers",
+    "Sti.mu",
+    "sudo.Assist",
+    "uPgrade: Capacity.I",
+    "uPgrade: Capacity.II",
+    "uPgrade: Dashboard",
+    "uPgrade: Fulcrum",
   ],
   FundingRoundShares: [0.1, 0.35, 0.25, 0.2],
   FundingRoundMultiplier: [4, 3, 3, 2.5],

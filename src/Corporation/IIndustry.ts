@@ -3,7 +3,7 @@ import { Warehouse } from "./Warehouse";
 import { ICorporation } from "./ICorporation";
 import { OfficeSpace } from "./OfficeSpace";
 import { Product } from "./Product";
-import { IndustryUpgrade } from "./IndustryUpgrades";
+import { IReviverValue } from "../utils/JSONReviver";
 
 export interface IIndustry {
   name: string;
@@ -36,12 +36,11 @@ export interface IIndustry {
   thisCycleRevenue: number;
   thisCycleExpenses: number;
 
-  upgrades: number[];
-
   state: string;
   newInd: boolean;
   warehouses: { [key: string]: Warehouse | 0 };
   offices: { [key: string]: OfficeSpace | 0 };
+  numAdVerts: number;
 
   init(): void;
   getProductDescriptionText(): string;
@@ -56,7 +55,8 @@ export interface IIndustry {
   processProducts(marketCycles: number, corporation: ICorporation): [number, number];
   processProduct(marketCycles: number, product: Product, corporation: ICorporation): number;
   discontinueProduct(product: Product): void;
-  upgrade(upgrade: IndustryUpgrade, refs: { corporation: ICorporation; office: OfficeSpace }): void;
+  getAdVertCost(): number;
+  applyAdVert(corporation: ICorporation): void;
   getOfficeProductivity(office: OfficeSpace, params?: { forProduct?: boolean }): number;
   getBusinessFactor(office: OfficeSpace): number;
   getAdvertisingFactors(): [number, number, number, number];
@@ -73,5 +73,5 @@ export interface IIndustry {
   getSalesMultiplier(): number;
   getScientificResearchMultiplier(): number;
   getStorageMultiplier(): number;
-  toJSON(): any;
+  toJSON(): IReviverValue;
 }

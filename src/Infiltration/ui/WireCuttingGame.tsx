@@ -34,7 +34,7 @@ const types = [KEY.PIPE, KEY.DOT, KEY.FORWARD_SLASH, KEY.HYPHEN, "█", KEY.HASH
 
 const colors = ["red", "#FFC107", "blue", "white"];
 
-const colorNames: any = {
+const colorNames: Record<string, string> = {
   red: "red",
   "#FFC107": "yellow",
   blue: "blue",

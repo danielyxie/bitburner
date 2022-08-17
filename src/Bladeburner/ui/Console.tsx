@@ -14,7 +14,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 
 interface ILineProps {
-  content: any;
+  content: React.ReactNode;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -197,7 +197,7 @@ function Logs({ entries }: ILogProps): React.ReactElement {
 
   return (
     <List sx={{ height: "100%", overflow: "auto", p: 1 }} ref={scrollHook}>
-      {entries && entries.map((log: any, i: number) => <Line key={i} content={log} />)}
+      {entries && entries.map((log: string, i: number) => <Line key={i} content={log} />)}
     </List>
   );
 }

@@ -6,15 +6,11 @@
  *
  * Sleeves are unlocked in BitNode-10.
  */
-import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 
 import { IPlayer } from "../IPlayer";
 import { Person } from "../Person";
-import { ITaskTracker, createTaskTracker } from "../ITaskTracker";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
-
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Crime } from "../../Crime/Crime";
 import { Crimes } from "../../Crime/Crimes";
@@ -28,98 +24,27 @@ import { CONSTANTS } from "../../Constants";
 
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
-import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
-import { BladeburnerConstants } from "../../Bladeburner/data/Constants";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../utils/JSONReviver";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { capitalizeFirstLetter, capitalizeEachWord } from "../../utils/StringHelperFunctions";
+import { FactionWorkType } from "../../Work/data/FactionWorkType";
+import { Work } from "./Work/Work";
+import { SleeveClassWork } from "./Work/SleeveClassWork";
+import { ClassType } from "../../Work/ClassWork";
+import { SleeveSynchroWork } from "./Work/SleeveSynchroWork";
+import { SleeveRecoveryWork } from "./Work/SleeveRecoveryWork";
+import { SleeveFactionWork } from "./Work/SleeveFactionWork";
+import { SleeveCompanyWork } from "./Work/SleeveCompanyWork";
+import { SleeveInfiltrateWork } from "./Work/SleeveInfiltrateWork";
+import { SleeveSupportWork } from "./Work/SleeveSupportWork";
+import { SleeveBladeburnerWork } from "./Work/SleeveBladeburnerWork";
+import { SleeveCrimeWork } from "./Work/SleeveCrimeWork";
 
 export class Sleeve extends Person {
-  /**
-   * Stores the name of the class that the player is currently taking
-   */
-  className = "";
-
-  /**
-   * Stores the type of crime the sleeve is currently attempting
-   * Must match the name of a Crime object
-   */
-  crimeType = "";
-
-  /**
-   * Enum value for current task
-   */
-  currentTask: SleeveTaskType = SleeveTaskType.Idle;
-
-  /**
-   * Contains details about the sleeve's current task. The info stored
-   * in this depends on the task type
-   *
-   * Faction/Company Work: Name of Faction/Company
-   * Crime: Money earned if successful
-   * Class/Gym: Name of university/gym
-   * Bladeburner: success chance
-   */
-  currentTaskLocation = "";
-
-  /**
-   * Maximum amount of time (in milliseconds) that can  be spent on current task.
-   */
-  currentTaskMaxTime = 0;
-
-  /**
-   * Milliseconds spent on current task
-   */
-  currentTaskTime = 0;
-
-  /**
-   * Keeps track of experience earned for other sleeves
-   */
-  earningsForSleeves: ITaskTracker = createTaskTracker();
-
-  /**
-   * Keeps track of experience + money earned for player
-   */
-  earningsForPlayer: ITaskTracker = createTaskTracker();
-
-  /**
-   * Keeps track of experienced earned in the current task/action
-   */
-  earningsForTask: ITaskTracker = createTaskTracker();
-
-  /**
-   * Keeps track of what type of work sleeve is doing for faction, if applicable
-   */
-  factionWorkType: FactionWorkType = FactionWorkType.None;
-
-  /**
-   * Records experience gain rate for the current task
-   */
-  gainRatesForTask: ITaskTracker = createTaskTracker();
-
-  /**
-   * String that stores what stat the sleeve is training at the gym
-   */
-  gymStatType = "";
-
-  /**
-   * String that stores what stat the sleeve is training at the gym
-   */
-  bbAction = "";
-
-  /**
-   * String that stores what stat the sleeve is training at the gym
-   */
-  bbContract = "";
-
-  /**
-   * Keeps track of events/notifications for this sleeve
-   */
-  logs: string[] = [];
+  currentWork: Work | null = null;
 
   /**
    * Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs
@@ -143,7 +68,7 @@ export class Sleeve extends Person {
   /**
    * Synchronization. Number between 0 and 100
    * When experience is earned  by sleeve, both the player and the sleeve get
-   * sync% of the experience earned. Other sleeves get sync^2% of exp
+   * sync% of the experience earned.
    */
   sync = 1;
 
@@ -152,6 +77,24 @@ export class Sleeve extends Person {
     if (p != null) {
       this.shockRecovery(p);
     }
+  }
+
+  shockBonus(): number {
+    return this.shock / 100;
+  }
+
+  syncBonus(): number {
+    return this.sync / 100;
+  }
+
+  startWork(player: IPlayer, w: Work): void {
+    if (this.currentWork) this.currentWork.finish(player);
+    this.currentWork = w;
+  }
+
+  stopWork(player: IPlayer): void {
+    if (this.currentWork) this.currentWork.finish(player);
+    this.currentWork = null;
   }
 
   /**
@@ -163,247 +106,8 @@ export class Sleeve extends Person {
       return false;
     }
 
-    if (this.currentTask !== SleeveTaskType.Idle) {
-      this.finishTask(p);
-    } else {
-      this.resetTaskStatus(p);
-    }
-
-    this.gainRatesForTask.hack = crime.hacking_exp * this.hacking_exp_mult * BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.str = crime.strength_exp * this.strength_exp_mult * BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.def = crime.defense_exp * this.defense_exp_mult * BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.dex = crime.dexterity_exp * this.dexterity_exp_mult * BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.agi = crime.agility_exp * this.agility_exp_mult * BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.cha = crime.charisma_exp * this.charisma_exp_mult * BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.int = crime.intelligence_exp;
-    this.gainRatesForTask.money = crime.money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
-
-    this.currentTaskLocation = String(this.gainRatesForTask.money);
-
-    this.crimeType = crime.name;
-    this.currentTaskMaxTime = crime.time;
-    this.currentTask = SleeveTaskType.Crime;
+    this.startWork(p, new SleeveCrimeWork(crime.type));
     return true;
-  }
-
-  /**
-   * Called to stop the current task
-   */
-  finishTask(p: IPlayer): ITaskTracker {
-    let retValue: ITaskTracker = createTaskTracker(); // Amount of exp to be gained by other sleeves
-
-    if (this.currentTask === SleeveTaskType.Crime) {
-      // For crimes, all experience and money is gained at the end
-      if (this.currentTaskTime >= this.currentTaskMaxTime) {
-        const crime: Crime | undefined = Object.values(Crimes).find((crime) => crime.name === this.crimeType);
-        if (!crime) {
-          console.error(`Invalid data stored in sleeve.crimeType: ${this.crimeType}`);
-          this.resetTaskStatus(p);
-          return retValue;
-        }
-        if (Math.random() < crime.successRate(this)) {
-          // Success
-          const successGainRates: ITaskTracker = createTaskTracker();
-
-          const keysForIteration: (keyof ITaskTracker)[] = Object.keys(successGainRates) as (keyof ITaskTracker)[];
-          for (let i = 0; i < keysForIteration.length; ++i) {
-            const key = keysForIteration[i];
-            successGainRates[key] = this.gainRatesForTask[key] * 2;
-          }
-          retValue = this.gainExperience(p, successGainRates);
-          this.gainMoney(p, this.gainRatesForTask);
-
-          p.karma -= crime.karma * (this.sync / 100);
-        } else {
-          retValue = this.gainExperience(p, this.gainRatesForTask);
-        }
-
-        // Do not reset task to IDLE
-        this.currentTaskTime = 0;
-        return retValue;
-      }
-    } else if (this.currentTask === SleeveTaskType.Bladeburner) {
-      if (this.currentTaskMaxTime === 0) {
-        this.currentTaskTime = 0;
-        return retValue;
-      }
-      // For bladeburner, all experience and money is gained at the end
-      const bb = p.bladeburner;
-      if (bb === null) {
-        const errorLogText = `bladeburner is null`;
-        console.error(`Function: sleeves.finishTask; Message: '${errorLogText}'`);
-        this.resetTaskStatus(p);
-        return retValue;
-      }
-
-      if (this.currentTaskTime >= this.currentTaskMaxTime) {
-        if (this.bbAction === "Infiltrate synthoids") {
-          bb.infiltrateSynthoidCommunities(p);
-          this.currentTaskTime = 0;
-          return retValue;
-        }
-        let type: string;
-        let name: string;
-        if (this.bbAction === "Take on contracts") {
-          type = "Contracts";
-          name = this.bbContract;
-        } else {
-          type = "General";
-          name = this.bbAction;
-        }
-
-        const actionIdent = bb.getActionIdFromTypeAndName(type, name);
-        if (actionIdent === null) {
-          const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-          console.error(`Function: sleeves.finishTask; Message: '${errorLogText}'`);
-          this.resetTaskStatus(p);
-          return retValue;
-        }
-
-        const action = bb.getActionObject(actionIdent);
-        if ((action?.count ?? 0) > 0) {
-          const bbRetValue = bb.completeAction(p, this, actionIdent, false);
-          if (bbRetValue) {
-            retValue = this.gainExperience(p, bbRetValue);
-            this.gainMoney(p, bbRetValue);
-
-            // Do not reset task to IDLE
-            this.currentTaskTime = 0;
-            return retValue;
-          }
-        }
-      }
-    }
-
-    this.resetTaskStatus(p);
-
-    return retValue;
-  }
-
-  /**
-   * Earn experience for any stats (supports multiple)
-   * This function also handles experience propogating to Player and other sleeves
-   */
-  gainExperience(p: IPlayer, exp: ITaskTracker, numCycles = 1, fromOtherSleeve = false): ITaskTracker {
-    // If the experience is coming from another sleeve, it is not multiplied by anything.
-    // Also the player does not earn anything
-    if (fromOtherSleeve) {
-      if (exp.hack > 0) {
-        this.hacking_exp += exp.hack;
-      }
-
-      if (exp.str > 0) {
-        this.strength_exp += exp.str;
-      }
-
-      if (exp.def > 0) {
-        this.defense_exp += exp.def;
-      }
-
-      if (exp.dex > 0) {
-        this.dexterity_exp += exp.dex;
-      }
-
-      if (exp.agi > 0) {
-        this.agility_exp += exp.agi;
-      }
-
-      if (exp.cha > 0) {
-        this.charisma_exp += exp.cha;
-      }
-
-      return createTaskTracker();
-    }
-
-    // Experience is first multiplied by shock. Then 'synchronization'
-    // is accounted for
-
-    const multFac = (this.shock / 100) * (this.sync / 100) * numCycles;
-    const pHackExp = exp.hack * multFac;
-    const pStrExp = exp.str * multFac;
-    const pDefExp = exp.def * multFac;
-    const pDexExp = exp.dex * multFac;
-    const pAgiExp = exp.agi * multFac;
-    const pChaExp = exp.cha * multFac;
-    const pIntExp = exp.int * multFac;
-
-    // Experience is gained by both this sleeve and player
-    if (pHackExp > 0) {
-      this.gainHackingExp(pHackExp);
-      p.gainHackingExp(pHackExp);
-      this.earningsForPlayer.hack += pHackExp;
-      this.earningsForTask.hack += pHackExp;
-    }
-
-    if (pStrExp > 0) {
-      this.gainStrengthExp(pStrExp);
-      p.gainStrengthExp(pStrExp);
-      this.earningsForPlayer.str += pStrExp;
-      this.earningsForTask.str += pStrExp;
-    }
-
-    if (pDefExp > 0) {
-      this.gainDefenseExp(pDefExp);
-      p.gainDefenseExp(pDefExp);
-      this.earningsForPlayer.def += pDefExp;
-      this.earningsForTask.def += pDefExp;
-    }
-
-    if (pDexExp > 0) {
-      this.gainDexterityExp(pDexExp);
-      p.gainDexterityExp(pDexExp);
-      this.earningsForPlayer.dex += pDexExp;
-      this.earningsForTask.dex += pDexExp;
-    }
-
-    if (pAgiExp > 0) {
-      this.gainAgilityExp(pAgiExp);
-      p.gainAgilityExp(pAgiExp);
-      this.earningsForPlayer.agi += pAgiExp;
-      this.earningsForTask.agi += pAgiExp;
-    }
-
-    if (pChaExp > 0) {
-      this.gainCharismaExp(pChaExp);
-      p.gainCharismaExp(pChaExp);
-      this.earningsForPlayer.cha += pChaExp;
-      this.earningsForTask.cha += pChaExp;
-    }
-
-    if (pIntExp > 0) {
-      this.gainIntelligenceExp(pIntExp);
-      p.gainIntelligenceExp(pIntExp);
-    }
-
-    // Record earnings for other sleeves
-    this.earningsForSleeves.hack += pHackExp * (this.sync / 100);
-    this.earningsForSleeves.str += pStrExp * (this.sync / 100);
-    this.earningsForSleeves.def += pDefExp * (this.sync / 100);
-    this.earningsForSleeves.dex += pDexExp * (this.sync / 100);
-    this.earningsForSleeves.agi += pAgiExp * (this.sync / 100);
-    this.earningsForSleeves.cha += pChaExp * (this.sync / 100);
-
-    // Return the experience to be gained by other sleeves
-    return {
-      hack: pHackExp * (this.sync / 100),
-      str: pStrExp * (this.sync / 100),
-      def: pDefExp * (this.sync / 100),
-      dex: pDexExp * (this.sync / 100),
-      agi: pAgiExp * (this.sync / 100),
-      cha: pChaExp * (this.sync / 100),
-      int: pIntExp * (this.sync / 100),
-      money: exp.money,
-    };
-  }
-
-  /**
-   * Earn money for player
-   */
-  gainMoney(p: IPlayer, task: ITaskTracker, numCycles = 1): void {
-    const gain: number = task.money * numCycles;
-    this.earningsForTask.money += gain;
-    this.earningsForPlayer.money += gain;
-    p.gainMoney(gain, "sleeves");
   }
 
   /**
@@ -431,77 +135,16 @@ export class Sleeve extends Person {
     return currCost * baseCost;
   }
 
-  /**
-   * Gets reputation gain for the current task
-   * Only applicable when working for company or faction
-   */
-  getRepGain(p: IPlayer): number {
-    if (this.currentTask === SleeveTaskType.Faction) {
-      let favorMult = 1;
-      const fac: Faction | null = Factions[this.currentTaskLocation];
-      if (fac != null) {
-        favorMult = 1 + fac.favor / 100;
-      }
-
-      switch (this.factionWorkType) {
-        case FactionWorkType.Hacking:
-          return this.getFactionHackingWorkRepGain() * (this.shock / 100) * favorMult;
-        case FactionWorkType.Field:
-          return this.getFactionFieldWorkRepGain() * (this.shock / 100) * favorMult;
-        case FactionWorkType.Security:
-          return this.getFactionSecurityWorkRepGain() * (this.shock / 100) * favorMult;
-        default:
-          console.warn(`Invalid Sleeve.factionWorkType property in Sleeve.getRepGain(): ${this.factionWorkType}`);
-          return 0;
-      }
-    } else if (this.currentTask === SleeveTaskType.Company) {
-      const companyName: string = this.currentTaskLocation;
-      const company: Company | null = Companies[companyName];
-      if (company == null) {
-        console.error(`Invalid company found when trying to calculate rep gain: ${companyName}`);
-        return 0;
-      }
-
-      const companyPosition: CompanyPosition | null = CompanyPositions[p.jobs[companyName]];
-      if (companyPosition == null) {
-        console.error(`Invalid company position name found when trying to calculate rep gain: ${p.jobs[companyName]}`);
-        return 0;
-      }
-
-      const jobPerformance: number = companyPosition.calculateJobPerformance(
-        this.hacking,
-        this.strength,
-        this.defense,
-        this.dexterity,
-        this.agility,
-        this.charisma,
-      );
-      const favorMult = 1 + company.favor / 100;
-
-      return jobPerformance * this.company_rep_mult * favorMult;
-    } else {
-      return 0;
-    }
-  }
-
   installAugmentation(aug: Augmentation): void {
-    this.hacking_exp = 0;
-    this.strength_exp = 0;
-    this.defense_exp = 0;
-    this.dexterity_exp = 0;
-    this.agility_exp = 0;
-    this.charisma_exp = 0;
+    this.exp.hacking = 0;
+    this.exp.strength = 0;
+    this.exp.defense = 0;
+    this.exp.dexterity = 0;
+    this.exp.agility = 0;
+    this.exp.charisma = 0;
     this.applyAugmentation(aug);
     this.augmentations.push({ name: aug.name, level: 1 });
     this.updateStatLevels();
-  }
-
-  log(entry: string): void {
-    const MaxLogSize = 50;
-    this.logs.push(entry);
-    if (this.logs.length > MaxLogSize) {
-      this.logs.shift();
-    }
   }
 
   /**
@@ -509,17 +152,16 @@ export class Sleeve extends Person {
    */
   prestige(p: IPlayer): void {
     // Reset exp
-    this.hacking_exp = 0;
-    this.strength_exp = 0;
-    this.defense_exp = 0;
-    this.dexterity_exp = 0;
-    this.agility_exp = 0;
-    this.charisma_exp = 0;
+    this.exp.hacking = 0;
+    this.exp.strength = 0;
+    this.exp.defense = 0;
+    this.exp.dexterity = 0;
+    this.exp.agility = 0;
+    this.exp.charisma = 0;
+    this.updateStatLevels();
 
     // Reset task-related stuff
-    this.resetTaskStatus(p);
-    this.earningsForSleeves = createTaskTracker();
-    this.earningsForPlayer = createTaskTracker();
+    this.stopWork(p);
     this.shockRecovery(p);
 
     // Reset augs and multipliers
@@ -534,8 +176,6 @@ export class Sleeve extends Person {
     this.shock = 1;
     this.storedCycles = 0;
     this.sync = Math.max(this.memory, 1);
-
-    this.logs = [];
   }
 
   /**
@@ -543,151 +183,27 @@ export class Sleeve extends Person {
    * Returns an object containing the amount of experience that should be
    * transferred to all other sleeves
    */
-  process(p: IPlayer, numCycles = 1): ITaskTracker | null {
+  process(p: IPlayer, numCycles = 1): void {
     // Only process once every second (5 cycles)
     const CyclesPerSecond = 1000 / CONSTANTS.MilliPerCycle;
     this.storedCycles += numCycles;
-    if (this.storedCycles < CyclesPerSecond) {
-      return null;
-    }
+    if (this.storedCycles < CyclesPerSecond) return;
 
     let cyclesUsed = this.storedCycles;
     cyclesUsed = Math.min(cyclesUsed, 15);
-    let time = cyclesUsed * CONSTANTS.MilliPerCycle;
-    if (this.currentTaskMaxTime !== 0 && this.currentTaskTime + time > this.currentTaskMaxTime) {
-      time = this.currentTaskMaxTime - this.currentTaskTime;
-      cyclesUsed = Math.floor(time / CONSTANTS.MilliPerCycle);
-
-      if (time < 0 || cyclesUsed < 0) {
-        console.warn(`Sleeve.process() calculated negative cycle usage`);
-        time = 0;
-        cyclesUsed = 0;
-      }
-    }
-
-    this.currentTaskTime += time;
-
-    // Shock gradually goes towards 100
     this.shock = Math.min(100, this.shock + 0.0001 * cyclesUsed);
-
-    let retValue: ITaskTracker = createTaskTracker();
-    switch (this.currentTask) {
-      case SleeveTaskType.Idle:
-        break;
-      case SleeveTaskType.Class:
-      case SleeveTaskType.Gym:
-        this.updateTaskGainRates(p);
-        retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
-        this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
-        break;
-      case SleeveTaskType.Faction: {
-        retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
-        this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
-
-        // Gain faction reputation
-        const fac: Faction = Factions[this.currentTaskLocation];
-        if (!(fac instanceof Faction)) {
-          console.error(`Invalid faction for Sleeve task: ${this.currentTaskLocation}`);
-          break;
-        }
-
-        // If the player has a gang with the faction the sleeve is working
-        // for, we need to reset the sleeve's task
-        if (p.gang) {
-          if (fac.name === p.gang.facName) {
-            this.resetTaskStatus(p);
-          }
-        }
-
-        fac.playerReputation += this.getRepGain(p) * cyclesUsed;
-        break;
-      }
-      case SleeveTaskType.Company: {
-        retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
-        this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
-
-        const company: Company = Companies[this.currentTaskLocation];
-        if (!(company instanceof Company)) {
-          console.error(`Invalid company for Sleeve task: ${this.currentTaskLocation}`);
-          break;
-        }
-
-        company.playerReputation += this.getRepGain(p) * cyclesUsed;
-        break;
-      }
-      case SleeveTaskType.Recovery:
-        this.shock = Math.min(100, this.shock + 0.0002 * cyclesUsed);
-        if (this.shock >= 100) this.resetTaskStatus(p);
-        break;
-      case SleeveTaskType.Synchro:
-        this.sync = Math.min(100, this.sync + p.getIntelligenceBonus(0.5) * 0.0002 * cyclesUsed);
-        if (this.sync >= 100) this.resetTaskStatus(p);
-        break;
-      default:
-        break;
-    }
-
-    if (this.currentTaskMaxTime !== 0 && this.currentTaskTime >= this.currentTaskMaxTime) {
-      if (this.currentTask === SleeveTaskType.Crime || this.currentTask === SleeveTaskType.Bladeburner) {
-        retValue = this.finishTask(p);
-      } else {
-        this.finishTask(p);
-      }
-    }
-
-    this.updateStatLevels();
-
+    if (!this.currentWork) return;
+    this.currentWork.process(p, this, cyclesUsed);
     this.storedCycles -= cyclesUsed;
-
-    return retValue;
-  }
-
-  /**
-   * Resets all parameters used to keep information about the current task
-   */
-  resetTaskStatus(p: IPlayer): void {
-    if (this.bbAction == "Support main sleeve") {
-      p.bladeburner?.sleeveSupport(false);
-    }
-    if (this.currentTask == SleeveTaskType.Class) {
-      const retVal = createTaskTracker();
-      retVal.int = CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.currentTaskTime / 1000);
-      const r = this.gainExperience(p, retVal);
-      p.sleeves.filter((s) => s != this).forEach((s) => s.gainExperience(p, r, 1, true));
-    }
-    this.earningsForTask = createTaskTracker();
-    this.gainRatesForTask = createTaskTracker();
-    this.currentTask = SleeveTaskType.Idle;
-    this.currentTaskTime = 0;
-    this.currentTaskMaxTime = 0;
-    this.factionWorkType = FactionWorkType.None;
-    this.crimeType = "";
-    this.currentTaskLocation = "";
-    this.gymStatType = "";
-    this.className = "";
-    this.bbAction = "";
-    this.bbContract = "------";
   }
 
   shockRecovery(p: IPlayer): boolean {
-    if (this.currentTask !== SleeveTaskType.Idle) {
-      this.finishTask(p);
-    } else {
-      this.resetTaskStatus(p);
-    }
-
-    this.currentTask = SleeveTaskType.Recovery;
+    this.startWork(p, new SleeveRecoveryWork());
     return true;
   }
 
   synchronize(p: IPlayer): boolean {
-    if (this.currentTask !== SleeveTaskType.Idle) {
-      this.finishTask(p);
-    } else {
-      this.resetTaskStatus(p);
-    }
-
-    this.currentTask = SleeveTaskType.Synchro;
+    this.startWork(p, new SleeveSynchroWork());
     return true;
   }
 
@@ -695,66 +211,59 @@ export class Sleeve extends Person {
    * Take a course at a university
    */
   takeUniversityCourse(p: IPlayer, universityName: string, className: string): boolean {
-    if (this.currentTask !== SleeveTaskType.Idle) {
-      this.finishTask(p);
-    } else {
-      this.resetTaskStatus(p);
-    }
-
     // Set exp/money multipliers based on which university.
     // Also check that the sleeve is in the right city
-    let costMult = 1;
+    let loc: LocationName | undefined;
     switch (universityName.toLowerCase()) {
-      case LocationName.AevumSummitUniversity.toLowerCase():
-        if (this.city !== CityName.Aevum) {
-          return false;
-        }
-        this.currentTaskLocation = LocationName.AevumSummitUniversity;
-        costMult = 4;
+      case LocationName.AevumSummitUniversity.toLowerCase(): {
+        if (this.city !== CityName.Aevum) return false;
+        loc = LocationName.AevumSummitUniversity;
         break;
-      case LocationName.Sector12RothmanUniversity.toLowerCase():
-        if (this.city !== CityName.Sector12) {
-          return false;
-        }
-        this.currentTaskLocation = LocationName.Sector12RothmanUniversity;
-        costMult = 3;
+      }
+      case LocationName.Sector12RothmanUniversity.toLowerCase(): {
+        if (this.city !== CityName.Sector12) return false;
+        loc = LocationName.Sector12RothmanUniversity;
         break;
-      case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
-        if (this.city !== CityName.Volhaven) {
-          return false;
-        }
-        this.currentTaskLocation = LocationName.VolhavenZBInstituteOfTechnology;
-        costMult = 5;
+      }
+      case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase(): {
+        if (this.city !== CityName.Volhaven) return false;
+        loc = LocationName.VolhavenZBInstituteOfTechnology;
         break;
-      default:
-        return false;
+      }
     }
+    if (!loc) return false;
 
     // Set experience/money gains based on class
+    let classType: ClassType | undefined;
     switch (className.toLowerCase()) {
       case "study computer science":
+        classType = ClassType.StudyComputerScience;
         break;
       case "data structures":
-        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassDataStructuresBaseCost * costMult);
+        classType = ClassType.DataStructures;
         break;
       case "networks":
-        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassNetworksBaseCost * costMult);
+        classType = ClassType.Networks;
         break;
       case "algorithms":
-        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassAlgorithmsBaseCost * costMult);
+        classType = ClassType.Algorithms;
         break;
       case "management":
-        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassManagementBaseCost * costMult);
+        classType = ClassType.Management;
         break;
       case "leadership":
-        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassLeadershipBaseCost * costMult);
+        classType = ClassType.Leadership;
         break;
-      default:
-        return false;
     }
+    if (!classType) return false;
 
-    this.className = className;
-    this.currentTask = SleeveTaskType.Class;
+    this.startWork(
+      p,
+      new SleeveClassWork({
+        classType: classType,
+        location: loc,
+      }),
+    );
     return true;
   }
 
@@ -783,94 +292,6 @@ export class Sleeve extends Person {
     return true;
   }
 
-  updateTaskGainRates(p: IPlayer): void {
-    if (this.currentTask === SleeveTaskType.Class) {
-      let expMult = 1;
-      switch (this.currentTaskLocation.toLowerCase()) {
-        case LocationName.AevumSummitUniversity.toLowerCase():
-          expMult = 3;
-          break;
-        case LocationName.Sector12RothmanUniversity.toLowerCase():
-          expMult = 2;
-          break;
-        case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
-          expMult = 4;
-          break;
-        default:
-          return;
-      }
-
-      const totalExpMult = expMult * p.hashManager.getStudyMult();
-      switch (this.className.toLowerCase()) {
-        case "study computer science":
-          this.gainRatesForTask.hack =
-            CONSTANTS.ClassStudyComputerScienceBaseExp * totalExpMult * this.hacking_exp_mult;
-          break;
-        case "data structures":
-          this.gainRatesForTask.hack = CONSTANTS.ClassDataStructuresBaseExp * totalExpMult * this.hacking_exp_mult;
-          break;
-        case "networks":
-          this.gainRatesForTask.hack = CONSTANTS.ClassNetworksBaseExp * totalExpMult * this.hacking_exp_mult;
-          break;
-        case "algorithms":
-          this.gainRatesForTask.hack = CONSTANTS.ClassAlgorithmsBaseExp * totalExpMult * this.hacking_exp_mult;
-          break;
-        case "management":
-          this.gainRatesForTask.cha = CONSTANTS.ClassManagementBaseExp * totalExpMult * this.charisma_exp_mult;
-          break;
-        case "leadership":
-          this.gainRatesForTask.cha = CONSTANTS.ClassLeadershipBaseExp * totalExpMult * this.charisma_exp_mult;
-          break;
-        default:
-          break;
-      }
-
-      return;
-    }
-
-    if (this.currentTask === SleeveTaskType.Gym) {
-      // Get gym exp multiplier
-      let expMult = 1;
-      switch (this.currentTaskLocation.toLowerCase()) {
-        case LocationName.AevumCrushFitnessGym.toLowerCase():
-          expMult = 2;
-          break;
-        case LocationName.AevumSnapFitnessGym.toLowerCase():
-          expMult = 5;
-          break;
-        case LocationName.Sector12IronGym.toLowerCase():
-          expMult = 1;
-          break;
-        case LocationName.Sector12PowerhouseGym.toLowerCase():
-          expMult = 10;
-          break;
-        case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
-          expMult = 4;
-          break;
-        default:
-          return;
-      }
-
-      // Set stat gain rate
-      const baseGymExp = 1;
-      const totalExpMultiplier = p.hashManager.getTrainingMult() * expMult;
-      const sanitizedStat: string = this.gymStatType.toLowerCase();
-      if (sanitizedStat.includes("str")) {
-        this.gainRatesForTask.str = baseGymExp * totalExpMultiplier * this.strength_exp_mult;
-      } else if (sanitizedStat.includes("def")) {
-        this.gainRatesForTask.def = baseGymExp * totalExpMultiplier * this.defense_exp_mult;
-      } else if (sanitizedStat.includes("dex")) {
-        this.gainRatesForTask.dex = baseGymExp * totalExpMultiplier * this.dexterity_exp_mult;
-      } else if (sanitizedStat.includes("agi")) {
-        this.gainRatesForTask.agi = baseGymExp * totalExpMultiplier * this.agility_exp_mult;
-      }
-
-      return;
-    }
-
-    console.warn(`Sleeve.updateTaskGainRates() called for unexpected task type ${this.currentTask}`);
-  }
-
   upgradeMemory(n: number): void {
     if (n < 0) {
       console.warn(`Sleeve.upgradeMemory() called with negative value: ${n}`);
@@ -889,58 +310,12 @@ export class Sleeve extends Person {
       return false;
     }
 
-    if (this.currentTask !== SleeveTaskType.Idle) {
-      this.finishTask(p);
-    } else {
-      this.resetTaskStatus(p);
-    }
-
     const company: Company | null = Companies[companyName];
     const companyPosition: CompanyPosition | null = CompanyPositions[p.jobs[companyName]];
-    if (company == null) {
-      return false;
-    }
-    if (companyPosition == null) {
-      return false;
-    }
-    this.gainRatesForTask.money =
-      companyPosition.baseSalary *
-      company.salaryMultiplier *
-      this.work_money_mult *
-      BitNodeMultipliers.CompanyWorkMoney;
-    this.gainRatesForTask.hack =
-      companyPosition.hackingExpGain *
-      company.expMultiplier *
-      this.hacking_exp_mult *
-      BitNodeMultipliers.CompanyWorkExpGain;
-    this.gainRatesForTask.str =
-      companyPosition.strengthExpGain *
-      company.expMultiplier *
-      this.strength_exp_mult *
-      BitNodeMultipliers.CompanyWorkExpGain;
-    this.gainRatesForTask.def =
-      companyPosition.defenseExpGain *
-      company.expMultiplier *
-      this.defense_exp_mult *
-      BitNodeMultipliers.CompanyWorkExpGain;
-    this.gainRatesForTask.dex =
-      companyPosition.dexterityExpGain *
-      company.expMultiplier *
-      this.dexterity_exp_mult *
-      BitNodeMultipliers.CompanyWorkExpGain;
-    this.gainRatesForTask.agi =
-      companyPosition.agilityExpGain *
-      company.expMultiplier *
-      this.agility_exp_mult *
-      BitNodeMultipliers.CompanyWorkExpGain;
-    this.gainRatesForTask.cha =
-      companyPosition.charismaExpGain *
-      company.expMultiplier *
-      this.charisma_exp_mult *
-      BitNodeMultipliers.CompanyWorkExpGain;
+    if (company == null) return false;
+    if (companyPosition == null) return false;
 
-    this.currentTaskLocation = companyName;
-    this.currentTask = SleeveTaskType.Company;
+    this.startWork(p, new SleeveCompanyWork({ companyName: companyName }));
 
     return true;
   }
@@ -955,49 +330,31 @@ export class Sleeve extends Person {
       return false;
     }
 
-    if (this.currentTask !== SleeveTaskType.Idle) {
-      this.finishTask(p);
-    } else {
-      this.resetTaskStatus(p);
-    }
-
     const factionInfo = faction.getInfo();
 
     // Set type of work (hacking/field/security), and the experience gains
-    const sanitizedWorkType: string = workType.toLowerCase();
+    const sanitizedWorkType = workType.toLowerCase();
+    let factionWorkType: FactionWorkType;
     if (sanitizedWorkType.includes("hack")) {
-      if (!factionInfo.offerHackingWork) {
-        return false;
-      }
-      this.factionWorkType = FactionWorkType.Hacking;
-      this.gainRatesForTask.hack = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      if (!factionInfo.offerHackingWork) return false;
+      factionWorkType = FactionWorkType.HACKING;
     } else if (sanitizedWorkType.includes("field")) {
-      if (!factionInfo.offerFieldWork) {
-        return false;
-      }
-      this.factionWorkType = FactionWorkType.Field;
-      this.gainRatesForTask.hack = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.str = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.def = 0.1 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.dex = 0.1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.agi = 0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.cha = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      if (!factionInfo.offerFieldWork) return false;
+      factionWorkType = FactionWorkType.FIELD;
     } else if (sanitizedWorkType.includes("security")) {
-      if (!factionInfo.offerSecurityWork) {
-        return false;
-      }
-      this.factionWorkType = FactionWorkType.Security;
-      this.gainRatesForTask.hack = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.str = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.def = 0.15 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.dex = 0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.agi = 0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      if (!factionInfo.offerSecurityWork) return false;
+      factionWorkType = FactionWorkType.SECURITY;
     } else {
       return false;
     }
 
-    this.currentTaskLocation = factionName;
-    this.currentTask = SleeveTaskType.Faction;
+    this.startWork(
+      p,
+      new SleeveFactionWork({
+        factionWorkType: factionWorkType,
+        factionName: faction.name,
+      }),
+    );
 
     return true;
   }
@@ -1006,73 +363,65 @@ export class Sleeve extends Person {
    * Begin a gym workout task
    */
   workoutAtGym(p: IPlayer, gymName: string, stat: string): boolean {
-    if (this.currentTask !== SleeveTaskType.Idle) {
-      this.finishTask(p);
-    } else {
-      this.resetTaskStatus(p);
-    }
-
     // Set exp/money multipliers based on which university.
     // Also check that the sleeve is in the right city
-    let costMult = 1;
+    let loc: LocationName | undefined;
     switch (gymName.toLowerCase()) {
-      case LocationName.AevumCrushFitnessGym.toLowerCase():
-        if (this.city != CityName.Aevum) {
-          return false;
-        }
-        this.currentTaskLocation = LocationName.AevumCrushFitnessGym;
-        costMult = 3;
+      case LocationName.AevumCrushFitnessGym.toLowerCase(): {
+        if (this.city != CityName.Aevum) return false;
+        loc = LocationName.AevumCrushFitnessGym;
         break;
-      case LocationName.AevumSnapFitnessGym.toLowerCase():
-        if (this.city != CityName.Aevum) {
-          return false;
-        }
-        this.currentTaskLocation = LocationName.AevumSnapFitnessGym;
-        costMult = 10;
+      }
+      case LocationName.AevumSnapFitnessGym.toLowerCase(): {
+        if (this.city != CityName.Aevum) return false;
+        loc = LocationName.AevumSnapFitnessGym;
         break;
-      case LocationName.Sector12IronGym.toLowerCase():
-        if (this.city != CityName.Sector12) {
-          return false;
-        }
-        this.currentTaskLocation = LocationName.Sector12IronGym;
-        costMult = 1;
+      }
+      case LocationName.Sector12IronGym.toLowerCase(): {
+        if (this.city != CityName.Sector12) return false;
+        loc = LocationName.Sector12IronGym;
         break;
-      case LocationName.Sector12PowerhouseGym.toLowerCase():
-        if (this.city != CityName.Sector12) {
-          return false;
-        }
-        this.currentTaskLocation = LocationName.Sector12PowerhouseGym;
-        costMult = 20;
+      }
+      case LocationName.Sector12PowerhouseGym.toLowerCase(): {
+        if (this.city != CityName.Sector12) return false;
+        loc = LocationName.Sector12PowerhouseGym;
         break;
-      case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
-        if (this.city != CityName.Volhaven) {
-          return false;
-        }
-        this.currentTaskLocation = LocationName.VolhavenMilleniumFitnessGym;
-        costMult = 7;
+      }
+      case LocationName.VolhavenMilleniumFitnessGym.toLowerCase(): {
+        if (this.city != CityName.Volhaven) return false;
+        loc = LocationName.VolhavenMilleniumFitnessGym;
         break;
-      default:
-        return false;
+      }
     }
+    if (!loc) return false;
 
     // Set experience/money gains based on class
     const sanitizedStat: string = stat.toLowerCase();
 
-    // Set cost
-    this.gainRatesForTask.money = -1 * (CONSTANTS.ClassGymBaseCost * costMult);
-
-    // Validate "stat" argument
-    if (
-      !sanitizedStat.includes("str") &&
-      !sanitizedStat.includes("def") &&
-      !sanitizedStat.includes("dex") &&
-      !sanitizedStat.includes("agi")
-    ) {
-      return false;
+    // set stat to a default value.
+    let classType: ClassType | undefined;
+    if (sanitizedStat.includes("str")) {
+      classType = ClassType.GymStrength;
     }
+    if (sanitizedStat.includes("def")) {
+      classType = ClassType.GymDefense;
+    }
+    if (sanitizedStat.includes("dex")) {
+      classType = ClassType.GymDexterity;
+    }
+    if (sanitizedStat.includes("agi")) {
+      classType = ClassType.GymAgility;
+    }
+    // if stat is still equals its default value, then validation has failed.
+    if (!classType) return false;
 
-    this.gymStatType = stat;
-    this.currentTask = SleeveTaskType.Gym;
+    this.startWork(
+      p,
+      new SleeveClassWork({
+        classType: classType,
+        location: loc,
+      }),
+    );
 
     return true;
   }
@@ -1081,60 +430,27 @@ export class Sleeve extends Person {
    * Begin a bladeburner task
    */
   bladeburner(p: IPlayer, action: string, contract: string): boolean {
-    if (this.currentTask !== SleeveTaskType.Idle) {
-      this.finishTask(p);
-    } else {
-      this.resetTaskStatus(p);
-    }
-
-    this.gainRatesForTask.hack = 0;
-    this.gainRatesForTask.str = 0;
-    this.gainRatesForTask.def = 0;
-    this.gainRatesForTask.dex = 0;
-    this.gainRatesForTask.agi = 0;
-    this.gainRatesForTask.cha = 0;
-    this.gainRatesForTask.money = 0;
-    this.currentTaskLocation = "";
-
-    let time = 0;
-
-    this.bbContract = "------";
     switch (action) {
       case "Field analysis":
-        time = this.getBladeburnerActionTime(p, "General", action);
-        this.gainRatesForTask.hack = 20 * this.hacking_exp_mult;
-        this.gainRatesForTask.cha = 20 * this.charisma_exp_mult;
-        break;
+        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Field Analysis" }));
+        return true;
       case "Recruitment":
-        time = this.getBladeburnerActionTime(p, "General", action);
-        this.gainRatesForTask.cha =
-          2 * BladeburnerConstants.BaseStatGain * (p.bladeburner?.getRecruitmentTime(this) ?? 0) * 1000;
-        this.currentTaskLocation = `(Success Rate: ${numeralWrapper.formatPercentage(
-          this.recruitmentSuccessChance(p),
-        )})`;
-        break;
+        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Recruitment" }));
+        return true;
       case "Diplomacy":
-        time = this.getBladeburnerActionTime(p, "General", action);
-        break;
+        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Diplomacy" }));
+        return true;
       case "Infiltrate synthoids":
-        time = 60000;
-        this.currentTaskLocation = "This will generate additional contracts and operations";
-        break;
+        this.startWork(p, new SleeveInfiltrateWork());
+        return true;
       case "Support main sleeve":
-        p.bladeburner?.sleeveSupport(true);
-        time = 0;
-        break;
+        this.startWork(p, new SleeveSupportWork(p));
+        return true;
       case "Take on contracts":
-        time = this.getBladeburnerActionTime(p, "Contracts", contract);
-        this.contractGainRates(p, "Contracts", contract);
-        this.currentTaskLocation = this.contractSuccessChance(p, "Contracts", contract);
-        this.bbContract = capitalizeEachWord(contract.toLowerCase());
-        break;
+        this.startWork(p, new SleeveBladeburnerWork({ type: "Contracts", name: contract }));
+        return true;
     }
 
-    this.bbAction = capitalizeFirstLetter(action.toLowerCase());
-    this.currentTaskMaxTime = time;
-    this.currentTask = SleeveTaskType.Bladeburner;
     return true;
   }
 
@@ -1161,68 +477,16 @@ export class Sleeve extends Person {
     }
   }
 
-  contractGainRates(p: IPlayer, type: string, name: string): void {
-    const bb = p.bladeburner;
-    if (bb === null) {
-      const errorLogText = `bladeburner is null`;
-      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`);
-      return;
-    }
-    const actionIdent = bb.getActionIdFromTypeAndName(type, name);
-    if (actionIdent === null) {
-      const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`);
-      this.resetTaskStatus(p);
-      return;
-    }
-    const action = bb.getActionObject(actionIdent);
-    if (action === null) {
-      const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`);
-      this.resetTaskStatus(p);
-      return;
-    }
-    const retValue = bb.getActionStats(action, true);
-    this.gainRatesForTask.hack = retValue.hack;
-    this.gainRatesForTask.str = retValue.str;
-    this.gainRatesForTask.def = retValue.def;
-    this.gainRatesForTask.dex = retValue.dex;
-    this.gainRatesForTask.agi = retValue.agi;
-    this.gainRatesForTask.cha = retValue.cha;
-    const rewardMultiplier = Math.pow(action.rewardFac, action.level - 1);
-    this.gainRatesForTask.money =
-      BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * bb.skillMultipliers.money;
-  }
-
-  getBladeburnerActionTime(p: IPlayer, type: string, name: string): number {
-    //Maybe find workerscript and use original
-    const bb = p.bladeburner;
-    if (bb === null) {
-      const errorLogText = `bladeburner is null`;
-      console.error(`Function: sleeves.getBladeburnerActionTime; Message: '${errorLogText}'`);
-      return -1;
-    }
-
-    const time = bb.getActionTimeNetscriptFn(this, type, name);
-    if (typeof time === "string") {
-      const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-      console.error(`Function: sleeves.getBladeburnerActionTime; Message: '${errorLogText}'`);
-      return -1;
-    } else {
-      return time;
-    }
-  }
-
   takeDamage(amt: number): boolean {
     if (typeof amt !== "number") {
       console.warn(`Player.takeDamage() called without a numeric argument: ${amt}`);
       return false;
     }
 
-    this.hp -= amt;
-    if (this.hp <= 0) {
-      this.shock += 0.5;
-      this.hp = this.max_hp;
+    this.hp.current -= amt;
+    if (this.hp.current <= 0) {
+      this.shock = Math.min(1, this.shock - 0.5);
+      this.hp.current = this.hp.max;
       return true;
     } else {
       return false;
@@ -1236,15 +500,14 @@ export class Sleeve extends Person {
   /**
    * Serialize the current object to a JSON save state.
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Sleeve", this);
   }
 
   /**
    * Initiatizes a Sleeve object from a JSON save state.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Sleeve {
+  static fromJSON(value: IReviverValue): Sleeve {
     return Generic_fromJSON(Sleeve, value.data);
   }
 }

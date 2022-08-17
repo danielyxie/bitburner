@@ -18,7 +18,7 @@ import {
 
 import { createRandomIp } from "../utils/IPAddress";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 interface IConstructorParams {
@@ -125,7 +125,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
 
   updateRamUsed(ram: number, player: IPlayer): void {
     super.updateRamUsed(ram, player);
-    this.updateHashRate(player.hacknet_node_money_mult);
+    this.updateHashRate(player.mults.hacknet_node_money);
   }
 
   updateHashCapacity(): void {
@@ -145,13 +145,12 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
   }
 
   // Serialize the current object to a JSON save state
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("HacknetServer", this);
   }
 
   // Initializes a HacknetServer Object from a JSON save state
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): HacknetServer {
+  static fromJSON(value: IReviverValue): HacknetServer {
     return Generic_fromJSON(HacknetServer, value.data);
   }
 }

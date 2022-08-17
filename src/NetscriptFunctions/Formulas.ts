@@ -1,5 +1,4 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { calculateServerGrowth } from "../Server/formulas/grow";
 import {
   calculateMoneyGainRate,
@@ -27,7 +26,11 @@ import {
   calculateWeakenTime,
 } from "../Hacking";
 import { Programs } from "../Programs/Programs";
-import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
+import {
+  Formulas as IFormulas,
+  HacknetNodeConstants as DefHacknetNodeConstants,
+  HacknetServerConstants as DefHacknetServerConstants,
+} from "../ScriptEditor/NetscriptDefinitions";
 import {
   calculateRespectGain,
   calculateWantedLevelGain,
@@ -39,11 +42,12 @@ import {
 import { favorToRep as calculateFavorToRep, repToFavor as calculateRepToFavor } from "../Faction/formulas/favor";
 import { repFromDonation } from "../Faction/formulas/donation";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): InternalAPI<IFormulas> {
+export function NetscriptFormulas(): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
     if (!player.hasProgram(Programs.Formulas.name)) {
-      throw helper.makeRuntimeErrorMsg(`formulas.${ctx.function}`, `Requires Formulas.exe to run.`);
+      throw helpers.makeRuntimeErrorMsg(ctx, `Requires Formulas.exe to run.`);
     }
   };
   return {
@@ -51,21 +55,22 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
       calculateFavorToRep:
         (ctx: NetscriptContext) =>
         (_favor: unknown): number => {
-          const favor = ctx.helper.number("favor", _favor);
+          const favor = helpers.number(ctx, "favor", _favor);
           checkFormulasAccess(ctx);
           return calculateFavorToRep(favor);
         },
       calculateRepToFavor:
         (ctx: NetscriptContext) =>
         (_rep: unknown): number => {
-          const rep = ctx.helper.number("rep", _rep);
+          const rep = helpers.number(ctx, "rep", _rep);
           checkFormulasAccess(ctx);
           return calculateRepToFavor(rep);
         },
       repFromDonation:
         (ctx: NetscriptContext) =>
-        (_amount: unknown, player: any): number => {
-          const amount = ctx.helper.number("amount", _amount);
+        (_amount: unknown, _player: unknown): number => {
+          const amount = helpers.number(ctx, "amount", _amount);
+          const player = helpers.player(ctx, _player);
           checkFormulasAccess(ctx);
           return repFromDonation(amount, player);
         },
@@ -74,16 +79,16 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
       calculateSkill:
         (ctx: NetscriptContext) =>
         (_exp: unknown, _mult: unknown = 1): number => {
-          const exp = ctx.helper.number("exp", _exp);
-          const mult = ctx.helper.number("mult", _mult);
+          const exp = helpers.number(ctx, "exp", _exp);
+          const mult = helpers.number(ctx, "mult", _mult);
           checkFormulasAccess(ctx);
           return calculateSkill(exp, mult);
         },
       calculateExp:
         (ctx: NetscriptContext) =>
         (_skill: unknown, _mult: unknown = 1): number => {
-          const skill = ctx.helper.number("skill", _skill);
-          const mult = ctx.helper.number("mult", _mult);
+          const skill = helpers.number(ctx, "skill", _skill);
+          const mult = helpers.number(ctx, "mult", _mult);
           checkFormulasAccess(ctx);
           return calculateExp(skill, mult);
         },
@@ -91,45 +96,59 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
     hacking: {
       hackChance:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = helpers.server(ctx, _server);
+          const player = helpers.player(ctx, _player);
           checkFormulasAccess(ctx);
           return calculateHackingChance(server, player);
         },
       hackExp:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = helpers.server(ctx, _server);
+          const player = helpers.player(ctx, _player);
           checkFormulasAccess(ctx);
           return calculateHackingExpGain(server, player);
         },
       hackPercent:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = helpers.server(ctx, _server);
+          const player = helpers.player(ctx, _player);
           checkFormulasAccess(ctx);
           return calculatePercentMoneyHacked(server, player);
         },
       growPercent:
         (ctx: NetscriptContext) =>
-        (server: any, _threads: unknown, player: any, _cores: unknown = 1): number => {
-          const threads = ctx.helper.number("threads", _threads);
-          const cores = ctx.helper.number("cores", _cores);
+        (_server: unknown, _threads: unknown, _player: unknown, _cores: unknown = 1): number => {
+          const server = helpers.server(ctx, _server);
+          const player = helpers.player(ctx, _player);
+          const threads = helpers.number(ctx, "threads", _threads);
+          const cores = helpers.number(ctx, "cores", _cores);
           checkFormulasAccess(ctx);
           return calculateServerGrowth(server, threads, player, cores);
         },
       hackTime:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = helpers.server(ctx, _server);
+          const player = helpers.player(ctx, _player);
           checkFormulasAccess(ctx);
           return calculateHackingTime(server, player) * 1000;
         },
       growTime:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = helpers.server(ctx, _server);
+          const player = helpers.player(ctx, _player);
           checkFormulasAccess(ctx);
           return calculateGrowTime(server, player) * 1000;
         },
       weakenTime:
         (ctx: NetscriptContext) =>
-        (server: any, player: any): number => {
+        (_server: unknown, _player: unknown): number => {
+          const server = helpers.server(ctx, _server);
+          const player = helpers.player(ctx, _player);
           checkFormulasAccess(ctx);
           return calculateWeakenTime(server, player) * 1000;
         },
@@ -138,49 +157,49 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
       moneyGainRate:
         (ctx: NetscriptContext) =>
         (_level: unknown, _ram: unknown, _cores: unknown, _mult: unknown = 1): number => {
-          const level = ctx.helper.number("level", _level);
-          const ram = ctx.helper.number("ram", _ram);
-          const cores = ctx.helper.number("cores", _cores);
-          const mult = ctx.helper.number("mult", _mult);
+          const level = helpers.number(ctx, "level", _level);
+          const ram = helpers.number(ctx, "ram", _ram);
+          const cores = helpers.number(ctx, "cores", _cores);
+          const mult = helpers.number(ctx, "mult", _mult);
           checkFormulasAccess(ctx);
           return calculateMoneyGainRate(level, ram, cores, mult);
         },
       levelUpgradeCost:
         (ctx: NetscriptContext) =>
         (_startingLevel: unknown, _extraLevels: unknown = 1, _costMult: unknown = 1): number => {
-          const startingLevel = ctx.helper.number("startingLevel", _startingLevel);
-          const extraLevels = ctx.helper.number("extraLevels", _extraLevels);
-          const costMult = ctx.helper.number("costMult", _costMult);
+          const startingLevel = helpers.number(ctx, "startingLevel", _startingLevel);
+          const extraLevels = helpers.number(ctx, "extraLevels", _extraLevels);
+          const costMult = helpers.number(ctx, "costMult", _costMult);
           checkFormulasAccess(ctx);
           return calculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
         },
       ramUpgradeCost:
         (ctx: NetscriptContext) =>
         (_startingRam: unknown, _extraLevels: unknown = 1, _costMult: unknown = 1): number => {
-          const startingRam = ctx.helper.number("startingRam", _startingRam);
-          const extraLevels = ctx.helper.number("extraLevels", _extraLevels);
-          const costMult = ctx.helper.number("costMult", _costMult);
+          const startingRam = helpers.number(ctx, "startingRam", _startingRam);
+          const extraLevels = helpers.number(ctx, "extraLevels", _extraLevels);
+          const costMult = helpers.number(ctx, "costMult", _costMult);
           checkFormulasAccess(ctx);
           return calculateRamUpgradeCost(startingRam, extraLevels, costMult);
         },
       coreUpgradeCost:
         (ctx: NetscriptContext) =>
         (_startingCore: unknown, _extraCores: unknown = 1, _costMult: unknown = 1): number => {
-          const startingCore = ctx.helper.number("startingCore", _startingCore);
-          const extraCores = ctx.helper.number("extraCores", _extraCores);
-          const costMult = ctx.helper.number("costMult", _costMult);
+          const startingCore = helpers.number(ctx, "startingCore", _startingCore);
+          const extraCores = helpers.number(ctx, "extraCores", _extraCores);
+          const costMult = helpers.number(ctx, "costMult", _costMult);
           checkFormulasAccess(ctx);
           return calculateCoreUpgradeCost(startingCore, extraCores, costMult);
         },
       hacknetNodeCost:
         (ctx: NetscriptContext) =>
         (_n: unknown, _mult: unknown): number => {
-          const n = ctx.helper.number("n", _n);
-          const mult = ctx.helper.number("mult", _mult);
+          const n = helpers.number(ctx, "n", _n);
+          const mult = helpers.number(ctx, "mult", _mult);
           checkFormulasAccess(ctx);
           return calculateNodeCost(n, mult);
         },
-      constants: (ctx: NetscriptContext) => (): any => {
+      constants: (ctx: NetscriptContext) => (): DefHacknetNodeConstants => {
         checkFormulasAccess(ctx);
         return Object.assign({}, HacknetNodeConstants);
       },
@@ -189,73 +208,70 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
       hashGainRate:
         (ctx: NetscriptContext) =>
         (_level: unknown, _ramUsed: unknown, _maxRam: unknown, _cores: unknown, _mult: unknown = 1): number => {
-          const level = ctx.helper.number("level", _level);
-          const ramUsed = ctx.helper.number("ramUsed", _ramUsed);
-          const maxRam = ctx.helper.number("maxRam", _maxRam);
-          const cores = ctx.helper.number("cores", _cores);
-          const mult = ctx.helper.number("mult", _mult);
+          const level = helpers.number(ctx, "level", _level);
+          const ramUsed = helpers.number(ctx, "ramUsed", _ramUsed);
+          const maxRam = helpers.number(ctx, "maxRam", _maxRam);
+          const cores = helpers.number(ctx, "cores", _cores);
+          const mult = helpers.number(ctx, "mult", _mult);
           checkFormulasAccess(ctx);
           return HScalculateHashGainRate(level, ramUsed, maxRam, cores, mult);
         },
       levelUpgradeCost:
         (ctx: NetscriptContext) =>
         (_startingLevel: unknown, _extraLevels: unknown = 1, _costMult: unknown = 1): number => {
-          const startingLevel = ctx.helper.number("startingLevel", _startingLevel);
-          const extraLevels = ctx.helper.number("extraLevels", _extraLevels);
-          const costMult = ctx.helper.number("costMult", _costMult);
+          const startingLevel = helpers.number(ctx, "startingLevel", _startingLevel);
+          const extraLevels = helpers.number(ctx, "extraLevels", _extraLevels);
+          const costMult = helpers.number(ctx, "costMult", _costMult);
           checkFormulasAccess(ctx);
           return HScalculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
         },
       ramUpgradeCost:
         (ctx: NetscriptContext) =>
         (_startingRam: unknown, _extraLevels: unknown = 1, _costMult: unknown = 1): number => {
-          const startingRam = ctx.helper.number("startingRam", _startingRam);
-          const extraLevels = ctx.helper.number("extraLevels", _extraLevels);
-          const costMult = ctx.helper.number("costMult", _costMult);
+          const startingRam = helpers.number(ctx, "startingRam", _startingRam);
+          const extraLevels = helpers.number(ctx, "extraLevels", _extraLevels);
+          const costMult = helpers.number(ctx, "costMult", _costMult);
           checkFormulasAccess(ctx);
           return HScalculateRamUpgradeCost(startingRam, extraLevels, costMult);
         },
       coreUpgradeCost:
         (ctx: NetscriptContext) =>
         (_startingCore: unknown, _extraCores: unknown = 1, _costMult: unknown = 1): number => {
-          const startingCore = ctx.helper.number("startingCore", _startingCore);
-          const extraCores = ctx.helper.number("extraCores", _extraCores);
-          const costMult = ctx.helper.number("costMult", _costMult);
+          const startingCore = helpers.number(ctx, "startingCore", _startingCore);
+          const extraCores = helpers.number(ctx, "extraCores", _extraCores);
+          const costMult = helpers.number(ctx, "costMult", _costMult);
           checkFormulasAccess(ctx);
           return HScalculateCoreUpgradeCost(startingCore, extraCores, costMult);
         },
       cacheUpgradeCost:
         (ctx: NetscriptContext) =>
         (_startingCache: unknown, _extraCache: unknown = 1): number => {
-          const startingCache = ctx.helper.number("startingCache", _startingCache);
-          const extraCache = ctx.helper.number("extraCache", _extraCache);
+          const startingCache = helpers.number(ctx, "startingCache", _startingCache);
+          const extraCache = helpers.number(ctx, "extraCache", _extraCache);
           checkFormulasAccess(ctx);
           return HScalculateCacheUpgradeCost(startingCache, extraCache);
         },
       hashUpgradeCost:
         (ctx: NetscriptContext) =>
         (_upgName: unknown, _level: unknown): number => {
-          const upgName = helper.string("hashUpgradeCost", "upgName", _upgName);
-          const level = ctx.helper.number("level", _level);
+          const upgName = helpers.string(ctx, "upgName", _upgName);
+          const level = helpers.number(ctx, "level", _level);
           checkFormulasAccess(ctx);
           const upg = player.hashManager.getUpgrade(upgName);
           if (!upg) {
-            throw helper.makeRuntimeErrorMsg(
-              "formulas.hacknetServers.calculateHashUpgradeCost",
-              `Invalid Hash Upgrade: ${upgName}`,
-            );
+            throw helpers.makeRuntimeErrorMsg(ctx, `Invalid Hash Upgrade: ${upgName}`);
           }
           return upg.getCost(level);
         },
       hacknetServerCost:
         (ctx: NetscriptContext) =>
         (_n: unknown, _mult: unknown = 1): number => {
-          const n = ctx.helper.number("n", _n);
-          const mult = ctx.helper.number("mult", _mult);
+          const n = helpers.number(ctx, "n", _n);
+          const mult = helpers.number(ctx, "mult", _mult);
           checkFormulasAccess(ctx);
           return HScalculateServerCost(n, mult);
         },
-      constants: (ctx: NetscriptContext) => (): any => {
+      constants: (ctx: NetscriptContext) => (): DefHacknetServerConstants => {
         checkFormulasAccess(ctx);
         return Object.assign({}, HacknetServerConstants);
       },
@@ -263,39 +279,49 @@ export function NetscriptFormulas(player: IPlayer, helper: INetscriptHelper): In
     gang: {
       wantedPenalty:
         (ctx: NetscriptContext) =>
-        (gang: any): number => {
+        (_gang: unknown): number => {
+          const gang = helpers.gang(ctx, _gang);
           checkFormulasAccess(ctx);
           return calculateWantedPenalty(gang);
         },
       respectGain:
         (ctx: NetscriptContext) =>
-        (gang: any, member: any, task: any): number => {
+        (_gang: unknown, _member: unknown, _task: unknown): number => {
+          const gang = helpers.gang(ctx, _gang);
+          const member = helpers.gangMember(ctx, _member);
+          const task = helpers.gangTask(ctx, _task);
           checkFormulasAccess(ctx);
           return calculateRespectGain(gang, member, task);
         },
       wantedLevelGain:
         (ctx: NetscriptContext) =>
-        (gang: any, member: any, task: any): number => {
+        (_gang: unknown, _member: unknown, _task: unknown): number => {
+          const gang = helpers.gang(ctx, _gang);
+          const member = helpers.gangMember(ctx, _member);
+          const task = helpers.gangTask(ctx, _task);
           checkFormulasAccess(ctx);
           return calculateWantedLevelGain(gang, member, task);
         },
       moneyGain:
         (ctx: NetscriptContext) =>
-        (gang: any, member: any, task: any): number => {
+        (_gang: unknown, _member: unknown, _task: unknown): number => {
+          const gang = helpers.gang(ctx, _gang);
+          const member = helpers.gangMember(ctx, _member);
+          const task = helpers.gangTask(ctx, _task);
           checkFormulasAccess(ctx);
           return calculateMoneyGain(gang, member, task);
         },
       ascensionPointsGain:
         (ctx: NetscriptContext) =>
         (_exp: unknown): number => {
-          const exp = ctx.helper.number("exp", _exp);
+          const exp = helpers.number(ctx, "exp", _exp);
           checkFormulasAccess(ctx);
           return calculateAscensionPointsGain(exp);
         },
       ascensionMultiplier:
         (ctx: NetscriptContext) =>
         (_points: unknown): number => {
-          const points = ctx.helper.number("points", _points);
+          const points = helpers.number(ctx, "points", _points);
           checkFormulasAccess(ctx);
           return calculateAscensionMult(points);
         },

@@ -5,7 +5,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 import { createRandomString } from "../utils/helpers/createRandomString";
 import { createRandomIp } from "../utils/IPAddress";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export interface IConstructorParams {
   adminRights?: boolean;
@@ -152,13 +152,12 @@ export class Server extends BaseServer {
   /**
    * Serialize the current object to a JSON save state
    */
-  toJSON(): any {
+  toJSON(): IReviverValue {
     return Generic_toJSON("Server", this);
   }
 
   // Initializes a Server Object from a JSON save state
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static fromJSON(value: any): Server {
+  static fromJSON(value: IReviverValue): Server {
     return Generic_fromJSON(Server, value.data);
   }
 }

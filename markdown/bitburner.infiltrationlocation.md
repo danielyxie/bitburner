@@ -16,6 +16,6 @@ export interface InfiltrationLocation
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [difficulty](./bitburner.infiltrationlocation.difficulty.md) | number |  |
-|  [location](./bitburner.infiltrationlocation.location.md) | any |  |
+|  [location](./bitburner.infiltrationlocation.location.md) | [ILocation](./bitburner.ilocation.md) |  |
 |  [reward](./bitburner.infiltrationlocation.reward.md) | [InfiltrationReward](./bitburner.infiltrationreward.md) |  |
 

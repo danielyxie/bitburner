@@ -12,8 +12,6 @@ import { Favor } from "../../ui/React/Favor";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
-
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { MathJaxWrapper } from "../../MathJaxWrapper";
 
@@ -58,7 +56,7 @@ export function DonateOption(props: IProps): React.ReactElement {
   }
 
   function Status(): React.ReactElement {
-    if (donateAmt === null) return <></>;
+    if (isNaN(donateAmt)) return <></>;
     if (!canDonate()) {
       if (props.p.money < donateAmt) return <Typography>Insufficient funds</Typography>;
       return <Typography>Invalid donate amount entered!</Typography>;

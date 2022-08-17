@@ -19,6 +19,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
 import { FactionNames } from "./data/FactionNames";
 import { SFC32RNG } from "../Casino/RNG";
+import { isFactionWork } from "../Work/FactionWork";
 
 export function inviteToFaction(faction: Faction): void {
   Player.receiveInvite(faction.name);
@@ -113,7 +114,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 
 export function processPassiveFactionRepGain(numCycles: number): void {
   for (const name of Object.keys(Factions)) {
-    if (name === Player.currentWorkFactionName) continue;
+    if (isFactionWork(Player.currentWork) && name === Player.currentWork.factionName) continue;
     if (!Factions.hasOwnProperty(name)) continue;
     const faction = Factions[name];
     if (!faction.isMember) continue;
@@ -132,7 +133,7 @@ export function processPassiveFactionRepGain(numCycles: number): void {
     const fRep = getFactionFieldWorkRepGain(Player, faction);
     const rate = Math.max(hRep * favorMult, sRep * favorMult, fRep * favorMult, 1 / 120);
 
-    faction.playerReputation += rate * numCycles * Player.faction_rep_mult * BitNodeMultipliers.FactionPassiveRepGain;
+    faction.playerReputation += rate * numCycles * Player.mults.faction_rep * BitNodeMultipliers.FactionPassiveRepGain;
   }
 }
 

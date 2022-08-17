@@ -140,13 +140,13 @@ export function StyleEditorModal(props: IProps): React.ReactElement {
         <FontFamilyField
           value={customStyle.fontFamily}
           refreshId={refreshId}
-          onChange={(value, error) => update({ ...customStyle, fontFamily: value as any }, error)}
+          onChange={(value, error) => update({ ...customStyle, fontFamily: value ?? "" }, error)}
         />
         <br />
         <LineHeightField
           value={customStyle.lineHeight}
           refreshId={refreshId}
-          onChange={(value, error) => update({ ...customStyle, lineHeight: value as any }, error)}
+          onChange={(value, error) => update({ ...customStyle, lineHeight: Number(value) ?? 0 }, error)}
         />
         <br />
         <ButtonGroup sx={{ my: 1 }}>

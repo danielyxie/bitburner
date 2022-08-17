@@ -22,6 +22,8 @@ If you are not in BitNode-10, then you must have Source-File 10 in order to use 
 |  --- | --- |
 |  [getInformation(sleeveNumber)](./bitburner.sleeve.getinformation.md) | Get information about a sleeve. |
 |  [getNumSleeves()](./bitburner.sleeve.getnumsleeves.md) | Get the number of sleeves you own. |
+|  [getSleeveAugmentationPrice(augName)](./bitburner.sleeve.getsleeveaugmentationprice.md) | Get price of an augmentation. |
+|  [getSleeveAugmentationRepReq(augName)](./bitburner.sleeve.getsleeveaugmentationrepreq.md) | Get reputation requirement of an augmentation. |
 |  [getSleeveAugmentations(sleeveNumber)](./bitburner.sleeve.getsleeveaugmentations.md) | Get augmentations installed on a sleeve. |
 |  [getSleevePurchasableAugs(sleeveNumber)](./bitburner.sleeve.getsleevepurchasableaugs.md) | List purchasable augs for a sleeve. |
 |  [getSleeveStats(sleeveNumber)](./bitburner.sleeve.getsleevestats.md) | Get the stats of a sleeve. |

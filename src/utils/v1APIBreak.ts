@@ -1,3 +1,5 @@
+import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { Player } from "../Player";
 import { Script } from "../Script/Script";
 import { GetAllServers } from "../Server/AllServers";
@@ -71,11 +73,24 @@ function convert(code: string): string {
   return out.join("\n");
 }
 
-export function v1APIBreak(): void {
-  interface IFileLine {
-    file: string;
-    line: number;
+export function AwardNFG(n = 1): void {
+  const nf = Player.augmentations.find((a) => a.name === AugmentationNames.NeuroFluxGovernor);
+  if (nf) {
+    nf.level += n;
+  } else {
+    const nf = new PlayerOwnedAugmentation(AugmentationNames.NeuroFluxGovernor);
+    nf.level = n;
+    Player.augmentations.push(nf);
   }
+}
+
+export interface IFileLine {
+  file: string;
+  line: number;
+  content: string;
+}
+
+export function v1APIBreak(): void {
   let txt = "";
   for (const server of GetAllServers()) {
     for (const change of detect) {
@@ -87,6 +102,7 @@ export function v1APIBreak(): void {
             s.push({
               file: script.filename,
               line: i + 1,
+              content: "",
             });
           }
         }

@@ -52,7 +52,7 @@ const TemplatedHelpTexts: IMap<(command: string) => string[]> = {
     return [
       `Usage: ${command} [file ...] | [glob]`,
       ` `,
-      `Opens up the specified file(s) in the Script Editor. Only scripts (.js, .ns, .script) or text files (.txt) `,
+      `Opens up the specified file(s) in the Script Editor. Only scripts (.js, or .script) or text files (.txt) `,
       `can be edited using the Script Editor. If a file does not exist a new one will be created`,
       ` `,
       `If provided a glob as the only argument, ${command} can spider directories and open all matching `,
@@ -472,7 +472,7 @@ export const HelpTexts: IMap<string[]> = {
     "Usage: wget [url] [target file]",
     " ",
     "Retrieves data from a URL and downloads it to a file on the current server. The data can only ",
-    "be downloaded to a script (.script, .ns, .js) or a text file (.txt). If the file already exists, ",
+    "be downloaded to a script (.script or .js) or a text file (.txt). If the file already exists, ",
     "it will be overwritten by this command.",
     " ",
     "Note that it will not be possible to download data from many websites because they do not allow ",
