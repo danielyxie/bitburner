@@ -91,6 +91,8 @@
 |  [UserInterface](./bitburner.userinterface.md) | User Interface API. |
 |  [Warehouse](./bitburner.warehouse.md) | Warehouse for a division in a city |
 |  [WarehouseAPI](./bitburner.warehouseapi.md) | Corporation Warehouse API |
+|  [WorkFormulas](./bitburner.workformulas.md) | Work formulas |
+|  [WorkStats](./bitburner.workstats.md) |  |
 
 ## Type Aliases
 

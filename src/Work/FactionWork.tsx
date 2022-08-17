@@ -8,14 +8,9 @@ import { Faction } from "../Faction/Faction";
 import { applyWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
-import {
-  getFactionFieldWorkRepGain,
-  getFactionSecurityWorkRepGain,
-  getHackingWorkRepGain,
-} from "../PersonObjects/formulas/reputation";
 import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { calculateFactionExp } from "./formulas/Faction";
+import { calculateFactionExp, calculateFactionRep } from "./formulas/Faction";
 import { FactionWorkType } from "./data/FactionWorkType";
 
 interface FactionWorkParams {
@@ -43,18 +38,11 @@ export class FactionWork extends Work {
   }
 
   getReputationRate(player: IPlayer): number {
-    const faction = this.getFaction();
-    const repFormulas = {
-      [FactionWorkType.HACKING]: getHackingWorkRepGain,
-      [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
-      [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
-    };
-    const rep = repFormulas[this.factionWorkType](player, faction);
     let focusBonus = 1;
     if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
       focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    return rep * focusBonus;
+    return calculateFactionRep(player, this.factionWorkType, this.getFaction().favor) * focusBonus;
   }
 
   getExpRates(player: IPlayer): WorkStats {

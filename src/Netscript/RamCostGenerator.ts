@@ -590,6 +590,11 @@ const SourceRamCosts = {
       ascensionPointsGain: 0,
       ascensionMultiplier: 0,
     },
+    work: {
+      crimeGains: 0,
+      classGains: 0,
+      factionGains: 0,
+    },
   },
 };
 
