@@ -52,22 +52,24 @@ function killWorkerScriptByPid(pid: number): boolean {
   return false;
 }
 
-function stopAndCleanUpWorkerScript(workerScript: WorkerScript): void {
-  if (typeof workerScript.atExit === "function") {
+function stopAndCleanUpWorkerScript(ws: WorkerScript): void {
+  killNetscriptDelay(ws);
+  if (typeof ws.atExit === "function") {
     try {
-      workerScript.atExit();
+      ws.env.stopFlag = false;
+      ws.atExit();
     } catch (e: unknown) {
+      let message = e instanceof ScriptDeath ? e.errorMessage : String(e);
+      message = message.replace(/.*\|DELIMITER\|/, "");
       dialogBoxCreate(
-        `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${
-          workerScript.scriptRef.args
-        } ${String(e)}`,
+        `Error trying to call atExit for script ${ws.name} on ${ws.hostname} ${ws.scriptRef.args}\n` + message,
       );
+      console.log(e);
     }
-    workerScript.atExit = undefined;
+    ws.atExit = undefined;
   }
-  workerScript.env.stopFlag = true;
-  killNetscriptDelay(workerScript);
-  removeWorkerScript(workerScript);
+  ws.env.stopFlag = true;
+  removeWorkerScript(ws);
 }
 
 /**
