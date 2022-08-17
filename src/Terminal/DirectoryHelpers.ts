@@ -38,7 +38,7 @@ export function removeTrailingSlash(s: string): string {
 export function isValidFilename(filename: string): boolean {
   // Allows alphanumerics, hyphens, underscores, and percentage signs
   // Must have a file extension
-  const regex = /^[.a-zA-Z0-9_-]+[.][a-zA-Z0-9]+(?:-\d+(?:\.\d*)?%-INC)?$/;
+  const regex = /^[.&'a-zA-Z0-9_-]+\.[a-zA-Z0-9]+(?:-\d+(?:\.\d*)?%-INC)?$/;
 
   // match() returns null if no match is found
   return filename.match(regex) != null;
