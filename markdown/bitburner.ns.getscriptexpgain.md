@@ -9,8 +9,17 @@ Get the exp gain of a script.
 <b>Signature:</b>
 
 ```typescript
-getScriptExpGain(): number;
+getScriptExpGain(script: string, host: string, ...args: (string | number | boolean)[]): number;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  script | string | Filename of script. |
+|  host | string | Server on which script is running. |
+|  args | (string \| number \| boolean)\[\] | Arguments that the script is running with. |
+
 <b>Returns:</b>
 
 number

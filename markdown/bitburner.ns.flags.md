@@ -9,7 +9,7 @@ Parse command line flags.
 <b>Signature:</b>
 
 ```typescript
-flags(schema: [string, string | number | boolean | string[]][]): any;
+flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ flags(schema: [string, string | number | boolean | string[]][]): any;
 
 <b>Returns:</b>
 
-any
+{ \[key: string\]: [ScriptArg](./bitburner.scriptarg.md) }
 
 ## Remarks
 
@@ -41,7 +41,7 @@ var data = flags([
 ]);
 tprint(data);
 
-// example.ns
+// example.js
 export async function main(ns) {
   const data = ns.flags([
     ['delay', 0], // a default number means this flag is a number

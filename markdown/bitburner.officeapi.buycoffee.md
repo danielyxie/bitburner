@@ -9,7 +9,7 @@ Buy coffee for your employees
 <b>Signature:</b>
 
 ```typescript
-buyCoffee(divisionName: string, cityName: string): Promise<void>;
+buyCoffee(divisionName: string, cityName: string): boolean;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ buyCoffee(divisionName: string, cityName: string): Promise<void>;
 
 <b>Returns:</b>
 
-Promise&lt;void&gt;
+boolean
 
-A promise that is fulfilled when the coffee is served.
+true if buying coffee was successful, false otherwise
 

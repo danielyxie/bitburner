@@ -23,31 +23,32 @@ This API requires Source-File 4 to use. The RAM cost of all these functions is m
 |  [applyToCompany(companyName, field)](./bitburner.singularity.applytocompany.md) | Apply for a job at a company. |
 |  [b1tflum3(nextBN, callbackScript)](./bitburner.singularity.b1tflum3.md) | b1t\_flum3 into a different BN. |
 |  [checkFactionInvitations()](./bitburner.singularity.checkfactioninvitations.md) | List all current faction invitations. |
-|  [commitCrime(crime)](./bitburner.singularity.commitcrime.md) | Commit a crime. |
+|  [commitCrime(crime, focus)](./bitburner.singularity.commitcrime.md) | Commit a crime. |
 |  [connect(hostname)](./bitburner.singularity.connect.md) | Connect to a server. |
 |  [createProgram(program, focus)](./bitburner.singularity.createprogram.md) | Create a program. |
 |  [destroyW0r1dD43m0n(nextBN, callbackScript)](./bitburner.singularity.destroyw0r1dd43m0n.md) | Destroy the w0r1d\_d43m0n and move on to the next BN. |
 |  [donateToFaction(faction, amount)](./bitburner.singularity.donatetofaction.md) | Donate to a faction. |
+|  [getAugmentationBasePrice(augName)](./bitburner.singularity.getaugmentationbaseprice.md) | Get base price of an augmentation. |
 |  [getAugmentationCost(augName)](./bitburner.singularity.getaugmentationcost.md) | Get the price and reputation of an augmentation. |
 |  [getAugmentationPrereq(augName)](./bitburner.singularity.getaugmentationprereq.md) | Get the pre-requisite of an augmentation. |
 |  [getAugmentationPrice(augName)](./bitburner.singularity.getaugmentationprice.md) | Get price of an augmentation. |
 |  [getAugmentationRepReq(augName)](./bitburner.singularity.getaugmentationrepreq.md) | Get reputation requirement of an augmentation. |
 |  [getAugmentationsFromFaction(faction)](./bitburner.singularity.getaugmentationsfromfaction.md) | Get a list of augmentation available from a faction. |
 |  [getAugmentationStats(name)](./bitburner.singularity.getaugmentationstats.md) | Get the stats of an augmentation. |
-|  [getCharacterInformation()](./bitburner.singularity.getcharacterinformation.md) | Returns an object with various information about your character. |
 |  [getCompanyFavor(companyName)](./bitburner.singularity.getcompanyfavor.md) | Get company favor. |
 |  [getCompanyFavorGain(companyName)](./bitburner.singularity.getcompanyfavorgain.md) | Get company favor gain. |
 |  [getCompanyRep(companyName)](./bitburner.singularity.getcompanyrep.md) | Get company reputation. |
 |  [getCrimeChance(crime)](./bitburner.singularity.getcrimechance.md) | Get chance to successfully commit a crime. |
 |  [getCrimeStats(crime)](./bitburner.singularity.getcrimestats.md) | Get stats related to a crime. |
 |  [getCurrentServer()](./bitburner.singularity.getcurrentserver.md) | Get the current server. |
+|  [getCurrentWork()](./bitburner.singularity.getcurrentwork.md) | Get the current work the player is doing. |
 |  [getDarkwebProgramCost(programName)](./bitburner.singularity.getdarkwebprogramcost.md) | Check the price of an exploit on the dark web |
 |  [getDarkwebPrograms()](./bitburner.singularity.getdarkwebprograms.md) | Get a list of programs offered on the dark web. |
 |  [getFactionFavor(faction)](./bitburner.singularity.getfactionfavor.md) | Get faction favor. |
 |  [getFactionFavorGain(faction)](./bitburner.singularity.getfactionfavorgain.md) | Get faction favor gain. |
 |  [getFactionRep(faction)](./bitburner.singularity.getfactionrep.md) | Get faction reputation. |
 |  [getOwnedAugmentations(purchased)](./bitburner.singularity.getownedaugmentations.md) | Get a list of owned augmentation. |
-|  [getStats()](./bitburner.singularity.getstats.md) | Returns an object with the Player’s stats. |
+|  [getOwnedSourceFiles()](./bitburner.singularity.getownedsourcefiles.md) | Get a list of acquired Source-Files. |
 |  [getUpgradeHomeCoresCost()](./bitburner.singularity.getupgradehomecorescost.md) | Get the price of upgrading home cores. |
 |  [getUpgradeHomeRamCost()](./bitburner.singularity.getupgradehomeramcost.md) | Get the price of upgrading home RAM. |
 |  [goToLocation(locationName)](./bitburner.singularity.gotolocation.md) | Go to a location. |

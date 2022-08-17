@@ -4,7 +4,7 @@
 
 ## NS.corporation property
 
-Namespace for corporation functions. RAM cost: 0 GB
+Namespace for corporation functions. RAM cost: 1022.4 GB
 
 <b>Signature:</b>
 
