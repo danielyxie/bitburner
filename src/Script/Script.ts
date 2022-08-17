@@ -113,8 +113,8 @@ export class Script {
    * Calculates and updates the script's RAM usage based on its code
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
-  async updateRamUsage(player: IPlayer, otherScripts: Script[]): Promise<void> {
-    const res = await calculateRamUsage(player, this.code, otherScripts);
+  updateRamUsage(player: IPlayer, otherScripts: Script[]): void {
+    const res = calculateRamUsage(player, this.code, otherScripts);
     if (res.cost > 0) {
       this.ramUsage = roundToTwo(res.cost);
       this.ramUsageEntries = res.entries;

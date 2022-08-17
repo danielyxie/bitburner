@@ -829,11 +829,7 @@ const base: InternalAPI<NS> = {
   },
   scp:
     (ctx: NetscriptContext) =>
-    async (
-      _scriptname: unknown,
-      _destination: unknown,
-      _source: unknown = ctx.workerScript.hostname,
-    ): Promise<boolean> => {
+    (_scriptname: unknown, _destination: unknown, _source: unknown = ctx.workerScript.hostname): boolean => {
       const destination = helpers.string(ctx, "destination", _destination);
       const source = helpers.string(ctx, "source", _source);
       if (Array.isArray(_scriptname)) {
@@ -843,14 +839,12 @@ const base: InternalAPI<NS> = {
           throw helpers.makeRuntimeErrorMsg(ctx, "No scripts to copy");
         }
         let res = true;
-        await Promise.all(
-          scripts.map(async function (script) {
-            if (!(await NetscriptFunctions(ctx.workerScript).scp(script, destination, source))) {
-              res = false;
-            }
-          }),
-        );
-        return Promise.resolve(res);
+        scripts.map(function (script) {
+          if (!NetscriptFunctions(ctx.workerScript).scp(script, destination, source)) {
+            res = false;
+          }
+        });
+        return res;
       }
 
       const scriptName = helpers.string(ctx, "scriptName", _scriptname);
@@ -880,18 +874,18 @@ const base: InternalAPI<NS> = {
 
         if (!found) {
           helpers.log(ctx, () => `File '${scriptName}' does not exist.`);
-          return Promise.resolve(false);
+          return false;
         }
 
         for (let i = 0; i < destServer.messages.length; ++i) {
           if (destServer.messages[i] === scriptName) {
             helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-            return Promise.resolve(true); // Already exists
+            return true; // Already exists
           }
         }
         destServer.messages.push(scriptName);
         helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-        return Promise.resolve(true);
+        return true;
       }
 
       // Scp for text files
@@ -905,7 +899,7 @@ const base: InternalAPI<NS> = {
         }
         if (txtFile === undefined) {
           helpers.log(ctx, () => `File '${scriptName}' does not exist.`);
-          return Promise.resolve(false);
+          return false;
         }
 
         for (let i = 0; i < destServer.textFiles.length; ++i) {
@@ -913,13 +907,13 @@ const base: InternalAPI<NS> = {
             // Overwrite
             destServer.textFiles[i].text = txtFile.text;
             helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-            return Promise.resolve(true);
+            return true;
           }
         }
         const newFile = new TextFile(txtFile.fn, txtFile.text);
         destServer.textFiles.push(newFile);
         helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-        return Promise.resolve(true);
+        return true;
       }
 
       // Scp for script files
@@ -932,7 +926,7 @@ const base: InternalAPI<NS> = {
       }
       if (sourceScript == null) {
         helpers.log(ctx, () => `File '${scriptName}' does not exist.`);
-        return Promise.resolve(false);
+        return false;
       }
 
       // Overwrite script if it already exists
@@ -943,11 +937,11 @@ const base: InternalAPI<NS> = {
           // If it's the exact same file don't actually perform the
           // copy to avoid recompiling uselessly. Players tend to scp
           // liberally.
-          if (oldScript.code === sourceScript.code) return Promise.resolve(true);
+          if (oldScript.code === sourceScript.code) return true;
           oldScript.code = sourceScript.code;
           oldScript.ramUsage = sourceScript.ramUsage;
           oldScript.markUpdated();
-          return Promise.resolve(true);
+          return true;
         }
       }
 
@@ -958,13 +952,8 @@ const base: InternalAPI<NS> = {
       newScript.server = destServer.hostname;
       destServer.scripts.push(newScript);
       helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-      return new Promise((resolve) => {
-        if (destServer === null) {
-          resolve(false);
-          return;
-        }
-        newScript.updateRamUsage(Player, destServer.scripts).then(() => resolve(true));
-      });
+      newScript.updateRamUsage(Player, destServer.scripts);
+      return true;
     },
   ls:
     (ctx: NetscriptContext) =>
@@ -1501,7 +1490,7 @@ const base: InternalAPI<NS> = {
     },
   write:
     (ctx: NetscriptContext) =>
-    (_port: unknown, data: unknown = "", _mode: unknown = "a"): Promise<void> => {
+    (_port: unknown, data: unknown = "", _mode: unknown = "a"): void => {
       const port = helpers.string(ctx, "port", _port);
       const mode = helpers.string(ctx, "mode", _mode);
       if (isString(port)) {
@@ -1545,7 +1534,7 @@ const base: InternalAPI<NS> = {
           const txtFile = getTextFile(fn, server);
           if (txtFile == null) {
             createTextFile(fn, String(data), server);
-            return Promise.resolve();
+            return;
           }
           if (mode === "w") {
             txtFile.write(String(data));
@@ -1553,7 +1542,7 @@ const base: InternalAPI<NS> = {
             txtFile.append(String(data));
           }
         }
-        return Promise.resolve();
+        return;
       } else {
         throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
       }
