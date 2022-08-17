@@ -839,7 +839,8 @@ const base: InternalAPI<NS> = {
           throw helpers.makeRuntimeErrorMsg(ctx, "No scripts to copy");
         }
         let res = true;
-        scripts.map(function (script) {
+        scripts.forEach(function (script) {
+          //TODO: This array method still needs to be reworked because it is terribly inefficient.
           if (!NetscriptFunctions(ctx.workerScript).scp(script, destination, source)) {
             res = false;
           }

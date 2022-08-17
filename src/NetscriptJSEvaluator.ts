@@ -29,7 +29,7 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
   // but not really behaves like import. Particularly, it cannot
   // load fully dynamic content. So we hide the import from webpack
   // by placing it inside an eval call.
-  await script.updateRamUsage(player, scripts);
+  script.updateRamUsage(player, scripts);
   const uurls = _getScriptUrls(script, scripts, []);
   const url = uurls[uurls.length - 1].url;
   if (script.url && script.url !== url) {
