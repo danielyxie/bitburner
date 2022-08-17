@@ -62,7 +62,7 @@ function stopAndCleanUpWorkerScript(ws: WorkerScript): void {
       let message = e instanceof ScriptDeath ? e.errorMessage : String(e);
       message = message.replace(/.*\|DELIMITER\|/, "");
       dialogBoxCreate(
-        `Error trying to call atExit for script ${ws.name} on ${ws.hostname} ${ws.scriptRef.args}\n` + message,
+        `Error trying to call atExit for script ${[ws.name, ...ws.args].join(" ")} on ${ws.hostname}\n ${message}`,
       );
       console.log(e);
     }
