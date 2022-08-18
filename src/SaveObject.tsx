@@ -36,6 +36,7 @@ import { Faction } from "./Faction/Faction";
 import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { v2APIBreak } from "./utils/v2APIBreak";
+import { Script } from "./Script/Script";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -489,6 +490,9 @@ function evaluateVersionCompatibility(ver: string | number): void {
     }
     if (ver < 23) {
       anyPlayer.currentWork = null;
+    }
+    if (ver < 24) {
+      Player.getHomeComputer().scripts.forEach((s) => s.filename.endsWith(".ns") && (s.filename += ".js"));
     }
   }
 }
