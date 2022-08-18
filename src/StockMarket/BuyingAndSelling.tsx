@@ -229,7 +229,7 @@ export function shortStock(
   }
   if (stock == null || isNaN(shares)) {
     if (workerScript) {
-      workerScript.log("stock.short", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
+      workerScript.log("stock.shortStock", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate(
         "Failed to initiate a short position in a stock. This is probably " +
@@ -247,7 +247,7 @@ export function shortStock(
   if (Player.money < totalPrice) {
     if (workerScript) {
       workerScript.log(
-        "stock.short",
+        "stock.shortStock",
         () =>
           "You do not have enough " +
           "money to purchase this short position. You need " +
@@ -268,7 +268,7 @@ export function shortStock(
   if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
     if (workerScript) {
       workerScript.log(
-        "stock.short",
+        "stock.shortStock",
         () =>
           `This '${shares + stock.playerShares + stock.playerShortShares}' short shares would exceed ${
             stock.symbol
@@ -301,7 +301,7 @@ export function shortStock(
         CONSTANTS.StockMarketCommission,
       )} ` +
       `in commission fees.`;
-    workerScript.log("stock.short", () => resultTxt);
+    workerScript.log("stock.shortStock", () => resultTxt);
   } else if (!opts.suppressDialog) {
     dialogBoxCreate(
       <>
