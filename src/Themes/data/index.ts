@@ -12,3 +12,5 @@ export { Theme as DiscordLike } from "./discord-like";
 export { Theme as OneDark } from "./one-dark";
 export { Theme as MutedGoldBlue } from "./muted-gold-blue";
 export { Theme as Light } from "./light";
+export { Theme as NordDark } from "./nord-dark";
+export { Theme as NordLight } from "./nord-light";

@@ -1,0 +1,45 @@
+import { IPredefinedTheme } from "../../Themes";
+import img1 from "./screenshot.png";
+
+export const Theme: IPredefinedTheme = {
+  name: "Nord Light",
+  description: "An arctic, north-bluish color palette",
+  credit: "GreenMan36",
+  reference: "https://discord.com/channels/415207508303544321/921991895230611466/926542411042287636",
+  screenshot: img1,
+  colors: {
+    primarylight: "#434c5e",
+    primary: "#3b4252",
+    primarydark: "#2e3440",
+    successlight: "#A3BE8C",
+    success: "#A3BE8C",
+    successdark: "#A3BE8C",
+    errorlight: "#BF616A",
+    error: "#BF616A",
+    errordark: "#BF616A",
+    secondarylight: "#4c566a",
+    secondary: "#434c5e",
+    secondarydark: "#3b4252",
+    warninglight: "#EBCB78",
+    warning: "#EBCB78",
+    warningdark: "#EBCB78",
+    infolight: "#88C0D0",
+    info: "#5E81AC",
+    infodark: "#81A1C1",
+    welllight: "#ECEFF4",
+    well: "#ECEFF4",
+    white: "#2e3440",
+    black: "#e5e9f0",
+    hp: "#BF616A",
+    money: "#EBCB78",
+    hack: "#A3BE8C",
+    combat: "#3b4252",
+    cha: "#B48EAD",
+    int: "#5E81AC",
+    rep: "#EBCB78",
+    disabled: "#8FBCBB",
+    backgroundprimary: "#eceff4",
+    backgroundsecondary: "#e5e9f0",
+    button: "#D8DEE9"
+  }
+};
