@@ -40,6 +40,6 @@ export const Theme: IPredefinedTheme = {
     disabled: "#8FBCBB",
     backgroundprimary: "#2E3440",
     backgroundsecondary: "#2E3440",
-    button: "#3B4252"
-  }
+    button: "#3B4252",
+  },
 };
