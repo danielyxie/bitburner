@@ -12,10 +12,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { ICancelOrderParams } from "../StockMarket";
-import { WorkerScript } from "../../Netscript/WorkerScript";
+import { NetscriptContext } from "../../Netscript/APIWrapper";
 
 type IProps = {
-  cancelOrder: (params: ICancelOrderParams, workerScript?: WorkerScript) => void;
+  cancelOrder: (params: ICancelOrderParams, ctx?: NetscriptContext) => void;
   order: Order;
 };
 

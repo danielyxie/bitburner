@@ -32,7 +32,7 @@ import Collapse from "@mui/material/Collapse";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import { ICancelOrderParams } from "../StockMarket";
-import { WorkerScript } from "../../Netscript/WorkerScript";
+import { NetscriptContext } from "../../Netscript/APIWrapper";
 
 enum SelectorOrderType {
   Market = "Market Order",
@@ -52,7 +52,7 @@ type placeOrderFn = (
 type IProps = {
   buyStockLong: txFn;
   buyStockShort: txFn;
-  cancelOrder: (params: ICancelOrderParams, workerScript?: WorkerScript) => void;
+  cancelOrder: (params: ICancelOrderParams, ctx?: NetscriptContext) => void;
   orders: Order[];
   p: IPlayer;
   placeOrder: placeOrderFn;
