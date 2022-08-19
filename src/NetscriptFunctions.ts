@@ -1465,34 +1465,19 @@ const base: InternalAPI<NS> = {
     },
   write:
     (ctx: NetscriptContext) =>
-    (_port: unknown, data: unknown = "", _mode: unknown = "a"): void => {
+    (_port: unknown, _data: unknown = "", _mode: unknown = "a"): void => {
       const port = helpers.string(ctx, "port", _port);
+      const data = helpers.string(ctx, "data", _data);
       const mode = helpers.string(ctx, "mode", _mode);
       if (isString(port)) {
         // Write to script or text file
         let fn = port;
-        if (!isValidFilePath(fn)) {
-          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
-        }
+        if (!isValidFilePath(fn)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
 
-        if (fn.lastIndexOf("/") === 0) {
-          fn = removeLeadingSlash(fn);
-        }
+        if (fn.lastIndexOf("/") === 0) fn = removeLeadingSlash(fn);
 
-        // Coerce 'data' to be a string
-        try {
-          data = String(data);
-        } catch (e: unknown) {
-          throw helpers.makeRuntimeErrorMsg(
-            ctx,
-            `Invalid data (${String(e)}). Data being written must be convertible to a string`,
-          );
-        }
+        const server = helpers.getServer(ctx, ctx.workerScript.hostname);
 
-        const server = ctx.workerScript.getServer();
-        if (server == null) {
-          throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
-        }
         if (isScriptFilename(fn)) {
           // Write to script
           let script = ctx.workerScript.getScriptOnServer(fn, server);

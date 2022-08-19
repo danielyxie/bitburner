@@ -46,15 +46,16 @@ export class Script {
   ramUsage = 0;
   ramUsageEntries?: RamUsageEntry[];
 
+  // Used to deconflict multiple simultaneous compilations.
+  queueCompile = false;
+
   // hostname of server that this script is on.
   server = "";
 
   constructor(player: IPlayer | null = null, fn = "", code = "", server = "", otherScripts: Script[] = []) {
     this.filename = fn;
     this.code = code;
-    this.ramUsage = 0;
     this.server = server; // hostname of server this script is on
-    this.module = null;
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     if (this.code !== "" && player !== null) {
       this.updateRamUsage(player, otherScripts);
@@ -105,7 +106,7 @@ export class Script {
       const [dependentScript] = otherScripts.filter(
         (s) => s.filename === dependent.filename && s.server == dependent.server,
       );
-      if (dependentScript !== null) dependentScript.markUpdated();
+      dependentScript?.markUpdated();
     }
   }
 
