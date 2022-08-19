@@ -139,7 +139,7 @@ function initAppNotifier(): void {
     toast: (message: string, type: ToastVariant, duration = 2000) => SnackbarEvents.emit(message, type, duration),
   };
 
-  // Will be consumud by the electron wrapper.
+  // Will be consumed by the electron wrapper.
   window.appNotifier = funcs;
 }
 
@@ -173,7 +173,7 @@ function initSaveFunctions(): void {
     pushSaveData: (base64save: string, automatic = false): void => Router.toImportSave(base64save, automatic),
   };
 
-  // Will be consumud by the electron wrapper.
+  // Will be consumed by the electron wrapper.
   window.appSaveFns = funcs;
 }
 
