@@ -2,9 +2,9 @@
 
 import { validateObject } from "./Validator";
 
-export interface IReviverValue {
+export interface IReviverValue<T = any> {
   ctor: string;
-  data: any;
+  data: T;
 }
 
 // A generic "smart reviver" function.
