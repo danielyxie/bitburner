@@ -69,7 +69,7 @@ export interface ImportPlayerData {
   sourceFiles: number;
 }
 
-class BitburnerSaveObject {
+export class BitburnerSaveObject {
   PlayerSave = "";
   AllServersSave = "";
   CompaniesSave = "";
@@ -195,7 +195,7 @@ class BitburnerSaveObject {
 
     let parsedSave;
     try {
-      parsedSave = JSON.parse(newSave);
+      parsedSave = JSON.parse(newSave) as IReviverValue;
     } catch (error) {
       console.error(error); // We'll handle below
     }
@@ -761,10 +761,11 @@ function createNewUpdateText(): void {
   setTimeout(
     () =>
       dialogBoxCreate(
-        "New update!\n" +
-          "Please report any bugs/issues through the GitHub repository " +
-          "or the Bitburner subreddit (reddit.com/r/bitburner).\n\n" +
-          CONSTANTS.LatestUpdate,
+        "New update!<br>" +
+        "Please report any bugs/issues through the GitHub repository " +
+        "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
+        CONSTANTS.LatestUpdate,
+        resets,
       ),
     1000,
   );
@@ -773,10 +774,11 @@ function createNewUpdateText(): void {
 function createBetaUpdateText(): void {
   dialogBoxCreate(
     "You are playing on the beta environment! This branch of the game " +
-      "features the latest developments in the game. This version may be unstable.\n" +
-      "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
-      "or the Bitburner subreddit (reddit.com/r/bitburner).\n\n" +
-      CONSTANTS.LatestUpdate,
+    "features the latest developments in the game. This version may be unstable.<br>" +
+    "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
+    "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
+    CONSTANTS.LatestUpdate,
+    resets,
   );
 }
 
