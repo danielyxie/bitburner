@@ -10,7 +10,6 @@ import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
 
 import { CONSTANTS } from "../Constants";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { IMap } from "../types";
 import { EventEmitter } from "../utils/EventEmitter";
 
@@ -18,6 +17,8 @@ import { numeralWrapper } from "../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver } from "../utils/JSONReviver";
+import { NetscriptContext } from "../Netscript/APIWrapper";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
 export let StockMarket: IStockMarket = {
   lastUpdate: 0,
@@ -33,19 +34,19 @@ export function placeOrder(
   price: number,
   type: OrderTypes,
   position: PositionTypes,
-  workerScript: WorkerScript | null = null,
+  ctx: NetscriptContext | null = null,
 ): boolean {
   if (!(stock instanceof Stock)) {
-    if (workerScript) {
-      workerScript.log("stock.placeOrder", () => `Invalid stock: '${stock}'`);
+    if (ctx) {
+      helpers.log(ctx, () => `Invalid stock: '${stock}'`);
     } else {
       dialogBoxCreate(`ERROR: Invalid stock passed to placeOrder() function`);
     }
     return false;
   }
   if (typeof shares !== "number" || typeof price !== "number") {
-    if (workerScript) {
-      workerScript.log("stock.placeOrder", () => `Invalid arguments: shares='${shares}' price='${price}'`);
+    if (ctx) {
+      helpers.log(ctx, () => `Invalid arguments: shares='${shares}' price='${price}'`);
     } else {
       dialogBoxCreate("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
     }
@@ -85,7 +86,7 @@ export interface ICancelOrderParams {
   stock?: Stock;
   type?: OrderTypes;
 }
-export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScript | null = null): boolean {
+export function cancelOrder(params: ICancelOrderParams, ctx: NetscriptContext | null = null): boolean {
   if (StockMarket["Orders"] == null) {
     return false;
   }
@@ -120,14 +121,14 @@ export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScri
         params.pos === order.pos
       ) {
         stockOrders.splice(i, 1);
-        if (workerScript) {
-          workerScript.scriptRef.log("Successfully cancelled order: " + orderTxt);
+        if (ctx) {
+          helpers.log(ctx, ()=>"Successfully cancelled order: " + orderTxt);
         }
         return true;
       }
     }
-    if (workerScript) {
-      workerScript.scriptRef.log("Failed to cancel order: " + orderTxt);
+    if (ctx) {
+      helpers.log(ctx, ()=>"Failed to cancel order: " + orderTxt);
     }
     return false;
   }
