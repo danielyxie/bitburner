@@ -12,7 +12,6 @@ import { Script } from "./Script/Script";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { ScriptModule } from "./Script/ScriptModule";
-import { queue } from "jquery";
 
 // Acorn type def is straight up incomplete so we have to fill with our own.
 export type Node = any;
