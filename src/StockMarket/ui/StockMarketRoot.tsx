@@ -11,7 +11,6 @@ import { IStockMarket } from "../IStockMarket";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
 type IProps = {
-  initStockMarket: () => void;
   p: IPlayer;
   stockMarket: IStockMarket;
 };
@@ -28,7 +27,7 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
   }, []);
   return (
     <>
-      <InfoAndPurchases initStockMarket={props.initStockMarket} p={props.p} rerender={rerender} />
+      <InfoAndPurchases p={props.p} rerender={rerender} />
       {props.p.hasWseAccount && (
         <StockTickers p={props.p} stockMarket={props.stockMarket} />
       )}

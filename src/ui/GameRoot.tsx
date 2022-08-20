@@ -17,7 +17,7 @@ import { prestigeAugmentation } from "../Prestige";
 import { dialogBoxCreate } from "./React/DialogBox";
 import { GetAllServers } from "../Server/AllServers";
 import { Factions } from "../Faction/Factions";
-import { initStockMarketFn, StockMarket } from "../StockMarket/StockMarket";
+import { StockMarket } from "../StockMarket/StockMarket";
 
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -437,7 +437,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     case Page.StockMarket: {
       mainPage = (
         <StockMarketRoot
-          initStockMarket={initStockMarketFn}
           p={player}
           stockMarket={StockMarket}
         />
