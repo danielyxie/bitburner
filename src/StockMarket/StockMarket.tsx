@@ -11,7 +11,6 @@ import { StockSymbols } from "./data/StockSymbols";
 
 import { CONSTANTS } from "../Constants";
 import { IMap } from "../types";
-import { EventEmitter } from "../utils/EventEmitter";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 

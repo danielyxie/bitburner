@@ -28,9 +28,7 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
   return (
     <>
       <InfoAndPurchases p={props.p} rerender={rerender} />
-      {props.p.hasWseAccount && (
-        <StockTickers p={props.p} stockMarket={props.stockMarket} />
-      )}
+      {props.p.hasWseAccount && <StockTickers p={props.p} stockMarket={props.stockMarket} />}
     </>
   );
 }

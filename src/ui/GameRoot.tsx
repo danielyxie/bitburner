@@ -435,12 +435,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.StockMarket: {
-      mainPage = (
-        <StockMarketRoot
-          p={player}
-          stockMarket={StockMarket}
-        />
-      );
+      mainPage = <StockMarketRoot p={player} stockMarket={StockMarket} />;
       break;
     }
     case Page.City: {
