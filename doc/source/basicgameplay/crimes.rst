@@ -13,7 +13,12 @@ Basic Mechanics
 When you visit the 'Slums' you will see a list of buttons that show all of the
 available crimes. Simply select one of the options to begin attempting that
 crime. Attempting to commit a crime takes a certain amount of time. This time
-varies between crimes. During this time, you cannot do anything else.
+varies between crimes. 
+
+While doing criemes, you can click “Do something else simultaneously” 
+to be able to do things while you continue to do crimes in the background. There is a 
+20% penalty to the related gains. Clicking the “Focus” button under the overview 
+will return you to the current task.
 
 Crimes are not always successful. Your rate of success is determined by your
 stats (and Augmentation multipliers) and can be seen on the crime-selection
@@ -27,15 +32,27 @@ Harder crimes are typically more profitable, and also give more EXP.
 Crime details
 ^^^^^^^^^^^^^
 Available crimes, and their descriptions, which all begin with "attempt to..."
+
 Shoplift	…shoplift from a low-end retailer
+
 Rob store 	…commit armed robbery on a high-end store
+
 Mug someone 	…mug a random person on the street
+
 Larceny 	…rob property from someone's house
+
 Deal Drugs 	…deal drugs
+
 Bond Forgery 	…forge corporate bonds
+
 Traffick illegal Arms 	…smuggle illegal arms into the city
+
 Homicide 	…murder a random person on the street
+
 Grand theft Auto 	…commit grand theft auto
+
 Kidnap and Ransom 	…kidnap and ransom a high-profile-target
+
 Assassinate 	…assassinate a high-profile target
+
 Heist 	…pull off the ultimate heist
