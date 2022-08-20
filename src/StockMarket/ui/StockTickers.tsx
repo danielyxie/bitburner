@@ -10,29 +10,13 @@ import { StockTickersConfig, TickerDisplayMode } from "./StockTickersConfig";
 
 import { IStockMarket } from "../IStockMarket";
 import { Stock } from "../Stock";
-import { OrderTypes } from "../data/OrderTypes";
-import { PositionTypes } from "../data/PositionTypes";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { EventEmitter } from "../../utils/EventEmitter";
 
-type txFn = (stock: Stock, shares: number) => boolean;
-type placeOrderFn = (
-  stock: Stock,
-  shares: number,
-  price: number,
-  ordType: OrderTypes,
-  posType: PositionTypes,
-) => boolean;
-
 type IProps = {
-  buyStockLong: txFn;
-  buyStockShort: txFn;
   eventEmitterForReset?: EventEmitter<[]>;
   p: IPlayer;
-  placeOrder: placeOrderFn;
-  sellStockLong: txFn;
-  sellStockShort: txFn;
   stockMarket: IStockMarket;
 };
 
@@ -86,18 +70,7 @@ export function StockTickers(props: IProps): React.ReactElement {
       }
 
       tickers.push(
-        <StockTicker
-          buyStockLong={props.buyStockLong}
-          buyStockShort={props.buyStockShort}
-          key={val.symbol}
-          orders={orders}
-          p={props.p}
-          placeOrder={props.placeOrder}
-          rerenderAllTickers={rerender}
-          sellStockLong={props.sellStockLong}
-          sellStockShort={props.sellStockShort}
-          stock={val}
-        />,
+        <StockTicker key={val.symbol} orders={orders} p={props.p} rerenderAllTickers={rerender} stock={val} />,
       );
     }
   }
