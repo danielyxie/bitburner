@@ -12,10 +12,8 @@ import { IStockMarket } from "../IStockMarket";
 import { Stock } from "../Stock";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { EventEmitter } from "../../utils/EventEmitter";
 
 type IProps = {
-  eventEmitterForReset?: EventEmitter<[]>;
   p: IPlayer;
   stockMarket: IStockMarket;
 };

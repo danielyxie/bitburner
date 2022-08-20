@@ -9,10 +9,8 @@ import { StockTickers } from "./StockTickers";
 import { IStockMarket } from "../IStockMarket";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { EventEmitter } from "../../utils/EventEmitter";
 
 type IProps = {
-  eventEmitterForReset?: EventEmitter<[]>;
   initStockMarket: () => void;
   p: IPlayer;
   stockMarket: IStockMarket;
@@ -32,7 +30,7 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
     <>
       <InfoAndPurchases initStockMarket={props.initStockMarket} p={props.p} rerender={rerender} />
       {props.p.hasWseAccount && (
-        <StockTickers eventEmitterForReset={props.eventEmitterForReset} p={props.p} stockMarket={props.stockMarket} />
+        <StockTickers p={props.p} stockMarket={props.stockMarket} />
       )}
     </>
   );
