@@ -31,8 +31,6 @@ import Paper from "@mui/material/Paper";
 import Collapse from "@mui/material/Collapse";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ExpandLess from "@mui/icons-material/ExpandLess";
-import { ICancelOrderParams } from "../StockMarket";
-import { NetscriptContext } from "../../Netscript/APIWrapper";
 
 enum SelectorOrderType {
   Market = "Market Order",
@@ -52,7 +50,6 @@ type placeOrderFn = (
 type IProps = {
   buyStockLong: txFn;
   buyStockShort: txFn;
-  cancelOrder: (params: ICancelOrderParams, ctx?: NetscriptContext) => void;
   orders: Order[];
   p: IPlayer;
   placeOrder: placeOrderFn;
@@ -327,7 +324,7 @@ export function StockTicker(props: IProps): React.ReactElement {
             <StockTickerTxButton onClick={handleSellAllButtonClick} text={"Sell ALL"} />
           </Box>
           <StockTickerPositionText p={props.p} stock={props.stock} />
-          <StockTickerOrderList cancelOrder={props.cancelOrder} orders={props.orders} p={props.p} stock={props.stock} />
+          <StockTickerOrderList orders={props.orders} p={props.p} stock={props.stock} />
 
           <PlaceOrderModal
             text={modalProps.text}

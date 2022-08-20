@@ -86,7 +86,7 @@ export interface ICancelOrderParams {
   stock?: Stock;
   type?: OrderTypes;
 }
-export function cancelOrder(params: ICancelOrderParams, ctx: NetscriptContext | null = null): boolean {
+export function cancelOrder(params: ICancelOrderParams, ctx?: NetscriptContext): boolean {
   if (StockMarket["Orders"] == null) {
     return false;
   }
@@ -122,13 +122,13 @@ export function cancelOrder(params: ICancelOrderParams, ctx: NetscriptContext | 
       ) {
         stockOrders.splice(i, 1);
         if (ctx) {
-          helpers.log(ctx, ()=>"Successfully cancelled order: " + orderTxt);
+          helpers.log(ctx, () => "Successfully cancelled order: " + orderTxt);
         }
         return true;
       }
     }
     if (ctx) {
-      helpers.log(ctx, ()=>"Failed to cancel order: " + orderTxt);
+      helpers.log(ctx, () => "Failed to cancel order: " + orderTxt);
     }
     return false;
   }

@@ -13,8 +13,6 @@ import { PositionTypes } from "../data/PositionTypes";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { EventEmitter } from "../../utils/EventEmitter";
-import { ICancelOrderParams } from "../StockMarket";
-import { NetscriptContext } from "../../Netscript/APIWrapper";
 
 type txFn = (stock: Stock, shares: number) => boolean;
 type placeOrderFn = (
@@ -28,7 +26,6 @@ type placeOrderFn = (
 type IProps = {
   buyStockLong: txFn;
   buyStockShort: txFn;
-  cancelOrder: (params: ICancelOrderParams, ctx?: NetscriptContext) => void;
   eventEmitterForReset?: EventEmitter<[]>;
   initStockMarket: () => void;
   p: IPlayer;
@@ -55,7 +52,6 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
         <StockTickers
           buyStockLong={props.buyStockLong}
           buyStockShort={props.buyStockShort}
-          cancelOrder={props.cancelOrder}
           eventEmitterForReset={props.eventEmitterForReset}
           p={props.p}
           placeOrder={props.placeOrder}
