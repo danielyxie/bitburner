@@ -976,7 +976,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       (ctx: NetscriptContext) =>
       (_corporationName: unknown, _selfFund: unknown = true): boolean => {
         const corporationName = helpers.string(ctx, "corporationName", _corporationName);
-        const selfFund = !_selfFund;
+        const selfFund = !!_selfFund;
         return createCorporation(corporationName, selfFund);
       },
     hasUnlockUpgrade:
