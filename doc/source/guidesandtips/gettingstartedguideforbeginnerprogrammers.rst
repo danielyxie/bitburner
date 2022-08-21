@@ -860,6 +860,8 @@ Random Tips
 * At this stage in the game, your combat stats (strength, defense, etc.) are not nearly
   as useful as your hacking stat. Do not invest too much time or money into gaining combat
   stat exp.
+* As a rule of thumb, your hacking target should be the server with highest max money that's
+  required hacking level is under 1/3 of your hacking level. 
 
 
 
