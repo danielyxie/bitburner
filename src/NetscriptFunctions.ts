@@ -1925,6 +1925,7 @@ const base: InternalAPI<NS> = {
       playtimeSinceLastAug: Player.playtimeSinceLastAug,
       playtimeSinceLastBitnode: Player.playtimeSinceLastBitnode,
       jobs: {},
+      currentWork: Player.currentWork,
       factions: Player.factions.slice(),
       tor: Player.hasTorRouter(),
       inBladeburner: Player.inBladeburner(),
