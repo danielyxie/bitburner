@@ -9,7 +9,7 @@ Singularity API
 <b>Signature:</b>
 
 ```typescript
-export interface Singularity
+export interface Singularity 
 ```
 
 ## Remarks
@@ -17,6 +17,7 @@ export interface Singularity
 This API requires Source-File 4 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on Source-File 4 levels.
 
 ## Methods
+
 |  Method | Description |
 |  --- | --- |
 |  [applyToCompany(companyName, field)](./bitburner.singularity.applytocompany.md) | Apply for a job at a company. |

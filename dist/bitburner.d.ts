@@ -3433,8 +3433,7 @@ export declare interface NS {
      * PID stands for Process ID. The PID is a unique identifier for each script.
      * The PID will always be a positive integer.
      *
-     * Running this function with a numThreads argument of 0 will return 0 without running the script.
-     * However, running this function with a negative numThreads argument will cause a runtime error.
+     * Running this function with a numThreads argument of 0 or less will cause a runtime error.
      *
      * @example
      * ```ts
@@ -3481,7 +3480,7 @@ export declare interface NS {
      * PID stands for Process ID. The PID is a unique identifier for each script.
      * The PID will always be a positive integer.
      *
-     * Running this function with 0 or a negative numThreads argument will cause a runtime error.
+     * Running this function with a numThreads argument of 0 or less will cause a runtime error.
      *
      * @example
      * ```ts
@@ -3526,6 +3525,8 @@ export declare interface NS {
      * on the local server.
      *
      * Because this function immediately terminates the script, it does not have a return value.
+     *
+     * Running this function with a numThreads argument of 0 or less will cause a runtime error.
      *
      * @example
      * ```ts
@@ -6757,7 +6758,6 @@ export declare interface TIX {
     /**
      * Short stocks.
      * @remarks
-     * @deprecated use sellShort
      * RAM cost: 2.5 GB
      * Attempts to purchase a short position of a stock using a Market Order.
      *
