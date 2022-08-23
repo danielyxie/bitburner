@@ -16,14 +16,14 @@ export interface NodeStats
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [cache](./bitburner.nodestats.cache.md) | number | Cache level. Only applicable for Hacknet Servers |
+|  [cache?](./bitburner.nodestats.cache.md) | number | <i>(Optional)</i> Cache level. Only applicable for Hacknet Servers |
 |  [cores](./bitburner.nodestats.cores.md) | number | Node's number of cores |
-|  [hashCapacity](./bitburner.nodestats.hashcapacity.md) | number | Hash Capacity provided by this Node. Only applicable for Hacknet Servers |
+|  [hashCapacity?](./bitburner.nodestats.hashcapacity.md) | number | <i>(Optional)</i> Hash Capacity provided by this Node. Only applicable for Hacknet Servers |
 |  [level](./bitburner.nodestats.level.md) | number | Node's level |
 |  [name](./bitburner.nodestats.name.md) | string | Node's name |
 |  [production](./bitburner.nodestats.production.md) | number | Node's production per second |
 |  [ram](./bitburner.nodestats.ram.md) | number | Node's RAM (GB) |
-|  [ramUsed](./bitburner.nodestats.ramused.md) | number | Node's used RAM (GB) |
+|  [ramUsed?](./bitburner.nodestats.ramused.md) | number | <i>(Optional)</i> Node's used RAM (GB) |
 |  [timeOnline](./bitburner.nodestats.timeonline.md) | number | Number of seconds since Node has been purchased |
 |  [totalProduction](./bitburner.nodestats.totalproduction.md) | number | Total number of money Node has produced |
 

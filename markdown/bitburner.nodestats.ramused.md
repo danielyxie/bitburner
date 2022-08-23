@@ -9,5 +9,5 @@ Node's used RAM (GB)
 <b>Signature:</b>
 
 ```typescript
-ramUsed: number;
+ramUsed?: number;
 ```

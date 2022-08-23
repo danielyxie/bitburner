@@ -43,7 +43,7 @@ export class SleeveFactionWork extends Work {
       [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
       [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
     };
-    return repFormulas[this.factionWorkType](sleeve, faction) * sleeve.shockBonus();
+    return repFormulas[this.factionWorkType](sleeve, faction.favor) * sleeve.shockBonus();
   }
 
   getFaction(): Faction {

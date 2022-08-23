@@ -191,7 +191,7 @@ export class PlayerObject implements IPlayer {
       dexterity: 1,
       agility: 1,
       charisma: 1,
-      intelligence: 1,
+      intelligence: 0,
     };
     this.exp = {
       hacking: 0,

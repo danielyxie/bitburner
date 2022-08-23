@@ -36,6 +36,7 @@ import { Faction } from "./Faction/Faction";
 import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { v2APIBreak } from "./utils/v2APIBreak";
+import { Script } from "./Script/Script";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -402,6 +403,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
         delete anyPlayer.resleeves;
       }
     }
+
     if (ver < 15) {
       Settings.EditorTheme = { ...defaultMonacoTheme };
     }
@@ -420,6 +422,23 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
     }
 
+    const v22PlayerBreak = () => {
+      // reset HP correctly to avoid crash
+      anyPlayer.hp = { current: 1, max: 1 };
+      for (const sleeve of anyPlayer.sleeves) {
+        sleeve.hp = { current: 1, max: 1 };
+      }
+
+      // transfer over old exp to new struct
+      anyPlayer.exp.hacking = anyPlayer.hacking_exp;
+      anyPlayer.exp.strength = anyPlayer.strength_exp;
+      anyPlayer.exp.defense = anyPlayer.defense_exp;
+      anyPlayer.exp.dexterity = anyPlayer.dexterity_exp;
+      anyPlayer.exp.agility = anyPlayer.agility_exp;
+      anyPlayer.exp.charisma = anyPlayer.charisma_exp;
+      anyPlayer.exp.intelligence = anyPlayer.intelligence_exp;
+    };
+
     // Fix bugged NFG accumulation in owned augmentations
     if (ver < 17) {
       let ownedNFGs = [...Player.augmentations];
@@ -436,9 +455,11 @@ function evaluateVersionCompatibility(ver: string | number): void {
         newNFG,
       ];
 
+      v22PlayerBreak();
       Player.reapplyAllAugmentations(true);
       Player.reapplyAllSourceFiles();
     }
+
     if (ver < 20) {
       // Create the darkweb for everyone but it won't be linked
       const dw = GetServer(SpecialServers.DarkWeb);
@@ -464,24 +485,176 @@ function evaluateVersionCompatibility(ver: string | number): void {
       if (graft) Player.augmentations.push({ name: graft, level: 1 });
     }
     if (ver < 22) {
-      // reset HP correctly to avoid crash
-      anyPlayer.hp = { current: 1, max: 1 };
-      for (const sleeve of anyPlayer.sleeves) {
-        sleeve.hp = { current: 1, max: 1 };
-      }
-
-      // transfer over old exp to new struct
-      anyPlayer.exp.hacking = anyPlayer.hacking_exp;
-      anyPlayer.exp.strength = anyPlayer.strength_exp;
-      anyPlayer.exp.defense = anyPlayer.defense_exp;
-      anyPlayer.exp.dexterity = anyPlayer.dexterity_exp;
-      anyPlayer.exp.agility = anyPlayer.agility_exp;
-      anyPlayer.exp.charisma = anyPlayer.charisma_exp;
-      anyPlayer.exp.intelligence = anyPlayer.intelligence_exp;
+      v22PlayerBreak();
       v2APIBreak();
     }
     if (ver < 23) {
       anyPlayer.currentWork = null;
+    }
+    if (ver < 24) {
+      Player.getHomeComputer().scripts.forEach((s) => s.filename.endsWith(".ns") && (s.filename += ".js"));
+    }
+    if (ver < 25) {
+      const removePlayerFields = [
+        "hacking_chance_mult",
+        "hacking_speed_mult",
+        "hacking_money_mult",
+        "hacking_grow_mult",
+        "hacking_mult",
+        "strength_mult",
+        "defense_mult",
+        "dexterity_mult",
+        "agility_mult",
+        "charisma_mult",
+        "hacking_exp_mult",
+        "strength_exp_mult",
+        "defense_exp_mult",
+        "dexterity_exp_mult",
+        "agility_exp_mult",
+        "charisma_exp_mult",
+        "company_rep_mult",
+        "faction_rep_mult",
+        "crime_money_mult",
+        "crime_success_mult",
+        "work_money_mult",
+        "hacknet_node_money_mult",
+        "hacknet_node_purchase_cost_mult",
+        "hacknet_node_ram_cost_mult",
+        "hacknet_node_core_cost_mult",
+        "hacknet_node_level_cost_mult",
+        "bladeburner_max_stamina_mult",
+        "bladeburner_stamina_gain_mult",
+        "bladeburner_analysis_mult",
+        "bladeburner_success_chance_mult",
+        "hacking_exp",
+        "strength_exp",
+        "defense_exp",
+        "dexterity_exp",
+        "agility_exp",
+        "charisma_exp",
+        "intelligence_exp",
+        "companyName",
+        "isWorking",
+        "workType",
+        "workCostMult",
+        "workExpMult",
+        "currentWorkFactionName",
+        "currentWorkFactionDescription",
+        "workHackExpGainRate",
+        "workStrExpGainRate",
+        "workDefExpGainRate",
+        "workDexExpGainRate",
+        "workAgiExpGainRate",
+        "workChaExpGainRate",
+        "workRepGainRate",
+        "workMoneyGainRate",
+        "workMoneyLossRate",
+        "workHackExpGained",
+        "workStrExpGained",
+        "workDefExpGained",
+        "workDexExpGained",
+        "workAgiExpGained",
+        "workChaExpGained",
+        "workRepGained",
+        "workMoneyGained",
+        "createProgramName",
+        "createProgramReqLvl",
+        "graftAugmentationName",
+        "timeWorkedGraftAugmentation",
+        "className",
+        "crimeType",
+        "timeWorked",
+        "timeWorkedCreateProgram",
+        "timeNeededToCompleteWork",
+        "factionWorkType",
+        "committingCrimeThruSingFn",
+        "singFnCrimeWorkerScript",
+        "hacking",
+        "max_hp",
+        "strength",
+        "defense",
+        "dexterity",
+        "agility",
+        "charisma",
+        "intelligence",
+      ];
+      const removeSleeveFields = [
+        "gymStatType",
+        "bbAction",
+        "bbContract",
+        "hacking",
+        "strength",
+        "defense",
+        "dexterity",
+        "agility",
+        "charisma",
+        "intelligence",
+        "max_hp",
+        "hacking_exp",
+        "strength_exp",
+        "defense_exp",
+        "dexterity_exp",
+        "agility_exp",
+        "charisma_exp",
+        "intelligence_exp",
+        "hacking_mult",
+        "strength_mult",
+        "defense_mult",
+        "dexterity_mult",
+        "agility_mult",
+        "charisma_mult",
+        "hacking_exp_mult",
+        "strength_exp_mult",
+        "defense_exp_mult",
+        "dexterity_exp_mult",
+        "agility_exp_mult",
+        "charisma_exp_mult",
+        "hacking_chance_mult",
+        "hacking_speed_mult",
+        "hacking_money_mult",
+        "hacking_grow_mult",
+        "company_rep_mult",
+        "faction_rep_mult",
+        "crime_money_mult",
+        "crime_success_mult",
+        "work_money_mult",
+        "hacknet_node_money_mult",
+        "hacknet_node_purchase_cost_mult",
+        "hacknet_node_ram_cost_mult",
+        "hacknet_node_core_cost_mult",
+        "hacknet_node_level_cost_mult",
+        "bladeburner_max_stamina_mult",
+        "bladeburner_stamina_gain_mult",
+        "bladeburner_analysis_mult",
+        "bladeburner_success_chance_mult",
+        "className",
+        "crimeType",
+        "currentTask",
+        "currentTaskLocation",
+        "currentTaskMaxTime",
+        "currentTaskTime",
+        "earningsForSleeves",
+        "earningsForPlayer",
+        "earningsForTask",
+        "factionWorkType",
+        "gainRatesForTask",
+        "logs",
+      ];
+      let intExp = Number(anyPlayer.intelligence_exp);
+      if (isNaN(intExp)) intExp = 0;
+      anyPlayer.exp.intelligence += intExp;
+      for (const field of removePlayerFields) {
+        delete anyPlayer[field];
+      }
+      for (const sleeve of anyPlayer.sleeves) {
+        const anySleeve = sleeve as any;
+        let intExp = Number(anySleeve.intelligence_exp);
+        if (isNaN(intExp)) intExp = 0;
+        anySleeve.exp.intelligence += intExp;
+        for (const field of removeSleeveFields) {
+          delete sleeve[field];
+        }
+      }
     }
   }
 }

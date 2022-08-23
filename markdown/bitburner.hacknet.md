@@ -31,12 +31,12 @@ Not all these functions are immediately available.
 |  [getStudyMult()](./bitburner.hacknet.getstudymult.md) | Get the multiplier to study. |
 |  [getTrainingMult()](./bitburner.hacknet.gettrainingmult.md) | Get the multiplier to training. |
 |  [hashCapacity()](./bitburner.hacknet.hashcapacity.md) | Get the maximum number of hashes you can store. |
-|  [hashCost(upgName)](./bitburner.hacknet.hashcost.md) | Get the cost of a hash upgrade. |
+|  [hashCost(upgName, count)](./bitburner.hacknet.hashcost.md) | Get the cost of a hash upgrade. |
 |  [maxNumNodes()](./bitburner.hacknet.maxnumnodes.md) | Get the maximum number of hacknet nodes. |
 |  [numHashes()](./bitburner.hacknet.numhashes.md) | Get the total number of hashes stored. |
 |  [numNodes()](./bitburner.hacknet.numnodes.md) | Get the number of hacknet nodes you own. |
 |  [purchaseNode()](./bitburner.hacknet.purchasenode.md) | Purchase a new hacknet node. |
-|  [spendHashes(upgName, upgTarget)](./bitburner.hacknet.spendhashes.md) | Purchase a hash upgrade. |
+|  [spendHashes(upgName, upgTarget, count)](./bitburner.hacknet.spendhashes.md) | Purchase a hash upgrade. |
 |  [upgradeCache(index, n)](./bitburner.hacknet.upgradecache.md) | Upgrade the cache of a hacknet node. |
 |  [upgradeCore(index, n)](./bitburner.hacknet.upgradecore.md) | Upgrade the core of a hacknet node. |
 |  [upgradeLevel(index, n)](./bitburner.hacknet.upgradelevel.md) | Upgrade the level of a hacknet node. |

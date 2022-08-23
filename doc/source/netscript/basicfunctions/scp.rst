@@ -5,10 +5,10 @@ scp() Netscript Function
 
     :RAM cost: 0.6 GB
     :param string/array files: Filename or an array of filenames of script/literature files to copy
+    :param string destination: Hostname of the destination server, which is the server to which the file will be copied.
     :param string source:
         Hostname of the source server, which is the server from which the file will be copied.
         This argument is optional and if it's omitted the source will be the current server.
-    :param string destination: Hostname of the destination server, which is the server to which the file will be copied.
     :returns: ``true`` if the copy was a success.
 
     Copies a script or literature (.lit) file(s) to another server. The
@@ -26,8 +26,8 @@ scp() Netscript Function
         scp("hack-template.script", "foodnstuff"); // returns: true
 
         //Copies "foo.lit" from the helios server to the "home" computer
-        scp("foo.lit", "helios", "home"); // returns: true
+        scp("foo.lit", "home", "helios"); // returns: true
 
         //Tries to copy three files from "rothman-uni" to "home" computer
         files = ["foo1.lit", "foo2.script", "foo3.script"];
-        scp(files, "rothman-uni", "home"); // returns: true
+        scp(files, "home", "rothman-uni"); // returns: true

@@ -9,7 +9,7 @@ Commit a crime.
 <b>Signature:</b>
 
 ```typescript
-commitCrime(crime: string): number;
+commitCrime(crime: string, focus?: boolean): number;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ commitCrime(crime: string): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  crime | string | Name of crime to attempt. |
+|  focus | boolean | Acquire player focus on this program creation. Optional. Defaults to true. |
 
 <b>Returns:</b>
 

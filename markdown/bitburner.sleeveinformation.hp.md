@@ -4,10 +4,10 @@
 
 ## SleeveInformation.hp property
 
-Current hp of the sleeve
+hp of the sleeve
 
 <b>Signature:</b>
 
 ```typescript
-hp: number;
+hp: HP;
 ```

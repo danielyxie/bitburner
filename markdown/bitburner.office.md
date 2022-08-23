@@ -9,7 +9,7 @@ Office for a division in a city.
 <b>Signature:</b>
 
 ```typescript
-interface Office 
+export interface Office 
 ```
 
 ## Properties
@@ -25,5 +25,6 @@ interface Office
 |  [maxMor](./bitburner.office.maxmor.md) | number | Maximum morale of the employees |
 |  [minEne](./bitburner.office.minene.md) | number | Minimum amount of energy of the employees |
 |  [minHap](./bitburner.office.minhap.md) | number | Minimum happiness of the employees |
+|  [minMor](./bitburner.office.minmor.md) | number | Minimum morale of the employees |
 |  [size](./bitburner.office.size.md) | number | Maximum number of employee |
 

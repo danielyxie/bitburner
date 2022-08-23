@@ -16,7 +16,7 @@ export interface ProcessInfo
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [args](./bitburner.processinfo.args.md) | string\[\] | Script's arguments |
+|  [args](./bitburner.processinfo.args.md) | (string \| number \| boolean)\[\] | Script's arguments |
 |  [filename](./bitburner.processinfo.filename.md) | string | Script name. |
 |  [pid](./bitburner.processinfo.pid.md) | number | Process ID |
 |  [threads](./bitburner.processinfo.threads.md) | number | Number of threads script is running with |

@@ -455,6 +455,7 @@ export function Research(division: IIndustry, researchName: string): void {
   if (!allResearch.includes(researchName)) throw new Error(`No research named '${researchName}'`);
   const research = ResearchMap[researchName];
 
+  if (division.researched[researchName]) return;
   if (division.sciResearch.qty < research.cost)
     throw new Error(`You do not have enough Scientific Research for ${research.name}`);
   division.sciResearch.qty -= research.cost;

@@ -10,6 +10,7 @@ import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMa
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../../ui/React/Money";
+import { initStockMarket } from "../StockMarket";
 
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
@@ -22,7 +23,6 @@ import { StaticModal } from "../../ui/React/StaticModal";
 import { FactionNames } from "../../Faction/data/FactionNames";
 
 type IProps = {
-  initStockMarket: () => void;
   p: IPlayer;
   rerender: () => void;
 };
@@ -88,7 +88,7 @@ function PurchaseWseAccountButton(props: IProps): React.ReactElement {
       return;
     }
     props.p.hasWseAccount = true;
-    props.initStockMarket();
+    initStockMarket();
     props.p.loseMoney(CONSTANTS.WSEAccountCost, "stock");
     props.rerender();
   }

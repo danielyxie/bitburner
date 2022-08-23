@@ -21,7 +21,7 @@ export abstract class Person implements IPerson {
     dexterity: 1,
     agility: 1,
     charisma: 1,
-    intelligence: 1,
+    intelligence: 0,
   };
   exp: Skills = {
     hacking: 0,

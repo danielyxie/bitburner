@@ -1,4 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 
 import {
   Infiltration as IInfiltration,
@@ -18,8 +18,9 @@ import { Factions } from "../Faction/Factions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { LocationName } from "../Locations/data/LocationNames";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltration> {
+export function NetscriptInfiltration(): InternalAPI<IInfiltration> {
   const getLocationsWithInfiltrations = Object.values(Locations).filter(
     (location: Location) => location.infiltrationData,
   );
@@ -27,9 +28,9 @@ export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltratio
   const calculateInfiltrationData = (ctx: NetscriptContext, locationName: string): InfiltrationLocation => {
     if (!checkEnum(LocationName, locationName)) throw new Error(`Location '${locationName}' does not exists.`);
     const location = Locations[locationName];
-    if (location === undefined) throw ctx.makeRuntimeErrorMsg(`Location '${location}' does not exists.`);
+    if (location === undefined) throw helpers.makeRuntimeErrorMsg(ctx, `Location '${location}' does not exists.`);
     if (location.infiltrationData === undefined)
-      throw ctx.makeRuntimeErrorMsg(`Location '${location}' does not provide infiltrations.`);
+      throw helpers.makeRuntimeErrorMsg(ctx, `Location '${location}' does not provide infiltrations.`);
     const startingSecurityLevel = location.infiltrationData.startingSecurityLevel;
     const difficulty = calculateDifficulty(player, startingSecurityLevel);
     const reward = calculateReward(player, startingSecurityLevel);
@@ -54,7 +55,7 @@ export function NetscriptInfiltration(player: IPlayer): InternalAPI<IInfiltratio
     getInfiltration:
       (ctx: NetscriptContext) =>
       (_location: unknown): InfiltrationLocation => {
-        const location = ctx.helper.string("location", _location);
+        const location = helpers.string(ctx, "location", _location);
         return calculateInfiltrationData(ctx, location);
       },
   };

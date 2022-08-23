@@ -9,5 +9,5 @@ Hash Capacity provided by this Node. Only applicable for Hacknet Servers
 <b>Signature:</b>
 
 ```typescript
-hashCapacity: number;
+hashCapacity?: number;
 ```
