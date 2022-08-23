@@ -1911,10 +1911,9 @@ const base: InternalAPI<NS> = {
   },
   getPlayer: () => (): INetscriptPlayer => {
     const data = {
-      hp: Player.hp,
-      skills: Player.skills,
-      exp: Player.exp,
-      hacking_chance_mult: Player.mults.hacking_chance,
+      hp: JSON.parse(JSON.stringify(Player.hp)),
+      skills: JSON.parse(JSON.stringify(Player.skills)),
+      exp: JSON.parse(JSON.stringify(Player.exp)),
       mults: JSON.parse(JSON.stringify(Player.mults)),
       numPeopleKilled: Player.numPeopleKilled,
       money: Player.money,
