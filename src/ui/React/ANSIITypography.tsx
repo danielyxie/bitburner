@@ -93,20 +93,9 @@ export const ANSIITypography = React.memo((props: IProps): React.ReactElement =>
   }
   return (
     <Typography classes={{ root: lineClass(classes, props.color) }} paragraph={false}>
-      {parts.map((part, index) => {
-        const spanStyle = ansiCodeStyle(part.code);
-        if (!_.isEmpty(spanStyle)) {
-          // Only wrap parts with spans if the calculated spanStyle is non-empty...
-          return (
-            <Typography key={index} paragraph={false} component="span" sx={spanStyle}>
-              {part.text}
-            </Typography>
-          );
-        } else {
-          // ... otherwise yield the unmodified, unwrapped part.
-          return part.text;
-        }
-      })}
+      {parts.map((part) => (
+        <span style={ansiCodeStyle(part.code)}>{part.text}</span>
+      ))}
     </Typography>
   );
 });
@@ -129,14 +118,14 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
     7: "#ffffff",
   };
   const COLOR_MAP_DARK: Record<number, string> = {
-    0: "#000000",
-    1: "#800000",
-    2: "#008000",
-    3: "#808000",
-    4: "#000080",
-    5: "#800080",
-    6: "#008080",
-    7: "#c0c0c0",
+    8: "#000000",
+    9: "#800000",
+    10: "#008000",
+    11: "#808000",
+    12: "#000080",
+    13: "#800080",
+    14: "#008080",
+    15: "#c0c0c0",
   };
 
   const ansi2rgb = (code: number): string => {
@@ -170,13 +159,13 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
     return "initial";
   };
 
-  type styleKey = "fontWeight" | "textDecoration" | "color" | "backgroundColor" | "display";
+  type styleKey = "fontWeight" | "textDecoration" | "color" | "backgroundColor" | "padding";
   const style: {
     fontWeight?: string;
     textDecoration?: string;
     color?: string;
     backgroundColor?: string;
-    display?: string;
+    padding?: string;
   } = {};
 
   if (code === null || code === "0") {
@@ -227,10 +216,10 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
       nextStyleKey = "backgroundColor";
     }
   });
-  // If a background color is set, render this as an inline block element (instead of inline)
-  //  so that the background between lines (at least those that don't wrap) is uninterrupted.
-  if (style.backgroundColor !== undefined) {
-    style.display = "inline-block";
+  // If a background color is set, add slight padding to increase the background fill area.
+  // This was previously display:inline-block, but that has display errors when line breaks are used.
+  if (style.backgroundColor) {
+    style.padding = "0px 1px";
   }
   return style;
 }
