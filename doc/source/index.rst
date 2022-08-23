@@ -24,6 +24,7 @@ secrets that you've been searching for.
     Basic documentation <netscript>
     Basic Gameplay <basicgameplay>
     Advanced Gameplay <advancedgameplay>
+    Remote API <remoteapi.rst>
     Keyboard Shortcuts <shortcuts>
     Game Frozen or Stuck? <gamefrozen>
     Guides & Tips <guidesandtips>

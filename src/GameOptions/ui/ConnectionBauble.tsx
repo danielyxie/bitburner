@@ -1,5 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import WifiIcon from "@mui/icons-material/Wifi";
+import WifiOffIcon from "@mui/icons-material/WifiOff";
 
 interface baubleProps {
   isConnected: () => boolean;
@@ -15,5 +17,24 @@ export const ConnectionBauble = (props: baubleProps): React.ReactElement => {
     return () => clearInterval(timer);
   });
 
-  return <Typography>{connection ? "Connected" : "Disconnected"}</Typography>;
+  return (
+    <>
+      <Typography>
+        Status:&nbsp;
+        <Typography component="span" color={connection ? "primary" : "error"}>
+          {connection ? (
+            <>
+              Online&nbsp;
+              <WifiIcon />
+            </>
+          ) : (
+            <>
+              Offline&nbsp;
+              <WifiOffIcon />
+            </>
+          )}
+        </Typography>
+      </Typography>
+    </>
+  );
 };

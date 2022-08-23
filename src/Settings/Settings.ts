@@ -211,7 +211,7 @@ export const defaultSettings: IDefaultSettings = {
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
   MaxTerminalCapacity: 500,
-  RemoteFileApiPort: 12525,
+  RemoteFileApiPort: 0,
   SaveGameOnFileSave: true,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,

@@ -17,7 +17,7 @@ ReactDOM.render(
   document.getElementById("root"),
 );
 
-newRemoteFileApiConnection();
+setTimeout(newRemoteFileApiConnection, 2000);
 
 function rerender(): void {
   refreshTheme();

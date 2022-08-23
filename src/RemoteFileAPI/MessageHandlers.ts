@@ -12,12 +12,10 @@ import {
   FileLocation,
   isFileData,
 } from "./MessageDefinitions";
-//@ts-ignore: Complaint of import ending with .d.ts
+
 import libSource from "!!raw-loader!../ScriptEditor/NetscriptDefinitions.d.ts";
-import { RFALogger } from "./RFALogger";
 
 function error(errorMsg: string, { id }: RFAMessage): RFAMessage {
-  RFALogger.error((typeof id === "undefined" ? "" : `Request ${id}: `) + errorMsg);
   return new RFAMessage({ error: errorMsg, id: id });
 }
 
@@ -129,12 +127,11 @@ export const RFARequestHandler: Record<string, (message: RFAMessage) => void | R
     if (!script) return error("File doesn't exist", msg);
     const ramUsage = script.ramUsage;
 
-    return new RFAMessage({ result: String(ramUsage), id: msg.id });
+    return new RFAMessage({ result: ramUsage, id: msg.id });
   },
 
   getDefinitionFile: function (msg: RFAMessage): RFAMessage {
     const source = (libSource + "").replace(/export /g, "");
-    console.log(source);
     return new RFAMessage({ result: source, id: msg.id });
   },
 };

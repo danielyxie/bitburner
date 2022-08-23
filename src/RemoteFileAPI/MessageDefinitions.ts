@@ -1,12 +1,14 @@
 export class RFAMessage {
   jsonrpc = "2.0"; // Transmits version of JSON-RPC. Compliance maybe allows some funky interaction with external tools?
   public method?: string; // Is defined when it's a request/notification, otherwise undefined
-  public result?: string; // Is defined when it's a response, otherwise undefined
+  public result?: string | number; // Is defined when it's a response, otherwise undefined
   public params?: FileMetadata; // Optional parameters to method
   public error?: string; // Only defined on error
   public id?: number; // ID to keep track of request -> response interaction, undefined with notifications, defined with request/response
 
-  constructor(obj: { method?: string; result?: string; params?: FileMetadata; error?: string; id?: number } = {}) {
+  constructor(
+    obj: { method?: string; result?: string | number; params?: FileMetadata; error?: string; id?: number } = {},
+  ) {
     this.method = obj.method;
     this.result = obj.result;
     this.params = obj.params;

@@ -107,6 +107,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
           <SideBarTab sideBarProps={props} tab={GameOptionsTab.GAMEPLAY} tabName="Gameplay" />
           <SideBarTab sideBarProps={props} tab={GameOptionsTab.INTERFACE} tabName="Interface" />
           <SideBarTab sideBarProps={props} tab={GameOptionsTab.MISC} tabName="Misc" />
+          <SideBarTab sideBarProps={props} tab={GameOptionsTab.REMOTE_API} tabName="Remote API" />
         </List>
       </Paper>
       <Box

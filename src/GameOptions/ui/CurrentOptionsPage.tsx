@@ -1,4 +1,4 @@
-import { MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography, Box } from "@mui/material";
+import { MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography, Link } from "@mui/material";
 import React, { useState } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { isRemoteFileApiConnectionLive, newRemoteFileApiConnection } from "../../RemoteFileAPI/RemoteFileAPI";
@@ -370,12 +370,25 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             </>
           }
         />
+      </GameOptionsPage>
+    ),
+    [GameOptionsTab.REMOTE_API]: (
+      <GameOptionsPage title="Remote API">
+        <Typography>
+          These settings control the Remote API for bitburner. This is typically used to write scripts using an external
+          text editor and then upload files to the home server.
+        </Typography>
+        <Typography>
+          <Link href="#" target="_blank">
+            Documentation
+          </Link>
+        </Typography>
+        <ConnectionBauble isConnected={isRemoteFileApiConnectionLive} />
         <Tooltip
           title={
             <Typography>
-              This port number is used to connect to a Remote File API port, please ensure that it matches with the port
-              the Remote File API server is publishing on (12525 by default). Click the reconnect button to try and
-              re-establish connection. The little colored bauble shows whether the connection is live or not.
+              This port number is used to connect to a Remote API port, please ensure that it matches with your Remote
+              API server port. Set to 0 to disable the feature.
             </Typography>
           }
         >
@@ -383,15 +396,10 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             InputProps={{
               startAdornment: (
                 <Typography color={remoteFileApiPort > 0 && remoteFileApiPort <= 65535 ? "success" : "error"}>
-                  Remote File API port:
+                  Port:&nbsp;
                 </Typography>
               ),
-              endAdornment: (
-                <Box>
-                  <Button onClick={newRemoteFileApiConnection}>Reconnect</Button>
-                  <ConnectionBauble isConnected={isRemoteFileApiConnectionLive} />
-                </Box>
-              ),
+              endAdornment: <Button onClick={newRemoteFileApiConnection}>Connect</Button>,
             }}
             value={remoteFileApiPort}
             onChange={handleRemoteFileApiPortChange}
