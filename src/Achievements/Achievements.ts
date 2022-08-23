@@ -255,13 +255,16 @@ export const achievements: IMap<Achievement> = {
   HACKING_100000: {
     ...achievementData["HACKING_100000"],
     Icon: "hack100000",
-    Condition: () => Player.hacking >= 100000,
+    Condition: () => Player.skills.hacking >= 100000,
   },
   COMBAT_3000: {
     ...achievementData["COMBAT_3000"],
     Icon: "combat3000",
     Condition: () =>
-      Player.strength >= 3000 && Player.defense >= 3000 && Player.dexterity >= 3000 && Player.agility >= 3000,
+      Player.skills.strength >= 3000 &&
+      Player.skills.defense >= 3000 &&
+      Player.skills.dexterity >= 3000 &&
+      Player.skills.agility >= 3000,
   },
   NEUROFLUX_255: {
     ...achievementData["NEUROFLUX_255"],
@@ -481,7 +484,7 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["INTELLIGENCE_255"],
     Icon: "INT255",
     Visible: () => hasAccessToSF(Player, 5),
-    Condition: () => Player.intelligence >= 255,
+    Condition: () => Player.skills.intelligence >= 255,
   },
   BLADEBURNER_DIVISION: {
     ...achievementData["BLADEBURNER_DIVISION"],
@@ -648,12 +651,12 @@ export const achievements: IMap<Achievement> = {
       !Player.sleeves.some(
         (s) =>
           s.augmentations.length > 0 ||
-          s.hacking_exp > 0 ||
-          s.strength_exp > 0 ||
-          s.defense_exp > 0 ||
-          s.agility_exp > 0 ||
-          s.dexterity_exp > 0 ||
-          s.charisma_exp > 0,
+          s.exp.hacking > 0 ||
+          s.exp.strength > 0 ||
+          s.exp.defense > 0 ||
+          s.exp.agility > 0 ||
+          s.exp.dexterity > 0 ||
+          s.exp.charisma > 0,
       ),
   },
   CHALLENGE_BN12: {

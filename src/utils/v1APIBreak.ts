@@ -84,11 +84,13 @@ export function AwardNFG(n = 1): void {
   }
 }
 
+export interface IFileLine {
+  file: string;
+  line: number;
+  content: string;
+}
+
 export function v1APIBreak(): void {
-  interface IFileLine {
-    file: string;
-    line: number;
-  }
   let txt = "";
   for (const server of GetAllServers()) {
     for (const change of detect) {
@@ -100,6 +102,7 @@ export function v1APIBreak(): void {
             s.push({
               file: script.filename,
               line: i + 1,
+              content: "",
             });
           }
         }

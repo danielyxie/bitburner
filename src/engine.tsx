@@ -33,7 +33,6 @@ import { Settings } from "./Settings/Settings";
 import { ThemeEvents } from "./Themes/ui/Theme";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
-import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
@@ -121,20 +120,7 @@ const Engine: {
 
     // Sleeves
     for (let i = 0; i < Player.sleeves.length; ++i) {
-      if (Player.sleeves[i] instanceof Sleeve) {
-        const expForOtherSleeves = Player.sleeves[i].process(Player, numCycles);
-
-        // This sleeve earns experience for other sleeves
-        if (expForOtherSleeves == null) {
-          continue;
-        }
-        for (let j = 0; j < Player.sleeves.length; ++j) {
-          if (j === i) {
-            continue;
-          }
-          Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCycles, true);
-        }
-      }
+      Player.sleeves[i].process(Player, numCycles);
     }
 
     // Counters
@@ -291,7 +277,9 @@ const Engine: {
       const offlineHackingIncome = (Player.moneySourceA.hacking / Player.playtimeSinceLastAug) * timeOffline * 0.75;
       Player.gainMoney(offlineHackingIncome, "hacking");
       // Process offline progress
+
       loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
+
       if (Player.currentWork !== null) {
         Player.focus = true;
         Player.processWork(numCyclesOffline);
@@ -307,9 +295,9 @@ const Engine: {
           // No rep for gangs.
           if (Player.getGangName() === facName) continue;
 
-          const hRep = getHackingWorkRepGain(Player, faction);
-          const sRep = getFactionSecurityWorkRepGain(Player, faction);
-          const fRep = getFactionFieldWorkRepGain(Player, faction);
+          const hRep = getHackingWorkRepGain(Player, faction.favor);
+          const sRep = getFactionSecurityWorkRepGain(Player, faction.favor);
+          const fRep = getFactionFieldWorkRepGain(Player, faction.favor);
           // can be infinite, doesn't matter.
           const reputationRate = Math.max(hRep, sRep, fRep) / Player.factions.length;
 
@@ -357,20 +345,7 @@ const Engine: {
 
       // Sleeves offline progress
       for (let i = 0; i < Player.sleeves.length; ++i) {
-        if (Player.sleeves[i] instanceof Sleeve) {
-          const expForOtherSleeves = Player.sleeves[i].process(Player, numCyclesOffline);
-
-          // This sleeve earns experience for other sleeves
-          if (expForOtherSleeves == null) {
-            continue;
-          }
-          for (let j = 0; j < Player.sleeves.length; ++j) {
-            if (j === i) {
-              continue;
-            }
-            Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCyclesOffline, true);
-          }
-        }
+        Player.sleeves[i].process(Player, numCyclesOffline);
       }
 
       // Update total playtime

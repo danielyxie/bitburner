@@ -34,7 +34,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
     this.getHealed = this.getHealed.bind(this);
 
     this.state = {
-      currHp: this.props.p.hp,
+      currHp: this.props.p.hp.current,
     };
   }
 
@@ -47,20 +47,20 @@ export class HospitalLocation extends React.Component<IProps, IState> {
       return;
     }
 
-    if (this.props.p.hp < 0) {
-      this.props.p.hp = 0;
+    if (this.props.p.hp.current < 0) {
+      this.props.p.hp.current = 0;
     }
-    if (this.props.p.hp >= this.props.p.max_hp) {
+    if (this.props.p.hp.current >= this.props.p.hp.max) {
       return;
     }
 
     const cost = this.getCost();
     this.props.p.loseMoney(cost, "hospitalization");
-    this.props.p.hp = this.props.p.max_hp;
+    this.props.p.hp.current = this.props.p.hp.max;
 
     // This just forces a re-render to update the cost
     this.setState({
-      currHp: this.props.p.hp,
+      currHp: this.props.p.hp.current,
     });
 
     dialogBoxCreate(

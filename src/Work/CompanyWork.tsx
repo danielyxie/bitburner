@@ -6,10 +6,12 @@ import { influenceStockThroughCompanyWork } from "../StockMarket/PlayerInfluenci
 import { LocationName } from "../Locations/data/LocationNames";
 import { calculateCompanyWorkStats } from "./formulas/Company";
 import { Companies } from "../Company/Companies";
-import { applyWorkStats, WorkStats } from "./WorkStats";
+import { applyWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 import { Company } from "../Company/Company";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
+import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { CONSTANTS } from "../Constants";
 
 interface CompanyWorkParams {
   companyName: string;
@@ -32,26 +34,40 @@ export class CompanyWork extends Work {
   }
 
   getGainRates(player: IPlayer): WorkStats {
-    return calculateCompanyWorkStats(player, this.getCompany());
+    let focusBonus = 1;
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    }
+    return scaleWorkStats(calculateCompanyWorkStats(player, player, this.getCompany()), focusBonus);
   }
 
   process(player: IPlayer, cycles: number): boolean {
     this.cyclesWorked += cycles;
     const company = this.getCompany();
     const gains = this.getGainRates(player);
-    applyWorkStats(player, gains, cycles, "work");
+    applyWorkStats(player, player, gains, cycles, "work");
     company.playerReputation += gains.reputation * cycles;
     influenceStockThroughCompanyWork(company, gains.reputation, cycles);
     return false;
   }
   finish(): void {
-    dialogBoxCreate(
-      <>
-        You finished working for {this.companyName}
-        <br />
-        You have <Reputation reputation={this.getCompany().playerReputation} /> reputation with them.
-      </>,
-    );
+    if (!this.singularity) {
+      dialogBoxCreate(
+        <>
+          You finished working for {this.companyName}
+          <br />
+          You have <Reputation reputation={this.getCompany().playerReputation} /> reputation with them.
+        </>,
+      );
+    }
+  }
+
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      companyName: this.companyName,
+    };
   }
 
   /**

@@ -7,6 +7,54 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
+import { newWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { calculateCrimeWorkStats } from "./formulas/Crime";
+
+enum newCrimeType {
+  SHOPLIFT = "SHOPLIFT",
+  ROBSTORE = "ROBSTORE",
+  MUG = "MUG",
+  LARCENY = "LARCENY",
+  DRUGS = "DRUGS",
+  BONDFORGERY = "BONDFORGERY",
+  TRAFFICKARMS = "TRAFFICKARMS",
+  HOMICIDE = "HOMICIDE",
+  GRANDTHEFTAUTO = "GRANDTHEFTAUTO",
+  KIDNAP = "KIDNAP",
+  ASSASSINATION = "ASSASSINATION",
+  HEIST = "HEIST",
+}
+
+const convertCrimeType = (crimeType: CrimeType): newCrimeType => {
+  switch (crimeType) {
+    case CrimeType.SHOPLIFT:
+      return newCrimeType.SHOPLIFT;
+    case CrimeType.ROB_STORE:
+      return newCrimeType.ROBSTORE;
+    case CrimeType.MUG:
+      return newCrimeType.MUG;
+    case CrimeType.LARCENY:
+      return newCrimeType.LARCENY;
+    case CrimeType.DRUGS:
+      return newCrimeType.DRUGS;
+    case CrimeType.BOND_FORGERY:
+      return newCrimeType.BONDFORGERY;
+    case CrimeType.TRAFFIC_ARMS:
+      return newCrimeType.TRAFFICKARMS;
+    case CrimeType.HOMICIDE:
+      return newCrimeType.HOMICIDE;
+    case CrimeType.GRAND_THEFT_AUTO:
+      return newCrimeType.GRANDTHEFTAUTO;
+    case CrimeType.KIDNAP:
+      return newCrimeType.KIDNAP;
+    case CrimeType.ASSASSINATION:
+      return newCrimeType.ASSASSINATION;
+    case CrimeType.HEIST:
+      return newCrimeType.HEIST;
+  }
+  return newCrimeType.SHOPLIFT;
+};
 
 interface CrimeWorkParams {
   crimeType: CrimeType;
@@ -21,7 +69,7 @@ export class CrimeWork extends Work {
 
   constructor(params?: CrimeWorkParams) {
     super(WorkType.CRIME, params?.singularity ?? true);
-    this.crimeType = params?.crimeType ?? CrimeType.Shoplift;
+    this.crimeType = params?.crimeType ?? CrimeType.SHOPLIFT;
     this.unitCompleted = 0;
   }
 
@@ -42,14 +90,12 @@ export class CrimeWork extends Work {
     return false;
   }
 
+  earnings(): WorkStats {
+    return calculateCrimeWorkStats(this.getCrime());
+  }
+
   commit(player: IPlayer): void {
-    let crime = null;
-    for (const i of Object.keys(Crimes)) {
-      if (Crimes[i].type == this.crimeType) {
-        crime = Crimes[i];
-        break;
-      }
-    }
+    const crime = this.getCrime();
     if (crime == null) {
       dialogBoxCreate(
         `ERR: Unrecognized crime type (${this.crimeType}). This is probably a bug please contact the developer`,
@@ -59,38 +105,36 @@ export class CrimeWork extends Work {
     const focusPenalty = player.focusPenalty();
     // exp times 2 because were trying to maintain the same numbers as before the conversion
     // Technically the definition of Crimes should have the success numbers and failure should divide by 4
-    let hackExp = crime.hacking_exp * 2;
-    let StrExp = crime.strength_exp * 2;
-    let DefExp = crime.defense_exp * 2;
-    let DexExp = crime.dexterity_exp * 2;
-    let AgiExp = crime.agility_exp * 2;
-    let ChaExp = crime.charisma_exp * 2;
+    let gains = scaleWorkStats(this.earnings(), focusPenalty, false);
     let karma = crime.karma;
     const success = determineCrimeSuccess(player, crime.type);
     if (success) {
-      player.gainMoney(crime.money * focusPenalty, "crime");
+      player.gainMoney(gains.money * player.mults.crime_money, "crime");
       player.numPeopleKilled += crime.kills;
-      player.gainIntelligenceExp(crime.intelligence_exp * focusPenalty);
+      player.gainIntelligenceExp(gains.intExp);
     } else {
-      hackExp /= 4;
-      StrExp /= 4;
-      DefExp /= 4;
-      DexExp /= 4;
-      AgiExp /= 4;
-      ChaExp /= 4;
+      gains = scaleWorkStats(gains, 0.25);
       karma /= 4;
     }
-    player.gainHackingExp(hackExp * focusPenalty);
-    player.gainStrengthExp(StrExp * focusPenalty);
-    player.gainDefenseExp(DefExp * focusPenalty);
-    player.gainDexterityExp(DexExp * focusPenalty);
-    player.gainAgilityExp(AgiExp * focusPenalty);
-    player.gainCharismaExp(ChaExp * focusPenalty);
+    player.gainHackingExp(gains.hackExp);
+    player.gainStrengthExp(gains.strExp);
+    player.gainDefenseExp(gains.defExp);
+    player.gainDexterityExp(gains.dexExp);
+    player.gainAgilityExp(gains.agiExp);
+    player.gainCharismaExp(gains.chaExp);
     player.karma -= karma * focusPenalty;
   }
 
-  finish(player: IPlayer, cancelled: boolean): void {
-    if (cancelled) return;
+  finish(): void {
+    /** nothing to do */
+  }
+
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      crimeType: convertCrimeType(this.crimeType),
+    };
   }
 
   /**

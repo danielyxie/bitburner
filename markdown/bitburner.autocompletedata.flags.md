@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-flags(schema: [string, string | number | boolean | string[]][]): any;
+flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ flags(schema: [string, string | number | boolean | string[]][]): any;
 
 <b>Returns:</b>
 
-any
+{ \[key: string\]: [ScriptArg](./bitburner.scriptarg.md) }
 

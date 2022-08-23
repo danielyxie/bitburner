@@ -9,7 +9,7 @@ Work for a company.
 <b>Signature:</b>
 
 ```typescript
-workForCompany(companyName?: string, focus?: boolean): boolean;
+workForCompany(companyName: string, focus?: boolean): boolean;
 ```
 
 ## Parameters

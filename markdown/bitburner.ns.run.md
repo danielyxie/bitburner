@@ -36,7 +36,7 @@ If the script was successfully started, then this functions returns the PID of t
 
 PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.
 
-Running this function with a numThreads argument of 0 will return 0 without running the script. However, running this function with a negative numThreads argument will cause a runtime error.
+Running this function with a numThreads argument of 0 or less will cause a runtime error.
 
 ## Example 1
 

@@ -285,10 +285,8 @@ export async function determineAllPossibilitiesForTabCompletion(
       return processFilepath(script.filename) === fn || script.filename === "/" + fn;
     });
     if (!script) return; // Doesn't exist.
-    if (!script.module) {
-      await compile(p, script, currServ.scripts);
-    }
-    const loadedModule = await script.module;
+    //Will return the already compiled module if recompilation not needed.
+    const loadedModule = await compile(p, script, currServ.scripts);
     if (!loadedModule || !loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
 
     const runArgs = { "--tail": Boolean, "-t": Number };
@@ -309,7 +307,7 @@ export async function determineAllPossibilitiesForTabCompletion(
           return "--" + f[0];
         });
         try {
-          return flagFunc()(schema);
+          return flagFunc(schema);
         } catch (err) {
           return {};
         }

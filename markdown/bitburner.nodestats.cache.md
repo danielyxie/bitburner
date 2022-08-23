@@ -9,5 +9,5 @@ Cache level. Only applicable for Hacknet Servers
 <b>Signature:</b>
 
 ```typescript
-cache: number;
+cache?: number;
 ```

@@ -12,18 +12,18 @@ import { Work, WorkType } from "./Work";
 import { applyWorkStats, newWorkStats, sumWorkStats, WorkStats } from "./WorkStats";
 
 export enum ClassType {
-  StudyComputerScience = "StudyComputerScience",
-  DataStructures = "DataStructures",
-  Networks = "Networks",
-  Algorithms = "Algorithms",
+  StudyComputerScience = "STUDYCOMPUTERSCIENCE",
+  DataStructures = "DATASTRUCTURES",
+  Networks = "NETWORKS",
+  Algorithms = "ALGORITHMS",
 
-  Management = "Management",
-  Leadership = "Leadership",
+  Management = "MANAGEMENT",
+  Leadership = "LEADERSHIP",
 
-  GymStrength = "GymStrength",
-  GymDefense = "GymDefense",
-  GymDexterity = "GymDexterity",
-  GymAgility = "GymAgility",
+  GymStrength = "GYMSTRENGTH",
+  GymDefense = "GYMDEFENSE",
+  GymDexterity = "GYMDEXTERITY",
+  GymAgility = "GYMAGILITY",
 }
 
 export interface Class {
@@ -147,13 +147,13 @@ export class ClassWork extends Work {
   }
 
   calculateRates(player: IPlayer): WorkStats {
-    return calculateClassEarningsRate(player, this);
+    return calculateClassEarningsRate(player, player, this.classType, this.location);
   }
 
   process(player: IPlayer, cycles: number): boolean {
     this.cyclesWorked += cycles;
     const rate = this.calculateRates(player);
-    const earnings = applyWorkStats(player, rate, cycles, "class");
+    const earnings = applyWorkStats(player, player, rate, cycles, "class");
     this.earnings = sumWorkStats(this.earnings, earnings);
     return false;
   }
@@ -177,6 +177,15 @@ export class ClassWork extends Work {
         </>,
       );
     }
+  }
+
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      classType: this.classType,
+      location: this.location,
+    };
   }
 
   /**

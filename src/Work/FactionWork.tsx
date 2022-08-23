@@ -5,17 +5,12 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
-import { applyWorkStats, WorkStats } from "./WorkStats";
+import { applyWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
-import {
-  getFactionFieldWorkRepGain,
-  getFactionSecurityWorkRepGain,
-  getHackingWorkRepGain,
-} from "../PersonObjects/formulas/reputation";
 import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { calculateFactionExp } from "./formulas/Faction";
+import { calculateFactionExp, calculateFactionRep } from "./formulas/Faction";
 import { FactionWorkType } from "./data/FactionWorkType";
 
 interface FactionWorkParams {
@@ -43,22 +38,20 @@ export class FactionWork extends Work {
   }
 
   getReputationRate(player: IPlayer): number {
-    const faction = this.getFaction();
-    const repFormulas = {
-      [FactionWorkType.HACKING]: getHackingWorkRepGain,
-      [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
-      [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
-    };
-    const rep = repFormulas[this.factionWorkType](player, faction);
     let focusBonus = 1;
     if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
       focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    return rep * focusBonus;
+    return calculateFactionRep(player, this.factionWorkType, this.getFaction().favor) * focusBonus;
   }
 
   getExpRates(player: IPlayer): WorkStats {
-    return calculateFactionExp(player, this.factionWorkType);
+    let focusBonus = 1;
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    }
+    const rate = calculateFactionExp(player, this.factionWorkType);
+    return scaleWorkStats(rate, focusBonus, false);
   }
 
   process(player: IPlayer, cycles: number): boolean {
@@ -66,7 +59,7 @@ export class FactionWork extends Work {
     this.getFaction().playerReputation += this.getReputationRate(player) * cycles;
 
     const rate = this.getExpRates(player);
-    applyWorkStats(player, rate, cycles, "class");
+    applyWorkStats(player, player, rate, cycles, "class");
 
     return false;
   }
@@ -81,6 +74,15 @@ export class FactionWork extends Work {
         </>,
       );
     }
+  }
+
+  APICopy(): Record<string, unknown> {
+    return {
+      type: this.type,
+      cyclesWorked: this.cyclesWorked,
+      factionWorkType: this.factionWorkType,
+      factionName: this.factionName,
+    };
   }
 
   /**

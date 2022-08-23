@@ -9,15 +9,15 @@ Check if you have a warehouse in city
 <b>Signature:</b>
 
 ```typescript
-hasWarehouse(adivisionName: any, acityName: any): boolean;
+hasWarehouse(adivisionName: string, acityName: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  adivisionName | any |  |
-|  acityName | any |  |
+|  adivisionName | string |  |
+|  acityName | string |  |
 
 <b>Returns:</b>
 

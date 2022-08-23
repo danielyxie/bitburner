@@ -9,7 +9,7 @@ Assign an employee to a job.
 <b>Signature:</b>
 
 ```typescript
-assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
+assignJob(divisionName: string, cityName: string, employeeName: string, job: string): void;
 ```
 
 ## Parameters
@@ -23,7 +23,5 @@ assignJob(divisionName: string, cityName: string, employeeName: string, job: str
 
 <b>Returns:</b>
 
-Promise&lt;void&gt;
-
-A promise that is fulfilled when the assignment is complete.
+void
 

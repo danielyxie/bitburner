@@ -36,6 +36,8 @@ import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { KEY } from "../utils/helpers/keyCodes";
+import { isSleeveInfiltrateWork } from "../PersonObjects/Sleeve/Work/SleeveInfiltrateWork";
+import { isSleeveSupportWork } from "../PersonObjects/Sleeve/Work/SleeveSupportWork";
 
 interface BlackOpsAttempt {
   error?: string;
@@ -1027,16 +1029,17 @@ export class Bladeburner implements IBladeburner {
     const CharismaLinearFactor = 1e3;
     const CharismaExponentialFactor = 0.045;
 
-    const charismaEff = Math.pow(person.charisma, CharismaExponentialFactor) + person.charisma / CharismaLinearFactor;
+    const charismaEff =
+      Math.pow(person.skills.charisma, CharismaExponentialFactor) + person.skills.charisma / CharismaLinearFactor;
     return (100 - charismaEff) / 100;
   }
 
   getRecruitmentSuccessChance(person: IPerson): number {
-    return Math.pow(person.charisma, 0.45) / (this.teamSize - this.sleeveSize + 1);
+    return Math.pow(person.skills.charisma, 0.45) / (this.teamSize - this.sleeveSize + 1);
   }
 
   getRecruitmentTime(person: IPerson): number {
-    const effCharisma = person.charisma * this.skillMultipliers.effCha;
+    const effCharisma = person.skills.charisma * this.skillMultipliers.effCha;
     const charismaFactor = Math.pow(effCharisma, 0.81) + effCharisma / 90;
     return Math.max(10, Math.round(BladeburnerConstants.BaseRecruitmentTimeNeeded - charismaFactor));
   }
@@ -1123,10 +1126,10 @@ export class Bladeburner implements IBladeburner {
       const losses = getRandomInt(0, max);
       this.teamSize -= losses;
       if (this.teamSize < this.sleeveSize) {
-        const sup = player.sleeves.filter((x) => x.bbAction == "Support main sleeve");
+        const sup = player.sleeves.filter((x) => isSleeveSupportWork(x.currentWork));
         for (let i = 0; i > this.teamSize - this.sleeveSize; i--) {
           const r = Math.floor(Math.random() * sup.length);
-          sup[r].takeDamage(sup[r].max_hp);
+          sup[r].takeDamage(sup[r].hp.max);
           sup.splice(r, 1);
         }
         this.teamSize += this.sleeveSize;
@@ -1437,10 +1440,10 @@ export class Bladeburner implements IBladeburner {
             const losses = getRandomInt(1, teamLossMax);
             this.teamSize -= losses;
             if (this.teamSize < this.sleeveSize) {
-              const sup = player.sleeves.filter((x) => x.bbAction == "Support main sleeve");
+              const sup = player.sleeves.filter((x) => isSleeveSupportWork(x.currentWork));
               for (let i = 0; i > this.teamSize - this.sleeveSize; i--) {
                 const r = Math.floor(Math.random() * sup.length);
-                sup[r].takeDamage(sup[r].max_hp);
+                sup[r].takeDamage(sup[r].hp.max);
                 sup.splice(r, 1);
               }
               this.teamSize += this.sleeveSize;
@@ -1451,7 +1454,7 @@ export class Bladeburner implements IBladeburner {
             }
           }
         } catch (e: unknown) {
-          exceptionAlert(e);
+          exceptionAlert(String(e));
         }
         break;
       }
@@ -1489,9 +1492,9 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Field Analysis"]: {
         // Does not use stamina. Effectiveness depends on hacking, int, and cha
         let eff =
-          0.04 * Math.pow(person.hacking, 0.3) +
-          0.04 * Math.pow(person.intelligence, 0.9) +
-          0.02 * Math.pow(person.charisma, 0.3);
+          0.04 * Math.pow(person.skills.hacking, 0.3) +
+          0.04 * Math.pow(person.skills.intelligence, 0.9) +
+          0.02 * Math.pow(person.skills.charisma, 0.3);
         eff *= person.mults.bladeburner_analysis;
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
@@ -1601,7 +1604,7 @@ export class Bladeburner implements IBladeburner {
   }
 
   infiltrateSynthoidCommunities(p: IPlayer): void {
-    const infilSleeves = p.sleeves.filter((s) => s.bbAction === "Infiltrate synthoids").length;
+    const infilSleeves = p.sleeves.filter((s) => isSleeveInfiltrateWork(s.currentWork)).length;
     const amt = Math.pow(infilSleeves, -0.5) / 2;
     for (const contract of Object.keys(this.contracts)) {
       this.contracts[contract].count += amt;
@@ -1680,14 +1683,14 @@ export class Bladeburner implements IBladeburner {
   }
 
   calculateStaminaGainPerSecond(player: IPlayer): number {
-    const effAgility = player.agility * this.skillMultipliers.effAgi;
+    const effAgility = player.skills.agility * this.skillMultipliers.effAgi;
     const maxStaminaBonus = this.maxStamina / BladeburnerConstants.MaxStaminaToGainFactor;
     const gain = (BladeburnerConstants.StaminaGainPerSecond + maxStaminaBonus) * Math.pow(effAgility, 0.17);
     return gain * (this.skillMultipliers.stamina * player.mults.bladeburner_stamina_gain);
   }
 
   calculateMaxStamina(player: IPlayer): void {
-    const effAgility = player.agility * this.skillMultipliers.effAgi;
+    const effAgility = player.skills.agility * this.skillMultipliers.effAgi;
     const maxStamina =
       (Math.pow(effAgility, 0.8) + this.staminaBonus) *
       this.skillMultipliers.stamina *

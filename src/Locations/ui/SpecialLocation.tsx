@@ -54,7 +54,12 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (p.inBladeburner()) {
       // Enter Bladeburner division
       router.toBladeburner();
-    } else if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
+    } else if (
+      p.skills.strength >= 100 &&
+      p.skills.defense >= 100 &&
+      p.skills.dexterity >= 100 &&
+      p.skills.agility >= 100
+    ) {
       // Apply for Bladeburner division
       p.startBladeburner();
       dialogBoxCreate("You have been accepted into the Bladeburner division!");
@@ -96,14 +101,14 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       N00dles(); // This is the true power of the noodles.
       if (player.sourceFiles.length > 0) player.giveExploit(Exploit.N00dles);
       if (player.sourceFileLvl(5) > 0 || player.bitNodeN === 5) {
-        player.intelligence_exp *= 1.0000000000000002;
+        player.exp.intelligence *= 1.0000000000000002;
       }
-      player.hacking_exp *= 1.0000000000000002;
-      player.strength_exp *= 1.0000000000000002;
-      player.defense_exp *= 1.0000000000000002;
-      player.agility_exp *= 1.0000000000000002;
-      player.dexterity_exp *= 1.0000000000000002;
-      player.charisma_exp *= 1.0000000000000002;
+      player.exp.hacking *= 1.0000000000000002;
+      player.exp.strength *= 1.0000000000000002;
+      player.exp.defense *= 1.0000000000000002;
+      player.exp.agility *= 1.0000000000000002;
+      player.exp.dexterity *= 1.0000000000000002;
+      player.exp.charisma *= 1.0000000000000002;
       for (const node of player.hacknetNodes) {
         if (node instanceof HacknetNode) {
           player.gainMoney(node.moneyGainRatePerSecond * 0.001, "other");

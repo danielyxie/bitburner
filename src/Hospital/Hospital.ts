@@ -6,13 +6,13 @@ export function getHospitalizationCost(p: IPlayer): number {
     return 0;
   }
 
-  return Math.min(p.money * 0.1, (p.max_hp - p.hp) * CONSTANTS.HospitalCostPerHp);
+  return Math.min(p.money * 0.1, (p.hp.max - p.hp.current) * CONSTANTS.HospitalCostPerHp);
 }
 
 export function calculateHospitalizationCost(p: IPlayer, damage: number): number {
-  const oldhp = p.hp;
-  p.hp -= damage;
+  const oldhp = p.hp.current;
+  p.hp.current -= damage;
   const cost = getHospitalizationCost(p);
-  p.hp = oldhp;
+  p.hp.current = oldhp;
   return cost;
 }

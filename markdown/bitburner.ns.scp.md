@@ -9,7 +9,7 @@ Copy file between servers.
 <b>Signature:</b>
 
 ```typescript
-scp(files: string | string[], destination: string): Promise<boolean>;
+scp(files: string | string[], destination: string, source?: string): Promise<boolean>;
 ```
 
 ## Parameters
@@ -18,6 +18,7 @@ scp(files: string | string[], destination: string): Promise<boolean>;
 |  --- | --- | --- |
 |  files | string \| string\[\] | Filename or an array of filenames of script/literature files to copy. |
 |  destination | string | Host of the destination server, which is the server to which the file will be copied. |
+|  source | string | Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server. |
 
 <b>Returns:</b>
 
@@ -37,11 +38,11 @@ Copies a script or literature (.lit) file(s) to another server. The files argume
 ```ts
 // NS1:
 //Copies foo.lit from the helios server to the home computer:
-scp("foo.lit", "helios", "home");
+scp("foo.lit", "home", "helios");
 
 //Tries to copy three files from rothman-uni to home computer:
 files = ["foo1.lit", "foo2.script", "foo3.script"];
-scp(files, "rothman-uni", "home");
+scp(files, "home", "rothman-uni");
 ```
 
 ## Example 2
@@ -50,11 +51,11 @@ scp(files, "rothman-uni", "home");
 ```ts
 // NS2:
 //Copies foo.lit from the helios server to the home computer:
-await ns.scp("foo.lit", "helios", "home");
+await ns.scp("foo.lit", "home", "helios" );
 
 //Tries to copy three files from rothman-uni to home computer:
 files = ["foo1.lit", "foo2.script", "foo3.script"];
-await ns.scp(files, "rothman-uni", "home");
+await ns.scp(files,  "home", "rothman-uni");
 ```
 
 ## Example 3
@@ -64,6 +65,6 @@ await ns.scp(files, "rothman-uni", "home");
 //ns2, copies files from home to a target server
 const server = ns.args[0];
 const files = ["hack.js","weaken.js","grow.js"];
-await ns.scp(files, "home", server);
+await ns.scp(files, server, "home");
 ```
 

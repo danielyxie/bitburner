@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-jobs: any;
+jobs: Record<string, string>;
 ```

@@ -1,6 +1,27 @@
 /**
  * @public
  */
+export interface HP {
+  current: number;
+  max: number;
+}
+
+/**
+ * @public
+ */
+export interface Skills {
+  hacking: number;
+  strength: number;
+  defense: number;
+  dexterity: number;
+  agility: number;
+  charisma: number;
+  intelligence: number;
+}
+
+/**
+ * @public
+ */
 export interface PossibleInfiltrationLocation {
   city: string;
   name: string;
@@ -31,30 +52,14 @@ type FilenameOrPID = number | string;
  * @public
  */
 interface Player {
-  hacking: number;
-  hp: number;
-  max_hp: number;
-  strength: number;
-  defense: number;
-  dexterity: number;
-  agility: number;
-  charisma: number;
-  intelligence: number;
-  hacking_exp: number;
-  strength_exp: number;
-  defense_exp: number;
-  dexterity_exp: number;
-  agility_exp: number;
-  charisma_exp: number;
+  hp: HP;
+  skills: Skills;
+  exp: Skills;
   mults: Multipliers;
   numPeopleKilled: number;
   money: number;
   city: string;
   location: string;
-  hasWseAccount: boolean;
-  hasTixApiAccess: boolean;
-  has4SData: boolean;
-  has4SDataTixApi: boolean;
   bitNodeN: number;
   totalPlaytime: number;
   playtimeSinceLastAug: number;
@@ -997,10 +1002,8 @@ export interface SleeveSkills {
 export interface SleeveInformation {
   /** Location of the sleeve */
   city: string;
-  /** Current hp of the sleeve */
-  hp: number;
-  /** Max hp of the sleeve */
-  maxHp: number;
+  /** hp of the sleeve */
+  hp: HP;
   /** Jobs available to the sleeve */
   jobs: string[];
   /** Job titles available to the sleeve */
@@ -1009,36 +1012,13 @@ export interface SleeveInformation {
   tor: boolean;
   /** Sleeve multipliers */
   mult: CharacterMult;
-  /** Time spent on the current task in milliseconds */
-  timeWorked: number;
-  /** Earnings synchronized to other sleeves */
-  earningsForSleeves: SleeveWorkGains;
-  /** Earnings synchronized to the player */
-  earningsForPlayer: SleeveWorkGains;
-  /** Earnings for this sleeve */
-  earningsForTask: SleeveWorkGains;
-  /** Faction or company reputation gained for the current task */
-  workRepGain: number;
 }
 
 /**
  * Object representing a sleeve current task.
  * @public
  */
-export interface SleeveTask {
-  /** Task type */
-  task: string;
-  /** Crime currently attempting, if any */
-  crime: string;
-  /** Location of the task, if any */
-  location: string;
-  /** Stat being trained at the gym, if any */
-  gymStatType: string;
-  /** Faction work type being performed, if any */
-  factionWorkType: string;
-  /** Class being taken at university, if any */
-  className: string;
-}
+export type SleeveTask = any;
 
 /**
  * Object representing a port. A port is a serialized queue.
@@ -1117,6 +1097,26 @@ export interface NetscriptPort {
  * @public
  */
 export interface TIX {
+  /**
+   * Returns true if the player has access to a WSE Account
+   * @remarks RAM cost: 0.05 GB
+   */
+  hasWSEAccount(): boolean;
+  /**
+   * Returns true if the player has access to the TIX API
+   * @remarks RAM cost: 0.05 GB
+   */
+  hasTIXAPIAccess(): boolean;
+  /**
+   * Returns true if the player has access to the 4S Data
+   * @remarks RAM cost: 0.05 GB
+   */
+  has4SData(): boolean;
+  /**
+   * Returns true if the player has access to the 4SData TIX API
+   * @remarks RAM cost: 0.05 GB
+   */
+  has4SDataTIXAPI(): boolean;
   /**
    * Returns an array of the symbols of the tradable stocks
    *
@@ -1303,7 +1303,7 @@ export interface TIX {
    * @param shares - Number of shares to short. Must be positive. Will be rounded to nearest integer.
    * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
    */
-  short(sym: string, shares: number): number;
+  buyShort(sym: string, shares: number): number;
 
   /**
    * Sell short stock.
@@ -2344,6 +2344,15 @@ export interface Singularity {
    * @param callbackScript - Name of the script to launch in the next BN.
    */
   destroyW0r1dD43m0n(nextBN: number, callbackScript?: string): void;
+
+  /**
+   * Get the current work the player is doing.
+   * @remarks
+   * RAM cost: 0.5 GB * 16/4/1
+   *
+   * @returns - An object representing the current work. Fields depend on the kind of work.
+   */
+  getCurrentWork(): any | null;
 }
 
 /**
@@ -3213,7 +3222,12 @@ export interface CodingContract {
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
    */
-  attempt(answer: string[] | number, filename: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
+  attempt(
+    answer: string | number | any[],
+    filename: string,
+    host?: string,
+    opts?: CodingAttemptOptions,
+  ): boolean | string;
 
   /**
    * Get the type of a coding contract.
@@ -3842,6 +3856,31 @@ interface SkillsFormulas {
 }
 
 /**
+ * @public
+ */
+export interface WorkStats {
+  money: number;
+  reputation: number;
+  hackExp: number;
+  strExp: number;
+  defExp: number;
+  dexExp: number;
+  agiExp: number;
+  chaExp: number;
+  intExp: number;
+}
+
+/**
+ * Work formulas
+ * @public
+ */
+interface WorkFormulas {
+  crimeGains(crimeType: string): WorkStats;
+  classGains(player: Player, classType: string, locationName: string): WorkStats;
+  factionGains(player: Player, workType: string, favor: number): WorkStats;
+}
+
+/**
  * Reputation formulas
  * @public
  */
@@ -4122,6 +4161,8 @@ export interface Formulas {
   hacknetServers: HacknetServersFormulas;
   /** Gang formulas */
   gang: GangFormulas;
+  /** Work formulas */
+  work: WorkFormulas;
 }
 
 /**
@@ -4272,7 +4313,7 @@ export interface InfiltrationReward {
  * @public
  */
 export interface ILocation {
-  city: CityName | null;
+  city: string;
   name: string;
 }
 
@@ -4471,7 +4512,7 @@ export interface NS {
   readonly infiltration: Infiltration;
   /**
    * Namespace for corporation functions.
-   * RAM cost: 0 GB
+   * RAM cost: 1022.4 GB
    */
   readonly corporation: Corporation;
 
@@ -5142,8 +5183,7 @@ export interface NS {
    * PID stands for Process ID. The PID is a unique identifier for each script.
    * The PID will always be a positive integer.
    *
-   * Running this function with a numThreads argument of 0 will return 0 without running the script.
-   * However, running this function with a negative numThreads argument will cause a runtime error.
+   * Running this function with a numThreads argument of 0 or less will cause a runtime error.
    *
    * @example
    * ```ts
@@ -5190,7 +5230,7 @@ export interface NS {
    * PID stands for Process ID. The PID is a unique identifier for each script.
    * The PID will always be a positive integer.
    *
-   * Running this function with 0 or a negative numThreads argument will cause a runtime error.
+   * Running this function with a numThreads argument of 0 or less will cause a runtime error.
    *
    * @example
    * ```ts
@@ -5235,6 +5275,8 @@ export interface NS {
    * on the local server.
    *
    * Because this function immediately terminates the script, it does not have a return value.
+   *
+   * Running this function with a numThreads argument of 0 or less will cause a runtime error.
    *
    * @example
    * ```ts
@@ -6912,6 +6954,31 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    */
   getInvestmentOffer(): InvestmentOffer;
   /**
+   * Get list of materials
+   * @returns material names
+   */
+  getMaterialNames(): string[];
+  /**
+   * Get list of industry types
+   * @returns industry names
+   */
+  getIndustryTypes(): string[];
+  /**
+   * Get list of one-time unlockable upgrades
+   * @returns unlockable upgrades names
+   */
+  getUnlockables(): string[];
+  /**
+   * Get list of upgrade names
+   * @returns upgrade names
+   */
+  getUpgradeNames(): string[];
+  /**
+   * Get list of research names
+   * @returns research names
+   */
+  getResearchNames(): string[];
+  /**
    * Accept investment based on you companies current valuation
    * @remarks
    * Is based on current valuation and will not honer a specific Offer
@@ -6928,10 +6995,9 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * Bribe a faction
    * @param factionName - Faction name
    * @param amountCash - Amount of money to bribe
-   * @param amountShares - Amount of shares to bribe
    * @returns True if successful, false if not
    */
-  bribe(factionName: string, amountCash: number, amountShares: number): boolean;
+  bribe(factionName: string, amountCash: number): boolean;
   /**
    * Get corporation data
    * @returns Corporation data

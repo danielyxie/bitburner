@@ -78,21 +78,21 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.numPeopleKilled = 0;
 
   //Reset stats
-  this.hacking = 1;
+  this.skills.hacking = 1;
 
-  this.strength = 1;
-  this.defense = 1;
-  this.dexterity = 1;
-  this.agility = 1;
+  this.skills.strength = 1;
+  this.skills.defense = 1;
+  this.skills.dexterity = 1;
+  this.skills.agility = 1;
 
-  this.charisma = 1;
+  this.skills.charisma = 1;
 
-  this.hacking_exp = 0;
-  this.strength_exp = 0;
-  this.defense_exp = 0;
-  this.dexterity_exp = 0;
-  this.agility_exp = 0;
-  this.charisma_exp = 0;
+  this.exp.hacking = 0;
+  this.exp.strength = 0;
+  this.exp.defense = 0;
+  this.exp.dexterity = 0;
+  this.exp.agility = 0;
+  this.exp.charisma = 0;
 
   this.money = 1000 + CONSTANTS.Donations;
 
@@ -136,7 +136,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
 
   // Reapply augs, re-calculate skills and reset HP
   this.reapplyAllAugmentations(true);
-  this.hp = this.max_hp;
+  this.hp.current = this.hp.max;
 
   this.finishWork(true);
 }
@@ -197,46 +197,46 @@ export function calculateSkillProgress(this: IPlayer, exp: number, mult = 1): IS
 }
 
 export function updateSkillLevels(this: IPlayer): void {
-  this.hacking = Math.max(
+  this.skills.hacking = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.hacking_exp, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
+    Math.floor(this.calculateSkill(this.exp.hacking, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
   );
-  this.strength = Math.max(
+  this.skills.strength = Math.max(
     1,
     Math.floor(
-      this.calculateSkill(this.strength_exp, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
+      this.calculateSkill(this.exp.strength, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
     ),
   );
-  this.defense = Math.max(
+  this.skills.defense = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.defense_exp, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
+    Math.floor(this.calculateSkill(this.exp.defense, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
   );
-  this.dexterity = Math.max(
+  this.skills.dexterity = Math.max(
     1,
     Math.floor(
-      this.calculateSkill(this.dexterity_exp, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
+      this.calculateSkill(this.exp.dexterity, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
     ),
   );
-  this.agility = Math.max(
+  this.skills.agility = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.agility_exp, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
+    Math.floor(this.calculateSkill(this.exp.agility, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
   );
-  this.charisma = Math.max(
+  this.skills.charisma = Math.max(
     1,
     Math.floor(
-      this.calculateSkill(this.charisma_exp, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
+      this.calculateSkill(this.exp.charisma, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
     ),
   );
 
-  if (this.intelligence > 0) {
-    this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
+  if (this.skills.intelligence > 0) {
+    this.skills.intelligence = Math.floor(this.calculateSkill(this.exp.intelligence));
   } else {
-    this.intelligence = 0;
+    this.skills.intelligence = 0;
   }
 
-  const ratio = this.hp / this.max_hp;
-  this.max_hp = Math.floor(10 + this.defense / 10);
-  this.hp = Math.round(this.max_hp * ratio);
+  const ratio = this.hp.current / this.hp.max;
+  this.hp.max = Math.floor(10 + this.skills.defense / 10);
+  this.hp.current = Math.round(this.hp.max * ratio);
 }
 
 export function resetMultipliers(this: IPlayer): void {
@@ -311,12 +311,15 @@ export function gainHackingExp(this: IPerson, exp: number): void {
     console.error("ERR: NaN passed into Player.gainHackingExp()");
     return;
   }
-  this.hacking_exp += exp;
-  if (this.hacking_exp < 0) {
-    this.hacking_exp = 0;
+  this.exp.hacking += exp;
+  if (this.exp.hacking < 0) {
+    this.exp.hacking = 0;
   }
 
-  this.hacking = calculateSkillF(this.hacking_exp, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier);
+  this.skills.hacking = calculateSkillF(
+    this.exp.hacking,
+    this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
+  );
 }
 
 export function gainStrengthExp(this: IPerson, exp: number): void {
@@ -324,12 +327,15 @@ export function gainStrengthExp(this: IPerson, exp: number): void {
     console.error("ERR: NaN passed into Player.gainStrengthExp()");
     return;
   }
-  this.strength_exp += exp;
-  if (this.strength_exp < 0) {
-    this.strength_exp = 0;
+  this.exp.strength += exp;
+  if (this.exp.strength < 0) {
+    this.exp.strength = 0;
   }
 
-  this.strength = calculateSkillF(this.strength_exp, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier);
+  this.skills.strength = calculateSkillF(
+    this.exp.strength,
+    this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
+  );
 }
 
 export function gainDefenseExp(this: IPerson, exp: number): void {
@@ -337,15 +343,18 @@ export function gainDefenseExp(this: IPerson, exp: number): void {
     console.error("ERR: NaN passed into player.gainDefenseExp()");
     return;
   }
-  this.defense_exp += exp;
-  if (this.defense_exp < 0) {
-    this.defense_exp = 0;
+  this.exp.defense += exp;
+  if (this.exp.defense < 0) {
+    this.exp.defense = 0;
   }
 
-  this.defense = calculateSkillF(this.defense_exp, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier);
-  const ratio = this.hp / this.max_hp;
-  this.max_hp = Math.floor(10 + this.defense / 10);
-  this.hp = Math.round(this.max_hp * ratio);
+  this.skills.defense = calculateSkillF(
+    this.exp.defense,
+    this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
+  );
+  const ratio = this.hp.current / this.hp.max;
+  this.hp.max = Math.floor(10 + this.skills.defense / 10);
+  this.hp.current = Math.round(this.hp.max * ratio);
 }
 
 export function gainDexterityExp(this: IPerson, exp: number): void {
@@ -353,13 +362,13 @@ export function gainDexterityExp(this: IPerson, exp: number): void {
     console.error("ERR: NaN passed into Player.gainDexterityExp()");
     return;
   }
-  this.dexterity_exp += exp;
-  if (this.dexterity_exp < 0) {
-    this.dexterity_exp = 0;
+  this.exp.dexterity += exp;
+  if (this.exp.dexterity < 0) {
+    this.exp.dexterity = 0;
   }
 
-  this.dexterity = calculateSkillF(
-    this.dexterity_exp,
+  this.skills.dexterity = calculateSkillF(
+    this.exp.dexterity,
     this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
 }
@@ -369,12 +378,15 @@ export function gainAgilityExp(this: IPerson, exp: number): void {
     console.error("ERR: NaN passed into Player.gainAgilityExp()");
     return;
   }
-  this.agility_exp += exp;
-  if (this.agility_exp < 0) {
-    this.agility_exp = 0;
+  this.exp.agility += exp;
+  if (this.exp.agility < 0) {
+    this.exp.agility = 0;
   }
 
-  this.agility = calculateSkillF(this.agility_exp, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier);
+  this.skills.agility = calculateSkillF(
+    this.exp.agility,
+    this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
+  );
 }
 
 export function gainCharismaExp(this: IPerson, exp: number): void {
@@ -382,12 +394,15 @@ export function gainCharismaExp(this: IPerson, exp: number): void {
     console.error("ERR: NaN passed into Player.gainCharismaExp()");
     return;
   }
-  this.charisma_exp += exp;
-  if (this.charisma_exp < 0) {
-    this.charisma_exp = 0;
+  this.exp.charisma += exp;
+  if (this.exp.charisma < 0) {
+    this.exp.charisma = 0;
   }
 
-  this.charisma = calculateSkillF(this.charisma_exp, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier);
+  this.skills.charisma = calculateSkillF(
+    this.exp.charisma,
+    this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
+  );
 }
 
 export function gainIntelligenceExp(this: IPerson, exp: number): void {
@@ -395,9 +410,9 @@ export function gainIntelligenceExp(this: IPerson, exp: number): void {
     console.error("ERROR: NaN passed into Player.gainIntelligenceExp()");
     return;
   }
-  if (Player.sourceFileLvl(5) > 0 || this.intelligence > 0) {
-    this.intelligence_exp += exp;
-    this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp, 1));
+  if (Player.sourceFileLvl(5) > 0 || this.skills.intelligence > 0 || Player.bitNodeN === 5) {
+    this.exp.intelligence += exp;
+    this.skills.intelligence = Math.floor(this.calculateSkill(this.exp.intelligence, 1));
   }
 }
 
@@ -415,25 +430,25 @@ export function gainStats(this: IPerson, retValue: ITaskTracker): void {
 export function queryStatFromString(this: IPlayer, str: string): number {
   const tempStr = str.toLowerCase();
   if (tempStr.includes("hack")) {
-    return this.hacking;
+    return this.skills.hacking;
   }
   if (tempStr.includes("str")) {
-    return this.strength;
+    return this.skills.strength;
   }
   if (tempStr.includes("def")) {
-    return this.defense;
+    return this.skills.defense;
   }
   if (tempStr.includes("dex")) {
-    return this.dexterity;
+    return this.skills.dexterity;
   }
   if (tempStr.includes("agi")) {
-    return this.agility;
+    return this.skills.agility;
   }
   if (tempStr.includes("cha")) {
-    return this.charisma;
+    return this.skills.charisma;
   }
   if (tempStr.includes("int")) {
-    return this.intelligence;
+    return this.skills.intelligence;
   }
   return 0;
 }
@@ -453,8 +468,8 @@ export function takeDamage(this: IPlayer, amt: number): boolean {
     return false;
   }
 
-  this.hp -= amt;
-  if (this.hp <= 0) {
+  this.hp.current -= amt;
+  if (this.hp.current <= 0) {
     this.hospitalize();
     return true;
   } else {
@@ -467,9 +482,9 @@ export function regenerateHp(this: IPerson, amt: number): void {
     console.warn(`Player.regenerateHp() called without a numeric argument: ${amt}`);
     return;
   }
-  this.hp += amt;
-  if (this.hp > this.max_hp) {
-    this.hp = this.max_hp;
+  this.hp.current += amt;
+  if (this.hp.current > this.hp.max) {
+    this.hp.current = this.hp.max;
   }
 }
 
@@ -478,7 +493,7 @@ export function hospitalize(this: IPlayer): number {
   SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.WARNING, 2000);
 
   this.loseMoney(cost, "hospitalization");
-  this.hp = this.max_hp;
+  this.hp.current = this.hp.max;
   return cost;
 }
 
@@ -754,12 +769,12 @@ export function isQualified(this: IPlayer, company: Company, position: CompanyPo
   const reqCharisma = position.requiredCharisma > 0 ? position.requiredCharisma + offset : 0;
 
   return (
-    this.hacking >= reqHacking &&
-    this.strength >= reqStrength &&
-    this.defense >= reqDefense &&
-    this.dexterity >= reqDexterity &&
-    this.agility >= reqAgility &&
-    this.charisma >= reqCharisma &&
+    this.skills.hacking >= reqHacking &&
+    this.skills.strength >= reqStrength &&
+    this.skills.defense >= reqDefense &&
+    this.skills.dexterity >= reqDexterity &&
+    this.skills.agility >= reqAgility &&
+    this.skills.charisma >= reqCharisma &&
     company.playerReputation >= position.requiredReputation
   );
 }
@@ -851,11 +866,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !illuminatiFac.alreadyInvited &&
     numAugmentations >= 30 &&
     this.money >= 150000000000 &&
-    this.hacking >= 1500 &&
-    this.strength >= 1200 &&
-    this.defense >= 1200 &&
-    this.dexterity >= 1200 &&
-    this.agility >= 1200
+    this.skills.hacking >= 1500 &&
+    this.skills.strength >= 1200 &&
+    this.skills.defense >= 1200 &&
+    this.skills.dexterity >= 1200 &&
+    this.skills.agility >= 1200
   ) {
     invitedFactions.push(illuminatiFac);
   }
@@ -868,8 +883,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !daedalusFac.alreadyInvited &&
     numAugmentations >= BitNodeMultipliers.DaedalusAugsRequirement &&
     this.money >= 100000000000 &&
-    (this.hacking >= 2500 ||
-      (this.strength >= 1500 && this.defense >= 1500 && this.dexterity >= 1500 && this.agility >= 1500))
+    (this.skills.hacking >= 2500 ||
+      (this.skills.strength >= 1500 &&
+        this.skills.defense >= 1500 &&
+        this.skills.dexterity >= 1500 &&
+        this.skills.agility >= 1500))
   ) {
     invitedFactions.push(daedalusFac);
   }
@@ -882,11 +900,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !covenantFac.alreadyInvited &&
     numAugmentations >= 20 &&
     this.money >= 75000000000 &&
-    this.hacking >= 850 &&
-    this.strength >= 850 &&
-    this.defense >= 850 &&
-    this.dexterity >= 850 &&
-    this.agility >= 850
+    this.skills.hacking >= 850 &&
+    this.skills.strength >= 850 &&
+    this.skills.defense >= 850 &&
+    this.skills.dexterity >= 850 &&
+    this.skills.agility >= 850
   ) {
     invitedFactions.push(covenantFac);
   }
@@ -1131,11 +1149,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !speakersforthedeadFac.isBanned &&
     !speakersforthedeadFac.isMember &&
     !speakersforthedeadFac.alreadyInvited &&
-    this.hacking >= 100 &&
-    this.strength >= 300 &&
-    this.defense >= 300 &&
-    this.dexterity >= 300 &&
-    this.agility >= 300 &&
+    this.skills.hacking >= 100 &&
+    this.skills.strength >= 300 &&
+    this.skills.defense >= 300 &&
+    this.skills.dexterity >= 300 &&
+    this.skills.agility >= 300 &&
     this.numPeopleKilled >= 30 &&
     this.karma <= -45 &&
     !allCompanies.includes(LocationName.Sector12CIA) &&
@@ -1150,11 +1168,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !thedarkarmyFac.isBanned &&
     !thedarkarmyFac.isMember &&
     !thedarkarmyFac.alreadyInvited &&
-    this.hacking >= 300 &&
-    this.strength >= 300 &&
-    this.defense >= 300 &&
-    this.dexterity >= 300 &&
-    this.agility >= 300 &&
+    this.skills.hacking >= 300 &&
+    this.skills.strength >= 300 &&
+    this.skills.defense >= 300 &&
+    this.skills.dexterity >= 300 &&
+    this.skills.agility >= 300 &&
     this.city == CityName.Chongqing &&
     this.numPeopleKilled >= 5 &&
     this.karma <= -45 &&
@@ -1170,11 +1188,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !thesyndicateFac.isBanned &&
     !thesyndicateFac.isMember &&
     !thesyndicateFac.alreadyInvited &&
-    this.hacking >= 200 &&
-    this.strength >= 200 &&
-    this.defense >= 200 &&
-    this.dexterity >= 200 &&
-    this.agility >= 200 &&
+    this.skills.hacking >= 200 &&
+    this.skills.strength >= 200 &&
+    this.skills.defense >= 200 &&
+    this.skills.dexterity >= 200 &&
+    this.skills.agility >= 200 &&
     (this.city == CityName.Aevum || this.city == CityName.Sector12) &&
     this.money >= 10000000 &&
     this.karma <= -90 &&
@@ -1206,10 +1224,10 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !tetradsFac.isMember &&
     !tetradsFac.alreadyInvited &&
     (this.city == CityName.Chongqing || this.city == CityName.NewTokyo || this.city == CityName.Ishima) &&
-    this.strength >= 75 &&
-    this.defense >= 75 &&
-    this.dexterity >= 75 &&
-    this.agility >= 75 &&
+    this.skills.strength >= 75 &&
+    this.skills.defense >= 75 &&
+    this.skills.dexterity >= 75 &&
+    this.skills.agility >= 75 &&
     this.karma <= -18
   ) {
     invitedFactions.push(tetradsFac);
@@ -1221,10 +1239,10 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !slumsnakesFac.isBanned &&
     !slumsnakesFac.isMember &&
     !slumsnakesFac.alreadyInvited &&
-    this.strength >= 30 &&
-    this.defense >= 30 &&
-    this.dexterity >= 30 &&
-    this.agility >= 30 &&
+    this.skills.strength >= 30 &&
+    this.skills.defense >= 30 &&
+    this.skills.dexterity >= 30 &&
+    this.skills.agility >= 30 &&
     this.karma <= -9 &&
     this.money >= 1000000
   ) {
@@ -1255,7 +1273,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !netburnersFac.isBanned &&
     !netburnersFac.isMember &&
     !netburnersFac.alreadyInvited &&
-    this.hacking >= 80 &&
+    this.skills.hacking >= 80 &&
     totalHacknetRam >= 8 &&
     totalHacknetCores >= 4 &&
     totalHacknetLevels >= 100
@@ -1270,7 +1288,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !tiandihuiFac.isMember &&
     !tiandihuiFac.alreadyInvited &&
     this.money >= 1000000 &&
-    this.hacking >= 50 &&
+    this.skills.hacking >= 50 &&
     (this.city == CityName.Chongqing || this.city == CityName.NewTokyo || this.city == CityName.Ishima)
   ) {
     invitedFactions.push(tiandihuiFac);
@@ -1418,7 +1436,7 @@ export function giveAchievement(this: IPlayer, achievementId: string): void {
 }
 
 export function getIntelligenceBonus(this: IPlayer, weight: number): number {
-  return calculateIntelligenceBonus(this.intelligence, weight);
+  return calculateIntelligenceBonus(this.skills.intelligence, weight);
 }
 
 export function getCasinoWinnings(this: IPlayer): number {

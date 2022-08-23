@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-location: any;
+location: ILocation;
 ```

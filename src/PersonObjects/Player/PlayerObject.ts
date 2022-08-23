@@ -40,6 +40,8 @@ import { ITaskTracker } from "../ITaskTracker";
 import { CONSTANTS } from "../../Constants";
 import { Work } from "src/Work/Work";
 import { defaultMultipliers, Multipliers } from "../Multipliers";
+import { HP } from "../HP";
+import { Skills } from "../Skills";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -58,13 +60,11 @@ export class PlayerObject implements IPlayer {
   hashManager: HashManager;
   hasTixApiAccess: boolean;
   hasWseAccount: boolean;
-  hp: number;
   jobs: IMap<string>;
   init: () => void;
   karma: number;
   numPeopleKilled: number;
   location: LocationName;
-  max_hp: number;
   money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
@@ -84,23 +84,9 @@ export class PlayerObject implements IPlayer {
   lastSave: number;
   totalPlaytime: number;
 
-  // Stats
-  hacking: number;
-  strength: number;
-  defense: number;
-  dexterity: number;
-  agility: number;
-  charisma: number;
-  intelligence: number;
-
-  // Experience
-  hacking_exp: number;
-  strength_exp: number;
-  defense_exp: number;
-  dexterity_exp: number;
-  agility_exp: number;
-  charisma_exp: number;
-  intelligence_exp: number;
+  hp: HP;
+  skills: Skills;
+  exp: Skills;
 
   mults: Multipliers;
 
@@ -197,31 +183,25 @@ export class PlayerObject implements IPlayer {
   focusPenalty: () => number;
 
   constructor() {
-    //Skills and stats
-    this.hacking = 1;
-
-    //Combat stats
-    this.hp = 10;
-    this.max_hp = 10;
-    this.strength = 1;
-    this.defense = 1;
-    this.dexterity = 1;
-    this.agility = 1;
-
-    //Labor stats
-    this.charisma = 1;
-
-    //Special stats
-    this.intelligence = 0;
-
-    //Experience and multipliers
-    this.hacking_exp = 0;
-    this.strength_exp = 0;
-    this.defense_exp = 0;
-    this.dexterity_exp = 0;
-    this.agility_exp = 0;
-    this.charisma_exp = 0;
-    this.intelligence_exp = 0;
+    this.hp = { current: 10, max: 10 };
+    this.skills = {
+      hacking: 1,
+      strength: 1,
+      defense: 1,
+      dexterity: 1,
+      agility: 1,
+      charisma: 1,
+      intelligence: 0,
+    };
+    this.exp = {
+      hacking: 0,
+      strength: 0,
+      defense: 0,
+      dexterity: 0,
+      agility: 0,
+      charisma: 0,
+      intelligence: 0,
+    };
 
     this.mults = defaultMultipliers();
 

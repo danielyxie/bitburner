@@ -76,33 +76,33 @@ function checkForMessagesToSend(): void {
       throw new Error("The world daemon is not a server???? Please un-break reality");
     }
     //If the daemon can be hacked, send the player icarus.msg
-    if (Player.hacking >= worldDaemon.requiredHackingSkill) {
+    if (Player.skills.hacking >= worldDaemon.requiredHackingSkill) {
       sendMessage(redpill, Player.sourceFiles.length === 0);
     }
     //If the daemon cannot be hacked, send the player truthgazer.msg a single time.
     else if (!recvd(truthGazer)) {
       sendMessage(truthGazer);
     }
-  } else if (!recvd(jumper0) && Player.hacking >= 25) {
+  } else if (!recvd(jumper0) && Player.skills.hacking >= 25) {
     sendMessage(jumper0);
     const flightName = Programs.Flight.name;
     const homeComp = Player.getHomeComputer();
     if (!homeComp.programs.includes(flightName)) {
       homeComp.programs.push(flightName);
     }
-  } else if (!recvd(jumper1) && Player.hacking >= 40) {
+  } else if (!recvd(jumper1) && Player.skills.hacking >= 40) {
     sendMessage(jumper1);
-  } else if (!recvd(cybersecTest) && Player.hacking >= 50) {
+  } else if (!recvd(cybersecTest) && Player.skills.hacking >= 50) {
     sendMessage(cybersecTest);
-  } else if (!recvd(jumper2) && Player.hacking >= 175) {
+  } else if (!recvd(jumper2) && Player.skills.hacking >= 175) {
     sendMessage(jumper2);
-  } else if (!recvd(nitesecTest) && Player.hacking >= 200) {
+  } else if (!recvd(nitesecTest) && Player.skills.hacking >= 200) {
     sendMessage(nitesecTest);
-  } else if (!recvd(jumper3) && Player.hacking >= 350) {
+  } else if (!recvd(jumper3) && Player.skills.hacking >= 350) {
     sendMessage(jumper3);
-  } else if (!recvd(jumper4) && Player.hacking >= 490) {
+  } else if (!recvd(jumper4) && Player.skills.hacking >= 490) {
     sendMessage(jumper4);
-  } else if (!recvd(bitrunnersTest) && Player.hacking >= 500) {
+  } else if (!recvd(bitrunnersTest) && Player.skills.hacking >= 500) {
     sendMessage(bitrunnersTest);
   }
 }

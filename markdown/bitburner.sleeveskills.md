@@ -21,6 +21,7 @@ export interface SleeveSkills
 |  [defense](./bitburner.sleeveskills.defense.md) | number | Current defense of the sleeve |
 |  [dexterity](./bitburner.sleeveskills.dexterity.md) | number | Current dexterity of the sleeve |
 |  [hacking](./bitburner.sleeveskills.hacking.md) | number | Current hacking skill of the sleeve |
+|  [memory](./bitburner.sleeveskills.memory.md) | number | Current memory of the sleeve \[1-100\] |
 |  [shock](./bitburner.sleeveskills.shock.md) | number | Current shock of the sleeve \[0-100\] |
 |  [strength](./bitburner.sleeveskills.strength.md) | number | Current strength of the sleeve |
 |  [sync](./bitburner.sleeveskills.sync.md) | number | Current sync of the sleeve \[0-100\] |

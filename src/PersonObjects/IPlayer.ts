@@ -31,6 +31,8 @@ import { PlayerAchievement } from "../Achievements/Achievements";
 import { IPerson } from "./IPerson";
 import { Work } from "../Work/Work";
 import { Multipliers } from "./Multipliers";
+import { Skills } from "./Skills";
+import { HP } from "./HP";
 
 export interface IPlayer extends IPerson {
   bitNodeN: number;
@@ -47,12 +49,10 @@ export interface IPlayer extends IPerson {
   hashManager: HashManager;
   hasTixApiAccess: boolean;
   hasWseAccount: boolean;
-  hp: number;
   jobs: IMap<string>;
   karma: number;
   numPeopleKilled: number;
   location: LocationName;
-  max_hp: number;
   readonly money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
@@ -70,23 +70,9 @@ export interface IPlayer extends IPerson {
   lastUpdate: number;
   totalPlaytime: number;
 
-  // Stats
-  hacking: number;
-  strength: number;
-  defense: number;
-  dexterity: number;
-  agility: number;
-  charisma: number;
-  intelligence: number;
-
-  // Experience
-  hacking_exp: number;
-  strength_exp: number;
-  defense_exp: number;
-  dexterity_exp: number;
-  agility_exp: number;
-  charisma_exp: number;
-  intelligence_exp: number;
+  hp: HP;
+  skills: Skills;
+  exp: Skills;
 
   mults: Multipliers;
 

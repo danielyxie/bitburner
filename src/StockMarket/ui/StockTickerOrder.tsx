@@ -11,17 +11,15 @@ import { Money } from "../../ui/React/Money";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { ICancelOrderParams } from "../StockMarket";
-import { WorkerScript } from "../../Netscript/WorkerScript";
+import { cancelOrder } from "../StockMarket";
 
 type IProps = {
-  cancelOrder: (params: ICancelOrderParams, workerScript?: WorkerScript) => void;
   order: Order;
 };
 
 export function StockTickerOrder(props: IProps): React.ReactElement {
   function handleCancelOrderClick(): void {
-    props.cancelOrder({ order: props.order });
+    cancelOrder({ order: props.order });
   }
 
   const order = props.order;

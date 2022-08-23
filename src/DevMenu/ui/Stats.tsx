@@ -78,13 +78,13 @@ export function Stats(props: IProps): React.ReactElement {
   }
 
   function resetAllExp(): void {
-    props.player.hacking_exp = 0;
-    props.player.strength_exp = 0;
-    props.player.defense_exp = 0;
-    props.player.dexterity_exp = 0;
-    props.player.agility_exp = 0;
-    props.player.charisma_exp = 0;
-    props.player.intelligence_exp = 0;
+    props.player.exp.hacking = 0;
+    props.player.exp.strength = 0;
+    props.player.exp.defense = 0;
+    props.player.exp.dexterity = 0;
+    props.player.exp.agility = 0;
+    props.player.exp.charisma = 0;
+    props.player.exp.intelligence = 0;
     props.player.updateSkillLevels();
   }
 
@@ -92,25 +92,25 @@ export function Stats(props: IProps): React.ReactElement {
     return function () {
       switch (stat) {
         case "hacking":
-          props.player.hacking_exp = 0;
+          props.player.exp.hacking = 0;
           break;
         case "strength":
-          props.player.strength_exp = 0;
+          props.player.exp.strength = 0;
           break;
         case "defense":
-          props.player.defense_exp = 0;
+          props.player.exp.defense = 0;
           break;
         case "dexterity":
-          props.player.dexterity_exp = 0;
+          props.player.exp.dexterity = 0;
           break;
         case "agility":
-          props.player.agility_exp = 0;
+          props.player.exp.agility = 0;
           break;
         case "charisma":
-          props.player.charisma_exp = 0;
+          props.player.exp.charisma = 0;
           break;
         case "intelligence":
-          props.player.intelligence_exp = 0;
+          props.player.exp.intelligence = 0;
           break;
       }
       props.player.updateSkillLevels();
@@ -124,15 +124,15 @@ export function Stats(props: IProps): React.ReactElement {
   }
 
   function enableIntelligence(): void {
-    if (props.player.intelligence === 0) {
-      props.player.intelligence = 1;
+    if (props.player.skills.intelligence === 0) {
+      props.player.skills.intelligence = 1;
       props.player.updateSkillLevels();
     }
   }
 
   function disableIntelligence(): void {
-    props.player.intelligence_exp = 0;
-    props.player.intelligence = 0;
+    props.player.exp.intelligence = 0;
+    props.player.skills.intelligence = 0;
     props.player.updateSkillLevels();
   }
 

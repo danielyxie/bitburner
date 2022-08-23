@@ -2,14 +2,19 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { calculateSkill } from "../../PersonObjects/formulas/skill";
 
 function calculateRawDiff(player: IPlayer, stats: number, startingDifficulty: number): number {
-  const difficulty = startingDifficulty - Math.pow(stats, 0.9) / 250 - player.intelligence / 1600;
+  const difficulty = startingDifficulty - Math.pow(stats, 0.9) / 250 - player.skills.intelligence / 1600;
   if (difficulty < 0) return 0;
   if (difficulty > 3) return 3;
   return difficulty;
 }
 
 export function calculateDifficulty(player: IPlayer, startingSecurityLevel: number): number {
-  const totalStats = player.strength + player.defense + player.dexterity + player.agility + player.charisma;
+  const totalStats =
+    player.skills.strength +
+    player.skills.defense +
+    player.skills.dexterity +
+    player.skills.agility +
+    player.skills.charisma;
   return calculateRawDiff(player, totalStats, startingSecurityLevel);
 }
 

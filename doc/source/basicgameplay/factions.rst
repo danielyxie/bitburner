@@ -127,34 +127,34 @@ List of Factions and their Requirements
 | Megacorporations    | Faction Name   | Requirements                            | Joining this Faction prevents |
 |                     |                |                                         | you from joining:             |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | ECorp          | * Have 200k reputation with             |                               |
+|                     | ECorp          | * Have 400k reputation with             |                               |
 |                     |                |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | MegaCorp       | * Have 200k reputation with             |                               |
+|                     | MegaCorp       | * Have 400k reputation with             |                               |
 |                     |                |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | KuaiGong       | * Have 200k reputation with             |                               |
+|                     | KuaiGong       | * Have 400k reputation with             |                               |
 |                     | International  |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Four Sigma     | * Have 200k reputation with             |                               |
+|                     | Four Sigma     | * Have 400k reputation with             |                               |
 |                     |                |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | NWO            | * Have 200k reputation with             |                               |
+|                     | NWO            | * Have 400k reputation with             |                               |
 |                     |                |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Blade          | * Have 200k reputation with             |                               |
+|                     | Blade          | * Have 400k reputation with             |                               |
 |                     | Industries     |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | OmniTek        | * Have 200k reputation with             |                               |
+|                     | OmniTek        | * Have 400k reputation with             |                               |
 |                     | Incorporated   |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Bachman &      | * Have 200k reputation with             |                               |
+|                     | Bachman &      | * Have 400k reputation with             |                               |
 |                     | Associates     |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Clarke         | * Have 200k reputation with             |                               |
+|                     | Clarke         | * Have 400k reputation with             |                               |
 |                     | Incorporated   |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Fulcrum Secret | * Have 250k reputation with             |                               |
+|                     | Fulcrum Secret | * Have 400k reputation with             |                               |
 |                     | Technologies   |   the Corporation                       |                               |
 |                     |                | * Install a backdoor on the             |                               |
 |                     |                |   fulcrumassets server                  |                               |

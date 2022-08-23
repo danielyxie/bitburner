@@ -126,6 +126,10 @@ const hacknet = {
 
 // Stock API
 const stock = {
+  hasWSEAccount: 0.05,
+  hasTIXAPIAccess: 0.05,
+  has4SData: 0.05,
+  has4SDataTIXAPI: 0.05,
   getSymbols: RamCostConstants.ScriptGetStockRamCost,
   getPrice: RamCostConstants.ScriptGetStockRamCost,
   getAskPrice: RamCostConstants.ScriptGetStockRamCost,
@@ -136,7 +140,7 @@ const stock = {
   getSaleGain: RamCostConstants.ScriptGetStockRamCost,
   buyStock: RamCostConstants.ScriptBuySellStockRamCost,
   sellStock: RamCostConstants.ScriptBuySellStockRamCost,
-  short: RamCostConstants.ScriptBuySellStockRamCost,
+  buyShort: RamCostConstants.ScriptBuySellStockRamCost,
   sellShort: RamCostConstants.ScriptBuySellStockRamCost,
   placeOrder: RamCostConstants.ScriptBuySellStockRamCost,
   cancelOrder: RamCostConstants.ScriptBuySellStockRamCost,
@@ -203,6 +207,7 @@ const singularity = {
   setFocus: SF4Cost(0.1),
   b1tflum3: SF4Cost(16),
   destroyW0r1dD43m0n: SF4Cost(32),
+  getCurrentWork: SF4Cost(0.5),
 };
 
 // Gang API
@@ -341,6 +346,11 @@ const grafting = {
 };
 
 const corporation = {
+  getMaterialNames: 0,
+  getIndustryTypes: 0,
+  getUnlockables: 0,
+  getUpgradeNames: 0,
+  getResearchNames: 0,
   createCorporation: 0,
   hasUnlockUpgrade: 0,
   getUnlockUpgradeCost: 0,
@@ -579,6 +589,11 @@ const SourceRamCosts = {
       moneyGain: 0,
       ascensionPointsGain: 0,
       ascensionMultiplier: 0,
+    },
+    work: {
+      crimeGains: 0,
+      classGains: 0,
+      factionGains: 0,
     },
   },
 };

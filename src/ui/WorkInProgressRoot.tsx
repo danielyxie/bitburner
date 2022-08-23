@@ -48,7 +48,7 @@ interface IWorkInfo {
   stopTooltip?: string | React.ReactElement;
 }
 
-export function ExpRows(rate: WorkStats): React.ReactElement[] {
+function ExpRows(rate: WorkStats): React.ReactElement[] {
   return [
     rate.hackExp > 0 ? (
       <StatsRow
@@ -119,6 +119,77 @@ export function ExpRows(rate: WorkStats): React.ReactElement[] {
   ];
 }
 
+function CrimeExpRows(rate: WorkStats): React.ReactElement[] {
+  return [
+    rate.hackExp > 0 ? (
+      <StatsRow
+        name="Hacking Exp"
+        color={Settings.theme.hack}
+        data={{
+          content: `${numeralWrapper.formatExp(rate.hackExp * CYCLES_PER_SEC)}`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    rate.strExp > 0 ? (
+      <StatsRow
+        name="Strength Exp"
+        color={Settings.theme.combat}
+        data={{
+          content: `${numeralWrapper.formatExp(rate.strExp * CYCLES_PER_SEC)}`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    rate.defExp > 0 ? (
+      <StatsRow
+        name="Defense Exp"
+        color={Settings.theme.combat}
+        data={{
+          content: `${numeralWrapper.formatExp(rate.defExp * CYCLES_PER_SEC)}`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    rate.dexExp > 0 ? (
+      <StatsRow
+        name="Dexterity Exp"
+        color={Settings.theme.combat}
+        data={{
+          content: `${numeralWrapper.formatExp(rate.dexExp * CYCLES_PER_SEC)}`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    rate.agiExp > 0 ? (
+      <StatsRow
+        name="Agility Exp"
+        color={Settings.theme.combat}
+        data={{
+          content: `${numeralWrapper.formatExp(rate.agiExp * CYCLES_PER_SEC)}`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+    rate.chaExp > 0 ? (
+      <StatsRow
+        name="Charisma Exp"
+        color={Settings.theme.cha}
+        data={{
+          content: `${numeralWrapper.formatExp(rate.chaExp * CYCLES_PER_SEC)}`,
+        }}
+      />
+    ) : (
+      <></>
+    ),
+  ];
+}
+
 export function WorkInProgressRoot(): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -149,7 +220,7 @@ export function WorkInProgressRoot(): React.ReactElement {
   if (isCrimeWork(player.currentWork)) {
     const crime = player.currentWork.getCrime();
     const completion = (player.currentWork.unitCompleted / crime.time) * 100;
-
+    const gains = player.currentWork.earnings();
     workInfo = {
       buttons: {
         cancel: () => {
@@ -163,6 +234,15 @@ export function WorkInProgressRoot(): React.ReactElement {
       },
       title: `You are attempting to ${crime.type}`,
 
+      gains: [
+        <Typography>Gains (on success)</Typography>,
+        <StatsRow name="Money:" color={Settings.theme.money}>
+          <Typography>
+            <Money money={gains.money} />
+          </Typography>
+        </StatsRow>,
+        ...CrimeExpRows(gains),
+      ],
       progress: {
         remaining: crime.time - player.currentWork.unitCompleted,
         percentage: completion,

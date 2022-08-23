@@ -1,5 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
+import { Player as player } from "../Player";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { CityName } from "../Locations/data/CityNames";
@@ -15,12 +14,16 @@ import {
 } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
-import { FactionWorkType } from "../Work/data/FactionWorkType";
+import { isSleeveBladeburnerWork } from "../PersonObjects/Sleeve/Work/SleeveBladeburnerWork";
+import { isSleeveFactionWork } from "../PersonObjects/Sleeve/Work/SleeveFactionWork";
+import { isSleeveCompanyWork } from "../PersonObjects/Sleeve/Work/SleeveCompanyWork";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
-export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
+export function NetscriptSleeve(): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext): void {
     if (player.bitNodeN !== 10 && !player.sourceFileLvl(10)) {
-      throw ctx.makeRuntimeErrorMsg(
+      throw helpers.makeRuntimeErrorMsg(
+        ctx,
         "You do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10",
       );
     }
@@ -29,8 +32,8 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
   const checkSleeveNumber = function (ctx: NetscriptContext, sleeveNumber: number): void {
     if (sleeveNumber >= player.sleeves.length || sleeveNumber < 0) {
       const msg = `Invalid sleeve number: ${sleeveNumber}`;
-      ctx.log(() => msg);
-      throw ctx.makeRuntimeErrorMsg(msg);
+      helpers.log(ctx, () => msg);
+      throw helpers.makeRuntimeErrorMsg(ctx, msg);
     }
   };
 
@@ -40,12 +43,12 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
       shock: 100 - sl.shock,
       sync: sl.sync,
       memory: sl.memory,
-      hacking: sl.hacking,
-      strength: sl.strength,
-      defense: sl.defense,
-      dexterity: sl.dexterity,
-      agility: sl.agility,
-      charisma: sl.charisma,
+      hacking: sl.skills.hacking,
+      strength: sl.skills.strength,
+      defense: sl.skills.defense,
+      dexterity: sl.skills.dexterity,
+      agility: sl.skills.agility,
+      charisma: sl.skills.charisma,
     };
   };
 
@@ -57,7 +60,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     setToShockRecovery:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
         return player.sleeves[sleeveNumber].shockRecovery(player);
@@ -65,7 +68,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     setToSynchronize:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
         return player.sleeves[sleeveNumber].synchronize(player);
@@ -73,8 +76,8 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     setToCommitCrime:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, _crimeRoughName: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
-        const crimeRoughName = ctx.helper.string("crimeName", _crimeRoughName);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
+        const crimeRoughName = helpers.string(ctx, "crimeName", _crimeRoughName);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
         const crime = findCrime(crimeRoughName);
@@ -86,9 +89,9 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     setToUniversityCourse:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, _universityName: unknown, _className: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
-        const universityName = ctx.helper.string("universityName", _universityName);
-        const className = ctx.helper.string("className", _className);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
+        const universityName = helpers.string(ctx, "universityName", _universityName);
+        const className = helpers.string(ctx, "className", _className);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
         return player.sleeves[sleeveNumber].takeUniversityCourse(player, universityName, className);
@@ -96,21 +99,21 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     travel:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, _cityName: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
-        const cityName = ctx.helper.string("cityName", _cityName);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
+        const cityName = helpers.string(ctx, "cityName", _cityName);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
         if (checkEnum(CityName, cityName)) {
           return player.sleeves[sleeveNumber].travel(player, cityName);
         } else {
-          throw ctx.makeRuntimeErrorMsg(`Invalid city name: '${cityName}'.`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid city name: '${cityName}'.`);
         }
       },
     setToCompanyWork:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, acompanyName: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
-        const companyName = ctx.helper.string("companyName", acompanyName);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
+        const companyName = helpers.string(ctx, "companyName", acompanyName);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
@@ -120,8 +123,9 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
             continue;
           }
           const other = player.sleeves[i];
-          if (other.currentTask === SleeveTaskType.Company && other.currentTaskLocation === companyName) {
-            throw ctx.makeRuntimeErrorMsg(
+          if (isSleeveCompanyWork(other.currentWork) && other.currentWork.companyName === companyName) {
+            throw helpers.makeRuntimeErrorMsg(
+              ctx,
               `Sleeve ${sleeveNumber} cannot work for company ${companyName} because Sleeve ${i} is already working for them.`,
             );
           }
@@ -132,9 +136,9 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     setToFactionWork:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, _factionName: unknown, _workType: unknown): boolean | undefined => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
-        const factionName = ctx.helper.string("factionName", _factionName);
-        const workType = ctx.helper.string("workType", _workType);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
+        const factionName = helpers.string(ctx, "factionName", _factionName);
+        const workType = helpers.string(ctx, "workType", _workType);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
@@ -144,15 +148,17 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
             continue;
           }
           const other = player.sleeves[i];
-          if (other.currentTask === SleeveTaskType.Faction && other.currentTaskLocation === factionName) {
-            throw ctx.makeRuntimeErrorMsg(
+          if (isSleeveFactionWork(other.currentWork) && other.currentWork.factionName === factionName) {
+            throw helpers.makeRuntimeErrorMsg(
+              ctx,
               `Sleeve ${sleeveNumber} cannot work for faction ${factionName} because Sleeve ${i} is already working for them.`,
             );
           }
         }
 
         if (player.gang && player.gang.facName == factionName) {
-          throw ctx.makeRuntimeErrorMsg(
+          throw helpers.makeRuntimeErrorMsg(
+            ctx,
             `Sleeve ${sleeveNumber} cannot work for faction ${factionName} because you have started a gang with them.`,
           );
         }
@@ -162,9 +168,9 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     setToGymWorkout:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, _gymName: unknown, _stat: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
-        const gymName = ctx.helper.string("gymName", _gymName);
-        const stat = ctx.helper.string("stat", _stat);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
+        const gymName = helpers.string(ctx, "gymName", _gymName);
+        const stat = helpers.string(ctx, "stat", _stat);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
@@ -173,32 +179,26 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     getSleeveStats:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown): SleeveSkills => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
         return getSleeveStats(sleeveNumber);
       },
     getTask:
       (ctx: NetscriptContext) =>
-      (_sleeveNumber: unknown): SleeveTask => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
+      (_sleeveNumber: unknown): SleeveTask | null => {
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
         const sl = player.sleeves[sleeveNumber];
-        return {
-          task: SleeveTaskType[sl.currentTask],
-          crime: sl.crimeType,
-          location: sl.currentTaskLocation,
-          gymStatType: sl.gymStatType,
-          factionWorkType: FactionWorkType[sl.factionWorkType],
-          className: sl.className,
-        };
+        if (sl.currentWork === null) return null;
+        return sl.currentWork.APICopy();
       },
     getInformation:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown): SleeveInformation => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
@@ -209,7 +209,6 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
           hp: sl.hp,
           jobs: Object.keys(player.jobs), // technically sleeves have the same jobs as the player.
           jobTitle: Object.values(player.jobs),
-          maxHp: sl.max_hp,
 
           mult: {
             agility: sl.mults.agility,
@@ -230,42 +229,12 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
             strengthExp: sl.mults.strength_exp,
             workMoney: sl.mults.work_money,
           },
-
-          timeWorked: sl.currentTaskTime,
-          earningsForSleeves: {
-            workHackExpGain: sl.earningsForSleeves.hack,
-            workStrExpGain: sl.earningsForSleeves.str,
-            workDefExpGain: sl.earningsForSleeves.def,
-            workDexExpGain: sl.earningsForSleeves.dex,
-            workAgiExpGain: sl.earningsForSleeves.agi,
-            workChaExpGain: sl.earningsForSleeves.cha,
-            workMoneyGain: sl.earningsForSleeves.money,
-          },
-          earningsForPlayer: {
-            workHackExpGain: sl.earningsForPlayer.hack,
-            workStrExpGain: sl.earningsForPlayer.str,
-            workDefExpGain: sl.earningsForPlayer.def,
-            workDexExpGain: sl.earningsForPlayer.dex,
-            workAgiExpGain: sl.earningsForPlayer.agi,
-            workChaExpGain: sl.earningsForPlayer.cha,
-            workMoneyGain: sl.earningsForPlayer.money,
-          },
-          earningsForTask: {
-            workHackExpGain: sl.earningsForTask.hack,
-            workStrExpGain: sl.earningsForTask.str,
-            workDefExpGain: sl.earningsForTask.def,
-            workDexExpGain: sl.earningsForTask.dex,
-            workAgiExpGain: sl.earningsForTask.agi,
-            workChaExpGain: sl.earningsForTask.cha,
-            workMoneyGain: sl.earningsForTask.money,
-          },
-          workRepGain: sl.getRepGain(player),
         };
       },
     getSleeveAugmentations:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown): string[] => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
@@ -278,7 +247,7 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     getSleevePurchasableAugs:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown): AugmentPair[] => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
@@ -297,18 +266,18 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
     purchaseSleeveAug:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, _augName: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
-        const augName = ctx.helper.string("augName", _augName);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
+        const augName = helpers.string(ctx, "augName", _augName);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
         if (getSleeveStats(sleeveNumber).shock > 0) {
-          throw ctx.makeRuntimeErrorMsg(`Sleeve shock too high: Sleeve ${sleeveNumber}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Sleeve shock too high: Sleeve ${sleeveNumber}`);
         }
 
         const aug = StaticAugmentations[augName];
         if (!aug) {
-          throw ctx.makeRuntimeErrorMsg(`Invalid aug: ${augName}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
         }
 
         return player.sleeves[sleeveNumber].tryBuyAugmentation(player, aug);
@@ -317,28 +286,28 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
       (ctx: NetscriptContext) =>
       (_augName: unknown): number => {
         checkSleeveAPIAccess(ctx);
-        const augName = ctx.helper.string("augName", _augName);
+        const augName = helpers.string(ctx, "augName", _augName);
         const aug: Augmentation = StaticAugmentations[augName];
         return aug.baseCost;
       },
     getSleeveAugmentationRepReq:
       (ctx: NetscriptContext) =>
-      (_augName: unknown, _basePrice = false): number => {
+      (_augName: unknown): number => {
         checkSleeveAPIAccess(ctx);
-        const augName = ctx.helper.string("augName", _augName);
+        const augName = helpers.string(ctx, "augName", _augName);
         const aug: Augmentation = StaticAugmentations[augName];
         return aug.getCost(player).repCost;
       },
     setToBladeburnerAction:
       (ctx: NetscriptContext) =>
       (_sleeveNumber: unknown, _action: unknown, _contract?: unknown): boolean => {
-        const sleeveNumber = ctx.helper.number("sleeveNumber", _sleeveNumber);
-        const action = ctx.helper.string("action", _action);
+        const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
+        const action = helpers.string(ctx, "action", _action);
         let contract: string;
         if (typeof _contract === "undefined") {
           contract = "------";
         } else {
-          contract = ctx.helper.string("contract", _contract);
+          contract = helpers.string(ctx, "contract", _contract);
         }
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
@@ -350,12 +319,9 @@ export function NetscriptSleeve(player: IPlayer): InternalAPI<ISleeve> {
               continue;
             }
             const other = player.sleeves[i];
-            if (
-              other.currentTask === SleeveTaskType.Bladeburner &&
-              other.bbAction === action &&
-              other.bbContract === contract
-            ) {
-              throw ctx.helper.makeRuntimeErrorMsg(
+            if (isSleeveBladeburnerWork(other.currentWork) && other.currentWork.actionName === contract) {
+              throw helpers.makeRuntimeErrorMsg(
+                ctx,
                 `Sleeve ${sleeveNumber} cannot take on contracts because Sleeve ${i} is already performing that action.`,
               );
             }

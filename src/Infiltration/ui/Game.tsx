@@ -91,7 +91,7 @@ export function Game(props: IProps): React.ReactElement {
     // Kill the player immediately if they use automation, so
     // it's clear they're not meant to
     const damage = options?.automated
-      ? player.hp
+      ? player.hp.current
       : props.StartingDifficulty * 3 * (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 0.5 : 1);
     if (player.takeDamage(damage)) {
       router.toCity();

@@ -17,14 +17,7 @@ import { prestigeAugmentation } from "../Prestige";
 import { dialogBoxCreate } from "./React/DialogBox";
 import { GetAllServers } from "../Server/AllServers";
 import { Factions } from "../Faction/Factions";
-import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
-import {
-  cancelOrder,
-  eventEmitterForUiReset,
-  initStockMarketFn,
-  placeOrder,
-  StockMarket,
-} from "../StockMarket/StockMarket";
+import { StockMarket } from "../StockMarket/StockMarket";
 
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -87,6 +80,7 @@ import _wrap from "lodash/wrap";
 import _functions from "lodash/functions";
 import { Apr1 } from "./Apr1";
 import { isFactionWork } from "../Work/FactionWork";
+import { V2Modal } from "../utils/V2Modal";
 
 const htmlLocation = location;
 
@@ -103,10 +97,10 @@ const useStyles = makeStyles((theme: Theme) =>
       "scrollbar-width": "none" /* for Firefox */,
       margin: theme.spacing(0),
       flexGrow: 1,
-      display: "block",
       padding: "8px",
       minHeight: "100vh",
       boxSizing: "border-box",
+      width: "1px",
     },
   }),
 );
@@ -441,20 +435,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.StockMarket: {
-      mainPage = (
-        <StockMarketRoot
-          buyStockLong={buyStock}
-          buyStockShort={shortStock}
-          cancelOrder={cancelOrder}
-          eventEmitterForReset={eventEmitterForUiReset}
-          initStockMarket={initStockMarketFn}
-          p={player}
-          placeOrder={placeOrder}
-          sellStockLong={sellStock}
-          sellStockShort={sellShort}
-          stockMarket={StockMarket}
-        />
-      );
+      mainPage = <StockMarketRoot p={player} stockMarket={StockMarket} />;
       break;
     }
     case Page.City: {
@@ -558,6 +539,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             </SnackbarProvider>
           </BypassWrapper>
         </ErrorBoundary>
+        <V2Modal />
       </Context.Router.Provider>
     </Context.Player.Provider>
   );

@@ -43,7 +43,7 @@ export function SnackbarProvider(props: IProps): React.ReactElement {
   );
 }
 
-export const SnackbarEvents = new EventEmitter<[string | React.ReactNode, ToastVariant, number]>();
+export const SnackbarEvents = new EventEmitter<[string | React.ReactNode, ToastVariant, number | null]>();
 
 export function Snackbar(): React.ReactElement {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

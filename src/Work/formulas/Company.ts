@@ -4,16 +4,11 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { WorkStats } from "../WorkStats";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { IPerson } from "src/PersonObjects/IPerson";
 
-export const calculateCompanyWorkStats = (player: IPlayer, company: Company): WorkStats => {
+export const calculateCompanyWorkStats = (player: IPlayer, worker: IPerson, company: Company): WorkStats => {
   const companyPositionName = player.jobs[company.name];
   const companyPosition = CompanyPositions[companyPositionName];
-
-  let focusBonus = 1;
-  if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
-    focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
-  }
 
   // If player has SF-11, calculate salary multiplier from favor
   let favorMult = 1 + company.favor / 100;
@@ -27,60 +22,53 @@ export const calculateCompanyWorkStats = (player: IPlayer, company: Company): Wo
   }
 
   let jobPerformance = companyPosition.calculateJobPerformance(
-    player.hacking,
-    player.strength,
-    player.defense,
-    player.dexterity,
-    player.agility,
-    player.charisma,
+    worker.skills.hacking,
+    worker.skills.strength,
+    worker.skills.defense,
+    worker.skills.dexterity,
+    worker.skills.agility,
+    worker.skills.charisma,
   );
 
-  jobPerformance += player.intelligence / CONSTANTS.MaxSkillLevel;
+  jobPerformance += worker.skills.intelligence / CONSTANTS.MaxSkillLevel;
 
   return {
     money:
-      focusBonus *
       companyPosition.baseSalary *
       company.salaryMultiplier *
-      player.mults.work_money *
+      worker.mults.work_money *
       BitNodeMultipliers.CompanyWorkMoney *
       bn11Mult,
-    reputation: focusBonus * jobPerformance * player.mults.company_rep * favorMult,
+    reputation: jobPerformance * worker.mults.company_rep * favorMult,
     hackExp:
-      focusBonus *
       companyPosition.hackingExpGain *
       company.expMultiplier *
-      player.mults.hacking_exp *
+      worker.mults.hacking_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     strExp:
-      focusBonus *
       companyPosition.strengthExpGain *
       company.expMultiplier *
-      player.mults.strength_exp *
+      worker.mults.strength_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     defExp:
-      focusBonus *
       companyPosition.defenseExpGain *
       company.expMultiplier *
-      player.mults.defense_exp *
+      worker.mults.defense_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     dexExp:
-      focusBonus *
       companyPosition.dexterityExpGain *
       company.expMultiplier *
-      player.mults.dexterity_exp *
+      worker.mults.dexterity_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     agiExp:
-      focusBonus *
       companyPosition.agilityExpGain *
       company.expMultiplier *
-      player.mults.agility_exp *
+      worker.mults.agility_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     chaExp:
-      focusBonus *
       companyPosition.charismaExpGain *
       company.expMultiplier *
-      player.mults.charisma_exp *
+      worker.mults.charisma_exp *
       BitNodeMultipliers.CompanyWorkExpGain,
     intExp: 0,
   };
