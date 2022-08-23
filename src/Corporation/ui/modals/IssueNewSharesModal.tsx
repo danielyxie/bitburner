@@ -73,24 +73,31 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
 
     const profit = newShares * newSharePrice;
     corp.issueNewSharesCooldown = CorporationConstants.IssueNewSharesCooldown;
-    corp.totalShares += newShares;
 
     // Determine how many are bought by private investors
-    // Private investors get up to 50% at most
-    // Round # of private shares to the nearest millionth
-    let privateShares = getRandomInt(0, Math.round(newShares / 2));
-    privateShares = Math.round(privateShares / 1e6) * 1e6;
+    // If private investors own n% of the company, private investors get up to 0.5n% at most
+    // Round # of private shares to the nearest million
+    const privateOwnedRatio = 1 - (corp.numShares + corp.issuedShares) / corp.totalShares;
+    const maxPrivateShares = Math.round((newShares / 2) * privateOwnedRatio);
+    const privateShares = Math.round(getRandomInt(0, maxPrivateShares) / 1e6) * 1e6;
 
     corp.issuedShares += newShares - privateShares;
+    corp.totalShares += newShares;
     corp.funds = corp.funds + profit;
     corp.immediatelyUpdateSharePrice();
     props.onClose();
-    dialogBoxCreate(
-      `Issued ${numeralWrapper.format(newShares, "0.000a")} and raised ` +
-        `${numeralWrapper.formatMoney(profit)}. ${numeralWrapper.format(privateShares, "0.000a")} ` +
-        `of these shares were bought by private investors.<br><br>` +
-        `Stock price decreased to ${numeralWrapper.formatMoney(corp.sharePrice)}`,
-    );
+
+    let dialogContents =
+      `Issued ${numeralWrapper.format(newShares, "0.000a")} new shares` +
+      ` and raised ${numeralWrapper.formatMoney(profit)}.`;
+    if (privateShares > 0) {
+      dialogContents += `<br>${numeralWrapper.format(
+        privateShares,
+        "0.000a",
+      )} of these shares were bought by private investors.`;
+    }
+    dialogContents += `<br><br>Stock price decreased to ${numeralWrapper.formatMoney(corp.sharePrice)}`;
+    dialogBoxCreate(dialogContents);
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -114,9 +121,9 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
         &nbsp;* Number of new shares issued must be a multiple of 10 million
         <br />
         <br />
-        When you choose to issue new equity, private shareholders have first priority for up to 50% of the new shares.
-        If they choose to exercise this option, these newly issued shares become private, restricted shares, which means
-        you cannot buy them back.
+        When you choose to issue new equity, private shareholders have first priority for up to 0.5n% of the new shares,
+        where n is the percentage of the company currently owned by private shareholders. If they choose to exercise
+        this option, these newly issued shares become private, restricted shares, which means you cannot buy them back.
       </Typography>
       <EffectText shares={shares} />
       <NumberInput autoFocus placeholder="# New Shares" onChange={setShares} onKeyDown={onKeyDown} />
