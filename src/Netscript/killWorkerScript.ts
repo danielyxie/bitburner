@@ -64,7 +64,7 @@ function stopAndCleanUpWorkerScript(ws: WorkerScript): void {
       dialogBoxCreate(
         `Error trying to call atExit for script ${[ws.name, ...ws.args].join(" ")} on ${ws.hostname}\n ${message}`,
       );
-      console.log(e);
+      console.error(e);
     }
     ws.atExit = undefined;
   }
