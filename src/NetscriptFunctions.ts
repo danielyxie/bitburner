@@ -1849,7 +1849,7 @@ const base: InternalAPI<NS> = {
     (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, _duration: unknown = 2000): void => {
       const message = helpers.string(ctx, "message", _message);
       const variant = helpers.string(ctx, "variant", _variant);
-      const duration = helpers.number(ctx, "duration", _duration);
+      const duration = _duration === null ? null : helpers.number(ctx, "duration", _duration);
       if (!checkEnum(ToastVariant, variant))
         throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
       SnackbarEvents.emit(message, variant, duration);
