@@ -88,7 +88,7 @@ export const CONSTANTS: {
   Donations: number; // number of blood/plasma/palette donation the dev have verified., boosts NFG
   LatestUpdate: string;
 } = {
-  VersionString: "2.0.2",
+  VersionString: "2.1.0",
   VersionNumber: 25,
 
   // Speed (in ms) at which the main loop is updated
@@ -229,84 +229,14 @@ export const CONSTANTS: {
 
   InfiniteLoopLimit: 2000,
 
-  Donations: 22,
+  Donations: 25,
 
   LatestUpdate: `
-v2.0.0 - 2022-07-19 Work rework
--------------------------------
+v2.1.0 - 2022-08-23
+-------------------
 
-  API break rewards
-
-  * Everyone is awarded 10 NFG.
-  * All work in progress program is auto completed.
-  * All work in progress crafting is auto completed without adding entropy.
-
-  Work (Create program / Work for faction / Studying / etc ...)
-
-  * Working has been rebuilt from the grounds up. The motivation for that change is that all
-    different types of work all required different cached variables on the main Player object.
-    This caused a lot of bugs and crashes. It's been reworked in such a way as to prevent bugs
-    and make it nearly trivial to add new kinds of work. However, since this caused a few API break
-    I've decided to mark this version following semver protocols and call it 2.0.0
-  * Crime can be unfocused and auto loops, no more spam clicking.
-  * All work type give their reward immediately. No need to stop work to bank rewards like reputation.
-  * Faction and Company work no longer have a time limit.
-  * Company work no longer reduces rep gain by half for quitting early.
-  * Company faction require 400k rep to join (from 200k)
-  * Backdooring company server reduces faction requirement to 300k.
-  * All work generally no longer keep track of cumulative gains like exp and reputation since it's applied instantly.
-  * getPlayer returns way less fields but does return the new 'currentWork' field, some fields are moved around.
-
-  API breaks
-
-  * workForCompany argument 'companyName' is now not-optional
-  * commitCrime now has 'focus' optional parameter
-  * using getScriptIncome to get total income has been separated to getTotalScriptIncome.
-  * using getScriptExpGain to get total income has been separated to getTotalScriptExpGain.
-  * scp has it's 2 last argument reversed, the signature is now (files, destination, optional_source)
-  * ns.connect and other singularity function are no longer available at the top level.
-    They were already hidden from documentation but now they're gone.
-  * stock.buy and stock.sell were renamed to stock.buyStock and stock.sellStock because 'buy' and 'sell'
-    are very common tokens.
-  * corporation.bribe no longer allows to give shares as bribe.
-  * hasWseAccount, hasTixApiAccess, has4SData, has4SDataTixApi have been removed and replaced with similar stock functions.
-
-  Netscript
-
-  * Add singularity.getCurrentWork
-  * Add singularity.getAugmentationBasePrice
-  * Add sleeve.getSleeveAugmentationPrice
-  * Add sleeve.getSleeveAugmentationRepReq
-  * Fix infiltration.getInfiltrationLocations
-  * Singularity.goToLocation support for non-city-specific locations (@Ansopedian)
-  * All corporation functions are synchronous. Job assignment only works on the following cycle. (@stalefishies)
-  * Add batch functionality to NS spendHashes API (@undeemiss)
-  * Fix #3661 Add missing memory property to Sleeve API (@borisflagell)
-  * FIX#3732 Cannot assign two sleeve on "Take on contracts" regardless of contract type. (@borisflagell)
-
-  Corporation
-
-  * Dividend fixes and exposing dividends info via scripts (@stalefishies)
-  * Add big number format support in some Corporation's modal (@borisflagell)
-  * Fix #3261 Industry overview number formatting (@nickofolas)
-
-  Multipliers
-
-  * The main player object was also plagues with a million fields all called '*_mult'. Representing the different multipliers
-  * These have been refactored in a field called 'mults'.
-
-  Misc. 
-
-  * #3596 Enhanced terminal command parsing (@RevanProdigalKnight)
-  * Fix #3366 Sleeve UI would sometimes displays the wrong stat while working out. (@borisflagell)
-  * Two new encryption themed contracts - caesar and vigenere (@Markus-D-M)
-  * Fixes #3132 several Sleeve can no longer works concurrently in the same company (@borisflagell)
-  * FIX #3514 Clear recently killed tab on BN end event (@Daniel-Barbera)
-  * HammingCodes description and implementation fixes (@s2ks)
-  * FIX #3794 Sleeve were getting less shocked when hospitalized (was positive, should have detrimental) (@borisflagell)
-  * Fix #3803 Servers can no longer have duplicate IPs (@crimsonhawk47)
-  * Fix #3854 ctrl+c does not clear terminal input (@evil-tim)
-  * Nerf noodle bar, obviously.
+  * pending
+  * nerf noodle bar
 
 `,
 };
