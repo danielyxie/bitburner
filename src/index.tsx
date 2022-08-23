@@ -4,6 +4,9 @@ import ReactDOM from "react-dom";
 import { TTheme as Theme, ThemeEvents, refreshTheme } from "./Themes/ui/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import { initElectron } from "./Electron";
+
+import { newRemoteFileApiConnection } from "./RemoteFileAPI/RemoteFileAPI";
+
 initElectron();
 globalThis["React"] = React;
 globalThis["ReactDOM"] = ReactDOM;
@@ -13,6 +16,8 @@ ReactDOM.render(
   </Theme>,
   document.getElementById("root"),
 );
+
+newRemoteFileApiConnection();
 
 function rerender(): void {
   refreshTheme();
