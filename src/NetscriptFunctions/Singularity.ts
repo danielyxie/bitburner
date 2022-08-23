@@ -9,6 +9,7 @@ import { killWorkerScript } from "../Netscript/killWorkerScript";
 import { CONSTANTS } from "../Constants";
 import { isString } from "../utils/helpers/isString";
 import { RunningScript } from "../Script/RunningScript";
+import { calculateAchievements } from "../Achievements/Achievements";
 
 import {
   AugmentationStats,
@@ -1275,12 +1276,11 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         helpers.checkSingularityAccess(ctx);
         const nextBN = helpers.number(ctx, "nextBN", _nextBN);
         const callbackScript = helpers.string(ctx, "callbackScript", _callbackScript);
-        helpers.checkSingularityAccess(ctx);
 
+        const wd = GetServer(SpecialServers.WorldDaemon);
+        if (!(wd instanceof Server))
+          throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
         const hackingRequirements = (): boolean => {
-          const wd = GetServer(SpecialServers.WorldDaemon);
-          if (!(wd instanceof Server))
-            throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
           if (player.skills.hacking < wd.requiredHackingSkill) return false;
           if (!wd.hasAdminRights) return false;
           return true;
@@ -1296,6 +1296,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           return;
         }
 
+        wd.backdoorInstalled = true;
+        calculateAchievements();
         enterBitNode(Router, false, player.bitNodeN, nextBN);
         if (callbackScript)
           setTimeout(() => {

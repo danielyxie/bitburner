@@ -171,7 +171,7 @@ const FactionElement = (props: IFactionProps): React.ReactElement => {
       {props.joined && (
         <Box display="grid" sx={{ alignItems: "center", justifyItems: "left", gridAutoFlow: "row" }}>
           <Typography sx={{ color: Settings.theme.rep }}>
-            {numeralWrapper.formatFavor(props.faction.favor)} favor
+            {numeralWrapper.formatFavor(Math.floor(props.faction.favor))} favor
           </Typography>
           <Typography sx={{ color: Settings.theme.rep }}>
             {numeralWrapper.formatReputation(props.faction.playerReputation)} rep
