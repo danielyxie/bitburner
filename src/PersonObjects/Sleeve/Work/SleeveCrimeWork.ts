@@ -28,14 +28,14 @@ export class SleeveCrimeWork extends Work {
   getExp(): WorkStats {
     const crime = this.getCrime();
     return newWorkStats({
-      money: crime.money*BitNodeMultipliers.CrimeMoney,
-      hackExp: crime.hacking_exp*BitNodeMultipliers.CrimeExpGain,
-      strExp: crime.strength_exp*BitNodeMultipliers.CrimeExpGain,
-      defExp: crime.defense_exp*BitNodeMultipliers.CrimeExpGain,
-      dexExp: crime.dexterity_exp*BitNodeMultipliers.CrimeExpGain,
-      agiExp: crime.agility_exp*BitNodeMultipliers.CrimeExpGain,
-      chaExp: crime.charisma_exp*BitNodeMultipliers.CrimeExpGain,
-      intExp: crime.intelligence_exp*BitNodeMultipliers.CrimeExpGain,
+      money: crime.money * BitNodeMultipliers.CrimeMoney,
+      hackExp: crime.hacking_exp * BitNodeMultipliers.CrimeExpGain,
+      strExp: crime.strength_exp * BitNodeMultipliers.CrimeExpGain,
+      defExp: crime.defense_exp * BitNodeMultipliers.CrimeExpGain,
+      dexExp: crime.dexterity_exp * BitNodeMultipliers.CrimeExpGain,
+      agiExp: crime.agility_exp * BitNodeMultipliers.CrimeExpGain,
+      chaExp: crime.charisma_exp * BitNodeMultipliers.CrimeExpGain,
+      intExp: crime.intelligence_exp * BitNodeMultipliers.CrimeExpGain,
     });
   }
 

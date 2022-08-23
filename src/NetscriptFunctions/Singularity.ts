@@ -1278,8 +1278,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         const callbackScript = helpers.string(ctx, "callbackScript", _callbackScript);
 
         const wd = GetServer(SpecialServers.WorldDaemon);
-        if (!(wd instanceof Server))
-          throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
+        if (!(wd instanceof Server)) throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
         const hackingRequirements = (): boolean => {
           if (player.skills.hacking < wd.requiredHackingSkill) return false;
           if (!wd.hasAdminRights) return false;
