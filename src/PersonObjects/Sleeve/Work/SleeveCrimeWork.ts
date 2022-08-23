@@ -7,6 +7,7 @@ import { Crimes } from "../../../Crime/Crimes";
 import { Crime } from "../../../Crime/Crime";
 import { newWorkStats, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { CONSTANTS } from "../../../Constants";
+import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
 
 export const isSleeveCrimeWork = (w: Work | null): w is SleeveCrimeWork => w !== null && w.type === WorkType.CRIME;
 
@@ -27,14 +28,14 @@ export class SleeveCrimeWork extends Work {
   getExp(): WorkStats {
     const crime = this.getCrime();
     return newWorkStats({
-      money: crime.money,
-      hackExp: crime.hacking_exp,
-      strExp: crime.strength_exp,
-      defExp: crime.defense_exp,
-      dexExp: crime.dexterity_exp,
-      agiExp: crime.agility_exp,
-      chaExp: crime.charisma_exp,
-      intExp: crime.intelligence_exp,
+      money: crime.money*BitNodeMultipliers.CrimeMoney,
+      hackExp: crime.hacking_exp*BitNodeMultipliers.CrimeExpGain,
+      strExp: crime.strength_exp*BitNodeMultipliers.CrimeExpGain,
+      defExp: crime.defense_exp*BitNodeMultipliers.CrimeExpGain,
+      dexExp: crime.dexterity_exp*BitNodeMultipliers.CrimeExpGain,
+      agiExp: crime.agility_exp*BitNodeMultipliers.CrimeExpGain,
+      chaExp: crime.charisma_exp*BitNodeMultipliers.CrimeExpGain,
+      intExp: crime.intelligence_exp*BitNodeMultipliers.CrimeExpGain,
     });
   }
 
