@@ -633,11 +633,6 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("stock.short()", async function () {
-      const f = ["stock", "short"];
-      await testNonzeroDynamicRamCost(f);
-    });
-
     it("stock.sellShort()", async function () {
       const f = ["stock", "sellShort"];
       await testNonzeroDynamicRamCost(f);
@@ -705,11 +700,6 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getStats()", async function () {
-      const f = ["singularity", "getStats"];
-      await testNonzeroDynamicRamCost(f);
-    });
-
     it("getDarkwebProgramCost()", async function () {
       const f = ["singularity", "getDarkwebProgramCost"];
       await testNonzeroDynamicRamCost(f);
@@ -717,11 +707,6 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("getDarkwebPrograms()", async function () {
       const f = ["singularity", "getDarkwebPrograms"];
-      await testNonzeroDynamicRamCost(f);
-    });
-
-    it("getCharacterInformation()", async function () {
-      const f = ["singularity", "getCharacterInformation"];
       await testNonzeroDynamicRamCost(f);
     });
 
