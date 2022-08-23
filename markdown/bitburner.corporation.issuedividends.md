@@ -9,14 +9,14 @@ Issue dividends
 <b>Signature:</b>
 
 ```typescript
-issueDividends(percent: number): void;
+issueDividends(rate: number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  percent | number | Percent of profit to issue as dividends. |
+|  rate | number | Fraction of profit to issue as dividends. |
 
 <b>Returns:</b>
 

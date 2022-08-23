@@ -24,7 +24,6 @@
 |  [BitNodeMultipliers](./bitburner.bitnodemultipliers.md) | All multipliers affecting the difficulty of the current challenge. |
 |  [Bladeburner](./bitburner.bladeburner.md) | Bladeburner API |
 |  [BladeburnerCurAction](./bitburner.bladeburnercuraction.md) | Bladeburner current action. |
-|  [CharacterInfo](./bitburner.characterinfo.md) |  |
 |  [CharacterMult](./bitburner.charactermult.md) |  |
 |  [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md) attempt. |
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contract API |
@@ -55,11 +54,14 @@
 |  [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) | Hacknet Node formulas |
 |  [HacknetServerConstants](./bitburner.hacknetserverconstants.md) | Hacknet server related constants |
 |  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Server formulas |
+|  [HP](./bitburner.hp.md) |  |
+|  [ILocation](./bitburner.ilocation.md) |  |
 |  [Infiltration](./bitburner.infiltration.md) | Infiltration API. |
 |  [InfiltrationLocation](./bitburner.infiltrationlocation.md) |  |
 |  [InfiltrationReward](./bitburner.infiltrationreward.md) |  |
 |  [InvestmentOffer](./bitburner.investmentoffer.md) | Corporation investment offer |
 |  [Material](./bitburner.material.md) | Material in a warehouse |
+|  [Multipliers](./bitburner.multipliers.md) |  |
 |  [NetscriptPort](./bitburner.netscriptport.md) | Object representing a port. A port is a serialized queue. |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
@@ -67,7 +69,7 @@
 |  [Office](./bitburner.office.md) | Office for a division in a city. |
 |  [OfficeAPI](./bitburner.officeapi.md) | Corporation Office API |
 |  [Player](./bitburner.player.md) |  |
-|  [PlayerSkills](./bitburner.playerskills.md) | Short summary of the players skills. |
+|  [PossibleInfiltrationLocation](./bitburner.possibleinfiltrationlocation.md) |  |
 |  [ProcessInfo](./bitburner.processinfo.md) | A single process on a server. |
 |  [Product](./bitburner.product.md) | Product in a warehouse |
 |  [RecentScript](./bitburner.recentscript.md) |  |
@@ -75,11 +77,11 @@
 |  [RunningScript](./bitburner.runningscript.md) |  |
 |  [Server](./bitburner.server.md) | A single server. |
 |  [Singularity](./bitburner.singularity.md) | Singularity API |
+|  [Skills](./bitburner.skills.md) |  |
 |  [SkillsFormulas](./bitburner.skillsformulas.md) | Skills formulas |
 |  [Sleeve](./bitburner.sleeve.md) | Sleeve API |
 |  [SleeveInformation](./bitburner.sleeveinformation.md) | Object representing sleeve information. |
 |  [SleeveSkills](./bitburner.sleeveskills.md) | Object representing a sleeve stats. |
-|  [SleeveTask](./bitburner.sleevetask.md) | Object representing a sleeve current task. |
 |  [SleeveWorkGains](./bitburner.sleeveworkgains.md) |  |
 |  [SourceFileLvl](./bitburner.sourcefilelvl.md) |  |
 |  [Stanek](./bitburner.stanek.md) | Stanek's Gift API. |
@@ -89,11 +91,17 @@
 |  [UserInterface](./bitburner.userinterface.md) | User Interface API. |
 |  [Warehouse](./bitburner.warehouse.md) | Warehouse for a division in a city |
 |  [WarehouseAPI](./bitburner.warehouseapi.md) | Corporation Warehouse API |
+|  [WorkFormulas](./bitburner.workformulas.md) | Work formulas |
+|  [WorkStats](./bitburner.workstats.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [CodingContractData](./bitburner.codingcontractdata.md) | Coding contract data will differ depending on coding contract. |
 |  [FilenameOrPID](./bitburner.filenameorpid.md) |  |
+|  [PortData](./bitburner.portdata.md) |  |
+|  [ScriptArg](./bitburner.scriptarg.md) |  |
+|  [SleeveTask](./bitburner.sleevetask.md) | Object representing a sleeve current task. |
 |  [ToastVariantValues](./bitburner.toastvariantvalues.md) |  |
 

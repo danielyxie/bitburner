@@ -51,13 +51,15 @@ export class CompanyWork extends Work {
     return false;
   }
   finish(): void {
-    dialogBoxCreate(
-      <>
-        You finished working for {this.companyName}
-        <br />
-        You have <Reputation reputation={this.getCompany().playerReputation} /> reputation with them.
-      </>,
-    );
+    if (!this.singularity) {
+      dialogBoxCreate(
+        <>
+          You finished working for {this.companyName}
+          <br />
+          You have <Reputation reputation={this.getCompany().playerReputation} /> reputation with them.
+        </>,
+      );
+    }
   }
 
   APICopy(): Record<string, unknown> {

@@ -10,8 +10,9 @@ user's physical and mental faculties.
 
 Augmentations provide persistent upgrades in the form of multipliers.
 These multipliers apply to a wide variety of things such as stats,
-experience gain, and hacking, just to name a few. Your multipliers
-can be viewed in the 'Character' page (:ref:`keyboard shortcut <shortcuts>` Alt + c).
+experience gain, and hacking, just to name a few. The effects of 
+Autmentations stack multiplicatively. Your multiplierscan be viewed in 
+the 'Character' page (:ref:`keyboard shortcut <shortcuts>` Alt + c).
 
 How to acquire Augmentations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -75,4 +76,6 @@ will cause the Augmentations to get progressively more expensive. When
 you purchase an Augmentation, the price of purchasing another Augmentation
 doubles. This multiplier stacks for each Augmentation you
 purchase. Once you install your purchased Augmentations, their costs
-are reset back to the original prices.
+are reset back to the original prices. You can only purchase each augmentation 
+once, with the exception of NeuroFlux Governor, which can be purchased infinitely
+at increasing cost.

@@ -410,7 +410,7 @@ export function gainIntelligenceExp(this: IPerson, exp: number): void {
     console.error("ERROR: NaN passed into Player.gainIntelligenceExp()");
     return;
   }
-  if (Player.sourceFileLvl(5) > 0 || this.skills.intelligence > 0) {
+  if (Player.sourceFileLvl(5) > 0 || this.skills.intelligence > 0 || Player.bitNodeN === 5) {
     this.exp.intelligence += exp;
     this.skills.intelligence = Math.floor(this.calculateSkill(this.exp.intelligence, 1));
   }

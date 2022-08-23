@@ -9,7 +9,7 @@ Employee in an office
 <b>Signature:</b>
 
 ```typescript
-interface Employee 
+export interface Employee 
 ```
 
 ## Properties

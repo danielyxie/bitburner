@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-hp: number;
+hp: HP;
 ```

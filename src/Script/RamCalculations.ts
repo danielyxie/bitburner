@@ -44,7 +44,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
  *                                      keep track of what functions have/havent been accounted for
  */
-async function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: string): Promise<RamCalculation> {
+function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: string): RamCalculation {
   try {
     /**
      * Maps dependent identifiers to their dependencies.
@@ -88,47 +88,22 @@ async function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], co
     while (parseQueue.length > 0) {
       const nextModule = parseQueue.shift();
       if (nextModule === undefined) throw new Error("nextModule should not be undefined");
+      if (nextModule.startsWith("https://") || nextModule.startsWith("http://")) continue;
 
-      // Additional modules can either be imported from the web (in which case we use
-      // a dynamic import), or from other in-game scripts
-      let code;
-      if (nextModule.startsWith("https://") || nextModule.startsWith("http://")) {
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          const module = await eval("import(nextModule)");
-          code = "";
-          for (const prop in module) {
-            if (typeof module[prop] === "function") {
-              code += module[prop].toString() + ";\n";
-            }
-          }
-        } catch (e) {
-          console.error(`Error dynamically importing module from ${nextModule} for RAM calculations: ${e}`);
-          return { cost: RamCalculationErrorCode.URLImportError };
+      let script = null;
+      const fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
+      for (const s of otherScripts) {
+        if (areImportsEquals(s.filename, fn)) {
+          script = s;
+          break;
         }
-      } else {
-        if (!Array.isArray(otherScripts)) {
-          console.warn(`parseOnlyRamCalculate() not called with array of scripts`);
-          return { cost: RamCalculationErrorCode.ImportError };
-        }
-
-        let script = null;
-        const fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
-        for (const s of otherScripts) {
-          if (areImportsEquals(s.filename, fn)) {
-            script = s;
-            break;
-          }
-        }
-
-        if (script == null) {
-          return { cost: RamCalculationErrorCode.ImportError }; // No such script on the server
-        }
-
-        code = script.code;
       }
 
-      parseCode(code, nextModule);
+      if (script == null) {
+        return { cost: RamCalculationErrorCode.ImportError }; // No such script on the server
+      }
+
+      parseCode(script.code, nextModule);
     }
 
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
@@ -406,13 +381,9 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): ParseDepsR
  * @param {Script[]} otherScripts - All other scripts on the server.
  *                                  Used to account for imported scripts
  */
-export async function calculateRamUsage(
-  player: IPlayer,
-  codeCopy: string,
-  otherScripts: Script[],
-): Promise<RamCalculation> {
+export function calculateRamUsage(player: IPlayer, codeCopy: string, otherScripts: Script[]): RamCalculation {
   try {
-    return await parseOnlyRamCalculate(player, otherScripts, codeCopy);
+    return parseOnlyRamCalculate(player, otherScripts, codeCopy);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);

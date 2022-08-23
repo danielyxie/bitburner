@@ -459,7 +459,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
           {!division.hasResearch("AutoBrew") && (
             <>
               <Tooltip
-                title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
+                title={<Typography>Provide your employees with coffee, increasing their energy by 5%</Typography>}
               >
                 <span>
                   <Button

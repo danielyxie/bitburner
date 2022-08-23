@@ -9,7 +9,7 @@ Set the auto job assignment for a job
 <b>Signature:</b>
 
 ```typescript
-setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
+setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): boolean;
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount
 
 <b>Returns:</b>
 
-Promise&lt;boolean&gt;
+boolean
 
-A promise that is fulfilled when the assignment is complete.
+true if the employee count reached the target amount, false if not
 

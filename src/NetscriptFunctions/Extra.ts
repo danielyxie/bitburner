@@ -1,8 +1,9 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player as player } from "../Player";
 import { Exploit } from "../Exploits/Exploit";
 import * as bcrypt from "bcryptjs";
 import { Apr1Events as devMenu } from "../ui/Apr1";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
 export interface INetscriptExtra {
   heart: {
@@ -15,7 +16,7 @@ export interface INetscriptExtra {
   rainbow(guess: string): void;
 }
 
-export function NetscriptExtra(player: IPlayer): InternalAPI<INetscriptExtra> {
+export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
   return {
     heart: {
       // Easter egg function
@@ -67,7 +68,7 @@ export function NetscriptExtra(player: IPlayer): InternalAPI<INetscriptExtra> {
         function tryGuess(): boolean {
           // eslint-disable-next-line no-sync
           const verified = bcrypt.compareSync(
-            ctx.helper.string("guess", guess),
+            helpers.string(ctx, "guess", guess),
             "$2a$10$aertxDEkgor8baVtQDZsLuMwwGYmkRM/ohcA6FjmmzIHQeTCsrCcO",
           );
           if (verified) {

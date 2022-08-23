@@ -1,10 +1,10 @@
 import { ScriptDeath } from "./Netscript/ScriptDeath";
-import { isScriptErrorMessage } from "./NetscriptEvaluator";
+import { helpers } from "./Netscript/NetscriptHelpers";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 
 export function setupUncaughtPromiseHandler(): void {
   window.addEventListener("unhandledrejection", function (e) {
-    if (isScriptErrorMessage(e.reason)) {
+    if (helpers.isScriptErrorMessage(e.reason)) {
       const errorTextArray = e.reason.split("|DELIMITER|");
       const hostname = errorTextArray[1];
       const scriptName = errorTextArray[2];

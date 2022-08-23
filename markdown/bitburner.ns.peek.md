@@ -9,7 +9,7 @@ Get a copy of the data from a port without popping it.
 <b>Signature:</b>
 
 ```typescript
-peek(port: number): any;
+peek(port: number): PortData;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ peek(port: number): any;
 
 <b>Returns:</b>
 
-any
+[PortData](./bitburner.portdata.md)
 
 Data in the specified port.
 
