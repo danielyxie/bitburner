@@ -546,6 +546,8 @@ const SourceRamCosts = {
   },
 
   formulas: {
+    mockServer: 0,
+    mockPlayer: 0,
     reputation: {
       calculateFavorToRep: 0,
       calculateRepToFavor: 0,

@@ -500,12 +500,39 @@ function player(ctx: NetscriptContext, p: unknown): IPlayer {
 }
 
 function server(ctx: NetscriptContext, s: unknown): Server {
-  if (!roughlyIs(new Server(), s)) throw makeRuntimeErrorMsg(ctx, `server should be a Server.`);
+  const fakeServer = {
+    cpuCores: undefined,
+    ftpPortOpen: undefined,
+    hasAdminRights: undefined,
+    hostname: undefined,
+    httpPortOpen: undefined,
+    ip: undefined,
+    isConnectedTo: undefined,
+    maxRam: undefined,
+    organizationName: undefined,
+    ramUsed: undefined,
+    smtpPortOpen: undefined,
+    sqlPortOpen: undefined,
+    sshPortOpen: undefined,
+    purchasedByPlayer: undefined,
+    backdoorInstalled: undefined,
+    baseDifficulty: undefined,
+    hackDifficulty: undefined,
+    minDifficulty: undefined,
+    moneyAvailable: undefined,
+    moneyMax: undefined,
+    numOpenPortsRequired: undefined,
+    openPortCount: undefined,
+    requiredHackingSkill: undefined,
+    serverGrowth: undefined,
+  };
+  if (!roughlyIs(fakeServer, s)) throw makeRuntimeErrorMsg(ctx, `server should be a Server.`);
   return s as Server;
 }
 
 function roughlyIs(expect: object, actual: unknown): boolean {
   if (typeof actual !== "object" || actual == null) return false;
+
   const expects = Object.keys(expect);
   const actuals = Object.keys(actual);
   for (const expect of expects)

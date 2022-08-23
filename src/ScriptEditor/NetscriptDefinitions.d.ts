@@ -4149,6 +4149,8 @@ interface GangFormulas {
  * @public
  */
 export interface Formulas {
+  mockServer(): Server;
+  mockPlayer(): Player;
   /** Reputation formulas */
   reputation: ReputationFormulas;
   /** Skills formulas */

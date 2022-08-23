@@ -389,7 +389,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
               endAdornment: (
                 <Box>
                   <Button onClick={newRemoteFileApiConnection}>Reconnect</Button>
-                  <ConnectionBauble callback={isRemoteFileApiConnectionLive} />
+                  <ConnectionBauble isConnected={isRemoteFileApiConnectionLive} />
                 </Box>
               ),
             }}

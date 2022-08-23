@@ -1,18 +1,19 @@
+import { Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 interface baubleProps {
-  callback: () => boolean;
+  isConnected: () => boolean;
 }
 
 export const ConnectionBauble = (props: baubleProps): React.ReactElement => {
-  const [connection, setConnection] = useState(props.callback());
+  const [connection, setConnection] = useState(props.isConnected());
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setConnection(props.callback());
+      setConnection(props.isConnected());
     }, 1000);
     return () => clearInterval(timer);
   });
 
-  return <div className="ConnectionBauble">{connection ? "Connected" : "Disconnected"}</div>;
+  return <Typography>{connection ? "Connected" : "Disconnected"}</Typography>;
 };
