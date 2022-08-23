@@ -3,7 +3,6 @@ import React from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import { Theme } from "@mui/material/styles";
-import _ from "lodash";
 
 // This particular eslint-disable is correct.
 // In this super specific weird case we in fact do want a regex on an ANSII character.
