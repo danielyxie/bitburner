@@ -7,8 +7,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
-import { newWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { scaleWorkStats, WorkStats } from "./WorkStats";
 import { calculateCrimeWorkStats } from "./formulas/Crime";
 
 enum newCrimeType {
