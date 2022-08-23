@@ -17,14 +17,7 @@ import { prestigeAugmentation } from "../Prestige";
 import { dialogBoxCreate } from "./React/DialogBox";
 import { GetAllServers } from "../Server/AllServers";
 import { Factions } from "../Faction/Factions";
-import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
-import {
-  cancelOrder,
-  eventEmitterForUiReset,
-  initStockMarketFn,
-  placeOrder,
-  StockMarket,
-} from "../StockMarket/StockMarket";
+import { StockMarket } from "../StockMarket/StockMarket";
 
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -442,20 +435,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.StockMarket: {
-      mainPage = (
-        <StockMarketRoot
-          buyStockLong={buyStock}
-          buyStockShort={shortStock}
-          cancelOrder={cancelOrder}
-          eventEmitterForReset={eventEmitterForUiReset}
-          initStockMarket={initStockMarketFn}
-          p={player}
-          placeOrder={placeOrder}
-          sellStockLong={sellStock}
-          sellStockShort={sellShort}
-          stockMarket={StockMarket}
-        />
-      );
+      mainPage = <StockMarketRoot p={player} stockMarket={StockMarket} />;
       break;
     }
     case Page.City: {
