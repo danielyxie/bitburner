@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 
@@ -240,22 +240,17 @@ export function Root(props: IProps): React.ReactElement {
     }
   }
 
-  const debouncedSetRAM = useMemo(
-    () =>
-      debounce((s, e) => {
-        setRAM(s);
-        setRamEntries(e);
-        setUpdatingRam(false);
-      }, 300),
-    [],
-  );
+  const debouncedUpdateRAM = debounce((newCode: string) => {
+    updateRAM(newCode);
+    setUpdatingRam(false);
+  }, 300);
 
-  async function updateRAM(newCode: string): Promise<void> {
+  function updateRAM(newCode: string): void {
     if (currentScript != null && currentScript.isTxt) {
-      debouncedSetRAM("N/A", [["N/A", ""]]);
+      setRAM("N/A");
+      setRamEntries([["N/A", ""]]);
       return;
     }
-    setUpdatingRam(true);
     const codeCopy = newCode + "";
     const ramUsage = calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
     if (ramUsage.cost > 0) {
@@ -265,25 +260,28 @@ export function Root(props: IProps): React.ReactElement {
         entriesDisp.push([`${entry.name} (${entry.type})`, numeralWrapper.formatRAM(entry.cost)]);
       }
 
-      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost), entriesDisp);
+      setRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost));
+      setRamEntries(entriesDisp);
       return;
     }
+    let RAM = "";
+    const entriesDisp = [];
     switch (ramUsage.cost) {
       case RamCalculationErrorCode.ImportError: {
-        debouncedSetRAM("RAM: Import Error", [["Import Error", ""]]);
-        break;
-      }
-      case RamCalculationErrorCode.URLImportError: {
-        debouncedSetRAM("RAM: HTTP Import Error", [["HTTP Import Error", ""]]);
+        RAM = "RAM: Import Error";
+        entriesDisp.push(["Import Error", ""]);
         break;
       }
       case RamCalculationErrorCode.SyntaxError:
       default: {
-        debouncedSetRAM("RAM: Syntax Error", [["Syntax Error", ""]]);
+        RAM = "RAM: Syntax Error";
+        entriesDisp.push(["Syntax Error", ""]);
         break;
       }
     }
-    return new Promise<void>(() => undefined);
+    setRAM(RAM);
+    setRamEntries(entriesDisp);
+    return;
   }
 
   // Formats the code
@@ -446,7 +444,8 @@ export function Root(props: IProps): React.ReactElement {
   // When the code is updated within the editor
   function updateCode(newCode?: string): void {
     if (newCode === undefined) return;
-    updateRAM(newCode);
+    setUpdatingRam(true);
+    debouncedUpdateRAM(newCode);
     if (editorRef.current === null) return;
     const newPos = editorRef.current.getPosition();
     if (newPos === null) return;
