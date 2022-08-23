@@ -780,7 +780,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       function (_companyName: unknown, _focus: unknown = true): boolean {
         helpers.checkSingularityAccess(ctx);
         const companyName = helpers.string(ctx, "companyName", _companyName);
-        const focus = !_focus;
+        const focus = !!_focus;
 
         // Make sure its a valid company
         if (companyName == null || companyName === "" || !(Companies[companyName] instanceof Company)) {
