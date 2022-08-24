@@ -5980,11 +5980,11 @@ export interface NS {
    * then the data will be written in “append” mode which means that the data will be added at the
    * end of the file.
    *
-   * @param handle - Filename to be written to.
+   * @param filename - Name of the file to be written to.
    * @param data - Data to write.
    * @param mode - Defines the write mode.
    */
-  write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): void;
+  write(filename: string, data?: string[] | number | string, mode?: "w" | "a"): void;
 
   /**
    * Attempt to write to a port.
@@ -6006,15 +6006,15 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * This function is used to read data from a text file (.txt).
+   * This function is used to read data from a text file (.txt) or script (.script, .js).
    *
-   * This function will return the data in the specified text
-   * file. If the text file does not exist, an empty string will be returned.
+   * This function will return the data in the specified file.
+   * If the file does not exist, an empty string will be returned.
    *
-   * @param handle - Filename to read from.
+   * @param filename - Name of the file to be read.
    * @returns Data in the specified text file.
    */
-  read(handle: string);
+  read(filename: string): string;
 
   /**
    * Get a copy of the data from a port without popping it.

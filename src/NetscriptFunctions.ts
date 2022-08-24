@@ -1465,8 +1465,8 @@ const base: InternalAPI<NS> = {
     },
   write:
     (ctx: NetscriptContext) =>
-    (_handle: unknown, _data: unknown = "", _mode: unknown = "a"): void => {
-      let fn = helpers.string(ctx, "handle", _handle);
+    (_filename: unknown, _data: unknown = "", _mode: unknown = "a"): void => {
+      let fn = helpers.string(ctx, "handle", _filename);
       const data = helpers.string(ctx, "data", _data);
       const mode = helpers.string(ctx, "mode", _mode);
       if (!isValidFilePath(fn)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
@@ -1540,33 +1540,27 @@ const base: InternalAPI<NS> = {
     },
   read:
     (ctx: NetscriptContext) =>
-    (_port: unknown): string => {
-      const port = helpers.string(ctx, "port", _port);
-      if (isString(port)) {
-        // Read from script or text file
-        const fn = port;
-        const server = GetServer(ctx.workerScript.hostname);
-        if (server == null) {
-          throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
+    (_filename: unknown): string => {
+      const fn = helpers.string(ctx, "filename", _filename);
+      const server = GetServer(ctx.workerScript.hostname);
+      if (server == null) {
+        throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
+      }
+      if (isScriptFilename(fn)) {
+        // Read from script
+        const script = ctx.workerScript.getScriptOnServer(fn, server);
+        if (script == null) {
+          return "";
         }
-        if (isScriptFilename(fn)) {
-          // Read from script
-          const script = ctx.workerScript.getScriptOnServer(fn, server);
-          if (script == null) {
-            return "";
-          }
-          return script.code;
-        } else {
-          // Read from text file
-          const txtFile = getTextFile(fn, server);
-          if (txtFile !== null) {
-            return txtFile.text;
-          } else {
-            return "";
-          }
-        }
+        return script.code;
       } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
+        // Read from text file
+        const txtFile = getTextFile(fn, server);
+        if (txtFile !== null) {
+          return txtFile.text;
+        } else {
+          return "";
+        }
       }
     },
   peek:
