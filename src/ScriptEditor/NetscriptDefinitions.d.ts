@@ -1550,7 +1550,7 @@ export interface Singularity {
    * function is the same as the cost for traveling through the Travel Agency.
    *
    * @param city - City to travel to.
-   * @returns True if actions is successful, false otherwise.
+   * @returns True if action is successful, false otherwise.
    */
   travelToCity(city: string): boolean;
 
