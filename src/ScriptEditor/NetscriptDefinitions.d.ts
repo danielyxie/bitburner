@@ -6014,7 +6014,7 @@ export interface NS {
    * @param handle - Filename to read from.
    * @returns Data in the specified text file.
    */
-  read(handle: string): PortData;
+  read(handle: string);
 
   /**
    * Get a copy of the data from a port without popping it.
