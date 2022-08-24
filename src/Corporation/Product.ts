@@ -152,7 +152,6 @@ export class Product {
 
     this.prog += progress;
     for (const pos of Object.keys(employeeProd)) {
-      console.log(`${pos} ${this.creationProd[pos]} += ${(employeeProd[pos] * progress) / 100}`);
       this.creationProd[pos] += (employeeProd[pos] * progress) / 100;
     }
   }
