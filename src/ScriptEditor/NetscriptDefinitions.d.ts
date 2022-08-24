@@ -5413,25 +5413,25 @@ export interface NS {
    * ```ts
    * // NS2:
    * //Copies foo.lit from the helios server to the home computer:
-   * await ns.scp("foo.lit", "home", "helios" );
+   * ns.scp("foo.lit", "home", "helios" );
    *
    * //Tries to copy three files from rothman-uni to home computer:
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
-   * await ns.scp(files,  "home", "rothman-uni");
+   * ns.scp(files,  "home", "rothman-uni");
    * ```
    * @example
    * ```ts
    * //ns2, copies files from home to a target server
    * const server = ns.args[0];
    * const files = ["hack.js","weaken.js","grow.js"];
-   * await ns.scp(files, server, "home");
+   * ns.scp(files, server, "home");
    * ```
    * @param files - Filename or an array of filenames of script/literature files to copy.
-   * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
    * @param destination - Host of the destination server, which is the server to which the file will be copied.
-   * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
+   * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
+   * @returns True if the file is successfully copied over and false otherwise. If the files argument is an array then this function will return false if any of the operations failed.
    */
-  scp(files: string | string[], destination: string, source?: string): Promise<boolean>;
+  scp(files: string | string[], destination: string, source?: string): boolean;
 
   /**
    * List files on a server.
@@ -5971,20 +5971,20 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * This function can be used to write data to a text file (.txt).
+   * This function can be used to write data to a text file (.txt) or a script (.js or .script).
    *
-   * This function will write data to that text file. If the specified text file does not exist,
+   * This function will write data to that file. If the specified file does not exist,
    * then it will be created. The third argument mode, defines how the data will be written to
-   * the text file. If *mode is set to “w”, then the data is written in “write” mode which means
-   * that it will overwrite all existing data on the text file. If mode is set to any other value
+   * the file. If *mode is set to “w”, then the data is written in “write” mode which means
+   * that it will overwrite all existing data on the file. If mode is set to any other value
    * then the data will be written in “append” mode which means that the data will be added at the
-   * end of the text file.
+   * end of the file.
    *
-   * @param handle - Filename of the text file that will be written to.
+   * @param handle - Filename to be written to.
    * @param data - Data to write.
-   * @param mode - Defines the write mode. Only valid when writing to text files.
+   * @param mode - Defines the write mode.
    */
-  write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): Promise<void>;
+  write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): void;
 
   /**
    * Attempt to write to a port.

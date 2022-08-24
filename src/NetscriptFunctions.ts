@@ -1465,47 +1465,42 @@ const base: InternalAPI<NS> = {
     },
   write:
     (ctx: NetscriptContext) =>
-    (_port: unknown, _data: unknown = "", _mode: unknown = "a"): void => {
-      const port = helpers.string(ctx, "port", _port);
+    (_handle: unknown, _data: unknown = "", _mode: unknown = "a"): void => {
+      let fn = helpers.string(ctx, "handle", _handle);
       const data = helpers.string(ctx, "data", _data);
       const mode = helpers.string(ctx, "mode", _mode);
-      if (isString(port)) {
-        // Write to script or text file
-        let fn = port;
-        if (!isValidFilePath(fn)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
+      if (!isValidFilePath(fn)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
 
-        if (fn.lastIndexOf("/") === 0) fn = removeLeadingSlash(fn);
+      if (fn.lastIndexOf("/") === 0) fn = removeLeadingSlash(fn);
 
-        const server = helpers.getServer(ctx, ctx.workerScript.hostname);
+      const server = helpers.getServer(ctx, ctx.workerScript.hostname);
 
-        if (isScriptFilename(fn)) {
-          // Write to script
-          let script = ctx.workerScript.getScriptOnServer(fn, server);
-          if (script == null) {
-            // Create a new script
-            script = new Script(Player, fn, String(data), server.hostname, server.scripts);
-            server.scripts.push(script);
-            return script.updateRamUsage(Player, server.scripts);
-          }
-          mode === "w" ? (script.code = String(data)) : (script.code += data);
+      if (isScriptFilename(fn)) {
+        // Write to script
+        let script = ctx.workerScript.getScriptOnServer(fn, server);
+        if (script == null) {
+          // Create a new script
+          script = new Script(Player, fn, String(data), server.hostname, server.scripts);
+          server.scripts.push(script);
           return script.updateRamUsage(Player, server.scripts);
-        } else {
-          // Write to text file
-          const txtFile = getTextFile(fn, server);
-          if (txtFile == null) {
-            createTextFile(fn, String(data), server);
-            return;
-          }
-          if (mode === "w") {
-            txtFile.write(String(data));
-          } else {
-            txtFile.append(String(data));
-          }
         }
-        return;
+        mode === "w" ? (script.code = String(data)) : (script.code += data);
+        return script.updateRamUsage(Player, server.scripts);
       } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
+        // Write to text file
+        if (!fn.endsWith(".txt")) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: ${fn}`);
+        const txtFile = getTextFile(fn, server);
+        if (txtFile == null) {
+          createTextFile(fn, String(data), server);
+          return;
+        }
+        if (mode === "w") {
+          txtFile.write(String(data));
+        } else {
+          txtFile.append(String(data));
+        }
       }
+      return;
     },
   tryWritePort:
     (ctx: NetscriptContext) =>
