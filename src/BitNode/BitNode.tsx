@@ -115,8 +115,8 @@ BitNodes["BitNode3"] = new BitNode(
       <br />
       Destroying this BitNode will give you Source-File 3, or if you already have this Source-File it will upgrade its
       level up to a maximum of 3. This Source-File lets you create corporations on other BitNodes (although some
-      BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers
-      by:
+      BitNodes will disable this mechanic) and level 3 permanently unlocks the full API. 
+      This Source-File also increases your charisma and company salary multipliers by:
       <br />
       Level 1: 8%
       <br />
@@ -144,7 +144,13 @@ BitNodes["BitNode4"] = new BitNode(
       <br />
       Destroying this BitNode will give you Source-File 4, or if you already have this Source-File it will upgrade its
       level up to a maximum of 3. This Source-File lets you access and use the Singularity Functions in other BitNodes.
-      Each level of this Source-File reduces the RAM cost of singularity functions.
+      Each level of this Source-File reduces the RAM cost of singularity functions:
+      <br />
+      Level 1: 16x
+      <br />
+      Level 2: 6x
+      <br />
+      Level 3: 1x
     </>
   ),
 );
@@ -339,7 +345,7 @@ BitNodes["BitNode10"] = new BitNode(
       achieved immortality - at least for those that could afford it.
       <br />
       <br />
-      This BitNode unlocks Sleeve technology. Sleeve technology allows you to:
+      This BitNode unlocks Sleeve and grafting technologies. Sleeve technology allows you to:
       <br />
       <br />
       1. Grafting: Visit VitaLife in New Tokyo to be able to obtain Augmentations without needing to install
@@ -348,8 +354,11 @@ BitNodes["BitNode10"] = new BitNode(
       synchronously.
       <br />
       <br />
+      Grafting technology allows you to graft Augmentations, which is an alternative way of installing Augmentations.
+      <br />
+      <br />
       Destroying this BitNode will give you Source-File 10, or if you already have this Source-File it will upgrade its
-      level up to a maximum of 3. This Source-File unlocks Sleeve technology in other BitNodes. Each level of this
+      level up to a maximum of 3. This Source-File unlocks Sleeve technology, and the Grafting API in other BitNodes. Each level of this
       Source-File also grants you a Duplicate Sleeve
     </>
   ),
