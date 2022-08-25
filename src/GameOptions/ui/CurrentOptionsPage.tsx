@@ -379,7 +379,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
           text editor and then upload files to the home server.
         </Typography>
         <Typography>
-          <Link href="#" target="_blank">
+          <Link href="https://github.com/danielyxie/bitburner/blob/dev/doc/source/remoteapi.rst" target="_blank">
             Documentation
           </Link>
         </Typography>
