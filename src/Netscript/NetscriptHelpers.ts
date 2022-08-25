@@ -554,7 +554,7 @@ function gangMember(ctx: NetscriptContext, m: unknown): GangMember {
 }
 
 function gangTask(ctx: NetscriptContext, t: unknown): GangMemberTask {
-  if (!roughlyIs(new GangMemberTask("", "", false, false, {}), t))
+  if (!roughlyIs(new GangMemberTask("", "", false, false, { hackWeight: 100 }), t))
     throw makeRuntimeErrorMsg(ctx, `task should be a GangMemberTask.`);
   return t as GangMemberTask;
 }
