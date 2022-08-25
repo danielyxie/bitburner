@@ -7358,5 +7358,5 @@ interface AutocompleteData {
   servers: string[];
   scripts: string[];
   txts: string[];
-  flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
+  flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg | string[] };
 }
