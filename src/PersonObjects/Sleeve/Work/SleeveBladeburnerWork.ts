@@ -5,6 +5,8 @@ import { applySleeveGains, Work, WorkType } from "./Work";
 import { CONSTANTS } from "../../../Constants";
 import { GeneralActions } from "../../../Bladeburner/data/GeneralActions";
 import { WorkStats } from "../../../Work/WorkStats";
+import { Contract } from "src/Bladeburner/Contract";
+import { Contracts } from "src/Bladeburner/data/Contracts";
 
 interface SleeveBladeburnerWorkParams {
   type: string;
@@ -54,13 +56,14 @@ export class SleeveBladeburnerWork extends Work {
           return 0;
         }
       }
-      player.bladeburner.completeAction(player, sleeve, actionIdent, false);
+      const retValue = player.bladeburner.completeAction(player, sleeve, actionIdent, false);
       let exp: WorkStats | undefined;
       if (this.actionType === "General") {
         exp = GeneralActions[this.actionName]?.exp;
         if (!exp) throw new Error(`Somehow there was no exp for action ${this.actionType} ${this.actionName}`);
         applySleeveGains(player, sleeve, exp, 1);
       }
+      if (retValue.money>0)player.gainMoney(retValue.money,"sleeves")
       this.cyclesWorked -= this.cyclesNeeded(player, sleeve);
     }
     return 0;
