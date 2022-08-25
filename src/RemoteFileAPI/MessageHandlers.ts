@@ -93,7 +93,7 @@ export const RFARequestHandler: Record<string, (message: RFAMessage) => void | R
       ...server.scripts.map((scr): string => scr.filename),
     ];
 
-    return new RFAMessage({ result: JSON.stringify(fileNameList), id: msg.id });
+    return new RFAMessage({ result: fileNameList, id: msg.id });
   },
 
   getAllFiles: function (msg: RFAMessage): RFAMessage {
@@ -111,7 +111,7 @@ export const RFARequestHandler: Record<string, (message: RFAMessage) => void | R
       }),
     ];
 
-    return new RFAMessage({ result: JSON.stringify(fileList), id: msg.id });
+    return new RFAMessage({ result: fileList, id: msg.id });
   },
 
   calculateRam: function (msg: RFAMessage): RFAMessage {
