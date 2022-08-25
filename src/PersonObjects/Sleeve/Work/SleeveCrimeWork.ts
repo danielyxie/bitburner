@@ -64,7 +64,7 @@ export class SleeveCrimeWork extends Work {
   APICopy(): Record<string, unknown> {
     return {
       type: this.type,
-      name: this.crimeType
+      crimeType : this.crimeType,
     };
   }
 

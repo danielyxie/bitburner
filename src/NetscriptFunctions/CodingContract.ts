@@ -37,7 +37,7 @@ export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
           throw new Error("The answer provided was not a number, string, or array");
 
         // Convert answer to string.
-        const answerStr = typeof answer === 'string' ? answer : JSON.stringify(answer);
+        const answerStr = typeof answer === "string" ? answer : JSON.stringify(answer);
         const creward = contract.reward;
         if (creward === null) throw new Error("Somehow solved a contract that didn't have a reward");
 

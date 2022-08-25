@@ -101,7 +101,7 @@ export function EarningsElement(props: IProps): React.ReactElement {
   if (isSleeveCrimeWork(props.sleeve.currentWork)) {
     const gains = props.sleeve.currentWork.getExp();
     data = [
-      [`Money:`, <Money money={5 * gains.money * BitNodeMultipliers.CrimeMoney} />],
+      [`Money:`, <Money money={5 * gains.money} />],
       [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * gains.hackExp * BitNodeMultipliers.CrimeExpGain)}`],
       [`Strength Exp:`, `${numeralWrapper.formatExp(5 * gains.strExp * BitNodeMultipliers.CrimeExpGain)}`],
       [`Defense Exp:`, `${numeralWrapper.formatExp(5 * gains.defExp * BitNodeMultipliers.CrimeExpGain)}`],
@@ -114,25 +114,25 @@ export function EarningsElement(props: IProps): React.ReactElement {
     const rates = props.sleeve.currentWork.calculateRates(player, props.sleeve);
     data = [
       [`Money:`, <MoneyRate money={5 * rates.money} />],
-      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp * BitNodeMultipliers.ClassGymExpGain)} / sec`],
-      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp * BitNodeMultipliers.ClassGymExpGain)} / sec`],
-      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp * BitNodeMultipliers.ClassGymExpGain)} / sec`],
-      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp * BitNodeMultipliers.ClassGymExpGain)} / sec`],
-      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp * BitNodeMultipliers.ClassGymExpGain)} / sec`],
-      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp * BitNodeMultipliers.ClassGymExpGain)} / sec`],
+      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp)} / sec`],
+      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp)} / sec`],
+      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp)} / sec`],
+      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp)} / sec`],
+      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp)} / sec`],
+      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp)} / sec`],
     ];
   }
   if (isSleeveFactionWork(props.sleeve.currentWork)) {
     const rates = props.sleeve.currentWork.getExpRates(props.sleeve);
     const repGain = props.sleeve.currentWork.getReputationRate(props.sleeve);
     data = [
-      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp * BitNodeMultipliers.FactionWorkExpGain)} / sec`],
-      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp * BitNodeMultipliers.FactionWorkExpGain)} / sec`],
-      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp * BitNodeMultipliers.FactionWorkExpGain)} / sec`],
-      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp * BitNodeMultipliers.FactionWorkExpGain)} / sec`],
-      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp * BitNodeMultipliers.FactionWorkExpGain)} / sec`],
-      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp * BitNodeMultipliers.FactionWorkExpGain)} / sec`],
-      [`Reputation:`, <ReputationRate reputation={5 * repGain * BitNodeMultipliers.FactionWorkRepGain} />],
+      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp)} / sec`],
+      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp)} / sec`],
+      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp)} / sec`],
+      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp)} / sec`],
+      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp)} / sec`],
+      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp)} / sec`],
+      [`Reputation:`, <ReputationRate reputation={repGain} />],
     ];
   }
 
@@ -140,12 +140,12 @@ export function EarningsElement(props: IProps): React.ReactElement {
     const rates = props.sleeve.currentWork.getGainRates(player, props.sleeve);
     data = [
       [`Money:`, <MoneyRate money={5 * rates.money * BitNodeMultipliers.CompanyWorkMoney} />],
-      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp * BitNodeMultipliers.CompanyWorkExpGain)} / sec`],
-      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp * BitNodeMultipliers.CompanyWorkExpGain)} / sec`],
-      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp * BitNodeMultipliers.CompanyWorkExpGain)} / sec`],
-      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp * BitNodeMultipliers.CompanyWorkExpGain)} / sec`],
-      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp * BitNodeMultipliers.CompanyWorkExpGain)} / sec`],
-      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp * BitNodeMultipliers.CompanyWorkExpGain)} / sec`],
+      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp)} / sec`],
+      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * rates.strExp)} / sec`],
+      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * rates.defExp)} / sec`],
+      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * rates.dexExp)} / sec`],
+      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * rates.agiExp)} / sec`],
+      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * rates.chaExp)} / sec`],
       [`Reputation:`, <ReputationRate reputation={5 * rates.reputation} />],
     ];
   }

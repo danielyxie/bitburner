@@ -5,8 +5,6 @@ import { applySleeveGains, Work, WorkType } from "./Work";
 import { CONSTANTS } from "../../../Constants";
 import { GeneralActions } from "../../../Bladeburner/data/GeneralActions";
 import { WorkStats } from "../../../Work/WorkStats";
-import { Contract } from "src/Bladeburner/Contract";
-import { Contracts } from "src/Bladeburner/data/Contracts";
 
 interface SleeveBladeburnerWorkParams {
   type: string;
@@ -38,20 +36,20 @@ export class SleeveBladeburnerWork extends Work {
     this.cyclesWorked += cycles;
     const actionIdent = player.bladeburner.getActionIdFromTypeAndName(this.actionType, this.actionName);
     if (!actionIdent) throw new Error(`Error getting ${this.actionName} action`);
-    if (this.actionType === "Contracts"){
-      const action=player.bladeburner.getActionObject(actionIdent);
+    if (this.actionType === "Contracts") {
+      const action = player.bladeburner.getActionObject(actionIdent);
       if (!action) throw new Error(`Error getting ${this.actionName} action object`);
-      if (action.count<=0){
+      if (action.count <= 0) {
         sleeve.stopWork(player);
         return 0;
       }
     }
 
     while (this.cyclesWorked > this.cyclesNeeded(player, sleeve)) {
-      if (this.actionType === "Contracts"){
-        const action=player.bladeburner.getActionObject(actionIdent);
+      if (this.actionType === "Contracts") {
+        const action = player.bladeburner.getActionObject(actionIdent);
         if (!action) throw new Error(`Error getting ${this.actionName} action object`);
-        if (action.count<=0){
+        if (action.count <= 0) {
           sleeve.stopWork(player);
           return 0;
         }
@@ -63,7 +61,7 @@ export class SleeveBladeburnerWork extends Work {
         if (!exp) throw new Error(`Somehow there was no exp for action ${this.actionType} ${this.actionName}`);
         applySleeveGains(player, sleeve, exp, 1);
       }
-      if (retValue.money>0)player.gainMoney(retValue.money,"sleeves")
+      if (retValue.money > 0) player.gainMoney(retValue.money, "sleeves");
       this.cyclesWorked -= this.cyclesNeeded(player, sleeve);
     }
     return 0;
