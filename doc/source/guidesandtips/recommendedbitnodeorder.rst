@@ -127,7 +127,7 @@ Source-File
     Each level of this Source-File will reduce RAM costs:
 
     * Level 1: 16x
-    * Level 2: 6x
+    * Level 2: 4x
     * Level 3: 1x
 
 Difficulty:
