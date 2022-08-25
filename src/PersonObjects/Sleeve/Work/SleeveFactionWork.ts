@@ -13,6 +13,7 @@ import {
   getHackingWorkRepGain,
 } from "../../../PersonObjects/formulas/reputation";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
 
 interface SleeveFactionWorkParams {
   factionWorkType: FactionWorkType;
