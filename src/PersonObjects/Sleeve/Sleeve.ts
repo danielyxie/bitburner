@@ -485,7 +485,7 @@ export class Sleeve extends Person {
 
     this.hp.current -= amt;
     if (this.hp.current <= 0) {
-      this.shock = Math.min(1, this.shock - 0.5);
+      this.shock = Math.max(0, this.shock - 0.5);
       this.hp.current = this.hp.max;
       return true;
     } else {
