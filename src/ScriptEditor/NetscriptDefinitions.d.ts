@@ -1514,7 +1514,7 @@ export interface Singularity {
    * @param universityName - Name of university. You must be in the correct city for whatever university you specify.
    * @param courseName - Name of course.
    * @param focus - Acquire player focus on this class. Optional. Defaults to true.
-   * @returns True if actions is successfully started, false otherwise.
+   * @returns True if action is successfully started, false otherwise.
    */
   universityCourse(universityName: string, courseName: string, focus?: boolean): boolean;
 
@@ -2369,7 +2369,7 @@ export interface Hacknet {
    *
    * Returns the number of Hacknet Nodes you own.
    *
-   * @returns number of hacknet nodes.
+   * @returns Number of hacknet nodes.
    */
   numNodes(): number;
 
@@ -2378,7 +2378,7 @@ export interface Hacknet {
    * @remarks
    * RAM cost: 0 GB
    *
-   * @returns maximum number of hacknet nodes.
+   * @returns Maximum number of hacknet nodes.
    */
   maxNumNodes(): number;
 
@@ -2453,13 +2453,13 @@ export interface Hacknet {
    * So this is equivalent to multiplying the Node’s RAM by 2 n.
    *
    * Returns true if the Hacknet Node’s RAM is successfully upgraded n times
-   * or if it is upgraded some positive number of times and the Node reaches it max RAM.
+   * or if it is upgraded some positive number of times and the Node reaches its max RAM.
    *
    * Returns false otherwise.
    *
    * @param index - Index/Identifier of Hacknet Node.
    * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
-   * @returns True if the Hacknet Node’s ram is successfully upgraded, false otherwise.
+   * @returns True if the Hacknet Node’s RAM is successfully upgraded, false otherwise.
    */
   upgradeRam(index: number, n: number): boolean;
 
@@ -2497,7 +2497,7 @@ export interface Hacknet {
    *
    * @param index - Index/Identifier of Hacknet Node.
    * @param n - Number of cache levels to purchase. Must be positive. Rounded to nearest integer.
-   * @returns True if the Hacknet Node’s cores are successfully purchased, false otherwise.
+   * @returns True if the Hacknet Node’s cache level is successfully upgraded, false otherwise.
    */
   upgradeCache(index: number, n: number): boolean;
 
@@ -2525,11 +2525,11 @@ export interface Hacknet {
    * Returns the cost of upgrading the RAM of the specified Hacknet Node n times.
    *
    * If an invalid value for n is provided, then this function returns 0.
-   * If the specified Hacknet Node is already at max level, then Infinity is returned.
+   * If the specified Hacknet Node already has max RAM, then Infinity is returned.
    *
    * @param index - Index/Identifier of Hacknet Node.
    * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
-   * @returns Cost of upgrading the specified Hacknet Node's ram.
+   * @returns Cost of upgrading the specified Hacknet Node's RAM.
    */
   getRamUpgradeCost(index: number, n: number): number;
 
@@ -2654,7 +2654,7 @@ export interface Hacknet {
    * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.
    * @param count - Number of upgrades to buy at once. Defaults to 1 if not specified.
    * For compatability reasons, upgTarget must be specified, even if it is not used, in order to specify count.
-   * @returns True if the upgrade is successfully purchased, and false otherwise..
+   * @returns True if the upgrade is successfully purchased, and false otherwise.
    */
   spendHashes(upgName: string, upgTarget?: string, count?: number): boolean;
 
@@ -3218,7 +3218,7 @@ export interface CodingContract {
    *
    * @param answer - Solution for the contract.
    * @param filename - Filename of the contract.
-   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
    */
@@ -3238,7 +3238,7 @@ export interface CodingContract {
    * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
    *
    * @param filename - Filename of the contract.
-   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Name describing the type of problem posed by the Coding Contract.
    */
   getContractType(filename: string, host?: string): string;
@@ -3251,7 +3251,7 @@ export interface CodingContract {
    * Get the full text description for the problem posed by the Coding Contract.
    *
    * @param filename - Filename of the contract.
-   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Contract’s text description.
    */
   getDescription(filename: string, host?: string): string;
@@ -3263,24 +3263,24 @@ export interface CodingContract {
    *
    * Get the data associated with the specific Coding Contract.
    * Note that this is not the same as the contract’s description.
-   * This is just the data that the contract wants you to act on in order to solve
+   * This is just the data that the contract wants you to act on in order to solve the contract.
    *
    * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-   * @returns The specified contract’s data, data type depends on contract type.;
+   * @returns The specified contract’s data, data type depends on contract type.
    */
   getData(filename: string, host?: string): CodingContractData;
 
   /**
-   * Get the number of attempt remaining.
+   * Get the number of attempts remaining.
    * @remarks
    * RAM cost: 2 GB
    *
    * Get the number of tries remaining on the contract before it self-destructs.
    *
    * @param filename - Filename of the contract.
-   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-   * @returns How many attempts are remaining for the contract;
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @returns How many attempts are remaining for the contract.
    */
   getNumTriesRemaining(filename: string, host?: string): number;
 }
