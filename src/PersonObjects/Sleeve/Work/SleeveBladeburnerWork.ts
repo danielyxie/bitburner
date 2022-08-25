@@ -34,9 +34,26 @@ export class SleeveBladeburnerWork extends Work {
   process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
     if (!player.bladeburner) throw new Error("sleeve doing blade work without being a member");
     this.cyclesWorked += cycles;
+    const actionIdent = player.bladeburner.getActionIdFromTypeAndName(this.actionType, this.actionName);
+    if (!actionIdent) throw new Error(`Error getting ${this.actionName} action`);
+    if (this.actionType === "Contracts"){
+      const action=player.bladeburner.getActionObject(actionIdent);
+      if (!action) throw new Error(`Error getting ${this.actionName} action object`);
+      if (action.count<=0){
+        sleeve.stopWork(player);
+        return 0;
+      }
+    }
+
     while (this.cyclesWorked > this.cyclesNeeded(player, sleeve)) {
-      const actionIdent = player.bladeburner.getActionIdFromTypeAndName(this.actionType, this.actionName);
-      if (!actionIdent) throw new Error(`Error getting ${this.actionName} action`);
+      if (this.actionType === "Contracts"){
+        const action=player.bladeburner.getActionObject(actionIdent);
+        if (!action) throw new Error(`Error getting ${this.actionName} action object`);
+        if (action.count<=0){
+          sleeve.stopWork(player);
+          return 0;
+        }
+      }
       player.bladeburner.completeAction(player, sleeve, actionIdent, false);
       let exp: WorkStats | undefined;
       if (this.actionType === "General") {
