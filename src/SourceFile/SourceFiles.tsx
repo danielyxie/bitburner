@@ -41,7 +41,8 @@ SourceFiles["SourceFile3"] = new SourceFile(
   (
     <>
       This Source-File lets you create corporations on other BitNodes (although some BitNodes will disable this
-      mechanic) and level 3 permanently unlocks the full API. This Source-File also increases your charisma and company salary multipliers by:
+      mechanic) and level 3 permanently unlocks the full API. This Source-File also increases your charisma and company
+      salary multipliers by:
       <br />
       Level 1: 8%
       <br />

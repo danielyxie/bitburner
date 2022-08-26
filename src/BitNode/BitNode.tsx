@@ -115,8 +115,8 @@ BitNodes["BitNode3"] = new BitNode(
       <br />
       Destroying this BitNode will give you Source-File 3, or if you already have this Source-File it will upgrade its
       level up to a maximum of 3. This Source-File lets you create corporations on other BitNodes (although some
-      BitNodes will disable this mechanic) and level 3 permanently unlocks the full API. 
-      This Source-File also increases your charisma and company salary multipliers by:
+      BitNodes will disable this mechanic) and level 3 permanently unlocks the full API. This Source-File also increases
+      your charisma and company salary multipliers by:
       <br />
       Level 1: 8%
       <br />
@@ -148,7 +148,7 @@ BitNodes["BitNode4"] = new BitNode(
       <br />
       Level 1: 16x
       <br />
-      Level 2: 6x
+      Level 2: 4x
       <br />
       Level 3: 1x
     </>
@@ -358,8 +358,8 @@ BitNodes["BitNode10"] = new BitNode(
       <br />
       <br />
       Destroying this BitNode will give you Source-File 10, or if you already have this Source-File it will upgrade its
-      level up to a maximum of 3. This Source-File unlocks Sleeve technology, and the Grafting API in other BitNodes. Each level of this
-      Source-File also grants you a Duplicate Sleeve
+      level up to a maximum of 3. This Source-File unlocks Sleeve technology, and the Grafting API in other BitNodes.
+      Each level of this Source-File also grants you a Duplicate Sleeve
     </>
   ),
 );
