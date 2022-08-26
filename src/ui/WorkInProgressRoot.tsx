@@ -221,6 +221,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     const crime = player.currentWork.getCrime();
     const completion = (player.currentWork.unitCompleted / crime.time) * 100;
     const gains = player.currentWork.earnings();
+    const successChance = crime.successRate(player);
     workInfo = {
       buttons: {
         cancel: () => {
@@ -232,9 +233,10 @@ export function WorkInProgressRoot(): React.ReactElement {
           player.stopFocusing();
         },
       },
-      title: `You are attempting to ${crime.type}`,
+      title: `You are attempting ${crime.workName}`,
 
       gains: [
+        <Typography>Success chance: {numeralWrapper.formatPercentage(successChance)}</Typography>,
         <Typography>Gains (on success)</Typography>,
         <StatsRow name="Money:" color={Settings.theme.money}>
           <Typography>
