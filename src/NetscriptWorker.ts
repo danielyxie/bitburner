@@ -124,7 +124,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
       const entry = ns[name];
       if (typeof entry === "function") {
         //Async functions need to be wrapped. See JS-Interpreter documentation
-        const asyncFuncs = ["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write", "share", "wget"];
+        const asyncFuncs = ["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "share", "wget"];
 
         if (asyncFuncs.includes(name)) {
           const tempWrapper = function (...args: unknown[]): void {
