@@ -39,6 +39,9 @@ export class Crime {
   // Name of crime
   name = "";
 
+  // Name of crime as it appears on work screen: "You are attempting..."
+  workName = "";
+
   // Milliseconds it takes to attempt the crime
   time = 0;
 
@@ -64,6 +67,7 @@ export class Crime {
 
   constructor(
     name = "",
+    workName = "",
     type: CrimeType,
     time = 0,
     money = 0,
@@ -72,6 +76,7 @@ export class Crime {
     params: IConstructorParams = {},
   ) {
     this.name = name;
+    this.workName = workName;
     this.type = type;
     this.time = time;
     this.money = money;
