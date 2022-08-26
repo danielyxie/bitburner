@@ -250,7 +250,7 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
         checkBladeburnerAccess(ctx);
         const action = getBladeburnerActionObject(ctx, type, name);
         if (level < 1 || level > action.maxLevel) {
-          helpers.makeRuntimeErrorMsg(ctx, `Level must be between 1 and ${action.maxLevel}, is ${level}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Level must be between 1 and ${action.maxLevel}, is ${level}`);
         }
         action.level = level;
       },
