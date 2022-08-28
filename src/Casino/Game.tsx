@@ -11,7 +11,7 @@ export function win(p: IPlayer, n: number): void {
 export function reachedLimit(p: IPlayer): boolean {
   const reached = p.getCasinoWinnings() > gainLimit;
   if (reached) {
-    dialogBoxCreate(<>Alright cheater get out of here. You're not allowed here anymore.</>);
+    dialogBoxCreate("Alright cheater get out of here. You're not allowed here anymore.");
   }
   return reached;
 }
@@ -24,7 +24,7 @@ export class Game<T, U> extends React.Component<T, U> {
   reachedLimit(p: IPlayer): boolean {
     const reached = p.getCasinoWinnings() > gainLimit;
     if (reached) {
-      dialogBoxCreate(<>Alright cheater get out of here. You're not allowed here anymore.</>);
+      dialogBoxCreate("Alright cheater get out of here. You're not allowed here anymore.");
     }
     return reached;
   }

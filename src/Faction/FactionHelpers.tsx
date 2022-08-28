@@ -94,12 +94,9 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       return "You purchased " + aug.name;
     } else if (!Settings.SuppressBuyAugmentationConfirmation) {
       dialogBoxCreate(
-        "You purchased " +
-          aug.name +
-          ". Its enhancements will not take " +
-          "effect until they are installed. To install your augmentations, go to the " +
-          "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
-          "augmentations will now be more expensive.",
+        `You purchased ${aug.name}. Its enhancements will not take effect until they are installed.` +
+          "To install your augmentations, go to the 'Augmentations' tab on the left-hand navigation menu." +
+          "Purchasing additional augmentations will now be more expensive.",
       );
     }
   } else {

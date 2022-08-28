@@ -35,7 +35,7 @@ function travel(p: IPlayer, router: IRouter, to: CityName): void {
 
   p.loseMoney(cost, "other");
   p.travel(to);
-  dialogBoxCreate(<>You are now in {to}!</>);
+  dialogBoxCreate(`You are now in ${to}!`);
   router.toCity();
 }
 

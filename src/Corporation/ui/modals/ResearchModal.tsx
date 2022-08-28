@@ -42,9 +42,7 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
     }
 
     dialogBoxCreate(
-      `Researched ${n.text}. It may take a market cycle ` +
-        `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
-        `the Research apply.`,
+      `Researched ${n.text}. It may take a market cycle (~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of the Research apply.`,
     );
   }
 
