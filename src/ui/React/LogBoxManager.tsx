@@ -159,7 +159,7 @@ function LogWindow(props: IProps): React.ReactElement {
     if (server === null) return;
     const s = findRunningScript(script.filename, script.args, server);
     if (s === null) {
-      startWorkerScript(Player, script, server);
+      startWorkerScript(script, server);
     } else {
       setScript(s);
     }

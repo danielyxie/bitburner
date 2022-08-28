@@ -34,10 +34,8 @@ import { simple as walksimple } from "acorn-walk";
 import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 import { Player } from "./Player";
 import { Terminal } from "./Terminal";
-import { IPlayer } from "./PersonObjects/IPlayer";
 import { ScriptArg } from "./Netscript/ScriptArg";
 import { helpers } from "./Netscript/NetscriptHelpers";
-import { NS } from "./ScriptEditor/NetscriptDefinitions";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -61,10 +59,10 @@ export function prestigeWorkerScripts(): void {
 // JS script promises need a little massaging to have the same guarantees as netscript
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
-function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Promise<void> {
+function startNetscript2Script(workerScript: WorkerScript): Promise<void> {
   workerScript.running = true;
   return new Promise<void>((resolve, reject) => {
-    executeJSScript(player, workerScript.getServer().scripts, workerScript)
+    executeJSScript(Player, workerScript.getServer().scripts, workerScript)
       .then(() => {
         resolve();
       })
@@ -114,111 +112,56 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
     return Promise.resolve();
   }
 
-  const interpreterInitialization = function (int: Interpreter, scope: unknown): void {
-    interface NS1 extends NS {
+  function wrapNS1Layer(int: Interpreter, intLayer: unknown, path: string[] = []) {
+    //TODO: Better typing layers of interpreter scope and ns
+    interface BasicObject {
       [key: string]: any;
     }
-    //Add the Netscript environment
-    const ns = NetscriptFunctions(workerScript) as NS1;
-    for (const name of Object.keys(ns)) {
-      const entry = ns[name];
+    const nsLayer = path.reduce((prev, newPath) => prev[newPath], workerScript.env.vars as BasicObject);
+    for (const [name, entry] of Object.entries(nsLayer)) {
       if (typeof entry === "function") {
-        //Async functions need to be wrapped. See JS-Interpreter documentation
-        const asyncFuncs = ["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "share", "wget"];
-
-        if (asyncFuncs.includes(name)) {
-          const tempWrapper = function (...args: unknown[]): void {
-            const fnArgs = [];
-
-            //All of the Object/array elements are in JSInterpreter format, so
-            //we have to convert them back to native format to pass them to these fns
-            for (let i = 0; i < args.length - 1; ++i) {
-              if (typeof args[i] === "object" || Array.isArray(args[i])) {
-                fnArgs.push(int.pseudoToNative(args[i]));
-              } else {
-                fnArgs.push(args[i]);
-              }
+        // Async functions need to be wrapped. See JS-Interpreter documentation
+        const wrapper = async (...args: unknown[]) => {
+          // This async wrapper is sent a resolver function as an extra arg.
+          // See JSInterpreter.js:3209
+          try {
+            const callback = args.pop() as (value: unknown) => void;
+            const result = await entry(...args.map(int.pseudoToNative));
+            return callback(int.nativeToPseudo(result));
+          } catch (e: unknown) {
+            // TODO: Unify error handling, this was stolen from previous async handler
+            if (typeof e === "string") {
+              console.error(e);
+              const errorTextArray = e.split("|DELIMITER|");
+              const hostname = errorTextArray[1];
+              const scriptName = errorTextArray[2];
+              const errorMsg = errorTextArray[3];
+              let msg = `${scriptName}@${hostname}<br>`;
+              msg += "<br>";
+              msg += errorMsg;
+              dialogBoxCreate(msg);
+              workerScript.env.stopFlag = true;
+              workerScript.running = false;
+              killWorkerScript(workerScript);
+              return;
             }
-            const callb = args[args.length - 1];
-            const fnPromise = entry(...fnArgs);
-            fnPromise
-              .then(function (res: unknown) {
-                if (typeof callb === "function") {
-                  callb(res);
-                }
-              })
-              .catch(function (err: unknown) {
-                if (typeof err === "string") {
-                  console.error(err);
-                  const errorTextArray = err.split("|DELIMITER|");
-                  const hostname = errorTextArray[1];
-                  const scriptName = errorTextArray[2];
-                  const errorMsg = errorTextArray[3];
-                  let msg = `${scriptName}@${hostname}<br>`;
-                  msg += "<br>";
-                  msg += errorMsg;
-                  dialogBoxCreate(msg);
-                  workerScript.env.stopFlag = true;
-                  workerScript.running = false;
-                  killWorkerScript(workerScript);
-                  return Promise.resolve();
-                }
-              });
-          };
-          int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
-        } else if (
-          name === "sprintf" ||
-          name === "vsprintf" ||
-          name === "scp" ||
-          name == "write" ||
-          name === "tryWritePort" ||
-          name === "run" ||
-          name === "exec"
-        ) {
-          const tempWrapper = function (...args: unknown[]): void {
-            const fnArgs = [];
-
-            //All of the Object/array elements are in JSInterpreter format, so
-            //we have to convert them back to native format to pass them to these fns
-            for (let i = 0; i < args.length; ++i) {
-              if (typeof args[i] === "object" || Array.isArray(args[i])) {
-                fnArgs.push(int.pseudoToNative(args[i]));
-              } else {
-                fnArgs.push(args[i]);
-              }
-            }
-
-            return entry(...fnArgs);
-          };
-          int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
-        } else {
-          const tempWrapper = function (...args: unknown[]): unknown {
-            const res = entry(...args);
-
-            if (res == null) {
-              return res;
-            } else if (res.constructor === Array || res === Object(res)) {
-              //Objects and Arrays must be converted to the interpreter's format
-              return int.nativeToPseudo(res);
-            } else {
-              return res;
-            }
-          };
-          int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
-        }
+          }
+        };
+        int.setProperty(intLayer, name, int.createAsyncFunction(wrapper));
+      } else if (Array.isArray(entry) || typeof entry !== "object"){
+        // args, strings on enums, etc
+        int.setProperty(intLayer, name, int.nativeToPseudo(entry));
       } else {
-        //bladeburner, or anything else
-        int.setProperty(scope, name, int.nativeToPseudo(entry));
+        // new object layer, e.g. bladeburner
+        int.setProperty(intLayer, name, int.nativeToPseudo({}));
+        wrapNS1Layer(int, (intLayer as BasicObject).properties[name], [...path, name]);
       }
     }
-
-    //Add the arguments
-    int.setProperty(scope, "args", int.nativeToPseudo(workerScript.args));
   };
 
   let interpreter: Interpreter;
   try {
-    interpreter = new Interpreter(codeWithImports, interpreterInitialization, codeLineOffset);
+    interpreter = new Interpreter(codeWithImports, wrapNS1Layer, codeLineOffset);
   } catch (e: unknown) {
     dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + String(e));
     workerScript.env.stopFlag = true;
@@ -422,12 +365,11 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): { c
  * it is active
  */
 export function startWorkerScript(
-  player: IPlayer,
   runningScript: RunningScript,
   server: BaseServer,
   parent?: WorkerScript,
 ): number {
-  if (createAndAddWorkerScript(player, runningScript, server, parent)) {
+  if (createAndAddWorkerScript(runningScript, server, parent)) {
     // Push onto runningScripts.
     // This has to come after createAndAddWorkerScript() because that fn updates RAM usage
     server.runScript(runningScript);
@@ -448,7 +390,6 @@ export function startWorkerScript(
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
 function createAndAddWorkerScript(
-  player: IPlayer,
   runningScriptObj: RunningScript,
   server: BaseServer,
   parent?: WorkerScript,
@@ -496,7 +437,7 @@ function createAndAddWorkerScript(
   // Start the script's execution
   let scriptExecution: Promise<void> | null = null; // Script's resulting promise
   if (workerScript.name.endsWith(".js")) {
-    scriptExecution = startNetscript2Script(player, workerScript);
+    scriptExecution = startNetscript2Script(workerScript);
   } else {
     scriptExecution = startNetscript1Script(workerScript);
     if (!(scriptExecution instanceof Promise)) {
@@ -583,7 +524,7 @@ export function updateOnlineScriptTimes(numCycles = 1): void {
  * Called when the game is loaded. Loads all running scripts (from all servers)
  * into worker scripts so that they will start running
  */
-export function loadAllRunningScripts(player: IPlayer): void {
+export function loadAllRunningScripts(): void {
   const skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
   if (skipScriptLoad) {
     Terminal.warn("Skipped loading player scripts during startup");
@@ -604,7 +545,7 @@ export function loadAllRunningScripts(player: IPlayer): void {
     } else {
       for (let j = 0; j < server.runningScripts.length; ++j) {
         const fileName = server.runningScripts[j].filename;
-        createAndAddWorkerScript(player, server.runningScripts[j], server);
+        createAndAddWorkerScript(server.runningScripts[j], server);
 
         if (!server.runningScripts[j]) {
           // createAndAddWorkerScript can modify the server.runningScripts array if a script is invalid
@@ -623,7 +564,6 @@ export function loadAllRunningScripts(player: IPlayer): void {
  * Run a script from inside another script (run(), exec(), spawn(), etc.)
  */
 export function runScriptFromScript(
-  player: IPlayer,
   caller: string,
   server: BaseServer,
   scriptname: string,
@@ -698,7 +638,7 @@ export function runScriptFromScript(
     runningScriptObj.threads = threads;
     runningScriptObj.server = server.hostname;
 
-    return startWorkerScript(player, runningScriptObj, server, workerScript);
+    return startWorkerScript(runningScriptObj, server, workerScript);
   }
 
   workerScript.log(caller, () => `Could not find script '${scriptname}' on '${server.hostname}'`);

@@ -92,7 +92,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
         const runningScriptObj = new RunningScript(script, []); // No args
         runningScriptObj.threads = 1; // Only 1 thread
-        startWorkerScript(player, runningScriptObj, home);
+        startWorkerScript(runningScriptObj, home);
       }
     }
   };
