@@ -299,6 +299,7 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
       Sorry :(`,
     );
   }
+  throw new ScriptDeath(ws);
 }
 
 /** Validates the input v as being a CityName. Throws an error if it is not. */
