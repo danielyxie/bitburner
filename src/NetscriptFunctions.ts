@@ -745,7 +745,6 @@ const base: InternalAPI<NS> = {
 
       helpers.log(ctx, () => `Will execute '${scriptname}' in ${spawnDelay} seconds`);
 
-      ctx.workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
       if (killWorkerScript(ctx.workerScript)) {
         helpers.log(ctx, () => "Exiting...");
       }
@@ -820,7 +819,6 @@ const base: InternalAPI<NS> = {
       return scriptsKilled > 0;
     },
   exit: (ctx: NetscriptContext) => (): void => {
-    ctx.workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
     if (killWorkerScript(ctx.workerScript)) {
       helpers.log(ctx, () => "Exiting...");
     } else {

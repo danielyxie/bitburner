@@ -15,7 +15,6 @@ import { workerScripts } from "../../Netscript/WorkerScripts";
 import { startWorkerScript } from "../../NetscriptWorker";
 import { GetServer } from "../../Server/AllServers";
 import { findRunningScript } from "../../Script/ScriptHelpers";
-import { Player } from "../../Player";
 import { debounce } from "lodash";
 import { Settings } from "../../Settings/Settings";
 import { ANSIITypography } from "./ANSIITypography";

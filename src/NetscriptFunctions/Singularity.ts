@@ -235,8 +235,6 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           runAfterReset(cbScript);
         }, 0);
 
-        // Prevent ctx.workerScript from "finishing execution naturally"
-        ctx.workerScript.running = false;
         killWorkerScript(ctx.workerScript);
       },
     installAugmentations: (ctx: NetscriptContext) =>
@@ -255,7 +253,6 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           runAfterReset(cbScript);
         }, 0);
 
-        ctx.workerScript.running = false; // Prevent ctx.workerScript from "finishing execution naturally"
         killWorkerScript(ctx.workerScript);
         return true;
       },

@@ -60,7 +60,6 @@ export function prestigeWorkerScripts(): void {
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
 function startNetscript2Script(workerScript: WorkerScript): Promise<void> {
-  workerScript.running = true;
   return new Promise<void>((resolve, reject) => {
     executeJSScript(Player, workerScript.getServer().scripts, workerScript)
       .then(() => {
@@ -96,7 +95,6 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<void> {
 
 function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   const code = workerScript.code;
-  workerScript.running = true;
 
   //Process imports
   let codeWithImports, codeLineOffset;
@@ -107,7 +105,6 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   } catch (e: unknown) {
     dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + String(e));
     workerScript.env.stopFlag = true;
-    workerScript.running = false;
     killWorkerScript(workerScript);
     return Promise.resolve();
   }
@@ -141,14 +138,13 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
               msg += errorMsg;
               dialogBoxCreate(msg);
               workerScript.env.stopFlag = true;
-              workerScript.running = false;
               killWorkerScript(workerScript);
               return;
             }
           }
         };
         int.setProperty(intLayer, name, int.createAsyncFunction(wrapper));
-      } else if (Array.isArray(entry) || typeof entry !== "object"){
+      } else if (Array.isArray(entry) || typeof entry !== "object") {
         // args, strings on enums, etc
         int.setProperty(intLayer, name, int.nativeToPseudo(entry));
       } else {
@@ -157,7 +153,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
         wrapNS1Layer(int, (intLayer as BasicObject).properties[name], [...path, name]);
       }
     }
-  };
+  }
 
   let interpreter: Interpreter;
   try {
@@ -165,7 +161,6 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   } catch (e: unknown) {
     dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + String(e));
     workerScript.env.stopFlag = true;
-    workerScript.running = false;
     killWorkerScript(workerScript);
     return Promise.resolve();
   }
@@ -364,11 +359,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): { c
  * corresponding WorkerScript), and add the RunningScript to the server on which
  * it is active
  */
-export function startWorkerScript(
-  runningScript: RunningScript,
-  server: BaseServer,
-  parent?: WorkerScript,
-): number {
+export function startWorkerScript(runningScript: RunningScript, server: BaseServer, parent?: WorkerScript): number {
   if (createAndAddWorkerScript(runningScript, server, parent)) {
     // Push onto runningScripts.
     // This has to come after createAndAddWorkerScript() because that fn updates RAM usage
@@ -389,11 +380,7 @@ export function startWorkerScript(
  * @param {Server} server - Server on which the script is to be run
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
-function createAndAddWorkerScript(
-  runningScriptObj: RunningScript,
-  server: BaseServer,
-  parent?: WorkerScript,
-): boolean {
+function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseServer, parent?: WorkerScript): boolean {
   // Update server's ram usage
   let threads = 1;
   if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
@@ -449,14 +436,11 @@ function createAndAddWorkerScript(
   // running status to false
   scriptExecution
     .then(function () {
-      workerScript.running = false;
       workerScript.env.stopFlag = true;
       // On natural death, the earnings are transfered to the parent if it still exists.
-      if (parent !== undefined) {
-        if (parent.running) {
-          parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
-          parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
-        }
+      if (parent !== undefined && !parent.env.stopFlag) {
+        parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
+        parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
       }
 
       killWorkerScript(workerScript);
