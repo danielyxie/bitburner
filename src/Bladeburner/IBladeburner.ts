@@ -116,6 +116,6 @@ export interface IBladeburner {
   calculateMaxStamina(player: IPlayer): void;
   create(): void;
   process(router: IRouter, player: IPlayer): void;
-  getActionStats(action: IAction, success: boolean): ITaskTracker;
+  getActionStats(action: IAction, person: IPerson, success: boolean): ITaskTracker;
   sleeveSupport(joining: boolean): void;
 }
