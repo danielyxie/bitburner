@@ -1465,47 +1465,42 @@ const base: InternalAPI<NS> = {
     },
   write:
     (ctx: NetscriptContext) =>
-    (_port: unknown, _data: unknown = "", _mode: unknown = "a"): void => {
-      const port = helpers.string(ctx, "port", _port);
+    (_filename: unknown, _data: unknown = "", _mode: unknown = "a"): void => {
+      let fn = helpers.string(ctx, "handle", _filename);
       const data = helpers.string(ctx, "data", _data);
       const mode = helpers.string(ctx, "mode", _mode);
-      if (isString(port)) {
-        // Write to script or text file
-        let fn = port;
-        if (!isValidFilePath(fn)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
+      if (!isValidFilePath(fn)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
 
-        if (fn.lastIndexOf("/") === 0) fn = removeLeadingSlash(fn);
+      if (fn.lastIndexOf("/") === 0) fn = removeLeadingSlash(fn);
 
-        const server = helpers.getServer(ctx, ctx.workerScript.hostname);
+      const server = helpers.getServer(ctx, ctx.workerScript.hostname);
 
-        if (isScriptFilename(fn)) {
-          // Write to script
-          let script = ctx.workerScript.getScriptOnServer(fn, server);
-          if (script == null) {
-            // Create a new script
-            script = new Script(Player, fn, String(data), server.hostname, server.scripts);
-            server.scripts.push(script);
-            return script.updateRamUsage(Player, server.scripts);
-          }
-          mode === "w" ? (script.code = String(data)) : (script.code += data);
+      if (isScriptFilename(fn)) {
+        // Write to script
+        let script = ctx.workerScript.getScriptOnServer(fn, server);
+        if (script == null) {
+          // Create a new script
+          script = new Script(Player, fn, String(data), server.hostname, server.scripts);
+          server.scripts.push(script);
           return script.updateRamUsage(Player, server.scripts);
-        } else {
-          // Write to text file
-          const txtFile = getTextFile(fn, server);
-          if (txtFile == null) {
-            createTextFile(fn, String(data), server);
-            return;
-          }
-          if (mode === "w") {
-            txtFile.write(String(data));
-          } else {
-            txtFile.append(String(data));
-          }
         }
-        return;
+        mode === "w" ? (script.code = String(data)) : (script.code += data);
+        return script.updateRamUsage(Player, server.scripts);
       } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
+        // Write to text file
+        if (!fn.endsWith(".txt")) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: ${fn}`);
+        const txtFile = getTextFile(fn, server);
+        if (txtFile == null) {
+          createTextFile(fn, String(data), server);
+          return;
+        }
+        if (mode === "w") {
+          txtFile.write(String(data));
+        } else {
+          txtFile.append(String(data));
+        }
       }
+      return;
     },
   tryWritePort:
     (ctx: NetscriptContext) =>
@@ -1545,33 +1540,27 @@ const base: InternalAPI<NS> = {
     },
   read:
     (ctx: NetscriptContext) =>
-    (_port: unknown): string => {
-      const port = helpers.string(ctx, "port", _port);
-      if (isString(port)) {
-        // Read from script or text file
-        const fn = port;
-        const server = GetServer(ctx.workerScript.hostname);
-        if (server == null) {
-          throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
+    (_filename: unknown): string => {
+      const fn = helpers.string(ctx, "filename", _filename);
+      const server = GetServer(ctx.workerScript.hostname);
+      if (server == null) {
+        throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
+      }
+      if (isScriptFilename(fn)) {
+        // Read from script
+        const script = ctx.workerScript.getScriptOnServer(fn, server);
+        if (script == null) {
+          return "";
         }
-        if (isScriptFilename(fn)) {
-          // Read from script
-          const script = ctx.workerScript.getScriptOnServer(fn, server);
-          if (script == null) {
-            return "";
-          }
-          return script.code;
-        } else {
-          // Read from text file
-          const txtFile = getTextFile(fn, server);
-          if (txtFile !== null) {
-            return txtFile.text;
-          } else {
-            return "";
-          }
-        }
+        return script.code;
       } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
+        // Read from text file
+        const txtFile = getTextFile(fn, server);
+        if (txtFile !== null) {
+          return txtFile.text;
+        } else {
+          return "";
+        }
       }
     },
   peek:
