@@ -24,7 +24,7 @@ import { Settings } from "./Settings/Settings";
 
 import { generate } from "escodegen";
 
-import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { dialogBoxCreate} from "./ui/React/DialogBox";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { roundToTwo } from "./utils/helpers/roundToTwo";
 
