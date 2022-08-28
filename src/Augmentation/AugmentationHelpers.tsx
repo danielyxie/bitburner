@@ -126,15 +126,15 @@ function installAugmentations(force?: boolean): boolean {
     if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
       level = ` - ${ownedAug.level}`;
     }
-    augmentationList += aug.name + level + "<br>";
+    augmentationList += aug.name + level + "\n";
   }
   Player.queuedAugmentations = [];
   if (!force) {
     dialogBoxCreate(
       "You slowly drift to sleep as scientists put you under in order " +
-        "to install the following Augmentations:<br>" +
+        "to install the following Augmentations:\n" +
         augmentationList +
-        "<br>You wake up in your home...you feel different...",
+        "\nYou wake up in your home...you feel different...",
     );
   }
   prestigeAugmentation();

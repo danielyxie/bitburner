@@ -24,10 +24,9 @@ import { Settings } from "./Settings/Settings";
 
 import { generate } from "escodegen";
 
-import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { dialogBoxCreate, errorDialog } from "./ui/React/DialogBox";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { roundToTwo } from "./utils/helpers/roundToTwo";
-import { isString } from "./utils/helpers/isString";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
@@ -35,7 +34,6 @@ import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 import { Player } from "./Player";
 import { Terminal } from "./Terminal";
 import { ScriptArg } from "./Netscript/ScriptArg";
-import { helpers } from "./Netscript/NetscriptHelpers";
 
 export const NetscriptPorts: Map<number, IPort> = new Map();
 
@@ -54,39 +52,8 @@ export function prestigeWorkerScripts(): void {
 // JS script promises need a little massaging to have the same guarantees as netscript
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
-function startNetscript2Script(workerScript: WorkerScript): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    executeJSScript(Player, workerScript.getServer().scripts, workerScript)
-      .then(() => {
-        resolve();
-      })
-      .catch((e) => reject(e));
-  }).catch((e) => {
-    if (e instanceof Error) {
-      if (e instanceof SyntaxError) {
-        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
-          workerScript,
-          e.message + " (sorry we can't be more helpful)",
-        );
-      } else {
-        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
-          workerScript,
-          e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
-        );
-      }
-      throw new ScriptDeath(workerScript);
-    } else if (helpers.isScriptErrorMessage(e)) {
-      workerScript.errorMessage = e;
-      throw new ScriptDeath(workerScript);
-    } else if (e instanceof ScriptDeath) {
-      throw e;
-    }
-
-    // Don't know what to do with it, let's try making an error message out of it
-    workerScript.errorMessage = helpers.makeRuntimeRejectMsg(workerScript, "" + e);
-    throw new ScriptDeath(workerScript);
-  });
-}
+const startNetscript2Script = (workerScript: WorkerScript): Promise<void> =>
+  executeJSScript(Player, workerScript.getServer().scripts, workerScript);
 
 function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   const code = workerScript.code;
@@ -98,18 +65,16 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
     codeWithImports = importProcessingRes.code;
     codeLineOffset = importProcessingRes.lineOffset;
   } catch (e: unknown) {
-    dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + String(e));
+    dialogBoxCreate(`Error processing Imports in ${workerScript.name} on ${workerScript.hostname}:\n\n${e}`);
     workerScript.env.stopFlag = true;
     killWorkerScript(workerScript);
     return Promise.resolve();
   }
 
-  function wrapNS1Layer(int: Interpreter, intLayer: unknown, path: string[] = []) {
-    //TODO: Better typing layers of interpreter scope and ns
-    interface BasicObject {
-      [key: string]: any;
-    }
-    const nsLayer = path.reduce((prev, newPath) => prev[newPath], workerScript.env.vars as BasicObject);
+  interface BasicObject {
+    [key: string]: any;
+  }
+  function wrapNS1Layer(int: Interpreter, intLayer: unknown, nsLayer = workerScript.env.vars as BasicObject) {
     for (const [name, entry] of Object.entries(nsLayer)) {
       if (typeof entry === "function") {
         // Async functions need to be wrapped. See JS-Interpreter documentation
@@ -121,21 +86,11 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
             const result = await entry(...args.map((arg) => int.pseudoToNative(arg)));
             return callback(int.nativeToPseudo(result));
           } catch (e: unknown) {
-            // TODO: Unify error handling, this was stolen from previous async handler
-            if (typeof e === "string") {
-              console.error(e);
-              const errorTextArray = e.split("|DELIMITER|");
-              const hostname = errorTextArray[1];
-              const scriptName = errorTextArray[2];
-              const errorMsg = errorTextArray[3];
-              let msg = `${scriptName}@${hostname}<br>`;
-              msg += "<br>";
-              msg += errorMsg;
-              dialogBoxCreate(msg);
-              workerScript.env.stopFlag = true;
-              killWorkerScript(workerScript);
-              return;
-            }
+            // NS1 interpreter doesn't cleanly handle throwing. Need to show dialog here.
+            errorDialog(e, `RUNTIME ERROR:\n${workerScript.name}@${workerScript.hostname}\n\n`);
+            workerScript.env.stopFlag = true;
+            killWorkerScript(workerScript);
+            return;
           }
         };
         int.setProperty(intLayer, name, int.createAsyncFunction(wrapper));
@@ -145,7 +100,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
       } else {
         // new object layer, e.g. bladeburner
         int.setProperty(intLayer, name, int.nativeToPseudo({}));
-        wrapNS1Layer(int, (intLayer as BasicObject).properties[name], [...path, name]);
+        wrapNS1Layer(int, (intLayer as BasicObject).properties[name], nsLayer[name]);
       }
     }
   }
@@ -154,54 +109,30 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   try {
     interpreter = new Interpreter(codeWithImports, wrapNS1Layer, codeLineOffset);
   } catch (e: unknown) {
-    dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + String(e));
+    dialogBoxCreate(`Syntax ERROR in ${workerScript.name} on ${workerScript.hostname}:\n\n${String(e)}`);
     workerScript.env.stopFlag = true;
     killWorkerScript(workerScript);
     return Promise.resolve();
   }
 
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve) => {
     function runInterpreter(): void {
-      try {
-        if (workerScript.env.stopFlag) {
-          return reject(new ScriptDeath(workerScript));
-        }
+      if (workerScript.env.stopFlag) resolve();
 
-        let more = true;
-        let i = 0;
-        while (i < 3 && more) {
-          more = more && interpreter.step();
-          i++;
-        }
-
-        if (more) {
-          setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
-        } else {
-          resolve();
-        }
-      } catch (_e: unknown) {
-        let e = String(_e);
-        if (!helpers.isScriptErrorMessage(e)) {
-          e = helpers.makeRuntimeRejectMsg(workerScript, e);
-        }
-        workerScript.errorMessage = e;
-        return reject(new ScriptDeath(workerScript));
+      let more = true;
+      let i = 0;
+      while (i < 3 && more) {
+        more = more && interpreter.step();
+        i++;
       }
-    }
 
-    try {
-      runInterpreter();
-    } catch (e: unknown) {
-      if (isString(e)) {
-        workerScript.errorMessage = e;
-        return reject(new ScriptDeath(workerScript));
-      } else if (e instanceof ScriptDeath) {
-        return reject(e);
+      if (more) {
+        setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
       } else {
-        console.error(e);
-        return reject(new ScriptDeath(workerScript));
+        resolve();
       }
     }
+    runInterpreter();
   });
 }
 
@@ -430,58 +361,19 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   // running status to false
   scriptExecution
     .then(function () {
-      workerScript.env.stopFlag = true;
       // On natural death, the earnings are transfered to the parent if it still exists.
-      if (parent !== undefined && !parent.env.stopFlag) {
+      if (parent && !parent.env.stopFlag) {
         parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
         parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
       }
-
       killWorkerScript(workerScript);
       workerScript.log("", () => "Script finished running");
     })
     .catch(function (e) {
-      if (e instanceof Error) {
-        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-        console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
-        return;
-      } else if (e instanceof ScriptDeath) {
-        if (helpers.isScriptErrorMessage(workerScript.errorMessage)) {
-          const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
-          if (errorTextArray.length != 4) {
-            console.error("ERROR: Something wrong with Error text in evaluator...");
-            console.error("Error text: " + workerScript.errorMessage);
-            return;
-          }
-          const hostname = errorTextArray[1];
-          const scriptName = errorTextArray[2];
-          const errorMsg = errorTextArray[3];
-
-          let msg = `RUNTIME ERROR<br>${scriptName}@${hostname} (PID - ${workerScript.pid})<br>`;
-          if (workerScript.args.length > 0) {
-            msg += `Args: ${arrayToString(workerScript.args)}<br>`;
-          }
-          msg += "<br>";
-          msg += errorMsg;
-
-          dialogBoxCreate(msg);
-          workerScript.log("", () => "Script crashed with runtime error");
-        } else {
-          workerScript.log("", () => "Script killed");
-          return; // Already killed, so stop here
-        }
-      } else if (helpers.isScriptErrorMessage(e)) {
-        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-        console.error(
-          "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
-            e.toString(),
-        );
-        return;
-      } else {
-        dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-        console.error(e);
-      }
-
+      errorDialog(e, `RUNTIME ERROR\n${workerScript.name}@${workerScript.hostname} (PID - ${workerScript.pid})\n\n`);
+      let logText = "Script crashed due to an error.";
+      if (e instanceof ScriptDeath) logText = "Script killed.";
+      workerScript.log("", () => logText);
       killWorkerScript(workerScript);
     });
 

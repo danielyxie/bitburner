@@ -10,7 +10,7 @@ import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventE
 import { RunningScript } from "../Script/RunningScript";
 import { GetServer } from "../Server/AllServers";
 
-import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { errorDialog } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
 import { Player } from "../Player";
 import { ITutorial } from "../InteractiveTutorial";
@@ -66,12 +66,7 @@ function stopAndCleanUpWorkerScript(ws: WorkerScript): void {
       ws.env.stopFlag = false;
       ws.atExit();
     } catch (e: unknown) {
-      let message = e instanceof ScriptDeath ? e.errorMessage : String(e);
-      message = message.replace(/.*\|DELIMITER\|/, "");
-      dialogBoxCreate(
-        `Error trying to call atExit for script ${[ws.name, ...ws.args].join(" ")} on ${ws.hostname}\n ${message}`,
-      );
-      console.error(e);
+      errorDialog(e, `Error during atExit ${ws.name}@${ws.hostname} (PID - ${ws.pid}\n\n`);
     }
     ws.atExit = undefined;
   }

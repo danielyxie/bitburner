@@ -71,7 +71,7 @@ export async function executeJSScript(
   const ns = workerScript.env.vars;
 
   if (!loadedModule) {
-    throw helpers.makeRuntimeRejectMsg(
+    throw helpers.makeBasicErrorMsg(
       workerScript,
       `${script.filename} cannot be run because the script module won't load`,
     );
@@ -79,18 +79,19 @@ export async function executeJSScript(
   // TODO: putting await in a non-async function yields unhelpful
   // "SyntaxError: unexpected reserved word" with no line number information.
   if (!loadedModule.main) {
-    throw helpers.makeRuntimeRejectMsg(
+    throw helpers.makeBasicErrorMsg(
       workerScript,
       `${script.filename} cannot be run because it does not have a main function.`,
     );
   }
   if (!ns) {
-    throw helpers.makeRuntimeRejectMsg(
+    throw helpers.makeBasicErrorMsg(
       workerScript,
       `${script.filename} cannot be run because the NS object hasn't been constructed properly.`,
     );
   }
-  return loadedModule.main(ns);
+  await loadedModule.main(ns);
+  return;
 }
 
 function isDependencyOutOfDate(filename: string, scripts: Script[], scriptModuleSequenceNumber: number): boolean {

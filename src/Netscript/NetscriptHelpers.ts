@@ -3,7 +3,6 @@ import { WorkerScript } from "./WorkerScript";
 import { GetAllServers, GetServer } from "../Server/AllServers";
 import { Player } from "../Player";
 import { ScriptDeath } from "./ScriptDeath";
-import { isString } from "../utils/helpers/isString";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { ScriptArg } from "./ScriptArg";
 import { CityName } from "../Locations/data/CityNames";
@@ -40,8 +39,7 @@ export const helpers = {
   number,
   scriptArgs,
   argsToString,
-  isScriptErrorMessage,
-  makeRuntimeRejectMsg,
+  makeBasicErrorMsg,
   makeRuntimeErrorMsg,
   resolveNetscriptRequestedThreads,
   checkEnvFlags,
@@ -114,15 +112,6 @@ function scriptArgs(ctx: NetscriptContext, args: unknown) {
   return args;
 }
 
-/** Determines if the given msg string is an error created by makeRuntimeRejectMsg. */
-function isScriptErrorMessage(msg: string): boolean {
-  if (!isString(msg)) {
-    return false;
-  }
-  const splitMsg = msg.split("|DELIMITER|");
-  return splitMsg.length == 4;
-}
-
 /** Convert multiple arguments for tprint or print into a single string. */
 function argsToString(args: unknown[]): string {
   let out = "";
@@ -143,12 +132,11 @@ function argsToString(args: unknown[]): string {
 }
 
 /** Creates an error message string containing hostname, scriptname, and the error message msg */
-function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): string {
+function makeBasicErrorMsg(workerScript: WorkerScript, msg: string): string {
   for (const scriptUrl of workerScript.scriptRef.dependencies) {
     msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
   }
-
-  return "|DELIMITER|" + workerScript.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
+  return msg;
 }
 
 /** Creates an error message string with a stack trace. */
@@ -156,9 +144,9 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   const errstack = new Error().stack;
   if (errstack === undefined) throw new Error("how did we not throw an error?");
   const stack = errstack.split("\n").slice(1);
-  const workerScript = ctx.workerScript;
-  const caller = ctx.function;
-  const scripts = workerScript.getServer().scripts;
+  const ws = ctx.workerScript;
+  const caller = ctx.functionPath;
+  const scripts = ws.getServer().scripts;
   const userstack = [];
   for (const stackline of stack) {
     let filename;
@@ -216,10 +204,10 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
     userstack.push(`${filename}:L${call.line}@${call.func}`);
   }
 
-  workerScript.log(caller, () => msg);
+  log(ctx, () => msg);
   let rejectMsg = `${caller}: ${msg}`;
   if (userstack.length !== 0) rejectMsg += `<br><br>Stack:<br>${userstack.join("<br>")}`;
-  return makeRuntimeRejectMsg(workerScript, rejectMsg);
+  return makeBasicErrorMsg(ws, rejectMsg);
 }
 
 /** Validate requested number of threads for h/g/w options */
@@ -230,14 +218,14 @@ function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThread
   }
   const requestedThreadsAsInt = requestedThreads | 0;
   if (isNaN(requestedThreads) || requestedThreadsAsInt < 1) {
-    throw makeRuntimeRejectMsg(
-      ctx.workerScript,
+    throw makeRuntimeErrorMsg(
+      ctx,
       `Invalid thread count passed to ${ctx.function}: ${requestedThreads}. Threads must be a positive number.`,
     );
   }
   if (requestedThreadsAsInt > threads) {
-    throw makeRuntimeRejectMsg(
-      ctx.workerScript,
+    throw makeRuntimeErrorMsg(
+      ctx,
       `Too many threads requested by ${ctx.function}. Requested: ${requestedThreads}. Has: ${threads}.`,
     );
   }
@@ -258,17 +246,21 @@ function checkSingularityAccess(ctx: NetscriptContext): void {
 /** Create an error if a script is dead or if concurrent ns function calls are made */
 function checkEnvFlags(ctx: NetscriptContext): void {
   const ws = ctx.workerScript;
-  if (ws.env.stopFlag) throw new ScriptDeath(ws);
+  if (ws.env.stopFlag) {
+    log(ctx, () => "Failed to run due to script being killed.");
+    throw new ScriptDeath(ws);
+  }
   if (ws.env.runningFn && ctx.function !== "asleep") {
-    ws.errorMessage = makeRuntimeRejectMsg(
+    //This one has no error message so it will not create a dialog
+    if (ws.delayReject) ws.delayReject(new ScriptDeath(ws));
+    ws.errorMessage = makeBasicErrorMsg(
       ws,
       `Concurrent calls to Netscript functions are not allowed!
       Did you forget to await hack(), grow(), or some other
       promise-returning function?
       Currently running: ${ws.env.runningFn} tried to run: ${ctx.function}`,
     );
-    if (ws.delayReject) ws.delayReject(new ScriptDeath(ws));
-    throw new ScriptDeath(ws); //No idea if this is the right thing to throw
+    throw new ScriptDeath(ws);
   }
 }
 
@@ -302,7 +294,8 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
   }
   ws.dynamicRamUsage += ramCost;
   if (ws.dynamicRamUsage > 1.01 * ws.ramUsage) {
-    ws.errorMessage = makeRuntimeRejectMsg(
+    log(ctx, () => "Insufficient static ram available.");
+    ws.errorMessage = makeBasicErrorMsg(
       ws,
       `Dynamic RAM usage calculated to be greater than initial RAM usage on fn: ${fnName}.
       This is probably because you somehow circumvented the static RAM calculation.
@@ -605,7 +598,7 @@ function getRunningScriptByArgs(
   scriptArgs: ScriptArg[],
 ): RunningScript | null {
   if (!Array.isArray(scriptArgs)) {
-    throw helpers.makeRuntimeRejectMsg(
+    throw helpers.makeBasicErrorMsg(
       ctx.workerScript,
       `Invalid scriptArgs argument passed into getRunningScript() from ${ctx.function}(). ` +
         `This is probably a bug. Please report to game developer`,

@@ -41,7 +41,7 @@ function wrapFunction(
   const functionPath = tree.join(".");
   const functionName = tree.pop();
   if (typeof functionName !== "string") {
-    throw helpers.makeRuntimeRejectMsg(workerScript, "Failure occured while wrapping netscript api");
+    throw helpers.makeBasicErrorMsg(workerScript, "Failure occured while wrapping netscript api");
   }
   const ctx = {
     workerScript,

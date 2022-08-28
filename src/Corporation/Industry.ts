@@ -825,14 +825,7 @@ export class Industry implements IIndustry {
                     sellAmt = eval(tmp);
                   } catch (e) {
                     dialogBoxCreate(
-                      "Error evaluating your sell amount for material " +
-                        mat.name +
-                        " in " +
-                        this.name +
-                        "'s " +
-                        city +
-                        " office. The sell amount " +
-                        "is being set to zero",
+                      `Error evaluating your sell amount for material ${mat.name} in ${this.name}'s ${city} office. The sell amount is being set to zero`,
                     );
                     sellAmt = 0;
                   }
@@ -879,27 +872,13 @@ export class Industry implements IIndustry {
                     amt = eval(amtStr);
                   } catch (e) {
                     dialogBoxCreate(
-                      "Calculating export for " +
-                        mat.name +
-                        " in " +
-                        this.name +
-                        "'s " +
-                        city +
-                        " division failed with " +
-                        "error: " +
-                        e,
+                      `Calculating export for ${mat.name} in ${this.name}'s ${city} division failed with error: ${e}`,
                     );
                     continue;
                   }
                   if (isNaN(amt)) {
                     dialogBoxCreate(
-                      "Error calculating export amount for " +
-                        mat.name +
-                        " in " +
-                        this.name +
-                        "'s " +
-                        city +
-                        " division.",
+                      `Error calculating export amount for ${mat.name} in ${this.name}'s ${city} division.`,
                     );
                     continue;
                   }
@@ -1172,13 +1151,7 @@ export class Industry implements IIndustry {
                 tmp = eval(tmp);
               } catch (e) {
                 dialogBoxCreate(
-                  "Error evaluating your sell price expression for " +
-                    product.name +
-                    " in " +
-                    this.name +
-                    "'s " +
-                    city +
-                    " office. Sell price is being set to MAX",
+                  `Error evaluating your sell price expression for ${product.name} in ${this.name}'s ${city} office. Sell price is being set to MAX`,
                 );
                 tmp = product.maxsll;
               }
