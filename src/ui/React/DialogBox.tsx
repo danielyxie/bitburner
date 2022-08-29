@@ -22,10 +22,5 @@ export function errorDialog(e: unknown, initialText = "") {
     errorText = "An unknown error was thrown, see console.";
     console.error(e);
   }
-
-  if (!initialText && e instanceof ScriptDeath) {
-    const basicHeader = `ERROR\n${e.name}@${e.hostname} (PID - ${e.pid})\n\n`;
-    if (e.errorMessage.includes(basicHeader)) initialText = basicHeader;
-  }
   dialogBoxCreate(initialText + errorText);
 }
