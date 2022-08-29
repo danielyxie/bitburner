@@ -1402,7 +1402,7 @@ export class Bladeburner implements IBladeburner {
               );
             }
           } else {
-            retValue = this.getActionStats(action, false);
+            retValue = this.getActionStats(action, person, false);
             let rankLoss = 0;
             let damage = 0;
             if (action.rankLoss) {
