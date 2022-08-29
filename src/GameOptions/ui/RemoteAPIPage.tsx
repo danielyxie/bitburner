@@ -20,7 +20,7 @@ export const RemoteAPIPage = (): React.ReactElement => {
         text editor and then upload files to the home server.
       </Typography>
       <Typography>
-        <Link href="#" target="_blank">
+        <Link href="https://bitburner.readthedocs.io/en/latest/remoteapi.html" target="_blank">
           Documentation
         </Link>
       </Typography>
