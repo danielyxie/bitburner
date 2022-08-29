@@ -596,7 +596,8 @@ export function quitJob(this: IPlayer, company: string): void {
   }
   for (const sleeve of this.sleeves) {
     if (sleeve.currentWork instanceof SleeveCompanyWork && sleeve.currentWork.companyName === company){
-      sleeve.currentWork.finish(this);
+      sleeve.stopWork(this);
+      dialogBoxCreate(`You quit ${company} while one of your sleeves was working there. The sleeve is now idle.`)
     }
   }
   delete this.jobs[company];
