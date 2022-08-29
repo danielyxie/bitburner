@@ -163,11 +163,11 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   for (const stackline of stack) {
     let filename;
     for (const script of scripts) {
-      if (script.url && stackline.includes(script.url)) {
+      if (script.filename && stackline.includes(script.filename)) {
         filename = script.filename;
       }
       for (const dependency of script.dependencies) {
-        if (stackline.includes(dependency.url)) {
+        if (stackline.includes(dependency.filename)) {
           filename = dependency.filename;
         }
       }
