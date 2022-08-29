@@ -347,7 +347,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
       workerScript.log("", () => "Script finished running");
     })
     .catch(function (e) {
-      let initialText = `ERROR\n${workerScript.name}@${workerScript.hostname} (PID - ${workerScript.pid})\n\n`;
+      const initialText = `ERROR\n${workerScript.name}@${workerScript.hostname} (PID - ${workerScript.pid})\n\n`;
       if (e instanceof SyntaxError) e = `SYNTAX ${initialText}${e.message} (sorry we can't be more helpful)`;
       else if (e instanceof Error) {
         e = `RUNTIME ${initialText}${e.message}${e.stack ? `\nstack:\n${e.stack.toString()}` : ""}`;
