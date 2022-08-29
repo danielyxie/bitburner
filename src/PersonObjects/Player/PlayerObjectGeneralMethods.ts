@@ -23,7 +23,7 @@ import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../Sleeve/Sleeve";
-import { isSleeveCompanyWork, SleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
+import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
 import {
   calculateSkill as calculateSkillF,
   calculateSkillProgress as calculateSkillProgressF,
