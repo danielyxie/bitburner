@@ -38,9 +38,9 @@ export function NetscriptInfiltration(): InternalAPI<IInfiltration> {
     return {
       location: JSON.parse(JSON.stringify(location)),
       reward: {
-        tradeRep: calculateTradeInformationRepReward(player, reward, maxLevel, difficulty),
-        sellCash: calculateSellInformationCashReward(player, reward, maxLevel, difficulty),
-        SoARep: calculateInfiltratorsRepReward(player, Factions[FactionNames.ShadowsOfAnarchy], difficulty),
+        tradeRep: calculateTradeInformationRepReward(player, reward, maxLevel, startingSecurityLevel),
+        sellCash: calculateSellInformationCashReward(player, reward, maxLevel, startingSecurityLevel),
+        SoARep: calculateInfiltratorsRepReward(player, Factions[FactionNames.ShadowsOfAnarchy], startingSecurityLevel),
       },
       difficulty: difficulty,
     };
