@@ -335,6 +335,7 @@ const ui = {
   resetStyles: 0,
   getGameInfo: 0,
   clearTerminal: 0,
+  windowSize: 0,
 };
 
 // Grafting API
@@ -531,6 +532,8 @@ const SourceRamCosts = {
   mv: 0,
   tail: 0,
   toast: 0,
+  moveTail: 0,
+  resizeTail: 0,
   closeTail: 0,
   clearPort: 0,
   openDevMenu: 0,

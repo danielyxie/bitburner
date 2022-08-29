@@ -67,11 +67,33 @@ export const helpers = {
   failOnHacknetServer,
 };
 
+const userFriendlyString = (v: unknown): string => {
+  const clip = (s: string): string => {
+    if (s.length > 15) return s.slice(0, 12) + "...";
+    return s;
+  };
+  if (typeof v === "number") return String(v);
+  if (typeof v === "string") {
+    if (v === "") return "empty string";
+    return `'${clip(v)}'`;
+  }
+  const json = JSON.stringify(v);
+  if (!json) return "???";
+  return `'${clip(json)}'`;
+};
+
+const debugType = (v: unknown): string => {
+  if (v === null) return `Is null.`;
+  if (v === undefined) return "Is undefined.";
+  if (typeof v === "function") return "Is a function.";
+  return `Is of type '${typeof v}', value: ${userFriendlyString(v)}`;
+};
+
 /** Convert a provided value v for argument argName to string. If it wasn't originally a string or number, throw. */
 function string(ctx: NetscriptContext, argName: string, v: unknown): string {
   if (typeof v === "string") return v;
   if (typeof v === "number") return v + ""; // cast to string;
-  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string.`);
+  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string. ${debugType(v)}`);
 }
 
 /** Convert provided value v for argument argName to number. Throw if could not convert to a non-NaN number. */
@@ -83,7 +105,7 @@ function number(ctx: NetscriptContext, argName: string, v: unknown): number {
     if (isNaN(v)) throw makeRuntimeErrorMsg(ctx, `'${argName}' is NaN.`);
     return v;
   }
-  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number.`);
+  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number. ${debugType(v)}`);
 }
 
 /** Returns args back if it is a ScriptArg[]. Throws an error if it is not. */

@@ -38,7 +38,7 @@ import { WorkerScript } from "./Netscript/WorkerScript";
 import { helpers } from "./Netscript/NetscriptHelpers";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
-import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
+import { LogBoxEvents, LogBoxCloserEvents, LogBoxPositionEvents, LogBoxSizeEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 import { NetscriptGang } from "./NetscriptFunctions/Gang";
@@ -536,7 +536,22 @@ const base: InternalAPI<NS> = {
 
       LogBoxEvents.emit(runningScriptObj);
     },
-
+  moveTail:
+    (ctx: NetscriptContext) =>
+    (_x: unknown, _y: unknown, _pid: unknown = ctx.workerScript.scriptRef.pid) => {
+      const x = helpers.number(ctx, "x", _x);
+      const y = helpers.number(ctx, "y", _y);
+      const pid = helpers.number(ctx, "pid", _pid);
+      LogBoxPositionEvents.emit({ pid, data: { x, y } });
+    },
+  resizeTail:
+    (ctx: NetscriptContext) =>
+    (_w: unknown, _h: unknown, _pid: unknown = ctx.workerScript.scriptRef.pid) => {
+      const w = helpers.number(ctx, "w", _w);
+      const h = helpers.number(ctx, "h", _h);
+      const pid = helpers.number(ctx, "pid", _pid);
+      LogBoxSizeEvents.emit({ pid, data: { w, h } });
+    },
   closeTail:
     (ctx: NetscriptContext) =>
     (_pid: unknown = ctx.workerScript.scriptRef.pid): void => {

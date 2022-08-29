@@ -16,6 +16,9 @@ import { helpers } from "../Netscript/NetscriptHelpers";
 
 export function NetscriptUserInterface(): InternalAPI<IUserInterface> {
   return {
+    windowSize: () => (): [number, number] => {
+      return [window.innerWidth, window.innerHeight];
+    },
     getTheme: () => (): UserInterfaceTheme => {
       return { ...Settings.theme };
     },

@@ -4357,6 +4357,15 @@ interface Infiltration {
  */
 interface UserInterface {
   /**
+   * Get the current window size
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns An array of 2 value containing the window width and height.
+   */
+  windowSize(): [number, number];
+
+  /**
    * Get the current theme
    * @remarks
    * RAM cost: 0 GB
@@ -5013,6 +5022,32 @@ export interface NS {
    * @param args - Arguments for the script being tailed.
    */
   tail(fn?: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): void;
+
+  /**
+   * Move a tail window
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0)
+   *
+   * @param x - x coordinate.
+   * @param y - y coordinate.
+   * @param pid - Optional. PID of the script having its tail moved. If omitted, the current script is used.
+   */
+  moveTail(x: number, y: number, pid?: number): void;
+
+  /**
+   * Resize a tail window
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * Resize a tail window. Size are in pixel
+   *
+   * @param width - width of the window.
+   * @param height - height of the window.
+   * @param pid - Optional. PID of the script having its tail resized. If omitted, the current script is used.
+   */
+  resizeTail(width: number, height: number, pid?: number): void;
 
   /**
    * Close the tail window of a script.
