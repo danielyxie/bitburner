@@ -3,8 +3,12 @@ import React, { useState } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
 import { GameOptionsTab } from "../GameOptionsTab";
-import { CurrentOptionsPage } from "./CurrentOptionsPage";
 import { GameOptionsSidebar } from "./GameOptionsSidebar";
+import { GameplayPage } from "./GameplayPage";
+import { InterfacePage } from "./InterfacePage";
+import { MiscPage } from "./MiscPage";
+import { RemoteAPIPage } from "./RemoteAPIPage";
+import { SystemPage } from "./SystemPage";
 
 interface IProps {
   player: IPlayer;
@@ -32,7 +36,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
           forceKill={props.forceKill}
           softReset={props.softReset}
         />
-        <CurrentOptionsPage currentTab={currentTab} player={props.player} />
+        {currentTab === GameOptionsTab.SYSTEM && <SystemPage />}
+        {currentTab === GameOptionsTab.INTERFACE && <InterfacePage />}
+        {currentTab === GameOptionsTab.GAMEPLAY && <GameplayPage />}
+        {currentTab === GameOptionsTab.MISC && <MiscPage />}
+        {currentTab === GameOptionsTab.REMOTE_API && <RemoteAPIPage />}
       </Box>
     </Container>
   );
