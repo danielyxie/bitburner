@@ -34,6 +34,7 @@ export const RemoteAPIPage = (): React.ReactElement => {
         }
       >
         <TextField
+          key={"remoteAPIPort"}
           InputProps={{
             startAdornment: (
               <Typography color={remoteFileApiPort > 0 && remoteFileApiPort <= 65535 ? "success" : "error"}>

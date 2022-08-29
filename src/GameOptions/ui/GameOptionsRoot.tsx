@@ -28,7 +28,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       <Box sx={{ display: "grid", gridTemplateColumns: "1fr 3fr", gap: 1 }}>
         <GameOptionsSidebar
           tab={currentTab}
-          setTab={(tab: GameOptionsTab) => setCurrentTab(tab)}
+          setTab={setCurrentTab}
           player={props.player}
           router={props.router}
           save={props.save}

@@ -58,6 +58,7 @@ export const InterfacePage = (): React.ReactElement => {
         }
       >
         <TextField
+          key={"timestampFormat"}
           InputProps={{
             startAdornment: (
               <Typography
