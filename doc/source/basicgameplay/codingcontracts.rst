@@ -374,7 +374,7 @@ The list contains the name of (i.e. the value returned by
 |                                         | | substitution cipher in which each letter in the plaintext is replaced by a letter some |
 |                                         | | fixed number of positions down the alphabet. For example, with a left shift of 3, D    |
 |                                         | | would be replaced by A, E would become B, and A would become X (because of rotation).  |
-|                                         | | You are given an array with two elements.The first element is the plaintext, the       |
+|                                         | | You are given an array with two elements. The first element is the plaintext, the      |
 |                                         | | second element is the left shift value. Return the ciphertext as uppercase string.     |
 |                                         | | Spaces remains the same.                                                               |
 +-----------------------------------------+------------------------------------------------------------------------------------------+
