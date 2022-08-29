@@ -702,7 +702,7 @@ const base: InternalAPI<NS> = {
         throw helpers.makeRuntimeErrorMsg(ctx, "Could not find server. This is a bug. Report to dev.");
       }
 
-      return runScriptFromScript(Player, "run", scriptServer, scriptname, args, ctx.workerScript, threads);
+      return runScriptFromScript("run", scriptServer, scriptname, args, ctx.workerScript, threads);
     },
   exec:
     (ctx: NetscriptContext) =>
@@ -718,7 +718,7 @@ const base: InternalAPI<NS> = {
         throw helpers.makeRuntimeErrorMsg(ctx, `Invalid thread count. Must be numeric and > 0, is ${threads}`);
       }
       const server = helpers.getServer(ctx, hostname);
-      return runScriptFromScript(Player, "exec", server, scriptname, args, ctx.workerScript, threads);
+      return runScriptFromScript("exec", server, scriptname, args, ctx.workerScript, threads);
     },
   spawn:
     (ctx: NetscriptContext) =>
@@ -740,12 +740,11 @@ const base: InternalAPI<NS> = {
           throw helpers.makeRuntimeErrorMsg(ctx, "Could not find server. This is a bug. Report to dev");
         }
 
-        return runScriptFromScript(Player, "spawn", scriptServer, scriptname, args, ctx.workerScript, threads);
+        return runScriptFromScript("spawn", scriptServer, scriptname, args, ctx.workerScript, threads);
       }, spawnDelay * 1e3);
 
       helpers.log(ctx, () => `Will execute '${scriptname}' in ${spawnDelay} seconds`);
 
-      ctx.workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
       if (killWorkerScript(ctx.workerScript)) {
         helpers.log(ctx, () => "Exiting...");
       }
@@ -820,7 +819,6 @@ const base: InternalAPI<NS> = {
       return scriptsKilled > 0;
     },
   exit: (ctx: NetscriptContext) => (): void => {
-    ctx.workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
     if (killWorkerScript(ctx.workerScript)) {
       helpers.log(ctx, () => "Exiting...");
     } else {

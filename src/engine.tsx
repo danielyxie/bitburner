@@ -278,7 +278,7 @@ const Engine: {
       Player.gainMoney(offlineHackingIncome, "hacking");
       // Process offline progress
 
-      loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
+      loadAllRunningScripts(); // This also takes care of offline production for those scripts
 
       if (Player.currentWork !== null) {
         Player.focus = true;

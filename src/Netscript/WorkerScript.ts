@@ -95,11 +95,6 @@ export class WorkerScript {
   ramUsage = 0;
 
   /**
-   * Whether or not this workerScript is currently running
-   */
-  running = false;
-
-  /**
    * Reference to underlying RunningScript object
    */
   scriptRef: RunningScript;
