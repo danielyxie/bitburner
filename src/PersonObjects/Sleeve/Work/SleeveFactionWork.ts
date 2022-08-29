@@ -13,6 +13,7 @@ import {
   getHackingWorkRepGain,
 } from "../../../PersonObjects/formulas/reputation";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
 
 interface SleeveFactionWorkParams {
   factionWorkType: FactionWorkType;
@@ -43,7 +44,11 @@ export class SleeveFactionWork extends Work {
       [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
       [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
     };
-    return repFormulas[this.factionWorkType](sleeve, faction.favor) * sleeve.shockBonus();
+    return (
+      repFormulas[this.factionWorkType](sleeve, faction.favor) *
+      sleeve.shockBonus() *
+      BitNodeMultipliers.FactionWorkRepGain
+    );
   }
 
   getFaction(): Faction {
