@@ -23,7 +23,7 @@ import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../Sleeve/Sleeve";
-import { SleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
+import { isSleeveCompanyWork, SleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
 import {
   calculateSkill as calculateSkillF,
   calculateSkillProgress as calculateSkillProgressF,
@@ -595,9 +595,9 @@ export function quitJob(this: IPlayer, company: string): void {
     this.finishWork(true);
   }
   for (const sleeve of this.sleeves) {
-    if (sleeve.currentWork instanceof SleeveCompanyWork && sleeve.currentWork.companyName === company){
+    if (isSleeveCompanyWork(sleeve.currentWork) && sleeve.currentWork.companyName === company) {
       sleeve.stopWork(this);
-      dialogBoxCreate(`You quit ${company} while one of your sleeves was working there. The sleeve is now idle.`)
+      dialogBoxCreate(`You quit ${company} while one of your sleeves was working there. The sleeve is now idle.`);
     }
   }
   delete this.jobs[company];
