@@ -62,7 +62,8 @@ function stopAndCleanUpWorkerScript(ws: WorkerScript): void {
   //Clean up any ongoing netscriptDelay
   if (ws.delay) clearTimeout(ws.delay);
   ws.delayReject?.(new ScriptDeath(ws));
-
+  ws.env.runningFn = "";
+  
   if (typeof ws.atExit === "function") {
     try {
       ws.env.stopFlag = false;
