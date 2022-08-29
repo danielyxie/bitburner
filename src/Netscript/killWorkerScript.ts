@@ -12,7 +12,6 @@ import { GetServer } from "../Server/AllServers";
 
 import { errorDialog } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
-import { Player } from "../Player";
 
 export type killScriptParams = WorkerScript | number | { runningScript: RunningScript; hostname: string };
 
@@ -95,8 +94,8 @@ function removeWorkerScript(workerScript: WorkerScript): void {
 
   // Recalculate ram used on that server
 
-  server.updateRamUsed(0, Player);
-  for (const rs of server.runningScripts) server.updateRamUsed(server.ramUsed + rs.ramUsage * rs.threads, Player);
+  server.updateRamUsed(0);
+  for (const rs of server.runningScripts) server.updateRamUsed(server.ramUsed + rs.ramUsage * rs.threads);
 
   // Delete script from global pool (workerScripts)
   workerScripts.delete(workerScript.pid);

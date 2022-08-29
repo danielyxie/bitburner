@@ -286,7 +286,7 @@ export async function determineAllPossibilitiesForTabCompletion(
     });
     if (!script) return; // Doesn't exist.
     //Will return the already compiled module if recompilation not needed.
-    const loadedModule = await compile(p, script, currServ.scripts);
+    const loadedModule = await compile(script, currServ.scripts);
     if (!loadedModule || !loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
 
     const runArgs = { "--tail": Boolean, "-t": Number };

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IEngine } from "../IEngine";
-import { ITerminal } from "../Terminal/ITerminal";
+import { Player } from "../Player";
+import { Engine } from "../engine";
+import { Terminal } from "../Terminal";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";
@@ -84,12 +84,6 @@ import { V2Modal } from "../utils/V2Modal";
 
 const htmlLocation = location;
 
-interface IProps {
-  terminal: ITerminal;
-  player: IPlayer;
-  engine: IEngine;
-}
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -148,20 +142,20 @@ export let Router: IRouter = {
   toImportSave: uninitialized,
 };
 
-function determineStartPage(player: IPlayer): Page {
+function determineStartPage(): Page {
   if (RecoveryMode) return Page.Recovery;
-  if (player.currentWork !== null) return Page.Work;
+  if (Player.currentWork !== null) return Page.Work;
   return Page.Terminal;
 }
 
-export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
+export function GameRoot(): React.ReactElement {
   const classes = useStyles();
   const [{ files, vim }, setEditorOptions] = useState({ files: {}, vim: false });
-  const [page, setPage] = useState(determineStartPage(player));
+  const [page, setPage] = useState(determineStartPage());
   const setRerender = useState(0)[1];
   const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
-    isFactionWork(player.currentWork) ? Factions[player.currentWork.factionName] : (undefined as unknown as Faction),
+    isFactionWork(Player.currentWork) ? Factions[Player.currentWork.factionName] : (undefined as unknown as Faction),
   );
   if (faction === undefined && page === Page.Faction)
     throw new Error("Trying to go to a page without the proper setup");
@@ -243,7 +237,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setPage(Page.City);
     },
     toTravel: () => {
-      player.gotoLocation(LocationName.TravelAgency);
+      Player.gotoLocation(LocationName.TravelAgency);
       setPage(Page.Travel);
     },
     toBitVerse: (flume: boolean, quick: boolean) => {
@@ -347,7 +341,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Terminal: {
-      mainPage = <TerminalRoot terminal={terminal} router={Router} player={player} />;
+      mainPage = <TerminalRoot terminal={Terminal} router={Router} player={Player} />;
       break;
     }
     case Page.Sleeves: {
@@ -366,8 +360,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       mainPage = (
         <ScriptEditorRoot
           files={files}
-          hostname={player.getCurrentServer().hostname}
-          player={player}
+          hostname={Player.getCurrentServer().hostname}
+          player={Player}
           router={Router}
           vim={vim}
         />
@@ -379,7 +373,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Hacknet: {
-      mainPage = <HacknetRoot player={player} />;
+      mainPage = <HacknetRoot player={Player} />;
       break;
     }
     case Page.CreateProgram: {
@@ -387,7 +381,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Factions: {
-      mainPage = <FactionsRoot player={player} router={Router} />;
+      mainPage = <FactionsRoot player={Player} router={Router} />;
       break;
     }
     case Page.Faction: {
@@ -395,7 +389,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Milestones: {
-      mainPage = <MilestonesRoot player={player} />;
+      mainPage = <MilestonesRoot player={Player} />;
       break;
     }
     case Page.Tutorial: {
@@ -411,7 +405,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.DevMenu: {
-      mainPage = <DevMenuRoot player={player} engine={engine} router={Router} />;
+      mainPage = <DevMenuRoot player={Player} engine={Engine} router={Router} />;
       break;
     }
     case Page.Gang: {
@@ -431,11 +425,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Travel: {
-      mainPage = <TravelAgencyRoot p={player} router={Router} />;
+      mainPage = <TravelAgencyRoot p={Player} router={Router} />;
       break;
     }
     case Page.StockMarket: {
-      mainPage = <StockMarketRoot p={player} stockMarket={StockMarket} />;
+      mainPage = <StockMarketRoot p={Player} stockMarket={StockMarket} />;
       break;
     }
     case Page.City: {
@@ -450,12 +444,12 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     case Page.Options: {
       mainPage = (
         <GameOptionsRoot
-          player={player}
+          player={Player}
           router={Router}
           save={() => saveObject.saveGame()}
           export={() => {
             // Apply the export bonus before saving the game
-            onExport(player);
+            onExport(Player);
             saveObject.exportGame();
           }}
           forceKill={killAllScripts}
@@ -469,7 +463,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         <AugmentationsRoot
           exportGameFn={() => {
             // Apply the export bonus before saving the game
-            onExport(player);
+            onExport(Player);
             saveObject.exportGame();
           }}
           installAugmentationsFn={() => {
@@ -496,7 +490,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   }
 
   return (
-    <Context.Player.Provider value={player}>
+    <Context.Player.Provider value={Player}>
       <Context.Router.Provider value={Router}>
         <ErrorBoundary key={errorBoundaryKey} router={Router} softReset={softReset}>
           <BypassWrapper content={bypassGame ? mainPage : null}>
@@ -511,7 +505,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               {withSidebar ? (
                 <Box display="flex" flexDirection="row" width="100%">
                   <SidebarRoot
-                    player={player}
+                    player={Player}
                     router={Router}
                     page={page}
                     opened={sidebarOpened}
