@@ -50,9 +50,11 @@ Description
     * Certain Factions (Slum Snakes, Tetrads, The Syndicate, The Dark Army, Speakers for the Dead,
       NiteSec, The Black Hand) give the player the ability to form and manage their own gangs. These gangs
       will earn the player money and reputation with the corresponding Faction
-    * Every Augmentation in the game will be available through the Factions listed above
+    * Every Augmentation* in the game will be available through the Factions listed above
     * For every Faction NOT listed above, reputation gains are halved
     * You will no longer gain passive reputation with Factions
+
+    (* except Neuroflux Governor, The Red Pill and augments of secret factions)
 
 Source-File
     :Max Level: 3
@@ -84,7 +86,7 @@ Description
     has the potential of generating massive profits. All other forms of income are reduced by 75%. Furthermore:
 
     * The price and reputation cost of all Augmentations is tripled
-    * The starting and maximum amount of money on servers is reduced by 75%
+    * The starting and maximum amount of money on servers is reduced by 80%
     * Server growth rate is reduced by 80%
     * You now only need 75 favour with a faction in order to donate to it, rather than 150
 
@@ -92,7 +94,7 @@ Source-File
     :Max Level: 3
 
     This Source-File lets you create corporations on other BitNodes (although
-    some BitNodes will disable this mechanic). This Source-File also increases your
+    some BitNodes will disable this mechanic) and level 3 permanently unlocks the full API. This Source-File also increases your
     charisma and company salary multipliers by:
 
     * Level 1: 8%
@@ -122,7 +124,11 @@ Source-File
     :Max Level: 3
 
     This Source-File lets you access and use the Singularity Functions in other BitNodes.
-    Each level of this Source-File will reduce RAM costs.
+    Each level of this Source-File will reduce RAM costs:
+
+    * Level 1: 16x
+    * Level 2: 4x
+    * Level 3: 1x
 
 Difficulty:
     Depending on what Source-Files you have unlocked before attempting this BitNode,
@@ -139,11 +145,11 @@ Description
     In this BitNode:
 
     * The base security level of servers is doubled
-    * The starting money on servers is halved, but the maximum money remains the same
+    * The starting money on servers is halved, but the maximum money is doubled
     * Most methods of earning money now give significantly less
     * Infiltration gives 50% more reputation and money
     * Corporations have 50% lower valuations and are therefore less profitable
-    * Augmentations are more expensive
+    * Augmentation price is doubled
     * Hacking experience gain rates are reduced
 
 Source-File
@@ -181,7 +187,7 @@ Description
 
     * Hacking and Hacknet Nodes will be less profitable
     * Your hacking level is reduced by 65%
-    * Hacking experience gain from scripts is reduced by 75%
+    * Hacking experience gain is reduced by 75%
     * Corporations have 80% lower valuations and are therefore less profitable
     * Working for companies is 50% less profitable
     * Crimes and Infiltration are 25% less profitable
@@ -220,7 +226,7 @@ Description
     * Augmentations are 3x more expensive
     * Hacking and Hacknet Nodes will be significantly less profitable
     * Your hacking level is reduced by 65%
-    * Hacking experience gain from scripts is reduced by 75%
+    * Hacking experience gain is reduced by 75%
     * Corporations have 80% lower valuations and are therefore less profitable
     * Working for companies is 50% less profitable
     * Crimes and Infiltration are 25% less profitable
@@ -300,6 +306,12 @@ Source-File
     (Note that the Level 3 effect of this Source-File only applies when entering a new BitNode, NOT
     when installing Augmentations.)
 
+    This Source-File also increases your hacknet multipliers by:
+
+    * Level 1: 8%
+    * Level 2: 12%
+    * Level 3: 14%
+
 Difficulty
     Hard
 
@@ -312,10 +324,12 @@ Description
     for the human consciousness. Mankind had finally achieved immortality - at least for those
     that could afford it.
 
-    This BitNode unlocks Sleeve technology. Sleeve technology allows you to:
+    This BitNode unlocks Sleeve and grafting technologies. Sleeve technology allows you to:
 
     1. Re-sleeve: Purchase and transfer your consciousness into a new body
     2. Duplicate Sleeves: Duplicate your consciousness into Synthoids, allowing you to perform different tasks synchronously
+
+    Grafting technology allows you to graft Augmentations, which is an alternative way of installing Augmentations.
 
     In this BitNode:
 
@@ -327,7 +341,7 @@ Description
 Source-File
     :Max Level: 3
 
-    This Source-File unlocks Sleeve technology in other BitNodes.
+    This Source-File unlocks Sleeve and grafting technologies in other BitNodes.
     Each level of this Source-File also grants you a Duplicate Sleeve.
 
 Difficulty
@@ -346,8 +360,8 @@ Description
 
     In this BitNode:
 
-    * Your hacking stat and experience gain are halved
-    * The starting and maximum amount of money available on servers is significantly decreased
+    * Your hacking stat and experience gain are reduced
+    * The starting and maximum amount of money available on servers are reduced by 90%
     * The growth rate of servers is significantly reduced
     * Weakening a server is twice as effective
     * Company wages are decreased by 50%
@@ -367,6 +381,12 @@ Source-File
     * Level 1: 32%
     * Level 2: 48%
     * Level 3: 56%
+
+    This Source-File reduces the price increase for every aug bought by:
+
+    * Level 1: 4%
+    * Level 2: 6%
+    * Level 3: 7%
 
 Difficulty
     Hard
