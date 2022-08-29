@@ -62,7 +62,6 @@ async function startNetscript2Script(workerScript: WorkerScript): Promise<void> 
     throw `${script.filename} cannot be run because it does not have a main function.`;
   if (!ns) throw `${script.filename} cannot be run because the NS object hasn't been constructed properly.`;
   await loadedModule.main(ns);
-  return;
 }
 
 async function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
