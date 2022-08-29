@@ -18,7 +18,6 @@ export const MiscPage = (): React.ReactElement => {
           </>
         }
       />
-      <br />
       <OptionSwitch
         checked={Settings.EnableBashHotkeys}
         onChange={(newValue) => (Settings.EnableBashHotkeys = newValue)}

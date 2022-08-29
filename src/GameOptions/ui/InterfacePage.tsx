@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
-import { Settings } from "../../Settings/Settings";
+import { defaultSettings, Settings } from "../../Settings/Settings";
 import { OptionSwitch } from "../../ui/React/OptionSwitch";
 import { GameOptionsPage } from "./GameOptionsPage";
 import { formatTime } from "../../utils/helpers/formatTime";
+import { Box } from "@mui/system";
 
 export const InterfacePage = (): React.ReactElement => {
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
@@ -64,7 +65,7 @@ export const InterfacePage = (): React.ReactElement => {
               <Typography
                 color={formatTime(timestampFormat) === "format error" && timestampFormat !== "" ? "error" : "success"}
               >
-                Timestamp format:
+                Timestamp&nbsp;format:&nbsp;
               </Typography>
             ),
           }}
@@ -73,28 +74,28 @@ export const InterfacePage = (): React.ReactElement => {
           placeholder="yyyy-MM-dd hh:mm:ss"
         />
       </Tooltip>
-      <>
-        <Tooltip title={<Typography>Sets the locale for displaying numbers.</Typography>}>
-          <Typography>Locale</Typography>
-        </Tooltip>
-        <Select value={locale} onChange={handleLocaleChange}>
-          <MenuItem value="en">en</MenuItem>
-          <MenuItem value="bg">bg</MenuItem>
-          <MenuItem value="cs">cs</MenuItem>
-          <MenuItem value="da-dk">da-dk</MenuItem>
-          <MenuItem value="de">de</MenuItem>
-          <MenuItem value="en-au">en-au</MenuItem>
-          <MenuItem value="en-gb">en-gb</MenuItem>
-          <MenuItem value="es">es</MenuItem>
-          <MenuItem value="fr">fr</MenuItem>
-          <MenuItem value="hu">hu</MenuItem>
-          <MenuItem value="it">it</MenuItem>
-          <MenuItem value="lv">lv</MenuItem>
-          <MenuItem value="no">no</MenuItem>
-          <MenuItem value="pl">pl</MenuItem>
-          <MenuItem value="ru">ru</MenuItem>
-        </Select>
-      </>
+      <Typography>
+        Example timestamp: {timestampFormat !== "" ? formatTime(timestampFormat) : "no timestamp"}
+      </Typography>
+      <br />
+
+      <Select startAdornment={<Typography>Locale&nbsp;</Typography>} value={locale} onChange={handleLocaleChange}>
+        <MenuItem value="en">en</MenuItem>
+        <MenuItem value="bg">bg</MenuItem>
+        <MenuItem value="cs">cs</MenuItem>
+        <MenuItem value="da-dk">da-dk</MenuItem>
+        <MenuItem value="de">de</MenuItem>
+        <MenuItem value="en-au">en-au</MenuItem>
+        <MenuItem value="en-gb">en-gb</MenuItem>
+        <MenuItem value="es">es</MenuItem>
+        <MenuItem value="fr">fr</MenuItem>
+        <MenuItem value="hu">hu</MenuItem>
+        <MenuItem value="it">it</MenuItem>
+        <MenuItem value="lv">lv</MenuItem>
+        <MenuItem value="no">no</MenuItem>
+        <MenuItem value="pl">pl</MenuItem>
+        <MenuItem value="ru">ru</MenuItem>
+      </Select>
     </GameOptionsPage>
   );
 };
