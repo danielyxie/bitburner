@@ -108,24 +108,16 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     <>
       <Box width="100%" minHeight="100vh" display={"flex"} alignItems={"flex-end"}>
         <List key={key} id="terminal" classes={{ root: classes.list }}>
-          {terminal.outputHistory.map((item, i) => {
-            if (item instanceof Output)
-              return (
-                <ListItem key={i} classes={{ root: classes.nopadding }}>
-                  <ANSIITypography text={item.text} color={item.color} />
-                </ListItem>
-              );
-            if (item instanceof RawOutput)
-              return (
-                <ListItem key={i} classes={{ root: classes.nopadding }}>
-                  <Typography classes={{ root: classes.preformatted }} paragraph={false}>
-                    {item.raw}
-                  </Typography>
-                </ListItem>
-              );
-            if (item instanceof Link)
-              return (
-                <ListItem key={i} classes={{ root: classes.nopadding }}>
+          {terminal.outputHistory.map((item, i) => (
+            <ListItem key={i} classes={{ root: classes.nopadding }}>
+              {item instanceof Output && <ANSIITypography text={item.text} color={item.color} />}
+              {item instanceof RawOutput && (
+                <Typography classes={{ root: classes.preformatted }} paragraph={false}>
+                  {item.raw}
+                </Typography>
+              )}
+              {item instanceof Link && (
+                <>
                   <Typography>{item.dashes}&gt;&nbsp;</Typography>
                   <MuiLink
                     classes={{ root: classes.preformatted }}
@@ -135,9 +127,10 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
                   >
                     <Typography>{item.hostname}</Typography>
                   </MuiLink>
-                </ListItem>
-              );
-          })}
+                </>
+              )}
+            </ListItem>
+          ))}
 
           {terminal.action !== null && (
             <ListItem classes={{ root: classes.nopadding }}>
