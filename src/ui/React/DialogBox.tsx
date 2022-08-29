@@ -23,9 +23,9 @@ export function errorDialog(e: unknown, initialText = "") {
     console.error(e);
   }
 
-  if (!initialText) {
-    if (e instanceof ScriptDeath) initialText = `${e.name}@${e.hostname} (PID - ${e.pid})\n\n`;
+  if (!initialText && e instanceof ScriptDeath) {
+    const basicHeader = `ERROR\n${e.name}@${e.hostname} (PID - ${e.pid})\n\n`;
+    if (e.errorMessage.includes(basicHeader)) initialText = basicHeader;
   }
-
   dialogBoxCreate(initialText + errorText);
 }
