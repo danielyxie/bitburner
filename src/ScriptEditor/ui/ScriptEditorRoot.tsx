@@ -252,7 +252,7 @@ export function Root(props: IProps): React.ReactElement {
       return;
     }
     const codeCopy = newCode + "";
-    const ramUsage = calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
+    const ramUsage = calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
     if (ramUsage.cost > 0) {
       const entries = ramUsage.entries?.sort((a, b) => b.cost - a.cost) ?? [];
       const entriesDisp = [];
@@ -466,7 +466,6 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (scriptToSave.fileName == server.scripts[i].filename) {
           server.scripts[i].saveScript(
-            props.player,
             scriptToSave.fileName,
             scriptToSave.code,
             props.player.currentServer,
@@ -480,13 +479,7 @@ export function Root(props: IProps): React.ReactElement {
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(
-        props.player,
-        scriptToSave.fileName,
-        scriptToSave.code,
-        props.player.currentServer,
-        server.scripts,
-      );
+      script.saveScript(scriptToSave.fileName, scriptToSave.code, props.player.currentServer, server.scripts);
       server.scripts.push(script);
     } else if (scriptToSave.isTxt) {
       for (let i = 0; i < server.textFiles.length; ++i) {
@@ -555,7 +548,6 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (currentScript.fileName == server.scripts[i].filename) {
           server.scripts[i].saveScript(
-            props.player,
             currentScript.fileName,
             currentScript.code,
             props.player.currentServer,
@@ -569,13 +561,7 @@ export function Root(props: IProps): React.ReactElement {
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(
-        props.player,
-        currentScript.fileName,
-        currentScript.code,
-        props.player.currentServer,
-        server.scripts,
-      );
+      script.saveScript(currentScript.fileName, currentScript.code, props.player.currentServer, server.scripts);
       server.scripts.push(script);
     } else if (currentScript.isTxt) {
       for (let i = 0; i < server.textFiles.length; ++i) {

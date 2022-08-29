@@ -12,7 +12,6 @@ import { isScriptFilename } from "../Script/isScriptFilename";
 
 import { createRandomIp } from "../utils/IPAddress";
 import { compareArrays } from "../utils/helpers/compareArrays";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { ScriptArg } from "../Netscript/ScriptArg";
 
 interface IConstructorParams {
@@ -245,7 +244,7 @@ export class BaseServer {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateRamUsed(ram: number, player: IPlayer): void {
+  updateRamUsed(ram: number): void {
     this.ramUsed = ram;
   }
 
@@ -266,7 +265,7 @@ export class BaseServer {
    * Write to a script file
    * Overwrites existing files. Creates new files if the script does not eixst
    */
-  writeToScriptFile(player: IPlayer, fn: string, code: string): writeResult {
+  writeToScriptFile(fn: string, code: string): writeResult {
     const ret = { success: false, overwritten: false };
     if (!isValidFilePath(fn) || !isScriptFilename(fn)) {
       return ret;
@@ -277,7 +276,7 @@ export class BaseServer {
       if (fn === this.scripts[i].filename) {
         const script = this.scripts[i];
         script.code = code;
-        script.updateRamUsage(player, this.scripts);
+        script.updateRamUsage(this.scripts);
         script.markUpdated();
         ret.overwritten = true;
         ret.success = true;
@@ -286,7 +285,7 @@ export class BaseServer {
     }
 
     // Otherwise, create a new script
-    const newScript = new Script(player, fn, code, this.hostname, this.scripts);
+    const newScript = new Script(fn, code, this.hostname, this.scripts);
     this.scripts.push(newScript);
     ret.success = true;
     return ret;

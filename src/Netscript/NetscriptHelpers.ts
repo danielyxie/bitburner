@@ -57,7 +57,6 @@ export const helpers = {
   gangMember,
   gangTask,
   log,
-  getFunctionNames,
   getRunningScript,
   getRunningScriptByArgs,
   getCannotFindRunningScriptErrorMessage,
@@ -205,8 +204,8 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   }
 
   log(ctx, () => msg);
-  let rejectMsg = `${caller}: ${msg}`;
-  if (userstack.length !== 0) rejectMsg += `<br><br>Stack:<br>${userstack.join("<br>")}`;
+  let rejectMsg = `RUNTIME ERROR\n${ws.name}@${ws.hostname} (PID - ${ws.pid})\n\n${caller}: ${msg}`;
+  if (userstack.length !== 0) rejectMsg += `\n\nStack:\n${userstack.join("\n")}`;
   return makeBasicErrorMsg(ws, rejectMsg);
 }
 
@@ -253,14 +252,15 @@ function checkEnvFlags(ctx: NetscriptContext): void {
   if (ws.env.runningFn && ctx.function !== "asleep") {
     //This one has no error message so it will not create a dialog
     if (ws.delayReject) ws.delayReject(new ScriptDeath(ws));
-    ws.errorMessage = makeBasicErrorMsg(
-      ws,
+    ws.env.stopFlag = true;
+    log(ctx, () => "Failed to run due to failed concurrency check.");
+    throw makeRuntimeErrorMsg(
+      ctx,
       `Concurrent calls to Netscript functions are not allowed!
       Did you forget to await hack(), grow(), or some other
       promise-returning function?
       Currently running: ${ws.env.runningFn} tried to run: ${ctx.function}`,
     );
-    throw new ScriptDeath(ws);
   }
 }
 
@@ -295,9 +295,10 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
   ws.dynamicRamUsage += ramCost;
   if (ws.dynamicRamUsage > 1.01 * ws.ramUsage) {
     log(ctx, () => "Insufficient static ram available.");
-    ws.errorMessage = makeBasicErrorMsg(
-      ws,
-      `Dynamic RAM usage calculated to be greater than initial RAM usage on fn: ${fnName}.
+    ws.env.stopFlag = true;
+    throw makeRuntimeErrorMsg(
+      ctx,
+      `Dynamic RAM usage calculated to be greater than initial RAM usage.
       This is probably because you somehow circumvented the static RAM calculation.
 
       Threads: ${threads}
@@ -306,14 +307,13 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
 
       One of these could be the reason:
       * Using eval() to get a reference to a ns function
-      &nbsp;&nbsp;const myScan = eval('ns.scan');
+      \u00a0\u00a0const myScan = eval('ns.scan');
 
       * Using map access to do the same
-      &nbsp;&nbsp;const myScan = ns['scan'];
+      \u00a0\u00a0const myScan = ns['scan'];
 
       Sorry :(`,
     );
-    throw new ScriptDeath(ws);
   }
 }
 
@@ -368,7 +368,7 @@ function isScriptArgs(args: unknown): args is ScriptArg[] {
   return Array.isArray(args) && args.every(isScriptArg);
 }
 
-async function hack(
+function hack(
   ctx: NetscriptContext,
   hostname: string,
   manual: boolean,
@@ -454,7 +454,7 @@ async function hack(
       if (manual) {
         server.backdoorInstalled = true;
       }
-      return Promise.resolve(moneyGained);
+      return moneyGained;
     } else {
       // Player only gains 25% exp for failure?
       Player.gainHackingExp(expGainedOnFailure);
@@ -466,7 +466,7 @@ async function hack(
             expGainedOnFailure,
           )} exp (t=${numeralWrapper.formatThreads(threads)})`,
       );
-      return Promise.resolve(0);
+      return 0;
     }
   });
 }
@@ -598,10 +598,10 @@ function getRunningScriptByArgs(
   scriptArgs: ScriptArg[],
 ): RunningScript | null {
   if (!Array.isArray(scriptArgs)) {
-    throw helpers.makeBasicErrorMsg(
-      ctx.workerScript,
-      `Invalid scriptArgs argument passed into getRunningScript() from ${ctx.function}(). ` +
-        `This is probably a bug. Please report to game developer`,
+    throw helpers.makeRuntimeErrorMsg(
+      ctx,
+      "Invalid scriptArgs argument passed into getRunningScriptByArgs().\n" +
+        "This is probably a bug. Please report to game developer",
     );
   }
 
@@ -617,21 +617,6 @@ function getRunningScriptByArgs(
 
   // If no arguments are specified, return the current RunningScript
   return ctx.workerScript.scriptRef;
-}
-
-/** Provides an array of all function names on a nested object */
-function getFunctionNames(obj: object, prefix: string): string[] {
-  const functionNames: string[] = [];
-  for (const [key, value] of Object.entries(obj)) {
-    if (key === "args") {
-      continue;
-    } else if (typeof value == "function") {
-      functionNames.push(prefix + key);
-    } else if (typeof value == "object") {
-      functionNames.push(...getFunctionNames(value, key + "."));
-    }
-  }
-  return functionNames;
 }
 
 function getRunningScriptByPid(pid: number): RunningScript | null {

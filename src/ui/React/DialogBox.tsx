@@ -14,8 +14,10 @@ export function errorDialog(e: unknown, initialText = "") {
   else if (e instanceof ScriptDeath) {
     if (!e.errorMessage) return; //No need for a dialog for an empty ScriptDeath
     errorText = e.errorMessage;
-  } else if (e instanceof SyntaxError) errorText = e.message + " (sorry we can't be more helpful)";
-  else if (e instanceof Error) errorText = e.message + (e.stack ? `\nstack:\n${e.stack.toString()}` : "");
+    if (!e.errorMessage.includes(`${e.name}@${e.hostname}`)) {
+      initialText += `${e.name}@${e.hostname} (PID - ${e.pid})\n\n`;
+    }
+  } else if (e instanceof Error) errorText = "Original error message:\n" + e.message;
   else {
     errorText = "An unknown error was thrown, see console.";
     console.error(e);

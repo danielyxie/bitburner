@@ -5,12 +5,9 @@
 import * as walk from "acorn-walk";
 import { parse } from "acorn";
 
-import { helpers } from "./Netscript/NetscriptHelpers";
 import { ScriptUrl } from "./Script/ScriptUrl";
-import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
-import { IPlayer } from "./PersonObjects/IPlayer";
 import { ScriptModule } from "./Script/ScriptModule";
 
 // Acorn type def is straight up incomplete so we have to fill with our own.
@@ -21,7 +18,7 @@ function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
 }
 
-export async function compile(player: IPlayer, script: Script, scripts: Script[]): Promise<ScriptModule> {
+export async function compile(script: Script, scripts: Script[]): Promise<ScriptModule> {
   //!shouldCompile ensures that script.module is non-null, hence the "as".
   if (!shouldCompile(script, scripts)) return script.module as Promise<ScriptModule>;
   script.queueCompile = true;
@@ -31,7 +28,7 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
   //If multiple compiles were called on the same script before a compilation could be completed this ensures only one complilation is actually performed.
   if (!script.queueCompile) return script.module as Promise<ScriptModule>;
   script.queueCompile = false;
-  script.updateRamUsage(player, scripts);
+  script.updateRamUsage(scripts);
   const uurls = _getScriptUrls(script, scripts, []);
   const url = uurls[uurls.length - 1].url;
   if (script.url && script.url !== url) URL.revokeObjectURL(script.url);
@@ -48,50 +45,6 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
   script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
   script.dependencies = uurls;
   return script.module;
-}
-
-// Begin executing a user JS script, and return a promise that resolves
-// or rejects when the script finishes.
-// - script is a script to execute (see Script.js). We depend only on .filename and .code.
-// scripts is an array of other scripts on the server.
-// env is the global environment that should be visible to all the scripts
-// (i.e. hack, grow, etc.).
-// When the promise returned by this resolves, we'll have finished
-// running the main function of the script.
-export async function executeJSScript(
-  player: IPlayer,
-  scripts: Script[] = [],
-  workerScript: WorkerScript,
-): Promise<void> {
-  const script = workerScript.getScript();
-  if (script === null) throw new Error("script is null");
-  const loadedModule = await compile(player, script, scripts);
-  workerScript.ramUsage = script.ramUsage;
-
-  const ns = workerScript.env.vars;
-
-  if (!loadedModule) {
-    throw helpers.makeBasicErrorMsg(
-      workerScript,
-      `${script.filename} cannot be run because the script module won't load`,
-    );
-  }
-  // TODO: putting await in a non-async function yields unhelpful
-  // "SyntaxError: unexpected reserved word" with no line number information.
-  if (!loadedModule.main) {
-    throw helpers.makeBasicErrorMsg(
-      workerScript,
-      `${script.filename} cannot be run because it does not have a main function.`,
-    );
-  }
-  if (!ns) {
-    throw helpers.makeBasicErrorMsg(
-      workerScript,
-      `${script.filename} cannot be run because the NS object hasn't been constructed properly.`,
-    );
-  }
-  await loadedModule.main(ns);
-  return;
 }
 
 function isDependencyOutOfDate(filename: string, scripts: Script[], scriptModuleSequenceNumber: number): boolean {

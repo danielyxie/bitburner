@@ -931,13 +931,13 @@ const base: InternalAPI<NS> = {
         }
 
         // Create new script if it does not already exist
-        const newScript = new Script(Player, file);
+        const newScript = new Script(file);
         newScript.code = sourceScript.code;
         newScript.ramUsage = sourceScript.ramUsage;
         newScript.server = destServer.hostname;
         destServer.scripts.push(newScript);
         helpers.log(ctx, () => `File '${file}' copied over to '${destServer?.hostname}'.`);
-        newScript.updateRamUsage(Player, destServer.scripts);
+        newScript.updateRamUsage(destServer.scripts);
       }
 
       return noFailures;
@@ -1492,12 +1492,12 @@ const base: InternalAPI<NS> = {
         let script = ctx.workerScript.getScriptOnServer(fn, server);
         if (script == null) {
           // Create a new script
-          script = new Script(Player, fn, String(data), server.hostname, server.scripts);
+          script = new Script(fn, String(data), server.hostname, server.scripts);
           server.scripts.push(script);
-          return script.updateRamUsage(Player, server.scripts);
+          return script.updateRamUsage(server.scripts);
         }
         mode === "w" ? (script.code = String(data)) : (script.code += data);
-        return script.updateRamUsage(Player, server.scripts);
+        return script.updateRamUsage(server.scripts);
       } else {
         // Write to text file
         if (!fn.endsWith(".txt")) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: ${fn}`);
@@ -1820,7 +1820,7 @@ const base: InternalAPI<NS> = {
           function (data) {
             let res;
             if (isScriptFilename(target)) {
-              res = s.writeToScriptFile(Player, target, data);
+              res = s.writeToScriptFile(target, data);
             } else {
               res = s.writeToTextFile(target, data);
             }
@@ -1950,4 +1950,18 @@ const ns = {
   ...NetscriptExtra(),
 };
 
-const possibleLogs = Object.fromEntries([...helpers.getFunctionNames(ns, "")].map((a) => [a, true]));
+const possibleLogs = Object.fromEntries([...getFunctionNames(ns, "")].map((a) => [a, true]));
+/** Provides an array of all function names on a nested object */
+function getFunctionNames(obj: object, prefix: string): string[] {
+  const functionNames: string[] = [];
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === "args") {
+      continue;
+    } else if (typeof value == "function") {
+      functionNames.push(prefix + key);
+    } else if (typeof value == "object") {
+      functionNames.push(...getFunctionNames(value, key + "."));
+    }
+  }
+  return functionNames;
+}
