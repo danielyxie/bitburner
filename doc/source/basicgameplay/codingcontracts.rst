@@ -32,6 +32,18 @@ an area to provide an answer.
 Interacting through Scripts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 See the `Coding Contract API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.codingcontract.md>`_.
+Interacting with Coding Contracts via the Terminal can be tedious the more
+contracts you solve. Consider using the API to automate various aspects of
+your solution. For example, some contracts have long solutions while others
+have even longer solutions. You might want to use the API to automate the
+process of submitting your solution rather than copy and paste a long
+solution into an answer box.
+
+However, using the API comes at a cost. Like most functions in other APIs,
+each function in the Coding Contract API has a RAM cost. Depending on which
+function you use, the initial RAM on your home server might not be enough
+to allow you to use various API functions. Plan on upgrading the RAM on your
+home server if you want to use the Coding Contract API.
 
 Submitting Solutions
 ^^^^^^^^^^^^^^^^^^^^
