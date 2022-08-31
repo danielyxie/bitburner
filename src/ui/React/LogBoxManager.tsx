@@ -171,7 +171,6 @@ function LogWindow(props: IProps): React.ReactElement {
     const node = rootRef?.current;
     if (!node) return;
     const state = node.state as { x: number; y: number };
-    console.log(`before ${state.x} ${state.y}`);
     state.x = x;
     state.y = y;
   };
@@ -315,8 +314,8 @@ function LogWindow(props: IProps): React.ReactElement {
         ref={container}
       >
         <ResizableBox
-          height={size[0]}
-          width={size[1]}
+          width={size[0]}
+          height={size[1]}
           onResize={onResize}
           minConstraints={minConstraints}
           handle={
