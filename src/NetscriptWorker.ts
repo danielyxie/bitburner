@@ -37,7 +37,6 @@ import { Terminal } from "./Terminal";
 import { ScriptArg } from "./Netscript/ScriptArg";
 import { helpers } from "./Netscript/NetscriptHelpers";
 
-// Netscript Ports are instantiated here
 export const NetscriptPorts: Map<number, IPort> = new Map();
 
 export function prestigeWorkerScripts(): void {
