@@ -613,7 +613,7 @@ function getRunningScriptByArgs(
     throw helpers.makeRuntimeRejectMsg(
       ctx.workerScript,
       `Invalid scriptArgs argument passed into getRunningScript() from ${ctx.function}(). ` +
-      `This is probably a bug. Please report to game developer`,
+        `This is probably a bug. Please report to game developer`,
     );
   }
 
