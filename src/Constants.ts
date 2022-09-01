@@ -124,7 +124,7 @@ export const CONSTANTS: {
   // NeuroFlux Governor Augmentation cost multiplier
   NeuroFluxGovernorLevelMult: 1.14,
 
-  NumNetscriptPorts: Infinity,
+  NumNetscriptPorts: Number.MAX_SAFE_INTEGER,
 
   // Server-related constants
   HomeComputerMaxRam: 1073741824, // 2 ^ 30
