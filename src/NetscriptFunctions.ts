@@ -836,7 +836,7 @@ const base: InternalAPI<NS> = {
     },
   exit: (ctx: NetscriptContext) => (): never => {
     helpers.log(ctx, () => "Exiting...");
-    ctx.workerScript.env.stopFlag = true;
+    killWorkerScript(ctx.workerScript);
     throw new ScriptDeath(ctx.workerScript);
   },
   scp:
