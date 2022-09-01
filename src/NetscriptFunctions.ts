@@ -54,7 +54,7 @@ import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
 import { NetscriptGrafting } from "./NetscriptFunctions/Grafting";
-import { IPort } from "./NetscriptPort";
+import { NetscriptPort, IPort } from "./NetscriptPort";
 import {
   NS,
   Player as INetscriptPlayer,
@@ -1533,7 +1533,12 @@ const base: InternalAPI<NS> = {
             `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
           );
         }
-        const iport = NetscriptPorts[port - 1];
+        let iport = NetscriptPorts.get(port);
+        if (iport == null || !(iport instanceof Object)) {
+          NetscriptPorts.set(port, NetscriptPort());
+        }
+        // Try again.
+        iport = NetscriptPorts.get(port);
         if (iport == null || !(iport instanceof Object)) {
           throw helpers.makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
