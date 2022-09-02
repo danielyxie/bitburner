@@ -1518,34 +1518,15 @@ const base: InternalAPI<NS> = {
   tryWritePort:
     (ctx: NetscriptContext) =>
     (_port: unknown, data: unknown = ""): Promise<any> => {
-      let port = helpers.number(ctx, "port", _port);
+      const port = helpers.number(ctx, "port", _port);
       if (typeof data !== "string" && typeof data !== "number") {
         throw helpers.makeRuntimeErrorMsg(
           ctx,
           `Trying to write invalid data to a port: only strings and numbers are valid.`,
         );
       }
-      if (!isNaN(port)) {
-        port = Math.round(port);
-        if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-          throw helpers.makeRuntimeErrorMsg(
-            ctx,
-            `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
-          );
-        }
-        let iport = NetscriptPorts.get(port);
-        if (iport == null || !(iport instanceof Object)) {
-          NetscriptPorts.set(port, NetscriptPort());
-        }
-        // Try again.
-        iport = NetscriptPorts.get(port);
-        if (iport == null || !(iport instanceof Object)) {
-          throw helpers.makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
-        }
-        return Promise.resolve(iport.tryWrite(data));
-      } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
-      }
+      const iport = helpers.getValidPort(ctx, port);
+      return Promise.resolve(iport.tryWrite(data));
     },
   readPort:
     (ctx: NetscriptContext) =>
