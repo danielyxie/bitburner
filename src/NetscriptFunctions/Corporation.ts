@@ -534,7 +534,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       },
     limitProductProduction:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _productName: unknown, _cityName: unknown, _qty: unknown): void => {
+      (_divisionName: unknown, _cityName: unknown, _productName: unknown, _qty: unknown): void => {
         checkAccess(ctx, 7);
         const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const cityName = helpers.city(ctx, "cityName", _cityName);
