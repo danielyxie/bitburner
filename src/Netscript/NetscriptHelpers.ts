@@ -131,11 +131,11 @@ function argsToString(args: unknown[]): string {
 }
 
 /** Creates an error message string containing hostname, scriptname, and the error message msg */
-function makeBasicErrorMsg(workerScript: WorkerScript, msg: string): string {
+function makeBasicErrorMsg(workerScript: WorkerScript, msg: string, type = "RUNTIME"): string {
   for (const scriptUrl of workerScript.scriptRef.dependencies) {
     msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
   }
-  return msg;
+  return `${type} ERROR\n${workerScript.name}@${workerScript.hostname} (PID - ${workerScript.pid})\n\n${msg}`;
 }
 
 /** Creates an error message string with a stack trace. */
@@ -204,7 +204,7 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   }
 
   log(ctx, () => msg);
-  let rejectMsg = `RUNTIME ERROR\n${ws.name}@${ws.hostname} (PID - ${ws.pid})\n\n${caller}: ${msg}`;
+  let rejectMsg = `${caller}: ${msg}`;
   if (userstack.length !== 0) rejectMsg += `\n\nStack:\n${userstack.join("\n")}`;
   return makeBasicErrorMsg(ws, rejectMsg);
 }

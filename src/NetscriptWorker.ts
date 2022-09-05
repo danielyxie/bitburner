@@ -33,6 +33,7 @@ import { simple as walksimple } from "acorn-walk";
 import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";
 import { ScriptArg } from "./Netscript/ScriptArg";
+import { helpers } from "./Netscript/NetscriptHelpers";
 
 export const NetscriptPorts: Map<number, IPort> = new Map();
 
@@ -345,12 +346,16 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
       workerScript.log("", () => "Script finished running");
     })
     .catch(function (e) {
-      const initialText = `ERROR\n${workerScript.name}@${workerScript.hostname} (PID - ${workerScript.pid})\n\n`;
-      if (e instanceof SyntaxError) e = `SYNTAX ${initialText}${e.message} (sorry we can't be more helpful)`;
-      else if (e instanceof Error) {
-        e = `RUNTIME ${initialText}${e.message}${e.stack ? `\nstack:\n${e.stack.toString()}` : ""}`;
+      if (typeof e === "string") {
+        const headerText = helpers.makeBasicErrorMsg(workerScript, "", "");
+        //Add header info if it is not present;
+        if (!e.includes(headerText)) e = helpers.makeBasicErrorMsg(workerScript, e);
+      } else if (e instanceof SyntaxError) {
+        e = helpers.makeBasicErrorMsg(workerScript, `${e.message} (sorry we can't be more helpful)`, "SYNTAX");
+      } else if (e instanceof Error) {
+        e = helpers.makeBasicErrorMsg(workerScript, `${e.message}${e.stack ? `\nstack:\n${e.stack.toString()}` : ""}`);
       }
-      errorDialog(e, typeof e === "string" && e.includes(initialText) ? "" : initialText);
+      errorDialog(e);
       workerScript.log("", () => (e instanceof ScriptDeath ? "Script killed." : "Script crashed due to an error."));
       killWorkerScript(workerScript);
     });
