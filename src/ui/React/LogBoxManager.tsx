@@ -213,6 +213,7 @@ function LogWindow(props: IProps): React.ReactElement {
     if (server === null) return;
     const s = findRunningScript(script.filename, script.args, server);
     if (s === null) {
+      script.ramUsage = 0;
       startWorkerScript(script, server);
     } else {
       setScript(s);
