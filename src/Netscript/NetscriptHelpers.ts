@@ -686,9 +686,9 @@ function createPublicRunningScript(runningScript: RunningScript): IRunningScript
  * @param {string} callingFn - Name of calling function. For logging purposes
  * @returns {boolean} True if the server is a Hacknet Server, false otherwise
  */
-function failOnHacknetServer(ctx: NetscriptContext, server: BaseServer, callingFn = ""): boolean {
+function failOnHacknetServer(ctx: NetscriptContext, server: BaseServer): boolean {
   if (server instanceof HacknetServer) {
-    ctx.workerScript.log(callingFn, () => `Does not work on Hacknet Servers`);
+    log(ctx, () => `Does not work on Hacknet Servers`);
     return true;
   } else {
     return false;

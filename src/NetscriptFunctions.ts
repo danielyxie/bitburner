@@ -1110,7 +1110,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 0;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerMoneyAvailable")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 0;
       }
       if (server.hostname == "home") {
@@ -1130,7 +1130,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(
@@ -1149,7 +1149,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerBaseSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(
@@ -1167,7 +1167,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerMinSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(
@@ -1185,7 +1185,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerRequiredHackingLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(
@@ -1203,7 +1203,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 0;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerMaxMoney")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 0;
       }
       helpers.log(ctx, () => `returned ${numeralWrapper.formatMoney(server.moneyMax)} for '${server.hostname}'`);
@@ -1218,7 +1218,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerGrowth")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(ctx, () => `returned ${server.serverGrowth} for '${server.hostname}'`);
@@ -1233,7 +1233,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 5;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerNumPortsRequired")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 5;
       }
       helpers.log(ctx, () => `returned ${server.numOpenPortsRequired} for '${server.hostname}'`);
@@ -1679,7 +1679,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getHackTime")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return Infinity;
       }
 
@@ -1694,7 +1694,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getGrowTime")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return Infinity;
       }
 
@@ -1709,7 +1709,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getWeakenTime")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return Infinity;
       }
 
