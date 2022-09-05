@@ -285,8 +285,14 @@ export async function determineAllPossibilitiesForTabCompletion(
       return processFilepath(script.filename) === fn || script.filename === "/" + fn;
     });
     if (!script) return; // Doesn't exist.
-    //Will return the already compiled module if recompilation not needed.
-    const loadedModule = await compile(script, currServ.scripts);
+    let loadedModule;
+    try {
+      //Will return the already compiled module if recompilation not needed.
+      loadedModule = await compile(script, currServ.scripts);
+    } catch (e) {
+      //fail silently if the script fails to compile (e.g. syntax error)
+      return;
+    }
     if (!loadedModule || !loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
 
     const runArgs = { "--tail": Boolean, "-t": Number };
