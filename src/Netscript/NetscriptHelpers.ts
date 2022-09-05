@@ -91,7 +91,7 @@ const debugType = (v: unknown): string => {
 function string(ctx: NetscriptContext, argName: string, v: unknown): string {
   if (typeof v === "string") return v;
   if (typeof v === "number") return v + ""; // cast to string;
-  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string. ${debugType(v)}`);
+  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string. ${debugType(v)}`, "TYPE");
 }
 
 /** Convert provided value v for argument argName to number. Throw if could not convert to a non-NaN number. */
@@ -103,12 +103,12 @@ function number(ctx: NetscriptContext, argName: string, v: unknown): number {
     if (isNaN(v)) throw makeRuntimeErrorMsg(ctx, `'${argName}' is NaN.`);
     return v;
   }
-  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number. ${debugType(v)}`);
+  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number. ${debugType(v)}`, "TYPE");
 }
 
 /** Returns args back if it is a ScriptArg[]. Throws an error if it is not. */
 function scriptArgs(ctx: NetscriptContext, args: unknown) {
-  if (!isScriptArgs(args)) throw makeRuntimeErrorMsg(ctx, "'args' is not an array of script args");
+  if (!isScriptArgs(args)) throw makeRuntimeErrorMsg(ctx, "'args' is not an array of script args", "TYPE");
   return args;
 }
 
@@ -142,7 +142,7 @@ function makeBasicErrorMsg(ws: WorkerScript | ScriptDeath, msg: string, type = "
 }
 
 /** Creates an error message string with a stack trace. */
-function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
+function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string, type = "RUNTIME"): string {
   const errstack = new Error().stack;
   if (errstack === undefined) throw new Error("how did we not throw an error?");
   const stack = errstack.split("\n").slice(1);
@@ -209,7 +209,7 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   log(ctx, () => msg);
   let rejectMsg = `${caller}: ${msg}`;
   if (userstack.length !== 0) rejectMsg += `\n\nStack:\n${userstack.join("\n")}`;
-  return makeBasicErrorMsg(ws, rejectMsg);
+  return makeBasicErrorMsg(ws, rejectMsg, type);
 }
 
 /** Validate requested number of threads for h/g/w options */
@@ -241,6 +241,7 @@ function checkSingularityAccess(ctx: NetscriptContext): void {
       ctx,
       `This singularity function requires Source-File 4 to run. A power up you obtain later in the game.
       It will be very obvious when and how you can obtain it.`,
+      "API ACCESS",
     );
   }
 }
@@ -262,6 +263,7 @@ function checkEnvFlags(ctx: NetscriptContext): void {
       Did you forget to await hack(), grow(), or some other
       promise-returning function?
       Currently running: ${ws.env.runningFn} tried to run: ${ctx.function}`,
+      "CONCURRENCY",
     );
   }
 }
@@ -304,8 +306,8 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
       This is probably because you somehow circumvented the static RAM calculation.
 
       Threads: ${threads}
-      Dynamic RAM Usage: ${numeralWrapper.formatRAM(ws.dynamicRamUsage)}
-      Static RAM Usage: ${numeralWrapper.formatRAM(ws.ramUsage)}
+      Dynamic RAM Usage: ${numeralWrapper.formatRAM(ws.dynamicRamUsage)} per thread
+      Static RAM Usage: ${numeralWrapper.formatRAM(ws.ramUsage)} per thread
 
       One of these could be the reason:
       * Using eval() to get a reference to a ns function
@@ -315,6 +317,7 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
       \u00a0\u00a0const myScan = ns['scan'];
 
       Sorry :(`,
+      "RAM USAGE",
     );
   }
 }
@@ -346,7 +349,7 @@ function scriptIdentifier(
       args,
     };
   }
-  throw new Error("not implemented");
+  throw makeRuntimeErrorMsg(ctx, "An unknown type of input was provided as a script identifier.", "TYPE");
 }
 
 /**
@@ -514,7 +517,7 @@ function player(ctx: NetscriptContext, p: unknown): IPlayer {
     hasCorporation: undefined,
     entropy: undefined,
   };
-  if (!roughlyIs(fakePlayer, p)) throw makeRuntimeErrorMsg(ctx, `player should be a Player.`);
+  if (!roughlyIs(fakePlayer, p)) throw makeRuntimeErrorMsg(ctx, `player should be a Player.`, "TYPE");
   return p as IPlayer;
 }
 
@@ -545,7 +548,7 @@ function server(ctx: NetscriptContext, s: unknown): Server {
     requiredHackingSkill: undefined,
     serverGrowth: undefined,
   };
-  if (!roughlyIs(fakeServer, s)) throw makeRuntimeErrorMsg(ctx, `server should be a Server.`);
+  if (!roughlyIs(fakeServer, s)) throw makeRuntimeErrorMsg(ctx, `server should be a Server.`, "TYPE");
   return s as Server;
 }
 
@@ -563,18 +566,18 @@ function roughlyIs(expect: object, actual: unknown): boolean {
 
 function gang(ctx: NetscriptContext, g: unknown): FormulaGang {
   if (!roughlyIs({ respect: 0, territory: 0, wantedLevel: 0 }, g))
-    throw makeRuntimeErrorMsg(ctx, `gang should be a Gang.`);
+    throw makeRuntimeErrorMsg(ctx, `gang should be a Gang.`, "TYPE");
   return g as FormulaGang;
 }
 
 function gangMember(ctx: NetscriptContext, m: unknown): GangMember {
-  if (!roughlyIs(new GangMember(), m)) throw makeRuntimeErrorMsg(ctx, `member should be a GangMember.`);
+  if (!roughlyIs(new GangMember(), m)) throw makeRuntimeErrorMsg(ctx, `member should be a GangMember.`, "TYPE");
   return m as GangMember;
 }
 
 function gangTask(ctx: NetscriptContext, t: unknown): GangMemberTask {
   if (!roughlyIs(new GangMemberTask("", "", false, false, { hackWeight: 100 }), t))
-    throw makeRuntimeErrorMsg(ctx, `task should be a GangMemberTask.`);
+    throw makeRuntimeErrorMsg(ctx, `task should be a GangMemberTask.`, "TYPE");
   return t as GangMemberTask;
 }
 
