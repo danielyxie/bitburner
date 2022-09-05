@@ -635,10 +635,7 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["CHALLENGE_BN9"],
     Icon: "BN9+",
     Visible: () => hasAccessToSF(Player, 9),
-    Condition: () =>
-      Player.bitNodeN === 9 &&
-      bitNodeFinishedState() &&
-      !Player.moneySourceB.hasAnythingFrom("hacknet"),
+    Condition: () => Player.bitNodeN === 9 && bitNodeFinishedState() && !Player.moneySourceB.hasAnythingFrom("hacknet"),
   },
   CHALLENGE_BN10: {
     ...achievementData["CHALLENGE_BN10"],

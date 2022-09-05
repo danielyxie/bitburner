@@ -19,8 +19,7 @@ export class MoneySourceTracker {
     if (amt > 0) {
       this.income[sanitizedSource] += amt;
       this.income.total += amt;
-    }
-    else {
+    } else {
       this.expenses[sanitizedSource] -= amt;
       this.expenses.total -= amt;
     }
@@ -39,7 +38,7 @@ export class MoneySourceTracker {
   hasAnythingFrom(source: string): boolean {
     const sanitizedSource = this.trySanitizeSource(source);
     if (sanitizedSource === "") return false;
-    return (this.income[sanitizedSource] > 0 || this.expenses[sanitizedSource] > 0);
+    return this.income[sanitizedSource] > 0 || this.expenses[sanitizedSource] > 0;
   }
 
   // Returns income for the source
@@ -55,7 +54,7 @@ export class MoneySourceTracker {
     if (sanitizedSource === "") return 0;
     return this.expenses[sanitizedSource];
   }
-  
+
   // Returns [income - expenses] for the source
   getTotal(source: string): number {
     const sanitizedSource = this.trySanitizeSource(source);
@@ -82,11 +81,9 @@ export class MoneySourceTracker {
       for (const name in value.data) {
         if (name == "hacknet_expenses") {
           ret.expenses["hacknet"] = -value.data[name];
-        }
-        else if (value.data[name] > 0) {
+        } else if (value.data[name] > 0) {
           ret.income[name] = value.data[name];
-        }
-        else if (value.data[name] < 0) {
+        } else if (value.data[name] < 0) {
           ret.expenses[name] = -value.data[name];
         }
       }
@@ -97,7 +94,7 @@ export class MoneySourceTracker {
 }
 
 class MoneySourceTrackerRecord {
-  [key: string]: number
+  [key: string]: number;
   starting = 0;
   bladeburner = 0;
   casino = 0;

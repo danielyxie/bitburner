@@ -115,61 +115,156 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
   function convertMoneySourceTrackerToString(src: MoneySourceTracker): React.ReactElement {
     const parts: [string, JSX.Element, JSX.Element, JSX.Element][] = [
       [``, <span>Income</span>, <span>Expenses</span>, <span>Total</span>],
-      [`Total:`, <Money money={src.getIncome("total") || ""} />, <Money money={-src.getExpenses("total") || ""} />, <Money money={src.getTotal("total") || ""} />]
+      [
+        `Total:`,
+        <Money money={src.getIncome("total") || ""} />,
+        <Money money={-src.getExpenses("total") || ""} />,
+        <Money money={src.getTotal("total") || ""} />,
+      ],
     ];
     if (src.hasAnythingFrom("augmentations")) {
-      parts.push([`Augmentations:`, <Money money={src.getIncome("augmentations") || ""} />, <Money money={-src.getExpenses("augmentations") || ""} />, <Money money={src.getTotal("augmentations") || ""} />]);
+      parts.push([
+        `Augmentations:`,
+        <Money money={src.getIncome("augmentations") || ""} />,
+        <Money money={-src.getExpenses("augmentations") || ""} />,
+        <Money money={src.getTotal("augmentations") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("bladeburner")) {
-      parts.push([`Bladeburner:`, <Money money={src.getIncome("bladeburner") || ""} />, <Money money={-src.getExpenses("bladeburner") || ""} />, <Money money={src.getTotal("bladeburner") || ""} />]);
+      parts.push([
+        `Bladeburner:`,
+        <Money money={src.getIncome("bladeburner") || ""} />,
+        <Money money={-src.getExpenses("bladeburner") || ""} />,
+        <Money money={src.getTotal("bladeburner") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("casino")) {
-      parts.push([`Casino:`, <Money money={src.getIncome("casino") || ""} />, <Money money={-src.getExpenses("casino") || ""} />, <Money money={src.getTotal("casino") || ""} />]);
+      parts.push([
+        `Casino:`,
+        <Money money={src.getIncome("casino") || ""} />,
+        <Money money={-src.getExpenses("casino") || ""} />,
+        <Money money={src.getTotal("casino") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("codingcontract")) {
-      parts.push([`Coding Contracts:`, <Money money={src.getIncome("codingcontract") || ""} />, <Money money={-src.getExpenses("codingcontract") || ""} />, <Money money={src.getTotal("codingcontract") || ""} />]);
+      parts.push([
+        `Coding Contracts:`,
+        <Money money={src.getIncome("codingcontract") || ""} />,
+        <Money money={-src.getExpenses("codingcontract") || ""} />,
+        <Money money={src.getTotal("codingcontract") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("work")) {
-      parts.push([`Company Work:`, <Money money={src.getIncome("work") || ""} />, <Money money={-src.getExpenses("work") || ""} />, <Money money={src.getTotal("work") || ""} />]);
+      parts.push([
+        `Company Work:`,
+        <Money money={src.getIncome("work") || ""} />,
+        <Money money={-src.getExpenses("work") || ""} />,
+        <Money money={src.getTotal("work") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("class")) {
-      parts.push([`Class:`, <Money money={src.getIncome("class") || ""} />, <Money money={-src.getExpenses("class") || ""} />, <Money money={src.getTotal("class") || ""} />]);
+      parts.push([
+        `Class:`,
+        <Money money={src.getIncome("class") || ""} />,
+        <Money money={-src.getExpenses("class") || ""} />,
+        <Money money={src.getTotal("class") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("corporation")) {
-      parts.push([`Corporation:`, <Money money={src.getIncome("corporation") || ""} />, <Money money={-src.getExpenses("corporation") || ""} />, <Money money={src.getTotal("corporation") || ""} />]);
+      parts.push([
+        `Corporation:`,
+        <Money money={src.getIncome("corporation") || ""} />,
+        <Money money={-src.getExpenses("corporation") || ""} />,
+        <Money money={src.getTotal("corporation") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("crime")) {
-      parts.push([`Crimes:`, <Money money={src.getIncome("crime") || ""} />, <Money money={-src.getExpenses("crime") || ""} />, <Money money={src.getTotal("crime") || ""} />]);
+      parts.push([
+        `Crimes:`,
+        <Money money={src.getIncome("crime") || ""} />,
+        <Money money={-src.getExpenses("crime") || ""} />,
+        <Money money={src.getTotal("crime") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("gang")) {
-      parts.push([`Gang:`, <Money money={src.getIncome("gang") || ""} />, <Money money={-src.getExpenses("gang") || ""} />, <Money money={src.getTotal("gang") || ""} />]);
+      parts.push([
+        `Gang:`,
+        <Money money={src.getIncome("gang") || ""} />,
+        <Money money={-src.getExpenses("gang") || ""} />,
+        <Money money={src.getTotal("gang") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("hacking")) {
-      parts.push([`Hacking:`, <Money money={src.getIncome("hacking") || ""} />, <Money money={-src.getExpenses("hacking") || ""} />, <Money money={src.getTotal("hacking") || ""} />]);
+      parts.push([
+        `Hacking:`,
+        <Money money={src.getIncome("hacking") || ""} />,
+        <Money money={-src.getExpenses("hacking") || ""} />,
+        <Money money={src.getTotal("hacking") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("hacknet")) {
-      parts.push([`Hacknet Nodes:`, <Money money={src.getIncome("hacknet") || ""} />, <Money money={-src.getExpenses("hacknet") || ""} />, <Money money={src.getTotal("hacknet") || ""} />]);
+      parts.push([
+        `Hacknet Nodes:`,
+        <Money money={src.getIncome("hacknet") || ""} />,
+        <Money money={-src.getExpenses("hacknet") || ""} />,
+        <Money money={src.getTotal("hacknet") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("hospitalization")) {
-      parts.push([`Hospitalization:`, <Money money={src.getIncome("hospitalization") || ""} />, <Money money={-src.getExpenses("hospitalization") || ""} />, <Money money={src.getTotal("hospitalization") || ""} />]);
+      parts.push([
+        `Hospitalization:`,
+        <Money money={src.getIncome("hospitalization") || ""} />,
+        <Money money={-src.getExpenses("hospitalization") || ""} />,
+        <Money money={src.getTotal("hospitalization") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("infiltration")) {
-      parts.push([`Infiltration:`, <Money money={src.getIncome("infiltration") || ""} />, <Money money={-src.getExpenses("infiltration") || ""} />, <Money money={src.getTotal("infiltration") || ""} />]);
+      parts.push([
+        `Infiltration:`,
+        <Money money={src.getIncome("infiltration") || ""} />,
+        <Money money={-src.getExpenses("infiltration") || ""} />,
+        <Money money={src.getTotal("infiltration") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("servers")) {
-      parts.push([`Servers:`, <Money money={src.getIncome("servers") || ""} />, <Money money={-src.getExpenses("servers") || ""} />, <Money money={src.getTotal("servers") || ""} />]);
+      parts.push([
+        `Servers:`,
+        <Money money={src.getIncome("servers") || ""} />,
+        <Money money={-src.getExpenses("servers") || ""} />,
+        <Money money={src.getTotal("servers") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("starting")) {
-      parts.push([`Starting Money:`, <Money money={src.getIncome("starting") || ""} />, <Money money={-src.getExpenses("starting") || ""} />, <Money money={src.getTotal("starting") || ""} />]);
+      parts.push([
+        `Starting Money:`,
+        <Money money={src.getIncome("starting") || ""} />,
+        <Money money={-src.getExpenses("starting") || ""} />,
+        <Money money={src.getTotal("starting") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("stock")) {
-      parts.push([`Stock Market:`, <Money money={src.getIncome("stock") || ""} />, <Money money={-src.getExpenses("stock") || ""} />, <Money money={src.getTotal("stock") || ""} />]);
+      parts.push([
+        `Stock Market:`,
+        <Money money={src.getIncome("stock") || ""} />,
+        <Money money={-src.getExpenses("stock") || ""} />,
+        <Money money={src.getTotal("stock") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("sleeves")) {
-      parts.push([`Sleeves:`, <Money money={src.getIncome("sleeves") || ""} />, <Money money={-src.getExpenses("sleeves") || ""} />, <Money money={src.getTotal("sleeves") || ""} />]);
+      parts.push([
+        `Sleeves:`,
+        <Money money={src.getIncome("sleeves") || ""} />,
+        <Money money={-src.getExpenses("sleeves") || ""} />,
+        <Money money={src.getTotal("sleeves") || ""} />,
+      ]);
     }
     if (src.hasAnythingFrom("other")) {
-      parts.push([`Other:`, <Money money={src.getIncome("other") || ""} />, <Money money={-src.getExpenses("other") || ""} />, <Money money={src.getTotal("other") || ""} />]);
+      parts.push([
+        `Other:`,
+        <Money money={src.getIncome("other") || ""} />,
+        <Money money={-src.getExpenses("other") || ""} />,
+        <Money money={src.getTotal("other") || ""} />,
+      ]);
     }
     return <StatsTable rows={parts} wide />;
   }
