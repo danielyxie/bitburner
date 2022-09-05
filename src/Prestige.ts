@@ -166,6 +166,9 @@ export function prestigeAugmentation(): void {
 
   staneksGift.prestigeAugmentation();
 
+  Player.moneySourceA.record(Player.money, "starting");
+  Player.moneySourceB.record(Player.money, "starting");
+
   resetPidCounter();
   ProgramsSeen.splice(0, ProgramsSeen.length);
   InvitationsSeen.splice(0, InvitationsSeen.length);
@@ -306,6 +309,9 @@ export function prestigeSourceFile(flume: boolean): void {
     Player.money = CONSTANTS.TravelCost;
   }
   staneksGift.prestigeSourceFile();
+
+  Player.moneySourceA.record(Player.money, "starting");
+  Player.moneySourceB.record(Player.money, "starting");
 
   // Gain int exp
   if (Player.sourceFileLvl(5) !== 0 && !flume) Player.gainIntelligenceExp(300);

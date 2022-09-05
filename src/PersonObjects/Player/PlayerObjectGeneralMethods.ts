@@ -1447,7 +1447,7 @@ export function getIntelligenceBonus(this: IPlayer, weight: number): number {
 }
 
 export function getCasinoWinnings(this: IPlayer): number {
-  return this.moneySourceA.casino;
+  return this.moneySourceA.getTotal("casino");
 }
 
 export function canAccessCotMG(this: IPlayer): boolean {
