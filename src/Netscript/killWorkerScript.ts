@@ -10,8 +10,8 @@ import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventE
 import { RunningScript } from "../Script/RunningScript";
 import { GetServer } from "../Server/AllServers";
 
-import { errorDialog } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
+import { handleUnknownError } from "./NetscriptHelpers";
 
 export type killScriptParams = WorkerScript | number | { runningScript: RunningScript; hostname: string };
 
@@ -52,13 +52,16 @@ function killWorkerScriptByPid(pid: number): boolean {
 }
 
 function stopAndCleanUpWorkerScript(ws: WorkerScript): void {
-  killNetscriptDelay(ws);
+  //Clean up any ongoing netscriptDelay
+  if (ws.delay) clearTimeout(ws.delay);
+  ws.delayReject?.(new ScriptDeath(ws));
+
   if (typeof ws.atExit === "function") {
     try {
       ws.env.stopFlag = false;
       ws.atExit();
     } catch (e: unknown) {
-      errorDialog(e, `Error during atExit ${ws.name}@${ws.hostname} (PID - ${ws.pid}\n\n`);
+      handleUnknownError(e, ws, "Error running atExit function.\n\n");
     }
     ws.atExit = undefined;
   }
@@ -107,20 +110,4 @@ function removeWorkerScript(workerScript: WorkerScript): void {
   AddRecentScript(workerScript);
 
   WorkerScriptStartStopEventEmitter.emit();
-}
-
-/**
- * Helper function that interrupts a script's delay if it is in the middle of a
- * timed, blocked operation (like hack(), sleep(), etc.). This allows scripts to
- * be killed immediately even if they're in the middle of one of those long operations
- */
-function killNetscriptDelay(workerScript: WorkerScript): void {
-  if (workerScript instanceof WorkerScript) {
-    if (workerScript.delay) {
-      clearTimeout(workerScript.delay);
-      if (workerScript.delayReject) {
-        workerScript.delayReject(new ScriptDeath(workerScript));
-      }
-    }
-  }
 }
