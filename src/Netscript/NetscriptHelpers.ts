@@ -33,6 +33,7 @@ import { RunningScript as IRunningScript } from "../ScriptEditor/NetscriptDefini
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 
 export const helpers = {
   string,
@@ -131,11 +132,13 @@ function argsToString(args: unknown[]): string {
 }
 
 /** Creates an error message string containing hostname, scriptname, and the error message msg */
-function makeBasicErrorMsg(workerScript: WorkerScript, msg: string, type = "RUNTIME"): string {
-  for (const scriptUrl of workerScript.scriptRef.dependencies) {
-    msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
+function makeBasicErrorMsg(ws: WorkerScript | ScriptDeath, msg: string, type = "RUNTIME"): string {
+  if (ws instanceof WorkerScript) {
+    for (const scriptUrl of ws.scriptRef.dependencies) {
+      msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
+    }
   }
-  return `${type} ERROR\n${workerScript.name}@${workerScript.hostname} (PID - ${workerScript.pid})\n\n${msg}`;
+  return `${type} ERROR\n${ws.name}@${ws.hostname} (PID - ${ws.pid})\n\n${msg}`;
 }
 
 /** Creates an error message string with a stack trace. */
@@ -250,8 +253,7 @@ function checkEnvFlags(ctx: NetscriptContext): void {
     throw new ScriptDeath(ws);
   }
   if (ws.env.runningFn && ctx.function !== "asleep") {
-    //This one has no error message so it will not create a dialog
-    if (ws.delayReject) ws.delayReject(new ScriptDeath(ws));
+    ws.delayReject?.(new ScriptDeath(ws));
     ws.env.stopFlag = true;
     log(ctx, () => "Failed to run due to failed concurrency check.");
     throw makeRuntimeErrorMsg(
@@ -691,4 +693,31 @@ function failOnHacknetServer(ctx: NetscriptContext, server: BaseServer, callingF
   } else {
     return false;
   }
+}
+
+/** Generate an error dialog when workerscript is known */
+export function handleUnknownError(e: unknown, ws: WorkerScript | ScriptDeath | null = null, initialText = "") {
+  if (e instanceof ScriptDeath) {
+    //No dialog for an empty ScriptDeath
+    if (e.errorMessage === "") return;
+    if (!ws) {
+      ws = e;
+      e = ws.errorMessage;
+    }
+  }
+  if (ws && typeof e === "string") {
+    const headerText = makeBasicErrorMsg(ws, "", "");
+    if (!e.includes(headerText)) e = makeBasicErrorMsg(ws, e);
+  } else if (e instanceof SyntaxError) {
+    const msg = `${e.message} (sorry we can't be more helpful)`;
+    e = ws ? makeBasicErrorMsg(ws, msg, "SYNTAX") : `SYNTAX ERROR:\n\n${msg}`;
+  } else if (e instanceof Error) {
+    const msg = `${e.message}${e.stack ? `\nstack:\n${e.stack.toString()}` : ""}`;
+    e = ws ? makeBasicErrorMsg(ws, msg) : `RUNTIME ERROR:\n\n${msg}`;
+  }
+  if (typeof e !== "string") {
+    console.error("Unexpected error type:", e);
+    e = "Unexpected type of error thrown. See console output.";
+  }
+  dialogBoxCreate(initialText + e);
 }

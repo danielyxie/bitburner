@@ -1,7 +1,11 @@
-import { errorDialog } from "./ui/React/DialogBox";
+import { handleUnknownError } from "./Netscript/NetscriptHelpers";
 
 export function setupUncaughtPromiseHandler(): void {
-  window.addEventListener("unhandledrejection", (e) =>
-    errorDialog(e.reason, "UNCAUGHT PROMISE ERROR\nYou forgot to await a promise\nmaybe hack / grow / weaken ?\n"),
-  );
+  window.addEventListener("unhandledrejection", (e) => {
+    handleUnknownError(
+      e.reason,
+      null,
+      "UNCAUGHT PROMISE ERROR\nYou forgot to await a promise\nmaybe hack / grow / weaken ?\n\n",
+    );
+  });
 }
