@@ -395,7 +395,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
     dialogBoxCreate(
       `Not enough RAM to run script ${runningScriptObj.filename} with args ${arrayToString(runningScriptObj.args)}.\n` +
         `This can occur when you reload the game and the script's RAM usage has increased (either because of an update to the game or ` +
-        `your changes to the script).\nThis can also occur if you have attempted to launched a script from a tail window with insufficient RAM. `,
+        `your changes to the script).\nThis can also occur if you have attempted to launch a script from a tail window with insufficient RAM. `,
     );
     return false;
   }
