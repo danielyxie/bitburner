@@ -279,18 +279,14 @@ export class OfficeSpace {
   static fromJSON(value: IReviverValue): OfficeSpace {
     // Convert employees from the old version
     if (value.data.hasOwnProperty("employees")) {
+      const empCopy: [{ data: { hap: number; mor: number; ene: number; exp: number } }] = value.data.employees;
+      delete value.data.employees;
       const ret = Generic_fromJSON(OfficeSpace, value.data);
-      ret.totalEmployees = value.data.employees.length;
-      ret.avgHap =
-        value.data.employees.reduce((a: number, b: { data: { hap: number } }) => a + b.data.hap, 0) /
-          ret.totalEmployees || 75;
-      ret.avgMor =
-        value.data.employees.reduce((a: number, b: { data: { mor: number } }) => a + b.data.mor, 0) /
-          ret.totalEmployees || 75;
-      ret.avgEne =
-        value.data.employees.reduce((a: number, b: { data: { ene: number } }) => a + b.data.ene, 0) /
-          ret.totalEmployees || 75;
-      ret.totalExp = value.data.employees.reduce((a: number, b: { data: { exp: number } }) => a + b.data.exp, 0);
+      ret.totalEmployees = empCopy.length;
+      ret.avgHap = empCopy.reduce((a, b) => a + b.data.hap, 0) / ret.totalEmployees || 75;
+      ret.avgMor = empCopy.reduce((a, b) => a + b.data.mor, 0) / ret.totalEmployees || 75;
+      ret.avgEne = empCopy.reduce((a, b) => a + b.data.ene, 0) / ret.totalEmployees || 75;
+      ret.totalExp = empCopy.reduce((a, b) => a + b.data.exp, 0);
       return ret;
     }
     return Generic_fromJSON(OfficeSpace, value.data);
