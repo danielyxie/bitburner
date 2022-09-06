@@ -7,41 +7,37 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { Adjuster } from "./Adjuster";
 
-interface IProps {
-  player: IPlayer;
-}
-
-export function Sleeves(props: IProps): React.ReactElement {
+export function Sleeves(): React.ReactElement {
   function sleeveMaxAllShock(): void {
-    for (let i = 0; i < props.player.sleeves.length; ++i) {
-      props.player.sleeves[i].shock = 0;
+    for (let i = 0; i < Player.sleeves.length; ++i) {
+      Player.sleeves[i].shock = 0;
     }
   }
 
   function sleeveClearAllShock(): void {
-    for (let i = 0; i < props.player.sleeves.length; ++i) {
-      props.player.sleeves[i].shock = 100;
+    for (let i = 0; i < Player.sleeves.length; ++i) {
+      Player.sleeves[i].shock = 100;
     }
   }
 
   function sleeveSyncMaxAll(): void {
-    for (let i = 0; i < props.player.sleeves.length; ++i) {
-      props.player.sleeves[i].sync = 100;
+    for (let i = 0; i < Player.sleeves.length; ++i) {
+      Player.sleeves[i].sync = 100;
     }
   }
 
   function sleeveSyncClearAll(): void {
-    for (let i = 0; i < props.player.sleeves.length; ++i) {
-      props.player.sleeves[i].sync = 0;
+    for (let i = 0; i < Player.sleeves.length; ++i) {
+      Player.sleeves[i].sync = 0;
     }
   }
 
   function sleeveSetStoredCycles(cycles: number): void {
-    for (let i = 0; i < props.player.sleeves.length; ++i) {
-      props.player.sleeves[i].storedCycles = cycles;
+    for (let i = 0; i < Player.sleeves.length; ++i) {
+      Player.sleeves[i].storedCycles = cycles;
     }
   }
 

@@ -24,9 +24,9 @@ export class SleeveClassWork extends Work {
     this.location = params?.location ?? LocationName.Sector12RothmanUniversity;
   }
 
-  calculateRates(player: IPlayer, sleeve: Sleeve): WorkStats {
+  calculateRates(sleeve: Sleeve): WorkStats {
     return scaleWorkStats(
-      calculateClassEarnings(player, sleeve, this.classType, this.location),
+      calculateClassEarnings(sleeve, this.classType, this.location),
       sleeve.shockBonus(),
       false,
     );
@@ -38,9 +38,9 @@ export class SleeveClassWork extends Work {
     );
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
-    const rate = this.calculateRates(player, sleeve);
-    applySleeveGains(player, sleeve, rate, cycles);
+  process(sleeve: Sleeve, cycles: number): number {
+    const rate = this.calculateRates(sleeve);
+    applySleeveGains(sleeve, rate, cycles);
     return 0;
   }
   APICopy(): Record<string, unknown> {

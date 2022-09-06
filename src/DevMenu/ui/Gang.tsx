@@ -7,32 +7,28 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { Adjuster } from "./Adjuster";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 
 const bigNumber = 1e27;
 
-interface IProps {
-  player: IPlayer;
-}
-
-export function Gang(props: IProps): React.ReactElement {
+export function Gang(): React.ReactElement {
   function addTonsGangCycles(): void {
-    if (props.player.gang) {
-      props.player.gang.storedCycles = bigNumber;
+    if (Player.gang) {
+      Player.gang.storedCycles = bigNumber;
     }
   }
 
   function modifyGangCycles(modify: number): (x: number) => void {
     return function (cycles: number): void {
-      if (props.player.gang) {
-        props.player.gang.storedCycles += cycles * modify;
+      if (Player.gang) {
+        Player.gang.storedCycles += cycles * modify;
       }
     };
   }
 
   function resetGangCycles(): void {
-    if (props.player.gang) {
-      props.player.gang.storedCycles = 0;
+    if (Player.gang) {
+      Player.gang.storedCycles = 0;
     }
   }
 

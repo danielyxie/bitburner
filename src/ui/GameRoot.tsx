@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { Player } from "../Player";
-import { Engine } from "../engine";
-import { Terminal } from "../Terminal";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";
@@ -311,7 +309,7 @@ export function GameRoot(): React.ReactElement {
   let bypassGame = false;
   switch (page) {
     case Page.Recovery: {
-      mainPage = <RecoveryRoot router={Router} softReset={softReset} />;
+      mainPage = <RecoveryRoot softReset={softReset} />;
       withSidebar = false;
       withPopups = false;
       bypassGame = true;
@@ -341,7 +339,7 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.Terminal: {
-      mainPage = <TerminalRoot terminal={Terminal} router={Router} player={Player} />;
+      mainPage = <TerminalRoot />;
       break;
     }
     case Page.Sleeves: {
@@ -357,15 +355,7 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.ScriptEditor: {
-      mainPage = (
-        <ScriptEditorRoot
-          files={files}
-          hostname={Player.getCurrentServer().hostname}
-          player={Player}
-          router={Router}
-          vim={vim}
-        />
-      );
+      mainPage = <ScriptEditorRoot files={files} hostname={Player.getCurrentServer().hostname} vim={vim} />;
       break;
     }
     case Page.ActiveScripts: {
@@ -373,7 +363,7 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.Hacknet: {
-      mainPage = <HacknetRoot player={Player} />;
+      mainPage = <HacknetRoot />;
       break;
     }
     case Page.CreateProgram: {
@@ -381,7 +371,7 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.Factions: {
-      mainPage = <FactionsRoot player={Player} router={Router} />;
+      mainPage = <FactionsRoot />;
       break;
     }
     case Page.Faction: {
@@ -389,7 +379,7 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.Milestones: {
-      mainPage = <MilestonesRoot player={Player} />;
+      mainPage = <MilestonesRoot />;
       break;
     }
     case Page.Tutorial: {
@@ -405,7 +395,7 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.DevMenu: {
-      mainPage = <DevMenuRoot player={Player} engine={Engine} router={Router} />;
+      mainPage = <DevMenuRoot />;
       break;
     }
     case Page.Gang: {
@@ -425,11 +415,11 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.Travel: {
-      mainPage = <TravelAgencyRoot p={Player} router={Router} />;
+      mainPage = <TravelAgencyRoot />;
       break;
     }
     case Page.StockMarket: {
-      mainPage = <StockMarketRoot p={Player} stockMarket={StockMarket} />;
+      mainPage = <StockMarketRoot stockMarket={StockMarket} />;
       break;
     }
     case Page.City: {
@@ -444,12 +434,10 @@ export function GameRoot(): React.ReactElement {
     case Page.Options: {
       mainPage = (
         <GameOptionsRoot
-          player={Player}
-          router={Router}
           save={() => saveObject.saveGame()}
           export={() => {
             // Apply the export bonus before saving the game
-            onExport(Player);
+            onExport();
             saveObject.exportGame();
           }}
           forceKill={killAllScripts}
@@ -463,7 +451,7 @@ export function GameRoot(): React.ReactElement {
         <AugmentationsRoot
           exportGameFn={() => {
             // Apply the export bonus before saving the game
-            onExport(Player);
+            onExport();
             saveObject.exportGame();
           }}
           installAugmentationsFn={() => {
@@ -478,11 +466,11 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.ThemeBrowser: {
-      mainPage = <ThemeBrowser router={Router} />;
+      mainPage = <ThemeBrowser />;
       break;
     }
     case Page.ImportSave: {
-      mainPage = <ImportSaveRoot importString={importString} automatic={importAutomatic} router={Router} />;
+      mainPage = <ImportSaveRoot importString={importString} automatic={importAutomatic} />;
       withSidebar = false;
       withPopups = false;
       bypassGame = true;
@@ -492,7 +480,7 @@ export function GameRoot(): React.ReactElement {
   return (
     <Context.Player.Provider value={Player}>
       <Context.Router.Provider value={Router}>
-        <ErrorBoundary key={errorBoundaryKey} router={Router} softReset={softReset}>
+        <ErrorBoundary key={errorBoundaryKey} softReset={softReset}>
           <BypassWrapper content={bypassGame ? mainPage : null}>
             <SnackbarProvider>
               <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
@@ -505,8 +493,6 @@ export function GameRoot(): React.ReactElement {
               {withSidebar ? (
                 <Box display="flex" flexDirection="row" width="100%">
                   <SidebarRoot
-                    player={Player}
-                    router={Router}
                     page={page}
                     opened={sidebarOpened}
                     onToggled={(isOpened) => {

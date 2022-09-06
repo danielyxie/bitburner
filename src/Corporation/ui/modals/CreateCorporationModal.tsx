@@ -72,7 +72,7 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
         </Button>
       )}
       <Button onClick={selfFund} disabled={name == "" || !canSelfFund}>
-        Self-Fund (<Money money={150e9} player={player} />)
+        Self-Fund (<Money money={150e9} forPurchase={true} />)
       </Button>
     </Modal>
   );

@@ -5,7 +5,6 @@ import { OperationPage } from "./OperationPage";
 import { BlackOpPage } from "./BlackOpPage";
 import { SkillPage } from "./SkillPage";
 import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -13,7 +12,6 @@ import Box from "@mui/material/Box";
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
 }
 
 export function AllPages(props: IProps): React.ReactElement {
@@ -33,10 +31,10 @@ export function AllPages(props: IProps): React.ReactElement {
         <Tab label="Skills" />
       </Tabs>
       <Box sx={{ p: 1 }}>
-        {value === 0 && <GeneralActionPage bladeburner={props.bladeburner} player={props.player} />}
-        {value === 1 && <ContractPage bladeburner={props.bladeburner} player={props.player} />}
-        {value === 2 && <OperationPage bladeburner={props.bladeburner} player={props.player} />}
-        {value === 3 && <BlackOpPage bladeburner={props.bladeburner} player={props.player} />}
+        {value === 0 && <GeneralActionPage bladeburner={props.bladeburner} />}
+        {value === 1 && <ContractPage bladeburner={props.bladeburner} />}
+        {value === 2 && <OperationPage bladeburner={props.bladeburner} />}
+        {value === 3 && <BlackOpPage bladeburner={props.bladeburner} />}
         {value === 4 && <SkillPage bladeburner={props.bladeburner} />}
       </Box>
     </>

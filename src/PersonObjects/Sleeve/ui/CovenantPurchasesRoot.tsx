@@ -56,7 +56,7 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
     if (player.canAfford(purchaseCost())) {
       player.loseMoney(purchaseCost(), "sleeves");
       player.sleevesFromCovenant += 1;
-      player.sleeves.push(new Sleeve(player));
+      player.sleeves.push(new Sleeve());
       rerender();
     } else {
       dialogBoxCreate(`You cannot afford to purchase a Duplicate Sleeve`);
@@ -67,7 +67,7 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
   const upgradePanels = [];
   for (let i = 0; i < player.sleeves.length; ++i) {
     const sleeve = player.sleeves[i];
-    upgradePanels.push(<CovenantSleeveMemoryUpgrade index={i} p={player} rerender={rerender} sleeve={sleeve} />);
+    upgradePanels.push(<CovenantSleeveMemoryUpgrade index={i} rerender={rerender} sleeve={sleeve} />);
   }
 
   return (
@@ -81,7 +81,7 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
             </Typography>
             <Button disabled={purchaseDisabled} onClick={purchaseOnClick}>
               Purchase -&nbsp;
-              <Money money={purchaseCost()} player={player} />
+              <Money money={purchaseCost()} forPurchase={true} />
             </Button>
           </>
         )}

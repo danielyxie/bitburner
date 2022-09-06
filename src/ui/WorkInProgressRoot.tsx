@@ -10,7 +10,8 @@ import { LocationName } from "../Locations/data/LocationNames";
 import { Locations } from "../Locations/Locations";
 import { Settings } from "../Settings/Settings";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { use } from "./Context";
+import { Player } from "../Player";
+import { Router } from "./GameRoot"
 import { numeralWrapper } from "./numeralFormat";
 import { Money } from "./React/Money";
 import { MoneyRate } from "./React/MoneyRate";
@@ -202,9 +203,6 @@ export function WorkInProgressRoot(): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
-  const player = use.Player();
-  const router = use.Router();
-
   let workInfo: IWorkInfo = {
     buttons: {
       cancel: () => undefined,
@@ -213,25 +211,25 @@ export function WorkInProgressRoot(): React.ReactElement {
     stopText: "",
   };
 
-  if (player.currentWork === null) {
-    setTimeout(() => router.toTerminal());
+  if (Player.currentWork === null) {
+    setTimeout(() => Router.toTerminal());
     return <></>;
   }
 
-  if (isCrimeWork(player.currentWork)) {
-    const crime = player.currentWork.getCrime();
-    const completion = (player.currentWork.unitCompleted / crime.time) * 100;
-    const gains = player.currentWork.earnings();
-    const successChance = crime.successRate(player);
+  if (isCrimeWork(Player.currentWork)) {
+    const crime = Player.currentWork.getCrime();
+    const completion = (Player.currentWork.unitCompleted / crime.time) * 100;
+    const gains = Player.currentWork.earnings();
+    const successChance = crime.successRate(Player);
     workInfo = {
       buttons: {
         cancel: () => {
-          router.toLocation(Locations[LocationName.Slums]);
-          player.finishWork(true);
+          Router.toLocation(Locations[LocationName.Slums]);
+          Player.finishWork(true);
         },
         unfocus: () => {
-          router.toCity();
-          player.stopFocusing();
+          Router.toCity();
+          Player.stopFocusing();
         },
       },
       title: `You are attempting ${crime.workName}`,
@@ -247,7 +245,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         ...CrimeExpRows(gains),
       ],
       progress: {
-        remaining: crime.time - player.currentWork.unitCompleted,
+        remaining: crime.time - Player.currentWork.unitCompleted,
         percentage: completion,
       },
 
@@ -255,16 +253,16 @@ export function WorkInProgressRoot(): React.ReactElement {
     };
   }
 
-  if (isClassWork(player.currentWork)) {
-    const classWork = player.currentWork;
+  if (isClassWork(Player.currentWork)) {
+    const classWork = Player.currentWork;
     function cancel(): void {
-      player.finishWork(true);
-      router.toCity();
+      Player.finishWork(true);
+      Router.toCity();
     }
 
     function unfocus(): void {
-      router.toCity();
-      player.stopFocusing();
+      Router.toCity();
+      Player.stopFocusing();
     }
 
     let stopText = "";
@@ -274,7 +272,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       stopText = "Stop taking course";
     }
 
-    const rates = classWork.calculateRates(player);
+    const rates = classWork.calculateRates();
     workInfo = {
       buttons: {
         cancel: cancel,
@@ -302,15 +300,15 @@ export function WorkInProgressRoot(): React.ReactElement {
     };
   }
 
-  if (isCreateProgramWork(player.currentWork)) {
-    const create = player.currentWork;
+  if (isCreateProgramWork(Player.currentWork)) {
+    const create = Player.currentWork;
     function cancel(): void {
-      player.finishWork(true);
-      router.toTerminal();
+      Player.finishWork(true);
+      Router.toTerminal();
     }
     function unfocus(): void {
-      router.toTerminal();
-      player.stopFocusing();
+      Router.toTerminal();
+      Player.stopFocusing();
     }
 
     const completion = (create.unitCompleted / create.unitNeeded()) * 100;
@@ -336,15 +334,15 @@ export function WorkInProgressRoot(): React.ReactElement {
     };
   }
 
-  if (isGraftingWork(player.currentWork)) {
-    const graft = player.currentWork;
+  if (isGraftingWork(Player.currentWork)) {
+    const graft = Player.currentWork;
     function cancel(): void {
-      player.finishWork(true);
-      router.toTerminal();
+      Player.finishWork(true);
+      Router.toTerminal();
     }
     function unfocus(): void {
-      router.toTerminal();
-      player.stopFocusing();
+      Router.toTerminal();
+      Player.stopFocusing();
     }
 
     workInfo = {
@@ -372,15 +370,15 @@ export function WorkInProgressRoot(): React.ReactElement {
     };
   }
 
-  if (isFactionWork(player.currentWork)) {
-    const faction = player.currentWork.getFaction();
+  if (isFactionWork(Player.currentWork)) {
+    const faction = Player.currentWork.getFaction();
     if (!faction) {
       workInfo = {
         buttons: {
-          cancel: () => router.toFactions(),
+          cancel: () => Router.toFactions(),
         },
         title:
-          `You have not joined ${player.currentWork.factionName || "(Faction not found)"} at this time,` +
+          `You have not joined ${Player.currentWork.factionName || "(Faction not found)"} at this time,` +
           " please try again if you think this should have worked",
 
         stopText: "Back to Factions",
@@ -388,12 +386,12 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     function cancel(): void {
-      router.toFaction(faction);
-      player.finishWork(true);
+      Router.toFaction(faction);
+      Player.finishWork(true);
     }
     function unfocus(): void {
-      router.toFaction(faction);
-      player.stopFocusing();
+      Router.toFaction(faction);
+      Player.stopFocusing();
     }
 
     const description = {
@@ -402,7 +400,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       [FactionWorkType.SECURITY]: "performing security detail",
     };
 
-    const exp = player.currentWork.getExpRates(player);
+    const exp = Player.currentWork.getExpRates();
 
     workInfo = {
       buttons: {
@@ -411,34 +409,34 @@ export function WorkInProgressRoot(): React.ReactElement {
       },
       title: (
         <>
-          You are currently {description[player.currentWork.factionWorkType]} for <b>{faction.name}</b>
+          You are currently {description[Player.currentWork.factionWorkType]} for <b>{faction.name}</b>
         </>
       ),
 
       description: (
         <>
           Current Faction Reputation: <Reputation reputation={faction.playerReputation} /> (
-          <ReputationRate reputation={player.currentWork.getReputationRate(player) * CYCLES_PER_SEC} />)
+          <ReputationRate reputation={Player.currentWork.getReputationRate() * CYCLES_PER_SEC} />)
         </>
       ),
       gains: ExpRows(exp),
       progress: {
-        elapsed: player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
+        elapsed: Player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
       },
 
       stopText: "Stop Faction work",
     };
   }
 
-  if (isCompanyWork(player.currentWork)) {
-    const comp = Companies[player.currentWork.companyName];
+  if (isCompanyWork(Player.currentWork)) {
+    const comp = Companies[Player.currentWork.companyName];
     if (comp == null || !(comp instanceof Company)) {
       workInfo = {
         buttons: {
-          cancel: () => router.toTerminal(),
+          cancel: () => Router.toTerminal(),
         },
         title:
-          `You cannot work for ${player.currentWork.companyName || "(Company not found)"} at this time,` +
+          `You cannot work for ${Player.currentWork.companyName || "(Company not found)"} at this time,` +
           " please try again if you think this should have worked",
 
         stopText: "Back to Terminal",
@@ -448,16 +446,16 @@ export function WorkInProgressRoot(): React.ReactElement {
     const companyRep = comp.playerReputation;
 
     function cancel(): void {
-      player.finishWork(true);
-      router.toJob(Locations[comp.name]);
+      Player.finishWork(true);
+      Router.toJob(Locations[comp.name]);
     }
     function unfocus(): void {
-      player.stopFocusing();
-      router.toJob(Locations[comp.name]);
+      Player.stopFocusing();
+      Router.toJob(Locations[comp.name]);
     }
 
-    const position = player.jobs[player.currentWork.companyName];
-    const gains = player.currentWork.getGainRates(player);
+    const position = Player.jobs[Player.currentWork.companyName];
+    const gains = Player.currentWork.getGainRates();
     workInfo = {
       buttons: {
         cancel: cancel,
@@ -465,7 +463,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       },
       title: (
         <>
-          You are currently working as a <b>{position}</b> at <b>{player.currentWork.companyName}</b>
+          You are currently working as a <b>{position}</b> at <b>{Player.currentWork.companyName}</b>
         </>
       ),
 
@@ -488,7 +486,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         ...ExpRows(gains),
       ],
       progress: {
-        elapsed: player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
+        elapsed: Player.currentWork.cyclesWorked * CONSTANTS._idleSpeed,
       },
 
       stopText: "Stop working",

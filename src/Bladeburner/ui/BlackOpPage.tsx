@@ -1,7 +1,6 @@
 import * as React from "react";
 import { BlackOpList } from "./BlackOpList";
 import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import Typography from "@mui/material/Typography";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { use } from "../../ui/Context";
@@ -11,7 +10,6 @@ import { CorruptableText } from "../../ui/React/CorruptableText";
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
 }
 
 export function BlackOpPage(props: IProps): React.ReactElement {
@@ -37,7 +35,7 @@ export function BlackOpPage(props: IProps): React.ReactElement {
           <CorruptableText content="Destroy w0rld_d34mon"></CorruptableText>
         </Button>
       ) : (
-        <BlackOpList bladeburner={props.bladeburner} player={props.player} />
+        <BlackOpList bladeburner={props.bladeburner} />
       )}
     </>
   );

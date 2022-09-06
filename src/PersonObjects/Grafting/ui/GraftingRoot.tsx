@@ -11,11 +11,11 @@ import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
 import { PurchaseAugmentationsOrderSetting } from "../../../Settings/SettingEnums";
 import { Settings } from "../../../Settings/Settings";
-import { use } from "../../../ui/Context";
+import { Router } from "../../../ui/GameRoot";
 import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
-import { IPlayer } from "../../IPlayer";
+import { Player } from "../../../Player";
 import { GraftableAugmentation } from "../GraftableAugmentation";
 import { calculateGraftingTimeWithBonus, getGraftingAvailableAugs } from "../GraftingHelpers";
 
@@ -29,21 +29,19 @@ export const GraftableAugmentations = (): Record<string, GraftableAugmentation> 
   return gAugs;
 };
 
-const canGraft = (player: IPlayer, aug: GraftableAugmentation): boolean => {
-  if (player.money < aug.cost) {
+const canGraft = (aug: GraftableAugmentation): boolean => {
+  if (Player.money < aug.cost) {
     return false;
   }
   return hasAugmentationPrereqs(aug.augmentation);
 };
 
 interface IProps {
-  player: IPlayer;
   aug: Augmentation;
 }
 
 const AugPreReqsChecklist = (props: IProps): React.ReactElement => {
-  const aug = props.aug,
-    player = props.player;
+  const aug = props.aug;
 
   return (
     <Typography color={Settings.theme.money}>
@@ -51,7 +49,7 @@ const AugPreReqsChecklist = (props: IProps): React.ReactElement => {
       <br />
       {aug.prereqs.map((preAug) => (
         <span style={{ display: "flex", alignItems: "center" }}>
-          {player.hasAugmentation(preAug) ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
+          {Player.hasAugmentation(preAug) ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
           {preAug}
         </span>
       ))}
@@ -60,12 +58,9 @@ const AugPreReqsChecklist = (props: IProps): React.ReactElement => {
 };
 
 export const GraftingRoot = (): React.ReactElement => {
-  const player = use.Player();
-  const router = use.Router();
-
   const graftableAugmentations = useState(GraftableAugmentations())[0];
 
-  const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs(player)[0]);
+  const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs()[0]);
   const [graftOpen, setGraftOpen] = useState(false);
   const selectedAugmentation = StaticAugmentations[selectedAug];
 
@@ -75,7 +70,7 @@ export const GraftingRoot = (): React.ReactElement => {
   }
 
   const getAugsSorted = (): string[] => {
-    const augs = getGraftingAvailableAugs(player);
+    const augs = getGraftingAvailableAugs();
     switch (Settings.PurchaseAugmentationsOrder) {
       case PurchaseAugmentationsOrderSetting.Cost:
         return augs.sort((a, b) => graftableAugmentations[a].cost - graftableAugmentations[b].cost);
@@ -96,7 +91,7 @@ export const GraftingRoot = (): React.ReactElement => {
 
   return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
-      <Button onClick={() => router.toLocation(Locations[LocationName.NewTokyoVitaLife])}>Back</Button>
+      <Button onClick={() => Router.toLocation(Locations[LocationName.NewTokyoVitaLife])}>Back</Button>
       <Typography variant="h4">Grafting Laboratory</Typography>
       <Typography>
         You find yourself in a secret laboratory, owned by a mysterious researcher.
@@ -122,14 +117,14 @@ export const GraftingRoot = (): React.ReactElement => {
             </Button>
           </Box>
         </Paper>
-        {getGraftingAvailableAugs(player).length > 0 ? (
+        {getGraftingAvailableAugs().length > 0 ? (
           <Paper sx={{ mb: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
               {getAugsSorted().map((k, i) => (
                 <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
                   <Typography
                     sx={{
-                      color: canGraft(player, graftableAugmentations[k])
+                      color: canGraft(graftableAugmentations[k])
                         ? Settings.theme.primary
                         : Settings.theme.disabled,
                     }}
@@ -146,11 +141,11 @@ export const GraftingRoot = (): React.ReactElement => {
               <Button
                 onClick={() => setGraftOpen(true)}
                 sx={{ width: "100%" }}
-                disabled={!canGraft(player, graftableAugmentations[selectedAug])}
+                disabled={!canGraft(graftableAugmentations[selectedAug])}
               >
                 Graft Augmentation (
                 <Typography>
-                  <Money money={graftableAugmentations[selectedAug].cost} player={player} />
+                  <Money money={graftableAugmentations[selectedAug].cost} forPurchase={true} />
                 </Typography>
                 )
               </Button>
@@ -158,21 +153,20 @@ export const GraftingRoot = (): React.ReactElement => {
                 open={graftOpen}
                 onClose={() => setGraftOpen(false)}
                 onConfirm={() => {
-                  player.startWork(
+                  Player.startWork(
                     new GraftingWork({
                       augmentation: selectedAug,
                       singularity: false,
-                      player: player,
                     }),
                   );
-                  player.startFocusing();
-                  router.toWork();
+                  Player.startFocusing();
+                  Router.toWork();
                 }}
                 confirmationText={
                   <>
                     Cancelling grafting will <b>not</b> save grafting progress, and the money you spend will <b>not</b>{" "}
                     be returned.
-                    {!player.hasAugmentation(AugmentationNames.CongruityImplant) && (
+                    {!Player.hasAugmentation(AugmentationNames.CongruityImplant) && (
                       <>
                         <br />
                         <br />
@@ -186,14 +180,12 @@ export const GraftingRoot = (): React.ReactElement => {
                 <Typography color={Settings.theme.info}>
                   <b>Time to Graft:</b>{" "}
                   {convertTimeMsToTimeElapsedString(
-                    calculateGraftingTimeWithBonus(player, graftableAugmentations[selectedAug]),
+                    calculateGraftingTimeWithBonus(graftableAugmentations[selectedAug]),
                   )}
                   {/* Use formula so the displayed creation time is accurate to player bonus */}
                 </Typography>
 
-                {selectedAugmentation.prereqs.length > 0 && (
-                  <AugPreReqsChecklist player={player} aug={selectedAugmentation} />
-                )}
+                {selectedAugmentation.prereqs.length > 0 && <AugPreReqsChecklist aug={selectedAugmentation} />}
 
                 <br />
 
@@ -229,10 +221,10 @@ export const GraftingRoot = (): React.ReactElement => {
 
         <Paper sx={{ my: 1, p: 1, width: "fit-content" }}>
           <Typography>
-            <b>Entropy strength:</b> {player.entropy}
+            <b>Entropy strength:</b> {Player.entropy}
             <br />
             <b>All multipliers decreased by:</b>{" "}
-            {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropy) * 100, 3)}% (multiplicative)
+            {formatNumber((1 - CONSTANTS.EntropyEffect ** Player.entropy) * 100, 3)}% (multiplicative)
           </Typography>
         </Paper>
 

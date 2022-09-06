@@ -24,11 +24,11 @@ export function BladeburnerRoot(): React.ReactElement {
   return (
     <Box display="flex" flexDirection="column">
       <Box sx={{ display: "grid", gridTemplateColumns: "4fr 8fr", p: 1 }}>
-        <Stats bladeburner={bladeburner} player={player} router={router} />
-        <Console bladeburner={bladeburner} player={player} />
+        <Stats bladeburner={bladeburner} />
+        <Console bladeburner={bladeburner} />
       </Box>
 
-      <AllPages bladeburner={bladeburner} player={player} />
+      <AllPages bladeburner={bladeburner} />
     </Box>
   );
 }

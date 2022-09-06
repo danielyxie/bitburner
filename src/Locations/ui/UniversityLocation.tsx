@@ -53,31 +53,31 @@ export function UniversityLocation(props: IProps): React.ReactElement {
       <Tooltip title={earnHackingExpTooltip}>
         <Button onClick={() => take(ClassType.DataStructures)}>
           Take Data Structures course (
-          <Money money={dataStructuresCost} player={player} /> / sec)
+          <Money money={dataStructuresCost} forPurchase={true} /> / sec)
         </Button>
       </Tooltip>
       <Tooltip title={earnHackingExpTooltip}>
         <Button onClick={() => take(ClassType.Networks)}>
           Take Networks course (
-          <Money money={networksCost} player={player} /> / sec)
+          <Money money={networksCost} forPurchase={true} /> / sec)
         </Button>
       </Tooltip>
       <Tooltip title={earnHackingExpTooltip}>
         <Button onClick={() => take(ClassType.Algorithms)}>
           Take Algorithms course (
-          <Money money={algorithmsCost} player={player} /> / sec)
+          <Money money={algorithmsCost} forPurchase={true} /> / sec)
         </Button>
       </Tooltip>
       <Tooltip title={earnCharismaExpTooltip}>
         <Button onClick={() => take(ClassType.Management)}>
           Take Management course (
-          <Money money={managementCost} player={player} /> / sec)
+          <Money money={managementCost} forPurchase={true} /> / sec)
         </Button>
       </Tooltip>
       <Tooltip title={earnCharismaExpTooltip}>
         <Button onClick={() => take(ClassType.Leadership)}>
           Take Leadership course (
-          <Money money={leadershipCost} player={player} /> / sec)
+          <Money money={leadershipCost} forPurchase={true} /> / sec)
         </Button>
       </Tooltip>
     </Box>

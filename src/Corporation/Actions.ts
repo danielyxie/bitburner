@@ -1,5 +1,4 @@
 import { Player } from "../Player";
-import { IPlayer } from "src/PersonObjects/IPlayer";
 import { MaterialSizes } from "./MaterialSizes";
 import { ICorporation } from "./ICorporation";
 import { Corporation } from "./Corporation";
@@ -271,7 +270,7 @@ export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material:
   }
 }
 
-export function SellShares(corporation: ICorporation, player: IPlayer, numShares: number): number {
+export function SellShares(corporation: ICorporation, numShares: number): number {
   if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
   if (numShares < 0) throw new Error("Invalid value for number of shares");
   if (numShares > corporation.numShares) throw new Error("You don't have that many shares to sell!");
@@ -287,20 +286,20 @@ export function SellShares(corporation: ICorporation, player: IPlayer, numShares
   corporation.sharePrice = newSharePrice;
   corporation.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
   corporation.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
-  player.gainMoney(profit, "corporation");
+  Player.gainMoney(profit, "corporation");
   return profit;
 }
 
-export function BuyBackShares(corporation: ICorporation, player: IPlayer, numShares: number): boolean {
+export function BuyBackShares(corporation: ICorporation, numShares: number): boolean {
   if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
   if (numShares < 0) throw new Error("Invalid value for number of shares");
   if (numShares > corporation.issuedShares) throw new Error("You don't have that many shares to buy!");
   if (!corporation.public) throw new Error("You haven't gone public!");
   const buybackPrice = corporation.sharePrice * 1.1;
-  if (player.money < numShares * buybackPrice) throw new Error("You cant afford that many shares!");
+  if (Player.money < numShares * buybackPrice) throw new Error("You cant afford that many shares!");
   corporation.numShares += numShares;
   corporation.issuedShares -= numShares;
-  player.loseMoney(numShares * buybackPrice, "corporation");
+  Player.loseMoney(numShares * buybackPrice, "corporation");
   return true;
 }
 

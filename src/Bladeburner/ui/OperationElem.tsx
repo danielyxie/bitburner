@@ -10,7 +10,7 @@ import { TeamSizeButton } from "./TeamSizeButton";
 import { IBladeburner } from "../IBladeburner";
 import { Operation } from "../Operation";
 import { Operations } from "../data/Operations";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { CopyableText } from "../../ui/React/CopyableText";
 
 import Typography from "@mui/material/Typography";
@@ -18,7 +18,6 @@ import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
   action: Operation;
 }
 
@@ -33,7 +32,7 @@ export function OperationElem(props: IProps): React.ReactElement {
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,
     props.bladeburner.actionTimeToComplete,
   );
-  const actionTime = props.action.getActionTime(props.bladeburner, props.player);
+  const actionTime = props.action.getActionTime(props.bladeburner, Player);
 
   const actionData = Operations[props.action.name];
   if (actionData === undefined) {

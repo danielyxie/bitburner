@@ -49,7 +49,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   function sell(): void {
     if (disabled) return;
     try {
-      const profit = SellShares(corp, player, shares);
+      const profit = SellShares(corp, shares);
       props.onClose();
       dialogBoxCreate(
         <>

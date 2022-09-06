@@ -32,5 +32,5 @@ export function applyEntropy(this: IPlayer, stacks = 1): void {
   this.reapplyAllAugmentations();
   this.reapplyAllSourceFiles();
 
-  this.mults = calculateEntropy(this, stacks);
+  this.mults = calculateEntropy(stacks);
 }

@@ -1,11 +1,9 @@
 import React from "react";
 import { ContractElem } from "./ContractElem";
 import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
 }
 
 export function ContractList(props: IProps): React.ReactElement {
@@ -14,7 +12,7 @@ export function ContractList(props: IProps): React.ReactElement {
   return (
     <>
       {names.map((name: string) => (
-        <ContractElem key={name} bladeburner={props.bladeburner} action={contracts[name]} player={props.player} />
+        <ContractElem key={name} bladeburner={props.bladeburner} action={contracts[name]} />
       ))}
     </>
   );

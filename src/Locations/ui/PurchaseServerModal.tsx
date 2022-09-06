@@ -25,7 +25,7 @@ export function PurchaseServerModal(props: IProps): React.ReactElement {
   const [hostname, setHostname] = useState("");
 
   function tryToPurchaseServer(): void {
-    purchaseServer(hostname, props.ram, props.cost, player);
+    purchaseServer(hostname, props.ram, props.cost);
     props.onClose();
   }
 
@@ -41,7 +41,7 @@ export function PurchaseServerModal(props: IProps): React.ReactElement {
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
         Would you like to purchase a new server with {numeralWrapper.formatRAM(props.ram)} of RAM for{" "}
-        <Money money={props.cost} player={player} />?
+        <Money money={props.cost} forPurchase={true} />?
       </Typography>
       <br />
       <br />

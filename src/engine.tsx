@@ -91,7 +91,7 @@ const Engine: {
     Player.playtimeSinceLastAug += time;
     Player.playtimeSinceLastBitnode += time;
 
-    Terminal.process(Router, Player, numCycles);
+    Terminal.process(numCycles);
 
     Player.processWork(numCycles);
 
@@ -120,7 +120,7 @@ const Engine: {
 
     // Sleeves
     for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].process(Player, numCycles);
+      Player.sleeves[i].process(numCycles);
     }
 
     // Counters
@@ -131,7 +131,7 @@ const Engine: {
     updateOnlineScriptTimes(numCycles);
 
     // Hacknet Nodes
-    processHacknetEarnings(Player, numCycles);
+    processHacknetEarnings(numCycles);
   },
 
   /**
@@ -205,12 +205,12 @@ const Engine: {
       }
     }
     if (Player.corporation instanceof Corporation) {
-      Player.corporation.process(Player);
+      Player.corporation.process();
     }
     if (Engine.Counters.mechanicProcess <= 0) {
       if (Player.bladeburner instanceof Bladeburner) {
         try {
-          Player.bladeburner.process(Router, Player);
+          Player.bladeburner.process();
         } catch (e) {
           exceptionAlert("Exception caught in Bladeburner.process(): " + e);
         }
@@ -240,7 +240,7 @@ const Engine: {
     if (loadGame(saveString)) {
       ThemeEvents.emit();
 
-      initBitNodeMultipliers(Player);
+      initBitNodeMultipliers();
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
       if (Player.hasWseAccount) {
@@ -308,8 +308,8 @@ const Engine: {
       }
 
       // Hacknet Nodes offline progress
-      const offlineProductionFromHacknetNodes = processHacknetEarnings(Player, numCyclesOffline);
-      const hacknetProdInfo = hasHacknetServers(Player) ? (
+      const offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
+      const hacknetProdInfo = hasHacknetServers() ? (
         <>
           <Hashes hashes={offlineProductionFromHacknetNodes} /> hashes
         </>
@@ -345,7 +345,7 @@ const Engine: {
 
       // Sleeves offline progress
       for (let i = 0; i < Player.sleeves.length; ++i) {
-        Player.sleeves[i].process(Player, numCyclesOffline);
+        Player.sleeves[i].process(numCyclesOffline);
       }
 
       // Update total playtime
@@ -392,7 +392,7 @@ const Engine: {
       );
     } else {
       // No save found, start new game
-      initBitNodeMultipliers(Player);
+      initBitNodeMultipliers();
       Engine.start(); // Run main game loop and Scripts loop
       Player.init();
       initForeignServers(Player.getHomeComputer());

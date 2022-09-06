@@ -1047,14 +1047,14 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       (_numShares: unknown): number => {
         checkAccess(ctx);
         const numShares = helpers.number(ctx, "numShares", _numShares);
-        return SellShares(getCorporation(), player, numShares);
+        return SellShares(getCorporation(), numShares);
       },
     buyBackShares:
       (ctx: NetscriptContext) =>
       (_numShares: unknown): boolean => {
         checkAccess(ctx);
         const numShares = helpers.number(ctx, "numShares", _numShares);
-        return BuyBackShares(getCorporation(), player, numShares);
+        return BuyBackShares(getCorporation(), numShares);
       },
     bribe:
       (ctx: NetscriptContext) =>

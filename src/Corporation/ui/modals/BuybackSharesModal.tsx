@@ -35,7 +35,7 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
   function buy(): void {
     if (disabled) return;
     try {
-      BuyBackShares(corp, player, shares);
+      BuyBackShares(corp, shares);
     } catch (err) {
       dialogBoxCreate(err + "");
     }

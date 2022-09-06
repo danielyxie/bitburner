@@ -31,7 +31,6 @@ export function Industry(props: IProps): React.ReactElement {
       <Box sx={{ width: "50%" }}>
         <IndustryWarehouse
           rerender={props.rerender}
-          player={player}
           corp={corp}
           currentCity={props.city}
           division={division}

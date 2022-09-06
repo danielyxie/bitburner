@@ -45,8 +45,9 @@ import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { IRouter, Page } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
+import { Player } from "../../Player";
 import { CONSTANTS } from "../../Constants";
 import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../../InteractiveTutorial";
 import { getAvailableCreatePrograms } from "../../Programs/ProgramHelpers";
@@ -103,8 +104,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IProps {
-  player: IPlayer;
-  router: IRouter;
   page: Page;
   opened: boolean;
   onToggled: (newValue: boolean) => void;
@@ -140,122 +139,122 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const flashTutorial = ITutorial.currStep === iTutorialSteps.WorldDescription;
 
-  const augmentationCount = props.player.queuedAugmentations.length;
-  const invitationsCount = props.player.factionInvitations.filter((f) => !InvitationsSeen.includes(f)).length;
-  const programCount = getAvailableCreatePrograms(props.player).length - ProgramsSeen.length;
+  const augmentationCount = Player.queuedAugmentations.length;
+  const invitationsCount = Player.factionInvitations.filter((f) => !InvitationsSeen.includes(f)).length;
+  const programCount = getAvailableCreatePrograms().length - ProgramsSeen.length;
 
   const canOpenFactions =
-    props.player.factionInvitations.length > 0 ||
-    props.player.factions.length > 0 ||
-    props.player.augmentations.length > 0 ||
-    props.player.queuedAugmentations.length > 0 ||
-    props.player.sourceFiles.length > 0;
+    Player.factionInvitations.length > 0 ||
+    Player.factions.length > 0 ||
+    Player.augmentations.length > 0 ||
+    Player.queuedAugmentations.length > 0 ||
+    Player.sourceFiles.length > 0;
 
   const canOpenAugmentations =
-    props.player.augmentations.length > 0 ||
-    props.player.queuedAugmentations.length > 0 ||
-    props.player.sourceFiles.length > 0;
+    Player.augmentations.length > 0 ||
+    Player.queuedAugmentations.length > 0 ||
+    Player.sourceFiles.length > 0;
 
-  const canOpenSleeves = props.player.sleeves.length > 0;
+  const canOpenSleeves = Player.sleeves.length > 0;
 
-  const canCorporation = !!props.player.corporation;
-  const canGang = !!props.player.gang;
-  const canJob = Object.values(props.player.jobs).length > 0;
-  const canStockMarket = props.player.hasWseAccount;
-  const canBladeburner = !!props.player.bladeburner;
-  const canStaneksGift = props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
+  const canCorporation = !!Player.corporation;
+  const canGang = !!Player.gang;
+  const canJob = Object.values(Player.jobs).length > 0;
+  const canStockMarket = Player.hasWseAccount;
+  const canBladeburner = !!Player.bladeburner;
+  const canStaneksGift = Player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
 
   function clickTerminal(): void {
-    props.router.toTerminal();
+    Router.toTerminal();
     if (flashTerminal) iTutorialNextStep();
   }
 
   function clickScriptEditor(): void {
-    props.router.toScriptEditor();
+    Router.toScriptEditor();
   }
 
   function clickStats(): void {
-    props.router.toStats();
+    Router.toStats();
     if (flashStats) iTutorialNextStep();
   }
 
   function clickActiveScripts(): void {
-    props.router.toActiveScripts();
+    Router.toActiveScripts();
     if (flashActiveScripts) iTutorialNextStep();
   }
 
   function clickCreateProgram(): void {
-    props.router.toCreateProgram();
+    Router.toCreateProgram();
   }
 
   function clickStaneksGift(): void {
-    props.router.toStaneksGift();
+    Router.toStaneksGift();
   }
 
   function clickFactions(): void {
-    props.router.toFactions();
+    Router.toFactions();
   }
 
   function clickAugmentations(): void {
-    props.router.toAugmentations();
+    Router.toAugmentations();
   }
 
   function clickSleeves(): void {
-    props.router.toSleeves();
+    Router.toSleeves();
   }
 
   function clickHacknet(): void {
-    props.router.toHacknetNodes();
+    Router.toHacknetNodes();
     if (flashHacknet) iTutorialNextStep();
   }
 
   function clickCity(): void {
-    props.router.toCity();
+    Router.toCity();
     if (flashCity) iTutorialNextStep();
   }
 
   function clickTravel(): void {
-    props.router.toTravel();
+    Router.toTravel();
   }
 
   function clickJob(): void {
-    props.router.toJob(Locations[Object.keys(props.player.jobs)[0]]);
+    Router.toJob(Locations[Object.keys(Player.jobs)[0]]);
   }
 
   function clickStockMarket(): void {
-    props.router.toStockMarket();
+    Router.toStockMarket();
   }
 
   function clickBladeburner(): void {
-    props.router.toBladeburner();
+    Router.toBladeburner();
   }
 
   function clickCorp(): void {
-    props.router.toCorporation();
+    Router.toCorporation();
   }
 
   function clickGang(): void {
-    props.router.toGang();
+    Router.toGang();
   }
 
   function clickTutorial(): void {
-    props.router.toTutorial();
+    Router.toTutorial();
     if (flashTutorial) iTutorialNextStep();
   }
 
   function clickMilestones(): void {
-    props.router.toMilestones();
+    Router.toMilestones();
   }
   function clickOptions(): void {
-    props.router.toGameOptions();
+    Router.toGameOptions();
   }
 
   function clickDev(): void {
-    props.router.toDevMenu();
+    Router.toDevMenu();
   }
 
   function clickAchievements(): void {
-    props.router.toAchievements();
+    Router.toAchievements();
   }
 
   useEffect(() => {
@@ -277,7 +276,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     //  Alt-g - Gang
     function handleShortcuts(this: Document, event: KeyboardEvent): void {
       if (Settings.DisableHotkeys) return;
-      if ((props.player.currentWork && props.player.focus) || props.router.page() === Page.BitVerse) return;
+      if ((Player.currentWork && Player.focus) || Router.page() === Page.BitVerse) return;
       if (event.code === KEYCODE.T && event.altKey) {
         event.preventDefault();
         clickTerminal();
@@ -321,10 +320,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       } else if (event.code === KEYCODE.O && event.altKey) {
         event.preventDefault();
         clickOptions();
-      } else if (event.code === KEYCODE.B && event.altKey && props.player.bladeburner) {
+      } else if (event.code === KEYCODE.B && event.altKey && Player.bladeburner) {
         event.preventDefault();
         clickBladeburner();
-      } else if (event.code === KEYCODE.G && event.altKey && props.player.gang) {
+      } else if (event.code === KEYCODE.G && event.altKey && Player.gang) {
         event.preventDefault();
         clickGang();
       }

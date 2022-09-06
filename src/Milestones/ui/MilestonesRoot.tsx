@@ -1,4 +1,4 @@
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { Milestones } from "../Milestones";
 import { Milestone } from "../Milestone";
 import * as React from "react";
@@ -6,26 +6,22 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-interface IProps {
-  player: IPlayer;
-}
-
-function highestMilestone(p: IPlayer, milestones: Milestone[]): number {
+function highestMilestone(milestones: Milestone[]): number {
   let n = -1;
   for (let i = 0; i < milestones.length; i++) {
-    if (milestones[i].fulfilled(p)) n = i;
+    if (milestones[i].fulfilled(Player)) n = i;
   }
 
   return n;
 }
 
-export function MilestonesRoot(props: IProps): JSX.Element {
-  const n = highestMilestone(props.player, Milestones);
+export function MilestonesRoot(): JSX.Element {
+  const n = highestMilestone(Milestones);
   const milestones = Milestones.map((milestone: Milestone, i: number) => {
     if (i <= n + 1) {
       return (
         <Typography key={i}>
-          [{milestone.fulfilled(props.player) ? "x" : " "}] {milestone.title}
+          [{milestone.fulfilled(Player) ? "x" : " "}] {milestone.title}
         </Typography>
       );
     }

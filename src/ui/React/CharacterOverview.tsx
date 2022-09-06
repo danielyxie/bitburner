@@ -197,7 +197,7 @@ function Work(): React.ReactElement {
       <>
         <Reputation reputation={factionWork.getFaction().playerReputation} /> rep
         <br />(
-        <ReputationRate reputation={factionWork.getReputationRate(player) * (1000 / CONSTANTS._idleSpeed)} />)
+        <ReputationRate reputation={factionWork.getReputationRate() * (1000 / CONSTANTS._idleSpeed)} />)
       </>
     );
   }
@@ -217,7 +217,7 @@ function Work(): React.ReactElement {
       <>
         <Reputation reputation={companyWork.getCompany().playerReputation} /> rep
         <br />(
-        <ReputationRate reputation={companyWork.getGainRates(player).reputation * (1000 / CONSTANTS._idleSpeed)} />)
+        <ReputationRate reputation={companyWork.getGainRates().reputation * (1000 / CONSTANTS._idleSpeed)} />)
       </>
     );
   }

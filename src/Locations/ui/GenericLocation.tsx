@@ -27,7 +27,7 @@ import { isBackdoorInstalled } from "../../Server/ServerHelpers";
 import { GetServer } from "../../Server/AllServers";
 
 import { CorruptableText } from "../../ui/React/CorruptableText";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
 import { serverMetadata } from "../../Server/data/servers";
 import { Tooltip } from "@mui/material";
 
@@ -36,8 +36,6 @@ type IProps = {
 };
 
 export function GenericLocation({ loc }: IProps): React.ReactElement {
-  const router = use.Router();
-  const player = use.Player();
   /**
    * Determine what needs to be rendered for this location based on the locations
    * type. Returns an array of React components that should be rendered
@@ -50,11 +48,11 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
     }
 
     if (loc.types.includes(LocationType.Gym)) {
-      content.push(<GymLocation key={"gymlocation"} router={router} loc={loc} p={player} />);
+      content.push(<GymLocation key={"gymlocation"} loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.Hospital)) {
-      content.push(<HospitalLocation key={"hospitallocation"} p={player} />);
+      content.push(<HospitalLocation key={"hospitallocation"} />);
     }
 
     if (loc.types.includes(LocationType.Slums)) {
@@ -70,7 +68,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
     }
 
     if (loc.types.includes(LocationType.TravelAgency)) {
-      content.push(<TravelAgencyRoot key={"travelagencylocation"} p={player} router={router} />);
+      content.push(<TravelAgencyRoot key={"travelagencylocation"} />);
     }
 
     if (loc.types.includes(LocationType.University)) {
@@ -78,7 +76,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
     }
 
     if (loc.types.includes(LocationType.Casino)) {
-      content.push(<CasinoLocation key={"casinoLocation"} p={player} />);
+      content.push(<CasinoLocation key={"casinoLocation"} />);
     }
 
     return content;
@@ -92,7 +90,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
 
   return (
     <>
-      <Button onClick={() => router.toCity()}>Return to World</Button>
+      <Button onClick={() => Router.toCity()}>Return to World</Button>
       <Typography variant="h4" sx={{ mt: 1 }}>
         {backdoorInstalled && !Settings.DisableTextEffects ? (
           <Tooltip title={`Backdoor installed on ${loc.name}.`}>

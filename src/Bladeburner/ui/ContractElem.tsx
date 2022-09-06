@@ -5,7 +5,7 @@ import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/Stri
 import { Contracts } from "../data/Contracts";
 import { IBladeburner } from "../IBladeburner";
 import { IAction } from "../IAction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { SuccessChance } from "./SuccessChance";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { ActionLevel } from "./ActionLevel";
@@ -17,7 +17,6 @@ import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
   action: IAction;
 }
 
@@ -32,7 +31,7 @@ export function ContractElem(props: IProps): React.ReactElement {
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,
     props.bladeburner.actionTimeToComplete,
   );
-  const actionTime = props.action.getActionTime(props.bladeburner, props.player);
+  const actionTime = props.action.getActionTime(props.bladeburner, Player);
 
   const actionData = Contracts[props.action.name];
   if (actionData === undefined) {

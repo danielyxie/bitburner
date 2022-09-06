@@ -13,5 +13,5 @@ export function inBladeburner(this: IPlayer): boolean {
 }
 
 export function startBladeburner(this: IPlayer): void {
-  this.bladeburner = new Bladeburner(this);
+  this.bladeburner = new Bladeburner();
 }

@@ -3,11 +3,9 @@ import { BlackOperations } from "../BlackOperations";
 import { BlackOperation } from "../BlackOperation";
 import { BlackOpElem } from "./BlackOpElem";
 import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
 }
 
 export function BlackOpList(props: IProps): React.ReactElement {
@@ -35,7 +33,7 @@ export function BlackOpList(props: IProps): React.ReactElement {
   return (
     <>
       {blackops.map((blackop: BlackOperation) => (
-        <BlackOpElem key={blackop.name} bladeburner={props.bladeburner} action={blackop} player={props.player} />
+        <BlackOpElem key={blackop.name} bladeburner={props.bladeburner} action={blackop} />
       ))}
     </>
   );

@@ -15,7 +15,6 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { MoneyCost } from "./MoneyCost";
 import { isRelevantMaterial } from "./Helpers";
 import { IndustryProductEquation } from "./IndustryProductEquation";
@@ -35,7 +34,6 @@ interface IProps {
   division: IIndustry;
   warehouse: Warehouse | 0;
   currentCity: string;
-  player: IPlayer;
   rerender: () => void;
 }
 

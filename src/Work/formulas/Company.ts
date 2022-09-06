@@ -1,13 +1,13 @@
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import { Company } from "../../Company/Company";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { WorkStats } from "../WorkStats";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
 import { IPerson } from "src/PersonObjects/IPerson";
 
-export const calculateCompanyWorkStats = (player: IPlayer, worker: IPerson, company: Company): WorkStats => {
-  const companyPositionName = player.jobs[company.name];
+export const calculateCompanyWorkStats = (worker: IPerson, company: Company): WorkStats => {
+  const companyPositionName = Player.jobs[company.name];
   const companyPosition = CompanyPositions[companyPositionName];
 
   // If player has SF-11, calculate salary multiplier from favor
@@ -17,7 +17,7 @@ export const calculateCompanyWorkStats = (player: IPlayer, worker: IPerson, comp
   }
 
   let bn11Mult = 1;
-  if (player.sourceFileLvl(11) > 0) {
+  if (Player.sourceFileLvl(11) > 0) {
     bn11Mult = favorMult;
   }
 

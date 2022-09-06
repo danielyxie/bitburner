@@ -1,7 +1,6 @@
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { Sleeve } from "./Sleeve";
 
-import { IPlayer } from "../IPlayer";
 import { Player } from "../../Player";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
@@ -11,7 +10,7 @@ import { Multipliers } from "../Multipliers";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { getFactionAugmentationsFiltered } from "../../Faction/FactionHelpers";
 
-export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentation[] {
+export function findSleevePurchasableAugs(sleeve: Sleeve): Augmentation[] {
   // You can only purchase Augmentations that are actually available from
   // your factions. I.e. you must be in a faction that has the Augmentation
   // and you must also have enough rep in that faction in order to purchase it.
@@ -55,21 +54,21 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
 
   // If player is in a gang, then we return all augs that the player
   // has enough reputation for (since that gang offers all augs)
-  if (p.inGang()) {
-    const fac = p.getGangFaction();
-    const gangAugs = getFactionAugmentationsFiltered(Player, fac);
+  if (Player.inGang()) {
+    const fac = Player.getGangFaction();
+    const gangAugs = getFactionAugmentationsFiltered(fac);
 
     for (const augName of gangAugs) {
       const aug = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) continue;
 
-      if (fac.playerReputation > aug.getCost(p).repCost) {
+      if (fac.playerReputation > aug.getCost().repCost) {
         availableAugs.push(aug);
       }
     }
   }
 
-  for (const facName of p.factions) {
+  for (const facName of Player.factions) {
     if (facName === FactionNames.Bladeburners) continue;
     if (facName === FactionNames.Netburners) continue;
     const fac = Factions[facName];
@@ -79,7 +78,7 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
       const aug = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) continue;
 
-      if (fac.playerReputation > aug.getCost(p).repCost) {
+      if (fac.playerReputation > aug.getCost().repCost) {
         availableAugs.push(aug);
       }
     }

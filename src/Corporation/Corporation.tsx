@@ -8,7 +8,7 @@ import { Industry } from "./Industry";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { showLiterature } from "../Literature/LiteratureHelpers";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
@@ -76,7 +76,7 @@ export class Corporation {
     this.storedCycles += numCycles;
   }
 
-  process(player: IPlayer): void {
+  process(): void {
     if (this.storedCycles >= CorporationConstants.CyclesPerIndustryStateCycle) {
       const state = this.getState();
       const marketCycles = 1;
@@ -139,7 +139,7 @@ export class Corporation {
           } else {
             const totalDividends = this.dividendRate * cycleProfit;
             const retainedEarnings = cycleProfit - totalDividends;
-            player.gainMoney(this.getCycleDividends(), "corporation");
+            Player.gainMoney(this.getCycleDividends(), "corporation");
             this.addFunds(retainedEarnings);
           }
         } else {
@@ -428,9 +428,9 @@ export class Corporation {
   // Adds the Corporation Handbook (Starter Guide) to the player's home computer.
   // This is a lit file that gives introductory info to the player
   // This occurs when the player clicks the "Getting Started Guide" button on the overview panel
-  getStarterGuide(player: IPlayer): void {
+  getStarterGuide(): void {
     // Check if player already has Corporation Handbook
-    const homeComp = player.getHomeComputer();
+    const homeComp = Player.getHomeComputer();
     let hasHandbook = false;
     const handbookFn = LiteratureNames.CorporationManagementHandbook;
     for (let i = 0; i < homeComp.messages.length; ++i) {

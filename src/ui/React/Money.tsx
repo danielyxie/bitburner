@@ -1,6 +1,6 @@
 import * as React from "react";
 import { numeralWrapper } from "../numeralFormat";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
@@ -18,14 +18,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   money: number | string;
-  player?: IPlayer;
+  forPurchase?: boolean;
 }
 export function Money(props: IProps): React.ReactElement {
   const classes = useStyles();
-  if (props.player !== undefined) {
-    if (typeof props.money !== "number") throw new Error("if player if provided, money should be number, contact dev");
-    if (!props.player.canAfford(props.money))
-      return <span className={classes.unbuyable}>{numeralWrapper.formatMoney(props.money)}</span>;
+  if (props.forPurchase){
+    if (typeof props.money !== "number") throw new Error("if value is for a purchase, money should be number, contact dev");
+    if (!Player.canAfford(props.money)) return <span className={classes.unbuyable}>{numeralWrapper.formatMoney(props.money)}</span>;
   }
   return (
     <span className={classes.money}>

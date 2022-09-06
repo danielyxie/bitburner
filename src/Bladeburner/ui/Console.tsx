@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { IBladeburner } from "../IBladeburner";
 import { KEY } from "../../utils/helpers/keyCodes";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -50,7 +49,6 @@ function Line(props: ILineProps): React.ReactElement {
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
 }
 
 export function Console(props: IProps): React.ReactElement {
@@ -81,7 +79,7 @@ export function Console(props: IProps): React.ReactElement {
       event.preventDefault();
       if (command.length > 0) {
         props.bladeburner.postToConsole("> " + command);
-        props.bladeburner.executeConsoleCommands(props.player, command);
+        props.bladeburner.executeConsoleCommands(command);
         setConsoleHistoryIndex(props.bladeburner.consoleHistory.length);
         setCommand("");
       }

@@ -20,7 +20,7 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import { Settings } from "../../Settings/Settings";
 import { ConfirmationModal } from "../../ui/React/ConfirmationModal";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { AugmentationNames } from "../data/AugmentationNames";
 import { StaticAugmentations } from "../StaticAugmentations";
 import { CONSTANTS } from "../../Constants";
@@ -29,12 +29,8 @@ import { Info } from "@mui/icons-material";
 import { Link } from "@mui/material";
 import { AlertEvents } from "../../ui/React/AlertManager";
 
-interface NFGDisplayProps {
-  player: IPlayer;
-}
-
-const NeuroFluxDisplay = ({ player }: NFGDisplayProps): React.ReactElement => {
-  const level = player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0;
+const NeuroFluxDisplay = (): React.ReactElement => {
+  const level = Player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0;
 
   const openBloodDonation = () => {
     AlertEvents.emit(
@@ -67,18 +63,14 @@ const NeuroFluxDisplay = ({ player }: NFGDisplayProps): React.ReactElement => {
   );
 };
 
-interface EntropyDisplayProps {
-  player: IPlayer;
-}
-
-const EntropyDisplay = ({ player }: EntropyDisplayProps): React.ReactElement => {
-  return player.entropy > 0 ? (
+const EntropyDisplay = (): React.ReactElement => {
+  return Player.entropy > 0 ? (
     <Paper sx={{ p: 1 }}>
       <Typography variant="h5" color={Settings.theme.error}>
-        Entropy Virus - Level {player.entropy}
+        Entropy Virus - Level {Player.entropy}
       </Typography>
       <Typography color={Settings.theme.error}>
-        <b>All multipliers decreased by:</b> {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropy) * 100, 3)}%
+        <b>All multipliers decreased by:</b> {formatNumber((1 - CONSTANTS.EntropyEffect ** Player.entropy) * 100, 3)}%
         (multiplicative)
       </Typography>
     </Paper>
@@ -222,8 +214,8 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
           gap: 1,
         }}
       >
-        <NeuroFluxDisplay player={player} />
-        <EntropyDisplay player={player} />
+        <NeuroFluxDisplay />
+        <EntropyDisplay />
       </Box>
 
       <Box>

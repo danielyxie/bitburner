@@ -112,15 +112,15 @@ export function prestigeAugmentation(this: PlayerObject): void {
   const numSleeves = Math.min(3, this.sourceFileLvl(10) + (this.bitNodeN === 10 ? 1 : 0)) + this.sleevesFromCovenant;
   if (this.sleeves.length > numSleeves) this.sleeves.length = numSleeves;
   for (let i = this.sleeves.length; i < numSleeves; i++) {
-    this.sleeves.push(new Sleeve(this));
+    this.sleeves.push(new Sleeve());
   }
 
   for (let i = 0; i < this.sleeves.length; ++i) {
     if (this.sleeves[i] instanceof Sleeve) {
       if (this.sleeves[i].shock >= 100) {
-        this.sleeves[i].synchronize(this);
+        this.sleeves[i].synchronize();
       } else {
-        this.sleeves[i].shockRecovery(this);
+        this.sleeves[i].shockRecovery();
       }
     }
   }
@@ -149,9 +149,9 @@ export function prestigeSourceFile(this: IPlayer): void {
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
   for (let i = 0; i < this.sleeves.length; ++i) {
     if (this.sleeves[i] instanceof Sleeve) {
-      this.sleeves[i].prestige(this);
+      this.sleeves[i].prestige();
     } else {
-      this.sleeves[i] = new Sleeve(this);
+      this.sleeves[i] = new Sleeve();
     }
   }
 
@@ -490,7 +490,7 @@ export function regenerateHp(this: IPerson, amt: number): void {
 }
 
 export function hospitalize(this: IPlayer): number {
-  const cost = getHospitalizationCost(this);
+  const cost = getHospitalizationCost();
   SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.WARNING, 2000);
 
   this.loseMoney(cost, "hospitalization");
@@ -596,7 +596,7 @@ export function quitJob(this: IPlayer, company: string): void {
   }
   for (const sleeve of this.sleeves) {
     if (isSleeveCompanyWork(sleeve.currentWork) && sleeve.currentWork.companyName === company) {
-      sleeve.stopWork(this);
+      sleeve.stopWork();
       dialogBoxCreate(`You quit ${company} while one of your sleeves was working there. The sleeve is now idle.`);
     }
   }

@@ -1,4 +1,4 @@
-import { IPlayer } from "../../../PersonObjects/IPlayer";
+import { Player } from "../../../Player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Work, WorkType } from "./Work";
 
@@ -6,17 +6,17 @@ export const isSleeveSupportWork = (w: Work | null): w is SleeveSupportWork =>
   w !== null && w.type === WorkType.SUPPORT;
 
 export class SleeveSupportWork extends Work {
-  constructor(player?: IPlayer) {
+  constructor() {
     super(WorkType.SUPPORT);
-    if (player) player.bladeburner?.sleeveSupport(true);
+    Player.bladeburner?.sleeveSupport(true);
   }
 
   process(): number {
     return 0;
   }
 
-  finish(player: IPlayer): void {
-    player.bladeburner?.sleeveSupport(false);
+  finish(): void {
+    Player.bladeburner?.sleeveSupport(false);
   }
 
   APICopy(): Record<string, unknown> {

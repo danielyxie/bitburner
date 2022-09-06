@@ -390,7 +390,7 @@ function hack(
   const hackingTime = calculateHackingTime(server, Player); // This is in seconds
 
   // No root access or skill level too low
-  const canHack = netscriptCanHack(server, Player);
+  const canHack = netscriptCanHack(server);
   if (!canHack.res) {
     throw makeRuntimeErrorMsg(ctx, canHack.msg || "");
   }

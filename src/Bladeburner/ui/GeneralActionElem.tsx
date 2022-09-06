@@ -5,7 +5,7 @@ import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/Stri
 import { IBladeburner } from "../IBladeburner";
 import { IAction } from "../IAction";
 import { GeneralActions } from "../data/GeneralActions";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { CopyableText } from "../../ui/React/CopyableText";
 
 import { StartButton } from "./StartButton";
@@ -16,7 +16,6 @@ import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
   action: IAction;
 }
 
@@ -40,13 +39,13 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
       case "Incite Violence":
         return 60;
       case "Recruitment":
-        return props.bladeburner.getRecruitmentTime(props.player);
+        return props.bladeburner.getRecruitmentTime(Player);
     }
     return -1; // dead code
   })();
   const successChance =
     props.action.name === "Recruitment"
-      ? Math.max(0, Math.min(props.bladeburner.getRecruitmentSuccessChance(props.player), 1))
+      ? Math.max(0, Math.min(props.bladeburner.getRecruitmentSuccessChance(Player), 1))
       : -1;
 
   const actionData = GeneralActions[props.action.name];

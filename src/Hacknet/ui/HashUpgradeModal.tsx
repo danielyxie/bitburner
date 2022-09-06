@@ -9,7 +9,7 @@ import { HashUpgrades } from "../HashUpgrades";
 import { Hashes } from "../../ui/React/Hashes";
 import { HacknetUpgradeElem } from "./HacknetUpgradeElem";
 import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import Typography from "@mui/material/Typography";
 
 interface IProps {
@@ -18,7 +18,6 @@ interface IProps {
 }
 
 export function HashUpgradeModal(props: IProps): React.ReactElement {
-  const player = use.Player();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -29,7 +28,7 @@ export function HashUpgradeModal(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
-  const hashManager = player.hashManager;
+  const hashManager = Player.hashManager;
   if (!(hashManager instanceof HashManager)) {
     throw new Error(`Player does not have a HashManager)`);
   }
@@ -39,19 +38,11 @@ export function HashUpgradeModal(props: IProps): React.ReactElement {
       <>
         <Typography>Spend your hashes on a variety of different upgrades</Typography>
         <Typography>
-          Hashes: <Hashes hashes={player.hashManager.hashes} />
+          Hashes: <Hashes hashes={Player.hashManager.hashes} />
         </Typography>
         {Object.keys(HashUpgrades).map((upgName) => {
           const upg = HashUpgrades[upgName];
-          return (
-            <HacknetUpgradeElem
-              player={player}
-              upg={upg}
-              hashManager={hashManager}
-              key={upg.name}
-              rerender={rerender}
-            />
-          );
+          return <HacknetUpgradeElem upg={upg} hashManager={hashManager} key={upg.name} rerender={rerender} />;
         })}
       </>
     </Modal>

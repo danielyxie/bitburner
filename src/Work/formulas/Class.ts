@@ -2,7 +2,7 @@ import { Locations } from "../../Locations/Locations";
 import { Location } from "../../Locations/Location";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { Class, Classes, ClassType } from "../ClassWork";
 import { WorkStats } from "../WorkStats";
 import { Server } from "../../Server/Server";
@@ -21,13 +21,12 @@ export function calculateCost(classs: Class, location: Location): number {
 }
 
 export function calculateClassEarnings(
-  player: IPlayer,
-  target: IPerson,
+  person: IPerson,
   type: ClassType,
   locationName: LocationName,
 ): WorkStats {
   //Find cost and exp gain per game cycle
-  const hashManager = player.hashManager;
+  const hashManager = Player.hashManager;
   const classs = Classes[type];
   const location = Locations[locationName];
 
@@ -47,12 +46,12 @@ export function calculateClassEarnings(
   return {
     money: cost,
     reputation: 0,
-    hackExp: hackExp * target.mults.hacking_exp * BitNodeMultipliers.ClassGymExpGain,
-    strExp: strExp * target.mults.strength_exp * BitNodeMultipliers.ClassGymExpGain,
-    defExp: defExp * target.mults.defense_exp * BitNodeMultipliers.ClassGymExpGain,
-    dexExp: dexExp * target.mults.dexterity_exp * BitNodeMultipliers.ClassGymExpGain,
-    agiExp: agiExp * target.mults.agility_exp * BitNodeMultipliers.ClassGymExpGain,
-    chaExp: chaExp * target.mults.charisma_exp * BitNodeMultipliers.ClassGymExpGain,
+    hackExp: hackExp * person.mults.hacking_exp * BitNodeMultipliers.ClassGymExpGain,
+    strExp: strExp * person.mults.strength_exp * BitNodeMultipliers.ClassGymExpGain,
+    defExp: defExp * person.mults.defense_exp * BitNodeMultipliers.ClassGymExpGain,
+    dexExp: dexExp * person.mults.dexterity_exp * BitNodeMultipliers.ClassGymExpGain,
+    agiExp: agiExp * person.mults.agility_exp * BitNodeMultipliers.ClassGymExpGain,
+    chaExp: chaExp * person.mults.charisma_exp * BitNodeMultipliers.ClassGymExpGain,
     intExp: 0,
   };
 }

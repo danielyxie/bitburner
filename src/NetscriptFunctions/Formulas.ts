@@ -410,11 +410,11 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
         },
       classGains:
         (ctx: NetscriptContext) =>
-        (_player: unknown, _classType: unknown, _locationName: unknown): WorkStats => {
-          const target = helpers.player(ctx, _player);
+        (_person: unknown, _classType: unknown, _locationName: unknown): WorkStats => {
+          const person = helpers.player(ctx, _person);
           const classType = helpers.string(ctx, "classType", _classType);
           const locationName = helpers.string(ctx, "locationName", _locationName);
-          return calculateClassEarnings(player, target, classType as ClassType, locationName as LocationName);
+          return calculateClassEarnings(person, classType as ClassType, locationName as LocationName);
         },
       factionGains:
         (ctx: NetscriptContext) =>

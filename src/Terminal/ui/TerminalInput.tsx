@@ -8,9 +8,9 @@ import Popper from "@mui/material/Popper";
 import TextField from "@mui/material/TextField";
 
 import { KEY, KEYCODE } from "../../utils/helpers/keyCodes";
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
+import { Router } from "../../ui/GameRoot";
+import { Player } from "../../Player";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
 import { tabCompletion } from "../tabCompletion";
 import { Settings } from "../../Settings/Settings";
@@ -37,15 +37,10 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface IProps {
-  terminal: ITerminal;
-  router: IRouter;
-  player: IPlayer;
-}
 // Save command in case we de-load this screen.
 let command = "";
 
-export function TerminalInput({ terminal, router, player }: IProps): React.ReactElement {
+export function TerminalInput(): React.ReactElement {
   const terminalInput = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState(command);
@@ -54,9 +49,9 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   const classes = useStyles();
 
   // If we have no data in the current terminal history, let's initialize it from the player save
-  if (terminal.commandHistory.length === 0 && player.terminalCommandHistory.length > 0) {
-    terminal.commandHistory = player.terminalCommandHistory;
-    terminal.commandHistoryIndex = terminal.commandHistory.length;
+  if (Terminal.commandHistory.length === 0 && Player.terminalCommandHistory.length > 0) {
+    Terminal.commandHistory = Player.terminalCommandHistory;
+    Terminal.commandHistoryIndex = Terminal.commandHistory.length;
   }
 
   // Need to run after state updates, for example if we need to move cursor
@@ -183,9 +178,9 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   // Catch all key inputs and redirect them to the terminal.
   useEffect(() => {
     function keyDown(this: Document, event: KeyboardEvent): void {
-      if (terminal.contractOpen) return;
-      if (terminal.action !== null && event.key === KEY.C && event.ctrlKey) {
-        terminal.finishAction(router, player, true);
+      if (Terminal.contractOpen) return;
+      if (Terminal.action !== null && event.key === KEY.C && event.ctrlKey) {
+        Terminal.finishAction(true);
         return;
       }
       const ref = terminalInput.current;
@@ -204,8 +199,8 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     // Run command.
     if (event.key === KEY.ENTER && value !== "") {
       event.preventDefault();
-      terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
-      terminal.executeCommands(router, player, value);
+      Terminal.print(`[${Player.getCurrentServer().hostname} ~${Terminal.cwd()}]> ${value}`);
+      Terminal.executeCommands(value);
       saveValue("");
       return;
     }
@@ -228,7 +223,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       if (index < -1) {
         index = 0;
       }
-      const allPos = await determineAllPossibilitiesForTabCompletion(player, copy, index, terminal.cwd());
+      const allPos = await determineAllPossibilitiesForTabCompletion(Player, copy, index, Terminal.cwd());
       if (allPos.length == 0) {
         return;
       }
@@ -264,7 +259,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     // Clear screen.
     if (event.key === KEY.L && event.ctrlKey) {
       event.preventDefault();
-      terminal.clear();
+      Terminal.clear();
     }
 
     // Select previous command.
@@ -272,20 +267,20 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
-      const i = terminal.commandHistoryIndex;
-      const len = terminal.commandHistory.length;
+      const i = Terminal.commandHistoryIndex;
+      const len = Terminal.commandHistory.length;
 
       if (len == 0) {
         return;
       }
       if (i < 0 || i > len) {
-        terminal.commandHistoryIndex = len;
+        Terminal.commandHistoryIndex = len;
       }
 
       if (i != 0) {
-        --terminal.commandHistoryIndex;
+        --Terminal.commandHistoryIndex;
       }
-      const prevCommand = terminal.commandHistory[terminal.commandHistoryIndex];
+      const prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
       saveValue(prevCommand);
       if (ref) {
         setTimeout(function () {
@@ -299,23 +294,23 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
-      const i = terminal.commandHistoryIndex;
-      const len = terminal.commandHistory.length;
+      const i = Terminal.commandHistoryIndex;
+      const len = Terminal.commandHistory.length;
 
       if (len == 0) {
         return;
       }
       if (i < 0 || i > len) {
-        terminal.commandHistoryIndex = len;
+        Terminal.commandHistoryIndex = len;
       }
 
       // Latest command, put nothing
       if (i == len || i == len - 1) {
-        terminal.commandHistoryIndex = len;
+        Terminal.commandHistoryIndex = len;
         saveValue("");
       } else {
-        ++terminal.commandHistoryIndex;
-        const prevCommand = terminal.commandHistory[terminal.commandHistoryIndex];
+        ++Terminal.commandHistoryIndex;
+        const prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
         saveValue(prevCommand);
       }
     }
@@ -324,7 +319,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     if (Settings.EnableBashHotkeys) {
       if (event.code === KEYCODE.C && event.ctrlKey && ref && ref.selectionStart === ref.selectionEnd) {
         event.preventDefault();
-        terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
+        Terminal.print(`[${Player.getCurrentServer().hostname} ~${Terminal.cwd()}]> ${value}`);
         modifyInput("clearall");
       }
 
@@ -389,9 +384,9 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     <>
       <TextField
         fullWidth
-        color={terminal.action === null ? "primary" : "secondary"}
+        color={Terminal.action === null ? "primary" : "secondary"}
         autoFocus
-        disabled={terminal.action !== null}
+        disabled={Terminal.action !== null}
         autoComplete="off"
         value={value}
         classes={{ root: classes.textfield }}
@@ -402,8 +397,8 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
           id: "terminal-input",
           className: classes.input,
           startAdornment: (
-            <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
-              [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
+            <Typography color={Terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
+              [{Player.getCurrentServer().hostname}&nbsp;~{Terminal.cwd()}]&gt;&nbsp;
             </Typography>
           ),
           spellCheck: false,

@@ -37,7 +37,7 @@ const BitNode8StartingMoney = 250e6;
 
 // Prestige by purchasing augmentation
 export function prestigeAugmentation(): void {
-  initBitNodeMultipliers(Player);
+  initBitNodeMultipliers();
 
   const maintainMembership = Player.factions.concat(Player.factionInvitations).filter(function (faction) {
     return Factions[faction].getInfo().keep;
@@ -91,7 +91,7 @@ export function prestigeAugmentation(): void {
 
   // Stop a Terminal action if there is one.
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
   Terminal.clear();
   LogBoxClearEvents.emit();
@@ -176,7 +176,7 @@ export function prestigeAugmentation(): void {
 
 // Prestige by destroying Bit Node and gaining a Source File
 export function prestigeSourceFile(flume: boolean): void {
-  initBitNodeMultipliers(Player);
+  initBitNodeMultipliers();
 
   Player.prestigeSourceFile();
   prestigeWorkerScripts(); // Delete all Worker Scripts objects
@@ -185,7 +185,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Stop a Terminal action if there is one.
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
   Terminal.clear();
   LogBoxClearEvents.emit();
@@ -225,7 +225,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Stop a Terminal action if there is one
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
 
   // Delete all Augmentations
@@ -302,7 +302,7 @@ export function prestigeSourceFile(flume: boolean): void {
     hserver.cache = 5;
     hserver.updateHashRate(Player.mults.hacknet_node_money);
     hserver.updateHashCapacity();
-    updateHashManagerCapacity(Player);
+    updateHashManagerCapacity();
   }
 
   if (Player.bitNodeN === 13) {

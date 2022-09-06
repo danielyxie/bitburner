@@ -9,7 +9,6 @@ import { Blackjack, DECK_COUNT } from "../../Casino/Blackjack";
 import { CoinFlip } from "../../Casino/CoinFlip";
 import { Roulette } from "../../Casino/Roulette";
 import { SlotMachine } from "../../Casino/SlotMachine";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Box } from "@mui/material";
 
 enum GameType {
@@ -20,11 +19,7 @@ enum GameType {
   Blackjack = "blackjack",
 }
 
-type IProps = {
-  p: IPlayer;
-};
-
-export function CasinoLocation(props: IProps): React.ReactElement {
+export function CasinoLocation(): React.ReactElement {
   const [game, setGame] = useState(GameType.None);
 
   function updateGame(game: GameType): void {
@@ -44,10 +39,10 @@ export function CasinoLocation(props: IProps): React.ReactElement {
       {game !== GameType.None && (
         <>
           <Button onClick={() => updateGame(GameType.None)}>Stop playing</Button>
-          {game === GameType.Coin && <CoinFlip p={props.p} />}
-          {game === GameType.Slots && <SlotMachine p={props.p} />}
-          {game === GameType.Roulette && <Roulette p={props.p} />}
-          {game === GameType.Blackjack && <Blackjack p={props.p} />}
+          {game === GameType.Coin && <CoinFlip />}
+          {game === GameType.Slots && <SlotMachine />}
+          {game === GameType.Roulette && <Roulette />}
+          {game === GameType.Blackjack && <Blackjack />}
         </>
       )}
     </>

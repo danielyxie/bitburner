@@ -34,7 +34,7 @@ export function StartButton(props: IProps): React.ReactElement {
     props.bladeburner.action.type = props.type;
     props.bladeburner.action.name = props.name;
     if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true)) player.finishWork(true);
-    props.bladeburner.startAction(player, props.bladeburner.action);
+    props.bladeburner.startAction(props.bladeburner.action);
     props.rerender();
   }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { BitNodeMultipliers, IBitNodeMultipliers } from "./BitNodeMultipliers";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { IMap } from "../types";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { CityName } from "../Locations/data/CityNames";
@@ -876,6 +876,6 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
   }
 }
 
-export function initBitNodeMultipliers(p: IPlayer): void {
-  Object.assign(BitNodeMultipliers, getBitNodeMultipliers(p.bitNodeN, p.sourceFileLvl(p.bitNodeN)));
+export function initBitNodeMultipliers(): void {
+  Object.assign(BitNodeMultipliers, getBitNodeMultipliers(Player.bitNodeN, Player.sourceFileLvl(Player.bitNodeN)));
 }

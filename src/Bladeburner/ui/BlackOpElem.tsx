@@ -6,7 +6,7 @@ import { TeamSizeButton } from "./TeamSizeButton";
 import { IBladeburner } from "../IBladeburner";
 import { BlackOperation } from "../BlackOperation";
 import { BlackOperations } from "../data/BlackOperations";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { SuccessChance } from "./SuccessChance";
 import { StartButton } from "./StartButton";
@@ -16,7 +16,6 @@ import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;
-  player: IPlayer;
   action: BlackOperation;
 }
 
@@ -37,7 +36,7 @@ export function BlackOpElem(props: IProps): React.ReactElement {
   const isActive =
     props.bladeburner.action.type === ActionTypes["BlackOperation"] &&
     props.action.name === props.bladeburner.action.name;
-  const actionTime = props.action.getActionTime(props.bladeburner, props.player);
+  const actionTime = props.action.getActionTime(props.bladeburner, Player);
   const hasReqdRank = props.bladeburner.rank >= props.action.reqdRank;
   const computedActionTimeCurrent = Math.min(
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,

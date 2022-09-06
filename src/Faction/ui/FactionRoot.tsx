@@ -15,7 +15,8 @@ import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction";
 
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
+import { Player } from "../../Player";
 
 import { Typography, Button } from "@mui/material";
 import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
@@ -58,18 +59,16 @@ interface IMainProps {
 }
 
 function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
   const [sleevesOpen, setSleevesOpen] = useState(false);
   const factionInfo = faction.getInfo();
 
   function startWork(): void {
-    player.startFocusing();
-    router.toWork();
+    Player.startFocusing();
+    Router.toWork();
   }
 
   function startFieldWork(faction: Faction): void {
-    player.startWork(
+    Player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,
@@ -80,7 +79,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   }
 
   function startHackingContracts(faction: Faction): void {
-    player.startWork(
+    Player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,
@@ -91,7 +90,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   }
 
   function startSecurityWork(faction: Faction): void {
-    player.startWork(
+    Player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,
@@ -103,18 +102,18 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   // We have a special flag for whether the player this faction is the player's
   // gang faction because if the player has a gang, they cannot do any other action
-  const isPlayersGang = player.inGang() && player.getGangName() === faction.name;
+  const isPlayersGang = Player.inGang() && Player.getGangName() === faction.name;
 
   // Flags for whether special options (gang, sleeve purchases, donate, etc.)
   // should be shown
   const favorToDonate = Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
   const canDonate = faction.favor >= favorToDonate;
 
-  const canPurchaseSleeves = faction.name === FactionNames.TheCovenant && player.bitNodeN === 10;
+  const canPurchaseSleeves = faction.name === FactionNames.TheCovenant && Player.bitNodeN === 10;
 
   return (
     <>
-      <Button onClick={() => router.toFactions()}>Back</Button>
+      <Button onClick={() => Router.toFactions()}>Back</Button>
       <Typography variant="h4" color="primary">
         {faction.name}
       </Typography>
@@ -134,13 +133,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
         <Option buttonText={"Security Work"} infoText={securityWorkInfo} onClick={() => startSecurityWork(faction)} />
       )}
       {!isPlayersGang && factionInfo.offersWork() && (
-        <DonateOption
-          faction={faction}
-          p={player}
-          rerender={rerender}
-          favorToDonate={favorToDonate}
-          disabled={!canDonate}
-        />
+        <DonateOption faction={faction} rerender={rerender} favorToDonate={favorToDonate} disabled={!canDonate} />
       )}
       <Option buttonText={"Purchase Augmentations"} infoText={augmentationsInfo} onClick={onAugmentations} />
       {canPurchaseSleeves && (
@@ -159,8 +152,6 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
 export function FactionRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
-  const player = use.Player();
-  const router = use.Router();
   const [purchasingAugs, setPurchasingAugs] = useState(props.augPage);
 
   function rerender(): void {
@@ -174,13 +165,13 @@ export function FactionRoot(props: IProps): React.ReactElement {
 
   const faction = props.faction;
 
-  if (player && !player.factions.includes(faction.name)) {
+  if (!Player.factions.includes(faction.name)) {
     return (
       <>
         <Typography variant="h4" color="primary">
           You have not joined {faction.name} yet!
         </Typography>
-        <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+        <Button onClick={() => Router.toFactions()}>Back to Factions</Button>
       </>
     );
   }

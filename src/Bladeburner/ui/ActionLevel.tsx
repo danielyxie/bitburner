@@ -27,14 +27,14 @@ export function ActionLevel({ action, isActive, bladeburner, rerender }: IProps)
   function increaseLevel(): void {
     if (!canIncrease) return;
     ++action.level;
-    if (isActive) bladeburner.startAction(player, bladeburner.action);
+    if (isActive) bladeburner.startAction(bladeburner.action);
     rerender();
   }
 
   function decreaseLevel(): void {
     if (!canDecrease) return;
     --action.level;
-    if (isActive) bladeburner.startAction(player, bladeburner.action);
+    if (isActive) bladeburner.startAction(bladeburner.action);
     rerender();
   }
 

@@ -24,7 +24,7 @@ export function TravelConfirmationModal(props: IProps): React.ReactElement {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
-        Would you like to travel to {props.city}? The trip will cost <Money money={cost} player={player} />.
+        Would you like to travel to {props.city}? The trip will cost <Money money={cost} forPurchase={true} />.
       </Typography>
       <br />
       <br />
