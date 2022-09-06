@@ -30,7 +30,6 @@ import {
   SellProduct,
   SetSmartSupply,
   BuyMaterial,
-  AssignJob,
   AutoAssignJob,
   UpgradeOfficeSize,
   PurchaseWarehouse,
@@ -690,20 +689,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         }
         return CorporationConstants.OfficeInitialCost * mult;
       },
-    assignJob:
-      (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown, _employeeName: unknown, _job: unknown): void => {
-        checkAccess(ctx, 8);
-        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-        const cityName = helpers.city(ctx, "cityName", _cityName);
-        const employeeName = helpers.string(ctx, "employeeName", _employeeName);
-        const job = helpers.string(ctx, "job", _job);
-
-        if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-        const office = getOffice(divisionName, cityName);
-
-        AssignJob(office, employeeName, job);
-      },
     setAutoJobAssignment:
       (ctx: NetscriptContext) =>
       (_divisionName: unknown, _cityName: unknown, _job: unknown, _amount: unknown): boolean => {
@@ -823,7 +808,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
             Unassigned: office.employeeJobs[EmployeePositions.Unassigned],
           },
         };
-      }
+      },
   };
 
   return {

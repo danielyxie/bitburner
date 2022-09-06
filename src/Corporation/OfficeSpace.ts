@@ -1,7 +1,5 @@
 import { EmployeePositions } from "./EmployeePositions";
 import { CorporationConstants } from "./data/Constants";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { generateRandomString } from "../utils/StringHelperFunctions";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { IIndustry } from "./IIndustry";
 import { ICorporation } from "./ICorporation";
@@ -114,7 +112,7 @@ export class OfficeSpace {
     if (this.totalEmployees > 0) {
       // Calculate changes in Morale/Happiness/Energy for Employees
       let perfMult = 1; //Multiplier for employee morale/happiness/energy based on company performance
-      let reduction = 0.0015 * marketCycles; // Passive reduction every cycle
+      const reduction = 0.0015 * marketCycles; // Passive reduction every cycle
       if (corporation.funds < 0 && industry.lastCycleRevenue < 0) {
         perfMult = Math.pow(0.99, marketCycles);
       } else if (corporation.funds > 0 && industry.lastCycleRevenue > 0) {
@@ -125,7 +123,7 @@ export class OfficeSpace {
         this.avgEne = this.maxEne;
       } else if (this.coffeeMult > 1) {
         this.avgEne -= reduction;
-        this.avgEne *= this.coffeeMult * this.coffeeEmployees / this.totalEmployees;
+        this.avgEne *= (this.coffeeMult * this.coffeeEmployees) / this.totalEmployees;
       } else {
         this.avgEne -= reduction;
         this.avgEne *= perfMult;
@@ -136,14 +134,14 @@ export class OfficeSpace {
         this.avgHap = this.maxHap;
       } else if (this.partyMult > 1) {
         this.avgHap -= reduction;
-        this.avgMor *= this.partyMult * this.partyEmployees / this.totalEmployees;
-        this.avgHap *= this.partyMult * this.partyEmployees / this.totalEmployees;
+        this.avgMor *= (this.partyMult * this.partyEmployees) / this.totalEmployees;
+        this.avgHap *= (this.partyMult * this.partyEmployees) / this.totalEmployees;
       } else {
         this.avgHap -= reduction;
         this.avgMor *= perfMult;
         this.avgHap *= perfMult;
       }
-      
+
       this.avgEne = Math.max(Math.min(this.avgEne, this.maxEne), this.minEne);
       this.avgMor = Math.max(Math.min(this.avgMor, this.maxMor), this.minMor);
       this.avgHap = Math.max(Math.min(this.avgHap, this.maxHap), this.minHap);
@@ -155,14 +153,22 @@ export class OfficeSpace {
     }
 
     // Get experience increase; unassigned employees do not contribute, employees in training contribute 5x
-    this.totalExp += 0.0015 * marketCycles * (this.totalEmployees - this.employeeJobs[EmployeePositions.Unassigned] + this.employeeJobs[EmployeePositions.Training] * 4);
+    this.totalExp +=
+      0.0015 *
+      marketCycles *
+      (this.totalEmployees -
+        this.employeeJobs[EmployeePositions.Unassigned] +
+        this.employeeJobs[EmployeePositions.Training] * 4);
 
     this.calculateEmployeeProductivity(corporation, industry);
     if (this.totalEmployees === 0) {
       this.totalSalary = 0;
-    }
-    else {
-      this.totalSalary = CorporationConstants.EmployeeSalaryMultiplier * marketCycles * this.totalEmployees * (this.avgInt + this.avgCha + this.totalExp / this.totalEmployees + this.avgCre + this.avgEff)
+    } else {
+      this.totalSalary =
+        CorporationConstants.EmployeeSalaryMultiplier *
+        marketCycles *
+        this.totalEmployees *
+        (this.avgInt + this.avgCha + this.totalExp / this.totalEmployees + this.avgCre + this.avgEff);
     }
     return this.totalSalary;
   }
@@ -175,10 +181,10 @@ export class OfficeSpace {
     const prodBase = this.avgMor * this.avgHap * this.avgEne * 1e-6;
 
     let total = 0;
-    let exp = this.totalExp / this.totalEmployees || 0;
+    const exp = this.totalExp / this.totalEmployees || 0;
     for (const name of Object.keys(this.employeeProd)) {
       let prodMult = 0;
-      switch(name) {
+      switch (name) {
         case EmployeePositions.Operations:
           prodMult = 0.6 * effInt + 0.1 * effCha + exp + 0.5 * effCre + effEff;
           break;
@@ -202,7 +208,7 @@ export class OfficeSpace {
           console.error(`Invalid employee position: ${name}`);
           break;
       }
-      this.employeeProd[name] = this.employeeJobs[name] * prodMult;
+      this.employeeProd[name] = this.employeeJobs[name] * prodMult * prodBase;
       total += this.employeeProd[name];
     }
 
@@ -217,8 +223,7 @@ export class OfficeSpace {
     if (setToTraining) {
       ++this.employeeJobs[EmployeePositions.Training];
       ++this.employeeNextJobs[EmployeePositions.Training];
-    }
-    else {
+    } else {
       ++this.employeeJobs[EmployeePositions.Unassigned];
       ++this.employeeNextJobs[EmployeePositions.Unassigned];
     }
@@ -230,12 +235,11 @@ export class OfficeSpace {
   }
 
   autoAssignJob(job: string, target: number): boolean {
-    let diff = target - this.employeeNextJobs[job];
+    const diff = target - this.employeeNextJobs[job];
 
     if (diff === 0) {
       return true;
-    }
-    else if (diff <= this.employeeNextJobs[EmployeePositions.Unassigned]) {
+    } else if (diff <= this.employeeNextJobs[EmployeePositions.Unassigned]) {
       // This covers both a negative diff (reducing the amount of employees in position) and a positive (increasing and using up unassigned employees)
       this.employeeNextJobs[EmployeePositions.Unassigned] -= diff;
       this.employeeNextJobs[job] = target;
@@ -275,12 +279,18 @@ export class OfficeSpace {
   static fromJSON(value: IReviverValue): OfficeSpace {
     // Convert employees from the old version
     if (value.data.hasOwnProperty("employees")) {
-      let ret = Generic_fromJSON(OfficeSpace, value.data);
+      const ret = Generic_fromJSON(OfficeSpace, value.data);
       ret.totalEmployees = value.data.employees.length;
-      ret.avgHap = value.data.employees.reduce((a: number, b: { data: { hap: number; }; }) => a + b.data.hap, 0) / ret.totalEmployees || 75;
-      ret.avgMor = value.data.employees.reduce((a: number, b: { data: { mor: number; }; }) => a + b.data.mor, 0) / ret.totalEmployees || 75;
-      ret.avgEne = value.data.employees.reduce((a: number, b: { data: { ene: number; }; }) => a + b.data.ene, 0) / ret.totalEmployees || 75;
-      ret.totalExp = value.data.employees.reduce((a: number, b: { data: { exp: number; }; }) => a + b.data.exp, 0);
+      ret.avgHap =
+        value.data.employees.reduce((a: number, b: { data: { hap: number } }) => a + b.data.hap, 0) /
+          ret.totalEmployees || 75;
+      ret.avgMor =
+        value.data.employees.reduce((a: number, b: { data: { mor: number } }) => a + b.data.mor, 0) /
+          ret.totalEmployees || 75;
+      ret.avgEne =
+        value.data.employees.reduce((a: number, b: { data: { ene: number } }) => a + b.data.ene, 0) /
+          ret.totalEmployees || 75;
+      ret.totalExp = value.data.employees.reduce((a: number, b: { data: { exp: number } }) => a + b.data.exp, 0);
       return ret;
     }
     return Generic_fromJSON(OfficeSpace, value.data);

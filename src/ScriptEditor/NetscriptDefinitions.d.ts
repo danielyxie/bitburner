@@ -6612,14 +6612,6 @@ export interface NSEnums {
  */
 export interface OfficeAPI {
   /**
-   * Assign an employee to a job.
-   * @param divisionName - Name of the division
-   * @param cityName - Name of the city
-   * @param employeeName - name of the employee
-   * @param job - Name of the job.
-   */
-  assignJob(divisionName: string, cityName: string, employeeName: string, job: string): void;
-  /**
    * Hire an employee.
    * @param divisionName - Name of the division
    * @param cityName - Name of the city

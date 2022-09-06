@@ -22,8 +22,6 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
@@ -144,7 +142,9 @@ function AutoManagement(props: IProps): React.ReactElement {
             <Typography>Avg Employee Experience:</Typography>
           </TableCell>
           <TableCell align="right">
-            <Typography>{numeralWrapper.format(props.office.totalExp / props.office.totalEmployees || 0, "0.000")}</Typography>
+            <Typography>
+              {numeralWrapper.format(props.office.totalExp / props.office.totalEmployees || 0, "0.000")}
+            </Typography>
           </TableCell>
         </TableRow>
         <TableRow>

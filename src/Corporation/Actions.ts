@@ -302,10 +302,6 @@ export function BuyBackShares(corporation: ICorporation, player: IPlayer, numSha
   return true;
 }
 
-export function AssignJob(office: OfficeSpace, employeeName: string, job: string): void {
-  throw new Error(`Manual job assignment has been removed`);
-}
-
 export function AutoAssignJob(office: OfficeSpace, job: string, count: number): boolean {
   if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
 
