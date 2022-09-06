@@ -465,7 +465,7 @@ export const achievements: IMap<Achievement> = {
       for (const d of Player.corporation.divisions) {
         for (const o of Object.values(d.offices)) {
           if (o === 0) continue;
-          if (o.employees.length >= 3000) return true;
+          if (o.totalEmployees >= 3000) return true;
         }
       }
       return false;

@@ -1,7 +1,6 @@
 import { Player as player } from "../Player";
 
 import { OfficeSpace } from "../Corporation/OfficeSpace";
-import { Employee } from "../Corporation/Employee";
 import { Product } from "../Corporation/Product";
 import { Material } from "../Corporation/Material";
 import { Warehouse } from "../Corporation/Warehouse";
@@ -11,7 +10,6 @@ import { ICorporation } from "../Corporation/ICorporation";
 import {
   Corporation as NSCorporation,
   CorporationInfo,
-  Employee as NSEmployee,
   Product as NSProduct,
   Material as NSMaterial,
   Warehouse as NSWarehouse,
@@ -265,13 +263,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     const product = division.products[productName];
     if (product === undefined) throw new Error(`Invalid product name: '${productName}'`);
     return product;
-  }
-
-  function getEmployee(divisionName: string, cityName: string, employeeName: string): Employee {
-    const office = getOffice(divisionName, cityName);
-    const employee = office.employees.find((e) => e.name === employeeName);
-    if (employee === undefined) throw new Error(`Invalid employee name: '${employeeName}'`);
-    return employee;
   }
 
   function checkAccess(ctx: NetscriptContext, api?: number): void {
@@ -729,27 +720,12 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       },
     hireEmployee:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown): NSEmployee | undefined => {
+      (_divisionName: unknown, _cityName: unknown): boolean => {
         checkAccess(ctx, 8);
         const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const cityName = helpers.city(ctx, "cityName", _cityName);
         const office = getOffice(divisionName, cityName);
-        const employee = office.hireRandomEmployee();
-        if (employee === undefined) return undefined;
-        return {
-          name: employee.name,
-          mor: employee.mor,
-          hap: employee.hap,
-          ene: employee.ene,
-          int: employee.int,
-          cha: employee.cha,
-          exp: employee.exp,
-          cre: employee.cre,
-          eff: employee.eff,
-          sal: employee.sal,
-          loc: employee.loc,
-          pos: employee.pos,
-        };
+        return office.hireRandomEmployee();
       },
     upgradeOfficeSize:
       (ctx: NetscriptContext) =>
@@ -824,7 +800,10 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
           maxHap: office.maxHap,
           minMor: office.minMor,
           maxMor: office.maxMor,
-          employees: office.employees.map((e) => e.name),
+          employees: office.totalEmployees,
+          avgEne: office.avgEne,
+          avgHap: office.avgHap,
+          avgMor: office.avgMor,
           employeeProd: {
             Operations: office.employeeProd[EmployeePositions.Operations],
             Engineer: office.employeeProd[EmployeePositions.Engineer],
@@ -844,30 +823,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
             Unassigned: office.employeeJobs[EmployeePositions.Unassigned],
           },
         };
-      },
-    getEmployee:
-      (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown, _employeeName: unknown): NSEmployee => {
-        checkAccess(ctx, 8);
-        const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-        const cityName = helpers.city(ctx, "cityName", _cityName);
-        const employeeName = helpers.string(ctx, "employeeName", _employeeName);
-        const employee = getEmployee(divisionName, cityName, employeeName);
-        return {
-          name: employee.name,
-          mor: employee.mor,
-          hap: employee.hap,
-          ene: employee.ene,
-          int: employee.int,
-          cha: employee.cha,
-          exp: employee.exp,
-          cre: employee.cre,
-          eff: employee.eff,
-          sal: employee.sal,
-          loc: employee.loc,
-          pos: employee.pos,
-        };
-      },
+      }
   };
 
   return {

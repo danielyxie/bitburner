@@ -303,12 +303,7 @@ export function BuyBackShares(corporation: ICorporation, player: IPlayer, numSha
 }
 
 export function AssignJob(office: OfficeSpace, employeeName: string, job: string): void {
-  const employee = office.employees.find((e) => e.name === employeeName);
-
-  if (!employee) throw new Error(`Could not find employee '${name}'.`);
-  if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-
-  office.assignSingleJob(employee, job);
+  throw new Error(`Manual job assignment has been removed`);
 }
 
 export function AutoAssignJob(office: OfficeSpace, job: string, count: number): boolean {
@@ -347,7 +342,7 @@ export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
 
 export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
   const mult = 1 + costPerEmployee / 10e6;
-  const cost = costPerEmployee * office.employees.length;
+  const cost = costPerEmployee * office.totalEmployees;
   if (corp.funds < cost) {
     return 0;
   }
