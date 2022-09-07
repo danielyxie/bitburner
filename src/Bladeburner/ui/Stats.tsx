@@ -94,7 +94,6 @@ export function Stats(props: IProps): React.ReactElement {
             </Typography>
           </Tooltip>
         </Box>
-        <br />
         <Typography>
           Stamina Penalty: {formatNumber((1 - props.bladeburner.calculateStaminaPenalty()) * 100, 1)}%
         </Typography>
@@ -122,7 +121,6 @@ export function Stats(props: IProps): React.ReactElement {
             </Typography>
           </Tooltip>
         </Box>
-        <br />
         <Box display="flex">
           <Tooltip
             title={
@@ -134,7 +132,6 @@ export function Stats(props: IProps): React.ReactElement {
             <Typography>Synthoid Communities: {formatNumber(props.bladeburner.getCurrentCity().comms, 0)}</Typography>
           </Tooltip>
         </Box>
-        <br />
         <Box display="flex">
           <Tooltip
             title={
