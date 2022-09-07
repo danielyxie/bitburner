@@ -53,6 +53,8 @@ import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWor
 import { FactionWork } from "../Work/FactionWork";
 import { FactionWorkType } from "../Work/data/FactionWorkType";
 import { CompanyWork } from "../Work/CompanyWork";
+import { canGetBonus, onExport } from "../ExportBonus";
+import { saveObject } from "../SaveObject";
 
 export function NetscriptSingularity(): InternalAPI<ISingularity> {
   const getAugmentation = function (ctx: NetscriptContext, name: string): Augmentation {
@@ -1303,6 +1305,15 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
     getCurrentWork: () => (): any | null => {
       if (!player.currentWork) return null;
       return player.currentWork.APICopy();
+    },
+    exportGame: (ctx: NetscriptContext) => (): void => {
+      helpers.checkSingularityAccess(ctx);
+      onExport(player);
+      return saveObject.exportGame();
+    },
+    exportGameBonus: (ctx: NetscriptContext) => (): boolean => {
+      helpers.checkSingularityAccess(ctx);
+      return canGetBonus();
     },
   };
 }
