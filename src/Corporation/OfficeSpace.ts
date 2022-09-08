@@ -80,7 +80,9 @@ export class OfficeSpace {
   process(marketCycles = 1, corporation: ICorporation, industry: IIndustry): number {
     // HRBuddy AutoRecruitment and training
     if (industry.hasResearch("HRBuddy-Recruitment") && !this.atCapacity()) {
-      this.hireRandomEmployee(industry.hasResearch("HRBuddy-Training"));
+      this.hireRandomEmployee(
+        industry.hasResearch("HRBuddy-Training") ? EmployeePositions.Training : EmployeePositions.Unassigned,
+      );
     }
 
     // Update employee jobs and job counts
@@ -114,9 +116,9 @@ export class OfficeSpace {
       let perfMult = 1; //Multiplier for employee morale/happiness/energy based on company performance
       const reduction = 0.0015 * marketCycles; // Passive reduction every cycle
       if (corporation.funds < 0 && industry.lastCycleRevenue < 0) {
-        perfMult = Math.pow(0.99, marketCycles);
+        perfMult = Math.pow(0.995, marketCycles);
       } else if (corporation.funds > 0 && industry.lastCycleRevenue > 0) {
-        perfMult = Math.pow(1.01, marketCycles);
+        perfMult = Math.pow(1.005, marketCycles);
       }
 
       if (this.autoCoffee) {
@@ -215,18 +217,14 @@ export class OfficeSpace {
     this.employeeProd.total = total;
   }
 
-  hireRandomEmployee(setToTraining = false): boolean {
+  hireRandomEmployee(position: string): boolean {
     if (this.atCapacity()) return false;
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) return false;
 
     ++this.totalEmployees;
-    if (setToTraining) {
-      ++this.employeeJobs[EmployeePositions.Training];
-      ++this.employeeNextJobs[EmployeePositions.Training];
-    } else {
-      ++this.employeeJobs[EmployeePositions.Unassigned];
-      ++this.employeeNextJobs[EmployeePositions.Unassigned];
-    }
+    ++this.employeeJobs[position];
+    ++this.employeeNextJobs[position];
+
     this.totalExp += 75;
     this.avgMor = (this.avgMor * this.totalEmployees + 75) / (this.totalEmployees + 1);
     this.avgHap = (this.avgHap * this.totalEmployees + 75) / (this.totalEmployees + 1);

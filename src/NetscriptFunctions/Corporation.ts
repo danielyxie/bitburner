@@ -705,12 +705,20 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       },
     hireEmployee:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _cityName: unknown): boolean => {
+      (
+        _divisionName: unknown,
+        _cityName: unknown,
+        _employeePosition: unknown = EmployeePositions.Unassigned,
+      ): boolean => {
         checkAccess(ctx, 8);
         const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const cityName = helpers.city(ctx, "cityName", _cityName);
+        const employeePosition = helpers.string(ctx, "employeePosition", _employeePosition);
+
+        if (!Object.values(EmployeePositions).includes(employeePosition))
+          throw new Error(`'${employeePosition}' is not a valid job.`);
         const office = getOffice(divisionName, cityName);
-        return office.hireRandomEmployee();
+        return office.hireRandomEmployee(employeePosition);
       },
     upgradeOfficeSize:
       (ctx: NetscriptContext) =>

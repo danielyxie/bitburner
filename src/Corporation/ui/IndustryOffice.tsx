@@ -278,7 +278,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
   function autohireEmployeeButtonOnClick(): void {
     if (props.office.atCapacity()) return;
-    props.office.hireRandomEmployee();
+    props.office.hireRandomEmployee(EmployeePositions.Unassigned);
     props.rerender();
   }
 

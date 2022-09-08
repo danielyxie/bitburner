@@ -6615,9 +6615,10 @@ export interface OfficeAPI {
    * Hire an employee.
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
+   * @param employeePosition - Position to place into. Defaults to "Unassigned".
    * @returns True if an employee was hired, false otherwise
    */
-  hireEmployee(divisionName: string, cityName: string): Employee | undefined;
+  hireEmployee(divisionName: string, cityName: string, employeePosition: string): boolean;
   /**
    * Upgrade office size.
    * @param divisionName - Name of the division
