@@ -1778,7 +1778,7 @@ const base: InternalAPI<NS> = {
     (ctx: NetscriptContext) =>
     (_message: unknown): void => {
       const message = helpers.string(ctx, "message", _message);
-      dialogBoxCreate(message);
+      dialogBoxCreate(message, true);
     },
   toast:
     (ctx: NetscriptContext) =>
