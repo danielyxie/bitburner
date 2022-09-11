@@ -35,6 +35,7 @@ const bladeburnerSelectorOptions: string[] = [
   "Field analysis",
   "Recruitment",
   "Diplomacy",
+  "Hyperbolic Regeneration Chamber",
   "Infiltrate synthoids",
   "Support main sleeve",
   "Take on contracts",
@@ -285,6 +286,8 @@ function getABC(sleeve: Sleeve): [string, string, string] {
         return ["Perform Bladeburner Actions", "Diplomacy", "------"];
       case "Recruitment":
         return ["Perform Bladeburner Actions", "Recruitment", "------"];
+      case: "Hyperbolic Regeneration Chamber":
+        return ["Perform Bladeburner Actions", "Hyperbolic Regeneration Chamber", "------"];
     }
   }
 

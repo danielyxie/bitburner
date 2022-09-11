@@ -440,6 +440,9 @@ export class Sleeve extends Person {
       case "Diplomacy":
         this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Diplomacy" }));
         return true;
+      case "Hyperbolic Regeneration Chamber":
+        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Hyperbolic Regeneration Chamber" }));
+        return true;
       case "Infiltrate synthoids":
         this.startWork(p, new SleeveInfiltrateWork());
         return true;
