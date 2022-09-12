@@ -252,7 +252,7 @@ export function PlayerMultipliers(): React.ReactElement {
     },
   ];
 
-  if (Player.canAccessBladeburner()) {
+  if (Player.canAccessBladeburner() && BitNodeMultipliers.BladeburnerRank > 0) {
     rightColData.push(
       {
         mult: "Bladeburner Success Chance",

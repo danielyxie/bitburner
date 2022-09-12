@@ -83,7 +83,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   }
 
   function renderBladeburner(): React.ReactElement {
-    if (!player.canAccessBladeburner()) {
+    if (!player.canAccessBladeburner() || BitNodeMultipliers.BladeburnerRank == 0) {
       return <></>;
     }
     const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";

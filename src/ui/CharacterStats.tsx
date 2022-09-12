@@ -532,7 +532,7 @@ export function CharacterStats(): React.ReactElement {
               ]}
               color={Settings.theme.combat}
             />
-            {player.canAccessBladeburner() && (
+            {player.canAccessBladeburner() && BitNodeMultipliers.BladeburnerRank > 0 && (
               <MultiplierTable
                 rows={[
                   {
