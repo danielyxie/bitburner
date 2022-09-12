@@ -476,49 +476,47 @@ export function GameRoot(): React.ReactElement {
   }
 
   return (
-    <Context.Player.Provider value={Player}>
-      <Context.Router.Provider value={Router}>
-        <ErrorBoundary key={errorBoundaryKey} softReset={softReset}>
-          <BypassWrapper content={bypassGame ? mainPage : null}>
-            <SnackbarProvider>
-              <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
-                {!ITutorial.isRunning ? (
-                  <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
-                ) : (
-                  <InteractiveTutorialRoot />
-                )}
-              </Overview>
-              {withSidebar ? (
-                <Box display="flex" flexDirection="row" width="100%">
-                  <SidebarRoot
-                    page={page}
-                    opened={sidebarOpened}
-                    onToggled={(isOpened) => {
-                      setSideBarOpened(isOpened);
-                      Settings.IsSidebarOpened = isOpened;
-                    }}
-                  />
-                  <Box className={classes.root}>{mainPage}</Box>
-                </Box>
+    <>
+      <ErrorBoundary key={errorBoundaryKey} softReset={softReset}>
+        <BypassWrapper content={bypassGame ? mainPage : null}>
+          <SnackbarProvider>
+            <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
+              {!ITutorial.isRunning ? (
+                <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
               ) : (
+                <InteractiveTutorialRoot />
+              )}
+            </Overview>
+            {withSidebar ? (
+              <Box display="flex" flexDirection="row" width="100%">
+                <SidebarRoot
+                  page={page}
+                  opened={sidebarOpened}
+                  onToggled={(isOpened) => {
+                    setSideBarOpened(isOpened);
+                    Settings.IsSidebarOpened = isOpened;
+                  }}
+                />
                 <Box className={classes.root}>{mainPage}</Box>
-              )}
-              <Unclickable />
-              {withPopups && (
-                <>
-                  <LogBoxManager />
-                  <AlertManager />
-                  <PromptManager />
-                  <InvitationModal />
-                  <Snackbar />
-                </>
-              )}
-              <Apr1 />
-            </SnackbarProvider>
-          </BypassWrapper>
-        </ErrorBoundary>
-        <V2Modal />
-      </Context.Router.Provider>
-    </Context.Player.Provider>
+              </Box>
+            ) : (
+              <Box className={classes.root}>{mainPage}</Box>
+            )}
+            <Unclickable />
+            {withPopups && (
+              <>
+                <LogBoxManager />
+                <AlertManager />
+                <PromptManager />
+                <InvitationModal />
+                <Snackbar />
+              </>
+            )}
+            <Apr1 />
+          </SnackbarProvider>
+        </BypassWrapper>
+      </ErrorBoundary>
+      <V2Modal />
+    </>
   );
 }

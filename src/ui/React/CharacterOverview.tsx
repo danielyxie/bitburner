@@ -212,7 +212,7 @@ function Work(): React.ReactElement {
     );
     innerText = (
       <>
-        <Reputation reputation={companyWork.getCompany().PlayerReputation} /> rep
+        <Reputation reputation={companyWork.getCompany().playerReputation} /> rep
         <br />(
         <ReputationRate reputation={companyWork.getGainRates().reputation * (1000 / CONSTANTS._idleSpeed)} />)
       </>
