@@ -10,7 +10,8 @@ import Button from "@mui/material/Button";
 import { Location } from "../Location";
 
 import { Money } from "../../ui/React/Money";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
+import { Player } from "../../Player";
 import { Box } from "@mui/material";
 
 import { ClassWork, ClassType, Classes } from "../../Work/ClassWork";
@@ -21,19 +22,16 @@ type IProps = {
 };
 
 export function UniversityLocation(props: IProps): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
-
   function take(classType: ClassType): void {
-    player.startWork(
+    Player.startWork(
       new ClassWork({
         classType: classType,
         location: props.loc.name,
         singularity: false,
       }),
     );
-    player.startFocusing();
-    router.toWork();
+    Player.startFocusing();
+    Router.toWork();
   }
 
   const dataStructuresCost = calculateCost(Classes[ClassType.DataStructures], props.loc);

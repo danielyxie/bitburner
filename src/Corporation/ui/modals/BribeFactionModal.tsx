@@ -4,7 +4,7 @@ import { CorporationConstants } from "../../data/Constants";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
+import { Player } from "../../../Player";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -19,11 +19,10 @@ interface IProps {
 }
 
 export function BribeFactionModal(props: IProps): React.ReactElement {
-  const player = use.Player();
-  const factions = player.factions.filter((name: string) => {
+  const factions = Player.factions.filter((name: string) => {
     const info = Factions[name].getInfo();
     if (!info.offersWork()) return false;
-    if (player.hasGangWith(name)) return false;
+    if (Player.hasGangWith(name)) return false;
     return true;
   });
   const corp = useCorporation();
@@ -77,7 +76,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
           {factions.map((name: string) => {
             const info = Factions[name].getInfo();
             if (!info.offersWork()) return;
-            if (player.hasGangWith(name)) return;
+            if (Player.hasGangWith(name)) return;
             return (
               <MenuItem key={name} value={name}>
                 {name}

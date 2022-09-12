@@ -21,7 +21,8 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Factions } from "../../Faction/Factions";
 import { joinFaction } from "../../Faction/FactionHelpers";
 
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
+import { Player } from "../../Player";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
@@ -41,27 +42,24 @@ type IProps = {
 };
 
 export function SpecialLocation(props: IProps): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
   const setRerender = useState(false)[1];
-  const inBladeburner = player.inBladeburner();
+  const inBladeburner = Player.inBladeburner();
 
   /**
    * Click handler for Bladeburner button at Sector-12 NSA
    */
   function handleBladeburner(): void {
-    const p = player;
-    if (p.inBladeburner()) {
+    if (Player.inBladeburner()) {
       // Enter Bladeburner division
-      router.toBladeburner();
+      Router.toBladeburner();
     } else if (
-      p.skills.strength >= 100 &&
-      p.skills.defense >= 100 &&
-      p.skills.dexterity >= 100 &&
-      p.skills.agility >= 100
+      Player.skills.strength >= 100 &&
+      Player.skills.defense >= 100 &&
+      Player.skills.dexterity >= 100 &&
+      Player.skills.agility >= 100
     ) {
       // Apply for Bladeburner division
-      p.startBladeburner();
+      Player.startBladeburner();
       dialogBoxCreate("You have been accepted into the Bladeburner division!");
       setRerender((old) => !old);
 
@@ -79,11 +77,11 @@ export function SpecialLocation(props: IProps): React.ReactElement {
    * Click handler for Resleeving button at New Tokyo VitaLife
    */
   function handleGrafting(): void {
-    router.toGrafting();
+    Router.toGrafting();
   }
 
   function renderBladeburner(): React.ReactElement {
-    if (!player.canAccessBladeburner() || BitNodeMultipliers.BladeburnerRank === 0) {
+    if (!Player.canAccessBladeburner() || BitNodeMultipliers.BladeburnerRank === 0) {
       return <></>;
     }
     const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
@@ -99,32 +97,32 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     function EatNoodles(): void {
       SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", ToastVariant.SUCCESS, 2000);
       N00dles(); // This is the true power of the noodles.
-      if (player.sourceFiles.length > 0) player.giveExploit(Exploit.N00dles);
-      if (player.sourceFileLvl(5) > 0 || player.bitNodeN === 5) {
-        player.exp.intelligence *= 1.0000000000000002;
+      if (Player.sourceFiles.length > 0) Player.giveExploit(Exploit.N00dles);
+      if (Player.sourceFileLvl(5) > 0 || Player.bitNodeN === 5) {
+        Player.exp.intelligence *= 1.0000000000000002;
       }
-      player.exp.hacking *= 1.0000000000000002;
-      player.exp.strength *= 1.0000000000000002;
-      player.exp.defense *= 1.0000000000000002;
-      player.exp.agility *= 1.0000000000000002;
-      player.exp.dexterity *= 1.0000000000000002;
-      player.exp.charisma *= 1.0000000000000002;
-      for (const node of player.hacknetNodes) {
+      Player.exp.hacking *= 1.0000000000000002;
+      Player.exp.strength *= 1.0000000000000002;
+      Player.exp.defense *= 1.0000000000000002;
+      Player.exp.agility *= 1.0000000000000002;
+      Player.exp.dexterity *= 1.0000000000000002;
+      Player.exp.charisma *= 1.0000000000000002;
+      for (const node of Player.hacknetNodes) {
         if (node instanceof HacknetNode) {
-          player.gainMoney(node.moneyGainRatePerSecond * 0.001, "other");
+          Player.gainMoney(node.moneyGainRatePerSecond * 0.001, "other");
         } else {
           const server = GetServer(node);
           if (!(server instanceof HacknetServer)) throw new Error(`Server ${node} is not a hacknet server.`);
-          player.hashManager.storeHashes(server.hashRate * 0.001);
+          Player.hashManager.storeHashes(server.hashRate * 0.001);
         }
       }
 
-      if (player.bladeburner) {
-        player.bladeburner.rank += 0.00001;
+      if (Player.bladeburner) {
+        Player.bladeburner.rank += 0.00001;
       }
 
-      if (player.corporation) {
-        player.corporation.funds += player.corporation.revenue * 0.01;
+      if (Player.corporation) {
+        Player.corporation.funds += Player.corporation.revenue * 0.01;
       }
     }
 
@@ -138,7 +136,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function CreateCorporation(): React.ReactElement {
     const [open, setOpen] = useState(false);
-    if (!player.canAccessCorporation()) {
+    if (!Player.canAccessCorporation()) {
       return (
         <>
           <Typography>
@@ -149,7 +147,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
     return (
       <>
-        <Button disabled={!player.canAccessCorporation() || player.hasCorporation()} onClick={() => setOpen(true)}>
+        <Button disabled={!Player.canAccessCorporation() || Player.hasCorporation()} onClick={() => setOpen(true)}>
           Create a Corporation
         </Button>
         <CreateCorporationModal open={open} onClose={() => setOpen(false)} />
@@ -158,7 +156,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   }
 
   function renderGrafting(): React.ReactElement {
-    if (!player.canAccessGrafting()) {
+    if (!Player.canAccessGrafting()) {
       return <></>;
     }
     return (
@@ -170,21 +168,21 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function handleCotMG(): void {
     const faction = Factions[FactionNames.ChurchOfTheMachineGod];
-    if (!player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
+    if (!Player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       joinFaction(faction);
     }
     if (
-      !player.augmentations.some((a) => a.name === AugmentationNames.StaneksGift1) &&
-      !player.queuedAugmentations.some((a) => a.name === AugmentationNames.StaneksGift1)
+      !Player.augmentations.some((a) => a.name === AugmentationNames.StaneksGift1) &&
+      !Player.queuedAugmentations.some((a) => a.name === AugmentationNames.StaneksGift1)
     ) {
       applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
     }
 
-    router.toStaneksGift();
+    Router.toStaneksGift();
   }
 
   function renderCotMG(): React.ReactElement {
-    const toStanek = <Button onClick={() => router.toStaneksGift()}>Open Stanek's Gift</Button>;
+    const toStanek = <Button onClick={() => Router.toStaneksGift()}>Open Stanek's Gift</Button>;
     // prettier-ignore
     const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
       {"                 ``          "}<br />
@@ -215,7 +213,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       {"    sNNo-.`.-omNy`           "}<br />
       {"     -smNNNNmdo-             "}<br />
       {"        `..`                 "}</Typography>
-    if (player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
+    if (Player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
       return (
         <>
           <Typography>
@@ -232,7 +230,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         </>
       );
     }
-    if (player.hasAugmentation(AugmentationNames.StaneksGift2, true)) {
+    if (Player.hasAugmentation(AugmentationNames.StaneksGift2, true)) {
       return (
         <>
           <Typography>
@@ -249,7 +247,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         </>
       );
     }
-    if (player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
+    if (Player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       return (
         <>
           <Typography>
@@ -263,7 +261,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       );
     }
 
-    if (!player.canAccessCotMG()) {
+    if (!Player.canAccessCotMG()) {
       return (
         <>
           <Typography>
@@ -278,8 +276,8 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
 
     if (
-      player.augmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0 ||
-      player.queuedAugmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0
+      Player.augmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0 ||
+      Player.queuedAugmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0
     ) {
       return (
         <>

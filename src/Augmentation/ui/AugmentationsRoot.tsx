@@ -10,8 +10,6 @@ import { PurchasedAugmentations } from "./PurchasedAugmentations";
 import { SourceFilesElement } from "./SourceFiles";
 
 import { canGetBonus } from "../../ExportBonus";
-import { use } from "../../ui/Context";
-
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -86,7 +84,6 @@ interface IProps {
 
 export function AugmentationsRoot(props: IProps): React.ReactElement {
   const [installOpen, setInstallOpen] = useState(false);
-  const player = use.Player();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((o) => !o);
@@ -179,7 +176,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
           <Box sx={{ display: "grid", width: "100%", gridTemplateColumns: "1fr 1fr" }}>
             <Tooltip title={<Typography>'I never asked for this'</Typography>}>
               <span>
-                <Button sx={{ width: "100%" }} disabled={player.queuedAugmentations.length === 0} onClick={doInstall}>
+                <Button sx={{ width: "100%" }} disabled={Player.queuedAugmentations.length === 0} onClick={doInstall}>
                   Install Augmentations
                 </Button>
               </span>
@@ -191,7 +188,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
             </Tooltip>
           </Box>
         </Paper>
-        {player.queuedAugmentations.length > 0 ? (
+        {Player.queuedAugmentations.length > 0 ? (
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <PurchasedAugmentations />
             <PlayerMultipliers />
@@ -208,8 +205,8 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
           my: 1,
           display: "grid",
           gridTemplateColumns: `repeat(${
-            +!!((player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0) > 0) +
-            +!!(player.entropy > 0)
+            +!!((Player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0) > 0) +
+            +!!(Player.entropy > 0)
           }, 1fr)`,
           gap: 1,
         }}

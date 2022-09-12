@@ -3,7 +3,7 @@ import { BlackOpList } from "./BlackOpList";
 import { IBladeburner } from "../IBladeburner";
 import Typography from "@mui/material/Typography";
 import { FactionNames } from "../../Faction/data/FactionNames";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
 import { BlackOperationNames } from "../data/BlackOperationNames";
 import { Button } from "@mui/material";
 import { CorruptableText } from "../../ui/React/CorruptableText";
@@ -13,7 +13,6 @@ interface IProps {
 }
 
 export function BlackOpPage(props: IProps): React.ReactElement {
-  const router = use.Router();
   return (
     <>
       <Typography>
@@ -31,7 +30,7 @@ export function BlackOpPage(props: IProps): React.ReactElement {
         losses.
       </Typography>
       {props.bladeburner.blackops[BlackOperationNames.OperationDaedalus] ? (
-        <Button sx={{ my: 1, p: 1 }} onClick={() => router.toBitVerse(false, false)}>
+        <Button sx={{ my: 1, p: 1 }} onClick={() => Router.toBitVerse(false, false)}>
           <CorruptableText content="Destroy w0rld_d34mon"></CorruptableText>
         </Button>
       ) : (

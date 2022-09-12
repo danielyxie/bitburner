@@ -20,7 +20,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 import { Settings } from "../../Settings/Settings";
-import { use } from "../Context";
+import { Router } from "../GameRoot";
+import { Player } from "../../Player"; 
 import { StatsProgressOverviewCell } from "./StatsProgressBar";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
@@ -42,10 +43,9 @@ interface IProps {
 
 function Intelligence(): React.ReactElement {
   const theme = useTheme();
-  const player = use.Player();
   const classes = useStyles();
-  if (player.skills.intelligence === 0) return <></>;
-  const progress = player.calculateSkillProgress(player.exp.intelligence);
+  if (Player.skills.intelligence === 0) return <></>;
+  const progress = Player.calculateSkillProgress(Player.exp.intelligence);
 
   return (
     <>
@@ -55,7 +55,7 @@ function Intelligence(): React.ReactElement {
         </TableCell>
         <TableCell align="right" classes={{ root: classes.cell }}>
           <Typography classes={{ root: classes.int }}>
-            {numeralWrapper.formatSkill(player.skills.intelligence)}
+            {numeralWrapper.formatSkill(Player.skills.intelligence)}
           </Typography>
         </TableCell>
         <TableCell align="right" classes={{ root: classes.cell }}>
@@ -75,9 +75,8 @@ function Intelligence(): React.ReactElement {
 }
 
 function Bladeburner(): React.ReactElement {
-  const player = use.Player();
   const classes = useStyles();
-  const bladeburner = player.bladeburner;
+  const bladeburner = Player.bladeburner;
   if (bladeburner === null) return <></>;
   const action = bladeburner.getTypeAndNameFromActionId(bladeburner.action);
   if (action.type === "Idle") return <></>;
@@ -141,32 +140,30 @@ function WorkInProgressOverview({
 }
 
 function Work(): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
   const onClickFocus = (): void => {
-    player.startFocusing();
-    router.toWork();
+    Player.startFocusing();
+    Router.toWork();
   };
-  if (player.currentWork === null || player.focus) return <></>;
+  if (Player.currentWork === null || Player.focus) return <></>;
 
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
-  if (isCrimeWork(player.currentWork)) {
-    const crime = player.currentWork.getCrime();
-    const perc = (player.currentWork.unitCompleted / crime.time) * 100;
+  if (isCrimeWork(Player.currentWork)) {
+    const crime = Player.currentWork.getCrime();
+    const perc = (Player.currentWork.unitCompleted / crime.time) * 100;
 
-    details = <>{player.currentWork.crimeType}</>;
-    header = <>You are attempting to {player.currentWork.crimeType}</>;
+    details = <>{Player.currentWork.crimeType}</>;
+    header = <>You are attempting to {Player.currentWork.crimeType}</>;
     innerText = <>{perc.toFixed(2)}%</>;
   }
-  if (isClassWork(player.currentWork)) {
-    details = <>{player.currentWork.getClass().youAreCurrently}</>;
-    header = <>You are {player.currentWork.getClass().youAreCurrently}</>;
-    innerText = <>{convertTimeMsToTimeElapsedString(player.currentWork.cyclesWorked * CONSTANTS._idleSpeed)}</>;
+  if (isClassWork(Player.currentWork)) {
+    details = <>{Player.currentWork.getClass().youAreCurrently}</>;
+    header = <>You are {Player.currentWork.getClass().youAreCurrently}</>;
+    innerText = <>{convertTimeMsToTimeElapsedString(Player.currentWork.cyclesWorked * CONSTANTS._idleSpeed)}</>;
   }
-  if (isCreateProgramWork(player.currentWork)) {
-    const create = player.currentWork;
+  if (isCreateProgramWork(Player.currentWork)) {
+    const create = Player.currentWork;
     details = <>Coding {create.programName}</>;
     header = <>Creating a program</>;
     innerText = (
@@ -175,8 +172,8 @@ function Work(): React.ReactElement {
       </>
     );
   }
-  if (isGraftingWork(player.currentWork)) {
-    const graft = player.currentWork;
+  if (isGraftingWork(Player.currentWork)) {
+    const graft = Player.currentWork;
     details = <>Grafting {graft.augmentation}</>;
     header = <>Grafting an Augmentation</>;
     innerText = (
@@ -186,8 +183,8 @@ function Work(): React.ReactElement {
     );
   }
 
-  if (isFactionWork(player.currentWork)) {
-    const factionWork = player.currentWork;
+  if (isFactionWork(Player.currentWork)) {
+    const factionWork = Player.currentWork;
     header = (
       <>
         Working for <strong>{factionWork.factionName}</strong>
@@ -201,11 +198,11 @@ function Work(): React.ReactElement {
       </>
     );
   }
-  if (isCompanyWork(player.currentWork)) {
-    const companyWork = player.currentWork;
+  if (isCompanyWork(Player.currentWork)) {
+    const companyWork = Player.currentWork;
     details = (
       <>
-        {player.jobs[companyWork.companyName]} at <strong>{companyWork.companyName}</strong>
+        {Player.jobs[companyWork.companyName]} at <strong>{companyWork.companyName}</strong>
       </>
     );
     header = (
@@ -215,7 +212,7 @@ function Work(): React.ReactElement {
     );
     innerText = (
       <>
-        <Reputation reputation={companyWork.getCompany().playerReputation} /> rep
+        <Reputation reputation={companyWork.getCompany().PlayerReputation} /> rep
         <br />(
         <ReputationRate reputation={companyWork.getGainRates().reputation * (1000 / CONSTANTS._idleSpeed)} />)
       </>
@@ -281,41 +278,37 @@ export { useStyles as characterOverviewStyles };
 
 export function CharacterOverview({ save, killScripts }: IProps): React.ReactElement {
   const [killOpen, setKillOpen] = useState(false);
-  const player = use.Player();
-
   const setRerender = useState(false)[1];
-
   useEffect(() => {
     const id = setInterval(() => setRerender((old) => !old), 600);
     return () => clearInterval(id);
   }, []);
-
   const classes = useStyles();
   const theme = useTheme();
 
-  const hackingProgress = player.calculateSkillProgress(
-    player.exp.hacking,
-    player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
+  const hackingProgress = Player.calculateSkillProgress(
+    Player.exp.hacking,
+    Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
   );
-  const strengthProgress = player.calculateSkillProgress(
-    player.exp.strength,
-    player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
+  const strengthProgress = Player.calculateSkillProgress(
+    Player.exp.strength,
+    Player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
   );
-  const defenseProgress = player.calculateSkillProgress(
-    player.exp.defense,
-    player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
+  const defenseProgress = Player.calculateSkillProgress(
+    Player.exp.defense,
+    Player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
   );
-  const dexterityProgress = player.calculateSkillProgress(
-    player.exp.dexterity,
-    player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
+  const dexterityProgress = Player.calculateSkillProgress(
+    Player.exp.dexterity,
+    Player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
-  const agilityProgress = player.calculateSkillProgress(
-    player.exp.agility,
-    player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
+  const agilityProgress = Player.calculateSkillProgress(
+    Player.exp.agility,
+    Player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
   );
-  const charismaProgress = player.calculateSkillProgress(
-    player.exp.charisma,
-    player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
+  const charismaProgress = Player.calculateSkillProgress(
+    Player.exp.charisma,
+    Player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
   );
 
   return (
@@ -328,7 +321,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.hp }}>
-                {numeralWrapper.formatHp(player.hp.current)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.hp.max)}
+                {numeralWrapper.formatHp(Player.hp.current)}&nbsp;/&nbsp;{numeralWrapper.formatHp(Player.hp.max)}
               </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
@@ -343,7 +336,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.money }}>{numeralWrapper.formatMoney(player.money)}</Typography>
+              <Typography classes={{ root: classes.money }}>{numeralWrapper.formatMoney(Player.money)}</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-money-hook" classes={{ root: classes.money }}>
@@ -358,7 +351,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.hack }}>
-                {numeralWrapper.formatSkill(player.skills.hacking)}
+                {numeralWrapper.formatSkill(Player.skills.hacking)}
               </Typography>
             </TableCell>
           </TableRow>
@@ -384,7 +377,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.combat }}>
-                {numeralWrapper.formatSkill(player.skills.strength)}
+                {numeralWrapper.formatSkill(Player.skills.strength)}
               </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
@@ -405,7 +398,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.combat }}>
-                {numeralWrapper.formatSkill(player.skills.defense)}
+                {numeralWrapper.formatSkill(Player.skills.defense)}
               </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
@@ -426,7 +419,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.combat }}>
-                {numeralWrapper.formatSkill(player.skills.dexterity)}
+                {numeralWrapper.formatSkill(Player.skills.dexterity)}
               </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
@@ -447,7 +440,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
               <Typography classes={{ root: classes.combat }}>
-                {numeralWrapper.formatSkill(player.skills.agility)}
+                {numeralWrapper.formatSkill(Player.skills.agility)}
               </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
@@ -468,7 +461,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.cha }}>
-                {numeralWrapper.formatSkill(player.skills.charisma)}
+                {numeralWrapper.formatSkill(Player.skills.charisma)}
               </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>

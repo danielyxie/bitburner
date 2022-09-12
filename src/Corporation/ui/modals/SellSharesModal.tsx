@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
 import { useCorporation } from "../Context";
 import { ICorporation } from "../../ICorporation";
 import Typography from "@mui/material/Typography";
@@ -20,7 +19,6 @@ interface IProps {
 // Create a popup that lets the player sell Corporation shares
 // This is created when the player clicks the "Sell Shares" button in the overview panel
 export function SellSharesModal(props: IProps): React.ReactElement {
-  const player = use.Player();
   const corp = useCorporation();
   const [shares, setShares] = useState<number>(NaN);
 

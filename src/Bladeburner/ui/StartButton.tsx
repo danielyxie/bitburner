@@ -2,7 +2,7 @@ import React from "react";
 
 import { IBladeburner } from "../IBladeburner";
 import { BlackOperation } from "../BlackOperation";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import Button from "@mui/material/Button";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
@@ -13,7 +13,6 @@ interface IProps {
   rerender: () => void;
 }
 export function StartButton(props: IProps): React.ReactElement {
-  const player = use.Player();
   const action = props.bladeburner.getActionObject({ name: props.name, type: props.type });
   if (action == null) {
     throw new Error("Failed to get Operation Object for: " + props.name);
@@ -33,7 +32,7 @@ export function StartButton(props: IProps): React.ReactElement {
     if (disabled) return;
     props.bladeburner.action.type = props.type;
     props.bladeburner.action.name = props.name;
-    if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true)) player.finishWork(true);
+    if (!Player.hasAugmentation(AugmentationNames.BladesSimulacrum, true)) Player.finishWork(true);
     props.bladeburner.startAction(props.bladeburner.action);
     props.rerender();
   }

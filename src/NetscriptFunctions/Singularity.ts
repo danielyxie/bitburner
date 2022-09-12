@@ -1178,7 +1178,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeRoughName}'`);
         }
         helpers.log(ctx, () => `Attempting to commit ${crime.name}...`);
-        const crimeTime = crime.commit(Player, 1, ctx.workerScript);
+        const crimeTime = crime.commit(1, ctx.workerScript);
         if (focus) {
           Player.startFocusing();
           Router.toWork();
@@ -1275,7 +1275,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         const nextBN = helpers.number(ctx, "nextBN", _nextBN);
         const callbackScript = helpers.string(ctx, "callbackScript", _callbackScript);
         helpers.checkSingularityAccess(ctx);
-        enterBitNode(Router, true, Player.bitNodeN, nextBN);
+        enterBitNode(true, Player.bitNodeN, nextBN);
         if (callbackScript)
           setTimeout(() => {
             runAfterReset(callbackScript);
@@ -1308,7 +1308,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
 
         wd.backdoorInstalled = true;
         calculateAchievements();
-        enterBitNode(Router, false, Player.bitNodeN, nextBN);
+        enterBitNode(false, Player.bitNodeN, nextBN);
         if (callbackScript)
           setTimeout(() => {
             runAfterReset(callbackScript);

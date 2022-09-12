@@ -274,7 +274,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
         const member = getGangMember(ctx, memberName);
         const equipment = GangMemberUpgrades[equipName];
         if (!equipment) return false;
-        const res = member.buyUpgrade(equipment, player, gang);
+        const res = member.buyUpgrade(equipment);
         if (res) {
           ctx.workerScript.log(
             "gang.purchaseEquipment",

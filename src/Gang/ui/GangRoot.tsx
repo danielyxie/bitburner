@@ -5,17 +5,16 @@ import React, { useState, useEffect } from "react";
 import { ManagementSubpage } from "./ManagementSubpage";
 import { TerritorySubpage } from "./TerritorySubpage";
 import { EquipmentsSubpage } from "./EquipmentsSubpage";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import { Context } from "./Context";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 export function GangRoot(): React.ReactElement {
-  const player = use.Player();
   const gang = (function () {
-    if (player.gang === null) throw new Error("Gang should not be null");
-    return player.gang;
+    if (Player.gang === null) throw new Error("Gang should not be null");
+    return Player.gang;
   })();
   const [value, setValue] = React.useState(0);
 

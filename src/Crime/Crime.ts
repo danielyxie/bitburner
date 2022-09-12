@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { IPerson } from "../PersonObjects/IPerson";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType } from "../utils/WorkType";
@@ -101,11 +101,11 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
+  commit(div = 1, workerScript: WorkerScript | null = null): number {
     if (div <= 0) {
       div = 1;
     }
-    p.startWork(
+    Player.startWork(
       new CrimeWork({
         crimeType: this.type,
         singularity: workerScript !== null,

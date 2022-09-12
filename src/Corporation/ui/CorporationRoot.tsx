@@ -6,7 +6,7 @@ import { IIndustry } from "../IIndustry";
 import { MainPanel } from "./MainPanel";
 import { Industries } from "../IndustryData";
 import { ExpandIndustryTab } from "./ExpandIndustryTab";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import { Context } from "./Context";
 import { Overview } from "./Overview";
 
@@ -14,8 +14,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 export function CorporationRoot(): React.ReactElement {
-  const player = use.Player();
-  const corporation = player.corporation;
+  const corporation = Player.corporation;
   if (corporation === null) return <></>;
   const setRerender = useState(false)[1];
   function rerender(): void {

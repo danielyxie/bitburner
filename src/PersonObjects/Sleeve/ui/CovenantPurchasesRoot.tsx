@@ -11,7 +11,7 @@ import { BaseCostPerSleeve, MaxSleevesFromCovenant } from "../SleeveCovenantPurc
 
 import { Money } from "../../../ui/React/Money";
 import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
+import { Player } from "../../../Player";
 
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import Typography from "@mui/material/Typography";
@@ -24,14 +24,13 @@ interface IProps {
 }
 
 export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
-  const player = use.Player();
   const [update, setUpdate] = useState(0);
 
   /**
    * Get the cost to purchase a new Duplicate Sleeve
    */
   function purchaseCost(): number {
-    return Math.pow(10, player.sleevesFromCovenant) * BaseCostPerSleeve;
+    return Math.pow(10, Player.sleevesFromCovenant) * BaseCostPerSleeve;
   }
 
   /**
@@ -43,20 +42,20 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
 
   // Purchasing a new Duplicate Sleeve
   let purchaseDisabled = false;
-  if (!player.canAfford(purchaseCost())) {
+  if (!Player.canAfford(purchaseCost())) {
     purchaseDisabled = true;
   }
-  if (player.sleevesFromCovenant >= MaxSleevesFromCovenant) {
+  if (Player.sleevesFromCovenant >= MaxSleevesFromCovenant) {
     purchaseDisabled = true;
   }
 
   function purchaseOnClick(): void {
-    if (player.sleevesFromCovenant >= MaxSleevesFromCovenant) return;
+    if (Player.sleevesFromCovenant >= MaxSleevesFromCovenant) return;
 
-    if (player.canAfford(purchaseCost())) {
-      player.loseMoney(purchaseCost(), "sleeves");
-      player.sleevesFromCovenant += 1;
-      player.sleeves.push(new Sleeve());
+    if (Player.canAfford(purchaseCost())) {
+      Player.loseMoney(purchaseCost(), "sleeves");
+      Player.sleevesFromCovenant += 1;
+      Player.sleeves.push(new Sleeve());
       rerender();
     } else {
       dialogBoxCreate(`You cannot afford to purchase a Duplicate Sleeve`);
@@ -65,15 +64,15 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
 
   // Purchasing Upgrades for Sleeves
   const upgradePanels = [];
-  for (let i = 0; i < player.sleeves.length; ++i) {
-    const sleeve = player.sleeves[i];
+  for (let i = 0; i < Player.sleeves.length; ++i) {
+    const sleeve = Player.sleeves[i];
     upgradePanels.push(<CovenantSleeveMemoryUpgrade index={i} rerender={rerender} sleeve={sleeve} />);
   }
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <>
-        {player.sleevesFromCovenant < MaxSleevesFromCovenant && (
+        {Player.sleevesFromCovenant < MaxSleevesFromCovenant && (
           <>
             <Typography>
               Purchase an additional Sleeves. These Duplicate Sleeves are permanent (they persist through BitNodes). You

@@ -1,5 +1,4 @@
 import { Industry } from "./Industry";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { CorporationState } from "./CorporationState";
@@ -36,7 +35,7 @@ export interface ICorporation {
   addFunds(amt: number): void;
   getState(): string;
   storeCycles(numCycles: number): void;
-  process(player: IPlayer): void;
+  process(): void;
   determineValuation(): void;
   determineCycleValuation(): number;
   getTargetSharePrice(): number;
@@ -56,7 +55,7 @@ export interface ICorporation {
   getEmployeeEffMultiplier(): number;
   getSalesMultiplier(): number;
   getScientificResearchMultiplier(): number;
-  getStarterGuide(player: IPlayer): void;
+  getStarterGuide(): void;
   updateDividendTax(): void;
   getCycleDividends(): number;
   toJSON(): IReviverValue;

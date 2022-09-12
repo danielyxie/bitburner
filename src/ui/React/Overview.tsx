@@ -7,7 +7,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import SchoolIcon from "@mui/icons-material/School";
-import { use } from "../Context";
+import { Router } from "../GameRoot";
 import { Page } from "../Router";
 import { Settings } from "../../Settings/Settings";
 import { Box, Button, Typography } from "@mui/material";
@@ -69,7 +69,6 @@ export function Overview({ children, mode }: IProps): React.ReactElement {
   const [x, setX] = useState(Settings.overview.x);
   const [y, setY] = useState(Settings.overview.y);
   const classes = useStyles();
-  const router = use.Router();
 
   const CurrentIcon = open ? KeyboardArrowUpIcon : KeyboardArrowDownIcon;
   const LeftIcon = mode === "tutorial" ? SchoolIcon : EqualizerIcon;
@@ -113,7 +112,7 @@ export function Overview({ children, mode }: IProps): React.ReactElement {
     node.dispatchEvent(clickEvent);
   };
 
-  if (router.page() === Page.BitVerse || router.page() === Page.Loading || router.page() === Page.Recovery)
+  if (Router.page() === Page.BitVerse || Router.page() === Page.Loading || Router.page() === Page.Recovery)
     return <></>;
   return (
     <Draggable handle=".drag" bounds="body" onStop={handleStop} defaultPosition={{ x, y }}>

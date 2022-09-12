@@ -64,8 +64,6 @@ import { PromptManager } from "./React/PromptManager";
 import { InvitationModal } from "../Faction/ui/InvitationModal";
 import { calculateAchievements } from "../Achievements/Achievements";
 
-import { enterBitNode } from "../RedPill";
-import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -316,7 +314,7 @@ export function GameRoot(): React.ReactElement {
       break;
     }
     case Page.BitVerse: {
-      mainPage = <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />;
+      mainPage = <BitverseRoot flume={flume} quick={quick} />;
       withSidebar = false;
       withPopups = false;
       break;

@@ -3,7 +3,8 @@
  */
 import React from "react";
 import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
+import { Player } from "../../Player";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { KEY } from "../../utils/helpers/keyCodes";
@@ -16,8 +17,6 @@ interface IProps {
 }
 
 export function CreateGangModal(props: IProps): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
   const combatGangText =
     "This is a COMBAT gang. Members in this gang will have different tasks than HACKING gangs. " +
     "Compared to hacking gangs, progression with combat gangs can be more difficult as territory management " +
@@ -33,9 +32,9 @@ export function CreateGangModal(props: IProps): React.ReactElement {
   }
 
   function createGang(): void {
-    player.startGang(props.facName, isHacking());
+    Player.startGang(props.facName, isHacking());
     props.onClose();
-    router.toGang();
+    Router.toGang();
   }
 
   function onKeyUp(event: React.KeyboardEvent): void {

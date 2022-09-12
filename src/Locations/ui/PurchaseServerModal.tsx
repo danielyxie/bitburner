@@ -6,7 +6,7 @@ import { purchaseServer } from "../../Server/ServerPurchases";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -21,7 +21,6 @@ interface IProps {
 }
 
 export function PurchaseServerModal(props: IProps): React.ReactElement {
-  const player = use.Player();
   const [hostname, setHostname] = useState("");
 
   function tryToPurchaseServer(): void {
@@ -56,7 +55,7 @@ export function PurchaseServerModal(props: IProps): React.ReactElement {
         placeholder="Unique Hostname"
         InputProps={{
           endAdornment: (
-            <Button onClick={tryToPurchaseServer} disabled={!player.canAfford(props.cost) || hostname === ""}>
+            <Button onClick={tryToPurchaseServer} disabled={!Player.canAfford(props.cost) || hostname === ""}>
               Buy
             </Button>
           ),
