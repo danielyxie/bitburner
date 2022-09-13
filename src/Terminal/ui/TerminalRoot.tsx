@@ -125,7 +125,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
                     paragraph={false}
                     onClick={() => terminal.connectToServer(player, item.hostname)}
                   >
-                    <Typography>{item.hostname}</Typography>
+                    <Typography sx={{ textDecoration: 'underline' }}>{item.hostname}</Typography>
                   </MuiLink>
                 </>
               )}
