@@ -44,39 +44,39 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
     const content: React.ReactNode[] = [];
 
     if (loc.types.includes(LocationType.Company)) {
-      content.push(<CompanyLocation key={"companylocation"} locName={loc.name} />);
+      content.push(<CompanyLocation locName={loc.name} />);
     }
 
     if (loc.types.includes(LocationType.Gym)) {
-      content.push(<GymLocation key={"gymlocation"} loc={loc} />);
+      content.push(<GymLocation loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.Hospital)) {
-      content.push(<HospitalLocation key={"hospitallocation"} />);
+      content.push(<HospitalLocation />);
     }
 
     if (loc.types.includes(LocationType.Slums)) {
-      content.push(<SlumsLocation key={"slumslocation"} />);
+      content.push(<SlumsLocation />);
     }
 
     if (loc.types.includes(LocationType.Special)) {
-      content.push(<SpecialLocation key={"speciallocation"} loc={loc} />);
+      content.push(<SpecialLocation loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.TechVendor)) {
-      content.push(<TechVendorLocation key={"techvendorlocation"} loc={loc} />);
+      content.push(<TechVendorLocation loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.TravelAgency)) {
-      content.push(<TravelAgencyRoot key={"travelagencylocation"} />);
+      content.push(<TravelAgencyRoot />);
     }
 
     if (loc.types.includes(LocationType.University)) {
-      content.push(<UniversityLocation key={"universitylocation"} loc={loc} />);
+      content.push(<UniversityLocation loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.Casino)) {
-      content.push(<CasinoLocation key={"casinoLocation"} />);
+      content.push(<CasinoLocation />);
     }
 
     return content;

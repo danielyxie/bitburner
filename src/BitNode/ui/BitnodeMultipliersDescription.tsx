@@ -5,7 +5,7 @@ import { uniqueId } from "lodash";
 import React from "react";
 import { SpecialServers } from "../../Server/data/SpecialServers";
 import { Settings } from "../../Settings/Settings";
-import { Player } from "../../ui/Player";
+import { Player } from "../../Player";
 import { StatsRow } from "../../ui/React/StatsRow";
 import { defaultMultipliers, getBitNodeMultipliers } from "../BitNode";
 import { IBitNodeMultipliers } from "../BitNodeMultipliers";

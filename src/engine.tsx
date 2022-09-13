@@ -5,6 +5,7 @@ import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions"
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
+import { initDarkWebItems } from "./DarkWeb/DarkWebItems";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { generateRandomContract } from "./CodingContractGenerator";
 import { initCompanies } from "./Company/Companies";
@@ -241,6 +242,7 @@ const Engine: {
       ThemeEvents.emit();
 
       initBitNodeMultipliers();
+      initDarkWebItems();
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
       if (Player.hasWseAccount) {
@@ -398,6 +400,7 @@ const Engine: {
       initForeignServers(Player.getHomeComputer());
       initCompanies();
       initFactions();
+      initDarkWebItems();
       initAugmentations();
 
       // Start interactive tutorial

@@ -17,6 +17,7 @@ type IState = {
   currHp: number;
 };
 
+//Todo: Make this a functional component
 export class HospitalLocation extends React.Component<Record<string, never>, IState> {
   /**
    * Stores button styling that sets them all to block display
@@ -25,9 +26,6 @@ export class HospitalLocation extends React.Component<Record<string, never>, ISt
 
   constructor() {
     super({});
-
-    this.getCost = this.getCost.bind(this);
-    this.getHealed = this.getHealed.bind(this);
 
     this.state = {
       currHp: Player.hp.current,
