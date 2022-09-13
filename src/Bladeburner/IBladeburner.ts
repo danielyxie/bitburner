@@ -120,5 +120,5 @@ export interface IBladeburner {
   process(): void;
   getActionStats(action: IAction, person: IPerson, success: boolean): ITaskTracker;
   sleeveSupport(joining: boolean): void;
-  toJSON():IReviverValue;
+  toJSON(): IReviverValue;
 }

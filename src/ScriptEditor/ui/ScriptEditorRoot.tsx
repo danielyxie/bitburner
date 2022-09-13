@@ -463,12 +463,7 @@ export function Root(props: IProps): React.ReactElement {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < server.scripts.length; i++) {
         if (scriptToSave.fileName == server.scripts[i].filename) {
-          server.scripts[i].saveScript(
-            scriptToSave.fileName,
-            scriptToSave.code,
-            Player.currentServer,
-            server.scripts,
-          );
+          server.scripts[i].saveScript(scriptToSave.fileName, scriptToSave.code, Player.currentServer, server.scripts);
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
           Router.toTerminal();
           return;

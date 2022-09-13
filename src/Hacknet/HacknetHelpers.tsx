@@ -153,10 +153,7 @@ export function getMaxNumberRamUpgrades(nodeObj: HacknetNode | HacknetServer, ma
 }
 
 // Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node's cores
-export function getMaxNumberCoreUpgrades(
-  nodeObj: HacknetNode | HacknetServer,
-  maxLevel: number,
-): number {
+export function getMaxNumberCoreUpgrades(nodeObj: HacknetNode | HacknetServer, maxLevel: number): number {
   if (maxLevel == null) {
     throw new Error(`getMaxNumberCoreUpgrades() called without maxLevel arg`);
   }

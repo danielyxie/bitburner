@@ -36,7 +36,7 @@ type State = {
   wagerInvalidHelperText: string;
 };
 
-export class Blackjack extends React.Component<{},State> {
+export class Blackjack extends React.Component<Record<string, never>, State> {
   deck: Deck;
 
   constructor() {

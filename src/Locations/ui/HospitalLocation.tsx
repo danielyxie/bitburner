@@ -13,20 +13,18 @@ import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
-type IProps = {};
-
 type IState = {
   currHp: number;
 };
 
-export class HospitalLocation extends React.Component<IProps, IState> {
+export class HospitalLocation extends React.Component<Record<string, never>, IState> {
   /**
    * Stores button styling that sets them all to block display
    */
   btnStyle = { display: "block" };
 
-  constructor(props: IProps) {
-    super(props);
+  constructor() {
+    super({});
 
     this.getCost = this.getCost.bind(this);
     this.getHealed = this.getHealed.bind(this);

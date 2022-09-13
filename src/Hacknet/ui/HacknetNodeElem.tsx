@@ -77,9 +77,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
   }
   function upgradeLevelOnClick(): void {
     const numUpgrades =
-      purchaseMult === "MAX"
-        ? getMaxNumberLevelUpgrades(node, HacknetNodeConstants.MaxLevel)
-        : purchaseMult;
+      purchaseMult === "MAX" ? getMaxNumberLevelUpgrades(node, HacknetNodeConstants.MaxLevel) : purchaseMult;
     purchaseLevelUpgrade(node, numUpgrades);
     rerender();
   }
@@ -128,9 +126,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
 
   function upgradeCoresOnClick(): void {
     const numUpgrades =
-      purchaseMult === "MAX"
-        ? getMaxNumberCoreUpgrades(node, HacknetNodeConstants.MaxCores)
-        : purchaseMult;
+      purchaseMult === "MAX" ? getMaxNumberCoreUpgrades(node, HacknetNodeConstants.MaxCores) : purchaseMult;
     purchaseCoreUpgrade(node, numUpgrades);
     rerender();
   }

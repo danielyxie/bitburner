@@ -68,12 +68,7 @@ export const scaleWorkStats = (w: WorkStats, n: number, scaleMoney = true): Work
   };
 };
 
-export const applyWorkStats = (
-  target: IPerson,
-  workStats: WorkStats,
-  cycles: number,
-  source: string,
-): WorkStats => {
+export const applyWorkStats = (target: IPerson, workStats: WorkStats, cycles: number, source: string): WorkStats => {
   const expStats = applyWorkStatsExp(target, workStats, cycles);
   const gains = {
     money: workStats.money * cycles,

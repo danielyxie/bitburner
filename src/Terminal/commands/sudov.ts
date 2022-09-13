@@ -1,10 +1,7 @@
 import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 
-export function sudov(
-  args: (string | number | boolean)[],
-  server: BaseServer,
-): void {
+export function sudov(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length !== 0) {
     Terminal.error("Incorrect number of arguments. Usage: sudov");
     return;

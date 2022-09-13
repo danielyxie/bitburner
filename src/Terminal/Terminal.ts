@@ -784,10 +784,7 @@ export class Terminal implements ITerminal {
     }
 
     const commands: {
-      [key: string]: (
-        args: (string | number | boolean)[],
-        server: BaseServer,
-      ) => void;
+      [key: string]: (args: (string | number | boolean)[], server: BaseServer) => void;
     } = {
       "scan-analyze": scananalyze,
       alias: alias,

@@ -41,7 +41,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(1),
       time: CONSTANTS.MillisecondsPerFiveMinutes,
     },
-    run: (_args:string[], server: BaseServer): void => {
+    run: (_args: string[], server: BaseServer): void => {
       if (!(server instanceof Server)) {
         Terminal.error("Cannot nuke this kind of server.");
         return;
@@ -70,7 +70,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(50),
       time: CONSTANTS.MillisecondsPerFiveMinutes * 2,
     },
-    run: (_args:string[], server: BaseServer): void => {
+    run: (_args: string[], server: BaseServer): void => {
       if (!(server instanceof Server)) {
         Terminal.error("Cannot run BruteSSH.exe on this kind of server.");
         return;
@@ -94,7 +94,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(100),
       time: CONSTANTS.MillisecondsPerHalfHour,
     },
-    run: (_args:string[], server: BaseServer): void => {
+    run: (_args: string[], server: BaseServer): void => {
       if (!(server instanceof Server)) {
         Terminal.error("Cannot run FTPCrack.exe on this kind of server.");
         return;
@@ -118,7 +118,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(250),
       time: CONSTANTS.MillisecondsPer2Hours,
     },
-    run: (_args:string[], server: BaseServer): void => {
+    run: (_args: string[], server: BaseServer): void => {
       if (!(server instanceof Server)) {
         Terminal.error("Cannot run relaySMTP.exe on this kind of server.");
         return;
@@ -142,7 +142,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(500),
       time: CONSTANTS.MillisecondsPer4Hours,
     },
-    run: (_args:string[], server: BaseServer): void => {
+    run: (_args: string[], server: BaseServer): void => {
       if (!(server instanceof Server)) {
         Terminal.error("Cannot run HTTPWorm.exe on this kind of server.");
         return;
@@ -166,7 +166,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(750),
       time: CONSTANTS.MillisecondsPer8Hours,
     },
-    run: (_args:string[], server: BaseServer): void => {
+    run: (_args: string[], server: BaseServer): void => {
       if (!(server instanceof Server)) {
         Terminal.error("Cannot run SQLInject.exe on this kind of server.");
         return;

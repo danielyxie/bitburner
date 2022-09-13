@@ -3,10 +3,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import { getRamUsageFromRunningScript } from "../../Script/RunningScriptHelpers";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-export function top(
-  args: (string | number | boolean)[],
-  server: BaseServer,
-): void {
+export function top(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length !== 0) {
     Terminal.error("Incorrect usage of top command. Usage: top");
     return;

@@ -18,7 +18,7 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
   const reward = calculateReward(Player, startingSecurityLevel);
 
   function cancel(): void {
-   Router.toCity();
+    Router.toCity();
   }
 
   return (

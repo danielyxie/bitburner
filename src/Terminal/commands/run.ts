@@ -4,10 +4,7 @@ import { isScriptFilename } from "../../Script/isScriptFilename";
 import { runScript } from "./runScript";
 import { runProgram } from "./runProgram";
 
-export function run(
-  args: (string | number | boolean)[],
-  server: BaseServer,
-): void {
+export function run(args: (string | number | boolean)[], server: BaseServer): void {
   // Run a program or a script
   if (args.length < 1) {
     Terminal.error("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");

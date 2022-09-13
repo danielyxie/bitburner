@@ -12,11 +12,7 @@ export class Program {
   create: IProgramCreate | null;
   run: (args: string[], server: BaseServer) => void;
 
-  constructor(
-    name: string,
-    create: IProgramCreate | null,
-    run: (args: string[], server: BaseServer) => void,
-  ) {
+  constructor(name: string, create: IProgramCreate | null, run: (args: string[], server: BaseServer) => void) {
     this.name = name;
     this.create = create;
     this.run = run;

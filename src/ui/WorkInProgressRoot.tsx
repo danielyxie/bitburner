@@ -11,7 +11,7 @@ import { Locations } from "../Locations/Locations";
 import { Settings } from "../Settings/Settings";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Player } from "../Player";
-import { Router } from "./GameRoot"
+import { Router } from "./GameRoot";
 import { numeralWrapper } from "./numeralFormat";
 import { Money } from "./React/Money";
 import { MoneyRate } from "./React/MoneyRate";

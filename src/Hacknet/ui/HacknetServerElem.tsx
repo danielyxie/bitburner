@@ -60,13 +60,8 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     }
 
     const base_increase =
-      calculateHashGainRate(
-        node.level + multiplier,
-        0,
-        node.maxRam,
-        node.cores,
-        Player.mults.hacknet_node_money,
-      ) - calculateHashGainRate(node.level, 0, node.maxRam, node.cores, Player.mults.hacknet_node_money);
+      calculateHashGainRate(node.level + multiplier, 0, node.maxRam, node.cores, Player.mults.hacknet_node_money) -
+      calculateHashGainRate(node.level, 0, node.maxRam, node.cores, Player.mults.hacknet_node_money);
     const modded_increase = (base_increase * (node.maxRam - node.ramUsed)) / node.maxRam;
 
     const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, Player.mults.hacknet_node_level_cost);
@@ -136,8 +131,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
         node.maxRam * Math.pow(2, multiplier),
         node.cores,
         Player.mults.hacknet_node_money,
-      ) -
-      calculateHashGainRate(node.level, node.ramUsed, node.maxRam, node.cores, Player.mults.hacknet_node_money);
+      ) - calculateHashGainRate(node.level, node.ramUsed, node.maxRam, node.cores, Player.mults.hacknet_node_money);
 
     const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, Player.mults.hacknet_node_ram_cost);
     upgradeRamButton = (
@@ -183,13 +177,8 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     }
 
     const base_increase =
-      calculateHashGainRate(
-        node.level,
-        0,
-        node.maxRam,
-        node.cores + multiplier,
-        Player.mults.hacknet_node_money,
-      ) - calculateHashGainRate(node.level, 0, node.maxRam, node.cores, Player.mults.hacknet_node_money);
+      calculateHashGainRate(node.level, 0, node.maxRam, node.cores + multiplier, Player.mults.hacknet_node_money) -
+      calculateHashGainRate(node.level, 0, node.maxRam, node.cores, Player.mults.hacknet_node_money);
     const modded_increase = (base_increase * (node.maxRam - node.ramUsed)) / node.maxRam;
 
     const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, Player.mults.hacknet_node_core_cost);

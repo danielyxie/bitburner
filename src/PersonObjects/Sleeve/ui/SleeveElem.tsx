@@ -200,9 +200,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
               <ProgressBar
                 variant="determinate"
                 value={
-                  (props.sleeve.currentWork.cyclesWorked /
-                    props.sleeve.currentWork.cyclesNeeded(props.sleeve)) *
-                  100
+                  (props.sleeve.currentWork.cyclesWorked / props.sleeve.currentWork.cyclesNeeded(props.sleeve)) * 100
                 }
                 color="primary"
               />

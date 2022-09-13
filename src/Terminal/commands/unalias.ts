@@ -1,9 +1,7 @@
 import { Terminal } from "../../Terminal";
 import { removeAlias } from "../../Alias";
 
-export function unalias(
-  args: (string | number | boolean)[],
-): void {
+export function unalias(args: (string | number | boolean)[]): void {
   if (args.length !== 1) {
     Terminal.error("Incorrect usage of unalias name. Usage: unalias [alias]");
     return;

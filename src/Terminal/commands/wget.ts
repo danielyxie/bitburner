@@ -4,10 +4,7 @@ import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 
-export function wget(
-  args: (string | number | boolean)[],
-  server: BaseServer,
-): void {
+export function wget(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length !== 2) {
     Terminal.error("Incorrect usage of wget command. Usage: wget [url] [target file]");
     return;

@@ -97,9 +97,7 @@ export function ProgramsRoot(): React.ReactElement {
                     sx={{ my: 1, width: "100%" }}
                     onClick={(event) => {
                       if (!event.isTrusted) return;
-                      Player.startWork(
-                        new CreateProgramWork({singularity: false, programName: program.name }),
-                      );
+                      Player.startWork(new CreateProgramWork({ singularity: false, programName: program.name }));
                       Player.startFocusing();
                       Router.toWork();
                     }}

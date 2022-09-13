@@ -88,13 +88,11 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
                   Certain <b>gangs</b>
                 </li>
               )}
-              {Player.canAccessGrafting() &&
-                !props.aug.isSpecial &&
-                props.aug.name !== AugmentationNames.TheRedPill && (
-                  <li>
-                    <b>Grafting</b>
-                  </li>
-                )}
+              {Player.canAccessGrafting() && !props.aug.isSpecial && props.aug.name !== AugmentationNames.TheRedPill && (
+                <li>
+                  <b>Grafting</b>
+                </li>
+              )}
             </Typography>
           </ul>
         </>
@@ -209,8 +207,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                   <>
                     <Typography variant="h5">
                       {props.augName}
-                      {props.augName === AugmentationNames.NeuroFluxGovernor &&
-                        ` - Level ${aug.getLevel()}`}
+                      {props.augName === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel()}`}
                     </Typography>
                     <Typography>{description}</Typography>
                   </>
@@ -223,9 +220,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     color:
-                      props.owned || !props.parent.canPurchase(aug)
-                        ? Settings.theme.disabled
-                        : Settings.theme.primary,
+                      props.owned || !props.parent.canPurchase(aug) ? Settings.theme.disabled : Settings.theme.primary,
                   }}
                 >
                   {aug.name}
@@ -233,9 +228,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                 </Typography>
               </Tooltip>
 
-              {aug.factions.length === 1 && !props.parent.sleeveAugs && (
-                <Exclusive aug={aug} />
-              )}
+              {aug.factions.length === 1 && !props.parent.sleeveAugs && <Exclusive aug={aug} />}
               {aug.prereqs.length > 0 && !props.parent.sleeveAugs && <PreReqs aug={aug} />}
             </Box>
           </Box>

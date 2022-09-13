@@ -243,8 +243,7 @@ const canDo: {
   "Commit Crime": () => true,
   "Take University Course": (sleeve: Sleeve) =>
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
-  "Workout at Gym": (sleeve: Sleeve) =>
-    [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
+  "Workout at Gym": (sleeve: Sleeve) => [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
   "Perform Bladeburner Actions": () => Player.inBladeburner(),
   "Shock Recovery": (sleeve: Sleeve) => sleeve.shock < 100,
   Synchronize: (sleeve: Sleeve) => sleeve.sync < 100,
@@ -343,9 +342,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
   const [s1, setS1] = useState(abc[1]);
   const [s2, setS2] = useState(abc[2]);
 
-  const validActions = Object.keys(canDo).filter((k) =>
-    (canDo[k] as (sleeve: Sleeve) => boolean)(props.sleeve),
-  );
+  const validActions = Object.keys(canDo).filter((k) => (canDo[k] as (sleeve: Sleeve) => boolean)(props.sleeve));
 
   const detailsF = tasks[s0];
   if (detailsF === undefined) throw new Error(`No function for task '${s0}'`);

@@ -22,9 +22,11 @@ interface IProps {
 }
 export function Money(props: IProps): React.ReactElement {
   const classes = useStyles();
-  if (props.forPurchase){
-    if (typeof props.money !== "number") throw new Error("if value is for a purchase, money should be number, contact dev");
-    if (!Player.canAfford(props.money)) return <span className={classes.unbuyable}>{numeralWrapper.formatMoney(props.money)}</span>;
+  if (props.forPurchase) {
+    if (typeof props.money !== "number")
+      throw new Error("if value is for a purchase, money should be number, contact dev");
+    if (!Player.canAfford(props.money))
+      return <span className={classes.unbuyable}>{numeralWrapper.formatMoney(props.money)}</span>;
   }
   return (
     <span className={classes.money}>

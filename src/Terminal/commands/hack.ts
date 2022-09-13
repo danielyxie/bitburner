@@ -3,10 +3,7 @@ import { Player } from "../../Player";
 import { BaseServer } from "../../Server/BaseServer";
 import { Server } from "../../Server/Server";
 
-export function hack(
-  args: (string | number | boolean)[],
-  server: BaseServer,
-): void {
+export function hack(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length !== 0) {
     Terminal.error("Incorrect usage of hack command. Usage: hack");
     return;

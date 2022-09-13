@@ -3,10 +3,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { getDestinationFilepath, areFilesEqual } from "../DirectoryHelpers";
 
-export function cp(
-  args: (string | number | boolean)[],
-  server: BaseServer,
-): void {
+export function cp(args: (string | number | boolean)[], server: BaseServer): void {
   try {
     if (args.length !== 2) {
       Terminal.error("Incorrect usage of cp command. Usage: cp [src] [dst]");

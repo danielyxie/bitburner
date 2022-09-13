@@ -124,9 +124,7 @@ export const GraftingRoot = (): React.ReactElement => {
                 <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
                   <Typography
                     sx={{
-                      color: canGraft(graftableAugmentations[k])
-                        ? Settings.theme.primary
-                        : Settings.theme.disabled,
+                      color: canGraft(graftableAugmentations[k]) ? Settings.theme.primary : Settings.theme.disabled,
                     }}
                   >
                     {k}

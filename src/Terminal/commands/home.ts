@@ -1,9 +1,7 @@
 import { Terminal } from "../../Terminal";
 import { Player } from "../../Player";
 
-export function home(
-  args: (string | number | boolean)[],
-): void {
+export function home(args: (string | number | boolean)[]): void {
   if (args.length !== 0) {
     Terminal.error("Incorrect usage of home command. Usage: home");
     return;

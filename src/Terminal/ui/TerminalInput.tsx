@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 
 import { KEY, KEYCODE } from "../../utils/helpers/keyCodes";
 import { Terminal } from "../../Terminal";
-import { Router } from "../../ui/GameRoot";
 import { Player } from "../../Player";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
 import { tabCompletion } from "../tabCompletion";

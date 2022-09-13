@@ -1,4 +1,3 @@
-import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { applySleeveGains, Work, WorkType } from "./Work";
 import { ClassType } from "../../../Work/ClassWork";
@@ -25,11 +24,7 @@ export class SleeveClassWork extends Work {
   }
 
   calculateRates(sleeve: Sleeve): WorkStats {
-    return scaleWorkStats(
-      calculateClassEarnings(sleeve, this.classType, this.location),
-      sleeve.shockBonus(),
-      false,
-    );
+    return scaleWorkStats(calculateClassEarnings(sleeve, this.classType, this.location), sleeve.shockBonus(), false);
   }
 
   isGym(): boolean {

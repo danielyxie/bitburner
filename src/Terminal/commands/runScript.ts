@@ -7,10 +7,7 @@ import { findRunningScript } from "../../Script/ScriptHelpers";
 import * as libarg from "arg";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-export function runScript(
-  commandArgs: (string | number | boolean)[],
-  server: BaseServer,
-): void {
+export function runScript(commandArgs: (string | number | boolean)[], server: BaseServer): void {
   if (commandArgs.length < 1) {
     Terminal.error(
       `Bug encountered with Terminal.runScript(). Command array has a length of less than 1: ${commandArgs}`,
