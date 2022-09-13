@@ -1,9 +1,10 @@
 import { DarkWebItem } from "./DarkWebItem";
 import { IMap } from "../types";
-import { Programs } from "../Programs/Programs";
+import { Programs, initPrograms } from "../Programs/Programs";
 
 export const DarkWebItems: IMap<DarkWebItem> = {};
 export function initDarkWebItems() {
+  initPrograms();
   Object.assign(DarkWebItems, {
     BruteSSHProgram: new DarkWebItem(Programs.BruteSSHProgram.name, 500e3, "Opens up SSH Ports."),
     FTPCrackProgram: new DarkWebItem(Programs.FTPCrackProgram.name, 1500e3, "Opens up FTP Ports."),
