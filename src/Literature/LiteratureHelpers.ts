@@ -1,4 +1,3 @@
-import React from "react";
 import { Literatures } from "./Literatures";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 
