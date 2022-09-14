@@ -142,7 +142,7 @@ export function NetscriptStanek(): InternalAPI<IStanek> {
         //Return true iff the player is in CotMG and has the first Stanek aug installed
         return (
           Factions[FactionNames.ChurchOfTheMachineGod].isMember &&
-          player.hasAugmentation(AugmentationNames.StaneksGift1)
+          player.hasAugmentation(AugmentationNames.StaneksGift1, true)
         );
       },
   };

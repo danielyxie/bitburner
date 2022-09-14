@@ -39,7 +39,7 @@ export class FactionWork extends Work {
 
   getReputationRate(player: IPlayer): number {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager,true)) {
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
       focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
     return calculateFactionRep(player, this.factionWorkType, this.getFaction().favor) * focusBonus;
@@ -47,7 +47,7 @@ export class FactionWork extends Work {
 
   getExpRates(player: IPlayer): WorkStats {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager,true)) {
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
       focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
     const rate = calculateFactionExp(player, this.factionWorkType);
