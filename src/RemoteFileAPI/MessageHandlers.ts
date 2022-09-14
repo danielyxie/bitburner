@@ -13,7 +13,7 @@ import {
   isFileData,
 } from "./MessageDefinitions";
 
-import libSource from "!!raw-loader!../ScriptEditor/NetscriptDefinitions.d.ts";
+import libSource from "../ScriptEditor/NetscriptDefinitions.d.ts";
 
 function error(errorMsg: string, { id }: RFAMessage): RFAMessage {
   return new RFAMessage({ error: errorMsg, id: id });
