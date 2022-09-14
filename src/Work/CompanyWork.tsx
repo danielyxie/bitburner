@@ -35,7 +35,7 @@ export class CompanyWork extends Work {
 
   getGainRates(player: IPlayer): WorkStats {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
       focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
     return scaleWorkStats(calculateCompanyWorkStats(player, player, this.getCompany()), focusBonus);

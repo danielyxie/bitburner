@@ -58,7 +58,7 @@ export class CreateProgramWork extends Work {
 
   process(player: IPlayer, cycles: number): boolean {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
       focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
     //Higher hacking skill will allow you to create programs faster

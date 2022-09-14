@@ -1462,7 +1462,7 @@ export function sourceFileLvl(this: IPlayer, n: number): number {
 
 export function focusPenalty(this: IPlayer): number {
   let focus = 1;
-  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
+  if (!this.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
     focus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
   }
   return focus;
