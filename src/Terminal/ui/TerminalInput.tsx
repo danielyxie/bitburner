@@ -222,7 +222,7 @@ export function TerminalInput(): React.ReactElement {
       if (index < -1) {
         index = 0;
       }
-      const allPos = await determineAllPossibilitiesForTabCompletion(Player, copy, index, Terminal.cwd());
+      const allPos = await determineAllPossibilitiesForTabCompletion(copy, index, Terminal.cwd());
       if (allPos.length == 0) {
         return;
       }

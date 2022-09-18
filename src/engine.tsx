@@ -103,11 +103,11 @@ const Engine: {
 
     // Gang, if applicable
     if (Player.inGang() && Player.gang !== null) {
-      Player.gang.process(numCycles, Player);
+      Player.gang.process(numCycles);
     }
 
     // Staneks gift
-    staneksGift.process(Player, numCycles);
+    staneksGift.process(numCycles);
 
     // Corporation
     if (Player.corporation instanceof Corporation) {
@@ -330,7 +330,7 @@ const Engine: {
       // Gang progress for BitNode 2
       const gang = Player.gang;
       if (Player.inGang() && gang !== null) {
-        gang.process(numCyclesOffline, Player);
+        gang.process(numCyclesOffline);
       }
 
       // Corporation offline progress
@@ -343,7 +343,7 @@ const Engine: {
         Player.bladeburner.storeCycles(numCyclesOffline);
       }
 
-      staneksGift.process(Player, numCyclesOffline);
+      staneksGift.process(numCyclesOffline);
 
       // Sleeves offline progress
       for (let i = 0; i < Player.sleeves.length; ++i) {

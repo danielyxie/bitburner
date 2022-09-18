@@ -30,9 +30,9 @@ export function Victory(props: IProps): React.ReactElement {
   }
 
   const soa = Factions[FactionNames.ShadowsOfAnarchy];
-  const repGain = calculateTradeInformationRepReward(Player, props.Reward, props.MaxLevel, props.StartingDifficulty);
-  const moneyGain = calculateSellInformationCashReward(Player, props.Reward, props.MaxLevel, props.StartingDifficulty);
-  const infiltrationRepGain = calculateInfiltratorsRepReward(Player, soa, props.StartingDifficulty);
+  const repGain = calculateTradeInformationRepReward(props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const moneyGain = calculateSellInformationCashReward(props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const infiltrationRepGain = calculateInfiltratorsRepReward(soa, props.StartingDifficulty);
 
   const isMemberOfInfiltrators = Player.factions.includes(FactionNames.ShadowsOfAnarchy);
 

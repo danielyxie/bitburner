@@ -266,7 +266,7 @@ const base: InternalAPI<NS> = {
       );
       return helpers.netscriptDelay(ctx, growTime * 1000).then(function () {
         const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
-        processSingleServerGrowth(server, threads, Player, host.cpuCores);
+        processSingleServerGrowth(server, threads, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
         ctx.workerScript.scriptRef.recordGrow(server.hostname, threads);
         const expGain = calculateHackingExpGain(server, Player) * threads;
@@ -304,7 +304,7 @@ const base: InternalAPI<NS> = {
         throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
       }
 
-      return numCycleForGrowth(server, Number(growth), Player, cores);
+      return numCycleForGrowth(server, Number(growth), cores);
     },
   growthAnalyzeSecurity:
     (ctx: NetscriptContext) =>
@@ -321,7 +321,7 @@ const base: InternalAPI<NS> = {
         }
 
         const maxThreadsNeeded = Math.ceil(
-          numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, Player, cores),
+          numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, cores),
         );
 
         threads = Math.min(threads, maxThreadsNeeded);

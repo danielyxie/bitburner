@@ -5,7 +5,7 @@ import { calculateServerGrowth } from "./formulas/grow";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { Programs } from "../Programs/Programs";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
 
@@ -48,7 +48,7 @@ export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
  * @param p - Reference to Player object
  * @returns Number of "growth cycles" needed
  */
-export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, cores = 1): number {
+export function numCycleForGrowth(server: Server, growth: number, cores = 1): number {
   let ajdGrowthRate = 1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
   if (ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
     ajdGrowthRate = CONSTANTS.ServerMaxGrowthRate;
@@ -60,39 +60,12 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
   const cycles =
     Math.log(growth) /
     (Math.log(ajdGrowthRate) *
-      p.mults.hacking_grow *
+      Player.mults.hacking_grow *
       serverGrowthPercentage *
       BitNodeMultipliers.ServerGrowthRate *
       coreBonus);
 
   return cycles;
-}
-
-/**
- * Replacement function for the above function that accounts for the +$1/thread functionality of grow
- * with parameters that are the same (for compatibility), but functionality is slightly different.
- * This function can ONLY be used to calculate the threads needed for a given server in its current state,
- * and so wouldn't be appropriate to use for formulas.exe or ns.growthAnalyze (as those are meant to
- * provide theoretical scenarios, or inverse hack respectively). Players COULD use this function with a
- * custom server object with the correct moneyAvailable and moneyMax amounts, combined with a multiplier
- * correctly calculated to bring the server to a new moneyAvailable (ie, passing in moneyAvailable 300 and x2
- * when you want the number of threads required to grow that particular server from 300 to 600), and this
- * function would pass back the correct number of threads. But the key thing is that it doesn't just
- * inverse/undo a hack (since the amount hacked from/to matters, not just the multiplier).
- * The above is also a rather unnecessarily obtuse way of thinking about it for a formulas.exe type of
- * application, so another function with different parameters is provided for that case below this one.
- * Instead this function is meant to hand-off from the old numCycleForGrowth function to the new one
- * where used internally for pro-rating or the like. Where you have applied a grow and want to determine
- * how many threads were needed for THAT SPECIFIC grow case using a multiplier.
- * Ideally, this function, and the original function above will be depreciated to use the methodology
- * and inputs of the new function below this one. Even for internal cases (it's actually easier to do so).
- * @param server - Server being grown
- * @param growth - How much the server money is expected to be multiplied by (e.g. 1.5 for *1.5 / +50%)
- * @param p - Reference to Player object
- * @returns Number of "growth cycles" needed
- */
-export function numCycleForGrowthTransition(server: Server, growth: number, p: IPlayer, cores = 1): number {
-  return numCycleForGrowthCorrected(server, server.moneyAvailable * growth, server.moneyAvailable, p, cores);
 }
 
 /**
@@ -104,16 +77,10 @@ export function numCycleForGrowthTransition(server: Server, growth: number, p: I
  * @param server - Server being grown
  * @param targetMoney - How much you want the server grown TO (not by), for instance, to grow from 200 to 600, input 600
  * @param startMoney - How much you are growing the server from, for instance, to grow from 200 to 600, input 200
- * @param p - Reference to Player object
+ * @param cores - Number of cores on the host performing grow
  * @returns Number of "growth cycles" needed
  */
-export function numCycleForGrowthCorrected(
-  server: Server,
-  targetMoney: number,
-  startMoney: number,
-  p: IPlayer,
-  cores = 1,
-): number {
+export function numCycleForGrowthCorrected(server: Server, targetMoney: number, startMoney: number, cores = 1): number {
   if (startMoney < 0) {
     startMoney = 0;
   } // servers "can't" have less than 0 dollars on them
@@ -132,7 +99,7 @@ export function numCycleForGrowthCorrected(
   const serverGrowthPercentage = server.serverGrowth / 100.0;
   const coreMultiplier = 1 + (cores - 1) / 16;
   const threadMultiplier =
-    serverGrowthPercentage * p.mults.hacking_grow * coreMultiplier * BitNodeMultipliers.ServerGrowthRate;
+    serverGrowthPercentage * Player.mults.hacking_grow * coreMultiplier * BitNodeMultipliers.ServerGrowthRate;
 
   /* To understand what is done below we need to do some math. I hope the explanation is clear enough.
    * First of, the names will be shortened for ease of manipulation:
@@ -241,47 +208,9 @@ export function numCycleForGrowthCorrected(
   return cca + 1;
 }
 
-/**
- * This function calculates the number of threads needed to grow a server based on a pre-hack money and hackAmt
- * (ie, if you're hacking a server with $1e6 moneyAvail for 60%, this function will tell you how many threads to regrow it
- * A good replacement for the current ns.growthAnalyze if you want players to have more control/responsibility
- * @param server - Server being grown
- * @param hackProp - the proportion of money hacked (total, not per thread, like 0.60 for hacking 60% of available money)
- * @param prehackMoney - how much money the server had before being hacked (like 200000 for hacking a server that had $200000 on it at time of hacking)
- * @param p - Reference to Player object
- * @returns Number of "growth cycles" needed to reverse the described hack
- */
-export function numCycleForGrowthByHackAmt(
-  server: Server,
-  hackProp: number,
-  prehackMoney: number,
-  p: IPlayer,
-  cores = 1,
-): number {
-  if (prehackMoney > server.moneyMax) prehackMoney = server.moneyMax;
-  const posthackMoney = Math.floor(prehackMoney * Math.min(1, Math.max(0, 1 - hackProp)));
-  return numCycleForGrowthCorrected(server, prehackMoney, posthackMoney, p, cores);
-}
-
-/**
- * This function calculates the number of threads needed to grow a server based on an expected growth multiplier assuming it will max out
- * (ie, if you expect to grow a server by 60% to reach maxMoney, this function will tell you how many threads to grow it)
- * PROBABLY the best replacement for the current ns.growthAnalyze to maintain existing scripts
- * @param server - Server being grown
- * @param growth - How much the server is being grown by, as a multiple in DECIMAL form (e.g. 1.5 rather than 50). Infinity is acceptable.
- * @param p - Reference to Player object
- * @returns Number of "growth cycles" needed
- */
-export function numCycleForGrowthByMultiplier(server: Server, growth: number, p: IPlayer, cores = 1): number {
-  if (growth < 1.0) growth = 1.0;
-  const targetMoney = server.moneyMax;
-  const startingMoney = server.moneyMax / growth;
-  return numCycleForGrowthCorrected(server, targetMoney, startingMoney, p, cores);
-}
-
 //Applied server growth for a single server. Returns the percentage growth
-export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer, cores = 1): number {
-  let serverGrowth = calculateServerGrowth(server, threads, p, cores);
+export function processSingleServerGrowth(server: Server, threads: number, cores = 1): number {
+  let serverGrowth = calculateServerGrowth(server, threads, Player, cores);
   if (serverGrowth < 1) {
     console.warn("serverGrowth calculated to be less than 1");
     serverGrowth = 1;
@@ -303,7 +232,7 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
 
   // if there was any growth at all, increase security
   if (oldMoneyAvailable !== server.moneyAvailable) {
-    let usedCycles = numCycleForGrowthCorrected(server, server.moneyAvailable, oldMoneyAvailable, p, cores);
+    let usedCycles = numCycleForGrowthCorrected(server, server.moneyAvailable, oldMoneyAvailable, cores);
     // Growing increases server security twice as much as hacking
     usedCycles = Math.min(Math.max(0, Math.ceil(usedCycles)), threads);
     server.fortify(2 * CONSTANTS.ServerFortifyAmount * usedCycles);
@@ -311,7 +240,7 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
   return server.moneyAvailable / oldMoneyAvailable;
 }
 
-export function prestigeHomeComputer(player: IPlayer, homeComp: Server): void {
+export function prestigeHomeComputer(homeComp: Server): void {
   const hasBitflume = homeComp.programs.includes(Programs.BitFlume.name);
 
   homeComp.programs.length = 0; //Remove programs

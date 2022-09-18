@@ -52,7 +52,7 @@ export function prestigeAugmentation(): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(Player, homeComp);
+  prestigeHomeComputer(homeComp);
 
   if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink, true)) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
@@ -194,7 +194,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(Player, homeComp);
+  prestigeHomeComputer(homeComp);
 
   // Re-create foreign servers
   initForeignServers(Player.getHomeComputer());

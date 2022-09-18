@@ -1,7 +1,6 @@
 import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMember } from "./GangMember";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { IAscensionResult } from "./IAscensionResult";
 import { IReviverValue } from "src/utils/JSONReviver";
 
@@ -28,8 +27,8 @@ export interface IGang {
 
   getPower(): number;
   getTerritory(): number;
-  process(numCycles: number, player: IPlayer): void;
-  processGains(numCycles: number, player: IPlayer): void;
+  process(numCycles: number): void;
+  processGains(numCycles: number): void;
   processTerritoryAndPowerGains(numCycles: number): void;
   processExperienceGains(numCycles: number): void;
   clash(won: boolean): void;

@@ -23,7 +23,7 @@ import { AllGangs } from "./AllGangs";
 import { GangMember } from "./GangMember";
 
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { PowerMultiplier } from "./data/power";
 import { IGang } from "./IGang";
 
@@ -82,7 +82,7 @@ export class Gang implements IGang {
     return AllGangs[this.facName].territory;
   }
 
-  process(numCycles = 1, player: IPlayer): void {
+  process(numCycles = 1): void {
     const CyclesPerSecond = 1000 / CONSTANTS._idleSpeed;
 
     if (isNaN(numCycles)) {
@@ -95,7 +95,7 @@ export class Gang implements IGang {
     const cycles = Math.min(this.storedCycles, 5 * CyclesPerSecond);
 
     try {
-      this.processGains(cycles, player);
+      this.processGains(cycles);
       this.processExperienceGains(cycles);
       this.processTerritoryAndPowerGains(cycles);
       this.storedCycles -= cycles;
@@ -104,7 +104,7 @@ export class Gang implements IGang {
     }
   }
 
-  processGains(numCycles = 1, player: IPlayer): void {
+  processGains(numCycles = 1): void {
     // Get gains per cycle
     let moneyGains = 0;
     let respectGains = 0;
@@ -132,7 +132,7 @@ export class Gang implements IGang {
     }
     const favorMult = 1 + fac.favor / 100;
 
-    fac.playerReputation += (player.mults.faction_rep * gain * favorMult) / GangConstants.GangRespectToReputationRatio;
+    fac.playerReputation += (Player.mults.faction_rep * gain * favorMult) / GangConstants.GangRespectToReputationRatio;
 
     // Keep track of respect gained per member
     for (let i = 0; i < this.members.length; ++i) {
@@ -148,7 +148,7 @@ export class Gang implements IGang {
       this.wanted = newWanted;
       if (this.wanted < 1) this.wanted = 1;
     }
-    player.gainMoney(moneyGains * numCycles, "gang");
+    Player.gainMoney(moneyGains * numCycles, "gang");
   }
 
   processTerritoryAndPowerGains(numCycles = 1): void {

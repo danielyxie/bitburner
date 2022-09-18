@@ -21,7 +21,7 @@ import { CONSTANTS } from "../Constants";
 import { influenceStockThroughServerHack } from "../StockMarket/PlayerInfluencing";
 import { IPort, NetscriptPort } from "../NetscriptPort";
 import { NetscriptPorts } from "../NetscriptWorker";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { IPerson } from "../PersonObjects/IPerson";
 import { FormulaGang } from "../Gang/formulas/formulas";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
@@ -498,7 +498,7 @@ function getValidPort(ctx: NetscriptContext, port: number): IPort {
   return iport;
 }
 
-function player(ctx: NetscriptContext, p: unknown): IPlayer {
+function player(ctx: NetscriptContext, p: unknown): IPerson {
   const fakePlayer = {
     hp: undefined,
     mults: undefined,
@@ -518,7 +518,7 @@ function player(ctx: NetscriptContext, p: unknown): IPlayer {
     entropy: undefined,
   };
   if (!roughlyIs(fakePlayer, p)) throw makeRuntimeErrorMsg(ctx, `player should be a Player.`, "TYPE");
-  return p as IPlayer;
+  return p as IPerson;
 }
 
 function server(ctx: NetscriptContext, s: unknown): Server {

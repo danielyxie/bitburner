@@ -3,7 +3,6 @@ import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";
 import { IStaneksGift } from "./IStaneksGift";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { Factions } from "../Faction/Factions";
 import { CalculateEffect } from "./formulas/effect";
 import { StaneksGiftEvents } from "./StaneksGiftEvents";
@@ -30,7 +29,7 @@ export class StaneksGift implements IStaneksGift {
     return Math.max(3, Math.min(Math.floor(this.baseSize() / 2 + 0.6), StanekConstants.MaxSize));
   }
 
-  charge(player: IPlayer, af: ActiveFragment, threads: number): void {
+  charge(af: ActiveFragment, threads: number): void {
     if (threads > af.highestCharge) {
       af.numCharge = (af.highestCharge * af.numCharge) / threads + 1;
       af.highestCharge = threads;
@@ -39,19 +38,19 @@ export class StaneksGift implements IStaneksGift {
     }
 
     const cotmg = Factions[FactionNames.ChurchOfTheMachineGod];
-    cotmg.playerReputation += (player.mults.faction_rep * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
+    cotmg.playerReputation += (Player.mults.faction_rep * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 
   inBonus(): boolean {
     return (this.storedCycles * CONSTANTS._idleSpeed) / 1000 > 1;
   }
 
-  process(p: IPlayer, numCycles = 1): void {
-    if (!p.hasAugmentation(AugmentationNames.StaneksGift1)) return;
+  process(numCycles = 1): void {
+    if (!Player.hasAugmentation(AugmentationNames.StaneksGift1)) return;
     this.storedCycles += numCycles;
     this.storedCycles -= 10;
     this.storedCycles = Math.max(0, this.storedCycles);
-    this.updateMults(p);
+    this.updateMults();
     StaneksGiftEvents.emit();
   }
 
@@ -210,19 +209,19 @@ export class StaneksGift implements IStaneksGift {
     return mults;
   }
 
-  updateMults(p: IPlayer): void {
+  updateMults(): void {
     // applyEntropy also reapplies all augmentations and source files
     // This wraps up the reset nicely
-    p.applyEntropy(p.entropy);
+    Player.applyEntropy(Player.entropy);
     const mults = this.calculateMults();
-    p.mults = mergeMultipliers(p.mults, mults);
-    p.updateSkillLevels();
-    const zoeAmt = p.sleeves.reduce((n, sleeve) => n + (sleeve.hasAugmentation(AugmentationNames.ZOE) ? 1 : 0), 0);
+    Player.mults = mergeMultipliers(Player.mults, mults);
+    Player.updateSkillLevels();
+    const zoeAmt = Player.sleeves.reduce((n, sleeve) => n + (sleeve.hasAugmentation(AugmentationNames.ZOE) ? 1 : 0), 0);
     if (zoeAmt === 0) return;
     // Less powerful for each copy.
     const scaling = 3 / (zoeAmt + 2);
     const sleeveMults = scaleMultipliers(mults, scaling);
-    for (const sleeve of p.sleeves) {
+    for (const sleeve of Player.sleeves) {
       if (!sleeve.hasAugmentation(AugmentationNames.ZOE)) continue;
       sleeve.resetMultipliers();
       sleeve.mults = mergeMultipliers(sleeve.mults, sleeveMults);
