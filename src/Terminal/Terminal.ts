@@ -1,4 +1,4 @@
-import { ITerminal, Output, Link, RawOutput, TTimer } from "./ITerminal";
+import { Output, Link, RawOutput, TTimer } from "./OutputTypes";
 import { Router } from "../ui/GameRoot";
 import { Player } from "../Player";
 import { HacknetServer } from "../Hacknet/HacknetServer";
@@ -75,7 +75,7 @@ import { hash } from "../hash/hash";
 import { apr1 } from "./commands/apr1";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
-export class Terminal implements ITerminal {
+export class Terminal {
   // Flags to determine whether the player is currently running a hack or an analyze
   action: TTimer | null = null;
 

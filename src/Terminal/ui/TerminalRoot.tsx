@@ -7,7 +7,7 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
-import { Output, Link, RawOutput } from "../ITerminal";
+import { Output, Link, RawOutput } from "../OutputTypes";
 import { Terminal } from "../../Terminal";
 import { TerminalInput } from "./TerminalInput";
 import { TerminalEvents, TerminalClearEvents } from "../TerminalEvents";
