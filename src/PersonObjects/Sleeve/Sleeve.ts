@@ -45,7 +45,6 @@ import { SleeveSupportWork } from "./Work/SleeveSupportWork";
 import { SleeveBladeburnerWork } from "./Work/SleeveBladeburnerWork";
 import { SleeveCrimeWork } from "./Work/SleeveCrimeWork";
 import * as sleeveMethods from "./SleeveMethods";
-import { mergeMultipliers } from "../Multipliers";
 
 export class Sleeve extends Person {
   currentWork: Work | null = null;
