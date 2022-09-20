@@ -2,7 +2,7 @@ import { FactionNames } from "../Faction/data/FactionNames";
 import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";
-import { IStaneksGift } from "./IStaneksGift";
+import { BaseGift } from "./BaseGift";
 import { Factions } from "../Faction/Factions";
 import { CalculateEffect } from "./formulas/effect";
 import { StaneksGiftEvents } from "./StaneksGiftEvents";
@@ -14,9 +14,11 @@ import { Player } from "../Player";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { defaultMultipliers, mergeMultipliers, Multipliers, scaleMultipliers } from "../PersonObjects/Multipliers";
 
-export class StaneksGift implements IStaneksGift {
+export class StaneksGift extends BaseGift {
   storedCycles = 0;
-  fragments: ActiveFragment[] = [];
+  constructor() {
+    super();
+  }
 
   baseSize(): number {
     return StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13);
@@ -93,16 +95,6 @@ export class StaneksGift implements IStaneksGift {
 
   findFragment(rootX: number, rootY: number): ActiveFragment | undefined {
     return this.fragments.find((f) => f.x === rootX && f.y === rootY);
-  }
-
-  fragmentAt(worldX: number, worldY: number): ActiveFragment | undefined {
-    for (const aFrag of this.fragments) {
-      if (aFrag.fullAt(worldX, worldY)) {
-        return aFrag;
-      }
-    }
-
-    return undefined;
   }
 
   count(fragment: Fragment): number {

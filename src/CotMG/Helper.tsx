@@ -1,9 +1,9 @@
 import { Reviver } from "../utils/JSONReviver";
+import { BaseGift } from "./BaseGift";
 
-import { IStaneksGift } from "./IStaneksGift";
 import { StaneksGift } from "./StaneksGift";
 
-export let staneksGift: IStaneksGift = new StaneksGift();
+export let staneksGift = new StaneksGift();
 
 export function loadStaneksGift(saveString: string): void {
   if (saveString) {
@@ -23,7 +23,7 @@ export function zeros(width: number, height: number): number[][] {
   return array;
 }
 
-export function calculateGrid(gift: IStaneksGift): number[][] {
+export function calculateGrid(gift: BaseGift): number[][] {
   const newgrid = zeros(gift.width(), gift.height()) as unknown as number[][];
   for (let i = 0; i < gift.width(); i++) {
     for (let j = 0; j < gift.height(); j++) {

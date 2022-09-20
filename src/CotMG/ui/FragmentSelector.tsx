@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Fragments, Fragment, NoneFragment, DeleteFragment } from "../Fragment";
 import { FragmentType, Effect } from "../FragmentType";
-import { IStaneksGift } from "../IStaneksGift";
+import { StaneksGift } from "../StaneksGift";
 import { FragmentPreview } from "./FragmentPreview";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 type IOptionProps = {
-  gift: IStaneksGift;
+  gift: StaneksGift;
   fragment: Fragment;
   selectFragment: (fragment: Fragment) => void;
 };
@@ -46,7 +46,7 @@ function FragmentOption(props: IOptionProps): React.ReactElement {
 }
 
 type IProps = {
-  gift: IStaneksGift;
+  gift: StaneksGift;
   selectFragment: (fragment: Fragment) => void;
 };
 

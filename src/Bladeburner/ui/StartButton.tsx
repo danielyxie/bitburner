@@ -5,6 +5,7 @@ import { BlackOperation } from "../BlackOperation";
 import { Player } from "../../Player";
 import Button from "@mui/material/Button";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { ActionIdentifier } from "../ActionIdentifier";
 
 interface IProps {
   bladeburner: Bladeburner;
@@ -13,7 +14,7 @@ interface IProps {
   rerender: () => void;
 }
 export function StartButton(props: IProps): React.ReactElement {
-  const action = props.bladeburner.getActionObject({ name: props.name, type: props.type });
+  const action = props.bladeburner.getActionObject(new ActionIdentifier({ name: props.name, type: props.type }));
   if (action == null) {
     throw new Error("Failed to get Operation Object for: " + props.name);
   }

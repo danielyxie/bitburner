@@ -1,5 +1,4 @@
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
-import { IActionIdentifier } from "./IActionIdentifier";
 import { ActionIdentifier } from "./ActionIdentifier";
 import { ActionTypes } from "./data/ActionTypes";
 import { Growths } from "./data/Growths";
@@ -66,7 +65,7 @@ export class Bladeburner {
   actionTimeCurrent = 0;
   actionTimeOverflow = 0;
 
-  action: IActionIdentifier = new ActionIdentifier({
+  action: ActionIdentifier = new ActionIdentifier({
     type: ActionTypes["Idle"],
   });
 
@@ -88,11 +87,11 @@ export class Bladeburner {
     events: true,
   };
   automateEnabled = false;
-  automateActionHigh: IActionIdentifier = new ActionIdentifier({
+  automateActionHigh: ActionIdentifier = new ActionIdentifier({
     type: ActionTypes["Idle"],
   });
   automateThreshHigh = 0;
-  automateActionLow: IActionIdentifier = new ActionIdentifier({
+  automateActionLow: ActionIdentifier = new ActionIdentifier({
     type: ActionTypes["Idle"],
   });
   automateThreshLow = 0;
@@ -124,7 +123,7 @@ export class Bladeburner {
     return Math.min(1, this.stamina / (0.5 * this.maxStamina));
   }
 
-  canAttemptBlackOp(actionId: IActionIdentifier): BlackOpsAttempt {
+  canAttemptBlackOp(actionId: ActionIdentifier): BlackOpsAttempt {
     // Safety measure - don't repeat BlackOps that are already done
     if (this.blackops[actionId.name] != null) {
       return { error: "Tried to start a Black Operation that had already been completed" };
@@ -162,7 +161,7 @@ export class Bladeburner {
   }
 
   /** This function is only for the player. Sleeves use their own functions to perform blade work. */
-  startAction(actionId: IActionIdentifier): void {
+  startAction(actionId: ActionIdentifier): void {
     if (actionId == null) return;
     this.action = actionId;
     this.actionTimeCurrent = 0;
@@ -309,7 +308,7 @@ export class Bladeburner {
   }
 
   // working on
-  getActionIdFromTypeAndName(type = "", name = ""): IActionIdentifier | null {
+  getActionIdFromTypeAndName(type = "", name = ""): ActionIdentifier | null {
     if (type === "" || name === "") {
       return null;
     }
@@ -1201,7 +1200,7 @@ export class Bladeburner {
     }
   }
 
-  getActionObject(actionId: IActionIdentifier): Action | null {
+  getActionObject(actionId: ActionIdentifier): Action | null {
     /**
      * Given an ActionIdentifier object, returns the corresponding
      * GeneralAction, Contract, Operation, or BlackOperation object
@@ -1231,7 +1230,7 @@ export class Bladeburner {
     }
   }
 
-  completeContract(success: boolean, actionIdent: IActionIdentifier): void {
+  completeContract(success: boolean, actionIdent: ActionIdentifier): void {
     if (actionIdent.type !== ActionTypes.Contract) {
       throw new Error("completeContract() called even though current action is not a Contract");
     }
@@ -1256,7 +1255,7 @@ export class Bladeburner {
     }
   }
 
-  completeAction(person: Person, actionIdent: IActionIdentifier, isPlayer = true): ITaskTracker {
+  completeAction(person: Person, actionIdent: ActionIdentifier, isPlayer = true): ITaskTracker {
     let retValue = createTaskTracker();
     switch (actionIdent.type) {
       case ActionTypes["Contract"]:
@@ -2060,7 +2059,7 @@ export class Bladeburner {
     }
   }
 
-  getTypeAndNameFromActionId(actionId: IActionIdentifier): {
+  getTypeAndNameFromActionId(actionId: ActionIdentifier): {
     type: string;
     name: string;
   } {

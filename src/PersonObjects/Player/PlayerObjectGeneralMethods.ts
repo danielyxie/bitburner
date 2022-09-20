@@ -23,10 +23,7 @@ import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
-import {
-  calculateSkillProgress as calculateSkillProgressF,
-  ISkillProgress,
-} from "../formulas/skill";
+import { calculateSkillProgress as calculateSkillProgressF, ISkillProgress } from "../formulas/skill";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
 import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";

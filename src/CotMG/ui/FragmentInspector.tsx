@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ActiveFragment } from "../ActiveFragment";
-import { IStaneksGift } from "../IStaneksGift";
+import { StaneksGift } from "../StaneksGift";
 import { FragmentType, Effect } from "../FragmentType";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 type IProps = {
-  gift: IStaneksGift;
+  gift: StaneksGift;
   fragment: ActiveFragment | undefined;
   x: number;
   y: number;

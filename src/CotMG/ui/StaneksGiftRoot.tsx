@@ -3,7 +3,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { CONSTANTS } from "../../Constants";
 import { StaneksGiftEvents } from "../StaneksGiftEvents";
 import { MainBoard } from "./MainBoard";
-import { IStaneksGift } from "../IStaneksGift";
+import { StaneksGift } from "../StaneksGift";
 import { Info } from "@mui/icons-material";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import Typography from "@mui/material/Typography";
@@ -13,7 +13,7 @@ import { DummyGrid } from "./DummyGrid";
 import Container from "@mui/material/Container";
 
 type IProps = {
-  staneksGift: IStaneksGift;
+  staneksGift: StaneksGift;
 };
 
 export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
