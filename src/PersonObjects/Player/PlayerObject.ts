@@ -8,13 +8,13 @@ import * as workMethods from "./PlayerObjectWorkMethods";
 
 import { IMap } from "../../types";
 import { Sleeve } from "../Sleeve/Sleeve";
-import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
+import { PlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { Exploit } from "../../Exploits/Exploit";
 
 import { LocationName } from "../../Locations/data/LocationNames";
 import { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { Corporation } from "../../Corporation/Corporation";
-import { IGang } from "../../Gang/IGang";
+import { Gang } from "../../Gang/Gang";
 import { Bladeburner } from "../../Bladeburner/Bladeburner";
 import { HacknetNode } from "../../Hacknet/HacknetNode";
 
@@ -33,7 +33,7 @@ export class PlayerObject extends Person {
   // Player-specific properties
   bitNodeN = 1; //current bitnode
   corporation: Corporation | null = null;
-  gang: IGang | null = null;
+  gang: Gang | null = null;
   bladeburner: Bladeburner | null = null;
   currentServer = "";
   factions: string[] = [];
@@ -58,7 +58,7 @@ export class PlayerObject extends Person {
   scriptProdSinceLastAug = 0;
   sleeves: Sleeve[] = [];
   sleevesFromCovenant = 0;
-  sourceFiles: IPlayerOwnedSourceFile[] = [];
+  sourceFiles: PlayerOwnedSourceFile[] = [];
   exploits: Exploit[] = [];
   achievements: PlayerAchievement[] = [];
   terminalCommandHistory: string[] = [];

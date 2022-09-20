@@ -4,7 +4,7 @@ import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMemberUpgrades } from "./GangMemberUpgrades";
 import { IAscensionResult } from "./IAscensionResult";
 import { Player } from "../Player";
-import { IGang } from "./IGang";
+import { Gang } from "./Gang";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import {
   calculateRespectGain,
@@ -111,7 +111,7 @@ export class GangMember {
     return GangMemberTasks["Unassigned"];
   }
 
-  calculateRespectGain(gang: IGang): number {
+  calculateRespectGain(gang: Gang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -121,7 +121,7 @@ export class GangMember {
     return calculateRespectGain(g, this, task);
   }
 
-  calculateWantedLevelGain(gang: IGang): number {
+  calculateWantedLevelGain(gang: Gang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -131,7 +131,7 @@ export class GangMember {
     return calculateWantedLevelGain(g, this, task);
   }
 
-  calculateMoneyGain(gang: IGang): number {
+  calculateMoneyGain(gang: Gang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -191,7 +191,7 @@ export class GangMember {
       this.calculateAscensionMult(this.cha_asc_points);
   }
 
-  recordEarnedRespect(numCycles = 1, gang: IGang): void {
+  recordEarnedRespect(numCycles = 1, gang: Gang): void {
     this.earnedRespect += this.calculateRespectGain(gang) * numCycles;
   }
 

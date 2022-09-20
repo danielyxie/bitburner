@@ -10,8 +10,3 @@ export class PlayerOwnedSourceFile {
     this.lvl = level;
   }
 }
-
-export interface IPlayerOwnedSourceFile {
-  lvl: number;
-  n: number;
-}
