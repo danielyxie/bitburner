@@ -16,6 +16,6 @@ export const GangConstants = {
     FactionNames.SpeakersForTheDead,
     FactionNames.NiteSec,
     FactionNames.TheBlackHand,
-  ],
+  ] as string[],
   GangKarmaRequirement: -54000,
 };
