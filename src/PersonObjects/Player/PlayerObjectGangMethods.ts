@@ -1,10 +1,10 @@
 import { Factions } from "../../Faction/Factions";
 import { Faction } from "../../Faction/Faction";
 import { Gang } from "../../Gang/Gang";
-import { IPlayer } from "../IPlayer";
+import { PlayerObject } from "./PlayerObject";
 import { GangConstants } from "../../Gang/data/Constants";
 
-export function canAccessGang(this: IPlayer): boolean {
+export function canAccessGang(this: PlayerObject): boolean {
   if (this.bitNodeN === 2) {
     return true;
   }
@@ -15,11 +15,11 @@ export function canAccessGang(this: IPlayer): boolean {
   return this.karma <= GangConstants.GangKarmaRequirement;
 }
 
-export function isAwareOfGang(this: IPlayer): boolean {
+export function isAwareOfGang(this: PlayerObject): boolean {
   return this.bitNodeN === 2 || this.sourceFileLvl(2) >= 1;
 }
 
-export function getGangFaction(this: IPlayer): Faction {
+export function getGangFaction(this: PlayerObject): Faction {
   const gang = this.gang;
   if (gang === null) {
     throw new Error("Cannot get gang faction because player is not in a gang.");
@@ -32,7 +32,7 @@ export function getGangFaction(this: IPlayer): Faction {
   return fac;
 }
 
-export function getGangName(this: IPlayer): string {
+export function getGangName(this: PlayerObject): string {
   if (!this.inGang()) return "";
   const gang = this.gang;
   if (gang === null) {
@@ -41,7 +41,7 @@ export function getGangName(this: IPlayer): string {
   return gang.facName;
 }
 
-export function hasGangWith(this: IPlayer, facName: string): boolean {
+export function hasGangWith(this: PlayerObject, facName: string): boolean {
   if (!this.inGang()) return false;
   const gang = this.gang;
   if (gang === null) {
@@ -50,7 +50,7 @@ export function hasGangWith(this: IPlayer, facName: string): boolean {
   return gang.facName === facName;
 }
 
-export function inGang(this: IPlayer): boolean {
+export function inGang(this: PlayerObject): boolean {
   if (this.gang == null || this.gang == undefined) {
     return false;
   }
@@ -58,7 +58,7 @@ export function inGang(this: IPlayer): boolean {
   return this.gang instanceof Gang;
 }
 
-export function startGang(this: IPlayer, factionName: string, hacking: boolean): void {
+export function startGang(this: PlayerObject, factionName: string, hacking: boolean): void {
   this.gang = new Gang(factionName, hacking);
 
   const fac = Factions[factionName];

@@ -1,13 +1,13 @@
 /**
  * Augmentation-related methods for the Player class (PlayerObject)
  */
-import { IPlayer } from "../IPlayer";
+import { PlayerObject } from "./PlayerObject";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 
 import { calculateEntropy } from "../Grafting/EntropyAccumulation";
 
-export function hasAugmentation(this: IPlayer, aug: string | Augmentation, ignoreQueued = false): boolean {
+export function hasAugmentation(this: PlayerObject, aug: string | Augmentation, ignoreQueued = false): boolean {
   const augName: string = aug instanceof Augmentation ? aug.name : aug;
 
   for (const owned of this.augmentations) {
@@ -27,7 +27,7 @@ export function hasAugmentation(this: IPlayer, aug: string | Augmentation, ignor
   return false;
 }
 
-export function applyEntropy(this: IPlayer, stacks = 1): void {
+export function applyEntropy(this: PlayerObject, stacks = 1): void {
   // Re-apply all multipliers
   this.reapplyAllAugmentations();
   this.reapplyAllSourceFiles();
