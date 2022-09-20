@@ -3,7 +3,7 @@ import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
 import { useCorporation } from "../Context";
-import { ICorporation } from "../../ICorporation";
+import { Corporation } from "../../Corporation";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Money } from "../../../ui/React/Money";
@@ -24,7 +24,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
 
   const disabled = isNaN(shares) || shares <= 0 || shares > corp.numShares;
 
-  function ProfitIndicator(props: { shares: number | null; corp: ICorporation }): React.ReactElement {
+  function ProfitIndicator(props: { shares: number | null; corp: Corporation }): React.ReactElement {
     if (props.shares === null) return <></>;
     let text = "";
     if (isNaN(props.shares) || props.shares <= 0) {

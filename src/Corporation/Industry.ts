@@ -12,16 +12,15 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { isString } from "../utils/helpers/isString";
 import { MaterialSizes } from "./MaterialSizes";
 import { Warehouse } from "./Warehouse";
-import { ICorporation } from "./ICorporation";
-import { IIndustry } from "./IIndustry";
+import { Corporation } from "./Corporation";
 
 interface IParams {
   name?: string;
-  corp?: ICorporation;
+  corp?: Corporation;
   type?: string;
 }
 
-export class Industry implements IIndustry {
+export class Industry {
   name = "";
   type = Industries.Agriculture;
   sciResearch = new Material({ name: "Scientific Research" });
@@ -385,7 +384,7 @@ export class Industry implements IIndustry {
     }
   }
 
-  process(marketCycles = 1, state: string, corporation: ICorporation): void {
+  process(marketCycles = 1, state: string, corporation: Corporation): void {
     this.state = state;
 
     //At the start of a cycle, store and reset revenue/expenses
@@ -518,7 +517,7 @@ export class Industry implements IIndustry {
   }
 
   //Process production, purchase, and import/export of materials
-  processMaterials(marketCycles = 1, corporation: ICorporation): [number, number] {
+  processMaterials(marketCycles = 1, corporation: Corporation): [number, number] {
     let revenue = 0,
       expenses = 0;
     this.calculateProductionFactors();
@@ -949,7 +948,7 @@ export class Industry implements IIndustry {
   }
 
   //Process production & sale of this industry's FINISHED products (including all of their stats)
-  processProducts(marketCycles = 1, corporation: ICorporation): [number, number] {
+  processProducts(marketCycles = 1, corporation: Corporation): [number, number] {
     let revenue = 0;
     const expenses = 0;
 
@@ -985,7 +984,7 @@ export class Industry implements IIndustry {
   }
 
   //Processes FINISHED products
-  processProduct(marketCycles = 1, product: Product, corporation: ICorporation): number {
+  processProduct(marketCycles = 1, product: Product, corporation: Corporation): number {
     let totalProfit = 0;
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       const city = CorporationConstants.Cities[i];
@@ -1225,7 +1224,7 @@ export class Industry implements IIndustry {
     return 1e9 * Math.pow(1.06, this.numAdVerts);
   }
 
-  applyAdVert(corporation: ICorporation): void {
+  applyAdVert(corporation: Corporation): void {
     const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
     const awareness = (this.awareness + 3 * advMult) * (1.01 * advMult);
     this.awareness = Math.min(awareness, Number.MAX_VALUE);

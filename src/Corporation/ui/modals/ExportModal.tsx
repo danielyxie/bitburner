@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Material } from "../../Material";
 import { Export } from "../../Export";
-import { IIndustry } from "../../IIndustry";
+import { Industry } from "../../Industry";
 import { ExportMaterial } from "../../Actions";
 import { Modal } from "../../../ui/React/Modal";
 import { useCorporation } from "../Context";
@@ -23,7 +23,7 @@ interface IProps {
 // Create a popup that lets the player manage exports
 export function ExportModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  const possibleDivisions = corp.divisions.filter((division: IIndustry) =>
+  const possibleDivisions = corp.divisions.filter((division: Industry) =>
     isRelevantMaterial(props.mat.name, division),
   );
   if (possibleDivisions.length === 0) throw new Error("Export popup created with no divisions.");
@@ -72,7 +72,7 @@ export function ExportModal(props: IProps): React.ReactElement {
     rerender();
   }
 
-  const currentDivision = corp.divisions.find((division: IIndustry) => division.name === industry);
+  const currentDivision = corp.divisions.find((division: Industry) => division.name === industry);
   if (currentDivision === undefined)
     throw new Error(`Export popup somehow ended up with undefined division '${currentDivision}'`);
   const possibleCities = Object.keys(currentDivision.warehouses).filter(
@@ -90,8 +90,8 @@ export function ExportModal(props: IProps): React.ReactElement {
       </Typography>
       <Select onChange={onIndustryChange} value={industry}>
         {corp.divisions
-          .filter((division: IIndustry) => isRelevantMaterial(props.mat.name, division))
-          .map((division: IIndustry) => (
+          .filter((division: Industry) => isRelevantMaterial(props.mat.name, division))
+          .map((division: Industry) => (
             <MenuItem key={division.name} value={division.name}>
               {division.name}
             </MenuItem>

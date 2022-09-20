@@ -13,7 +13,7 @@ import { Exploit } from "../../Exploits/Exploit";
 
 import { LocationName } from "../../Locations/data/LocationNames";
 import { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
-import { ICorporation } from "../../Corporation/ICorporation";
+import { Corporation } from "../../Corporation/Corporation";
 import { IGang } from "../../Gang/IGang";
 import { Bladeburner } from "../../Bladeburner/Bladeburner";
 import { HacknetNode } from "../../Hacknet/HacknetNode";
@@ -32,7 +32,7 @@ import { Person } from "../Person";
 export class PlayerObject extends Person {
   // Player-specific properties
   bitNodeN = 1; //current bitnode
-  corporation: ICorporation | null = null;
+  corporation: Corporation | null = null;
   gang: IGang | null = null;
   bladeburner: Bladeburner | null = null;
   currentServer = "";

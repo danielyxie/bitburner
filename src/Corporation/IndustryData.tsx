@@ -1,6 +1,6 @@
 import React from "react";
 import { ResearchTree } from "./ResearchTree";
-import { ICorporation } from "./ICorporation";
+import { Corporation } from "./Corporation";
 import { getBaseResearchTreeCopy, getProductIndustryResearchTreeCopy } from "./data/BaseResearchTree";
 import { MoneyCost } from "./ui/MoneyCost";
 
@@ -59,8 +59,8 @@ export const IndustryStartingCosts: IIndustryMap<number> = {
 };
 
 // Map of description for each industry
-export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.ReactElement> = {
-  Energy: (corp: ICorporation) => (
+export const IndustryDescriptions: IIndustryMap<(corp: Corporation) => React.ReactElement> = {
+  Energy: (corp: Corporation) => (
     <>
       Engage in the production and distribution of energy.
       <br />
@@ -70,7 +70,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  Utilities: (corp: ICorporation) => (
+  Utilities: (corp: Corporation) => (
     <>
       Distribute water and provide wastewater services.
       <br />
@@ -80,7 +80,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  Agriculture: (corp: ICorporation) => (
+  Agriculture: (corp: Corporation) => (
     <>
       Cultivate crops and breed livestock to produce food.
       <br />
@@ -90,7 +90,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: YES
     </>
   ),
-  Fishing: (corp: ICorporation) => (
+  Fishing: (corp: Corporation) => (
     <>
       Produce food through the breeding and processing of fish and fish products.
       <br />
@@ -100,7 +100,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  Mining: (corp: ICorporation) => (
+  Mining: (corp: Corporation) => (
     <>
       Extract and process metals from the earth.
       <br />
@@ -110,7 +110,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  Food: (corp: ICorporation) => (
+  Food: (corp: Corporation) => (
     <>
       Create your own restaurants all around the world.
       <br />
@@ -120,7 +120,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: YES
     </>
   ),
-  Tobacco: (corp: ICorporation) => (
+  Tobacco: (corp: Corporation) => (
     <>
       Create and distribute tobacco and tobacco-related products.
       <br />
@@ -130,7 +130,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: YES
     </>
   ),
-  Chemical: (corp: ICorporation) => (
+  Chemical: (corp: Corporation) => (
     <>
       Produce industrial chemicals.
       <br />
@@ -140,7 +140,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  Pharmaceutical: (corp: ICorporation) => (
+  Pharmaceutical: (corp: Corporation) => (
     <>
       Discover, develop, and create new pharmaceutical drugs.
       <br />
@@ -150,7 +150,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  Computer: (corp: ICorporation) => (
+  Computer: (corp: Corporation) => (
     <>
       Develop and manufacture new computer hardware and networking infrastructures.
       <br />
@@ -160,7 +160,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  Robotics: (corp: ICorporation) => (
+  Robotics: (corp: Corporation) => (
     <>
       Develop and create robots.
       <br />
@@ -170,7 +170,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  Software: (corp: ICorporation) => (
+  Software: (corp: Corporation) => (
     <>
       Develop computer software and create AI Cores.
       <br />
@@ -180,7 +180,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: YES
     </>
   ),
-  Healthcare: (corp: ICorporation) => (
+  Healthcare: (corp: Corporation) => (
     <>
       Create and manage hospitals.
       <br />
@@ -190,7 +190,7 @@ export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.Re
       Recommended starting Industry: NO
     </>
   ),
-  RealEstate: (corp: ICorporation) => (
+  RealEstate: (corp: Corporation) => (
     <>
       Develop and manage real estate properties.
       <br />

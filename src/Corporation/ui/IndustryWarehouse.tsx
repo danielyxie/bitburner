@@ -13,8 +13,8 @@ import { MaterialSizes } from "../MaterialSizes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-import { ICorporation } from "../ICorporation";
-import { IIndustry } from "../IIndustry";
+import { Corporation } from "../Corporation";
+import { Industry } from "../Industry";
 import { MoneyCost } from "./MoneyCost";
 import { isRelevantMaterial } from "./Helpers";
 import { IndustryProductEquation } from "./IndustryProductEquation";
@@ -30,8 +30,8 @@ import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 
 interface IProps {
-  corp: ICorporation;
-  division: IIndustry;
+  corp: Corporation;
+  division: Industry;
   warehouse: Warehouse | 0;
   currentCity: string;
   rerender: () => void;

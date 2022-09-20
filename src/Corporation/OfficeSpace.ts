@@ -4,8 +4,8 @@ import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { generateRandomString } from "../utils/StringHelperFunctions";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { Employee } from "./Employee";
-import { IIndustry } from "./IIndustry";
-import { ICorporation } from "./ICorporation";
+import { Industry } from "./Industry";
+import { Corporation } from "./Corporation";
 
 interface IParams {
   loc?: string;
@@ -68,7 +68,7 @@ export class OfficeSpace {
     return this.employees.length >= this.size;
   }
 
-  process(marketCycles = 1, corporation: ICorporation, industry: IIndustry): number {
+  process(marketCycles = 1, corporation: Corporation, industry: Industry): number {
     // HRBuddy AutoRecruitment and training
     if (industry.hasResearch("HRBuddy-Recruitment") && !this.atCapacity()) {
       const emp = this.hireRandomEmployee();
@@ -177,7 +177,7 @@ export class OfficeSpace {
     }
   }
 
-  calculateEmployeeProductivity(corporation: ICorporation, industry: IIndustry): void {
+  calculateEmployeeProductivity(corporation: Corporation, industry: Industry): void {
     //Reset
     for (const name of Object.keys(this.employeeProd)) {
       this.employeeProd[name] = 0;

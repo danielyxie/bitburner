@@ -1,9 +1,9 @@
 import React from "react";
-import { IIndustry } from "../IIndustry";
+import { Industry } from "../Industry";
 import { MathJaxWrapper } from "../../MathJaxWrapper";
 
 interface IProps {
-  division: IIndustry;
+  division: Industry;
 }
 
 export function IndustryProductEquation(props: IProps): React.ReactElement {

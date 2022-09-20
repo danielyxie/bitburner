@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { IndustryStartingCosts, Industries, IndustryDescriptions } from "../IndustryData";
 import { useCorporation } from "./Context";
-import { IIndustry } from "../IIndustry";
+import { Industry } from "../Industry";
 import { NewIndustry } from "../Actions";
 
 import Typography from "@mui/material/Typography";
@@ -23,7 +23,7 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
   const possibleIndustries = allIndustries
     .filter(
       (industryType: string) =>
-        corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
+        corp.divisions.find((division: Industry) => division.type === industryType) === undefined,
     )
     .sort();
   const [industry, setIndustry] = useState(possibleIndustries.length > 0 ? possibleIndustries[0] : "");

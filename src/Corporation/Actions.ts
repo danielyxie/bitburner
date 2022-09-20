@@ -1,8 +1,6 @@
 import { Player } from "../Player";
 import { MaterialSizes } from "./MaterialSizes";
-import { ICorporation } from "./ICorporation";
 import { Corporation } from "./Corporation";
-import { IIndustry } from "./IIndustry";
 import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
 import { Industry } from "./Industry";
 import { CorporationConstants } from "./data/Constants";
@@ -17,7 +15,7 @@ import { EmployeePositions } from "./EmployeePositions";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
 
-export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
+export function NewIndustry(corporation: Corporation, industry: string, name: string): void {
   if (corporation.divisions.find(({ type }) => industry == type))
     throw new Error(`You have already expanded into the ${industry} industry!`);
 
@@ -47,7 +45,7 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
   }
 }
 
-export function NewCity(corporation: ICorporation, division: IIndustry, city: string): void {
+export function NewCity(corporation: Corporation, division: Industry, city: string): void {
   if (corporation.funds < CorporationConstants.OfficeInitialCost) {
     throw new Error("You don't have enough company funds to open a new office!");
   }
@@ -61,7 +59,7 @@ export function NewCity(corporation: ICorporation, division: IIndustry, city: st
   });
 }
 
-export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnlockUpgrade): void {
+export function UnlockUpgrade(corporation: Corporation, upgrade: CorporationUnlockUpgrade): void {
   if (corporation.funds < upgrade.price) {
     throw new Error("Insufficient funds");
   }
@@ -71,7 +69,7 @@ export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnl
   corporation.unlock(upgrade);
 }
 
-export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgrade): void {
+export function LevelUpgrade(corporation: Corporation, upgrade: CorporationUpgrade): void {
   const baseCost = upgrade.basePrice;
   const priceMult = upgrade.priceMult;
   const level = corporation.upgrades[upgrade.index];
@@ -83,7 +81,7 @@ export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgr
   }
 }
 
-export function IssueDividends(corporation: ICorporation, rate: number): void {
+export function IssueDividends(corporation: Corporation, rate: number): void {
   if (isNaN(rate) || rate < 0 || rate > CorporationConstants.DividendMaxRate) {
     throw new Error(`Invalid value. Must be an number between 0 and ${CorporationConstants.DividendMaxRate}`);
   }
@@ -252,7 +250,7 @@ export function BuyMaterial(material: Material, amt: number): void {
   material.buy = amt;
 }
 
-export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material: Material, amt: number): void {
+export function BulkPurchase(corp: Corporation, warehouse: Warehouse, material: Material, amt: number): void {
   const matSize = MaterialSizes[material.name];
   const maxAmount = (warehouse.size - warehouse.sizeUsed) / matSize;
   if (isNaN(amt) || amt < 0) {
@@ -270,7 +268,7 @@ export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material:
   }
 }
 
-export function SellShares(corporation: ICorporation, numShares: number): number {
+export function SellShares(corporation: Corporation, numShares: number): number {
   if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
   if (numShares < 0) throw new Error("Invalid value for number of shares");
   if (numShares > corporation.numShares) throw new Error("You don't have that many shares to sell!");
@@ -290,7 +288,7 @@ export function SellShares(corporation: ICorporation, numShares: number): number
   return profit;
 }
 
-export function BuyBackShares(corporation: ICorporation, numShares: number): boolean {
+export function BuyBackShares(corporation: Corporation, numShares: number): boolean {
   if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
   if (numShares < 0) throw new Error("Invalid value for number of shares");
   if (numShares > corporation.issuedShares) throw new Error("You don't have that many shares to buy!");
@@ -318,7 +316,7 @@ export function AutoAssignJob(office: OfficeSpace, job: string, count: number): 
   return office.autoAssignJob(job, count);
 }
 
-export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size: number): void {
+export function UpgradeOfficeSize(corp: Corporation, office: OfficeSpace, size: number): void {
   const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
   const costMultiplier = 1.09;
   // Calculate cost to upgrade size by 15 employees
@@ -332,7 +330,7 @@ export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size:
   corp.funds = corp.funds - cost;
 }
 
-export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
+export function BuyCoffee(corp: Corporation, office: OfficeSpace): boolean {
   const cost = office.getCoffeeCost();
   if (corp.funds < cost) {
     return false;
@@ -346,7 +344,7 @@ export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
   return true;
 }
 
-export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
+export function ThrowParty(corp: Corporation, office: OfficeSpace, costPerEmployee: number): number {
   const mult = 1 + costPerEmployee / 10e6;
   const cost = costPerEmployee * office.employees.length;
   if (corp.funds < cost) {
@@ -361,7 +359,7 @@ export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmplo
   return mult;
 }
 
-export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city: string): void {
+export function PurchaseWarehouse(corp: Corporation, division: Industry, city: string): void {
   if (corp.funds < CorporationConstants.WarehouseInitialCost) return;
   if (division.warehouses[city] instanceof Warehouse) return;
   division.warehouses[city] = new Warehouse({
@@ -380,7 +378,7 @@ export function UpgradeWarehouseCost(warehouse: Warehouse, amt: number): number 
   );
 }
 
-export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse, amt = 1): void {
+export function UpgradeWarehouse(corp: Corporation, division: Industry, warehouse: Warehouse, amt = 1): void {
   const sizeUpgradeCost = UpgradeWarehouseCost(warehouse, amt);
   if (corp.funds < sizeUpgradeCost) return;
   warehouse.level += amt;
@@ -388,7 +386,7 @@ export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, wareho
   corp.funds = corp.funds - sizeUpgradeCost;
 }
 
-export function HireAdVert(corp: ICorporation, division: IIndustry): void {
+export function HireAdVert(corp: Corporation, division: Industry): void {
   const cost = division.getAdVertCost();
   if (corp.funds < cost) return;
   corp.funds = corp.funds - cost;
@@ -396,8 +394,8 @@ export function HireAdVert(corp: ICorporation, division: IIndustry): void {
 }
 
 export function MakeProduct(
-  corp: ICorporation,
-  division: IIndustry,
+  corp: Corporation,
+  division: Industry,
   city: string,
   productName: string,
   designInvest: number,
@@ -449,7 +447,7 @@ export function MakeProduct(
   products[product.name] = product;
 }
 
-export function Research(division: IIndustry, researchName: string): void {
+export function Research(division: Industry, researchName: string): void {
   const researchTree = IndustryResearchTrees[division.type];
   if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
   const allResearch = researchTree.getAllNodes();
