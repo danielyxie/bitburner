@@ -44,6 +44,7 @@ import { SleeveInfiltrateWork } from "./Work/SleeveInfiltrateWork";
 import { SleeveSupportWork } from "./Work/SleeveSupportWork";
 import { SleeveBladeburnerWork } from "./Work/SleeveBladeburnerWork";
 import { SleeveCrimeWork } from "./Work/SleeveCrimeWork";
+import * as sleeveMethods from "./SleeveMethods";
 
 export class Sleeve extends Person {
   currentWork: Work | null = null;
@@ -78,6 +79,8 @@ export class Sleeve extends Person {
     super();
     this.shockRecovery();
   }
+
+  findPurchasableAugs = sleeveMethods.findPurchasableAugs;
 
   shockBonus(): number {
     return this.shock / 100;

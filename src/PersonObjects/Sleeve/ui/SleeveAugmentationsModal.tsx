@@ -4,7 +4,6 @@ import { PurchasableAugmentations } from "../../../Augmentation/ui/PurchasableAu
 import { Player } from "../../../Player";
 import { Modal } from "../../../ui/React/Modal";
 import { Sleeve } from "../Sleeve";
-import { findSleevePurchasableAugs } from "../SleeveHelpers";
 
 interface IProps {
   open: boolean;
@@ -29,7 +28,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
   // You can only purchase Augmentations that are actually available from
   // your factions. I.e. you must be in a faction that has the Augmentation
   // and you must also have enough rep in that faction in order to purchase it.
-  const availableAugs = findSleevePurchasableAugs(props.sleeve);
+  const availableAugs = props.sleeve.findPurchasableAugs();
 
   return (
     <Modal open={props.open} onClose={props.onClose}>

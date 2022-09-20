@@ -10,12 +10,12 @@ import { Multipliers } from "../Multipliers";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { getFactionAugmentationsFiltered } from "../../Faction/FactionHelpers";
 
-export function findSleevePurchasableAugs(sleeve: Sleeve): Augmentation[] {
+export function findPurchasableAugs(this: Sleeve): Augmentation[] {
   // You can only purchase Augmentations that are actually available from
   // your factions. I.e. you must be in a faction that has the Augmentation
   // and you must also have enough rep in that faction in order to purchase it.
 
-  const ownedAugNames = sleeve.augmentations.map((e) => e.name);
+  const ownedAugNames = this.augmentations.map((e) => e.name);
   const availableAugs: Augmentation[] = [];
 
   // Helper function that helps filter out augs that are already owned
@@ -85,7 +85,7 @@ export function findSleevePurchasableAugs(sleeve: Sleeve): Augmentation[] {
   }
 
   // Add the stanek sleeve aug
-  if (!ownedAugNames.includes(AugmentationNames.ZOE) && p.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
+  if (!ownedAugNames.includes(AugmentationNames.ZOE) && Player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
     const aug = StaticAugmentations[AugmentationNames.ZOE];
     availableAugs.push(aug);
   }

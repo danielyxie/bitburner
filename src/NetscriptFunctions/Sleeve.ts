@@ -1,5 +1,4 @@
 import { Player } from "../Player";
-import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";
@@ -251,7 +250,7 @@ export function NetscriptSleeve(): InternalAPI<ISleeve> {
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
 
-        const purchasableAugs = findSleevePurchasableAugs(Player.sleeves[sleeveNumber]);
+        const purchasableAugs = Player.sleeves[sleeveNumber].findPurchasableAugs();
         const augs = [];
         for (let i = 0; i < purchasableAugs.length; i++) {
           const aug = purchasableAugs[i];
