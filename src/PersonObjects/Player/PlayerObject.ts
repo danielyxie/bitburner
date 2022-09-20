@@ -15,7 +15,7 @@ import { LocationName } from "../../Locations/data/LocationNames";
 import { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { ICorporation } from "../../Corporation/ICorporation";
 import { IGang } from "../../Gang/IGang";
-import { IBladeburner } from "../../Bladeburner/IBladeburner";
+import { Bladeburner } from "../../Bladeburner/Bladeburner";
 import { HacknetNode } from "../../Hacknet/HacknetNode";
 
 import { HashManager } from "../../Hacknet/HashManager";
@@ -34,7 +34,7 @@ export class PlayerObject extends Person {
   bitNodeN = 1; //current bitnode
   corporation: ICorporation | null = null;
   gang: IGang | null = null;
-  bladeburner: IBladeburner | null = null;
+  bladeburner: Bladeburner | null = null;
   currentServer = "";
   factions: string[] = [];
   factionInvitations: string[] = [];

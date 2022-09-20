@@ -3,8 +3,8 @@ import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { Contracts } from "../data/Contracts";
-import { IBladeburner } from "../IBladeburner";
-import { IAction } from "../IAction";
+import { Bladeburner } from "../Bladeburner";
+import { Action } from "../Action";
 import { Player } from "../../Player";
 import { SuccessChance } from "./SuccessChance";
 import { CopyableText } from "../../ui/React/CopyableText";
@@ -16,8 +16,8 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
 interface IProps {
-  bladeburner: IBladeburner;
-  action: IAction;
+  bladeburner: Bladeburner;
+  action: Action;
 }
 
 export function ContractElem(props: IProps): React.ReactElement {

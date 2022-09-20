@@ -1,10 +1,10 @@
 import * as React from "react";
 import { ContractList } from "./ContractList";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import Typography from "@mui/material/Typography";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 
 export function ContractPage(props: IProps): React.ReactElement {

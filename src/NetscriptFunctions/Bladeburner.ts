@@ -2,7 +2,7 @@ import { Player } from "../Player";
 import { Bladeburner } from "../Bladeburner/Bladeburner";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Bladeburner as INetscriptBladeburner, BladeburnerCurAction } from "../ScriptEditor/NetscriptDefinitions";
-import { IAction } from "src/Bladeburner/IAction";
+import { Action } from "src/Bladeburner/Action";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperation } from "../Bladeburner/BlackOperation";
 import { helpers } from "../Netscript/NetscriptHelpers";
@@ -31,7 +31,7 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
     }
   };
 
-  const getBladeburnerActionObject = function (ctx: NetscriptContext, type: string, name: string): IAction {
+  const getBladeburnerActionObject = function (ctx: NetscriptContext, type: string, name: string): Action {
     const bladeburner = Player.bladeburner;
     if (bladeburner === null) throw new Error("Must have joined bladeburner");
     const actionId = bladeburner.getActionIdFromTypeAndName(type, name);

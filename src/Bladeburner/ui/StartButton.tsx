@@ -1,13 +1,13 @@
 import React from "react";
 
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import { BlackOperation } from "../BlackOperation";
 import { Player } from "../../Player";
 import Button from "@mui/material/Button";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
   type: number;
   name: string;
   rerender: () => void;

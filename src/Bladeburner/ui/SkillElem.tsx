@@ -1,7 +1,7 @@
 import React from "react";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { formatNumber } from "../../utils/StringHelperFunctions";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -13,7 +13,7 @@ import { Skill } from "../Skill";
 
 interface IProps {
   skill: Skill;
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
   onUpgrade: () => void;
 }
 

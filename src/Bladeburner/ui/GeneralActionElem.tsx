@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { IBladeburner } from "../IBladeburner";
-import { IAction } from "../IAction";
+import { Bladeburner } from "../Bladeburner";
+import { Action } from "../Action";
 import { GeneralActions } from "../data/GeneralActions";
 import { Player } from "../../Player";
 import { CopyableText } from "../../ui/React/CopyableText";
@@ -15,8 +15,8 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 
 interface IProps {
-  bladeburner: IBladeburner;
-  action: IAction;
+  bladeburner: Bladeburner;
+  action: Action;
 }
 
 export function GeneralActionElem(props: IProps): React.ReactElement {

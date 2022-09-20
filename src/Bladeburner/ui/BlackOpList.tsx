@@ -2,10 +2,10 @@ import React from "react";
 import { BlackOperations } from "../BlackOperations";
 import { BlackOperation } from "../BlackOperation";
 import { BlackOpElem } from "./BlackOpElem";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 
 export function BlackOpList(props: IProps): React.ReactElement {

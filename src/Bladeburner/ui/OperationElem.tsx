@@ -7,7 +7,7 @@ import { ActionLevel } from "./ActionLevel";
 import { Autolevel } from "./Autolevel";
 import { StartButton } from "./StartButton";
 import { TeamSizeButton } from "./TeamSizeButton";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import { Operation } from "../Operation";
 import { Operations } from "../data/Operations";
 import { Player } from "../../Player";
@@ -17,7 +17,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
   action: Operation;
 }
 

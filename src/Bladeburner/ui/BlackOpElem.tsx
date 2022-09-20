@@ -3,7 +3,7 @@ import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/Stri
 import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { TeamSizeButton } from "./TeamSizeButton";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import { BlackOperation } from "../BlackOperation";
 import { BlackOperations } from "../data/BlackOperations";
 import { Player } from "../../Player";
@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
   action: BlackOperation;
 }
 

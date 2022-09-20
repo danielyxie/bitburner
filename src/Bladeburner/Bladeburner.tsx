@@ -1,5 +1,4 @@
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
-import { IBladeburner } from "./IBladeburner";
 import { IActionIdentifier } from "./IActionIdentifier";
 import { ActionIdentifier } from "./ActionIdentifier";
 import { ActionTypes } from "./data/ActionTypes";
@@ -13,7 +12,7 @@ import { formatNumber } from "../utils/StringHelperFunctions";
 import { Skills } from "./Skills";
 import { Skill } from "./Skill";
 import { City } from "./City";
-import { IAction } from "./IAction";
+import { Action } from "./Action";
 import { Player } from "../Player";
 import { createTaskTracker, ITaskTracker } from "../PersonObjects/ITaskTracker";
 import { Person } from "../PersonObjects/Person";
@@ -45,7 +44,7 @@ export interface BlackOpsAttempt {
   action?: BlackOperation;
 }
 
-export class Bladeburner implements IBladeburner {
+export class Bladeburner {
   numHosp = 0;
   moneyLost = 0;
   rank = 0;
@@ -995,7 +994,7 @@ export class Bladeburner implements IBladeburner {
    * @param action(Action obj) - Derived action class
    * @param success(bool) - Whether action was successful
    */
-  getActionStats(action: IAction, person: Person, success: boolean): ITaskTracker {
+  getActionStats(action: Action, person: Person, success: boolean): ITaskTracker {
     const difficulty = action.getDifficulty();
 
     /**
@@ -1202,7 +1201,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  getActionObject(actionId: IActionIdentifier): IAction | null {
+  getActionObject(actionId: IActionIdentifier): Action | null {
     /**
      * Given an ActionIdentifier object, returns the corresponding
      * GeneralAction, Contract, Operation, or BlackOperation object

@@ -1,9 +1,9 @@
 import React from "react";
 import { OperationElem } from "./OperationElem";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 
 export function OperationList(props: IProps): React.ReactElement {

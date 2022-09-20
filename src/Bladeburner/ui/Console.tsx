@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import { KEY } from "../../utils/helpers/keyCodes";
 
 import Paper from "@mui/material/Paper";
@@ -48,7 +48,7 @@ function Line(props: ILineProps): React.ReactElement {
 }
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 
 export function Console(props: IProps): React.ReactElement {

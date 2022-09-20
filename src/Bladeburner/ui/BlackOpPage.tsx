@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BlackOpList } from "./BlackOpList";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import Typography from "@mui/material/Typography";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { Router } from "../../ui/GameRoot";
@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 import { CorruptableText } from "../../ui/React/CorruptableText";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 
 export function BlackOpPage(props: IProps): React.ReactElement {

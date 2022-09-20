@@ -1,9 +1,9 @@
 import React from "react";
 import { ContractElem } from "./ContractElem";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 
 export function ContractList(props: IProps): React.ReactElement {

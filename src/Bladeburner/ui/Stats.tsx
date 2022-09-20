@@ -7,7 +7,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { Factions } from "../../Faction/Factions";
 import { Router } from "../../ui/GameRoot";
 import { joinFaction } from "../../Faction/FactionHelpers";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 
 import { TravelModal } from "./TravelModal";
 import Typography from "@mui/material/Typography";
@@ -18,7 +18,7 @@ import Paper from "@mui/material/Paper";
 import { FactionNames } from "../../Faction/data/FactionNames";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 
 export function Stats(props: IProps): React.ReactElement {

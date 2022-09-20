@@ -1,6 +1,6 @@
 import React from "react";
-import { IAction } from "../IAction";
-import { IBladeburner } from "../IBladeburner";
+import { Action } from "../Action";
+import { Bladeburner } from "../Bladeburner";
 import { BladeburnerConstants } from "../data/Constants";
 
 import Typography from "@mui/material/Typography";
@@ -11,9 +11,9 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 interface IProps {
-  action: IAction;
+  action: Action;
   isActive: boolean;
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
   rerender: () => void;
 }
 
