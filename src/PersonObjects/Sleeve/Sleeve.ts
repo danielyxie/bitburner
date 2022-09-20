@@ -80,6 +80,7 @@ export class Sleeve extends Person {
     this.shockRecovery();
   }
 
+  applyAugmentation = sleeveMethods.applyAugmentation;
   findPurchasableAugs = sleeveMethods.findPurchasableAugs;
 
   shockBonus(): number {
@@ -147,7 +148,7 @@ export class Sleeve extends Person {
     this.exp.charisma = 0;
     this.applyAugmentation(aug);
     this.augmentations.push({ name: aug.name, level: 1 });
-    this.updateStatLevels();
+    this.updateSkillLevels();
   }
 
   /**
@@ -161,7 +162,7 @@ export class Sleeve extends Person {
     this.exp.dexterity = 0;
     this.exp.agility = 0;
     this.exp.charisma = 0;
-    this.updateStatLevels();
+    this.updateSkillLevels();
     this.hp.current = this.hp.max;
 
     // Reset task-related stuff

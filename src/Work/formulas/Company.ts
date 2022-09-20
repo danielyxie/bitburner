@@ -4,9 +4,9 @@ import { Player } from "../../Player";
 import { WorkStats } from "../WorkStats";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
-import { IPerson } from "src/PersonObjects/IPerson";
+import { Person } from "../../PersonObjects/Person";
 
-export const calculateCompanyWorkStats = (worker: IPerson, company: Company): WorkStats => {
+export const calculateCompanyWorkStats = (worker: Person, company: Company): WorkStats => {
   const companyPositionName = Player.jobs[company.name];
   const companyPosition = CompanyPositions[companyPositionName];
 

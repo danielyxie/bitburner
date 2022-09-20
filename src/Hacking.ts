@@ -1,12 +1,12 @@
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-import { IPerson } from "./PersonObjects/IPerson";
+import { Person } from "./PersonObjects/Person";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { Server } from "./Server/Server";
 
 /**
  * Returns the chance the person has to successfully hack a server
  */
-export function calculateHackingChance(server: Server, person: IPerson): number {
+export function calculateHackingChance(server: Server, person: Person): number {
   const hackFactor = 1.75;
   const difficultyMult = (100 - server.hackDifficulty) / 100;
   const skillMult = hackFactor * person.skills.hacking;
@@ -30,7 +30,7 @@ export function calculateHackingChance(server: Server, person: IPerson): number 
  * Returns the amount of hacking experience the person will gain upon
  * successfully hacking a server
  */
-export function calculateHackingExpGain(server: Server, person: IPerson): number {
+export function calculateHackingExpGain(server: Server, person: Person): number {
   const baseExpGain = 3;
   const diffFactor = 0.3;
   if (server.baseDifficulty == null) {
@@ -46,7 +46,7 @@ export function calculateHackingExpGain(server: Server, person: IPerson): number
  * Returns the percentage of money that will be stolen from a server if
  * it is successfully hacked (returns the decimal form, not the actual percent value)
  */
-export function calculatePercentMoneyHacked(server: Server, person: IPerson): number {
+export function calculatePercentMoneyHacked(server: Server, person: Person): number {
   // Adjust if needed for balancing. This is the divisor for the final calculation
   const balanceFactor = 240;
 
@@ -67,7 +67,7 @@ export function calculatePercentMoneyHacked(server: Server, person: IPerson): nu
 /**
  * Returns time it takes to complete a hack on a server, in seconds
  */
-export function calculateHackingTime(server: Server, person: IPerson): number {
+export function calculateHackingTime(server: Server, person: Person): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 
   const baseDiff = 500;
@@ -88,7 +88,7 @@ export function calculateHackingTime(server: Server, person: IPerson): number {
 /**
  * Returns time it takes to complete a grow operation on a server, in seconds
  */
-export function calculateGrowTime(server: Server, person: IPerson): number {
+export function calculateGrowTime(server: Server, person: Person): number {
   const growTimeMultiplier = 3.2; // Relative to hacking time. 16/5 = 3.2
 
   return growTimeMultiplier * calculateHackingTime(server, person);
@@ -97,7 +97,7 @@ export function calculateGrowTime(server: Server, person: IPerson): number {
 /**
  * Returns time it takes to complete a weaken operation on a server, in seconds
  */
-export function calculateWeakenTime(server: Server, person: IPerson): number {
+export function calculateWeakenTime(server: Server, person: Person): number {
   const weakenTimeMultiplier = 4; // Relative to hacking time
 
   return weakenTimeMultiplier * calculateHackingTime(server, person);

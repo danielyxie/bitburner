@@ -6,9 +6,16 @@ import { Player } from "../../Player";
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { Factions } from "../../Faction/Factions";
-import { Multipliers } from "../Multipliers";
+import { mergeMultipliers, Multipliers } from "../Multipliers";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { getFactionAugmentationsFiltered } from "../../Faction/FactionHelpers";
+
+/**
+ * Updates this object's multipliers for the given augmentation
+ */
+export function applyAugmentation(this: Sleeve, aug: Augmentation): void {
+  this.mults = mergeMultipliers(this.mults, aug.mults);
+}
 
 export function findPurchasableAugs(this: Sleeve): Augmentation[] {
   // You can only purchase Augmentations that are actually available from

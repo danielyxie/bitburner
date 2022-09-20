@@ -11,7 +11,6 @@ import { Sleeve } from "../Sleeve/Sleeve";
 import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { Exploit } from "../../Exploits/Exploit";
 
-import { IPerson } from "../IPerson";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { ICorporation } from "../../Corporation/ICorporation";
@@ -20,7 +19,6 @@ import { IBladeburner } from "../../Bladeburner/IBladeburner";
 import { HacknetNode } from "../../Hacknet/HacknetNode";
 
 import { HashManager } from "../../Hacknet/HashManager";
-import { CityName } from "../../Locations/data/CityNames";
 
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../../utils/JSONReviver";
@@ -29,15 +27,11 @@ import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
 import { Work } from "src/Work/Work";
-import { defaultMultipliers } from "../Multipliers";
-import { HP } from "../HP";
-import { Skills } from "../Skills";
+import { Person } from "../Person";
 
-export class PlayerObject implements IPerson {
-  // Class members
-  augmentations: IPlayerOwnedAugmentation[] = [];
+export class PlayerObject extends Person {
+  // Player-specific properties
   bitNodeN = 1; //current bitnode
-  city = CityName.Sector12;
   corporation: ICorporation | null = null;
   gang: IGang | null = null;
   bladeburner: IBladeburner | null = null;
@@ -73,34 +67,12 @@ export class PlayerObject implements IPerson {
   lastSave = 0;
   totalPlaytime = 0;
 
-  hp: HP = { current: 10, max: 10 };
-  skills: Skills = {
-    hacking: 1,
-    strength: 1,
-    defense: 1,
-    dexterity: 1,
-    agility: 1,
-    charisma: 1,
-    intelligence: 0,
-  };
-  exp: Skills = {
-    hacking: 0,
-    strength: 0,
-    defense: 0,
-    dexterity: 0,
-    agility: 0,
-    charisma: 0,
-    intelligence: 0,
-  };
-
-  mults = defaultMultipliers();
-
   currentWork: Work | null = null;
   focus = false;
 
   entropy = 0;
 
-  // Methods
+  // Player-specific methods
   init = generalMethods.init;
   startWork = workMethods.startWork;
   processWork = workMethods.processWork;
@@ -124,14 +96,6 @@ export class PlayerObject implements IPerson {
   canAccessGang = gangMethods.canAccessGang;
   canAccessGrafting = generalMethods.canAccessGrafting;
   canAfford = generalMethods.canAfford;
-  gainHackingExp = generalMethods.gainHackingExp;
-  gainStrengthExp = generalMethods.gainStrengthExp;
-  gainDefenseExp = generalMethods.gainDefenseExp;
-  gainDexterityExp = generalMethods.gainDexterityExp;
-  gainAgilityExp = generalMethods.gainAgilityExp;
-  gainCharismaExp = generalMethods.gainCharismaExp;
-  gainIntelligenceExp = generalMethods.gainIntelligenceExp;
-  gainStats = generalMethods.gainStats;
   gainMoney = generalMethods.gainMoney;
   getCurrentServer = serverMethods.getCurrentServer;
   getGangFaction = gangMethods.getGangFaction;
@@ -153,7 +117,6 @@ export class PlayerObject implements IPerson {
   loseMoney = generalMethods.loseMoney;
   reapplyAllAugmentations = generalMethods.reapplyAllAugmentations;
   reapplyAllSourceFiles = generalMethods.reapplyAllSourceFiles;
-  regenerateHp = generalMethods.regenerateHp;
   recordMoneySource = generalMethods.recordMoneySource;
   setMoney = generalMethods.setMoney;
   startBladeburner = bladeburnerMethods.startBladeburner;
@@ -164,21 +127,16 @@ export class PlayerObject implements IPerson {
   travel = generalMethods.travel;
   giveExploit = generalMethods.giveExploit;
   giveAchievement = generalMethods.giveAchievement;
-  queryStatFromString = generalMethods.queryStatFromString;
-  getIntelligenceBonus = generalMethods.getIntelligenceBonus;
   getCasinoWinnings = generalMethods.getCasinoWinnings;
   quitJob = generalMethods.quitJob;
   hasJob = generalMethods.hasJob;
   createHacknetServer = serverMethods.createHacknetServer;
   queueAugmentation = generalMethods.queueAugmentation;
   receiveInvite = generalMethods.receiveInvite;
-  updateSkillLevels = generalMethods.updateSkillLevels;
   gainCodingContractReward = generalMethods.gainCodingContractReward;
   stopFocusing = generalMethods.stopFocusing;
-  resetMultipliers = generalMethods.resetMultipliers;
   prestigeAugmentation = generalMethods.prestigeAugmentation;
   prestigeSourceFile = generalMethods.prestigeSourceFile;
-  calculateSkill = generalMethods.calculateSkill;
   calculateSkillProgress = generalMethods.calculateSkillProgress;
   hospitalize = generalMethods.hospitalize;
   checkForFactionInvitations = generalMethods.checkForFactionInvitations;
@@ -189,6 +147,7 @@ export class PlayerObject implements IPerson {
   focusPenalty = generalMethods.focusPenalty;
 
   constructor() {
+    super();
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
       "I-" +

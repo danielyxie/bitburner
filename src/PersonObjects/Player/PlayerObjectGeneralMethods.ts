@@ -24,11 +24,9 @@ import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
 import {
-  calculateSkill as calculateSkillF,
   calculateSkillProgress as calculateSkillProgressF,
   ISkillProgress,
 } from "../formulas/skill";
-import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
 import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
@@ -47,12 +45,8 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
-import { ITaskTracker } from "../ITaskTracker";
-import { IPerson } from "../IPerson";
-import { Player } from "../../Player";
 
 import { isCompanyWork } from "../../Work/CompanyWork";
-import { defaultMultipliers } from "../Multipliers";
 import { serverMetadata } from "../../Server/data/servers";
 
 export function init(this: PlayerObject): void {
@@ -186,61 +180,9 @@ export function receiveInvite(this: PlayerObject, factionName: string): void {
   this.factionInvitations.push(factionName);
 }
 
-//Calculates skill level based on experience. The same formula will be used for every skill
-export function calculateSkill(this: IPerson, exp: number, mult = 1): number {
-  return calculateSkillF(exp, mult);
-}
-
 //Calculates skill level progress based on experience. The same formula will be used for every skill
 export function calculateSkillProgress(this: PlayerObject, exp: number, mult = 1): ISkillProgress {
   return calculateSkillProgressF(exp, mult);
-}
-
-export function updateSkillLevels(this: PlayerObject): void {
-  this.skills.hacking = Math.max(
-    1,
-    Math.floor(this.calculateSkill(this.exp.hacking, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
-  );
-  this.skills.strength = Math.max(
-    1,
-    Math.floor(
-      this.calculateSkill(this.exp.strength, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
-    ),
-  );
-  this.skills.defense = Math.max(
-    1,
-    Math.floor(this.calculateSkill(this.exp.defense, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
-  );
-  this.skills.dexterity = Math.max(
-    1,
-    Math.floor(
-      this.calculateSkill(this.exp.dexterity, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
-    ),
-  );
-  this.skills.agility = Math.max(
-    1,
-    Math.floor(this.calculateSkill(this.exp.agility, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
-  );
-  this.skills.charisma = Math.max(
-    1,
-    Math.floor(
-      this.calculateSkill(this.exp.charisma, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
-    ),
-  );
-
-  if (this.skills.intelligence > 0) {
-    this.skills.intelligence = Math.floor(this.calculateSkill(this.exp.intelligence));
-  } else {
-    this.skills.intelligence = 0;
-  }
-
-  const ratio = this.hp.current / this.hp.max;
-  this.hp.max = Math.floor(10 + this.skills.defense / 10);
-  this.hp.current = Math.round(this.hp.max * ratio);
-}
-
-export function resetMultipliers(this: PlayerObject): void {
-  this.mults = defaultMultipliers();
 }
 
 export function hasProgram(this: PlayerObject, programName: string): boolean {
@@ -306,153 +248,6 @@ export function recordMoneySource(this: PlayerObject, amt: number, source: strin
   this.moneySourceB.record(amt, source);
 }
 
-export function gainHackingExp(this: IPerson, exp: number): void {
-  if (isNaN(exp)) {
-    console.error("ERR: NaN passed into Player.gainHackingExp()");
-    return;
-  }
-  this.exp.hacking += exp;
-  if (this.exp.hacking < 0) {
-    this.exp.hacking = 0;
-  }
-
-  this.skills.hacking = calculateSkillF(
-    this.exp.hacking,
-    this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
-  );
-}
-
-export function gainStrengthExp(this: IPerson, exp: number): void {
-  if (isNaN(exp)) {
-    console.error("ERR: NaN passed into Player.gainStrengthExp()");
-    return;
-  }
-  this.exp.strength += exp;
-  if (this.exp.strength < 0) {
-    this.exp.strength = 0;
-  }
-
-  this.skills.strength = calculateSkillF(
-    this.exp.strength,
-    this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
-  );
-}
-
-export function gainDefenseExp(this: IPerson, exp: number): void {
-  if (isNaN(exp)) {
-    console.error("ERR: NaN passed into player.gainDefenseExp()");
-    return;
-  }
-  this.exp.defense += exp;
-  if (this.exp.defense < 0) {
-    this.exp.defense = 0;
-  }
-
-  this.skills.defense = calculateSkillF(
-    this.exp.defense,
-    this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
-  );
-  const ratio = this.hp.current / this.hp.max;
-  this.hp.max = Math.floor(10 + this.skills.defense / 10);
-  this.hp.current = Math.round(this.hp.max * ratio);
-}
-
-export function gainDexterityExp(this: IPerson, exp: number): void {
-  if (isNaN(exp)) {
-    console.error("ERR: NaN passed into Player.gainDexterityExp()");
-    return;
-  }
-  this.exp.dexterity += exp;
-  if (this.exp.dexterity < 0) {
-    this.exp.dexterity = 0;
-  }
-
-  this.skills.dexterity = calculateSkillF(
-    this.exp.dexterity,
-    this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
-  );
-}
-
-export function gainAgilityExp(this: IPerson, exp: number): void {
-  if (isNaN(exp)) {
-    console.error("ERR: NaN passed into Player.gainAgilityExp()");
-    return;
-  }
-  this.exp.agility += exp;
-  if (this.exp.agility < 0) {
-    this.exp.agility = 0;
-  }
-
-  this.skills.agility = calculateSkillF(
-    this.exp.agility,
-    this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
-  );
-}
-
-export function gainCharismaExp(this: IPerson, exp: number): void {
-  if (isNaN(exp)) {
-    console.error("ERR: NaN passed into Player.gainCharismaExp()");
-    return;
-  }
-  this.exp.charisma += exp;
-  if (this.exp.charisma < 0) {
-    this.exp.charisma = 0;
-  }
-
-  this.skills.charisma = calculateSkillF(
-    this.exp.charisma,
-    this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
-  );
-}
-
-export function gainIntelligenceExp(this: IPerson, exp: number): void {
-  if (isNaN(exp)) {
-    console.error("ERROR: NaN passed into Player.gainIntelligenceExp()");
-    return;
-  }
-  if (Player.sourceFileLvl(5) > 0 || this.skills.intelligence > 0 || Player.bitNodeN === 5) {
-    this.exp.intelligence += exp;
-    this.skills.intelligence = Math.floor(this.calculateSkill(this.exp.intelligence, 1));
-  }
-}
-
-export function gainStats(this: IPerson, retValue: ITaskTracker): void {
-  this.gainHackingExp(retValue.hack * this.mults.hacking_exp);
-  this.gainStrengthExp(retValue.str * this.mults.strength_exp);
-  this.gainDefenseExp(retValue.def * this.mults.defense_exp);
-  this.gainDexterityExp(retValue.dex * this.mults.dexterity_exp);
-  this.gainAgilityExp(retValue.agi * this.mults.agility_exp);
-  this.gainCharismaExp(retValue.cha * this.mults.charisma_exp);
-  this.gainIntelligenceExp(retValue.int);
-}
-
-//Given a string expression like "str" or "strength", returns the given stat
-export function queryStatFromString(this: PlayerObject, str: string): number {
-  const tempStr = str.toLowerCase();
-  if (tempStr.includes("hack")) {
-    return this.skills.hacking;
-  }
-  if (tempStr.includes("str")) {
-    return this.skills.strength;
-  }
-  if (tempStr.includes("def")) {
-    return this.skills.defense;
-  }
-  if (tempStr.includes("dex")) {
-    return this.skills.dexterity;
-  }
-  if (tempStr.includes("agi")) {
-    return this.skills.agility;
-  }
-  if (tempStr.includes("cha")) {
-    return this.skills.charisma;
-  }
-  if (tempStr.includes("int")) {
-    return this.skills.intelligence;
-  }
-  return 0;
-}
-
 export function startFocusing(this: PlayerObject): void {
   this.focus = true;
 }
@@ -474,17 +269,6 @@ export function takeDamage(this: PlayerObject, amt: number): boolean {
     return true;
   } else {
     return false;
-  }
-}
-
-export function regenerateHp(this: IPerson, amt: number): void {
-  if (typeof amt !== "number") {
-    console.warn(`Player.regenerateHp() called without a numeric argument: ${amt}`);
-    return;
-  }
-  this.hp.current += amt;
-  if (this.hp.current > this.hp.max) {
-    this.hp.current = this.hp.max;
   }
 }
 
@@ -1439,10 +1223,6 @@ export function giveAchievement(this: PlayerObject, achievementId: string): void
     this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
     SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, ToastVariant.SUCCESS, 2000);
   }
-}
-
-export function getIntelligenceBonus(this: PlayerObject, weight: number): number {
-  return calculateIntelligenceBonus(this.skills.intelligence, weight);
 }
 
 export function getCasinoWinnings(this: PlayerObject): number {

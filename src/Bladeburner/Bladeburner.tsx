@@ -16,7 +16,7 @@ import { City } from "./City";
 import { IAction } from "./IAction";
 import { Player } from "../Player";
 import { createTaskTracker, ITaskTracker } from "../PersonObjects/ITaskTracker";
-import { IPerson } from "../PersonObjects/IPerson";
+import { Person } from "../PersonObjects/Person";
 import { Router } from "../ui/GameRoot";
 import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
@@ -995,7 +995,7 @@ export class Bladeburner implements IBladeburner {
    * @param action(Action obj) - Derived action class
    * @param success(bool) - Whether action was successful
    */
-  getActionStats(action: IAction, person: IPerson, success: boolean): ITaskTracker {
+  getActionStats(action: IAction, person: Person, success: boolean): ITaskTracker {
     const difficulty = action.getDifficulty();
 
     /**
@@ -1025,7 +1025,7 @@ export class Bladeburner implements IBladeburner {
     };
   }
 
-  getDiplomacyEffectiveness(person: IPerson): number {
+  getDiplomacyEffectiveness(person: Person): number {
     // Returns a decimal by which the city's chaos level should be multiplied (e.g. 0.98)
     const CharismaLinearFactor = 1e3;
     const CharismaExponentialFactor = 0.045;
@@ -1035,11 +1035,11 @@ export class Bladeburner implements IBladeburner {
     return (100 - charismaEff) / 100;
   }
 
-  getRecruitmentSuccessChance(person: IPerson): number {
+  getRecruitmentSuccessChance(person: Person): number {
     return Math.pow(person.skills.charisma, 0.45) / (this.teamSize - this.sleeveSize + 1);
   }
 
-  getRecruitmentTime(person: IPerson): number {
+  getRecruitmentTime(person: Person): number {
     const effCharisma = person.skills.charisma * this.skillMultipliers.effCha;
     const charismaFactor = Math.pow(effCharisma, 0.81) + effCharisma / 90;
     return Math.max(10, Math.round(BladeburnerConstants.BaseRecruitmentTimeNeeded - charismaFactor));
@@ -1257,7 +1257,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  completeAction(person: IPerson, actionIdent: IActionIdentifier, isPlayer = true): ITaskTracker {
+  completeAction(person: Person, actionIdent: IActionIdentifier, isPlayer = true): ITaskTracker {
     let retValue = createTaskTracker();
     switch (actionIdent.type) {
       case ActionTypes["Contract"]:
@@ -1610,7 +1610,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  changeRank(person: IPerson, change: number): void {
+  changeRank(person: Person, change: number): void {
     if (isNaN(change)) {
       throw new Error("NaN passed into Bladeburner.changeRank()");
     }
@@ -2146,7 +2146,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  getActionTimeNetscriptFn(person: IPerson, type: string, name: string): number | string {
+  getActionTimeNetscriptFn(person: Person, type: string, name: string): number | string {
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
       return "bladeburner.getActionTime";
@@ -2177,7 +2177,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  getActionEstimatedSuccessChanceNetscriptFn(person: IPerson, type: string, name: string): [number, number] | string {
+  getActionEstimatedSuccessChanceNetscriptFn(person: Person, type: string, name: string): [number, number] | string {
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
       return "bladeburner.getActionEstimatedSuccessChance";

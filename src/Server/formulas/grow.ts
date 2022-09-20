@@ -1,9 +1,9 @@
 import { CONSTANTS } from "../../Constants";
 import { Server } from "../Server";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { IPerson } from "../../PersonObjects/IPerson";
+import { Person } from "../../PersonObjects/Person";
 
-export function calculateServerGrowth(server: Server, threads: number, p: IPerson, cores = 1): number {
+export function calculateServerGrowth(server: Server, threads: number, p: Person, cores = 1): number {
   const numServerGrowthCycles = Math.max(Math.floor(threads), 0);
 
   //Get adjusted growth rate, which accounts for server security

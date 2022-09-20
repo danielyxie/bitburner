@@ -1,5 +1,5 @@
 import { IReviverValue } from "../utils/JSONReviver";
-import { IPerson } from "../PersonObjects/IPerson";
+import { Person } from "../PersonObjects/Person";
 import { IBladeburner } from "./IBladeburner";
 
 interface IStatsMultiplier {
@@ -57,15 +57,15 @@ export interface IAction {
   teamCount: number;
 
   getDifficulty(): number;
-  attempt(inst: IBladeburner, person: IPerson): boolean;
+  attempt(inst: IBladeburner, person: Person): boolean;
   getActionTimePenalty(): number;
-  getActionTime(inst: IBladeburner, person: IPerson): number;
+  getActionTime(inst: IBladeburner, person: Person): number;
   getTeamSuccessBonus(inst: IBladeburner): number;
   getActionTypeSkillSuccessBonus(inst: IBladeburner): number;
   getChaosCompetencePenalty(inst: IBladeburner, params: ISuccessChanceParams): number;
   getChaosDifficultyBonus(inst: IBladeburner): number;
-  getEstSuccessChance(inst: IBladeburner, person: IPerson): [number, number];
-  getSuccessChance(inst: IBladeburner, person: IPerson, params: ISuccessChanceParams): number;
+  getEstSuccessChance(inst: IBladeburner, person: Person): [number, number];
+  getSuccessChance(inst: IBladeburner, person: Person, params: ISuccessChanceParams): number;
   getSuccessesNeededForNextLevel(baseSuccessesPerLevel: number): number;
   setMaxLevel(baseSuccessesPerLevel: number): void;
   toJSON(): IReviverValue;

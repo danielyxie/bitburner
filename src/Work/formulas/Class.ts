@@ -8,7 +8,7 @@ import { WorkStats } from "../WorkStats";
 import { Server } from "../../Server/Server";
 import { GetServer } from "../../Server/AllServers";
 import { serverMetadata } from "../../Server/data/servers";
-import { IPerson } from "../../PersonObjects/IPerson";
+import { Person } from "../../PersonObjects/Person";
 import { LocationName } from "../../Locations/data/LocationNames";
 
 const gameCPS = 1000 / CONSTANTS._idleSpeed; // 5 cycles per second
@@ -20,7 +20,7 @@ export function calculateCost(classs: Class, location: Location): number {
   return classs.earnings.money * location.costMult * discount;
 }
 
-export function calculateClassEarnings(person: IPerson, type: ClassType, locationName: LocationName): WorkStats {
+export function calculateClassEarnings(person: Person, type: ClassType, locationName: LocationName): WorkStats {
   //Find cost and exp gain per game cycle
   const hashManager = Player.hashManager;
   const classs = Classes[type];

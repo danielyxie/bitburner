@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../Constants";
 import { Player } from "../Player";
-import { IPerson } from "../PersonObjects/IPerson";
+import { Person } from "../PersonObjects/Person";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType } from "../utils/WorkType";
 import { CrimeWork } from "../Work/CrimeWork";
@@ -115,7 +115,7 @@ export class Crime {
     return this.time;
   }
 
-  successRate(p: IPerson): number {
+  successRate(p: Person): number {
     let chance: number =
       this.hacking_success_weight * p.skills.hacking +
       this.strength_success_weight * p.skills.strength +

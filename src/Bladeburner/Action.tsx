@@ -5,7 +5,7 @@ import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../uti
 import { BladeburnerConstants } from "./data/Constants";
 import { IBladeburner } from "./IBladeburner";
 import { IAction, ISuccessChanceParams } from "./IAction";
-import { IPerson } from "../PersonObjects/IPerson";
+import { Person } from "../PersonObjects/Person";
 
 class StatsMultiplier {
   [key: string]: number;
@@ -153,7 +153,7 @@ export class Action implements IAction {
    * Tests for success. Should be called when an action has completed
    * @param inst {Bladeburner} - Bladeburner instance
    */
-  attempt(inst: IBladeburner, person: IPerson): boolean {
+  attempt(inst: IBladeburner, person: Person): boolean {
     return Math.random() < this.getSuccessChance(inst, person);
   }
 
@@ -162,7 +162,7 @@ export class Action implements IAction {
     return 1;
   }
 
-  getActionTime(inst: IBladeburner, person: IPerson): number {
+  getActionTime(inst: IBladeburner, person: Person): number {
     const difficulty = this.getDifficulty();
     let baseTime = difficulty / BladeburnerConstants.DifficultyToTimeFactor;
     const skillFac = inst.skillMultipliers.actionTime; // Always < 1
@@ -212,7 +212,7 @@ export class Action implements IAction {
     return 1;
   }
 
-  getEstSuccessChance(inst: IBladeburner, person: IPerson): [number, number] {
+  getEstSuccessChance(inst: IBladeburner, person: Person): [number, number] {
     function clamp(x: number): number {
       return Math.max(0, Math.min(x, 1));
     }
@@ -233,7 +233,7 @@ export class Action implements IAction {
    * @params - options:
    *  est (bool): Get success chance estimate instead of real success chance
    */
-  getSuccessChance(inst: IBladeburner, person: IPerson, params: ISuccessChanceParams = { est: false }): number {
+  getSuccessChance(inst: IBladeburner, person: Person, params: ISuccessChanceParams = { est: false }): number {
     if (inst == null) {
       throw new Error("Invalid Bladeburner instance passed into Action.getSuccessChance");
     }

@@ -225,7 +225,7 @@ export class StaneksGift implements IStaneksGift {
       if (!sleeve.hasAugmentation(AugmentationNames.ZOE)) continue;
       sleeve.resetMultipliers();
       sleeve.mults = mergeMultipliers(sleeve.mults, sleeveMults);
-      sleeve.updateStatLevels();
+      sleeve.updateSkillLevels();
     }
   }
 

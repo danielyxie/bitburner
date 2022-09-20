@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../../Constants";
-import { IPerson } from "../../PersonObjects/IPerson";
+import { Person } from "../../PersonObjects/Person";
 
-export function repFromDonation(amt: number, person: IPerson): number {
+export function repFromDonation(amt: number, person: Person): number {
   return (amt / CONSTANTS.DonateMoneyToRepDivisor) * person.mults.faction_rep;
 }
