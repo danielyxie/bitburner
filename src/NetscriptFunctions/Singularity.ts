@@ -53,6 +53,7 @@ import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWor
 import { FactionWork } from "../Work/FactionWork";
 import { FactionWorkType } from "../Work/data/FactionWorkType";
 import { CompanyWork } from "../Work/CompanyWork";
+import { calculateCrimeWorkStats } from "../Work/formulas/Crime";
 
 export function NetscriptSingularity(): InternalAPI<ISingularity> {
   const getAugmentation = function (ctx: NetscriptContext, name: string): Augmentation {
@@ -1208,7 +1209,19 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: ${crimeRoughName}`);
         }
 
-        return Object.assign({}, crime);
+        const crimeStatsWithMultipliers = calculateCrimeWorkStats(crime);
+
+        return Object.assign({}, crime, {
+          money: crimeStatsWithMultipliers.money,
+          reputation: crimeStatsWithMultipliers.reputation,
+          hacking_exp: crimeStatsWithMultipliers.hackExp,
+          strength_exp: crimeStatsWithMultipliers.strExp,
+          defense_exp: crimeStatsWithMultipliers.defExp,
+          dexterity_exp: crimeStatsWithMultipliers.dexExp,
+          agility_exp: crimeStatsWithMultipliers.agiExp,
+          charisma_exp: crimeStatsWithMultipliers.chaExp,
+          intelligence_exp: crimeStatsWithMultipliers.intExp,
+        });
       },
     getDarkwebPrograms: (ctx: NetscriptContext) =>
       function (): string[] {
