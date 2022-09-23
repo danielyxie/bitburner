@@ -24,4 +24,5 @@ interface UserInterface
 |  [resetTheme()](./bitburner.userinterface.resettheme.md) | Resets the player's theme to the default values |
 |  [setStyles(newStyles)](./bitburner.userinterface.setstyles.md) | Sets the current styles |
 |  [setTheme(newTheme)](./bitburner.userinterface.settheme.md) | Sets the current theme |
+|  [windowSize()](./bitburner.userinterface.windowsize.md) | Get the current window size |
 

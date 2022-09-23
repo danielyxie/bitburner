@@ -17,7 +17,7 @@ commitCrime(crime: string, focus?: boolean): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  crime | string | Name of crime to attempt. |
-|  focus | boolean | Acquire player focus on this program creation. Optional. Defaults to true. |
+|  focus | boolean | Acquire player focus on this crime. Optional. Defaults to true. |
 
 <b>Returns:</b>
 

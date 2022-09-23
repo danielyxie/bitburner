@@ -86,11 +86,8 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   }
 
   // Add the stanek sleeve aug
-  if (
-    !ownedAugNames.includes(AugmentationNames.UnnamedAug1) &&
-    p.factions.includes(FactionNames.ChurchOfTheMachineGod)
-  ) {
-    const aug = StaticAugmentations[AugmentationNames.UnnamedAug1];
+  if (!ownedAugNames.includes(AugmentationNames.ZOE) && p.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
+    const aug = StaticAugmentations[AugmentationNames.ZOE];
     availableAugs.push(aug);
   }
 

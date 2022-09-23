@@ -23,11 +23,11 @@ getData(filename: string, host?: string): CodingContractData;
 
 [CodingContractData](./bitburner.codingcontractdata.md)
 
-The specified contract’s data, data type depends on contract type.;
+The specified contract’s data, data type depends on contract type.
 
 ## Remarks
 
 RAM cost: 5 GB
 
-Get the data associated with the specific Coding Contract. Note that this is not the same as the contract’s description. This is just the data that the contract wants you to act on in order to solve
+Get the data associated with the specific Coding Contract. Note that this is not the same as the contract’s description. This is just the data that the contract wants you to act on in order to solve the contract.
 

@@ -217,16 +217,13 @@ export class StaneksGift implements IStaneksGift {
     const mults = this.calculateMults();
     p.mults = mergeMultipliers(p.mults, mults);
     p.updateSkillLevels();
-    const unnamedAug1Amt = p.sleeves.reduce(
-      (n, sleeve) => n + (sleeve.hasAugmentation(AugmentationNames.UnnamedAug1) ? 1 : 0),
-      0,
-    );
-    if (unnamedAug1Amt === 0) return;
+    const zoeAmt = p.sleeves.reduce((n, sleeve) => n + (sleeve.hasAugmentation(AugmentationNames.ZOE) ? 1 : 0), 0);
+    if (zoeAmt === 0) return;
     // Less powerful for each copy.
-    const scaling = 3 / (unnamedAug1Amt + 2);
+    const scaling = 3 / (zoeAmt + 2);
     const sleeveMults = scaleMultipliers(mults, scaling);
     for (const sleeve of p.sleeves) {
-      if (!sleeve.hasAugmentation(AugmentationNames.UnnamedAug1)) continue;
+      if (!sleeve.hasAugmentation(AugmentationNames.ZOE)) continue;
       sleeve.resetMultipliers();
       sleeve.mults = mergeMultipliers(sleeve.mults, sleeveMults);
       sleeve.updateStatLevels();

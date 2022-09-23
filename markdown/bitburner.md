@@ -34,6 +34,7 @@
 |  [Employee](./bitburner.employee.md) | Employee in an office |
 |  [EmployeeJobs](./bitburner.employeejobs.md) | Object representing the number of employee in each job. |
 |  [EquipmentStats](./bitburner.equipmentstats.md) | Object representing data representing a gang member equipment. |
+|  [Export](./bitburner.export.md) | Export order for a material |
 |  [Formulas](./bitburner.formulas.md) | Formulas API |
 |  [Fragment](./bitburner.fragment.md) |  |
 |  [Gang](./bitburner.gang.md) | Gang API |

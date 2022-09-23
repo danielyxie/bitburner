@@ -15,7 +15,7 @@ maxNumNodes(): number;
 
 number
 
-maximum number of hacknet nodes.
+Maximum number of hacknet nodes.
 
 ## Remarks
 

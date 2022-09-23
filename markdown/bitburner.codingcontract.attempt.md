@@ -23,7 +23,7 @@ attempt(
 |  --- | --- | --- |
 |  answer | string \| number \| any\[\] | Solution for the contract. |
 |  filename | string | Filename of the contract. |
-|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Hostname of the server containing the contract. Optional. Defaults to current server if not provided. |
 |  opts | [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Optional parameters for configuring function behavior. |
 
 <b>Returns:</b>

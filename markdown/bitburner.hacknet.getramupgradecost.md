@@ -23,7 +23,7 @@ getRamUpgradeCost(index: number, n: number): number;
 
 number
 
-Cost of upgrading the specified Hacknet Node's ram.
+Cost of upgrading the specified Hacknet Node's RAM.
 
 ## Remarks
 
@@ -31,5 +31,5 @@ RAM cost: 0 GB
 
 Returns the cost of upgrading the RAM of the specified Hacknet Node n times.
 
-If an invalid value for n is provided, then this function returns 0. If the specified Hacknet Node is already at max level, then Infinity is returned.
+If an invalid value for n is provided, then this function returns 0. If the specified Hacknet Node already has max RAM, then Infinity is returned.
 

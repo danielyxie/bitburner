@@ -93,7 +93,7 @@ export enum AugmentationNames {
   CongruityImplant = "nickofolas Congruity Implant",
   HydroflameLeftArm = "Hydroflame Left Arm",
   BigDsBigBrain = "BigD's Big ... Brain",
-  UnnamedAug1 = "UnnamedAug1",
+  ZOE = "Z.O.Ë.",
   UnnamedAug2 = "UnnamedAug2",
 
   // Bladeburner augs

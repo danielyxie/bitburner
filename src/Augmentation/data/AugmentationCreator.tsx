@@ -1661,17 +1661,20 @@ export const initGeneralAugmentations = (): Augmentation[] => [
   }),
 
   // Sleeve exclusive augmentations
-  // new Augmentation({
-  //   name: AugmentationNames.UnnamedAug1,
-  //   isSpecial: true,
-  //   repCost: Infinity,
-  //   moneyCost: 1e12,
-  //   info: "This augmentation is exclusive to sleeves.",
-  //   stats: <>Allows sleeves to benefit from Stanek's Gift but it is less powerful if several are installed.</>,
-  //   factions: [
-  //     /*Technically in FactionNames.ChurchOfTheMachineGod but not really for display reasons */
-  //   ],
-  // }),
+  new Augmentation({
+    name: AugmentationNames.ZOE,
+    isSpecial: true,
+    repCost: Infinity,
+    moneyCost: 1e12,
+    info:
+      "Zoë's Omnicerebrum Ënhancer for sleeves inserts an omnicerebrum into your sleeve. " +
+      "An omnicerebrum is a near perfect simulation of the human brain, allowing it to take advantage of a larger variety of augments. " +
+      "But you should know about this BitRunner, since you have one of these yourself!",
+    stats: <>Allows sleeves to benefit from Stanek's Gift but it is less powerful if several are installed.</>,
+    factions: [
+      /*Technically in FactionNames.ChurchOfTheMachineGod but not really for display reasons */
+    ],
+  }),
 ];
 
 export const initBladeburnerAugmentations = (): Augmentation[] => [
