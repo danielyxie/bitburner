@@ -233,7 +233,7 @@ export class Material {
     return Generic_toJSON("Material", this);
   }
 
-  // Initiatizes a Material object from a JSON save state.
+  // Initializes a Material object from a JSON save state.
   static fromJSON(value: IReviverValue): Material {
     return Generic_fromJSON(Material, value.data);
   }
