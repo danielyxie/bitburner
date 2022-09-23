@@ -1497,6 +1497,28 @@ export interface TIX {
  */
 export interface Singularity {
   /**
+   * Backup game save.
+   * @remarks
+   * RAM cost: 1 GB * 16/4/1
+   *
+   *
+   * This function will automatically opens the backup save prompt and claim the free faction favour if available.
+   *
+   */
+  exportGame(): void;
+
+  /**
+   * Returns Backup save bonus availability.
+   * @remarks
+   * RAM cost: 0.5 GB * 16/4/1
+   *
+   *
+   * This function will check if there is a bonus for backing up your save.
+   *
+   */
+  exportGameBonus(): boolean;
+
+  /**
    * Take university class.
    *
    * @remarks
