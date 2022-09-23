@@ -123,8 +123,7 @@ export function Stats(props: IProps): React.ReactElement {
           <Tooltip
             title={
               <Typography>
-                This is your Bladeburner division's estimate of how many Synthoid communities exist in your current
-                city.
+                This is your Bladeburner division's estimate of how many Synthoid communities exist in your current city.
               </Typography>
             }
           >
