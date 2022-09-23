@@ -62,12 +62,6 @@ export interface IConstructorParams {
   bladeburner_stamina_gain?: number;
   bladeburner_analysis?: number;
   bladeburner_success_chance?: number;
-  infiltration_base_rep_increase?: number;
-  infiltration_rep?: number;
-  infiltration_trade?: number;
-  infiltration_sell?: number;
-  infiltration_timer?: number;
-  infiltration_damage_reduction?: number;
 
   startingMoney?: number;
   programs?: string[];

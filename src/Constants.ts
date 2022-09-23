@@ -229,7 +229,7 @@ export const CONSTANTS: {
 
   InfiniteLoopLimit: 2000,
 
-  Donations: 25,
+  Donations: 30,
 
   LatestUpdate: `
 v2.1.0 - 2022-08-23
