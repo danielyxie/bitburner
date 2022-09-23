@@ -50,7 +50,7 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
 
   // Numeraljs formatter
   const nf = "0.000";
-  const nfB = "0.000a"; // For numbers that might be biger
+  const nfB = "0.000a"; // For numbers that might be bigger
 
   // Total gain or loss of this material (per second)
   const totalGain = mat.buy + mat.prd + mat.imp - mat.sll - mat.totalExp;
