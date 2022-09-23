@@ -397,8 +397,8 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
     },
     joinBladeburnerDivision: (ctx: NetscriptContext) => (): boolean => {
       if (player.bitNodeN === 7 || player.sourceFileLvl(7) > 0) {
-        if (player.bitNodeN === 8) {
-          return false;
+        if (BitNodeMultipliers.BladeburnerRank == 0) {
+          return false; // Disabled in this bitnode
         }
         if (player.bladeburner instanceof Bladeburner) {
           return true; // Already member

@@ -280,6 +280,14 @@ function BladeburnerMults({ mults }: IMultsProps): React.ReactElement {
   const player = use.Player();
   if (!player.canAccessBladeburner()) return <></>;
 
+  if (mults.BladeburnerRank == 0) {
+    const rows: IBNMultRows = {
+      BladeburnerRank: { name: "Disabled", content: "" },
+    };
+
+    return <BNMultTable sectionName="Bladeburner" rowData={rows} mults={mults} />;
+  }
+
   const rows: IBNMultRows = {
     BladeburnerRank: { name: "Rank Gain" },
     BladeburnerSkillCost: { name: "Skill Cost" },
@@ -322,6 +330,17 @@ function GangMults({ mults }: IMultsProps): React.ReactElement {
 function CorporationMults({ mults }: IMultsProps): React.ReactElement {
   const player = use.Player();
   if (!player.canAccessCorporation()) return <></>;
+
+  if (mults.CorporationSoftcap < 0.15) {
+    const rows: IBNMultRows = {
+      CorporationSoftcap: {
+        name: "Disabled",
+        content: "",
+      },
+    };
+
+    return <BNMultTable sectionName="Corporation" rowData={rows} mults={mults} />;
+  }
 
   const rows: IBNMultRows = {
     CorporationSoftcap: {

@@ -654,6 +654,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
     }
     case 8: {
       return Object.assign(mults, {
+        BladeburnerRank: 0,
         ScriptHackMoney: 0.3,
         ScriptHackMoneyGain: 0,
         ManualHackMoney: 0,
