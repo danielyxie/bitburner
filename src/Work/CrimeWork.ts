@@ -108,7 +108,7 @@ export class CrimeWork extends Work {
     let karma = crime.karma;
     const success = determineCrimeSuccess(player, crime.type);
     if (success) {
-      player.gainMoney(gains.money * player.mults.crime_money, "crime");
+      player.gainMoney(gains.money, "crime");
       player.numPeopleKilled += crime.kills;
       player.gainIntelligenceExp(gains.intExp);
     } else {
