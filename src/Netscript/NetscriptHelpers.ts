@@ -20,7 +20,7 @@ import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { influenceStockThroughServerHack } from "../StockMarket/PlayerInfluencing";
-import { IPort } from "../NetscriptPort";
+import { IPort, NetscriptPort } from "../NetscriptPort";
 import { NetscriptPorts } from "../NetscriptWorker";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { FormulaGang } from "../Gang/formulas/formulas";
@@ -492,10 +492,16 @@ function getValidPort(ctx: NetscriptContext, port: number): IPort {
       `Trying to use an invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
     );
   }
-  const iport = NetscriptPorts[port - 1];
+  let iport = NetscriptPorts.get(port);
   if (iport == null || !(iport instanceof Object)) {
-    throw makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
+    NetscriptPorts.set(port, NetscriptPort());
   }
+  // Try again.
+  iport = NetscriptPorts.get(port);
+  if (iport == null || !(iport instanceof Object)) {
+    throw helpers.makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
+  }
+
   return iport;
 }
 

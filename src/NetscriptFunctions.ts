@@ -31,7 +31,7 @@ import { Server } from "./Server/Server";
 import { influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
-import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
+import { runScriptFromScript } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
@@ -1518,29 +1518,15 @@ const base: InternalAPI<NS> = {
   tryWritePort:
     (ctx: NetscriptContext) =>
     (_port: unknown, data: unknown = ""): Promise<any> => {
-      let port = helpers.number(ctx, "port", _port);
+      const port = helpers.number(ctx, "port", _port);
       if (typeof data !== "string" && typeof data !== "number") {
         throw helpers.makeRuntimeErrorMsg(
           ctx,
           `Trying to write invalid data to a port: only strings and numbers are valid.`,
         );
       }
-      if (!isNaN(port)) {
-        port = Math.round(port);
-        if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-          throw helpers.makeRuntimeErrorMsg(
-            ctx,
-            `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
-          );
-        }
-        const iport = NetscriptPorts[port - 1];
-        if (iport == null || !(iport instanceof Object)) {
-          throw helpers.makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
-        }
-        return Promise.resolve(iport.tryWrite(data));
-      } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
-      }
+      const iport = helpers.getValidPort(ctx, port);
+      return Promise.resolve(iport.tryWrite(data));
     },
   readPort:
     (ctx: NetscriptContext) =>
