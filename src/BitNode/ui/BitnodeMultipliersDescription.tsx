@@ -280,7 +280,7 @@ function BladeburnerMults({ mults }: IMultsProps): React.ReactElement {
   const player = use.Player();
   if (!player.canAccessBladeburner()) return <></>;
 
-  if (mults.BladeburnerRank == 0) {
+  if (mults.BladeburnerRank === 0) {
     const rows: IBNMultRows = {
       BladeburnerRank: { name: "Disabled", content: "" },
     };
