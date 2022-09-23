@@ -231,8 +231,7 @@ BitNodes["BitNode7"] = new BitNode(
       <br />
       <br />
       In this BitNode you will be able to access the {FactionNames.Bladeburners} API, which allows you to access{" "}
-      {FactionNames.Bladeburners}
-      functionality through Netscript.
+      {FactionNames.Bladeburners} functionality through Netscript.
       <br />
       <br />
       Destroying this BitNode will give you Source-File 7, or if you already have this Source-File it will upgrade its
