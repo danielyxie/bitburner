@@ -76,7 +76,9 @@ export class Server extends BaseServer {
 
     //Hack Difficulty is synonymous with server security. Base Difficulty = Starting difficulty
     this.hackDifficulty =
-      params.hackDifficulty != null ? Math.min(params.hackDifficulty * BitNodeMultipliers.ServerStartingSecurity, 100) : 1;
+      params.hackDifficulty != null
+        ? Math.min(params.hackDifficulty * BitNodeMultipliers.ServerStartingSecurity, 100)
+        : 1;
     this.baseDifficulty = this.hackDifficulty;
     this.minDifficulty = Math.max(1, Math.round(this.hackDifficulty / 3));
     this.serverGrowth = params.serverGrowth != null ? params.serverGrowth : 1; //Integer from 0 to 100. Affects money increase from grow()
