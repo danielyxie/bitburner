@@ -7140,7 +7140,7 @@ interface CorporationInfo {
   numShares: number;
   /** Cooldown until shares can be sold again */
   shareSaleCooldown: number;
-  /** Amount of shares issued */
+  /** Amount of aqcuirable shares. */
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;

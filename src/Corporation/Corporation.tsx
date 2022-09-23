@@ -84,6 +84,10 @@ export class Corporation {
       this.storedCycles -= gameCycles;
 
       this.divisions.forEach((ind) => {
+        ind.resetImports(state);
+      });
+
+      this.divisions.forEach((ind) => {
         ind.process(marketCycles, state, this);
       });
 
@@ -230,6 +234,7 @@ export class Corporation {
     let sharePrice = this.sharePrice;
     let sharesSold = 0;
     let profit = 0;
+    let targetPrice = this.getTargetSharePrice();
 
     const maxIterations = Math.ceil(numShares / CorporationConstants.SHARESPERPRICEUPDATE);
     if (isNaN(maxIterations) || maxIterations > 10e6) {
@@ -249,9 +254,13 @@ export class Corporation {
         sharesUntilUpdate = CorporationConstants.SHARESPERPRICEUPDATE;
         sharesTracker -= sharesUntilUpdate;
         sharesSold += sharesUntilUpdate;
-
+        targetPrice = this.valuation / (2 * (this.totalShares + sharesSold - this.numShares));
         // Calculate what new share price would be
-        sharePrice = this.valuation / (2 * (this.totalShares + sharesSold - this.numShares));
+        if (sharePrice <= targetPrice) {
+          sharePrice *= 1 + 0.5 * 0.01;
+        } else {
+          sharePrice *= 1 - 0.5 * 0.01;
+        }
       }
     }
 
