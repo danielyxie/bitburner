@@ -25,6 +25,7 @@ export interface ICorporation {
   issuedShares: number;
   sharePrice: number;
   storedCycles: number;
+  valuation: number;
 
   unlockUpgrades: number[];
   upgrades: number[];
@@ -36,7 +37,8 @@ export interface ICorporation {
   getState(): string;
   storeCycles(numCycles: number): void;
   process(player: IPlayer): void;
-  determineValuation(): number;
+  determineValuation(): void;
+  determineCycleValuation(): number;
   getTargetSharePrice(): number;
   updateSharePrice(): void;
   immediatelyUpdateSharePrice(): void;

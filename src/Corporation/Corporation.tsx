@@ -45,7 +45,9 @@ export class Corporation {
   upgrades: number[];
   upgradeMultipliers: number[];
 
-  avgProfit = 0;
+  cycleValuation = 0;
+  valuationsList = [0];
+  valuation = 0;
 
   state = new CorporationState();
 
@@ -108,8 +110,8 @@ export class Corporation {
           this.expenses = this.expenses + ind.lastCycleExpenses;
         });
         const profit = this.revenue - this.expenses;
-        this.avgProfit =
-          (this.avgProfit * (CorporationConstants.AvgProfitLength - 1) + profit) / CorporationConstants.AvgProfitLength;
+        this.cycleValuation = this.determineCycleValuation();
+        this.determineValuation();
         const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
@@ -166,9 +168,9 @@ export class Corporation {
     return Math.pow(dividends, 1 - this.dividendTax);
   }
 
-  determineValuation(): number {
+  determineCycleValuation(): number {
     let val,
-      profit = this.avgProfit;
+      profit = this.revenue - this.expenses;
     if (this.public) {
       // Account for dividends
       if (this.dividendRate > 0) {
@@ -182,19 +184,25 @@ export class Corporation {
       val = 10e9 + Math.max(this.funds, 0) / 3; //Base valuation
       if (profit > 0) {
         val += profit * 315e3;
-        val *= Math.pow(1.1, this.divisions.length);
-      } else {
-        val = 10e9 * Math.pow(1.1, this.divisions.length);
       }
+      val *= Math.pow(1.1, this.divisions.length);
       val -= val % 1e6; //Round down to nearest millionth
     }
     return val * BitNodeMultipliers.CorporationValuation;
   }
 
+  determineValuation(): void {
+    this.valuationsList.push(this.cycleValuation); //Add current valuation to the list
+    if (this.valuationsList.length > CorporationConstants.ValuationLength) this.valuationsList.shift();
+    let val = this.valuationsList.reduce((a, b) => a + b); //Calculate valuations sum
+    val /= CorporationConstants.ValuationLength; //Calculate the average
+    this.valuation = val;
+  }
+
   getTargetSharePrice(): number {
     // Note: totalShares - numShares is not the same as issuedShares because
     // issuedShares does not account for private investors
-    return this.determineValuation() / (2 * (this.totalShares - this.numShares) + 1);
+    return this.valuation / (2 * (this.totalShares - this.numShares) + 1);
   }
 
   updateSharePrice(): void {
@@ -243,7 +251,7 @@ export class Corporation {
         sharesSold += sharesUntilUpdate;
 
         // Calculate what new share price would be
-        sharePrice = this.determineValuation() / (2 * (this.totalShares + sharesSold - this.numShares));
+        sharePrice = this.valuation / (2 * (this.totalShares + sharesSold - this.numShares));
       }
     }
 

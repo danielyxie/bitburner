@@ -146,7 +146,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         shares: 0,
         round: corporation.fundingRound + 1, // Make more readable
       }; // Don't throw an error here, no reason to have a second function to check if you can get investment.
-    const val = corporation.determineValuation();
+    const val = corporation.valuation;
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
     const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
     const funding = val * percShares * roundMultiplier;
@@ -166,7 +166,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       corporation.public
     )
       return false;
-    const val = corporation.determineValuation();
+    const val = corporation.valuation;
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
     const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
     const funding = val * percShares * roundMultiplier;
@@ -179,7 +179,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
 
   function goPublic(numShares: number): boolean {
     const corporation = getCorporation();
-    const initialSharePrice = corporation.determineValuation() / corporation.totalShares;
+    const initialSharePrice = corporation.valuation / corporation.totalShares;
     if (isNaN(numShares)) throw new Error("Invalid value for number of issued shares");
     if (numShares < 0) throw new Error("Invalid value for number of issued shares");
     if (numShares > corporation.numShares) throw new Error("You don't have that many shares to issue!");
