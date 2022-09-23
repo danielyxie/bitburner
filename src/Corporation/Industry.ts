@@ -40,7 +40,7 @@ export class Industry implements IIndustry {
 
   /* The following are factors for how much production/other things are increased by
        different factors. The production increase always has diminishing returns,
-       and they are all reprsented by exponentials of < 1 (e.g x ^ 0.5, x ^ 0.8)
+       and they are all represented by exponentials of < 1 (e.g x ^ 0.5, x ^ 0.8)
        The number for these represent the exponential. A lower number means more
        diminishing returns */
   reFac = 0; //Real estate Factor
@@ -389,7 +389,7 @@ export class Industry implements IIndustry {
     this.state = state;
 
     //At the start of a cycle, store and reset revenue/expenses
-    //Then calculate salaries and processs the markets
+    //Then calculate salaries and process the markets
     if (state === "START") {
       if (isNaN(this.thisCycleRevenue) || isNaN(this.thisCycleExpenses)) {
         console.error("NaN in Corporation's computed revenue/expenses");
@@ -922,7 +922,7 @@ export class Industry implements IIndustry {
 
                       // Make sure theres enough space in warehouse
                       if (expWarehouse.sizeUsed >= expWarehouse.size) {
-                        // Warehouse at capacity. Exporting doesnt
+                        // Warehouse at capacity. Exporting doesn't
                         // affect revenue so just return 0's
                         return [0, 0];
                       } else {
@@ -1106,7 +1106,7 @@ export class Industry implements IIndustry {
               // Reverse engineer the 'maxSell' formula
               // 1. Set 'maxSell' = prod
               // 2. Substitute formula for 'markup'
-              // 3. Solve for 'sCost'roduct.pCost = sCost
+              // 3. Solve for 'sCost', product.pCost = sCost
               const numerator = markupLimit;
               const sqrtNumerator = prod;
               const sqrtDenominator =
@@ -1322,7 +1322,7 @@ export class Industry implements IIndustry {
     const researchTree = IndustryResearchTrees[this.type];
     if (researchTree === undefined) throw new Error(`Invalid industry "${this.type}"`);
 
-    // Since ResearchTree data isnt saved, we'll update the Research Tree data
+    // Since ResearchTree data isn't saved, we'll update the Research Tree data
     // based on the stored 'researched' property in the Industry object
     if (Object.keys(researchTree.researched).length !== Object.keys(this.researched).length) {
       for (const research of Object.keys(this.researched)) {
@@ -1410,7 +1410,7 @@ export class Industry implements IIndustry {
   }
 
   /**
-   * Initiatizes a Industry object from a JSON save state.
+   * Initializes a Industry object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): Industry {
     return Generic_fromJSON(Industry, value.data);
