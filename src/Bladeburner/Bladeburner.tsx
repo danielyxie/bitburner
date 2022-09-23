@@ -696,7 +696,7 @@ export class Bladeburner {
 
     // Set variables
     if (args.length === 4) {
-      const variable = args[1].toLowerCase(); // allows Action Type to be with or without capitalisation.
+      const variable = args[1].toLowerCase(); // allows Action Type to be with or without capitalization.
       const val = args[2];
 
       let highLow = false; // True for high, false for low
@@ -1416,7 +1416,7 @@ export class Bladeburner {
 
           this.resetAction(); // Stop regardless of success or fail
 
-          // Calculate team lossses
+          // Calculate team losses
           if (teamCount >= 1) {
             const losses = getRandomInt(1, teamLossMax);
             this.teamSize -= losses;
@@ -1645,7 +1645,7 @@ export class Bladeburner {
     }
 
     // If the previous action went past its completion time, add to the next action
-    // This is not added inmediatly in case the automation changes the action
+    // This is not added immediately in case the automation changes the action
     this.actionTimeCurrent += seconds + this.actionTimeOverflow;
     this.actionTimeOverflow = 0;
     if (this.actionTimeCurrent >= this.actionTimeToComplete) {
@@ -2385,7 +2385,7 @@ export class Bladeburner {
   }
 
   /**
-   * Initiatizes a Bladeburner object from a JSON save state.
+   * Initializes a Bladeburner object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): Bladeburner {
     return Generic_fromJSON(Bladeburner, value.data);
