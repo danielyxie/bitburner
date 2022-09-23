@@ -1320,7 +1320,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
     },
     exportGame: (ctx: NetscriptContext) => (): void => {
       helpers.checkSingularityAccess(ctx);
-      onExport(player);
+      onExport();
       return saveObject.exportGame();
     },
     exportGameBonus: (ctx: NetscriptContext) => (): boolean => {
