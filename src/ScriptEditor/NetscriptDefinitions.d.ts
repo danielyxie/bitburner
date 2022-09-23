@@ -3511,7 +3511,7 @@ export interface Gang {
    * Ascend the specified Gang Member.
    *
    * @param memberName - Name of member to ascend.
-   * @returns Object with info about the ascension results. undefined if ascension did not occur.
+   * @returns Object with info about the ascension results. Undefined if ascension did not occur.
    */
   ascendMember(memberName: string): GangMemberAscension | undefined;
 
