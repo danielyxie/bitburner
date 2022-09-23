@@ -21,7 +21,7 @@ export class Deck {
     return this.cards.shift() as Card; // Guaranteed to return a Card since we throw an Error if array is empty
   }
 
-  // Draws a card, resetting the deck beforehands if the Deck is empty
+  // Draws a card, resetting the deck beforehand if the Deck is empty
   safeDrawCard(): Card {
     if (this.cards.length === 0) {
       this.reset();
