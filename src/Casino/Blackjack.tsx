@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 
 const MAX_BET = 100e6;
-export const DECK_COUNT = 5; // 5-deck multideck
+export const DECK_COUNT = 5; // 5-deck multi-deck
 
 enum Result {
   Pending = "",
@@ -70,7 +70,7 @@ export class Blackjack extends React.Component<Record<string, never>, State> {
       return;
     }
 
-    // Take money from player right away so that player's dont just "leave" to avoid the loss (I mean they could
+    // Take money from player right away so that player's don't just "leave" to avoid the loss (I mean they could
     // always reload without saving but w.e) TODO: Save/Restore the RNG state to limit the value of save-scumming.
     win(-this.state.bet);
 
@@ -128,7 +128,7 @@ export class Blackjack extends React.Component<Record<string, never>, State> {
       valuesUnder21.sort((a, b) => a - b);
       return valuesUnder21[valuesUnder21.length - 1];
     } else {
-      // Just return the first value. It doesnt really matter anyways since hand is buted
+      // Just return the first value. It doesn't really matter anyways since hand is busted
       return handValues[0];
     }
   };
@@ -248,7 +248,7 @@ export class Blackjack extends React.Component<Record<string, never>, State> {
         bet: 0,
         betInput,
         wagerInvalid: true,
-        wagerInvalidHelperText: "Must bet a postive amount",
+        wagerInvalidHelperText: "Must bet a positive amount",
       });
     } else if (wager > MAX_BET) {
       this.setState({
