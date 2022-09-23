@@ -3523,7 +3523,7 @@ export interface Gang {
    * Get the result of an ascension without ascending.
    *
    * @param memberName - Name of member.
-   * @returns Object with info about the ascension results. undefined if ascension is impossible.
+   * @returns Object with info about the ascension results. Undefined if ascension is impossible.
    */
   getAscensionResult(memberName: string): GangMemberAscension | undefined;
 
