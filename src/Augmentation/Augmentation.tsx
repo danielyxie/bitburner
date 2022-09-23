@@ -607,7 +607,7 @@ export class Augmentation {
     return Generic_toJSON("Augmentation", this);
   }
 
-  // Initiatizes a Augmentation object from a JSON save state.
+  // Initializes a Augmentation object from a JSON save state.
   static fromJSON(value: IReviverValue): Augmentation {
     return Generic_fromJSON(Augmentation, value.data);
   }
