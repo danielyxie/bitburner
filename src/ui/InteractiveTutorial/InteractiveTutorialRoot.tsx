@@ -624,7 +624,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
                 <ArrowBackIos />
               </IconButton>
             )}
-            {content.canNext && (
+            {(content.canNext || ITutorial.stepIsDone[step]) && (
               <IconButton onClick={iTutorialNextStep} aria-label="next">
                 <ArrowForwardIos />
               </IconButton>
