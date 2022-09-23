@@ -50,7 +50,7 @@ export class Product {
 
   // Variables for handling the creation process of this Product
   fin = false; // Whether this Product has finished being created
-  prog = 0; // Creation progress - A number betwee 0-100 representing percentage
+  prog = 0; // Creation progress - A number between 0-100 representing percentage
   createCity = ""; // City in which the product is/was being created
   designCost = 0; // How much money was invested into designing this Product
   advCost = 0; // How much money was invested into advertising this Product
@@ -268,7 +268,7 @@ export class Product {
     return Generic_toJSON("Product", this);
   }
 
-  // Initiatizes a Product object from a JSON save state.
+  // Initializes a Product object from a JSON save state.
   static fromJSON(value: IReviverValue): Product {
     return Generic_fromJSON(Product, value.data);
   }
