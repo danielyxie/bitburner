@@ -47,8 +47,8 @@ export class Fragment {
     return this.shape[0].length;
   }
 
-  // List of direct neighbors of this fragment.
-  neighbors(rotation: number): number[][] {
+  // List of direct neighboors of this fragment.
+  neighboors(rotation: number): number[][] {
     const candidates: number[][] = [];
 
     const add = (x: number, y: number): void => {
