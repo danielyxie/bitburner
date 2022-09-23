@@ -61,9 +61,9 @@ export class ActiveFragment {
     return this.fragment().fullAt(worldX - this.x, worldY - this.y, this.rotation);
   }
 
-  neighboors(): number[][] {
+  neighbors(): number[][] {
     return this.fragment()
-      .neighboors(this.rotation)
+      .neighbors(this.rotation)
       .map((cell) => [this.x + cell[0], this.y + cell[1]]);
   }
 
