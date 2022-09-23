@@ -100,14 +100,16 @@ export function UpgradeOfficeSizeModal(props: IProps): React.ReactElement {
           cost={upgradeCost15}
           size={CorporationConstants.OfficeInitialSize * 5}
         />
-        <UpgradeSizeButton
-          onClose={props.onClose}
-          rerender={props.rerender}
-          office={props.office}
-          corp={corp}
-          cost={upgradeCostMax}
-          size={maxNum * CorporationConstants.OfficeInitialSize}
-        />
+        {maxNum !== 1 && maxNum !== 5 && (
+          <UpgradeSizeButton
+            onClose={props.onClose}
+            rerender={props.rerender}
+            office={props.office}
+            corp={corp}
+            cost={upgradeCostMax}
+            size={maxNum * CorporationConstants.OfficeInitialSize}
+          />
+        )}
       </Box>
     </Modal>
   );
