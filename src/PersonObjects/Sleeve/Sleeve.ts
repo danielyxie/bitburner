@@ -20,6 +20,8 @@ import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 
+import { Contracts } from "../../Bladeburner/data/Contracts";
+
 import { CONSTANTS } from "../../Constants";
 
 import { Faction } from "../../Faction/Faction";
@@ -451,11 +453,12 @@ export class Sleeve extends Person {
         this.startWork(p, new SleeveSupportWork(p));
         return true;
       case "Take on contracts":
+        if (!Contracts[contract]) return false;
         this.startWork(p, new SleeveBladeburnerWork({ type: "Contracts", name: contract }));
         return true;
     }
 
-    return true;
+    return false;
   }
 
   recruitmentSuccessChance(p: IPlayer): number {
