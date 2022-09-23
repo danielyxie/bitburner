@@ -954,7 +954,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
 
         // if the player is in a gang and the target faction is any of the gang faction, fail
         if (player.inGang() && faction.name === player.getGangFaction().name) {
-          helpers.log(ctx, () => `You can't work for '${facName}' because youre managing a gang for it`);
+          helpers.log(ctx, () => `You can't work for '${facName}' because you're managing a gang for it.`);
           return false;
         }
 
