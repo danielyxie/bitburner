@@ -280,15 +280,15 @@ export class Sleeve extends Person {
     return true;
   }
 
+  hasAugmentation(aug: string): boolean {
+    return this.augmentations.some((a) => a.name === aug);
+  }
+
   tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
-    if (!p.canAfford(aug.baseCost)) {
-      return false;
-    }
+    if (!p.canAfford(aug.baseCost)) return false;
 
     // Verify that this sleeve does not already have that augmentation.
-    if (this.augmentations.some((a) => a.name === aug.name)) {
-      return false;
-    }
+    if (this.hasAugmentation(aug.name)) return false;
 
     p.loseMoney(aug.baseCost, "sleeves");
     this.installAugmentation(aug);
@@ -296,11 +296,6 @@ export class Sleeve extends Person {
   }
 
   upgradeMemory(n: number): void {
-    if (n < 0) {
-      console.warn(`Sleeve.upgradeMemory() called with negative value: ${n}`);
-      return;
-    }
-
     this.memory = Math.min(100, Math.round(this.memory + n));
   }
 

@@ -6,6 +6,7 @@ import { WHRNG } from "../../Casino/RNG";
 import React from "react";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { CONSTANTS } from "../../Constants";
+import { Faction } from "src/Faction/Faction";
 
 interface CircadianBonus {
   bonuses: {
@@ -1630,6 +1631,16 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     factions: [FactionNames.TianDiHui],
   }),
 
+  // new Augmentation({
+  //   name: AugmentationNames.UnnamedAug2,
+  //   repCost: 500e3,
+  //   moneyCost: 5e9,
+  //   info: "Undecided description",
+  //   startingMoney: 100e6,
+  //   programs: [Programs.HTTPWormProgram.name, Programs.SQLInjectProgram.name],
+  //   factions: [FactionNames.OmniTekIncorporated],
+  // }),
+
   // Grafting-exclusive Augmentation
   new Augmentation({
     name: AugmentationNames.CongruityImplant,
@@ -1647,6 +1658,19 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     ),
     stats: <>This Augmentation removes the Entropy virus, and prevents it from affecting you again.</>,
     factions: [],
+  }),
+
+  // Sleeve exclusive augmentations
+  new Augmentation({
+    name: AugmentationNames.UnnamedAug1,
+    isSpecial: true,
+    repCost: Infinity,
+    moneyCost: 1e12,
+    info: "This augmentation is exclusive to sleeves.",
+    stats: <>Allows sleeves to benefit from Stanek's Gift but it is less powerful if several are installed.</>,
+    factions: [
+      /*Technically in FactionNames.ChurchOfTheMachineGod but not really for display reasons */
+    ],
   }),
 ];
 
