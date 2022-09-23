@@ -1,6 +1,8 @@
+import { Player } from "../Player";
 import { IPlayer } from "src/PersonObjects/IPlayer";
 import { MaterialSizes } from "./MaterialSizes";
 import { ICorporation } from "./ICorporation";
+import { Corporation } from "./Corporation";
 import { IIndustry } from "./IIndustry";
 import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
 import { Industry } from "./Industry";
@@ -463,6 +465,23 @@ export function Research(division: IIndustry, researchName: string): void {
   // Get the Node from the Research Tree and set its 'researched' property
   researchTree.research(researchName);
   division.researched[researchName] = true;
+
+  // I couldn't figure out where else to put this so that warehouse size would get updated instantly
+  // whether research is done by script or UI. All other stats gets calculated in every cycle
+  // Warehouse size gets updated only when something increases it.
+  if (researchName == "Drones - Transport") {
+    for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
+      const city = CorporationConstants.Cities[i];
+      const warehouse = division.warehouses[city];
+      if (!(warehouse instanceof Warehouse)) {
+        continue;
+      }
+      if (Player.corporation instanceof Corporation) {
+        // Stores cycles in a "buffer". Processed separately using Engine Counters
+        warehouse.updateSize(Player.corporation, division);
+      }
+    }
+  }
 }
 
 export function ExportMaterial(
