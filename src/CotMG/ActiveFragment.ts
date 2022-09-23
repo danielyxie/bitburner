@@ -79,7 +79,7 @@ export class ActiveFragment {
   }
 
   /**
-   * Initializes an acive fragment from a JSON save state
+   * Initializes an active fragment from a JSON save state
    */
   static fromJSON(value: IReviverValue): ActiveFragment {
     return Generic_fromJSON(ActiveFragment, value.data);
