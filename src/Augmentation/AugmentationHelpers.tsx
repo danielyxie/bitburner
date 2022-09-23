@@ -61,7 +61,7 @@ export function getGenericAugmentationPriceMultiplier(): number {
   return Math.pow(getBaseAugmentationPriceMultiplier(), Player.queuedAugmentations.length);
 }
 
-//Resets an Augmentation during (re-initizliation)
+//Resets an Augmentation during (re-initialization)
 function resetAugmentation(aug: Augmentation): void {
   aug.addToFactions(aug.factions);
   const name = aug.name;
