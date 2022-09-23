@@ -1444,7 +1444,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
           coloring[initialVertex] = 0;
           const frontier: number[] = [initialVertex];
 
-          //Propogate the coloring throughout the component containing v greedily
+          //Propagate the coloring throughout the component containing v greedily
           while (frontier.length > 0) {
             const v: number = frontier.pop() || 0;
             const neighbors: number[] = neighbourhood(v);
@@ -1728,7 +1728,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return [
         "Vigenère cipher is a type of polyalphabetic substitution. It uses ",
         "the Vigenère square to encrypt and decrypt plaintext with a keyword.\n\n",
-        "&nbsp;&nbsp;Vignenère square:\n",
+        "&nbsp;&nbsp;Vigenère square:\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n",
         "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----------------------------------------------------\n",
         "&nbsp;&nbsp;&nbsp;&nbsp; A | A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n",
