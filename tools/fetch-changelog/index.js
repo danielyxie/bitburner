@@ -4,12 +4,10 @@ import commandLineArgs from "command-line-args";
 
 const owner = "danielyxie";
 const repo = "bitburner";
-const basePath = `https://github.com/${owner}/${repo}`;
 
 const cliArgs = commandLineArgs([
   { name: "from", alias: "f", type: String },
   { name: "to", alias: "t", type: String },
-  { name: "detailed", alias: "d", type: Boolean },
 ]);
 
 class MergeChangelog {
@@ -176,65 +174,57 @@ class MergeChangelog {
     return response.data.commit.sha;
   }
 
-  async getChangelog(from, to, detailedOutput) {
+  async getChangelog(from, to) {
     const changes = await this.getPullsMergedBetween(from, to);
-    const pullLines = changes.pulls.map((line) => this.getPullMarkdown(line, detailedOutput));
-    const commitLines = changes.danglingCommits.map((line) => this.getCommitMarkdown(line, detailedOutput));
-    commitLines.push(`* Nerf noodle bar.`);
-    const shortFrom = changes.from.date.toISOString().split("T")[0];
-    const shortTo = changes.to.date.toISOString().split("T")[0];
-    const shortFromSha = changes.from.commit.sha.slice(0, 7);
-    const shortToSha = changes.to.commit.sha.slice(0, 7);
-    const title = `## [draft] v1.x.x - ${shortFrom} to ${shortTo}`;
-    let log = `
-${title}
+    const pullLines = changes.pulls
+      .map((line) => this.getPullMarkdown(line))
+      .concat(changes.danglingCommits.map((line) => this.getCommitMarkdown(line)));
+    pullLines.push({ category: "MISC", title: "Nerf Noodle bar" });
+    const title = `v2.x.x - ${new Date().toISOString().slice(0, 10)}  TITLE\n\n`;
+    const map = {};
+    pullLines.forEach((c) => {
+      if (c.title.includes("allbuild commit")) return;
+      let array = map[c.category];
+      if (!array) {
+        array = [];
+        map[c.category] = array;
+      }
+      array.push(c);
+    });
 
-#### Information
+    let log = title;
+    Object.entries(map).forEach(([key, value]) => {
+      log += `  ${key}\n`;
+      value.forEach((v) => (log += `  * ${v.title} ${v.by ? `(by @${v.by})` : ""}\n`));
+      log += "\n";
+    });
 
-Modifications included between **${shortFrom}** and **${shortTo}** (\`${shortFromSha}\` to \`${shortToSha}\`).
-
-*[See Pull Requests on GitHub](https://github.com/search?q=${encodeURIComponent(changes.pullQuery)})*
-
-#### Merged Pull Requests
-
-${pullLines.join("\n")}
-
-`;
-
-    if (commitLines.length > 0) {
-      log += `
-#### Other Changes
-
-${commitLines.join("\n")}
-`;
-    }
     return {
-      log: log.trim(),
+      log: log,
       changes: changes,
     };
   }
 
-  getPullMarkdown(pr, detailedOutput) {
-    if (!detailedOutput) {
-      return `* ${pr.title} (by @${pr.user.login}) #[${pr.number}](${pr.url})`;
-    } else {
-      return (
-        `* [${pr.merge_commit_sha.slice(0, 7)}](${basePath}/commit/${pr.merge_commit_sha}) | ` +
-        `${pr.title} ([@${pr.user.login}](${pr.user.url}))` +
-        ` PR #[${pr.number}](${pr.url})`
-      );
+  getPullMarkdown(pr) {
+    let category = "MISC";
+    let title = pr.title;
+    if (pr.title.includes(":")) {
+      category = pr.title.split(":")[0];
+      title = pr.title.split(":")[1];
     }
+    return {
+      category: category,
+      title: title,
+      by: pr.user.login,
+    };
   }
 
-  getCommitMarkdown(commit, detailedOutput) {
-    if (!detailedOutput) {
-      return `* ${commit.message} (by @${commit.user.login}) - [${commit.sha.slice(0, 7)}](${commit.url})`;
-    } else {
-      return (
-        `* [${commit.sha.slice(0, 7)}](${commit.url}) | ` +
-        `${commit.message} ([@${commit.user.login}](${commit.user.url}))`
-      );
-    }
+  getCommitMarkdown(commit) {
+    return {
+      category: "MISC",
+      title: commit.message,
+      by: commit.user.login,
+    };
   }
 }
 
@@ -245,6 +235,10 @@ const sleep = async (wait) => {
 };
 
 const api = new MergeChangelog({ auth: process.env.GITHUB_API_TOKEN });
-api.getChangelog(cliArgs.from, cliArgs.to, cliArgs.detailed).then((data) => {
+if (!cliArgs.from || !cliArgs.to) {
+  console.error("USAGE: node index.js --from hash --to hash");
+  process.exit();
+}
+api.getChangelog(cliArgs.from, cliArgs.to).then((data) => {
   console.log(data.log);
 });
