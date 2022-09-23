@@ -360,6 +360,9 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         const materialName = helpers.string(ctx, "materialName", _materialName);
         const material = getMaterial(divisionName, cityName, materialName);
         const corporation = getCorporation();
+        const exports = material.exp.map((e) => {
+          return { div: e.ind, loc: e.city, amt: e.amt };
+        });
         return {
           cost: material.bCost,
           sCost: material.sCost,
@@ -370,6 +373,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
           cmp: corporation.unlockUpgrades[3] ? material.cmp : undefined,
           prod: material.prd,
           sell: material.sll,
+          exp: exports,
         };
       },
     getProduct:

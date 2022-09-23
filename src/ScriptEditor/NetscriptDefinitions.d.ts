@@ -7233,10 +7233,25 @@ interface Material {
   prod: number;
   /** Amount of material sold */
   sell: number;
-  /** cost to buy material */
+  /** Cost to buy material */
   cost: number;
   /** Sell cost, can be "MP+5" */
   sCost: string | number;
+  /** Export orders */
+  exp: Export[];
+}
+
+/**
+ * Export order for a material
+ * @public
+ */
+interface Export {
+  /** Division the material is being exported to */
+  div: string;
+  /** City the material is being exported to */
+  loc: string;
+  /** Amount of material exported */
+  amt: string;
 }
 
 /**
