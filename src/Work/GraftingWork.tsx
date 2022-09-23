@@ -37,7 +37,7 @@ export class GraftingWork extends Work {
 
   process(player: IPlayer, cycles: number): boolean {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
       focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
 
@@ -52,7 +52,7 @@ export class GraftingWork extends Work {
     if (!cancelled) {
       applyAugmentation({ name: augName, level: 1 });
 
-      if (!player.hasAugmentation(AugmentationNames.CongruityImplant)) {
+      if (!player.hasAugmentation(AugmentationNames.CongruityImplant, true)) {
         player.entropy += 1;
         player.applyEntropy(player.entropy);
       }
@@ -62,7 +62,7 @@ export class GraftingWork extends Work {
           <>
             You've finished grafting {augName}.<br />
             The augmentation has been applied to your body{" "}
-            {player.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."}
+            {player.hasAugmentation(AugmentationNames.CongruityImplant, true) ? "." : ", but you feel a bit off."}
           </>,
         );
       }

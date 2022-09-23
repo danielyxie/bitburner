@@ -69,7 +69,7 @@ function checkForMessagesToSend(): void {
   const truthGazer = Messages[MessageFilenames.TruthGazer];
   const redpill = Messages[MessageFilenames.RedPill];
 
-  if (Player.hasAugmentation(AugmentationNames.TheRedPill)) {
+  if (Player.hasAugmentation(AugmentationNames.TheRedPill, true)) {
     //Get the world daemon required hacking level
     const worldDaemon = GetServer(SpecialServers.WorldDaemon);
     if (!(worldDaemon instanceof Server)) {
