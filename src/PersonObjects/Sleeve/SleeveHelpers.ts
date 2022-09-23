@@ -2,12 +2,14 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 import { Sleeve } from "./Sleeve";
 
 import { IPlayer } from "../IPlayer";
+import { Player } from "../../Player";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { Factions } from "../../Faction/Factions";
 import { Multipliers } from "../Multipliers";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { getFactionAugmentationsFiltered } from "../../Faction/FactionHelpers";
 
 export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentation[] {
   // You can only purchase Augmentations that are actually available from
@@ -55,8 +57,9 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   // has enough reputation for (since that gang offers all augs)
   if (p.inGang()) {
     const fac = p.getGangFaction();
+    const gangAugs = getFactionAugmentationsFiltered(Player, fac);
 
-    for (const augName of Object.keys(StaticAugmentations)) {
+    for (const augName of gangAugs) {
       const aug = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) continue;
 

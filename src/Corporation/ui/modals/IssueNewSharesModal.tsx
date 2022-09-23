@@ -110,7 +110,7 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
         You can issue new equity shares (i.e. stocks) in order to raise capital for your corporation.
         <br />
         <br />
-        &nbsp;* You can issue at most {numeralWrapper.formatMoney(maxNewShares)} new shares
+        &nbsp;* You can issue at most {numeralWrapper.format(maxNewShares, "0.000a")} new shares
         <br />
         &nbsp;* New shares are sold at a 10% discount
         <br />

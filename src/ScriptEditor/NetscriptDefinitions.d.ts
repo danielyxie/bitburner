@@ -2012,7 +2012,7 @@ export interface Singularity {
    * guarantee that your browser will follow that time limit.
    *
    * @param crime - Name of crime to attempt.
-   * @param focus - Acquire player focus on this program creation. Optional. Defaults to true.
+   * @param focus - Acquire player focus on this crime. Optional. Defaults to true.
    * @returns The number of milliseconds it takes to attempt the specified crime.
    */
   commitCrime(crime: string, focus?: boolean): number;
@@ -3511,7 +3511,7 @@ export interface Gang {
    * Ascend the specified Gang Member.
    *
    * @param memberName - Name of member to ascend.
-   * @returns Object with info about the ascension results. undefined if ascension did not occur.
+   * @returns Object with info about the ascension results. Undefined if ascension did not occur.
    */
   ascendMember(memberName: string): GangMemberAscension | undefined;
 
@@ -3523,7 +3523,7 @@ export interface Gang {
    * Get the result of an ascension without ascending.
    *
    * @param memberName - Name of member.
-   * @returns Object with info about the ascension results. undefined if ascension is impossible.
+   * @returns Object with info about the ascension results. Undefined if ascension is impossible.
    */
   getAscensionResult(memberName: string): GangMemberAscension | undefined;
 
@@ -7140,7 +7140,7 @@ interface CorporationInfo {
   numShares: number;
   /** Cooldown until shares can be sold again */
   shareSaleCooldown: number;
-  /** Amount of shares issued */
+  /** Amount of aqcuirable shares. */
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;

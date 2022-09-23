@@ -54,6 +54,7 @@ export interface IIndustry {
   processMaterials(marketCycles: number, corporation: ICorporation): [number, number];
   processProducts(marketCycles: number, corporation: ICorporation): [number, number];
   processProduct(marketCycles: number, product: Product, corporation: ICorporation): number;
+  resetImports(state: string): void;
   discontinueProduct(product: Product): void;
   getAdVertCost(): number;
   applyAdVert(corporation: ICorporation): void;

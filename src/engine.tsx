@@ -262,7 +262,7 @@ const Engine: {
         if (numCyclesOffline < 3000 * 100) {
           // if we have less than 100 rolls, just roll them exactly.
           for (let i = 0; i < numCyclesOffline / 3000; i++) {
-            if (Math.random() < 0.25) numContracts++;
+            if (Math.random() <= 0.25) numContracts++;
           }
         } else {
           // just average it.
