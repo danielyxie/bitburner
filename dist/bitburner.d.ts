@@ -96,7 +96,7 @@ export declare interface AutocompleteData {
     servers: string[];
     scripts: string[];
     txts: string[];
-    flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
+    flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg | string[] };
 }
 
 /**
@@ -773,7 +773,7 @@ export declare interface CodingContract {
      *
      * @param answer - Solution for the contract.
      * @param filename - Filename of the contract.
-     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
      */
@@ -793,7 +793,7 @@ export declare interface CodingContract {
      * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
      *
      * @param filename - Filename of the contract.
-     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Name describing the type of problem posed by the Coding Contract.
      */
     getContractType(filename: string, host?: string): string;
@@ -806,7 +806,7 @@ export declare interface CodingContract {
      * Get the full text description for the problem posed by the Coding Contract.
      *
      * @param filename - Filename of the contract.
-     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Contract’s text description.
      */
     getDescription(filename: string, host?: string): string;
@@ -818,24 +818,24 @@ export declare interface CodingContract {
      *
      * Get the data associated with the specific Coding Contract.
      * Note that this is not the same as the contract’s description.
-     * This is just the data that the contract wants you to act on in order to solve
+     * This is just the data that the contract wants you to act on in order to solve the contract.
      *
      * @param filename - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-     * @returns The specified contract’s data, data type depends on contract type.;
+     * @returns The specified contract’s data, data type depends on contract type.
      */
     getData(filename: string, host?: string): CodingContractData;
 
     /**
-     * Get the number of attempt remaining.
+     * Get the number of attempts remaining.
      * @remarks
      * RAM cost: 2 GB
      *
      * Get the number of tries remaining on the contract before it self-destructs.
      *
      * @param filename - Filename of the contract.
-     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-     * @returns How many attempts are remaining for the contract;
+     * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @returns How many attempts are remaining for the contract.
      */
     getNumTriesRemaining(filename: string, host?: string): number;
 }
@@ -1026,7 +1026,7 @@ export declare interface CorporationInfo {
     numShares: number;
     /** Cooldown until shares can be sold again */
     shareSaleCooldown: number;
-    /** Amount of shares issued */
+    /** Amount of aqcuirable shares. */
     issuedShares: number;
     /** Price of the shares */
     sharePrice: number;
@@ -1189,6 +1189,19 @@ export declare interface EquipmentStats {
 }
 
 /**
+ * Export order for a material
+ * @public
+ */
+export declare interface Export {
+    /** Division the material is being exported to */
+    div: string;
+    /** City the material is being exported to */
+    loc: string;
+    /** Amount of material exported */
+    amt: string;
+}
+
+/**
  * @public
  */
 export declare type FilenameOrPID = number | string;
@@ -1200,6 +1213,8 @@ export declare type FilenameOrPID = number | string;
  * @public
  */
 export declare interface Formulas {
+    mockServer(): Server;
+    mockPlayer(): Player;
     /** Reputation formulas */
     reputation: ReputationFormulas;
     /** Skills formulas */
@@ -1441,7 +1456,7 @@ export declare interface Gang {
      * Ascend the specified Gang Member.
      *
      * @param memberName - Name of member to ascend.
-     * @returns Object with info about the ascension results. undefined if ascension did not occur.
+     * @returns Object with info about the ascension results. Undefined if ascension did not occur.
      */
     ascendMember(memberName: string): GangMemberAscension | undefined;
 
@@ -1453,7 +1468,7 @@ export declare interface Gang {
      * Get the result of an ascension without ascending.
      *
      * @param memberName - Name of member.
-     * @returns Object with info about the ascension results. undefined if ascension is impossible.
+     * @returns Object with info about the ascension results. Undefined if ascension is impossible.
      */
     getAscensionResult(memberName: string): GangMemberAscension | undefined;
 
@@ -1896,7 +1911,7 @@ export declare interface Hacknet {
      *
      * Returns the number of Hacknet Nodes you own.
      *
-     * @returns number of hacknet nodes.
+     * @returns Number of hacknet nodes.
      */
     numNodes(): number;
 
@@ -1905,7 +1920,7 @@ export declare interface Hacknet {
      * @remarks
      * RAM cost: 0 GB
      *
-     * @returns maximum number of hacknet nodes.
+     * @returns Maximum number of hacknet nodes.
      */
     maxNumNodes(): number;
 
@@ -1980,13 +1995,13 @@ export declare interface Hacknet {
      * So this is equivalent to multiplying the Node’s RAM by 2 n.
      *
      * Returns true if the Hacknet Node’s RAM is successfully upgraded n times
-     * or if it is upgraded some positive number of times and the Node reaches it max RAM.
+     * or if it is upgraded some positive number of times and the Node reaches its max RAM.
      *
      * Returns false otherwise.
      *
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
-     * @returns True if the Hacknet Node’s ram is successfully upgraded, false otherwise.
+     * @returns True if the Hacknet Node’s RAM is successfully upgraded, false otherwise.
      */
     upgradeRam(index: number, n: number): boolean;
 
@@ -2024,7 +2039,7 @@ export declare interface Hacknet {
      *
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of cache levels to purchase. Must be positive. Rounded to nearest integer.
-     * @returns True if the Hacknet Node’s cores are successfully purchased, false otherwise.
+     * @returns True if the Hacknet Node’s cache level is successfully upgraded, false otherwise.
      */
     upgradeCache(index: number, n: number): boolean;
 
@@ -2052,11 +2067,11 @@ export declare interface Hacknet {
      * Returns the cost of upgrading the RAM of the specified Hacknet Node n times.
      *
      * If an invalid value for n is provided, then this function returns 0.
-     * If the specified Hacknet Node is already at max level, then Infinity is returned.
+     * If the specified Hacknet Node already has max RAM, then Infinity is returned.
      *
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
-     * @returns Cost of upgrading the specified Hacknet Node's ram.
+     * @returns Cost of upgrading the specified Hacknet Node's RAM.
      */
     getRamUpgradeCost(index: number, n: number): number;
 
@@ -2181,7 +2196,7 @@ export declare interface Hacknet {
      * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.
      * @param count - Number of upgrades to buy at once. Defaults to 1 if not specified.
      * For compatability reasons, upgTarget must be specified, even if it is not used, in order to specify count.
-     * @returns True if the upgrade is successfully purchased, and false otherwise..
+     * @returns True if the upgrade is successfully purchased, and false otherwise.
      */
     spendHashes(upgName: string, upgTarget?: string, count?: number): boolean;
 
@@ -2543,10 +2558,12 @@ export declare interface Material {
     prod: number;
     /** Amount of material sold */
     sell: number;
-    /** cost to buy material */
+    /** Cost to buy material */
     cost: number;
     /** Sell cost, can be "MP+5" */
     sCost: string | number;
+    /** Export orders */
+    exp: Export[];
 }
 
 /**
@@ -3268,6 +3285,32 @@ export declare interface NS {
     tail(fn?: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): void;
 
     /**
+     * Move a tail window
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0)
+     *
+     * @param x - x coordinate.
+     * @param y - y coordinate.
+     * @param pid - Optional. PID of the script having its tail moved. If omitted, the current script is used.
+     */
+    moveTail(x: number, y: number, pid?: number): void;
+
+    /**
+     * Resize a tail window
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * Resize a tail window. Size are in pixel
+     *
+     * @param width - width of the window.
+     * @param height - height of the window.
+     * @param pid - Optional. PID of the script having its tail resized. If omitted, the current script is used.
+     */
+    resizeTail(width: number, height: number, pid?: number): void;
+
+    /**
      * Close the tail window of a script.
      * @remarks
      * RAM cost: 0 GB
@@ -3642,7 +3685,7 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      */
-    exit(): void;
+    exit(): never;
 
     /**
      * Copy file between servers.
@@ -3666,25 +3709,25 @@ export declare interface NS {
      * ```ts
      * // NS2:
      * //Copies foo.lit from the helios server to the home computer:
-     * await ns.scp("foo.lit", "home", "helios" );
+     * ns.scp("foo.lit", "home", "helios" );
      *
      * //Tries to copy three files from rothman-uni to home computer:
      * files = ["foo1.lit", "foo2.script", "foo3.script"];
-     * await ns.scp(files,  "home", "rothman-uni");
+     * ns.scp(files,  "home", "rothman-uni");
      * ```
      * @example
      * ```ts
      * //ns2, copies files from home to a target server
      * const server = ns.args[0];
      * const files = ["hack.js","weaken.js","grow.js"];
-     * await ns.scp(files, server, "home");
+     * ns.scp(files, server, "home");
      * ```
      * @param files - Filename or an array of filenames of script/literature files to copy.
-     * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
      * @param destination - Host of the destination server, which is the server to which the file will be copied.
-     * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
+     * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
+     * @returns True if the file is successfully copied over and false otherwise. If the files argument is an array then this function will return false if any of the operations failed.
      */
-    scp(files: string | string[], destination: string, source?: string): Promise<boolean>;
+    scp(files: string | string[], destination: string, source?: string): boolean;
 
     /**
      * List files on a server.
@@ -4224,20 +4267,20 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
-     * This function can be used to write data to a text file (.txt).
+     * This function can be used to write data to a text file (.txt) or a script (.js or .script).
      *
-     * This function will write data to that text file. If the specified text file does not exist,
+     * This function will write data to that file. If the specified file does not exist,
      * then it will be created. The third argument mode, defines how the data will be written to
-     * the text file. If *mode is set to “w”, then the data is written in “write” mode which means
-     * that it will overwrite all existing data on the text file. If mode is set to any other value
+     * the file. If *mode is set to “w”, then the data is written in “write” mode which means
+     * that it will overwrite all existing data on the file. If mode is set to any other value
      * then the data will be written in “append” mode which means that the data will be added at the
-     * end of the text file.
+     * end of the file.
      *
-     * @param handle - Filename of the text file that will be written to.
+     * @param filename - Name of the file to be written to.
      * @param data - Data to write.
-     * @param mode - Defines the write mode. Only valid when writing to text files.
+     * @param mode - Defines the write mode.
      */
-    write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): Promise<void>;
+    write(filename: string, data?: string[] | number | string, mode?: "w" | "a"): void;
 
     /**
      * Attempt to write to a port.
@@ -4259,15 +4302,15 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
-     * This function is used to read data from a text file (.txt).
+     * This function is used to read data from a text file (.txt) or script (.script, .js).
      *
-     * This function will return the data in the specified text
-     * file. If the text file does not exist, an empty string will be returned.
+     * This function will return the data in the specified file.
+     * If the file does not exist, an empty string will be returned.
      *
-     * @param handle - Filename to read from.
+     * @param filename - Name of the file to be read.
      * @returns Data in the specified text file.
      */
-    read(handle: string): PortData;
+    read(filename: string): string;
 
     /**
      * Get a copy of the data from a port without popping it.
@@ -4784,7 +4827,7 @@ export declare interface NS {
      * // {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":true}
      * ```
      */
-    flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
+    flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg | string[] };
 
     /**
      * Share your computer with your factions.
@@ -5225,6 +5268,28 @@ export declare interface Server {
  */
 export declare interface Singularity {
     /**
+     * Backup game save.
+     * @remarks
+     * RAM cost: 1 GB * 16/4/1
+     *
+     *
+     * This function will automatically opens the backup save prompt and claim the free faction favour if available.
+     *
+     */
+    exportGame(): void;
+
+    /**
+     * Returns Backup save bonus availability.
+     * @remarks
+     * RAM cost: 0.5 GB * 16/4/1
+     *
+     *
+     * This function will check if there is a bonus for backing up your save.
+     *
+     */
+    exportGameBonus(): boolean;
+
+    /**
      * Take university class.
      *
      * @remarks
@@ -5242,7 +5307,7 @@ export declare interface Singularity {
      * @param universityName - Name of university. You must be in the correct city for whatever university you specify.
      * @param courseName - Name of course.
      * @param focus - Acquire player focus on this class. Optional. Defaults to true.
-     * @returns True if actions is successfully started, false otherwise.
+     * @returns True if action is successfully started, false otherwise.
      */
     universityCourse(universityName: string, courseName: string, focus?: boolean): boolean;
 
@@ -5278,7 +5343,7 @@ export declare interface Singularity {
      * function is the same as the cost for traveling through the Travel Agency.
      *
      * @param city - City to travel to.
-     * @returns True if actions is successful, false otherwise.
+     * @returns True if action is successful, false otherwise.
      */
     travelToCity(city: string): boolean;
 
@@ -5718,7 +5783,7 @@ export declare interface Singularity {
      * guarantee that your browser will follow that time limit.
      *
      * @param crime - Name of crime to attempt.
-     * @param focus - Acquire player focus on this program creation. Optional. Defaults to true.
+     * @param focus - Acquire player focus on this crime. Optional. Defaults to true.
      * @returns The number of milliseconds it takes to attempt the specified crime.
      */
     commitCrime(crime: string, focus?: boolean): number;
@@ -6982,6 +7047,15 @@ export declare type ToastVariantValues = `${ToastVariant}`;
  * @public
  */
 export declare interface UserInterface {
+    /**
+     * Get the current window size
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * @returns An array of 2 value containing the window width and height.
+     */
+    windowSize(): [number, number];
+
     /**
      * Get the current theme
      * @remarks

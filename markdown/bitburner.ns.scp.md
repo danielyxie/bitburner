@@ -9,7 +9,7 @@ Copy file between servers.
 <b>Signature:</b>
 
 ```typescript
-scp(files: string | string[], destination: string, source?: string): Promise<boolean>;
+scp(files: string | string[], destination: string, source?: string): boolean;
 ```
 
 ## Parameters
@@ -22,9 +22,9 @@ scp(files: string | string[], destination: string, source?: string): Promise<boo
 
 <b>Returns:</b>
 
-Promise&lt;boolean&gt;
+boolean
 
-True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
+True if the file is successfully copied over and false otherwise. If the files argument is an array then this function will return false if any of the operations failed.
 
 ## Remarks
 
@@ -51,11 +51,11 @@ scp(files, "home", "rothman-uni");
 ```ts
 // NS2:
 //Copies foo.lit from the helios server to the home computer:
-await ns.scp("foo.lit", "home", "helios" );
+ns.scp("foo.lit", "home", "helios" );
 
 //Tries to copy three files from rothman-uni to home computer:
 files = ["foo1.lit", "foo2.script", "foo3.script"];
-await ns.scp(files,  "home", "rothman-uni");
+ns.scp(files,  "home", "rothman-uni");
 ```
 
 ## Example 3
@@ -65,6 +65,6 @@ await ns.scp(files,  "home", "rothman-uni");
 //ns2, copies files from home to a target server
 const server = ns.args[0];
 const files = ["hack.js","weaken.js","grow.js"];
-await ns.scp(files, server, "home");
+ns.scp(files, server, "home");
 ```
 

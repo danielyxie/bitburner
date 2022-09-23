@@ -24,7 +24,7 @@ universityCourse(universityName: string, courseName: string, focus?: boolean): b
 
 boolean
 
-True if actions is successfully started, false otherwise.
+True if action is successfully started, false otherwise.
 
 ## Remarks
 

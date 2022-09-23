@@ -17,8 +17,9 @@ interface Material
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [cmp](./bitburner.material.cmp.md) | number \| undefined | Competition for the material, only present if "Market Research - Competition" unlocked |
-|  [cost](./bitburner.material.cost.md) | number | cost to buy material |
+|  [cost](./bitburner.material.cost.md) | number | Cost to buy material |
 |  [dmd](./bitburner.material.dmd.md) | number \| undefined | Demand for the material, only present if "Market Research - Demand" unlocked |
+|  [exp](./bitburner.material.exp.md) | [Export](./bitburner.export.md)<!-- -->\[\] | Export orders |
 |  [name](./bitburner.material.name.md) | string | Name of the material |
 |  [prod](./bitburner.material.prod.md) | number | Amount of material produced |
 |  [qlt](./bitburner.material.qlt.md) | number | Quality of the material |

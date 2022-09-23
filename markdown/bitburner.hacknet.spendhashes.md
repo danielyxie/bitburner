@@ -24,7 +24,7 @@ spendHashes(upgName: string, upgTarget?: string, count?: number): boolean;
 
 boolean
 
-True if the upgrade is successfully purchased, and false otherwise..
+True if the upgrade is successfully purchased, and false otherwise.
 
 ## Remarks
 

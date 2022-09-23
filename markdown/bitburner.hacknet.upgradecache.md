@@ -23,7 +23,7 @@ upgradeCache(index: number, n: number): boolean;
 
 boolean
 
-True if the Hacknet Node’s cores are successfully purchased, false otherwise.
+True if the Hacknet Node’s cache level is successfully upgraded, false otherwise.
 
 ## Remarks
 
