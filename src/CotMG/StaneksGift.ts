@@ -56,20 +56,20 @@ export class StaneksGift implements IStaneksGift {
   }
 
   effect(fragment: ActiveFragment): number {
-    // Find all the neighboring cells
-    const cells = fragment.neighbors();
-    // find the neighboring active fragments.
+    // Find all the neighbooring cells
+    const cells = fragment.neighboors();
+    // find the neighbooring active fragments.
     const maybeFragments = cells.map((n) => this.fragmentAt(n[0], n[1]));
 
     // Filter out undefined with typescript "Type guard". Whatever
-    let neighbors = maybeFragments.filter((v: ActiveFragment | undefined): v is ActiveFragment => !!v);
+    let neighboors = maybeFragments.filter((v: ActiveFragment | undefined): v is ActiveFragment => !!v);
 
-    neighbors = neighbors.filter((fragment) => fragment.fragment().type === FragmentType.Booster);
+    neighboors = neighboors.filter((fragment) => fragment.fragment().type === FragmentType.Booster);
     let boost = 1;
 
-    neighbors = neighbors.filter((v, i, s) => s.indexOf(v) === i);
-    for (const neighbor of neighbors) {
-      boost *= neighbor.fragment().power;
+    neighboors = neighboors.filter((v, i, s) => s.indexOf(v) === i);
+    for (const neighboor of neighboors) {
+      boost *= neighboor.fragment().power;
     }
     return CalculateEffect(fragment.highestCharge, fragment.numCharge, fragment.fragment().power, boost);
   }
