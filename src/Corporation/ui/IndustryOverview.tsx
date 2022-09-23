@@ -132,7 +132,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         <Tooltip
           title={
             <>
-              <Typography>Total multiplier for this industrys sales due to its awareness and popularity</Typography>
+              <Typography>Total multiplier for this industry's sales due to its awareness and popularity</Typography>
               <StatsTable
                 rows={[
                   ["Awareness Bonus:", "x" + numeralWrapper.formatReallyBigNumber(Math.pow(awarenessFac, 0.85))],
