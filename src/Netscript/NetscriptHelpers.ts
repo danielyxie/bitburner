@@ -493,15 +493,10 @@ function getValidPort(ctx: NetscriptContext, port: number): IPort {
     );
   }
   let iport = NetscriptPorts.get(port);
-  if (iport == null || !(iport instanceof Object)) {
-    NetscriptPorts.set(port, NetscriptPort());
+  if (!iport) {
+    iport = NetscriptPort();
+    NetscriptPorts.set(port, iport);
   }
-  // Try again.
-  iport = NetscriptPorts.get(port);
-  if (iport == null || !(iport instanceof Object)) {
-    throw helpers.makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
-  }
-
   return iport;
 }
 

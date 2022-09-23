@@ -45,9 +45,7 @@ export function prestigeWorkerScripts(): void {
     killWorkerScript(ws);
   }
 
-  for (const [__, port] of NetscriptPorts.entries()) {
-    port.clear();
-  }
+  NetscriptPorts.clear();
 
   WorkerScriptStartStopEventEmitter.emit();
   workerScripts.clear();
