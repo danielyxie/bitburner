@@ -32,7 +32,7 @@ export class CorporationState {
     return Generic_toJSON("CorporationState", this);
   }
 
-  // Initiatizes a CorporationState object from a JSON save state.
+  // Initializes a CorporationState object from a JSON save state.
   static fromJSON(value: IReviverValue): CorporationState {
     return Generic_fromJSON(CorporationState, value.data);
   }
