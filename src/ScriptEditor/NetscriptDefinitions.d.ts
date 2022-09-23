@@ -5446,7 +5446,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    */
-  exit(): void;
+  exit(): never;
 
   /**
    * Copy file between servers.

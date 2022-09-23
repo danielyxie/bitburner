@@ -79,6 +79,7 @@ import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 import { recentScripts } from "./Netscript/RecentScripts";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
+import { ScriptDeath } from "./Netscript/ScriptDeath";
 
 export type NSFull = NS & INetscriptExtra;
 
@@ -833,12 +834,10 @@ const base: InternalAPI<NS> = {
 
       return scriptsKilled > 0;
     },
-  exit: (ctx: NetscriptContext) => (): void => {
-    if (killWorkerScript(ctx.workerScript)) {
-      helpers.log(ctx, () => "Exiting...");
-    } else {
-      helpers.log(ctx, () => "Failed. This is a bug. Report to dev.");
-    }
+  exit: (ctx: NetscriptContext) => (): never => {
+    helpers.log(ctx, () => "Exiting...");
+    killWorkerScript(ctx.workerScript);
+    throw new ScriptDeath(ctx.workerScript);
   },
   scp:
     (ctx: NetscriptContext) =>
