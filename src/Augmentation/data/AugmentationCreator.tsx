@@ -150,8 +150,8 @@ export const initSoAAugmentations = (): Augmentation[] => [
     repCost: 1e4,
     moneyCost: 1e6,
     info:
-      "Extra-occular neurons taken from old martial art master. Injecting them gives the user the ability to " +
-      "predict the enemy's attack before they even know it themself.",
+      "Extra-ocular neurons taken from old martial art master. Injecting them gives the user the ability to " +
+      "predict the enemy's attack before they even know it themselves.",
     stats: (
       <>This augmentation makes the Slash minigame easier by showing you via an indicator when the slash in coming.</>
     ),
@@ -617,7 +617,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     info:
       "Electrical signals are used to induce a new, artificial form of myelinogenesis in the human body. " +
       "This process results in the proliferation of new, synthetic myelin sheaths in the nervous " +
-      "system. These myelin sheaths can propogate neuro-signals much faster than their organic " +
+      "system. These myelin sheaths can propagate neuro-signals much faster than their organic " +
       "counterparts, leading to greater processing speeds and better brain function.",
     hacking_speed: 1.03,
     hacking_exp: 1.1,
@@ -1070,7 +1070,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 4e8,
     info:
       "A crude but functional matter phase-shifter module that is embedded " +
-      "in the brainstem and cerebellum. This augmentation was developed by " +
+      "in the brain stem and cerebellum. This augmentation was developed by " +
       "criminal organizations and allows the user to project and control holographic " +
       "simulacrums within a large radius. These simulacrums are commonly used for " +
       "espionage and surveillance work.",
@@ -1519,7 +1519,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 2e9,
     info:
       "A 'Probability Computation Matrix' is installed in the frontal cortex. This implant " +
-      "uses advanced mathematical algorithims to rapidly identify and compute statistical " +
+      "uses advanced mathematical algorithms to rapidly identify and compute statistical " +
       "outcomes of nearly every situation.",
     charisma: 1.0777,
     charisma_exp: 1.0777,
@@ -1535,7 +1535,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     name: AugmentationNames.INFRARet,
     repCost: 7.5e3,
     moneyCost: 3e7,
-    info: "A tiny chip that sits behind the retinae. This implant lets the user visually detect infrared radiation.",
+    info: "A tiny chip that sits behind the retina. This implant lets the user visually detect infrared radiation.",
     crime_success: 1.25,
     crime_money: 1.1,
     dexterity: 1.1,
@@ -1926,13 +1926,13 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
     moneyCost: 1.5e11,
     info:
       "A highly-advanced matter phase-shifter module that is embedded " +
-      "in the brainstem and cerebellum. This augmentation allows " +
+      "in the brain stem and cerebellum. This augmentation allows " +
       "the user to project and control a holographic simulacrum within an " +
       "extremely large radius. These specially-modified holograms were specifically " +
       "weaponized by Bladeburner units to be used against Synthoids.",
     stats: (
       <>
-        This augmentation allows you to perform Bladeburner actions and other actions (such as working, commiting
+        This augmentation allows you to perform Bladeburner actions and other actions (such as working, committing
         crimes, etc.) at the same time.
       </>
     ),
