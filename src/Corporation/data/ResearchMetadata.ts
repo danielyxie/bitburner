@@ -24,7 +24,7 @@ export const researchMetadata: IConstructorParams[] = [
     name: "Automatic Drug Administration",
     cost: 10e3,
     desc:
-      "Research how to automatically administer performance-enhacing drugs to all of " +
+      "Research how to automatically administer performance-enhancing drugs to all of " +
       "your employees. This unlocks Drug-related Research.",
   },
   {
