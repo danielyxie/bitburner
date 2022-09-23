@@ -62,7 +62,7 @@ export class Corporation {
 
   addFunds(amt: number): void {
     if (!isFinite(amt)) {
-      console.error("Trying to add invalid amount of funds. Report to a developper.");
+      console.error("Trying to add invalid amount of funds. Report to a developer.");
       return;
     }
     this.funds = this.funds + amt;
@@ -239,7 +239,7 @@ export class Corporation {
     const maxIterations = Math.ceil(numShares / CorporationConstants.SHARESPERPRICEUPDATE);
     if (isNaN(maxIterations) || maxIterations > 10e6) {
       console.error(
-        `Something went wrong or unexpected when calculating share sale. Maxiterations calculated to be ${maxIterations}`,
+        `Something went wrong or unexpected when calculating share sale. Max iterations calculated to be ${maxIterations}`,
       );
       return [0, 0, 0];
     }
@@ -455,7 +455,7 @@ export class Corporation {
   }
 
   /**
-   * Initiatizes a Corporation object from a JSON save state.
+   * Initializes a Corporation object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): Corporation {
     return Generic_fromJSON(Corporation, value.data);
