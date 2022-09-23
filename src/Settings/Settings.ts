@@ -155,6 +155,11 @@ interface IDefaultSettings {
   UseIEC60027_2: boolean;
 
   /*
+   * Display intermediary time unit when their value is null
+   */
+  ShowMiddleNullTimeUnit: boolean;
+
+  /*
    * Character overview settings
    */
   overview: OverviewSettings;
@@ -222,6 +227,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressSavedGameToast: false,
   SuppressAutosaveDisabledWarnings: false,
   UseIEC60027_2: false,
+  ShowMiddleNullTimeUnit: false,
   ExcludeRunningScriptsFromSave: false,
   IsSidebarOpened: true,
 
@@ -265,6 +271,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
   SuppressAutosaveDisabledWarnings: defaultSettings.SuppressAutosaveDisabledWarnings,
   UseIEC60027_2: defaultSettings.UseIEC60027_2,
+  ShowMiddleNullTimeUnit: defaultSettings.ShowMiddleNullTimeUnit,
   ExcludeRunningScriptsFromSave: defaultSettings.ExcludeRunningScriptsFromSave,
   IsSidebarOpened: defaultSettings.IsSidebarOpened,
 
