@@ -464,7 +464,7 @@ export class Terminal {
     this.contractOpen = true;
     const res = await contract.prompt();
 
-    //Check if the contract still exists by the time the promise is fullfilled
+    //Check if the contract still exists by the time the promise is fulfilled
     if (serv.getContract(contractName) == null) {
       this.contractOpen = false;
       return this.error("Contract no longer exists (Was it solved by a script?)");
