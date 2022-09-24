@@ -196,7 +196,7 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
     } else if (codePart == 4) {
       style.textDecoration = "underline";
     }
-    // Forground Color (x8)
+    // Foreground Color (x8)
     else if (30 <= codePart && codePart < 38) {
       if (COLOR_MAP_BRIGHT[codePart % 10]) {
         style.color = COLOR_MAP_BRIGHT[codePart % 10];
@@ -208,7 +208,7 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
         style.backgroundColor = COLOR_MAP_DARK[codePart % 10];
       }
     }
-    // Forground Color (x256)
+    // Foreground Color (x256)
     else if (codePart == 38) {
       nextStyleKey = "color";
     }
