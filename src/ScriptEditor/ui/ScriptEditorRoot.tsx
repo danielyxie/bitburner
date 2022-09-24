@@ -223,7 +223,7 @@ export function Root(props: IProps): React.ReactElement {
         });
       } catch {}
     } else if (!options.vim) {
-      // Whem vim mode is disabled
+      // When vim mode is disabled
       vimEditor?.dispose();
       setVimEditor(null);
     }
