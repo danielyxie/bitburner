@@ -42,7 +42,7 @@ export class Script {
   dependencies: ScriptUrl[] = [];
   dependents: ScriptReference[] = [];
 
-  // Amount of RAM this Script requres to run
+  // Amount of RAM this Script requires to run
   ramUsage = 0;
   ramUsageEntries?: RamUsageEntry[];
 
