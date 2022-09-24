@@ -256,7 +256,7 @@ Interpreter.prototype.run = function () {
 };
 
 /**
- * Initialize the global scope with buitin properties and functions.
+ * Initialize the global scope with builtin properties and functions.
  * @param {!Interpreter.Object} scope Global scope.
  */
 Interpreter.prototype.initGlobalScope = function (scope) {
@@ -2767,7 +2767,7 @@ Interpreter.prototype.unwind = function (type, value, label, lineNumberMsg = "")
           state.value = value;
           return;
         } else if (type !== Interpreter.Completion.THROW) {
-          throw Error("Unsynatctic break/continue not rejected by Acorn");
+          throw Error("Unsyntactic break/continue not rejected by Acorn");
         }
     }
     if (type === Interpreter.Completion.BREAK) {
