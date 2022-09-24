@@ -42,7 +42,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * @param {Script[]} otherScripts - All other scripts on the server. Used to account for imported scripts
  * @param {string} codeCopy - The code being parsed
  * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
- *                                      keep track of what functions have/havent been accounted for
+ *                                      keep track of what functions have/haven't been accounted for
  */
 function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: string): RamCalculation {
   try {
