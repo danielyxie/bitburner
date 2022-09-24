@@ -95,7 +95,7 @@ export class RunningScript {
   }
 
   clearLog(amount?: number): void {
-    if (amount == null || amount > this.logs.length) {
+    if (amount == null || amount >= this.logs.length) {
       this.logs.length = 0;
     } else {
       for (let i = 0; i < amount; i++) {
