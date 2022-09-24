@@ -156,10 +156,10 @@ function LogWindow(props: IProps): React.ReactElement {
   //       setTimeout(() => {
   //         const server = GetServer(script.server);
   //         if (server === null) return;
-  //         const exisitingScript = findRunningScript(script.filename, script.args, server);
-  //         if (exisitingScript) {
-  //           exisitingScript.logs = script.logs.concat(exisitingScript.logs)
-  //           setScript(exisitingScript)
+  //         const existingScript = findRunningScript(script.filename, script.args, server);
+  //         if (existingScript) {
+  //           existingScript.logs = script.logs.concat(existingScript.logs)
+  //           setScript(existingScript)
   //         }
   //         rerender();
   //       }, 100)
@@ -303,14 +303,14 @@ function LogWindow(props: IProps): React.ReactElement {
           minHeight: `${minConstraints[1]}px`,
           ...(minimized
             ? {
-                border: "none",
-                margin: 0,
-                maxHeight: 0,
-                padding: 0,
-              }
+              border: "none",
+              margin: 0,
+              maxHeight: 0,
+              padding: 0,
+            }
             : {
-                border: `1px solid ${Settings.theme.welllight}`,
-              }),
+              border: `1px solid ${Settings.theme.welllight}`,
+            }),
         }}
         ref={container}
       >
