@@ -197,7 +197,7 @@ export async function determineAllPossibilitiesForTabCompletion(
   if (evaledParentDirPath === "/") {
     evaledParentDirPath = null;
   } else if (evaledParentDirPath == null) {
-    // do nothing for some reason tests dont like this?
+    // do nothing for some reason tests don't like this?
     // return allPos; // Invalid path
   } else {
     evaledParentDirPath += "/";
