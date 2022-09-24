@@ -4898,8 +4898,10 @@ export interface NS {
    * Clears the script’s logs.
    * @remarks
    * RAM cost: 0 GB
+   *
+   * @param amount - amount of lines to clear
    */
-  clearLog(): void;
+  clearLog(amount?: number): void;
 
   /**
    * Disables logging for the given function.

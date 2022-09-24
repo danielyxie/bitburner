@@ -94,8 +94,15 @@ export class RunningScript {
     }
   }
 
-  clearLog(): void {
-    this.logs.length = 0;
+  clearLog(amount?: number): void {
+    if (amount == null || amount > this.logs.length) {
+      this.logs.length = 0;
+    } else {
+      for (let i = 0; i < amount; i++) {
+        this.logs.pop();
+      }
+    }
+
   }
 
   // Update the moneyStolen and numTimesHack maps when hacking

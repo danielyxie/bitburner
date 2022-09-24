@@ -470,8 +470,16 @@ const base: InternalAPI<NS> = {
       }
       Terminal.print(`${str}`);
     },
-  clearLog: (ctx: NetscriptContext) => (): void => {
-    ctx.workerScript.scriptRef.clearLog();
+  clearLog: (ctx: NetscriptContext) => (_amount?: unknown): void => {
+    if (_amount == null) {
+      ctx.workerScript.scriptRef.clearLog();
+    } else {
+      const amount = helpers.number(ctx, "amount", _amount);
+      if (amount <= 0) {
+        throw helpers.makeRuntimeErrorMsg(ctx, `amount must be greater than 0, found ${amount}.`);
+      }
+      ctx.workerScript.scriptRef.clearLog(amount);
+    }
   },
   disableLog:
     (ctx: NetscriptContext) =>
