@@ -325,7 +325,7 @@ export class GangMember {
   }
 
   /**
-   * Initiatizes a GangMember object from a JSON save state.
+   * Initializes a GangMember object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): GangMember {
     return Generic_fromJSON(GangMember, value.data);
