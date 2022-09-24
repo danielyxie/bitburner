@@ -100,7 +100,7 @@ export class GraftingWork extends Work {
   }
 
   /**
-   * Initiatizes a GraftingWork object from a JSON save state.
+   * Initializes a GraftingWork object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): GraftingWork {
     return Generic_fromJSON(GraftingWork, value.data);
