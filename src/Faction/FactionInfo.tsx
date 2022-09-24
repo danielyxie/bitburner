@@ -411,7 +411,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     offerSecurityWork: true,
   }),
 
-  // Earlygame factions - factions the player will prestige with early on that don't belong in other categories.
+  // Early game factions - factions the player will prestige with early on that don't belong in other categories.
   [FactionNames.Netburners]: new FactionInfo({
     infoText: <>{"~~//*>H4CK||3T 8URN3R5**>?>\\~~"}</>,
     offerHackingWork: true,
