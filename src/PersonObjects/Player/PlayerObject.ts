@@ -218,7 +218,7 @@ export class PlayerObject implements IPlayer {
     this.jobs = {};
 
     // Servers
-    this.currentServer = ""; //hostname of Server currently being accessed through termina;
+    this.currentServer = ""; //hostname of Server currently being accessed through terminal;
     this.purchasedServers = []; //hostnames of purchased server;
 
     // Hacknet Nodes/Servers
@@ -226,7 +226,7 @@ export class PlayerObject implements IPlayer {
     this.hashManager = new HashManager();
 
     //Factions
-    this.factions = []; //Names of all factions player has joine;
+    this.factions = []; //Names of all factions player has joined;
     this.factionInvitations = []; //Outstanding faction invitation;
 
     //Augmentations
@@ -396,7 +396,7 @@ export class PlayerObject implements IPlayer {
   }
 
   /**
-   * Initiatizes a PlayerObject object from a JSON save state.
+   * Initializes a PlayerObject object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): PlayerObject {
     return Generic_fromJSON(PlayerObject, value.data);
