@@ -58,7 +58,7 @@ export const HacknetServerConstants: {
   CoreBaseCost: number;
   CacheBaseCost: number;
 
-  PurchaseMult: number; // Multiplier for puchasing an additional Hacknet Server
+  PurchaseMult: number; // Multiplier for purchasing an additional Hacknet Server
   UpgradeLevelMult: number; // Multiplier for cost when upgrading level
   UpgradeRamMult: number; // Multiplier for cost when upgrading RAM
   UpgradeCoreMult: number; // Multiplier for cost when buying another core
