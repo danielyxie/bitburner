@@ -21,7 +21,7 @@ function sendMessage(msg: Message, forced = false): void {
 
 function showMessage(name: MessageFilenames): void {
   const msg = Messages[name];
-  if (!(msg instanceof Message)) throw new Error("trying to display unexistent message");
+  if (!(msg instanceof Message)) throw new Error("trying to display nonexistent message");
   const txt =
     "Message received from unknown sender: <br><br>" +
     "<i>" +
