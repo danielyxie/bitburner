@@ -297,7 +297,7 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
 
   let threads = ws.scriptRef.threads;
   if (typeof threads !== "number") {
-    console.warn(`WorkerScript detected NaN for threadcount for ${ws.name} on ${ws.hostname}`);
+    console.warn(`WorkerScript detected NaN for thread count for ${ws.name} on ${ws.hostname}`);
     threads = 1;
   }
   ws.dynamicRamUsage += ramCost;
