@@ -124,7 +124,7 @@ async function startNetscript1Script(workerScript: WorkerScript): Promise<void> 
 }
 
 /*  Since the JS Interpreter used for Netscript 1.0 only supports ES5, the keyword
-    'import' throws an error. However, since we want to support import funtionality
+    'import' throws an error. However, since we want to support import functionality
     we'll implement it ourselves by parsing the Nodes in the AST out.
 
     @param code - The script's code
@@ -335,10 +335,8 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
 
   // Start the script's execution using the correct function for file type
   (workerScript.name.endsWith(".js") ? startNetscript2Script : startNetscript1Script)(workerScript)
-    // Once the code finishes (either resolved or rejected, doesnt matter), set its
-    // running status to false
     .then(function () {
-      // On natural death, the earnings are transfered to the parent if it still exists.
+      // On natural death, the earnings are transferred to the parent if it still exists.
       if (parent && !parent.env.stopFlag) {
         parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
         parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
@@ -452,7 +450,7 @@ export function runScriptFromScript(
   // Check if the script exists and if it does run it
   for (let i = 0; i < server.scripts.length; ++i) {
     if (!areFilesEqual(server.scripts[i].filename, scriptname)) continue;
-    // Check for admin rights and that there is enough RAM availble to run
+    // Check for admin rights and that there is enough RAM available to run
     const script = server.scripts[i];
     let ramUsage = script.ramUsage;
     threads = Math.floor(Number(threads));
