@@ -168,7 +168,7 @@ export class PlayerObject extends Person {
   }
 
   /**
-   * Initiatizes a PlayerObject object from a JSON save state.
+   * Initializes a PlayerObject object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): PlayerObject {
     return Generic_fromJSON(PlayerObject, value.data);
