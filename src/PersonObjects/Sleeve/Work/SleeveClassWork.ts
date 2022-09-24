@@ -53,7 +53,7 @@ export class SleeveClassWork extends Work {
   }
 
   /**
-   * Initiatizes a ClassWork object from a JSON save state.
+   * Initializes a ClassWork object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): SleeveClassWork {
     return Generic_fromJSON(SleeveClassWork, value.data);
