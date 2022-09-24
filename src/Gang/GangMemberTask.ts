@@ -57,9 +57,9 @@ export class GangMemberTask {
     this.difficulty = params.difficulty ? params.difficulty : 1;
 
     // Territory Factors. Exponential factors that dictate how territory affects gains
-    // Formula: Territory Mutiplier = (Territory * 100) ^ factor / 100
+    // Formula: Territory Multiplier = (Territory * 100) ^ factor / 100
     // So factor should be > 1 if something should scale exponentially with territory
-    // and should be < 1 if it should have diminshing returns
+    // and should be < 1 if it should have diminishing returns
     this.territory = params.territory ? params.territory : { money: 1, respect: 1, wanted: 1 };
   }
 }
