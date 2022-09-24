@@ -73,7 +73,7 @@ export function scp(
         return;
       }
       if (tRes.overwritten) {
-        terminal.print(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
+        terminal.print(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
         terminal.print(`${scriptname} overwritten on ${destServer.hostname}`);
         return;
       }
