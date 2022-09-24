@@ -264,7 +264,7 @@ export const Literatures: IMap<Literature> = {};
     "The answer is that we have reached the Singularity, just not in the way we expected. The artificial superintelligence " +
     "that was predicted by Kurzweil and others exists in the world today - in the form of Augmentations. " +
     "Yes, those Augmentations that the rich and powerful keep to themselves enable humans " +
-    "to become superintelligent beings. The Singularity did not lead to a world where " +
+    "to become super-intelligent beings. The Singularity did not lead to a world where " +
     "our machines are infinitely more intelligent than us, it led to a world " +
     "where man and machine can merge to become something greater. Most of the world just doesn't " +
     "know it yet.";
