@@ -110,7 +110,7 @@ interface IDefaultSettings {
   SuppressMessages: boolean;
 
   /**
-   * Whether the user should be asked to confirm travelling between cities.
+   * Whether the user should be asked to confirm traveling between cities.
    */
   SuppressTravelConfirmation: boolean;
 
