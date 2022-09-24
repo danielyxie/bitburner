@@ -33,7 +33,7 @@ export class Order {
       invalidArgs = true;
     }
     if (invalidArgs) {
-      throw new Error(`Invalid constructor paramters for Order`);
+      throw new Error(`Invalid constructor parameters for Order`);
     }
 
     this.stockSymbol = stockSymbol;
