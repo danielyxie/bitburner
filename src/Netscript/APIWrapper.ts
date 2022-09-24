@@ -41,7 +41,7 @@ function wrapFunction(
   const functionPath = tree.join(".");
   const functionName = tree.pop();
   if (typeof functionName !== "string") {
-    throw helpers.makeRuntimeRejectMsg(workerScript, "Failure occured while wrapping netscript api");
+    throw helpers.makeRuntimeRejectMsg(workerScript, "Failure occurred while wrapping netscript api");
   }
   const ctx = {
     workerScript,
@@ -90,7 +90,7 @@ export function wrapAPILayer(
 function setNestedProperty(root: any, value: unknown, ...tree: string[]): void {
   let target = root;
   const key = tree.pop();
-  if (!key) throw new Error("Failure occured while wrapping netscript api (setNestedProperty)");
+  if (!key) throw new Error("Failure occurred while wrapping netscript api (setNestedProperty)");
   for (const branch of tree) {
     target[branch] ??= {};
     target = target[branch];
