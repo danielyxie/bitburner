@@ -22,7 +22,7 @@ function sendMessage(msg: Message, forced = false): void {
 
 function showMessage(name: MessageFilenames): void {
   const msg = Messages[name];
-  if (!(msg instanceof Message)) throw new Error("trying to display unexistent message");
+  if (!(msg instanceof Message)) throw new Error("trying to display nonexistent message");
   dialogBoxCreate(
     <>
       Message received from unknown sender:<i>{msg.msg}</i>This message was saved as {msg.filename} onto your home
