@@ -1015,7 +1015,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     invitedFactions.push(kuaigonginternationalFac);
   }
 
-  //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
+  //Fulcrum Secret Technologies - If you've unlocked fulcrum secret technologies server and have a high rep with the company
   const fulcrumsecrettechonologiesFac = Factions[FactionNames.FulcrumSecretTechnologies];
   const fulcrumSecretServer = GetServer(SpecialServers.FulcrumSecretTechnologies);
   if (!(fulcrumSecretServer instanceof Server))
