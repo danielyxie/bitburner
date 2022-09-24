@@ -51,7 +51,7 @@ export class BaseServer {
   // IP Address. Must be unique
   ip = "";
 
-  // Flag indicating whether player is curently connected to this server
+  // Flag indicating whether player is currently connected to this server
   isConnectedTo = false;
 
   // RAM (GB) available on this server
@@ -92,7 +92,7 @@ export class BaseServer {
   // Text files on this server
   textFiles: TextFile[] = [];
 
-  // Flag indicating wehther this is a purchased server
+  // Flag indicating whether this is a purchased server
   purchasedByPlayer = false;
 
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
@@ -256,7 +256,7 @@ export class BaseServer {
 
   /**
    * Write to a script file
-   * Overwrites existing files. Creates new files if the script does not eixst
+   * Overwrites existing files. Creates new files if the script does not exist
    */
   writeToScriptFile(fn: string, code: string): writeResult {
     const ret = { success: false, overwritten: false };
