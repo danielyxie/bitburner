@@ -402,7 +402,7 @@ function processAllHacknetServerEarnings(numCycles: number): number {
     const ip = Player.hacknetNodes[i];
     if (ip instanceof HacknetNode) throw new Error(`player nodes should not be HacketNode`);
     const hserver = GetServer(ip);
-    if (!(hserver instanceof HacknetServer)) throw new Error(`player nodes shoud not be Server`);
+    if (!(hserver instanceof HacknetServer)) throw new Error(`player nodes should not be Server`);
     hserver.updateHashRate(Player.mults.hacknet_node_money);
     const h = hserver.process(numCycles);
     hashes += h;
@@ -536,7 +536,7 @@ export function purchaseHashUpgrade(upgName: string, upgTarget: string, count = 
         break;
       }
       case "Exchange for Bladeburner Rank": {
-        // This will throw if player isnt in Bladeburner
+        // This will throw if player isn't in Bladeburner
         const bladeburner = Player.bladeburner;
         if (bladeburner === null) {
           Player.hashManager.refundUpgrade(upgName, count);
@@ -546,7 +546,7 @@ export function purchaseHashUpgrade(upgName: string, upgTarget: string, count = 
         break;
       }
       case "Exchange for Bladeburner SP": {
-        // This will throw if player isnt in Bladeburner
+        // This will throw if player isn't in Bladeburner
         const bladeburner = Player.bladeburner;
         if (bladeburner === null) {
           Player.hashManager.refundUpgrade(upgName, count);
