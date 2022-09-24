@@ -58,7 +58,7 @@ export function mv(
         return;
       }
 
-      // Command doesnt work if script is running
+      // Command doesn't work if script is running
       if (server.isRunning(sourcePath)) {
         terminal.error(`Cannot use 'mv' on a script that is running`);
         return;
@@ -67,7 +67,7 @@ export function mv(
       if (destFile != null) {
         // Already exists, will be overwritten, so we'll delete it
 
-        // Command doesnt work if script is running
+        // Command doesn't work if script is running
         if (server.isRunning(destPath)) {
           terminal.error(`Cannot use 'mv' on a script that is running`);
           return;
