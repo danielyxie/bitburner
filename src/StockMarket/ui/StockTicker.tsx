@@ -183,7 +183,7 @@ export function StockTicker(props: IProps): React.ReactElement {
   function handleOrderTypeChange(e: SelectChangeEvent<string>): void {
     const val = e.target.value;
 
-    // The select value returns a string. Afaik TypeScript doesnt make it easy
+    // The select value returns a string. Afaik TypeScript doesn't make it easy
     // to convert that string back to an enum type so we'll just do this for now
     switch (val) {
       case SelectorOrderType.Limit:
