@@ -21,7 +21,7 @@ type IProps = {
 function LongPosition(props: IProps): React.ReactElement {
   const stock = props.stock;
 
-  // Caculate total returns
+  // Calculate total returns
   const totalCost = stock.playerShares * stock.playerAvgPx;
   const gains = (stock.getBidPrice() - stock.playerAvgPx) * stock.playerShares;
   let percentageGains = gains / totalCost;
@@ -58,7 +58,7 @@ function LongPosition(props: IProps): React.ReactElement {
 function ShortPosition(props: IProps): React.ReactElement {
   const stock = props.stock;
 
-  // Caculate total returns
+  // Calculate total returns
   const totalCost = stock.playerShortShares * stock.playerAvgShortPx;
   const gains = (stock.playerAvgShortPx - stock.getAskPrice()) * stock.playerShortShares;
   let percentageGains = gains / totalCost;
