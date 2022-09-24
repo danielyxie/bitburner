@@ -709,7 +709,7 @@ function loadGame(saveString: string): boolean {
     try {
       Settings.load(saveObj.SettingsSave);
     } catch (e) {
-      console.error("ERROR: Failed to parse Settings. Re-initing default values");
+      console.error("ERROR: Failed to parse Settings. Re-initializing default values");
       Settings.init();
     }
   } else {
