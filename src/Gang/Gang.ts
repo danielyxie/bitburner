@@ -62,7 +62,7 @@ export class Gang {
     // limit is reached, and then calculates and applies the gains only at that limit
     this.storedCycles = 0;
 
-    // Separate variable to keep track of cycles for Territry + Power gang, which
+    // Separate variable to keep track of cycles for Territory + Power gang, which
     // happens on a slower "clock" than normal processing
     this.storedTerritoryAndPowerCycles = 0;
 
@@ -402,7 +402,7 @@ export class Gang {
   }
 
   /**
-   * Initiatizes a Gang object from a JSON save state.
+   * Initializes a Gang object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): Gang {
     return Generic_fromJSON(Gang, value.data);
