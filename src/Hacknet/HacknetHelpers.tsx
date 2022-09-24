@@ -400,7 +400,7 @@ function processAllHacknetServerEarnings(numCycles: number): number {
     // hacknetNodes array only contains the IP addresses of the servers.
     // Also, update the hash rate before processing
     const ip = Player.hacknetNodes[i];
-    if (ip instanceof HacknetNode) throw new Error(`player nodes should not be HacketNode`);
+    if (ip instanceof HacknetNode) throw new Error(`player nodes should not be HacknetNode`);
     const hserver = GetServer(ip);
     if (!(hserver instanceof HacknetServer)) throw new Error(`player nodes should not be Server`);
     hserver.updateHashRate(Player.mults.hacknet_node_money);
