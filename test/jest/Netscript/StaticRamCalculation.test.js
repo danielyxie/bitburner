@@ -539,7 +539,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
       }
     });
 
-    it("should incur a one time cost of for accesing the namespace", async function () {
+    it("should incur a one time cost of for accessing the namespace", async function () {
       let code = "";
       for (const fn of apiFunctions) {
         code += "hacknet." + fn + "(); ";
