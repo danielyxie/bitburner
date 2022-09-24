@@ -329,7 +329,7 @@ describe("Stock Market Tests", function () {
         expect(stock.getForecastIncreaseChance()).toEqual(0.5);
 
         stock.otlkMagForecast = 25;
-        stock.otlkMag = 5; // Asolute forecast of 45
+        stock.otlkMag = 5; // Absolute forecast of 45
         expect(stock.getForecastIncreaseChance()).toEqual(0.3);
       });
     });
@@ -553,7 +553,7 @@ describe("Stock Market Tests", function () {
         expect(res).toEqual(null);
       });
 
-      it("should properly evaluate LONG transactionst", function () {
+      it("should properly evaluate LONG transactions", function () {
         const shares = ctorParams.shareTxForMovement / 2;
         const res = getSellTransactionGain(stock, shares, PositionTypes.Long);
         const expected = shares * stock.getBidPrice() - commission;
@@ -894,7 +894,7 @@ describe("Stock Market Tests", function () {
         expect(Player.money).toEqual(gain);
       });
 
-      it("should cap the number of sharse sold to however many the player owns", function () {
+      it("should cap the number of shares sold to however many the player owns", function () {
         const attemptedShares = 2e3;
         const actualShares = 1e3;
         stock.playerShares = actualShares;
@@ -988,7 +988,7 @@ describe("Stock Market Tests", function () {
         expect(Player.money).toEqual(gain);
       });
 
-      it("should cap the number of sharse sold to however many the player owns", function () {
+      it("should cap the number of shares sold to however many the player owns", function () {
         const attemptedShares = 2e3;
         const actualShares = 1e3;
         stock.playerShortShares = actualShares;
