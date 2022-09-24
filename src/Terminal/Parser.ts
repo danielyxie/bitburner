@@ -2,7 +2,7 @@ import { KEY } from "../utils/helpers/keyCodes";
 import { substituteAliases } from "../Alias";
 // Helper function to parse individual arguments into number/boolean/string as appropriate
 function parseArg(arg: string): string | number | boolean {
-  // Handles all numbers including hexadecimal, octal, and binary representations, returning NaN on an unparseable string
+  // Handles all numbers including hexadecimal, octal, and binary representations, returning NaN on an unparsable string
   const asNumber = Number(arg);
   if (!isNaN(asNumber)) {
     return asNumber;
