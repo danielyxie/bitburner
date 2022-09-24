@@ -191,7 +191,7 @@ export class CodingContract {
   }
 
   /**
-   * Initiatizes a CodingContract from a JSON save state.
+   * Initializes a CodingContract from a JSON save state.
    */
   static fromJSON(value: IReviverValue): CodingContract {
     return Generic_fromJSON(CodingContract, value.data);
