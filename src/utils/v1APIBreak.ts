@@ -22,7 +22,7 @@ const detect: [string, string][] = [
   ["basic.weakenTime", "renamed 'hacking.weakenTime'"],
   ["write", "needs to be awaited"],
   ["scp", "needs to be awaited"],
-  ["sleep", "Can no longer be called simultenaously."],
+  ["sleep", "Can no longer be called simultaneously."],
   ["hacking_skill", "renamed 'hacking'"],
   ["tryWrite", "renamed 'tryWritePort'"],
 ];
