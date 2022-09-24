@@ -824,7 +824,7 @@ export function Root(props: IProps): React.ReactElement {
                     ...colorProps,
                   };
 
-                  const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`;
+                  const scriptTabText = `${hostname}:~${fileName.startsWith("/") ? "" : "/"}${fileName} ${dirty(index)}`;
                   return (
                     <Draggable
                       key={fileName + hostname}
