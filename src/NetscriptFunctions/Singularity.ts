@@ -789,7 +789,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           return false;
         }
 
-        // Make sure player is actually employed at the comapny
+        // Make sure player is actually employed at the company
         if (!Object.keys(player.jobs).includes(companyName)) {
           helpers.log(ctx, () => `You do not have a job at '${companyName}'`);
           return false;
