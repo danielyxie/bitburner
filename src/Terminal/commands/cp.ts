@@ -68,7 +68,7 @@ export function cp(
         return;
       }
       if (tRes.overwritten) {
-        terminal.print(`WARNING: ${dst} already exists and will be overwriten`);
+        terminal.print(`WARNING: ${dst} already exists and will be overwritten`);
         terminal.print(`${dst} overwritten`);
         return;
       }
