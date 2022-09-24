@@ -86,7 +86,7 @@ export class SleeveFactionWork extends Work {
   }
 
   /**
-   * Initiatizes a FactionWork object from a JSON save state.
+   * Initializes a FactionWork object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): SleeveFactionWork {
     return Generic_fromJSON(SleeveFactionWork, value.data);
