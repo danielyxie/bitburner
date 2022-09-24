@@ -34,7 +34,7 @@ export function comprLZGenerate(): string {
   return plain.substring(0, length);
 }
 
-// compress plaintest string
+// compress plaintext string
 export function comprLZEncode(plain: string): string {
   // for state[i][j]:
   //      if i is 0, we're adding a literal of length j
