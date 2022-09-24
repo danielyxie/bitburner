@@ -128,7 +128,7 @@ export class HacknetNode implements IHacknetNode {
   }
 
   /**
-   * Initiatizes a HacknetNode object from a JSON save state.
+   * Initializes a HacknetNode object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): HacknetNode {
     return Generic_fromJSON(HacknetNode, value.data);
