@@ -1,7 +1,7 @@
 export {};
 
 describe("netscript", () => {
-  it("Do naviguation", () => {
+  it("Do navigation", () => {
     cy.findByRole("button", { name: "SKIP TUTORIAL" }).click();
 
     cy.findByText("Dev").click();
