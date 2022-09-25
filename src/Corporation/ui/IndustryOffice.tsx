@@ -121,7 +121,7 @@ function ManualManagement(props: IProps): React.ReactElement {
     props.rerender();
   }
 
-  // Numeraljs formatter
+  // Numeral.js formatter
   const nf = "0.000";
 
   // Employee stats (after applying multipliers)
