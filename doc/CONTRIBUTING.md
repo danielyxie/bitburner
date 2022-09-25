@@ -89,24 +89,64 @@ changes are okay to contribute:
 
 ## How to setup fork properly
 
-Fork and clone the repo
+Clone and fork the game's repository by using one of these methods: web browser, GitHub
+Desktop, or command line.
 
-```
-  # This will add the game original code as a repo in your local copy
-  $ git remote add danielyxie git@github.com:danielyxie/bitburner.git
+- Web browser. Log in to your GitHub account, navigate to the
+  [game's repository](https://github.com/danielyxie/bitburner), and fork the
+  repository. Refer to
+  [this page](https://docs.github.com/en/get-started/quickstart/fork-a-repo) for more
+  detail.
+- GitHub Desktop. Click on `File`, then click `Clone repository`. Click on the `URL`
+  tab and type `danielyxie/bitburner` into the text box for repository URL. Choose
+  the path where you want to clone the repository and click the `Clone` button.
+  Refer to [this page](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop)
+  for more detail.
+- Command line.
 
-  # You can verify you did this right by doing the following command
-  $ git remote show
-  danielyxie
-  origin
+```sh
+# This clones the game's code repository. The output you get might vary.
+$ git clone https://github.com/danielyxie/bitburner.git
+Cloning into 'bitburner'...
+remote: Enumerating objects: 57072, done.
+remote: Counting objects: 100% (404/404), done.
+remote: Compressing objects: 100% (205/205), done.
+remote: Total 57072 (delta 210), reused 375 (delta 199), pack-reused 56668
+Receiving objects: 100% (57072/57072), 339.11 MiB | 5.42 MiB/s, done.
+Resolving deltas: 100% (43708/43708), done.
+Updating files: 100% (2561/2561), done.
 
-  # Then download all the branches from the game. (there might be more branches)
-  $ git fetch danielyxie
-  From github.com:danielyxie/bitburner
-  * [new branch]        dev             -> danielyxie/dev
-  * [new branch]        master          -> danielyxie/master
+# Change to the directory that contains your local copy.
+$ cd bitburner
 
-  # Makes sure you always start from `danielyxie/dev` to avoid merge conflicts.
+# The upstream is the repository that contains the game's source code. The
+# upstream is also the place where proposed changes are merged into the game.
+$ git remote rename origin upstream
+Renaming remote references: 100% (8/8), done.
+
+# The origin is your own copy or fork of the game's source code. Assume that
+# your fork will be on GitHub. Change "myname" to your GitHub username. Change
+# "myfork" to the name of your forked repository.
+$ git remote add origin https://github.com/myname/myfork
+
+# Now "origin" is your fork and "upstream" is where changes should be merged.
+$ git remote show
+origin
+upstream
+
+# You can now download all changes and branches from the upstream repository.
+# The output you get might vary.
+$ git fetch upstream
+
+# Make sure you always start from "upstream/dev" to avoid merge conflicts.
+$ git branch
+* dev
+$ git branch -r
+upstream/BN14
+upstream/HEAD -> upstream/dev
+upstream/dev
+upstream/folders
+upstream/master
 ```
 
 ## Development Workflow Best Practices
@@ -139,18 +179,18 @@ These steps only work in a Bash-like environment, like MinGW for Windows.
 
 ```sh
 # Install the main game dependencies & build the app in debug mode.
-npm install
-npm run build:dev
+$ npm install
+$ npm run build:dev
 
 # Use electron-packager to build the app to the .build/ folder.
-npm run electron
+$ npm run electron
 
 # When launching the .exe directly, you'll need the steam_appid.txt file in the root.
 # If not using Windows, change this line accordingly.
-cp .build/bitburner-win32-x64/resources/app/steam_appid.txt .build/bitburner-win32-x64/steam_appid.txt
+$ cp .build/bitburner-win32-x64/resources/app/steam_appid.txt .build/bitburner-win32-x64/steam_appid.txt
 
 # And run the game...
-.build/bitburner-win32-x64/bitburner.exe
+$ .build/bitburner-win32-x64/bitburner.exe
 ```
 
 ### Submitting a Pull Request
