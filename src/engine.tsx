@@ -256,17 +256,14 @@ const Engine: {
       const timeOffline = Engine._lastUpdate - lastUpdate;
       const numCyclesOffline = Math.floor(timeOffline / CONSTANTS._idleSpeed);
 
+      // Calculate the number of chances for a contract the player had whilst offline
+      const contractChancesWhileOffline = Math.floor(timeOffline / (1000 * 60 * 10));
+
       // Generate coding contracts
       if (Player.sourceFiles.length > 0) {
         let numContracts = 0;
-        if (numCyclesOffline < 3000 * 100) {
-          // if we have less than 100 rolls, just roll them exactly.
-          for (let i = 0; i < numCyclesOffline / 3000; i++) {
-            if (Math.random() <= 0.25) numContracts++;
-          }
-        } else {
-          // just average it.
-          numContracts = (numCyclesOffline / 3000) * 0.25;
+        if (contractChancesWhileOffline > 0) {
+          numContracts += Math.floor(contractChancesWhileOffline * 0.25);
         }
         for (let i = 0; i < numContracts; i++) {
           generateRandomContract();
