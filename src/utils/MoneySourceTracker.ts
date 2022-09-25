@@ -54,7 +54,7 @@ export class MoneySourceTracker {
     return Generic_toJSON("MoneySourceTracker", this);
   }
 
-  // Initiatizes a MoneySourceTracker object from a JSON save state.
+  // Initializes a MoneySourceTracker object from a JSON save state.
   static fromJSON(value: IReviverValue): MoneySourceTracker {
     return Generic_fromJSON(MoneySourceTracker, value.data);
   }

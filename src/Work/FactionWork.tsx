@@ -93,7 +93,7 @@ export class FactionWork extends Work {
   }
 
   /**
-   * Initiatizes a FactionWork object from a JSON save state.
+   * Initializes a FactionWork object from a JSON save state.
    */
   static fromJSON(value: IReviverValue): FactionWork {
     return Generic_fromJSON(FactionWork, value.data);
