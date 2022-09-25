@@ -133,7 +133,7 @@ BitNodes["BitNode4"] = new BitNode(
   "The Man and the Machine",
   (
     <>
-      The Singularity has arrived. The human race is gone, replaced by artificially super-intelligent beings that are
+      The Singularity has arrived. The human race is gone, replaced by artificially superintelligent beings that are
       more machine than man. <br />
       <br />
       <br />
@@ -193,7 +193,7 @@ BitNodes["BitNode6"] = new BitNode(
     <>
       In the middle of the 21st century, {FactionNames.OmniTekIncorporated} began designing and manufacturing advanced
       synthetic androids, or Synthoids for short. They achieved a major technological breakthrough in the sixth
-      generation of their Synthoid design, called MK-VI, by developing a hyper-intelligent AI. Many argue that this was
+      generation of their Synthoid design, called MK-VI, by developing a hyperintelligent AI. Many argue that this was
       the first sentient AI ever created. This resulted in Synthoid models that were stronger, faster, and more
       intelligent than the humans that had created them.
       <br />
@@ -226,8 +226,8 @@ BitNodes["BitNode7"] = new BitNode(
       In the middle of the 21st century, you were doing cutting-edge work at {FactionNames.OmniTekIncorporated} as part
       of the AI design team for advanced synthetic androids, or Synthoids for short. You helped achieve a major
       technological breakthrough in the sixth generation of the company's Synthoid design, called MK-VI, by developing a
-      hyper-intelligent AI. Many argue that this was the first sentient AI ever created. This resulted in Synthoid
-      models that were stronger, faster, and more intelligent than the humans that had created them.
+      hyperintelligent AI. Many argue that this was the first sentient AI ever created. This resulted in Synthoid models
+      that were stronger, faster, and more intelligent than the humans that had created them.
       <br />
       <br />
       In this BitNode you will be able to access the {FactionNames.Bladeburners} API, which allows you to access{" "}
