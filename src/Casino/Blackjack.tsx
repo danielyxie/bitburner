@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 
 const MAX_BET = 100e6;
-export const DECK_COUNT = 5; // 5-deck multi-deck
+export const DECK_COUNT = 5; // 5-deck multideck
 
 enum Result {
   Pending = "",
@@ -70,7 +70,7 @@ export class Blackjack extends React.Component<Record<string, never>, State> {
       return;
     }
 
-    // Take money from player right away so that player's don't just "leave" to avoid the loss (I mean they could
+    // Take money from player right away so that players don't just "leave" to avoid the loss (I mean they could
     // always reload without saving but w.e) TODO: Save/Restore the RNG state to limit the value of save-scumming.
     win(-this.state.bet);
 
