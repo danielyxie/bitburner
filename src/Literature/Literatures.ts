@@ -261,10 +261,10 @@ export const Literatures: IMap<Literature> = {};
     "that the Singularity would arrive by 2045. " +
     "And yet here we are, more than three decades later, where most would agree that we have not " +
     "yet reached a point where computers and machines are vastly more intelligent than we are. So what gives?<br><br>" +
-    "The answer is that we have reached the Singularity, just not in the way we expected. The artificial super-intelligence " +
+    "The answer is that we have reached the Singularity, just not in the way we expected. The artificial superintelligence " +
     "that was predicted by Kurzweil and others exists in the world today - in the form of Augmentations. " +
     "Yes, those Augmentations that the rich and powerful keep to themselves enable humans " +
-    "to become super-intelligent beings. The Singularity did not lead to a world where " +
+    "to become superintelligent beings. The Singularity did not lead to a world where " +
     "our machines are infinitely more intelligent than us, it led to a world " +
     "where man and machine can merge to become something greater. Most of the world just doesn't " +
     "know it yet.";
