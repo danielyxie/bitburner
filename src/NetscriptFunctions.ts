@@ -24,7 +24,7 @@ import {
   numCycleForGrowth,
   numCycleForGrowthCorrected,
   processSingleServerGrowth,
-  safetlyCreateUniqueServer,
+  safelyCreateUniqueServer,
 } from "./Server/ServerHelpers";
 import { getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam } from "./Server/ServerPurchases";
 import { Server } from "./Server/Server";
@@ -1361,7 +1361,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => `Not enough money to purchase server. Need ${numeralWrapper.formatMoney(cost)}`);
         return "";
       }
-      const newServ = safetlyCreateUniqueServer({
+      const newServ = safelyCreateUniqueServer({
         ip: createUniqueRandomIp(),
         hostname: hostnameStr,
         organizationName: "",

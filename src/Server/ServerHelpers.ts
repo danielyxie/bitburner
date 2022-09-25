@@ -15,7 +15,7 @@ import { isValidNumber } from "../utils/helpers/isValidNumber";
  * Constructs a new server, while also ensuring that the new server
  * does not have a duplicate hostname/ip.
  */
-export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
+export function safelyCreateUniqueServer(params: IConstructorParams): Server {
   let hostname: string = params.hostname.replace(/ /g, `-`);
 
   if (params.ip != null && ipExists(params.ip)) {

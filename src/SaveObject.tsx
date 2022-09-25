@@ -32,7 +32,7 @@ import { pushGameSaved } from "./Electron";
 import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
 import { FactionNames } from "./Faction/data/FactionNames";
 import { Faction } from "./Faction/Faction";
-import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
+import { safelyCreateUniqueServer } from "./Server/ServerHelpers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { v2APIBreak } from "./utils/v2APIBreak";
 
@@ -461,7 +461,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
       // Create the darkweb for everyone but it won't be linked
       const dw = GetServer(SpecialServers.DarkWeb);
       if (!dw) {
-        const darkweb = safetlyCreateUniqueServer({
+        const darkweb = safelyCreateUniqueServer({
           ip: createUniqueRandomIp(),
           hostname: SpecialServers.DarkWeb,
           organizationName: "",

@@ -26,7 +26,7 @@ import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
 import { calculateSkillProgress as calculateSkillProgressF, ISkillProgress } from "../formulas/skill";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
-import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
+import { safelyCreateUniqueServer } from "../../Server/ServerHelpers";
 
 import { SpecialServers } from "../../Server/data/SpecialServers";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
@@ -48,7 +48,7 @@ import { serverMetadata } from "../../Server/data/servers";
 
 export function init(this: PlayerObject): void {
   /* Initialize Player's home computer */
-  const t_homeComp = safetlyCreateUniqueServer({
+  const t_homeComp = safelyCreateUniqueServer({
     adminRights: true,
     hostname: "home",
     ip: createUniqueRandomIp(),

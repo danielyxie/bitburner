@@ -3,7 +3,7 @@
  * the home computer
  */
 import { AddToAllServers, createUniqueRandomIp } from "./AllServers";
-import { safetlyCreateUniqueServer } from "./ServerHelpers";
+import { safelyCreateUniqueServer } from "./ServerHelpers";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
@@ -75,7 +75,7 @@ export function purchaseServer(hostname: string, ram: number, cost: number): voi
   }
 
   // Create server
-  const newServ = safetlyCreateUniqueServer({
+  const newServ = safelyCreateUniqueServer({
     adminRights: true,
     hostname: hostname,
     ip: createUniqueRandomIp(),
