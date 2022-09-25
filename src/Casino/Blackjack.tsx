@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 
 const MAX_BET = 100e6;
-export const DECK_COUNT = 5; // 5-deck multi-deck
+export const DECK_COUNT = 5; // 5-deck multideck
 
 enum Result {
   Pending = "",
