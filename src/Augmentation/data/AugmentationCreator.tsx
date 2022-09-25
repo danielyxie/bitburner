@@ -1071,7 +1071,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     moneyCost: 4e8,
     info:
       "A crude but functional matter phase-shifter module that is embedded " +
-      "in the brain stem and cerebellum. This augmentation was developed by " +
+      "in the brainstem and cerebellum. This augmentation was developed by " +
       "criminal organizations and allows the user to project and control holographic " +
       "simulacrums within a large radius. These simulacrums are commonly used for " +
       "espionage and surveillance work.",
@@ -1927,7 +1927,7 @@ export const initBladeburnerAugmentations = (): Augmentation[] => [
     moneyCost: 1.5e11,
     info:
       "A highly-advanced matter phase-shifter module that is embedded " +
-      "in the brain stem and cerebellum. This augmentation allows " +
+      "in the brainstem and cerebellum. This augmentation allows " +
       "the user to project and control a holographic simulacrum within an " +
       "extremely large radius. These specially-modified holograms were specifically " +
       "weaponized by Bladeburner units to be used against Synthoids.",
