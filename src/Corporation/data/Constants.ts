@@ -98,7 +98,7 @@ export const CorporationConstants: {
     "Pharmaceutical",
     "Hardware",
     "Robotics",
-    "Software",
+    "Computers",
     "Healthcare",
     "RealEstate",
   ],
