@@ -96,7 +96,7 @@ export function processTransactionForecastMovement(stock: Stock, shares: number)
   const remainingShares = shares - firstShares;
   let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
-  // If on the off-chance we end up perfectly at the next price movement
+  // If on the off chance we end up perfectly at the next price movement
   stock.shareTxUntilMovement =
     stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
   if (stock.shareTxUntilMovement === stock.shareTxForMovement || stock.shareTxUntilMovement <= 0) {
