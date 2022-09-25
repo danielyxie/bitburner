@@ -33,16 +33,16 @@ already been reported as an [Issue](https://github.com/danielyxie/bitburner/issu
 
 #### How to Submit a Good Bug Report
 
-- **Use a clear and descriptive title** for the issue
-- **State your browser, your browser's version, and your computer's OS**
-- **Attach your save file**, if you think it would help solve the issue
+- **Use a clear and descriptive title** for the issue.
+- **State your browser, your browser's version, and your computer's OS.**
+- **Attach your save file**, if you think it would help solve the issue.
 - **Provide instructions on how to reproduce the bug** in as much detail
   as possible. If you cannot reliably reproduce the bug, then just try
-  your best to explain what was happening when the bug occurred
-- **Provide any scripts** that triggered the bug if the issue is Netscript-related
+  your best to explain what was happening when the bug occurred.
+- **Provide any scripts** that triggered the bug if the issue is Netscript-related.
 - **Open your browser's Dev Console and report any error-related output**
   that may be printed there. The Dev Console can be opened on most modern
-  browsers by pressing F12
+  browsers by pressing F12.
 
 ## As a Developer
 
@@ -110,10 +110,10 @@ Fork and clone the repo
 
 ## Development Workflow Best Practices
 
-- Work in a new branch forked from the `dev` branch to isolate your new code
+- Work in a new branch forked from the `dev` branch to isolate your new code.
   - Keep code-changes on a branch as small as possible. This makes it easier for code review. Each branch should be its own independent feature.
   - Regularly rebase your branch against `dev` to make sure you have the latest updates pulled.
-  - When merging, always merge your branch into `dev`. When releasing a new update, then merge `dev` into `master`
+  - When merging, always merge your branch into `dev`. When releasing a new update, then merge `dev` into `master`.
 
 ## Running locally.
 
@@ -132,19 +132,19 @@ Saving a file will reload the game automatically.
 
 ### How to build the electron app
 
-Tested on Node v16.13.1 (LTS) on Windows
+Tested on Node v16.13.1 (LTS) on Windows.
 These steps only work in a bash-like environment, like MinGW for Windows.
 
 ```sh
-# Install the main game dependencies & build the app in debug mode
+# Install the main game dependencies & build the app in debug mode.
 npm install
 npm run build:dev
 
-# Use electron-packager to build the app to the .build/ folder
+# Use electron-packager to build the app to the .build/ folder.
 npm run electron
 
-# When launching the .exe directly, you'll need the steam_appid.txt file in the root
-# If not using windows, change this line accordingly
+# When launching the .exe directly, you'll need the steam_appid.txt file in the root.
+# If not using windows, change this line accordingly.
 cp .build/bitburner-win32-x64/resources/app/steam_appid.txt .build/bitburner-win32-x64/steam_appid.txt
 
 # And run the game...
@@ -156,15 +156,15 @@ cp .build/bitburner-win32-x64/resources/app/steam_appid.txt .build/bitburner-win
 When submitting a pull request with your code contributions, please abide by
 the following rules:
 
-- Work in a branch forked from `dev` to isolate the new code
+- Work in a branch forked from `dev` to isolate the new code.
 - Ensure you have latest from the [game's main
-  repository](../../../tree/dev)
-- Rebase your branch if necessary
-- Run the game locally to test out your changes
+  repository](../../../tree/dev).
+- Rebase your branch if necessary.
+- Run the game locally to test out your changes.
 - When submitting the pull request, make sure that the base fork is
   _danielyxie/bitburner_ and the base is _dev_.
 - If your changes affect the game's UI, attach some screenshots or GIFs showing
-  the changes to the UI
+  the changes to the UI.
 - If your changes affect Netscript, provide some
   scripts that can be used to test the Netscript changes.
 - Ensure you have run `npm run lint` to make sure your changes conform to the
@@ -187,10 +187,10 @@ We are using [API Extractor](https://api-extractor.com/pages/tsdoc/doc_comment_s
 Before submitting your code for a pull request, please try to follow these
 rules:
 
-- Work in a branch forked from `dev` to isolate the new code
+- Work in a branch forked from `dev` to isolate the new code.
 - Ensure you have latest from the [game's main
-  repository](../../../tree/dev)
-- Rebase your branch if necessary
+  repository](../../../tree/dev).
+- Rebase your branch if necessary.
 - When submitting the pull request, make sure that the base fork is
   _danielyxie/bitburner_ and the base is _dev_.
 - Do not check in any generated files under `doc\`. The documentation is built
