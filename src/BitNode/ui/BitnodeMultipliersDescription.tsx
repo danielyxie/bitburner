@@ -299,7 +299,7 @@ function StanekMults({ mults }: IMultsProps): React.ReactElement {
 
   const extraSize = mults.StaneksGiftExtraSize.toFixed(3);
   const rows: IBNMultRows = {
-    StnakesGiftPowerMultiplier: { name: "Gift Power" },
+    StaneksGiftPowerMultiplier: { name: "Gift Power" },
     StaneksGiftExtraSize: {
       name: "Base Size Modifier",
       content: `${mults.StaneksGiftExtraSize > defaultMultipliers.StaneksGiftExtraSize ? `+${extraSize}` : extraSize}`,
