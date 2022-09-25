@@ -38,7 +38,7 @@ export function ProductElem(props: IProductProps): React.ReactElement {
   const city = props.city;
   const product = props.product;
 
-  // Numeraljs formatters
+  // Numeral.js formatters
   const nf = "0.000";
   const nfB = "0.000a"; // For numbers that might be big
 
