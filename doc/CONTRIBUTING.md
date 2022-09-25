@@ -3,22 +3,22 @@
 ## In General
 
 The game is made better because the community as a whole speaks up about
-ways to improve the game. Here's some of the ways you can make your voice
+ways to improve the game. Here are some of the ways you can make your voice
 heard:
 
-- [Discord](https://discord.gg/XKEGvHqVr3)
+- [Discord](https://discord.gg/XKEGvHqVr3).
   There is a dedicated Discord instance set up for more free-form chats
   between all members of the community. Regular players, heavy scripters,
   Bitburner contributors, and everyone in between can be found on the
   server.
-- [Github Issues](https://github.com/danielyxie/bitburner/issues)
+- [Github Issues](https://github.com/danielyxie/bitburner/issues).
   Although the term "issues" can have a negative connotation, they are a
-  means of communicating with the community. A new Issue can be a
+  means of communicating with the community. A new Issue can be an
   interesting new feature that you feel would improve the game. It could be
   an unexpected behavior within the game. Or because the game is about
   scripting perhaps there is something that is conflicting with the
-  browser's Javascript interaction. So please do not be afraid to open a
-  [new issue](https://github.com/danielyxie/bitburner/issues/new).
+  browser's JavaScript interaction. So please do not be afraid to open a
+  [new Issue](https://github.com/danielyxie/bitburner/issues/new).
 
 ## Reporting Bugs
 
@@ -33,13 +33,14 @@ already been reported as an [Issue](https://github.com/danielyxie/bitburner/issu
 
 #### How to Submit a Good Bug Report
 
-- **Use a clear and descriptive title** for the issue.
+- **Use a clear and descriptive title** for the Issue.
 - **State your browser, your browser's version, and your computer's OS.**
-- **Attach your save file**, if you think it would help solve the issue.
+- **Attach your save file**, if you think it would help solve the Issue.
+  Zip your save file first, then attach the zipped save file.
 - **Provide instructions on how to reproduce the bug** in as much detail
   as possible. If you cannot reliably reproduce the bug, then just try
   your best to explain what was happening when the bug occurred.
-- **Provide any scripts** that triggered the bug if the issue is Netscript-related.
+- **Provide any scripts** that triggered the bug if the Issue is Netscript-related.
 - **Open your browser's Dev Console and report any error-related output**
   that may be printed there. The Dev Console can be opened on most modern
   browsers by pressing F12.
@@ -71,13 +72,13 @@ changes are okay to contribute:
 
 ##### Contributions that Will Most Likely Be Accepted
 
-- Bug Fixes
-- Quality-of-Life Changes
+- Bug fixes
+- Quality-of-life changes
   - Adding a new, commonly-requested Netscript function
   - Fixing or improving UI elements
   - Adding game settings/options
   - Adding a new Terminal command
-- Code Refactors that conform to good/standard practices
+- Code refactors that conform to good/standard practices
 
 ##### Contributions that will not be Accepted without prior approval
 
@@ -113,19 +114,20 @@ Fork and clone the repo
 - Work in a new branch forked from the `dev` branch to isolate your new code.
   - Keep code-changes on a branch as small as possible. This makes it easier for code review. Each branch should be its own independent feature.
   - Regularly rebase your branch against `dev` to make sure you have the latest updates pulled.
-  - When merging, always merge your branch into `dev`. When releasing a new update, then merge `dev` into `master`.
+  - When merging, always merge your branch into `dev`. When releasing a new update, merge `dev` into `master`.
 
-## Running locally.
+## Running locally
 
 Install
 
 - `npm` (maybe via `nvm`)
-- Github Desktop (windows only)
-- Visual Studio code (optional)
+- Github Desktop (Windows only)
+- Visual Studio Code (optional)
 
-Inside the root of the repo run
-`npm install` to install all the dependencies
-`npm run start:dev` to launch the game in dev mode.
+Inside the root of the repository run:
+
+- `npm install` to install all the dependencies; and
+- `npm run start:dev` to launch the game in dev mode.
 
 After that you can open any browser and navigate to `localhost:8000` and play the game.
 Saving a file will reload the game automatically.
@@ -133,7 +135,7 @@ Saving a file will reload the game automatically.
 ### How to build the electron app
 
 Tested on Node v16.13.1 (LTS) on Windows.
-These steps only work in a bash-like environment, like MinGW for Windows.
+These steps only work in a Bash-like environment, like MinGW for Windows.
 
 ```sh
 # Install the main game dependencies & build the app in debug mode.
@@ -144,7 +146,7 @@ npm run build:dev
 npm run electron
 
 # When launching the .exe directly, you'll need the steam_appid.txt file in the root.
-# If not using windows, change this line accordingly.
+# If not using Windows, change this line accordingly.
 cp .build/bitburner-win32-x64/resources/app/steam_appid.txt .build/bitburner-win32-x64/steam_appid.txt
 
 # And run the game...
@@ -157,7 +159,7 @@ When submitting a pull request with your code contributions, please abide by
 the following rules:
 
 - Work in a branch forked from `dev` to isolate the new code.
-- Ensure you have latest from the [game's main
+- Ensure you have the latest from the [game's main
   repository](../../../tree/dev).
 - Rebase your branch if necessary.
 - Run the game locally to test out your changes.
@@ -174,21 +176,21 @@ the following rules:
   in the root of the repository. These will be updated as part of official
   releases.
 
-## As a Documentor
+## As a Documenter
 
 To contribute to and view your changes to the BitBurner documentation on [Read The
 Docs](http://bitburner.readthedocs.io/), you will
 need to have Python installed, along with [Sphinx](http://www.sphinx-doc.org).
 
-To make change to the [in-game documentation](../markdown/bitburner.md), you will need to modify the [TypeScript definitions](../src/ScriptEditor/NetscriptDefinitions.d.ts), not the markdown files.
+To make change to the [in-game documentation](../markdown/bitburner.md), you will need to modify the [TypeScript definitions](../src/ScriptEditor/NetscriptDefinitions.d.ts), not the Markdown files.
 
-We are using [API Extractor](https://api-extractor.com/pages/tsdoc/doc_comment_syntax/) (tsdoc hints) to generate the markdown doc. Make your changes to the TypeScript definitions and then run `npm run doc`.
+We are using [API Extractor](https://api-extractor.com/pages/tsdoc/doc_comment_syntax/) (tsdoc hints) to generate the Markdown doc. Make your changes to the TypeScript definitions and then run `npm run doc`.
 
 Before submitting your code for a pull request, please try to follow these
 rules:
 
 - Work in a branch forked from `dev` to isolate the new code.
-- Ensure you have latest from the [game's main
+- Ensure you have the latest from the [game's main
   repository](../../../tree/dev).
 - Rebase your branch if necessary.
 - When submitting the pull request, make sure that the base fork is
@@ -204,5 +206,5 @@ Update the following
 - `package.json` `version`
 - `doc/source/conf.py` `version` and `release`
 - `doc/source/changelog.rst`
-- post to discord
+- post to Discord
 - post to reddit.com/r/Bitburner
