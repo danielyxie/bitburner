@@ -158,7 +158,7 @@ the following rules:
 
 - Work in a branch forked from `dev` to isolate the new code
 - Ensure you have latest from the [game's main
-  repository](danielyxie/bitburner@dev)
+  repository](../../../tree/dev)
 - Rebase your branch if necessary
 - Run the game locally to test out your changes
 - When submitting the pull request, make sure that the base fork is
@@ -189,7 +189,7 @@ rules:
 
 - Work in a branch forked from `dev` to isolate the new code
 - Ensure you have latest from the [game's main
-  repository](danielyxie/bitburner@dev)
+  repository](../../../tree/dev)
 - Rebase your branch if necessary
 - When submitting the pull request, make sure that the base fork is
   _danielyxie/bitburner_ and the base is _dev_.
