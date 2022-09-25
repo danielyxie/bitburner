@@ -16,6 +16,6 @@ export function KeyHandler(props: IProps): React.ReactElement {
     return () => document.removeEventListener("keydown", press);
   });
 
-  // invisible auto-focused element that eats all the keypress for the minigames.
+  // invisible autofocused element that eats all the keypress for the minigames.
   return <></>;
 }
