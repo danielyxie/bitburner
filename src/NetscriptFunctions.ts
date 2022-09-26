@@ -924,7 +924,7 @@ const base: InternalAPI<NS> = {
             continue;
           }
           destScript.code = sourceScript.code;
-          destScript.ramUsage = sourceScript.ramUsage;
+          destScript.ramUsage = destScript.ramUsage;
           destScript.markUpdated();
           helpers.log(ctx, () => `WARNING: File '${file}' overwritten on '${destServer?.hostname}'`);
           continue;
