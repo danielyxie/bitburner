@@ -53,7 +53,9 @@ function killWorkerScriptByPid(pid: number): boolean {
 }
 
 function stopAndCleanUpWorkerScript(ws: WorkerScript): void {
-  killNetscriptDelay(ws);
+  if (ws.delay) clearTimeout(ws.delay);
+  ws.delayReject?.(new ScriptDeath(ws));
+  ws.env.runningFn = "";
   if (typeof ws.atExit === "function") {
     try {
       ws.env.stopFlag = false;
@@ -113,20 +115,4 @@ function removeWorkerScript(workerScript: WorkerScript): void {
   AddRecentScript(workerScript);
 
   WorkerScriptStartStopEventEmitter.emit();
-}
-
-/**
- * Helper function that interrupts a script's delay if it is in the middle of a
- * timed, blocked operation (like hack(), sleep(), etc.). This allows scripts to
- * be killed immediately even if they're in the middle of one of those long operations
- */
-function killNetscriptDelay(workerScript: WorkerScript): void {
-  if (workerScript instanceof WorkerScript) {
-    if (workerScript.delay) {
-      clearTimeout(workerScript.delay);
-      if (workerScript.delayReject) {
-        workerScript.delayReject(new ScriptDeath(workerScript));
-      }
-    }
-  }
 }
