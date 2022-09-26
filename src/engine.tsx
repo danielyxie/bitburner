@@ -262,8 +262,15 @@ const Engine: {
       // Generate coding contracts
       if (Player.sourceFiles.length > 0) {
         let numContracts = 0;
-        if (contractChancesWhileOffline > 0) {
+        if (contractChancesWhileOffline > 100) {
           numContracts += Math.floor(contractChancesWhileOffline * 0.25);
+        }
+        if (contractChancesWhileOffline > 0 && contractChancesWhileOffline <= 100) {
+          for (let i = 0; i < contractChancesWhileOffline; ++i) {
+            if (Math.random() <= 0.25) {
+              numContracts++;
+            }
+          }
         }
         for (let i = 0; i < numContracts; i++) {
           generateRandomContract();
