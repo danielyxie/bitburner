@@ -75,10 +75,11 @@ export class Server extends BaseServer {
     this.moneyMax = 25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
 
     //Hack Difficulty is synonymous with server security. Base Difficulty = Starting difficulty
-    this.hackDifficulty =
+    const realDifficulty =
       params.hackDifficulty != null ? params.hackDifficulty * BitNodeMultipliers.ServerStartingSecurity : 1;
+    this.hackDifficulty = Math.min(realDifficulty, 100);
     this.baseDifficulty = this.hackDifficulty;
-    this.minDifficulty = Math.max(1, Math.round(this.hackDifficulty / 3));
+    this.minDifficulty = Math.min(Math.max(1, Math.round(realDifficulty / 3)), 100);
     this.serverGrowth = params.serverGrowth != null ? params.serverGrowth : 1; //Integer from 0 to 100. Affects money increase from grow()
 
     //Port information, required for porthacking servers to get admin rights

@@ -9,6 +9,7 @@ import { killWorkerScript } from "../Netscript/killWorkerScript";
 import { CONSTANTS } from "../Constants";
 import { isString } from "../utils/helpers/isString";
 import { RunningScript } from "../Script/RunningScript";
+import { calculateAchievements } from "../Achievements/Achievements";
 
 import {
   AugmentationStats,
@@ -52,6 +53,9 @@ import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWor
 import { FactionWork } from "../Work/FactionWork";
 import { FactionWorkType } from "../Work/data/FactionWorkType";
 import { CompanyWork } from "../Work/CompanyWork";
+import { canGetBonus, onExport } from "../ExportBonus";
+import { saveObject } from "../SaveObject";
+import { calculateCrimeWorkStats } from "../Work/formulas/Crime";
 
 export function NetscriptSingularity(): InternalAPI<ISingularity> {
   const getAugmentation = function (ctx: NetscriptContext, name: string): Augmentation {
@@ -91,7 +95,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
         const runningScriptObj = new RunningScript(script, []); // No args
         runningScriptObj.threads = 1; // Only 1 thread
-        startWorkerScript(player, runningScriptObj, home);
+        startWorkerScript(runningScriptObj, home);
       }
     }
   };
@@ -234,8 +238,6 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           runAfterReset(cbScript);
         }, 0);
 
-        // Prevent ctx.workerScript from "finishing execution naturally"
-        ctx.workerScript.running = false;
         killWorkerScript(ctx.workerScript);
       },
     installAugmentations: (ctx: NetscriptContext) =>
@@ -254,7 +256,6 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           runAfterReset(cbScript);
         }, 0);
 
-        ctx.workerScript.running = false; // Prevent ctx.workerScript from "finishing execution naturally"
         killWorkerScript(ctx.workerScript);
         return true;
       },
@@ -780,7 +781,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       function (_companyName: unknown, _focus: unknown = true): boolean {
         helpers.checkSingularityAccess(ctx);
         const companyName = helpers.string(ctx, "companyName", _companyName);
-        const focus = !_focus;
+        const focus = !!_focus;
 
         // Make sure its a valid company
         if (companyName == null || companyName === "" || !(Companies[companyName] instanceof Company)) {
@@ -953,7 +954,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
 
         // if the player is in a gang and the target faction is any of the gang faction, fail
         if (player.inGang() && faction.name === player.getGangFaction().name) {
-          helpers.log(ctx, () => `You can't work for '${facName}' because youre managing a gang for it`);
+          helpers.log(ctx, () => `You can't work for '${facName}' because you're managing a gang for it.`);
           return false;
         }
 
@@ -1210,7 +1211,19 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: ${crimeRoughName}`);
         }
 
-        return Object.assign({}, crime);
+        const crimeStatsWithMultipliers = calculateCrimeWorkStats(crime);
+
+        return Object.assign({}, crime, {
+          money: crimeStatsWithMultipliers.money,
+          reputation: crimeStatsWithMultipliers.reputation,
+          hacking_exp: crimeStatsWithMultipliers.hackExp,
+          strength_exp: crimeStatsWithMultipliers.strExp,
+          defense_exp: crimeStatsWithMultipliers.defExp,
+          dexterity_exp: crimeStatsWithMultipliers.dexExp,
+          agility_exp: crimeStatsWithMultipliers.agiExp,
+          charisma_exp: crimeStatsWithMultipliers.chaExp,
+          intelligence_exp: crimeStatsWithMultipliers.intExp,
+        });
       },
     getDarkwebPrograms: (ctx: NetscriptContext) =>
       function (): string[] {
@@ -1275,12 +1288,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         helpers.checkSingularityAccess(ctx);
         const nextBN = helpers.number(ctx, "nextBN", _nextBN);
         const callbackScript = helpers.string(ctx, "callbackScript", _callbackScript);
-        helpers.checkSingularityAccess(ctx);
 
+        const wd = GetServer(SpecialServers.WorldDaemon);
+        if (!(wd instanceof Server)) throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
         const hackingRequirements = (): boolean => {
-          const wd = GetServer(SpecialServers.WorldDaemon);
-          if (!(wd instanceof Server))
-            throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
           if (player.skills.hacking < wd.requiredHackingSkill) return false;
           if (!wd.hasAdminRights) return false;
           return true;
@@ -1296,6 +1307,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           return;
         }
 
+        wd.backdoorInstalled = true;
+        calculateAchievements();
         enterBitNode(Router, false, player.bitNodeN, nextBN);
         if (callbackScript)
           setTimeout(() => {
@@ -1305,6 +1318,15 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
     getCurrentWork: () => (): any | null => {
       if (!player.currentWork) return null;
       return player.currentWork.APICopy();
+    },
+    exportGame: (ctx: NetscriptContext) => (): void => {
+      helpers.checkSingularityAccess(ctx);
+      onExport(player);
+      return saveObject.exportGame();
+    },
+    exportGameBonus: (ctx: NetscriptContext) => (): boolean => {
+      helpers.checkSingularityAccess(ctx);
+      return canGetBonus();
     },
   };
 }

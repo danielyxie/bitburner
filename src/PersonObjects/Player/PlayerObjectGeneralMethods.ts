@@ -23,6 +23,7 @@ import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../Sleeve/Sleeve";
+import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
 import {
   calculateSkill as calculateSkillF,
   calculateSkillProgress as calculateSkillProgressF,
@@ -592,6 +593,12 @@ export function getNextCompanyPosition(
 export function quitJob(this: IPlayer, company: string): void {
   if (isCompanyWork(this.currentWork) && this.currentWork.companyName === company) {
     this.finishWork(true);
+  }
+  for (const sleeve of this.sleeves) {
+    if (isSleeveCompanyWork(sleeve.currentWork) && sleeve.currentWork.companyName === company) {
+      sleeve.stopWork(this);
+      dialogBoxCreate(`You quit ${company} while one of your sleeves was working there. The sleeve is now idle.`);
+    }
   }
   delete this.jobs[company];
 }
@@ -1455,7 +1462,7 @@ export function sourceFileLvl(this: IPlayer, n: number): number {
 
 export function focusPenalty(this: IPlayer): number {
   let focus = 1;
-  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
+  if (!this.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
     focus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
   }
   return focus;

@@ -26,6 +26,8 @@ import { StaticAugmentations } from "../StaticAugmentations";
 import { CONSTANTS } from "../../Constants";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { Info } from "@mui/icons-material";
+import { Link } from "@mui/material";
+import { AlertEvents } from "../../ui/React/AlertManager";
 
 interface NFGDisplayProps {
   player: IPlayer;
@@ -34,6 +36,19 @@ interface NFGDisplayProps {
 const NeuroFluxDisplay = ({ player }: NFGDisplayProps): React.ReactElement => {
   const level = player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0;
 
+  const openBloodDonation = () => {
+    AlertEvents.emit(
+      <>
+        <Typography variant="h5">Bitburner blood donation community program</Typography>
+        <Typography>
+          The blood donation program is a continuous real life event started on 2022-04-01. To participate simply go
+          donate blood, plasma, or platelets to your local organisation and take a picture as proof (hide your personal
+          information). Then send the proof to hydroflame on reddit or discord.
+        </Typography>
+        <Typography>Currently accumulated {CONSTANTS.Donations} donations.</Typography>
+      </>,
+    );
+  };
   return level > 0 ? (
     <Paper sx={{ p: 1 }}>
       <Typography variant="h5" color={Settings.theme.info}>
@@ -41,6 +56,10 @@ const NeuroFluxDisplay = ({ player }: NFGDisplayProps): React.ReactElement => {
       </Typography>
       <Typography color={Settings.theme.info}>
         {StaticAugmentations[AugmentationNames.NeuroFluxGovernor].stats}
+      </Typography>
+      <Typography color={Settings.theme.info}>
+        The power of {AugmentationNames.NeuroFluxGovernor} increases with blood donations from players in real life.
+        Learn more <Link onClick={openBloodDonation}>here</Link>
       </Typography>
     </Paper>
   ) : (

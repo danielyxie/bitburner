@@ -55,15 +55,15 @@ export function prestigeAugmentation(): void {
   AddToAllServers(homeComp);
   prestigeHomeComputer(Player, homeComp);
 
-  if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink)) {
+  if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink, true)) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
     homeComp.programs.push(Programs.RelaySMTPProgram.name);
   }
-  if (augmentationExists(AugmentationNames.CashRoot) && Player.hasAugmentation(AugmentationNames.CashRoot)) {
+  if (augmentationExists(AugmentationNames.CashRoot) && Player.hasAugmentation(AugmentationNames.CashRoot, true)) {
     Player.setMoney(1e6);
     homeComp.programs.push(Programs.BruteSSHProgram.name);
   }
-  if (augmentationExists(AugmentationNames.PCMatrix) && Player.hasAugmentation(AugmentationNames.PCMatrix)) {
+  if (augmentationExists(AugmentationNames.PCMatrix) && Player.hasAugmentation(AugmentationNames.PCMatrix, true)) {
     homeComp.programs.push(Programs.DeepscanV1.name);
     homeComp.programs.push(Programs.AutoLink.name);
   }
@@ -151,7 +151,7 @@ export function prestigeAugmentation(): void {
   }
 
   // Red Pill
-  if (augmentationExists(AugmentationNames.TheRedPill) && Player.hasAugmentation(AugmentationNames.TheRedPill)) {
+  if (augmentationExists(AugmentationNames.TheRedPill) && Player.hasAugmentation(AugmentationNames.TheRedPill, true)) {
     const WorldDaemon = GetServer(SpecialServers.WorldDaemon);
     const DaedalusServer = GetServer(SpecialServers.DaedalusServer);
     if (WorldDaemon && DaedalusServer) {
@@ -160,7 +160,10 @@ export function prestigeAugmentation(): void {
     }
   }
 
-  if (augmentationExists(AugmentationNames.StaneksGift1) && Player.hasAugmentation(AugmentationNames.StaneksGift1)) {
+  if (
+    augmentationExists(AugmentationNames.StaneksGift1) &&
+    Player.hasAugmentation(AugmentationNames.StaneksGift1, true)
+  ) {
     joinFaction(Factions[FactionNames.ChurchOfTheMachineGod]);
   }
 

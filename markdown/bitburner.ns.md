@@ -130,6 +130,7 @@ export async function main(ns) {
 |  [kill(script, host, args)](./bitburner.ns.kill_1.md) | Terminate another script. |
 |  [killall(host, safetyguard)](./bitburner.ns.killall.md) | Terminate all scripts on a server. |
 |  [ls(host, grep)](./bitburner.ns.ls.md) | List files on a server. |
+|  [moveTail(x, y, pid)](./bitburner.ns.movetail.md) | Move a tail window |
 |  [mv(host, source, destination)](./bitburner.ns.mv.md) | Move a file on the target server. |
 |  [nFormat(n, format)](./bitburner.ns.nformat.md) | Format a number |
 |  [nuke(host)](./bitburner.ns.nuke.md) | Runs NUKE.exe on a server. |
@@ -139,9 +140,10 @@ export async function main(ns) {
 |  [prompt(txt, options)](./bitburner.ns.prompt.md) | Prompt the player with an input modal. |
 |  [ps(host)](./bitburner.ns.ps.md) | List running scripts on a server. |
 |  [purchaseServer(hostname, ram)](./bitburner.ns.purchaseserver.md) | Purchase a server. |
-|  [read(handle)](./bitburner.ns.read.md) | Read content of a file. |
+|  [read(filename)](./bitburner.ns.read.md) | Read content of a file. |
 |  [readPort(port)](./bitburner.ns.readport.md) | Read data from a port. |
 |  [relaysmtp(host)](./bitburner.ns.relaysmtp.md) | Runs relaySMTP.exe on a server. |
+|  [resizeTail(width, height, pid)](./bitburner.ns.resizetail.md) | Resize a tail window |
 |  [rm(name, host)](./bitburner.ns.rm.md) | Delete a file. |
 |  [run(script, numThreads, args)](./bitburner.ns.run.md) | Start another script on the current server. |
 |  [scan(host)](./bitburner.ns.scan.md) | Get the list of servers connected to a server. |
@@ -164,6 +166,6 @@ export async function main(ns) {
 |  [weaken(host, opts)](./bitburner.ns.weaken.md) | Reduce a server security level. |
 |  [weakenAnalyze(threads, cores)](./bitburner.ns.weakenanalyze.md) | Predict the effect of weaken. |
 |  [wget(url, target, host)](./bitburner.ns.wget.md) | Download a file from the internet. |
-|  [write(handle, data, mode)](./bitburner.ns.write.md) | Write data to a file. |
+|  [write(filename, data, mode)](./bitburner.ns.write.md) | Write data to a file. |
 |  [writePort(port, data)](./bitburner.ns.writeport.md) | Write data to a port. |
 

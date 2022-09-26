@@ -19,10 +19,10 @@ interface IProps {
 export function GoPublicModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const [shares, setShares] = useState<number>(NaN);
-  const initialSharePrice = corp.determineValuation() / corp.totalShares;
+  const initialSharePrice = corp.valuation / corp.totalShares;
 
   function goPublic(): void {
-    const initialSharePrice = corp.determineValuation() / corp.totalShares;
+    const initialSharePrice = corp.valuation / corp.totalShares;
     if (isNaN(shares)) {
       dialogBoxCreate("Invalid value for number of issued shares");
       return;

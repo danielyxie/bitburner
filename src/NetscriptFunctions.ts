@@ -31,14 +31,14 @@ import { Server } from "./Server/Server";
 import { influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
-import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
+import { runScriptFromScript } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { helpers } from "./Netscript/NetscriptHelpers";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
-import { LogBoxEvents, LogBoxCloserEvents } from "./ui/React/LogBoxManager";
+import { LogBoxEvents, LogBoxCloserEvents, LogBoxPositionEvents, LogBoxSizeEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 import { NetscriptGang } from "./NetscriptFunctions/Gang";
@@ -79,6 +79,7 @@ import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 import { recentScripts } from "./Netscript/RecentScripts";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
+import { ScriptDeath } from "./Netscript/ScriptDeath";
 
 export type NSFull = NS & INetscriptExtra;
 
@@ -536,7 +537,22 @@ const base: InternalAPI<NS> = {
 
       LogBoxEvents.emit(runningScriptObj);
     },
-
+  moveTail:
+    (ctx: NetscriptContext) =>
+    (_x: unknown, _y: unknown, _pid: unknown = ctx.workerScript.scriptRef.pid) => {
+      const x = helpers.number(ctx, "x", _x);
+      const y = helpers.number(ctx, "y", _y);
+      const pid = helpers.number(ctx, "pid", _pid);
+      LogBoxPositionEvents.emit({ pid, data: { x, y } });
+    },
+  resizeTail:
+    (ctx: NetscriptContext) =>
+    (_w: unknown, _h: unknown, _pid: unknown = ctx.workerScript.scriptRef.pid) => {
+      const w = helpers.number(ctx, "w", _w);
+      const h = helpers.number(ctx, "h", _h);
+      const pid = helpers.number(ctx, "pid", _pid);
+      LogBoxSizeEvents.emit({ pid, data: { w, h } });
+    },
   closeTail:
     (ctx: NetscriptContext) =>
     (_pid: unknown = ctx.workerScript.scriptRef.pid): void => {
@@ -702,7 +718,7 @@ const base: InternalAPI<NS> = {
         throw helpers.makeRuntimeErrorMsg(ctx, "Could not find server. This is a bug. Report to dev.");
       }
 
-      return runScriptFromScript(Player, "run", scriptServer, scriptname, args, ctx.workerScript, threads);
+      return runScriptFromScript("run", scriptServer, scriptname, args, ctx.workerScript, threads);
     },
   exec:
     (ctx: NetscriptContext) =>
@@ -718,7 +734,7 @@ const base: InternalAPI<NS> = {
         throw helpers.makeRuntimeErrorMsg(ctx, `Invalid thread count. Must be numeric and > 0, is ${threads}`);
       }
       const server = helpers.getServer(ctx, hostname);
-      return runScriptFromScript(Player, "exec", server, scriptname, args, ctx.workerScript, threads);
+      return runScriptFromScript("exec", server, scriptname, args, ctx.workerScript, threads);
     },
   spawn:
     (ctx: NetscriptContext) =>
@@ -740,12 +756,11 @@ const base: InternalAPI<NS> = {
           throw helpers.makeRuntimeErrorMsg(ctx, "Could not find server. This is a bug. Report to dev");
         }
 
-        return runScriptFromScript(Player, "spawn", scriptServer, scriptname, args, ctx.workerScript, threads);
+        return runScriptFromScript("spawn", scriptServer, scriptname, args, ctx.workerScript, threads);
       }, spawnDelay * 1e3);
 
       helpers.log(ctx, () => `Will execute '${scriptname}' in ${spawnDelay} seconds`);
 
-      ctx.workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
       if (killWorkerScript(ctx.workerScript)) {
         helpers.log(ctx, () => "Exiting...");
       }
@@ -819,152 +834,113 @@ const base: InternalAPI<NS> = {
 
       return scriptsKilled > 0;
     },
-  exit: (ctx: NetscriptContext) => (): void => {
-    ctx.workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
-    if (killWorkerScript(ctx.workerScript)) {
-      helpers.log(ctx, () => "Exiting...");
-    } else {
-      helpers.log(ctx, () => "Failed. This is a bug. Report to dev.");
-    }
+  exit: (ctx: NetscriptContext) => (): never => {
+    helpers.log(ctx, () => "Exiting...");
+    killWorkerScript(ctx.workerScript);
+    throw new ScriptDeath(ctx.workerScript);
   },
   scp:
     (ctx: NetscriptContext) =>
-    async (
-      _scriptname: unknown,
-      _destination: unknown,
-      _source: unknown = ctx.workerScript.hostname,
-    ): Promise<boolean> => {
+    (_files: unknown, _destination: unknown, _source: unknown = ctx.workerScript.hostname): boolean => {
       const destination = helpers.string(ctx, "destination", _destination);
       const source = helpers.string(ctx, "source", _source);
-      if (Array.isArray(_scriptname)) {
-        // Recursively call scp on all elements of array
-        const scripts: string[] = _scriptname;
-        if (scripts.length === 0) {
-          throw helpers.makeRuntimeErrorMsg(ctx, "No scripts to copy");
-        }
-        let res = true;
-        await Promise.all(
-          scripts.map(async function (script) {
-            if (!(await NetscriptFunctions(ctx.workerScript).scp(script, destination, source))) {
-              res = false;
-            }
-          }),
-        );
-        return Promise.resolve(res);
-      }
-
-      const scriptName = helpers.string(ctx, "scriptName", _scriptname);
-
-      // Invalid file type
-      if (!isValidFilePath(scriptName)) {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: '${scriptName}'`);
-      }
-
-      // Invalid file name
-      if (!scriptName.endsWith(".lit") && !isScriptFilename(scriptName) && !scriptName.endsWith("txt")) {
-        throw helpers.makeRuntimeErrorMsg(ctx, "Only works for scripts, .lit and .txt files");
-      }
-
       const destServer = helpers.getServer(ctx, destination);
-      const currServ = helpers.getServer(ctx, source);
+      const sourceServ = helpers.getServer(ctx, source);
+      const files = Array.isArray(_files) ? _files : [_files];
 
-      // Scp for lit files
-      if (scriptName.endsWith(".lit")) {
-        let found = false;
-        for (let i = 0; i < currServ.messages.length; ++i) {
-          if (currServ.messages[i] == scriptName) {
-            found = true;
-            break;
+      //First loop through filenames to find all errors before moving anything.
+      for (const file of files) {
+        // Not a string
+        if (typeof file !== "string")
+          throw helpers.makeRuntimeErrorMsg(ctx, "files should be a string or an array of strings.");
+
+        // Invalid file name
+        if (!isValidFilePath(file)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: '${file}'`);
+
+        // Invalid file type
+        if (!file.endsWith(".lit") && !isScriptFilename(file) && !file.endsWith("txt")) {
+          throw helpers.makeRuntimeErrorMsg(ctx, "Only works for scripts, .lit and .txt files.");
+        }
+      }
+
+      let noFailures = true;
+      //ts detects files as any[] here even though we would have thrown in the above loop if it wasn't string[]
+      for (const file of files as string[]) {
+        // Scp for lit files
+        if (file.endsWith(".lit")) {
+          const sourceMessage = sourceServ.messages.find((message) => message === file);
+          if (!sourceMessage) {
+            helpers.log(ctx, () => `File '${file}' does not exist.`);
+            noFailures = false;
+            continue;
           }
-        }
 
-        if (!found) {
-          helpers.log(ctx, () => `File '${scriptName}' does not exist.`);
-          return Promise.resolve(false);
-        }
-
-        for (let i = 0; i < destServer.messages.length; ++i) {
-          if (destServer.messages[i] === scriptName) {
-            helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-            return Promise.resolve(true); // Already exists
+          const destMessage = destServer.messages.find((message) => message === file);
+          if (destMessage) {
+            helpers.log(ctx, () => `File '${file}' was already on '${destServer?.hostname}'.`);
+            continue;
           }
-        }
-        destServer.messages.push(scriptName);
-        helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-        return Promise.resolve(true);
-      }
 
-      // Scp for text files
-      if (scriptName.endsWith(".txt")) {
-        let txtFile;
-        for (let i = 0; i < currServ.textFiles.length; ++i) {
-          if (currServ.textFiles[i].fn === scriptName) {
-            txtFile = currServ.textFiles[i];
-            break;
+          destServer.messages.push(file);
+          helpers.log(ctx, () => `File '${file}' copied over to '${destServer?.hostname}'.`);
+          continue;
+        }
+
+        // Scp for text files
+        if (file.endsWith(".txt")) {
+          const sourceTextFile = sourceServ.textFiles.find((textFile) => textFile.fn === file);
+          if (!sourceTextFile) {
+            helpers.log(ctx, () => `File '${file}' does not exist.`);
+            noFailures = false;
+            continue;
           }
-        }
-        if (txtFile === undefined) {
-          helpers.log(ctx, () => `File '${scriptName}' does not exist.`);
-          return Promise.resolve(false);
-        }
 
-        for (let i = 0; i < destServer.textFiles.length; ++i) {
-          if (destServer.textFiles[i].fn === scriptName) {
-            // Overwrite
-            destServer.textFiles[i].text = txtFile.text;
-            helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-            return Promise.resolve(true);
+          const destTextFile = destServer.textFiles.find((textFile) => textFile.fn === file);
+          if (destTextFile) {
+            destTextFile.text = sourceTextFile.text;
+            helpers.log(ctx, () => `File '${file}' overwritten on '${destServer?.hostname}'.`);
+            continue;
           }
+
+          const newFile = new TextFile(sourceTextFile.fn, sourceTextFile.text);
+          destServer.textFiles.push(newFile);
+          helpers.log(ctx, () => `File '${file}' copied over to '${destServer?.hostname}'.`);
+          continue;
         }
-        const newFile = new TextFile(txtFile.fn, txtFile.text);
-        destServer.textFiles.push(newFile);
-        helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-        return Promise.resolve(true);
+
+        // Scp for script files
+        const sourceScript = sourceServ.scripts.find((script) => script.filename === file);
+        if (!sourceScript) {
+          helpers.log(ctx, () => `File '${file}' does not exist.`);
+          noFailures = false;
+          continue;
+        }
+
+        // Overwrite script if it already exists
+        const destScript = destServer.scripts.find((script) => script.filename === file);
+        if (destScript) {
+          if (destScript.code === sourceScript.code) {
+            helpers.log(ctx, () => `Identical file '${file}' was already on '${destServer?.hostname}'`);
+            continue;
+          }
+          destScript.code = sourceScript.code;
+          destScript.ramUsage = destScript.ramUsage;
+          destScript.markUpdated();
+          helpers.log(ctx, () => `WARNING: File '${file}' overwritten on '${destServer?.hostname}'`);
+          continue;
+        }
+
+        // Create new script if it does not already exist
+        const newScript = new Script(Player, file);
+        newScript.code = sourceScript.code;
+        newScript.ramUsage = sourceScript.ramUsage;
+        newScript.server = destServer.hostname;
+        destServer.scripts.push(newScript);
+        helpers.log(ctx, () => `File '${file}' copied over to '${destServer?.hostname}'.`);
+        newScript.updateRamUsage(Player, destServer.scripts);
       }
 
-      // Scp for script files
-      let sourceScript = null;
-      for (let i = 0; i < currServ.scripts.length; ++i) {
-        if (scriptName == currServ.scripts[i].filename) {
-          sourceScript = currServ.scripts[i];
-          break;
-        }
-      }
-      if (sourceScript == null) {
-        helpers.log(ctx, () => `File '${scriptName}' does not exist.`);
-        return Promise.resolve(false);
-      }
-
-      // Overwrite script if it already exists
-      for (let i = 0; i < destServer.scripts.length; ++i) {
-        if (scriptName == destServer.scripts[i].filename) {
-          helpers.log(ctx, () => `WARNING: File '${scriptName}' overwritten on '${destServer?.hostname}'`);
-          const oldScript = destServer.scripts[i];
-          // If it's the exact same file don't actually perform the
-          // copy to avoid recompiling uselessly. Players tend to scp
-          // liberally.
-          if (oldScript.code === sourceScript.code) return Promise.resolve(true);
-          oldScript.code = sourceScript.code;
-          oldScript.ramUsage = sourceScript.ramUsage;
-          oldScript.markUpdated();
-          return Promise.resolve(true);
-        }
-      }
-
-      // Create new script if it does not already exist
-      const newScript = new Script(Player, scriptName);
-      newScript.code = sourceScript.code;
-      newScript.ramUsage = sourceScript.ramUsage;
-      newScript.server = destServer.hostname;
-      destServer.scripts.push(newScript);
-      helpers.log(ctx, () => `File '${scriptName}' copied over to '${destServer?.hostname}'.`);
-      return new Promise((resolve) => {
-        if (destServer === null) {
-          resolve(false);
-          return;
-        }
-        newScript.updateRamUsage(Player, destServer.scripts).then(() => resolve(true));
-      });
+      return noFailures;
     },
   ls:
     (ctx: NetscriptContext) =>
@@ -1501,89 +1477,55 @@ const base: InternalAPI<NS> = {
     },
   write:
     (ctx: NetscriptContext) =>
-    (_port: unknown, data: unknown = "", _mode: unknown = "a"): Promise<void> => {
-      const port = helpers.string(ctx, "port", _port);
+    (_filename: unknown, _data: unknown = "", _mode: unknown = "a"): void => {
+      let fn = helpers.string(ctx, "handle", _filename);
+      const data = helpers.string(ctx, "data", _data);
       const mode = helpers.string(ctx, "mode", _mode);
-      if (isString(port)) {
-        // Write to script or text file
-        let fn = port;
-        if (!isValidFilePath(fn)) {
-          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
-        }
+      if (!isValidFilePath(fn)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filepath: ${fn}`);
 
-        if (fn.lastIndexOf("/") === 0) {
-          fn = removeLeadingSlash(fn);
-        }
+      if (fn.lastIndexOf("/") === 0) fn = removeLeadingSlash(fn);
 
-        // Coerce 'data' to be a string
-        try {
-          data = String(data);
-        } catch (e: unknown) {
-          throw helpers.makeRuntimeErrorMsg(
-            ctx,
-            `Invalid data (${String(e)}). Data being written must be convertible to a string`,
-          );
-        }
+      const server = helpers.getServer(ctx, ctx.workerScript.hostname);
 
-        const server = ctx.workerScript.getServer();
-        if (server == null) {
-          throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
-        }
-        if (isScriptFilename(fn)) {
-          // Write to script
-          let script = ctx.workerScript.getScriptOnServer(fn, server);
-          if (script == null) {
-            // Create a new script
-            script = new Script(Player, fn, String(data), server.hostname, server.scripts);
-            server.scripts.push(script);
-            return script.updateRamUsage(Player, server.scripts);
-          }
-          mode === "w" ? (script.code = String(data)) : (script.code += data);
+      if (isScriptFilename(fn)) {
+        // Write to script
+        let script = ctx.workerScript.getScriptOnServer(fn, server);
+        if (script == null) {
+          // Create a new script
+          script = new Script(Player, fn, String(data), server.hostname, server.scripts);
+          server.scripts.push(script);
           return script.updateRamUsage(Player, server.scripts);
-        } else {
-          // Write to text file
-          const txtFile = getTextFile(fn, server);
-          if (txtFile == null) {
-            createTextFile(fn, String(data), server);
-            return Promise.resolve();
-          }
-          if (mode === "w") {
-            txtFile.write(String(data));
-          } else {
-            txtFile.append(String(data));
-          }
         }
-        return Promise.resolve();
+        mode === "w" ? (script.code = String(data)) : (script.code += data);
+        return script.updateRamUsage(Player, server.scripts);
       } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
+        // Write to text file
+        if (!fn.endsWith(".txt")) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: ${fn}`);
+        const txtFile = getTextFile(fn, server);
+        if (txtFile == null) {
+          createTextFile(fn, String(data), server);
+          return;
+        }
+        if (mode === "w") {
+          txtFile.write(String(data));
+        } else {
+          txtFile.append(String(data));
+        }
       }
+      return;
     },
   tryWritePort:
     (ctx: NetscriptContext) =>
     (_port: unknown, data: unknown = ""): Promise<any> => {
-      let port = helpers.number(ctx, "port", _port);
+      const port = helpers.number(ctx, "port", _port);
       if (typeof data !== "string" && typeof data !== "number") {
         throw helpers.makeRuntimeErrorMsg(
           ctx,
           `Trying to write invalid data to a port: only strings and numbers are valid.`,
         );
       }
-      if (!isNaN(port)) {
-        port = Math.round(port);
-        if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-          throw helpers.makeRuntimeErrorMsg(
-            ctx,
-            `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
-          );
-        }
-        const iport = NetscriptPorts[port - 1];
-        if (iport == null || !(iport instanceof Object)) {
-          throw helpers.makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
-        }
-        return Promise.resolve(iport.tryWrite(data));
-      } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
-      }
+      const iport = helpers.getValidPort(ctx, port);
+      return Promise.resolve(iport.tryWrite(data));
     },
   readPort:
     (ctx: NetscriptContext) =>
@@ -1596,33 +1538,27 @@ const base: InternalAPI<NS> = {
     },
   read:
     (ctx: NetscriptContext) =>
-    (_port: unknown): string => {
-      const port = helpers.string(ctx, "port", _port);
-      if (isString(port)) {
-        // Read from script or text file
-        const fn = port;
-        const server = GetServer(ctx.workerScript.hostname);
-        if (server == null) {
-          throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
+    (_filename: unknown): string => {
+      const fn = helpers.string(ctx, "filename", _filename);
+      const server = GetServer(ctx.workerScript.hostname);
+      if (server == null) {
+        throw helpers.makeRuntimeErrorMsg(ctx, "Error getting Server. This is a bug. Report to dev.");
+      }
+      if (isScriptFilename(fn)) {
+        // Read from script
+        const script = ctx.workerScript.getScriptOnServer(fn, server);
+        if (script == null) {
+          return "";
         }
-        if (isScriptFilename(fn)) {
-          // Read from script
-          const script = ctx.workerScript.getScriptOnServer(fn, server);
-          if (script == null) {
-            return "";
-          }
-          return script.code;
-        } else {
-          // Read from text file
-          const txtFile = getTextFile(fn, server);
-          if (txtFile !== null) {
-            return txtFile.text;
-          } else {
-            return "";
-          }
-        }
+        return script.code;
       } else {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: ${port}`);
+        // Read from text file
+        const txtFile = getTextFile(fn, server);
+        if (txtFile !== null) {
+          return txtFile.text;
+        } else {
+          return "";
+        }
       }
     },
   peek:
@@ -1849,7 +1785,7 @@ const base: InternalAPI<NS> = {
     (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, _duration: unknown = 2000): void => {
       const message = helpers.string(ctx, "message", _message);
       const variant = helpers.string(ctx, "variant", _variant);
-      const duration = helpers.number(ctx, "duration", _duration);
+      const duration = _duration === null ? null : helpers.number(ctx, "duration", _duration);
       if (!checkEnum(ToastVariant, variant))
         throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
       SnackbarEvents.emit(message, variant, duration);
@@ -1911,10 +1847,9 @@ const base: InternalAPI<NS> = {
   },
   getPlayer: () => (): INetscriptPlayer => {
     const data = {
-      hp: Player.hp,
-      skills: Player.skills,
-      exp: Player.exp,
-      hacking_chance_mult: Player.mults.hacking_chance,
+      hp: JSON.parse(JSON.stringify(Player.hp)),
+      skills: JSON.parse(JSON.stringify(Player.skills)),
+      exp: JSON.parse(JSON.stringify(Player.exp)),
       mults: JSON.parse(JSON.stringify(Player.mults)),
       numPeopleKilled: Player.numPeopleKilled,
       money: Player.money,

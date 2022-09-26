@@ -7,8 +7,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
-import { newWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { scaleWorkStats, WorkStats } from "./WorkStats";
 import { calculateCrimeWorkStats } from "./formulas/Crime";
 
 enum newCrimeType {
@@ -109,7 +108,7 @@ export class CrimeWork extends Work {
     let karma = crime.karma;
     const success = determineCrimeSuccess(player, crime.type);
     if (success) {
-      player.gainMoney(gains.money * player.mults.crime_money, "crime");
+      player.gainMoney(gains.money, "crime");
       player.numPeopleKilled += crime.kills;
       player.gainIntelligenceExp(gains.intExp);
     } else {

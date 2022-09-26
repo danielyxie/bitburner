@@ -250,7 +250,7 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
         checkBladeburnerAccess(ctx);
         const action = getBladeburnerActionObject(ctx, type, name);
         if (level < 1 || level > action.maxLevel) {
-          helpers.makeRuntimeErrorMsg(ctx, `Level must be between 1 and ${action.maxLevel}, is ${level}`);
+          throw helpers.makeRuntimeErrorMsg(ctx, `Level must be between 1 and ${action.maxLevel}, is ${level}`);
         }
         action.level = level;
       },
@@ -397,8 +397,8 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
     },
     joinBladeburnerDivision: (ctx: NetscriptContext) => (): boolean => {
       if (player.bitNodeN === 7 || player.sourceFileLvl(7) > 0) {
-        if (player.bitNodeN === 8) {
-          return false;
+        if (BitNodeMultipliers.BladeburnerRank === 0) {
+          return false; // Disabled in this bitnode
         }
         if (player.bladeburner instanceof Bladeburner) {
           return true; // Already member

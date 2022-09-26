@@ -1422,9 +1422,13 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     solver: (_data: unknown, ans: string): boolean => {
       const data = _data as [number, [number, number][]];
+
+      //Sanitize player input
+      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+
       //Case where the player believes there is no solution.
       //Attempt to construct one to check if this is correct.
-      if (ans == "[]") {
+      if (sanitizedPlayerAns === "") {
         //Helper function to get neighbourhood of a vertex
         function neighbourhood(vertex: number): number[] {
           const adjLeft = data[1].filter(([a]) => a == vertex).map(([, b]) => b);
@@ -1473,12 +1477,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         return false;
       }
 
-      //Sanitize player input
-      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+      //Solution provided case
       const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
       const coloring: number[] = sanitizedPlayerAnsArr.map((val) => parseInt(val));
-
-      //Solution provided case
       if (coloring.length == data[0]) {
         const edges = data[1];
         const validColors = [0, 1];

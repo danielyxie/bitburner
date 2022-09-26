@@ -41,7 +41,8 @@ SourceFiles["SourceFile3"] = new SourceFile(
   (
     <>
       This Source-File lets you create corporations on other BitNodes (although some BitNodes will disable this
-      mechanic). This Source-File also increases your charisma and company salary multipliers by:
+      mechanic) and level 3 permanently unlocks the full API. This Source-File also increases your charisma and company
+      salary multipliers by:
       <br />
       Level 1: 8%
       <br />
@@ -56,7 +57,13 @@ SourceFiles["SourceFile4"] = new SourceFile(
   (
     <>
       This Source-File lets you access and use the Singularity Functions in every BitNode. Every level of this
-      Source-File reduces the RAM cost of Singularity functions.
+      Source-File reduces the RAM cost of Singularity functions:
+      <br />
+      Level 1: 16x
+      <br />
+      Level 2: 4x
+      <br />
+      Level 3: 1x
     </>
   ),
 );

@@ -1,7 +1,7 @@
 scp() Netscript Function
 ========================
 
-.. js:function:: scp(files[, source], destination)
+.. js:function:: scp(files, destination [, source])
 
     :RAM cost: 0.6 GB
     :param string/array files: Filename or an array of filenames of script/literature files to copy

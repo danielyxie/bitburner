@@ -32,6 +32,8 @@ Terminates the current script, and then after a delay of about 10 seconds it wil
 
 Because this function immediately terminates the script, it does not have a return value.
 
+Running this function with a numThreads argument of 0 or less will cause a runtime error.
+
 ## Example 1
 
 

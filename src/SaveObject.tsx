@@ -36,7 +36,6 @@ import { Faction } from "./Faction/Faction";
 import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { v2APIBreak } from "./utils/v2APIBreak";
-import { Script } from "./Script/Script";
 
 /* SaveObject.js
  *  Defines the object used to save/load games

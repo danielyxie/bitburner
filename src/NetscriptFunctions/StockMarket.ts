@@ -163,7 +163,7 @@ export function NetscriptStockMarket(): InternalAPI<TIX> {
         const shares = helpers.number(ctx, "shares", _shares);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
-        const res = buyStock(stock, shares, ctx.workerScript, {});
+        const res = buyStock(stock, shares, ctx, {});
         return res ? stock.getAskPrice() : 0;
       },
     sellStock:
@@ -173,7 +173,7 @@ export function NetscriptStockMarket(): InternalAPI<TIX> {
         const shares = helpers.number(ctx, "shares", _shares);
         checkTixApiAccess(ctx);
         const stock = getStockFromSymbol(ctx, symbol);
-        const res = sellStock(stock, shares, ctx.workerScript, {});
+        const res = sellStock(stock, shares, ctx, {});
 
         return res ? stock.getBidPrice() : 0;
       },
@@ -192,7 +192,7 @@ export function NetscriptStockMarket(): InternalAPI<TIX> {
           }
         }
         const stock = getStockFromSymbol(ctx, symbol);
-        const res = shortStock(stock, shares, ctx.workerScript, {});
+        const res = shortStock(stock, shares, ctx, {});
 
         return res ? stock.getBidPrice() : 0;
       },
@@ -211,7 +211,7 @@ export function NetscriptStockMarket(): InternalAPI<TIX> {
           }
         }
         const stock = getStockFromSymbol(ctx, symbol);
-        const res = sellShort(stock, shares, ctx.workerScript, {});
+        const res = sellShort(stock, shares, ctx, {});
 
         return res ? stock.getAskPrice() : 0;
       },
@@ -258,7 +258,7 @@ export function NetscriptStockMarket(): InternalAPI<TIX> {
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid position type: ${pos}`);
         }
 
-        return placeOrder(stock, shares, price, orderType, orderPos, ctx.workerScript);
+        return placeOrder(stock, shares, price, orderType, orderPos, ctx);
       },
     cancelOrder:
       (ctx: NetscriptContext) =>
@@ -314,7 +314,7 @@ export function NetscriptStockMarket(): InternalAPI<TIX> {
           type: orderType,
           pos: orderPos,
         };
-        return cancelOrder(params, ctx.workerScript);
+        return cancelOrder(params, ctx);
       },
     getOrders: (ctx: NetscriptContext) => (): StockOrder => {
       checkTixApiAccess(ctx);

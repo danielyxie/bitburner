@@ -4,7 +4,7 @@
 
 ## CodingContract.getNumTriesRemaining() method
 
-Get the number of attempt remaining.
+Get the number of attempts remaining.
 
 <b>Signature:</b>
 
@@ -17,13 +17,13 @@ getNumTriesRemaining(filename: string, host?: string): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  filename | string | Filename of the contract. |
-|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Hostname of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
 number
 
-How many attempts are remaining for the contract;
+How many attempts are remaining for the contract.
 
 ## Remarks
 

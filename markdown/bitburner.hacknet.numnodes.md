@@ -15,7 +15,7 @@ numNodes(): number;
 
 number
 
-number of hacknet nodes.
+Number of hacknet nodes.
 
 ## Remarks
 

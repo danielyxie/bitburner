@@ -244,7 +244,7 @@ function BribeButton(): React.ReactElement {
   const corp = useCorporation();
   const [open, setOpen] = useState(false);
   const canBribe =
-    corp.determineValuation() >= CorporationConstants.BribeThreshold &&
+    corp.valuation >= CorporationConstants.BribeThreshold &&
     player.factions.filter((f) => Factions[f].getInfo().offersWork()).length > 0;
 
   function openBribe(): void {

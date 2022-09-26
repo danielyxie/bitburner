@@ -601,11 +601,6 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
       await expectNonZeroRamCost(f);
     });
 
-    it("stock.short()", async function () {
-      const f = ["stock", "short"];
-      await expectNonZeroRamCost(f);
-    });
-
     it("stock.sellShort()", async function () {
       const f = ["stock", "sellShort"];
       await expectNonZeroRamCost(f);
@@ -670,16 +665,6 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
 
     it("purchaseProgram()", async function () {
       const f = ["purchaseProgram"];
-      await expectNonZeroRamCost(f);
-    });
-
-    it("getStats()", async function () {
-      const f = ["getStats"];
-      await expectNonZeroRamCost(f);
-    });
-
-    it("getCharacterInformation()", async function () {
-      const f = ["getCharacterInformation"];
       await expectNonZeroRamCost(f);
     });
 

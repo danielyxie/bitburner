@@ -262,7 +262,7 @@ const Engine: {
         if (numCyclesOffline < 3000 * 100) {
           // if we have less than 100 rolls, just roll them exactly.
           for (let i = 0; i < numCyclesOffline / 3000; i++) {
-            if (Math.random() < 0.25) numContracts++;
+            if (Math.random() <= 0.25) numContracts++;
           }
         } else {
           // just average it.
@@ -278,7 +278,7 @@ const Engine: {
       Player.gainMoney(offlineHackingIncome, "hacking");
       // Process offline progress
 
-      loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
+      loadAllRunningScripts(); // This also takes care of offline production for those scripts
 
       if (Player.currentWork !== null) {
         Player.focus = true;

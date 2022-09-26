@@ -20,7 +20,7 @@ import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { influenceStockThroughServerHack } from "../StockMarket/PlayerInfluencing";
-import { IPort } from "../NetscriptPort";
+import { IPort, NetscriptPort } from "../NetscriptPort";
 import { NetscriptPorts } from "../NetscriptWorker";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { FormulaGang } from "../Gang/formulas/formulas";
@@ -67,11 +67,33 @@ export const helpers = {
   failOnHacknetServer,
 };
 
+const userFriendlyString = (v: unknown): string => {
+  const clip = (s: string): string => {
+    if (s.length > 15) return s.slice(0, 12) + "...";
+    return s;
+  };
+  if (typeof v === "number") return String(v);
+  if (typeof v === "string") {
+    if (v === "") return "empty string";
+    return `'${clip(v)}'`;
+  }
+  const json = JSON.stringify(v);
+  if (!json) return "???";
+  return `'${clip(json)}'`;
+};
+
+const debugType = (v: unknown): string => {
+  if (v === null) return `Is null.`;
+  if (v === undefined) return "Is undefined.";
+  if (typeof v === "function") return "Is a function.";
+  return `Is of type '${typeof v}', value: ${userFriendlyString(v)}`;
+};
+
 /** Convert a provided value v for argument argName to string. If it wasn't originally a string or number, throw. */
 function string(ctx: NetscriptContext, argName: string, v: unknown): string {
   if (typeof v === "string") return v;
   if (typeof v === "number") return v + ""; // cast to string;
-  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string.`);
+  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string. ${debugType(v)}`);
 }
 
 /** Convert provided value v for argument argName to number. Throw if could not convert to a non-NaN number. */
@@ -83,7 +105,7 @@ function number(ctx: NetscriptContext, argName: string, v: unknown): number {
     if (isNaN(v)) throw makeRuntimeErrorMsg(ctx, `'${argName}' is NaN.`);
     return v;
   }
-  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number.`);
+  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number. ${debugType(v)}`);
 }
 
 /** Returns args back if it is a ScriptArg[]. Throws an error if it is not. */
@@ -141,11 +163,11 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   for (const stackline of stack) {
     let filename;
     for (const script of scripts) {
-      if (script.url && stackline.includes(script.url)) {
+      if (script.filename && stackline.includes(script.filename)) {
         filename = script.filename;
       }
       for (const dependency of script.dependencies) {
-        if (stackline.includes(dependency.url)) {
+        if (stackline.includes(dependency.filename)) {
           filename = dependency.filename;
         }
       }
@@ -298,6 +320,7 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
 
       Sorry :(`,
     );
+    throw new ScriptDeath(ws);
   }
 }
 
@@ -469,9 +492,10 @@ function getValidPort(ctx: NetscriptContext, port: number): IPort {
       `Trying to use an invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
     );
   }
-  const iport = NetscriptPorts[port - 1];
-  if (iport == null || !(iport instanceof Object)) {
-    throw makeRuntimeErrorMsg(ctx, `Could not find port: ${port}. This is a bug. Report to dev.`);
+  let iport = NetscriptPorts.get(port);
+  if (!iport) {
+    iport = NetscriptPort();
+    NetscriptPorts.set(port, iport);
   }
   return iport;
 }
@@ -500,12 +524,39 @@ function player(ctx: NetscriptContext, p: unknown): IPlayer {
 }
 
 function server(ctx: NetscriptContext, s: unknown): Server {
-  if (!roughlyIs(new Server(), s)) throw makeRuntimeErrorMsg(ctx, `server should be a Server.`);
+  const fakeServer = {
+    cpuCores: undefined,
+    ftpPortOpen: undefined,
+    hasAdminRights: undefined,
+    hostname: undefined,
+    httpPortOpen: undefined,
+    ip: undefined,
+    isConnectedTo: undefined,
+    maxRam: undefined,
+    organizationName: undefined,
+    ramUsed: undefined,
+    smtpPortOpen: undefined,
+    sqlPortOpen: undefined,
+    sshPortOpen: undefined,
+    purchasedByPlayer: undefined,
+    backdoorInstalled: undefined,
+    baseDifficulty: undefined,
+    hackDifficulty: undefined,
+    minDifficulty: undefined,
+    moneyAvailable: undefined,
+    moneyMax: undefined,
+    numOpenPortsRequired: undefined,
+    openPortCount: undefined,
+    requiredHackingSkill: undefined,
+    serverGrowth: undefined,
+  };
+  if (!roughlyIs(fakeServer, s)) throw makeRuntimeErrorMsg(ctx, `server should be a Server.`);
   return s as Server;
 }
 
 function roughlyIs(expect: object, actual: unknown): boolean {
   if (typeof actual !== "object" || actual == null) return false;
+
   const expects = Object.keys(expect);
   const actuals = Object.keys(actual);
   for (const expect of expects)
@@ -527,7 +578,7 @@ function gangMember(ctx: NetscriptContext, m: unknown): GangMember {
 }
 
 function gangTask(ctx: NetscriptContext, t: unknown): GangMemberTask {
-  if (!roughlyIs(new GangMemberTask("", "", false, false, {}), t))
+  if (!roughlyIs(new GangMemberTask("", "", false, false, { hackWeight: 100 }), t))
     throw makeRuntimeErrorMsg(ctx, `task should be a GangMemberTask.`);
   return t as GangMemberTask;
 }

@@ -205,6 +205,8 @@ const singularity = {
   installAugmentations: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   isFocused: SF4Cost(0.1),
   setFocus: SF4Cost(0.1),
+  exportGame: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 2),
+  exportGameBonus: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   b1tflum3: SF4Cost(16),
   destroyW0r1dD43m0n: SF4Cost(32),
   getCurrentWork: SF4Cost(0.5),
@@ -335,6 +337,7 @@ const ui = {
   resetStyles: 0,
   getGameInfo: 0,
   clearTerminal: 0,
+  windowSize: 0,
 };
 
 // Grafting API
@@ -531,6 +534,8 @@ const SourceRamCosts = {
   mv: 0,
   tail: 0,
   toast: 0,
+  moveTail: 0,
+  resizeTail: 0,
   closeTail: 0,
   clearPort: 0,
   openDevMenu: 0,
@@ -546,6 +551,8 @@ const SourceRamCosts = {
   },
 
   formulas: {
+    mockServer: 0,
+    mockPlayer: 0,
     reputation: {
       calculateFavorToRep: 0,
       calculateRepToFavor: 0,

@@ -1,5 +1,4 @@
 import { Player as player } from "../Player";
-import { is2DArray } from "../utils/helpers/is2DArray";
 import { CodingContract } from "../CodingContracts";
 import { CodingAttemptOptions, CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
@@ -34,20 +33,11 @@ export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
         const hostname = helpers.string(ctx, "hostname", _hostname);
         const contract = getCodingContract(ctx, "attempt", hostname, filename);
 
-        // Convert answer to string. If the answer is a 2D array, then we have to
-        // manually add brackets for the inner arrays
-        let answerStr = "";
-        if (is2DArray(answer)) {
-          const answerComponents = [];
-          for (let i = 0; i < answer.length; ++i) {
-            answerComponents.push(["[", String(answer[i]), "]"].join(""));
-          }
+        if (typeof answer !== "number" && typeof answer !== "string" && !Array.isArray(answer))
+          throw new Error("The answer provided was not a number, string, or array");
 
-          answerStr = answerComponents.join(",");
-        } else {
-          answerStr = String(answer);
-        }
-
+        // Convert answer to string.
+        const answerStr = typeof answer === "string" ? answer : JSON.stringify(answer);
         const creward = contract.reward;
         if (creward === null) throw new Error("Somehow solved a contract that didn't have a reward");
 

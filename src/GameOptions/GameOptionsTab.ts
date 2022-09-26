@@ -3,4 +3,5 @@ export enum GameOptionsTab {
   INTERFACE,
   GAMEPLAY,
   MISC,
+  REMOTE_API,
 }

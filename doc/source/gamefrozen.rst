@@ -19,7 +19,7 @@ Then, to fix your script, make sure you have a sleep or any other timed function
         await ns.sleep(1000); // Add a 1s sleep to prevent freezing
     }
 
-Also make sure that each while loop gets to `await`ed function or `break`, for example the next snippet has a sleep 
+Also make sure that each while loop gets to `awaited` function or `break`, for example the next snippet has a sleep 
 function, but it nor any possible conditional breaks are never reached and therefore will crash the game::
 
     while(true) {
@@ -34,7 +34,7 @@ function, but it nor any possible conditional breaks are never reached and there
     }
 
 If `n00dles` current money is, for example, 75% of the maximum money, the script will not reach neither `grow` nor `break` and crashes the game.
-Adding a sleep like in the first example, or changing the code so that `await`ed function or `break` is always reached, would prevent the crash.
+Adding a sleep like in the first example, or changing the code so that `awaited` function or `break` is always reached, would prevent the crash.
 
 Common infinite loop when translating the server purchasing script in starting guide to :ref:`netscriptjs` is to have a 
 while loop, that's condition's change is conditional::
@@ -62,8 +62,8 @@ If the game window becomes a black screen without the game itself crashing, this
 the game running too many concurrent scripts (the game runs on a browser and each tab can only 
 use so much ram until it crashes). Depending on which scripts are running and your hardware,
 this number can vary between 50000 to 100000 instances (in version 2.0.2. In prior versions this number 
-was about 1/5th of that). To prevent this from happening make sure to multithread the scripts as much as 
-possible.
+was about 1/5th of that). To prevent this from happening make sure to :ref:`multithread<gameplay_scripts_multithreadingscripts>`
+ the scripts as much as possible.
 
 
 Bug

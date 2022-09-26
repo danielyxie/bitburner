@@ -523,24 +523,6 @@ export class Industry implements IIndustry {
       expenses = 0;
     this.calculateProductionFactors();
 
-    //At the start of the export state, set the imports of everything to 0
-    if (this.state === "EXPORT") {
-      for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
-        const city = CorporationConstants.Cities[i];
-        if (!(this.warehouses[city] instanceof Warehouse)) {
-          continue;
-        }
-        const warehouse = this.warehouses[city];
-        if (warehouse === 0) continue;
-        for (const matName of Object.keys(warehouse.materials)) {
-          if (warehouse.materials.hasOwnProperty(matName)) {
-            const mat = warehouse.materials[matName];
-            mat.imp = 0;
-          }
-        }
-      }
-    }
-
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       const city = CorporationConstants.Cities[i];
       const office = this.offices[city];
@@ -1234,6 +1216,26 @@ export class Industry implements IIndustry {
       }
     }
     return totalProfit;
+  }
+
+  resetImports(state: string): void {
+    //At the start of the export state, set the imports of everything to 0
+    if (state === "EXPORT") {
+      for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
+        const city = CorporationConstants.Cities[i];
+        if (!(this.warehouses[city] instanceof Warehouse)) {
+          continue;
+        }
+        const warehouse = this.warehouses[city];
+        if (warehouse === 0) continue;
+        for (const matName of Object.keys(warehouse.materials)) {
+          if (warehouse.materials.hasOwnProperty(matName)) {
+            const mat = warehouse.materials[matName];
+            mat.imp = 0;
+          }
+        }
+      }
+    }
   }
 
   discontinueProduct(product: Product): void {

@@ -1,3 +1,4 @@
+import { Settings } from "../Settings/Settings";
 import { EqualityFunc } from "../types";
 import { isString } from "./helpers/isString";
 
@@ -37,15 +38,15 @@ function convertTimeMsToTimeElapsedString(time: number, showMilli = false): stri
 
   let res = "";
   if (days > 0) {
-    res += `${days} days `;
+    res += `${days} day${days === 1 ? "" : "s"} `;
   }
-  if (hours > 0) {
-    res += `${hours} hours `;
+  if (hours > 0 || (Settings.ShowMiddleNullTimeUnit && res != "")) {
+    res += `${hours} hour${hours === 1 ? "" : "s"} `;
   }
-  if (minutes > 0) {
-    res += `${minutes} minutes `;
+  if (minutes > 0 || (Settings.ShowMiddleNullTimeUnit && res != "")) {
+    res += `${minutes} minute${minutes === 1 ? "" : "s"} `;
   }
-  res += `${seconds} seconds`;
+  res += `${seconds} second${!showMilli && secTruncMinutes === 1 ? "" : "s"}`;
 
   return res;
 }

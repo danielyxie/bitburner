@@ -7,7 +7,7 @@ import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
 import { IPerson } from "./IPerson";
-import { defaultMultipliers, mergeMultipliers } from "./Multipliers";
+import { defaultMultipliers, mergeAugmentation } from "./Multipliers";
 import { Skills } from "./Skills";
 import { HP } from "./HP";
 
@@ -61,7 +61,7 @@ export abstract class Person implements IPerson {
    * Updates this object's multipliers for the given augmentation
    */
   applyAugmentation(aug: Augmentation): void {
-    this.mults = mergeMultipliers(this.mults, aug.mults);
+    this.mults = mergeAugmentation(this.mults, aug.mults);
   }
 
   /**

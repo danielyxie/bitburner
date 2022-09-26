@@ -9,7 +9,7 @@ Parse command line flags.
 <b>Signature:</b>
 
 ```typescript
-flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
+flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg | string[] };
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ flags(schema: [string, string | number | boolean | string[]][]): { [key: string]
 
 <b>Returns:</b>
 
-{ \[key: string\]: [ScriptArg](./bitburner.scriptarg.md) }
+{ \[key: string\]: [ScriptArg](./bitburner.scriptarg.md) \| string\[\] }
 
 ## Remarks
 

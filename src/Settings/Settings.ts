@@ -85,6 +85,11 @@ interface IDefaultSettings {
   MaxTerminalCapacity: number;
 
   /**
+   * Port the Remote File API client will try to connect to.
+   */
+  RemoteFileApiPort: number;
+
+  /**
    * Save the game when you save any file.
    */
   SaveGameOnFileSave: boolean;
@@ -150,6 +155,11 @@ interface IDefaultSettings {
   UseIEC60027_2: boolean;
 
   /*
+   * Display intermediary time unit when their value is null
+   */
+  ShowMiddleNullTimeUnit: boolean;
+
+  /*
    * Character overview settings
    */
   overview: OverviewSettings;
@@ -206,6 +216,7 @@ export const defaultSettings: IDefaultSettings = {
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
   MaxTerminalCapacity: 500,
+  RemoteFileApiPort: 0,
   SaveGameOnFileSave: true,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,
@@ -216,6 +227,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressSavedGameToast: false,
   SuppressAutosaveDisabledWarnings: false,
   UseIEC60027_2: false,
+  ShowMiddleNullTimeUnit: false,
   ExcludeRunningScriptsFromSave: false,
   IsSidebarOpened: true,
 
@@ -248,6 +260,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MaxTerminalCapacity: defaultSettings.MaxTerminalCapacity,
   OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting.AcquirementTime,
   PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting.Default,
+  RemoteFileApiPort: defaultSettings.RemoteFileApiPort,
   SaveGameOnFileSave: defaultSettings.SaveGameOnFileSave,
   SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
   SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
@@ -258,6 +271,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
   SuppressAutosaveDisabledWarnings: defaultSettings.SuppressAutosaveDisabledWarnings,
   UseIEC60027_2: defaultSettings.UseIEC60027_2,
+  ShowMiddleNullTimeUnit: defaultSettings.ShowMiddleNullTimeUnit,
   ExcludeRunningScriptsFromSave: defaultSettings.ExcludeRunningScriptsFromSave,
   IsSidebarOpened: defaultSettings.IsSidebarOpened,
 

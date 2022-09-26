@@ -20,6 +20,8 @@ import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 
+import { Contracts } from "../../Bladeburner/data/Contracts";
+
 import { CONSTANTS } from "../../Constants";
 
 import { Faction } from "../../Faction/Faction";
@@ -159,6 +161,7 @@ export class Sleeve extends Person {
     this.exp.agility = 0;
     this.exp.charisma = 0;
     this.updateStatLevels();
+    this.hp.current = this.hp.max;
 
     // Reset task-related stuff
     this.stopWork(p);
@@ -277,15 +280,15 @@ export class Sleeve extends Person {
     return true;
   }
 
+  hasAugmentation(aug: string): boolean {
+    return this.augmentations.some((a) => a.name === aug);
+  }
+
   tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
-    if (!p.canAfford(aug.baseCost)) {
-      return false;
-    }
+    if (!p.canAfford(aug.baseCost)) return false;
 
     // Verify that this sleeve does not already have that augmentation.
-    if (this.augmentations.some((a) => a.name === aug.name)) {
-      return false;
-    }
+    if (this.hasAugmentation(aug.name)) return false;
 
     p.loseMoney(aug.baseCost, "sleeves");
     this.installAugmentation(aug);
@@ -293,11 +296,6 @@ export class Sleeve extends Person {
   }
 
   upgradeMemory(n: number): void {
-    if (n < 0) {
-      console.warn(`Sleeve.upgradeMemory() called with negative value: ${n}`);
-      return;
-    }
-
     this.memory = Math.min(100, Math.round(this.memory + n));
   }
 
@@ -440,6 +438,9 @@ export class Sleeve extends Person {
       case "Diplomacy":
         this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Diplomacy" }));
         return true;
+      case "Hyperbolic Regeneration Chamber":
+        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Hyperbolic Regeneration Chamber" }));
+        return true;
       case "Infiltrate synthoids":
         this.startWork(p, new SleeveInfiltrateWork());
         return true;
@@ -447,11 +448,12 @@ export class Sleeve extends Person {
         this.startWork(p, new SleeveSupportWork(p));
         return true;
       case "Take on contracts":
+        if (!Contracts[contract]) return false;
         this.startWork(p, new SleeveBladeburnerWork({ type: "Contracts", name: contract }));
         return true;
     }
 
-    return true;
+    return false;
   }
 
   recruitmentSuccessChance(p: IPlayer): number {
@@ -485,7 +487,7 @@ export class Sleeve extends Person {
 
     this.hp.current -= amt;
     if (this.hp.current <= 0) {
-      this.shock = Math.min(1, this.shock - 0.5);
+      this.shock = Math.max(0, this.shock - 0.5);
       this.hp.current = this.hp.max;
       return true;
     } else {

@@ -28,3 +28,10 @@ You need Formulas.exe on your home computer to use this API.
 |  [skills](./bitburner.formulas.skills.md) | [SkillsFormulas](./bitburner.skillsformulas.md) | Skills formulas |
 |  [work](./bitburner.formulas.work.md) | [WorkFormulas](./bitburner.workformulas.md) | Work formulas |
 
+## Methods
+
+|  Method | Description |
+|  --- | --- |
+|  [mockPlayer()](./bitburner.formulas.mockplayer.md) |  |
+|  [mockServer()](./bitburner.formulas.mockserver.md) |  |
+

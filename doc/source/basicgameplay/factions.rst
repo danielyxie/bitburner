@@ -43,21 +43,23 @@ List of Factions and their Requirements
 
 .. _gameplay_factions::
 
-+---------------------+----------------+-----------------------------------------+-------------------------------+
-| Early Game          | Faction Name   | Requirements                            | Joining this Faction prevents |
-|  Factions           |                |                                         | you from joining:             |
-+                     +----------------+-----------------------------------------+-------------------------------+
-|                     | CyberSec       | * Install a backdoor on the CSEC server |                               |
-+                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Tian Di Hui    | * $1m                                   |                               |
-|                     |                | * Hacking Level 50                      |                               |
-|                     |                | * Be in Chongqing, New Tokyo, or Ishima |                               |
-+                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Netburners     | * Hacking Level 80                      |                               |
-|                     |                | * Total Hacknet Levels of 100           |                               |
-|                     |                | * Total Hacknet RAM of 8                |                               |
-|                     |                | * Total Hacknet Cores of 4              |                               |
-+---------------------+----------------+-----------------------------------------+-------------------------------+
++---------------------+--------------------+-----------------------------------------+-------------------------------+
+| Early Game          | Faction Name       | Requirements                            | Joining this Faction prevents |
+|  Factions           |                    |                                         | you from joining:             |
++                     +--------------------+-----------------------------------------+-------------------------------+
+|                     | CyberSec           | * Install a backdoor on the CSEC server |                               |
++                     +--------------------+-----------------------------------------+-------------------------------+
+|                     | Tian Di Hui        | * $1m                                   |                               |
+|                     |                    | * Hacking Level 50                      |                               |
+|                     |                    | * Be in Chongqing, New Tokyo, or Ishima |                               |
++                     +--------------------+-----------------------------------------+-------------------------------+
+|                     | Netburners         | * Hacking Level 80                      |                               |
+|                     |                    | * Total Hacknet Levels of 100           |                               |
+|                     |                    | * Total Hacknet RAM of 8                |                               |
+|                     |                    | * Total Hacknet Cores of 4              |                               |
++                     +--------------------+-----------------------------------------+-------------------------------+
+|                     | Shadows of Anarchy | * Successfully infiltrate a company     |                               |
++---------------------+--------------------+-----------------------------------------+-------------------------------+
 .. raw:: html
 
 	</details>

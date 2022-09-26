@@ -994,7 +994,7 @@ export class Bladeburner implements IBladeburner {
    * @param action(Action obj) - Derived action class
    * @param success(bool) - Whether action was successful
    */
-  getActionStats(action: IAction, success: boolean): ITaskTracker {
+  getActionStats(action: IAction, person: IPerson, success: boolean): ITaskTracker {
     const difficulty = action.getDifficulty();
 
     /**
@@ -1005,7 +1005,7 @@ export class Bladeburner implements IBladeburner {
       Math.pow(difficulty, BladeburnerConstants.DiffMultExponentialFactor) +
       difficulty / BladeburnerConstants.DiffMultLinearFactor;
 
-    const time = this.actionTimeToComplete;
+    const time = action.getActionTime(this, person);
     const successMult = success ? 1 : 0.5;
 
     const unweightedGain = time * BladeburnerConstants.BaseStatGain * successMult * difficultyMult;
@@ -1283,7 +1283,7 @@ export class Bladeburner implements IBladeburner {
 
           // Process Contract/Operation success/failure
           if (action.attempt(this, person)) {
-            retValue = this.getActionStats(action, true);
+            retValue = this.getActionStats(action, person, true);
             ++action.successes;
             --action.count;
 
@@ -1323,7 +1323,7 @@ export class Bladeburner implements IBladeburner {
             }
             isOperation ? this.completeOperation(true, player) : this.completeContract(true, actionIdent);
           } else {
-            retValue = this.getActionStats(action, false);
+            retValue = this.getActionStats(action, person, false);
             ++action.failures;
             let loss = 0,
               damage = 0;
@@ -1386,7 +1386,7 @@ export class Bladeburner implements IBladeburner {
           let teamLossMax;
 
           if (action.attempt(this, person)) {
-            retValue = this.getActionStats(action, true);
+            retValue = this.getActionStats(action, person, true);
             action.count = 0;
             this.blackops[action.name] = true;
             let rankGain = 0;
@@ -1402,7 +1402,7 @@ export class Bladeburner implements IBladeburner {
               );
             }
           } else {
-            retValue = this.getActionStats(action, false);
+            retValue = this.getActionStats(action, person, false);
             let rankLoss = 0;
             let damage = 0;
             if (action.rankLoss) {

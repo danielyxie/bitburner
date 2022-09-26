@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Draggable, { DraggableEvent } from "react-draggable";
-import { ResizableBox } from "react-resizable";
+import { ResizableBox, ResizeCallbackData } from "react-resizable";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -15,7 +15,6 @@ import { workerScripts } from "../../Netscript/WorkerScripts";
 import { startWorkerScript } from "../../NetscriptWorker";
 import { GetServer } from "../../Server/AllServers";
 import { findRunningScript } from "../../Script/ScriptHelpers";
-import { Player } from "../../Player";
 import { debounce } from "lodash";
 import { Settings } from "../../Settings/Settings";
 import { ANSIITypography } from "./ANSIITypography";
@@ -26,6 +25,25 @@ let layerCounter = 0;
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
 export const LogBoxCloserEvents = new EventEmitter<[number]>();
 export const LogBoxClearEvents = new EventEmitter<[]>();
+
+interface LogBoxUIEvent<T> {
+  pid: number;
+  data: T;
+}
+
+interface LogBoxPositionData {
+  x: number;
+  y: number;
+}
+
+export const LogBoxPositionEvents = new EventEmitter<[LogBoxUIEvent<LogBoxPositionData>]>();
+
+interface LogBoxResizeData {
+  w: number;
+  h: number;
+}
+
+export const LogBoxSizeEvents = new EventEmitter<[LogBoxUIEvent<LogBoxResizeData>]>();
 
 interface Log {
   id: string;
@@ -122,10 +140,15 @@ function LogWindow(props: IProps): React.ReactElement {
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
+  const [size, setSize] = useState<[number, number]>([500, 500]);
   const [minimized, setMinimized] = useState(false);
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  const onResize = (e: React.SyntheticEvent, { size }: ResizeCallbackData) => {
+    setSize([size.width, size.height]);
+  };
 
   // useEffect(
   //   () =>
@@ -144,6 +167,37 @@ function LogWindow(props: IProps): React.ReactElement {
   //   [],
   // );
 
+  const setPosition = ({ x, y }: LogBoxPositionData) => {
+    const node = rootRef?.current;
+    if (!node) return;
+    const state = node.state as { x: number; y: number };
+    state.x = x;
+    state.y = y;
+  };
+
+  // Listen to Logbox positioning events.
+  useEffect(
+    () =>
+      LogBoxPositionEvents.subscribe((e) => {
+        if (e.pid !== props.script.pid) return;
+        setPosition(e.data);
+      }),
+    [],
+  );
+
+  // Listen to Logbox resizing events.
+  useEffect(
+    () =>
+      LogBoxSizeEvents.subscribe((e) => {
+        if (e.pid !== props.script.pid) return;
+        setSize([e.data.w, e.data.h]);
+      }),
+    [],
+  );
+
+  // initial position if 40%/30%
+  useEffect(() => setPosition({ x: window.innerWidth * 0.4, y: window.innerHeight * 0.3 }), []);
+
   useEffect(() => {
     updateLayer();
     const id = setInterval(rerender, 1000);
@@ -159,7 +213,8 @@ function LogWindow(props: IProps): React.ReactElement {
     if (server === null) return;
     const s = findRunningScript(script.filename, script.args, server);
     if (s === null) {
-      startWorkerScript(Player, script, server);
+      script.ramUsage = 0;
+      startWorkerScript(script, server);
     } else {
       setScript(s);
     }
@@ -204,18 +259,18 @@ function LogWindow(props: IProps): React.ReactElement {
 
   // And trigger fakeDrag when the window is resized
   useEffect(() => {
-    window.addEventListener("resize", onResize);
+    window.addEventListener("resize", onWindowResize);
     return () => {
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", onWindowResize);
     };
   }, []);
 
-  const onResize = debounce((): void => {
+  const onWindowResize = debounce((): void => {
     const node = draggableRef?.current;
     if (!node) return;
 
     if (!isOnScreen(node)) {
-      resetPosition();
+      setPosition({ x: 0, y: 0 });
     }
   }, 100);
 
@@ -223,15 +278,6 @@ function LogWindow(props: IProps): React.ReactElement {
     const bounds = node.getBoundingClientRect();
 
     return !(bounds.right < 0 || bounds.bottom < 0 || bounds.left > innerWidth || bounds.top > outerWidth);
-  };
-
-  const resetPosition = (): void => {
-    const node = rootRef?.current;
-    if (!node) return;
-    const state = node.state as { x: number; y: number };
-    state.x = 0;
-    state.y = 0;
-    node.setState(state);
   };
 
   const boundToBody = (e: DraggableEvent): void | false => {
@@ -252,8 +298,6 @@ function LogWindow(props: IProps): React.ReactElement {
         sx={{
           flexFlow: "column",
           position: "fixed",
-          left: "40%",
-          top: "30%",
           zIndex: 1400,
           minWidth: `${minConstraints[0]}px`,
           minHeight: `${minConstraints[1]}px`,
@@ -271,8 +315,9 @@ function LogWindow(props: IProps): React.ReactElement {
         ref={container}
       >
         <ResizableBox
-          height={500}
-          width={500}
+          width={size[0]}
+          height={size[1]}
+          onResize={onResize}
           minConstraints={minConstraints}
           handle={
             <span
@@ -324,9 +369,7 @@ function LogWindow(props: IProps): React.ReactElement {
               <span style={{ display: "flex", flexDirection: "column" }}>
                 {script.logs.map(
                   (line: string, i: number): JSX.Element => (
-                    <React.Fragment key={i}>
-                      <ANSIITypography text={line} color={lineColor(line)} />
-                    </React.Fragment>
+                    <ANSIITypography key={i} text={line} color={lineColor(line)} />
                   ),
                 )}
               </span>
