@@ -1,6 +1,6 @@
 import { EmployeePositions } from "./EmployeePositions";
 import { MaterialSizes } from "./MaterialSizes";
-import { IIndustry } from "./IIndustry";
+import { Industry } from "./Industry";
 import { ProductRatingWeights, IProductRatingWeight } from "./ProductRatingWeights";
 
 import { createCityMap } from "../Locations/createCityMap";
@@ -157,7 +157,7 @@ export class Product {
   }
 
   // @param industry - Industry object. Reference to industry that makes this Product
-  finishProduct(industry: IIndustry): void {
+  finishProduct(industry: Industry): void {
     this.fin = true;
 
     // Calculate properties
@@ -248,7 +248,7 @@ export class Product {
     }
   }
 
-  calculateRating(industry: IIndustry): void {
+  calculateRating(industry: Industry): void {
     const weights: IProductRatingWeight = ProductRatingWeights[industry.type];
     if (weights == null) {
       console.error(`Could not find product rating weights for: ${industry}`);

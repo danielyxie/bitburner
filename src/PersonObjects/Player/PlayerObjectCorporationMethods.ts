@@ -3,20 +3,17 @@ import {
   CorporationUnlockUpgradeIndex,
   CorporationUnlockUpgrades,
 } from "../../Corporation/data/CorporationUnlockUpgrades";
-import { IPlayer } from "../IPlayer";
+import { PlayerObject } from "./PlayerObject";
 
-export function canAccessCorporation(this: IPlayer): boolean {
+export function canAccessCorporation(this: PlayerObject): boolean {
   return this.bitNodeN === 3 || this.sourceFileLvl(3) > 0;
 }
 
-export function hasCorporation(this: IPlayer): boolean {
-  if (this.corporation == null) {
-    return false;
-  }
-  return this.corporation instanceof Corporation;
+export function hasCorporation(this: PlayerObject): boolean {
+  return Boolean(this.corporation);
 }
 
-export function startCorporation(this: IPlayer, corpName: string, additionalShares = 0): void {
+export function startCorporation(this: PlayerObject, corpName: string, additionalShares = 0): void {
   this.corporation = new Corporation({
     name: corpName,
   });

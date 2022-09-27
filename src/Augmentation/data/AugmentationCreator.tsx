@@ -6,7 +6,6 @@ import { WHRNG } from "../../Casino/RNG";
 import React from "react";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { CONSTANTS } from "../../Constants";
-import { Faction } from "src/Faction/Faction";
 
 interface CircadianBonus {
   bonuses: {

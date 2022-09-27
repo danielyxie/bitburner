@@ -9,7 +9,6 @@ import { characterOverviewStyles as useStyles } from "../../../ui/React/Characte
 import { Money } from "../../../ui/React/Money";
 import { MoneyRate } from "../../../ui/React/MoneyRate";
 import { ReputationRate } from "../../../ui/React/ReputationRate";
-import { use } from "../../../ui/Context";
 
 import { Sleeve } from "../Sleeve";
 import { isSleeveClassWork } from "../Work/SleeveClassWork";
@@ -95,7 +94,6 @@ export function StatsElement(props: IProps): React.ReactElement {
 
 export function EarningsElement(props: IProps): React.ReactElement {
   const classes = useStyles();
-  const player = use.Player();
 
   let data: (string | JSX.Element)[][] = [];
   if (isSleeveCrimeWork(props.sleeve.currentWork)) {
@@ -111,7 +109,7 @@ export function EarningsElement(props: IProps): React.ReactElement {
     ];
   }
   if (isSleeveClassWork(props.sleeve.currentWork)) {
-    const rates = props.sleeve.currentWork.calculateRates(player, props.sleeve);
+    const rates = props.sleeve.currentWork.calculateRates(props.sleeve);
     data = [
       [`Money:`, <MoneyRate money={5 * rates.money} />],
       [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp)} / sec`],
@@ -137,7 +135,7 @@ export function EarningsElement(props: IProps): React.ReactElement {
   }
 
   if (isSleeveCompanyWork(props.sleeve.currentWork)) {
-    const rates = props.sleeve.currentWork.getGainRates(player, props.sleeve);
+    const rates = props.sleeve.currentWork.getGainRates(props.sleeve);
     data = [
       [`Money:`, <MoneyRate money={5 * rates.money * BitNodeMultipliers.CompanyWorkMoney} />],
       [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * rates.hackExp)} / sec`],

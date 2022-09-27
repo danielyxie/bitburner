@@ -1,5 +1,3 @@
-import { Player as player } from "../Player";
-
 import {
   Infiltration as IInfiltration,
   InfiltrationLocation,
@@ -32,15 +30,15 @@ export function NetscriptInfiltration(): InternalAPI<IInfiltration> {
     if (location.infiltrationData === undefined)
       throw helpers.makeRuntimeErrorMsg(ctx, `Location '${location}' does not provide infiltrations.`);
     const startingSecurityLevel = location.infiltrationData.startingSecurityLevel;
-    const difficulty = calculateDifficulty(player, startingSecurityLevel);
-    const reward = calculateReward(player, startingSecurityLevel);
+    const difficulty = calculateDifficulty(startingSecurityLevel);
+    const reward = calculateReward(startingSecurityLevel);
     const maxLevel = location.infiltrationData.maxClearanceLevel;
     return {
       location: JSON.parse(JSON.stringify(location)),
       reward: {
-        tradeRep: calculateTradeInformationRepReward(player, reward, maxLevel, startingSecurityLevel),
-        sellCash: calculateSellInformationCashReward(player, reward, maxLevel, startingSecurityLevel),
-        SoARep: calculateInfiltratorsRepReward(player, Factions[FactionNames.ShadowsOfAnarchy], startingSecurityLevel),
+        tradeRep: calculateTradeInformationRepReward(reward, maxLevel, startingSecurityLevel),
+        sellCash: calculateSellInformationCashReward(reward, maxLevel, startingSecurityLevel),
+        SoARep: calculateInfiltratorsRepReward(Factions[FactionNames.ShadowsOfAnarchy], startingSecurityLevel),
       },
       difficulty: difficulty,
     };

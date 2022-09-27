@@ -1,8 +1,8 @@
-import { IIndustry } from "../IIndustry";
+import { Industry } from "../Industry";
 
 // Returns a boolean indicating whether the given material is relevant for the
 // current industry.
-export function isRelevantMaterial(matName: string, division: IIndustry): boolean {
+export function isRelevantMaterial(matName: string, division: Industry): boolean {
   // Materials that affect Production multiplier
   const prodMultiplierMats = ["Hardware", "Robots", "AICores", "RealEstate", "AI Cores", "Real Estate"];
 

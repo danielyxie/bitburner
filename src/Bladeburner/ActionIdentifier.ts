@@ -1,4 +1,3 @@
-import { IActionIdentifier } from "./IActionIdentifier";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 interface IParams {
@@ -6,7 +5,7 @@ interface IParams {
   type?: number;
 }
 
-export class ActionIdentifier implements IActionIdentifier {
+export class ActionIdentifier {
   name = "";
   type = -1;
 

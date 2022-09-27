@@ -4,17 +4,14 @@ import { StaticAugmentations } from "./Augmentation/StaticAugmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Companies, initCompanies } from "./Company/Companies";
 import { resetIndustryResearchTrees } from "./Corporation/IndustryData";
 import { Programs } from "./Programs/Programs";
-import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
-import { Router } from "./ui/GameRoot";
 import { recentScripts } from "./Netscript/RecentScripts";
 import { resetPidCounter } from "./Netscript/Pid";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
@@ -37,7 +34,7 @@ const BitNode8StartingMoney = 250e6;
 
 // Prestige by purchasing augmentation
 export function prestigeAugmentation(): void {
-  initBitNodeMultipliers(Player);
+  initBitNodeMultipliers();
 
   const maintainMembership = Player.factions.concat(Player.factionInvitations).filter(function (faction) {
     return Factions[faction].getInfo().keep;
@@ -53,7 +50,7 @@ export function prestigeAugmentation(): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(Player, homeComp);
+  prestigeHomeComputer(homeComp);
 
   if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink, true)) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
@@ -91,7 +88,7 @@ export function prestigeAugmentation(): void {
 
   // Stop a Terminal action if there is one.
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
   Terminal.clear();
   LogBoxClearEvents.emit();
@@ -109,11 +106,9 @@ export function prestigeAugmentation(): void {
 
   // Gang
   const gang = Player.gang;
-  if (Player.inGang() && gang !== null) {
+  if (gang) {
     const faction = Factions[gang.facName];
-    if (faction instanceof Faction) {
-      joinFaction(faction);
-    }
+    if (faction) joinFaction(faction);
     const penalty = 0.95;
     for (const m of gang.members) {
       m.hack_asc_points *= penalty;
@@ -131,7 +126,7 @@ export function prestigeAugmentation(): void {
   }
 
   // Cancel Bladeburner action
-  if (Player.bladeburner instanceof Bladeburner) {
+  if (Player.bladeburner) {
     Player.bladeburner.prestige();
   }
 
@@ -176,7 +171,7 @@ export function prestigeAugmentation(): void {
 
 // Prestige by destroying Bit Node and gaining a Source File
 export function prestigeSourceFile(flume: boolean): void {
-  initBitNodeMultipliers(Player);
+  initBitNodeMultipliers();
 
   Player.prestigeSourceFile();
   prestigeWorkerScripts(); // Delete all Worker Scripts objects
@@ -185,7 +180,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Stop a Terminal action if there is one.
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
   Terminal.clear();
   LogBoxClearEvents.emit();
@@ -195,7 +190,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(Player, homeComp);
+  prestigeHomeComputer(homeComp);
 
   // Re-create foreign servers
   initForeignServers(Player.getHomeComputer());
@@ -225,7 +220,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Stop a Terminal action if there is one
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
 
   // Delete all Augmentations
@@ -302,7 +297,7 @@ export function prestigeSourceFile(flume: boolean): void {
     hserver.cache = 5;
     hserver.updateHashRate(Player.mults.hacknet_node_money);
     hserver.updateHashCapacity();
-    updateHashManagerCapacity(Player);
+    updateHashManagerCapacity();
   }
 
   if (Player.bitNodeN === 13) {

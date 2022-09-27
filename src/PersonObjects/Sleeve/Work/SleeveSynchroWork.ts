@@ -1,4 +1,4 @@
-import { IPlayer } from "../../IPlayer";
+import { Player } from "../../../Player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { Work, WorkType } from "./Work";
@@ -11,9 +11,9 @@ export class SleeveSynchroWork extends Work {
     super(WorkType.SYNCHRO);
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
-    sleeve.sync = Math.min(100, sleeve.sync + player.getIntelligenceBonus(0.5) * 0.0002 * cycles);
-    if (sleeve.sync >= 100) sleeve.stopWork(player);
+  process(sleeve: Sleeve, cycles: number): number {
+    sleeve.sync = Math.min(100, sleeve.sync + Player.getIntelligenceBonus(0.5) * 0.0002 * cycles);
+    if (sleeve.sync >= 100) sleeve.stopWork();
     return 0;
   }
 

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IEngine } from "../IEngine";
-import { ITerminal } from "../Terminal/ITerminal";
+import { Player } from "../Player";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";
@@ -66,8 +64,6 @@ import { PromptManager } from "./React/PromptManager";
 import { InvitationModal } from "../Faction/ui/InvitationModal";
 import { calculateAchievements } from "../Achievements/Achievements";
 
-import { enterBitNode } from "../RedPill";
-import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -83,12 +79,6 @@ import { isFactionWork } from "../Work/FactionWork";
 import { V2Modal } from "../utils/V2Modal";
 
 const htmlLocation = location;
-
-interface IProps {
-  terminal: ITerminal;
-  player: IPlayer;
-  engine: IEngine;
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -148,20 +138,20 @@ export let Router: IRouter = {
   toImportSave: uninitialized,
 };
 
-function determineStartPage(player: IPlayer): Page {
+function determineStartPage(): Page {
   if (RecoveryMode) return Page.Recovery;
-  if (player.currentWork !== null) return Page.Work;
+  if (Player.currentWork !== null) return Page.Work;
   return Page.Terminal;
 }
 
-export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
+export function GameRoot(): React.ReactElement {
   const classes = useStyles();
   const [{ files, vim }, setEditorOptions] = useState({ files: {}, vim: false });
-  const [page, setPage] = useState(determineStartPage(player));
+  const [page, setPage] = useState(determineStartPage());
   const setRerender = useState(0)[1];
   const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
-    isFactionWork(player.currentWork) ? Factions[player.currentWork.factionName] : (undefined as unknown as Faction),
+    isFactionWork(Player.currentWork) ? Factions[Player.currentWork.factionName] : (undefined as unknown as Faction),
   );
   if (faction === undefined && page === Page.Faction)
     throw new Error("Trying to go to a page without the proper setup");
@@ -243,7 +233,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setPage(Page.City);
     },
     toTravel: () => {
-      player.gotoLocation(LocationName.TravelAgency);
+      Player.gotoLocation(LocationName.TravelAgency);
       setPage(Page.Travel);
     },
     toBitVerse: (flume: boolean, quick: boolean) => {
@@ -317,14 +307,14 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   let bypassGame = false;
   switch (page) {
     case Page.Recovery: {
-      mainPage = <RecoveryRoot router={Router} softReset={softReset} />;
+      mainPage = <RecoveryRoot softReset={softReset} />;
       withSidebar = false;
       withPopups = false;
       bypassGame = true;
       break;
     }
     case Page.BitVerse: {
-      mainPage = <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />;
+      mainPage = <BitverseRoot flume={flume} quick={quick} />;
       withSidebar = false;
       withPopups = false;
       break;
@@ -347,7 +337,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Terminal: {
-      mainPage = <TerminalRoot terminal={terminal} router={Router} player={player} />;
+      mainPage = <TerminalRoot />;
       break;
     }
     case Page.Sleeves: {
@@ -363,15 +353,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.ScriptEditor: {
-      mainPage = (
-        <ScriptEditorRoot
-          files={files}
-          hostname={player.getCurrentServer().hostname}
-          player={player}
-          router={Router}
-          vim={vim}
-        />
-      );
+      mainPage = <ScriptEditorRoot files={files} hostname={Player.getCurrentServer().hostname} vim={vim} />;
       break;
     }
     case Page.ActiveScripts: {
@@ -379,7 +361,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Hacknet: {
-      mainPage = <HacknetRoot player={player} />;
+      mainPage = <HacknetRoot />;
       break;
     }
     case Page.CreateProgram: {
@@ -387,7 +369,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Factions: {
-      mainPage = <FactionsRoot player={player} router={Router} />;
+      mainPage = <FactionsRoot />;
       break;
     }
     case Page.Faction: {
@@ -395,7 +377,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Milestones: {
-      mainPage = <MilestonesRoot player={player} />;
+      mainPage = <MilestonesRoot />;
       break;
     }
     case Page.Tutorial: {
@@ -411,7 +393,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.DevMenu: {
-      mainPage = <DevMenuRoot player={player} engine={engine} router={Router} />;
+      mainPage = <DevMenuRoot />;
       break;
     }
     case Page.Gang: {
@@ -431,11 +413,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Travel: {
-      mainPage = <TravelAgencyRoot p={player} router={Router} />;
+      mainPage = <TravelAgencyRoot />;
       break;
     }
     case Page.StockMarket: {
-      mainPage = <StockMarketRoot p={player} stockMarket={StockMarket} />;
+      mainPage = <StockMarketRoot stockMarket={StockMarket} />;
       break;
     }
     case Page.City: {
@@ -450,12 +432,10 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     case Page.Options: {
       mainPage = (
         <GameOptionsRoot
-          player={player}
-          router={Router}
           save={() => saveObject.saveGame()}
           export={() => {
             // Apply the export bonus before saving the game
-            onExport(player);
+            onExport();
             saveObject.exportGame();
           }}
           forceKill={killAllScripts}
@@ -469,7 +449,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         <AugmentationsRoot
           exportGameFn={() => {
             // Apply the export bonus before saving the game
-            onExport(player);
+            onExport();
             saveObject.exportGame();
           }}
           installAugmentationsFn={() => {
@@ -484,11 +464,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.ThemeBrowser: {
-      mainPage = <ThemeBrowser router={Router} />;
+      mainPage = <ThemeBrowser />;
       break;
     }
     case Page.ImportSave: {
-      mainPage = <ImportSaveRoot importString={importString} automatic={importAutomatic} router={Router} />;
+      mainPage = <ImportSaveRoot importString={importString} automatic={importAutomatic} />;
       withSidebar = false;
       withPopups = false;
       bypassGame = true;
@@ -496,51 +476,47 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   }
 
   return (
-    <Context.Player.Provider value={player}>
-      <Context.Router.Provider value={Router}>
-        <ErrorBoundary key={errorBoundaryKey} router={Router} softReset={softReset}>
-          <BypassWrapper content={bypassGame ? mainPage : null}>
-            <SnackbarProvider>
-              <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
-                {!ITutorial.isRunning ? (
-                  <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
-                ) : (
-                  <InteractiveTutorialRoot />
-                )}
-              </Overview>
-              {withSidebar ? (
-                <Box display="flex" flexDirection="row" width="100%">
-                  <SidebarRoot
-                    player={player}
-                    router={Router}
-                    page={page}
-                    opened={sidebarOpened}
-                    onToggled={(isOpened) => {
-                      setSideBarOpened(isOpened);
-                      Settings.IsSidebarOpened = isOpened;
-                    }}
-                  />
-                  <Box className={classes.root}>{mainPage}</Box>
-                </Box>
+    <>
+      <ErrorBoundary key={errorBoundaryKey} softReset={softReset}>
+        <BypassWrapper content={bypassGame ? mainPage : null}>
+          <SnackbarProvider>
+            <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
+              {!ITutorial.isRunning ? (
+                <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
               ) : (
+                <InteractiveTutorialRoot />
+              )}
+            </Overview>
+            {withSidebar ? (
+              <Box display="flex" flexDirection="row" width="100%">
+                <SidebarRoot
+                  page={page}
+                  opened={sidebarOpened}
+                  onToggled={(isOpened) => {
+                    setSideBarOpened(isOpened);
+                    Settings.IsSidebarOpened = isOpened;
+                  }}
+                />
                 <Box className={classes.root}>{mainPage}</Box>
-              )}
-              <Unclickable />
-              {withPopups && (
-                <>
-                  <LogBoxManager />
-                  <AlertManager />
-                  <PromptManager />
-                  <InvitationModal />
-                  <Snackbar />
-                </>
-              )}
-              <Apr1 />
-            </SnackbarProvider>
-          </BypassWrapper>
-        </ErrorBoundary>
-        <V2Modal />
-      </Context.Router.Provider>
-    </Context.Player.Provider>
+              </Box>
+            ) : (
+              <Box className={classes.root}>{mainPage}</Box>
+            )}
+            <Unclickable />
+            {withPopups && (
+              <>
+                <LogBoxManager />
+                <AlertManager />
+                <PromptManager />
+                <InvitationModal />
+                <Snackbar />
+              </>
+            )}
+            <Apr1 />
+          </SnackbarProvider>
+        </BypassWrapper>
+      </ErrorBoundary>
+      <V2Modal />
+    </>
   );
 }

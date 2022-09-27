@@ -8,7 +8,7 @@ import { Money } from "../ui/React/Money";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { AugmentationNames } from "./data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { StaticAugmentations } from "./StaticAugmentations";
@@ -531,26 +531,26 @@ export class Augmentation {
     }
   }
 
-  getCost(player: IPlayer): AugmentationCosts {
+  getCost(): AugmentationCosts {
     const augmentationReference = StaticAugmentations[this.name];
     let moneyCost = augmentationReference.baseCost;
     let repCost = augmentationReference.baseRepRequirement;
 
     if (augmentationReference.name === AugmentationNames.NeuroFluxGovernor) {
-      let nextLevel = this.getLevel(player);
+      let nextLevel = this.getLevel();
       --nextLevel;
       const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
       repCost = augmentationReference.baseRepRequirement * multiplier * BitNodeMultipliers.AugmentationRepCost;
       moneyCost = augmentationReference.baseCost * multiplier * BitNodeMultipliers.AugmentationMoneyCost;
 
-      for (let i = 0; i < player.queuedAugmentations.length; ++i) {
+      for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
         moneyCost *= getBaseAugmentationPriceMultiplier();
       }
     } else if (augmentationReference.factions.includes(FactionNames.ShadowsOfAnarchy)) {
       const soaAugmentationNames = initSoAAugmentations().map((augmentation) => augmentation.name);
       const soaMultiplier = Math.pow(
         CONSTANTS.SoACostMult,
-        soaAugmentationNames.filter((augmentationName) => player.hasAugmentation(augmentationName)).length,
+        soaAugmentationNames.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length,
       );
       moneyCost = augmentationReference.baseCost * soaMultiplier;
       if (soaAugmentationNames.find((augmentationName) => augmentationName === augmentationReference.name)) {
@@ -566,19 +566,19 @@ export class Augmentation {
     return { moneyCost, repCost };
   }
 
-  getLevel(player: IPlayer): number {
+  getLevel(): number {
     // Get current Neuroflux level based on Player's augmentations
     if (this.name === AugmentationNames.NeuroFluxGovernor) {
       let currLevel = 0;
-      for (let i = 0; i < player.augmentations.length; ++i) {
-        if (player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-          currLevel = player.augmentations[i].level;
+      for (let i = 0; i < Player.augmentations.length; ++i) {
+        if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+          currLevel = Player.augmentations[i].level;
         }
       }
 
       // Account for purchased but uninstalled Augmentations
-      for (let i = 0; i < player.queuedAugmentations.length; ++i) {
-        if (player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+      for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
+        if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
           ++currLevel;
         }
       }

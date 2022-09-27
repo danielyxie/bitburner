@@ -1,8 +1,8 @@
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { GraftableAugmentation } from "./GraftableAugmentation";
-import { IPlayer } from "../IPlayer";
+import { Player } from "../../Player";
 
-export const getGraftingAvailableAugs = (player: IPlayer): string[] => {
+export const getGraftingAvailableAugs = (): string[] => {
   const augs: string[] = [];
 
   for (const [augName, aug] of Object.entries(StaticAugmentations)) {
@@ -10,14 +10,14 @@ export const getGraftingAvailableAugs = (player: IPlayer): string[] => {
     augs.push(augName);
   }
 
-  return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation));
+  return augs.filter((augmentation: string) => !Player.hasAugmentation(augmentation));
 };
 
-export const graftingIntBonus = (player: IPlayer): number => {
-  return 1 + (player.getIntelligenceBonus(3) - 1) / 3;
+export const graftingIntBonus = (): number => {
+  return 1 + (Player.getIntelligenceBonus(3) - 1) / 3;
 };
 
-export const calculateGraftingTimeWithBonus = (player: IPlayer, aug: GraftableAugmentation): number => {
+export const calculateGraftingTimeWithBonus = (aug: GraftableAugmentation): number => {
   const baseTime = aug.time;
-  return baseTime / graftingIntBonus(player);
+  return baseTime / graftingIntBonus();
 };

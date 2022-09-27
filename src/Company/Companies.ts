@@ -29,7 +29,7 @@ export function initCompanies(): void {
   for (const companyName of Object.keys(Companies)) {
     const company = Companies[companyName];
     const oldCompany = oldCompanies[companyName];
-    if (!(oldCompany instanceof Company)) {
+    if (!oldCompany) {
       // New game, so no OldCompanies data
       company.favor = 0;
     } else {

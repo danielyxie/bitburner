@@ -6,7 +6,7 @@ import { numeralWrapper } from "../ui/numeralFormat";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Money } from "../ui/React/Money";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { calculateClassEarnings as calculateClassEarningsRate } from "./formulas/Class";
 import { Work, WorkType } from "./Work";
 import { applyWorkStats, newWorkStats, sumWorkStats, WorkStats } from "./WorkStats";
@@ -146,14 +146,14 @@ export class ClassWork extends Work {
     return Classes[this.classType];
   }
 
-  calculateRates(player: IPlayer): WorkStats {
-    return calculateClassEarningsRate(player, player, this.classType, this.location);
+  calculateRates(): WorkStats {
+    return calculateClassEarningsRate(Player, this.classType, this.location);
   }
 
-  process(player: IPlayer, cycles: number): boolean {
+  process(cycles: number): boolean {
     this.cyclesWorked += cycles;
-    const rate = this.calculateRates(player);
-    const earnings = applyWorkStats(player, player, rate, cycles, "class");
+    const rate = this.calculateRates();
+    const earnings = applyWorkStats(Player, rate, cycles, "class");
     this.earnings = sumWorkStats(this.earnings, earnings);
     return false;
   }

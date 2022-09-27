@@ -12,8 +12,8 @@ import { Locations } from "../Locations";
 import { Location } from "../Location";
 import { Settings } from "../../Settings/Settings";
 
-import { Router } from "../../ui/GameRoot";
 import { Player } from "../../Player";
+import { Router } from "../../ui/GameRoot";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { LocationType } from "../LocationTypeEnum";

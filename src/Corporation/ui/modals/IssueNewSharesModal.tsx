@@ -89,14 +89,11 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
 
     let dialogContents =
       `Issued ${numeralWrapper.format(newShares, "0.000a")} new shares` +
-      ` and raised ${numeralWrapper.formatMoney(profit)}.`;
-    if (privateShares > 0) {
-      dialogContents += `<br>${numeralWrapper.format(
-        privateShares,
-        "0.000a",
-      )} of these shares were bought by private investors.`;
-    }
-    dialogContents += `<br><br>Stock price decreased to ${numeralWrapper.formatMoney(corp.sharePrice)}`;
+      ` and raised ${numeralWrapper.formatMoney(profit)}.` +
+      (privateShares > 0)
+        ? "\n" + numeralWrapper.format(privateShares, "0.000a") + "of these shares were bought by private investors."
+        : "";
+    dialogContents += `\n\nStock price decreased to ${numeralWrapper.formatMoney(corp.sharePrice)}`;
     dialogBoxCreate(dialogContents);
   }
 

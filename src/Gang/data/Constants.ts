@@ -1,13 +1,6 @@
 import { FactionNames } from "../../Faction/data/FactionNames";
 
-export const GangConstants: {
-  GangRespectToReputationRatio: number;
-  MaximumGangMembers: number;
-  CyclesPerTerritoryAndPowerUpdate: number;
-  AscensionMultiplierRatio: number;
-  Names: string[];
-  GangKarmaRequirement: number;
-} = {
+export const GangConstants = {
   // Respect is divided by this to get rep gain
   GangRespectToReputationRatio: 75,
   MaximumGangMembers: 12,
@@ -23,6 +16,6 @@ export const GangConstants: {
     FactionNames.SpeakersForTheDead,
     FactionNames.NiteSec,
     FactionNames.TheBlackHand,
-  ],
+  ] as string[],
   GangKarmaRequirement: -54000,
 };

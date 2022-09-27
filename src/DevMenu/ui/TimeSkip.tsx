@@ -7,22 +7,17 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { saveObject } from "../../SaveObject";
-import { IEngine } from "../../IEngine";
+import { Engine } from "../../engine";
 
 // Update as additional BitNodes get implemented
 
-interface IProps {
-  player: IPlayer;
-  engine: IEngine;
-}
-
-export function TimeSkip(props: IProps): React.ReactElement {
+export function TimeSkip(): React.ReactElement {
   function timeskip(time: number) {
     return () => {
-      props.player.lastUpdate -= time;
-      props.engine._lastUpdate -= time;
+      Player.lastUpdate -= time;
+      Engine._lastUpdate -= time;
       saveObject.saveGame();
       setTimeout(() => location.reload(), 1000);
     };

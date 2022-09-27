@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IPerson } from "../PersonObjects/IPerson";
+import { Player } from "../Player";
+import { Person } from "../PersonObjects/Person";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType } from "../utils/WorkType";
 import { CrimeWork } from "../Work/CrimeWork";
@@ -101,11 +101,11 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
+  commit(div = 1, workerScript: WorkerScript | null = null): number {
     if (div <= 0) {
       div = 1;
     }
-    p.startWork(
+    Player.startWork(
       new CrimeWork({
         crimeType: this.type,
         singularity: workerScript !== null,
@@ -115,7 +115,7 @@ export class Crime {
     return this.time;
   }
 
-  successRate(p: IPerson): number {
+  successRate(p: Person): number {
     let chance: number =
       this.hacking_success_weight * p.skills.hacking +
       this.strength_success_weight * p.skills.strength +

@@ -1,22 +1,28 @@
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { Sleeve } from "./Sleeve";
 
-import { IPlayer } from "../IPlayer";
 import { Player } from "../../Player";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { Factions } from "../../Faction/Factions";
-import { Multipliers } from "../Multipliers";
+import { mergeMultipliers, Multipliers } from "../Multipliers";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { getFactionAugmentationsFiltered } from "../../Faction/FactionHelpers";
 
-export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentation[] {
+/**
+ * Updates this object's multipliers for the given augmentation
+ */
+export function applyAugmentation(this: Sleeve, aug: Augmentation): void {
+  this.mults = mergeMultipliers(this.mults, aug.mults);
+}
+
+export function findPurchasableAugs(this: Sleeve): Augmentation[] {
   // You can only purchase Augmentations that are actually available from
   // your factions. I.e. you must be in a faction that has the Augmentation
   // and you must also have enough rep in that faction in order to purchase it.
 
-  const ownedAugNames = sleeve.augmentations.map((e) => e.name);
+  const ownedAugNames = this.augmentations.map((e) => e.name);
   const availableAugs: Augmentation[] = [];
 
   // Helper function that helps filter out augs that are already owned
@@ -55,21 +61,21 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
 
   // If player is in a gang, then we return all augs that the player
   // has enough reputation for (since that gang offers all augs)
-  if (p.inGang()) {
-    const fac = p.getGangFaction();
-    const gangAugs = getFactionAugmentationsFiltered(Player, fac);
+  if (Player.gang) {
+    const fac = Player.getGangFaction();
+    const gangAugs = getFactionAugmentationsFiltered(fac);
 
     for (const augName of gangAugs) {
       const aug = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) continue;
 
-      if (fac.playerReputation > aug.getCost(p).repCost) {
+      if (fac.playerReputation > aug.getCost().repCost) {
         availableAugs.push(aug);
       }
     }
   }
 
-  for (const facName of p.factions) {
+  for (const facName of Player.factions) {
     if (facName === FactionNames.Bladeburners) continue;
     if (facName === FactionNames.Netburners) continue;
     const fac = Factions[facName];
@@ -79,14 +85,14 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
       const aug = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) continue;
 
-      if (fac.playerReputation > aug.getCost(p).repCost) {
+      if (fac.playerReputation > aug.getCost().repCost) {
         availableAugs.push(aug);
       }
     }
   }
 
   // Add the stanek sleeve aug
-  if (!ownedAugNames.includes(AugmentationNames.ZOE) && p.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
+  if (!ownedAugNames.includes(AugmentationNames.ZOE) && Player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
     const aug = StaticAugmentations[AugmentationNames.ZOE];
     availableAugs.push(aug);
   }

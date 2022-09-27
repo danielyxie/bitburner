@@ -1,20 +1,12 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 
 import { evaluateDirectoryPath, removeTrailingSlash } from "../DirectoryHelpers";
 import { containsFiles } from "../DirectoryServerHelpers";
 
-export function cd(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  args: (string | number | boolean)[],
-): void {
+export function cd(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length > 1) {
-    terminal.error("Incorrect number of arguments. Usage: cd [dir]");
+    Terminal.error("Incorrect number of arguments. Usage: cd [dir]");
   } else {
     let dir = args.length === 1 ? args[0] + "" : "/";
 
@@ -25,23 +17,22 @@ export function cd(
       // Ignore trailing slashes
       dir = removeTrailingSlash(dir);
 
-      evaledDir = evaluateDirectoryPath(dir, terminal.cwd());
+      evaledDir = evaluateDirectoryPath(dir, Terminal.cwd());
       if (evaledDir === null || evaledDir === "") {
-        terminal.error("Invalid path. Failed to change directories");
+        Terminal.error("Invalid path. Failed to change directories");
         return;
       }
-      if (terminal.cwd().length > 1 && dir === "..") {
-        terminal.setcwd(evaledDir);
+      if (Terminal.cwd().length > 1 && dir === "..") {
+        Terminal.setcwd(evaledDir);
         return;
       }
 
-      const server = player.getCurrentServer();
       if (!containsFiles(server, evaledDir)) {
-        terminal.error("Invalid path. Failed to change directories");
+        Terminal.error("Invalid path. Failed to change directories");
         return;
       }
     }
 
-    terminal.setcwd(evaledDir);
+    Terminal.setcwd(evaledDir);
   }
 }

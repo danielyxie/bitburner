@@ -31,7 +31,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { numeralWrapper } from "../numeralFormat";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { pushImportResult } from "../../Electron";
-import { IRouter } from "../Router";
+import { Router } from "../GameRoot";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -105,7 +105,6 @@ function ComparisonIcon({ isBetter }: { isBetter: boolean }): JSX.Element {
 export interface IProps {
   importString: string;
   automatic: boolean;
-  router: IRouter;
 }
 
 let initialAutosave = 0;
@@ -120,7 +119,7 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
   function handleGoBack(): void {
     Settings.AutosaveInterval = initialAutosave;
     pushImportResult(false);
-    props.router.allowRouting(true);
+    Router.allowRouting(true);
     setHeadback(true);
   }
 
@@ -133,11 +132,11 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
     // We want to disable autosave while we're in this mode
     initialAutosave = Settings.AutosaveInterval;
     Settings.AutosaveInterval = 0;
-    props.router.allowRouting(false);
+    Router.allowRouting(false);
   }, []);
 
   useEffect(() => {
-    if (headback) props.router.toTerminal();
+    if (headback) Router.toTerminal();
   }, [headback]);
 
   useEffect(() => {

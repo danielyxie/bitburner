@@ -12,16 +12,15 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { isString } from "../utils/helpers/isString";
 import { MaterialSizes } from "./MaterialSizes";
 import { Warehouse } from "./Warehouse";
-import { ICorporation } from "./ICorporation";
-import { IIndustry } from "./IIndustry";
+import { Corporation } from "./Corporation";
 
 interface IParams {
   name?: string;
-  corp?: ICorporation;
+  corp?: Corporation;
   type?: string;
 }
 
-export class Industry implements IIndustry {
+export class Industry {
   name = "";
   type = Industries.Agriculture;
   sciResearch = new Material({ name: "Scientific Research" });
@@ -356,9 +355,7 @@ export class Industry implements IIndustry {
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       const city = CorporationConstants.Cities[i];
       const warehouse = this.warehouses[city];
-      if (!(warehouse instanceof Warehouse)) {
-        continue;
-      }
+      if (!warehouse) continue;
 
       const materials = warehouse.materials;
 
@@ -385,7 +382,7 @@ export class Industry implements IIndustry {
     }
   }
 
-  process(marketCycles = 1, state: string, corporation: ICorporation): void {
+  process(marketCycles = 1, state: string, corporation: Corporation): void {
     this.state = state;
 
     //At the start of a cycle, store and reset revenue/expenses
@@ -414,10 +411,7 @@ export class Industry implements IIndustry {
       let employeeSalary = 0;
       for (const officeLoc of Object.keys(this.offices)) {
         const office = this.offices[officeLoc];
-        if (office === 0) continue;
-        if (office instanceof OfficeSpace) {
-          employeeSalary += office.process(marketCycles, corporation, this);
-        }
+        if (office) employeeSalary += office.process(marketCycles, corporation, this);
       }
       this.thisCycleExpenses = this.thisCycleExpenses + employeeSalary;
 
@@ -468,7 +462,7 @@ export class Industry implements IIndustry {
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       //If this industry has a warehouse in this city, process the market
       //for every material this industry requires or produces
-      if (this.warehouses[CorporationConstants.Cities[i]] instanceof Warehouse) {
+      if (this.warehouses[CorporationConstants.Cities[i]]) {
         const wh = this.warehouses[CorporationConstants.Cities[i]];
         if (wh === 0) continue;
         for (const name of Object.keys(reqMats)) {
@@ -518,7 +512,7 @@ export class Industry implements IIndustry {
   }
 
   //Process production, purchase, and import/export of materials
-  processMaterials(marketCycles = 1, corporation: ICorporation): [number, number] {
+  processMaterials(marketCycles = 1, corporation: Corporation): [number, number] {
     let revenue = 0,
       expenses = 0;
     this.calculateProductionFactors();
@@ -528,7 +522,7 @@ export class Industry implements IIndustry {
       const office = this.offices[city];
       if (office === 0) continue;
 
-      if (this.warehouses[city] instanceof Warehouse) {
+      if (this.warehouses[city]) {
         const warehouse = this.warehouses[city];
         if (warehouse === 0) continue;
 
@@ -825,14 +819,7 @@ export class Industry implements IIndustry {
                     sellAmt = eval(tmp);
                   } catch (e) {
                     dialogBoxCreate(
-                      "Error evaluating your sell amount for material " +
-                        mat.name +
-                        " in " +
-                        this.name +
-                        "'s " +
-                        city +
-                        " office. The sell amount " +
-                        "is being set to zero",
+                      `Error evaluating your sell amount for material ${mat.name} in ${this.name}'s ${city} office. The sell amount is being set to zero`,
                     );
                     sellAmt = 0;
                   }
@@ -879,27 +866,13 @@ export class Industry implements IIndustry {
                     amt = eval(amtStr);
                   } catch (e) {
                     dialogBoxCreate(
-                      "Calculating export for " +
-                        mat.name +
-                        " in " +
-                        this.name +
-                        "'s " +
-                        city +
-                        " division failed with " +
-                        "error: " +
-                        e,
+                      `Calculating export for ${mat.name} in ${this.name}'s ${city} division failed with error: ${e}`,
                     );
                     continue;
                   }
                   if (isNaN(amt)) {
                     dialogBoxCreate(
-                      "Error calculating export amount for " +
-                        mat.name +
-                        " in " +
-                        this.name +
-                        "'s " +
-                        city +
-                        " division.",
+                      `Error calculating export amount for ${mat.name} in ${this.name}'s ${city} division.`,
                     );
                     continue;
                   }
@@ -915,7 +888,7 @@ export class Industry implements IIndustry {
                     if (corporation.divisions[foo].name === exp.ind) {
                       const expIndustry = corporation.divisions[foo];
                       const expWarehouse = expIndustry.warehouses[exp.city];
-                      if (!(expWarehouse instanceof Warehouse)) {
+                      if (!expWarehouse) {
                         console.error(`Invalid export! ${expIndustry.name} ${exp.city}`);
                         break;
                       }
@@ -958,7 +931,7 @@ export class Industry implements IIndustry {
 
       //Produce Scientific Research based on R&D employees
       //Scientific Research can be produced without a warehouse
-      if (office instanceof OfficeSpace) {
+      if (office) {
         this.sciResearch.qty +=
           0.004 *
           Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5) *
@@ -970,7 +943,7 @@ export class Industry implements IIndustry {
   }
 
   //Process production & sale of this industry's FINISHED products (including all of their stats)
-  processProducts(marketCycles = 1, corporation: ICorporation): [number, number] {
+  processProducts(marketCycles = 1, corporation: Corporation): [number, number] {
     let revenue = 0;
     const expenses = 0;
 
@@ -997,7 +970,7 @@ export class Industry implements IIndustry {
     for (const prodName of Object.keys(this.products)) {
       if (this.products.hasOwnProperty(prodName)) {
         const prod = this.products[prodName];
-        if (prod instanceof Product && prod.fin) {
+        if (prod && prod.fin) {
           revenue += this.processProduct(marketCycles, prod, corporation);
         }
       }
@@ -1006,14 +979,14 @@ export class Industry implements IIndustry {
   }
 
   //Processes FINISHED products
-  processProduct(marketCycles = 1, product: Product, corporation: ICorporation): number {
+  processProduct(marketCycles = 1, product: Product, corporation: Corporation): number {
     let totalProfit = 0;
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       const city = CorporationConstants.Cities[i];
       const office = this.offices[city];
       if (office === 0) continue;
       const warehouse = this.warehouses[city];
-      if (warehouse instanceof Warehouse) {
+      if (warehouse) {
         switch (this.state) {
           case "PRODUCTION": {
             //Calculate the maximum production of this material based
@@ -1172,13 +1145,7 @@ export class Industry implements IIndustry {
                 tmp = eval(tmp);
               } catch (e) {
                 dialogBoxCreate(
-                  "Error evaluating your sell price expression for " +
-                    product.name +
-                    " in " +
-                    this.name +
-                    "'s " +
-                    city +
-                    " office. Sell price is being set to MAX",
+                  `Error evaluating your sell price expression for ${product.name} in ${this.name}'s ${city} office. Sell price is being set to MAX`,
                 );
                 tmp = product.maxsll;
               }
@@ -1223,7 +1190,7 @@ export class Industry implements IIndustry {
     if (state === "EXPORT") {
       for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
         const city = CorporationConstants.Cities[i];
-        if (!(this.warehouses[city] instanceof Warehouse)) {
+        if (!this.warehouses[city]) {
           continue;
         }
         const warehouse = this.warehouses[city];
@@ -1252,7 +1219,7 @@ export class Industry implements IIndustry {
     return 1e9 * Math.pow(1.06, this.numAdVerts);
   }
 
-  applyAdVert(corporation: ICorporation): void {
+  applyAdVert(corporation: Corporation): void {
     const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
     const awareness = (this.awareness + 3 * advMult) * (1.01 * advMult);
     this.awareness = Math.min(awareness, Number.MAX_VALUE);

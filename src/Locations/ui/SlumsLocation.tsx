@@ -10,132 +10,131 @@ import Tooltip from "@mui/material/Tooltip";
 import { Crimes } from "../../Crime/Crimes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
+import { Player } from "../../Player";
 import { Box } from "@mui/material";
 
 export function SlumsLocation(): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
   function shoplift(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Shoplift.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.Shoplift.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function robStore(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.RobStore.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.RobStore.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function mug(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Mug.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.Mug.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function larceny(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Larceny.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.Larceny.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function dealDrugs(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.DealDrugs.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.DealDrugs.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function bondForgery(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.BondForgery.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.BondForgery.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function traffickArms(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.TraffickArms.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.TraffickArms.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function homicide(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Homicide.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.Homicide.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function grandTheftAuto(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.GrandTheftAuto.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.GrandTheftAuto.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function kidnap(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Kidnap.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.Kidnap.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function assassinate(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Assassination.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.Assassination.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
   function heist(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Crimes.Heist.commit(player);
-    router.toWork();
-    player.focus = true;
+    Crimes.Heist.commit();
+    Router.toWork();
+    Player.focus = true;
   }
 
-  const shopliftChance = Crimes.Shoplift.successRate(player);
-  const robStoreChance = Crimes.RobStore.successRate(player);
-  const mugChance = Crimes.Mug.successRate(player);
-  const larcenyChance = Crimes.Larceny.successRate(player);
-  const drugsChance = Crimes.DealDrugs.successRate(player);
-  const bondChance = Crimes.BondForgery.successRate(player);
-  const armsChance = Crimes.TraffickArms.successRate(player);
-  const homicideChance = Crimes.Homicide.successRate(player);
-  const gtaChance = Crimes.GrandTheftAuto.successRate(player);
-  const kidnapChance = Crimes.Kidnap.successRate(player);
-  const assassinateChance = Crimes.Assassination.successRate(player);
-  const heistChance = Crimes.Heist.successRate(player);
+  const shopliftChance = Crimes.Shoplift.successRate(Player);
+  const robStoreChance = Crimes.RobStore.successRate(Player);
+  const mugChance = Crimes.Mug.successRate(Player);
+  const larcenyChance = Crimes.Larceny.successRate(Player);
+  const drugsChance = Crimes.DealDrugs.successRate(Player);
+  const bondChance = Crimes.BondForgery.successRate(Player);
+  const armsChance = Crimes.TraffickArms.successRate(Player);
+  const homicideChance = Crimes.Homicide.successRate(Player);
+  const gtaChance = Crimes.GrandTheftAuto.successRate(Player);
+  const kidnapChance = Crimes.Kidnap.successRate(Player);
+  const assassinateChance = Crimes.Assassination.successRate(Player);
+  const heistChance = Crimes.Heist.successRate(Player);
 
   return (
     <Box sx={{ display: "grid", width: "fit-content" }}>

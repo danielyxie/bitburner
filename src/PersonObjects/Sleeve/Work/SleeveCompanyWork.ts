@@ -1,4 +1,3 @@
-import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
@@ -30,14 +29,14 @@ export class SleeveCompanyWork extends Work {
     return c;
   }
 
-  getGainRates(player: IPlayer, sleeve: Sleeve): WorkStats {
-    return calculateCompanyWorkStats(player, sleeve, this.getCompany());
+  getGainRates(sleeve: Sleeve): WorkStats {
+    return calculateCompanyWorkStats(sleeve, this.getCompany());
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
+  process(sleeve: Sleeve, cycles: number): number {
     const company = this.getCompany();
-    const gains = this.getGainRates(player, sleeve);
-    applySleeveGains(player, sleeve, gains, cycles);
+    const gains = this.getGainRates(sleeve);
+    applySleeveGains(sleeve, gains, cycles);
     company.playerReputation += gains.reputation * cycles;
     influenceStockThroughCompanyWork(company, gains.reputation, cycles);
     return 0;

@@ -1,14 +1,14 @@
 import { Material } from "./Material";
-import { ICorporation } from "./ICorporation";
-import { IIndustry } from "./IIndustry";
+import { Corporation } from "./Corporation";
+import { Industry } from "./Industry";
 import { MaterialSizes } from "./MaterialSizes";
 import { IMap } from "../types";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 
 interface IConstructorParams {
-  corp?: ICorporation;
-  industry?: IIndustry;
+  corp?: Corporation;
+  industry?: Industry;
   loc?: string;
   size?: number;
 }
@@ -96,7 +96,7 @@ export class Warehouse {
     }
   }
 
-  updateSize(corporation: ICorporation, industry: IIndustry): void {
+  updateSize(corporation: Corporation, industry: Industry): void {
     try {
       this.size = this.level * 100 * corporation.getStorageMultiplier() * industry.getStorageMultiplier();
     } catch (e: unknown) {

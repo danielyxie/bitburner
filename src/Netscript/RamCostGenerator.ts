@@ -1,13 +1,12 @@
-import { IPlayer } from "src/PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { IMap } from "../types";
 
 import { NS as INS } from "../ScriptEditor/NetscriptDefinitions";
-
 import { INetscriptExtra } from "../NetscriptFunctions/Extra";
 
 type RamCostTree<API> = {
   [Property in keyof API]: API[Property] extends () => void
-    ? number | ((p: IPlayer) => void)
+    ? number | (() => void)
     : API[Property] extends object
     ? RamCostTree<API[Property]>
     : never;
@@ -89,10 +88,10 @@ export const RamCostConstants: IMap<number> = {
   ScriptStanekAcceptGift: 2,
 };
 
-function SF4Cost(cost: number): (player: IPlayer) => number {
-  return (player: IPlayer): number => {
-    if (player.bitNodeN === 4) return cost;
-    const sf4 = player.sourceFileLvl(4);
+function SF4Cost(cost: number): () => number {
+  return () => {
+    if (Player.bitNodeN === 4) return cost;
+    const sf4 = Player.sourceFileLvl(4);
     if (sf4 <= 1) return cost * 16;
     if (sf4 === 2) return cost * 4;
     return cost;
@@ -611,7 +610,7 @@ export const RamCosts: IMap<any> = SourceRamCosts;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _typecheck: RamCostTree<INS & INetscriptExtra> = SourceRamCosts;
 
-export function getRamCost(player: IPlayer, ...args: string[]): number {
+export function getRamCost(...args: string[]): number {
   if (args.length === 0) {
     console.warn(`No arguments passed to getRamCost()`);
     return 0;
@@ -637,7 +636,7 @@ export function getRamCost(player: IPlayer, ...args: string[]): number {
   }
 
   if (typeof curr === "function") {
-    return curr(player);
+    return curr();
   }
 
   console.warn(`Unexpected type (${curr}) for value [${args}]`);

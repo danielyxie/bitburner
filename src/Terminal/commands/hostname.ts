@@ -1,18 +1,10 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 
-export function hostname(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  args: (string | number | boolean)[],
-): void {
+export function hostname(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length !== 0) {
-    terminal.error("Incorrect usage of hostname command. Usage: hostname");
+    Terminal.error("Incorrect usage of hostname command. Usage: hostname");
     return;
   }
-  terminal.print(player.getCurrentServer().hostname);
+  Terminal.print(server.hostname);
 }
