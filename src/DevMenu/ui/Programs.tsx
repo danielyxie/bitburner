@@ -8,29 +8,25 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { Programs as AllPrograms } from "../../Programs/Programs";
 import MenuItem from "@mui/material/MenuItem";
 
-interface IProps {
-  player: IPlayer;
-}
-
-export function Programs(props: IProps): React.ReactElement {
+export function Programs(): React.ReactElement {
   const [program, setProgram] = useState("NUKE.exe");
   function setProgramDropdown(event: SelectChangeEvent<string>): void {
     setProgram(event.target.value);
   }
   function addProgram(): void {
-    if (!props.player.hasProgram(program)) {
-      props.player.getHomeComputer().programs.push(program);
+    if (!Player.hasProgram(program)) {
+      Player.getHomeComputer().programs.push(program);
     }
   }
 
   function addAllPrograms(): void {
     for (const i of Object.keys(AllPrograms)) {
-      if (!props.player.hasProgram(AllPrograms[i].name)) {
-        props.player.getHomeComputer().programs.push(AllPrograms[i].name);
+      if (!Player.hasProgram(AllPrograms[i].name)) {
+        Player.getHomeComputer().programs.push(AllPrograms[i].name);
       }
     }
   }

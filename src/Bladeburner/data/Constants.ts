@@ -1,33 +1,5 @@
 import { CityName } from "./../../Locations/data/CityNames";
-export const BladeburnerConstants: {
-  CityNames: string[];
-  CyclesPerSecond: number;
-  StaminaGainPerSecond: number;
-  BaseStaminaLoss: number;
-  MaxStaminaToGainFactor: number;
-  DifficultyToTimeFactor: number;
-  DiffMultExponentialFactor: number;
-  DiffMultLinearFactor: number;
-  EffAgiLinearFactor: number;
-  EffDexLinearFactor: number;
-  EffAgiExponentialFactor: number;
-  EffDexExponentialFactor: number;
-  BaseRecruitmentTimeNeeded: number;
-  PopulationThreshold: number;
-  PopulationExponent: number;
-  ChaosThreshold: number;
-  BaseStatGain: number;
-  BaseIntGain: number;
-  ActionCountGrowthPeriod: number;
-  RankToFactionRepFactor: number;
-  RankNeededForFaction: number;
-  ContractSuccessesPerLevel: number;
-  OperationSuccessesPerLevel: number;
-  RanksPerSkillPoint: number;
-  ContractBaseMoneyGain: number;
-  HrcHpGain: number;
-  HrcStaminaGain: number;
-} = {
+export const BladeburnerConstants = {
   CityNames: [
     CityName.Aevum,
     CityName.Chongqing,

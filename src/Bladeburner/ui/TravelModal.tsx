@@ -1,5 +1,5 @@
 import React from "react";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import { WorldMap } from "../../ui/React/WorldMap";
 import { Modal } from "../../ui/React/Modal";
 import { CityName } from "../../Locations/data/CityNames";
@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
   open: boolean;
   onClose: () => void;
 }

@@ -3,9 +3,9 @@ import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { Contracts } from "../data/Contracts";
-import { IBladeburner } from "../IBladeburner";
-import { IAction } from "../IAction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Bladeburner } from "../Bladeburner";
+import { Action } from "../Action";
+import { Player } from "../../Player";
 import { SuccessChance } from "./SuccessChance";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { ActionLevel } from "./ActionLevel";
@@ -16,9 +16,8 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
 interface IProps {
-  bladeburner: IBladeburner;
-  player: IPlayer;
-  action: IAction;
+  bladeburner: Bladeburner;
+  action: Action;
 }
 
 export function ContractElem(props: IProps): React.ReactElement {
@@ -32,7 +31,7 @@ export function ContractElem(props: IProps): React.ReactElement {
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,
     props.bladeburner.actionTimeToComplete,
   );
-  const actionTime = props.action.getActionTime(props.bladeburner, props.player);
+  const actionTime = props.action.getActionTime(props.bladeburner, Player);
 
   const actionData = Contracts[props.action.name];
   if (actionData === undefined) {

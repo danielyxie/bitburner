@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import { Exploit } from "../../Exploits/Exploit";
 
 const metaBB = "https://bitburner-official.github.io/bitburner-legacy/";
@@ -12,11 +12,10 @@ const style = {
 };
 
 export function BBCabinetRoot(): React.ReactElement {
-  const player = use.Player();
   useEffect(() => {
     window.addEventListener("message", function (this: Window, ev: MessageEvent<boolean>) {
       if (ev.isTrusted && ev.origin == "https://bitburner-official.github.io" && ev.data) {
-        player.giveExploit(Exploit.TrueRecursion);
+        Player.giveExploit(Exploit.TrueRecursion);
       }
     });
   });

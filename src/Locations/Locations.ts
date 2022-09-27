@@ -21,7 +21,7 @@ function constructLocation(p: IConstructorParams): Location {
     throw new Error(`Invalid constructor parameters for Location. No 'name' property`);
   }
 
-  if (Locations[p.name] instanceof Location) {
+  if (Locations[p.name]) {
     console.warn(`Property with name ${p.name} already exists and is being overwritten`);
   }
 

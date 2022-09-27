@@ -10,7 +10,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { PurchasableAugmentations } from "../../Augmentation/ui/PurchasableAugmentations";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Favor } from "../../ui/React/Favor";
 import { Reputation } from "../../ui/React/Reputation";
@@ -24,8 +24,6 @@ type IProps = {
 };
 
 export function AugmentationsPage(props: IProps): React.ReactElement {
-  const player = use.Player();
-
   const setRerender = useState(false)[1];
 
   function rerender(): void {
@@ -33,7 +31,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   }
 
   function getAugs(): string[] {
-    return getFactionAugmentationsFiltered(player, props.faction);
+    return getFactionAugmentationsFiltered(props.faction);
   }
 
   function getAugsSorted(): string[] {
@@ -61,7 +59,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         throw new Error("Invalid Augmentation Names");
       }
 
-      return aug1.getCost(player).moneyCost - aug2.getCost(player).moneyCost;
+      return aug1.getCost().moneyCost - aug2.getCost().moneyCost;
     });
 
     return augs;
@@ -71,11 +69,11 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     const augs = getAugs();
     function canBuy(augName: string): boolean {
       const aug = StaticAugmentations[augName];
-      const augCosts = aug.getCost(player);
+      const augCosts = aug.getCost();
       const repCost = augCosts.repCost;
       const hasReq = props.faction.playerReputation >= repCost;
       const hasRep = hasAugmentationPrereqs(aug);
-      const hasCost = augCosts.moneyCost !== 0 && player.money > augCosts.moneyCost;
+      const hasCost = augCosts.moneyCost !== 0 && Player.money > augCosts.moneyCost;
       return hasCost && hasReq && hasRep;
     }
     const buy = augs.filter(canBuy).sort((augName1, augName2) => {
@@ -85,7 +83,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         throw new Error("Invalid Augmentation Names");
       }
 
-      return aug1.getCost(player).moneyCost - aug2.getCost(player).moneyCost;
+      return aug1.getCost().moneyCost - aug2.getCost().moneyCost;
     });
     const cantBuy = augs
       .filter((aug) => !canBuy(aug))
@@ -95,7 +93,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         if (aug1 == null || aug2 == null) {
           throw new Error("Invalid Augmentation Names");
         }
-        return aug1.getCost(player).repCost - aug2.getCost(player).repCost;
+        return aug1.getCost().repCost - aug2.getCost().repCost;
       });
 
     return buy.concat(cantBuy);
@@ -109,7 +107,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       if (aug1 == null || aug2 == null) {
         throw new Error("Invalid Augmentation Names");
       }
-      return aug1.getCost(player).repCost - aug2.getCost(player).repCost;
+      return aug1.getCost().repCost - aug2.getCost().repCost;
     });
 
     return augs;
@@ -128,7 +126,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   const purchasable = augs.filter(
     (aug: string) =>
       aug === AugmentationNames.NeuroFluxGovernor ||
-      (!player.augmentations.some((a) => a.name === aug) && !player.queuedAugmentations.some((a) => a.name === aug)),
+      (!Player.augmentations.some((a) => a.name === aug) && !Player.queuedAugmentations.some((a) => a.name === aug)),
   );
   const owned = augs.filter((aug: string) => !purchasable.includes(aug));
 
@@ -195,16 +193,15 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       <PurchasableAugmentations
         augNames={purchasable}
         ownedAugNames={owned}
-        player={player}
-        canPurchase={(player, aug) => {
-          const costs = aug.getCost(player);
+        canPurchase={(aug) => {
+          const costs = aug.getCost();
           return (
             hasAugmentationPrereqs(aug) &&
             props.faction.playerReputation >= costs.repCost &&
-            (costs.moneyCost === 0 || player.money > costs.moneyCost)
+            (costs.moneyCost === 0 || Player.money > costs.moneyCost)
           );
         }}
-        purchaseAugmentation={(player, aug, showModal) => {
+        purchaseAugmentation={(aug, showModal) => {
           if (!Settings.SuppressBuyAugmentationConfirmation) {
             showModal(true);
           } else {

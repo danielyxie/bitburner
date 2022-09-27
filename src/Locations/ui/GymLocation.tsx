@@ -8,31 +8,29 @@ import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 
 import { Money } from "../../ui/React/Money";
-import { IRouter } from "../../ui/Router";
+import { Router } from "../../ui/GameRoot";
 import { Box } from "@mui/material";
 import { ClassWork, ClassType, Classes } from "../../Work/ClassWork";
 import { calculateCost } from "../../Work/formulas/Class";
 
 type IProps = {
   loc: Location;
-  p: IPlayer;
-  router: IRouter;
 };
 
 export function GymLocation(props: IProps): React.ReactElement {
   function train(stat: ClassType): void {
-    props.p.startWork(
+    Player.startWork(
       new ClassWork({
         classType: stat,
         location: props.loc.name,
         singularity: false,
       }),
     );
-    props.p.startFocusing();
-    props.router.toWork();
+    Player.startFocusing();
+    Router.toWork();
   }
 
   const cost = calculateCost(Classes[ClassType.GymStrength], props.loc);
@@ -40,16 +38,16 @@ export function GymLocation(props: IProps): React.ReactElement {
   return (
     <Box sx={{ display: "grid", width: "fit-content" }}>
       <Button onClick={() => train(ClassType.GymStrength)}>
-        Train Strength (<Money money={cost} player={props.p} /> / sec)
+        Train Strength (<Money money={cost} forPurchase={true} /> / sec)
       </Button>
       <Button onClick={() => train(ClassType.GymDefense)}>
-        Train Defense (<Money money={cost} player={props.p} /> / sec)
+        Train Defense (<Money money={cost} forPurchase={true} /> / sec)
       </Button>
       <Button onClick={() => train(ClassType.GymDexterity)}>
-        Train Dexterity (<Money money={cost} player={props.p} /> / sec)
+        Train Dexterity (<Money money={cost} forPurchase={true} /> / sec)
       </Button>
       <Button onClick={() => train(ClassType.GymAgility)}>
-        Train Agility (<Money money={cost} player={props.p} /> / sec)
+        Train Agility (<Money money={cost} forPurchase={true} /> / sec)
       </Button>
     </Box>
   );

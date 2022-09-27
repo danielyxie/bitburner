@@ -1,7 +1,7 @@
 import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CalculateShareMult } from "../../NetworkShare/Share";
-import { IPerson } from "../IPerson";
+import { Person } from "../Person";
 import { calculateIntelligenceBonus } from "./intelligence";
 
 function mult(favor: number): number {
@@ -12,7 +12,7 @@ function mult(favor: number): number {
   return favorMult * BitNodeMultipliers.FactionWorkRepGain;
 }
 
-export function getHackingWorkRepGain(p: IPerson, favor: number): number {
+export function getHackingWorkRepGain(p: Person, favor: number): number {
   return (
     ((p.skills.hacking + p.skills.intelligence / 3) / CONSTANTS.MaxSkillLevel) *
     p.mults.faction_rep *
@@ -22,7 +22,7 @@ export function getHackingWorkRepGain(p: IPerson, favor: number): number {
   );
 }
 
-export function getFactionSecurityWorkRepGain(p: IPerson, favor: number): number {
+export function getFactionSecurityWorkRepGain(p: Person, favor: number): number {
   const t =
     (0.9 *
       (p.skills.strength +
@@ -35,7 +35,7 @@ export function getFactionSecurityWorkRepGain(p: IPerson, favor: number): number
   return t * p.mults.faction_rep * mult(favor) * calculateIntelligenceBonus(p.skills.intelligence, 1);
 }
 
-export function getFactionFieldWorkRepGain(p: IPerson, favor: number): number {
+export function getFactionFieldWorkRepGain(p: Person, favor: number): number {
   const t =
     (0.9 *
       (p.skills.strength +

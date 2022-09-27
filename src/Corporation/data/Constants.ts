@@ -1,39 +1,7 @@
 import { CityName } from "./../../Locations/data/CityNames";
 const CyclesPerMarketCycle = 50;
 const AllCorporationStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
-export const CorporationConstants: {
-  INITIALSHARES: number;
-  SHARESPERPRICEUPDATE: number;
-  IssueNewSharesCooldown: number;
-  SellSharesCooldown: number;
-  CyclesPerMarketCycle: number;
-  CyclesPerIndustryStateCycle: number;
-  SecsPerMarketCycle: number;
-  Cities: string[];
-  WarehouseInitialCost: number;
-  WarehouseInitialSize: number;
-  WarehouseUpgradeBaseCost: number;
-  OfficeInitialCost: number;
-  OfficeInitialSize: number;
-  OfficeUpgradeBaseCost: number;
-  BribeThreshold: number;
-  BribeToRepRatio: number;
-  ProductProductionCostRatio: number;
-  DividendMaxRate: number;
-  EmployeeSalaryMultiplier: number;
-  CyclesPerEmployeeRaise: number;
-  EmployeeRaiseAmount: number;
-  BaseMaxProducts: number;
-  AllCorporationStates: string[];
-  AllMaterials: string[];
-  AllIndustryTypes: string[];
-  AllUnlocks: string[];
-  AllUpgrades: string[];
-  AllResearch: string[];
-  FundingRoundShares: number[];
-  FundingRoundMultiplier: number[];
-  ValuationLength: number;
-} = {
+export const CorporationConstants = {
   INITIALSHARES: 1e9, //Total number of shares you have at your company
   SHARESPERPRICEUPDATE: 1e6, //When selling large number of shares, price is dynamically updated for every batch of this amount
   IssueNewSharesCooldown: 216e3, // 12 Hour in terms of game cycles
@@ -96,7 +64,7 @@ export const CorporationConstants: {
     "Tobacco",
     "Chemical",
     "Pharmaceutical",
-    "Hardware",
+    "Computers",
     "Robotics",
     "Software",
     "Healthcare",

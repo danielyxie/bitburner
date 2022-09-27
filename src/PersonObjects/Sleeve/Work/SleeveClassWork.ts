@@ -1,4 +1,3 @@
-import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { applySleeveGains, Work, WorkType } from "./Work";
 import { ClassType } from "../../../Work/ClassWork";
@@ -24,12 +23,8 @@ export class SleeveClassWork extends Work {
     this.location = params?.location ?? LocationName.Sector12RothmanUniversity;
   }
 
-  calculateRates(player: IPlayer, sleeve: Sleeve): WorkStats {
-    return scaleWorkStats(
-      calculateClassEarnings(player, sleeve, this.classType, this.location),
-      sleeve.shockBonus(),
-      false,
-    );
+  calculateRates(sleeve: Sleeve): WorkStats {
+    return scaleWorkStats(calculateClassEarnings(sleeve, this.classType, this.location), sleeve.shockBonus(), false);
   }
 
   isGym(): boolean {
@@ -38,9 +33,9 @@ export class SleeveClassWork extends Work {
     );
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
-    const rate = this.calculateRates(player, sleeve);
-    applySleeveGains(player, sleeve, rate, cycles);
+  process(sleeve: Sleeve, cycles: number): number {
+    const rate = this.calculateRates(sleeve);
+    applySleeveGains(sleeve, rate, cycles);
     return 0;
   }
   APICopy(): Record<string, unknown> {

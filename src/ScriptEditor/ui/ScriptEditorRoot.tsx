@@ -7,8 +7,8 @@ type ITextModel = monaco.editor.ITextModel;
 import { OptionsModal } from "./OptionsModal";
 import { Options } from "./Options";
 import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IRouter } from "../../ui/Router";
+import { Player } from "../../Player";
+import { Router } from "../../ui/GameRoot";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { Script } from "../../Script/Script";
@@ -49,8 +49,6 @@ interface IProps {
   // Map of filename -> code
   files: Record<string, string>;
   hostname: string;
-  player: IPlayer;
-  router: IRouter;
   vim: boolean;
 }
 
@@ -156,7 +154,7 @@ export function Root(props: IProps): React.ReactElement {
       //Ctrl + b
       if (event.code == "KeyB" && (event.ctrlKey || event.metaKey)) {
         event.preventDefault();
-        props.router.toTerminal();
+        Router.toTerminal();
       }
 
       // CTRL/CMD + S
@@ -183,12 +181,12 @@ export function Root(props: IProps): React.ReactElement {
             save();
           });
           MonacoVim.VimMode.Vim.defineEx("quit", "q", function () {
-            props.router.toTerminal();
+            Router.toTerminal();
           });
 
           const saveNQuit = (): void => {
             save();
-            props.router.toTerminal();
+            Router.toTerminal();
           };
           // "wqriteandquit" &  "xriteandquit" are not typos, prefix must be found in full string
           MonacoVim.VimMode.Vim.defineEx("wqriteandquit", "wq", saveNQuit);
@@ -252,7 +250,7 @@ export function Root(props: IProps): React.ReactElement {
       return;
     }
     const codeCopy = newCode + "";
-    const ramUsage = calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
+    const ramUsage = calculateRamUsage(codeCopy, Player.getCurrentServer().scripts);
     if (ramUsage.cost > 0) {
       const entries = ramUsage.entries?.sort((a, b) => b.cost - a.cost) ?? [];
       const entriesDisp = [];
@@ -465,35 +463,23 @@ export function Root(props: IProps): React.ReactElement {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < server.scripts.length; i++) {
         if (scriptToSave.fileName == server.scripts[i].filename) {
-          server.scripts[i].saveScript(
-            props.player,
-            scriptToSave.fileName,
-            scriptToSave.code,
-            props.player.currentServer,
-            server.scripts,
-          );
+          server.scripts[i].saveScript(scriptToSave.fileName, scriptToSave.code, Player.currentServer, server.scripts);
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-          props.router.toTerminal();
+          Router.toTerminal();
           return;
         }
       }
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(
-        props.player,
-        scriptToSave.fileName,
-        scriptToSave.code,
-        props.player.currentServer,
-        server.scripts,
-      );
+      script.saveScript(scriptToSave.fileName, scriptToSave.code, Player.currentServer, server.scripts);
       server.scripts.push(script);
     } else if (scriptToSave.isTxt) {
       for (let i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === scriptToSave.fileName) {
           server.textFiles[i].write(scriptToSave.code);
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-          props.router.toTerminal();
+          Router.toTerminal();
           return;
         }
       }
@@ -505,7 +491,7 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-    props.router.toTerminal();
+    Router.toTerminal();
   }
 
   function save(): void {
@@ -555,10 +541,9 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (currentScript.fileName == server.scripts[i].filename) {
           server.scripts[i].saveScript(
-            props.player,
             currentScript.fileName,
             currentScript.code,
-            props.player.currentServer,
+            Player.currentServer,
             server.scripts,
           );
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
@@ -569,13 +554,7 @@ export function Root(props: IProps): React.ReactElement {
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(
-        props.player,
-        currentScript.fileName,
-        currentScript.code,
-        props.player.currentServer,
-        server.scripts,
-      );
+      script.saveScript(currentScript.fileName, currentScript.code, Player.currentServer, server.scripts);
       server.scripts.push(script);
     } else if (currentScript.isTxt) {
       for (let i = 0; i < server.textFiles.length; ++i) {
@@ -667,7 +646,7 @@ export function Root(props: IProps): React.ReactElement {
     openScripts.splice(index, 1);
     if (openScripts.length === 0) {
       currentScript = null;
-      props.router.toTerminal();
+      Router.toTerminal();
       return;
     }
 
@@ -824,7 +803,7 @@ export function Root(props: IProps): React.ReactElement {
                     ...colorProps,
                   };
 
-                  const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`;
+                  const scriptTabText = `${hostname}:~${fileName.startsWith("/") ? "" : "/"}${fileName} ${dirty(index)}`;
                   return (
                     <Draggable
                       key={fileName + hostname}
@@ -919,7 +898,7 @@ export function Root(props: IProps): React.ReactElement {
             {ram}
           </Button>
           <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
-          <Button sx={{ mx: 1 }} onClick={props.router.toTerminal}>
+          <Button sx={{ mx: 1 }} onClick={Router.toTerminal}>
             Terminal (Ctrl/Cmd + b)
           </Button>
           <Typography>

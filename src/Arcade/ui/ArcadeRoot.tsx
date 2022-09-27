@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BBCabinetRoot } from "./BBCabinet";
 
 import Button from "@mui/material/Button";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import { AlertEvents } from "../../ui/React/AlertManager";
 
 enum Page {
@@ -11,11 +11,10 @@ enum Page {
 }
 
 export function ArcadeRoot(): React.ReactElement {
-  const player = use.Player();
   const [page, setPage] = useState(Page.None);
 
   function mbBurner2000(): void {
-    if (player.sourceFileLvl(1) === 0) {
+    if (Player.sourceFileLvl(1) === 0) {
       AlertEvents.emit("This machine is broken.");
     } else {
       setPage(Page.Megabyteburner2000);

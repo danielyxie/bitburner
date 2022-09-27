@@ -11,10 +11,7 @@ import { StockTickersConfig, TickerDisplayMode } from "./StockTickersConfig";
 import { IStockMarket } from "../IStockMarket";
 import { Stock } from "../Stock";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
 type IProps = {
-  p: IPlayer;
   stockMarket: IStockMarket;
 };
 
@@ -67,9 +64,7 @@ export function StockTickers(props: IProps): React.ReactElement {
         }
       }
 
-      tickers.push(
-        <StockTicker key={val.symbol} orders={orders} p={props.p} rerenderAllTickers={rerender} stock={val} />,
-      );
+      tickers.push(<StockTicker key={val.symbol} orders={orders} rerenderAllTickers={rerender} stock={val} />);
     }
   }
 

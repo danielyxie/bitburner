@@ -2,7 +2,6 @@
 // (right-side panel in the Industry UI)
 import React, { useState } from "react";
 
-import { OfficeSpace } from "../OfficeSpace";
 import { Material } from "../Material";
 import { Warehouse } from "../Warehouse";
 import { ExportModal } from "./modals/ExportModal";
@@ -45,7 +44,7 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
   const mat = props.mat;
   const markupLimit = mat.getMarkupLimit();
   const office = division.offices[city];
-  if (!(office instanceof OfficeSpace)) {
+  if (!office) {
     throw new Error(`Could not get OfficeSpace object for this city (${city})`);
   }
 

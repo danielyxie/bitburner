@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
-import { IGang } from "../IGang";
+import { Gang } from "../Gang";
 
-export const Context: {
-  Gang: React.Context<IGang>;
-} = {
-  Gang: React.createContext<IGang>({} as IGang),
+export const Context = {
+  Gang: React.createContext<Gang>({} as Gang),
 };
 
-export const useGang = (): IGang => useContext(Context.Gang);
+export const useGang = (): Gang => useContext(Context.Gang);

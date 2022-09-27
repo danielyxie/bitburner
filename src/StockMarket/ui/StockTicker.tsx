@@ -17,7 +17,7 @@ import { PositionTypes } from "../data/PositionTypes";
 import { placeOrder } from "../StockMarket";
 import { buyStock, shortStock, sellStock, sellShort } from "../BuyingAndSelling";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 
@@ -42,7 +42,6 @@ enum SelectorOrderType {
 
 type IProps = {
   orders: Order[];
-  p: IPlayer;
   rerenderAllTickers: () => void;
   stock: Stock;
 };
@@ -157,7 +156,7 @@ export function StockTicker(props: IProps): React.ReactElement {
   }
 
   function handleBuyMaxButtonClick(): void {
-    const playerMoney: number = props.p.money;
+    const playerMoney: number = Player.money;
 
     const stock = props.stock;
     let maxShares = calculateBuyMaxAmount(stock, position, playerMoney);
@@ -274,18 +273,18 @@ export function StockTicker(props: IProps): React.ReactElement {
 
   // Whether the player has access to orders besides market orders (limit/stop)
   function hasOrderAccess(): boolean {
-    return props.p.bitNodeN === 8 || props.p.sourceFileLvl(8) >= 3;
+    return Player.bitNodeN === 8 || Player.sourceFileLvl(8) >= 3;
   }
 
   // Whether the player has access to shorting stocks
   function hasShortAccess(): boolean {
-    return props.p.bitNodeN === 8 || props.p.sourceFileLvl(8) >= 2;
+    return Player.bitNodeN === 8 || Player.sourceFileLvl(8) >= 2;
   }
 
   return (
     <Box component={Paper}>
       <ListItemButton onClick={() => setTicketOpen((old) => !old)}>
-        <ListItemText primary={<StockTickerHeaderText p={props.p} stock={props.stock} />} />
+        <ListItemText primary={<StockTickerHeaderText stock={props.stock} />} />
         {tickerOpen ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
       </ListItemButton>
       <Collapse in={tickerOpen} unmountOnExit>
@@ -311,8 +310,8 @@ export function StockTicker(props: IProps): React.ReactElement {
             <StockTickerTxButton onClick={handleBuyMaxButtonClick} text={"Buy MAX"} />
             <StockTickerTxButton onClick={handleSellAllButtonClick} text={"Sell ALL"} />
           </Box>
-          <StockTickerPositionText p={props.p} stock={props.stock} />
-          <StockTickerOrderList orders={props.orders} p={props.p} stock={props.stock} />
+          <StockTickerPositionText stock={props.stock} />
+          <StockTickerOrderList orders={props.orders} stock={props.stock} />
 
           <PlaceOrderModal
             text={modalProps.text}

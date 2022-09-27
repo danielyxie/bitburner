@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Operation } from "../Operation";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import { TeamSizeModal } from "./TeamSizeModal";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import Button from "@mui/material/Button";
 interface IProps {
   action: Operation;
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 export function TeamSizeButton(props: IProps): React.ReactElement {
   const [open, setOpen] = useState(false);

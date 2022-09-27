@@ -1,21 +1,18 @@
 import * as React from "react";
 import { BlackOpList } from "./BlackOpList";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Bladeburner } from "../Bladeburner";
 import Typography from "@mui/material/Typography";
 import { FactionNames } from "../../Faction/data/FactionNames";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
 import { BlackOperationNames } from "../data/BlackOperationNames";
 import { Button } from "@mui/material";
 import { CorruptableText } from "../../ui/React/CorruptableText";
 
 interface IProps {
-  bladeburner: IBladeburner;
-  player: IPlayer;
+  bladeburner: Bladeburner;
 }
 
 export function BlackOpPage(props: IProps): React.ReactElement {
-  const router = use.Router();
   return (
     <>
       <Typography>
@@ -33,11 +30,11 @@ export function BlackOpPage(props: IProps): React.ReactElement {
         losses.
       </Typography>
       {props.bladeburner.blackops[BlackOperationNames.OperationDaedalus] ? (
-        <Button sx={{ my: 1, p: 1 }} onClick={() => router.toBitVerse(false, false)}>
+        <Button sx={{ my: 1, p: 1 }} onClick={() => Router.toBitVerse(false, false)}>
           <CorruptableText content="Destroy w0rld_d34mon"></CorruptableText>
         </Button>
       ) : (
-        <BlackOpList bladeburner={props.bladeburner} player={props.player} />
+        <BlackOpList bladeburner={props.bladeburner} />
       )}
     </>
   );

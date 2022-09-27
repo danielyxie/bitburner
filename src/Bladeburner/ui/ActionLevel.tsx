@@ -1,8 +1,7 @@
 import React from "react";
-import { IAction } from "../IAction";
-import { IBladeburner } from "../IBladeburner";
+import { Action } from "../Action";
+import { Bladeburner } from "../Bladeburner";
 import { BladeburnerConstants } from "../data/Constants";
-import { use } from "../../ui/Context";
 
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
@@ -12,29 +11,27 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 interface IProps {
-  action: IAction;
+  action: Action;
   isActive: boolean;
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
   rerender: () => void;
 }
 
 export function ActionLevel({ action, isActive, bladeburner, rerender }: IProps): React.ReactElement {
-  const player = use.Player();
-
   const canIncrease = action.level < action.maxLevel;
   const canDecrease = action.level > 1;
 
   function increaseLevel(): void {
     if (!canIncrease) return;
     ++action.level;
-    if (isActive) bladeburner.startAction(player, bladeburner.action);
+    if (isActive) bladeburner.startAction(bladeburner.action);
     rerender();
   }
 
   function decreaseLevel(): void {
     if (!canDecrease) return;
     --action.level;
-    if (isActive) bladeburner.startAction(player, bladeburner.action);
+    if (isActive) bladeburner.startAction(bladeburner.action);
     rerender();
   }
 

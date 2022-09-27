@@ -3,7 +3,7 @@ import { Crime } from "../Crime/Crime";
 import { CONSTANTS } from "../Constants";
 import { determineCrimeSuccess } from "../Crime/CrimeHelpers";
 import { Crimes } from "../Crime/Crimes";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
@@ -78,12 +78,12 @@ export class CrimeWork extends Work {
     return crime;
   }
 
-  process(player: IPlayer, cycles = 1): boolean {
+  process(cycles = 1): boolean {
     this.cyclesWorked += cycles;
     const time = Object.values(Crimes).find((c) => c.type === this.crimeType)?.time ?? 0;
     this.unitCompleted += CONSTANTS._idleSpeed * cycles;
     while (this.unitCompleted >= time) {
-      this.commit(player);
+      this.commit();
       this.unitCompleted -= time;
     }
     return false;
@@ -93,7 +93,7 @@ export class CrimeWork extends Work {
     return calculateCrimeWorkStats(this.getCrime());
   }
 
-  commit(player: IPlayer): void {
+  commit(): void {
     const crime = this.getCrime();
     if (crime == null) {
       dialogBoxCreate(
@@ -101,27 +101,27 @@ export class CrimeWork extends Work {
       );
       return;
     }
-    const focusPenalty = player.focusPenalty();
+    const focusPenalty = Player.focusPenalty();
     // exp times 2 because were trying to maintain the same numbers as before the conversion
     // Technically the definition of Crimes should have the success numbers and failure should divide by 4
     let gains = scaleWorkStats(this.earnings(), focusPenalty, false);
     let karma = crime.karma;
-    const success = determineCrimeSuccess(player, crime.type);
+    const success = determineCrimeSuccess(crime.type);
     if (success) {
-      player.gainMoney(gains.money, "crime");
-      player.numPeopleKilled += crime.kills;
-      player.gainIntelligenceExp(gains.intExp);
+      Player.gainMoney(gains.money, "crime");
+      Player.numPeopleKilled += crime.kills;
+      Player.gainIntelligenceExp(gains.intExp);
     } else {
       gains = scaleWorkStats(gains, 0.25);
       karma /= 4;
     }
-    player.gainHackingExp(gains.hackExp);
-    player.gainStrengthExp(gains.strExp);
-    player.gainDefenseExp(gains.defExp);
-    player.gainDexterityExp(gains.dexExp);
-    player.gainAgilityExp(gains.agiExp);
-    player.gainCharismaExp(gains.chaExp);
-    player.karma -= karma * focusPenalty;
+    Player.gainHackingExp(gains.hackExp);
+    Player.gainStrengthExp(gains.strExp);
+    Player.gainDefenseExp(gains.defExp);
+    Player.gainDexterityExp(gains.dexExp);
+    Player.gainAgilityExp(gains.agiExp);
+    Player.gainCharismaExp(gains.chaExp);
+    Player.karma -= karma * focusPenalty;
   }
 
   finish(): void {

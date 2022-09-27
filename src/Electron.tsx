@@ -106,7 +106,7 @@ function initWebserver(): void {
         msg: "Home server does not exist.",
       };
     }
-    const { success, overwritten } = home.writeToScriptFile(Player, filename, code);
+    const { success, overwritten } = home.writeToScriptFile(filename, code);
     let script;
     if (success) {
       script = home.getScript(filename);

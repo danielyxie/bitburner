@@ -3,7 +3,7 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import { Aliases, GlobalAliases, substituteAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { GetAllServers } from "../Server/AllServers";
 import { Server } from "../Server/Server";
 import { ParseCommand, ParseCommands } from "./Parser";
@@ -57,7 +57,6 @@ const commands = [
 ];
 
 export async function determineAllPossibilitiesForTabCompletion(
-  p: IPlayer,
   input: string,
   index: number,
   currPath = "",
@@ -65,8 +64,8 @@ export async function determineAllPossibilitiesForTabCompletion(
   input = substituteAliases(input);
   let allPos: string[] = [];
   allPos = allPos.concat(Object.keys(GlobalAliases));
-  const currServ = p.getCurrentServer();
-  const homeComputer = p.getHomeComputer();
+  const currServ = Player.getCurrentServer();
+  const homeComputer = Player.getHomeComputer();
 
   let parentDirPath = "";
   let evaledParentDirPath: string | null = null;
@@ -285,8 +284,14 @@ export async function determineAllPossibilitiesForTabCompletion(
       return processFilepath(script.filename) === fn || script.filename === "/" + fn;
     });
     if (!script) return; // Doesn't exist.
-    //Will return the already compiled module if recompilation not needed.
-    const loadedModule = await compile(p, script, currServ.scripts);
+    let loadedModule;
+    try {
+      //Will return the already compiled module if recompilation not needed.
+      loadedModule = await compile(script, currServ.scripts);
+    } catch (e) {
+      //fail silently if the script fails to compile (e.g. syntax error)
+      return;
+    }
     if (!loadedModule || !loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
 
     const runArgs = { "--tail": Boolean, "-t": Number };

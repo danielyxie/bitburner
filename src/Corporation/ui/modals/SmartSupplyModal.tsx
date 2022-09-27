@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { Warehouse } from "../../Warehouse";
 import { SetSmartSupply, SetSmartSupplyUseLeftovers } from "../../Actions";
-import { Material } from "../../Material";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
 import { useDivision } from "../Context";
@@ -62,7 +61,7 @@ export function SmartSupplyModal(props: IProps): React.ReactElement {
   // Create React components for materials
   const mats = [];
   for (const matName of Object.keys(props.warehouse.materials)) {
-    if (!(props.warehouse.materials[matName] instanceof Material)) continue;
+    if (!props.warehouse.materials[matName]) continue;
     if (!Object.keys(division.reqMats).includes(matName)) continue;
     mats.push(<Leftover key={matName} warehouse={props.warehouse} matName={matName} />);
   }

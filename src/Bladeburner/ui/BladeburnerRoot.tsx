@@ -3,12 +3,10 @@ import { Stats } from "./Stats";
 import { Console } from "./Console";
 import { AllPages } from "./AllPages";
 
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import Box from "@mui/material/Box";
 
 export function BladeburnerRoot(): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -19,16 +17,16 @@ export function BladeburnerRoot(): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
-  const bladeburner = player.bladeburner;
-  if (bladeburner === null) return <></>;
+  const bladeburner = Player.bladeburner;
+  if (!bladeburner) return <></>;
   return (
     <Box display="flex" flexDirection="column">
       <Box sx={{ display: "grid", gridTemplateColumns: "4fr 8fr", p: 1 }}>
-        <Stats bladeburner={bladeburner} player={player} router={router} />
-        <Console bladeburner={bladeburner} player={player} />
+        <Stats bladeburner={bladeburner} />
+        <Console bladeburner={bladeburner} />
       </Box>
 
-      <AllPages bladeburner={bladeburner} player={player} />
+      <AllPages bladeburner={bladeburner} />
     </Box>
   );
 }

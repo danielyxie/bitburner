@@ -11,44 +11,39 @@ import { Tooltip } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { achievements } from "../../Achievements/Achievements";
-import { IEngine } from "../../IEngine";
+import { Engine } from "../../engine";
 
-interface IProps {
-  player: IPlayer;
-  engine: IEngine;
-}
-
-export function Achievements(props: IProps): React.ReactElement {
-  const [playerAchievement, setPlayerAchievements] = useState(props.player.achievements.map((m) => m.ID));
+export function Achievements(): React.ReactElement {
+  const [playerAchievement, setPlayerAchievements] = useState(Player.achievements.map((m) => m.ID));
 
   function grantAchievement(id: string): void {
-    props.player.giveAchievement(id);
-    setPlayerAchievements(props.player.achievements.map((m) => m.ID));
+    Player.giveAchievement(id);
+    setPlayerAchievements(Player.achievements.map((m) => m.ID));
   }
 
   function grantAllAchievements(): void {
-    Object.values(achievements).forEach((a) => props.player.giveAchievement(a.ID));
-    setPlayerAchievements(props.player.achievements.map((m) => m.ID));
+    Object.values(achievements).forEach((a) => Player.giveAchievement(a.ID));
+    setPlayerAchievements(Player.achievements.map((m) => m.ID));
   }
 
   function removeAchievement(id: string): void {
-    props.player.achievements = props.player.achievements.filter((a) => a.ID !== id);
-    setPlayerAchievements(props.player.achievements.map((m) => m.ID));
+    Player.achievements = Player.achievements.filter((a) => a.ID !== id);
+    setPlayerAchievements(Player.achievements.map((m) => m.ID));
   }
 
   function clearAchievements(): void {
-    props.player.achievements = [];
-    setPlayerAchievements(props.player.achievements.map((m) => m.ID));
+    Player.achievements = [];
+    setPlayerAchievements(Player.achievements.map((m) => m.ID));
   }
 
   function disableEngine(): void {
-    props.engine.Counters.achievementsCounter = Number.MAX_VALUE;
+    Engine.Counters.achievementsCounter = Number.MAX_VALUE;
   }
 
   function enableEngine(): void {
-    props.engine.Counters.achievementsCounter = 0;
+    Engine.Counters.achievementsCounter = 0;
   }
 
   return (

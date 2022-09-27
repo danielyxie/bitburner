@@ -1,6 +1,6 @@
 import { FactionNames } from "../Faction/data/FactionNames";
 import { GangConstants } from "../Gang/data/Constants";
-import { Player as player } from "../Player";
+import { Player } from "../Player";
 import { Gang } from "../Gang/Gang";
 import { AllGangs } from "../Gang/AllGangs";
 import { GangMemberTasks } from "../Gang/GangMemberTasks";
@@ -22,18 +22,14 @@ import {
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 
 export function NetscriptGang(): InternalAPI<IGang> {
-  const checkGangApiAccess = function (ctx: NetscriptContext): void {
-    const gang = player.gang;
-    if (gang === null) throw new Error("Must have joined gang");
-    const hasAccess = gang instanceof Gang;
-    if (!hasAccess) {
-      throw helpers.makeRuntimeErrorMsg(ctx, `You do not currently have a Gang`);
-    }
+  /** Functions as an API check and also returns the gang object */
+  const getGang = function (ctx: NetscriptContext): Gang {
+    if (!Player.gang) throw helpers.makeRuntimeErrorMsg(ctx, "Must have joined gang", "API ACCESS");
+    return Player.gang;
   };
 
   const getGangMember = function (ctx: NetscriptContext, name: string): GangMember {
-    const gang = player.gang;
-    if (gang === null) throw new Error("Must have joined gang");
+    const gang = getGang(ctx);
     for (const member of gang.members) if (member.name === name) return member;
     throw helpers.makeRuntimeErrorMsg(ctx, `Invalid gang member: '${name}'`);
   };
@@ -54,27 +50,23 @@ export function NetscriptGang(): InternalAPI<IGang> {
         const faction = helpers.string(ctx, "faction", _faction);
         // this list is copied from Faction/ui/Root.tsx
 
-        if (!player.canAccessGang() || !GangConstants.Names.includes(faction)) return false;
-        if (player.inGang()) return false;
-        if (!player.factions.includes(faction)) return false;
+        if (!Player.canAccessGang() || !GangConstants.Names.includes(faction)) return false;
+        if (Player.gang) return false;
+        if (!Player.factions.includes(faction)) return false;
 
         const isHacking = faction === FactionNames.NiteSec || faction === FactionNames.TheBlackHand;
-        player.startGang(faction, isHacking);
+        Player.startGang(faction, isHacking);
         return true;
       },
     inGang: () => (): boolean => {
-      return player.inGang();
+      return Player.gang ? true : false;
     },
     getMemberNames: (ctx: NetscriptContext) => (): string[] => {
-      checkGangApiAccess(ctx);
-      const gang = player.gang;
-      if (gang === null) throw new Error("Should not be called without Gang");
+      const gang = getGang(ctx);
       return gang.members.map((member) => member.name);
     },
     getGangInformation: (ctx: NetscriptContext) => (): GangGenInfo => {
-      checkGangApiAccess(ctx);
-      const gang = player.gang;
-      if (gang === null) throw new Error("Should not be called without Gang");
+      const gang = getGang(ctx);
       return {
         faction: gang.facName,
         isHacking: gang.isHackingGang,
@@ -91,7 +83,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
       };
     },
     getOtherGangInformation: (ctx: NetscriptContext) => (): GangOtherInfo => {
-      checkGangApiAccess(ctx);
+      getGang(ctx);
       const cpy: Record<string, GangOtherInfoObject> = {};
       for (const gang of Object.keys(AllGangs)) {
         cpy[gang] = Object.assign({}, AllGangs[gang]);
@@ -103,9 +95,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (ctx: NetscriptContext) =>
       (_memberName: unknown): GangMemberInfo => {
         const memberName = helpers.string(ctx, "memberName", _memberName);
-        checkGangApiAccess(ctx);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
+        const gang = getGang(ctx);
         const member = getGangMember(ctx, memberName);
         return {
           name: member.name,
@@ -155,18 +145,14 @@ export function NetscriptGang(): InternalAPI<IGang> {
         };
       },
     canRecruitMember: (ctx: NetscriptContext) => (): boolean => {
-      checkGangApiAccess(ctx);
-      const gang = player.gang;
-      if (gang === null) throw new Error("Should not be called without Gang");
+      const gang = getGang(ctx);
       return gang.canRecruitMember();
     },
     recruitMember:
       (ctx: NetscriptContext) =>
       (_memberName: unknown): boolean => {
         const memberName = helpers.string(ctx, "memberName", _memberName);
-        checkGangApiAccess(ctx);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
+        const gang = getGang(ctx);
         const recruited = gang.recruitMember(memberName);
         if (recruited) {
           ctx.workerScript.log("gang.recruitMember", () => `Successfully recruited Gang Member '${memberName}'`);
@@ -177,9 +163,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
         return recruited;
       },
     getTaskNames: (ctx: NetscriptContext) => (): string[] => {
-      checkGangApiAccess(ctx);
-      const gang = player.gang;
-      if (gang === null) throw new Error("Should not be called without Gang");
+      const gang = getGang(ctx);
       const tasks = gang.getAllTaskNames();
       tasks.unshift("Unassigned");
       return tasks;
@@ -189,10 +173,8 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (_memberName: unknown, _taskName: unknown): boolean => {
         const memberName = helpers.string(ctx, "memberName", _memberName);
         const taskName = helpers.string(ctx, "taskName", _taskName);
-        checkGangApiAccess(ctx);
+        const gang = getGang(ctx);
         const member = getGangMember(ctx, memberName);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
         if (!gang.getAllTaskNames().includes(taskName)) {
           ctx.workerScript.log(
             "gang.setMemberTask",
@@ -221,23 +203,21 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (ctx: NetscriptContext) =>
       (_taskName: unknown): GangTaskStats => {
         const taskName = helpers.string(ctx, "taskName", _taskName);
-        checkGangApiAccess(ctx);
+        getGang(ctx);
         const task = getGangTask(ctx, taskName);
         const copy = Object.assign({}, task);
         copy.territory = Object.assign({}, task.territory);
         return copy;
       },
     getEquipmentNames: (ctx: NetscriptContext) => (): string[] => {
-      checkGangApiAccess(ctx);
+      getGang(ctx);
       return Object.keys(GangMemberUpgrades);
     },
     getEquipmentCost:
       (ctx: NetscriptContext) =>
       (_equipName: unknown): number => {
         const equipName = helpers.string(ctx, "equipName", _equipName);
-        checkGangApiAccess(ctx);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
+        const gang = getGang(ctx);
         const upg = GangMemberUpgrades[equipName];
         if (upg === null) return Infinity;
         return gang.getUpgradeCost(upg);
@@ -246,7 +226,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (ctx: NetscriptContext) =>
       (_equipName: unknown): string => {
         const equipName = helpers.string(ctx, "equipName", _equipName);
-        checkGangApiAccess(ctx);
+        getGang(ctx);
         const upg = GangMemberUpgrades[equipName];
         if (upg == null) return "";
         return upg.getType();
@@ -255,7 +235,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (ctx: NetscriptContext) =>
       (_equipName: unknown): EquipmentStats => {
         const equipName = helpers.string(ctx, "equipName", _equipName);
-        checkGangApiAccess(ctx);
+        getGang(ctx);
         const equipment = GangMemberUpgrades[equipName];
         if (!equipment) {
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid equipment: ${equipName}`);
@@ -268,13 +248,11 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (_memberName: unknown, _equipName: unknown): boolean => {
         const memberName = helpers.string(ctx, "memberName", _memberName);
         const equipName = helpers.string(ctx, "equipName", _equipName);
-        checkGangApiAccess(ctx);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
+        getGang(ctx);
         const member = getGangMember(ctx, memberName);
         const equipment = GangMemberUpgrades[equipName];
         if (!equipment) return false;
-        const res = member.buyUpgrade(equipment, player, gang);
+        const res = member.buyUpgrade(equipment);
         if (res) {
           ctx.workerScript.log(
             "gang.purchaseEquipment",
@@ -293,9 +271,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (ctx: NetscriptContext) =>
       (_memberName: unknown): GangMemberAscension | undefined => {
         const memberName = helpers.string(ctx, "memberName", _memberName);
-        checkGangApiAccess(ctx);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
+        const gang = getGang(ctx);
         const member = getGangMember(ctx, memberName);
         if (!member.canAscend()) return;
         return gang.ascendMember(member, ctx.workerScript);
@@ -304,9 +280,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (ctx: NetscriptContext) =>
       (_memberName: unknown): GangMemberAscension | undefined => {
         const memberName = helpers.string(ctx, "memberName", _memberName);
-        checkGangApiAccess(ctx);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
+        getGang(ctx);
         const member = getGangMember(ctx, memberName);
         if (!member.canAscend()) return;
         return {
@@ -318,9 +292,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (ctx: NetscriptContext) =>
       (_engage: unknown): void => {
         const engage = !!_engage;
-        checkGangApiAccess(ctx);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
+        const gang = getGang(ctx);
         if (engage) {
           gang.territoryWarfareEngaged = true;
           ctx.workerScript.log("gang.setTerritoryWarfare", () => "Engaging in Gang Territory Warfare");
@@ -333,9 +305,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
       (ctx: NetscriptContext) =>
       (_otherGang: unknown): number => {
         const otherGang = helpers.string(ctx, "otherGang", _otherGang);
-        checkGangApiAccess(ctx);
-        const gang = player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
+        const gang = getGang(ctx);
         if (AllGangs[otherGang] == null) {
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid gang: ${otherGang}`);
         }
@@ -346,9 +316,7 @@ export function NetscriptGang(): InternalAPI<IGang> {
         return playerPower / (otherPower + playerPower);
       },
     getBonusTime: (ctx: NetscriptContext) => (): number => {
-      checkGangApiAccess(ctx);
-      const gang = player.gang;
-      if (gang === null) throw new Error("Should not be called without Gang");
+      const gang = getGang(ctx);
       return Math.round(gang.storedCycles / 5) * 1000;
     },
   };

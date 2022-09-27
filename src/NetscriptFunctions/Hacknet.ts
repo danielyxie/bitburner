@@ -29,7 +29,7 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
       throw helpers.makeRuntimeErrorMsg(ctx, "Index specified for Hacknet Node is out-of-bounds: " + i);
     }
 
-    if (hasHacknetServers(player)) {
+    if (hasHacknetServers()) {
       const hi = player.hacknetNodes[i];
       if (typeof hi !== "string") throw new Error("hacknet node was not a string");
       const hserver = GetServer(hi);
@@ -54,19 +54,19 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
       return player.hacknetNodes.length;
     },
     maxNumNodes: () => (): number => {
-      if (hasHacknetServers(player)) {
+      if (hasHacknetServers()) {
         return HacknetServerConstants.MaxServers;
       }
       return Infinity;
     },
     purchaseNode: () => (): number => {
-      return purchaseHacknet(player);
+      return purchaseHacknet();
     },
     getPurchaseNodeCost: () => (): number => {
-      if (hasHacknetServers(player)) {
-        return getCostOfNextHacknetServer(player);
+      if (hasHacknetServers()) {
+        return getCostOfNextHacknetServer();
       } else {
-        return getCostOfNextHacknetNode(player);
+        return getCostOfNextHacknetNode();
       }
     },
     getNodeStats:
@@ -74,7 +74,7 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
       (_i: unknown): NodeStats => {
         const i = helpers.number(ctx, "i", _i);
         const node = getHacknetNode(ctx, i);
-        const hasUpgraded = hasHacknetServers(player);
+        const hasUpgraded = hasHacknetServers();
         const res: NodeStats = {
           name: node instanceof HacknetServer ? node.hostname : node.name,
           level: node.level,
@@ -99,7 +99,7 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
         const i = helpers.number(ctx, "i", _i);
         const n = helpers.number(ctx, "n", _n);
         const node = getHacknetNode(ctx, i);
-        return purchaseLevelUpgrade(player, node, n);
+        return purchaseLevelUpgrade(node, n);
       },
     upgradeRam:
       (ctx: NetscriptContext) =>
@@ -107,7 +107,7 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
         const i = helpers.number(ctx, "i", _i);
         const n = helpers.number(ctx, "n", _n);
         const node = getHacknetNode(ctx, i);
-        return purchaseRamUpgrade(player, node, n);
+        return purchaseRamUpgrade(node, n);
       },
     upgradeCore:
       (ctx: NetscriptContext) =>
@@ -115,14 +115,14 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
         const i = helpers.number(ctx, "i", _i);
         const n = helpers.number(ctx, "n", _n);
         const node = getHacknetNode(ctx, i);
-        return purchaseCoreUpgrade(player, node, n);
+        return purchaseCoreUpgrade(node, n);
       },
     upgradeCache:
       (ctx: NetscriptContext) =>
       (_i: unknown, _n: unknown = 1): boolean => {
         const i = helpers.number(ctx, "i", _i);
         const n = helpers.number(ctx, "n", _n);
-        if (!hasHacknetServers(player)) {
+        if (!hasHacknetServers()) {
           return false;
         }
         const node = getHacknetNode(ctx, i);
@@ -130,9 +130,9 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
           helpers.log(ctx, () => "Can only be called on hacknet servers");
           return false;
         }
-        const res = purchaseCacheUpgrade(player, node, n);
+        const res = purchaseCacheUpgrade(node, n);
         if (res) {
-          updateHashManagerCapacity(player);
+          updateHashManagerCapacity();
         }
         return res;
       },
@@ -165,7 +165,7 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
       (_i: unknown, _n: unknown = 1): number => {
         const i = helpers.number(ctx, "i", _i);
         const n = helpers.number(ctx, "n", _n);
-        if (!hasHacknetServers(player)) {
+        if (!hasHacknetServers()) {
           return Infinity;
         }
         const node = getHacknetNode(ctx, i);
@@ -176,13 +176,13 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
         return node.calculateCacheUpgradeCost(n);
       },
     numHashes: () => (): number => {
-      if (!hasHacknetServers(player)) {
+      if (!hasHacknetServers()) {
         return 0;
       }
       return player.hashManager.hashes;
     },
     hashCapacity: () => (): number => {
-      if (!hasHacknetServers(player)) {
+      if (!hasHacknetServers()) {
         return 0;
       }
       return player.hashManager.capacity;
@@ -192,7 +192,7 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
       (_upgName: unknown, _count: unknown = 1): number => {
         const upgName = helpers.string(ctx, "upgName", _upgName);
         const count = helpers.number(ctx, "count", _count);
-        if (!hasHacknetServers(player)) {
+        if (!hasHacknetServers()) {
           return Infinity;
         }
 
@@ -204,13 +204,13 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
         const upgName = helpers.string(ctx, "upgName", _upgName);
         const upgTarget = helpers.string(ctx, "upgTarget", _upgTarget);
         const count = helpers.number(ctx, "count", _count);
-        if (!hasHacknetServers(player)) {
+        if (!hasHacknetServers()) {
           return false;
         }
-        return purchaseHashUpgrade(player, upgName, upgTarget, count);
+        return purchaseHashUpgrade(upgName, upgTarget, count);
       },
     getHashUpgrades: () => (): string[] => {
-      if (!hasHacknetServers(player)) {
+      if (!hasHacknetServers()) {
         return [];
       }
       return Object.values(HashUpgrades).map((upgrade: HashUpgrade) => upgrade.name);
@@ -226,13 +226,13 @@ export function NetscriptHacknet(): InternalAPI<IHacknet> {
         return level;
       },
     getStudyMult: () => (): number => {
-      if (!hasHacknetServers(player)) {
+      if (!hasHacknetServers()) {
         return 1;
       }
       return player.hashManager.getStudyMult();
     },
     getTrainingMult: () => (): number => {
-      if (!hasHacknetServers(player)) {
+      if (!hasHacknetServers()) {
         return 1;
       }
       return player.hashManager.getTrainingMult();

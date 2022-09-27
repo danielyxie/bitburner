@@ -1,4 +1,4 @@
-import { IBladeburner } from "./IBladeburner";
+import { Bladeburner } from "./Bladeburner";
 import { BladeburnerConstants } from "./data/Constants";
 import { Action, IActionParams } from "./Action";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
@@ -19,7 +19,7 @@ export class Operation extends Action {
   }
 
   // For actions that have teams. To be implemented by subtypes.
-  getTeamSuccessBonus(inst: IBladeburner): number {
+  getTeamSuccessBonus(inst: Bladeburner): number {
     if (this.teamCount && this.teamCount > 0) {
       this.teamCount = Math.min(this.teamCount, inst.teamSize);
       const teamMultiplier = Math.pow(this.teamCount, 0.05);
@@ -29,11 +29,11 @@ export class Operation extends Action {
     return 1;
   }
 
-  getActionTypeSkillSuccessBonus(inst: IBladeburner): number {
+  getActionTypeSkillSuccessBonus(inst: Bladeburner): number {
     return inst.skillMultipliers.successChanceOperation;
   }
 
-  getChaosDifficultyBonus(inst: IBladeburner /*, params: ISuccessChanceParams*/): number {
+  getChaosDifficultyBonus(inst: Bladeburner /*, params: ISuccessChanceParams*/): number {
     const city = inst.getCurrentCity();
     if (city.chaos > BladeburnerConstants.ChaosThreshold) {
       const diff = 1 + (city.chaos - BladeburnerConstants.ChaosThreshold);

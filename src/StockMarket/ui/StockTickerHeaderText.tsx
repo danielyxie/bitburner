@@ -8,13 +8,12 @@ import * as React from "react";
 import { Stock } from "../Stock";
 import { TickerHeaderFormatData } from "../data/TickerHeaderFormatData";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import Typography from "@mui/material/Typography";
 
 type IProps = {
-  p: IPlayer;
   stock: Stock;
 };
 
@@ -34,7 +33,7 @@ export function StockTickerHeaderText(props: IProps): React.ReactElement {
   const spacesBeforePrice = " ".repeat(spacesAllottedForStockPrice - stockPriceFormat.length);
 
   let hdrText = `${stock.name}${spacesAfterStockName}${stock.symbol} -${spacesBeforePrice}${stockPriceFormat}`;
-  if (props.p.has4SData) {
+  if (Player.has4SData) {
     hdrText += ` - Volatility: ${numeralWrapper.formatPercentage(stock.mv / 100)} - Price Forecast: `;
     let plusOrMinus = stock.b; // True for "+", false for "-"
     if (stock.otlkMag < 0) {
