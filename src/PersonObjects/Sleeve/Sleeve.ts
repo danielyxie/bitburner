@@ -280,10 +280,6 @@ export class Sleeve extends Person {
     return true;
   }
 
-  hasAugmentation(aug: string): boolean {
-    return this.augmentations.some((a) => a.name === aug);
-  }
-
   tryBuyAugmentation(aug: Augmentation): boolean {
     if (!Player.canAfford(aug.baseCost)) {
       return false;

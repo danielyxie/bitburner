@@ -12,7 +12,7 @@ import { RunningScript } from "../Script/RunningScript";
 import { calculateAchievements } from "../Achievements/Achievements";
 
 import {
-  AugmentationStats,
+  Multipliers,
   CrimeStats,
   Singularity as ISingularity,
   SourceFileLvl,
@@ -168,7 +168,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         return aug.getCost().repCost;
       },
     getAugmentationStats: (ctx: NetscriptContext) =>
-      function (_augName: unknown): AugmentationStats {
+      function (_augName: unknown): Multipliers {
         helpers.checkSingularityAccess(ctx);
         const augName = helpers.string(ctx, "augName", _augName);
         const aug = getAugmentation(ctx, augName);

@@ -50,6 +50,7 @@ export abstract class Person {
   regenerateHp = personMethods.regenerateHp;
   queryStatFromString = personMethods.queryStatFromString;
   updateSkillLevels = personMethods.updateSkillLevels;
+  hasAugmentation = personMethods.hasAugmentation;
   calculateSkill = calculateSkill; //Class version is equal to imported version
 
   /** Reset all multipliers to 1 */
