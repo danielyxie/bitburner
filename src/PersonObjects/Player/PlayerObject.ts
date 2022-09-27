@@ -53,7 +53,8 @@ export class PlayerObject extends Person {
   moneySourceB = new MoneySourceTracker();
   playtimeSinceLastAug = 0;
   playtimeSinceLastBitnode = 0;
-  purchasedServers: string[] = [];  scriptProdSinceLastAug = 0;
+  purchasedServers: string[] = [];
+  scriptProdSinceLastAug = 0;
   sleeves: Sleeve[] = [];
   sleevesFromCovenant = 0;
   sourceFiles: PlayerOwnedSourceFile[] = [];

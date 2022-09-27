@@ -32,14 +32,11 @@ export abstract class Person {
 
   mults = defaultMultipliers();
 
-  /**
-   * Augmentations
-   */
+  /** Augmentations */
   augmentations: IPlayerOwnedAugmentation[] = [];
+  queuedAugmentations: IPlayerOwnedAugmentation[] = [];
 
-  /**
-   * City that the person is in
-   */
+  /** City that the person is in */
   city: CityName = CityName.Sector12;
 
   gainHackingExp = personMethods.gainHackingExp;
@@ -55,9 +52,7 @@ export abstract class Person {
   updateSkillLevels = personMethods.updateSkillLevels;
   calculateSkill = calculateSkill; //Class version is equal to imported version
 
-  /**
-   * Reset all multipliers to 1
-   */
+  /** Reset all multipliers to 1 */
   resetMultipliers() {
     this.mults = defaultMultipliers();
   }
