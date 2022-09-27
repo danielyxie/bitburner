@@ -13,10 +13,17 @@ import { GetServer } from "../Server/AllServers";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
 import { Player } from "../Player";
+import { ITutorial } from "../InteractiveTutorial";
+import { AlertEvents } from "../ui/React/AlertManager";
 
 export type killScriptParams = WorkerScript | number | { runningScript: RunningScript; hostname: string };
 
 export function killWorkerScript(params: killScriptParams): boolean {
+  console.log(ITutorial.isRunning);
+  if (ITutorial.isRunning) {
+    AlertEvents.emit("Processes cannot be killed during the tutorial.");
+    return false;
+  }
   if (params instanceof WorkerScript) {
     stopAndCleanUpWorkerScript(params);
 

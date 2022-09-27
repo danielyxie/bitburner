@@ -56,8 +56,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   const killScript = killWorkerScript.bind(null, { runningScript: scriptRef, hostname: scriptRef.server });
 
   function killScriptClickHandler(): void {
-    killScript();
-    dialogBoxCreate("Killing script");
+    if (killScript()) dialogBoxCreate("Killing script");
   }
 
   // Calculations for script stats

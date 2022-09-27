@@ -118,7 +118,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
           // See JSInterpreter.js:3209
           try {
             const callback = args.pop() as (value: unknown) => void;
-            const result = await entry(...args.map(int.pseudoToNative));
+            const result = await entry(...args.map((arg) => int.pseudoToNative(arg)));
             return callback(int.nativeToPseudo(result));
           } catch (e: unknown) {
             // TODO: Unify error handling, this was stolen from previous async handler
