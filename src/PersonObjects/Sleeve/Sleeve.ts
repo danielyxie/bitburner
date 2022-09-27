@@ -424,6 +424,7 @@ export class Sleeve extends Person {
    * Begin a bladeburner task
    */
   bladeburner(action: string, contract: string): boolean {
+    if (!Player.bladeburner) return false;
     switch (action) {
       case "Field analysis":
         this.startWork(new SleeveBladeburnerWork({ type: "General", name: "Field Analysis" }));
@@ -448,7 +449,6 @@ export class Sleeve extends Person {
         this.startWork(new SleeveBladeburnerWork({ type: "Contracts", name: contract }));
         return true;
     }
-
     return false;
   }
 
