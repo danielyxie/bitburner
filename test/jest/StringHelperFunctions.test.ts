@@ -2,7 +2,7 @@ import { convertTimeMsToTimeElapsedString } from "../../src/utils/StringHelperFu
 
 describe("StringHelperFunctions Tests", function () {
   it("transforms strings", () => {
-    expect(convertTimeMsToTimeElapsedString(1000)).toEqual("1 seconds");
+    expect(convertTimeMsToTimeElapsedString(1000)).toEqual("1 second");
     expect(convertTimeMsToTimeElapsedString(5 * 60 * 1000 + 34 * 1000)).toEqual("5 minutes 34 seconds");
     expect(convertTimeMsToTimeElapsedString(2 * 60 * 60 * 24 * 1000 + 5 * 60 * 1000 + 34 * 1000)).toEqual(
       "2 days 5 minutes 34 seconds",
