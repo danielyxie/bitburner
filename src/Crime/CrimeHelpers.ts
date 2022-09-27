@@ -4,6 +4,7 @@ import { Player } from "../Player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 
+//This is only used for the player
 export function determineCrimeSuccess(type: string): boolean {
   let chance = 0;
   let found = false;

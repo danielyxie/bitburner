@@ -197,3 +197,7 @@ export function updateSkillLevels(this: Person): void {
   this.hp.max = Math.floor(10 + this.skills.defense / 10);
   this.hp.current = Math.round(this.hp.max * ratio);
 }
+
+export function hasAugmentation(this: Person, augName: string, ignoreQueued: boolean = false) {
+  return this.augmentations.some((a) => a.name === augName && (ignoreQueued || !this.queuedAugmentations.includes(a)));
+}

@@ -53,9 +53,7 @@ export class PlayerObject extends Person {
   moneySourceB = new MoneySourceTracker();
   playtimeSinceLastAug = 0;
   playtimeSinceLastBitnode = 0;
-  purchasedServers: string[] = [];
-  queuedAugmentations: IPlayerOwnedAugmentation[] = [];
-  scriptProdSinceLastAug = 0;
+  purchasedServers: string[] = [];  scriptProdSinceLastAug = 0;
   sleeves: Sleeve[] = [];
   sleevesFromCovenant = 0;
   sourceFiles: PlayerOwnedSourceFile[] = [];
@@ -105,7 +103,6 @@ export class PlayerObject extends Person {
   getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;
   getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
   gotoLocation = generalMethods.gotoLocation;
-  hasAugmentation = augmentationMethods.hasAugmentation;
   hasCorporation = corporationMethods.hasCorporation;
   hasGangWith = gangMethods.hasGangWith;
   hasTorRouter = serverMethods.hasTorRouter;
