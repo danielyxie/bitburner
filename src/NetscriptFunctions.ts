@@ -266,7 +266,7 @@ const base: InternalAPI<NS> = {
       );
       return helpers.netscriptDelay(ctx, growTime * 1000).then(function () {
         const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
-        processSingleServerGrowth(server, threads, Player, host.cpuCores);
+        processSingleServerGrowth(server, threads, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
         ctx.workerScript.scriptRef.recordGrow(server.hostname, threads);
         const expGain = calculateHackingExpGain(server, Player) * threads;
@@ -304,7 +304,7 @@ const base: InternalAPI<NS> = {
         throw helpers.makeRuntimeErrorMsg(ctx, `Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
       }
 
-      return numCycleForGrowth(server, Number(growth), Player, cores);
+      return numCycleForGrowth(server, Number(growth), cores);
     },
   growthAnalyzeSecurity:
     (ctx: NetscriptContext) =>
@@ -321,7 +321,7 @@ const base: InternalAPI<NS> = {
         }
 
         const maxThreadsNeeded = Math.ceil(
-          numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, Player, cores),
+          numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, cores),
         );
 
         threads = Math.min(threads, maxThreadsNeeded);
@@ -931,13 +931,13 @@ const base: InternalAPI<NS> = {
         }
 
         // Create new script if it does not already exist
-        const newScript = new Script(Player, file);
+        const newScript = new Script(file);
         newScript.code = sourceScript.code;
         newScript.ramUsage = sourceScript.ramUsage;
         newScript.server = destServer.hostname;
         destServer.scripts.push(newScript);
         helpers.log(ctx, () => `File '${file}' copied over to '${destServer?.hostname}'.`);
-        newScript.updateRamUsage(Player, destServer.scripts);
+        newScript.updateRamUsage(destServer.scripts);
       }
 
       return noFailures;
@@ -1110,7 +1110,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 0;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerMoneyAvailable")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 0;
       }
       if (server.hostname == "home") {
@@ -1130,7 +1130,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(
@@ -1149,7 +1149,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerBaseSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(
@@ -1167,7 +1167,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerMinSecurityLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(
@@ -1185,7 +1185,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerRequiredHackingLevel")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(
@@ -1203,7 +1203,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 0;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerMaxMoney")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 0;
       }
       helpers.log(ctx, () => `returned ${numeralWrapper.formatMoney(server.moneyMax)} for '${server.hostname}'`);
@@ -1218,7 +1218,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 1;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerGrowth")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 1;
       }
       helpers.log(ctx, () => `returned ${server.serverGrowth} for '${server.hostname}'`);
@@ -1233,7 +1233,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "Cannot be executed on this server.");
         return 5;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getServerNumPortsRequired")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return 5;
       }
       helpers.log(ctx, () => `returned ${server.numOpenPortsRequired} for '${server.hostname}'`);
@@ -1492,12 +1492,12 @@ const base: InternalAPI<NS> = {
         let script = ctx.workerScript.getScriptOnServer(fn, server);
         if (script == null) {
           // Create a new script
-          script = new Script(Player, fn, String(data), server.hostname, server.scripts);
+          script = new Script(fn, String(data), server.hostname, server.scripts);
           server.scripts.push(script);
-          return script.updateRamUsage(Player, server.scripts);
+          return script.updateRamUsage(server.scripts);
         }
         mode === "w" ? (script.code = String(data)) : (script.code += data);
-        return script.updateRamUsage(Player, server.scripts);
+        return script.updateRamUsage(server.scripts);
       } else {
         // Write to text file
         if (!fn.endsWith(".txt")) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: ${fn}`);
@@ -1679,7 +1679,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getHackTime")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return Infinity;
       }
 
@@ -1694,7 +1694,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getGrowTime")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return Infinity;
       }
 
@@ -1709,7 +1709,7 @@ const base: InternalAPI<NS> = {
         helpers.log(ctx, () => "invalid for this kind of server");
         return Infinity;
       }
-      if (helpers.failOnHacknetServer(ctx, server, "getWeakenTime")) {
+      if (helpers.failOnHacknetServer(ctx, server)) {
         return Infinity;
       }
 
@@ -1778,7 +1778,7 @@ const base: InternalAPI<NS> = {
     (ctx: NetscriptContext) =>
     (_message: unknown): void => {
       const message = helpers.string(ctx, "message", _message);
-      dialogBoxCreate(message);
+      dialogBoxCreate(message, true);
     },
   toast:
     (ctx: NetscriptContext) =>
@@ -1820,7 +1820,7 @@ const base: InternalAPI<NS> = {
           function (data) {
             let res;
             if (isScriptFilename(target)) {
-              res = s.writeToScriptFile(Player, target, data);
+              res = s.writeToScriptFile(target, data);
             } else {
               res = s.writeToTextFile(target, data);
             }
@@ -1950,4 +1950,18 @@ const ns = {
   ...NetscriptExtra(),
 };
 
-const possibleLogs = Object.fromEntries([...helpers.getFunctionNames(ns, "")].map((a) => [a, true]));
+const possibleLogs = Object.fromEntries([...getFunctionNames(ns, "")].map((a) => [a, true]));
+/** Provides an array of all function names on a nested object */
+function getFunctionNames(obj: object, prefix: string): string[] {
+  const functionNames: string[] = [];
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === "args") {
+      continue;
+    } else if (typeof value == "function") {
+      functionNames.push(prefix + key);
+    } else if (typeof value == "object") {
+      functionNames.push(...getFunctionNames(value, key + "."));
+    }
+  }
+  return functionNames;
+}

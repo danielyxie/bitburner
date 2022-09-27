@@ -5,7 +5,7 @@
 import React, { useState } from "react";
 
 import { Sleeve } from "../Sleeve";
-import { IPlayer } from "../../IPlayer";
+import { Player } from "../../../Player";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { Money } from "../../../ui/React/Money";
@@ -18,7 +18,6 @@ import Paper from "@mui/material/Paper";
 
 interface IProps {
   index: number;
-  p: IPlayer;
   rerender: () => void;
   sleeve: Sleeve;
 }
@@ -52,16 +51,16 @@ export function CovenantSleeveMemoryUpgrade(props: IProps): React.ReactElement {
 
   function purchaseMemory(): void {
     const cost = getPurchaseCost();
-    if (props.p.canAfford(cost)) {
+    if (Player.canAfford(cost)) {
       props.sleeve.upgradeMemory(amt);
-      props.p.loseMoney(cost, "sleeves");
+      Player.loseMoney(cost, "sleeves");
       props.rerender();
     }
   }
 
   // Purchase button props
   const cost = getPurchaseCost();
-  const purchaseBtnDisabled = !props.p.canAfford(cost);
+  const purchaseBtnDisabled = !Player.canAfford(cost);
   let purchaseBtnContent = <></>;
   if (isNaN(amt)) {
     purchaseBtnContent = <>Invalid value</>;
@@ -69,7 +68,7 @@ export function CovenantSleeveMemoryUpgrade(props: IProps): React.ReactElement {
     purchaseBtnContent = (
       <>
         Purchase {amt} memory&nbsp;-&nbsp;
-        <Money money={cost} player={props.p} />
+        <Money money={cost} forPurchase={true} />
       </>
     );
   }

@@ -1,5 +1,5 @@
-import { IPerson } from "src/PersonObjects/IPerson";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Person } from "src/PersonObjects/Person";
+import { Player } from "../Player";
 
 export interface WorkStats {
   money: number;
@@ -68,13 +68,7 @@ export const scaleWorkStats = (w: WorkStats, n: number, scaleMoney = true): Work
   };
 };
 
-export const applyWorkStats = (
-  player: IPlayer,
-  target: IPerson,
-  workStats: WorkStats,
-  cycles: number,
-  source: string,
-): WorkStats => {
+export const applyWorkStats = (target: Person, workStats: WorkStats, cycles: number, source: string): WorkStats => {
   const expStats = applyWorkStatsExp(target, workStats, cycles);
   const gains = {
     money: workStats.money * cycles,
@@ -87,12 +81,12 @@ export const applyWorkStats = (
     chaExp: expStats.chaExp,
     intExp: expStats.intExp,
   };
-  player.gainMoney(gains.money, source);
+  Player.gainMoney(gains.money, source);
 
   return gains;
 };
 
-export const applyWorkStatsExp = (target: IPerson, workStats: WorkStats, cycles: number): WorkStats => {
+export const applyWorkStatsExp = (target: Person, workStats: WorkStats, cycles: number): WorkStats => {
   const gains = {
     money: 0,
     reputation: 0,

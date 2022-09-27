@@ -41,8 +41,7 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
 
       if (mult > 0) {
         dialogBoxCreate(
-          "You threw a party for the office! The morale and happiness " +
-            "of each employee increased by " +
+          "You threw a party for the office! The morale and happiness of each employee increased by " +
             numeralWrapper.formatPercentage(mult - 1),
         );
       }

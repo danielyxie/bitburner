@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 
 import { CorporationConstants } from "../data/Constants";
-import { Material } from "../Material";
-import { Product } from "../Product";
 import { Warehouse } from "../Warehouse";
 import { SmartSupplyModal } from "./modals/SmartSupplyModal";
 import { ProductElem } from "./ProductElem";
@@ -13,9 +11,8 @@ import { MaterialSizes } from "../MaterialSizes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-import { ICorporation } from "../ICorporation";
-import { IIndustry } from "../IIndustry";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Corporation } from "../Corporation";
+import { Industry } from "../Industry";
 import { MoneyCost } from "./MoneyCost";
 import { isRelevantMaterial } from "./Helpers";
 import { IndustryProductEquation } from "./IndustryProductEquation";
@@ -31,11 +28,10 @@ import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 
 interface IProps {
-  corp: ICorporation;
-  division: IIndustry;
+  corp: Corporation;
+  division: Industry;
   warehouse: Warehouse | 0;
   currentCity: string;
-  player: IPlayer;
   rerender: () => void;
 }
 
@@ -94,7 +90,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   // Create React components for materials
   const mats = [];
   for (const matName of Object.keys(props.warehouse.materials)) {
-    if (!(props.warehouse.materials[matName] instanceof Material)) continue;
+    if (!props.warehouse.materials[matName]) continue;
     // Only create UI for materials that are relevant for the industry or in stock
     const isInStock = props.warehouse.materials[matName].qty > 0;
     const isRelevant = isRelevantMaterial(matName, division);
@@ -115,7 +111,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   if (division.makesProducts && Object.keys(division.products).length > 0) {
     for (const productName of Object.keys(division.products)) {
       const product = division.products[productName];
-      if (!(product instanceof Product)) continue;
+      if (!product) continue;
       products.push(
         <ProductElem rerender={props.rerender} city={props.currentCity} key={productName} product={product} />,
       );
@@ -219,7 +215,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
 }
 
 export function IndustryWarehouse(props: IProps): React.ReactElement {
-  if (props.warehouse instanceof Warehouse) {
+  if (props.warehouse) {
     return <WarehouseRoot {...props} />;
   } else {
     return <EmptyWarehouse rerender={props.rerender} city={props.currentCity} />;

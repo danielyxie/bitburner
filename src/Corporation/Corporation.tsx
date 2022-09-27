@@ -1,14 +1,13 @@
 import { CorporationState } from "./CorporationState";
 import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade, CorporationUpgrades } from "./data/CorporationUpgrades";
-import { Warehouse } from "./Warehouse";
 import { CorporationConstants } from "./data/Constants";
 import { Industry } from "./Industry";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { showLiterature } from "../Literature/LiteratureHelpers";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
@@ -76,7 +75,7 @@ export class Corporation {
     this.storedCycles += numCycles;
   }
 
-  process(player: IPlayer): void {
+  process(): void {
     if (this.storedCycles >= CorporationConstants.CyclesPerIndustryStateCycle) {
       const state = this.getState();
       const marketCycles = 1;
@@ -120,7 +119,7 @@ export class Corporation {
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
             "There was an error calculating your Corporations funds and they got reset to 0. " +
-              "This is a bug. Please report to game developer.<br><br>" +
+              "This is a bug. Please report to game developer.\n\n" +
               "(Your funds have been set to $150b for the inconvenience)",
           );
           this.funds = 150e9;
@@ -139,7 +138,7 @@ export class Corporation {
           } else {
             const totalDividends = this.dividendRate * cycleProfit;
             const retainedEarnings = cycleProfit - totalDividends;
-            player.gainMoney(this.getCycleDividends(), "corporation");
+            Player.gainMoney(this.getCycleDividends(), "corporation");
             this.addFunds(retainedEarnings);
           }
         } else {
@@ -331,7 +330,7 @@ export class Corporation {
         for (const city of Object.keys(industry.warehouses)) {
           const warehouse = industry.warehouses[city];
           if (warehouse === 0) continue;
-          if (industry.warehouses.hasOwnProperty(city) && warehouse instanceof Warehouse) {
+          if (industry.warehouses.hasOwnProperty(city) && warehouse) {
             warehouse.updateSize(this, industry);
           }
         }
@@ -428,9 +427,9 @@ export class Corporation {
   // Adds the Corporation Handbook (Starter Guide) to the player's home computer.
   // This is a lit file that gives introductory info to the player
   // This occurs when the player clicks the "Getting Started Guide" button on the overview panel
-  getStarterGuide(player: IPlayer): void {
+  getStarterGuide(): void {
     // Check if player already has Corporation Handbook
-    const homeComp = player.getHomeComputer();
+    const homeComp = Player.getHomeComputer();
     let hasHandbook = false;
     const handbookFn = LiteratureNames.CorporationManagementHandbook;
     for (let i = 0; i < homeComp.messages.length; ++i) {

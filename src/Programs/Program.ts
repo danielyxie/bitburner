@@ -1,11 +1,8 @@
 import { BaseServer } from "../Server/BaseServer";
-import { ITerminal } from "../Terminal/ITerminal";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IRouter } from "../ui/Router";
 
 export interface IProgramCreate {
   level: number;
-  req(p: IPlayer): boolean; // Function that indicates whether player meets requirements
+  req(): boolean; // Function that indicates whether player meets requirements
   time: number;
   tooltip: string;
 }
@@ -13,13 +10,9 @@ export interface IProgramCreate {
 export class Program {
   name = "";
   create: IProgramCreate | null;
-  run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void;
+  run: (args: string[], server: BaseServer) => void;
 
-  constructor(
-    name: string,
-    create: IProgramCreate | null,
-    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void,
-  ) {
+  constructor(name: string, create: IProgramCreate | null, run: (args: string[], server: BaseServer) => void) {
     this.name = name;
     this.create = create;
     this.run = run;

@@ -9,7 +9,7 @@ import { getPurchaseServerLimit } from "../Server/ServerPurchases";
 import { Settings } from "../Settings/Settings";
 import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { use } from "./Context";
+import { Player } from "../Player";
 import { numeralWrapper } from "./numeralFormat";
 import { Modal } from "./React/Modal";
 import { Money } from "./React/Money";
@@ -23,13 +23,12 @@ interface EmployersModalProps {
 }
 
 const EmployersModal = ({ open, onClose }: EmployersModalProps): React.ReactElement => {
-  const player = use.Player();
   return (
     <Modal open={open} onClose={onClose}>
       <>
         <Typography variant="h5">All Employers</Typography>
         <ul>
-          {Object.keys(player.jobs).map((j) => (
+          {Object.keys(Player.jobs).map((j) => (
             <Typography key={j}>* {j}</Typography>
           ))}
         </ul>
@@ -59,14 +58,13 @@ interface MultTableProps {
 }
 
 function MultiplierTable(props: MultTableProps): React.ReactElement {
-  const player = use.Player();
   return (
     <Table sx={{ display: "table", width: "100%", mb: (props.noMargin ?? false) === true ? 0 : 2 }}>
       <TableBody>
         {props.rows.map((data) => {
           const { mult, value, effValue = null, color = props.color } = data;
 
-          if (effValue !== null && effValue !== value && player.sourceFileLvl(5) > 0) {
+          if (effValue !== null && effValue !== value && Player.sourceFileLvl(5) > 0) {
             return (
               <StatsRow key={mult} name={mult} color={color} data={{}}>
                 <>
@@ -88,14 +86,13 @@ function MultiplierTable(props: MultTableProps): React.ReactElement {
 }
 
 function CurrentBitNode(): React.ReactElement {
-  const player = use.Player();
-  if (player.sourceFiles.length > 0) {
-    const index = "BitNode" + player.bitNodeN;
-    const lvl = Math.min(player.sourceFileLvl(player.bitNodeN) + 1, player.bitNodeN === 12 ? Infinity : 3);
+  if (Player.sourceFiles.length > 0) {
+    const index = "BitNode" + Player.bitNodeN;
+    const lvl = Math.min(Player.sourceFileLvl(Player.bitNodeN) + 1, Player.bitNodeN === 12 ? Infinity : 3);
     return (
       <Paper sx={{ mb: 1, p: 1 }}>
         <Typography variant="h5">
-          BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {lvl})
+          BitNode {Player.bitNodeN}: {BitNodes[index].name} (Level {lvl})
         </Typography>
         <Typography sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</Typography>
       </Paper>
@@ -111,7 +108,6 @@ interface IMoneyModalProps {
 }
 
 function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
-  const player = use.Player();
   function convertMoneySourceTrackerToString(src: MoneySourceTracker): React.ReactElement {
     const parts: [string, JSX.Element][] = [[`Total:`, <Money money={src.total} />]];
     if (src.augmentations) {
@@ -178,10 +174,10 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
         Money earned since you last installed Augmentations
       </Typography>
       <br />
-      {convertMoneySourceTrackerToString(player.moneySourceA)}
+      {convertMoneySourceTrackerToString(Player.moneySourceA)}
     </>
   );
-  if (player.sourceFiles.length !== 0) {
+  if (Player.sourceFiles.length !== 0) {
     content = (
       <>
         {content}
@@ -191,7 +187,7 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
           Money earned in this BitNode
         </Typography>
         <br />
-        {convertMoneySourceTrackerToString(player.moneySourceB)}
+        {convertMoneySourceTrackerToString(Player.moneySourceB)}
       </>
     );
   }
@@ -204,7 +200,6 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
 }
 
 export function CharacterStats(): React.ReactElement {
-  const player = use.Player();
   const [moneyOpen, setMoneyOpen] = useState(false);
   const [employersOpen, setEmployersOpen] = useState(false);
   const setRerender = useState(false)[1];
@@ -218,18 +213,18 @@ export function CharacterStats(): React.ReactElement {
   }, []);
 
   const timeRows = [
-    ["Since last Augmentation installation", convertTimeMsToTimeElapsedString(player.playtimeSinceLastAug)],
+    ["Since last Augmentation installation", convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug)],
   ];
-  if (player.sourceFiles.length > 0) {
-    timeRows.push(["Since last Bitnode destroyed", convertTimeMsToTimeElapsedString(player.playtimeSinceLastBitnode)]);
+  if (Player.sourceFiles.length > 0) {
+    timeRows.push(["Since last Bitnode destroyed", convertTimeMsToTimeElapsedString(Player.playtimeSinceLastBitnode)]);
   }
-  timeRows.push(["Total", convertTimeMsToTimeElapsedString(player.totalPlaytime)]);
+  timeRows.push(["Total", convertTimeMsToTimeElapsedString(Player.totalPlaytime)]);
 
   let showBitNodeMults = false;
-  if (player.sourceFileLvl(5) > 0) {
-    const n = player.bitNodeN;
+  if (Player.sourceFileLvl(5) > 0) {
+    const n = Player.bitNodeN;
     const maxSfLevel = n === 12 ? Infinity : 3;
-    const mults = getBitNodeMultipliers(n, Math.min(player.sourceFileLvl(n) + 1, maxSfLevel));
+    const mults = getBitNodeMultipliers(n, Math.min(Player.sourceFileLvl(n) + 1, maxSfLevel));
     showBitNodeMults = !isEqual(mults, defaultMultipliers);
   }
   return (
@@ -240,20 +235,20 @@ export function CharacterStats(): React.ReactElement {
           <Typography variant="h5">General</Typography>
           <Table>
             <TableBody>
-              <StatsRow name="Current City" color={Settings.theme.primary} data={{ content: player.city }} />
+              <StatsRow name="Current City" color={Settings.theme.primary} data={{ content: Player.city }} />
               <StatsRow name="Money" color={Settings.theme.money} data={{}}>
                 <>
-                  <Money money={player.money} />
+                  <Money money={Player.money} />
                   <IconButton onClick={() => setMoneyOpen(true)} sx={{ p: 0 }}>
                     <MoreHoriz color="info" />
                   </IconButton>
                 </>
               </StatsRow>
 
-              {player.jobs && Object.keys(player.jobs).length !== 0 ? (
+              {Player.jobs && Object.keys(Player.jobs).length !== 0 ? (
                 <StatsRow name="All Employers" color={Settings.theme.primary} data={{}}>
                   <>
-                    <span style={{ color: Settings.theme.primary }}>{Object.keys(player.jobs).length} total</span>
+                    <span style={{ color: Settings.theme.primary }}>{Object.keys(Player.jobs).length} total</span>
                     <IconButton onClick={() => setEmployersOpen(true)} sx={{ p: 0 }}>
                       <MoreHoriz color="info" />
                     </IconButton>
@@ -265,14 +260,14 @@ export function CharacterStats(): React.ReactElement {
               <StatsRow
                 name="Servers Owned"
                 color={Settings.theme.primary}
-                data={{ content: `${player.purchasedServers.length} / ${getPurchaseServerLimit()}` }}
+                data={{ content: `${Player.purchasedServers.length} / ${getPurchaseServerLimit()}` }}
               />
               <StatsRow
-                name={`Hacknet ${player.bitNodeN === 9 || player.sourceFileLvl(9) > 0 ? "Servers" : "Nodes"} owned`}
+                name={`Hacknet ${Player.bitNodeN === 9 || Player.sourceFileLvl(9) > 0 ? "Servers" : "Nodes"} owned`}
                 color={Settings.theme.primary}
                 data={{
-                  content: `${player.hacknetNodes.length}${
-                    player.bitNodeN === 9 || player.sourceFileLvl(9) > 0
+                  content: `${Player.hacknetNodes.length}${
+                    Player.bitNodeN === 9 || Player.sourceFileLvl(9) > 0
                       ? ` / ${HacknetServerConstants.MaxServers}`
                       : ""
                   }`,
@@ -281,7 +276,7 @@ export function CharacterStats(): React.ReactElement {
               <StatsRow
                 name="Augmentations Installed"
                 color={Settings.theme.primary}
-                data={{ content: String(player.augmentations.length) }}
+                data={{ content: String(Player.augmentations.length) }}
               />
             </TableBody>
           </Table>
@@ -293,38 +288,38 @@ export function CharacterStats(): React.ReactElement {
               <StatsRow
                 name="Hacking"
                 color={Settings.theme.hack}
-                data={{ level: player.skills.hacking, exp: player.exp.hacking }}
+                data={{ level: Player.skills.hacking, exp: Player.exp.hacking }}
               />
               <StatsRow
                 name="Strength"
                 color={Settings.theme.combat}
-                data={{ level: player.skills.strength, exp: player.exp.strength }}
+                data={{ level: Player.skills.strength, exp: Player.exp.strength }}
               />
               <StatsRow
                 name="Defense"
                 color={Settings.theme.combat}
-                data={{ level: player.skills.defense, exp: player.exp.defense }}
+                data={{ level: Player.skills.defense, exp: Player.exp.defense }}
               />
               <StatsRow
                 name="Dexterity"
                 color={Settings.theme.combat}
-                data={{ level: player.skills.dexterity, exp: player.exp.dexterity }}
+                data={{ level: Player.skills.dexterity, exp: Player.exp.dexterity }}
               />
               <StatsRow
                 name="Agility"
                 color={Settings.theme.combat}
-                data={{ level: player.skills.agility, exp: player.exp.agility }}
+                data={{ level: Player.skills.agility, exp: Player.exp.agility }}
               />
               <StatsRow
                 name="Charisma"
                 color={Settings.theme.cha}
-                data={{ level: player.skills.charisma, exp: player.exp.charisma }}
+                data={{ level: Player.skills.charisma, exp: Player.exp.charisma }}
               />
-              {player.skills.intelligence > 0 && (player.bitNodeN === 5 || player.sourceFileLvl(5) > 0) && (
+              {Player.skills.intelligence > 0 && (Player.bitNodeN === 5 || Player.sourceFileLvl(5) > 0) && (
                 <StatsRow
                   name="Intelligence"
                   color={Settings.theme.int}
-                  data={{ level: player.skills.intelligence, exp: player.exp.intelligence }}
+                  data={{ level: Player.skills.intelligence, exp: Player.exp.intelligence }}
                 />
               )}
             </TableBody>
@@ -335,7 +330,7 @@ export function CharacterStats(): React.ReactElement {
       <Paper sx={{ p: 1, mb: 1 }}>
         <Typography variant="h5" color="primary" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
           Multipliers
-          {player.sourceFileLvl(5) > 0 && (
+          {Player.sourceFileLvl(5) > 0 && (
             <Tooltip
               title={
                 <Typography>
@@ -361,21 +356,21 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Hacking Chance",
-                  value: player.mults.hacking_chance,
+                  value: Player.mults.hacking_chance,
                 },
                 {
                   mult: "Hacking Speed",
-                  value: player.mults.hacking_speed,
+                  value: Player.mults.hacking_speed,
                 },
                 {
                   mult: "Hacking Money",
-                  value: player.mults.hacking_money,
-                  effValue: player.mults.hacking_money * BitNodeMultipliers.ScriptHackMoney,
+                  value: Player.mults.hacking_money,
+                  effValue: Player.mults.hacking_money * BitNodeMultipliers.ScriptHackMoney,
                 },
                 {
                   mult: "Hacking Growth",
-                  value: player.mults.hacking_grow,
-                  effValue: player.mults.hacking_grow * BitNodeMultipliers.ServerGrowthRate,
+                  value: Player.mults.hacking_grow,
+                  effValue: Player.mults.hacking_grow * BitNodeMultipliers.ServerGrowthRate,
                 },
               ]}
               color={Settings.theme.hack}
@@ -384,13 +379,13 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Hacking Level",
-                  value: player.mults.hacking,
-                  effValue: player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
+                  value: Player.mults.hacking,
+                  effValue: Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
                 },
                 {
                   mult: "Hacking Experience",
-                  value: player.mults.hacking_exp,
-                  effValue: player.mults.hacking_exp * BitNodeMultipliers.HackExpGain,
+                  value: Player.mults.hacking_exp,
+                  effValue: Player.mults.hacking_exp * BitNodeMultipliers.HackExpGain,
                 },
               ]}
               color={Settings.theme.hack}
@@ -399,12 +394,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Strength Level",
-                  value: player.mults.strength,
-                  effValue: player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
+                  value: Player.mults.strength,
+                  effValue: Player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
                 },
                 {
                   mult: "Strength Experience",
-                  value: player.mults.strength_exp,
+                  value: Player.mults.strength_exp,
                 },
               ]}
               color={Settings.theme.combat}
@@ -413,12 +408,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Defense Level",
-                  value: player.mults.defense,
-                  effValue: player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
+                  value: Player.mults.defense,
+                  effValue: Player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
                 },
                 {
                   mult: "Defense Experience",
-                  value: player.mults.defense_exp,
+                  value: Player.mults.defense_exp,
                 },
               ]}
               color={Settings.theme.combat}
@@ -427,12 +422,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Dexterity Level",
-                  value: player.mults.dexterity,
-                  effValue: player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
+                  value: Player.mults.dexterity,
+                  effValue: Player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
                 },
                 {
                   mult: "Dexterity Experience",
-                  value: player.mults.dexterity_exp,
+                  value: Player.mults.dexterity_exp,
                 },
               ]}
               color={Settings.theme.combat}
@@ -441,12 +436,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Agility Level",
-                  value: player.mults.agility,
-                  effValue: player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
+                  value: Player.mults.agility,
+                  effValue: Player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
                 },
                 {
                   mult: "Agility Experience",
-                  value: player.mults.agility_exp,
+                  value: Player.mults.agility_exp,
                 },
               ]}
               color={Settings.theme.combat}
@@ -455,12 +450,12 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Charisma Level",
-                  value: player.mults.charisma,
-                  effValue: player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
+                  value: Player.mults.charisma,
+                  effValue: Player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
                 },
                 {
                   mult: "Charisma Experience",
-                  value: player.mults.charisma_exp,
+                  value: Player.mults.charisma_exp,
                 },
               ]}
               color={Settings.theme.cha}
@@ -473,24 +468,24 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Hacknet Node Production",
-                  value: player.mults.hacknet_node_money,
-                  effValue: player.mults.hacknet_node_money * BitNodeMultipliers.HacknetNodeMoney,
+                  value: Player.mults.hacknet_node_money,
+                  effValue: Player.mults.hacknet_node_money * BitNodeMultipliers.HacknetNodeMoney,
                 },
                 {
                   mult: "Hacknet Node Purchase Cost",
-                  value: player.mults.hacknet_node_purchase_cost,
+                  value: Player.mults.hacknet_node_purchase_cost,
                 },
                 {
                   mult: "Hacknet Node RAM Upgrade Cost",
-                  value: player.mults.hacknet_node_ram_cost,
+                  value: Player.mults.hacknet_node_ram_cost,
                 },
                 {
                   mult: "Hacknet Node Core Purchase Cost",
-                  value: player.mults.hacknet_node_core_cost,
+                  value: Player.mults.hacknet_node_core_cost,
                 },
                 {
                   mult: "Hacknet Node Level Upgrade Cost",
-                  value: player.mults.hacknet_node_level_cost,
+                  value: Player.mults.hacknet_node_level_cost,
                 },
               ]}
               color={Settings.theme.primary}
@@ -499,19 +494,19 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Company Reputation Gain",
-                  value: player.mults.company_rep,
+                  value: Player.mults.company_rep,
                   color: Settings.theme.rep,
                 },
                 {
                   mult: "Faction Reputation Gain",
-                  value: player.mults.faction_rep,
-                  effValue: player.mults.faction_rep * BitNodeMultipliers.FactionWorkRepGain,
+                  value: Player.mults.faction_rep,
+                  effValue: Player.mults.faction_rep * BitNodeMultipliers.FactionWorkRepGain,
                   color: Settings.theme.rep,
                 },
                 {
                   mult: "Salary",
-                  value: player.mults.work_money,
-                  effValue: player.mults.work_money * BitNodeMultipliers.CompanyWorkMoney,
+                  value: Player.mults.work_money,
+                  effValue: Player.mults.work_money * BitNodeMultipliers.CompanyWorkMoney,
                   color: Settings.theme.money,
                 },
               ]}
@@ -521,35 +516,35 @@ export function CharacterStats(): React.ReactElement {
               rows={[
                 {
                   mult: "Crime Success Chance",
-                  value: player.mults.crime_success,
+                  value: Player.mults.crime_success,
                 },
                 {
                   mult: "Crime Money",
-                  value: player.mults.crime_money,
-                  effValue: player.mults.crime_money * BitNodeMultipliers.CrimeMoney,
+                  value: Player.mults.crime_money,
+                  effValue: Player.mults.crime_money * BitNodeMultipliers.CrimeMoney,
                   color: Settings.theme.money,
                 },
               ]}
               color={Settings.theme.combat}
             />
-            {player.canAccessBladeburner() && BitNodeMultipliers.BladeburnerRank > 0 && (
+            {Player.canAccessBladeburner() && BitNodeMultipliers.BladeburnerRank > 0 && (
               <MultiplierTable
                 rows={[
                   {
                     mult: "Bladeburner Success Chance",
-                    value: player.mults.bladeburner_success_chance,
+                    value: Player.mults.bladeburner_success_chance,
                   },
                   {
                     mult: "Bladeburner Max Stamina",
-                    value: player.mults.bladeburner_max_stamina,
+                    value: Player.mults.bladeburner_max_stamina,
                   },
                   {
                     mult: "Bladeburner Stamina Gain",
-                    value: player.mults.bladeburner_stamina_gain,
+                    value: Player.mults.bladeburner_stamina_gain,
                   },
                   {
                     mult: "Bladeburner Field Analysis",
-                    value: player.mults.bladeburner_analysis,
+                    value: Player.mults.bladeburner_analysis,
                   },
                 ]}
                 color={Settings.theme.primary}
@@ -576,7 +571,7 @@ export function CharacterStats(): React.ReactElement {
       {showBitNodeMults && (
         <Paper sx={{ p: 1, mb: 1 }}>
           <Typography variant="h5">BitNode Multipliers</Typography>
-          <BitNodeMultipliersDisplay n={player.bitNodeN} />
+          <BitNodeMultipliersDisplay n={Player.bitNodeN} />
         </Paper>
       )}
 

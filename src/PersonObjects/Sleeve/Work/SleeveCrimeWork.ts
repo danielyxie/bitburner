@@ -1,4 +1,4 @@
-import { IPlayer } from "../../IPlayer";
+import { Player } from "../../../Player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
@@ -43,19 +43,19 @@ export class SleeveCrimeWork extends Work {
     return this.getCrime().time / CONSTANTS._idleSpeed;
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
+  process(sleeve: Sleeve, cycles: number): number {
     this.cyclesWorked += cycles;
 
     const crime = this.getCrime();
     let gains = this.getExp();
     if (this.cyclesWorked >= this.cyclesNeeded()) {
       if (Math.random() < crime.successRate(sleeve)) {
-        player.karma -= crime.karma * sleeve.syncBonus();
+        Player.karma -= crime.karma * sleeve.syncBonus();
       } else {
         gains.money = 0;
         gains = scaleWorkStats(gains, 0.25);
       }
-      applySleeveGains(player, sleeve, gains, cycles);
+      applySleeveGains(sleeve, gains, cycles);
       this.cyclesWorked -= this.cyclesNeeded();
     }
     return 0;

@@ -3,8 +3,8 @@ import { GangMemberTasks } from "./GangMemberTasks";
 import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMemberUpgrades } from "./GangMemberUpgrades";
 import { IAscensionResult } from "./IAscensionResult";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IGang } from "./IGang";
+import { Player } from "../Player";
+import { Gang } from "./Gang";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import {
   calculateRespectGain,
@@ -111,7 +111,7 @@ export class GangMember {
     return GangMemberTasks["Unassigned"];
   }
 
-  calculateRespectGain(gang: IGang): number {
+  calculateRespectGain(gang: Gang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -121,7 +121,7 @@ export class GangMember {
     return calculateRespectGain(g, this, task);
   }
 
-  calculateWantedLevelGain(gang: IGang): number {
+  calculateWantedLevelGain(gang: Gang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -131,7 +131,7 @@ export class GangMember {
     return calculateWantedLevelGain(g, this, task);
   }
 
-  calculateMoneyGain(gang: IGang): number {
+  calculateMoneyGain(gang: Gang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -191,7 +191,7 @@ export class GangMember {
       this.calculateAscensionMult(this.cha_asc_points);
   }
 
-  recordEarnedRespect(numCycles = 1, gang: IGang): void {
+  recordEarnedRespect(numCycles = 1, gang: Gang): void {
     this.earnedRespect += this.calculateRespectGain(gang) * numCycles;
   }
 
@@ -302,12 +302,14 @@ export class GangMember {
     if (upg.mults.hack != null) this.hack_mult *= upg.mults.hack;
   }
 
-  buyUpgrade(upg: GangMemberUpgrade, player: IPlayer, gang: IGang): boolean {
+  buyUpgrade(upg: GangMemberUpgrade): boolean {
+    if (!Player.gang) throw new Error("Tried to buy a gang member upgrade when no gang was present");
+
     // Prevent purchasing of already-owned upgrades
     if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) return false;
 
-    if (player.money < gang.getUpgradeCost(upg)) return false;
-    player.loseMoney(gang.getUpgradeCost(upg), "gang");
+    if (Player.money < Player.gang.getUpgradeCost(upg)) return false;
+    Player.loseMoney(Player.gang.getUpgradeCost(upg), "gang");
     if (upg.type === "g") {
       this.augmentations.push(upg.name);
     } else {

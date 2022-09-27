@@ -7,7 +7,7 @@ import { safetlyCreateUniqueServer } from "./ServerHelpers";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
@@ -50,15 +50,15 @@ export function getPurchaseServerMaxRam(): number {
 }
 
 // Manually purchase a server (NOT through Netscript)
-export function purchaseServer(hostname: string, ram: number, cost: number, p: IPlayer): void {
+export function purchaseServer(hostname: string, ram: number, cost: number): void {
   //Check if player has enough money
-  if (!p.canAfford(cost)) {
+  if (!Player.canAfford(cost)) {
     dialogBoxCreate("You don't have enough money to purchase this server!");
     return;
   }
 
   //Maximum server limit
-  if (p.purchasedServers.length >= getPurchaseServerLimit()) {
+  if (Player.purchasedServers.length >= getPurchaseServerLimit()) {
     dialogBoxCreate(
       "You have reached the maximum limit of " +
         getPurchaseServerLimit() +
@@ -87,32 +87,32 @@ export function purchaseServer(hostname: string, ram: number, cost: number, p: I
   AddToAllServers(newServ);
 
   // Add to Player's purchasedServers array
-  p.purchasedServers.push(newServ.hostname);
+  Player.purchasedServers.push(newServ.hostname);
 
   // Connect new server to home computer
-  const homeComputer = p.getHomeComputer();
+  const homeComputer = Player.getHomeComputer();
   homeComputer.serversOnNetwork.push(newServ.hostname);
   newServ.serversOnNetwork.push(homeComputer.hostname);
 
-  p.loseMoney(cost, "servers");
+  Player.loseMoney(cost, "servers");
 
   dialogBoxCreate("Server successfully purchased with hostname " + newServ.hostname);
 }
 
 // Manually upgrade RAM on home computer (NOT through Netscript)
-export function purchaseRamForHomeComputer(p: IPlayer): void {
-  const cost = p.getUpgradeHomeRamCost();
-  if (!p.canAfford(cost)) {
+export function purchaseRamForHomeComputer(): void {
+  const cost = Player.getUpgradeHomeRamCost();
+  if (!Player.canAfford(cost)) {
     dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
     return;
   }
 
-  const homeComputer = p.getHomeComputer();
+  const homeComputer = Player.getHomeComputer();
   if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
     dialogBoxCreate(`You cannot upgrade your home computer RAM because it is at its maximum possible value`);
     return;
   }
 
   homeComputer.maxRam *= 2;
-  p.loseMoney(cost, "servers");
+  Player.loseMoney(cost, "servers");
 }

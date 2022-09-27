@@ -1,11 +1,10 @@
 import React from "react";
 import { FactionNames } from "../../Faction/data/FactionNames";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
 import { CinematicText } from "../../ui/React/CinematicText";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 export function BladeburnerCinematic(): React.ReactElement {
-  const router = use.Router();
   return (
     <CinematicText
       lines={[
@@ -32,7 +31,7 @@ export function BladeburnerCinematic(): React.ReactElement {
         "investigating and dealing with Synthoid threats.",
       ]}
       onDone={() => {
-        router.toTerminal();
+        Router.toTerminal();
         dialogBoxCreate(
           `Visit the National Security Agency (NSA) to apply for their ${FactionNames.Bladeburners} ` +
             "division! You will need 100 of each combat stat before doing this.",

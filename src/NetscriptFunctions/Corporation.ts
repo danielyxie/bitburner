@@ -5,8 +5,8 @@ import { Employee } from "../Corporation/Employee";
 import { Product } from "../Corporation/Product";
 import { Material } from "../Corporation/Material";
 import { Warehouse } from "../Corporation/Warehouse";
-import { IIndustry } from "../Corporation/IIndustry";
-import { ICorporation } from "../Corporation/ICorporation";
+import { Industry } from "../Corporation/Industry";
+import { Corporation } from "../Corporation/Corporation";
 
 import {
   Corporation as NSCorporation,
@@ -59,7 +59,6 @@ import {
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
-import { Industry } from "../Corporation/Industry";
 import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/IndustryData";
 import { CorporationConstants } from "../Corporation/data/Constants";
 import { ResearchMap } from "../Corporation/ResearchMap";
@@ -191,7 +190,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return true;
   }
 
-  function getResearchCost(division: IIndustry, researchName: string): number {
+  function getResearchCost(division: Industry, researchName: string): number {
     const researchTree = IndustryResearchTrees[division.type];
     if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
     const allResearch = researchTree.getAllNodes();
@@ -200,7 +199,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return research.cost;
   }
 
-  function hasResearched(division: IIndustry, researchName: string): boolean {
+  function hasResearched(division: Industry, researchName: string): boolean {
     return division.researched[researchName] === undefined ? false : (division.researched[researchName] as boolean);
   }
 
@@ -223,13 +222,13 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return true;
   }
 
-  function getCorporation(): ICorporation {
+  function getCorporation(): Corporation {
     const corporation = player.corporation;
     if (corporation === null) throw new Error("cannot be called without a corporation");
     return corporation;
   }
 
-  function getDivision(divisionName: string): IIndustry {
+  function getDivision(divisionName: string): Industry {
     const corporation = getCorporation();
     const division = corporation.divisions.find((div) => div.name === divisionName);
     if (division === undefined) throw new Error(`No division named '${divisionName}'`);
@@ -1047,14 +1046,14 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       (_numShares: unknown): number => {
         checkAccess(ctx);
         const numShares = helpers.number(ctx, "numShares", _numShares);
-        return SellShares(getCorporation(), player, numShares);
+        return SellShares(getCorporation(), numShares);
       },
     buyBackShares:
       (ctx: NetscriptContext) =>
       (_numShares: unknown): boolean => {
         checkAccess(ctx);
         const numShares = helpers.number(ctx, "numShares", _numShares);
-        return BuyBackShares(getCorporation(), player, numShares);
+        return BuyBackShares(getCorporation(), numShares);
       },
     bribe:
       (ctx: NetscriptContext) =>

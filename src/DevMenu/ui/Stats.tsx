@@ -8,132 +8,128 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Adjuster } from "./Adjuster";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 
 const bigNumber = 1e27;
 
-interface IProps {
-  player: IPlayer;
-}
-
-export function Stats(props: IProps): React.ReactElement {
+export function Stats(): React.ReactElement {
   function modifyExp(stat: string, modifier: number) {
     return function (exp: number) {
       switch (stat) {
         case "hacking":
           if (exp) {
-            props.player.gainHackingExp(exp * modifier);
+            Player.gainHackingExp(exp * modifier);
           }
           break;
         case "strength":
           if (exp) {
-            props.player.gainStrengthExp(exp * modifier);
+            Player.gainStrengthExp(exp * modifier);
           }
           break;
         case "defense":
           if (exp) {
-            props.player.gainDefenseExp(exp * modifier);
+            Player.gainDefenseExp(exp * modifier);
           }
           break;
         case "dexterity":
           if (exp) {
-            props.player.gainDexterityExp(exp * modifier);
+            Player.gainDexterityExp(exp * modifier);
           }
           break;
         case "agility":
           if (exp) {
-            props.player.gainAgilityExp(exp * modifier);
+            Player.gainAgilityExp(exp * modifier);
           }
           break;
         case "charisma":
           if (exp) {
-            props.player.gainCharismaExp(exp * modifier);
+            Player.gainCharismaExp(exp * modifier);
           }
           break;
         case "intelligence":
           if (exp) {
-            props.player.gainIntelligenceExp(exp * modifier);
+            Player.gainIntelligenceExp(exp * modifier);
           }
           break;
       }
-      props.player.updateSkillLevels();
+      Player.updateSkillLevels();
     };
   }
 
   function modifyKarma(modifier: number) {
     return function (amt: number) {
-      props.player.karma += amt * modifier;
+      Player.karma += amt * modifier;
     };
   }
 
   function tonsOfExp(): void {
-    props.player.gainHackingExp(bigNumber);
-    props.player.gainStrengthExp(bigNumber);
-    props.player.gainDefenseExp(bigNumber);
-    props.player.gainDexterityExp(bigNumber);
-    props.player.gainAgilityExp(bigNumber);
-    props.player.gainCharismaExp(bigNumber);
-    props.player.gainIntelligenceExp(bigNumber);
-    props.player.updateSkillLevels();
+    Player.gainHackingExp(bigNumber);
+    Player.gainStrengthExp(bigNumber);
+    Player.gainDefenseExp(bigNumber);
+    Player.gainDexterityExp(bigNumber);
+    Player.gainAgilityExp(bigNumber);
+    Player.gainCharismaExp(bigNumber);
+    Player.gainIntelligenceExp(bigNumber);
+    Player.updateSkillLevels();
   }
 
   function resetAllExp(): void {
-    props.player.exp.hacking = 0;
-    props.player.exp.strength = 0;
-    props.player.exp.defense = 0;
-    props.player.exp.dexterity = 0;
-    props.player.exp.agility = 0;
-    props.player.exp.charisma = 0;
-    props.player.exp.intelligence = 0;
-    props.player.updateSkillLevels();
+    Player.exp.hacking = 0;
+    Player.exp.strength = 0;
+    Player.exp.defense = 0;
+    Player.exp.dexterity = 0;
+    Player.exp.agility = 0;
+    Player.exp.charisma = 0;
+    Player.exp.intelligence = 0;
+    Player.updateSkillLevels();
   }
 
   function resetExperience(stat: string): () => void {
     return function () {
       switch (stat) {
         case "hacking":
-          props.player.exp.hacking = 0;
+          Player.exp.hacking = 0;
           break;
         case "strength":
-          props.player.exp.strength = 0;
+          Player.exp.strength = 0;
           break;
         case "defense":
-          props.player.exp.defense = 0;
+          Player.exp.defense = 0;
           break;
         case "dexterity":
-          props.player.exp.dexterity = 0;
+          Player.exp.dexterity = 0;
           break;
         case "agility":
-          props.player.exp.agility = 0;
+          Player.exp.agility = 0;
           break;
         case "charisma":
-          props.player.exp.charisma = 0;
+          Player.exp.charisma = 0;
           break;
         case "intelligence":
-          props.player.exp.intelligence = 0;
+          Player.exp.intelligence = 0;
           break;
       }
-      props.player.updateSkillLevels();
+      Player.updateSkillLevels();
     };
   }
 
   function resetKarma(): () => void {
     return function () {
-      props.player.karma = 0;
+      Player.karma = 0;
     };
   }
 
   function enableIntelligence(): void {
-    if (props.player.skills.intelligence === 0) {
-      props.player.skills.intelligence = 1;
-      props.player.updateSkillLevels();
+    if (Player.skills.intelligence === 0) {
+      Player.skills.intelligence = 1;
+      Player.updateSkillLevels();
     }
   }
 
   function disableIntelligence(): void {
-    props.player.exp.intelligence = 0;
-    props.player.skills.intelligence = 0;
-    props.player.updateSkillLevels();
+    Player.exp.intelligence = 0;
+    Player.skills.intelligence = 0;
+    Player.updateSkillLevels();
   }
 
   return (

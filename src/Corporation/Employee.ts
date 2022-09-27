@@ -2,8 +2,8 @@ import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { EmployeePositions } from "./EmployeePositions";
-import { ICorporation } from "./ICorporation";
-import { IIndustry } from "./IIndustry";
+import { Corporation } from "./Corporation";
+import { Industry } from "./Industry";
 
 interface IParams {
   name?: string;
@@ -77,7 +77,7 @@ export class Employee {
     return salary;
   }
 
-  calculateProductivity(corporation: ICorporation, industry: IIndustry): number {
+  calculateProductivity(corporation: Corporation, industry: Industry): number {
     const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
       effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
       effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),

@@ -8,10 +8,9 @@ import { StockTickers } from "./StockTickers";
 
 import { IStockMarket } from "../IStockMarket";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 
 type IProps = {
-  p: IPlayer;
   stockMarket: IStockMarket;
 };
 
@@ -27,8 +26,8 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
   }, []);
   return (
     <>
-      <InfoAndPurchases p={props.p} rerender={rerender} />
-      {props.p.hasWseAccount && <StockTickers p={props.p} stockMarket={props.stockMarket} />}
+      <InfoAndPurchases rerender={rerender} />
+      {Player.hasWseAccount && <StockTickers stockMarket={props.stockMarket} />}
     </>
   );
 }

@@ -5,10 +5,9 @@ import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions"
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
+import { initDarkWebItems } from "./DarkWeb/DarkWebItems";
 import { generateRandomContract } from "./CodingContractGenerator";
 import { initCompanies } from "./Company/Companies";
-import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
 import { Factions, initFactions } from "./Faction/Factions";
 import { staneksGift } from "./CotMG/Helper";
@@ -91,7 +90,7 @@ const Engine: {
     Player.playtimeSinceLastAug += time;
     Player.playtimeSinceLastBitnode += time;
 
-    Terminal.process(Router, Player, numCycles);
+    Terminal.process(numCycles);
 
     Player.processWork(numCycles);
 
@@ -100,28 +99,20 @@ const Engine: {
       processStockPrices(numCycles);
     }
 
-    // Gang, if applicable
-    if (Player.inGang() && Player.gang !== null) {
-      Player.gang.process(numCycles, Player);
-    }
+    // Gang
+    if (Player.gang) Player.gang.process(numCycles);
 
     // Staneks gift
-    staneksGift.process(Player, numCycles);
+    staneksGift.process(numCycles);
 
     // Corporation
-    if (Player.corporation instanceof Corporation) {
-      // Stores cycles in a "buffer". Processed separately using Engine Counters
-      Player.corporation.storeCycles(numCycles);
-    }
+    if (Player.corporation) Player.corporation.storeCycles(numCycles);
 
-    if (Player.bladeburner instanceof Bladeburner) {
-      Player.bladeburner.storeCycles(numCycles);
-    }
+    // Bladeburner
+    if (Player.bladeburner) Player.bladeburner.storeCycles(numCycles);
 
     // Sleeves
-    for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].process(Player, numCycles);
-    }
+    Player.sleeves.forEach((sleeve) => sleeve.process(numCycles));
 
     // Counters
     Engine.decrementAllCounters(numCycles);
@@ -131,7 +122,7 @@ const Engine: {
     updateOnlineScriptTimes(numCycles);
 
     // Hacknet Nodes
-    processHacknetEarnings(Player, numCycles);
+    processHacknetEarnings(numCycles);
   },
 
   /**
@@ -204,13 +195,13 @@ const Engine: {
         Engine.Counters.messages = 150;
       }
     }
-    if (Player.corporation instanceof Corporation) {
-      Player.corporation.process(Player);
+    if (Player.corporation) {
+      Player.corporation.process();
     }
     if (Engine.Counters.mechanicProcess <= 0) {
-      if (Player.bladeburner instanceof Bladeburner) {
+      if (Player.bladeburner) {
         try {
-          Player.bladeburner.process(Router, Player);
+          Player.bladeburner.process();
         } catch (e) {
           exceptionAlert("Exception caught in Bladeburner.process(): " + e);
         }
@@ -240,7 +231,8 @@ const Engine: {
     if (loadGame(saveString)) {
       ThemeEvents.emit();
 
-      initBitNodeMultipliers(Player);
+      initBitNodeMultipliers();
+      initDarkWebItems();
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
       if (Player.hasWseAccount) {
@@ -308,8 +300,8 @@ const Engine: {
       }
 
       // Hacknet Nodes offline progress
-      const offlineProductionFromHacknetNodes = processHacknetEarnings(Player, numCyclesOffline);
-      const hacknetProdInfo = hasHacknetServers(Player) ? (
+      const offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
+      const hacknetProdInfo = hasHacknetServers() ? (
         <>
           <Hashes hashes={offlineProductionFromHacknetNodes} /> hashes
         </>
@@ -326,39 +318,25 @@ const Engine: {
       }
 
       // Gang progress for BitNode 2
-      const gang = Player.gang;
-      if (Player.inGang() && gang !== null) {
-        gang.process(numCyclesOffline, Player);
-      }
+      if (Player.gang) Player.gang.process(numCyclesOffline);
 
       // Corporation offline progress
-      if (Player.corporation instanceof Corporation) {
-        Player.corporation.storeCycles(numCyclesOffline);
-      }
+      if (Player.corporation) Player.corporation.storeCycles(numCyclesOffline);
 
       // Bladeburner offline progress
-      if (Player.bladeburner instanceof Bladeburner) {
-        Player.bladeburner.storeCycles(numCyclesOffline);
-      }
+      if (Player.bladeburner) Player.bladeburner.storeCycles(numCyclesOffline);
 
-      staneksGift.process(Player, numCyclesOffline);
+      staneksGift.process(numCyclesOffline);
 
       // Sleeves offline progress
-      for (let i = 0; i < Player.sleeves.length; ++i) {
-        Player.sleeves[i].process(Player, numCyclesOffline);
-      }
+      Player.sleeves.forEach((sleeve) => sleeve.process(numCyclesOffline));
 
       // Update total playtime
       const time = numCyclesOffline * CONSTANTS._idleSpeed;
-      if (Player.totalPlaytime == null) {
-        Player.totalPlaytime = 0;
-      }
-      if (Player.playtimeSinceLastAug == null) {
-        Player.playtimeSinceLastAug = 0;
-      }
-      if (Player.playtimeSinceLastBitnode == null) {
-        Player.playtimeSinceLastBitnode = 0;
-      }
+      Player.totalPlaytime ??= 0;
+      Player.playtimeSinceLastAug ??= 0;
+      Player.playtimeSinceLastBitnode ??= 0;
+
       Player.totalPlaytime += time;
       Player.playtimeSinceLastAug += time;
       Player.playtimeSinceLastBitnode += time;
@@ -392,12 +370,13 @@ const Engine: {
       );
     } else {
       // No save found, start new game
-      initBitNodeMultipliers(Player);
+      initBitNodeMultipliers();
       Engine.start(); // Run main game loop and Scripts loop
       Player.init();
       initForeignServers(Player.getHomeComputer());
       initCompanies();
       initFactions();
+      initDarkWebItems();
       initAugmentations();
 
       // Start interactive tutorial

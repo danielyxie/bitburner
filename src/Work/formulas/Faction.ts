@@ -1,4 +1,4 @@
-import { IPerson } from "../../PersonObjects/IPerson";
+import { Person } from "../../PersonObjects/Person";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
 import { FactionWorkType } from "../data/FactionWorkType";
@@ -30,7 +30,7 @@ export const FactionWorkStats: Record<FactionWorkType, WorkStats> = {
   }),
 };
 
-export const calculateFactionRep = (person: IPerson, tpe: FactionWorkType, favor: number): number => {
+export const calculateFactionRep = (person: Person, tpe: FactionWorkType, favor: number): number => {
   const repFormulas = {
     [FactionWorkType.HACKING]: getHackingWorkRepGain,
     [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
@@ -39,7 +39,7 @@ export const calculateFactionRep = (person: IPerson, tpe: FactionWorkType, favor
   return repFormulas[tpe](person, favor);
 };
 
-export function calculateFactionExp(person: IPerson, tpe: FactionWorkType): WorkStats {
+export function calculateFactionExp(person: Person, tpe: FactionWorkType): WorkStats {
   const baseStats = FactionWorkStats[tpe];
   return {
     money: 0,

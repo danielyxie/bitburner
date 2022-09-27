@@ -1,19 +1,11 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
 
-export function kill(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  args: (string | number | boolean)[],
-): void {
+export function kill(args: (string | number | boolean)[], server: BaseServer): void {
   try {
     if (args.length < 1) {
-      terminal.error("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]...");
+      Terminal.error("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]...");
       return;
     }
     if (typeof args[0] === "boolean") {
@@ -25,23 +17,23 @@ export function kill(
       const pid = args[0];
       const res = killWorkerScript(pid);
       if (res) {
-        terminal.print(`Killing script with PID ${pid}`);
+        Terminal.print(`Killing script with PID ${pid}`);
       } else {
-        terminal.error(`Failed to kill script with PID ${pid}. No such script is running`);
+        Terminal.error(`Failed to kill script with PID ${pid}. No such script is running`);
       }
 
       return;
     }
 
-    const scriptName = terminal.getFilepath(args[0]);
+    const scriptName = Terminal.getFilepath(args[0]);
     const runningScript = server.getRunningScript(scriptName, args.slice(1));
     if (runningScript == null) {
-      terminal.error("No such script is running. Nothing to kill");
+      Terminal.error("No such script is running. Nothing to kill");
       return;
     }
     killWorkerScript({ runningScript: runningScript, hostname: server.hostname });
-    terminal.print(`Killing ${scriptName}`);
+    Terminal.print(`Killing ${scriptName}`);
   } catch (e) {
-    terminal.error(e + "");
+    Terminal.error(e + "");
   }
 }

@@ -13,7 +13,6 @@ import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { Script } from "./Script";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { Node } from "../NetscriptJSEvaluator";
 
 export interface RamUsageEntry {
@@ -40,11 +39,8 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * Parses code into an AST and walks through it recursively to calculate
  * RAM usage. Also accounts for imported modules.
  * @param {Script[]} otherScripts - All other scripts on the server. Used to account for imported scripts
- * @param {string} codeCopy - The code being parsed
- * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
- *                                      keep track of what functions have/havent been accounted for
- */
-function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: string): RamCalculation {
+ * @param {string} code - The code being parsed */
+function parseOnlyRamCalculate(otherScripts: Script[], code: string): RamCalculation {
   try {
     /**
      * Maps dependent identifiers to their dependencies.
@@ -157,11 +153,11 @@ function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: st
       // Check if this identifier is a function in the workerScript environment.
       // If it is, then we need to get its RAM cost.
       try {
-        function applyFuncRam(cost: number | ((p: IPlayer) => number)): number {
+        function applyFuncRam(cost: number | (() => number)): number {
           if (typeof cost === "number") {
             return cost;
           } else if (typeof cost === "function") {
-            return cost(player);
+            return cost();
           } else {
             return 0;
           }
@@ -178,7 +174,7 @@ function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: st
           prefix: string,
           obj: object,
           ref: string,
-        ): { func: (p: IPlayer) => number | number; refDetail: string } | undefined => {
+        ): { func: () => number | number; refDetail: string } | undefined => {
           if (!obj) return;
           const elem = Object.entries(obj).find(([key]) => key === ref);
           if (elem !== undefined && (typeof elem[1] === "function" || typeof elem[1] === "number")) {
@@ -381,9 +377,9 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): ParseDepsR
  * @param {Script[]} otherScripts - All other scripts on the server.
  *                                  Used to account for imported scripts
  */
-export function calculateRamUsage(player: IPlayer, codeCopy: string, otherScripts: Script[]): RamCalculation {
+export function calculateRamUsage(codeCopy: string, otherScripts: Script[]): RamCalculation {
   try {
-    return parseOnlyRamCalculate(player, otherScripts, codeCopy);
+    return parseOnlyRamCalculate(otherScripts, codeCopy);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);

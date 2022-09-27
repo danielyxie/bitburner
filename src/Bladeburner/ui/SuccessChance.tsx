@@ -2,13 +2,13 @@ import React from "react";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { StealthIcon } from "./StealthIcon";
 import { KillIcon } from "./KillIcon";
-import { IAction } from "../IAction";
-import { IBladeburner } from "../IBladeburner";
+import { Action } from "../Action";
+import { Bladeburner } from "../Bladeburner";
 import { Player } from "../../Player";
 
 interface IProps {
-  bladeburner: IBladeburner;
-  action: IAction;
+  bladeburner: Bladeburner;
+  action: Action;
 }
 
 export function SuccessChance(props: IProps): React.ReactElement {

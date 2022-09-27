@@ -6,40 +6,34 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { getHospitalizationCost } from "../../Hospital/Hospital";
 
 import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
-type IProps = {
-  p: IPlayer;
-};
-
 type IState = {
   currHp: number;
 };
 
-export class HospitalLocation extends React.Component<IProps, IState> {
+//Todo: Make this a functional component
+export class HospitalLocation extends React.Component<Record<string, never>, IState> {
   /**
    * Stores button styling that sets them all to block display
    */
   btnStyle = { display: "block" };
 
-  constructor(props: IProps) {
-    super(props);
-
-    this.getCost = this.getCost.bind(this);
-    this.getHealed = this.getHealed.bind(this);
+  constructor() {
+    super({});
 
     this.state = {
-      currHp: this.props.p.hp.current,
+      currHp: Player.hp.current,
     };
   }
 
   getCost(): number {
-    return getHospitalizationCost(this.props.p);
+    return getHospitalizationCost();
   }
 
   getHealed(e: React.MouseEvent<HTMLElement>): void {
@@ -47,20 +41,20 @@ export class HospitalLocation extends React.Component<IProps, IState> {
       return;
     }
 
-    if (this.props.p.hp.current < 0) {
-      this.props.p.hp.current = 0;
+    if (Player.hp.current < 0) {
+      Player.hp.current = 0;
     }
-    if (this.props.p.hp.current >= this.props.p.hp.max) {
+    if (Player.hp.current >= Player.hp.max) {
       return;
     }
 
     const cost = this.getCost();
-    this.props.p.loseMoney(cost, "hospitalization");
-    this.props.p.hp.current = this.props.p.hp.max;
+    Player.loseMoney(cost, "hospitalization");
+    Player.hp.current = Player.hp.max;
 
     // This just forces a re-render to update the cost
     this.setState({
-      currHp: this.props.p.hp.current,
+      currHp: Player.hp.current,
     });
 
     dialogBoxCreate(
@@ -75,7 +69,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
 
     return (
       <Button onClick={this.getHealed} style={this.btnStyle}>
-        Get treatment for wounds - <Money money={cost} player={this.props.p} />
+        Get treatment for wounds - <Money money={cost} forPurchase={true} />
       </Button>
     );
   }

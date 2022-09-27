@@ -12,8 +12,8 @@ import { Locations } from "../Locations";
 import { Location } from "../Location";
 import { Settings } from "../../Settings/Settings";
 
-import { use } from "../../ui/Context";
-import { IRouter } from "../../ui/Router";
+import { Player } from "../../Player";
+import { Router } from "../../ui/GameRoot";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { LocationType } from "../LocationTypeEnum";
@@ -37,19 +37,18 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function toLocation(router: IRouter, location: Location): void {
+function toLocation(location: Location): void {
   if (location.name === LocationName.TravelAgency) {
-    router.toTravel();
+    Router.toTravel();
   } else if (location.name === LocationName.WorldStockExchange) {
-    router.toStockMarket();
+    Router.toStockMarket();
   } else {
-    router.toLocation(location);
+    Router.toLocation(location);
   }
 }
 
 function LocationLetter(location: Location): React.ReactElement {
   location.types;
-  const router = use.Router();
   const classes = useStyles();
   let L = "X";
   if (location.types.includes(LocationType.Company)) L = "C";
@@ -68,7 +67,7 @@ function LocationLetter(location: Location): React.ReactElement {
       aria-label={location.name}
       key={location.name}
       className={classes.location}
-      onClick={() => toLocation(router, location)}
+      onClick={() => toLocation(location)}
     >
       <b>{L}</b>
     </span>
@@ -147,11 +146,10 @@ function ASCIICity(props: IProps): React.ReactElement {
 }
 
 function ListCity(props: IProps): React.ReactElement {
-  const router = use.Router();
   const locationButtons = props.city.locations.map((locName) => {
     return (
       <React.Fragment key={locName}>
-        <Button onClick={() => toLocation(router, Locations[locName])}>{locName}</Button>
+        <Button onClick={() => toLocation(Locations[locName])}>{locName}</Button>
         <br />
       </React.Fragment>
     );
@@ -161,8 +159,7 @@ function ListCity(props: IProps): React.ReactElement {
 }
 
 export function LocationCity(): React.ReactElement {
-  const player = use.Player();
-  const city = Cities[player.city];
+  const city = Cities[Player.city];
   return (
     <>
       <Typography>{city.name}</Typography>

@@ -1,26 +1,18 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 import { findRunningScriptByPid } from "../../Script/ScriptHelpers";
 import { isScriptFilename, validScriptExtensions } from "../../Script/isScriptFilename";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { LogBoxEvents } from "../../ui/React/LogBoxManager";
 
-export function tail(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  commandArray: (string | number | boolean)[],
-): void {
+export function tail(commandArray: (string | number | boolean)[], server: BaseServer): void {
   try {
     if (commandArray.length < 1) {
-      terminal.error("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
+      Terminal.error("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
     } else if (typeof commandArray[0] === "string") {
-      const scriptName = terminal.getFilepath(commandArray[0]);
+      const scriptName = Terminal.getFilepath(commandArray[0]);
       if (!isScriptFilename(scriptName)) {
-        terminal.error(`tail can only be called on ${validScriptExtensions.join(", ")} files, or by PID`);
+        Terminal.error(`tail can only be called on ${validScriptExtensions.join(", ")} files, or by PID`);
         return;
       }
 
@@ -59,23 +51,23 @@ export function tail(
 
       // otherwise lists all possible conflicting choices.
       if (candidates.length > 1) {
-        terminal.error("Found several potential candidates:");
-        for (const candidate of candidates) terminal.error(`${candidate.filename} ${candidate.args.join(" ")}`);
-        terminal.error("Script arguments need to be specified.");
+        Terminal.error("Found several potential candidates:");
+        for (const candidate of candidates) Terminal.error(`${candidate.filename} ${candidate.args.join(" ")}`);
+        Terminal.error("Script arguments need to be specified.");
         return;
       }
 
       // if there's no candidate then we just don't know.
-      terminal.error(`No script named ${scriptName} is running on the server`);
+      Terminal.error(`No script named ${scriptName} is running on the server`);
     } else if (typeof commandArray[0] === "number") {
       const runningScript = findRunningScriptByPid(commandArray[0], server);
       if (runningScript == null) {
-        terminal.error(`No script with PID ${commandArray[0]} is running on the server`);
+        Terminal.error(`No script with PID ${commandArray[0]} is running on the server`);
         return;
       }
       LogBoxEvents.emit(runningScript);
     }
   } catch (e) {
-    terminal.error(e + "");
+    Terminal.error(e + "");
   }
 }

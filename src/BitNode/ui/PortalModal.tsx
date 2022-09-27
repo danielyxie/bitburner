@@ -1,8 +1,7 @@
 import React from "react";
 
+import { enterBitNode } from "../../RedPill";
 import { BitNodes } from "../BitNode";
-import { IRouter } from "../../ui/Router";
-import { use } from "../../ui/Context";
 import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -15,11 +14,9 @@ interface IProps {
   level: number;
   destroyedBitNode: number;
   flume: boolean;
-  enter: (router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
 }
 
 export function PortalModal(props: IProps): React.ReactElement {
-  const router = use.Router();
   const bitNodeKey = "BitNode" + props.n;
   const bitNode = BitNodes[bitNodeKey];
   if (bitNode == null) throw new Error(`Could not find BitNode object for number: ${props.n}`);
@@ -48,7 +45,7 @@ export function PortalModal(props: IProps): React.ReactElement {
         aria-label={`enter-bitnode-${bitNode.number.toString()}`}
         autoFocus={true}
         onClick={() => {
-          props.enter(router, props.flume, props.destroyedBitNode, props.n);
+          enterBitNode(props.flume, props.destroyedBitNode, props.n);
           props.onClose();
         }}
       >

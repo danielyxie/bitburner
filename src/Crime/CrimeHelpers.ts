@@ -1,16 +1,17 @@
 import { Crimes } from "./Crimes";
 import { Crime } from "./Crime";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 
-export function determineCrimeSuccess(p: IPlayer, type: string): boolean {
+//This is only used for the player
+export function determineCrimeSuccess(type: string): boolean {
   let chance = 0;
   let found = false;
   for (const i of Object.keys(Crimes)) {
     const crime = Crimes[i];
     if (crime.type === type) {
-      chance = crime.successRate(p);
+      chance = crime.successRate(Player);
       found = true;
       break;
     }

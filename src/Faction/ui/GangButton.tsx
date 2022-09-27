@@ -1,7 +1,8 @@
 import { Button, Typography, Box, Paper, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { GangConstants } from "../../Gang/data/Constants";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
+import { Player } from "../../Player";
 import { Faction } from "../Faction";
 import { CreateGangModal } from "./CreateGangModal";
 
@@ -10,14 +11,12 @@ type IProps = {
 };
 
 export function GangButton({ faction }: IProps): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
   const [gangOpen, setGangOpen] = useState(false);
 
   if (
     !GangConstants.Names.includes(faction.name) || // not even a gang
-    !player.isAwareOfGang() || // doesn't know about gang
-    (player.inGang() && player.getGangName() !== faction.name) // already in another gang
+    !Player.isAwareOfGang() || // doesn't know about gang
+    (Player.gang && Player.getGangName() !== faction.name) // already in another gang
   ) {
     return <></>;
   }
@@ -29,7 +28,7 @@ export function GangButton({ faction }: IProps): React.ReactElement {
     description: "",
   };
 
-  if (player.inGang()) {
+  if (Player.gang) {
     data = {
       enabled: true,
       title: "Manage Gang",
@@ -38,9 +37,9 @@ export function GangButton({ faction }: IProps): React.ReactElement {
     };
   } else {
     data = {
-      enabled: player.canAccessGang(),
+      enabled: Player.canAccessGang(),
       title: "Create Gang",
-      tooltip: !player.canAccessGang() ? (
+      tooltip: !Player.canAccessGang() ? (
         <Typography>Unlocked when reaching {GangConstants.GangKarmaRequirement} karma</Typography>
       ) : (
         ""
@@ -51,8 +50,8 @@ export function GangButton({ faction }: IProps): React.ReactElement {
 
   const manageGang = (): void => {
     // If player already has a gang, just go to the gang UI
-    if (player.inGang()) {
-      return router.toGang();
+    if (Player.inGang()) {
+      return Router.toGang();
     }
 
     setGangOpen(true);

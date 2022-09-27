@@ -7,7 +7,7 @@ import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { getJobRequirementText } from "../../Company/GetJobRequirementText";
 
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -19,10 +19,8 @@ type IProps = {
 };
 
 export function ApplyToJobButton(props: IProps): React.ReactElement {
-  const player = use.Player();
-
   function getJobRequirementTooltip(): string {
-    const pos = player.getNextCompanyPosition(props.company, props.entryPosType);
+    const pos = Player.getNextCompanyPosition(props.company, props.entryPosType);
     if (pos == null) {
       return "";
     }
