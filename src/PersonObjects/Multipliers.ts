@@ -1,5 +1,3 @@
-import { AugmentationStats } from "../ScriptEditor/NetscriptDefinitions";
-
 export interface Multipliers {
   hacking_chance: number;
   hacking_speed: number;
