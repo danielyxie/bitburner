@@ -21,7 +21,7 @@ import {
   initUnstableCircadianModulator,
 } from "./data/AugmentationCreator";
 import { Router } from "../ui/GameRoot";
-import { mergeAugmentation } from "../PersonObjects/Multipliers";
+import { mergeMultipliers } from "../PersonObjects/Multipliers";
 
 export function AddToStaticAugmentations(aug: Augmentation): void {
   const name = aug.name;
@@ -75,7 +75,7 @@ function applyAugmentation(aug: PlayerOwnedAugmentation, reapply = false): void 
   const staticAugmentation = StaticAugmentations[aug.name];
 
   // Apply multipliers
-  Player.mults = mergeAugmentation(Player.mults, staticAugmentation.mults);
+  Player.mults = mergeMultipliers(Player.mults, staticAugmentation.mults);
 
   // Special logic for Congruity Implant
   if (aug.name === AugmentationNames.CongruityImplant && !reapply) {

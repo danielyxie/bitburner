@@ -4,7 +4,7 @@
 import { DoubleArrow } from "@mui/icons-material";
 import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import * as React from "react";
-import { Multipliers, defaultMultipliers, mergeAugmentation } from "../../PersonObjects/Multipliers";
+import { Multipliers, defaultMultipliers, mergeMultipliers } from "../../PersonObjects/Multipliers";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Player } from "../../Player";
 import { Settings } from "../../Settings/Settings";
@@ -15,7 +15,7 @@ function calculateAugmentedStats(): Multipliers {
   let augP: Multipliers = defaultMultipliers();
   for (const aug of Player.queuedAugmentations) {
     const augObj = StaticAugmentations[aug.name];
-    augP = mergeAugmentation(augP, augObj.mults);
+    augP = mergeMultipliers(augP, augObj.mults);
   }
   return augP;
 }
