@@ -47,9 +47,7 @@ function toLocation(location: Location): void {
   }
 }
 
-function LocationLetter(location: Location): React.ReactElement {
-  location.types;
-  const classes = useStyles();
+function LocationLetter(location: Location, className: string): React.ReactElement {
   let L = "X";
   if (location.types.includes(LocationType.Company)) L = "C";
   if (location.types.includes(LocationType.Gym)) L = "G";
@@ -63,12 +61,7 @@ function LocationLetter(location: Location): React.ReactElement {
   if (location.types.includes(LocationType.Special)) L = "?";
   if (!location) return <span>*</span>;
   return (
-    <span
-      aria-label={location.name}
-      key={location.name}
-      className={classes.location}
-      onClick={() => toLocation(location)}
-    >
+    <span aria-label={location.name} key={location.name} className={className} onClick={() => toLocation(location)}>
       <b>{L}</b>
     </span>
   );
@@ -106,6 +99,7 @@ function ASCIICity(props: IProps): React.ReactElement {
     Y: 24,
     Z: 25,
   };
+  const classes = useStyles();
 
   const lineElems = (s: string): (string | React.ReactElement)[] => {
     const elems: (string | React.ReactElement)[] = [];
@@ -124,7 +118,7 @@ function ASCIICity(props: IProps): React.ReactElement {
       const endI = matches[i].index;
       elems.push(s.slice(startI, endI));
       const locationI = letterMap[s[matches[i].index]];
-      elems.push(LocationLetter(Locations[props.city.locations[locationI]]));
+      elems.push(LocationLetter(Locations[props.city.locations[locationI]], classes.location));
     }
     elems.push(s.slice(matches[matches.length - 1].index + 1));
     return elems;
