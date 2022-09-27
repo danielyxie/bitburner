@@ -25,8 +25,10 @@ function showMessage(name: MessageFilenames): void {
   if (!(msg instanceof Message)) throw new Error("trying to display nonexistent message");
   dialogBoxCreate(
     <>
-      Message received from unknown sender:<br/><br/><i>{msg.msg}</i>This message was saved as {msg.filename} onto your home
-      computer.
+      Message received from unknown sender:
+      <br />
+      <br />
+      <i>{msg.msg}</i>This message was saved as {msg.filename} onto your home computer.
     </>,
   );
 }
