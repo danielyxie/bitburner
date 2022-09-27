@@ -1,5 +1,4 @@
 import { Player } from "./Player";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 
 import React, { useEffect } from "react";
@@ -42,11 +41,11 @@ export function DevMenuRoot(): React.ReactElement {
       <Servers />
       <Companies />
 
-      {Player.bladeburner instanceof Bladeburner && <BladeburnerElem />}
+      {Player.bladeburner && <BladeburnerElem />}
 
-      {Player.inGang() && <Gang />}
+      {Player.gang && <Gang />}
 
-      {Player.hasCorporation() && <Corporation />}
+      {Player.corporation && <Corporation />}
 
       <CodingContracts />
 

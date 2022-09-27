@@ -350,7 +350,7 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
         if (BitNodeMultipliers.BladeburnerRank === 0) {
           return false; // Disabled in this bitnode
         }
-        if (Player.bladeburner instanceof Bladeburner) {
+        if (Player.bladeburner) {
           return true; // Already member
         } else if (
           Player.skills.strength >= 100 &&

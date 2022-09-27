@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import { uniqueId } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Companies } from "../Company/Companies";
-import { Company } from "../Company/Company";
 import { CONSTANTS } from "../Constants";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Locations } from "../Locations/Locations";
@@ -430,7 +429,7 @@ export function WorkInProgressRoot(): React.ReactElement {
 
   if (isCompanyWork(Player.currentWork)) {
     const comp = Companies[Player.currentWork.companyName];
-    if (comp == null || !(comp instanceof Company)) {
+    if (comp) {
       workInfo = {
         buttons: {
           cancel: () => Router.toTerminal(),

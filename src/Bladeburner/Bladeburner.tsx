@@ -23,7 +23,6 @@ import { BladeburnerConstants } from "./data/Constants";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { addOffset } from "../utils/helpers/addOffset";
-import { Faction } from "../Faction/Faction";
 import { Factions, factionExists } from "../Faction/Factions";
 import { calculateHospitalizationCost } from "../Hospital/Hospital";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
@@ -113,9 +112,7 @@ export class Bladeburner {
 
   getCurrentCity(): City {
     const city = this.cities[this.city];
-    if (!(city instanceof City)) {
-      throw new Error("Bladeburner.getCurrentCity() did not properly return a City object");
-    }
+    if (!city) throw new Error("Invalid city in Bladeburner.getCurrentCity()");
     return city;
   }
 
@@ -541,7 +538,7 @@ export class Bladeburner {
       case 3: {
         const skillName = args[2];
         const skill = Skills[skillName];
-        if (skill == null || !(skill instanceof Skill)) {
+        if (!skill) {
           this.postToConsole("Invalid skill name (Note that it is case-sensitive): " + skillName);
           break;
         }
@@ -683,10 +680,7 @@ export class Bladeburner {
             ".",
         );
       } else if (flag.toLowerCase().includes("en")) {
-        if (
-          !(this.automateActionLow instanceof ActionIdentifier) ||
-          !(this.automateActionHigh instanceof ActionIdentifier)
-        ) {
+        if (!this.automateActionLow || !this.automateActionHigh) {
           return this.log("Failed to enable automation. Actions were not set");
         }
         this.automateEnabled = true;
@@ -897,9 +891,7 @@ export class Bladeburner {
     // Choose random source/destination city for events
     const sourceCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
     const sourceCity = this.cities[sourceCityName];
-    if (!(sourceCity instanceof City)) {
-      throw new Error("sourceCity was not a City object in Bladeburner.randomEvent()");
-    }
+    if (!sourceCity) throw new Error("Invalid sourceCity in Bladeburner.randomEvent()");
 
     let destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
     while (destCityName === sourceCityName) {
@@ -907,9 +899,7 @@ export class Bladeburner {
     }
     const destCity = this.cities[destCityName];
 
-    if (!(sourceCity instanceof City) || !(destCity instanceof City)) {
-      throw new Error("sourceCity/destCity was not a City object in Bladeburner.randomEvent()");
-    }
+    if (!sourceCity || !destCity) throw new Error("Invalid sourceCity or destCity in Bladeburner.randomEvent()");
 
     if (chance <= 0.05) {
       // New Synthoid Community, 5%
@@ -1621,7 +1611,7 @@ export class Bladeburner {
     const bladeburnersFactionName = FactionNames.Bladeburners;
     if (factionExists(bladeburnersFactionName)) {
       const bladeburnerFac = Factions[bladeburnersFactionName];
-      if (!(bladeburnerFac instanceof Faction)) {
+      if (!bladeburnerFac) {
         throw new Error(
           `Could not properly get ${FactionNames.Bladeburners} Faction object in ${FactionNames.Bladeburners} UI Overview Faction button`,
         );
@@ -1650,7 +1640,7 @@ export class Bladeburner {
     if (this.actionTimeToComplete <= 0) {
       throw new Error(`Invalid actionTimeToComplete value: ${this.actionTimeToComplete}, type; ${this.action.type}`);
     }
-    if (!(this.action instanceof ActionIdentifier)) {
+    if (!this.action) {
       throw new Error("Bladeburner.action is not an ActionIdentifier Object");
     }
 
@@ -2018,9 +2008,7 @@ export class Bladeburner {
       // Chaos goes down very slowly
       for (const cityName of BladeburnerConstants.CityNames) {
         const city = this.cities[cityName];
-        if (!(city instanceof City)) {
-          throw new Error("Invalid City object when processing passive chaos reduction in Bladeburner.process");
-        }
+        if (!city) throw new Error("Invalid city when processing passive chaos reduction in Bladeburner.process");
         city.chaos -= 0.0001 * seconds;
         city.chaos = Math.max(0, city.chaos);
       }

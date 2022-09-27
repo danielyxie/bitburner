@@ -21,41 +21,22 @@ export function isAwareOfGang(this: PlayerObject): boolean {
 
 export function getGangFaction(this: PlayerObject): Faction {
   const gang = this.gang;
-  if (gang === null) {
-    throw new Error("Cannot get gang faction because player is not in a gang.");
-  }
+  if (gang === null) throw new Error("Cannot get gang faction because player is not in a gang.");
+
   const fac = Factions[gang.facName];
-  if (fac == null) {
-    throw new Error(`Gang has invalid faction name: ${gang.facName}`);
-  }
+  if (fac == null) throw new Error(`Gang has invalid faction name: ${gang.facName}`);
 
   return fac;
 }
 
 export function getGangName(this: PlayerObject): string {
-  if (!this.inGang()) return "";
   const gang = this.gang;
-  if (gang === null) {
-    throw new Error("Cannot get gang faction because player is not in a gang.");
-  }
-  return gang.facName;
+  return gang ? gang.facName : "";
 }
 
 export function hasGangWith(this: PlayerObject, facName: string): boolean {
-  if (!this.inGang()) return false;
   const gang = this.gang;
-  if (gang === null) {
-    throw new Error("Cannot get gang faction because player is not in a gang.");
-  }
-  return gang.facName === facName;
-}
-
-export function inGang(this: PlayerObject): boolean {
-  if (this.gang == null || this.gang == undefined) {
-    return false;
-  }
-
-  return this.gang instanceof Gang;
+  return gang ? gang.facName === facName : false;
 }
 
 export function startGang(this: PlayerObject, factionName: string, hacking: boolean): void {
@@ -66,4 +47,8 @@ export function startGang(this: PlayerObject, factionName: string, hacking: bool
     throw new Error(`Invalid faction name when creating gang: ${factionName}`);
   }
   fac.playerReputation = 0;
+}
+
+export function inGang(this: PlayerObject) {
+  return Boolean(this.gang);
 }

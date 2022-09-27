@@ -12,7 +12,6 @@ import { PlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { Exploit } from "../../Exploits/Exploit";
 
 import { LocationName } from "../../Locations/data/LocationNames";
-import { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { Corporation } from "../../Corporation/Corporation";
 import { Gang } from "../../Gang/Gang";
 import { Bladeburner } from "../../Bladeburner/Bladeburner";

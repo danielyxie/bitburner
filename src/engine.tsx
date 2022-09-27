@@ -6,10 +6,8 @@ import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
 import { initDarkWebItems } from "./DarkWeb/DarkWebItems";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { generateRandomContract } from "./CodingContractGenerator";
 import { initCompanies } from "./Company/Companies";
-import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
 import { Factions, initFactions } from "./Faction/Factions";
 import { staneksGift } from "./CotMG/Helper";
@@ -101,28 +99,20 @@ const Engine: {
       processStockPrices(numCycles);
     }
 
-    // Gang, if applicable
-    if (Player.inGang() && Player.gang !== null) {
-      Player.gang.process(numCycles);
-    }
+    // Gang
+    if (Player.gang) Player.gang.process(numCycles);
 
     // Staneks gift
     staneksGift.process(numCycles);
 
     // Corporation
-    if (Player.corporation instanceof Corporation) {
-      // Stores cycles in a "buffer". Processed separately using Engine Counters
-      Player.corporation.storeCycles(numCycles);
-    }
+    if (Player.corporation) Player.corporation.storeCycles(numCycles);
 
-    if (Player.bladeburner instanceof Bladeburner) {
-      Player.bladeburner.storeCycles(numCycles);
-    }
+    // Bladeburner
+    if (Player.bladeburner) Player.bladeburner.storeCycles(numCycles);
 
     // Sleeves
-    for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].process(numCycles);
-    }
+    Player.sleeves.forEach((sleeve) => sleeve.process(numCycles));
 
     // Counters
     Engine.decrementAllCounters(numCycles);
@@ -205,11 +195,11 @@ const Engine: {
         Engine.Counters.messages = 150;
       }
     }
-    if (Player.corporation instanceof Corporation) {
+    if (Player.corporation) {
       Player.corporation.process();
     }
     if (Engine.Counters.mechanicProcess <= 0) {
-      if (Player.bladeburner instanceof Bladeburner) {
+      if (Player.bladeburner) {
         try {
           Player.bladeburner.process();
         } catch (e) {
@@ -328,39 +318,25 @@ const Engine: {
       }
 
       // Gang progress for BitNode 2
-      const gang = Player.gang;
-      if (Player.inGang() && gang !== null) {
-        gang.process(numCyclesOffline);
-      }
+      if (Player.gang) Player.gang.process(numCyclesOffline);
 
       // Corporation offline progress
-      if (Player.corporation instanceof Corporation) {
-        Player.corporation.storeCycles(numCyclesOffline);
-      }
+      if (Player.corporation) Player.corporation.storeCycles(numCyclesOffline);
 
       // Bladeburner offline progress
-      if (Player.bladeburner instanceof Bladeburner) {
-        Player.bladeburner.storeCycles(numCyclesOffline);
-      }
+      if (Player.bladeburner) Player.bladeburner.storeCycles(numCyclesOffline);
 
       staneksGift.process(numCyclesOffline);
 
       // Sleeves offline progress
-      for (let i = 0; i < Player.sleeves.length; ++i) {
-        Player.sleeves[i].process(numCyclesOffline);
-      }
+      Player.sleeves.forEach((sleeve) => sleeve.process(numCyclesOffline));
 
       // Update total playtime
       const time = numCyclesOffline * CONSTANTS._idleSpeed;
-      if (Player.totalPlaytime == null) {
-        Player.totalPlaytime = 0;
-      }
-      if (Player.playtimeSinceLastAug == null) {
-        Player.playtimeSinceLastAug = 0;
-      }
-      if (Player.playtimeSinceLastBitnode == null) {
-        Player.playtimeSinceLastBitnode = 0;
-      }
+      Player.totalPlaytime ??= 0;
+      Player.playtimeSinceLastAug ??= 0;
+      Player.playtimeSinceLastBitnode ??= 0;
+
       Player.totalPlaytime += time;
       Player.playtimeSinceLastAug += time;
       Player.playtimeSinceLastBitnode += time;

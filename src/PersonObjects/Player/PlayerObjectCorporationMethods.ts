@@ -10,10 +10,7 @@ export function canAccessCorporation(this: PlayerObject): boolean {
 }
 
 export function hasCorporation(this: PlayerObject): boolean {
-  if (this.corporation == null) {
-    return false;
-  }
-  return this.corporation instanceof Corporation;
+  return Boolean(this.corporation);
 }
 
 export function startCorporation(this: PlayerObject, corpName: string, additionalShares = 0): void {

@@ -38,9 +38,7 @@ export function joinFaction(faction: Faction): void {
 
   //Determine what factions you are banned from now that you have joined this faction
   for (const enemy of factionInfo.enemies) {
-    if (Factions[enemy] instanceof Faction) {
-      Factions[enemy].isBanned = true;
-    }
+    if (Factions[enemy]) Factions[enemy].isBanned = true;
   }
   for (let i = 0; i < Player.factionInvitations.length; ++i) {
     if (Player.factionInvitations[i] == faction.name || Factions[Player.factionInvitations[i]].isBanned) {

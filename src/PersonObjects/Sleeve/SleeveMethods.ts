@@ -61,7 +61,7 @@ export function findPurchasableAugs(this: Sleeve): Augmentation[] {
 
   // If player is in a gang, then we return all augs that the player
   // has enough reputation for (since that gang offers all augs)
-  if (Player.inGang()) {
+  if (Player.gang) {
     const fac = Player.getGangFaction();
     const gangAugs = getFactionAugmentationsFiltered(fac);
 

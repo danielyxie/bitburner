@@ -4,11 +4,9 @@ import { StaticAugmentations } from "./Augmentation/StaticAugmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Companies, initCompanies } from "./Company/Companies";
 import { resetIndustryResearchTrees } from "./Corporation/IndustryData";
 import { Programs } from "./Programs/Programs";
-import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
@@ -108,11 +106,9 @@ export function prestigeAugmentation(): void {
 
   // Gang
   const gang = Player.gang;
-  if (Player.inGang() && gang !== null) {
+  if (gang) {
     const faction = Factions[gang.facName];
-    if (faction instanceof Faction) {
-      joinFaction(faction);
-    }
+    if (faction) joinFaction(faction);
     const penalty = 0.95;
     for (const m of gang.members) {
       m.hack_asc_points *= penalty;
@@ -130,7 +126,7 @@ export function prestigeAugmentation(): void {
   }
 
   // Cancel Bladeburner action
-  if (Player.bladeburner instanceof Bladeburner) {
+  if (Player.bladeburner) {
     Player.bladeburner.prestige();
   }
 

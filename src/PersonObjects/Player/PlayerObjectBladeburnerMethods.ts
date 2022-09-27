@@ -6,10 +6,7 @@ export function canAccessBladeburner(this: PlayerObject): boolean {
 }
 
 export function inBladeburner(this: PlayerObject): boolean {
-  if (this.bladeburner == null) {
-    return false;
-  }
-  return this.bladeburner instanceof Bladeburner;
+  return Boolean(this.bladeburner);
 }
 
 export function startBladeburner(this: PlayerObject): void {

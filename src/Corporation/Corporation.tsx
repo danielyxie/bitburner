@@ -1,7 +1,6 @@
 import { CorporationState } from "./CorporationState";
 import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade, CorporationUpgrades } from "./data/CorporationUpgrades";
-import { Warehouse } from "./Warehouse";
 import { CorporationConstants } from "./data/Constants";
 import { Industry } from "./Industry";
 
@@ -331,7 +330,7 @@ export class Corporation {
         for (const city of Object.keys(industry.warehouses)) {
           const warehouse = industry.warehouses[city];
           if (warehouse === 0) continue;
-          if (industry.warehouses.hasOwnProperty(city) && warehouse instanceof Warehouse) {
+          if (industry.warehouses.hasOwnProperty(city) && warehouse) {
             warehouse.updateSize(this, industry);
           }
         }

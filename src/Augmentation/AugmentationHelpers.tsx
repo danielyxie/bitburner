@@ -1,6 +1,6 @@
 import { Augmentation } from "./Augmentation";
 import { StaticAugmentations } from "./StaticAugmentations";
-import { PlayerOwnedAugmentation, IPlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
+import { PlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
 import { AugmentationNames } from "./data/AugmentationNames";
 
 import { CONSTANTS } from "../Constants";
@@ -71,7 +71,7 @@ function resetAugmentation(aug: Augmentation): void {
   AddToStaticAugmentations(aug);
 }
 
-function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void {
+function applyAugmentation(aug: PlayerOwnedAugmentation, reapply = false): void {
   const staticAugmentation = StaticAugmentations[aug.name];
 
   // Apply multipliers
@@ -146,8 +146,8 @@ function augmentationExists(name: string): boolean {
   return StaticAugmentations.hasOwnProperty(name);
 }
 
-export function isRepeatableAug(aug: Augmentation): boolean {
-  const augName = aug instanceof Augmentation ? aug.name : aug;
+export function isRepeatableAug(aug: Augmentation | string): boolean {
+  const augName = typeof aug === "string" ? aug : aug.name;
   return augName === AugmentationNames.NeuroFluxGovernor;
 }
 

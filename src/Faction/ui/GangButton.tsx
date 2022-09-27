@@ -16,7 +16,7 @@ export function GangButton({ faction }: IProps): React.ReactElement {
   if (
     !GangConstants.Names.includes(faction.name) || // not even a gang
     !Player.isAwareOfGang() || // doesn't know about gang
-    (Player.inGang() && Player.getGangName() !== faction.name) // already in another gang
+    (Player.gang && Player.getGangName() !== faction.name) // already in another gang
   ) {
     return <></>;
   }
@@ -28,7 +28,7 @@ export function GangButton({ faction }: IProps): React.ReactElement {
     description: "",
   };
 
-  if (Player.inGang()) {
+  if (Player.gang) {
     data = {
       enabled: true,
       title: "Manage Gang",

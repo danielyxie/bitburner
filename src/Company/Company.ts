@@ -88,11 +88,7 @@ export class Company {
   }
 
   hasPosition(pos: CompanyPosition | string): boolean {
-    if (pos instanceof CompanyPosition) {
-      return this.companyPositions[pos.name] != null;
-    } else {
-      return this.companyPositions[pos] != null;
-    }
+    return this.companyPositions[typeof pos === "string" ? pos : pos.name] != null;
   }
 
   hasAgentPositions(): boolean {

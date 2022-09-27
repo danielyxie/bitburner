@@ -18,12 +18,12 @@ interface IProps {
 }
 
 export function PurchaseAugmentationModal(props: IProps): React.ReactElement {
-  if (typeof props.aug === "undefined" || typeof props.faction === "undefined") {
+  if (!props.aug || !props.faction) {
     return <></>;
   }
 
   function buy(): void {
-    if (!isRepeatableAug(props.aug as Augmentation) && Player.hasAugmentation(props.aug as Augmentation)) {
+    if (!props.aug || (!isRepeatableAug(props.aug) && Player.hasAugmentation(props.aug.name))) {
       return;
     }
 

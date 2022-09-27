@@ -4,7 +4,6 @@
  * balance point to keep them from running out of control
  */
 
-import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
@@ -123,7 +122,7 @@ export class Gang {
     this.respect += gain;
     // Faction reputation gains is respect gain divided by some constant
     const fac = Factions[this.facName];
-    if (!(fac instanceof Faction)) {
+    if (!fac) {
       dialogBoxCreate(
         "ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev",
       );

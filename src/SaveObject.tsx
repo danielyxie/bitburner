@@ -97,9 +97,8 @@ class BitburnerSaveObject {
     this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
     this.StaneksGiftSave = JSON.stringify(staneksGift);
 
-    if (Player.inGang()) {
-      this.AllGangsSave = JSON.stringify(AllGangs);
-    }
+    if (Player.gang) this.AllGangsSave = JSON.stringify(AllGangs);
+
     const saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
 
     return saveString;
@@ -724,7 +723,7 @@ function loadGame(saveString: string): boolean {
       console.error("ERROR: Failed to parse last export bonus Settings " + err);
     }
   }
-  if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+  if (Player.gang && saveObj.hasOwnProperty("AllGangsSave")) {
     try {
       loadAllGangs(saveObj.AllGangsSave);
     } catch (e) {

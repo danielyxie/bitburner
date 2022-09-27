@@ -24,7 +24,6 @@ import { Contracts } from "../../Bladeburner/data/Contracts";
 
 import { CONSTANTS } from "../../Constants";
 
-import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 
 import { CityName } from "../../Locations/data/CityNames";
@@ -307,7 +306,7 @@ export class Sleeve extends Person {
    * Returns boolean indicating success
    */
   workForCompany(companyName: string): boolean {
-    if (!(Companies[companyName] instanceof Company) || Player.jobs[companyName] == null) {
+    if (!Companies[companyName] || Player.jobs[companyName] == null) {
       return false;
     }
 
@@ -327,7 +326,7 @@ export class Sleeve extends Person {
    */
   workForFaction(factionName: string, workType: string): boolean {
     const faction = Factions[factionName];
-    if (factionName === "" || !faction || !(faction instanceof Faction) || !Player.factions.includes(factionName)) {
+    if (factionName === "" || !faction || !Player.factions.includes(factionName)) {
       return false;
     }
 

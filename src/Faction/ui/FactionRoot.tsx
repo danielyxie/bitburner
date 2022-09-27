@@ -102,7 +102,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   // We have a special flag for whether the player this faction is the player's
   // gang faction because if the player has a gang, they cannot do any other action
-  const isPlayersGang = Player.inGang() && Player.getGangName() === faction.name;
+  const isPlayersGang = Player.gang && Player.getGangName() === faction.name;
 
   // Flags for whether special options (gang, sleeve purchases, donate, etc.)
   // should be shown

@@ -1,5 +1,5 @@
 import * as personMethods from "./PersonMethods";
-import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { CityName } from "../Locations/data/CityNames";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
@@ -33,8 +33,8 @@ export abstract class Person {
   mults = defaultMultipliers();
 
   /** Augmentations */
-  augmentations: IPlayerOwnedAugmentation[] = [];
-  queuedAugmentations: IPlayerOwnedAugmentation[] = [];
+  augmentations: PlayerOwnedAugmentation[] = [];
+  queuedAugmentations: PlayerOwnedAugmentation[] = [];
 
   /** City that the person is in */
   city: CityName = CityName.Sector12;

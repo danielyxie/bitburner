@@ -3,7 +3,6 @@
  */
 import React, { useState, useEffect } from "react";
 
-import { HashManager } from "../HashManager";
 import { HashUpgrades } from "../HashUpgrades";
 
 import { Hashes } from "../../ui/React/Hashes";
@@ -29,7 +28,7 @@ export function HashUpgradeModal(props: IProps): React.ReactElement {
   }, []);
 
   const hashManager = Player.hashManager;
-  if (!(hashManager instanceof HashManager)) {
+  if (!hashManager) {
     throw new Error(`Player does not have a HashManager)`);
   }
 

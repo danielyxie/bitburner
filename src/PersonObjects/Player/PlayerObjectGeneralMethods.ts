@@ -105,15 +105,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
     this.sleeves.push(new Sleeve());
   }
 
-  for (let i = 0; i < this.sleeves.length; ++i) {
-    if (this.sleeves[i] instanceof Sleeve) {
-      if (this.sleeves[i].shock >= 100) {
-        this.sleeves[i].synchronize();
-      } else {
-        this.sleeves[i].shockRecovery();
-      }
-    }
-  }
+  this.sleeves.forEach((sleeve) => (sleeve.shock >= 100 ? sleeve.synchronize() : sleeve.shockRecovery()));
 
   this.lastUpdate = new Date().getTime();
 
@@ -137,13 +129,7 @@ export function prestigeSourceFile(this: PlayerObject): void {
   this.prestigeAugmentation();
   this.karma = 0;
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
-  for (let i = 0; i < this.sleeves.length; ++i) {
-    if (this.sleeves[i] instanceof Sleeve) {
-      this.sleeves[i].prestige();
-    } else {
-      this.sleeves[i] = new Sleeve();
-    }
-  }
+  this.sleeves.forEach((sleeve) => sleeve.prestige());
 
   if (this.bitNodeN === 10) {
     for (let i = 0; i < this.sleeves.length; i++) {
@@ -284,7 +270,7 @@ export function hospitalize(this: PlayerObject): number {
 //the applyToCompany() Netscript Singularity function
 export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (!(company instanceof Company)) {
+  if (!company) {
     console.error(`Could not find company that matches the location: ${this.location}. Player.applyToCompany() failed`);
     return false;
   }
@@ -1131,7 +1117,7 @@ export function gainCodingContractReward(this: PlayerObject, reward: ICodingCont
   /* eslint-disable no-case-declarations */
   switch (reward.type) {
     case CodingContractRewardType.FactionReputation:
-      if (reward.name == null || !(Factions[reward.name] instanceof Faction)) {
+      if (reward.name == null || !Factions[reward.name]) {
         // If no/invalid faction was designated, just give rewards to all factions
         reward.type = CodingContractRewardType.FactionReputationAll;
         return this.gainCodingContractReward(reward);
@@ -1156,14 +1142,12 @@ export function gainCodingContractReward(this: PlayerObject, reward: ICodingCont
 
       const gainPerFaction = Math.floor(totalGain / factions.length);
       for (const facName of factions) {
-        if (!(Factions[facName] instanceof Faction)) {
-          continue;
-        }
+        if (!Factions[facName]) continue;
         Factions[facName].playerReputation += gainPerFaction;
       }
       return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.toString()}`;
     case CodingContractRewardType.CompanyReputation: {
-      if (reward.name == null || !(Companies[reward.name] instanceof Company)) {
+      if (reward.name == null || !Companies[reward.name]) {
         //If no/invalid company was designated, just give rewards to all factions
         reward.type = CodingContractRewardType.FactionReputationAll;
         return this.gainCodingContractReward(reward);

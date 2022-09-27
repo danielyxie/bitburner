@@ -355,9 +355,7 @@ export class Industry {
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       const city = CorporationConstants.Cities[i];
       const warehouse = this.warehouses[city];
-      if (!(warehouse instanceof Warehouse)) {
-        continue;
-      }
+      if (!warehouse) continue;
 
       const materials = warehouse.materials;
 
@@ -413,10 +411,7 @@ export class Industry {
       let employeeSalary = 0;
       for (const officeLoc of Object.keys(this.offices)) {
         const office = this.offices[officeLoc];
-        if (office === 0) continue;
-        if (office instanceof OfficeSpace) {
-          employeeSalary += office.process(marketCycles, corporation, this);
-        }
+        if (office) employeeSalary += office.process(marketCycles, corporation, this);
       }
       this.thisCycleExpenses = this.thisCycleExpenses + employeeSalary;
 
@@ -467,7 +462,7 @@ export class Industry {
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       //If this industry has a warehouse in this city, process the market
       //for every material this industry requires or produces
-      if (this.warehouses[CorporationConstants.Cities[i]] instanceof Warehouse) {
+      if (this.warehouses[CorporationConstants.Cities[i]]) {
         const wh = this.warehouses[CorporationConstants.Cities[i]];
         if (wh === 0) continue;
         for (const name of Object.keys(reqMats)) {
@@ -527,7 +522,7 @@ export class Industry {
       const office = this.offices[city];
       if (office === 0) continue;
 
-      if (this.warehouses[city] instanceof Warehouse) {
+      if (this.warehouses[city]) {
         const warehouse = this.warehouses[city];
         if (warehouse === 0) continue;
 
@@ -893,7 +888,7 @@ export class Industry {
                     if (corporation.divisions[foo].name === exp.ind) {
                       const expIndustry = corporation.divisions[foo];
                       const expWarehouse = expIndustry.warehouses[exp.city];
-                      if (!(expWarehouse instanceof Warehouse)) {
+                      if (!expWarehouse) {
                         console.error(`Invalid export! ${expIndustry.name} ${exp.city}`);
                         break;
                       }
@@ -936,7 +931,7 @@ export class Industry {
 
       //Produce Scientific Research based on R&D employees
       //Scientific Research can be produced without a warehouse
-      if (office instanceof OfficeSpace) {
+      if (office) {
         this.sciResearch.qty +=
           0.004 *
           Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5) *
@@ -975,7 +970,7 @@ export class Industry {
     for (const prodName of Object.keys(this.products)) {
       if (this.products.hasOwnProperty(prodName)) {
         const prod = this.products[prodName];
-        if (prod instanceof Product && prod.fin) {
+        if (prod && prod.fin) {
           revenue += this.processProduct(marketCycles, prod, corporation);
         }
       }
@@ -991,7 +986,7 @@ export class Industry {
       const office = this.offices[city];
       if (office === 0) continue;
       const warehouse = this.warehouses[city];
-      if (warehouse instanceof Warehouse) {
+      if (warehouse) {
         switch (this.state) {
           case "PRODUCTION": {
             //Calculate the maximum production of this material based
@@ -1195,7 +1190,7 @@ export class Industry {
     if (state === "EXPORT") {
       for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
         const city = CorporationConstants.Cities[i];
-        if (!(this.warehouses[city] instanceof Warehouse)) {
+        if (!this.warehouses[city]) {
           continue;
         }
         const warehouse = this.warehouses[city];

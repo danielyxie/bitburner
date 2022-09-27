@@ -19,7 +19,6 @@ import {
 } from "../ScriptEditor/NetscriptDefinitions";
 
 import { findCrime } from "../Crime/CrimeHelpers";
-import { CompanyPosition } from "../Company/CompanyPosition";
 import { CompanyPositions } from "../Company/CompanyPositions";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { CityName } from "../Locations/data/CityNames";
@@ -76,9 +75,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
 
   const getCompany = function (ctx: NetscriptContext, name: string): Company {
     const company = Companies[name];
-    if (company == null || !(company instanceof Company)) {
-      throw helpers.makeRuntimeErrorMsg(ctx, `Invalid company name: '${name}'`);
-    }
+    if (!company) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid company name: '${name}'`);
     return company;
   };
 
@@ -784,7 +781,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         const focus = !!_focus;
 
         // Make sure its a valid company
-        if (companyName == null || companyName === "" || !(Companies[companyName] instanceof Company)) {
+        if (companyName == null || companyName === "" || !Companies[companyName]) {
           helpers.log(ctx, () => `Invalid company: '${companyName}'`);
           return false;
         }
@@ -798,7 +795,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         // Check to make sure company position data is valid
         const companyPositionName = Player.jobs[companyName];
         const companyPosition = CompanyPositions[companyPositionName];
-        if (companyPositionName === "" || !(companyPosition instanceof CompanyPosition)) {
+        if (companyPositionName === "" || !companyPosition) {
           helpers.log(ctx, () => "You do not have a job");
           return false;
         }
@@ -953,7 +950,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         const faction = getFaction(ctx, facName);
 
         // if the player is in a gang and the target faction is any of the gang faction, fail
-        if (Player.inGang() && faction.name === Player.getGangFaction().name) {
+        if (Player.gang && faction.name === Player.getGangFaction().name) {
           helpers.log(ctx, () => `You can't work for '${facName}' because youre managing a gang for it`);
           return false;
         }
@@ -1071,7 +1068,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           helpers.log(ctx, () => `You can't donate to '${facName}' because you aren't a member`);
           return false;
         }
-        if (Player.inGang() && faction.name === Player.getGangFaction().name) {
+        if (Player.gang && faction.name === Player.getGangFaction().name) {
           helpers.log(ctx, () => `You can't donate to '${facName}' because youre managing a gang for it`);
           return false;
         }

@@ -361,7 +361,7 @@ export function ThrowParty(corp: Corporation, office: OfficeSpace, costPerEmploy
 
 export function PurchaseWarehouse(corp: Corporation, division: Industry, city: string): void {
   if (corp.funds < CorporationConstants.WarehouseInitialCost) return;
-  if (division.warehouses[city] instanceof Warehouse) return;
+  if (division.warehouses[city]) return;
   division.warehouses[city] = new Warehouse({
     corp: corp,
     industry: division,
@@ -439,7 +439,7 @@ export function MakeProduct(
     designCost: designInvest,
     advCost: marketingInvest,
   });
-  if (products[product.name] instanceof Product) {
+  if (products[product.name]) {
     throw new Error(`You already have a product with this name!`);
   }
 
@@ -470,10 +470,10 @@ export function Research(division: Industry, researchName: string): void {
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       const city = CorporationConstants.Cities[i];
       const warehouse = division.warehouses[city];
-      if (!(warehouse instanceof Warehouse)) {
+      if (!warehouse) {
         continue;
       }
-      if (Player.corporation instanceof Corporation) {
+      if (Player.corporation) {
         // Stores cycles in a "buffer". Processed separately using Engine Counters
         warehouse.updateSize(Player.corporation, division);
       }

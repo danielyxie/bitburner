@@ -15,7 +15,6 @@ import { Locations } from "../Locations";
 import { LocationName } from "../data/LocationNames";
 
 import { Companies } from "../../Company/Companies";
-import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import * as posNames from "../../Company/data/companypositionnames";
 
@@ -174,7 +173,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     }
 
     const pos = companyPosition;
-    if (pos instanceof CompanyPosition) {
+    if (pos) {
       Player.startWork(
         new CompanyWork({
           singularity: false,

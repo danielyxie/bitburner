@@ -164,15 +164,8 @@ export class BaseServer {
   }
 
   removeContract(contract: CodingContract | string): void {
-    if (contract instanceof CodingContract) {
-      this.contracts = this.contracts.filter((c) => {
-        return c.fn !== contract.fn;
-      });
-    } else {
-      this.contracts = this.contracts.filter((c) => {
-        return c.fn !== contract;
-      });
-    }
+    const index = this.contracts.findIndex((c) => c.fn === (typeof contract === "string" ? contract : contract.fn));
+    if (index > -1) this.contracts.splice(index, 1);
   }
 
   /**
