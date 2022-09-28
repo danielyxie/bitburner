@@ -45,6 +45,7 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 
 import { isCompanyWork } from "../../Work/CompanyWork";
 import { serverMetadata } from "../../Server/data/servers";
+import { aOrAn } from "../../utils/StringHelperFunctions";
 
 export function init(this: PlayerObject): void {
   /* Initialize Player's home computer */
@@ -279,7 +280,7 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
 
   if (!this.isQualified(company, pos)) {
     if (!sing) {
-      dialogBoxCreate("Unfortunately, you do not qualify for this position<br>" + getJobRequirementText(company, pos));
+      dialogBoxCreate("Unfortunately, you do not qualify for this position\n" + getJobRequirementText(company, pos));
     }
     return false;
   }
@@ -305,7 +306,7 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
         dialogBoxCreate("You are already at the highest position for your field! No promotion available");
       } else {
         const reqText = getJobRequirementText(company, nextPos);
-        dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
+        dialogBoxCreate("Unfortunately, you do not qualify for a promotion\n" + reqText);
       }
     }
     return false;
@@ -314,7 +315,8 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
   this.jobs[company.name] = pos.name;
 
   if (!sing) {
-    dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
+    const a = aOrAn(pos.name);
+    dialogBoxCreate(`Congratulations! You were offered a new job at ${company.name} as ${a} ${pos.name}!`);
   }
   return true;
 }

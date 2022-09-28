@@ -36,7 +36,7 @@ import { Companies } from "../Company/Companies";
 import { Factions, factionExists } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
 import { helpers } from "../Netscript/NetscriptHelpers";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { aOrAn, convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { getServerOnNetwork } from "../Server/ServerHelpers";
 import { Terminal } from "../Terminal";
 import { calculateHackingTime } from "../Hacking";
@@ -815,7 +815,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           Player.stopFocusing();
           Router.toTerminal();
         }
-        helpers.log(ctx, () => `Began working at '${companyName}' as a '${companyPositionName}'`);
+        const a = aOrAn(companyPositionName);
+        helpers.log(ctx, () => `Began working at '${companyName}' as ${a} '${companyPositionName}'`);
         return true;
       },
     applyToCompany: (ctx: NetscriptContext) =>
@@ -878,7 +879,11 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         //   return false;
         // }
         if (res) {
-          helpers.log(ctx, () => `You were offered a new job at '${companyName}' as a '${Player.jobs[companyName]}'`);
+          const a = aOrAn(Player.jobs[companyName]);
+          helpers.log(
+            ctx,
+            () => `You were offered a new job at '${companyName}' as ${a} '${Player.jobs[companyName]}'`,
+          );
         } else {
           helpers.log(ctx, () => `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`);
         }

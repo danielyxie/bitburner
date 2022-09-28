@@ -129,6 +129,14 @@ function capitalizeEachWord(s: string): string {
     .join(" ");
 }
 
+/** returns "a" or "an" depending on whether the provided string starts with a vowel */
+function aOrAn(s: string) {
+  const vowels = ["a", "A", "e", "E", "i", "I", "o", "O", "u", "U"];
+  const firstChar = s.at(0);
+  if (!firstChar || !vowels.includes(firstChar)) return "a";
+  return "an";
+}
+
 export {
   convertTimeMsToTimeElapsedString,
   longestCommonStart,
@@ -138,4 +146,5 @@ export {
   cyrb53,
   capitalizeFirstLetter,
   capitalizeEachWord,
+  aOrAn,
 };

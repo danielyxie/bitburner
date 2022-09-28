@@ -8,7 +8,7 @@ import { CONSTANTS } from "../Constants";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Locations } from "../Locations/Locations";
 import { Settings } from "../Settings/Settings";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { aOrAn, convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Player } from "../Player";
 import { Router } from "./GameRoot";
 import { numeralWrapper } from "./numeralFormat";
@@ -462,7 +462,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       },
       title: (
         <>
-          You are currently working as a <b>{position}</b> at <b>{Player.currentWork.companyName}</b>
+          You are currently working as {aOrAn(position)} <b>{position}</b> at <b>{Player.currentWork.companyName}</b>
         </>
       ),
 
