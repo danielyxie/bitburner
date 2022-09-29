@@ -371,12 +371,12 @@ const Engine: {
     } else {
       // No save found, start new game
       initBitNodeMultipliers();
+      initDarkWebItems();
       Engine.start(); // Run main game loop and Scripts loop
       Player.init();
       initForeignServers(Player.getHomeComputer());
       initCompanies();
       initFactions();
-      initDarkWebItems();
       initAugmentations();
 
       // Start interactive tutorial
