@@ -308,10 +308,10 @@ const base: InternalAPI<NS> = {
     },
   growthAnalyzeSecurity:
     (ctx: NetscriptContext) =>
-    (_threads: unknown, _hostname?: unknown, _cores?: unknown): number => {
+    (_threads: unknown, _hostname?: unknown, _cores: unknown = 1): number => {
       let threads = helpers.number(ctx, "threads", _threads);
       if (_hostname) {
-        const cores = helpers.number(ctx, "cores", _cores) || 1;
+        const cores = helpers.number(ctx, "cores", _cores);
         const hostname = helpers.string(ctx, "hostname", _hostname);
         const server = helpers.getServer(ctx, hostname);
 
