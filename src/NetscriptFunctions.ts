@@ -311,7 +311,7 @@ const base: InternalAPI<NS> = {
     (_threads: unknown, _hostname?: unknown, _cores?: unknown): number => {
       let threads = helpers.number(ctx, "threads", _threads);
       if (_hostname) {
-        const cores = helpers.number(ctx, "cores", _cores) || 1;
+        const cores = _cores ? helpers.number(ctx, "cores", _cores) : 1;
         const hostname = helpers.string(ctx, "hostname", _hostname);
         const server = helpers.getServer(ctx, hostname);
 
