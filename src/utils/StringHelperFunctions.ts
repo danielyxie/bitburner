@@ -129,8 +129,18 @@ function capitalizeEachWord(s: string): string {
     .join(" ");
 }
 
-/** returns "a" or "an" depending on whether the provided string starts with a vowel */
-const aOrAn = (s: string) => (/^[aeiou]/i.test(s) ? "an" : "a");
+/** returns "a" or "an" depending on whether the provided string starts with a vowel.
+ * Exceptions (like "unit" or "honest") need to be added to exception arrays in this function. */
+function aOrAn(s: string) {
+  s = s.split(" ")[0].toLowerCase();
+  /** string[] of words that use "a" but start with a vowel, like "unit". All lowercase. */
+  const aWords: string[] = [];
+  /** string[] of words that use "an" but don't start with a vowel, like "honest". All lowercase. */
+  const anWords: string[] = [];
+  if (aWords.includes(s)) return "a";
+  if (anWords.includes(s)) return "an";
+  return /^[aeiou]/.test(s) ? "an" : "a";
+}
 
 export {
   convertTimeMsToTimeElapsedString,
