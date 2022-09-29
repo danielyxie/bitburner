@@ -130,12 +130,7 @@ function capitalizeEachWord(s: string): string {
 }
 
 /** returns "a" or "an" depending on whether the provided string starts with a vowel */
-function aOrAn(s: string) {
-  const vowels = ["a", "A", "e", "E", "i", "I", "o", "O", "u", "U"];
-  const firstChar = s.at(0);
-  if (!firstChar || !vowels.includes(firstChar)) return "a";
-  return "an";
-}
+const aOrAn = (s: string) => (/^[aeiou]/i.test(s) ? "an" : "a");
 
 export {
   convertTimeMsToTimeElapsedString,
