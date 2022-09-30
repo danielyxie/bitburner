@@ -1089,11 +1089,12 @@ export interface TIX {
   getSymbols(): string[];
 
   /**
-   * Returns the price of a stock
+   * Returns the price of a stock.
    *
    * @remarks
    * RAM cost: 2 GB
-   * The stock’s price is the average of its bid and ask price.
+   *
+   * The stock’s price is the average of its bid and ask prices.
    *
    * @example
    * ```ts
