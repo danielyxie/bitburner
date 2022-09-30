@@ -4832,7 +4832,7 @@ export interface NS {
    * RAM cost: 0 GB
    *
    * see: https://github.com/alexei/sprintf.js
-   * @param format - format of the message
+   * @param format - Format of the message.
    * @param args - Value(s) to be printed.
    */
   printf(format: string, ...args: any[]): void;
@@ -4852,8 +4852,8 @@ export interface NS {
    * RAM cost: 0 GB
    *
    * see: https://github.com/alexei/sprintf.js
-   * @param format - format of the message
-   * @param msg - Value to be printed.
+   * @param format - Format of the message.
+   * @param values - Value(s) to be printed.
    */
   tprintf(format: string, ...values: any[]): void;
 
