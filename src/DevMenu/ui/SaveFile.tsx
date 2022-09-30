@@ -69,9 +69,9 @@ export function SaveFile(): React.ReactElement {
         }
 
         if (!restoreScripts) {
-          const parsedServers = JSON.parse(parsedRoot.AllServersSave)
+          const parsedServers = JSON.parse(parsedRoot.AllServersSave);
           for (const server of Object.values(parsedServers) as IReviverValue<Server>[]) {
-            server.data.scripts = []
+            server.data.scripts = [];
           }
 
           parsedRoot.AllServersSave = JSON.stringify(parsedServers);
