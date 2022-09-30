@@ -4822,6 +4822,77 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
+   * If the argument is a string, you can color code your message by prefixing your
+   * string with one of these strings:
+   *
+   * - `"ERROR"`: The whole string will be printed in red. Use this prefix to indicate
+   *   that an error has occurred.
+   *
+   * - `"SUCCESS"`: The whole string will be printed in green, similar to the default
+   *   theme of the Terminal. Use this prefix to indicate that something is correct.
+   *
+   * - `"WARN"`: The whole string will be printed in yellow. Use this prefix to
+   *   indicate that you or a user of your script should be careful of something.
+   *
+   * - `"INFO"`: The whole string will be printed in purplish blue. Use this prefix to
+   *   remind yourself or a user of your script of something. Think of this prefix as
+   *   indicating an FYI (for your information).
+   *
+   * For custom coloring, use ANSI escape sequences. The examples below use the Unicode
+   * escape code `\u001b`. The color coding also works if `\u001b` is replaced with
+   * the hexadecimal escape code `\x1b`. The Bash escape code `\e` is not supported.
+   * The octal escape code `\033` is not allowed because the game runs JavaScript in
+   * strict mode.
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * // Default color coding.
+   * print("ERROR means something's wrong.");
+   * print("SUCCESS means everything's OK.");
+   * print("WARN Tread with caution!");
+   * print("WARNING, warning, danger, danger!");
+   * print("WARNing! Here be dragons.");
+   * print("INFO for your I's only (FYI).");
+   * print("INFOrmation overload!");
+   * // Custom color coding. 
+   * var cyan = "\u001b[36m";
+   * var green = "\u001b[32m";
+   * var red = "\u001b[31m";
+   * var reset = "\u001b[0m";
+   * var msgError = red + "Ugh! What a mess." + reset;
+   * var msgSuccess = green + "Well done!" + reset;
+   * var msgMixed = cyan + "ERROR Should this be in red?" + reset;
+   * print(msgError);
+   * print(msgSuccess);
+   * print(msgMixed);
+   * tail();
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * // Default color coding.
+   * ns.print("ERROR means something's wrong.");
+   * ns.print("SUCCESS means everything's OK.");
+   * ns.print("WARN Tread with caution!");
+   * ns.print("WARNING, warning, danger, danger!");
+   * ns.print("WARNing! Here be dragons.");
+   * ns.print("INFO for your I's only (FYI).");
+   * ns.print("INFOrmation overload!");
+   * // Custom color coding.
+   * const cyan = "\u001b[36m";
+   * const green = "\u001b[32m";
+   * const red = "\u001b[31m";
+   * const reset = "\u001b[0m";
+   * const msgError = "Ugh! What a mess.";
+   * const msgSuccess = "Well done!";
+   * const msgMixed = "ERROR Should this be in red?";
+   * ns.print(`${red + msgError + reset}`);
+   * ns.print(`${green + msgSuccess + reset}`);
+   * ns.print(`${cyan + msgMixed + reset}`);
+   * ns.tail();
+   * ```
+   *
    * @param args - Value(s) to be printed.
    */
   print(...args: any[]): void;
@@ -4831,7 +4902,37 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * see: https://github.com/alexei/sprintf.js
+   * - See {@link NS.print | print} for how to add color to your printed strings.
+   *
+   * - For more detail, see: https://github.com/alexei/sprintf.js
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * var name = "Bit";
+   * var age = 4;
+   * printf("My name is %s.", name);
+   * printf("I'm %d seconds old.", age);
+   * printf("My age in binary is %b.", age);
+   * printf("My age in scientific notation is %e.", age);
+   * printf("In %d seconds, I'll be %s.", 6, "Byte");
+   * printf("Am I a nibble? %t", (4 == age));
+   * tail();
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * const name = "Bit";
+   * const age = 4;
+   * ns.printf("My name is %s.", name);
+   * ns.printf("I'm %d seconds old.", age);
+   * ns.printf("My age in binary is %b.", age);
+   * ns.printf("My age in scientific notation is %e.", age);
+   * ns.printf("In %d seconds, I'll be %s.", 6, "Byte");
+   * ns.printf("Am I a nibble? %t", (4 == age));
+   * ns.tail();
+   * ```
+   *
    * @param format - Format of the message.
    * @param args - Value(s) to be printed.
    */
@@ -4842,6 +4943,8 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
+   * See {@link NS.print | print} for how to add color to your printed strings.
+   *
    * @param args - Value(s) to be printed.
    */
   tprint(...args: any[]): void;
@@ -4851,7 +4954,12 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * see: https://github.com/alexei/sprintf.js
+   * - See {@link NS.print | print} for how to add color to your printed strings.
+   * 
+   * - See {@link NS.printf | printf} for examples on formatted strings.
+   * 
+   * - For more detail, see: https://github.com/alexei/sprintf.js
+   *
    * @param format - Format of the message.
    * @param values - Value(s) to be printed.
    */
