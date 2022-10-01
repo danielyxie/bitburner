@@ -5,8 +5,6 @@ import { RunningScript } from "../../../src/Script/RunningScript";
 import { Script } from "../../../src/Script/Script";
 import { WorkerScript } from "../../../src/Netscript/WorkerScript";
 
-
-
 describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
   const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
   // Creates a mock RunningScript object
@@ -85,10 +83,9 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
     // Run the function through the workerscript's args
     const scope = workerScript.env.vars;
     let curr = fnDesc.reduce((prev, curr) => {
-      try{
+      try {
         return prev[curr];
-      }
-      catch{
+      } catch {
         throw new Error(`Invalid function: [${fnDesc}]`);
       }
     }, scope as any);
@@ -143,14 +140,13 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
       scriptRef: runningScript,
     };
     workerScript.env.vars = NetscriptFunctions(workerScript as unknown as WorkerScript);
-    
+
     // Run the function through the workerscript's args
     const scope = workerScript.env.vars;
     let curr = fnDesc.reduce((prev, curr) => {
-      try{
+      try {
         return prev[curr];
-      }
-      catch{
+      } catch {
         throw new Error(`Invalid function: [${fnDesc}]`);
       }
     }, scope as any);

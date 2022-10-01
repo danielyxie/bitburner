@@ -283,8 +283,8 @@ describe("Terminal Directory Tests", function () {
     });
 
     it("should return false for invalid inputs (inputs that aren't filepaths)", function () {
-      expect(isInRootDirectory(null  as unknown as string)).toEqual(false);
-      expect(isInRootDirectory(undefined  as unknown as string)).toEqual(false);
+      expect(isInRootDirectory(null as unknown as string)).toEqual(false);
+      expect(isInRootDirectory(undefined as unknown as string)).toEqual(false);
       expect(isInRootDirectory("")).toEqual(false);
       expect(isInRootDirectory(" ")).toEqual(false);
       expect(isInRootDirectory("a")).toEqual(false);
