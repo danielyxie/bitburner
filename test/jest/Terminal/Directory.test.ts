@@ -224,10 +224,10 @@ describe("Terminal Directory Tests", function () {
     });
 
     it("should return false for invalid arguments", function () {
-      expect(isValidFilePath(null)).toEqual(false);
-      expect(isValidFilePath()).toEqual(false);
-      expect(isValidFilePath(5)).toEqual(false);
-      expect(isValidFilePath({})).toEqual(false);
+      expect(isValidFilePath(null as unknown as string)).toEqual(false);
+      expect(isValidFilePath(undefined as unknown as string)).toEqual(false);
+      expect(isValidFilePath(5 as unknown as string)).toEqual(false);
+      expect(isValidFilePath({} as unknown as string)).toEqual(false);
     });
   });
 
@@ -283,8 +283,8 @@ describe("Terminal Directory Tests", function () {
     });
 
     it("should return false for invalid inputs (inputs that aren't filepaths)", function () {
-      expect(isInRootDirectory(null)).toEqual(false);
-      expect(isInRootDirectory(undefined)).toEqual(false);
+      expect(isInRootDirectory(null  as unknown as string)).toEqual(false);
+      expect(isInRootDirectory(undefined  as unknown as string)).toEqual(false);
       expect(isInRootDirectory("")).toEqual(false);
       expect(isInRootDirectory(" ")).toEqual(false);
       expect(isInRootDirectory("a")).toEqual(false);
