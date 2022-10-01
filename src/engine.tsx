@@ -4,7 +4,6 @@
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
-import { initBitNodeMultipliers } from "./BitNode/BitNode";
 import { initSourceFiles } from "./SourceFile/SourceFiles";
 import { initDarkWebItems } from "./DarkWeb/DarkWebItems";
 import { generateRandomContract } from "./CodingContractGenerator";
@@ -232,7 +231,6 @@ const Engine: {
     if (loadGame(saveString)) {
       ThemeEvents.emit();
       initSourceFiles();
-      initBitNodeMultipliers();
       initDarkWebItems();
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
@@ -372,7 +370,6 @@ const Engine: {
     } else {
       // No save found, start new game
       initSourceFiles();
-      initBitNodeMultipliers();
       initDarkWebItems();
       Engine.start(); // Run main game loop and Scripts loop
       Player.init();

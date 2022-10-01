@@ -1,11 +1,13 @@
 import React from "react";
 import { SourceFile } from "./SourceFile";
 import { IMap } from "../types";
-import { initBitNodes } from "../BitNode/BitNode";
+import { initBitNodes, initBitNodeMultipliers } from "../BitNode/BitNode";
 
 export const SourceFiles: IMap<SourceFile> = {};
+/** Engine initializer for SourceFiles, BitNodes, and BitNodeMultipliers. Run once at engine load. */
 export function initSourceFiles() {
   initBitNodes();
+  initBitNodeMultipliers();
   SourceFiles["SourceFile1"] = new SourceFile(
     1,
     (
