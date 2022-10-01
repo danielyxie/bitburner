@@ -1,6 +1,6 @@
 import { numeralWrapper } from "../../../src/ui/numeralFormat";
 
-let decimalFormat = "0.[000000]";
+const decimalFormat = "0.[000000]";
 
 describe("Numeral formatting for positive numbers", () => {
   test("should not format too small numbers", () => {

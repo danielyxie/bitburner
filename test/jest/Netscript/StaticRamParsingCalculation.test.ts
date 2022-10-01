@@ -1,6 +1,3 @@
-// Player is needed for calculating costs like Singularity functions, that depend on acquired source files
-import { Player } from "../../../src/Player";
-
 import { RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../../src/Script/RamCalculations";
 import { Script } from "../../../src/Script/Script";

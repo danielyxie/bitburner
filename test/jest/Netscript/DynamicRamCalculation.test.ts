@@ -41,7 +41,10 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
    * @param {(...args: unknown[]) => unknown} fn
    * @param  {unknown[]} args
    */
-  function runPotentiallyAsyncFunction(fn: Function, ...args: (string | number | boolean)[]) {
+  function runPotentiallyAsyncFunction(
+    fn: (...args: (string | number | boolean)[]) => unknown,
+    ...args: (string | number | boolean)[]
+  ) {
     const res = fn(...args);
     if (res instanceof Promise) {
       res.catch(() => undefined);
@@ -82,7 +85,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     // Run the function through the workerscript's args
     const scope = workerScript.env.vars;
-    let curr = fnDesc.reduce((prev, curr) => {
+    const curr = fnDesc.reduce((prev, curr) => {
       try {
         return prev[curr];
       } catch {
@@ -143,7 +146,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     // Run the function through the workerscript's args
     const scope = workerScript.env.vars;
-    let curr = fnDesc.reduce((prev, curr) => {
+    const curr = fnDesc.reduce((prev, curr) => {
       try {
         return prev[curr];
       } catch {
