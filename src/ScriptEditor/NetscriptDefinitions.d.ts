@@ -1104,6 +1104,10 @@ export interface TIX {
    * @example
    * ```ts
    * // NS1
+   * stock.getPrice("FSIG");
+   * 
+   * // Choose the first stock symbol from the array of stock symbols.  Get the price
+   * // of the corresponding stock.
    * var sym = stock.getSymbols()[0];
    * tprint("Stock symbol: " + sym);
    * tprint("Stock price: " + stock.getPrice(sym));
@@ -1111,6 +1115,10 @@ export interface TIX {
    * @example
    * ```ts
    * // NS2
+   * ns.stock.getPrice("FSIG");
+   * 
+   * // Choose the first stock symbol from the array of stock symbols.  Get the price
+   * // of the corresponding stock.
    * const sym = ns.stock.getSymbols()[0];
    * ns.tprint("Stock symbol: " + sym);
    * ns.tprint("Stock price: " + ns.stock.getPrice(sym));
