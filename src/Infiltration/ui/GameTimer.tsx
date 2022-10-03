@@ -8,12 +8,15 @@ interface IProps {
   millis: number;
   onExpire: () => void;
   noPaper?: boolean;
+  ignoreAugment_WKSharmonizer?: boolean;
 }
 
 export function GameTimer(props: IProps): React.ReactElement {
   const player = use.Player();
   const [v, setV] = useState(100);
-  const totalMillis = (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 1.3 : 1) * props.millis;
+  const totalMillis =
+    (!props.ignoreAugment_WKSharmonizer && player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 1.3 : 1) *
+    props.millis;
 
   const tick = 200;
   useEffect(() => {
