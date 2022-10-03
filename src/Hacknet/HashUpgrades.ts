@@ -4,9 +4,8 @@
  */
 import { HashUpgrade, IConstructorParams } from "./HashUpgrade";
 import { HashUpgradesMetadata } from "./data/HashUpgradesMetadata";
-import { IMap } from "../types";
 
-export const HashUpgrades: IMap<HashUpgrade> = {};
+export const HashUpgrades: Record<string, HashUpgrade> = {};
 
 function createHashUpgrade(p: IConstructorParams): void {
   HashUpgrades[p.name] = new HashUpgrade(p);

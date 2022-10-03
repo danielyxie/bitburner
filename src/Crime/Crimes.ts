@@ -1,11 +1,10 @@
 import { Crime } from "./Crime";
 
 import { CONSTANTS } from "../Constants";
-import { IMap } from "../types";
 
 import { CrimeType } from "../utils/WorkType";
 
-export const Crimes: IMap<Crime> = {
+export const Crimes: Record<string, Crime> = {
   Shoplift: new Crime("Shoplift", "to shoplift", CrimeType.SHOPLIFT, 2e3, 15e3, 1 / 20, 0.1, {
     dexterity_success_weight: 1,
     agility_success_weight: 1,

@@ -1,7 +1,6 @@
 import React from "react";
 import { Player } from "../Player";
 import { BitNodeMultipliers, IBitNodeMultipliers } from "./BitNodeMultipliers";
-import { IMap } from "../types";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { CityName } from "../Locations/data/CityNames";
 
@@ -29,7 +28,7 @@ class BitNode {
   }
 }
 
-export const BitNodes: IMap<BitNode> = {};
+export const BitNodes: Record<string, BitNode> = {};
 export function initBitNodes() {
   BitNodes["BitNode1"] = new BitNode(
     1,

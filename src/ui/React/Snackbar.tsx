@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSnackbar, SnackbarProvider as SB } from "notistack";
 import makeStyles from "@mui/styles/makeStyles";
 import { EventEmitter } from "../../utils/EventEmitter";
-import Alert from "@mui/material/Alert";
+import Alert, { AlertColor } from "@mui/material/Alert";
 import Paper from "@mui/material/Paper";
 import { logBoxBaseZIndex } from "./LogBoxManager";
 
@@ -10,12 +10,7 @@ interface IProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
-export enum ToastVariant {
-  SUCCESS = "success",
-  WARNING = "warning",
-  ERROR = "error",
-  INFO = "info",
-}
+export type ToastVariant = AlertColor;
 
 const useStyles = makeStyles(() => ({
   snackbar: {

@@ -1,7 +1,5 @@
 import { codingContractTypesMetadata, DescriptionFunc, GeneratorFunc, SolverFunc } from "./data/codingcontracttypes";
 
-import { IMap } from "./types";
-
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "./utils/JSONReviver";
 import { CodingContractEvent } from "./ui/React/CodingContractModal";
 
@@ -58,7 +56,7 @@ class CodingContractType {
 
 /* Contract Types */
 // tslint:disable-next-line
-export const CodingContractTypes: IMap<CodingContractType> = {};
+export const CodingContractTypes: Record<string, CodingContractType> = {};
 
 for (const md of codingContractTypesMetadata) {
   // tslint:disable-next-line

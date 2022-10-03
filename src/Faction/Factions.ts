@@ -5,11 +5,9 @@
 import { Faction } from "./Faction";
 import { FactionInfos } from "./FactionInfo";
 
-import { IMap } from "../types";
-
 import { Reviver } from "../utils/JSONReviver";
 
-export let Factions: IMap<Faction> = {};
+export let Factions: Record<string, Faction> = {};
 
 export function loadFactions(saveString: string): void {
   Factions = JSON.parse(saveString, Reviver);

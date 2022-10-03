@@ -1,35 +1,8 @@
-/**
- * Performs an equality check between two instances of the same type.
- */
-export type EqualityFunc<T> = (a: T, b: T) => boolean;
+/** Construct a type using the values from an object. Requires object to be defined "as const" */
+export type ValuesFrom<T> = T[keyof T];
 
-/**
- * A map is an object that holds a mapping between string keys and some consistent type.
- */
-export interface IMap<T> {
-  [key: string]: T;
-}
-
-/**
- * Contains a method to initialize itself to a known state.
- */
-export interface ISelfInitializer {
-  /**
-   * Initialize/reset the object to a known, default state.
-   */
-  init(): void;
-}
-
-/**
- * Contains a method to repopulate itself based on a JSON string.
- */
-export interface ISelfLoading {
-  /**
-   * Loads the save state onto the current object.
-   * @param saveState JSON string representing the save state.
-   */
-  load(saveState: string): void;
-}
+/** Only allowed to be true if the types are equal. */
+export type TypeEquality<T1, T2> = [T1] extends [T2] ? ([T2] extends [T1] ? true : false) : false;
 
 /**
  * Status object for functions that return a boolean indicating success/failure

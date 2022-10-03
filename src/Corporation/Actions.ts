@@ -14,6 +14,7 @@ import { Cities } from "../Locations/Cities";
 import { EmployeePositions } from "./EmployeePositions";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
+import { checkObjContainsValue } from "../utils/helpers/checkObjContains";
 
 export function NewIndustry(corporation: Corporation, industry: string, name: string): void {
   if (corporation.divisions.find(({ type }) => industry == type))
@@ -303,16 +304,13 @@ export function BuyBackShares(corporation: Corporation, numShares: number): bool
 
 export function AssignJob(office: OfficeSpace, employeeName: string, job: string): void {
   const employee = office.employees.find((e) => e.name === employeeName);
-
   if (!employee) throw new Error(`Could not find employee '${name}'.`);
-  if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-
+  if (!checkObjContainsValue(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`)
   office.assignSingleJob(employee, job);
 }
 
 export function AutoAssignJob(office: OfficeSpace, job: string, count: number): boolean {
-  if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-
+  if (!checkObjContainsValue(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`)
   return office.autoAssignJob(job, count);
 }
 

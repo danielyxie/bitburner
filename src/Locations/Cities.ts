@@ -3,6 +3,5 @@
  * Key = City Name, Value = City object
  */
 import { City } from "./City";
-import { IMap } from "../types";
 
-export const Cities: IMap<City> = {};
+export const Cities: Record<string, City> = {};

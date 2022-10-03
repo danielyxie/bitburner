@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Typography from "@mui/material/Typography";
 import { saveObject } from "../../SaveObject";
-import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
+import { SnackbarEvents } from "../../ui/React/Snackbar";
 import { Upload } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { OptionSwitch } from "../../ui/React/OptionSwitch";
@@ -25,7 +25,7 @@ export function SaveFile(): React.ReactElement {
       const save = atob(base64Save);
       setSaveFile(save);
     } catch (e: unknown) {
-      SnackbarEvents.emit(String(e), ToastVariant.ERROR, 5000);
+      SnackbarEvents.emit(String(e), "error", 5000);
     }
   }
 

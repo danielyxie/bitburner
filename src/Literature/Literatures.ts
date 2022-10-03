@@ -1,10 +1,9 @@
 import { CityName } from "./../Locations/data/CityNames";
 import { Literature } from "./Literature";
 import { LiteratureNames } from "./data/LiteratureNames";
-import { IMap } from "../types";
 import { FactionNames } from "../Faction/data/FactionNames";
 
-export const Literatures: IMap<Literature> = {};
+export const Literatures: Record<string, Literature> = {};
 
 (function () {
   let title, fn, txt;

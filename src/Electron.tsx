@@ -3,7 +3,7 @@ import { Router } from "./ui/GameRoot";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
-import { IMap, IReturnStatus } from "./types";
+import { IReturnStatus } from "./types";
 import { GetServer } from "./Server/AllServers";
 import { ImportPlayerData, SaveData, saveObject } from "./SaveObject";
 import { Settings } from "./Settings/Settings";
@@ -125,7 +125,7 @@ function initWebserver(): void {
 function initAppNotifier(): void {
   const funcs = {
     terminal: (message: string, type?: string) => {
-      const typesFn: IMap<(s: string) => void> = {
+      const typesFn: Record<string, (s: string) => void> = {
         info: Terminal.info,
         warn: Terminal.warn,
         error: Terminal.error,
@@ -151,7 +151,7 @@ function initSaveFunctions(): void {
         saveObject.exportGame();
       } catch (error) {
         console.error(error);
-        SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
+        SnackbarEvents.emit("Could not export game.", "error", 2000);
       }
     },
     triggerScriptsExport: (): void => exportScripts("*", Player.getHomeComputer()),
@@ -203,7 +203,7 @@ function initElectronBridge(): void {
       })
       .catch((error: unknown) => {
         console.error(error);
-        SnackbarEvents.emit("Could not save game.", ToastVariant.ERROR, 2000);
+        SnackbarEvents.emit("Could not save game.", "error", 2000);
       });
   });
   bridge.receive("trigger-game-export", () => {
@@ -211,7 +211,7 @@ function initElectronBridge(): void {
       window.appSaveFns.triggerGameExport();
     } catch (error) {
       console.error(error);
-      SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
+      SnackbarEvents.emit("Could not export game.", "error", 2000);
     }
   });
   bridge.receive("trigger-scripts-export", () => {
@@ -219,7 +219,7 @@ function initElectronBridge(): void {
       window.appSaveFns.triggerScriptsExport();
     } catch (error) {
       console.error(error);
-      SnackbarEvents.emit("Could not export scripts.", ToastVariant.ERROR, 2000);
+      SnackbarEvents.emit("Could not export scripts.", "error", 2000);
     }
   });
 }

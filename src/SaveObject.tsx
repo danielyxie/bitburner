@@ -16,7 +16,7 @@ import { Settings } from "./Settings/Settings";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
-import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
+import { SnackbarEvents } from "./ui/React/Snackbar";
 
 import * as ExportBonus from "./ExportBonus";
 
@@ -120,7 +120,7 @@ class BitburnerSaveObject {
           pushGameSaved(saveData);
 
           if (emitToastEvent) {
-            SnackbarEvents.emit("Game Saved!", ToastVariant.INFO, 2000);
+            SnackbarEvents.emit("Game Saved!", "info", 2000);
           }
           return resolve();
         })
@@ -707,13 +707,9 @@ function loadGame(saveString: string): boolean {
   }
   if (saveObj.hasOwnProperty("SettingsSave")) {
     try {
+      // Try to set saved settings. 
       Settings.load(saveObj.SettingsSave);
-    } catch (e) {
-      console.error("ERROR: Failed to parse Settings. Re-initing default values");
-      Settings.init();
-    }
-  } else {
-    Settings.init();
+    } catch (e) {}
   }
   if (saveObj.hasOwnProperty("LastExportBonus")) {
     try {

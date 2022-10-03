@@ -10,8 +10,6 @@ import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
 
 import { CONSTANTS } from "../Constants";
-import { IMap } from "../types";
-
 import { numeralWrapper } from "../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
@@ -25,7 +23,7 @@ export let StockMarket: IStockMarket = {
   storedCycles: 0,
   ticksUntilCycle: 0,
 } as IStockMarket; // Maps full stock name -> Stock object
-export const SymbolToStockMap: IMap<Stock> = {}; // Maps symbol -> Stock object
+export const SymbolToStockMap: Record<string, Stock> = {}; // Maps symbol -> Stock object
 
 export function placeOrder(
   stock: Stock,
@@ -172,7 +170,7 @@ export function initStockMarket(): void {
 }
 
 export function initSymbolToStockMap(): void {
-  for (const name of Object.keys(StockSymbols)) {
+  for (const name of Object.keys(StockSymbols) as Array<keyof typeof StockSymbols>) {
     if (StockSymbols.hasOwnProperty(name)) {
       const stock = StockMarket[name];
       if (stock == null) {

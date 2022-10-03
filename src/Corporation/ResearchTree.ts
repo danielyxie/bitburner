@@ -6,8 +6,6 @@
 import { Research } from "./Research";
 import { ResearchMap } from "./ResearchMap";
 
-import { IMap } from "../types";
-
 interface IConstructorParams {
   children?: Node[];
   cost: number;
@@ -86,7 +84,7 @@ export class Node {
 // The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"
 export class ResearchTree {
   // Object containing names of all acquired Research by name
-  researched: IMap<boolean> = {};
+  researched: Record<string, boolean> = {};
 
   // Root Node
   root: Node | null = null;

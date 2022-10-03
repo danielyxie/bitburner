@@ -9,7 +9,6 @@
 import { HashUpgrades } from "./HashUpgrades";
 import { HashUpgrade } from "./HashUpgrade";
 
-import { IMap } from "../types";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export class HashManager {
@@ -21,7 +20,7 @@ export class HashManager {
   hashes = 0;
 
   // Map of Hash Upgrade Name -> levels in that upgrade
-  upgrades: IMap<number> = {};
+  upgrades: Record<string, number> = {};
 
   constructor() {
     for (const name of Object.keys(HashUpgrades)) {

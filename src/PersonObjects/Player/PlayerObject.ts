@@ -6,7 +6,6 @@ import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
 import * as workMethods from "./PlayerObjectWorkMethods";
 
-import { IMap } from "../../types";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { PlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { Exploit } from "../../Exploits/Exploit";
@@ -43,7 +42,7 @@ export class PlayerObject extends Person {
   hashManager = new HashManager();
   hasTixApiAccess = false;
   hasWseAccount = false;
-  jobs: IMap<string> = {};
+  jobs: Record<string, string> = {};
   karma = 0;
   numPeopleKilled = 0;
   location = LocationName.TravelAgency;

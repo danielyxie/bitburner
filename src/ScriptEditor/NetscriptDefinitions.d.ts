@@ -6573,22 +6573,16 @@ export interface NS {
   enums: NSEnums;
 }
 
-/** @public */
-export enum ToastVariant {
-  SUCCESS = "success",
-  WARNING = "warning",
-  ERROR = "error",
-  INFO = "info",
-}
+export const enums = {
+  toast: {
+    SUCCESS: "success",
+    WARNING: "warning",
+    ERROR: "error",
+    INFO: "info",
+  },
+} as const;
 
-/** @public */
-export type ToastVariantValues = `${ToastVariant}`;
-
-/** @public */
-export interface NSEnums {
-  toast: typeof ToastVariant;
-}
-
+export type NSEnums = typeof enums;
 /**
  * Corporation Office API
  * @remarks

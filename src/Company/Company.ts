@@ -2,14 +2,12 @@ import { CompanyPosition } from "./CompanyPosition";
 import * as posNames from "./data/companypositionnames";
 import { favorToRep, repToFavor } from "../Faction/formulas/favor";
 
-import { IMap } from "../types";
-
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export interface IConstructorParams {
   name: string;
   info: string;
-  companyPositions: IMap<boolean>;
+  companyPositions: Record<string, boolean>;
   expMultiplier: number;
   salaryMultiplier: number;
   jobStatReqOffset: number;
@@ -48,7 +46,7 @@ export class Company {
    *
    * Must match names of Company Positions, defined in data/companypositionnames.ts
    */
-  companyPositions: IMap<boolean>;
+  companyPositions: Record<string, boolean>;
 
   /**
    * Company-specific multiplier for earnings

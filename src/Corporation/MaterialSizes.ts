@@ -1,7 +1,5 @@
-import { IMap } from "../types";
-
 // Map of material (by name) to their sizes (how much space it takes in warehouse)
-export const MaterialSizes: IMap<number> = {
+export const MaterialSizes: Record<string, number> = {
   Water: 0.05,
   Energy: 0.01,
   Food: 0.03,

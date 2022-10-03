@@ -71,7 +71,7 @@ import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
-import { checkEnum } from "./utils/helpers/checkEnum";
+import { checkObjContainsValue } from "./utils/helpers/checkObjContains";
 
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
@@ -80,7 +80,17 @@ import { recentScripts } from "./Netscript/RecentScripts";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
+import { TypeEquality, ValuesFrom } from "./types";
 
+// "Enums" as object
+export const enums = {
+  toast: {
+    SUCCESS: "success",
+    WARNING: "warning",
+    ERROR: "error",
+    INFO: "info",
+  } as const,
+};
 export type NSFull = NS & INetscriptExtra;
 
 export function NetscriptFunctions(workerScript: WorkerScript): NSFull {
@@ -89,10 +99,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NSFull {
 
 const base: InternalAPI<NS> = {
   args: [],
-  enums: {
-    toast: ToastVariant,
-  },
-
+  //The next line will error if enums does not match the definition in NetscriptDefinitions.d.ts
+  enums,
   singularity: NetscriptSingularity(),
   gang: NetscriptGang(),
   bladeburner: NetscriptBladeburner(),
@@ -1782,12 +1790,12 @@ const base: InternalAPI<NS> = {
     },
   toast:
     (ctx: NetscriptContext) =>
-    (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, _duration: unknown = 2000): void => {
+    (_message: unknown, _variant: unknown = enums.toast.SUCCESS, _duration: unknown = 2000): void => {
       const message = helpers.string(ctx, "message", _message);
       const variant = helpers.string(ctx, "variant", _variant);
       const duration = _duration === null ? null : helpers.number(ctx, "duration", _duration);
-      if (!checkEnum(ToastVariant, variant))
-        throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
+      if (!checkObjContainsValue(enums.toast, variant))
+        throw new Error(`variant must be one of ${Object.values(enums.toast).join(", ")}`);
       SnackbarEvents.emit(message, variant, duration);
     },
   prompt:

@@ -13,7 +13,6 @@ import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
 import { GetServer } from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
-import { IMap } from "../types";
 import { NS } from "../ScriptEditor/NetscriptDefinitions";
 import { ScriptDeath } from "./ScriptDeath";
 import { ScriptArg } from "./ScriptArg";
@@ -43,14 +42,14 @@ export class WorkerScript {
   /**
    * Stores names of all functions that have logging disabled
    */
-  disableLogs: IMap<boolean> = {};
+  disableLogs: Record<string, boolean> = {};
 
   /**
    * Used for dynamic RAM calculation. Stores names of all functions that have
    * already been checked by this script.
    * TODO: Could probably just combine this with loadedFns?
    */
-  dynamicLoadedFns: IMap<boolean> = {};
+  dynamicLoadedFns: Record<string, boolean> = {};
 
   /**
    * Tracks dynamic RAM usage
@@ -71,7 +70,7 @@ export class WorkerScript {
    * Used for static RAM calculation. Stores names of all functions that have
    * already been checked by this script
    */
-  loadedFns: IMap<boolean> = {};
+  loadedFns: Record<string, boolean> = {};
 
   /**
    * Filename of script

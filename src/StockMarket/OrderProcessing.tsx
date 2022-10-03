@@ -11,8 +11,6 @@ import { Stock } from "./Stock";
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
 
-import { IMap } from "../types";
-
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 
@@ -23,7 +21,7 @@ import * as React from "react";
 
 export interface IProcessOrderRefs {
   stockMarket: IStockMarket;
-  symbolToStockMap: IMap<Stock>;
+  symbolToStockMap: Record<string, Stock>;
 }
 
 /**

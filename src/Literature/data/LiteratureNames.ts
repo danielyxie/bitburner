@@ -1,6 +1,4 @@
-import { IMap } from "../../types";
-
-export const LiteratureNames: IMap<string> = {
+export const LiteratureNames = {
   HackersStartingHandbook: "hackers-starting-handbook.lit",
   CorporationManagementHandbook: "corporation-management-handbook.lit",
   HistoryOfSynthoids: "history-of-synthoids.lit",
@@ -22,4 +20,4 @@ export const LiteratureNames: IMap<string> = {
   TheNewGod: "the-new-god.lit",
   NewTriads: "new-triads.lit",
   TheSecretWar: "the-secret-war.lit",
-};
+} as const;

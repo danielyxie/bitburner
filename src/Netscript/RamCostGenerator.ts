@@ -1,5 +1,4 @@
 import { Player } from "../Player";
-import { IMap } from "../types";
 
 import { NS as INS } from "../ScriptEditor/NetscriptDefinitions";
 import { INetscriptExtra } from "../NetscriptFunctions/Extra";
@@ -15,7 +14,7 @@ type RamCostTree<API> = {
 // TODO remember to update RamCalculations.js and WorkerScript.js
 
 // RAM costs for Netscript functions
-export const RamCostConstants: IMap<number> = {
+export const RamCostConstants: Record<string, number> = {
   ScriptBaseRamCost: 1.6,
   ScriptDomRamCost: 25,
   ScriptCorporationRamCost: 1024 - 1.6,
@@ -604,7 +603,7 @@ const SourceRamCosts = {
   },
 };
 
-export const RamCosts: IMap<any> = SourceRamCosts;
+export const RamCosts: Record<string, any> = SourceRamCosts;
 
 // This line in particular is there so typescript typechecks that we are not missing any static ram cost.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

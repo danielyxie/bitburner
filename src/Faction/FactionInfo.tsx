@@ -1,5 +1,4 @@
 import React from "react";
-import { IMap } from "../types";
 import { FactionNames } from "./data/FactionNames";
 import { Router } from "../ui/GameRoot";
 import { Option } from "./ui/Option";
@@ -81,7 +80,7 @@ export class FactionInfo {
  * A map of all factions and associated info to them.
  */
 // tslint:disable-next-line:variable-name
-export const FactionInfos: IMap<FactionInfo> = {
+export const FactionInfos: Record<string, FactionInfo> = {
   // Endgame
   [FactionNames.Illuminati]: new FactionInfo({
     infoText: (

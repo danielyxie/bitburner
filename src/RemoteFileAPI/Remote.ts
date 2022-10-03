@@ -1,6 +1,6 @@
 import { RFAMessage } from "./MessageDefinitions";
 import { RFARequestHandler } from "./MessageHandlers";
-import { SnackbarEvents, ToastVariant } from "../ui/React/Snackbar";
+import { SnackbarEvents } from "../ui/React/Snackbar";
 
 export class Remote {
   connection?: WebSocket;
@@ -22,18 +22,18 @@ export class Remote {
     this.connection = new WebSocket(address);
 
     this.connection.addEventListener("error", (e: Event) =>
-      SnackbarEvents.emit(`Error with websocket ${address}, details: ${JSON.stringify(e)}`, ToastVariant.ERROR, 5000),
+      SnackbarEvents.emit(`Error with websocket ${address}, details: ${JSON.stringify(e)}`, "error", 5000),
     );
     this.connection.addEventListener("message", handleMessageEvent);
     this.connection.addEventListener("open", () =>
       SnackbarEvents.emit(
         `Remote API connection established on ${this.ipaddr}:${this.port}`,
-        ToastVariant.SUCCESS,
+        "success",
         2000,
       ),
     );
     this.connection.addEventListener("close", () =>
-      SnackbarEvents.emit("Remote API connection closed", ToastVariant.WARNING, 2000),
+      SnackbarEvents.emit("Remote API connection closed", "warning", 2000),
     );
   }
 }

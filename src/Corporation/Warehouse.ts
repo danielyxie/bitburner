@@ -2,7 +2,6 @@ import { Material } from "./Material";
 import { Corporation } from "./Corporation";
 import { Industry } from "./Industry";
 import { MaterialSizes } from "./MaterialSizes";
-import { IMap } from "../types";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 
@@ -21,7 +20,7 @@ export class Warehouse {
   loc: string;
 
   // Map of Materials held by this Warehouse
-  materials: IMap<Material>;
+  materials: Record<string, Material>;
 
   // Maximum amount warehouse can hold
   size: number;

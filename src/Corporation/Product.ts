@@ -4,7 +4,6 @@ import { Industry } from "./Industry";
 import { ProductRatingWeights, IProductRatingWeight } from "./ProductRatingWeights";
 
 import { createCityMap } from "../Locations/createCityMap";
-import { IMap } from "../types";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -25,7 +24,7 @@ interface IConstructorParams {
   features?: number;
   loc?: string;
   size?: number;
-  req?: IMap<number>;
+  req?: Record<string, number>;
 }
 
 export class Product {
@@ -81,7 +80,7 @@ export class Product {
   // Data refers to the production, sale, and quantity of the products
   // These values are specific to a city
   // For each city, the data is [qty, prod, sell]
-  data: IMap<number[]> = createCityMap<number[]>([0, 0, 0]);
+  data: Record<string, number[]> = createCityMap<number[]>([0, 0, 0]);
 
   // Location of this Product
   // Only applies for location-based products like restaurants/hospitals
@@ -93,18 +92,18 @@ export class Product {
 
   // Material requirements. An object that maps the name of a material to how much it requires
   // to make 1 unit of the product.
-  reqMats: IMap<number> = {};
+  reqMats: Record<string, number> = {};
 
   // Data to keep track of whether production/sale of this Product is
   // manually limited. These values are specific to a city
   //  [Whether production/sale is limited, limit amount]
-  prdman: IMap<any[]> = createCityMap<any[]>([false, 0]);
-  sllman: IMap<any[]> = createCityMap<any[]>([false, 0]);
+  prdman: Record<string, any[]> = createCityMap<any[]>([false, 0]);
+  sllman: Record<string, any[]> = createCityMap<any[]>([false, 0]);
 
   // Flags that signal whether automatic sale pricing through Market TA is enabled
   marketTa1 = false;
   marketTa2 = false;
-  marketTa2Price: IMap<number> = createCityMap<number>(0);
+  marketTa2Price: Record<string, number> = createCityMap<number>(0);
 
   // Determines the maximum amount of this product that can be sold in one market cycle
   maxsll = 0;

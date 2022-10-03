@@ -8,9 +8,7 @@ import { Location, IConstructorParams } from "./Location";
 import { CityName } from "./data/CityNames";
 import { LocationsMetadata } from "./data/LocationsMetadata";
 
-import { IMap } from "../types";
-
-export const Locations: IMap<Location> = {};
+export const Locations: Record<string, Location> = {};
 
 /**
  * Here, we'll initialize both Locations and Cities data. These can both

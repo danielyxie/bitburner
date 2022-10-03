@@ -1,6 +1,4 @@
-import { IMap } from "../types";
-
-export const EmployeePositions: IMap<string> = {
+export const EmployeePositions = {
   Operations: "Operations",
   Engineer: "Engineer",
   Business: "Business",
@@ -8,4 +6,4 @@ export const EmployeePositions: IMap<string> = {
   RandD: "Research & Development",
   Training: "Training",
   Unassigned: "Unassigned",
-};
+} as const;
