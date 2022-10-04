@@ -199,5 +199,11 @@ export function updateSkillLevels(this: Person): void {
 }
 
 export function hasAugmentation(this: Person, augName: string, ignoreQueued = false) {
-  return this.augmentations.some((a) => a.name === augName && (ignoreQueued || !this.queuedAugmentations.includes(a)));
+  if (this.augmentations.some((a) => a.name === augName)) {
+    return true;
+  }
+  if (!ignoreQueued && this.queuedAugmentations.some((a) => a.name === augName)) {
+    return true;
+  }
+  return false;
 }
