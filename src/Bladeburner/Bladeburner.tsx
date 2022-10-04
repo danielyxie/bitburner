@@ -1229,7 +1229,7 @@ export class Bladeburner {
       switch (actionIdent.name) {
         case "Tracking":
           // Increase estimate accuracy by a relatively small amount
-          city.improvePopulationEstimateByCount(getRandomInt(100, 1e3));
+          city.improvePopulationEstimateByCount(getRandomInt(100, 1e3) * this.skillMultipliers.successChanceEstimate);
           break;
         case "Bounty Hunter":
           city.changePopulationByCount(-1, { estChange: -1, estOffset: 0 });
