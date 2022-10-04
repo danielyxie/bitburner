@@ -1,9 +1,4 @@
 import { Script } from "../../../src/Script/Script";
-import { Player } from "../../../src/Player";
-
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
-  virtual: true,
-});
 
 const code = `/** @param {NS} ns */
 export async function main(ns) {
@@ -14,9 +9,8 @@ describe("Validate Save Script Works", function () {
   it("Save", function () {
     const server = "home";
     const filename = "test.js";
-    const player = Player;
     const script = new Script();
-    script.saveScript(player, filename, code, server, []);
+    script.saveScript(filename, code, server, []);
 
     expect(script.filename).toEqual(filename);
     expect(script.code).toEqual(code);

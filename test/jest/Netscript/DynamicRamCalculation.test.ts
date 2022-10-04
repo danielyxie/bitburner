@@ -1,27 +1,22 @@
-import { Player } from "../../../src/Player";
 import { NetscriptFunctions } from "../../../src/NetscriptFunctions";
 import { getRamCost, RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 import { Environment } from "../../../src/Netscript/Environment";
 import { RunningScript } from "../../../src/Script/RunningScript";
 import { Script } from "../../../src/Script/Script";
-
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
-  virtual: true,
-});
-
-const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
+import { WorkerScript } from "../../../src/Netscript/WorkerScript";
 
 describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
+  const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
   // Creates a mock RunningScript object
   /**
    *
    * @param {string} code
    * @returns
    */
-  async function createRunningScript(code) {
+  function createRunningScript(code: string) {
     const script = new Script();
     script.code = code;
-    await script.updateRamUsage(Player, []);
+    script.updateRamUsage([]);
 
     const runningScript = new RunningScript(script);
 
@@ -34,7 +29,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
    * @param {number} val
    * @param {number} expected
    */
-  function testEquality(val, expected) {
+  function testEquality(val: number, expected: number) {
     expect(val).toBeGreaterThanOrEqual(expected - 100 * Number.EPSILON);
     expect(val).toBeLessThanOrEqual(expected + 100 * Number.EPSILON);
   }
@@ -46,7 +41,10 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
    * @param {(...args: unknown[]) => unknown} fn
    * @param  {unknown[]} args
    */
-  function runPotentiallyAsyncFunction(fn, ...args) {
+  function runPotentiallyAsyncFunction(
+    fn: (...args: (string | number | boolean)[]) => unknown,
+    ...args: (string | number | boolean)[]
+  ) {
     const res = fn(...args);
     if (res instanceof Promise) {
       res.catch(() => undefined);
@@ -61,43 +59,39 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function testNonzeroDynamicRamCost(fnDesc, ...args) {
+  async function testNonzeroDynamicRamCost(fnDesc: string[], ...args: (string | number | boolean)[]) {
     if (!Array.isArray(fnDesc)) {
       throw new Error("Non-array passed to testNonzeroDynamicRamCost()");
     }
-    const expected = getRamCost(Player, ...fnDesc);
+    const expected = getRamCost(...fnDesc);
     expect(expected).toBeGreaterThan(0);
 
     const code = `${fnDesc.join(".")}();`;
 
-    const runningScript = await createRunningScript(code);
+    const runningScript = createRunningScript(code);
 
     // We don't need a real WorkerScript
     const workerScript = {
       args: args,
       code: code,
+      delay: null,
       dynamicLoadedFns: {},
       dynamicRamUsage: RamCostConstants.ScriptBaseRamCost,
-      env: new Environment(null),
+      env: new Environment(),
       ramUsage: runningScript.ramUsage,
       scriptRef: runningScript,
     };
-    workerScript.env.vars = NetscriptFunctions(workerScript);
+    workerScript.env.vars = NetscriptFunctions(workerScript as WorkerScript);
 
     // Run the function through the workerscript's args
     const scope = workerScript.env.vars;
-    let curr = scope[fnDesc[0]];
-    for (let i = 1; i < fnDesc.length; ++i) {
-      if (curr == null) {
-        throw new Error(`Invalid function specified: [${fnDesc}]`);
+    const curr = fnDesc.reduce((prev, curr) => {
+      try {
+        return prev[curr];
+      } catch {
+        throw new Error(`Invalid function: [${fnDesc}]`);
       }
-
-      if (typeof curr === "function") {
-        break;
-      }
-
-      curr = curr[fnDesc[i]];
-    }
+    }, scope as any);
 
     if (typeof curr === "function") {
       // We use a try/catch because the function will probably fail since the game isn't
@@ -126,17 +120,17 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function testZeroDynamicRamCost(fnDesc, skipRun = false) {
+  async function testZeroDynamicRamCost(fnDesc: string[], skipRun = false) {
     if (!Array.isArray(fnDesc)) {
       throw new Error("Non-array passed to testZeroDynamicRamCost()");
     }
-    const expected = getRamCost(Player, ...fnDesc);
+    const expected = getRamCost(...fnDesc);
     expect(expected).toEqual(0);
     if (skipRun) return;
 
     const code = `${fnDesc.join(".")}();`;
 
-    const runningScript = await createRunningScript(code);
+    const runningScript = createRunningScript(code);
 
     // We don't need a real WorkerScript
     const workerScript = {
@@ -144,26 +138,21 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
       code: code,
       dynamicLoadedFns: {},
       dynamicRamUsage: RamCostConstants.ScriptBaseRamCost,
-      env: new Environment(null),
+      env: new Environment(),
       ramUsage: runningScript.ramUsage,
       scriptRef: runningScript,
     };
-    workerScript.env.vars = NetscriptFunctions(workerScript);
+    workerScript.env.vars = NetscriptFunctions(workerScript as unknown as WorkerScript);
 
     // Run the function through the workerscript's args
     const scope = workerScript.env.vars;
-    let curr = scope[fnDesc[0]];
-    for (let i = 1; i < fnDesc.length; ++i) {
-      if (curr == null) {
-        throw new Error(`Invalid function specified: [${fnDesc}]`);
+    const curr = fnDesc.reduce((prev, curr) => {
+      try {
+        return prev[curr];
+      } catch {
+        throw new Error(`Invalid function: [${fnDesc}]`);
       }
-
-      if (typeof curr === "function") {
-        break;
-      }
-
-      curr = curr[fnDesc[i]];
-    }
+    }, scope as any);
 
     if (typeof curr === "function") {
       // We use a try/catch because the function will probably fail since the game isn't

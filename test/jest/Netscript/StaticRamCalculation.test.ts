@@ -2,10 +2,6 @@ import { Player } from "../../../src/Player";
 import { getRamCost, RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../../src/Script/RamCalculations";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
-  virtual: true,
-});
-
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 const HacknetNamespaceCost = RamCostConstants.ScriptHacknetNodesRamCost;
 
@@ -16,7 +12,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    * @param {number} val
    * @param {number} expected
    */
-  function testEquality(val, expected) {
+  function testEquality(val: number, expected: number) {
     expect(val).toBeGreaterThanOrEqual(expected - 100 * Number.EPSILON);
     expect(val).toBeLessThanOrEqual(expected + 100 * Number.EPSILON);
   }
@@ -29,17 +25,17 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function expectNonZeroRamCost(fnDesc) {
-    const expected = getRamCost(Player, ...fnDesc);
+  async function expectNonZeroRamCost(fnDesc: string[]) {
+    const expected = getRamCost(...fnDesc);
     expect(expected).toBeGreaterThan(0);
 
     const code = fnDesc.join(".") + "(); ";
 
-    const calculated = (await calculateRamUsage(Player, code, [])).cost;
+    const calculated = calculateRamUsage(code, []).cost;
     testEquality(calculated, expected + ScriptBaseCost);
 
     const multipleCallsCode = code.repeat(3);
-    const multipleCallsCalculated = (await calculateRamUsage(Player, multipleCallsCode, [])).cost;
+    const multipleCallsCalculated = calculateRamUsage(multipleCallsCode, []).cost;
     expect(multipleCallsCalculated).toEqual(calculated);
   }
 
@@ -51,27 +47,21 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function expectZeroRamCost(fnDesc) {
-    const expected = getRamCost(Player, ...fnDesc);
+  async function expectZeroRamCost(fnDesc: string[]) {
+    const expected = getRamCost(...fnDesc);
     expect(expected).toEqual(0);
 
     const code = fnDesc.join(".") + "(); ";
-    const calculated = (await calculateRamUsage(Player, code, [])).cost;
+    const calculated = calculateRamUsage(code, []).cost;
     testEquality(calculated, ScriptBaseCost);
 
-    const multipleCallsCalculated = (await calculateRamUsage(Player, code, [])).cost;
+    const multipleCallsCalculated = calculateRamUsage(code, []).cost;
     expect(multipleCallsCalculated).toEqual(ScriptBaseCost);
   }
 
-  /**
-   *
-   * @param {Player} player
-   * @param {number} cost
-   * @returns
-   */
-  function SF4Cost(player, cost) {
-    if (player.bitNodeN === 4) return cost;
-    const sf4 = player.sourceFileLvl(4);
+  function SF4Cost(cost: number) {
+    if (Player.bitNodeN === 4) return cost;
+    const sf4 = Player.sourceFileLvl(4);
     if (sf4 <= 1) return cost * 16;
     if (sf4 === 2) return cost * 4;
     return cost;
@@ -86,16 +76,16 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    * @param {number} cost     - expected cost
    */
-  async function expectSpecificRamCost(fnDesc, cost) {
-    const expected = getRamCost(Player, ...fnDesc);
-    expect(expected).toEqual(SF4Cost(Player, cost));
+  async function expectSpecificRamCost(fnDesc: string[], cost: number) {
+    const expected = getRamCost(...fnDesc);
+    expect(expected).toEqual(SF4Cost(cost));
 
     const code = fnDesc.join(".") + "(); ";
-    const calculated = (await calculateRamUsage(Player, code, [])).cost;
-    testEquality(calculated, ScriptBaseCost + SF4Cost(Player, cost));
+    const calculated = calculateRamUsage(code, []).cost;
+    testEquality(calculated, ScriptBaseCost + SF4Cost(cost));
 
-    const multipleCallsCalculated = (await calculateRamUsage(Player, code, [])).cost;
-    expect(multipleCallsCalculated).toEqual(ScriptBaseCost + SF4Cost(Player, cost));
+    const multipleCallsCalculated = calculateRamUsage(code, []).cost;
+    expect(multipleCallsCalculated).toEqual(ScriptBaseCost + SF4Cost(cost));
   }
 
   describe("Basic Functions", function () {
@@ -535,7 +525,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
     ];
     it("should have zero RAM cost for all functions", function () {
       for (const fn of apiFunctions) {
-        expect(getRamCost(Player, "hacknet", fn)).toEqual(0);
+        expect(getRamCost("hacknet", fn)).toEqual(0);
       }
     });
 
@@ -545,7 +535,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
         code += "hacknet." + fn + "(); ";
       }
 
-      const calculated = await calculateRamUsage(Player, code, []);
+      const calculated = calculateRamUsage(code, []);
       testEquality(calculated.cost, ScriptBaseCost + HacknetNamespaceCost);
     });
   });

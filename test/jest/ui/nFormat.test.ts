@@ -1,6 +1,6 @@
 import { numeralWrapper } from "../../../src/ui/numeralFormat";
 
-let decimalFormat = "0.[000000]";
+const decimalFormat = "0.[000000]";
 
 describe("Numeral formatting for positive numbers", () => {
   test("should not format too small numbers", () => {
@@ -241,6 +241,8 @@ describe("Finding the number furthest away from 0", () => {
     expect(numeralWrapper.largestAbsoluteNumber(789123, -123456, -456789)).toEqual(789123);
   });
   test("Should return 0 for invalid input", () => {
-    expect(numeralWrapper.largestAbsoluteNumber("abc", undefined, null)).toEqual(0);
+    expect(
+      numeralWrapper.largestAbsoluteNumber("abc" as unknown as number, undefined, null as unknown as number),
+    ).toEqual(0);
   });
 });
