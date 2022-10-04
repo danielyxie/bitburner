@@ -1089,21 +1089,39 @@ export interface TIX {
   getSymbols(): string[];
 
   /**
-   * Returns the price of a stock
+   * Returns the price of a stock.
    *
    * @remarks
    * RAM cost: 2 GB
-   * The stock’s price is the average of its bid and ask price.
+   *
+   * The stock’s price is the average of its bid and ask prices. This function requires
+   * that you have the following:
+   *
+   * 1. WSE Account
+   *
+   * 1. TIX API Access
    *
    * @example
    * ```ts
    * // NS1
-   * stock.getPrice("FISG");
+   * stock.getPrice("FSIG");
+   * 
+   * // Choose the first stock symbol from the array of stock symbols.  Get the price
+   * // of the corresponding stock.
+   * var sym = stock.getSymbols()[0];
+   * tprint("Stock symbol: " + sym);
+   * tprint("Stock price: " + stock.getPrice(sym));
    * ```
    * @example
    * ```ts
    * // NS2
-   * ns.stock.getPrice("FISG");
+   * ns.stock.getPrice("FSIG");
+   * 
+   * // Choose the first stock symbol from the array of stock symbols.  Get the price
+   * // of the corresponding stock.
+   * const sym = ns.stock.getSymbols()[0];
+   * ns.tprint("Stock symbol: " + sym);
+   * ns.tprint("Stock price: " + ns.stock.getPrice(sym));
    * ```
    * @param sym - Stock symbol.
    * @returns The price of a stock.
