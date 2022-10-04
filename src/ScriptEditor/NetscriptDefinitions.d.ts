@@ -5969,7 +5969,7 @@ export interface NS {
    * @param data - Data to write.
    * @returns True if the data is successfully written to the port, and false otherwise.
    */
-  tryWritePort(port: number, data: string | number): Promise<boolean>;
+  tryWritePort(port: number, data: string | number): boolean;
 
   /**
    * Read content of a file.

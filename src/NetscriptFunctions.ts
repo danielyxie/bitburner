@@ -1518,7 +1518,7 @@ const base: InternalAPI<NS> = {
     },
   tryWritePort:
     (ctx: NetscriptContext) =>
-    (_port: unknown, data: unknown = ""): Promise<any> => {
+    (_port: unknown, data: unknown = ""): boolean => {
       const port = helpers.number(ctx, "port", _port);
       if (typeof data !== "string" && typeof data !== "number") {
         throw helpers.makeRuntimeErrorMsg(
@@ -1527,7 +1527,7 @@ const base: InternalAPI<NS> = {
         );
       }
       const iport = helpers.getValidPort(ctx, port);
-      return Promise.resolve(iport.tryWrite(data));
+      return iport.tryWrite(data);
     },
   readPort:
     (ctx: NetscriptContext) =>
