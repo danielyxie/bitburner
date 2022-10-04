@@ -25,16 +25,12 @@ export class SleeveSupportWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveSupportWork", this);
   }
 
-  /**
-   * Initiatizes a BladeburnerWork object from a JSON save state.
-   */
+  /** Initiatizes a BladeburnerWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveSupportWork {
     return Generic_fromJSON(SleeveSupportWork, value.data);
   }

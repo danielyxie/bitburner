@@ -136,16 +136,12 @@ export class CrimeWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("CrimeWork", this);
   }
 
-  /**
-   * Initiatizes a CrimeWork object from a JSON save state.
-   */
+  /** Initiatizes a CrimeWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): CrimeWork {
     return Generic_fromJSON(CrimeWork, value.data);
   }

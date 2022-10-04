@@ -80,17 +80,11 @@ import { recentScripts } from "./Netscript/RecentScripts";
 import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
-import { TypeEquality, ValuesFrom } from "./types";
 
 // "Enums" as object
 export const enums = {
-  toast: {
-    SUCCESS: "success",
-    WARNING: "warning",
-    ERROR: "error",
-    INFO: "info",
-  } as const,
-};
+  toast: ToastVariant,
+} as const;
 export type NSFull = NS & INetscriptExtra;
 
 export function NetscriptFunctions(workerScript: WorkerScript): NSFull {
@@ -1796,7 +1790,7 @@ const base: InternalAPI<NS> = {
       const duration = _duration === null ? null : helpers.number(ctx, "duration", _duration);
       if (!checkObjContainsValue(enums.toast, variant))
         throw new Error(`variant must be one of ${Object.values(enums.toast).join(", ")}`);
-      SnackbarEvents.emit(message, variant, duration);
+      SnackbarEvents.emit(message, variant as ToastVariant, duration);
     },
   prompt:
     (ctx: NetscriptContext) =>

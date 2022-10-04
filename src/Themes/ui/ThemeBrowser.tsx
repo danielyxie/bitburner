@@ -10,7 +10,7 @@ import { StyleEditorButton } from "./StyleEditorButton";
 import { ThemeEntry } from "./ThemeEntry";
 import { ThemeCollaborate } from "./ThemeCollaborate";
 import { Modal } from "../../ui/React/Modal";
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 
 // Everything dies when the theme gets reloaded, so we'll keep the current scroll to not jump around.
 let previousScrollY = 0;
@@ -49,7 +49,7 @@ export function ThemeBrowser(): React.ReactElement {
           UNDO
         </Button>
       </>,
-      "info",
+      ToastVariant.INFO,
       30000,
     );
   }

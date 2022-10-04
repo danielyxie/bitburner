@@ -91,16 +91,12 @@ export class GraftingWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("GraftingWork", this);
   }
 
-  /**
-   * Initiatizes a GraftingWork object from a JSON save state.
-   */
+  /** Initiatizes a GraftingWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): GraftingWork {
     return Generic_fromJSON(GraftingWork, value.data);
   }

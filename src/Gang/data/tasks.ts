@@ -6,24 +6,16 @@ import { ITaskParams } from "../ITaskParams";
  * (defined in Gang.js)
  */
 interface IGangMemberTaskMetadata {
-  /**
-   * Description of the task
-   */
+  /** Description of the task */
   desc: string;
 
-  /**
-   * Whether or not this task is meant for Combat-type gangs
-   */
+  /** Whether or not this task is meant for Combat-type gangs */
   isCombat: boolean;
 
-  /**
-   * Whether or not this task is for Hacking-type gangs
-   */
+  /** Whether or not this task is for Hacking-type gangs */
   isHacking: boolean;
 
-  /**
-   * Name of the task
-   */
+  /** Name of the task */
   name: string;
 
   /**

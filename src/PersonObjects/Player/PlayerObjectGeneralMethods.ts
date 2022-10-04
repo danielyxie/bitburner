@@ -39,7 +39,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
 
@@ -257,7 +257,7 @@ export function takeDamage(this: PlayerObject, amt: number): boolean {
 
 export function hospitalize(this: PlayerObject): number {
   const cost = getHospitalizationCost();
-  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning", 2000);
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.SUCCESS, 2000);
 
   this.loseMoney(cost, "hospitalization");
   this.hp.current = this.hp.max;
@@ -1193,7 +1193,7 @@ export function canAccessGrafting(this: PlayerObject): boolean {
 export function giveExploit(this: PlayerObject, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
-    SnackbarEvents.emit("SF -1 acquired!", "success", 2000);
+    SnackbarEvents.emit("SF -1 acquired!", ToastVariant.SUCCESS, 2000);
   }
 }
 
@@ -1202,7 +1202,7 @@ export function giveAchievement(this: PlayerObject, achievementId: string): void
   if (!achievement) return;
   if (!this.achievements.map((a) => a.ID).includes(achievementId)) {
     this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
-    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, "success", 2000);
+    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, ToastVariant.SUCCESS, 2000);
   }
 }
 

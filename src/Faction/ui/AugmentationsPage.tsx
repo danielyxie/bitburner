@@ -1,6 +1,3 @@
-/**
- * Root React Component for displaying a faction's "Purchase Augmentations" page
- */
 import { Box, Button, Tooltip, Typography, Paper, Container } from "@mui/material";
 import React, { useState } from "react";
 
@@ -23,6 +20,7 @@ type IProps = {
   routeToMainPage: () => void;
 };
 
+/** Root React Component for displaying a faction's "Purchase Augmentations" page */
 export function AugmentationsPage(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
 

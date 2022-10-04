@@ -24,19 +24,13 @@ const DefaultConstructorParams: IConstructorParams = {
 };
 
 export class Company {
-  /**
-   * Company name
-   */
+  /** Company name */
   name: string;
 
-  /**
-   * Description and general information about company
-   */
+  /** Description and general information about company */
   info: string;
 
-  /**
-   * Has faction associated.
-   */
+  /** Has faction associated. */
   isMegacorp: boolean;
 
   /**
@@ -48,9 +42,7 @@ export class Company {
    */
   companyPositions: Record<string, boolean>;
 
-  /**
-   * Company-specific multiplier for earnings
-   */
+  /** Company-specific multiplier for earnings */
   expMultiplier: number;
   salaryMultiplier: number;
 
@@ -63,9 +55,7 @@ export class Company {
    */
   jobStatReqOffset: number;
 
-  /**
-   * Properties to track the player's progress in this company
-   */
+  /** Properties to track the player's progress in this company */
   isPlayerEmployed: boolean;
   playerReputation: number;
   favor: number;
@@ -142,16 +132,12 @@ export class Company {
     return newFavor - this.favor;
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("Company", this);
   }
 
-  /**
-   * Initiatizes a Company from a JSON save state.
-   */
+  /** Initiatizes a Company from a JSON save state. */
   static fromJSON(value: IReviverValue): Company {
     return Generic_fromJSON(Company, value.data);
   }

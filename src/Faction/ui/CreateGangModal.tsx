@@ -1,6 +1,3 @@
-/**
- * React Component for the popup used to create a new gang.
- */
 import React from "react";
 import { Modal } from "../../ui/React/Modal";
 import { Router } from "../../ui/GameRoot";
@@ -16,6 +13,7 @@ interface IProps {
   facName: string;
 }
 
+/** React Component for the popup used to create a new gang. */
 export function CreateGangModal(props: IProps): React.ReactElement {
   const combatGangText =
     "This is a COMBAT gang. Members in this gang will have different tasks than HACKING gangs. " +

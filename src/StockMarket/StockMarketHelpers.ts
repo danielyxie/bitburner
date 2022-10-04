@@ -1,6 +1,3 @@
-/**
- * Stock Market Helper Functions
- */
 import { Stock } from "./Stock";
 import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";

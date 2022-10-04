@@ -446,16 +446,12 @@ export class Corporation {
     return;
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("Corporation", this);
   }
 
-  /**
-   * Initiatizes a Corporation object from a JSON save state.
-   */
+  /** Initiatizes a Corporation object from a JSON save state. */
   static fromJSON(value: IReviverValue): Corporation {
     return Generic_fromJSON(Corporation, value.data);
   }

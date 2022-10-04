@@ -107,16 +107,12 @@ export class CreateProgramWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("CreateProgramWork", this);
   }
 
-  /**
-   * Initiatizes a CreateProgramWork object from a JSON save state.
-   */
+  /** Initiatizes a CreateProgramWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): CreateProgramWork {
     return Generic_fromJSON(CreateProgramWork, value.data);
   }

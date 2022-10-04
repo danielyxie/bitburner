@@ -25,7 +25,7 @@ import { Router } from "../../ui/GameRoot";
 import { Player } from "../../Player";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { N00dles } from "../../utils/helpers/N00dles";
 import { Exploit } from "../../Exploits/Exploit";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
@@ -45,9 +45,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   const inBladeburner = Player.inBladeburner();
 
-  /**
-   * Click handler for Bladeburner button at Sector-12 NSA
-   */
+  /** Click handler for Bladeburner button at Sector-12 NSA */
   function handleBladeburner(): void {
     if (Player.inBladeburner()) {
       // Enter Bladeburner division
@@ -73,9 +71,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
   }
 
-  /**
-   * Click handler for Resleeving button at New Tokyo VitaLife
-   */
+  /** Click handler for Resleeving button at New Tokyo VitaLife */
   function handleGrafting(): void {
     Router.toGrafting();
   }
@@ -95,7 +91,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function renderNoodleBar(): React.ReactElement {
     function EatNoodles(): void {
-      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success", 2000);
+      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", ToastVariant.SUCCESS, 2000);
       N00dles(); // This is the true power of the noodles.
       if (Player.sourceFiles.length > 0) Player.giveExploit(Exploit.N00dles);
       if (Player.sourceFileLvl(5) > 0 || Player.bitNodeN === 5) {

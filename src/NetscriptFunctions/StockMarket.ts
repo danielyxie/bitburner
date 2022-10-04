@@ -17,9 +17,7 @@ import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
 export function NetscriptStockMarket(): InternalAPI<TIX> {
-  /**
-   * Checks if the player has TIX API access. Throws an error if the player does not
-   */
+  /** Checks if the player has TIX API access. Throws an error if the player does not */
   const checkTixApiAccess = function (ctx: NetscriptContext): void {
     if (!player.hasWseAccount) {
       throw helpers.makeRuntimeErrorMsg(ctx, `You don't have WSE Access! Cannot use ${ctx.function}()`);

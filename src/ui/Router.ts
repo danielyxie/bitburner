@@ -45,9 +45,7 @@ export interface ScriptEditorRouteOptions {
   vim: boolean;
 }
 
-/**
- * This class keeps track of player navigation/routing within the game.
- */
+/** The router keeps track of player navigation/routing within the game. */
 export interface IRouter {
   // toCinematicText(): void;
   // toInfiltration(): void;

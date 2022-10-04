@@ -1,6 +1,3 @@
-/**
- * Root React component for the Stock Market UI
- */
 import React, { useState, useEffect } from "react";
 
 import { InfoAndPurchases } from "./InfoAndPurchases";
@@ -14,6 +11,7 @@ type IProps = {
   stockMarket: IStockMarket;
 };
 
+/** Root React component for the Stock Market UI */
 export function StockMarketRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {

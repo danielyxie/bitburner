@@ -15,48 +15,30 @@ interface FactionInfoParams {
   assignment?: () => React.ReactElement;
 }
 
-/**
- * Contains the "information" property for all the Factions, which is just a description of each faction
- */
+/** Contains the "information" property for all the Factions, which is just a description of each faction */
 export class FactionInfo {
-  /**
-   * The names of all other factions considered to be enemies to this faction.
-   */
+  /** The names of all other factions considered to be enemies to this faction. */
   enemies: string[];
 
-  /**
-   * The descriptive text to show on the faction's page.
-   */
+  /** The descriptive text to show on the faction's page. */
   infoText: JSX.Element;
 
-  /**
-   * A flag indicating if the faction supports field work to earn reputation.
-   */
+  /** A flag indicating if the faction supports field work to earn reputation. */
   offerFieldWork: boolean;
 
-  /**
-   * A flag indicating if the faction supports hacking work to earn reputation.
-   */
+  /** A flag indicating if the faction supports hacking work to earn reputation. */
   offerHackingWork: boolean;
 
-  /**
-   * A flag indicating if the faction supports security work to earn reputation.
-   */
+  /** A flag indicating if the faction supports security work to earn reputation. */
   offerSecurityWork: boolean;
 
-  /**
-   * Keep faction on install.
-   */
+  /** Keep faction on install. */
   keep: boolean;
 
-  /**
-   * Special faction
-   */
+  /** Special faction */
   special: boolean;
 
-  /**
-   * The data to display on the faction screen.
-   */
+  /** The data to display on the faction screen. */
   assignment?: () => React.ReactElement;
 
   constructor(params: FactionInfoParams) {
@@ -76,9 +58,7 @@ export class FactionInfo {
   }
 }
 
-/**
- * A map of all factions and associated info to them.
- */
+/** A map of all factions and associated info to them. */
 // tslint:disable-next-line:variable-name
 export const FactionInfos: Record<string, FactionInfo> = {
   // Endgame

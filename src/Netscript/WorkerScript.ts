@@ -18,14 +18,10 @@ import { ScriptDeath } from "./ScriptDeath";
 import { ScriptArg } from "./ScriptArg";
 
 export class WorkerScript {
-  /**
-   * Script's arguments
-   */
+  /** Script's arguments */
   args: ScriptArg[];
 
-  /**
-   * Copy of the script's code
-   */
+  /** Copy of the script's code */
   code = "";
 
   /**
@@ -34,14 +30,10 @@ export class WorkerScript {
    */
   delay: number | null = null;
 
-  /**
-   * Holds the Promise reject() function while the script is "blocked" by an async op
-   */
+  /** Holds the Promise reject() function while the script is "blocked" by an async op */
   delayReject?: (reason?: ScriptDeath) => void;
 
-  /**
-   * Stores names of all functions that have logging disabled
-   */
+  /** Stores names of all functions that have logging disabled */
   disableLogs: Record<string, boolean> = {};
 
   /**
@@ -51,19 +43,13 @@ export class WorkerScript {
    */
   dynamicLoadedFns: Record<string, boolean> = {};
 
-  /**
-   * Tracks dynamic RAM usage
-   */
+  /** Tracks dynamic RAM usage */
   dynamicRamUsage: number = RamCostConstants.ScriptBaseRamCost;
 
-  /**
-   * Netscript Environment for this script
-   */
+  /** Netscript Environment for this script */
   env: Environment;
 
-  /**
-   * Status message in case of script error.
-   */
+  /** Status message in case of script error. */
   errorMessage = "";
 
   /**
@@ -72,14 +58,10 @@ export class WorkerScript {
    */
   loadedFns: Record<string, boolean> = {};
 
-  /**
-   * Filename of script
-   */
+  /** Filename of script */
   name: string;
 
-  /**
-   * Script's output/return value. Currently not used or implemented
-   */
+  /** Script's output/return value. Currently not used or implemented */
   output = "";
 
   /**
@@ -88,24 +70,16 @@ export class WorkerScript {
    */
   pid: number;
 
-  /**
-   * Script's Static RAM usage. Equivalent to underlying script's RAM usage
-   */
+  /** Script's Static RAM usage. Equivalent to underlying script's RAM usage */
   ramUsage = 0;
 
-  /**
-   * Reference to underlying RunningScript object
-   */
+  /** Reference to underlying RunningScript object */
   scriptRef: RunningScript;
 
-  /**
-   * hostname on which this script is running
-   */
+  /** hostname on which this script is running */
   hostname: string;
 
-  /**
-   * Function called when the script ends.
-   */
+  /** Function called when the script ends. */
   atExit?: () => void;
 
   constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => NS) {
@@ -142,9 +116,7 @@ export class WorkerScript {
     }
   }
 
-  /**
-   * Returns the Server on which this script is running
-   */
+  /** Returns the Server on which this script is running */
   getServer(): BaseServer {
     const server = GetServer(this.hostname);
     if (server == null) throw new Error(`Script ${this.name} pid ${this.pid} is running on non-existent server?`);

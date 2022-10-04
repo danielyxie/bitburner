@@ -1,6 +1,4 @@
-/**
- * Object representing an upgrade that can be purchased with hashes
- */
+/** Object representing an upgrade that can be purchased with hashes */
 export interface IConstructorParams {
   cost?: number;
   costPerLevel: number;
@@ -26,9 +24,7 @@ export class HashUpgrade {
    */
   costPerLevel = 0;
 
-  /**
-   * Description of what the upgrade does
-   */
+  /** Description of what the upgrade does */
   desc = "";
 
   /**
@@ -37,7 +33,7 @@ export class HashUpgrade {
    */
   hasTargetServer = false;
 
-  // Name of upgrade
+  /** Name of upgrade */
   name = "";
 
   // Generic value used to indicate the potency/amount of this upgrade's effect

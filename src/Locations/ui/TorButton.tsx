@@ -10,9 +10,7 @@ import { Player } from "../../Player";
 
 import { Money } from "../../ui/React/Money";
 
-/**
- * Attempt to purchase a TOR router using the button.
- */
+/** Attempt to purchase a TOR router using the button. */
 export function purchaseTorRouter(): void {
   if (Player.hasTorRouter()) {
     dialogBoxCreate(`You already have a TOR Router!`);

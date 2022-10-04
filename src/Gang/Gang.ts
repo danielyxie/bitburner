@@ -376,7 +376,7 @@ export class Gang {
     return Math.max(1, discount);
   }
 
-  // Returns only valid tasks for this gang. Excludes 'Unassigned'
+  /** Returns only valid tasks for this gang. Excludes 'Unassigned' */
   getAllTaskNames(): string[] {
     return Object.keys(GangMemberTasks).filter((taskName: string) => {
       const task = GangMemberTasks[taskName];
@@ -394,16 +394,12 @@ export class Gang {
     return upg.cost / this.getDiscount();
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("Gang", this);
   }
 
-  /**
-   * Initiatizes a Gang object from a JSON save state.
-   */
+  /** Initiatizes a Gang object from a JSON save state. */
   static fromJSON(value: IReviverValue): Gang {
     return Generic_fromJSON(Gang, value.data);
   }

@@ -1,6 +1,3 @@
-/**
- * Hacknet Servers - Reworked Hacknet Node mechanic for BitNode-9
- */
 import { CONSTANTS } from "../Constants";
 
 import { IHacknetNode } from "./IHacknetNode";
@@ -30,6 +27,7 @@ interface IConstructorParams {
   organizationName?: string;
 }
 
+/** Hacknet Servers - Reworked Hacknet Node mechanic for BitNode-9 */
 export class HacknetServer extends BaseServer implements IHacknetNode {
   // Cache level. Affects hash Capacity
   cache = 1;

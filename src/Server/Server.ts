@@ -86,9 +86,7 @@ export class Server extends BaseServer {
     this.numOpenPortsRequired = params.numOpenPortsRequired != null ? params.numOpenPortsRequired : 5;
   }
 
-  /**
-   * Ensures that the server's difficulty (server security) doesn't get too high
-   */
+  /** Ensures that the server's difficulty (server security) doesn't get too high */
   capDifficulty(): void {
     if (this.hackDifficulty < this.minDifficulty) {
       this.hackDifficulty = this.minDifficulty;
@@ -134,25 +132,19 @@ export class Server extends BaseServer {
     this.moneyMax *= n;
   }
 
-  /**
-   * Strengthens a server's security level (difficulty) by the specified amount
-   */
+  /** Strengthens a server's security level (difficulty) by the specified amount */
   fortify(amt: number): void {
     this.hackDifficulty += amt;
     this.capDifficulty();
   }
 
-  /**
-   * Lowers the server's security level (difficulty) by the specified amount)
-   */
+  /** Lowers the server's security level (difficulty) by the specified amount) */
   weaken(amt: number): void {
     this.hackDifficulty -= amt * BitNodeMultipliers.ServerWeakenRate;
     this.capDifficulty();
   }
 
-  /**
-   * Serialize the current object to a JSON save state
-   */
+  /** Serialize the current object to a JSON save state */
   toJSON(): IReviverValue {
     return Generic_toJSON("Server", this);
   }

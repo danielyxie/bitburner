@@ -61,9 +61,7 @@ export class Script {
     }
   }
 
-  /**
-   * Download the script as a file
-   */
+  /** Download the script as a file */
   download(): void {
     const filename = this.filename;
     const file = new Blob([this.code], { type: "text/plain" });

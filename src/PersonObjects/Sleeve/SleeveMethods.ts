@@ -10,9 +10,7 @@ import { mergeMultipliers, Multipliers } from "../Multipliers";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { getFactionAugmentationsFiltered } from "../../Faction/FactionHelpers";
 
-/**
- * Updates this object's multipliers for the given augmentation
- */
+/** Updates this object's multipliers for the given augmentation */
 export function applyAugmentation(this: Sleeve, aug: Augmentation): void {
   this.mults = mergeMultipliers(this.mults, aug.mults);
 }

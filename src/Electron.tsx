@@ -151,7 +151,7 @@ function initSaveFunctions(): void {
         saveObject.exportGame();
       } catch (error) {
         console.error(error);
-        SnackbarEvents.emit("Could not export game.", "error", 2000);
+        SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
       }
     },
     triggerScriptsExport: (): void => exportScripts("*", Player.getHomeComputer()),
@@ -203,7 +203,7 @@ function initElectronBridge(): void {
       })
       .catch((error: unknown) => {
         console.error(error);
-        SnackbarEvents.emit("Could not save game.", "error", 2000);
+        SnackbarEvents.emit("Could not save game.", ToastVariant.ERROR, 2000);
       });
   });
   bridge.receive("trigger-game-export", () => {
@@ -211,7 +211,7 @@ function initElectronBridge(): void {
       window.appSaveFns.triggerGameExport();
     } catch (error) {
       console.error(error);
-      SnackbarEvents.emit("Could not export game.", "error", 2000);
+      SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
     }
   });
   bridge.receive("trigger-scripts-export", () => {
@@ -219,7 +219,7 @@ function initElectronBridge(): void {
       window.appSaveFns.triggerScriptsExport();
     } catch (error) {
       console.error(error);
-      SnackbarEvents.emit("Could not export scripts.", "error", 2000);
+      SnackbarEvents.emit("Could not export scripts.", ToastVariant.ERROR, 2000);
     }
   });
 }

@@ -230,16 +230,12 @@ export class StaneksGift extends BaseGift {
     this.storedCycles = 0;
   }
 
-  /**
-   * Serialize Staneks Gift to a JSON save state.
-   */
+  /** Serialize Staneks Gift to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("StaneksGift", this);
   }
 
-  /**
-   * Initializes Staneks Gift from a JSON save state
-   */
+  /** Initializes Staneks Gift from a JSON save state */
   static fromJSON(value: IReviverValue): StaneksGift {
     return Generic_fromJSON(StaneksGift, value.data);
   }

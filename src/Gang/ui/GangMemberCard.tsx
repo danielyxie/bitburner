@@ -1,6 +1,3 @@
-/**
- * React Component for a gang member on the management subpage.
- */
 import React from "react";
 import { GangMember } from "../GangMember";
 import { GangMemberCardContent } from "./GangMemberCardContent";
@@ -14,6 +11,7 @@ interface IProps {
   member: GangMember;
 }
 
+/** React Component for a gang member on the management subpage. */
 export function GangMemberCard(props: IProps): React.ReactElement {
   return (
     <Box component={Paper} sx={{ width: "auto" }}>

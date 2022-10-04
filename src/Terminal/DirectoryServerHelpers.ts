@@ -52,9 +52,7 @@ export function getSubdirectories(serv: BaseServer, dir: string): string[] {
   return res;
 }
 
-/**
- * Returns true, if the server's directory itself or one of its subdirectory contains files.
- */
+/** Returns true, if the server's directory itself or one of its subdirectory contains files. */
 export function containsFiles(server: BaseServer, dir: string): boolean {
   const dirWithTrailingSlash = dir + (dir.slice(-1) === "/" ? "" : "/");
 

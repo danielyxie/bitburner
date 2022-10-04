@@ -1,6 +1,4 @@
-/**
- * Names of all locations
- */
+/** Names of all locations */
 export enum LocationName {
   // Aevum Locations
   AevumAeroCorp = "AeroCorp",

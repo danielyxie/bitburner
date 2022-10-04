@@ -2377,16 +2377,12 @@ export class Bladeburner {
     }
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("Bladeburner", this);
   }
 
-  /**
-   * Initiatizes a Bladeburner object from a JSON save state.
-   */
+  /** Initiatizes a Bladeburner object from a JSON save state. */
   static fromJSON(value: IReviverValue): Bladeburner {
     return Generic_fromJSON(Bladeburner, value.data);
   }

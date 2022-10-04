@@ -23,16 +23,12 @@ export class SleeveSynchroWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveSynchroWork", this);
   }
 
-  /**
-   * Initiatizes a SynchroWork object from a JSON save state.
-   */
+  /** Initiatizes a SynchroWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveSynchroWork {
     return Generic_fromJSON(SleeveSynchroWork, value.data);
   }

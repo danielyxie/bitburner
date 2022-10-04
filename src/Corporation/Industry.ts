@@ -1369,16 +1369,12 @@ export class Industry {
     return researchTree.getStorageMultiplier();
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("Industry", this);
   }
 
-  /**
-   * Initiatizes a Industry object from a JSON save state.
-   */
+  /** Initiatizes a Industry object from a JSON save state. */
   static fromJSON(value: IReviverValue): Industry {
     return Generic_fromJSON(Industry, value.data);
   }

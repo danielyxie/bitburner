@@ -47,17 +47,13 @@ export function CompanyLocation(props: IProps): React.ReactElement {
   const company = Companies[props.locName];
   if (company == null) throw new Error(`CompanyLocation component constructed with invalid company: ${props.locName}`);
 
-  /**
-   * Reference to the Location that this component is being rendered for
-   */
+  /** Reference to the Location that this component is being rendered for */
   const location = Locations[props.locName];
   if (location == null) {
     throw new Error(`CompanyLocation component constructed with invalid location: ${props.locName}`);
   }
 
-  /**
-   * Name of company position that player holds, if applicable
-   */
+  /** Name of company position that player holds, if applicable */
   const jobTitle = Player.jobs[props.locName] ? Player.jobs[props.locName] : null;
 
   /**

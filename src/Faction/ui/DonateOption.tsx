@@ -1,6 +1,3 @@
-/**
- * React component for a donate option on the Faction UI
- */
 import React, { useState } from "react";
 
 import { CONSTANTS } from "../../Constants";
@@ -27,6 +24,7 @@ type IProps = {
   rerender: () => void;
 };
 
+/** React component for a donate option on the Faction UI */
 export function DonateOption(props: IProps): React.ReactElement {
   const [donateAmt, setDonateAmt] = useState<number>(NaN);
   const digits = (CONSTANTS.DonateMoneyToRepDivisor + "").length - 1;

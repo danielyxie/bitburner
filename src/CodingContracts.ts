@@ -7,34 +7,22 @@ import { CodingContractEvent } from "./ui/React/CodingContractModal";
 
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
-  /**
-   * Function that generates a description of the problem
-   */
+  /** Function that generates a description of the problem */
   desc: DescriptionFunc;
 
-  /**
-   * Number that generally represents the problem's difficulty. Bigger numbers = harder
-   */
+  /** Number that generally represents the problem's difficulty. Bigger numbers = harder */
   difficulty: number;
 
-  /**
-   * A function that randomly generates a valid 'data' for the problem
-   */
+  /** A function that randomly generates a valid 'data' for the problem */
   generate: GeneratorFunc;
 
-  /**
-   * Name of the type of problem
-   */
+  /** Name of the type of problem */
   name: string;
 
-  /**
-   * The maximum number of tries the player gets on this kind of problem before it self-destructs
-   */
+  /** The maximum number of tries the player gets on this kind of problem before it self-destructs */
   numTries: number;
 
-  /**
-   * Stores a function that checks if the provided answer is correct
-   */
+  /** Stores a function that checks if the provided answer is correct */
   solver: SolverFunc;
 
   constructor(
@@ -70,9 +58,7 @@ for (const md of codingContractTypesMetadata) {
   );
 }
 
-/**
- * Enum representing the different types of rewards a Coding Contract can give
- */
+/** Enum representing the different types of rewards a Coding Contract can give */
 export enum CodingContractRewardType {
   FactionReputation,
   FactionReputationAll,
@@ -80,18 +66,14 @@ export enum CodingContractRewardType {
   Money, // This must always be the last reward type
 }
 
-/**
- * Enum representing the result when trying to solve the Contract
- */
+/** Enum representing the result when trying to solve the Contract */
 export enum CodingContractResult {
   Success,
   Failure,
   Cancelled,
 }
 
-/**
- * A class that represents the type of reward a contract gives
- */
+/** A class that represents the type of reward a contract gives */
 export interface ICodingContractReward {
   /* Name of Company/Faction name for reward, if applicable */
   name?: string;
@@ -159,9 +141,7 @@ export class CodingContract {
     return CodingContractTypes[this.type].solver(this.data, solution);
   }
 
-  /**
-   * Creates a popup to prompt the player to solve the problem
-   */
+  /** Creates a popup to prompt the player to solve the problem */
   async prompt(): Promise<CodingContractResult> {
     return new Promise<CodingContractResult>((resolve) => {
       const props = {
@@ -181,16 +161,12 @@ export class CodingContract {
     });
   }
 
-  /**
-   * Serialize the current file to a JSON save state.
-   */
+  /** Serialize the current file to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("CodingContract", this);
   }
 
-  /**
-   * Initiatizes a CodingContract from a JSON save state.
-   */
+  /** Initiatizes a CodingContract from a JSON save state. */
   static fromJSON(value: IReviverValue): CodingContract {
     return Generic_fromJSON(CodingContract, value.data);
   }

@@ -1,14 +1,12 @@
-/**
- * @public
- */
+export type ValuesFrom<T> = T[keyof T];
+
+/** @public */
 export interface HP {
   current: number;
   max: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface Skills {
   hacking: number;
   strength: number;
@@ -19,9 +17,7 @@ export interface Skills {
   intelligence: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface PossibleInfiltrationLocation {
   city: string;
   name: string;
@@ -33,24 +29,16 @@ export interface PossibleInfiltrationLocation {
  */
 type CodingContractData = any;
 
-/**
- * @public
- */
+/** @public */
 type PortData = string | number;
 
-/**
- * @public
- */
+/** @public */
 type ScriptArg = string | number | boolean;
 
-/**
- * @public
- */
+/** @public */
 type FilenameOrPID = number | string;
 
-/**
- * @public
- */
+/** @public */
 interface Player {
   hp: HP;
   skills: Skills;
@@ -72,9 +60,7 @@ interface Player {
   entropy: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface Multipliers {
   /** Multiplier to hacking skill */
   hacking?: number;
@@ -138,9 +124,7 @@ export interface Multipliers {
   bladeburner_success_chance?: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface RunningScript {
   /** Arguments the script was called with */
   args: (string | number | boolean)[];
@@ -173,9 +157,7 @@ export interface RunningScript {
   threads: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface RecentScript extends RunningScript {
   /** Timestamp of when the script was killed */
   timeOfDeath: Date;
@@ -259,17 +241,13 @@ export interface AugmentPair {
   cost: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export enum PositionTypes {
   Long = "L",
   Short = "S",
 }
 
-/**
- * @public
- */
+/** @public */
 export enum OrderTypes {
   LimitBuy = "Limit Buy Order",
   LimitSell = "Limit Sell Order",
@@ -633,9 +611,7 @@ export interface NodeStats {
   totalProduction: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface CharacterMult {
   /** Agility stat */
   agility: number;
@@ -673,9 +649,7 @@ export interface CharacterMult {
   workMoney: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface SleeveWorkGains {
   /** Hacking exp gained from work */
   workHackExpGain: number;
@@ -693,9 +667,7 @@ export interface SleeveWorkGains {
   workMoneyGain: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface SourceFileLvl {
   /** The number of the source file */
   n: number;
@@ -745,9 +717,7 @@ export interface GangGenInfo {
   wantedPenalty: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangOtherInfoObject {
   /** Gang power */
   power: number;
@@ -755,9 +725,7 @@ export interface GangOtherInfoObject {
   territory: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangOtherInfo {
   [key: string]: GangOtherInfoObject;
 }
@@ -818,9 +786,7 @@ export interface EquipmentStats {
   hack?: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangTerritory {
   /** Money gain impact on task scaling */
   money: number;
@@ -830,9 +796,7 @@ export interface GangTerritory {
   wanted: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangMemberInfo {
   /** Name of the gang member */
   name: string;
@@ -913,9 +877,7 @@ export interface GangMemberInfo {
   moneyGain: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangMemberAscension {
   /** Amount of respect lost from ascending */
   respect: number;
@@ -3840,9 +3802,7 @@ interface SkillsFormulas {
   calculateExp(skill: number, skillMult?: number): number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface WorkStats {
   money: number;
   reputation: number;
@@ -4152,9 +4112,7 @@ export interface Formulas {
   work: WorkFormulas;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface Fragment {
   id: number;
   shape: boolean[][];
@@ -4163,9 +4121,7 @@ export interface Fragment {
   limit: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface ActiveFragment {
   id: number;
   highestCharge: number;
@@ -4287,26 +4243,20 @@ interface Stanek {
   acceptGift(): boolean;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface InfiltrationReward {
   tradeRep: number;
   sellCash: number;
   SoARep: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface ILocation {
   city: string;
   name: string;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface InfiltrationLocation {
   location: ILocation;
   reward: InfiltrationReward;
@@ -6385,7 +6335,7 @@ export interface NS {
    * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
    * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
    */
-  toast(msg: string, variant?: ToastVariantValues, duration?: number | null): void;
+  toast(msg: string, variant?: ToastVariant, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -6573,7 +6523,7 @@ export interface NS {
   enums: NSEnums;
 }
 
-export const enums = {
+declare const enums = {
   toast: {
     SUCCESS: "success",
     WARNING: "warning",
@@ -6581,12 +6531,14 @@ export const enums = {
     INFO: "info",
   },
 } as const;
+type ToastVariant = ValuesFrom<typeof enums.toast>;
+
 
 export type NSEnums = typeof enums;
 /**
  * Corporation Office API
  * @remarks
- * Requires the Office API upgrade from your corporation.
+ * requires the Office API upgrade from your corporation.
  * @public
  */
 export interface OfficeAPI {

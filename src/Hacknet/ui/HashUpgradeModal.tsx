@@ -1,6 +1,3 @@
-/**
- * Create the pop-up for purchasing upgrades with hashes
- */
 import React, { useState, useEffect } from "react";
 
 import { HashUpgrades } from "../HashUpgrades";
@@ -16,6 +13,7 @@ interface IProps {
   onClose: () => void;
 }
 
+/** Create the pop-up for purchasing upgrades with hashes */
 export function HashUpgradeModal(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
