@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { SkillList } from "./SkillList";
 import { BladeburnerConstants } from "../data/Constants";
 import { formatNumber } from "../../utils/StringHelperFunctions";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import Typography from "@mui/material/Typography";
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
 }
 
 export function SkillPage(props: IProps): React.ReactElement {

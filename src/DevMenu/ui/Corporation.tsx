@@ -8,58 +8,54 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Adjuster } from "./Adjuster";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 
 const bigNumber = 1e27;
 
-interface IProps {
-  player: IPlayer;
-}
-
-export function Corporation(props: IProps): React.ReactElement {
+export function Corporation(): React.ReactElement {
   function addTonsCorporationFunds(): void {
-    if (props.player.corporation) {
-      props.player.corporation.funds = props.player.corporation.funds + bigNumber;
+    if (Player.corporation) {
+      Player.corporation.funds = Player.corporation.funds + bigNumber;
     }
   }
 
   function modifyCorporationFunds(modify: number): (x: number) => void {
     return function (funds: number): void {
-      if (props.player.corporation) {
-        props.player.corporation.funds += funds * modify;
+      if (Player.corporation) {
+        Player.corporation.funds += funds * modify;
       }
     };
   }
 
   function resetCorporationFunds(): void {
-    if (props.player.corporation) {
-      props.player.corporation.funds = props.player.corporation.funds - props.player.corporation.funds;
+    if (Player.corporation) {
+      Player.corporation.funds = Player.corporation.funds - Player.corporation.funds;
     }
   }
 
   function addTonsCorporationCycles(): void {
-    if (props.player.corporation) {
-      props.player.corporation.storedCycles = bigNumber;
+    if (Player.corporation) {
+      Player.corporation.storedCycles = bigNumber;
     }
   }
 
   function modifyCorporationCycles(modify: number): (x: number) => void {
     return function (cycles: number): void {
-      if (props.player.corporation) {
-        props.player.corporation.storedCycles += cycles * modify;
+      if (Player.corporation) {
+        Player.corporation.storedCycles += cycles * modify;
       }
     };
   }
 
   function resetCorporationCycles(): void {
-    if (props.player.corporation) {
-      props.player.corporation.storedCycles = 0;
+    if (Player.corporation) {
+      Player.corporation.storedCycles = 0;
     }
   }
 
   function finishCorporationProducts(): void {
-    if (!props.player.corporation) return;
-    props.player.corporation.divisions.forEach((div) => {
+    if (!Player.corporation) return;
+    Player.corporation.divisions.forEach((div) => {
       Object.keys(div.products).forEach((prod) => {
         const product = div.products[prod];
         if (product === undefined) throw new Error("Impossible product undefined");
@@ -69,8 +65,8 @@ export function Corporation(props: IProps): React.ReactElement {
   }
 
   function addCorporationResearch(): void {
-    if (!props.player.corporation) return;
-    props.player.corporation.divisions.forEach((div) => {
+    if (!Player.corporation) return;
+    Player.corporation.divisions.forEach((div) => {
       div.sciResearch.qty += 1e10;
     });
   }

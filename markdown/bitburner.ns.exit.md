@@ -9,11 +9,11 @@ Terminates the current script immediately.
 <b>Signature:</b>
 
 ```typescript
-exit(): void;
+exit(): never;
 ```
 <b>Returns:</b>
 
-void
+never
 
 ## Remarks
 

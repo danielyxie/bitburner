@@ -5,8 +5,8 @@ import { Employee } from "../Corporation/Employee";
 import { Product } from "../Corporation/Product";
 import { Material } from "../Corporation/Material";
 import { Warehouse } from "../Corporation/Warehouse";
-import { IIndustry } from "../Corporation/IIndustry";
-import { ICorporation } from "../Corporation/ICorporation";
+import { Industry } from "../Corporation/Industry";
+import { Corporation } from "../Corporation/Corporation";
 
 import {
   Corporation as NSCorporation,
@@ -59,7 +59,6 @@ import {
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
-import { Industry } from "../Corporation/Industry";
 import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/IndustryData";
 import { CorporationConstants } from "../Corporation/data/Constants";
 import { ResearchMap } from "../Corporation/ResearchMap";
@@ -146,7 +145,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         shares: 0,
         round: corporation.fundingRound + 1, // Make more readable
       }; // Don't throw an error here, no reason to have a second function to check if you can get investment.
-    const val = corporation.determineValuation();
+    const val = corporation.valuation;
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
     const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
     const funding = val * percShares * roundMultiplier;
@@ -166,7 +165,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       corporation.public
     )
       return false;
-    const val = corporation.determineValuation();
+    const val = corporation.valuation;
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
     const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
     const funding = val * percShares * roundMultiplier;
@@ -179,7 +178,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
 
   function goPublic(numShares: number): boolean {
     const corporation = getCorporation();
-    const initialSharePrice = corporation.determineValuation() / corporation.totalShares;
+    const initialSharePrice = corporation.valuation / corporation.totalShares;
     if (isNaN(numShares)) throw new Error("Invalid value for number of issued shares");
     if (numShares < 0) throw new Error("Invalid value for number of issued shares");
     if (numShares > corporation.numShares) throw new Error("You don't have that many shares to issue!");
@@ -191,7 +190,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return true;
   }
 
-  function getResearchCost(division: IIndustry, researchName: string): number {
+  function getResearchCost(division: Industry, researchName: string): number {
     const researchTree = IndustryResearchTrees[division.type];
     if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
     const allResearch = researchTree.getAllNodes();
@@ -200,7 +199,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return research.cost;
   }
 
-  function hasResearched(division: IIndustry, researchName: string): boolean {
+  function hasResearched(division: Industry, researchName: string): boolean {
     return division.researched[researchName] === undefined ? false : (division.researched[researchName] as boolean);
   }
 
@@ -223,13 +222,13 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return true;
   }
 
-  function getCorporation(): ICorporation {
+  function getCorporation(): Corporation {
     const corporation = player.corporation;
     if (corporation === null) throw new Error("cannot be called without a corporation");
     return corporation;
   }
 
-  function getDivision(divisionName: string): IIndustry {
+  function getDivision(divisionName: string): Industry {
     const corporation = getCorporation();
     const division = corporation.divisions.find((div) => div.name === divisionName);
     if (division === undefined) throw new Error(`No division named '${divisionName}'`);
@@ -360,6 +359,9 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         const materialName = helpers.string(ctx, "materialName", _materialName);
         const material = getMaterial(divisionName, cityName, materialName);
         const corporation = getCorporation();
+        const exports = material.exp.map((e) => {
+          return { div: e.ind, loc: e.city, amt: e.amt };
+        });
         return {
           cost: material.bCost,
           sCost: material.sCost,
@@ -370,6 +372,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
           cmp: corporation.unlockUpgrades[3] ? material.cmp : undefined,
           prod: material.prd,
           sell: material.sll,
+          exp: exports,
         };
       },
     getProduct:
@@ -534,7 +537,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       },
     limitProductProduction:
       (ctx: NetscriptContext) =>
-      (_divisionName: unknown, _productName: unknown, _cityName: unknown, _qty: unknown): void => {
+      (_divisionName: unknown, _cityName: unknown, _productName: unknown, _qty: unknown): void => {
         checkAccess(ctx, 7);
         const divisionName = helpers.string(ctx, "divisionName", _divisionName);
         const cityName = helpers.city(ctx, "cityName", _cityName);
@@ -873,20 +876,25 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   return {
     ...warehouseAPI,
     ...officeAPI,
-    getMaterialNames: () => (): string[] => {
-      return CorporationConstants.AllMaterials;
+    getMaterialNames: (ctx: NetscriptContext) => (): string[] => {
+      checkAccess(ctx);
+      return [...CorporationConstants.AllMaterials];
     },
-    getIndustryTypes: () => (): string[] => {
-      return CorporationConstants.AllIndustryTypes;
+    getIndustryTypes: (ctx: NetscriptContext) => (): string[] => {
+      checkAccess(ctx);
+      return [...CorporationConstants.AllIndustryTypes];
     },
-    getUnlockables: () => (): string[] => {
-      return CorporationConstants.AllUnlocks;
+    getUnlockables: (ctx: NetscriptContext) => (): string[] => {
+      checkAccess(ctx);
+      return [...CorporationConstants.AllUnlocks];
     },
-    getUpgradeNames: () => (): string[] => {
-      return CorporationConstants.AllUpgrades;
+    getUpgradeNames: (ctx: NetscriptContext) => (): string[] => {
+      checkAccess(ctx);
+      return [...CorporationConstants.AllUpgrades];
     },
-    getResearchNames: () => (): string[] => {
-      return CorporationConstants.AllResearch;
+    getResearchNames: (ctx: NetscriptContext) => (): string[] => {
+      checkAccess(ctx);
+      return [...CorporationConstants.AllResearch];
     },
     expandIndustry:
       (ctx: NetscriptContext) =>
@@ -976,7 +984,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       (ctx: NetscriptContext) =>
       (_corporationName: unknown, _selfFund: unknown = true): boolean => {
         const corporationName = helpers.string(ctx, "corporationName", _corporationName);
-        const selfFund = !_selfFund;
+        const selfFund = !!_selfFund;
         return createCorporation(corporationName, selfFund);
       },
     hasUnlockUpgrade:
@@ -1038,14 +1046,14 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       (_numShares: unknown): number => {
         checkAccess(ctx);
         const numShares = helpers.number(ctx, "numShares", _numShares);
-        return SellShares(getCorporation(), player, numShares);
+        return SellShares(getCorporation(), numShares);
       },
     buyBackShares:
       (ctx: NetscriptContext) =>
       (_numShares: unknown): boolean => {
         checkAccess(ctx);
         const numShares = helpers.number(ctx, "numShares", _numShares);
-        return BuyBackShares(getCorporation(), player, numShares);
+        return BuyBackShares(getCorporation(), numShares);
       },
     bribe:
       (ctx: NetscriptContext) =>

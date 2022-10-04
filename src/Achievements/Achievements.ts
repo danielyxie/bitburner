@@ -25,6 +25,7 @@ import * as data from "./AchievementData.json";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { isClassWork } from "../Work/ClassWork";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 // Unable to correctly cast the JSON data into AchievementDataJson type otherwise...
 const achievementData = (<AchievementDataJson>(<unknown>data)).achievements;
@@ -346,18 +347,18 @@ export const achievements: IMap<Achievement> = {
   FIRST_HACKNET_NODE: {
     ...achievementData["FIRST_HACKNET_NODE"],
     Icon: "node",
-    Condition: () => !hasHacknetServers(Player) && Player.hacknetNodes.length > 0,
+    Condition: () => !hasHacknetServers() && Player.hacknetNodes.length > 0,
   },
   "30_HACKNET_NODE": {
     ...achievementData["30_HACKNET_NODE"],
     Icon: "hacknet-all",
-    Condition: () => !hasHacknetServers(Player) && Player.hacknetNodes.length >= 30,
+    Condition: () => !hasHacknetServers() && Player.hacknetNodes.length >= 30,
   },
   MAX_HACKNET_NODE: {
     ...achievementData["MAX_HACKNET_NODE"],
     Icon: "hacknet-max",
     Condition: (): boolean => {
-      if (hasHacknetServers(Player)) return false;
+      if (hasHacknetServers()) return false;
       for (const h of Player.hacknetNodes) {
         if (!(h instanceof HacknetNode)) return false;
         if (
@@ -373,7 +374,7 @@ export const achievements: IMap<Achievement> = {
   HACKNET_NODE_10M: {
     ...achievementData["HACKNET_NODE_10M"],
     Icon: "hacknet-10m",
-    Condition: () => !hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 10e6,
+    Condition: () => !hasHacknetServers() && Player.moneySourceB.hacknet >= 10e6,
   },
   REPUTATION_10M: {
     ...achievementData["REPUTATION_10M"],
@@ -383,7 +384,10 @@ export const achievements: IMap<Achievement> = {
   DONATION: {
     ...achievementData["DONATION"],
     Icon: "donation",
-    Condition: () => Object.values(Factions).some((f) => f.favor >= 150),
+    Condition: () =>
+      Object.values(Factions).some(
+        (f) => f.favor >= Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction),
+      ),
   },
   TRAVEL: {
     ...achievementData["TRAVEL"],
@@ -511,14 +515,14 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["FIRST_HACKNET_SERVER"],
     Icon: "HASHNET",
     Visible: () => hasAccessToSF(Player, 9),
-    Condition: () => hasHacknetServers(Player) && Player.hacknetNodes.length > 0,
+    Condition: () => hasHacknetServers() && Player.hacknetNodes.length > 0,
     AdditionalUnlock: [achievementData.FIRST_HACKNET_NODE.ID],
   },
   ALL_HACKNET_SERVER: {
     ...achievementData["ALL_HACKNET_SERVER"],
     Icon: "HASHNETALL",
     Visible: () => hasAccessToSF(Player, 9),
-    Condition: () => hasHacknetServers(Player) && Player.hacknetNodes.length === HacknetServerConstants.MaxServers,
+    Condition: () => hasHacknetServers() && Player.hacknetNodes.length === HacknetServerConstants.MaxServers,
     AdditionalUnlock: [achievementData["30_HACKNET_NODE"].ID],
   },
   MAX_HACKNET_SERVER: {
@@ -526,7 +530,7 @@ export const achievements: IMap<Achievement> = {
     Icon: "HASHNETALL",
     Visible: () => hasAccessToSF(Player, 9),
     Condition: (): boolean => {
-      if (!hasHacknetServers(Player)) return false;
+      if (!hasHacknetServers()) return false;
       for (const h of Player.hacknetNodes) {
         if (typeof h !== "string") return false;
         const hs = GetServer(h);
@@ -547,7 +551,7 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["HACKNET_SERVER_1B"],
     Icon: "HASHNETMONEY",
     Visible: () => hasAccessToSF(Player, 9),
-    Condition: () => hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 1e9,
+    Condition: () => hasHacknetServers() && Player.moneySourceB.hacknet >= 1e9,
     AdditionalUnlock: [achievementData.HACKNET_NODE_10M.ID],
   },
   MAX_CACHE: {
@@ -555,7 +559,7 @@ export const achievements: IMap<Achievement> = {
     Icon: "HASHNETCAP",
     Visible: () => hasAccessToSF(Player, 9),
     Condition: () =>
-      hasHacknetServers(Player) &&
+      hasHacknetServers() &&
       Player.hashManager.hashes === Player.hashManager.capacity &&
       Player.hashManager.capacity > 0,
   },

@@ -4,7 +4,7 @@ import { ScriptArg } from "../Netscript/ScriptArg";
 import { NetscriptContext } from "../Netscript/APIWrapper";
 
 type FlagType = StringConstructor | NumberConstructor | BooleanConstructor | StringConstructor[];
-type FlagsRet = { [key: string]: ScriptArg };
+type FlagsRet = { [key: string]: ScriptArg | string[] };
 export function Flags(ctx: NetscriptContext | string[]): (data: unknown) => FlagsRet {
   const vargs = Array.isArray(ctx) ? ctx : ctx.workerScript.args;
   return (schema: unknown): FlagsRet => {

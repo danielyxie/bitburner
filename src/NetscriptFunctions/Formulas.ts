@@ -52,6 +52,9 @@ import { LocationName } from "../Locations/data/LocationNames";
 import { calculateFactionExp, calculateFactionRep } from "../Work/formulas/Faction";
 import { FactionWorkType } from "../Work/data/FactionWorkType";
 
+import { Player as INetscriptPlayer, Server as IServerDef } from "../ScriptEditor/NetscriptDefinitions";
+import { defaultMultipliers } from "../PersonObjects/Multipliers";
+
 export function NetscriptFormulas(): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
     if (!player.hasProgram(Programs.Formulas.name)) {
@@ -59,6 +62,68 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
     }
   };
   return {
+    mockServer: () => (): IServerDef => ({
+      cpuCores: 0,
+      ftpPortOpen: false,
+      hasAdminRights: false,
+      hostname: "",
+      httpPortOpen: false,
+      ip: "",
+      isConnectedTo: false,
+      maxRam: 0,
+      organizationName: "",
+      ramUsed: 0,
+      smtpPortOpen: false,
+      sqlPortOpen: false,
+      sshPortOpen: false,
+      purchasedByPlayer: false,
+      backdoorInstalled: false,
+      baseDifficulty: 0,
+      hackDifficulty: 0,
+      minDifficulty: 0,
+      moneyAvailable: 0,
+      moneyMax: 0,
+      numOpenPortsRequired: 0,
+      openPortCount: 0,
+      requiredHackingSkill: 0,
+      serverGrowth: 0,
+    }),
+    mockPlayer: () => (): INetscriptPlayer => ({
+      hp: { current: 0, max: 0 },
+      skills: {
+        hacking: 0,
+        strength: 0,
+        defense: 0,
+        dexterity: 0,
+        agility: 0,
+        charisma: 0,
+        intelligence: 0,
+      },
+      exp: {
+        hacking: 0,
+        strength: 0,
+        defense: 0,
+        dexterity: 0,
+        agility: 0,
+        charisma: 0,
+        intelligence: 0,
+      },
+      mults: defaultMultipliers(),
+      numPeopleKilled: 0,
+      money: 0,
+      city: "",
+      location: "",
+      bitNodeN: 0,
+      totalPlaytime: 0,
+      playtimeSinceLastAug: 0,
+      playtimeSinceLastBitnode: 0,
+      jobs: {},
+      factions: [],
+      tor: false,
+      hasCorporation: false,
+      inBladeburner: false,
+      entropy: 0,
+    }),
     reputation: {
       calculateFavorToRep:
         (ctx: NetscriptContext) =>
@@ -345,11 +410,11 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
         },
       classGains:
         (ctx: NetscriptContext) =>
-        (_player: unknown, _classType: unknown, _locationName: unknown): WorkStats => {
-          const target = helpers.player(ctx, _player);
+        (_person: unknown, _classType: unknown, _locationName: unknown): WorkStats => {
+          const person = helpers.player(ctx, _person);
           const classType = helpers.string(ctx, "classType", _classType);
           const locationName = helpers.string(ctx, "locationName", _locationName);
-          return calculateClassEarnings(player, target, classType as ClassType, locationName as LocationName);
+          return calculateClassEarnings(person, classType as ClassType, locationName as LocationName);
         },
       factionGains:
         (ctx: NetscriptContext) =>

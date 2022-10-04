@@ -15,13 +15,12 @@ import { ThemeEvents } from "./Theme";
 import { Settings, defaultSettings } from "../../Settings/Settings";
 import { defaultTheme } from "../Themes";
 import { UserInterfaceTheme } from "../../ScriptEditor/NetscriptDefinitions";
-import { IRouter } from "../../ui/Router";
+import { Router } from "../../ui/GameRoot";
 import { ThemeCollaborate } from "./ThemeCollaborate";
 
 interface IProps {
   open: boolean;
   onClose: () => void;
-  router: IRouter;
 }
 
 interface IColorEditorProps {
@@ -381,7 +380,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
               </Button>
             </Tooltip>
             <Tooltip title="Move over to the theme browser's page to use one of our predefined themes.">
-              <Button startIcon={<PaletteSharpIcon />} onClick={() => props.router.toThemeBrowser()}>
+              <Button startIcon={<PaletteSharpIcon />} onClick={() => Router.toThemeBrowser()}>
                 See more themes
               </Button>
             </Tooltip>

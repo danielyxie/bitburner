@@ -5,7 +5,7 @@ import { uniqueId } from "lodash";
 import React from "react";
 import { SpecialServers } from "../../Server/data/SpecialServers";
 import { Settings } from "../../Settings/Settings";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import { StatsRow } from "../../ui/React/StatsRow";
 import { defaultMultipliers, getBitNodeMultipliers } from "../BitNode";
 import { IBitNodeMultipliers } from "../BitNodeMultipliers";
@@ -33,13 +33,12 @@ export function BitnodeMultiplierDescription({ n, level }: IProps): React.ReactE
 }
 
 export const BitNodeMultipliersDisplay = ({ n, level }: IProps): React.ReactElement => {
-  const player = use.Player();
   // If a level argument has been provided, use that as the multiplier level
   // If not, then we have to assume that we want the next level up from the
   // current node's source file, so we get the min of that, the SF's max level,
   // or if it's BN12, ∞
   const maxSfLevel = n === 12 ? Infinity : 3;
-  const mults = getBitNodeMultipliers(n, level ?? Math.min(player.sourceFileLvl(n) + 1, maxSfLevel));
+  const mults = getBitNodeMultipliers(n, level ?? Math.min(Player.sourceFileLvl(n) + 1, maxSfLevel));
 
   return (
     <Box sx={{ columnCount: 2, columnGap: 1, mb: -2 }}>
@@ -277,8 +276,15 @@ function InfiltrationMults({ mults }: IMultsProps): React.ReactElement {
 }
 
 function BladeburnerMults({ mults }: IMultsProps): React.ReactElement {
-  const player = use.Player();
-  if (!player.canAccessBladeburner()) return <></>;
+  if (!Player.canAccessBladeburner()) return <></>;
+
+  if (mults.BladeburnerRank === 0) {
+    const rows: IBNMultRows = {
+      BladeburnerRank: { name: "Disabled", content: "" },
+    };
+
+    return <BNMultTable sectionName="Bladeburner" rowData={rows} mults={mults} />;
+  }
 
   const rows: IBNMultRows = {
     BladeburnerRank: { name: "Rank Gain" },
@@ -289,8 +295,7 @@ function BladeburnerMults({ mults }: IMultsProps): React.ReactElement {
 }
 
 function StanekMults({ mults }: IMultsProps): React.ReactElement {
-  const player = use.Player();
-  if (!player.canAccessCotMG()) return <></>;
+  if (!Player.canAccessCotMG()) return <></>;
 
   const extraSize = mults.StaneksGiftExtraSize.toFixed(3);
   const rows: IBNMultRows = {
@@ -305,8 +310,7 @@ function StanekMults({ mults }: IMultsProps): React.ReactElement {
 }
 
 function GangMults({ mults }: IMultsProps): React.ReactElement {
-  const player = use.Player();
-  if (player.bitNodeN !== 2 && player.sourceFileLvl(2) <= 0) return <></>;
+  if (Player.bitNodeN !== 2 && Player.sourceFileLvl(2) <= 0) return <></>;
 
   const rows: IBNMultRows = {
     GangSoftcap: {
@@ -320,8 +324,18 @@ function GangMults({ mults }: IMultsProps): React.ReactElement {
 }
 
 function CorporationMults({ mults }: IMultsProps): React.ReactElement {
-  const player = use.Player();
-  if (!player.canAccessCorporation()) return <></>;
+  if (!Player.canAccessCorporation()) return <></>;
+
+  if (mults.CorporationSoftcap < 0.15) {
+    const rows: IBNMultRows = {
+      CorporationSoftcap: {
+        name: "Disabled",
+        content: "",
+      },
+    };
+
+    return <BNMultTable sectionName="Corporation" rowData={rows} mults={mults} />;
+  }
 
   const rows: IBNMultRows = {
     CorporationSoftcap: {

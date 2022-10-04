@@ -4,7 +4,7 @@
 
 ## Material.cost property
 
-cost to buy material
+Cost to buy material
 
 <b>Signature:</b>
 

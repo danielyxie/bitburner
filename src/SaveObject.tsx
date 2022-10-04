@@ -27,7 +27,6 @@ import { AwardNFG, v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
 import { LocationName } from "./Locations/data/LocationNames";
-import { SxProps } from "@mui/system";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { pushGameSaved } from "./Electron";
 import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
@@ -36,7 +35,6 @@ import { Faction } from "./Faction/Faction";
 import { safetlyCreateUniqueServer } from "./Server/ServerHelpers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { v2APIBreak } from "./utils/v2APIBreak";
-import { Script } from "./Script/Script";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -99,9 +97,8 @@ class BitburnerSaveObject {
     this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
     this.StaneksGiftSave = JSON.stringify(staneksGift);
 
-    if (Player.inGang()) {
-      this.AllGangsSave = JSON.stringify(AllGangs);
-    }
+    if (Player.gang) this.AllGangsSave = JSON.stringify(AllGangs);
+
     const saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
 
     return saveString;
@@ -726,7 +723,7 @@ function loadGame(saveString: string): boolean {
       console.error("ERROR: Failed to parse last export bonus Settings " + err);
     }
   }
-  if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+  if (Player.gang && saveObj.hasOwnProperty("AllGangsSave")) {
     try {
       loadAllGangs(saveObj.AllGangsSave);
     } catch (e) {
@@ -760,27 +757,14 @@ function createScamUpdateText(): void {
   }
 }
 
-const resets: SxProps = {
-  "& h1, & h2, & h3, & h4, & p, & a, & ul": {
-    margin: 0,
-    color: Settings.theme.primary,
-    whiteSpace: "initial",
-  },
-  "& ul": {
-    paddingLeft: "1.5em",
-    lineHeight: 1.5,
-  },
-};
-
 function createNewUpdateText(): void {
   setTimeout(
     () =>
       dialogBoxCreate(
-        "New update!<br>" +
+        "New update!\n" +
           "Please report any bugs/issues through the GitHub repository " +
-          "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
+          "or the Bitburner subreddit (reddit.com/r/bitburner).\n\n" +
           CONSTANTS.LatestUpdate,
-        resets,
       ),
     1000,
   );
@@ -789,11 +773,10 @@ function createNewUpdateText(): void {
 function createBetaUpdateText(): void {
   dialogBoxCreate(
     "You are playing on the beta environment! This branch of the game " +
-      "features the latest developments in the game. This version may be unstable.<br>" +
+      "features the latest developments in the game. This version may be unstable.\n" +
       "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
-      "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
+      "or the Bitburner subreddit (reddit.com/r/bitburner).\n\n" +
       CONSTANTS.LatestUpdate,
-    resets,
   );
 }
 

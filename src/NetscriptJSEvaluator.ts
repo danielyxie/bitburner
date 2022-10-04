@@ -5,12 +5,10 @@
 import * as walk from "acorn-walk";
 import { parse } from "acorn";
 
-import { helpers } from "./Netscript/NetscriptHelpers";
 import { ScriptUrl } from "./Script/ScriptUrl";
-import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
-import { IPlayer } from "./PersonObjects/IPlayer";
+import { ScriptModule } from "./Script/ScriptModule";
 
 // Acorn type def is straight up incomplete so we have to fill with our own.
 export type Node = any;
@@ -20,8 +18,23 @@ function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
 }
 
-export async function compile(player: IPlayer, script: Script, scripts: Script[]): Promise<void> {
-  if (!shouldCompile(script, scripts)) return;
+export async function compile(script: Script, scripts: Script[]): Promise<ScriptModule> {
+  //!shouldCompile ensures that script.module is non-null, hence the "as".
+  if (!shouldCompile(script, scripts)) return script.module as Promise<ScriptModule>;
+  script.queueCompile = true;
+  //If we're already in the middle of compiling (script.module has not resolved yet), wait for the previous compilation to finish
+  //If script.module is null, this does nothing.
+  await script.module;
+  //If multiple compiles were called on the same script before a compilation could be completed this ensures only one complilation is actually performed.
+  if (!script.queueCompile) return script.module as Promise<ScriptModule>;
+  script.queueCompile = false;
+  script.updateRamUsage(scripts);
+  const uurls = _getScriptUrls(script, scripts, []);
+  const url = uurls[uurls.length - 1].url;
+  if (script.url && script.url !== url) URL.revokeObjectURL(script.url);
+
+  if (script.dependencies.length > 0) script.dependencies.forEach((dep) => URL.revokeObjectURL(dep.url));
+  script.url = uurls[uurls.length - 1].url;
   // The URL at the top is the one we want to import. It will
   // recursively import all the other modules in the urlStack.
   //
@@ -29,71 +42,9 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
   // but not really behaves like import. Particularly, it cannot
   // load fully dynamic content. So we hide the import from webpack
   // by placing it inside an eval call.
-  await script.updateRamUsage(player, scripts);
-  const uurls = _getScriptUrls(script, scripts, []);
-  const url = uurls[uurls.length - 1].url;
-  if (script.url && script.url !== url) {
-    URL.revokeObjectURL(script.url);
-    // Thoughts: Should we be revoking any URLs here?
-    // If a script is modified repeatedly between two states,
-    // we could reuse the blob at a later time.
-    // BlobCache.removeByValue(script.url);
-    // URL.revokeObjectURL(script.url);
-    // if (script.dependencies.length > 0) {
-    //   script.dependencies.forEach((dep) => {
-    //     removeBlobFromCache(dep.url);
-    //     URL.revokeObjectURL(dep.url);
-    //   });
-    // }
-  }
-  if (script.dependencies.length > 0) script.dependencies.forEach((dep) => URL.revokeObjectURL(dep.url));
-  script.url = uurls[uurls.length - 1].url;
   script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
   script.dependencies = uurls;
-}
-
-// Begin executing a user JS script, and return a promise that resolves
-// or rejects when the script finishes.
-// - script is a script to execute (see Script.js). We depend only on .filename and .code.
-// scripts is an array of other scripts on the server.
-// env is the global environment that should be visible to all the scripts
-// (i.e. hack, grow, etc.).
-// When the promise returned by this resolves, we'll have finished
-// running the main function of the script.
-export async function executeJSScript(
-  player: IPlayer,
-  scripts: Script[] = [],
-  workerScript: WorkerScript,
-): Promise<void> {
-  const script = workerScript.getScript();
-  if (script === null) throw new Error("script is null");
-  await compile(player, script, scripts);
-  workerScript.ramUsage = script.ramUsage;
-  const loadedModule = await script.module;
-
-  const ns = workerScript.env.vars;
-
-  if (!loadedModule) {
-    throw helpers.makeRuntimeRejectMsg(
-      workerScript,
-      `${script.filename} cannot be run because the script module won't load`,
-    );
-  }
-  // TODO: putting await in a non-async function yields unhelpful
-  // "SyntaxError: unexpected reserved word" with no line number information.
-  if (!loadedModule.main) {
-    throw helpers.makeRuntimeRejectMsg(
-      workerScript,
-      `${script.filename} cannot be run because it does not have a main function.`,
-    );
-  }
-  if (!ns) {
-    throw helpers.makeRuntimeRejectMsg(
-      workerScript,
-      `${script.filename} cannot be run because the NS object hasn't been constructed properly.`,
-    );
-  }
-  return loadedModule.main(ns);
+  return script.module;
 }
 
 function isDependencyOutOfDate(filename: string, scripts: Script[], scriptModuleSequenceNumber: number): boolean {
@@ -113,7 +64,11 @@ function isDependencyOutOfDate(filename: string, scripts: Script[], scriptModule
  */
 function shouldCompile(script: Script, scripts: Script[]): boolean {
   if (!script.module) return true;
-  return script.dependencies.some((dep) => isDependencyOutOfDate(dep.filename, scripts, script.moduleSequenceNumber));
+  if (script.dependencies.some((dep) => isDependencyOutOfDate(dep.filename, scripts, script.moduleSequenceNumber))) {
+    script.module = null;
+    return true;
+  }
+  return false;
 }
 
 // Gets a stack of blob urls, the top/right-most element being

@@ -43,7 +43,7 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
       const host = GetServer(runningScript.server);
       if (host === null) throw new Error("getServer of null key?");
       if (!(serv instanceof Server)) throw new Error("trying to grow a non-normal server");
-      const growth = processSingleServerGrowth(serv, timesGrown, Player, host.cpuCores);
+      const growth = processSingleServerGrowth(serv, timesGrown, host.cpuCores);
       runningScript.log(
         `'${serv.hostname}' grown by ${numeralWrapper.format(growth * 100 - 100, "0.000000%")} while offline`,
       );

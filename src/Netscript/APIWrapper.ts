@@ -1,6 +1,5 @@
 import { getRamCost } from "./RamCostGenerator";
 import type { WorkerScript } from "./WorkerScript";
-import { Player } from "../Player";
 import { helpers } from "./NetscriptHelpers";
 import { ScriptArg } from "./ScriptArg";
 import { NSEnums } from "src/ScriptEditor/NetscriptDefinitions";
@@ -41,7 +40,7 @@ function wrapFunction(
   const functionPath = tree.join(".");
   const functionName = tree.pop();
   if (typeof functionName !== "string") {
-    throw helpers.makeRuntimeRejectMsg(workerScript, "Failure occured while wrapping netscript api");
+    throw helpers.makeBasicErrorMsg(workerScript, "Failure occured while wrapping netscript api", "INITIALIZATION");
   }
   const ctx = {
     workerScript,
@@ -50,7 +49,7 @@ function wrapFunction(
   };
   function wrappedFunction(...args: unknown[]): unknown {
     helpers.checkEnvFlags(ctx);
-    helpers.updateDynamicRam(ctx, getRamCost(Player, ...tree, ctx.function));
+    helpers.updateDynamicRam(ctx, getRamCost(...tree, ctx.function));
     return func(ctx)(...args);
   }
   const parent = getNestedProperty(wrappedAPI, tree);

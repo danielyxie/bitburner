@@ -3,6 +3,162 @@
 Changelog
 =========
 
+v2.1.0 - 2022-09-23 Remote File API
+-----------------------------------
+
+Dev note
+
+* The most important change about this update is the introduction of the Remote File API (RFA).
+  With this we also deprecate the HTTP file API and the Visual Studio extension. Those things
+  were made during the rush of Steam and aren't well thought out. This new process works with
+  both the web and Steam version of the game and every text editor. Moving forward we also
+  won't be doing much, if any, upgrades to the in-game editor. We think it's good enough for
+  now and if you need more we recommend you hook up your favorite external editor.
+
+--- NEW FEATURES ---
+
+*  New Remote File API for transmitting files to the game (by @Hoekstraa)
+*  Added a new Augmentation, Z.O.Ë., which allows Sleeves to benefit from Stanek.
+
+--- FIXES ---
+
+API
+
+*  Remove incorrectly placed 's' in ns.tFormat() (by @LJNeon)
+*  More ports (previously max 20, now practically unlimited) (by @Hoekstraa)
+*  Corp functions now return copy of constant arrays instead of the original (by @Mughur)
+*  All the player sub-objects need to be copied for `getPlayer`. (by @MageKing17)
+*  add corp get<constant> functions, UI (by @Mughur)
+*  [danielyxie/bitburner#3860] destroyW0r1dD43m0n now properly gives achievements
+*  [danielyxie/bitburner#3890] favor now properly syncs across pages and the Donate achievement is now given correctly (by @Aerophia)
+*  getCrimeStats use bitnode multipliers in the output of crime stats (by @phyzical)
+*  add singularity function for exporting game save back (by @phyzical)
+
+CODING CONTRACTS
+
+*  inconsistent probability for generation between online and offline (by @quacksouls)
+*  Don't stringify answer if already a string (by @alainbryden)
+*  [danielyxie/bitburner#3755] change input handling for contract attempts (by @Snarling)
+
+CORPORATION
+
+*  [danielyxie/bitburner#3880], [danielyxie/bitburner#3876], [danielyxie/bitburner#3322], [danielyxie/bitburner#3138] Bunch of corporation fixes (by @Mughur)
+*  Gave investors some economics classes (by @Mughur)
+*  Limit shareholder priority on newly issued shares (by @Undeemiss)
+*  dont take research points for something already researched via api (by @phyzical)
+
+CORPORATION API
+
+*  Fix up param order for limitProductProduction to match docs (by @phyzical)
+*  [danielyxie/bitburner#3655] Expose exports from Material (by @Rasmoh)
+
+DOCUMENTATION
+
+*  update docs a bit more, amending some BN and SF texts (by @Mughur)
+*  Fixed Argument order for scp() (by @njalooo)
+*  Some typo fixes in Netscript functions (by @quacksouls)
+*  [danielyxie/bitburner#4033] Why use Coding Contract API (by @quacksouls)
+*  typo fix in description of Caesar cipher (by @quacksouls)
+*  typo fix in terminal.rst (by @BugiDev)
+*  Update bitburner.sleeve.settobladeburneraction.md (by @borisflagell)
+*  Correct documentation for `run()` with 0 threads. (by @MageKing17)
+*  Some doc updates (by @Mughur)
+*  fix documentation for remote api (by @hydroflame)
+
+NETSCRIPT
+
+*  Added functions to resize, move, and close tail windows
+*  [danielyxie/bitburner#2376] ns.exit now exits immediately (by @Snarling)
+*  [danielyxie/bitburner#4055] Fix dynamic ram check (by @Snarling)
+*  [danielyxie/bitburner#4037] ns1 wraps deeper layers correctly. (by @Snarling)
+*  [danielyxie/bitburner#3963] Prevent bladeburner.setActionLevel from setting invalid action levels (by @MPJ-K)
+*  Typo fixes in CodingContract, Hacknet, Singularity APIs (by @quacksouls)
+*  Fix a typo in doc of Singularity.travelToCity() (by @quacksouls)
+*  Update netscript definition file for scp, write, read, and flags (by @Snarling)
+*  Correct missing ! for boolean coercion in Corporation.createCorporation().  (by @Risenafis)
+*  Normalized Stock API logging (by @Snarling)
+*  [danielyxie/bitburner#3992] allow null duration in toast ns function (by @RollerKnobster)
+*  Correct missing `!` for boolean coercion in `singularity.workForCompany()`. (by @MageKing17)
+*  ns.scp and ns.write are now synchronous + fix exec race condition (by @Snarling)
+*  [danielyxie/bitburner#2931] atExit now allows synchronous ns functions (by @Snarling)
+*  Improve real life CPU and memory performance of scripts. (by @Snarling)
+*  Prompt Add user friendly message to avoid throwing recovery screen for invalid choices (by @phyzical)
+*  [danielyxie/bitburner#4081] Rerunning a script from tail window recalculates ram usage (by @Snarling)
+*  [danielyxie/bitburner#3962] The correct script will be closed even if the player modifies args (v2.0) (by @Snarling)
+*  Corrected ns formula for infiltration rewards (by @ezylot)
+*  Add singularity check for finishing company work (by @Snarling)
+
+SLEEVES
+
+*  [danielyxie/bitburner#3819] Allow using the regeneration chamber with sleeves to heal them. (by @coderanger)
+*  [danielyxie/bitburner#4063] fix crash when player tries to assign more than 3 sleeves to Bladeburner contracts (by @Snarling)
+*  [danielyxie/bitburner#4051] Sleeves no longer crash when player quits company sleeve was working (by @Snarling)
+*  [danielyxie/bitburner#4022], [danielyxie/bitburner#4024], [danielyxie/bitburner#4025], [danielyxie/bitburner#3998] (by @Mughur)
+*  Sleeve crime gain bitnode multiplier fix (by @Mughur)
+
+REMOTE FILE API
+
+*  NetscriptDefinitions retains export strings (by @Hoekstraa)
+*  Fix type of RFAMessages with non-String results (by @Hoekstraa)
+
+UI
+
+*  [danielyxie/bitburner#2962] add a setting to display middle time unit in Time Elapsed String (by @hydroflame)
+*  [danielyxie/bitburner#4106] fix incorrect experience display in Crime UI. (by @SilverNexus)
+*  Bitnode stats now show if BB/Corporation are disabled (by @Kelenius)
+*  Removed three empty lines from BB status screen (by @Kelenius)
+*  Add missing space to BN7 description (by @hex7cd)
+*  Improvements to crime work UI (by @Kelenius)
+*  [danielyxie/bitburner#3975], [danielyxie/bitburner#3882] Script Editor more responsive on resize, and fix dirty file indicator (by @Snarling)
+
+
+MISC
+
+*  Added weight to GangMemberTask construction call (by @ezylot)
+*  Fix ANSI display bugs (by @Snarling)
+*  Debounce updateRAM calls in script editor. (by @Snarling)
+*  [danielyxie/bitburner#3979] Allow characters & and ' in filenames (by @Snarling)
+*  [danielyxie/bitburner#3965] Corrected tutorial text (by @mihilt)
+*  Fix infil definitions.d.ts (by @phyzical)
+*  Modify PR template (by @Hoekstraa)
+*  crime gains, sleeve gang augs and faq (by @Mughur)
+*  [danielyxie/bitburner#3649] Preventing server starting security level from going above 100 (by @Shiiyu)
+*  Adds Shadows of Anarchy (by @Lagicrus)
+*  Added intormation about hacking managers to hacking algorithms page (by @Kelenius)
+*  Fix Jest CI Error (by @geggleto)
+*  multiple hasAugmentation checks didn't check if the augment was installed (by @Mughur)
+*  [danielyxie/bitburner#2442] & [danielyxie/bitburner#2795] (by @G4mingJon4s)
+*  Adds info regarding augments and focus (by @Lagicrus)
+*  Removed console.log line (by @dhosborne)
+*  Update some doc (by @hydroflame)
+*  trying to fix int problems (by @hydroflame)
+*  Fix broken ns filesnames (by @hydroflame)
+*  new formula functions (by @hydroflame)
+*  test fixes/md updates (by @phyzical)
+*  Remove "based" from positive adjectives in infiltrations (by @faangbait)
+*  minor fix in instance calculation (by @hydroflame)
+*  fix dynamic ram miscalc not triggering (by @hydroflame)
+*  Refactor game options into separate components (by @hydroflame)
+*  fix settings unfocusing on every key stroke (by @hydroflame)
+*  fix some stuff with the timestamp settings (by @hydroflame)
+*  Fix unique key problem with ascii elements (by @hydroflame)
+*  Improve wrong arg user message and add ui.windowSize (by @hydroflame)
+*  fix stack trace missing in some errors (by @hydroflame)
+*  Fix scp and write in ns1 (by @hydroflame)
+*  Did some changes of the remote api and added documentation (by @hydroflame)
+*  Add dummy function to generate a mock server or player for formulas stuff (by @hydroflame)
+*  fix compile error (by @hydroflame)
+*  regen doc (by @hydroflame)
+*  rm console log (by @hydroflame)
+*  regen doc (by @hydroflame)
+*  Added more info about blood program, change some aug descriptions (by @hydroflame)
+*  use triple equal (by @hydroflame)
+*  Minor improvements to Netscript Port loading and unloading (by @hydroflame)
+*  Fix hostname generation being weird about dash 0 added (by @hydroflame)
+*  upgrade version number. (by @hydroflame)
+*  Nerf noodle bar.
+
+
 v2.0.0 - 2022-07-19 Work rework
 -------------------------------
 

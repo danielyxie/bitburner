@@ -2,8 +2,7 @@ import { FactionNames } from "../Faction/data/FactionNames";
 import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";
-import { IStaneksGift } from "./IStaneksGift";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { BaseGift } from "./BaseGift";
 import { Factions } from "../Faction/Factions";
 import { CalculateEffect } from "./formulas/effect";
 import { StaneksGiftEvents } from "./StaneksGiftEvents";
@@ -13,10 +12,13 @@ import { StanekConstants } from "./data/Constants";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Player } from "../Player";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { defaultMultipliers, mergeMultipliers, Multipliers, scaleMultipliers } from "../PersonObjects/Multipliers";
 
-export class StaneksGift implements IStaneksGift {
+export class StaneksGift extends BaseGift {
   storedCycles = 0;
-  fragments: ActiveFragment[] = [];
+  constructor() {
+    super();
+  }
 
   baseSize(): number {
     return StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13);
@@ -29,7 +31,7 @@ export class StaneksGift implements IStaneksGift {
     return Math.max(3, Math.min(Math.floor(this.baseSize() / 2 + 0.6), StanekConstants.MaxSize));
   }
 
-  charge(player: IPlayer, af: ActiveFragment, threads: number): void {
+  charge(af: ActiveFragment, threads: number): void {
     if (threads > af.highestCharge) {
       af.numCharge = (af.highestCharge * af.numCharge) / threads + 1;
       af.highestCharge = threads;
@@ -38,19 +40,19 @@ export class StaneksGift implements IStaneksGift {
     }
 
     const cotmg = Factions[FactionNames.ChurchOfTheMachineGod];
-    cotmg.playerReputation += (player.mults.faction_rep * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
+    cotmg.playerReputation += (Player.mults.faction_rep * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 
   inBonus(): boolean {
     return (this.storedCycles * CONSTANTS._idleSpeed) / 1000 > 1;
   }
 
-  process(p: IPlayer, numCycles = 1): void {
-    if (!p.hasAugmentation(AugmentationNames.StaneksGift1)) return;
+  process(numCycles = 1): void {
+    if (!Player.hasAugmentation(AugmentationNames.StaneksGift1)) return;
     this.storedCycles += numCycles;
     this.storedCycles -= 10;
     this.storedCycles = Math.max(0, this.storedCycles);
-    this.updateMults(p);
+    this.updateMults();
     StaneksGiftEvents.emit();
   }
 
@@ -95,16 +97,6 @@ export class StaneksGift implements IStaneksGift {
     return this.fragments.find((f) => f.x === rootX && f.y === rootY);
   }
 
-  fragmentAt(worldX: number, worldY: number): ActiveFragment | undefined {
-    for (const aFrag of this.fragments) {
-      if (aFrag.fullAt(worldX, worldY)) {
-        return aFrag;
-      }
-    }
-
-    return undefined;
-  }
-
   count(fragment: Fragment): number {
     let amt = 0;
     for (const aFrag of this.fragments) {
@@ -135,81 +127,98 @@ export class StaneksGift implements IStaneksGift {
     });
   }
 
-  updateMults(p: IPlayer): void {
-    // applyEntropy also reapplies all augmentations and source files
-    // This wraps up the reset nicely
-    p.applyEntropy(p.entropy);
-
+  calculateMults(): Multipliers {
+    const mults = defaultMultipliers();
     for (const aFrag of this.fragments) {
       const fragment = aFrag.fragment();
 
       const power = this.effect(aFrag);
       switch (fragment.type) {
         case FragmentType.HackingChance:
-          p.mults.hacking_chance *= power;
+          mults.hacking_chance *= power;
           break;
         case FragmentType.HackingSpeed:
-          p.mults.hacking_speed *= power;
+          mults.hacking_speed *= power;
           break;
         case FragmentType.HackingMoney:
-          p.mults.hacking_money *= power;
+          mults.hacking_money *= power;
           break;
         case FragmentType.HackingGrow:
-          p.mults.hacking_grow *= power;
+          mults.hacking_grow *= power;
           break;
         case FragmentType.Hacking:
-          p.mults.hacking *= power;
-          p.mults.hacking_exp *= power;
+          mults.hacking *= power;
+          mults.hacking_exp *= power;
           break;
         case FragmentType.Strength:
-          p.mults.strength *= power;
-          p.mults.strength_exp *= power;
+          mults.strength *= power;
+          mults.strength_exp *= power;
           break;
         case FragmentType.Defense:
-          p.mults.defense *= power;
-          p.mults.defense_exp *= power;
+          mults.defense *= power;
+          mults.defense_exp *= power;
           break;
         case FragmentType.Dexterity:
-          p.mults.dexterity *= power;
-          p.mults.dexterity_exp *= power;
+          mults.dexterity *= power;
+          mults.dexterity_exp *= power;
           break;
         case FragmentType.Agility:
-          p.mults.agility *= power;
-          p.mults.agility_exp *= power;
+          mults.agility *= power;
+          mults.agility_exp *= power;
           break;
         case FragmentType.Charisma:
-          p.mults.charisma *= power;
-          p.mults.charisma_exp *= power;
+          mults.charisma *= power;
+          mults.charisma_exp *= power;
           break;
         case FragmentType.HacknetMoney:
-          p.mults.hacknet_node_money *= power;
+          mults.hacknet_node_money *= power;
           break;
         case FragmentType.HacknetCost:
-          p.mults.hacknet_node_purchase_cost /= power;
-          p.mults.hacknet_node_ram_cost /= power;
-          p.mults.hacknet_node_core_cost /= power;
-          p.mults.hacknet_node_level_cost /= power;
+          mults.hacknet_node_purchase_cost /= power;
+          mults.hacknet_node_ram_cost /= power;
+          mults.hacknet_node_core_cost /= power;
+          mults.hacknet_node_level_cost /= power;
           break;
         case FragmentType.Rep:
-          p.mults.company_rep *= power;
-          p.mults.faction_rep *= power;
+          mults.company_rep *= power;
+          mults.faction_rep *= power;
           break;
         case FragmentType.WorkMoney:
-          p.mults.work_money *= power;
+          mults.work_money *= power;
           break;
         case FragmentType.Crime:
-          p.mults.crime_success *= power;
-          p.mults.crime_money *= power;
+          mults.crime_success *= power;
+          mults.crime_money *= power;
           break;
         case FragmentType.Bladeburner:
-          p.mults.bladeburner_max_stamina *= power;
-          p.mults.bladeburner_stamina_gain *= power;
-          p.mults.bladeburner_analysis *= power;
-          p.mults.bladeburner_success_chance *= power;
+          mults.bladeburner_max_stamina *= power;
+          mults.bladeburner_stamina_gain *= power;
+          mults.bladeburner_analysis *= power;
+          mults.bladeburner_success_chance *= power;
           break;
       }
     }
-    p.updateSkillLevels();
+    return mults;
+  }
+
+  updateMults(): void {
+    // applyEntropy also reapplies all augmentations and source files
+    // This wraps up the reset nicely
+    Player.applyEntropy(Player.entropy);
+    const mults = this.calculateMults();
+    Player.mults = mergeMultipliers(Player.mults, mults);
+    Player.updateSkillLevels();
+    const zoeAmt = Player.sleeves.reduce((n, sleeve) => n + (sleeve.hasAugmentation(AugmentationNames.ZOE) ? 1 : 0), 0);
+    if (zoeAmt === 0) return;
+    // Less powerful for each copy.
+    const scaling = 3 / (zoeAmt + 2);
+    const sleeveMults = scaleMultipliers(mults, scaling);
+    for (const sleeve of Player.sleeves) {
+      if (!sleeve.hasAugmentation(AugmentationNames.ZOE)) continue;
+      sleeve.resetMultipliers();
+      sleeve.mults = mergeMultipliers(sleeve.mults, sleeveMults);
+      sleeve.updateSkillLevels();
+    }
   }
 
   prestigeAugmentation(): void {

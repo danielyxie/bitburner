@@ -16,7 +16,7 @@ interface IProps {
 // Create a popup that lets the player manage exports
 export function FindInvestorsModal(props: IProps): React.ReactElement {
   const corporation = useCorporation();
-  const val = corporation.determineValuation();
+  const val = corporation.valuation;
   if (
     corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
     corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length

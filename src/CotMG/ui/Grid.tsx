@@ -2,14 +2,14 @@ import { TableBody, TableRow } from "@mui/material";
 import * as React from "react";
 import { ActiveFragment } from "../ActiveFragment";
 import { calculateGrid } from "../Helper";
-import { IStaneksGift } from "../IStaneksGift";
+import { BaseGift } from "../BaseGift";
 import { Cell } from "./Cell";
 
 interface IProps {
   width: number;
   height: number;
   ghostGrid: number[][];
-  gift: IStaneksGift;
+  gift: BaseGift;
   enter(i: number, j: number): void;
   click(i: number, j: number): void;
 }

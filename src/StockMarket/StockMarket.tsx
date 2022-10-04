@@ -10,14 +10,14 @@ import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
 
 import { CONSTANTS } from "../Constants";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { IMap } from "../types";
-import { EventEmitter } from "../utils/EventEmitter";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver } from "../utils/JSONReviver";
+import { NetscriptContext } from "../Netscript/APIWrapper";
+import { helpers } from "../Netscript/NetscriptHelpers";
 
 export let StockMarket: IStockMarket = {
   lastUpdate: 0,
@@ -33,19 +33,19 @@ export function placeOrder(
   price: number,
   type: OrderTypes,
   position: PositionTypes,
-  workerScript: WorkerScript | null = null,
+  ctx?: NetscriptContext,
 ): boolean {
   if (!(stock instanceof Stock)) {
-    if (workerScript) {
-      workerScript.log("stock.placeOrder", () => `Invalid stock: '${stock}'`);
+    if (ctx) {
+      helpers.log(ctx, () => `Invalid stock: '${stock}'`);
     } else {
       dialogBoxCreate(`ERROR: Invalid stock passed to placeOrder() function`);
     }
     return false;
   }
   if (typeof shares !== "number" || typeof price !== "number") {
-    if (workerScript) {
-      workerScript.log("stock.placeOrder", () => `Invalid arguments: shares='${shares}' price='${price}'`);
+    if (ctx) {
+      helpers.log(ctx, () => `Invalid arguments: shares='${shares}' price='${price}'`);
     } else {
       dialogBoxCreate("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
     }
@@ -85,10 +85,8 @@ export interface ICancelOrderParams {
   stock?: Stock;
   type?: OrderTypes;
 }
-export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScript | null = null): boolean {
-  if (StockMarket["Orders"] == null) {
-    return false;
-  }
+export function cancelOrder(params: ICancelOrderParams, ctx?: NetscriptContext): boolean {
+  if (StockMarket["Orders"] == null) return false;
   if (params.order && params.order instanceof Order) {
     const order = params.order;
     // An 'Order' object is passed in
@@ -120,15 +118,11 @@ export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScri
         params.pos === order.pos
       ) {
         stockOrders.splice(i, 1);
-        if (workerScript) {
-          workerScript.scriptRef.log("Successfully cancelled order: " + orderTxt);
-        }
+        if (ctx) helpers.log(ctx, () => "Successfully cancelled order: " + orderTxt);
         return true;
       }
     }
-    if (workerScript) {
-      workerScript.scriptRef.log("Failed to cancel order: " + orderTxt);
-    }
+    if (ctx) helpers.log(ctx, () => "Failed to cancel order: " + orderTxt);
     return false;
   }
   return false;
@@ -142,9 +136,7 @@ export function loadStockMarket(saveString: string): void {
       storedCycles: 0,
       ticksUntilCycle: 0,
     } as IStockMarket;
-  } else {
-    StockMarket = JSON.parse(saveString, Reviver);
-  }
+  } else StockMarket = JSON.parse(saveString, Reviver);
 }
 
 export function deleteStockMarket(): void {
@@ -158,9 +150,7 @@ export function deleteStockMarket(): void {
 
 export function initStockMarket(): void {
   for (const stk of Object.keys(StockMarket)) {
-    if (StockMarket.hasOwnProperty(stk)) {
-      delete StockMarket[stk];
-    }
+    if (StockMarket.hasOwnProperty(stk)) delete StockMarket[stk];
   }
 
   for (const metadata of InitStockMetadata) {
@@ -171,9 +161,7 @@ export function initStockMarket(): void {
   const orders: IOrderBook = {};
   for (const name of Object.keys(StockMarket)) {
     const stock = StockMarket[name];
-    if (!(stock instanceof Stock)) {
-      continue;
-    }
+    if (!(stock instanceof Stock)) continue;
     orders[stock.symbol] = [];
   }
   StockMarket["Orders"] = orders;
@@ -200,9 +188,7 @@ export function initSymbolToStockMap(): void {
 function stockMarketCycle(): void {
   for (const name of Object.keys(StockMarket)) {
     const stock = StockMarket[name];
-    if (!(stock instanceof Stock)) {
-      continue;
-    }
+    if (!(stock instanceof Stock)) continue;
 
     const roll = Math.random();
     if (roll < 0.45) {
@@ -230,9 +216,7 @@ export function processStockPrices(numCycles = 1): void {
   // We can process the update every 4 seconds as long as there are enough
   // stored cycles. This lets us account for offline time
   const timeNow = new Date().getTime();
-  if (timeNow - StockMarket.lastUpdate < 4e3) {
-    return;
-  }
+  if (timeNow - StockMarket.lastUpdate < 4e3) return;
 
   StockMarket.lastUpdate = timeNow;
   StockMarket.storedCycles -= cyclesPerStockUpdate;
@@ -242,16 +226,12 @@ export function processStockPrices(numCycles = 1): void {
     StockMarket.ticksUntilCycle = TicksPerCycle;
   }
   --StockMarket.ticksUntilCycle;
-  if (StockMarket.ticksUntilCycle <= 0) {
-    stockMarketCycle();
-  }
+  if (StockMarket.ticksUntilCycle <= 0) stockMarketCycle();
 
   const v = Math.random();
   for (const name of Object.keys(StockMarket)) {
     const stock = StockMarket[name];
-    if (!(stock instanceof Stock)) {
-      continue;
-    }
+    if (!(stock instanceof Stock)) continue;
     let av = (v * stock.mv) / 100;
     if (isNaN(av)) {
       av = 0.02;
@@ -310,5 +290,3 @@ export function initStockMarketFn(): void {
   initStockMarket();
   initSymbolToStockMap();
 }
-
-export const eventEmitterForUiReset = new EventEmitter<[]>();

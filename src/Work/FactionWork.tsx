@@ -1,7 +1,7 @@
 import React from "react";
 import { Work, WorkType } from "./Work";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
@@ -37,29 +37,29 @@ export class FactionWork extends Work {
     return f;
   }
 
-  getReputationRate(player: IPlayer): number {
+  getReputationRate(): number {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
-      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
+      focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    return calculateFactionRep(player, this.factionWorkType, this.getFaction().favor) * focusBonus;
+    return calculateFactionRep(Player, this.factionWorkType, this.getFaction().favor) * focusBonus;
   }
 
-  getExpRates(player: IPlayer): WorkStats {
+  getExpRates(): WorkStats {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
-      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
+      focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    const rate = calculateFactionExp(player, this.factionWorkType);
+    const rate = calculateFactionExp(Player, this.factionWorkType);
     return scaleWorkStats(rate, focusBonus, false);
   }
 
-  process(player: IPlayer, cycles: number): boolean {
+  process(cycles: number): boolean {
     this.cyclesWorked += cycles;
-    this.getFaction().playerReputation += this.getReputationRate(player) * cycles;
+    this.getFaction().playerReputation += this.getReputationRate() * cycles;
 
-    const rate = this.getExpRates(player);
-    applyWorkStats(player, player, rate, cycles, "class");
+    const rate = this.getExpRates();
+    applyWorkStats(Player, rate, cycles, "class");
 
     return false;
   }

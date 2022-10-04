@@ -15,6 +15,7 @@ BitNode-1: Source Genesis
 Description
     The first BitNode created by the Enders to imprison the minds of humans. It became
     the prototype and testing-grounds for all of the BitNodes that followed.
+
     This is the first BitNode that you play through. It has no special
     modifications or mechanics.
 
@@ -34,6 +35,8 @@ Difficulty
 BitNode-2: Rise of the Underworld
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Description
+    From the shadows, they rose.
+
     Organized crime groups quickly filled the void of power left behind from the collapse of
     Western government in the 2050s. As society and civlization broke down, people quickly
     succumbed to the innate human impulse of evil and savagery. The organized crime
@@ -47,9 +50,11 @@ Description
     * Certain Factions (Slum Snakes, Tetrads, The Syndicate, The Dark Army, Speakers for the Dead,
       NiteSec, The Black Hand) give the player the ability to form and manage their own gangs. These gangs
       will earn the player money and reputation with the corresponding Faction
-    * Every Augmentation in the game will be available through the Factions listed above
+    * Every Augmentation* in the game will be available through the Factions listed above
     * For every Faction NOT listed above, reputation gains are halved
     * You will no longer gain passive reputation with Factions
+
+    (* except Neuroflux Governor, The Red Pill and augments of secret factions)
 
 Source-File
     :Max Level: 3
@@ -71,15 +76,17 @@ BitNode-3: Corporatocracy
 Description
     Our greatest illusion is that a healthy society can revolve around a
     single-minded pursuit of wealth.
+
     Sometime in the early 21st century economic and political globalization turned
     the world into a corporatocracy, and it never looked back. Now, the privileged
     elite will happily bankrupt their own countrymen, decimate their own community,
     and evict their neighbors from houses in their desperate bid to increase their wealth.
+    
     In this BitNode you can create and manage your own corporation. Running a successful corporation
     has the potential of generating massive profits. All other forms of income are reduced by 75%. Furthermore:
 
     * The price and reputation cost of all Augmentations is tripled
-    * The starting and maximum amount of money on servers is reduced by 75%
+    * The starting and maximum amount of money on servers is reduced by 80%
     * Server growth rate is reduced by 80%
     * You now only need 75 favour with a faction in order to donate to it, rather than 150
 
@@ -87,7 +94,7 @@ Source-File
     :Max Level: 3
 
     This Source-File lets you create corporations on other BitNodes (although
-    some BitNodes will disable this mechanic). This Source-File also increases your
+    some BitNodes will disable this mechanic) and level 3 permanently unlocks the full API. This Source-File also increases your
     charisma and company salary multipliers by:
 
     * Level 1: 8%
@@ -117,7 +124,11 @@ Source-File
     :Max Level: 3
 
     This Source-File lets you access and use the Singularity Functions in other BitNodes.
-    Each level of this Source-File will reduce RAM costs.
+    Each level of this Source-File will reduce RAM costs:
+
+    * Level 1: 16x
+    * Level 2: 4x
+    * Level 3: 1x
 
 Difficulty:
     Depending on what Source-Files you have unlocked before attempting this BitNode,
@@ -134,11 +145,11 @@ Description
     In this BitNode:
 
     * The base security level of servers is doubled
-    * The starting money on servers is halved, but the maximum money remains the same
+    * The starting money on servers is halved, but the maximum money is doubled
     * Most methods of earning money now give significantly less
     * Infiltration gives 50% more reputation and money
     * Corporations have 50% lower valuations and are therefore less profitable
-    * Augmentations are more expensive
+    * Augmentation price is doubled
     * Hacking experience gain rates are reduced
 
 Source-File
@@ -176,7 +187,7 @@ Description
 
     * Hacking and Hacknet Nodes will be less profitable
     * Your hacking level is reduced by 65%
-    * Hacking experience gain from scripts is reduced by 75%
+    * Hacking experience gain is reduced by 75%
     * Corporations have 80% lower valuations and are therefore less profitable
     * Working for companies is 50% less profitable
     * Crimes and Infiltration are 25% less profitable
@@ -215,7 +226,7 @@ Description
     * Augmentations are 3x more expensive
     * Hacking and Hacknet Nodes will be significantly less profitable
     * Your hacking level is reduced by 65%
-    * Hacking experience gain from scripts is reduced by 75%
+    * Hacking experience gain is reduced by 75%
     * Corporations have 80% lower valuations and are therefore less profitable
     * Working for companies is 50% less profitable
     * Crimes and Infiltration are 25% less profitable
@@ -295,6 +306,12 @@ Source-File
     (Note that the Level 3 effect of this Source-File only applies when entering a new BitNode, NOT
     when installing Augmentations.)
 
+    This Source-File also increases your hacknet multipliers by:
+
+    * Level 1: 8%
+    * Level 2: 12%
+    * Level 3: 14%
+
 Difficulty
     Hard
 
@@ -307,10 +324,12 @@ Description
     for the human consciousness. Mankind had finally achieved immortality - at least for those
     that could afford it.
 
-    This BitNode unlocks Sleeve technology. Sleeve technology allows you to:
+    This BitNode unlocks Sleeve and grafting technologies. Sleeve technology allows you to:
 
     1. Re-sleeve: Purchase and transfer your consciousness into a new body
     2. Duplicate Sleeves: Duplicate your consciousness into Synthoids, allowing you to perform different tasks synchronously
+
+    Grafting technology allows you to graft Augmentations, which is an alternative way of installing Augmentations.
 
     In this BitNode:
 
@@ -322,7 +341,7 @@ Description
 Source-File
     :Max Level: 3
 
-    This Source-File unlocks Sleeve technology in other BitNodes.
+    This Source-File unlocks Sleeve and grafting technologies in other BitNodes.
     Each level of this Source-File also grants you a Duplicate Sleeve.
 
 Difficulty
@@ -334,18 +353,19 @@ Description
     The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period
     of disorder that eventually lead to the governmental reformation of many global superpowers, most notably
     the USA and China. But just as the world was slowly beginning to recover from these dark times, financial catastrophe hit.
+
     In many countries, the high cost of trying to deal with the civil disorder bankrupted the governments. In all of this chaos and confusion, hackers
     were able to steal billions of dollars from the world's largest electronic banks, prompting an international banking crisis as
     governments were unable to bail out insolvent banks. Now, the world is slowly crumbling in the middle of the biggest economic crisis of all time.
 
     In this BitNode:
 
-    * Your hacking stat and experience gain are halved
-    * The starting and maximum amount of money available on servers is significantly decreased
+    * Your hacking stat and experience gain are reduced
+    * The starting and maximum amount of money available on servers are reduced by 90%
     * The growth rate of servers is significantly reduced
     * Weakening a server is twice as effective
     * Company wages are decreased by 50%
-    * Corporation valuations are 99% lower and are therefore significantly less profitable
+    * Corporation valuations are 90% lower and are therefore significantly less profitable
     * Hacknet Node production is significantly decreased
     * Crime and Infiltration are more lucrative
     * Augmentations are twice as expensive
@@ -361,6 +381,12 @@ Source-File
     * Level 1: 32%
     * Level 2: 48%
     * Level 3: 56%
+
+    This Source-File reduces the price increase for every aug bought by:
+
+    * Level 1: 4%
+    * Level 2: 6%
+    * Level 3: 7%
 
 Difficulty
     Hard
@@ -381,6 +407,47 @@ Source-File
 Difficulty
     Initially very easy, but then it (obviously) becomes harder as you continue to do it.
 
+BitNode-13: They're lunatics
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Description
+    With the invention of Augmentations in the 2040s a religious group known as the Church of the Machine God has rallied far more support than anyone would have hoped.
+
+    Their leader, Allison "Mother" Stanek is said to have created her own Augmentation whose power goes beyond any other. Find her in Chongqing and gain her trust.
+
+    In this BitNode:
+
+    * Your hacking stat is reduced by 75% and exp by 90%
+    * Your combat stats are reduced by 30%
+    * Class and gym exp gains halved
+    * The starting and maximum amount of money available on servers is decreased
+    * The starting security on servers is significantly increased
+    * Hacking money is decreased by 80%
+    * Company wages are decreased by 60% and exp gains by 50%
+    * Hacknet Node production is decreased by 60%
+    * Crime money is decreased by 60% and exp gains by 50%
+    * Stockmarket data costs are increased 10-fold
+    * Corporation valuations are 99.9% lower and are therefore extremely less profitable
+    * The rank you gain from Bladeburner contracts/operations is reduced by 55%
+    * Bladeburner skills cost twice as many skill points
+    * Coding contracts rewards reduced by 60%
+    * Gangs gain are reduced significantly and offer low amount of Augmentations
+    * Size of Stanek's Gift is increased by 1 size
+
+Source-File
+    :Max Level: 3
+
+    Destroying this BitNode will give you Source-File 13, or if you already have this Source-File it will upgrade its level up to a maximum of 3. 
+    This Source-File lets the Church of the Machine God appear in other BitNodes.
+
+    Each level of this Source-File increases the size of Stanek's Gift.
+
+    * Level 1: 5x5
+    * Level 2: 6x6
+    * Level 3: 7x7
+
+Difficulty
+    Hard
+
 Recommended BitNodes
 --------------------
 As a player, you are not forced to tackle the BitNodes in any particular order. You are
@@ -390,9 +457,43 @@ are the recommended BitNodes for different things:
 
 For fast progression
 ^^^^^^^^^^^^^^^^^^^^
-.. note:: This does not recommend the absolute fastest path, as I don't know what
-          exactly the fastest path is. But it does recommend the BitNodes that are
-          commonly considered to be optimal by players.
+.. note:: These paths do not recommend the absolute fastest path, since speed of progression is 
+    highly dependant on playing style. Path 1 is the recommended path according to the discord community.
+
+Path 1 (new):
+
+1. (Optional) Repeat **BitNode-1: Source Genesis** until you max out its Source-File. Its Source-File
+   is extremely powerful, as it raises all multipliers by a significant amount. This also a let's you 
+   get used to augments and other features resetting.
+
+2. Do **BitNode-3: Corporatocracy** once to unlock the Corporation mechanic. This mechanic
+   has highest profit potential in the game.
+
+3. Do **BitNode-10: Digital Carbon** once to unlock sleeves and grafting. Sleeves are useful in all nodes
+   and grafting can be useful in future BitNodes (especially 8). It's recommended to buy all sleeves and 
+   their memory during the first run.
+
+    The ordering of the next three is dependant on playing style and wants/needs.
+
+4. Do **BitNode-5: Artificial Intelligence** once or twice. The intelligence stat it unlocks
+   will gradually build up as you continue to play the game, and will be helpful
+   in the future. The Source-File also provides hacking multipliers, which are
+   strong because hacking is typically one of the best ways of earning money.
+
+5. Do **BitNode-4: The Singularity**. Its Source-File does not directly make you
+   more powerful in any way, but it does unlock the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_ which
+   let you automate significantly more aspects of the game. Consider repeating until Level 3, 
+   since each level decreases the RAM cost of Singularity functions.
+
+6. Do **BitNode-2: Rise of the Underworld** once to unlock the gang mechanic. This mechanic
+   has high profit potential and offers large amounts of Augmentations in a single faction.
+   Having sleeves (Source-File 10) greatly reduces the time it takes to get access to gangs 
+   outside this BitNode.
+
+7. Do **BitNode-9: Hacktocracy** to unlock the Hacknet Server mechanic. You can
+   consider repeating it as well, as its Level 2 and 3 effects are pretty helpful as well.
+
+Path 2 (old):
 
 1. Repeat **BitNode-1: Source Genesis** until you max out its Source-File. Its Source-File
    is extremely powerful, as it raises all multipliers by a significant amount.
@@ -478,6 +579,9 @@ simple money-generator to a more interesting mechanic.
 
 **BitNode-10: Digital Carbon** unlocks two new mechanics: Re-Sleeving and
 Duplicate Sleeves.
+
+**BitNode-13: They're lunatics** unlocks Stanek's Gift. This gift can improve skills, 
+hacknet production and costs, working and crime gains as well hacking power and speed.
 
 For a Challenge
 ^^^^^^^^^^^^^^^

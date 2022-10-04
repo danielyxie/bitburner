@@ -28,6 +28,8 @@ This API requires Source-File 4 to use. The RAM cost of all these functions is m
 |  [createProgram(program, focus)](./bitburner.singularity.createprogram.md) | Create a program. |
 |  [destroyW0r1dD43m0n(nextBN, callbackScript)](./bitburner.singularity.destroyw0r1dd43m0n.md) | Destroy the w0r1d\_d43m0n and move on to the next BN. |
 |  [donateToFaction(faction, amount)](./bitburner.singularity.donatetofaction.md) | Donate to a faction. |
+|  [exportGame()](./bitburner.singularity.exportgame.md) | Backup game save. |
+|  [exportGameBonus()](./bitburner.singularity.exportgamebonus.md) | Returns Backup save bonus availability. |
 |  [getAugmentationBasePrice(augName)](./bitburner.singularity.getaugmentationbaseprice.md) | Get base price of an augmentation. |
 |  [getAugmentationCost(augName)](./bitburner.singularity.getaugmentationcost.md) | Get the price and reputation of an augmentation. |
 |  [getAugmentationPrereq(augName)](./bitburner.singularity.getaugmentationprereq.md) | Get the pre-requisite of an augmentation. |

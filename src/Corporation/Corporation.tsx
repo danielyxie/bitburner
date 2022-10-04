@@ -1,14 +1,13 @@
 import { CorporationState } from "./CorporationState";
 import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade, CorporationUpgrades } from "./data/CorporationUpgrades";
-import { Warehouse } from "./Warehouse";
 import { CorporationConstants } from "./data/Constants";
 import { Industry } from "./Industry";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { showLiterature } from "../Literature/LiteratureHelpers";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
@@ -45,7 +44,9 @@ export class Corporation {
   upgrades: number[];
   upgradeMultipliers: number[];
 
-  avgProfit = 0;
+  cycleValuation = 0;
+  valuationsList = [0];
+  valuation = 0;
 
   state = new CorporationState();
 
@@ -74,12 +75,16 @@ export class Corporation {
     this.storedCycles += numCycles;
   }
 
-  process(player: IPlayer): void {
+  process(): void {
     if (this.storedCycles >= CorporationConstants.CyclesPerIndustryStateCycle) {
       const state = this.getState();
       const marketCycles = 1;
       const gameCycles = marketCycles * CorporationConstants.CyclesPerIndustryStateCycle;
       this.storedCycles -= gameCycles;
+
+      this.divisions.forEach((ind) => {
+        ind.resetImports(state);
+      });
 
       this.divisions.forEach((ind) => {
         ind.process(marketCycles, state, this);
@@ -108,13 +113,13 @@ export class Corporation {
           this.expenses = this.expenses + ind.lastCycleExpenses;
         });
         const profit = this.revenue - this.expenses;
-        this.avgProfit =
-          (this.avgProfit * (CorporationConstants.AvgProfitLength - 1) + profit) / CorporationConstants.AvgProfitLength;
+        this.cycleValuation = this.determineCycleValuation();
+        this.determineValuation();
         const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
             "There was an error calculating your Corporations funds and they got reset to 0. " +
-              "This is a bug. Please report to game developer.<br><br>" +
+              "This is a bug. Please report to game developer.\n\n" +
               "(Your funds have been set to $150b for the inconvenience)",
           );
           this.funds = 150e9;
@@ -133,7 +138,7 @@ export class Corporation {
           } else {
             const totalDividends = this.dividendRate * cycleProfit;
             const retainedEarnings = cycleProfit - totalDividends;
-            player.gainMoney(this.getCycleDividends(), "corporation");
+            Player.gainMoney(this.getCycleDividends(), "corporation");
             this.addFunds(retainedEarnings);
           }
         } else {
@@ -166,9 +171,9 @@ export class Corporation {
     return Math.pow(dividends, 1 - this.dividendTax);
   }
 
-  determineValuation(): number {
+  determineCycleValuation(): number {
     let val,
-      profit = this.avgProfit;
+      profit = this.revenue - this.expenses;
     if (this.public) {
       // Account for dividends
       if (this.dividendRate > 0) {
@@ -182,19 +187,25 @@ export class Corporation {
       val = 10e9 + Math.max(this.funds, 0) / 3; //Base valuation
       if (profit > 0) {
         val += profit * 315e3;
-        val *= Math.pow(1.1, this.divisions.length);
-      } else {
-        val = 10e9 * Math.pow(1.1, this.divisions.length);
       }
+      val *= Math.pow(1.1, this.divisions.length);
       val -= val % 1e6; //Round down to nearest millionth
     }
     return val * BitNodeMultipliers.CorporationValuation;
   }
 
+  determineValuation(): void {
+    this.valuationsList.push(this.cycleValuation); //Add current valuation to the list
+    if (this.valuationsList.length > CorporationConstants.ValuationLength) this.valuationsList.shift();
+    let val = this.valuationsList.reduce((a, b) => a + b); //Calculate valuations sum
+    val /= CorporationConstants.ValuationLength; //Calculate the average
+    this.valuation = val;
+  }
+
   getTargetSharePrice(): number {
     // Note: totalShares - numShares is not the same as issuedShares because
     // issuedShares does not account for private investors
-    return this.determineValuation() / (2 * (this.totalShares - this.numShares) + 1);
+    return this.valuation / (2 * (this.totalShares - this.numShares) + 1);
   }
 
   updateSharePrice(): void {
@@ -222,6 +233,7 @@ export class Corporation {
     let sharePrice = this.sharePrice;
     let sharesSold = 0;
     let profit = 0;
+    let targetPrice = this.getTargetSharePrice();
 
     const maxIterations = Math.ceil(numShares / CorporationConstants.SHARESPERPRICEUPDATE);
     if (isNaN(maxIterations) || maxIterations > 10e6) {
@@ -241,9 +253,13 @@ export class Corporation {
         sharesUntilUpdate = CorporationConstants.SHARESPERPRICEUPDATE;
         sharesTracker -= sharesUntilUpdate;
         sharesSold += sharesUntilUpdate;
-
+        targetPrice = this.valuation / (2 * (this.totalShares + sharesSold - this.numShares));
         // Calculate what new share price would be
-        sharePrice = this.determineValuation() / (2 * (this.totalShares + sharesSold - this.numShares));
+        if (sharePrice <= targetPrice) {
+          sharePrice *= 1 + 0.5 * 0.01;
+        } else {
+          sharePrice *= 1 - 0.5 * 0.01;
+        }
       }
     }
 
@@ -314,7 +330,7 @@ export class Corporation {
         for (const city of Object.keys(industry.warehouses)) {
           const warehouse = industry.warehouses[city];
           if (warehouse === 0) continue;
-          if (industry.warehouses.hasOwnProperty(city) && warehouse instanceof Warehouse) {
+          if (industry.warehouses.hasOwnProperty(city) && warehouse) {
             warehouse.updateSize(this, industry);
           }
         }
@@ -411,9 +427,9 @@ export class Corporation {
   // Adds the Corporation Handbook (Starter Guide) to the player's home computer.
   // This is a lit file that gives introductory info to the player
   // This occurs when the player clicks the "Getting Started Guide" button on the overview panel
-  getStarterGuide(player: IPlayer): void {
+  getStarterGuide(): void {
     // Check if player already has Corporation Handbook
-    const homeComp = player.getHomeComputer();
+    const homeComp = Player.getHomeComputer();
     let hasHandbook = false;
     const handbookFn = LiteratureNames.CorporationManagementHandbook;
     for (let i = 0; i < homeComp.messages.length; ++i) {

@@ -32,6 +32,18 @@ an area to provide an answer.
 Interacting through Scripts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 See the `Coding Contract API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.codingcontract.md>`_.
+Interacting with Coding Contracts via the Terminal can be tedious the more
+contracts you solve. Consider using the API to automate various aspects of
+your solution. For example, some contracts have long solutions while others
+have even longer solutions. You might want to use the API to automate the
+process of submitting your solution rather than copy and paste a long
+solution into an answer box.
+
+However, using the API comes at a cost. Like most functions in other APIs,
+each function in the Coding Contract API has a RAM cost. Depending on which
+function you use, the initial RAM on your home server might not be enough
+to allow you to use various API functions. Plan on upgrading the RAM on your
+home server if you want to use the Coding Contract API.
 
 Submitting Solutions
 ^^^^^^^^^^^^^^^^^^^^
@@ -374,7 +386,7 @@ The list contains the name of (i.e. the value returned by
 |                                         | | substitution cipher in which each letter in the plaintext is replaced by a letter some |
 |                                         | | fixed number of positions down the alphabet. For example, with a left shift of 3, D    |
 |                                         | | would be replaced by A, E would become B, and A would become X (because of rotation).  |
-|                                         | | You are given an array with two elements.The first element is the plaintext, the       |
+|                                         | | You are given an array with two elements. The first element is the plaintext, the      |
 |                                         | | second element is the left shift value. Return the ciphertext as uppercase string.     |
 |                                         | | Spaces remains the same.                                                               |
 +-----------------------------------------+------------------------------------------------------------------------------------------+

@@ -1,4 +1,4 @@
-import { IPlayer } from "../../IPlayer";
+import { Player } from "../../../Player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
@@ -13,6 +13,7 @@ import {
   getHackingWorkRepGain,
 } from "../../../PersonObjects/formulas/reputation";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
 
 interface SleeveFactionWorkParams {
   factionWorkType: FactionWorkType;
@@ -43,7 +44,11 @@ export class SleeveFactionWork extends Work {
       [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
       [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
     };
-    return repFormulas[this.factionWorkType](sleeve, faction.favor) * sleeve.shockBonus();
+    return (
+      repFormulas[this.factionWorkType](sleeve, faction.favor) *
+      sleeve.shockBonus() *
+      BitNodeMultipliers.FactionWorkRepGain
+    );
   }
 
   getFaction(): Faction {
@@ -52,16 +57,14 @@ export class SleeveFactionWork extends Work {
     return f;
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
-    if (player.gang) {
-      if (this.factionName === player.gang.facName) {
-        sleeve.stopWork(player);
-        return 0;
-      }
+  process(sleeve: Sleeve, cycles: number): number {
+    if (this.factionName === Player.gang?.facName) {
+      sleeve.stopWork();
+      return 0;
     }
 
     const exp = this.getExpRates(sleeve);
-    applySleeveGains(player, sleeve, exp, cycles);
+    applySleeveGains(sleeve, exp, cycles);
     const rep = this.getReputationRate(sleeve);
     this.getFaction().playerReputation += rep;
     return 0;

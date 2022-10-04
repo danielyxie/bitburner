@@ -22,7 +22,7 @@ travelToCity(city: string): boolean;
 
 boolean
 
-True if actions is successful, false otherwise.
+True if action is successful, false otherwise.
 
 ## Remarks
 

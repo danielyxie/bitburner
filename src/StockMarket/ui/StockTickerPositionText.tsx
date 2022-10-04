@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { Stock } from "../Stock";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import Typography from "@mui/material/Typography";
@@ -14,7 +14,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 
 type IProps = {
-  p: IPlayer;
   stock: Stock;
 };
 
@@ -66,7 +65,7 @@ function ShortPosition(props: IProps): React.ReactElement {
     percentageGains = 0;
   }
 
-  if (props.p.bitNodeN === 8 || props.p.sourceFileLvl(8) >= 2) {
+  if (Player.bitNodeN === 8 || Player.sourceFileLvl(8) >= 2) {
     return (
       <>
         <Box display="flex">

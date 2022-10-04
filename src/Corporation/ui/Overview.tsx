@@ -21,7 +21,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { StatsTable } from "../../ui/React/StatsTable";
-import { use } from "../../ui/Context";
+import { Player } from "../../Player";
 import { useCorporation } from "./Context";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
@@ -34,7 +34,6 @@ interface IProps {
   rerender: () => void;
 }
 export function Overview({ rerender }: IProps): React.ReactElement {
-  const player = use.Player();
   const corp = useCorporation();
   const profit: number = corp.revenue - corp.expenses;
 
@@ -100,7 +99,7 @@ export function Overview({ rerender }: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Button onClick={() => corp.getStarterGuide(player)}>Getting Started Guide</Button>
+          <Button onClick={() => corp.getStarterGuide()}>Getting Started Guide</Button>
         </Tooltip>
         {corp.public ? <PublicButtons rerender={rerender} /> : <PrivateButtons rerender={rerender} />}
         <BribeButton />
@@ -240,12 +239,11 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
 }
 
 function BribeButton(): React.ReactElement {
-  const player = use.Player();
   const corp = useCorporation();
   const [open, setOpen] = useState(false);
   const canBribe =
-    corp.determineValuation() >= CorporationConstants.BribeThreshold &&
-    player.factions.filter((f) => Factions[f].getInfo().offersWork()).length > 0;
+    corp.valuation >= CorporationConstants.BribeThreshold &&
+    Player.factions.filter((f) => Factions[f].getInfo().offersWork()).length > 0;
 
   function openBribe(): void {
     if (!canBribe) return;

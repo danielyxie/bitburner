@@ -18,13 +18,16 @@ export function OptionSwitch({ checked, onChange, text, tooltip }: IProps): Reac
   useEffect(() => onChange(value), [value]);
 
   return (
-    <FormControlLabel
-      control={<Switch checked={value} onChange={handleSwitchChange} />}
-      label={
-        <Tooltip title={<Typography>{tooltip}</Typography>}>
-          <Typography>{text}</Typography>
-        </Tooltip>
-      }
-    />
+    <>
+      <FormControlLabel
+        control={<Switch checked={value} onChange={handleSwitchChange} />}
+        label={
+          <Tooltip title={<Typography>{tooltip}</Typography>}>
+            <Typography>{text}</Typography>
+          </Tooltip>
+        }
+      />
+      <br />
+    </>
   );
 }

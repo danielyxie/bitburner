@@ -1,4 +1,4 @@
-import { IPlayer } from "../../IPlayer";
+import { Player } from "../../../Player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
@@ -25,26 +25,45 @@ export class SleeveBladeburnerWork extends Work {
     this.actionName = params?.name ?? "Field analysis";
   }
 
-  cyclesNeeded(player: IPlayer, sleeve: Sleeve): number {
-    const ret = player.bladeburner?.getActionTimeNetscriptFn(sleeve, this.actionType, this.actionName);
+  cyclesNeeded(sleeve: Sleeve): number {
+    const ret = Player.bladeburner?.getActionTimeNetscriptFn(sleeve, this.actionType, this.actionName);
     if (!ret || typeof ret === "string") throw new Error(`Error querying ${this.actionName} time`);
     return ret / CONSTANTS._idleSpeed;
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
-    if (!player.bladeburner) throw new Error("sleeve doing blade work without being a member");
+  process(sleeve: Sleeve, cycles: number): number {
+    if (!Player.bladeburner) throw new Error("sleeve doing blade work without being a member");
     this.cyclesWorked += cycles;
-    while (this.cyclesWorked > this.cyclesNeeded(player, sleeve)) {
-      const actionIdent = player.bladeburner.getActionIdFromTypeAndName(this.actionType, this.actionName);
-      if (!actionIdent) throw new Error(`Error getting ${this.actionName} action`);
-      player.bladeburner.completeAction(player, sleeve, actionIdent, false);
+    const actionIdent = Player.bladeburner.getActionIdFromTypeAndName(this.actionType, this.actionName);
+    if (!actionIdent) throw new Error(`Error getting ${this.actionName} action`);
+    if (this.actionType === "Contracts") {
+      const action = Player.bladeburner.getActionObject(actionIdent);
+      if (!action) throw new Error(`Error getting ${this.actionName} action object`);
+      if (action.count <= 0) {
+        sleeve.stopWork();
+        return 0;
+      }
+    }
+
+    while (this.cyclesWorked > this.cyclesNeeded(sleeve)) {
+      if (this.actionType === "Contracts") {
+        const action = Player.bladeburner.getActionObject(actionIdent);
+        if (!action) throw new Error(`Error getting ${this.actionName} action object`);
+        if (action.count <= 0) {
+          sleeve.stopWork();
+          return 0;
+        }
+      }
+      const retValue = Player.bladeburner.completeAction(sleeve, actionIdent, false);
       let exp: WorkStats | undefined;
       if (this.actionType === "General") {
         exp = GeneralActions[this.actionName]?.exp;
         if (!exp) throw new Error(`Somehow there was no exp for action ${this.actionType} ${this.actionName}`);
-        applySleeveGains(player, sleeve, exp, 1);
+        applySleeveGains(sleeve, exp, 1);
       }
-      this.cyclesWorked -= this.cyclesNeeded(player, sleeve);
+      Player.gainMoney(retValue.money, "sleeves");
+      Player.gainStats(retValue);
+      this.cyclesWorked -= this.cyclesNeeded(sleeve);
     }
     return 0;
   }

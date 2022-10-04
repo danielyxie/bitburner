@@ -191,7 +191,8 @@ function getRandomFilename(server: BaseServer, reward: ICodingContractReward): s
   }
 
   if (reward.name) {
-    contractFn += `-${reward.name.replace(/\s/g, "")}`;
+    // Only alphanumeric characters in the reward name.
+    contractFn += `-${reward.name.replace(/[^a-zA-Z0-9]/g, "")}`;
   }
 
   return contractFn;

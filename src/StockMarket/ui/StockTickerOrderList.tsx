@@ -9,14 +9,8 @@ import { StockTickerOrder } from "./StockTickerOrder";
 import { Order } from "../Order";
 import { Stock } from "../Stock";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { ICancelOrderParams } from "../StockMarket";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-
 type IProps = {
-  cancelOrder: (params: ICancelOrderParams, workerScript?: WorkerScript) => void;
   orders: Order[];
-  p: IPlayer;
   stock: Stock;
 };
 
@@ -24,7 +18,7 @@ export function StockTickerOrderList(props: IProps): React.ReactElement {
   const orders: React.ReactElement[] = [];
   for (let i = 0; i < props.orders.length; ++i) {
     const o = props.orders[i];
-    orders.push(<StockTickerOrder cancelOrder={props.cancelOrder} order={o} key={i} />);
+    orders.push(<StockTickerOrder order={o} key={i} />);
   }
 
   return <>{orders}</>;

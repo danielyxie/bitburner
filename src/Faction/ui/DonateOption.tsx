@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 import { CONSTANTS } from "../../Constants";
 import { Faction } from "../Faction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "../../Player";
 import { repFromDonation } from "../formulas/donation";
 import { Favor } from "../../ui/React/Favor";
 
@@ -24,7 +24,6 @@ type IProps = {
   faction: Faction;
   disabled: boolean;
   favorToDonate: number;
-  p: IPlayer;
   rerender: () => void;
 };
 
@@ -35,7 +34,7 @@ export function DonateOption(props: IProps): React.ReactElement {
   function canDonate(): boolean {
     if (isNaN(donateAmt)) return false;
     if (isNaN(donateAmt) || donateAmt <= 0) return false;
-    if (props.p.money < donateAmt) return false;
+    if (Player.money < donateAmt) return false;
     return true;
   }
 
@@ -44,8 +43,8 @@ export function DonateOption(props: IProps): React.ReactElement {
     const amt = donateAmt;
     if (isNaN(amt)) return;
     if (!canDonate()) return;
-    props.p.loseMoney(amt, "other");
-    const repGain = repFromDonation(amt, props.p);
+    Player.loseMoney(amt, "other");
+    const repGain = repFromDonation(amt, Player);
     props.faction.playerReputation += repGain;
     dialogBoxCreate(
       <>
@@ -58,12 +57,12 @@ export function DonateOption(props: IProps): React.ReactElement {
   function Status(): React.ReactElement {
     if (isNaN(donateAmt)) return <></>;
     if (!canDonate()) {
-      if (props.p.money < donateAmt) return <Typography>Insufficient funds</Typography>;
+      if (Player.money < donateAmt) return <Typography>Insufficient funds</Typography>;
       return <Typography>Invalid donate amount entered!</Typography>;
     }
     return (
       <Typography>
-        This donation will result in <Reputation reputation={repFromDonation(donateAmt, props.p)} /> reputation gain
+        This donation will result in <Reputation reputation={repFromDonation(donateAmt, Player)} /> reputation gain
       </Typography>
     );
   }

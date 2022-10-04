@@ -76,36 +76,66 @@ interface Player {
  * @public
  */
 export interface Multipliers {
-  hacking_chance: number;
-  hacking_speed: number;
-  hacking_money: number;
-  hacking_grow: number;
-  hacking: number;
-  hacking_exp: number;
-  strength: number;
-  strength_exp: number;
-  defense: number;
-  defense_exp: number;
-  dexterity: number;
-  dexterity_exp: number;
-  agility: number;
-  agility_exp: number;
-  charisma: number;
-  charisma_exp: number;
-  hacknet_node_money: number;
-  hacknet_node_purchase_cost: number;
-  hacknet_node_ram_cost: number;
-  hacknet_node_core_cost: number;
-  hacknet_node_level_cost: number;
-  company_rep: number;
-  faction_rep: number;
-  work_money: number;
-  crime_success: number;
-  crime_money: number;
-  bladeburner_max_stamina: number;
-  bladeburner_stamina_gain: number;
-  bladeburner_analysis: number;
-  bladeburner_success_chance: number;
+  /** Multiplier to hacking skill */
+  hacking?: number;
+  /** Multiplier to strength skill */
+  strength?: number;
+  /** Multiplier to defense skill */
+  defense?: number;
+  /** Multiplier to dexterity skill */
+  dexterity?: number;
+  /** Multiplier to agility skill */
+  agility?: number;
+  /** Multiplier to charisma skill */
+  charisma?: number;
+  /** Multiplier to hacking experience gain rate */
+  hacking_exp?: number;
+  /** Multiplier to strength experience gain rate */
+  strength_exp?: number;
+  /** Multiplier to defense experience gain rate */
+  defense_exp?: number;
+  /** Multiplier to dexterity experience gain rate */
+  dexterity_exp?: number;
+  /** Multiplier to agility experience gain rate */
+  agility_exp?: number;
+  /** Multiplier to charisma experience gain rate */
+  charisma_exp?: number;
+  /** Multiplier to chance of successfully performing a hack */
+  hacking_chance?: number;
+  /** Multiplier to hacking speed */
+  hacking_speed?: number;
+  /** Multiplier to amount of money the player gains from hacking */
+  hacking_money?: number;
+  /** Multiplier to amount of money injected into servers using grow */
+  hacking_grow?: number;
+  /** Multiplier to amount of reputation gained when working */
+  company_rep?: number;
+  /** Multiplier to amount of reputation gained when working */
+  faction_rep?: number;
+  /** Multiplier to amount of money gained from crimes */
+  crime_money?: number;
+  /** Multiplier to crime success rate */
+  crime_success?: number;
+  /** Multiplier to amount of money gained from working */
+  work_money?: number;
+  /** Multiplier to amount of money produced by Hacknet Nodes */
+  hacknet_node_money?: number;
+  /** Multiplier to cost of purchasing a Hacknet Node */
+  hacknet_node_purchase_cost?: number;
+  /** Multiplier to cost of ram for a Hacknet Node */
+  hacknet_node_ram_cost?: number;
+  /** Multiplier to cost of core for a Hacknet Node */
+  hacknet_node_core_cost?: number;
+  /** Multiplier to cost of leveling up a Hacknet Node */
+  hacknet_node_level_cost?: number;
+  /** Multiplier to Bladeburner max stamina */
+  bladeburner_max_stamina?: number;
+  /** Multiplier to Bladeburner stamina gain rate */
+  bladeburner_stamina_gain?: number;
+  /** Multiplier to effectiveness in Bladeburner Field Analysis */
+  bladeburner_analysis?: number;
+  /** Multiplier to success chance in Bladeburner contracts/operations */
+  bladeburner_success_chance?: number;
 }
 
 /**
@@ -196,73 +226,6 @@ export interface CrimeStats {
   charisma_exp: number;
   /** intelligence exp gained from crime */
   intelligence_exp: number;
-}
-
-/**
- * Data representing the internal values of an Augmentation.
- * @public
- */
-export interface AugmentationStats {
-  /** Multiplier to hacking skill */
-  hacking?: number;
-  /** Multiplier to strength skill */
-  strength?: number;
-  /** Multiplier to defense skill */
-  defense?: number;
-  /** Multiplier to dexterity skill */
-  dexterity?: number;
-  /** Multiplier to agility skill */
-  agility?: number;
-  /** Multiplier to charisma skill */
-  charisma?: number;
-  /** Multiplier to hacking experience gain rate */
-  hacking_exp?: number;
-  /** Multiplier to strength experience gain rate */
-  strength_exp?: number;
-  /** Multiplier to defense experience gain rate */
-  defense_exp?: number;
-  /** Multiplier to dexterity experience gain rate */
-  dexterity_exp?: number;
-  /** Multiplier to agility experience gain rate */
-  agility_exp?: number;
-  /** Multiplier to charisma experience gain rate */
-  charisma_exp?: number;
-  /** Multiplier to chance of successfully performing a hack */
-  hacking_chance?: number;
-  /** Multiplier to hacking speed */
-  hacking_speed?: number;
-  /** Multiplier to amount of money the player gains from hacking */
-  hacking_money?: number;
-  /** Multiplier to amount of money injected into servers using grow */
-  hacking_grow?: number;
-  /** Multiplier to amount of reputation gained when working */
-  company_rep?: number;
-  /** Multiplier to amount of reputation gained when working */
-  faction_rep?: number;
-  /** Multiplier to amount of money gained from crimes */
-  crime_money?: number;
-  /** Multiplier to crime success rate */
-  crime_success?: number;
-  /** Multiplier to amount of money gained from working */
-  work_money?: number;
-  /** Multiplier to amount of money produced by Hacknet Nodes */
-  hacknet_node_money?: number;
-  /** Multiplier to cost of purchasing a Hacknet Node */
-  hacknet_node_purchase_cost?: number;
-  /** Multiplier to cost of ram for a Hacknet Node */
-  hacknet_node_ram_cost?: number;
-  /** Multiplier to cost of core for a Hacknet Node */
-  hacknet_node_core_cost?: number;
-  /** Multiplier to cost of leveling up a Hacknet Node */
-  hacknet_node_level_cost?: number;
-  /** Multiplier to Bladeburner max stamina */
-  bladeburner_max_stamina?: number;
-  /** Multiplier to Bladeburner stamina gain rate */
-  bladeburner_stamina_gain?: number;
-  /** Multiplier to effectiveness in Bladeburner Field Analysis */
-  bladeburner_analysis?: number;
-  /** Multiplier to success chance in Bladeburner contracts/operations */
-  bladeburner_success_chance?: number;
 }
 
 /**
@@ -1126,21 +1089,39 @@ export interface TIX {
   getSymbols(): string[];
 
   /**
-   * Returns the price of a stock
+   * Returns the price of a stock.
    *
    * @remarks
    * RAM cost: 2 GB
-   * The stock’s price is the average of its bid and ask price.
+   *
+   * The stock’s price is the average of its bid and ask prices. This function requires
+   * that you have the following:
+   *
+   * 1. WSE Account
+   *
+   * 1. TIX API Access
    *
    * @example
    * ```ts
    * // NS1
-   * stock.getPrice("FISG");
+   * stock.getPrice("FSIG");
+   * 
+   * // Choose the first stock symbol from the array of stock symbols.  Get the price
+   * // of the corresponding stock.
+   * var sym = stock.getSymbols()[0];
+   * tprint("Stock symbol: " + sym);
+   * tprint("Stock price: " + stock.getPrice(sym));
    * ```
    * @example
    * ```ts
    * // NS2
-   * ns.stock.getPrice("FISG");
+   * ns.stock.getPrice("FSIG");
+   * 
+   * // Choose the first stock symbol from the array of stock symbols.  Get the price
+   * // of the corresponding stock.
+   * const sym = ns.stock.getSymbols()[0];
+   * ns.tprint("Stock symbol: " + sym);
+   * ns.tprint("Stock price: " + ns.stock.getPrice(sym));
    * ```
    * @param sym - Stock symbol.
    * @returns The price of a stock.
@@ -1497,6 +1478,28 @@ export interface TIX {
  */
 export interface Singularity {
   /**
+   * Backup game save.
+   * @remarks
+   * RAM cost: 1 GB * 16/4/1
+   *
+   *
+   * This function will automatically opens the backup save prompt and claim the free faction favour if available.
+   *
+   */
+  exportGame(): void;
+
+  /**
+   * Returns Backup save bonus availability.
+   * @remarks
+   * RAM cost: 0.5 GB * 16/4/1
+   *
+   *
+   * This function will check if there is a bonus for backing up your save.
+   *
+   */
+  exportGameBonus(): boolean;
+
+  /**
    * Take university class.
    *
    * @remarks
@@ -1514,7 +1517,7 @@ export interface Singularity {
    * @param universityName - Name of university. You must be in the correct city for whatever university you specify.
    * @param courseName - Name of course.
    * @param focus - Acquire player focus on this class. Optional. Defaults to true.
-   * @returns True if actions is successfully started, false otherwise.
+   * @returns True if action is successfully started, false otherwise.
    */
   universityCourse(universityName: string, courseName: string, focus?: boolean): boolean;
 
@@ -1550,7 +1553,7 @@ export interface Singularity {
    * function is the same as the cost for traveling through the Travel Agency.
    *
    * @param city - City to travel to.
-   * @returns True if actions is successful, false otherwise.
+   * @returns True if action is successful, false otherwise.
    */
   travelToCity(city: string): boolean;
 
@@ -1990,7 +1993,7 @@ export interface Singularity {
    * guarantee that your browser will follow that time limit.
    *
    * @param crime - Name of crime to attempt.
-   * @param focus - Acquire player focus on this program creation. Optional. Defaults to true.
+   * @param focus - Acquire player focus on this crime. Optional. Defaults to true.
    * @returns The number of milliseconds it takes to attempt the specified crime.
    */
   commitCrime(crime: string, focus?: boolean): number;
@@ -2153,7 +2156,7 @@ export interface Singularity {
    * @param name - Name of Augmentation. CASE-SENSITIVE.
    * @returns Augmentation stats.
    */
-  getAugmentationStats(name: string): AugmentationStats;
+  getAugmentationStats(name: string): Multipliers;
 
   /**
    * Install your purchased augmentations.
@@ -2369,7 +2372,7 @@ export interface Hacknet {
    *
    * Returns the number of Hacknet Nodes you own.
    *
-   * @returns number of hacknet nodes.
+   * @returns Number of hacknet nodes.
    */
   numNodes(): number;
 
@@ -2378,7 +2381,7 @@ export interface Hacknet {
    * @remarks
    * RAM cost: 0 GB
    *
-   * @returns maximum number of hacknet nodes.
+   * @returns Maximum number of hacknet nodes.
    */
   maxNumNodes(): number;
 
@@ -2453,13 +2456,13 @@ export interface Hacknet {
    * So this is equivalent to multiplying the Node’s RAM by 2 n.
    *
    * Returns true if the Hacknet Node’s RAM is successfully upgraded n times
-   * or if it is upgraded some positive number of times and the Node reaches it max RAM.
+   * or if it is upgraded some positive number of times and the Node reaches its max RAM.
    *
    * Returns false otherwise.
    *
    * @param index - Index/Identifier of Hacknet Node.
    * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
-   * @returns True if the Hacknet Node’s ram is successfully upgraded, false otherwise.
+   * @returns True if the Hacknet Node’s RAM is successfully upgraded, false otherwise.
    */
   upgradeRam(index: number, n: number): boolean;
 
@@ -2497,7 +2500,7 @@ export interface Hacknet {
    *
    * @param index - Index/Identifier of Hacknet Node.
    * @param n - Number of cache levels to purchase. Must be positive. Rounded to nearest integer.
-   * @returns True if the Hacknet Node’s cores are successfully purchased, false otherwise.
+   * @returns True if the Hacknet Node’s cache level is successfully upgraded, false otherwise.
    */
   upgradeCache(index: number, n: number): boolean;
 
@@ -2525,11 +2528,11 @@ export interface Hacknet {
    * Returns the cost of upgrading the RAM of the specified Hacknet Node n times.
    *
    * If an invalid value for n is provided, then this function returns 0.
-   * If the specified Hacknet Node is already at max level, then Infinity is returned.
+   * If the specified Hacknet Node already has max RAM, then Infinity is returned.
    *
    * @param index - Index/Identifier of Hacknet Node.
    * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
-   * @returns Cost of upgrading the specified Hacknet Node's ram.
+   * @returns Cost of upgrading the specified Hacknet Node's RAM.
    */
   getRamUpgradeCost(index: number, n: number): number;
 
@@ -2654,7 +2657,7 @@ export interface Hacknet {
    * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.
    * @param count - Number of upgrades to buy at once. Defaults to 1 if not specified.
    * For compatability reasons, upgTarget must be specified, even if it is not used, in order to specify count.
-   * @returns True if the upgrade is successfully purchased, and false otherwise..
+   * @returns True if the upgrade is successfully purchased, and false otherwise.
    */
   spendHashes(upgName: string, upgTarget?: string, count?: number): boolean;
 
@@ -3218,11 +3221,16 @@ export interface CodingContract {
    *
    * @param answer - Solution for the contract.
    * @param filename - Filename of the contract.
-   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
    */
-  attempt(answer: string[] | number, filename: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
+  attempt(
+    answer: string | number | any[],
+    filename: string,
+    host?: string,
+    opts?: CodingAttemptOptions,
+  ): boolean | string;
 
   /**
    * Get the type of a coding contract.
@@ -3233,7 +3241,7 @@ export interface CodingContract {
    * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
    *
    * @param filename - Filename of the contract.
-   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Name describing the type of problem posed by the Coding Contract.
    */
   getContractType(filename: string, host?: string): string;
@@ -3246,7 +3254,7 @@ export interface CodingContract {
    * Get the full text description for the problem posed by the Coding Contract.
    *
    * @param filename - Filename of the contract.
-   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Contract’s text description.
    */
   getDescription(filename: string, host?: string): string;
@@ -3258,24 +3266,24 @@ export interface CodingContract {
    *
    * Get the data associated with the specific Coding Contract.
    * Note that this is not the same as the contract’s description.
-   * This is just the data that the contract wants you to act on in order to solve
+   * This is just the data that the contract wants you to act on in order to solve the contract.
    *
    * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-   * @returns The specified contract’s data, data type depends on contract type.;
+   * @returns The specified contract’s data, data type depends on contract type.
    */
   getData(filename: string, host?: string): CodingContractData;
 
   /**
-   * Get the number of attempt remaining.
+   * Get the number of attempts remaining.
    * @remarks
    * RAM cost: 2 GB
    *
    * Get the number of tries remaining on the contract before it self-destructs.
    *
    * @param filename - Filename of the contract.
-   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-   * @returns How many attempts are remaining for the contract;
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @returns How many attempts are remaining for the contract.
    */
   getNumTriesRemaining(filename: string, host?: string): number;
 }
@@ -3484,7 +3492,7 @@ export interface Gang {
    * Ascend the specified Gang Member.
    *
    * @param memberName - Name of member to ascend.
-   * @returns Object with info about the ascension results. undefined if ascension did not occur.
+   * @returns Object with info about the ascension results. Undefined if ascension did not occur.
    */
   ascendMember(memberName: string): GangMemberAscension | undefined;
 
@@ -3496,7 +3504,7 @@ export interface Gang {
    * Get the result of an ascension without ascending.
    *
    * @param memberName - Name of member.
-   * @returns Object with info about the ascension results. undefined if ascension is impossible.
+   * @returns Object with info about the ascension results. Undefined if ascension is impossible.
    */
   getAscensionResult(memberName: string): GangMemberAscension | undefined;
 
@@ -4144,6 +4152,8 @@ interface GangFormulas {
  * @public
  */
 export interface Formulas {
+  mockServer(): Server;
+  mockPlayer(): Player;
   /** Reputation formulas */
   reputation: ReputationFormulas;
   /** Skills formulas */
@@ -4349,6 +4359,15 @@ interface Infiltration {
  * @public
  */
 interface UserInterface {
+  /**
+   * Get the current window size
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns An array of 2 value containing the window width and height.
+   */
+  windowSize(): [number, number];
+
   /**
    * Get the current theme
    * @remarks
@@ -4821,6 +4840,77 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
+   * If the argument is a string, you can color code your message by prefixing your
+   * string with one of these strings:
+   *
+   * - `"ERROR"`: The whole string will be printed in red. Use this prefix to indicate
+   *   that an error has occurred.
+   *
+   * - `"SUCCESS"`: The whole string will be printed in green, similar to the default
+   *   theme of the Terminal. Use this prefix to indicate that something is correct.
+   *
+   * - `"WARN"`: The whole string will be printed in yellow. Use this prefix to
+   *   indicate that you or a user of your script should be careful of something.
+   *
+   * - `"INFO"`: The whole string will be printed in purplish blue. Use this prefix to
+   *   remind yourself or a user of your script of something. Think of this prefix as
+   *   indicating an FYI (for your information).
+   *
+   * For custom coloring, use ANSI escape sequences. The examples below use the Unicode
+   * escape code `\u001b`. The color coding also works if `\u001b` is replaced with
+   * the hexadecimal escape code `\x1b`. The Bash escape code `\e` is not supported.
+   * The octal escape code `\033` is not allowed because the game runs JavaScript in
+   * strict mode.
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * // Default color coding.
+   * print("ERROR means something's wrong.");
+   * print("SUCCESS means everything's OK.");
+   * print("WARN Tread with caution!");
+   * print("WARNING, warning, danger, danger!");
+   * print("WARNing! Here be dragons.");
+   * print("INFO for your I's only (FYI).");
+   * print("INFOrmation overload!");
+   * // Custom color coding. 
+   * var cyan = "\u001b[36m";
+   * var green = "\u001b[32m";
+   * var red = "\u001b[31m";
+   * var reset = "\u001b[0m";
+   * var msgError = red + "Ugh! What a mess." + reset;
+   * var msgSuccess = green + "Well done!" + reset;
+   * var msgMixed = cyan + "ERROR Should this be in red?" + reset;
+   * print(msgError);
+   * print(msgSuccess);
+   * print(msgMixed);
+   * tail();
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * // Default color coding.
+   * ns.print("ERROR means something's wrong.");
+   * ns.print("SUCCESS means everything's OK.");
+   * ns.print("WARN Tread with caution!");
+   * ns.print("WARNING, warning, danger, danger!");
+   * ns.print("WARNing! Here be dragons.");
+   * ns.print("INFO for your I's only (FYI).");
+   * ns.print("INFOrmation overload!");
+   * // Custom color coding.
+   * const cyan = "\u001b[36m";
+   * const green = "\u001b[32m";
+   * const red = "\u001b[31m";
+   * const reset = "\u001b[0m";
+   * const msgError = "Ugh! What a mess.";
+   * const msgSuccess = "Well done!";
+   * const msgMixed = "ERROR Should this be in red?";
+   * ns.print(`${red + msgError + reset}`);
+   * ns.print(`${green + msgSuccess + reset}`);
+   * ns.print(`${cyan + msgMixed + reset}`);
+   * ns.tail();
+   * ```
+   *
    * @param args - Value(s) to be printed.
    */
   print(...args: any[]): void;
@@ -4830,8 +4920,38 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * see: https://github.com/alexei/sprintf.js
-   * @param format - format of the message
+   * - See {@link NS.print | print} for how to add color to your printed strings.
+   *
+   * - For more detail, see: https://github.com/alexei/sprintf.js
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * var name = "Bit";
+   * var age = 4;
+   * printf("My name is %s.", name);
+   * printf("I'm %d seconds old.", age);
+   * printf("My age in binary is %b.", age);
+   * printf("My age in scientific notation is %e.", age);
+   * printf("In %d seconds, I'll be %s.", 6, "Byte");
+   * printf("Am I a nibble? %t", (4 == age));
+   * tail();
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * const name = "Bit";
+   * const age = 4;
+   * ns.printf("My name is %s.", name);
+   * ns.printf("I'm %d seconds old.", age);
+   * ns.printf("My age in binary is %b.", age);
+   * ns.printf("My age in scientific notation is %e.", age);
+   * ns.printf("In %d seconds, I'll be %s.", 6, "Byte");
+   * ns.printf("Am I a nibble? %t", (4 == age));
+   * ns.tail();
+   * ```
+   *
+   * @param format - Format of the message.
    * @param args - Value(s) to be printed.
    */
   printf(format: string, ...args: any[]): void;
@@ -4840,6 +4960,8 @@ export interface NS {
    * Prints one or more values or variables to the Terminal.
    * @remarks
    * RAM cost: 0 GB
+   *
+   * See {@link NS.print | print} for how to add color to your printed strings.
    *
    * @param args - Value(s) to be printed.
    */
@@ -4850,9 +4972,14 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * see: https://github.com/alexei/sprintf.js
-   * @param format - format of the message
-   * @param msg - Value to be printed.
+   * - See {@link NS.print | print} for how to add color to your printed strings.
+   * 
+   * - See {@link NS.printf | printf} for examples on formatted strings.
+   * 
+   * - For more detail, see: https://github.com/alexei/sprintf.js
+   *
+   * @param format - Format of the message.
+   * @param values - Value(s) to be printed.
    */
   tprintf(format: string, ...values: any[]): void;
 
@@ -5006,6 +5133,32 @@ export interface NS {
    * @param args - Arguments for the script being tailed.
    */
   tail(fn?: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): void;
+
+  /**
+   * Move a tail window
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0)
+   *
+   * @param x - x coordinate.
+   * @param y - y coordinate.
+   * @param pid - Optional. PID of the script having its tail moved. If omitted, the current script is used.
+   */
+  moveTail(x: number, y: number, pid?: number): void;
+
+  /**
+   * Resize a tail window
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * Resize a tail window. Size are in pixel
+   *
+   * @param width - width of the window.
+   * @param height - height of the window.
+   * @param pid - Optional. PID of the script having its tail resized. If omitted, the current script is used.
+   */
+  resizeTail(width: number, height: number, pid?: number): void;
 
   /**
    * Close the tail window of a script.
@@ -5178,8 +5331,7 @@ export interface NS {
    * PID stands for Process ID. The PID is a unique identifier for each script.
    * The PID will always be a positive integer.
    *
-   * Running this function with a numThreads argument of 0 will return 0 without running the script.
-   * However, running this function with a negative numThreads argument will cause a runtime error.
+   * Running this function with a numThreads argument of 0 or less will cause a runtime error.
    *
    * @example
    * ```ts
@@ -5226,7 +5378,7 @@ export interface NS {
    * PID stands for Process ID. The PID is a unique identifier for each script.
    * The PID will always be a positive integer.
    *
-   * Running this function with 0 or a negative numThreads argument will cause a runtime error.
+   * Running this function with a numThreads argument of 0 or less will cause a runtime error.
    *
    * @example
    * ```ts
@@ -5271,6 +5423,8 @@ export interface NS {
    * on the local server.
    *
    * Because this function immediately terminates the script, it does not have a return value.
+   *
+   * Running this function with a numThreads argument of 0 or less will cause a runtime error.
    *
    * @example
    * ```ts
@@ -5381,7 +5535,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    */
-  exit(): void;
+  exit(): never;
 
   /**
    * Copy file between servers.
@@ -5405,25 +5559,25 @@ export interface NS {
    * ```ts
    * // NS2:
    * //Copies foo.lit from the helios server to the home computer:
-   * await ns.scp("foo.lit", "home", "helios" );
+   * ns.scp("foo.lit", "home", "helios" );
    *
    * //Tries to copy three files from rothman-uni to home computer:
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
-   * await ns.scp(files,  "home", "rothman-uni");
+   * ns.scp(files,  "home", "rothman-uni");
    * ```
    * @example
    * ```ts
    * //ns2, copies files from home to a target server
    * const server = ns.args[0];
    * const files = ["hack.js","weaken.js","grow.js"];
-   * await ns.scp(files, server, "home");
+   * ns.scp(files, server, "home");
    * ```
    * @param files - Filename or an array of filenames of script/literature files to copy.
-   * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
    * @param destination - Host of the destination server, which is the server to which the file will be copied.
-   * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
+   * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
+   * @returns True if the file is successfully copied over and false otherwise. If the files argument is an array then this function will return false if any of the operations failed.
    */
-  scp(files: string | string[], destination: string, source?: string): Promise<boolean>;
+  scp(files: string | string[], destination: string, source?: string): boolean;
 
   /**
    * List files on a server.
@@ -5963,20 +6117,20 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * This function can be used to write data to a text file (.txt).
+   * This function can be used to write data to a text file (.txt) or a script (.js or .script).
    *
-   * This function will write data to that text file. If the specified text file does not exist,
+   * This function will write data to that file. If the specified file does not exist,
    * then it will be created. The third argument mode, defines how the data will be written to
-   * the text file. If *mode is set to “w”, then the data is written in “write” mode which means
-   * that it will overwrite all existing data on the text file. If mode is set to any other value
+   * the file. If *mode is set to “w”, then the data is written in “write” mode which means
+   * that it will overwrite all existing data on the file. If mode is set to any other value
    * then the data will be written in “append” mode which means that the data will be added at the
-   * end of the text file.
+   * end of the file.
    *
-   * @param handle - Filename of the text file that will be written to.
+   * @param filename - Name of the file to be written to.
    * @param data - Data to write.
-   * @param mode - Defines the write mode. Only valid when writing to text files.
+   * @param mode - Defines the write mode.
    */
-  write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): Promise<void>;
+  write(filename: string, data?: string[] | number | string, mode?: "w" | "a"): void;
 
   /**
    * Attempt to write to a port.
@@ -5998,15 +6152,15 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * This function is used to read data from a text file (.txt).
+   * This function is used to read data from a text file (.txt) or script (.script, .js).
    *
-   * This function will return the data in the specified text
-   * file. If the text file does not exist, an empty string will be returned.
+   * This function will return the data in the specified file.
+   * If the file does not exist, an empty string will be returned.
    *
-   * @param handle - Filename to read from.
+   * @param filename - Name of the file to be read.
    * @returns Data in the specified text file.
    */
-  read(handle: string): PortData;
+  read(filename: string): string;
 
   /**
    * Get a copy of the data from a port without popping it.
@@ -6523,7 +6677,7 @@ export interface NS {
    * // {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":true}
    * ```
    */
-  flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
+  flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg | string[] };
 
   /**
    * Share your computer with your factions.
@@ -7075,7 +7229,7 @@ interface CorporationInfo {
   numShares: number;
   /** Cooldown until shares can be sold again */
   shareSaleCooldown: number;
-  /** Amount of shares issued */
+  /** Amount of aqcuirable shares. */
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;
@@ -7168,10 +7322,25 @@ interface Material {
   prod: number;
   /** Amount of material sold */
   sell: number;
-  /** cost to buy material */
+  /** Cost to buy material */
   cost: number;
   /** Sell cost, can be "MP+5" */
   sCost: string | number;
+  /** Export orders */
+  exp: Export[];
+}
+
+/**
+ * Export order for a material
+ * @public
+ */
+interface Export {
+  /** Division the material is being exported to */
+  div: string;
+  /** City the material is being exported to */
+  loc: string;
+  /** Amount of material exported */
+  amt: string;
 }
 
 /**
@@ -7350,5 +7519,5 @@ interface AutocompleteData {
   servers: string[];
   scripts: string[];
   txts: string[];
-  flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg };
+  flags(schema: [string, string | number | boolean | string[]][]): { [key: string]: ScriptArg | string[] };
 }

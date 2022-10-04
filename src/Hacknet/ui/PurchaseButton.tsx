@@ -18,14 +18,14 @@ interface IProps {
 export function PurchaseButton(props: IProps): React.ReactElement {
   const cost = props.cost;
   let text;
-  if (hasHacknetServers(Player)) {
-    if (hasMaxNumberHacknetServers(Player)) {
+  if (hasHacknetServers()) {
+    if (hasMaxNumberHacknetServers()) {
       text = <>Hacknet Server limit reached</>;
     } else {
       text = (
         <>
           Purchase Hacknet Server -&nbsp;
-          <Money money={cost} player={Player} />
+          <Money money={cost} forPurchase={true} />
         </>
       );
     }
@@ -33,7 +33,7 @@ export function PurchaseButton(props: IProps): React.ReactElement {
     text = (
       <>
         Purchase Hacknet Node -&nbsp;
-        <Money money={cost} player={Player} />
+        <Money money={cost} forPurchase={true} />
       </>
     );
   }

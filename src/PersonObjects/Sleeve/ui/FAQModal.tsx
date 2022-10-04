@@ -71,15 +71,8 @@ export function FAQModal({ open, onClose }: IProps): React.ReactElement {
         <br />
         <Typography>
           Only one of your sleeves can work for a given company/faction a time. To clarify further, if you have two
-          sleeves they can work for two different companies, but they cannot both work for the same company.
-        </Typography>
-        <br />
-        <br />
-        <Typography variant="h4">Why did my Sleeve stop working?</Typography>
-        <br />
-        <Typography>
-          Sleeves are subject to the same time restrictions as you. This means that they automatically stop working at a
-          company after 8 hours, and stop working for a faction after 20 hours.
+          sleeves they can work for two different companies/factions, but they cannot both work for the same
+          company/faction.
         </Typography>
         <br />
         <br />
@@ -92,13 +85,16 @@ export function FAQModal({ open, onClose }: IProps): React.ReactElement {
         <br />
         <Typography>
           Certain Augmentations, like {FactionNames.Bladeburners}-specific ones and NeuroFlux Governor, are not
-          available for sleeves.
+          available for sleeves. You also need enough current reputation on some faction that offers that Augmentation.
         </Typography>
         <br />
         <br />
         <Typography variant="h4">Do sleeves get reset when installing Augmentations or switching BitNodes?</Typography>
         <br />
-        <Typography>Sleeves are reset when switching BitNodes, but not when installing Augmentations.</Typography>
+        <Typography>
+          Sleeves are reset when switching BitNodes, but not when installing Augmentations. However installing
+          Augmentations on a sleeve does reset their stats.
+        </Typography>
         <br />
         <br />
         <Typography variant="h4">What is Memory?</Typography>

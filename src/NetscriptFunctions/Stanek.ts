@@ -53,7 +53,7 @@ export function NetscriptStanek(): InternalAPI<IStanek> {
         //Charge the fragment
         const time = staneksGift.inBonus() ? 200 : 1000;
         return helpers.netscriptDelay(ctx, time).then(function () {
-          staneksGift.charge(player, fragment, ctx.workerScript.scriptRef.threads);
+          staneksGift.charge(fragment, ctx.workerScript.scriptRef.threads);
           helpers.log(ctx, () => `Charged fragment with ${ctx.workerScript.scriptRef.threads} threads.`);
           return Promise.resolve();
         });
@@ -142,7 +142,7 @@ export function NetscriptStanek(): InternalAPI<IStanek> {
         //Return true iff the player is in CotMG and has the first Stanek aug installed
         return (
           Factions[FactionNames.ChurchOfTheMachineGod].isMember &&
-          player.hasAugmentation(AugmentationNames.StaneksGift1)
+          player.hasAugmentation(AugmentationNames.StaneksGift1, true)
         );
       },
   };

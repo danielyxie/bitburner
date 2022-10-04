@@ -1,11 +1,9 @@
 import React from "react";
 import { OperationElem } from "./OperationElem";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Bladeburner } from "../Bladeburner";
 
 interface IProps {
-  bladeburner: IBladeburner;
-  player: IPlayer;
+  bladeburner: Bladeburner;
 }
 
 export function OperationList(props: IProps): React.ReactElement {
@@ -14,7 +12,7 @@ export function OperationList(props: IProps): React.ReactElement {
   return (
     <>
       {names.map((name: string) => (
-        <OperationElem key={name} bladeburner={props.bladeburner} action={operations[name]} player={props.player} />
+        <OperationElem key={name} bladeburner={props.bladeburner} action={operations[name]} />
       ))}
     </>
   );

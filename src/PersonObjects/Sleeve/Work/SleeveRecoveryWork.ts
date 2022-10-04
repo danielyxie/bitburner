@@ -1,4 +1,3 @@
-import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { Work, WorkType } from "./Work";
@@ -11,9 +10,9 @@ export class SleeveRecoveryWork extends Work {
     super(WorkType.RECOVERY);
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
+  process(sleeve: Sleeve, cycles: number): number {
     sleeve.shock = Math.min(100, sleeve.shock + 0.0002 * cycles);
-    if (sleeve.shock >= 100) sleeve.stopWork(player);
+    if (sleeve.shock >= 100) sleeve.stopWork();
     return 0;
   }
 

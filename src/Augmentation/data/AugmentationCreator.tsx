@@ -1384,9 +1384,8 @@ export const initGeneralAugmentations = (): Augmentation[] => [
       "The left arm of a legendary BitRunner who ascended beyond this world. " +
       "It projects a light blue energy shield that protects the exposed inner parts. " +
       "Even though it contains no weapons, the advanced tungsten titanium " +
-      "alloy increases the user's strength to unbelievable levels. The augmentation " +
-      "gets more powerful over time for seemingly no reason.",
-    strength: 2.7,
+      "alloy increases the user's strength to unbelievable levels.",
+    strength: 2.8,
     factions: [FactionNames.NWO],
   }),
   new Augmentation({
@@ -1631,6 +1630,16 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     factions: [FactionNames.TianDiHui],
   }),
 
+  // new Augmentation({
+  //   name: AugmentationNames.UnnamedAug2,
+  //   repCost: 500e3,
+  //   moneyCost: 5e9,
+  //   info: "Undecided description",
+  //   startingMoney: 100e6,
+  //   programs: [Programs.HTTPWormProgram.name, Programs.SQLInjectProgram.name],
+  //   factions: [FactionNames.OmniTekIncorporated],
+  // }),
+
   // Grafting-exclusive Augmentation
   new Augmentation({
     name: AugmentationNames.CongruityImplant,
@@ -1648,6 +1657,22 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     ),
     stats: <>This Augmentation removes the Entropy virus, and prevents it from affecting you again.</>,
     factions: [],
+  }),
+
+  // Sleeve exclusive augmentations
+  new Augmentation({
+    name: AugmentationNames.ZOE,
+    isSpecial: true,
+    repCost: Infinity,
+    moneyCost: 1e12,
+    info:
+      "Zoë's Omnicerebrum Ënhancer for sleeves inserts an omnicerebrum into your sleeve. " +
+      "An omnicerebrum is a near perfect simulation of the human brain, allowing it to take advantage of a larger variety of augments. " +
+      "But you should know about this BitRunner, since you have one of these yourself!",
+    stats: <>Allows sleeves to benefit from Stanek's Gift but it is less powerful if several are installed.</>,
+    factions: [
+      /*Technically in FactionNames.ChurchOfTheMachineGod but not really for display reasons */
+    ],
   }),
 ];
 
@@ -2035,6 +2060,62 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
     stats: <>Stanek's Gift has no penalty.</>,
     factions: [FactionNames.ChurchOfTheMachineGod],
   }),
+  new Augmentation({
+    name: AugmentationNames.BigDsBigBrain,
+    isSpecial: true,
+    factions: [],
+    repCost: Infinity,
+    moneyCost: Infinity,
+    info:
+      "A chip containing the psyche of the greatest BitRunner to ever exists. " +
+      "Installing this relic significantly increases ALL of your stats. " +
+      "However it may have unintended consequence on the users mental well-being.",
+    stats: <>Grants access to unimaginable power.</>,
+    hacking: 2,
+    strength: 2,
+    defense: 2,
+    dexterity: 2,
+    agility: 2,
+    charisma: 2,
+    hacking_exp: 2,
+    strength_exp: 2,
+    defense_exp: 2,
+    dexterity_exp: 2,
+    agility_exp: 2,
+    charisma_exp: 2,
+    hacking_chance: 2,
+    hacking_speed: 2,
+    hacking_money: 2,
+    hacking_grow: 2,
+    company_rep: 2,
+    faction_rep: 2,
+    crime_money: 2,
+    crime_success: 2,
+    work_money: 2,
+    hacknet_node_money: 2,
+    hacknet_node_purchase_cost: 0.5,
+    hacknet_node_ram_cost: 0.5,
+    hacknet_node_core_cost: 0.5,
+    hacknet_node_level_cost: 0.5,
+    bladeburner_max_stamina: 2,
+    bladeburner_stamina_gain: 2,
+    bladeburner_analysis: 2,
+    bladeburner_success_chance: 2,
+
+    startingMoney: 1e12,
+    programs: [
+      Programs.BruteSSHProgram.name,
+      Programs.FTPCrackProgram.name,
+      Programs.RelaySMTPProgram.name,
+      Programs.HTTPWormProgram.name,
+      Programs.SQLInjectProgram.name,
+      Programs.DeepscanV1.name,
+      Programs.DeepscanV2.name,
+      Programs.ServerProfiler.name,
+      Programs.AutoLink.name,
+      Programs.Formulas.name,
+    ],
+  }),
 ];
 
 export function initNeuroFluxGovernor(): Augmentation {
@@ -2044,15 +2125,13 @@ export function initNeuroFluxGovernor(): Augmentation {
     repCost: 500,
     moneyCost: 750e3,
     info:
-      "A device that is embedded in the back of the neck. The NeuroFlux Governor " +
-      "monitors and regulates nervous impulses coming to and from the spinal column, " +
-      "essentially 'governing' the body. By doing so, it improves the functionality of the " +
-      "body's nervous system.",
+      "Undetectable adamantium nanobots injected in the users bloodstream. The NeuroFlux Governor " +
+      "monitors and regulates all aspects of the human body, essentially 'governing' the body. " +
+      "By doing so, it improves the users performance for most actions.",
     stats: (
       <>
         This special augmentation can be leveled up infinitely. Each level of this augmentation increases MOST
-        multipliers by 1% (+{(donationBonus * 100).toFixed(6)}% boosted by real life blood donations), stacking
-        multiplicatively.
+        multipliers by 1% (+{(donationBonus * 100).toFixed(6)}%), stacking multiplicatively.
       </>
     ),
     isSpecial: true,

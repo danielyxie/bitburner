@@ -4,17 +4,14 @@ import { StaticAugmentations } from "./Augmentation/StaticAugmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Companies, initCompanies } from "./Company/Companies";
 import { resetIndustryResearchTrees } from "./Corporation/IndustryData";
 import { Programs } from "./Programs/Programs";
-import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
-import { Router } from "./ui/GameRoot";
 import { recentScripts } from "./Netscript/RecentScripts";
 import { resetPidCounter } from "./Netscript/Pid";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
@@ -37,7 +34,7 @@ const BitNode8StartingMoney = 250e6;
 
 // Prestige by purchasing augmentation
 export function prestigeAugmentation(): void {
-  initBitNodeMultipliers(Player);
+  initBitNodeMultipliers();
 
   const maintainMembership = Player.factions.concat(Player.factionInvitations).filter(function (faction) {
     return Factions[faction].getInfo().keep;
@@ -53,17 +50,17 @@ export function prestigeAugmentation(): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(Player, homeComp);
+  prestigeHomeComputer(homeComp);
 
-  if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink)) {
+  if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink, true)) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
     homeComp.programs.push(Programs.RelaySMTPProgram.name);
   }
-  if (augmentationExists(AugmentationNames.CashRoot) && Player.hasAugmentation(AugmentationNames.CashRoot)) {
+  if (augmentationExists(AugmentationNames.CashRoot) && Player.hasAugmentation(AugmentationNames.CashRoot, true)) {
     Player.setMoney(1e6);
     homeComp.programs.push(Programs.BruteSSHProgram.name);
   }
-  if (augmentationExists(AugmentationNames.PCMatrix) && Player.hasAugmentation(AugmentationNames.PCMatrix)) {
+  if (augmentationExists(AugmentationNames.PCMatrix) && Player.hasAugmentation(AugmentationNames.PCMatrix, true)) {
     homeComp.programs.push(Programs.DeepscanV1.name);
     homeComp.programs.push(Programs.AutoLink.name);
   }
@@ -91,7 +88,7 @@ export function prestigeAugmentation(): void {
 
   // Stop a Terminal action if there is one.
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
   Terminal.clear();
   LogBoxClearEvents.emit();
@@ -109,11 +106,9 @@ export function prestigeAugmentation(): void {
 
   // Gang
   const gang = Player.gang;
-  if (Player.inGang() && gang !== null) {
+  if (gang) {
     const faction = Factions[gang.facName];
-    if (faction instanceof Faction) {
-      joinFaction(faction);
-    }
+    if (faction) joinFaction(faction);
     const penalty = 0.95;
     for (const m of gang.members) {
       m.hack_asc_points *= penalty;
@@ -131,7 +126,7 @@ export function prestigeAugmentation(): void {
   }
 
   // Cancel Bladeburner action
-  if (Player.bladeburner instanceof Bladeburner) {
+  if (Player.bladeburner) {
     Player.bladeburner.prestige();
   }
 
@@ -151,7 +146,7 @@ export function prestigeAugmentation(): void {
   }
 
   // Red Pill
-  if (augmentationExists(AugmentationNames.TheRedPill) && Player.hasAugmentation(AugmentationNames.TheRedPill)) {
+  if (augmentationExists(AugmentationNames.TheRedPill) && Player.hasAugmentation(AugmentationNames.TheRedPill, true)) {
     const WorldDaemon = GetServer(SpecialServers.WorldDaemon);
     const DaedalusServer = GetServer(SpecialServers.DaedalusServer);
     if (WorldDaemon && DaedalusServer) {
@@ -160,7 +155,10 @@ export function prestigeAugmentation(): void {
     }
   }
 
-  if (augmentationExists(AugmentationNames.StaneksGift1) && Player.hasAugmentation(AugmentationNames.StaneksGift1)) {
+  if (
+    augmentationExists(AugmentationNames.StaneksGift1) &&
+    Player.hasAugmentation(AugmentationNames.StaneksGift1, true)
+  ) {
     joinFaction(Factions[FactionNames.ChurchOfTheMachineGod]);
   }
 
@@ -173,7 +171,7 @@ export function prestigeAugmentation(): void {
 
 // Prestige by destroying Bit Node and gaining a Source File
 export function prestigeSourceFile(flume: boolean): void {
-  initBitNodeMultipliers(Player);
+  initBitNodeMultipliers();
 
   Player.prestigeSourceFile();
   prestigeWorkerScripts(); // Delete all Worker Scripts objects
@@ -182,7 +180,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Stop a Terminal action if there is one.
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
   Terminal.clear();
   LogBoxClearEvents.emit();
@@ -192,7 +190,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(Player, homeComp);
+  prestigeHomeComputer(homeComp);
 
   // Re-create foreign servers
   initForeignServers(Player.getHomeComputer());
@@ -222,7 +220,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Stop a Terminal action if there is one
   if (Terminal.action !== null) {
-    Terminal.finishAction(Router, Player, true);
+    Terminal.finishAction(true);
   }
 
   // Delete all Augmentations
@@ -299,7 +297,7 @@ export function prestigeSourceFile(flume: boolean): void {
     hserver.cache = 5;
     hserver.updateHashRate(Player.mults.hacknet_node_money);
     hserver.updateHashCapacity();
-    updateHashManagerCapacity(Player);
+    updateHashManagerCapacity();
   }
 
   if (Player.bitNodeN === 13) {

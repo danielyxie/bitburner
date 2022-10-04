@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import { Money } from "../../../ui/React/Money";
 import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
+import { Router } from "../../../ui/GameRoot";
+import { Player } from "../../../Player";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -13,10 +14,8 @@ interface IProps {
 }
 
 export function CreateCorporationModal(props: IProps): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
-  const canSelfFund = player.canAfford(150e9);
-  if (!player.canAccessCorporation() || player.hasCorporation()) {
+  const canSelfFund = Player.canAfford(150e9);
+  if (!Player.canAccessCorporation() || Player.hasCorporation()) {
     props.onClose();
     return <></>;
   }
@@ -35,11 +34,11 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
       return;
     }
 
-    player.startCorporation(name);
-    player.loseMoney(150e9, "corporation");
+    Player.startCorporation(name);
+    Player.loseMoney(150e9, "corporation");
 
     props.onClose();
-    router.toCorporation();
+    Router.toCorporation();
   }
 
   function seed(): void {
@@ -47,17 +46,17 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
       return;
     }
 
-    player.startCorporation(name, 500e6);
+    Player.startCorporation(name, 500e6);
 
     props.onClose();
-    router.toCorporation();
+    Router.toCorporation();
   }
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
         Would you like to start a corporation? This will require $150b for registration and initial funding.{" "}
-        {player.bitNodeN === 3 &&
+        {Player.bitNodeN === 3 &&
           `This $150b
         can either be self-funded, or you can obtain the seed money from the government in exchange for 500 million
         shares`}
@@ -66,13 +65,13 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
         If you would like to start one, please enter a name for your corporation below:
       </Typography>
       <TextField autoFocus={true} placeholder="Corporation Name" onChange={onChange} value={name} />
-      {player.bitNodeN === 3 && (
+      {Player.bitNodeN === 3 && (
         <Button onClick={seed} disabled={name == ""}>
           Use seed money
         </Button>
       )}
       <Button onClick={selfFund} disabled={name == "" || !canSelfFund}>
-        Self-Fund (<Money money={150e9} player={player} />)
+        Self-Fund (<Money money={150e9} forPurchase={true} />)
       </Button>
     </Modal>
   );

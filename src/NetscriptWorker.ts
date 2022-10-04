@@ -12,8 +12,8 @@ import { generateNextPid } from "./Netscript/Pid";
 import { CONSTANTS } from "./Constants";
 import { Interpreter } from "./ThirdParty/JSInterpreter";
 import { NetscriptFunctions } from "./NetscriptFunctions";
-import { executeJSScript, Node } from "./NetscriptJSEvaluator";
-import { NetscriptPort, IPort } from "./NetscriptPort";
+import { compile, Node } from "./NetscriptJSEvaluator";
+import { IPort } from "./NetscriptPort";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import { scriptCalculateOfflineProduction } from "./Script/ScriptHelpers";
@@ -27,78 +27,47 @@ import { generate } from "escodegen";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { roundToTwo } from "./utils/helpers/roundToTwo";
-import { isString } from "./utils/helpers/isString";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
 import { areFilesEqual } from "./Terminal/DirectoryHelpers";
-import { Player } from "./Player";
 import { Terminal } from "./Terminal";
-import { IPlayer } from "./PersonObjects/IPlayer";
 import { ScriptArg } from "./Netscript/ScriptArg";
-import { helpers } from "./Netscript/NetscriptHelpers";
-import { NS } from "./ScriptEditor/NetscriptDefinitions";
+import { handleUnknownError } from "./Netscript/NetscriptHelpers";
 
-// Netscript Ports are instantiated here
-export const NetscriptPorts: IPort[] = [];
-for (let i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
-  NetscriptPorts.push(NetscriptPort());
-}
+export const NetscriptPorts: Map<number, IPort> = new Map();
 
 export function prestigeWorkerScripts(): void {
   for (const ws of workerScripts.values()) {
     ws.env.stopFlag = true;
     killWorkerScript(ws);
   }
-  for (const port of NetscriptPorts) {
-    port.clear();
-  }
+
+  NetscriptPorts.clear();
 
   WorkerScriptStartStopEventEmitter.emit();
   workerScripts.clear();
 }
 
-// JS script promises need a little massaging to have the same guarantees as netscript
-// promises. This does said massaging and kicks the script off. It returns a promise
-// that resolves or rejects when the corresponding worker script is done.
-function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Promise<void> {
-  workerScript.running = true;
-  return new Promise<void>((resolve, reject) => {
-    executeJSScript(player, workerScript.getServer().scripts, workerScript)
-      .then(() => {
-        resolve();
-      })
-      .catch((e) => reject(e));
-  }).catch((e) => {
-    if (e instanceof Error) {
-      if (e instanceof SyntaxError) {
-        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
-          workerScript,
-          e.message + " (sorry we can't be more helpful)",
-        );
-      } else {
-        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
-          workerScript,
-          e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
-        );
-      }
-      throw new ScriptDeath(workerScript);
-    } else if (helpers.isScriptErrorMessage(e)) {
-      workerScript.errorMessage = e;
-      throw new ScriptDeath(workerScript);
-    } else if (e instanceof ScriptDeath) {
-      throw e;
-    }
+async function startNetscript2Script(workerScript: WorkerScript): Promise<void> {
+  const scripts = workerScript.getServer().scripts;
+  const script = workerScript.getScript();
+  if (script === null) throw "workerScript had no associated script. This is a bug.";
+  const loadedModule = await compile(script, scripts);
+  workerScript.ramUsage = script.ramUsage;
+  const ns = workerScript.env.vars;
 
-    // Don't know what to do with it, let's try making an error message out of it
-    workerScript.errorMessage = helpers.makeRuntimeRejectMsg(workerScript, "" + e);
-    throw new ScriptDeath(workerScript);
-  });
+  if (!loadedModule) throw `${script.filename} cannot be run because the script module won't load`;
+  // TODO: Better error for "unexpected reserved word" when using await in non-async function?
+  if (typeof loadedModule.main !== "function")
+    throw `${script.filename} cannot be run because it does not have a main function.`;
+  if (!ns) throw `${script.filename} cannot be run because the NS object hasn't been constructed properly.`;
+  await loadedModule.main(ns);
 }
 
-function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
+async function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   const code = workerScript.code;
-  workerScript.running = true;
+  let errorToThrow: unknown;
 
   //Process imports
   let codeWithImports, codeLineOffset;
@@ -107,169 +76,51 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
     codeWithImports = importProcessingRes.code;
     codeLineOffset = importProcessingRes.lineOffset;
   } catch (e: unknown) {
-    dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + String(e));
-    workerScript.env.stopFlag = true;
-    workerScript.running = false;
-    killWorkerScript(workerScript);
-    return Promise.resolve();
+    throw `Error processing Imports in ${workerScript.name}@${workerScript.hostname}:\n\n${e}`;
   }
 
-  const interpreterInitialization = function (int: Interpreter, scope: unknown): void {
-    interface NS1 extends NS {
-      [key: string]: any;
-    }
-    //Add the Netscript environment
-    const ns = NetscriptFunctions(workerScript) as NS1;
-    for (const name of Object.keys(ns)) {
-      const entry = ns[name];
+  interface BasicObject {
+    [key: string]: any;
+  }
+  function wrapNS1Layer(int: Interpreter, intLayer: unknown, nsLayer = workerScript.env.vars as BasicObject) {
+    for (const [name, entry] of Object.entries(nsLayer)) {
       if (typeof entry === "function") {
-        //Async functions need to be wrapped. See JS-Interpreter documentation
-        const asyncFuncs = ["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write", "share", "wget"];
-
-        if (asyncFuncs.includes(name)) {
-          const tempWrapper = function (...args: unknown[]): void {
-            const fnArgs = [];
-
-            //All of the Object/array elements are in JSInterpreter format, so
-            //we have to convert them back to native format to pass them to these fns
-            for (let i = 0; i < args.length - 1; ++i) {
-              if (typeof args[i] === "object" || Array.isArray(args[i])) {
-                fnArgs.push(int.pseudoToNative(args[i]));
-              } else {
-                fnArgs.push(args[i]);
-              }
-            }
-            const callb = args[args.length - 1];
-            const fnPromise = entry(...fnArgs);
-            fnPromise
-              .then(function (res: unknown) {
-                if (typeof callb === "function") {
-                  callb(res);
-                }
-              })
-              .catch(function (err: unknown) {
-                if (typeof err === "string") {
-                  console.error(err);
-                  const errorTextArray = err.split("|DELIMITER|");
-                  const hostname = errorTextArray[1];
-                  const scriptName = errorTextArray[2];
-                  const errorMsg = errorTextArray[3];
-                  let msg = `${scriptName}@${hostname}<br>`;
-                  msg += "<br>";
-                  msg += errorMsg;
-                  dialogBoxCreate(msg);
-                  workerScript.env.stopFlag = true;
-                  workerScript.running = false;
-                  killWorkerScript(workerScript);
-                  return Promise.resolve();
-                }
-              });
-          };
-          int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
-        } else if (
-          name === "sprintf" ||
-          name === "vsprintf" ||
-          name === "scp" ||
-          name == "write" ||
-          name === "tryWritePort" ||
-          name === "run" ||
-          name === "exec"
-        ) {
-          const tempWrapper = function (...args: unknown[]): void {
-            const fnArgs = [];
-
-            //All of the Object/array elements are in JSInterpreter format, so
-            //we have to convert them back to native format to pass them to these fns
-            for (let i = 0; i < args.length; ++i) {
-              if (typeof args[i] === "object" || Array.isArray(args[i])) {
-                fnArgs.push(int.pseudoToNative(args[i]));
-              } else {
-                fnArgs.push(args[i]);
-              }
-            }
-
-            return entry(...fnArgs);
-          };
-          int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
-        } else {
-          const tempWrapper = function (...args: unknown[]): unknown {
-            const res = entry(...args);
-
-            if (res == null) {
-              return res;
-            } else if (res.constructor === Array || res === Object(res)) {
-              //Objects and Arrays must be converted to the interpreter's format
-              return int.nativeToPseudo(res);
-            } else {
-              return res;
-            }
-          };
-          int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
-        }
+        const wrapper = async (...args: unknown[]) => {
+          try {
+            // Sent a resolver function as an extra arg. See createAsyncFunction JSInterpreter.js:3209
+            const callback = args.pop() as (value: unknown) => void;
+            const result = await entry(...args.map((arg) => int.pseudoToNative(arg)));
+            return callback(int.nativeToPseudo(result));
+          } catch (e: unknown) {
+            errorToThrow = e;
+          }
+        };
+        int.setProperty(intLayer, name, int.createAsyncFunction(wrapper));
+      } else if (Array.isArray(entry) || typeof entry !== "object") {
+        // args, strings on enums, etc
+        int.setProperty(intLayer, name, int.nativeToPseudo(entry));
       } else {
-        //bladeburner, or anything else
-        int.setProperty(scope, name, int.nativeToPseudo(entry));
+        // new object layer, e.g. bladeburner
+        int.setProperty(intLayer, name, int.nativeToPseudo({}));
+        wrapNS1Layer(int, (intLayer as BasicObject).properties[name], nsLayer[name]);
       }
     }
-
-    //Add the arguments
-    int.setProperty(scope, "args", int.nativeToPseudo(workerScript.args));
-  };
+  }
 
   let interpreter: Interpreter;
   try {
-    interpreter = new Interpreter(codeWithImports, interpreterInitialization, codeLineOffset);
+    interpreter = new Interpreter(codeWithImports, wrapNS1Layer, codeLineOffset);
   } catch (e: unknown) {
-    dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + String(e));
-    workerScript.env.stopFlag = true;
-    workerScript.running = false;
-    killWorkerScript(workerScript);
-    return Promise.resolve();
+    throw `Syntax ERROR in ${workerScript.name}@${workerScript.hostname}:\n\n${String(e)}`;
   }
 
-  return new Promise(function (resolve, reject) {
-    function runInterpreter(): void {
-      try {
-        if (workerScript.env.stopFlag) {
-          return reject(new ScriptDeath(workerScript));
-        }
-
-        let more = true;
-        let i = 0;
-        while (i < 3 && more) {
-          more = more && interpreter.step();
-          i++;
-        }
-
-        if (more) {
-          setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
-        } else {
-          resolve();
-        }
-      } catch (_e: unknown) {
-        let e = String(_e);
-        if (!helpers.isScriptErrorMessage(e)) {
-          e = helpers.makeRuntimeRejectMsg(workerScript, e);
-        }
-        workerScript.errorMessage = e;
-        return reject(new ScriptDeath(workerScript));
-      }
-    }
-
-    try {
-      runInterpreter();
-    } catch (e: unknown) {
-      if (isString(e)) {
-        workerScript.errorMessage = e;
-        return reject(new ScriptDeath(workerScript));
-      } else if (e instanceof ScriptDeath) {
-        return reject(e);
-      } else {
-        console.error(e);
-        return reject(new ScriptDeath(workerScript));
-      }
-    }
-  });
+  let more = true;
+  while (more) {
+    if (errorToThrow) throw errorToThrow;
+    if (workerScript.env.stopFlag) return;
+    for (let i = 0; more && i < 3; i++) more = interpreter.step();
+    if (more) await new Promise((r) => setTimeout(r, Settings.CodeInstructionRunTime));
+  }
 }
 
 /*  Since the JS Interpreter used for Netscript 1.0 only supports ES5, the keyword
@@ -421,13 +272,8 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): { c
  * corresponding WorkerScript), and add the RunningScript to the server on which
  * it is active
  */
-export function startWorkerScript(
-  player: IPlayer,
-  runningScript: RunningScript,
-  server: BaseServer,
-  parent?: WorkerScript,
-): number {
-  if (createAndAddWorkerScript(player, runningScript, server, parent)) {
+export function startWorkerScript(runningScript: RunningScript, server: BaseServer, parent?: WorkerScript): number {
+  if (createAndAddWorkerScript(runningScript, server, parent)) {
     // Push onto runningScripts.
     // This has to come after createAndAddWorkerScript() because that fn updates RAM usage
     server.runScript(runningScript);
@@ -447,12 +293,7 @@ export function startWorkerScript(
  * @param {Server} server - Server on which the script is to be run
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
-function createAndAddWorkerScript(
-  player: IPlayer,
-  runningScriptObj: RunningScript,
-  server: BaseServer,
-  parent?: WorkerScript,
-): boolean {
+function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseServer, parent?: WorkerScript): boolean {
   // Update server's ram usage
   let threads = 1;
   if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
@@ -465,15 +306,14 @@ function createAndAddWorkerScript(
   const ramAvailable = server.maxRam - server.ramUsed;
   if (ramUsage > ramAvailable + 0.001) {
     dialogBoxCreate(
-      `Not enough RAM to run script ${runningScriptObj.filename} with args ` +
-        `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
-        `the game and the script's RAM usage increased (either because of an update to the game or ` +
-        `your changes to the script.)`,
+      `Not enough RAM to run script ${runningScriptObj.filename} with args ${arrayToString(runningScriptObj.args)}.\n` +
+        `This can occur when you reload the game and the script's RAM usage has increased (either because of an update to the game or ` +
+        `your changes to the script).\nThis can also occur if you have attempted to launch a script from a tail window with insufficient RAM. `,
     );
     return false;
   }
 
-  server.updateRamUsed(roundToTwo(server.ramUsed + ramUsage), Player);
+  server.updateRamUsed(roundToTwo(server.ramUsed + ramUsage));
 
   // Get the pid
   const pid = generateNextPid();
@@ -493,79 +333,24 @@ function createAndAddWorkerScript(
   workerScripts.set(pid, workerScript);
   WorkerScriptStartStopEventEmitter.emit();
 
-  // Start the script's execution
-  let scriptExecution: Promise<void> | null = null; // Script's resulting promise
-  if (workerScript.name.endsWith(".js")) {
-    scriptExecution = startNetscript2Script(player, workerScript);
-  } else {
-    scriptExecution = startNetscript1Script(workerScript);
-    if (!(scriptExecution instanceof Promise)) {
-      return false;
-    }
-  }
-
-  // Once the code finishes (either resolved or rejected, doesnt matter), set its
-  // running status to false
-  scriptExecution
+  // Start the script's execution using the correct function for file type
+  (workerScript.name.endsWith(".js") ? startNetscript2Script : startNetscript1Script)(workerScript)
+    // Once the code finishes (either resolved or rejected, doesnt matter), set its
+    // running status to false
     .then(function () {
-      workerScript.running = false;
-      workerScript.env.stopFlag = true;
       // On natural death, the earnings are transfered to the parent if it still exists.
-      if (parent !== undefined) {
-        if (parent.running) {
-          parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
-          parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
-        }
+      if (parent && !parent.env.stopFlag) {
+        parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
+        parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
       }
-
       killWorkerScript(workerScript);
       workerScript.log("", () => "Script finished running");
     })
     .catch(function (e) {
-      if (e instanceof Error) {
-        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-        console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
-        return;
-      } else if (e instanceof ScriptDeath) {
-        if (helpers.isScriptErrorMessage(workerScript.errorMessage)) {
-          const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
-          if (errorTextArray.length != 4) {
-            console.error("ERROR: Something wrong with Error text in evaluator...");
-            console.error("Error text: " + workerScript.errorMessage);
-            return;
-          }
-          const hostname = errorTextArray[1];
-          const scriptName = errorTextArray[2];
-          const errorMsg = errorTextArray[3];
-
-          let msg = `RUNTIME ERROR<br>${scriptName}@${hostname} (PID - ${workerScript.pid})<br>`;
-          if (workerScript.args.length > 0) {
-            msg += `Args: ${arrayToString(workerScript.args)}<br>`;
-          }
-          msg += "<br>";
-          msg += errorMsg;
-
-          dialogBoxCreate(msg);
-          workerScript.log("", () => "Script crashed with runtime error");
-        } else {
-          workerScript.log("", () => "Script killed");
-          return; // Already killed, so stop here
-        }
-      } else if (helpers.isScriptErrorMessage(e)) {
-        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-        console.error(
-          "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
-            e.toString(),
-        );
-        return;
-      } else {
-        dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-        console.error(e);
-      }
-
+      handleUnknownError(e, workerScript);
+      workerScript.log("", () => (e instanceof ScriptDeath ? "Script killed." : "Script crashed due to an error."));
       killWorkerScript(workerScript);
     });
-
   return true;
 }
 
@@ -583,7 +368,7 @@ export function updateOnlineScriptTimes(numCycles = 1): void {
  * Called when the game is loaded. Loads all running scripts (from all servers)
  * into worker scripts so that they will start running
  */
-export function loadAllRunningScripts(player: IPlayer): void {
+export function loadAllRunningScripts(): void {
   const skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
   if (skipScriptLoad) {
     Terminal.warn("Skipped loading player scripts during startup");
@@ -604,7 +389,7 @@ export function loadAllRunningScripts(player: IPlayer): void {
     } else {
       for (let j = 0; j < server.runningScripts.length; ++j) {
         const fileName = server.runningScripts[j].filename;
-        createAndAddWorkerScript(player, server.runningScripts[j], server);
+        createAndAddWorkerScript(server.runningScripts[j], server);
 
         if (!server.runningScripts[j]) {
           // createAndAddWorkerScript can modify the server.runningScripts array if a script is invalid
@@ -623,7 +408,6 @@ export function loadAllRunningScripts(player: IPlayer): void {
  * Run a script from inside another script (run(), exec(), spawn(), etc.)
  */
 export function runScriptFromScript(
-  player: IPlayer,
   caller: string,
   server: BaseServer,
   scriptname: string,
@@ -698,7 +482,7 @@ export function runScriptFromScript(
     runningScriptObj.threads = threads;
     runningScriptObj.server = server.hostname;
 
-    return startWorkerScript(player, runningScriptObj, server, workerScript);
+    return startWorkerScript(runningScriptObj, server, workerScript);
   }
 
   workerScript.log(caller, () => `Could not find script '${scriptname}' on '${server.hostname}'`);

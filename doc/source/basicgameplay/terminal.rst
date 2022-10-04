@@ -45,7 +45,7 @@ files.
 
 Absolute vs Relative Paths
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-Many Terminal commands accept absolute both absolute and relative paths for specifying a
+Many Terminal commands accept both absolute and relative paths for specifying a
 file.
 
 An absolute path specifies the location of the file from the root directory (/).

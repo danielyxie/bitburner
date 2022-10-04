@@ -9,7 +9,6 @@ import { ScriptUrl } from "./ScriptUrl";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { ScriptModule } from "./ScriptModule";
 
 let globalModuleSequenceNumber = 0;
@@ -46,18 +45,19 @@ export class Script {
   ramUsage = 0;
   ramUsageEntries?: RamUsageEntry[];
 
+  // Used to deconflict multiple simultaneous compilations.
+  queueCompile = false;
+
   // hostname of server that this script is on.
   server = "";
 
-  constructor(player: IPlayer | null = null, fn = "", code = "", server = "", otherScripts: Script[] = []) {
+  constructor(fn = "", code = "", server = "", otherScripts: Script[] = []) {
     this.filename = fn;
     this.code = code;
-    this.ramUsage = 0;
     this.server = server; // hostname of server this script is on
-    this.module = null;
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
-    if (this.code !== "" && player !== null) {
-      this.updateRamUsage(player, otherScripts);
+    if (this.code !== "") {
+      this.updateRamUsage(otherScripts);
     }
   }
 
@@ -93,19 +93,19 @@ export class Script {
    * @param {string} code - The new contents of the script
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
-  saveScript(player: IPlayer, filename: string, code: string, hostname: string, otherScripts: Script[]): void {
+  saveScript(filename: string, code: string, hostname: string, otherScripts: Script[]): void {
     // Update code and filename
     this.code = Script.formatCode(code);
 
     this.filename = filename;
     this.server = hostname;
-    this.updateRamUsage(player, otherScripts);
+    this.updateRamUsage(otherScripts);
     this.markUpdated();
     for (const dependent of this.dependents) {
       const [dependentScript] = otherScripts.filter(
         (s) => s.filename === dependent.filename && s.server == dependent.server,
       );
-      if (dependentScript !== null) dependentScript.markUpdated();
+      dependentScript?.markUpdated();
     }
   }
 
@@ -113,8 +113,8 @@ export class Script {
    * Calculates and updates the script's RAM usage based on its code
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
-  async updateRamUsage(player: IPlayer, otherScripts: Script[]): Promise<void> {
-    const res = await calculateRamUsage(player, this.code, otherScripts);
+  updateRamUsage(otherScripts: Script[]): void {
+    const res = calculateRamUsage(this.code, otherScripts);
     if (res.cost > 0) {
       this.ramUsage = roundToTwo(res.cost);
       this.ramUsageEntries = res.entries;

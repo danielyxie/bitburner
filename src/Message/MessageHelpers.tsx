@@ -1,3 +1,4 @@
+import React from "react";
 import { Message } from "./Message";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { Router } from "../ui/GameRoot";
@@ -22,15 +23,12 @@ function sendMessage(msg: Message, forced = false): void {
 function showMessage(name: MessageFilenames): void {
   const msg = Messages[name];
   if (!(msg instanceof Message)) throw new Error("trying to display unexistent message");
-  const txt =
-    "Message received from unknown sender: <br><br>" +
-    "<i>" +
-    msg.msg +
-    "</i><br><br>" +
-    "This message was saved as " +
-    msg.filename +
-    " onto your home computer.";
-  dialogBoxCreate(txt);
+  dialogBoxCreate(
+    <>
+      Message received from unknown sender:<i>{msg.msg}</i>This message was saved as {msg.filename} onto your home
+      computer.
+    </>,
+  );
 }
 
 //Adds a message to a server
@@ -69,7 +67,7 @@ function checkForMessagesToSend(): void {
   const truthGazer = Messages[MessageFilenames.TruthGazer];
   const redpill = Messages[MessageFilenames.RedPill];
 
-  if (Player.hasAugmentation(AugmentationNames.TheRedPill)) {
+  if (Player.hasAugmentation(AugmentationNames.TheRedPill, true)) {
     //Get the world daemon required hacking level
     const worldDaemon = GetServer(SpecialServers.WorldDaemon);
     if (!(worldDaemon instanceof Server)) {
@@ -127,20 +125,20 @@ const Messages: Record<MessageFilenames, Message> = {
     MessageFilenames.Jumper0,
     "I know you can sense it. I know you're searching for it. " +
       "It's why you spend night after " +
-      "night at your computer. <br><br>It's real, I've seen it. And I can " +
-      "help you find it. But not right now. You're not ready yet.<br><br>" +
-      "Use this program to track your progress<br><br>" +
-      "The fl1ght.exe program was added to your home computer<br><br>" +
+      "night at your computer. \n\nIt's real, I've seen it. And I can " +
+      "help you find it. But not right now. You're not ready yet.\n\n" +
+      "Use this program to track your progress\n\n" +
+      "The fl1ght.exe program was added to your home computer\n\n" +
       "-jump3R",
   ),
 
   [MessageFilenames.Jumper1]: new Message(
     MessageFilenames.Jumper1,
     `Soon you will be contacted by a hacking group known as ${FactionNames.NiteSec}. ` +
-      "They can help you with your search. <br><br>" +
+      "They can help you with your search. \n\n" +
       "You should join them, garner their favor, and " +
       "exploit them for their Augmentations. But do not trust them. " +
-      "They are not what they seem. No one is.<br><br>" +
+      "They are not what they seem. No one is.\n\n" +
       "-jump3R",
   ),
 
@@ -148,21 +146,21 @@ const Messages: Record<MessageFilenames, Message> = {
     MessageFilenames.Jumper2,
     "Do not try to save the world. There is no world to save. If " +
       "you want to find the truth, worry only about yourself. Ethics and " +
-      `morals will get you killed. <br><br>Watch out for a hacking group known as ${FactionNames.NiteSec}.` +
-      "<br><br>-jump3R",
+      `morals will get you killed. \n\nWatch out for a hacking group known as ${FactionNames.NiteSec}.` +
+      "\n\n-jump3R",
   ),
 
   [MessageFilenames.Jumper3]: new Message(
     MessageFilenames.Jumper3,
     "You must learn to walk before you can run. And you must " +
-      `run before you can fly. Look for ${FactionNames.TheBlackHand}. <br><br>` +
-      "I.I.I.I <br><br>-jump3R",
+      `run before you can fly. Look for ${FactionNames.TheBlackHand}. \n\n` +
+      "I.I.I.I \n\n-jump3R",
   ),
 
   [MessageFilenames.Jumper4]: new Message(
     MessageFilenames.Jumper4,
     "To find what you are searching for, you must understand the bits. " +
-      "The bits are all around us. The runners will help you.<br><br>" +
+      "The bits are all around us. The runners will help you.\n\n" +
       "-jump3R",
   ),
 
@@ -171,8 +169,8 @@ const Messages: Record<MessageFilenames, Message> = {
     MessageFilenames.CyberSecTest,
     "We've been watching you. Your skills are very impressive. But you're wasting " +
       "your talents. If you join us, you can put your skills to good use and change " +
-      "the world for the better. If you join us, we can unlock your full potential. <br><br>" +
-      "But first, you must pass our test. Find and install the backdoor on our server. <br><br>" +
+      "the world for the better. If you join us, we can unlock your full potential. \n\n" +
+      "But first, you must pass our test. Find and install the backdoor on our server. \n\n" +
       `-${FactionNames.CyberSec}`,
   ),
 
@@ -181,17 +179,17 @@ const Messages: Record<MessageFilenames, Message> = {
     "People say that the corrupted governments and corporations rule the world. " +
       "Yes, maybe they do. But do you know who everyone really fears? People " +
       "like us. Because they can't hide from us. Because they can't fight shadows " +
-      "and ideas with bullets. <br><br>" +
-      "Join us, and people will fear you, too. <br><br>" +
+      "and ideas with bullets. \n\n" +
+      "Join us, and people will fear you, too. \n\n" +
       "Find and install the backdoor on our server, avmnite-02h. Then, we will contact you again." +
-      `<br><br>-${FactionNames.NiteSec}`,
+      `\n\n-${FactionNames.NiteSec}`,
   ),
 
   [MessageFilenames.BitRunnersTest]: new Message(
     MessageFilenames.BitRunnersTest,
     "We know what you are doing. We know what drives you. We know " +
-      "what you are looking for. <br><br> " +
-      "We can help you find the answers.<br><br>" +
+      "what you are looking for. \n\n " +
+      "We can help you find the answers.\n\n" +
       "run4theh111z",
   ),
 
@@ -199,18 +197,18 @@ const Messages: Record<MessageFilenames, Message> = {
   [MessageFilenames.TruthGazer]: new Message(
     MessageFilenames.TruthGazer,
     //"THE TRUTH CAN NO LONGER ESCAPE YOUR GAZE"
-    "@&*($#@&__TH3__#@A&#@*)__TRU1H__(*)&*)($#@&()E&R)W&<br>" +
-      "%@*$^$()@&$)$*@__CAN__()(@^#)@&@)#__N0__(#@&#)@&@&(<br>" +
-      "*(__LON6ER__^#)@)(()*#@)@__ESCAP3__)#(@(#@*@()@(#*$<br>" +
+    "@&*($#@&__TH3__#@A&#@*)__TRU1H__(*)&*)($#@&()E&R)W&\n" +
+      "%@*$^$()@&$)$*@__CAN__()(@^#)@&@)#__N0__(#@&#)@&@&(\n" +
+      "*(__LON6ER__^#)@)(()*#@)@__ESCAP3__)#(@(#@*@()@(#*$\n" +
       "()@)#$*%)$#()$#__Y0UR__(*)$#()%(&(%)*!)($__GAZ3__#(",
   ),
 
   [MessageFilenames.RedPill]: new Message(
     MessageFilenames.RedPill,
     //"FIND THE-CAVE"
-    "@)(#V%*N)@(#*)*C)@#%*)*V)@#(*%V@)(#VN%*)@#(*%<br>" +
-      ")@B(*#%)@)M#B*%V)____FIND___#$@)#%(B*)@#(*%B)<br>" +
-      "@_#(%_@#M(BDSPOMB__THE-CAVE_#)$(*@#$)@#BNBEGB<br>" +
+    "@)(#V%*N)@(#*)*C)@#%*)*V)@#(*%V@)(#VN%*)@#(*%\n" +
+      ")@B(*#%)@)M#B*%V)____FIND___#$@)#%(B*)@#(*%B)\n" +
+      "@_#(%_@#M(BDSPOMB__THE-CAVE_#)$(*@#$)@#BNBEGB\n" +
       "DFLSMFVMV)#@($*)@#*$MV)@#(*$V)M#(*$)M@(#*VM$)",
   ),
 };

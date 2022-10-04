@@ -9,18 +9,18 @@ Read content of a file.
 <b>Signature:</b>
 
 ```typescript
-read(handle: string): PortData;
+read(filename: string): string;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  handle | string | Filename to read from. |
+|  filename | string | Name of the file to be read. |
 
 <b>Returns:</b>
 
-[PortData](./bitburner.portdata.md)
+string
 
 Data in the specified text file.
 
@@ -28,7 +28,7 @@ Data in the specified text file.
 
 RAM cost: 0 GB
 
-This function is used to read data from a text file (.txt).
+This function is used to read data from a text file (.txt) or script (.script, .js).
 
-This function will return the data in the specified text file. If the text file does not exist, an empty string will be returned.
+This function will return the data in the specified file. If the file does not exist, an empty string will be returned.
 

@@ -1,3 +1,5 @@
+# Only bugfix are accepted
+
 # DELETE THIS AFTER READING
 
 # READ CONTRIBUTING.md
@@ -5,16 +7,20 @@
 # PR title
 
 Formatted as such:
-SECTION: FIX #xzyw PLAYER DESCRIPTION
+SECTION: PLAYER DESCRIPTION
 
 SECTION is something like "API", "UI", "MISC", "STANEK", "CORPORATION"
-FIX #xyzw is the issue number, if any
 PLAYER DESCRIPTION is what you'd tell a non-contributor to convey what is changed.
 
 # Linked issues
 
 If your pull request is related to a git issue, please link it in the description using #xyz.
-If your PR should close the issue when it is merged in, use `fixes #xyz` or `closes #xyz`. It'll automate the process.
+If your PR should close the issue when it is merged in, use `fixes #xyz` or `closes #xyz` like this:
+
+closes #xxxx
+closes #yyyy
+
+It'll automate the process.
 
 # Documentation
 

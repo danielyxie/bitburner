@@ -20,5 +20,5 @@ export interface CodingContract
 |  [getContractType(filename, host)](./bitburner.codingcontract.getcontracttype.md) | Get the type of a coding contract. |
 |  [getData(filename, host)](./bitburner.codingcontract.getdata.md) | Get the input data. |
 |  [getDescription(filename, host)](./bitburner.codingcontract.getdescription.md) | Get the description. |
-|  [getNumTriesRemaining(filename, host)](./bitburner.codingcontract.getnumtriesremaining.md) | Get the number of attempt remaining. |
+|  [getNumTriesRemaining(filename, host)](./bitburner.codingcontract.getnumtriesremaining.md) | Get the number of attempts remaining. |
 

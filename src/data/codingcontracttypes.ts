@@ -490,8 +490,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "Note that an octet cannot begin with a '0' unless the number",
         "itself is actually 0. For example, '192.168.010.1' is not a valid IP.\n\n",
         "Examples:\n\n",
-        "25525511135 -> [255.255.11.135, 255.255.111.35]\n",
-        "1938718066 -> [193.87.180.66]",
+        '25525511135 -> ["255.255.11.135", "255.255.111.35"]\n',
+        '1938718066 -> ["193.87.180.66"]',
       ].join(" ");
     },
     difficulty: 3,
@@ -532,7 +532,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
 
       const sanitizedAns: string = removeBracketsFromArrayString(ans).replace(/\s/g, "");
-      const ansArr: string[] = sanitizedAns.split(",");
+      const ansArr: string[] = sanitizedAns.split(",").map((ip) => ip.replace(/^"|"$/g, ""));
       if (ansArr.length !== ret.length) {
         return false;
       }
@@ -1422,9 +1422,13 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     solver: (_data: unknown, ans: string): boolean => {
       const data = _data as [number, [number, number][]];
+
+      //Sanitize player input
+      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+
       //Case where the player believes there is no solution.
       //Attempt to construct one to check if this is correct.
-      if (ans == "[]") {
+      if (sanitizedPlayerAns === "") {
         //Helper function to get neighbourhood of a vertex
         function neighbourhood(vertex: number): number[] {
           const adjLeft = data[1].filter(([a]) => a == vertex).map(([, b]) => b);
@@ -1473,12 +1477,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         return false;
       }
 
-      //Sanitize player input
-      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+      //Solution provided case
       const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
       const coloring: number[] = sanitizedPlayerAnsArr.map((val) => parseInt(val));
-
-      //Solution provided case
       if (coloring.length == data[0]) {
         const edges = data[1];
         const validColors = [0, 1];

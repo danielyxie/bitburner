@@ -2,7 +2,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
 import { Programs } from "../Programs/Programs";
 import { Work, WorkType } from "./Work";
 import { Program } from "../Programs/Program";
@@ -13,7 +13,6 @@ export const isCreateProgramWork = (w: Work | null): w is CreateProgramWork =>
 interface CreateProgramWorkParams {
   programName: string;
   singularity: boolean;
-  player: IPlayer;
 }
 
 export class CreateProgramWork extends Work {
@@ -26,10 +25,9 @@ export class CreateProgramWork extends Work {
     this.unitCompleted = 0;
     this.programName = params?.programName ?? "";
 
-    if (params?.player) {
-      const player = params.player;
-      for (let i = 0; i < player.getHomeComputer().programs.length; ++i) {
-        const programFile = player.getHomeComputer().programs[i];
+    if (params) {
+      for (let i = 0; i < Player.getHomeComputer().programs.length; ++i) {
+        const programFile = Player.getHomeComputer().programs[i];
         if (programFile.startsWith(this.programName) && programFile.endsWith("%-INC")) {
           const res = programFile.split("-");
           if (res.length != 3) {
@@ -40,7 +38,7 @@ export class CreateProgramWork extends Work {
             break;
           }
           this.unitCompleted = (percComplete / 100) * this.unitNeeded();
-          player.getHomeComputer().programs.splice(i, 1);
+          Player.getHomeComputer().programs.splice(i, 1);
         }
       }
     }
@@ -56,14 +54,14 @@ export class CreateProgramWork extends Work {
     return p;
   }
 
-  process(player: IPlayer, cycles: number): boolean {
+  process(cycles: number): boolean {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
-      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
+      focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
     //Higher hacking skill will allow you to create programs faster
     const reqLvl = this.getProgram().create?.level ?? 0;
-    let skillMult = (player.skills.hacking / reqLvl) * player.getIntelligenceBonus(3); //This should always be greater than 1;
+    let skillMult = (Player.skills.hacking / reqLvl) * Player.getIntelligenceBonus(3); //This should always be greater than 1;
     skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
     skillMult *= focusBonus;
     //Skill multiplier directly applied to "time worked"
@@ -75,11 +73,11 @@ export class CreateProgramWork extends Work {
     }
     return false;
   }
-  finish(player: IPlayer, cancelled: boolean): void {
+  finish(cancelled: boolean): void {
     const programName = this.programName;
     if (!cancelled) {
       //Complete case
-      player.gainIntelligenceExp(
+      Player.gainIntelligenceExp(
         (CONSTANTS.IntelligenceProgramBaseExpGain * this.cyclesWorked * CONSTANTS._idleSpeed) / 1000,
       );
       if (!this.singularity) {
@@ -90,14 +88,14 @@ export class CreateProgramWork extends Work {
         dialogBoxCreate(lines.join("<br>"));
       }
 
-      if (!player.getHomeComputer().programs.includes(programName)) {
-        player.getHomeComputer().programs.push(programName);
+      if (!Player.getHomeComputer().programs.includes(programName)) {
+        Player.getHomeComputer().programs.push(programName);
       }
-    } else if (!player.getHomeComputer().programs.includes(programName)) {
+    } else if (!Player.getHomeComputer().programs.includes(programName)) {
       //Incomplete case
       const perc = ((100 * this.unitCompleted) / this.unitNeeded()).toFixed(2);
       const incompleteName = programName + "-" + perc + "%-INC";
-      player.getHomeComputer().programs.push(incompleteName);
+      Player.getHomeComputer().programs.push(incompleteName);
     }
   }
 

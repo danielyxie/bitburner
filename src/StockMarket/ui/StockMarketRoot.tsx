@@ -7,34 +7,10 @@ import { InfoAndPurchases } from "./InfoAndPurchases";
 import { StockTickers } from "./StockTickers";
 
 import { IStockMarket } from "../IStockMarket";
-import { Stock } from "../Stock";
-import { OrderTypes } from "../data/OrderTypes";
-import { PositionTypes } from "../data/PositionTypes";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { EventEmitter } from "../../utils/EventEmitter";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-import { ICancelOrderParams } from "../StockMarket";
-
-type txFn = (stock: Stock, shares: number) => boolean;
-type placeOrderFn = (
-  stock: Stock,
-  shares: number,
-  price: number,
-  ordType: OrderTypes,
-  posType: PositionTypes,
-) => boolean;
+import { Player } from "../../Player";
 
 type IProps = {
-  buyStockLong: txFn;
-  buyStockShort: txFn;
-  cancelOrder: (params: ICancelOrderParams, workerScript?: WorkerScript) => void;
-  eventEmitterForReset?: EventEmitter<[]>;
-  initStockMarket: () => void;
-  p: IPlayer;
-  placeOrder: placeOrderFn;
-  sellStockLong: txFn;
-  sellStockShort: txFn;
   stockMarket: IStockMarket;
 };
 
@@ -50,20 +26,8 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
   }, []);
   return (
     <>
-      <InfoAndPurchases initStockMarket={props.initStockMarket} p={props.p} rerender={rerender} />
-      {props.p.hasWseAccount && (
-        <StockTickers
-          buyStockLong={props.buyStockLong}
-          buyStockShort={props.buyStockShort}
-          cancelOrder={props.cancelOrder}
-          eventEmitterForReset={props.eventEmitterForReset}
-          p={props.p}
-          placeOrder={props.placeOrder}
-          sellStockLong={props.sellStockLong}
-          sellStockShort={props.sellStockShort}
-          stockMarket={props.stockMarket}
-        />
-      )}
+      <InfoAndPurchases rerender={rerender} />
+      {Player.hasWseAccount && <StockTickers stockMarket={props.stockMarket} />}
     </>
   );
 }
