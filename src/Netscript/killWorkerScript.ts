@@ -18,7 +18,6 @@ import { handleUnknownError } from "./NetscriptHelpers";
 export type killScriptParams = WorkerScript | number | { runningScript: RunningScript; hostname: string };
 
 export function killWorkerScript(params: killScriptParams): boolean {
-  console.log(ITutorial.isRunning);
   if (ITutorial.isRunning) {
     AlertEvents.emit("Processes cannot be killed during the tutorial.");
     return false;
