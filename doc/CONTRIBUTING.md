@@ -1,3 +1,5 @@
+# Only bugfix are accepted
+
 # Contributing to Bitburner
 
 ## In General
