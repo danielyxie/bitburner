@@ -42,20 +42,7 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
   };
   const ns = NetscriptFunctions(workerScript as WorkerScript);
 
-  /**
-   * Tests that:
-   *      1. A function has non-zero RAM cost, or zero if it is flagged as zero cost.
-   *      2. Running the function properly updates the MockWorkerScript's dynamic RAM calculation
-   *      3. Running multiple calls of the function does not result in additional RAM cost
-   * @param {string[]} fnDesc - describes the name of the function being tested,
-   *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
-   */
-  function testDynamicRamCost(fnDesc: string[], zero: boolean = false) {
-    const expected = getRamCost(...fnDesc);
-    zero ? expect(expected).toEqual(0) : expect(expected).toBeGreaterThan(0);
-  }
-
-  function dynamicCheck(fnPath: string[], expectedRamCost: number) {
+  function dynamicCheck(fnPath: string[], expectedRamCost: number, extraLayerCost = 0) {
     const code = `${fnPath.join(".")}();\n`.repeat(3);
     const fnName = fnPath[fnPath.length - 1];
 
@@ -82,10 +69,10 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
 
     expect(workerScript.dynamicLoadedFns).toHaveProperty(fnName);
     expect(workerScript.dynamicRamUsage - ScriptBaseCost).toBeCloseTo(expectedRamCost, 5);
-    expect(workerScript.dynamicRamUsage).toBeCloseTo(runningScript.ramUsage, 5);
+    expect(workerScript.dynamicRamUsage).toBeCloseTo(runningScript.ramUsage - extraLayerCost, 5);
   }
 
-  function testFunctionExpectZero(fnPath: string[]) {
+  function testFunctionExpectZero(fnPath: string[], extraLayerCost = 0) {
     const wholeFn = `${fnPath.join(".")}()`;
     describe(wholeFn, () => {
       it("Zero Ram Static Check", () => {
@@ -93,13 +80,13 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
         expect(ramCost).toEqual(0);
         const code = wholeFn;
         const staticCost = calculateRamUsage(code, []).cost;
-        expect(staticCost).toEqual(ScriptBaseCost);
+        expect(staticCost).toEqual(ScriptBaseCost + extraLayerCost);
       });
-      it("Zero Ram Dynamic check", () => dynamicCheck(fnPath, 0));
+      it("Zero Ram Dynamic check", () => dynamicCheck(fnPath, 0, extraLayerCost));
     });
   }
 
-  function testFunctionExpectNonzero(fnPath: string[]) {
+  function testFunctionExpectNonzero(fnPath: string[], extraLayerCost = 0) {
     const wholeFn = `${fnPath.join(".")}()`;
     const ramCost = getRamCost(...fnPath);
     describe(wholeFn, () => {
@@ -107,13 +94,15 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
         expect(ramCost).toBeGreaterThan(0);
         const code = wholeFn;
         const staticCost = calculateRamUsage(code, []).cost;
-        expect(staticCost).toBeCloseTo(ramCost + ScriptBaseCost, 5);
+        expect(staticCost).toBeCloseTo(ramCost + ScriptBaseCost + extraLayerCost, 5);
       });
-      it("Dynamic Check", () => dynamicCheck(fnPath, ramCost));
+      it("Dynamic Check", () => dynamicCheck(fnPath, ramCost, extraLayerCost));
     });
   }
 
+  //input type for testSingularityFunctions
   type singularityData = { fnPath: string[]; baseCost: number };
+
   function testSingularityFunctions(data: singularityData[]) {
     const sf4 = Player.sourceFiles[0];
     data.forEach(({ fnPath, baseCost }) => {
@@ -154,64 +143,89 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
     [key: string]: NSLayer | unknown[] | (() => unknown);
   };
   type RamLayer = {
-    [key: string]: number | (() => number);
+    [key: string]: RamLayer | number | (() => number);
   };
-  function testLayer(nsLayer: NSLayer, ramLayer: RamLayer, path: string[]) {
+  function testLayer(nsLayer: NSLayer, ramLayer: RamLayer, path: string[], extraLayerCost = 0) {
     const zeroCostFunctions = Object.entries(nsLayer)
       .filter(([key, val]) => ramLayer[key] === 0 && typeof val === "function")
       .map(([key]) => [...path, key]);
-    zeroCostFunctions.forEach(testFunctionExpectZero);
+    zeroCostFunctions.forEach((fn) => testFunctionExpectZero(fn, extraLayerCost));
 
     const nonzeroCostFunctions = Object.entries(nsLayer)
       .filter(([key, val]) => ramLayer[key] > 0 && typeof val === "function")
       .map(([key]) => [...path, key]);
-    nonzeroCostFunctions.forEach(testFunctionExpectNonzero);
+    nonzeroCostFunctions.forEach((fn) => testFunctionExpectNonzero(fn, extraLayerCost));
   }
 
-  describe("Top level ns functions", function () {
+  describe("Top level ns functions", () => {
     const nsScope = ns as unknown as NSLayer;
-    const ramScope = RamCosts as unknown as RamLayer;
+    const ramScope = RamCosts;
     testLayer(nsScope, ramScope, []);
   });
 
-  describe("TIX API (stock) functions", function () {
-    const nsScope = ns.stock as unknown as NSLayer;
-    const ramScope = RamCosts.stock as unknown as RamLayer;
-    testLayer(nsScope, ramScope, ["stock"]);
-  });
-
-  describe("Bladeburner API (bladeburner) functions", function () {
+  describe("Bladeburner API (bladeburner) functions", () => {
     const nsScope = ns.bladeburner as unknown as NSLayer;
-    const ramScope = RamCosts.bladeburner as unknown as RamLayer;
+    const ramScope = RamCosts.bladeburner;
     testLayer(nsScope, ramScope, ["bladeburner"]);
   });
 
-  describe("Gang API (gang) functions", function () {
+  describe("Corporation API (corporation) functions", () => {
+    const nsScope = ns.corporation as unknown as NSLayer;
+    const ramScope = RamCosts.corporation;
+    testLayer(nsScope, ramScope, ["corporation"], 1024 - ScriptBaseCost);
+  });
+
+  describe("TIX API (stock) functions", () => {
+    const nsScope = ns.stock as unknown as NSLayer;
+    const ramScope = RamCosts.stock;
+    testLayer(nsScope, ramScope, ["stock"]);
+  });
+
+  describe("Gang API (gang) functions", () => {
     const nsScope = ns.gang as unknown as NSLayer;
-    const ramScope = RamCosts.gang as unknown as RamLayer;
+    const ramScope = RamCosts.gang;
     testLayer(nsScope, ramScope, ["gang"]);
   });
 
-  describe("Coding Contract API (codingcontract) functions", function () {
+  describe("Coding Contract API (codingcontract) functions", () => {
     const nsScope = ns.codingcontract as unknown as NSLayer;
-    const ramScope = RamCosts.codingcontract as unknown as RamLayer;
+    const ramScope = RamCosts.codingcontract;
     testLayer(nsScope, ramScope, ["codingcontract"]);
   });
 
-  describe("Sleeve API (sleeve) functions", function () {
+  describe("Sleeve API (sleeve) functions", () => {
     const nsScope = ns.sleeve as unknown as NSLayer;
-    const ramScope = RamCosts.sleeve as unknown as RamLayer;
+    const ramScope = RamCosts.sleeve;
     testLayer(nsScope, ramScope, ["sleeve"]);
   });
 
   //Singularity functions are tested in a different way because they also check SF4 level effect
-  describe("ns.singularity functions", function () {
-    const singularityFunctions = Object.entries(RamCosts.singularity).map(([key, val]) => {
+  describe("ns.singularity functions", () => {
+    const singularityFunctions = Object.entries(RamCosts.singularity).map(([fnName, ramFn]) => {
       return {
-        fnPath: ["singularity", key],
-        baseCost: (val as () => number)(),
+        fnPath: ["singularity", fnName],
+        // This will error if a singularity function is assigned a flat cost instead of using the SF4 function
+        baseCost: (ramFn as () => number)(),
       };
     });
     testSingularityFunctions(singularityFunctions);
   });
+
+  //Formulas requires deeper layer penetration
+  function formulasTest(
+    newLayer = "formulas",
+    oldNSLayer = ns as unknown as NSLayer,
+    oldRamLayer = RamCosts as unknown as RamLayer,
+    path = ["formulas"],
+    nsLayer = oldNSLayer[newLayer] as NSLayer,
+    ramLayer = oldRamLayer[newLayer] as RamLayer,
+  ) {
+    testLayer(nsLayer, ramLayer, path);
+    for (const [key, val] of Object.entries(nsLayer)) {
+      if (Array.isArray(val) || typeof val === "function" || key === "enums") continue;
+      // Only other option is an object / new layer
+      describe(key, () => formulasTest(key, nsLayer, ramLayer, [...path, key]));
+    }
+  }
+  describe("ns.formulas functions", formulasTest);
 });

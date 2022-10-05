@@ -4408,54 +4408,55 @@ export interface NS {
    * @remarks RAM cost: 4 GB
    */
   readonly hacknet: Hacknet;
+  
   /**
-   *
    * Namespace for bladeburner functions.
    * @remarks RAM cost: 0 GB
    */
   readonly bladeburner: Bladeburner;
+  
   /**
-   *
    * Namespace for codingcontract functions.
    * @remarks RAM cost: 0 GB
    */
   readonly codingcontract: CodingContract;
+  
   /**
-   *
    * Namespace for gang functions.
    * @remarks RAM cost: 0 GB
    */
   readonly gang: Gang;
+  
   /**
-   *
    * Namespace for sleeve functions.
    * @remarks RAM cost: 0 GB
    */
   readonly sleeve: Sleeve;
+  
   /**
-   *
    * Namespace for stock functions.
-   * @remarks
-   * RAM cost: 0 GB
+   * @remarks RAM cost: 0 GB
    */
   readonly stock: TIX;
+  
   /**
-   *
    * Namespace for formulas functions.
-   * @remarks
-   * RAM cost: 0 GB
+   * @remarks RAM cost: 0 GB
    */
   readonly formulas: Formulas;
+  
   /**
    * Namespace for stanek functions.
    * RAM cost: 0 GB
    */
   readonly stanek: Stanek;
+  
   /**
    * Namespace for infiltration functions.
    * RAM cost: 0 GB
    */
   readonly infiltration: Infiltration;
+
   /**
    * Namespace for corporation functions.
    * RAM cost: 1022.4 GB
@@ -4476,8 +4477,7 @@ export interface NS {
 
   /**
    * Namespace for grafting functions.
-   * @remarks
-   * RAM cost: 0 GB
+   * @remarks RAM cost: 0 GB
    */
   readonly grafting: Grafting;
 

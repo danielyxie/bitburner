@@ -1,19 +1,12 @@
 import { Player } from "../Player";
+import { NSFull } from "../NetscriptFunctions";
 
-import { NS as INS } from "../ScriptEditor/NetscriptDefinitions";
-import { INetscriptExtra } from "../NetscriptFunctions/Extra";
-
+/** This type assumes any value that isn't an API layer or a function has been omitted (args and enum) */
 type RamCostTree<API> = {
-  [Property in keyof API]: API[Property] extends () => void
-    ? number | (() => void)
-    : API[Property] extends object
-    ? RamCostTree<API[Property]>
-    : never;
+  [Property in keyof API]: API[Property] extends Function ? number | (() => number) : RamCostTree<API[Property]>;
 };
 
-// TODO remember to update RamCalculations.js and WorkerScript.js
-
-// RAM costs for Netscript functions
+/** Constants for assigning costs to ns functions */
 export const RamCostConstants: Record<string, number> = {
   ScriptBaseRamCost: 1.6,
   ScriptDomRamCost: 25,
@@ -120,7 +113,7 @@ const hacknet = {
   getHashUpgradeLevel: 0,
   getStudyMult: 0,
   getTrainingMult: 0,
-};
+} as const;
 
 // Stock API
 const stock = {
@@ -149,7 +142,7 @@ const stock = {
   purchase4SMarketDataTixApi: RamCostConstants.ScriptBuySellStockRamCost,
   purchaseWseAccount: RamCostConstants.ScriptBuySellStockRamCost,
   purchaseTixApi: RamCostConstants.ScriptBuySellStockRamCost,
-};
+} as const;
 
 // Singularity API
 const singularity = {
@@ -208,7 +201,7 @@ const singularity = {
   b1tflum3: SF4Cost(16),
   destroyW0r1dD43m0n: SF4Cost(32),
   getCurrentWork: SF4Cost(0.5),
-};
+} as const;
 
 // Gang API
 const gang = {
@@ -233,7 +226,7 @@ const gang = {
   setTerritoryWarfare: RamCostConstants.ScriptGangApiBaseRamCost / 2,
   getChanceToWinClash: RamCostConstants.ScriptGangApiBaseRamCost,
   getBonusTime: 0,
-};
+} as const;
 
 // Bladeburner API
 const bladeburner = {
@@ -272,12 +265,12 @@ const bladeburner = {
   joinBladeburnerFaction: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
   joinBladeburnerDivision: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
   getBonusTime: 0,
-};
+} as const;
 
 const infiltration = {
   getPossibleLocations: RamCostConstants.ScriptInfiltrationGetLocations,
   getInfiltration: RamCostConstants.ScriptInfiltrationGetInfiltrations,
-};
+} as const;
 
 // Coding Contract API
 const codingcontract = {
@@ -286,7 +279,7 @@ const codingcontract = {
   getData: RamCostConstants.ScriptCodingContractBaseRamCost / 2,
   getDescription: RamCostConstants.ScriptCodingContractBaseRamCost / 2,
   getNumTriesRemaining: RamCostConstants.ScriptCodingContractBaseRamCost / 5,
-};
+} as const;
 
 // Duplicate Sleeve API
 const sleeve = {
@@ -308,7 +301,7 @@ const sleeve = {
   setToBladeburnerAction: RamCostConstants.ScriptSleeveBaseRamCost,
   getSleeveAugmentationPrice: RamCostConstants.ScriptSleeveBaseRamCost,
   getSleeveAugmentationRepReq: RamCostConstants.ScriptSleeveBaseRamCost,
-};
+} as const;
 
 // Stanek API
 const stanek = {
@@ -323,7 +316,7 @@ const stanek = {
   getFragment: RamCostConstants.ScriptStanekFragmentAt,
   removeFragment: RamCostConstants.ScriptStanekDeleteAt,
   acceptGift: RamCostConstants.ScriptStanekAcceptGift,
-};
+} as const;
 
 // UI API
 const ui = {
@@ -336,7 +329,7 @@ const ui = {
   getGameInfo: 0,
   clearTerminal: 0,
   windowSize: 0,
-};
+} as const;
 
 // Grafting API
 const grafting = {
@@ -344,7 +337,7 @@ const grafting = {
   getAugmentationGraftTime: 3.75,
   getGraftableAugmentations: 5,
   graftAugmentation: 7.5,
-};
+} as const;
 
 const corporation = {
   getMaterialNames: 0,
@@ -412,16 +405,17 @@ const corporation = {
   hasResearched: 0,
   setAutoJobAssignment: 0,
   getOfficeSizeUpgradeCost: 0,
-};
+} as const;
 
-const SourceRamCosts = {
-  args: undefined as unknown as never[], // special use case
-  enums: undefined as unknown as never,
+/** RamCosts guaranteed to match ns structure 1:1 (aside from args and enums).
+ *  An error will be generated if there are missing OR additional ram costs defined.
+ *  To avoid errors, define every function in NetscriptDefinition.d.ts and NetscriptFunctions,
+ *  and have a ram cost associated here. */
+export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
   corporation,
   hacknet,
   stock,
   singularity,
-  ...singularity, // singularity is in namespace & toplevel
   gang,
   bladeburner,
   infiltration,
@@ -601,13 +595,7 @@ const SourceRamCosts = {
       factionGains: 0,
     },
   },
-};
-
-export const RamCosts: Record<string, any> = SourceRamCosts;
-
-// This line in particular is there so typescript typechecks that we are not missing any static ram cost.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _typecheck: RamCostTree<INS & INetscriptExtra> = SourceRamCosts;
+} as const;
 
 export function getRamCost(...args: string[]): number {
   if (args.length === 0) {
@@ -615,7 +603,7 @@ export function getRamCost(...args: string[]): number {
     return 0;
   }
 
-  let curr = RamCosts[args[0]];
+  let curr = RamCosts[args[0] as keyof typeof RamCosts];
   for (let i = 1; i < args.length; ++i) {
     if (curr == null) {
       console.warn(`Invalid function passed to getRamCost: ${args}`);
@@ -627,7 +615,7 @@ export function getRamCost(...args: string[]): number {
       break;
     }
 
-    curr = curr[args[i]];
+    curr = curr[args[i] as keyof typeof curr];
   }
 
   if (typeof curr === "number") {
