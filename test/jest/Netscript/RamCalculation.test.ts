@@ -128,7 +128,7 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
 
   describe("Singularity multiplier checks", () => {
     sf4.lvl = 3;
-    const singFunctions = Object.entries(ns.singularity).filter(([key, val]) => typeof val === "function");
+    const singFunctions = Object.entries(ns.singularity).filter(([__, val]) => typeof val === "function");
     const singObjects = singFunctions.map(([key, val]) => {
       return {
         name: key,

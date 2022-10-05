@@ -215,7 +215,8 @@ export interface CrimeStats {
  * @public
  */
 export interface BasicHGWOptions {
-  /** Number of threads to use for this function. Must be less than or equal to the number of threads the script is running with. */
+  /** Number of threads to use for this function.
+   * Must be less than or equal to the number of threads the script is running with. */
   threads?: number;
   /** Set to true this action will affect the stock market. */
   stock?: boolean;
@@ -540,7 +541,8 @@ export interface BitNodeMultipliers {
   HackExpGain: number;
   /** Influences how quickly the player's hacking level (not experience) scales */
   HackingLevelMultiplier: number;
-  /** Influences how much money is produced by Hacknet Nodes and the hash rate of Hacknet Servers (unlocked in BitNode-9) */
+  /** Influences how much money is produced by Hacknet Nodes
+   *  and the hash rate of Hacknet Servers (unlocked in BitNode-9) */
   HacknetNodeMoney: number;
   /** Influences how much money it costs to upgrade your home computer's RAM */
   HomeComputerRamCost: number;
@@ -548,7 +550,8 @@ export interface BitNodeMultipliers {
   InfiltrationMoney: number;
   /** Influences how much rep the player can gain from factions when selling stolen documents and secrets */
   InfiltrationRep: number;
-  /** Influences how much money can be stolen from a server when the player performs a hack against it through the Terminal. */
+  /** Influences how much money can be stolen from a server when the player
+   *  performs a hack against it through the Terminal. */
   ManualHackMoney: number;
   /** Influence how much it costs to purchase a server */
   PurchasedServerCost: number;
