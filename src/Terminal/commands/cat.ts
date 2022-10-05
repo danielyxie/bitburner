@@ -3,7 +3,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
 import { showLiterature } from "../../Literature/LiteratureHelpers";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { checkObjContainsValue } from "../../utils/helpers/checkObjContains";
+import { checkEnum } from "../../utils/helpers/checkEnum";
 
 export function cat(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length !== 1) {
@@ -35,7 +35,7 @@ export function cat(args: (string | number | boolean)[], server: BaseServer): vo
       } else if (filename.endsWith(".msg")) {
         const file = server.messages[i];
         if (file !== filename) continue;
-        if (!checkObjContainsValue(MessageFilenames, file)) return;
+        if (!checkEnum(MessageFilenames, file)) return;
         showMessage(file);
         return;
       }

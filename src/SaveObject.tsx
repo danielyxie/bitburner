@@ -707,7 +707,7 @@ function loadGame(saveString: string): boolean {
   }
   if (saveObj.hasOwnProperty("SettingsSave")) {
     try {
-      // Try to set saved settings. 
+      // Try to set saved settings.
       Settings.load(saveObj.SettingsSave);
     } catch (e) {}
   }

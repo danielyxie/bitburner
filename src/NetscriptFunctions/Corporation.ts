@@ -66,7 +66,7 @@ import { Factions } from "../Faction/Factions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
-import { checkObjContainsValue } from "../utils/helpers/checkObjContains";
+import { checkEnum } from "../utils/helpers/checkEnum";
 
 export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
@@ -712,7 +712,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         const employeeName = helpers.string(ctx, "employeeName", _employeeName);
         const job = helpers.string(ctx, "job", _job);
 
-        if (!checkObjContainsValue(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`);
+        if (!checkEnum(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`);
         const office = getOffice(divisionName, cityName);
 
         AssignJob(office, employeeName, job);
@@ -726,7 +726,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         const amount = helpers.number(ctx, "amount", _amount);
         const job = helpers.string(ctx, "job", _job);
 
-        if (!checkObjContainsValue(EmployeePositions,job)) throw new Error(`'${job}' is not a valid job.`);
+        if (!checkEnum(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`);
         const office = getOffice(divisionName, cityName);
 
         return AutoAssignJob(office, job, amount);

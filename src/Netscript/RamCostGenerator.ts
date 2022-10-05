@@ -3,7 +3,7 @@ import { NSFull } from "../NetscriptFunctions";
 
 /** This type assumes any value that isn't an API layer or a function has been omitted (args and enum) */
 type RamCostTree<API> = {
-  [Property in keyof API]: API[Property] extends Function ? number | (() => number) : RamCostTree<API[Property]>;
+  [Property in keyof API]: API[Property] extends () => unknown ? number | (() => number) : RamCostTree<API[Property]>;
 };
 
 /** Constants for assigning costs to ns functions */

@@ -17,7 +17,7 @@ function giveSourceFile(bitNodeNumber: number): void {
   }
 
   // Check if player already has this source file
-  const ownedSourceFile = Player.sourceFiles.find(sourceFile=>sourceFile.n === bitNodeNumber)
+  const ownedSourceFile = Player.sourceFiles.find((sourceFile) => sourceFile.n === bitNodeNumber);
 
   if (ownedSourceFile) {
     if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {

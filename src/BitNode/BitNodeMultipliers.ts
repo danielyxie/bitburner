@@ -86,34 +86,34 @@ export interface IBitNodeMultipliers {
    * Influeces the hash rate of Hacknet Servers (unlocked in BitNode-9)
    */
   HacknetNodeMoney: number;
-  
+
   /** Influences how much money it costs to upgrade your home computer's RAM */
   HomeComputerRamCost: number;
-  
+
   /** Influences how much money is gained when the player infiltrates a company. */
   InfiltrationMoney: number;
-  
+
   /** Influences how much rep the player can gain from factions when selling stolen documents and secrets */
   InfiltrationRep: number;
-  
+
   /**
    * Influences how much money can be stolen from a server when the player performs a hack against it through
    * the Terminal.
    */
   ManualHackMoney: number;
-  
+
   /** Influence how much it costs to purchase a server */
   PurchasedServerCost: number;
-  
+
   /** Influence how much it costs to purchase a server */
   PurchasedServerSoftcap: number;
-  
+
   /** Influences the maximum number of purchased servers you can have */
   PurchasedServerLimit: number;
-  
+
   /** Influences the maximum allowed RAM for a purchased server */
   PurchasedServerMaxRam: number;
-  
+
   /** Influences the minimum favor the player must have with a faction before they can donate to gain rep. */
   RepToDonateToFaction: number;
 

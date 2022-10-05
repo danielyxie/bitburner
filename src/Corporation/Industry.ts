@@ -602,6 +602,7 @@ export class Industry {
               }
             }
 
+            // TODO: Change all these Object.keys where the value is also needed to Object.entries.
             // Use the materials already in the warehouse if the option is on.
             for (const matName of Object.keys(smartBuy)) {
               if (!warehouse.smartSupplyUseLeftovers[matName]) continue;
@@ -612,9 +613,8 @@ export class Industry {
             }
 
             // buy them
-            for (const matName of Object.keys(smartBuy)) {
+            for (const [matName, buyAmt] of Object.entries(smartBuy)) {
               const mat = warehouse.materials[matName];
-              const buyAmt = smartBuy[matName];
               if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
               mat.qty += buyAmt;
               expenses += buyAmt * mat.bCost;

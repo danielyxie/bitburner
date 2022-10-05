@@ -4408,49 +4408,49 @@ export interface NS {
    * @remarks RAM cost: 4 GB
    */
   readonly hacknet: Hacknet;
-  
+
   /**
    * Namespace for bladeburner functions.
    * @remarks RAM cost: 0 GB
    */
   readonly bladeburner: Bladeburner;
-  
+
   /**
    * Namespace for codingcontract functions.
    * @remarks RAM cost: 0 GB
    */
   readonly codingcontract: CodingContract;
-  
+
   /**
    * Namespace for gang functions.
    * @remarks RAM cost: 0 GB
    */
   readonly gang: Gang;
-  
+
   /**
    * Namespace for sleeve functions.
    * @remarks RAM cost: 0 GB
    */
   readonly sleeve: Sleeve;
-  
+
   /**
    * Namespace for stock functions.
    * @remarks RAM cost: 0 GB
    */
   readonly stock: TIX;
-  
+
   /**
    * Namespace for formulas functions.
    * @remarks RAM cost: 0 GB
    */
   readonly formulas: Formulas;
-  
+
   /**
    * Namespace for stanek functions.
    * RAM cost: 0 GB
    */
   readonly stanek: Stanek;
-  
+
   /**
    * Namespace for infiltration functions.
    * RAM cost: 0 GB
@@ -6532,7 +6532,6 @@ declare const enums = {
   },
 } as const;
 type ToastVariant = ValuesFrom<typeof enums.toast>;
-
 
 export type NSEnums = typeof enums;
 /**

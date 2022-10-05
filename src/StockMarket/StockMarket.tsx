@@ -170,16 +170,13 @@ export function initStockMarket(): void {
 }
 
 export function initSymbolToStockMap(): void {
-  for (const name of Object.keys(StockSymbols) as Array<keyof typeof StockSymbols>) {
-    if (StockSymbols.hasOwnProperty(name)) {
-      const stock = StockMarket[name];
-      if (stock == null) {
-        console.error(`Could not find Stock for ${name}`);
-        continue;
-      }
-      const symbol = StockSymbols[name];
-      SymbolToStockMap[symbol] = stock;
+  for (const [name, symbol] of Object.entries(StockSymbols)) {
+    const stock = StockMarket[name];
+    if (stock == null) {
+      console.error(`Could not find Stock for ${name}`);
+      continue;
     }
+    SymbolToStockMap[symbol] = stock;
   }
 }
 

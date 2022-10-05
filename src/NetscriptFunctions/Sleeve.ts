@@ -11,7 +11,7 @@ import {
   SleeveSkills,
   SleeveTask,
 } from "../ScriptEditor/NetscriptDefinitions";
-import { checkObjContainsValue } from "../utils/helpers/checkObjContains";
+import { checkEnum } from "../utils/helpers/checkEnum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { isSleeveBladeburnerWork } from "../PersonObjects/Sleeve/Work/SleeveBladeburnerWork";
 import { isSleeveFactionWork } from "../PersonObjects/Sleeve/Work/SleeveFactionWork";
@@ -102,7 +102,7 @@ export function NetscriptSleeve(): InternalAPI<ISleeve> {
         const cityName = helpers.string(ctx, "cityName", _cityName);
         checkSleeveAPIAccess(ctx);
         checkSleeveNumber(ctx, sleeveNumber);
-        if (checkObjContainsValue(CityName, cityName)) {
+        if (checkEnum(CityName, cityName)) {
           return Player.sleeves[sleeveNumber].travel(cityName);
         } else {
           throw helpers.makeRuntimeErrorMsg(ctx, `Invalid city name: '${cityName}'.`);

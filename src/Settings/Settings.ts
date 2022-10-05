@@ -65,13 +65,13 @@ export const Settings = {
   /**  Whether the game's sidebar is opened. */
   IsSidebarOpened: true,
   /** Theme colors. */
-  theme: {...defaultTheme},
+  theme: { ...defaultTheme },
   /** Interface styles. */
-  styles: {...defaultStyles},
+  styles: { ...defaultStyles },
   /** Character overview settings. */
   overview: { x: 0, y: 0, opened: true },
   /**  Script editor theme data. */
-  EditorTheme: {...defaultMonacoTheme},
+  EditorTheme: { ...defaultMonacoTheme },
   /** Order to display the player's owned Augmentations/Source Files. */
   OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting.AcquirementTime,
   /** What order the Augmentations should be displayed in when purchasing from a Faction. */
@@ -85,7 +85,7 @@ export const Settings = {
   MonacoVim: false,
   /** Word wrap setting for Script Editor. */
   MonacoWordWrap: "off" as WordWrapOptions,
-  
+
   load(saveString: string) {
     const save = JSON.parse(saveString);
     save.theme && Object.assign(Settings.theme, save.theme);
