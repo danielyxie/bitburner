@@ -5383,25 +5383,35 @@ export interface NS {
    * @example
    * ```ts
    * // NS1:
-   * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
+   * // The simplest way to use the exec command is to call it with just the script name
+   * // and the target server. The following example will try to run generic-hack.script
+   * // on the foodnstuff server.
    * exec("generic-hack.script", "foodnstuff");
    *
-   * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
+   * // The following example will try to run the script generic-hack.script on the
+   * // joesguns server with 10 threads.
    * exec("generic-hack.script", "joesguns", 10);
    *
-   * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
+   * // This last example will try to run the script foo.script on the foodnstuff server
+   * // with 5 threads. It will also pass the number 1 and the string “test” in as
+   * // arguments to the script.
    * exec("foo.script", "foodnstuff", 5, 1, "test");
    * ```
    * @example
    * ```ts
    * // NS2:
-   * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
+   * // The simplest way to use the exec command is to call it with just the script name
+   * // and the target server. The following example will try to run generic-hack.script
+   * // on the foodnstuff server.
    * ns.exec("generic-hack.script", "foodnstuff");
    *
-   * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
+   * // The following example will try to run the script generic-hack.script on the
+   * // joesguns server with 10 threads.
    * ns.exec("generic-hack.script", "joesguns", 10);
    *
-   * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
+   * // This last example will try to run the script foo.script on the foodnstuff server
+   * // with 5 threads. It will also pass the number 1 and the string “test” in as
+   * // arguments to the script.
    * ns.exec("foo.script", "foodnstuff", 5, 1, "test");
    * ```
    * @param script - Filename of script to execute.
