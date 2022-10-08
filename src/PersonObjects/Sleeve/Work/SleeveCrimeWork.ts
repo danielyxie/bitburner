@@ -25,16 +25,16 @@ export class SleeveCrimeWork extends Work {
     return crime;
   }
 
-  getExp(): WorkStats {
+  getExp(sleeve: Sleeve): WorkStats {
     const crime = this.getCrime();
     return newWorkStats({
-      money: crime.money * BitNodeMultipliers.CrimeMoney,
-      hackExp: crime.hacking_exp * BitNodeMultipliers.CrimeExpGain,
-      strExp: crime.strength_exp * BitNodeMultipliers.CrimeExpGain,
-      defExp: crime.defense_exp * BitNodeMultipliers.CrimeExpGain,
-      dexExp: crime.dexterity_exp * BitNodeMultipliers.CrimeExpGain,
-      agiExp: crime.agility_exp * BitNodeMultipliers.CrimeExpGain,
-      chaExp: crime.charisma_exp * BitNodeMultipliers.CrimeExpGain,
+      money: crime.money * BitNodeMultipliers.CrimeMoney * sleeve.mults.crime_money,
+      hackExp: crime.hacking_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.hacking_exp,
+      strExp: crime.strength_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.strength_exp,
+      defExp: crime.defense_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.defense_exp,
+      dexExp: crime.dexterity_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.dexterity_exp,
+      agiExp: crime.agility_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.agility_exp,
+      chaExp: crime.charisma_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.charisma_exp,
       intExp: crime.intelligence_exp * BitNodeMultipliers.CrimeExpGain,
     });
   }
@@ -47,7 +47,7 @@ export class SleeveCrimeWork extends Work {
     this.cyclesWorked += cycles;
 
     const crime = this.getCrime();
-    let gains = this.getExp();
+    let gains = this.getExp(sleeve);
     if (this.cyclesWorked >= this.cyclesNeeded()) {
       if (Math.random() < crime.successRate(sleeve)) {
         Player.karma -= crime.karma * sleeve.syncBonus();
