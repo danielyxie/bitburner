@@ -282,7 +282,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     },
   },
   {
-    desc: "Assign this gang member to threaten and black mail high-profile targets<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
+    desc: "Assign this gang member to threaten and blackmail high-profile targets<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
     isCombat: true,
     isHacking: false,
     name: "Threaten & Blackmail",
