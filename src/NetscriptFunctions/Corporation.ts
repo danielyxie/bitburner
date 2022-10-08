@@ -67,6 +67,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 import { checkEnum } from "../utils/helpers/checkEnum";
+import {MaterialSizes} from "../Corporation/MaterialSizes";
 
 export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
@@ -288,6 +289,10 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       if (office === 0) continue;
       cities.push(office.loc);
     }
+    const int:number = division.getEmployeeIntMultiplier();
+    const cha:number = division.getEmployeeChaMultiplier();
+    const cre:number = division.getEmployeeCreMultiplier();
+    const eff:number = division.getEmployeeEffMultiplier();
 
     return {
       name: division.name,
@@ -304,6 +309,18 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       cities: cities,
       products: division.products === undefined ? [] : Object.keys(division.products),
       makesProducts: division.makesProducts,
+      getChaMultiplier : (): number => {
+        return cha;
+      },
+      getCreMultiplier : (): number => {
+        return cre;
+      },
+      getIntMultiplier : (): number => {
+        return int;
+      },
+      getEffMultiplier : (): number => {
+        return eff;
+      },
     };
   }
 
@@ -651,6 +668,13 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
           throw helpers.makeRuntimeErrorMsg(ctx, `You have not researched MarketTA.II for division: ${divisionName}`);
         SetProductMarketTA2(getProduct(divisionName, productName), on);
       },
+    getMaterialSize:
+      (ctx: NetscriptContext) =>
+      (_materialName: string): number => {
+        checkAccess(ctx, 7);
+        const materialName = helpers.string(ctx, "materialName", _materialName);
+        return MaterialSizes[materialName];
+    }
   };
 
   const officeAPI: InternalAPI<OfficeAPI> = {
@@ -1067,6 +1091,22 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     getBonusTime: (ctx: NetscriptContext) => (): number => {
       checkAccess(ctx);
       return Math.round(getCorporation().storedCycles / 5) * 1000;
+    },
+    getChaUpgradeMultiplier : (ctx: NetscriptContext) => (): number => {
+      checkAccess(ctx);
+      return getCorporation().getEmployeeChaMultiplier();
+    },
+    getCreUpgradeMultiplier : (ctx: NetscriptContext) => (): number => {
+      checkAccess(ctx);
+      return getCorporation().getEmployeeCreMultiplier();
+    },
+    getIntUpgradeMultiplier : (ctx: NetscriptContext) => (): number => {
+      checkAccess(ctx);
+      return getCorporation().getEmployeeIntMultiplier();
+    },
+    getEffUpgradeMultiplier : (ctx: NetscriptContext) => (): number => {
+      checkAccess(ctx);
+      return getCorporation().getEmployeeEffMultiplier();
     },
   };
 }

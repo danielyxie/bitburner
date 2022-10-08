@@ -405,6 +405,10 @@ const corporation = {
   hasResearched: 0,
   setAutoJobAssignment: 0,
   getOfficeSizeUpgradeCost: 0,
+  getChaUpgradeMultiplier:0,
+  getCreUpgradeMultiplier:0,
+  getIntUpgradeMultiplier:0,
+  getEffUpgradeMultiplier:0,
 } as const;
 
 /** RamCosts guaranteed to match ns structure 1:1 (aside from args and enums).
@@ -593,6 +597,11 @@ export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
       crimeGains: 0,
       classGains: 0,
       factionGains: 0,
+    },
+    corp: {
+      getProductionMultipliers: 0,
+      getProductRatingWeights: 0,
+      calculateProductionMultiplier: 0,
     },
   },
 } as const;

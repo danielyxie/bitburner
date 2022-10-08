@@ -64,7 +64,7 @@ export const CorporationConstants = {
     "Tobacco",
     "Chemical",
     "Pharmaceutical",
-    "Computers",
+    "Computer",
     "Robotics",
     "Software",
     "Healthcare",

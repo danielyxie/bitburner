@@ -1,6 +1,6 @@
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
-import { Industries, IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
+import {Industries, IndustryStartingCosts, IndustryResearchTrees, IndustryMaterialFactors} from "./IndustryData";
 import { CorporationConstants } from "./data/Constants";
 import { EmployeePositions } from "./EmployeePositions";
 import { Material } from "./Material";
@@ -110,195 +110,25 @@ export class Industry {
     const startingCost = IndustryStartingCosts[this.type];
     if (startingCost === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.startingCost = startingCost;
+    const factors = IndustryMaterialFactors[this.type];
+    this.reFac = factors.reFac;
+    this.sciFac = factors.sciFac;
+    this.robFac = factors.robFac;
+    this.aiFac = factors.aiFac;
+    this.advFac = factors.advFac;
+    this.reqMats = factors.reqMats;
+    this.prodMats = factors.prodMats;
+
     switch (this.type) {
-      case Industries.Energy:
-        this.reFac = 0.65;
-        this.sciFac = 0.7;
-        this.robFac = 0.05;
-        this.aiFac = 0.3;
-        this.advFac = 0.08;
-        this.reqMats = {
-          Hardware: 0.1,
-          Metal: 0.2,
-        };
-        this.prodMats = ["Energy"];
-        break;
-      case Industries.Utilities:
-      case "Utilities":
-        this.reFac = 0.5;
-        this.sciFac = 0.6;
-        this.robFac = 0.4;
-        this.aiFac = 0.4;
-        this.advFac = 0.08;
-        this.reqMats = {
-          Hardware: 0.1,
-          Metal: 0.1,
-        };
-        this.prodMats = ["Water"];
-        break;
-      case Industries.Agriculture:
-        this.reFac = 0.72;
-        this.sciFac = 0.5;
-        this.hwFac = 0.2;
-        this.robFac = 0.3;
-        this.aiFac = 0.3;
-        this.advFac = 0.04;
-        this.reqMats = {
-          Water: 0.5,
-          Energy: 0.5,
-        };
-        this.prodMats = ["Plants", "Food"];
-        break;
-      case Industries.Fishing:
-        this.reFac = 0.15;
-        this.sciFac = 0.35;
-        this.hwFac = 0.35;
-        this.robFac = 0.5;
-        this.aiFac = 0.2;
-        this.advFac = 0.08;
-        this.reqMats = {
-          Energy: 0.5,
-        };
-        this.prodMats = ["Food"];
-        break;
-      case Industries.Mining:
-        this.reFac = 0.3;
-        this.sciFac = 0.26;
-        this.hwFac = 0.4;
-        this.robFac = 0.45;
-        this.aiFac = 0.45;
-        this.advFac = 0.06;
-        this.reqMats = {
-          Energy: 0.8,
-        };
-        this.prodMats = ["Metal"];
-        break;
       case Industries.Food:
-        //reFac is unique for this bc it diminishes greatly per city. Handle this separately in code?
-        this.sciFac = 0.12;
-        this.hwFac = 0.15;
-        this.robFac = 0.3;
-        this.aiFac = 0.25;
-        this.advFac = 0.25;
-        this.reFac = 0.05;
-        this.reqMats = {
-          Food: 0.5,
-          Water: 0.5,
-          Energy: 0.2,
-        };
-        this.makesProducts = true;
-        break;
       case Industries.Tobacco:
-        this.reFac = 0.15;
-        this.sciFac = 0.75;
-        this.hwFac = 0.15;
-        this.robFac = 0.2;
-        this.aiFac = 0.15;
-        this.advFac = 0.2;
-        this.reqMats = {
-          Plants: 1,
-          Water: 0.2,
-        };
-        this.makesProducts = true;
-        break;
-      case Industries.Chemical:
-        this.reFac = 0.25;
-        this.sciFac = 0.75;
-        this.hwFac = 0.2;
-        this.robFac = 0.25;
-        this.aiFac = 0.2;
-        this.advFac = 0.07;
-        this.reqMats = {
-          Plants: 1,
-          Energy: 0.5,
-          Water: 0.5,
-        };
-        this.prodMats = ["Chemicals"];
-        break;
       case Industries.Pharmaceutical:
-        this.reFac = 0.05;
-        this.sciFac = 0.8;
-        this.hwFac = 0.15;
-        this.robFac = 0.25;
-        this.aiFac = 0.2;
-        this.advFac = 0.16;
-        this.reqMats = {
-          Chemicals: 2,
-          Energy: 1,
-          Water: 0.5,
-        };
-        this.prodMats = ["Drugs"];
-        this.makesProducts = true;
-        break;
       case Industries.Computer:
       case "Computer":
-        this.reFac = 0.2;
-        this.sciFac = 0.62;
-        this.robFac = 0.36;
-        this.aiFac = 0.19;
-        this.advFac = 0.17;
-        this.reqMats = {
-          Metal: 2,
-          Energy: 1,
-        };
-        this.prodMats = ["Hardware"];
-        this.makesProducts = true;
-        break;
       case Industries.Robotics:
-        this.reFac = 0.32;
-        this.sciFac = 0.65;
-        this.aiFac = 0.36;
-        this.advFac = 0.18;
-        this.hwFac = 0.19;
-        this.reqMats = {
-          Hardware: 5,
-          Energy: 3,
-        };
-        this.prodMats = ["Robots"];
-        this.makesProducts = true;
-        break;
       case Industries.Software:
-        this.sciFac = 0.62;
-        this.advFac = 0.16;
-        this.hwFac = 0.25;
-        this.reFac = 0.15;
-        this.aiFac = 0.18;
-        this.robFac = 0.05;
-        this.reqMats = {
-          Hardware: 0.5,
-          Energy: 0.5,
-        };
-        this.prodMats = ["AICores"];
-        this.makesProducts = true;
-        break;
       case Industries.Healthcare:
-        this.reFac = 0.1;
-        this.sciFac = 0.75;
-        this.advFac = 0.11;
-        this.hwFac = 0.1;
-        this.robFac = 0.1;
-        this.aiFac = 0.1;
-        this.reqMats = {
-          Robots: 10,
-          AICores: 5,
-          Energy: 5,
-          Water: 5,
-        };
-        this.makesProducts = true;
-        break;
       case Industries.RealEstate:
-        this.robFac = 0.6;
-        this.aiFac = 0.6;
-        this.advFac = 0.25;
-        this.sciFac = 0.05;
-        this.hwFac = 0.05;
-        this.reqMats = {
-          Metal: 5,
-          Energy: 5,
-          Water: 2,
-          Hardware: 4,
-        };
-        this.prodMats = ["RealEstate"];
         this.makesProducts = true;
         break;
       default:
@@ -317,7 +147,8 @@ export class Industry {
       case Industries.Pharmaceutical:
         return "develop new pharmaceutical drugs";
       case Industries.Computer:
-      case "Computer":
+      case "Computer Hardware":
+      case "Computers":
         return "create new computer hardware and networking infrastructures";
       case Industries.Robotics:
         return "build specialized robots and robot-related products";

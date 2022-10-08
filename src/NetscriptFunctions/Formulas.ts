@@ -1,3 +1,5 @@
+import {IMap} from "../types";
+
 import { Player as player } from "../Player";
 import { calculateServerGrowth } from "../Server/formulas/grow";
 import {
@@ -54,6 +56,9 @@ import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 import { Player as INetscriptPlayer, Server as IServerDef } from "../ScriptEditor/NetscriptDefinitions";
 import { defaultMultipliers } from "../PersonObjects/Multipliers";
+
+import { ProductRatingWeights } from "../Corporation/ProductRatingWeights";
+import { IndustryMaterialFactors } from "../Corporation/IndustryData";
 
 export function NetscriptFormulas(): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
@@ -432,5 +437,69 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
 
       // },
     },
+    corp: {
+      getProductionMultipliers:
+        (ctx: NetscriptContext) =>
+        (_industryName: string): IMap<any> => {
+          checkAccess(ctx, 7);
+          const industryName = helpers.string(ctx, "industryName", _industryName);
+          if(!IndustryMaterialFactors.hasOwnProperty(industryName)) {
+            throw new Error(`Invalid industry: '${industryName}'`);
+          }
+          const weights = IndustryMaterialFactors[industryName];
+          return {
+            reFac: weights.reFac,
+            sciFac: weights.sciFac,
+            robFac: weights.robFac,
+            aiFac: weights.aiFac,
+            advFac: weights.advFac,
+            reqMats: weights.reqMats,
+            prodMats: weights.prodMats,
+          };
+        },
+      getProductRatingWeights:
+        (ctx: NetscriptContext) =>
+        (_industryName: string): IMap<any> => {
+          checkAccess(ctx, 7);
+          const industryName = helpers.string(ctx, "industryName", _industryName);
+          if(!ProductRatingWeights.hasOwnProperty(industryName)) {
+            throw new Error(`Invalid industry: '${industryName}'`);
+          }
+          const weights = ProductRatingWeights[industryName];
+          return {
+            quality: weights.hasOwnProperty("Quality") ? weights.Quality : 0,
+            performance: weights.hasOwnProperty("Performance") ? weights.Performance : 0,
+            durability: weights.hasOwnProperty("Durability") ? weights.Durability : 0,
+            reliability: weights.hasOwnProperty("Reliability") ? weights.Reliability : 0,
+            aesthetics: weights.hasOwnProperty("Aesthetics") ? weights.Aesthetics : 0,
+            features: weights.hasOwnProperty("Features") ? weights.Features : 0,
+          };
+        },
+      calculateProductionMultiplier:
+        (ctx: NetscriptContext) =>
+        (_industryName: string, _realEstate: number, _hardware: number, _robots: number, _aiCores: number): number => {
+          checkAccess(ctx, 7);
+          const industryName = helpers.string(ctx, "industryName", _industryName);
+          if(!IndustryMaterialFactors.hasOwnProperty(industryName)) {
+            throw new Error(`Invalid industry: '${industryName}'`);
+          }
+          const factors = IndustryMaterialFactors[industryName];
+          const cityMult =
+            Math.pow(0.002 * _realEstate + 1, factors.reFac) *
+            Math.pow(0.002 * _hardware + 1, factors.hwFac) *
+            Math.pow(0.002 * _robots + 1, factors.robFac) *
+            Math.pow(0.002 * _aiCores + 1, factors.aiFac);
+
+          return Math.max(Math.pow(cityMult, 0.73), 1);
+        },
+    }
   };
+
+  function checkAccess(ctx: NetscriptContext, api?: number): void {
+    if (player.corporation === null) throw helpers.makeRuntimeErrorMsg(ctx, "Must own a corporation.");
+    if (!api) return;
+
+    if (!player.corporation.unlockUpgrades[api])
+      throw helpers.makeRuntimeErrorMsg(ctx, "You do not have access to this API.");
+  }
 }

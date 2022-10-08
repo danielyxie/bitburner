@@ -1,3 +1,5 @@
+import {IMap} from "../types";
+
 export type ValuesFrom<T> = T[keyof T];
 
 /** @public */
@@ -3846,6 +3848,35 @@ interface WorkFormulas {
   factionGains(player: Player, workType: string, favor: number): WorkStats;
 }
 
+
+/**
+ * Corporation formulas
+ * @public
+ */
+interface CorporationFormulas {
+  /**
+   * Get the material production bonus value for industry production
+   * @param industryName
+   */
+  getProductionMultipliers(industryName: string) : IMap<any>;
+  /**
+   * Get the product quality rating weights for industry products
+   * @param industryName
+   */
+  getProductRatingWeights(industryName: string) : IMap<any>;
+
+  /**
+   * Calculates the total production multiplier for a given quantity of materials
+   * @param industryName
+   * @param realEstate
+   * @param hardware
+   * @param robots
+   * @param aiCores
+   * @returns final multiplier
+   */
+  calculateProductionMultiplier(industryName: string, realEstate: number, hardware: number, robots: number, aiCores: number) : number;
+}
+
 /**
  * Reputation formulas
  * @public
@@ -4131,6 +4162,8 @@ export interface Formulas {
   gang: GangFormulas;
   /** Work formulas */
   work: WorkFormulas;
+  /** Corporation formulas */
+  corp: CorporationFormulas;
 }
 
 /** @public */
@@ -7005,6 +7038,13 @@ export interface WarehouseAPI {
    * @returns true if warehouse is present, false if not
    */
   hasWarehouse(adivisionName: string, acityName: string): boolean;
+
+  /**
+   * Get the storage size of a material
+   * @param materialName
+   * @returns size of a single unit of material
+   */
+  getMaterialSize(materialName: string): number;
 }
 
 /**
@@ -7164,6 +7204,26 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @returns Bonus time for the Corporation mechanic in milliseconds.
    */
   getBonusTime(): number;
+  /**
+   * Get corporation's employee charisma multiplier
+   * @returns Cha multiplier from upgrades.
+   */
+  getChaUpgradeMultiplier():number;
+  /**
+   * Get corporation's employee creativity multiplier
+   * @returns Cre multiplier from upgrades.
+   */
+  getCreUpgradeMultiplier():number;
+  /**
+   * Get corporation's employee intelligence multiplier
+   * @returns Int multiplier from upgrades.
+   */
+  getIntUpgradeMultiplier():number;
+  /**
+   * Get corporation's employee efficiency multiplier
+   * @returns Eff multiplier from upgrades.
+   */
+  getEffUpgradeMultiplier():number;
 }
 
 /**
@@ -7394,6 +7454,26 @@ interface Division {
   products: string[];
   /** Whether the industry this division is in is capable of making products */
   makesProducts: boolean;
+  /**
+   * Get division's employee charisma multiplier
+   * @returns Cha multiplier from research.
+   */
+  getChaMultiplier():number;
+  /**
+   * Get division's employee creativity multiplier
+   * @returns Cre multiplier from research.
+   */
+  getCreMultiplier():number;
+  /**
+   * Get division's employee intelligence multiplier
+   * @returns Int multiplier from research.
+   */
+  getIntMultiplier():number;
+  /**
+   * Get division's employee efficiency multiplier
+   * @returns Eff multiplier from research.
+   */
+  getEffMultiplier():number;
 }
 
 /**
