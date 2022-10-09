@@ -124,12 +124,17 @@ export class Industry {
       case Industries.Tobacco:
       case Industries.Pharmaceutical:
       case Industries.Computer:
-      case "Computer":
       case Industries.Robotics:
       case Industries.Software:
       case Industries.Healthcare:
       case Industries.RealEstate:
         this.makesProducts = true;
+        break;
+      case Industries.Energy:
+      case Industries.Utilities:
+      case Industries.Agriculture:
+      case Industries.Fishing:
+      case Industries.Mining:
         break;
       default:
         console.error(`Invalid Industry Type passed into Industry.init(): ${this.type}`);

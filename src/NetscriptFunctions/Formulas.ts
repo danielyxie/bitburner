@@ -480,15 +480,19 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
         (_industryName: string, _realEstate: number, _hardware: number, _robots: number, _aiCores: number): number => {
           checkAccess(ctx, 7);
           const industryName = helpers.string(ctx, "industryName", _industryName);
+          const realEstate = helpers.number(ctx, "realEstate", _realEstate);
+          const hardware = helpers.number(ctx, "hardware", _hardware);
+          const robots = helpers.number(ctx, "robots", _robots);
+          const aiCores = helpers.number(ctx, "aiCores", _aiCores);
           if(!IndustryMaterialFactors.hasOwnProperty(industryName)) {
             throw new Error(`Invalid industry: '${industryName}'`);
           }
           const factors = IndustryMaterialFactors[industryName];
           const cityMult =
-            Math.pow(0.002 * _realEstate + 1, factors.reFac) *
-            Math.pow(0.002 * _hardware + 1, factors.hwFac) *
-            Math.pow(0.002 * _robots + 1, factors.robFac) *
-            Math.pow(0.002 * _aiCores + 1, factors.aiFac);
+            Math.pow(0.002 * realEstate + 1, factors.reFac) *
+            Math.pow(0.002 * hardware + 1, factors.hwFac) *
+            Math.pow(0.002 * robots + 1, factors.robFac) *
+            Math.pow(0.002 * aiCores + 1, factors.aiFac);
 
           return Math.max(Math.pow(cityMult, 0.73), 1);
         },

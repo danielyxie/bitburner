@@ -293,6 +293,10 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     const cha:number = division.getEmployeeChaMultiplier();
     const cre:number = division.getEmployeeCreMultiplier();
     const eff:number = division.getEmployeeEffMultiplier();
+    const sci:number = division.getScientificResearchMultiplier();
+    const prod:number = division.getProductionMultiplier()
+    const store:number = division.getStorageMultiplier();
+
 
     return {
       name: division.name,
@@ -320,6 +324,15 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       },
       getEffMultiplier : (): number => {
         return eff;
+      },
+      getSciMultiplier : (): number => {
+        return sci;
+      },
+      getProdMultiplier : (): number => {
+        return prod;
+      },
+      getStoreMultiplier : (): number => {
+        return store;
       },
     };
   }

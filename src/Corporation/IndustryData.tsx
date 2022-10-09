@@ -63,6 +63,7 @@ export const IndustryMaterialFactors : IMap<any> = {
   [Industries.Energy]: {
     reFac: 0.65,
     sciFac: 0.7,
+    hwFac: 0,
     robFac: 0.05,
     aiFac: 0.3,
     advFac: 0.08,
@@ -75,6 +76,7 @@ export const IndustryMaterialFactors : IMap<any> = {
   [Industries.Utilities]: {
     reFac: 0.5,
     sciFac: 0.6,
+    hwFac: 0,
     robFac: 0.4,
     aiFac: 0.4,
     advFac: 0.08,
@@ -122,12 +124,12 @@ export const IndustryMaterialFactors : IMap<any> = {
     prodMats: ["Metal"],
   },
   [Industries.Food]: {
+    reFac: 0.05,
     sciFac: 0.12,
     hwFac: 0.15,
     robFac: 0.3,
     aiFac: 0.25,
     advFac: 0.25,
-    reFac: 0.05,
     reqMats:{
       Food: 0.5,
       Water: 0.5,
@@ -177,6 +179,7 @@ export const IndustryMaterialFactors : IMap<any> = {
   [Industries.Computer]: {
     reFac: 0.2,
     sciFac: 0.62,
+    hwFac: 0,
     robFac: 0.36,
     aiFac: 0.19,
     advFac: 0.17,
@@ -189,9 +192,10 @@ export const IndustryMaterialFactors : IMap<any> = {
   [Industries.Robotics]: {
     reFac: 0.32,
     sciFac: 0.65,
+    hwFac: 0.19,
+    robFac: 0,
     aiFac: 0.36,
     advFac: 0.18,
-    hwFac: 0.19,
     reqMats:{
       Hardware: 5,
       Energy: 3,
@@ -199,12 +203,12 @@ export const IndustryMaterialFactors : IMap<any> = {
     prodMats: ["Robots"],
   },
   [Industries.Software]: {
-    sciFac: 0.62,
-    advFac: 0.16,
-    hwFac: 0.25,
     reFac: 0.15,
-    aiFac: 0.18,
+    sciFac: 0.62,
+    hwFac: 0.25,
     robFac: 0.05,
+    aiFac: 0.18,
+    advFac: 0.16,
     reqMats: {
       Hardware: 0.5,
       Energy: 0.5,
@@ -214,10 +218,10 @@ export const IndustryMaterialFactors : IMap<any> = {
   [Industries.Healthcare]: {
     reFac: 0.1,
     sciFac: 0.75,
-    advFac: 0.11,
     hwFac: 0.1,
     robFac: 0.1,
     aiFac: 0.1,
+    advFac: 0.11,
     reqMats: {
       Robots: 10,
       AICores: 5,
@@ -226,11 +230,12 @@ export const IndustryMaterialFactors : IMap<any> = {
     },
   },
   [Industries.RealEstate]: {
+    reFac: 0,
+    sciFac: 0.05,
+    hwFac: 0.05,
     robFac: 0.6,
     aiFac: 0.6,
     advFac: 0.25,
-    sciFac: 0.05,
-    hwFac: 0.05,
     reqMats: {
       Metal: 5,
       Energy: 5,

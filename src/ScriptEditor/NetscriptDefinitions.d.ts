@@ -7474,6 +7474,21 @@ interface Division {
    * @returns Eff multiplier from research.
    */
   getEffMultiplier():number;
+  /**
+   * Get division's employee science multiplier
+   * @returns Sci multiplier from research.
+   */
+  getSciMultiplier():number;
+  /**
+   * Get division's researched production multiplier
+   * @returns Prod multiplier from research.
+   */
+  getProdMultiplier():number;
+  /**
+   * Get division's researched warehouse storage multiplier
+   * @returns Storage multiplier from research.
+   */
+  getStoreMultiplier():number;
 }
 
 /**
