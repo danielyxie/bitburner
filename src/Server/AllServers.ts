@@ -4,7 +4,7 @@ import { serverMetadata } from "./data/servers";
 
 import { HacknetServer } from "../Hacknet/HacknetServer";
 
-import { IMap, IMinMaxRange } from "../types";
+import { IMinMaxRange } from "../types";
 import { createRandomIp } from "../utils/IPAddress";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Reviver } from "../utils/JSONReviver";
@@ -17,7 +17,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
  *  Key (string) = IP
  *  Value = Server object
  */
-let AllServers: IMap<Server | HacknetServer> = {};
+let AllServers: Record<string, Server | HacknetServer> = {};
 
 function GetServerByIP(ip: string): BaseServer | undefined {
   for (const key of Object.keys(AllServers)) {

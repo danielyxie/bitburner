@@ -1,23 +1,15 @@
-/**
- * Class representing a City in the game
- */
 import { CityName } from "./data/CityNames";
 import { LocationName } from "./data/LocationNames";
 
+/** Class representing a City in the game */
 export class City {
-  /**
-   * List of all locations in this city
-   */
+  /** List of all locations in this city */
   locations: LocationName[];
 
-  /**
-   * Name of this city
-   */
+  /** Name of this city */
   name: CityName;
 
-  /**
-   * Metro map ascii art
-   */
+  /** Metro map ascii art */
   asciiArt: string;
 
   constructor(name: CityName, locations: LocationName[] = [], asciiArt = "") {

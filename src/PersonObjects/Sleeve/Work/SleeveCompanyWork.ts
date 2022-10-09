@@ -49,16 +49,12 @@ export class SleeveCompanyWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveCompanyWork", this);
   }
 
-  /**
-   * Initiatizes a CompanyWork object from a JSON save state.
-   */
+  /** Initiatizes a CompanyWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveCompanyWork {
     return Generic_fromJSON(SleeveCompanyWork, value.data);
   }

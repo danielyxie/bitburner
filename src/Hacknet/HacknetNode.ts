@@ -120,16 +120,12 @@ export class HacknetNode implements IHacknetNode {
     }
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("HacknetNode", this);
   }
 
-  /**
-   * Initiatizes a HacknetNode object from a JSON save state.
-   */
+  /** Initiatizes a HacknetNode object from a JSON save state. */
   static fromJSON(value: IReviverValue): HacknetNode {
     return Generic_fromJSON(HacknetNode, value.data);
   }

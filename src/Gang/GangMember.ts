@@ -319,16 +319,12 @@ export class GangMember {
     return true;
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("GangMember", this);
   }
 
-  /**
-   * Initiatizes a GangMember object from a JSON save state.
-   */
+  /** Initiatizes a GangMember object from a JSON save state. */
   static fromJSON(value: IReviverValue): GangMember {
     return Generic_fromJSON(GangMember, value.data);
   }

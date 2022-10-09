@@ -33,14 +33,10 @@ export interface IConstructorParams {
 }
 
 export class CompanyPosition {
-  /**
-   * Position title
-   */
+  /** Position title */
   name: string;
 
-  /**
-   * Title of next position to be promoted to
-   */
+  /** Title of next position to be promoted to */
   nextPosition: string | null;
 
   /**
@@ -49,14 +45,10 @@ export class CompanyPosition {
    */
   baseSalary: number;
 
-  /**
-   * Reputation multiplier
-   */
+  /** Reputation multiplier */
   repMultiplier: number;
 
-  /**
-   * Required stats to earn this position
-   */
+  /** Required stats to earn this position */
   requiredAgility: number;
   requiredCharisma: number;
   requiredDefense: number;
@@ -64,14 +56,10 @@ export class CompanyPosition {
   requiredHacking: number;
   requiredStrength: number;
 
-  /**
-   * Required company reputation to earn this position
-   */
+  /** Required company reputation to earn this position */
   requiredReputation: number;
 
-  /**
-   * Effectiveness of each stat time for job performance
-   */
+  /** Effectiveness of each stat time for job performance */
   hackingEffectiveness: number;
   strengthEffectiveness: number;
   defenseEffectiveness: number;
@@ -79,9 +67,7 @@ export class CompanyPosition {
   agilityEffectiveness: number;
   charismaEffectiveness: number;
 
-  /**
-   * Experience gain for performing job (per 200ms game cycle)
-   */
+  /** Experience gain for performing job (per 200ms game cycle) */
   hackingExpGain: number;
   strengthExpGain: number;
   defenseExpGain: number;

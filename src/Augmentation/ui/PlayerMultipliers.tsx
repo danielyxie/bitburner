@@ -1,6 +1,3 @@
-/**
- * React component for displaying the player's multipliers on the Augmentation UI page
- */
 import { DoubleArrow } from "@mui/icons-material";
 import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import * as React from "react";
@@ -85,6 +82,7 @@ function MultiplierList(props: IMultiplierListProps): React.ReactElement {
   return listItems.length > 0 ? <List disablePadding>{listItems}</List> : <></>;
 }
 
+/** React component for displaying the player's multipliers on the Augmentation UI page */
 export function PlayerMultipliers(): React.ReactElement {
   const mults = calculateAugmentedStats();
 

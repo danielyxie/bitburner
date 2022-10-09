@@ -1,6 +1,3 @@
-/**
- * React Component for a button that's used to apply for a job
- */
 import * as React from "react";
 
 import { Company } from "../../Company/Company";
@@ -18,6 +15,7 @@ type IProps = {
   text: string;
 };
 
+/** React Component for a button that's used to apply for a job */
 export function ApplyToJobButton(props: IProps): React.ReactElement {
   function getJobRequirementTooltip(): string {
     const pos = Player.getNextCompanyPosition(props.company, props.entryPosType);

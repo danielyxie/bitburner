@@ -55,7 +55,7 @@ export function generateContract(params: IGenerateContractParams): void {
   // Problem Type
   let problemType;
   const problemTypes = Object.keys(CodingContractTypes);
-  if (params.problemType != null && problemTypes.includes(params.problemType)) {
+  if (params.problemType && problemTypes.includes(params.problemType)) {
     problemType = params.problemType;
   } else {
     problemType = getRandomProblemType();

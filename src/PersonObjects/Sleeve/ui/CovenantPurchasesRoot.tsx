@@ -26,16 +26,12 @@ interface IProps {
 export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
   const [update, setUpdate] = useState(0);
 
-  /**
-   * Get the cost to purchase a new Duplicate Sleeve
-   */
+  /** Get the cost to purchase a new Duplicate Sleeve */
   function purchaseCost(): number {
     return Math.pow(10, Player.sleevesFromCovenant) * BaseCostPerSleeve;
   }
 
-  /**
-   * Force a rerender by just changing an arbitrary state value
-   */
+  /** Force a rerender by just changing an arbitrary state value */
   function rerender(): void {
     setUpdate(update + 1);
   }

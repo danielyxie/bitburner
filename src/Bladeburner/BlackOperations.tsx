@@ -1,8 +1,7 @@
 import { BlackOperation } from "./BlackOperation";
-import { IMap } from "../types";
 import { BlackOperationNames } from "./data/BlackOperationNames";
 
-export const BlackOperations: IMap<BlackOperation> = {};
+export const BlackOperations: Record<string, BlackOperation> = {};
 
 (function () {
   BlackOperations[BlackOperationNames.OperationTyphoon] = new BlackOperation({

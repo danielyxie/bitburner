@@ -1,6 +1,3 @@
-/**
- * React Component for displaying the bonus time remaining.
- */
 import * as React from "react";
 import { Gang } from "../Gang";
 import { CONSTANTS } from "../../Constants";
@@ -13,6 +10,7 @@ interface IProps {
   gang: Gang;
 }
 
+/** React Component for displaying the bonus time remaining. */
 export function BonusTime(props: IProps): React.ReactElement {
   const CyclerPerSecond = 1000 / CONSTANTS._idleSpeed;
   if ((props.gang.storedCycles / CyclerPerSecond) * 1000 <= 5000) return <></>;

@@ -1,6 +1,3 @@
-/**
- * React Component for all the gang stuff.
- */
 import React, { useState, useEffect } from "react";
 import { ManagementSubpage } from "./ManagementSubpage";
 import { TerritorySubpage } from "./TerritorySubpage";
@@ -11,6 +8,7 @@ import { Context } from "./Context";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
+/** React Component for all the gang stuff. */
 export function GangRoot(): React.ReactElement {
   const gang = (function () {
     if (Player.gang === null) throw new Error("Gang should not be null");

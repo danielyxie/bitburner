@@ -1,10 +1,9 @@
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
 import { companiesMetadata } from "./data/CompaniesMetadata";
 import { Company, IConstructorParams } from "./Company";
-import { IMap } from "../types";
 import { Reviver } from "../utils/JSONReviver";
 
-export let Companies: IMap<Company> = {};
+export let Companies: Record<string, Company> = {};
 
 function addCompany(params: IConstructorParams): void {
   if (Companies[params.name] != null) {

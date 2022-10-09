@@ -8,9 +8,7 @@
  * found in ./DirectoryServerHelpers.ts
  */
 
-/**
- * Removes leading forward slash ("/") from a string.
- */
+/** Removes leading forward slash ("/") from a string. */
 export function removeLeadingSlash(s: string): string {
   if (s.startsWith("/")) {
     return s.slice(1);
@@ -210,9 +208,7 @@ export function getFileName(path: string): string {
   return t_path.slice(lastSlash + 1);
 }
 
-/**
- * Checks if a file path refers to a file in the root directory.
- */
+/** Checks if a file path refers to a file in the root directory. */
 export function isInRootDirectory(path: string): boolean {
   if (!isValidFilePath(path)) {
     return false;

@@ -1,6 +1,3 @@
-/**
- * React Component for the popup that manages gang members upgrades
- */
 import React, { useState } from "react";
 import { useGang } from "./Context";
 
@@ -244,6 +241,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
   );
 }
 
+/** React Component for the popup that manages gang members upgrades */
 export function EquipmentsSubpage(): React.ReactElement {
   const gang = useGang();
   const [filter, setFilter] = useState("");

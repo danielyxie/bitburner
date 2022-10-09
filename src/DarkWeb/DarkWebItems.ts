@@ -1,8 +1,7 @@
 import { DarkWebItem } from "./DarkWebItem";
-import { IMap } from "../types";
 import { Programs, initPrograms } from "../Programs/Programs";
 
-export const DarkWebItems: IMap<DarkWebItem> = {};
+export const DarkWebItems: Record<string, DarkWebItem> = {};
 export function initDarkWebItems() {
   initPrograms();
   Object.assign(DarkWebItems, {

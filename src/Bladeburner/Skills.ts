@@ -1,8 +1,7 @@
 import { Skill } from "./Skill";
 import { SkillNames } from "./data/SkillNames";
-import { IMap } from "../types";
 
-export const Skills: IMap<Skill> = {};
+export const Skills: Record<string, Skill> = {};
 
 (function () {
   Skills[SkillNames.BladesIntuition] = new Skill({

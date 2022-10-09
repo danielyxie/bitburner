@@ -1,6 +1,3 @@
-/**
- * Abstract Base Class for any Server object
- */
 import { CodingContract } from "../CodingContracts";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
@@ -28,7 +25,8 @@ interface writeResult {
   overwritten: boolean;
 }
 
-export class BaseServer {
+/** Abstract Base Class for any Server object */
+export abstract class BaseServer {
   // Coding Contract files on this server
   contracts: CodingContract[] = [];
 
@@ -150,9 +148,7 @@ export class BaseServer {
     return null;
   }
 
-  /**
-   * Returns boolean indicating whether the given script is running on this server
-   */
+  /** Returns boolean indicating whether the given script is running on this server */
   isRunning(fn: string): boolean {
     for (const runningScriptObj of this.runningScripts) {
       if (runningScriptObj.filename === fn) {

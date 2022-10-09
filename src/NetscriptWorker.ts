@@ -354,9 +354,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   return true;
 }
 
-/**
- * Updates the online running time stat of all running scripts
- */
+/** Updates the online running time stat of all running scripts */
 export function updateOnlineScriptTimes(numCycles = 1): void {
   const time = (numCycles * CONSTANTS._idleSpeed) / 1000; //seconds
   for (const ws of workerScripts.values()) {
@@ -404,9 +402,7 @@ export function loadAllRunningScripts(): void {
   }
 }
 
-/**
- * Run a script from inside another script (run(), exec(), spawn(), etc.)
- */
+/** Run a script from inside another script (run(), exec(), spawn(), etc.) */
 export function runScriptFromScript(
   caller: string,
   server: BaseServer,

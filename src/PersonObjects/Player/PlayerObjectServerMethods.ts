@@ -1,6 +1,4 @@
-/**
- * Server and HacknetServer-related methods for the Player class (PlayerObject)
- */
+// Server and HacknetServer-related methods for the Player class (PlayerObject)
 import { PlayerObject } from "./PlayerObject";
 
 import { CONSTANTS } from "../../Constants";

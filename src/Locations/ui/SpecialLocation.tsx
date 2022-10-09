@@ -45,9 +45,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   const inBladeburner = Player.inBladeburner();
 
-  /**
-   * Click handler for Bladeburner button at Sector-12 NSA
-   */
+  /** Click handler for Bladeburner button at Sector-12 NSA */
   function handleBladeburner(): void {
     if (Player.inBladeburner()) {
       // Enter Bladeburner division
@@ -73,9 +71,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
   }
 
-  /**
-   * Click handler for Resleeving button at New Tokyo VitaLife
-   */
+  /** Click handler for Resleeving button at New Tokyo VitaLife */
   function handleGrafting(): void {
     Router.toGrafting();
   }

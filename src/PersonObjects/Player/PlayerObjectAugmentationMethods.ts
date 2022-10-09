@@ -1,6 +1,4 @@
-/**
- * Augmentation-related methods for the Player class (PlayerObject)
- */
+/** Augmentation-related methods for the Player class (PlayerObject) */
 import { PlayerObject } from "./PlayerObject";
 import { calculateEntropy } from "../Grafting/EntropyAccumulation";
 

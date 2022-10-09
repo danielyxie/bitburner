@@ -20,7 +20,6 @@ import { SpecialServers } from "../Server/data/SpecialServers";
 import { Server } from "../Server/Server";
 import { Router } from "../ui/GameRoot";
 import { Page } from "../ui/Router";
-import { IMap } from "../types";
 import * as data from "./AchievementData.json";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
@@ -47,7 +46,7 @@ export interface PlayerAchievement {
 }
 
 export interface AchievementDataJson {
-  achievements: IMap<AchievementData>;
+  achievements: Record<string, AchievementData>;
 }
 
 export interface AchievementData {
@@ -87,7 +86,7 @@ function sfAchievement(): Achievement[] {
   return achs;
 }
 
-export const achievements: IMap<Achievement> = {
+export const achievements: Record<string, Achievement> = {
   [FactionNames.CyberSec.toUpperCase()]: {
     ...achievementData[FactionNames.CyberSec.toUpperCase()],
     Icon: "CSEC",

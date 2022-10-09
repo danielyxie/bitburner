@@ -1,6 +1,3 @@
-/**
- * React Component for the popup used to purchase a new server.
- */
 import React, { useState } from "react";
 import { purchaseServer } from "../../Server/ServerPurchases";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -20,6 +17,7 @@ interface IProps {
   rerender: () => void;
 }
 
+/** React Component for the popup used to purchase a new server. */
 export function PurchaseServerModal(props: IProps): React.ReactElement {
   const [hostname, setHostname] = useState("");
 

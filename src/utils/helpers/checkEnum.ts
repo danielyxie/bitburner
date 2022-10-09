@@ -1,6 +1,4 @@
-export function checkEnum<T extends string, TEnumValue extends string>(
-  enumVariable: { [key in T]: TEnumValue },
-  value: string,
-): value is TEnumValue {
-  return Object.values(enumVariable).includes(value);
+// This works for both enums and regular objects.
+export function checkEnum<T extends Record<string, unknown>>(obj: T, value: unknown): value is T[keyof T] {
+  return Object.values(obj).includes(value);
 }

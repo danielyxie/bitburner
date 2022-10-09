@@ -1,8 +1,7 @@
-import { IMap } from "./types";
 import { Terminal } from "./Terminal";
 
-export let Aliases: IMap<string> = {};
-export let GlobalAliases: IMap<string> = {};
+export let Aliases: Record<string, string> = {};
+export let GlobalAliases: Record<string, string> = {};
 
 export function loadAliases(saveString: string): void {
   if (saveString === "") {

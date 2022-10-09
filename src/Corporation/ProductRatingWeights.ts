@@ -1,5 +1,4 @@
 import { Industries } from "./IndustryData";
-import { IMap } from "../types";
 
 export interface IProductRatingWeight {
   Aesthetics?: number;
@@ -10,7 +9,7 @@ export interface IProductRatingWeight {
   Reliability?: number;
 }
 
-export const ProductRatingWeights: IMap<any> = {
+export const ProductRatingWeights: Record<string, IProductRatingWeight> = {
   [Industries.Food]: {
     Quality: 0.7,
     Durability: 0.1,

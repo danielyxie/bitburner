@@ -48,9 +48,7 @@ import * as sleeveMethods from "./SleeveMethods";
 export class Sleeve extends Person {
   currentWork: Work | null = null;
 
-  /**
-   * Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs
-   */
+  /** Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs */
   memory = 1;
 
   /**
@@ -62,9 +60,7 @@ export class Sleeve extends Person {
    */
   shock = 1;
 
-  /**
-   * Stored number of game "loop" cycles
-   */
+  /** Stored number of game "loop" cycles */
   storedCycles = 0;
 
   /**
@@ -100,9 +96,7 @@ export class Sleeve extends Person {
     this.currentWork = null;
   }
 
-  /**
-   * Commit crimes
-   */
+  /** Commit crimes */
   commitCrime(crimeKey: string): boolean {
     const crime: Crime | null = Crimes[crimeKey] || Object.values(Crimes).find((crime) => crime.name === crimeKey);
     if (!crime) {
@@ -113,9 +107,7 @@ export class Sleeve extends Person {
     return true;
   }
 
-  /**
-   * Returns the cost of upgrading this sleeve's memory by a certain amount
-   */
+  /** Returns the cost of upgrading this sleeve's memory by a certain amount */
   getMemoryUpgradeCost(n: number): number {
     const amt = Math.round(n);
     if (amt < 0) {
@@ -150,9 +142,7 @@ export class Sleeve extends Person {
     this.updateSkillLevels();
   }
 
-  /**
-   * Called on every sleeve for a Source File Prestige
-   */
+  /** Called on every sleeve for a Source File Prestige */
   prestige(): void {
     // Reset exp
     this.exp.hacking = 0;
@@ -211,9 +201,7 @@ export class Sleeve extends Person {
     return true;
   }
 
-  /**
-   * Take a course at a university
-   */
+  /** Take a course at a university */
   takeUniversityCourse(universityName: string, className: string): boolean {
     // Set exp/money multipliers based on which university.
     // Also check that the sleeve is in the right city
@@ -270,9 +258,7 @@ export class Sleeve extends Person {
     return true;
   }
 
-  /**
-   * Travel to another City. Costs money from player
-   */
+  /** Travel to another City. Costs money from player */
   travel(newCity: CityName): boolean {
     Player.loseMoney(CONSTANTS.TravelCost, "sleeves");
     this.city = newCity;
@@ -354,9 +340,7 @@ export class Sleeve extends Person {
     return true;
   }
 
-  /**
-   * Begin a gym workout task
-   */
+  /** Begin a gym workout task */
   workoutAtGym(gymName: string, stat: string): boolean {
     // Set exp/money multipliers based on which university.
     // Also check that the sleeve is in the right city
@@ -420,9 +404,7 @@ export class Sleeve extends Person {
     return true;
   }
 
-  /**
-   * Begin a bladeburner task
-   */
+  /** Begin a bladeburner task */
   bladeburner(action: string, contract: string): boolean {
     if (!Player.bladeburner) return false;
     switch (action) {
@@ -495,16 +477,12 @@ export class Sleeve extends Person {
     return "Sleeve";
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("Sleeve", this);
   }
 
-  /**
-   * Initiatizes a Sleeve object from a JSON save state.
-   */
+  /** Initiatizes a Sleeve object from a JSON save state. */
   static fromJSON(value: IReviverValue): Sleeve {
     return Generic_fromJSON(Sleeve, value.data);
   }

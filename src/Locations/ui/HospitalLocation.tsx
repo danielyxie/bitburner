@@ -19,9 +19,7 @@ type IState = {
 
 //Todo: Make this a functional component
 export class HospitalLocation extends React.Component<Record<string, never>, IState> {
-  /**
-   * Stores button styling that sets them all to block display
-   */
+  /** Stores button styling that sets them all to block display */
   btnStyle = { display: "block" };
 
   constructor() {

@@ -257,7 +257,7 @@ export function takeDamage(this: PlayerObject, amt: number): boolean {
 
 export function hospitalize(this: PlayerObject): number {
   const cost = getHospitalizationCost();
-  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.WARNING, 2000);
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.SUCCESS, 2000);
 
   this.loseMoney(cost, "hospitalization");
   this.hp.current = this.hp.max;

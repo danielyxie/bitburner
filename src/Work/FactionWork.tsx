@@ -85,16 +85,12 @@ export class FactionWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("FactionWork", this);
   }
 
-  /**
-   * Initiatizes a FactionWork object from a JSON save state.
-   */
+  /** Initiatizes a FactionWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): FactionWork {
     return Generic_fromJSON(FactionWork, value.data);
   }

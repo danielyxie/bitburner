@@ -1,6 +1,3 @@
-/**
- * Root React Component for the Hacknet Node UI
- */
 import React, { useState, useEffect } from "react";
 
 import { GeneralInfo } from "./GeneralInfo";
@@ -29,6 +26,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 
+/** Root React Component for the Hacknet Node UI */
 export function HacknetRoot(): React.ReactElement {
   const [open, setOpen] = useState(false);
   const setRerender = useState(false)[1];

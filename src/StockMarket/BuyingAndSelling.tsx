@@ -23,9 +23,7 @@ import * as React from "react";
 import { NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-/**
- * Each function takes an optional config object as its last argument
- */
+/** Each function takes an optional config object as its last argument */
 interface IOptions {
   rerenderFn?: () => void;
   suppressDialog?: boolean;

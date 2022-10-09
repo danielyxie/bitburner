@@ -1,6 +1,4 @@
-/**
- * Implementation for what happens when you destroy a BitNode
- */
+/** Implementation for what happens when you destroy a BitNode */
 import React from "react";
 import { Player } from "./Player";
 import { prestigeSourceFile } from "./Prestige";
@@ -19,17 +17,9 @@ function giveSourceFile(bitNodeNumber: number): void {
   }
 
   // Check if player already has this source file
-  let alreadyOwned = false;
-  let ownedSourceFile = null;
-  for (let i = 0; i < Player.sourceFiles.length; ++i) {
-    if (Player.sourceFiles[i].n === bitNodeNumber) {
-      alreadyOwned = true;
-      ownedSourceFile = Player.sourceFiles[i];
-      break;
-    }
-  }
+  const ownedSourceFile = Player.sourceFiles.find((sourceFile) => sourceFile.n === bitNodeNumber);
 
-  if (alreadyOwned && ownedSourceFile) {
+  if (ownedSourceFile) {
     if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
       dialogBoxCreate(
         `The Source-File for the BitNode you just destroyed, ${sourceFile.name}, is already at max level!`,
@@ -45,10 +35,9 @@ function giveSourceFile(bitNodeNumber: number): void {
       );
     }
   } else {
-    const playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
-    Player.sourceFiles.push(playerSrcFile);
+    const newSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
+    Player.sourceFiles.push(newSrcFile);
     if (bitNodeNumber === 5 && Player.skills.intelligence === 0) {
-      // Artificial Intelligence
       Player.skills.intelligence = 1;
     }
     dialogBoxCreate(

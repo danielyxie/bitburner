@@ -1,6 +1,3 @@
-/**
- * React Component for a single stock ticker in the Stock Market UI
- */
 import React, { useState } from "react";
 
 import { StockTickerHeaderText } from "./StockTickerHeaderText";
@@ -46,6 +43,7 @@ type IProps = {
   stock: Stock;
 };
 
+/** React Component for a single stock ticker in the Stock Market UI */
 export function StockTicker(props: IProps): React.ReactElement {
   const [orderType, setOrderType] = useState(SelectorOrderType.Market);
   const [position, setPosition] = useState(PositionTypes.Long);

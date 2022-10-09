@@ -1,6 +1,3 @@
-/**
- * React Component for the button that is used to purchase new Hacknet Nodes
- */
 import React from "react";
 
 import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers";
@@ -15,6 +12,7 @@ interface IProps {
   cost: number;
 }
 
+/** React Component for the button that is used to purchase new Hacknet Nodes */
 export function PurchaseButton(props: IProps): React.ReactElement {
   const cost = props.cost;
   let text;

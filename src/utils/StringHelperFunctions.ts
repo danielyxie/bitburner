@@ -1,5 +1,4 @@
 import { Settings } from "../Settings/Settings";
-import { EqualityFunc } from "../types";
 import { isString } from "./helpers/isString";
 
 /*
@@ -65,7 +64,7 @@ function longestCommonStart(strings: string[]): string {
   const a2: string = A[A.length - 1];
   const L: number = a1.length;
   let i = 0;
-  const areEqualCaseInsensitive: EqualityFunc<string> = (a: string, b: string) => a.toUpperCase() === b.toUpperCase();
+  const areEqualCaseInsensitive = (a: string, b: string) => a.toUpperCase() === b.toUpperCase();
   while (i < L && areEqualCaseInsensitive(a1.charAt(i), a2.charAt(i))) {
     i++;
   }

@@ -81,7 +81,11 @@ import { InternalAPI, NetscriptContext, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 
-export type NSFull = NS & INetscriptExtra;
+// "Enums" as object
+export const enums = {
+  toast: ToastVariant,
+} as const;
+export type NSFull = Readonly<NS & INetscriptExtra>;
 
 export function NetscriptFunctions(workerScript: WorkerScript): NSFull {
   return wrapAPI(workerScript, ns, workerScript.args.slice());
@@ -89,10 +93,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NSFull {
 
 const base: InternalAPI<NS> = {
   args: [],
-  enums: {
-    toast: ToastVariant,
-  },
-
+  //The next line will error if enums does not match the definition in NetscriptDefinitions.d.ts
+  enums,
   singularity: NetscriptSingularity(),
   gang: NetscriptGang(),
   bladeburner: NetscriptBladeburner(),
@@ -1516,7 +1518,7 @@ const base: InternalAPI<NS> = {
     },
   tryWritePort:
     (ctx: NetscriptContext) =>
-    (_port: unknown, data: unknown = ""): Promise<any> => {
+    (_port: unknown, data: unknown = ""): boolean => {
       const port = helpers.number(ctx, "port", _port);
       if (typeof data !== "string" && typeof data !== "number") {
         throw helpers.makeRuntimeErrorMsg(
@@ -1525,7 +1527,7 @@ const base: InternalAPI<NS> = {
         );
       }
       const iport = helpers.getValidPort(ctx, port);
-      return Promise.resolve(iport.tryWrite(data));
+      return iport.tryWrite(data);
     },
   readPort:
     (ctx: NetscriptContext) =>
@@ -1788,7 +1790,7 @@ const base: InternalAPI<NS> = {
       const duration = _duration === null ? null : helpers.number(ctx, "duration", _duration);
       if (!checkEnum(ToastVariant, variant))
         throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
-      SnackbarEvents.emit(message, variant, duration);
+      SnackbarEvents.emit(message, variant as ToastVariant, duration);
     },
   prompt:
     (ctx: NetscriptContext) =>
@@ -1945,7 +1947,7 @@ const base: InternalAPI<NS> = {
 };
 
 // add undocumented functions
-const ns = {
+export const ns = {
   ...base,
   ...NetscriptExtra(),
 };

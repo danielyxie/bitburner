@@ -22,16 +22,12 @@ export class SleeveRecoveryWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveRecoveryWork", this);
   }
 
-  /**
-   * Initiatizes a RecoveryWork object from a JSON save state.
-   */
+  /** Initiatizes a RecoveryWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveRecoveryWork {
     return Generic_fromJSON(SleeveRecoveryWork, value.data);
   }

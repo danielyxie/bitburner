@@ -5,10 +5,9 @@
  * This map uses the official name of the city, NOT its key in the 'Cities' object
  */
 import { Cities } from "./Cities";
-import { IMap } from "../types";
 
-export function createCityMap<T>(initValue: T): IMap<T> {
-  const map: IMap<T> = {};
+export function createCityMap<T>(initValue: T): Record<string, T> {
+  const map: Record<string, T> = {};
   const cities = Object.keys(Cities);
   for (let i = 0; i < cities.length; ++i) {
     map[cities[i]] = initValue;

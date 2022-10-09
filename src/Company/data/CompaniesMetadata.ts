@@ -1,30 +1,29 @@
 import * as posNames from "./companypositionnames";
 import { IConstructorParams } from "../Company";
 
-import { IMap } from "../../types";
 import { LocationName } from "../../Locations/data/LocationNames";
 
 // Create Objects containing Company Positions by category
 // Will help in metadata construction later
-const AllSoftwarePositions: IMap<boolean> = {};
-const AllITPositions: IMap<boolean> = {};
-const AllNetworkEngineerPositions: IMap<boolean> = {};
-const SecurityEngineerPositions: IMap<boolean> = {};
-const AllTechnologyPositions: IMap<boolean> = {};
-const AllBusinessPositions: IMap<boolean> = {};
-const AllAgentPositions: IMap<boolean> = {};
-const AllSecurityPositions: IMap<boolean> = {};
-const AllSoftwareConsultantPositions: IMap<boolean> = {};
-const AllBusinessConsultantPositions: IMap<boolean> = {};
-const SoftwarePositionsUpToHeadOfEngineering: IMap<boolean> = {};
-const SoftwarePositionsUpToLeadDeveloper: IMap<boolean> = {};
-const BusinessPositionsUpToOperationsManager: IMap<boolean> = {};
-const WaiterOnly: IMap<boolean> = {};
-const EmployeeOnly: IMap<boolean> = {};
-const PartTimeWaiterOnly: IMap<boolean> = {};
-const PartTimeEmployeeOnly: IMap<boolean> = {};
-const OperationsManagerOnly: IMap<boolean> = {};
-const CEOOnly: IMap<boolean> = {};
+const AllSoftwarePositions: Record<string, boolean> = {};
+const AllITPositions: Record<string, boolean> = {};
+const AllNetworkEngineerPositions: Record<string, boolean> = {};
+const SecurityEngineerPositions: Record<string, boolean> = {};
+const AllTechnologyPositions: Record<string, boolean> = {};
+const AllBusinessPositions: Record<string, boolean> = {};
+const AllAgentPositions: Record<string, boolean> = {};
+const AllSecurityPositions: Record<string, boolean> = {};
+const AllSoftwareConsultantPositions: Record<string, boolean> = {};
+const AllBusinessConsultantPositions: Record<string, boolean> = {};
+const SoftwarePositionsUpToHeadOfEngineering: Record<string, boolean> = {};
+const SoftwarePositionsUpToLeadDeveloper: Record<string, boolean> = {};
+const BusinessPositionsUpToOperationsManager: Record<string, boolean> = {};
+const WaiterOnly: Record<string, boolean> = {};
+const EmployeeOnly: Record<string, boolean> = {};
+const PartTimeWaiterOnly: Record<string, boolean> = {};
+const PartTimeEmployeeOnly: Record<string, boolean> = {};
+const OperationsManagerOnly: Record<string, boolean> = {};
+const CEOOnly: Record<string, boolean> = {};
 
 posNames.SoftwareCompanyPositions.forEach((e) => {
   AllSoftwarePositions[e] = true;

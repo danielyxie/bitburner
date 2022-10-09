@@ -1,6 +1,3 @@
-/**
- * Game engine. Handles the main game loop.
- */
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
@@ -48,6 +45,7 @@ import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
 import { Button, Typography } from "@mui/material";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
+/** Game engine. Handles the main game loop. */
 const Engine: {
   _lastUpdate: number;
   updateGame: (numCycles?: number) => void;
@@ -147,8 +145,7 @@ const Engine: {
   },
 
   decrementAllCounters: function (numCycles = 1) {
-    for (const counterName of Object.keys(Engine.Counters)) {
-      const counter = Engine.Counters[counterName];
+    for (const [counterName, counter] of Object.entries(Engine.Counters)) {
       if (counter === undefined) throw new Error("counter should not be undefined");
       Engine.Counters[counterName] = counter - numCycles;
     }
@@ -403,9 +400,7 @@ const Engine: {
   },
 };
 
-/**
- * Shows a toast warning that lets the player know that auto-saves are disabled, with an button to re-enable them.
- */
+/** Shows a toast warning that lets the player know that auto-saves are disabled, with an button to re-enable them. */
 function warnAutosaveDisabled(): void {
   // If the player has suppressed those warnings let's just exit right away.
   if (Settings.SuppressAutosaveDisabledWarnings) return;

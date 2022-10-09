@@ -71,16 +71,12 @@ export class ActiveFragment {
     return Object.assign({}, this);
   }
 
-  /**
-   * Serialize an active fragment to a JSON save state.
-   */
+  /** Serialize an active fragment to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("ActiveFragment", this);
   }
 
-  /**
-   * Initializes an acive fragment from a JSON save state
-   */
+  /** Initializes an acive fragment from a JSON save state */
   static fromJSON(value: IReviverValue): ActiveFragment {
     return Generic_fromJSON(ActiveFragment, value.data);
   }

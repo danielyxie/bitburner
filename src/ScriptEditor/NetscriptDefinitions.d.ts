@@ -1,14 +1,12 @@
-/**
- * @public
- */
+export type ValuesFrom<T> = T[keyof T];
+
+/** @public */
 export interface HP {
   current: number;
   max: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface Skills {
   hacking: number;
   strength: number;
@@ -19,9 +17,7 @@ export interface Skills {
   intelligence: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface PossibleInfiltrationLocation {
   city: string;
   name: string;
@@ -33,24 +29,16 @@ export interface PossibleInfiltrationLocation {
  */
 type CodingContractData = any;
 
-/**
- * @public
- */
+/** @public */
 type PortData = string | number;
 
-/**
- * @public
- */
+/** @public */
 type ScriptArg = string | number | boolean;
 
-/**
- * @public
- */
+/** @public */
 type FilenameOrPID = number | string;
 
-/**
- * @public
- */
+/** @public */
 interface Player {
   hp: HP;
   skills: Skills;
@@ -72,9 +60,7 @@ interface Player {
   entropy: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface Multipliers {
   /** Multiplier to hacking skill */
   hacking?: number;
@@ -138,9 +124,7 @@ export interface Multipliers {
   bladeburner_success_chance?: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface RunningScript {
   /** Arguments the script was called with */
   args: (string | number | boolean)[];
@@ -173,9 +157,7 @@ export interface RunningScript {
   threads: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface RecentScript extends RunningScript {
   /** Timestamp of when the script was killed */
   timeOfDeath: Date;
@@ -233,7 +215,8 @@ export interface CrimeStats {
  * @public
  */
 export interface BasicHGWOptions {
-  /** Number of threads to use for this function. Must be less than or equal to the number of threads the script is running with. */
+  /** Number of threads to use for this function.
+   * Must be less than or equal to the number of threads the script is running with. */
   threads?: number;
   /** Set to true this action will affect the stock market. */
   stock?: boolean;
@@ -259,17 +242,13 @@ export interface AugmentPair {
   cost: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export enum PositionTypes {
   Long = "L",
   Short = "S",
 }
 
-/**
- * @public
- */
+/** @public */
 export enum OrderTypes {
   LimitBuy = "Limit Buy Order",
   LimitSell = "Limit Sell Order",
@@ -562,7 +541,8 @@ export interface BitNodeMultipliers {
   HackExpGain: number;
   /** Influences how quickly the player's hacking level (not experience) scales */
   HackingLevelMultiplier: number;
-  /** Influences how much money is produced by Hacknet Nodes and the hash rate of Hacknet Servers (unlocked in BitNode-9) */
+  /** Influences how much money is produced by Hacknet Nodes
+   *  and the hash rate of Hacknet Servers (unlocked in BitNode-9) */
   HacknetNodeMoney: number;
   /** Influences how much money it costs to upgrade your home computer's RAM */
   HomeComputerRamCost: number;
@@ -570,7 +550,8 @@ export interface BitNodeMultipliers {
   InfiltrationMoney: number;
   /** Influences how much rep the player can gain from factions when selling stolen documents and secrets */
   InfiltrationRep: number;
-  /** Influences how much money can be stolen from a server when the player performs a hack against it through the Terminal. */
+  /** Influences how much money can be stolen from a server when the player
+   *  performs a hack against it through the Terminal. */
   ManualHackMoney: number;
   /** Influence how much it costs to purchase a server */
   PurchasedServerCost: number;
@@ -633,9 +614,7 @@ export interface NodeStats {
   totalProduction: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface CharacterMult {
   /** Agility stat */
   agility: number;
@@ -673,9 +652,7 @@ export interface CharacterMult {
   workMoney: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface SleeveWorkGains {
   /** Hacking exp gained from work */
   workHackExpGain: number;
@@ -693,9 +670,7 @@ export interface SleeveWorkGains {
   workMoneyGain: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface SourceFileLvl {
   /** The number of the source file */
   n: number;
@@ -745,9 +720,7 @@ export interface GangGenInfo {
   wantedPenalty: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangOtherInfoObject {
   /** Gang power */
   power: number;
@@ -755,9 +728,7 @@ export interface GangOtherInfoObject {
   territory: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangOtherInfo {
   [key: string]: GangOtherInfoObject;
 }
@@ -818,9 +789,7 @@ export interface EquipmentStats {
   hack?: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangTerritory {
   /** Money gain impact on task scaling */
   money: number;
@@ -830,9 +799,7 @@ export interface GangTerritory {
   wanted: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangMemberInfo {
   /** Name of the gang member */
   name: string;
@@ -913,9 +880,7 @@ export interface GangMemberInfo {
   moneyGain: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface GangMemberAscension {
   /** Amount of respect lost from ascending */
   respect: number;
@@ -3858,9 +3823,7 @@ interface SkillsFormulas {
   calculateExp(skill: number, skillMult?: number): number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface WorkStats {
   money: number;
   reputation: number;
@@ -4170,9 +4133,7 @@ export interface Formulas {
   work: WorkFormulas;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface Fragment {
   id: number;
   shape: boolean[][];
@@ -4181,9 +4142,7 @@ export interface Fragment {
   limit: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface ActiveFragment {
   id: number;
   highestCharge: number;
@@ -4305,26 +4264,20 @@ interface Stanek {
   acceptGift(): boolean;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface InfiltrationReward {
   tradeRep: number;
   sellCash: number;
   SoARep: number;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface ILocation {
   city: string;
   name: string;
 }
 
-/**
- * @public
- */
+/** @public */
 export interface InfiltrationLocation {
   location: ILocation;
   reward: InfiltrationReward;
@@ -4476,54 +4429,55 @@ export interface NS {
    * @remarks RAM cost: 4 GB
    */
   readonly hacknet: Hacknet;
+
   /**
-   *
    * Namespace for bladeburner functions.
    * @remarks RAM cost: 0 GB
    */
   readonly bladeburner: Bladeburner;
+
   /**
-   *
    * Namespace for codingcontract functions.
    * @remarks RAM cost: 0 GB
    */
   readonly codingcontract: CodingContract;
+
   /**
-   *
    * Namespace for gang functions.
    * @remarks RAM cost: 0 GB
    */
   readonly gang: Gang;
+
   /**
-   *
    * Namespace for sleeve functions.
    * @remarks RAM cost: 0 GB
    */
   readonly sleeve: Sleeve;
+
   /**
-   *
    * Namespace for stock functions.
-   * @remarks
-   * RAM cost: 0 GB
+   * @remarks RAM cost: 0 GB
    */
   readonly stock: TIX;
+
   /**
-   *
    * Namespace for formulas functions.
-   * @remarks
-   * RAM cost: 0 GB
+   * @remarks RAM cost: 0 GB
    */
   readonly formulas: Formulas;
+
   /**
    * Namespace for stanek functions.
    * RAM cost: 0 GB
    */
   readonly stanek: Stanek;
+
   /**
    * Namespace for infiltration functions.
    * RAM cost: 0 GB
    */
   readonly infiltration: Infiltration;
+
   /**
    * Namespace for corporation functions.
    * RAM cost: 1022.4 GB
@@ -4544,8 +4498,7 @@ export interface NS {
 
   /**
    * Namespace for grafting functions.
-   * @remarks
-   * RAM cost: 0 GB
+   * @remarks RAM cost: 0 GB
    */
   readonly grafting: Grafting;
 
@@ -6155,7 +6108,7 @@ export interface NS {
    * @param data - Data to write.
    * @returns True if the data is successfully written to the port, and false otherwise.
    */
-  tryWritePort(port: number, data: string | number): Promise<boolean>;
+  tryWritePort(port: number, data: string | number): boolean;
 
   /**
    * Read content of a file.
@@ -6521,7 +6474,7 @@ export interface NS {
    * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
    * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
    */
-  toast(msg: string, variant?: ToastVariantValues, duration?: number | null): void;
+  toast(msg: string, variant?: ToastVariant, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -6709,26 +6662,21 @@ export interface NS {
   enums: NSEnums;
 }
 
-/** @public */
-export enum ToastVariant {
-  SUCCESS = "success",
-  WARNING = "warning",
-  ERROR = "error",
-  INFO = "info",
-}
+declare const enums = {
+  toast: {
+    SUCCESS: "success",
+    WARNING: "warning",
+    ERROR: "error",
+    INFO: "info",
+  },
+} as const;
+type ToastVariant = ValuesFrom<typeof enums.toast>;
 
-/** @public */
-export type ToastVariantValues = `${ToastVariant}`;
-
-/** @public */
-export interface NSEnums {
-  toast: typeof ToastVariant;
-}
-
+export type NSEnums = typeof enums;
 /**
  * Corporation Office API
  * @remarks
- * Requires the Office API upgrade from your corporation.
+ * requires the Office API upgrade from your corporation.
  * @public
  */
 export interface OfficeAPI {

@@ -1,35 +1,5 @@
-/**
- * Performs an equality check between two instances of the same type.
- */
-export type EqualityFunc<T> = (a: T, b: T) => boolean;
-
-/**
- * A map is an object that holds a mapping between string keys and some consistent type.
- */
-export interface IMap<T> {
-  [key: string]: T;
-}
-
-/**
- * Contains a method to initialize itself to a known state.
- */
-export interface ISelfInitializer {
-  /**
-   * Initialize/reset the object to a known, default state.
-   */
-  init(): void;
-}
-
-/**
- * Contains a method to repopulate itself based on a JSON string.
- */
-export interface ISelfLoading {
-  /**
-   * Loads the save state onto the current object.
-   * @param saveState JSON string representing the save state.
-   */
-  load(saveState: string): void;
-}
+/** Construct a type using the values from an object. Requires object to be defined "as const" */
+export type ValuesFrom<T> = T[keyof T];
 
 /**
  * Status object for functions that return a boolean indicating success/failure
@@ -46,18 +16,12 @@ export interface IReturnStatus {
  * It is up to the implementor to ensure max > min.
  */
 export interface IMinMaxRange {
-  /**
-   * Value by which the bounds are to be divided for the final range
-   */
+  /** Value by which the bounds are to be divided for the final range */
   divisor?: number;
 
-  /**
-   * The maximum bound of the range.
-   */
+  /** The maximum bound of the range. */
   max: number;
 
-  /**
-   * The minimum bound of the range.
-   */
+  /** The minimum bound of the range. */
   min: number;
 }
