@@ -1073,8 +1073,8 @@ const base: InternalAPI<NS> = {
       levelCost: Player.mults.hacknet_node_level_cost,
     };
   },
-  getBitNodeMultipliers: 
-    (ctx: NetscriptContext) => 
+  getBitNodeMultipliers:
+    (ctx: NetscriptContext) =>
     (_bitNode: number, _lvl: number): IBNMults => {
       let bitNode = _bitNode;
       const lvl = _lvl;
@@ -1086,7 +1086,7 @@ const base: InternalAPI<NS> = {
         bitNode = Player.bitNodeN;
       }
 
-      if (bitNode > 13 || bitNode < 1 ) {
+      if (bitNode > 13 || bitNode < 1) {
         throw helpers.makeRuntimeErrorMsg(ctx, "Invalid BitNode, can only be an integer 1-13");
       }
 
