@@ -7,7 +7,7 @@ import { safelyCreateUniqueServer } from "./ServerHelpers";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
-import { Player } from "../Player";
+import { Player } from "@player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";

@@ -1,5 +1,5 @@
 import { Terminal } from "../../Terminal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { BaseServer } from "../../Server/BaseServer";
 import { Server } from "../../Server/Server";
 

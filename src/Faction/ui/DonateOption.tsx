@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { CONSTANTS } from "../../Constants";
 import { Faction } from "../Faction";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { repFromDonation } from "../formulas/donation";
 import { Favor } from "../../ui/React/Favor";
 

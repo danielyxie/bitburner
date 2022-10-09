@@ -2,7 +2,7 @@ import React from "react";
 
 import { Bladeburner } from "../Bladeburner";
 import { BlackOperation } from "../BlackOperation";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import Button from "@mui/material/Button";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { ActionIdentifier } from "../ActionIdentifier";

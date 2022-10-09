@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "../../../ui/React/Modal";
 import { numeralWrapper } from "../../../ui/numeralFormat";
-import { Player } from "../../../Player";
+import { Player } from "@player";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";

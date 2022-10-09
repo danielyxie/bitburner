@@ -3,7 +3,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import { uniqueId } from "lodash";
 import React, { useEffect, useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";

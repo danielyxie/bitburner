@@ -2,7 +2,7 @@ import { Button, Typography, Box, Paper, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { GangConstants } from "../../Gang/data/Constants";
 import { Router } from "../../ui/GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Faction } from "../Faction";
 import { CreateGangModal } from "./CreateGangModal";
 

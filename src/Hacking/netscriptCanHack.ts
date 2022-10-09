@@ -6,7 +6,7 @@
  */
 import { IReturnStatus } from "../types";
 
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Server } from "../Server/Server";
 
 function baseCheck(server: Server, fnName: string): IReturnStatus {

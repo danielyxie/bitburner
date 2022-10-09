@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { PlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
 // Update as additional BitNodes get implemented

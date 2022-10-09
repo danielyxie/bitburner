@@ -13,7 +13,7 @@ import { hasHacknetServers } from "../Hacknet/HacknetHelpers";
 import { HacknetNode } from "../Hacknet/HacknetNode";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { CityName } from "../Locations/data/CityNames";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Programs } from "../Programs/Programs";
 import { GetAllServers, GetServer } from "../Server/AllServers";
 import { SpecialServers } from "../Server/data/SpecialServers";

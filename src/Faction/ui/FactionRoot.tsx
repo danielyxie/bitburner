@@ -16,7 +16,7 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction";
 
 import { Router } from "../../ui/GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 import { Typography, Button } from "@mui/material";
 import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";

@@ -4,7 +4,7 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 import { inviteToFaction } from "../../Faction/FactionHelpers";
 import { Factions } from "../../Faction/Factions";
 import { Router } from "../../ui/GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { formatNumber } from "../../utils/StringHelperFunctions";

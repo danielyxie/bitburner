@@ -4,7 +4,7 @@ import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { getJobRequirementText } from "../../Company/GetJobRequirementText";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 

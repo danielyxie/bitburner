@@ -3,7 +3,7 @@ import { Crime } from "../Crime/Crime";
 import { CONSTANTS } from "../Constants";
 import { determineCrimeSuccess } from "../Crime/CrimeHelpers";
 import { Crimes } from "../Crime/Crimes";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";

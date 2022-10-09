@@ -6,7 +6,7 @@ import { Industry } from "../Industry";
 import { MainPanel } from "./MainPanel";
 import { Industries } from "../IndustryData";
 import { ExpandIndustryTab } from "./ExpandIndustryTab";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Context } from "./Context";
 import { Overview } from "./Overview";
 

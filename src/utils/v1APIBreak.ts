@@ -1,6 +1,6 @@
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Script } from "../Script/Script";
 import { GetAllServers } from "../Server/AllServers";
 

@@ -1,5 +1,5 @@
 import { Terminal } from "../../Terminal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { listAllDarkwebItems, buyAllDarkwebItems, buyDarkwebItem } from "../../DarkWeb/DarkWeb";
 
 export function buy(args: (string | number | boolean)[]): void {

@@ -4,7 +4,7 @@ import { CorporationConstants } from "../../data/Constants";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
-import { Player } from "../../../Player";
+import { Player } from "@player";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";

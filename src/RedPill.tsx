@@ -1,6 +1,6 @@
 /** Implementation for what happens when you destroy a BitNode */
 import React from "react";
-import { Player } from "./Player";
+import { Player } from "@player";
 import { prestigeSourceFile } from "./Prestige";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { SourceFiles } from "./SourceFile/SourceFiles";

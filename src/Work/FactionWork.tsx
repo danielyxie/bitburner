@@ -1,7 +1,7 @@
 import React from "react";
 import { Work, WorkType } from "./Work";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";

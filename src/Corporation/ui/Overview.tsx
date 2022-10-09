@@ -21,7 +21,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { StatsTable } from "../../ui/React/StatsTable";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { useCorporation } from "./Context";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";

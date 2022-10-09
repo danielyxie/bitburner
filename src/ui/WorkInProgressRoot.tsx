@@ -9,7 +9,7 @@ import { LocationName } from "../Locations/data/LocationNames";
 import { Locations } from "../Locations/Locations";
 import { Settings } from "../Settings/Settings";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Router } from "./GameRoot";
 import { numeralWrapper } from "./numeralFormat";
 import { Money } from "./React/Money";

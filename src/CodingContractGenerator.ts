@@ -5,7 +5,7 @@ import {
   ICodingContractReward,
 } from "./CodingContracts";
 import { Factions } from "./Faction/Factions";
-import { Player } from "./Player";
+import { Player } from "@player";
 import { GetServer, GetAllServers } from "./Server/AllServers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { Server } from "./Server/Server";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Sleeve } from "../Sleeve";
-import { Player } from "../../../Player";
+import { Player } from "@player";
 import { Crimes } from "../../../Crime/Crimes";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { CityName } from "../../../Locations/data/CityNames";

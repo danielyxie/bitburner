@@ -1,6 +1,6 @@
 import { Augmentation, IConstructorParams } from "../Augmentation";
 import { AugmentationNames } from "./AugmentationNames";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Programs } from "../../Programs/Programs";
 import { WHRNG } from "../../Casino/RNG";
 import React from "react";

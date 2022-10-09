@@ -7,7 +7,7 @@ type ITextModel = monaco.editor.ITextModel;
 import { OptionsModal } from "./OptionsModal";
 import { Options } from "./Options";
 import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Router } from "../../ui/GameRoot";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { isScriptFilename } from "../../Script/isScriptFilename";

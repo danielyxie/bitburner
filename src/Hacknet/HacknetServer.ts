@@ -16,7 +16,7 @@ import {
 import { createRandomIp } from "../utils/IPAddress";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
-import { Player } from "../Player";
+import { Player } from "@player";
 
 interface IConstructorParams {
   adminRights?: boolean;

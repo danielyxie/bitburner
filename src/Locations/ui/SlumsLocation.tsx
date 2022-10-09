@@ -11,7 +11,7 @@ import { Crimes } from "../../Crime/Crimes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Router } from "../../ui/GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Box } from "@mui/material";
 
 export function SlumsLocation(): React.ReactElement {

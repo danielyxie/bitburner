@@ -1,7 +1,7 @@
 import { NetscriptContext } from "./APIWrapper";
 import { WorkerScript } from "./WorkerScript";
 import { GetAllServers, GetServer } from "../Server/AllServers";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { ScriptDeath } from "./ScriptDeath";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { ScriptArg } from "./ScriptArg";

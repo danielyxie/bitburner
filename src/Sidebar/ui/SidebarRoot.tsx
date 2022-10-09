@@ -47,7 +47,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { Router } from "../../ui/GameRoot";
 import { Page } from "../../ui/Router";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { CONSTANTS } from "../../Constants";
 import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../../InteractiveTutorial";
 import { getAvailableCreatePrograms } from "../../Programs/ProgramHelpers";

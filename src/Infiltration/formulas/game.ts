@@ -1,4 +1,4 @@
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { calculateSkill } from "../../PersonObjects/formulas/skill";
 
 function calculateRawDiff(stats: number, startingDifficulty: number): number {

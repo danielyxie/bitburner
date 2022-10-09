@@ -1,5 +1,5 @@
 import { Milestone } from "./Milestone";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
 import { GetServer } from "../Server/AllServers";

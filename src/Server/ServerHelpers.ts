@@ -5,7 +5,7 @@ import { calculateServerGrowth } from "./formulas/grow";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Programs } from "../Programs/Programs";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
 

@@ -10,7 +10,7 @@ import { TeamSizeButton } from "./TeamSizeButton";
 import { Bladeburner } from "../Bladeburner";
 import { Operation } from "../Operation";
 import { Operations } from "../data/Operations";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { CopyableText } from "../../ui/React/CopyableText";
 
 import Typography from "@mui/material/Typography";

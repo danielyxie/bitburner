@@ -1,6 +1,6 @@
 import { Output, Link, RawOutput, TTimer } from "./OutputTypes";
 import { Router } from "../ui/GameRoot";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
 import { Server } from "../Server/Server";

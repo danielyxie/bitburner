@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Money } from "../ui/React/Money";
 import { WHRNG } from "./RNG";
 import { win, reachedLimit } from "./Game";

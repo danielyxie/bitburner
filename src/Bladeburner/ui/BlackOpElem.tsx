@@ -6,7 +6,7 @@ import { TeamSizeButton } from "./TeamSizeButton";
 import { Bladeburner } from "../Bladeburner";
 import { BlackOperation } from "../BlackOperation";
 import { BlackOperations } from "../data/BlackOperations";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { SuccessChance } from "./SuccessChance";
 import { StartButton } from "./StartButton";

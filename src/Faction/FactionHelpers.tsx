@@ -6,7 +6,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 import { Faction } from "./Faction";
 import { Factions } from "./Factions";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Settings } from "../Settings/Settings";
 import {
   getHackingWorkRepGain,

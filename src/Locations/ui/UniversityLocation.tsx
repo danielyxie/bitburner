@@ -11,7 +11,7 @@ import { Location } from "../Location";
 
 import { Money } from "../../ui/React/Money";
 import { Router } from "../../ui/GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Box } from "@mui/material";
 
 import { ClassWork, ClassType, Classes } from "../../Work/ClassWork";

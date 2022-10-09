@@ -1,7 +1,7 @@
 import { Container, Typography, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { PurchasableAugmentations } from "../../../Augmentation/ui/PurchasableAugmentations";
-import { Player } from "../../../Player";
+import { Player } from "@player";
 import { Modal } from "../../../ui/React/Modal";
 import { Sleeve } from "../Sleeve";
 

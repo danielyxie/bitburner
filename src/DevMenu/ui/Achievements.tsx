@@ -11,7 +11,7 @@ import { Tooltip } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { achievements } from "../../Achievements/Achievements";
 import { Engine } from "../../engine";
 

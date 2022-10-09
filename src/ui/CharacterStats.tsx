@@ -9,7 +9,7 @@ import { getPurchaseServerLimit } from "../Server/ServerPurchases";
 import { Settings } from "../Settings/Settings";
 import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { numeralWrapper } from "./numeralFormat";
 import { Modal } from "./React/Modal";
 import { Money } from "./React/Money";

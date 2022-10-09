@@ -1,6 +1,6 @@
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { GraftableAugmentation } from "./GraftableAugmentation";
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 export const getGraftingAvailableAugs = (): string[] => {
   const augs: string[] = [];

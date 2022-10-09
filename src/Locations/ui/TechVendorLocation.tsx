@@ -15,7 +15,7 @@ import { CoresButton } from "./CoresButton";
 import { getPurchaseServerCost } from "../../Server/ServerPurchases";
 
 import { Money } from "../../ui/React/Money";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { PurchaseServerModal } from "./PurchaseServerModal";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Box } from "@mui/material";

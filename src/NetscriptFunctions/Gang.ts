@@ -1,6 +1,6 @@
 import { FactionNames } from "../Faction/data/FactionNames";
 import { GangConstants } from "../Gang/data/Constants";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Gang } from "../Gang/Gang";
 import { AllGangs } from "../Gang/AllGangs";
 import { GangMemberTasks } from "../Gang/GangMemberTasks";

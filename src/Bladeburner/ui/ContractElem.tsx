@@ -5,7 +5,7 @@ import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/Stri
 import { Contracts } from "../data/Contracts";
 import { Bladeburner } from "../Bladeburner";
 import { Action } from "../Action";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { SuccessChance } from "./SuccessChance";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { ActionLevel } from "./ActionLevel";

@@ -21,7 +21,7 @@ import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 import { Settings } from "../../Settings/Settings";
 import { Router } from "../GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { StatsProgressOverviewCell } from "./StatsProgressBar";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 

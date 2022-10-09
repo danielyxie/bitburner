@@ -4,7 +4,7 @@ import { StealthIcon } from "./StealthIcon";
 import { KillIcon } from "./KillIcon";
 import { Action } from "../Action";
 import { Bladeburner } from "../Bladeburner";
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 interface IProps {
   bladeburner: Bladeburner;

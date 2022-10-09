@@ -3,7 +3,7 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import { Aliases, GlobalAliases, substituteAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { GetAllServers } from "../Server/AllServers";
 import { Server } from "../Server/Server";
 import { ParseCommand, ParseCommands } from "./Parser";

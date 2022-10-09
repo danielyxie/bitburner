@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 import Typography from "@mui/material/Typography";
 

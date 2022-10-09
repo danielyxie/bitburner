@@ -2,7 +2,7 @@ import React from "react";
 import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { GraftableAugmentations } from "../PersonObjects/Grafting/ui/GraftingRoot";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Work, WorkType } from "./Work";
 import { graftingIntBonus } from "../PersonObjects/Grafting/GraftingHelpers";
 import { applyAugmentation } from "../Augmentation/AugmentationHelpers";

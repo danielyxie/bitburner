@@ -1,7 +1,7 @@
 import { Person } from "./Person";
 import { calculateSkill } from "./formulas/skill";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { ITaskTracker } from "./ITaskTracker";
 
 export function gainHackingExp(this: Person, exp: number): void {

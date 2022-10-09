@@ -1,6 +1,6 @@
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import { Company } from "../../Company/Company";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { WorkStats } from "../WorkStats";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";

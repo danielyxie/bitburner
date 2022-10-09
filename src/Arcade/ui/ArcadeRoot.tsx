@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BBCabinetRoot } from "./BBCabinet";
 
 import Button from "@mui/material/Button";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { AlertEvents } from "../../ui/React/AlertManager";
 
 enum Page {

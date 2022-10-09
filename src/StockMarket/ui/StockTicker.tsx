@@ -14,7 +14,7 @@ import { PositionTypes } from "../data/PositionTypes";
 import { placeOrder } from "../StockMarket";
 import { buyStock, shortStock, sellStock, sellShort } from "../BuyingAndSelling";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 

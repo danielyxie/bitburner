@@ -4,7 +4,7 @@
  */
 import React, { useState } from "react";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Exploit, ExploitName } from "../../Exploits/Exploit";
 
 import ListItemButton from "@mui/material/ListItemButton";

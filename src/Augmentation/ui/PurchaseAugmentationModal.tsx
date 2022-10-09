@@ -6,7 +6,7 @@ import { purchaseAugmentation } from "../../Faction/FactionHelpers";
 import { isRepeatableAug } from "../AugmentationHelpers";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 

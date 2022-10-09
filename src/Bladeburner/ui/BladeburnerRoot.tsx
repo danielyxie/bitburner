@@ -3,7 +3,7 @@ import { Stats } from "./Stats";
 import { Console } from "./Console";
 import { AllPages } from "./AllPages";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import Box from "@mui/material/Box";
 
 export function BladeburnerRoot(): React.ReactElement {

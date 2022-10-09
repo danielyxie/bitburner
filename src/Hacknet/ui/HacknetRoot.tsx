@@ -18,7 +18,7 @@ import {
   purchaseHacknet,
 } from "../HacknetHelpers";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { GetServer } from "../../Server/AllServers";
 
 import Typography from "@mui/material/Typography";

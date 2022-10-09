@@ -7,7 +7,7 @@
  * Sleeves are unlocked in BitNode-10.
  */
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Person } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Money } from "../ui/React/Money";
 import { win, reachedLimit } from "./Game";
 import { Deck } from "./CardDeck/Deck";

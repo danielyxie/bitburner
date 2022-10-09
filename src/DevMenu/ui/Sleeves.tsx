@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Adjuster } from "./Adjuster";
 
 export function Sleeves(): React.ReactElement {

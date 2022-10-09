@@ -2,7 +2,7 @@ import { Button, Container, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Router } from "../../ui/GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { BackwardGame } from "./BackwardGame";
 import { BracketGame } from "./BracketGame";
 import { BribeGame } from "./BribeGame";

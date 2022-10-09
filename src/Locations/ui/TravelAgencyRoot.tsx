@@ -9,7 +9,7 @@ import { CityName } from "../data/CityNames";
 import { TravelConfirmationModal } from "./TravelConfirmationModal";
 
 import { CONSTANTS } from "../../Constants";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Router } from "../../ui/GameRoot";
 import { Settings } from "../../Settings/Settings";
 

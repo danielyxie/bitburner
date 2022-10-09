@@ -6,7 +6,7 @@ import { GetServer } from "../../Server/AllServers";
 import { SpecialServers } from "../../Server/data/SpecialServers";
 
 import { CONSTANTS } from "../../Constants";
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 import { Money } from "../../ui/React/Money";
 

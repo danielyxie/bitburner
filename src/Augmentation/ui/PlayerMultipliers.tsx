@@ -3,7 +3,7 @@ import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import * as React from "react";
 import { Multipliers, defaultMultipliers, mergeMultipliers } from "../../PersonObjects/Multipliers";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StaticAugmentations } from "../StaticAugmentations";

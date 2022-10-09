@@ -1,4 +1,4 @@
-import { Player } from "./Player";
+import { Player } from "@player";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 
 import React, { useEffect } from "react";

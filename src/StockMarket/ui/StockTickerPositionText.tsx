@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { Stock } from "../Stock";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import Typography from "@mui/material/Typography";

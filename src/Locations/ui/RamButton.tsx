@@ -4,7 +4,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 import { CONSTANTS } from "../../Constants";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { purchaseRamForHomeComputer } from "../../Server/ServerPurchases";
 
 import { Money } from "../../ui/React/Money";
