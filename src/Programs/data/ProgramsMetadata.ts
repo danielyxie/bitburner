@@ -3,7 +3,7 @@ import { CONSTANTS } from "../../Constants";
 import { BaseServer } from "../../Server/BaseServer";
 import { Server } from "../../Server/Server";
 import { Terminal } from "../../Terminal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { GetServer } from "../../Server/AllServers";
 import { numeralWrapper } from "../../ui/numeralFormat";

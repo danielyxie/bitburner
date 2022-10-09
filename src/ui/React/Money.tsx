@@ -1,6 +1,6 @@
 import * as React from "react";
 import { numeralWrapper } from "../numeralFormat";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";

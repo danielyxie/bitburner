@@ -6,7 +6,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Typography from "@mui/material/Typography";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Adjuster } from "./Adjuster";
 
 // Update as additional BitNodes get implemented

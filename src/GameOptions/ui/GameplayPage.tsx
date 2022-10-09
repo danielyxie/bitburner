@@ -2,7 +2,7 @@ import React from "react";
 import { OptionSwitch } from "../../ui/React/OptionSwitch";
 import { Settings } from "../../Settings/Settings";
 import { GameOptionsPage } from "./GameOptionsPage";
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 export const GameplayPage = (): React.ReactElement => {
   return (

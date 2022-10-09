@@ -13,7 +13,7 @@ import {
 } from "./Hacking";
 import { netscriptCanGrow, netscriptCanWeaken } from "./Hacking/netscriptCanHack";
 import { Terminal } from "./Terminal";
-import { Player } from "./Player";
+import { Player } from "@player";
 import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
 import { isScriptFilename } from "./Script/isScriptFilename";

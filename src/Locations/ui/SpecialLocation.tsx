@@ -22,7 +22,7 @@ import { Factions } from "../../Faction/Factions";
 import { joinFaction } from "../../Faction/FactionHelpers";
 
 import { Router } from "../../ui/GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";

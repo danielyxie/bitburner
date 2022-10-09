@@ -127,9 +127,6 @@ module.exports = (env, argv) => {
       isFastRefresh && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
     target: "web",
-    // node: {
-    //   fs: "mock",
-    // },
     entry: entry,
     output: {
       path: path.resolve(__dirname, outputDirectory),
@@ -190,6 +187,9 @@ module.exports = (env, argv) => {
     devServer: devServerSettings,
     resolve: {
       extensions: [".tsx", ".ts", ".js", ".jsx"],
+      alias: {
+        "@player": path.resolve(__dirname, "src/Player"),
+      },
     },
     stats: statsConfig,
   };

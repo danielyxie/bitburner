@@ -4,7 +4,7 @@
 
 ## TIX.getPrice() method
 
-Returns the price of a stock
+Returns the price of a stock.
 
 <b>Signature:</b>
 
@@ -26,14 +26,26 @@ The price of a stock.
 
 ## Remarks
 
-RAM cost: 2 GB The stock’s price is the average of its bid and ask price.
+RAM cost: 2 GB
+
+The stock’s price is the average of its bid and ask prices. This function requires that you have the following:
+
+1. WSE Account
+
+1. TIX API Access
 
 ## Example 1
 
 
 ```ts
 // NS1
-stock.getPrice("FISG");
+stock.getPrice("FSIG");
+
+// Choose the first stock symbol from the array of stock symbols.  Get the price
+// of the corresponding stock.
+var sym = stock.getSymbols()[0];
+tprint("Stock symbol: " + sym);
+tprint("Stock price: " + stock.getPrice(sym));
 ```
 
 ## Example 2
@@ -41,6 +53,12 @@ stock.getPrice("FISG");
 
 ```ts
 // NS2
-ns.stock.getPrice("FISG");
+ns.stock.getPrice("FSIG");
+
+// Choose the first stock symbol from the array of stock symbols.  Get the price
+// of the corresponding stock.
+const sym = ns.stock.getSymbols()[0];
+ns.tprint("Stock symbol: " + sym);
+ns.tprint("Stock price: " + ns.stock.getPrice(sym));
 ```
 

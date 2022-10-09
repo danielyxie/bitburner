@@ -14,7 +14,7 @@ import {
   purchaseCoreUpgrade,
 } from "../HacknetHelpers";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { HacknetNode } from "../HacknetNode";
 
 import { Money } from "../../ui/React/Money";

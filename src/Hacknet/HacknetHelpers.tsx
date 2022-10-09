@@ -18,7 +18,7 @@ import { HashUpgrades } from "./HashUpgrades";
 
 import { generateRandomContract } from "../CodingContractGenerator";
 import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../InteractiveTutorial";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { GetServer } from "../Server/AllServers";
 import { Server } from "../Server/Server";
 

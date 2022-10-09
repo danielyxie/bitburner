@@ -1,7 +1,7 @@
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Crime } from "src/Crime/Crime";
 import { newWorkStats, scaleWorkStats, WorkStats } from "../WorkStats";
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 export const calculateCrimeWorkStats = (crime: Crime): WorkStats => {
   const gains = scaleWorkStats(

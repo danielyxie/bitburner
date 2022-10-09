@@ -5,7 +5,7 @@ import { StockTickers } from "./StockTickers";
 
 import { IStockMarket } from "../IStockMarket";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 type IProps = {
   stockMarket: IStockMarket;

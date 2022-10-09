@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { random } from "../utils";

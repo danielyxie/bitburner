@@ -12,7 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import React, { useState } from "react";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { StaticAugmentations } from "../StaticAugmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
 

@@ -1,4 +1,4 @@
-import { Player } from "../Player";
+import { Player } from "@player";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";

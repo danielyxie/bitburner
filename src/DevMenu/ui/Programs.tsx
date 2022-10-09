@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Programs as AllPrograms } from "../../Programs/Programs";
 import MenuItem from "@mui/material/MenuItem";
 

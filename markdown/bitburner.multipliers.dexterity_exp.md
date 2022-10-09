@@ -4,8 +4,10 @@
 
 ## Multipliers.dexterity\_exp property
 
+Multiplier to dexterity experience gain rate
+
 <b>Signature:</b>
 
 ```typescript
-dexterity_exp: number;
+dexterity_exp?: number;
 ```

@@ -3,7 +3,7 @@ import { GangMemberTasks } from "./GangMemberTasks";
 import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMemberUpgrades } from "./GangMemberUpgrades";
 import { IAscensionResult } from "./IAscensionResult";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Gang } from "./Gang";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import {

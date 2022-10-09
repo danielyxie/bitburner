@@ -1,7 +1,7 @@
 import { Programs } from "./Programs";
 import { Program } from "./Program";
 
-import { Player } from "../Player";
+import { Player } from "@player";
 
 //Returns the programs this player can create.
 export function getAvailableCreatePrograms(): Program[] {

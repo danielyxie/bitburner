@@ -1,6 +1,6 @@
 import { Crimes } from "./Crimes";
 import { Crime } from "./Crime";
-import { Player } from "../Player";
+import { Player } from "@player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 

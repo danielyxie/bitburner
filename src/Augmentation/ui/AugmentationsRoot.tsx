@@ -18,7 +18,7 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import { Settings } from "../../Settings/Settings";
 import { ConfirmationModal } from "../../ui/React/ConfirmationModal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { AugmentationNames } from "../data/AugmentationNames";
 import { StaticAugmentations } from "../StaticAugmentations";
 import { CONSTANTS } from "../../Constants";

@@ -1,5 +1,5 @@
 import { Terminal } from "../../Terminal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Programs } from "../../Programs/Programs";
 
 export function scananalyze(args: (string | number | boolean)[]): void {

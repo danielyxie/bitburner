@@ -1,6 +1,6 @@
 import React from "react";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Work, WorkType } from "./Work";
 import { influenceStockThroughCompanyWork } from "../StockMarket/PlayerInfluencing";
 import { LocationName } from "../Locations/data/LocationNames";

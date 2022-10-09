@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Money } from "../../../ui/React/Money";
 import { Modal } from "../../../ui/React/Modal";
 import { Router } from "../../../ui/GameRoot";
-import { Player } from "../../../Player";
+import { Player } from "@player";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";

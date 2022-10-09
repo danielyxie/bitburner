@@ -1,7 +1,7 @@
 import { Explore, Info, LastPage, LocalPolice, NewReleases, Report, SportsMma } from "@mui/icons-material";
 import { Box, Button, Container, Paper, Tooltip, Typography, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Router } from "../../ui/GameRoot";

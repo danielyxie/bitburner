@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { saveObject } from "../../SaveObject";
 import { Engine } from "../../engine";
 

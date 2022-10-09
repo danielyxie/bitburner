@@ -22,7 +22,7 @@ import { AllGangs } from "./AllGangs";
 import { GangMember } from "./GangMember";
 
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { PowerMultiplier } from "./data/power";
 
 export class Gang {

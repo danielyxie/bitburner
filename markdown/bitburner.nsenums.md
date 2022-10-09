@@ -2,18 +2,11 @@
 
 [Home](./index.md) &gt; [bitburner](./bitburner.md) &gt; [NSEnums](./bitburner.nsenums.md)
 
-## NSEnums interface
+## NSEnums type
 
 
 <b>Signature:</b>
 
 ```typescript
-export interface NSEnums 
+export type NSEnums = typeof enums;
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [toast](./bitburner.nsenums.toast.md) | typeof [ToastVariant](./bitburner.toastvariant.md) |  |
-

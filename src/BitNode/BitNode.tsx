@@ -1,5 +1,5 @@
 import React from "react";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { BitNodeMultipliers, IBitNodeMultipliers } from "./BitNodeMultipliers";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { CityName } from "../Locations/data/CityNames";

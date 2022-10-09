@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BitNodes } from "../BitNode";
 import { PortalModal } from "./PortalModal";
 import { CinematicText } from "../../ui/React/CinematicText";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import IconButton from "@mui/material/IconButton";

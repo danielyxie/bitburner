@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../Constants";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Person } from "../PersonObjects/Person";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType } from "../utils/WorkType";

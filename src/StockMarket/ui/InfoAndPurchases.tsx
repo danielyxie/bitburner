@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMarketCosts";
 
 import { CONSTANTS } from "../../Constants";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 import { initStockMarket } from "../StockMarket";
 

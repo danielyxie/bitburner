@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Player } from "../Player";
+import { Player } from "@player";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";

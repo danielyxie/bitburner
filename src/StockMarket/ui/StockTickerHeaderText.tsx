@@ -8,7 +8,7 @@ import * as React from "react";
 import { Stock } from "../Stock";
 import { TickerHeaderFormatData } from "../data/TickerHeaderFormatData";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import Typography from "@mui/material/Typography";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Company } from "../Company";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";

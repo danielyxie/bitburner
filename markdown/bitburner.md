@@ -10,14 +10,12 @@
 |  --- | --- |
 |  [OrderTypes](./bitburner.ordertypes.md) |  |
 |  [PositionTypes](./bitburner.positiontypes.md) |  |
-|  [ToastVariant](./bitburner.toastvariant.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [ActiveFragment](./bitburner.activefragment.md) |  |
-|  [AugmentationStats](./bitburner.augmentationstats.md) | Data representing the internal values of an Augmentation. |
 |  [AugmentPair](./bitburner.augmentpair.md) | Return value of [getSleevePurchasableAugs](./bitburner.sleeve.getsleevepurchasableaugs.md) |
 |  [AutocompleteData](./bitburner.autocompletedata.md) | Used for autocompletion |
 |  [BasicHGWOptions](./bitburner.basichgwoptions.md) | Options to affect the behavior of [hack](./bitburner.ns.hack.md)<!-- -->, [grow](./bitburner.ns.grow.md)<!-- -->, and [weaken](./bitburner.ns.weaken.md)<!-- -->. |
@@ -66,7 +64,6 @@
 |  [NetscriptPort](./bitburner.netscriptport.md) | Object representing a port. A port is a serialized queue. |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
-|  [NSEnums](./bitburner.nsenums.md) |  |
 |  [Office](./bitburner.office.md) | Office for a division in a city. |
 |  [OfficeAPI](./bitburner.officeapi.md) | Corporation Office API |
 |  [Player](./bitburner.player.md) |  |
@@ -101,8 +98,9 @@
 |  --- | --- |
 |  [CodingContractData](./bitburner.codingcontractdata.md) | Coding contract data will differ depending on coding contract. |
 |  [FilenameOrPID](./bitburner.filenameorpid.md) |  |
+|  [NSEnums](./bitburner.nsenums.md) |  |
 |  [PortData](./bitburner.portdata.md) |  |
 |  [ScriptArg](./bitburner.scriptarg.md) |  |
 |  [SleeveTask](./bitburner.sleevetask.md) | Object representing a sleeve current task. |
-|  [ToastVariantValues](./bitburner.toastvariantvalues.md) |  |
+|  [ToastVariant](./bitburner.toastvariant.md) |  |
 

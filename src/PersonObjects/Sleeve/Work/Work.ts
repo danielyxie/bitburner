@@ -1,4 +1,4 @@
-import { Player } from "../../../Player";
+import { Player } from "@player";
 import { IReviverValue } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applyWorkStats, applyWorkStatsExp, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";

@@ -2,7 +2,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Programs } from "../Programs/Programs";
 import { Work, WorkType } from "./Work";
 import { Program } from "../Programs/Program";

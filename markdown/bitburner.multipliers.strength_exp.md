@@ -4,8 +4,10 @@
 
 ## Multipliers.strength\_exp property
 
+Multiplier to strength experience gain rate
+
 <b>Signature:</b>
 
 ```typescript
-strength_exp: number;
+strength_exp?: number;
 ```

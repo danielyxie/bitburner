@@ -1,4 +1,4 @@
-import { Player } from "../Player";
+import { Player } from "@player";
 import { NSFull } from "../NetscriptFunctions";
 
 /** This type assumes any value that isn't an API layer or a function has been omitted (args and enum) */

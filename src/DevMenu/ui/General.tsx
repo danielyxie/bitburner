@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Router } from "../../ui/GameRoot";
 import { MenuItem, SelectChangeEvent, TextField, Select } from "@mui/material";
 import { Bladeburner } from "../../Bladeburner/Bladeburner";

@@ -17,7 +17,7 @@ import {
   updateHashManagerCapacity,
 } from "../HacknetHelpers";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { HacknetServer } from "../HacknetServer";
 
 import { Money } from "../../ui/React/Money";

@@ -16,7 +16,7 @@ setToCommitCrime(sleeveNumber: number, name: string): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to start commiting crime. |
+|  sleeveNumber | number | Index of the sleeve to start committing crime. |
 |  name | string | Name of the crime. Must be an exact match. |
 
 <b>Returns:</b>

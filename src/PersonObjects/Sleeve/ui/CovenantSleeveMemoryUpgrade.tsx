@@ -5,7 +5,7 @@
 import React, { useState } from "react";
 
 import { Sleeve } from "../Sleeve";
-import { Player } from "../../../Player";
+import { Player } from "@player";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { Money } from "../../../ui/React/Money";

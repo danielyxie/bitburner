@@ -3,7 +3,7 @@ import { purchaseServer } from "../../Server/ServerPurchases";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";

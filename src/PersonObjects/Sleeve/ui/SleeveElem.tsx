@@ -2,7 +2,7 @@ import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 import { CONSTANTS } from "../../../Constants";
-import { Player } from "../../../Player";
+import { Player } from "@player";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { ProgressBar } from "../../../ui/React/Progress";
 import { Sleeve } from "../Sleeve";

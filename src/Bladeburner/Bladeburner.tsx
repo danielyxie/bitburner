@@ -12,7 +12,7 @@ import { Skills } from "./Skills";
 import { Skill } from "./Skill";
 import { City } from "./City";
 import { Action } from "./Action";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { createTaskTracker, ITaskTracker } from "../PersonObjects/ITaskTracker";
 import { Person } from "../PersonObjects/Person";
 import { Router } from "../ui/GameRoot";

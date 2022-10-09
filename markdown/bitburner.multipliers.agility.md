@@ -4,8 +4,10 @@
 
 ## Multipliers.agility property
 
+Multiplier to agility skill
+
 <b>Signature:</b>
 
 ```typescript
-agility: number;
+agility?: number;
 ```

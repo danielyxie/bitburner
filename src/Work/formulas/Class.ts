@@ -2,7 +2,7 @@ import { Locations } from "../../Locations/Locations";
 import { Location } from "../../Locations/Location";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../../Constants";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Class, Classes, ClassType } from "../ClassWork";
 import { WorkStats } from "../WorkStats";
 import { Server } from "../../Server/Server";

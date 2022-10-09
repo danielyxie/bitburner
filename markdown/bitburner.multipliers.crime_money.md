@@ -4,8 +4,10 @@
 
 ## Multipliers.crime\_money property
 
+Multiplier to amount of money gained from crimes
+
 <b>Signature:</b>
 
 ```typescript
-crime_money: number;
+crime_money?: number;
 ```

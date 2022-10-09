@@ -1,4 +1,4 @@
-import { Player } from "../Player";
+import { Player } from "@player";
 import { MaterialSizes } from "./MaterialSizes";
 import { Corporation } from "./Corporation";
 import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";

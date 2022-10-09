@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Adjuster } from "./Adjuster";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Factions as AllFaction } from "../../Faction/Factions";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";

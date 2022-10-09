@@ -6,7 +6,7 @@ import { WorldMap } from "../../../ui/React/WorldMap";
 import { CityName } from "../../../Locations/data/CityNames";
 import { Settings } from "../../../Settings/Settings";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import { Player } from "../../../Player";
+import { Player } from "@player";
 import { Modal } from "../../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";

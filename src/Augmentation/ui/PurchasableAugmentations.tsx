@@ -6,7 +6,7 @@ import { CheckBox, CheckBoxOutlineBlank, CheckCircle, NewReleases, Report } from
 import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Faction } from "../../Faction/Faction";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentation } from "../Augmentation";

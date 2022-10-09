@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { joinFaction } from "../FactionHelpers";
 import { Faction } from "../Faction";
 import { Modal } from "../../ui/React/Modal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { EventEmitter } from "../../utils/EventEmitter";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";

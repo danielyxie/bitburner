@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Box, Typography, Button, Container } from "@mui/material";
 
-import { Player } from "../../../Player";
+import { Player } from "@player";
 
 import { SleeveElem } from "./SleeveElem";
 import { FAQModal } from "./FAQModal";

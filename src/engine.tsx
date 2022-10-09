@@ -22,7 +22,7 @@ import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelp
 import { iTutorialStart } from "./InteractiveTutorial";
 import { checkForMessagesToSend } from "./Message/MessageHelpers";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
-import { Player } from "./Player";
+import { Player } from "@player";
 import { saveObject, loadGame } from "./SaveObject";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";

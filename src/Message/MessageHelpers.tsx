@@ -3,7 +3,7 @@ import { Message } from "./Message";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { Router } from "../ui/GameRoot";
 import { Programs } from "../Programs/Programs";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { Page } from "../ui/Router";
 import { GetServer } from "../Server/AllServers";
 import { SpecialServers } from "../Server/data/SpecialServers";

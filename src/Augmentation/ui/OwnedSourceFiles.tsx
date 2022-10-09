@@ -4,7 +4,7 @@
  */
 import * as React from "react";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { SourceFiles } from "../../SourceFile/SourceFiles";

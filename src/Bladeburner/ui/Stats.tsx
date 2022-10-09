@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { BladeburnerConstants } from "../data/Constants";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Factions } from "../../Faction/Factions";

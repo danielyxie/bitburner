@@ -1,7 +1,7 @@
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { Sleeve } from "./Sleeve";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";

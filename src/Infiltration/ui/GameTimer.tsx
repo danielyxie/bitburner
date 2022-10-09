@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { ProgressBar } from "../../ui/React/Progress";
 
 interface IProps {

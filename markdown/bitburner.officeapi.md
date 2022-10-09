@@ -14,7 +14,7 @@ export interface OfficeAPI
 
 ## Remarks
 
-Requires the Office API upgrade from your corporation.
+requires the Office API upgrade from your corporation.
 
 ## Methods
 

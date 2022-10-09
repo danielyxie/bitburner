@@ -1,5 +1,5 @@
 import { Person } from "src/PersonObjects/Person";
-import { Player } from "../Player";
+import { Player } from "@player";
 
 export interface WorkStats {
   money: number;

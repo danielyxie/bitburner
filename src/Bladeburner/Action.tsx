@@ -1,4 +1,4 @@
-import { Player } from "../Player";
+import { Player } from "@player";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { addOffset } from "../utils/helpers/addOffset";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";

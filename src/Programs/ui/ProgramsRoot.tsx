@@ -5,7 +5,7 @@ import { Box, Typography, Button, Container, Paper } from "@mui/material";
 import { Check, Lock, Create } from "@mui/icons-material";
 
 import { Router } from "../../ui/GameRoot";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 
 import { Programs } from "../Programs";

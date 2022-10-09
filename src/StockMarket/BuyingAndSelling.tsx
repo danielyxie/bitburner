@@ -12,7 +12,7 @@ import {
 import { PositionTypes } from "./data/PositionTypes";
 
 import { CONSTANTS } from "../Constants";
-import { Player } from "../Player";
+import { Player } from "@player";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";

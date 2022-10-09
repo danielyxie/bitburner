@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 
 import { Money } from "../../ui/React/Money";
 import { MathJaxWrapper } from "../../MathJaxWrapper";

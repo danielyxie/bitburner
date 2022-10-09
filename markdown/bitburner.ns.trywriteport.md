@@ -9,7 +9,7 @@ Attempt to write to a port.
 <b>Signature:</b>
 
 ```typescript
-tryWritePort(port: number, data: string | number): Promise<boolean>;
+tryWritePort(port: number, data: string | number): boolean;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ tryWritePort(port: number, data: string | number): Promise<boolean>;
 
 <b>Returns:</b>
 
-Promise&lt;boolean&gt;
+boolean
 
 True if the data is successfully written to the port, and false otherwise.
 

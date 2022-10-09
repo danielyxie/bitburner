@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 
 import { KEY, KEYCODE } from "../../utils/helpers/keyCodes";
 import { Terminal } from "../../Terminal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
 import { tabCompletion } from "../tabCompletion";
 import { Settings } from "../../Settings/Settings";

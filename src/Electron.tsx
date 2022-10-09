@@ -1,4 +1,4 @@
-import { Player } from "./Player";
+import { Player } from "@player";
 import { Router } from "./ui/GameRoot";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";

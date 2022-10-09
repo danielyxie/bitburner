@@ -1,7 +1,7 @@
 import React from "react";
 
 import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 
 import Button from "@mui/material/Button";

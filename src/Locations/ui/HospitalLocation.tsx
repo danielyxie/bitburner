@@ -6,7 +6,7 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { getHospitalizationCost } from "../../Hospital/Hospital";
 
 import { Money } from "../../ui/React/Money";

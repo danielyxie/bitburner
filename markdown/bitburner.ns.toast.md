@@ -9,7 +9,7 @@ Queue a toast (bottom-right notification).
 <b>Signature:</b>
 
 ```typescript
-toast(msg: string, variant?: ToastVariantValues, duration?: number | null): void;
+toast(msg: string, variant?: ToastVariant, duration?: number | null): void;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ toast(msg: string, variant?: ToastVariantValues, duration?: number | null): void
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  msg | string | Message in the toast. |
-|  variant | [ToastVariantValues](./bitburner.toastvariantvalues.md) | Type of toast, must be one of success, info, warning, error. Defaults to success. |
+|  variant | [ToastVariant](./bitburner.toastvariant.md) | Type of toast, must be one of success, info, warning, error. Defaults to success. |
 |  duration | number \| null | Duration of toast in ms. Can also be <code>null</code> to create a persistent toast. Defaults to 2000 |
 
 <b>Returns:</b>

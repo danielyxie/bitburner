@@ -10,7 +10,7 @@ import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../uti
 import { CONSTANTS } from "../Constants";
 import { StanekConstants } from "./data/Constants";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { defaultMultipliers, mergeMultipliers, Multipliers, scaleMultipliers } from "../PersonObjects/Multipliers";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";

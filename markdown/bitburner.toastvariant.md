@@ -2,21 +2,11 @@
 
 [Home](./index.md) &gt; [bitburner](./bitburner.md) &gt; [ToastVariant](./bitburner.toastvariant.md)
 
-## ToastVariant enum
+## ToastVariant type
 
 
 <b>Signature:</b>
 
 ```typescript
-export enum ToastVariant 
+type ToastVariant = ValuesFrom<typeof enums.toast>;
 ```
-
-## Enumeration Members
-
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  ERROR | <code>&quot;error&quot;</code> |  |
-|  INFO | <code>&quot;info&quot;</code> |  |
-|  SUCCESS | <code>&quot;success&quot;</code> |  |
-|  WARNING | <code>&quot;warning&quot;</code> |  |
-

@@ -7,7 +7,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { PurchasableAugmentations } from "../../Augmentation/ui/PurchasableAugmentations";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Favor } from "../../ui/React/Favor";
 import { Reputation } from "../../ui/React/Reputation";

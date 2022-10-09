@@ -5,7 +5,7 @@ import { HashUpgrades } from "../HashUpgrades";
 import { Hashes } from "../../ui/React/Hashes";
 import { HacknetUpgradeElem } from "./HacknetUpgradeElem";
 import { Modal } from "../../ui/React/Modal";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import Typography from "@mui/material/Typography";
 
 interface IProps {

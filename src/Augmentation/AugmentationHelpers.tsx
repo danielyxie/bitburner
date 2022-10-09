@@ -5,7 +5,7 @@ import { AugmentationNames } from "./data/AugmentationNames";
 
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { prestigeAugmentation } from "../Prestige";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";

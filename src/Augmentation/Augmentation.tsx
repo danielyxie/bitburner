@@ -8,7 +8,7 @@ import { Money } from "../ui/React/Money";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { Player } from "../Player";
+import { Player } from "@player";
 import { AugmentationNames } from "./data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { StaticAugmentations } from "./StaticAugmentations";

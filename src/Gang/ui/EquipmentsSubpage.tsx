@@ -16,7 +16,7 @@ import { GangMemberUpgrade } from "../GangMemberUpgrade";
 import { Money } from "../../ui/React/Money";
 import { GangMember } from "../GangMember";
 import { UpgradeType } from "../data/upgrades";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { StatsRow } from "../../ui/React/StatsRow";
 

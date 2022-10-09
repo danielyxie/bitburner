@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ManagementSubpage } from "./ManagementSubpage";
 import { TerritorySubpage } from "./TerritorySubpage";
 import { EquipmentsSubpage } from "./EquipmentsSubpage";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Context } from "./Context";
 
 import Tabs from "@mui/material/Tabs";
