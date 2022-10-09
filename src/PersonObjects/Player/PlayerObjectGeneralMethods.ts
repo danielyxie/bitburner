@@ -1109,7 +1109,11 @@ export function queueAugmentation(this: PlayerObject, name: string): void {
 }
 
 /************* Coding Contracts **************/
-export function gainCodingContractReward(this: PlayerObject, reward: ICodingContractReward, difficulty = 1): string {
+export function gainCodingContractReward(
+  this: PlayerObject,
+  reward: ICodingContractReward | null,
+  difficulty = 1,
+): string {
   if (reward == null || reward.type == null) {
     return `No reward for this contract`;
   }

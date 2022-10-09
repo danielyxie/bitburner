@@ -279,6 +279,8 @@ const codingcontract = {
   getData: RamCostConstants.ScriptCodingContractBaseRamCost / 2,
   getDescription: RamCostConstants.ScriptCodingContractBaseRamCost / 2,
   getNumTriesRemaining: RamCostConstants.ScriptCodingContractBaseRamCost / 5,
+  createDummyContract: RamCostConstants.ScriptCodingContractBaseRamCost / 5,
+  getContractTypes: RamCostConstants.ScriptCodingContractBaseRamCost / 5,
 } as const;
 
 // Duplicate Sleeve API

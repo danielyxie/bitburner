@@ -3251,6 +3251,24 @@ export interface CodingContract {
    * @returns How many attempts are remaining for the contract.
    */
   getNumTriesRemaining(filename: string, host?: string): number;
+
+  /**
+   * Generate a dummy contract.
+   * @remarks
+   * RAM cost: 2 GB
+   *
+   * Generate a dummy contract on the home computer with no reward. Used to test various algorithms.
+   *
+   * @param type - Type of contract to generate
+   */
+  createDummyContract(type: string): void;
+
+  /**
+   * List all contract types.
+   * @remarks
+   * RAM cost: 2 GB
+   */
+  getContractTypes(): string[];
 }
 
 /**

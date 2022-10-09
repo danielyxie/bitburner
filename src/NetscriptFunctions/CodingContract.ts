@@ -3,6 +3,8 @@ import { CodingContract } from "../CodingContracts";
 import { CodingAttemptOptions, CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
+import { codingContractTypesMetadata } from "../data/codingcontracttypes";
+import { generateDummyContract } from "../CodingContractGenerator";
 
 export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
   const getCodingContract = function (
@@ -39,7 +41,6 @@ export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
         // Convert answer to string.
         const answerStr = typeof answer === "string" ? answer : JSON.stringify(answer);
         const creward = contract.reward;
-        if (creward === null) throw new Error("Somehow solved a contract that didn't have a reward");
 
         const serv = helpers.getServer(ctx, hostname);
         if (contract.isSolution(answerStr)) {
@@ -112,5 +113,12 @@ export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
         const contract = getCodingContract(ctx, "getNumTriesRemaining", hostname, filename);
         return contract.getMaxNumTries() - contract.tries;
       },
+    createDummyContract:
+      (ctx: NetscriptContext) =>
+      (_type: unknown): void => {
+        const type = helpers.string(ctx, "type", _type);
+        generateDummyContract(type);
+      },
+    getContractTypes: () => (): string[] => codingContractTypesMetadata.map((c) => c.name),
   };
 }
