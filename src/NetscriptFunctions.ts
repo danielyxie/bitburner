@@ -1075,15 +1075,11 @@ const base: InternalAPI<NS> = {
   },
   getBitNodeMultipliers:
     (ctx: NetscriptContext) =>
-    (_bitNode: number, _lvl: number): IBNMults => {
-      let bitNode = _bitNode;
-      const lvl = _lvl;
+    (_bitNode: unknown = Player.bitNodeN, _lvl: unknown = 1): IBNMults => {
+      const bitNode = helpers.number(ctx, "bitNode", _bitNode);
+      const lvl = helpers.number(ctx, "lvl", _lvl);
       if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5) {
         throw helpers.makeRuntimeErrorMsg(ctx, "Requires Source-File 5 to run.");
-      }
-
-      if (bitNode == undefined) {
-        bitNode = Player.bitNodeN;
       }
 
       if (bitNode > 13 || bitNode < 1) {
