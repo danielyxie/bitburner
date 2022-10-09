@@ -58,8 +58,8 @@ export const IndustryStartingCosts: IIndustryMap<number> = {
   RealEstate: 600e9,
 };
 
-export const IndustryMaterialFactors: IMap<any> = {
-  [Industries.Energy]: {
+export const IndustryMaterialFactors : IIndustryMap<any> = {
+  Energy: {
     reFac: 0.65,
     sciFac: 0.7,
     hwFac: 0,
@@ -72,136 +72,136 @@ export const IndustryMaterialFactors: IMap<any> = {
     },
     prodMats: ["Energy"],
   },
-  [Industries.Utilities]: {
+  Utilities: {
     reFac: 0.5,
     sciFac: 0.6,
     hwFac: 0,
     robFac: 0.4,
     aiFac: 0.4,
     advFac: 0.08,
-    reqMats: {
+    reqMats:{
       Hardware: 0.1,
       Metal: 0.1,
     },
     prodMats: ["Water"],
   },
-  [Industries.Agriculture]: {
+  Agriculture: {
     reFac: 0.72,
     sciFac: 0.5,
     hwFac: 0.2,
     robFac: 0.3,
     aiFac: 0.3,
     advFac: 0.04,
-    reqMats: {
+    reqMats:{
       Water: 0.5,
       Energy: 0.5,
     },
     prodMats: ["Plants", "Food"],
   },
-  [Industries.Fishing]: {
+  Fishing: {
     reFac: 0.15,
     sciFac: 0.35,
     hwFac: 0.35,
     robFac: 0.5,
     aiFac: 0.2,
     advFac: 0.08,
-    reqMats: {
+    reqMats:{
       Energy: 0.5,
     },
     prodMats: ["Food"],
   },
-  [Industries.Mining]: {
+  Mining: {
     reFac: 0.3,
     sciFac: 0.26,
     hwFac: 0.4,
     robFac: 0.45,
     aiFac: 0.45,
     advFac: 0.06,
-    reqMats: {
+    reqMats:{
       Energy: 0.8,
     },
     prodMats: ["Metal"],
   },
-  [Industries.Food]: {
+  Food: {
     reFac: 0.05,
     sciFac: 0.12,
     hwFac: 0.15,
     robFac: 0.3,
     aiFac: 0.25,
     advFac: 0.25,
-    reqMats: {
+    reqMats:{
       Food: 0.5,
       Water: 0.5,
       Energy: 0.2,
     },
   },
-  [Industries.Tobacco]: {
+  Tobacco: {
     reFac: 0.15,
     sciFac: 0.75,
     hwFac: 0.15,
     robFac: 0.2,
     aiFac: 0.15,
     advFac: 0.2,
-    reqMats: {
+    reqMats:{
       Plants: 1,
       Water: 0.2,
     },
   },
-  [Industries.Chemical]: {
+  Chemical: {
     reFac: 0.25,
     sciFac: 0.75,
     hwFac: 0.2,
     robFac: 0.25,
     aiFac: 0.2,
     advFac: 0.07,
-    reqMats: {
+    reqMats:{
       Plants: 1,
       Energy: 0.5,
       Water: 0.5,
     },
     prodMats: ["Chemicals"],
   },
-  [Industries.Pharmaceutical]: {
+  Pharmaceutical: {
     reFac: 0.05,
     sciFac: 0.8,
     hwFac: 0.15,
     robFac: 0.25,
     aiFac: 0.2,
     advFac: 0.16,
-    reqMats: {
+    reqMats:{
       Chemicals: 2,
       Energy: 1,
       Water: 0.5,
     },
     prodMats: ["Drugs"],
   },
-  [Industries.Computer]: {
+  Computer: {
     reFac: 0.2,
     sciFac: 0.62,
     hwFac: 0,
     robFac: 0.36,
     aiFac: 0.19,
     advFac: 0.17,
-    reqMats: {
+    reqMats:{
       Metal: 2,
       Energy: 1,
     },
     prodMats: ["Hardware"],
   },
-  [Industries.Robotics]: {
+  Robotics: {
     reFac: 0.32,
     sciFac: 0.65,
     hwFac: 0.19,
     robFac: 0,
     aiFac: 0.36,
     advFac: 0.18,
-    reqMats: {
+    reqMats:{
       Hardware: 5,
       Energy: 3,
     },
     prodMats: ["Robots"],
   },
-  [Industries.Software]: {
+  Software: {
     reFac: 0.15,
     sciFac: 0.62,
     hwFac: 0.25,
@@ -214,7 +214,7 @@ export const IndustryMaterialFactors: IMap<any> = {
     },
     prodMats: ["AICores"],
   },
-  [Industries.Healthcare]: {
+  Healthcare: {
     reFac: 0.1,
     sciFac: 0.75,
     hwFac: 0.1,
@@ -228,7 +228,7 @@ export const IndustryMaterialFactors: IMap<any> = {
       Water: 5,
     },
   },
-  [Industries.RealEstate]: {
+  RealEstate: {
     reFac: 0,
     sciFac: 0.05,
     hwFac: 0.05,
@@ -242,8 +242,8 @@ export const IndustryMaterialFactors: IMap<any> = {
       Hardware: 4,
     },
     prodMats: ["RealEstate"],
-  },
-};
+  }
+}
 
 // Map of description for each industry
 export const IndustryDescriptions: IIndustryMap<(corp: Corporation) => React.ReactElement> = {
