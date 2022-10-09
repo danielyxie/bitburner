@@ -13,6 +13,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Player } from "../Player";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { defaultMultipliers, mergeMultipliers, Multipliers, scaleMultipliers } from "../PersonObjects/Multipliers";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 
 export class StaneksGift extends BaseGift {
   storedCycles = 0;
@@ -216,6 +217,12 @@ export class StaneksGift extends BaseGift {
     for (const sleeve of Player.sleeves) {
       if (!sleeve.hasAugmentation(AugmentationNames.ZOE)) continue;
       sleeve.resetMultipliers();
+      //reapplying augmentation's multiplier
+      for (let i = 0; i < sleeve.augmentations.length; ++i) {
+        const aug = StaticAugmentations[sleeve.augmentations[i].name];
+        sleeve.applyAugmentation(aug);
+      }
+      //applying stanek multiplier
       sleeve.mults = mergeMultipliers(sleeve.mults, sleeveMults);
       sleeve.updateSkillLevels();
     }
