@@ -28,7 +28,7 @@ export class SleeveSynchroWork extends Work {
     return Generic_toJSON("SleeveSynchroWork", this);
   }
 
-  /** Initiatizes a SynchroWork object from a JSON save state. */
+  /** Initializes a SynchroWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveSynchroWork {
     return Generic_fromJSON(SleeveSynchroWork, value.data);
   }

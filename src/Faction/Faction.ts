@@ -65,7 +65,7 @@ export class Faction {
     return Generic_toJSON("Faction", this);
   }
 
-  /** Initiatizes a Faction object from a JSON save state. */
+  /** Initializes a Faction object from a JSON save state. */
   static fromJSON(value: IReviverValue): Faction {
     return Generic_fromJSON(Faction, value.data);
   }

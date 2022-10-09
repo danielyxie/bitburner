@@ -15,7 +15,7 @@ import { isValidNumber } from "../utils/helpers/isValidNumber";
  * Constructs a new server, while also ensuring that the new server
  * does not have a duplicate hostname/ip.
  */
-export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
+export function safelyCreateUniqueServer(params: IConstructorParams): Server {
   let hostname: string = params.hostname.replace(/ /g, `-`);
 
   if (params.ip != null && ipExists(params.ip)) {
@@ -118,7 +118,7 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
    *
    * A change of variable will do. The idea is to add an equation introducing a new variable (w here) in the form c = f(w) (for some f)
    * With this equation we will eliminate all references to c, then solve for w and plug the result in the new equation to get c.
-   * The change of variable performed here should get rid of the unwanted terms mentionned above, c = w/(ln(b)*t) - o should help.
+   * The change of variable performed here should get rid of the unwanted terms mentioned above, c = w/(ln(b)*t) - o should help.
    * This change of variable is allowed because whatever the value of c is, there is a value of w such that this equation holds:
    * w = (c + o)*ln(b)*t  (see how we used the terms we wanted to eliminate in order to build this variable change)
    *
@@ -130,7 +130,7 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
    * Finally we invert the variable change: c = W(n * ln(b) * t * b^(o*t))/(ln(b)*t) - o
    *
    * There is still an issue left: b^(o*t) doesn't fit inside a double precision float
-   * because the typical amount of money on servers is arround 10^6~10^9
+   * because the typical amount of money on servers is around 10^6~10^9
    * We need to get an approximation of W without computing the power when o is huge
    * Thankfully an approximation giving ~30% error uses log immediately so we will use
    * W(n * ln(b) * t * b^(o*t)) ~= log(n * ln(b) * t * b^(o*t)) = log(n * ln(b) * t) + log(exp(ln(b) * o * t))
@@ -179,7 +179,7 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
    * The main question to ask when using this method is "does it converges?"
    * (are the approximations getting better?), if it does then it does quickly.
    * DOES IT CONVERGES? In the present case it does. The reason why doesn't help explaining the algorithm.
-   * If you are intrested then check out the wikipedia page.
+   * If you are interested then check out the wikipedia page.
    */
   const bt = exponentialBase ** threadMultiplier;
   let corr = Infinity;

@@ -150,7 +150,7 @@ export class HashManager {
     return Generic_toJSON("HashManager", this);
   }
 
-  // Initiatizes a HashManager object from a JSON save state.
+  // Initializes a HashManager object from a JSON save state.
   static fromJSON(value: IReviverValue): HashManager {
     return Generic_fromJSON(HashManager, value.data);
   }

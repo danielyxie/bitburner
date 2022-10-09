@@ -83,7 +83,7 @@ export interface IBitNodeMultipliers {
 
   /**
    * Influences how much money is produced by Hacknet Nodes.
-   * Influeces the hash rate of Hacknet Servers (unlocked in BitNode-9)
+   * Influences the hash rate of Hacknet Servers (unlocked in BitNode-9)
    */
   HacknetNodeMoney: number;
 
@@ -130,7 +130,7 @@ export interface IBitNodeMultipliers {
   /** Influences the growth percentage per cycle against a server. */
   ServerGrowthRate: number;
 
-  /** Influences the maxmimum money that a server can grow to. */
+  /** Influences the maximum money that a server can grow to. */
   ServerMaxMoney: number;
 
   /** Influences the initial money that a server starts with. */

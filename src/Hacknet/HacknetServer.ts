@@ -50,7 +50,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
   // Total number of hashes earned by this server
   totalHashesGenerated = 0;
 
-  // Flag indicating wehther this is a purchased server
+  // Flag indicating whether this is a purchased server
   purchasedByPlayer = true;
 
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {

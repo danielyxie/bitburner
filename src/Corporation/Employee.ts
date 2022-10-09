@@ -85,7 +85,7 @@ export class Employee {
     const prodBase = this.mor * this.hap * this.ene * 1e-6;
     let prodMult = 0;
     switch (this.pos) {
-      //Calculate productivity based on position. This is multipled by prodBase
+      //Calculate productivity based on position. This is multiplied by prodBase
       //to get final value
       case EmployeePositions.Operations:
         prodMult = 0.6 * effInt + 0.1 * effCha + this.exp + 0.5 * effCre + effEff;

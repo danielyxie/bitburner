@@ -79,7 +79,7 @@ export function Stats(props: IProps): React.ReactElement {
                 <br />
                 Once your stamina falls below 50% of its max value, it begins to negatively affect the success rate of
                 your contracts/operations. This penalty is shown in the overview panel. If the penalty is 15%, then this
-                means your success rate would be multipled by 85% (100 - 15).
+                means your success rate would be multiplied by 85% (100 - 15).
                 <br />
                 <br />
                 Your max stamina and stamina gain rate can also be increased by training, or through skills and
@@ -123,7 +123,8 @@ export function Stats(props: IProps): React.ReactElement {
           <Tooltip
             title={
               <Typography>
-                This is your Bladeburner divison's estimate of how many Synthoid communities exist in your current city.
+                This is your Bladeburner division's estimate of how many Synthoid communities exist in your current
+                city.
               </Typography>
             }
           >

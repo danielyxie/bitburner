@@ -67,7 +67,7 @@ export class TextFile {
     this.text = txt;
   }
 
-  /** Initiatizes a TextFile from a JSON save state. */
+  /** Initializes a TextFile from a JSON save state. */
   static fromJSON(value: IReviverValue): TextFile {
     return Generic_fromJSON(TextFile, value.data);
   }

@@ -41,7 +41,7 @@ export function scp(args: (string | number | boolean)[], server: BaseServer): vo
         return;
       }
       if (tRes.overwritten) {
-        Terminal.print(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
+        Terminal.print(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
         Terminal.print(`${scriptname} overwritten on ${destServer.hostname}`);
         return;
       }

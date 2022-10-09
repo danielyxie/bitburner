@@ -193,7 +193,7 @@ export class ClassWork extends Work {
     return Generic_toJSON("ClassWork", this);
   }
 
-  /** Initiatizes a ClassWork object from a JSON save state. */
+  /** Initializes a ClassWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): ClassWork {
     return Generic_fromJSON(ClassWork, value.data);
   }

@@ -60,7 +60,7 @@ export function tabCompletion(
     const longestStartSubstr = longestCommonStart(allPossibilities);
     /**
      * If the longest common starting substring of remaining possibilities is the same
-     * as whatevers already in terminal, just list all possible options. Otherwise,
+     * as whatever's already in terminal, just list all possible options. Otherwise,
      * change the input in the terminal to the longest common starting substr
      */
     if (arg === "") {

@@ -54,7 +54,7 @@ export class Sleeve extends Person {
   /**
    * Sleeve shock. Number between 0 and 100
    * Trauma/shock that comes with being in a sleeve. Experience earned
-   * is multipled by shock%. This gets applied before synchronization
+   * is multiplied by shock%. This gets applied before synchronization
    *
    * Reputation earned is also multiplied by shock%
    */
@@ -482,7 +482,7 @@ export class Sleeve extends Person {
     return Generic_toJSON("Sleeve", this);
   }
 
-  /** Initiatizes a Sleeve object from a JSON save state. */
+  /** Initializes a Sleeve object from a JSON save state. */
   static fromJSON(value: IReviverValue): Sleeve {
     return Generic_fromJSON(Sleeve, value.data);
   }

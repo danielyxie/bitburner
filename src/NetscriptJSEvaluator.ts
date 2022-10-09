@@ -25,7 +25,7 @@ export async function compile(script: Script, scripts: Script[]): Promise<Script
   //If we're already in the middle of compiling (script.module has not resolved yet), wait for the previous compilation to finish
   //If script.module is null, this does nothing.
   await script.module;
-  //If multiple compiles were called on the same script before a compilation could be completed this ensures only one complilation is actually performed.
+  //If multiple compiles were called on the same script before a compilation could be completed this ensures only one compilation is actually performed.
   if (!script.queueCompile) return script.module as Promise<ScriptModule>;
   script.queueCompile = false;
   script.updateRamUsage(scripts);

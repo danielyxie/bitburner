@@ -27,7 +27,7 @@ export class SleeveRecoveryWork extends Work {
     return Generic_toJSON("SleeveRecoveryWork", this);
   }
 
-  /** Initiatizes a RecoveryWork object from a JSON save state. */
+  /** Initializes a RecoveryWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveRecoveryWork {
     return Generic_fromJSON(SleeveRecoveryWork, value.data);
   }

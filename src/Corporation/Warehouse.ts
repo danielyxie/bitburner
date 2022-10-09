@@ -108,7 +108,7 @@ export class Warehouse {
     return Generic_toJSON("Warehouse", this);
   }
 
-  // Initiatizes a Warehouse object from a JSON save state.
+  // Initializes a Warehouse object from a JSON save state.
   static fromJSON(value: IReviverValue): Warehouse {
     return Generic_fromJSON(Warehouse, value.data);
   }

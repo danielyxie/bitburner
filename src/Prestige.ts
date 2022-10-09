@@ -230,7 +230,7 @@ export function prestigeSourceFile(flume: boolean): void {
     }
   }
 
-  // Give levels of NeuroFluxGoverner for Source-File 12. Must be done here before Augmentations are recalculated
+  // Give levels of NeuroFluxGovernor for Source-File 12. Must be done here before Augmentations are recalculated
   if (Player.sourceFileLvl(12) > 0) {
     Player.augmentations.push({
       name: AugmentationNames.NeuroFluxGovernor,

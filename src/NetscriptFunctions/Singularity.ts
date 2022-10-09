@@ -786,7 +786,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           return false;
         }
 
-        // Make sure player is actually employed at the comapny
+        // Make sure player is actually employed at the company
         if (!Object.keys(Player.jobs).includes(companyName)) {
           helpers.log(ctx, () => `You do not have a job at '${companyName}'`);
           return false;
@@ -815,7 +815,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           Player.stopFocusing();
           Router.toTerminal();
         }
-        helpers.log(ctx, () => `Began working at '${companyName}' as a '${companyPositionName}'`);
+        helpers.log(ctx, () => `Began working at '${companyName}' with position '${companyPositionName}'`);
         return true;
       },
     applyToCompany: (ctx: NetscriptContext) =>
@@ -878,7 +878,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         //   return false;
         // }
         if (res) {
-          helpers.log(ctx, () => `You were offered a new job at '${companyName}' as a '${Player.jobs[companyName]}'`);
+          helpers.log(
+            ctx,
+            () => `You were offered a new job at '${companyName}' with position '${Player.jobs[companyName]}'`,
+          );
         } else {
           helpers.log(ctx, () => `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`);
         }

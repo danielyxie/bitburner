@@ -137,7 +137,7 @@ export class Company {
     return Generic_toJSON("Company", this);
   }
 
-  /** Initiatizes a Company from a JSON save state. */
+  /** Initializes a Company from a JSON save state. */
   static fromJSON(value: IReviverValue): Company {
     return Generic_fromJSON(Company, value.data);
   }

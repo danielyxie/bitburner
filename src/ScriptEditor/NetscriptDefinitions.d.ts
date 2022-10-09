@@ -339,7 +339,7 @@ export interface HacknetNodeConstants {
   BaseCost: number;
   /** Base cost per level */
   LevelBaseCost: number;
-  /** Base cost to incrase RAM */
+  /** Base cost to increase RAM */
   RamBaseCost: number;
   /** Base cost to increase cores */
   CoreBaseCost: number;
@@ -1297,7 +1297,7 @@ export interface TIX {
    * Cancel order for stocks.
    * @remarks
    * RAM cost: 2.5 GB
-   * Cancels an oustanding Limit or Stop order on the stock market.
+   * Cancels an outstanding Limit or Stop order on the stock market.
    *
    * The ability to use limit and stop orders is **not** immediately available to the player and
    * must be unlocked later on in the game.
@@ -1777,9 +1777,9 @@ export interface Singularity {
    * RAM cost: 3 GB * 16/4/1
    *
    *
-   * Returns an array with the name of all Factions you currently have oustanding invitations from.
+   * Returns an array with the name of all Factions you currently have outstanding invitations from.
    *
-   * @returns Array with the name of all Factions you currently have oustanding invitations from.
+   * @returns Array with the name of all Factions you currently have outstanding invitations from.
    */
   checkFactionInvitations(): string[];
 
@@ -1969,10 +1969,10 @@ export interface Singularity {
    * RAM cost: 5 GB * 16/4/1
    *
    *
-   * This function returns your chance of success at commiting the specified crime.
+   * This function returns your chance of success at committing the specified crime.
    *
    * @param crime - Name of crime.
-   * @returns Chance of success at commiting the specified crime.
+   * @returns Chance of success at committing the specified crime.
    */
   getCrimeChance(crime: string): number;
 
@@ -2621,7 +2621,7 @@ export interface Hacknet {
    * @param upgName - Name of the upgrade of Hacknet Node.
    * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.
    * @param count - Number of upgrades to buy at once. Defaults to 1 if not specified.
-   * For compatability reasons, upgTarget must be specified, even if it is not used, in order to specify count.
+   * For compatibility reasons, upgTarget must be specified, even if it is not used, in order to specify count.
    * @returns True if the upgrade is successfully purchased, and false otherwise.
    */
   spendHashes(upgName: string, upgTarget?: string, count?: number): boolean;
@@ -3599,7 +3599,7 @@ export interface Sleeve {
    *
    * Returns false if an invalid action is specified.
    *
-   * @param sleeveNumber - Index of the sleeve to start commiting crime.
+   * @param sleeveNumber - Index of the sleeve to start committing crime.
    * @param name - Name of the crime. Must be an exact match.
    * @returns True if this action was set successfully, false otherwise.
    */
@@ -6155,7 +6155,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Deleta all data from the underlying queue.
+   * Delete all data from the underlying queue.
    *
    * @param handle - Port to clear.
    */
@@ -6397,8 +6397,8 @@ export interface NS {
    *
    * see: https://github.com/alexei/sprintf.js
    * @param format - String to format.
-   * @param args - Formating arguments.
-   * @returns Formated text.
+   * @param args - Formatting arguments.
+   * @returns Formatted text.
    */
   sprintf(format: string, ...args: any[]): string;
 
@@ -6409,8 +6409,8 @@ export interface NS {
    *
    * see: https://github.com/alexei/sprintf.js
    * @param format - String to format.
-   * @param args - Formating arguments.
-   * @returns Formated text.
+   * @param args - Formatting arguments.
+   * @returns Formatted text.
    */
   vsprintf(format: string, args: any[]): string;
 
@@ -6420,13 +6420,13 @@ export interface NS {
    * RAM cost: 0 GB
    *
    * Converts a number into a string with the specified formatter.
-   * This uses the numeraljs library, so the formatters must be compatible with that.
+   * This uses the numeral.js library, so the formatters must be compatible with that.
    * This is the same function that the game itself uses to display numbers.
    *
    * see: http://numeraljs.com/
    * @param n - Number to format.
    * @param format - Formatter.
-   * @returns Formated number.
+   * @returns Formatted number.
    */
   nFormat(n: number, format: string): string;
 
@@ -7187,7 +7187,7 @@ interface CorporationInfo {
   numShares: number;
   /** Cooldown until shares can be sold again */
   shareSaleCooldown: number;
-  /** Amount of aqcuirable shares. */
+  /** Amount of acquirable shares. */
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;

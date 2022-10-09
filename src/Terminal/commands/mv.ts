@@ -50,7 +50,7 @@ export function mv(args: (string | number | boolean)[], server: BaseServer): voi
         return;
       }
 
-      // Command doesnt work if script is running
+      // Command doesn't work if script is running
       if (server.isRunning(sourcePath)) {
         Terminal.error(`Cannot use 'mv' on a script that is running`);
         return;
@@ -59,7 +59,7 @@ export function mv(args: (string | number | boolean)[], server: BaseServer): voi
       if (destFile != null) {
         // Already exists, will be overwritten, so we'll delete it
 
-        // Command doesnt work if script is running
+        // Command doesn't work if script is running
         if (server.isRunning(destPath)) {
           Terminal.error(`Cannot use 'mv' on a script that is running`);
           return;

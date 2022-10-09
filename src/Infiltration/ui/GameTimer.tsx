@@ -14,7 +14,7 @@ interface IProps {
 export function GameTimer(props: IProps): React.ReactElement {
   const [v, setV] = useState(100);
   const totalMillis =
-    (!props.ignoreAugment_WKSharmonizer && player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 1.3 : 1) *
+    (!props.ignoreAugment_WKSharmonizer && Player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 1.3 : 1) *
     props.millis;
 
   const tick = 200;

@@ -30,7 +30,7 @@ export class SleeveSupportWork extends Work {
     return Generic_toJSON("SleeveSupportWork", this);
   }
 
-  /** Initiatizes a BladeburnerWork object from a JSON save state. */
+  /** Initializes a BladeburnerWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveSupportWork {
     return Generic_fromJSON(SleeveSupportWork, value.data);
   }

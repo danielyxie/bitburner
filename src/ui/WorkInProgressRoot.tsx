@@ -248,7 +248,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         percentage: completion,
       },
 
-      stopText: "Stop commiting crime",
+      stopText: "Stop committing crime",
     };
   }
 

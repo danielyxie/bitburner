@@ -59,7 +59,7 @@ export class City {
 
   improvePopulationEstimateByCount(n: number): void {
     if (isNaN(n)) {
-      throw new Error("NaN passeed into City.improvePopulationEstimateByCount()");
+      throw new Error("NaN passed into City.improvePopulationEstimateByCount()");
     }
     if (this.popEst < this.pop) {
       this.popEst += n;
@@ -162,7 +162,7 @@ export class City {
     return Generic_toJSON("City", this);
   }
 
-  /** Initiatizes a City object from a JSON save state. */
+  /** Initializes a City object from a JSON save state. */
   static fromJSON(value: IReviverValue): City {
     return Generic_fromJSON(City, value.data);
   }

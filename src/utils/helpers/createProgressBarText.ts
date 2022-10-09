@@ -34,6 +34,6 @@ export function createProgressBarText(params: IProgressBarConfiguration): string
   const bars: number = Math.max(Math.floor(derived.progress / (1 / derived.totalTicks)), 1);
   const dashes: number = Math.max(derived.totalTicks - bars, 0);
 
-  // String.prototype.repeat isn't completley supported, but good enough for our purposes
+  // String.prototype.repeat isn't completely supported, but good enough for our purposes
   return `[${"|".repeat(bars)}${"-".repeat(dashes)}]`;
 }

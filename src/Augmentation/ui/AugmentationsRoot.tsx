@@ -36,7 +36,7 @@ const NeuroFluxDisplay = (): React.ReactElement => {
         <Typography variant="h5">Bitburner blood donation community program</Typography>
         <Typography>
           The blood donation program is a continuous real life event started on 2022-04-01. To participate simply go
-          donate blood, plasma, or platelets to your local organisation and take a picture as proof (hide your personal
+          donate blood, plasma, or platelets to your local organization and take a picture as proof (hide your personal
           information). Then send the proof to hydroflame on reddit or discord.
         </Typography>
         <Typography>Currently accumulated {CONSTANTS.Donations} donations.</Typography>

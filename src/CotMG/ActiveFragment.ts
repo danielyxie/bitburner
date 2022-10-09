@@ -61,9 +61,9 @@ export class ActiveFragment {
     return this.fragment().fullAt(worldX - this.x, worldY - this.y, this.rotation);
   }
 
-  neighboors(): number[][] {
+  neighbors(): number[][] {
     return this.fragment()
-      .neighboors(this.rotation)
+      .neighbors(this.rotation)
       .map((cell) => [this.x + cell[0], this.y + cell[1]]);
   }
 
@@ -76,7 +76,7 @@ export class ActiveFragment {
     return Generic_toJSON("ActiveFragment", this);
   }
 
-  /** Initializes an acive fragment from a JSON save state */
+  /** Initializes an active fragment from a JSON save state */
   static fromJSON(value: IReviverValue): ActiveFragment {
     return Generic_fromJSON(ActiveFragment, value.data);
   }

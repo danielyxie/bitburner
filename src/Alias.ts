@@ -101,7 +101,7 @@ export function removeAlias(name: string): boolean {
 export function substituteAliases(origCommand: string): string {
   const commandArray = origCommand.split(" ");
   if (commandArray.length > 0) {
-    // For the alias and unalias commands, dont substite
+    // For the alias and unalias commands, don't substitute
     if (commandArray[0] === "unalias" || commandArray[0] === "alias") {
       return commandArray.join(" ");
     }

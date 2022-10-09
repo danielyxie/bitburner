@@ -63,7 +63,7 @@ export class Node {
       return this;
     }
 
-    // Recursively search chilren
+    // Recursively search children
     let res = null;
     for (let i = 0; i < this.children.length; ++i) {
       res = this.children[i].findNode(text);

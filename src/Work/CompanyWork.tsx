@@ -75,7 +75,7 @@ export class CompanyWork extends Work {
     return Generic_toJSON("CompanyWork", this);
   }
 
-  /** Initiatizes a CompanyWork object from a JSON save state. */
+  /** Initializes a CompanyWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): CompanyWork {
     return Generic_fromJSON(CompanyWork, value.data);
   }

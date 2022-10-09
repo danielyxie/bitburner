@@ -35,7 +35,7 @@ export function getBuyTransactionCost(stock: Stock, shares: number, posType: Pos
  * Calculate the TOTAL amount of money gained from a sale (NOT net profit). This accounts
  * for spread and commission.
  * @param {Stock} stock - Stock being sold
- * @param {number} shares - Number of sharse being transacted
+ * @param {number} shares - Number of shares being transacted
  * @param {PositionTypes} posType - Long or short position
  * @returns {number | null} Amount of money gained from transaction. Returns null for an invalid transaction
  */
@@ -64,7 +64,7 @@ export function getSellTransactionGain(stock: Stock, shares: number, posType: Po
  * Processes a stock's change in forecast & second-order forecast
  * whenever it is transacted
  * @param {Stock} stock - Stock being sold
- * @param {number} shares - Number of sharse being transacted
+ * @param {number} shares - Number of shares being transacted
  * @param {PositionTypes} posType - Long or short position
  */
 export function processTransactionForecastMovement(stock: Stock, shares: number): void {
@@ -93,7 +93,7 @@ export function processTransactionForecastMovement(stock: Stock, shares: number)
   const remainingShares = shares - firstShares;
   let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
-  // If on the offchance we end up perfectly at the next price movement
+  // If on the off chance we end up perfectly at the next price movement
   stock.shareTxUntilMovement =
     stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
   if (stock.shareTxUntilMovement === stock.shareTxForMovement || stock.shareTxUntilMovement <= 0) {

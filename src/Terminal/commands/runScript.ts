@@ -44,7 +44,7 @@ export function runScript(commandArgs: (string | number | boolean)[], server: Ba
     if (server.scripts[i].filename !== scriptName) {
       continue;
     }
-    // Check for admin rights and that there is enough RAM availble to run
+    // Check for admin rights and that there is enough RAM available to run
     const script = server.scripts[i];
     script.server = server.hostname;
     const ramUsage = script.ramUsage * numThreads;

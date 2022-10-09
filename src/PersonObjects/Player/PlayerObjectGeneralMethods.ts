@@ -26,7 +26,7 @@ import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
 import { calculateSkillProgress as calculateSkillProgressF, ISkillProgress } from "../formulas/skill";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
-import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
+import { safelyCreateUniqueServer } from "../../Server/ServerHelpers";
 
 import { SpecialServers } from "../../Server/data/SpecialServers";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
@@ -48,7 +48,7 @@ import { serverMetadata } from "../../Server/data/servers";
 
 export function init(this: PlayerObject): void {
   /* Initialize Player's home computer */
-  const t_homeComp = safetlyCreateUniqueServer({
+  const t_homeComp = safelyCreateUniqueServer({
     adminRights: true,
     hostname: "home",
     ip: createUniqueRandomIp(),
@@ -279,7 +279,7 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
 
   if (!this.isQualified(company, pos)) {
     if (!sing) {
-      dialogBoxCreate("Unfortunately, you do not qualify for this position<br>" + getJobRequirementText(company, pos));
+      dialogBoxCreate("Unfortunately, you do not qualify for this position\n" + getJobRequirementText(company, pos));
     }
     return false;
   }
@@ -305,7 +305,7 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
         dialogBoxCreate("You are already at the highest position for your field! No promotion available");
       } else {
         const reqText = getJobRequirementText(company, nextPos);
-        dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
+        dialogBoxCreate("Unfortunately, you do not qualify for a promotion\n" + reqText);
       }
     }
     return false;
@@ -314,7 +314,7 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
   this.jobs[company.name] = pos.name;
 
   if (!sing) {
-    dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
+    dialogBoxCreate(`Congratulations! You were offered a new job at ${company.name} for position ${pos.name}!`);
   }
   return true;
 }
@@ -781,7 +781,7 @@ export function checkForFactionInvitations(this: PlayerObject): Faction[] {
     invitedFactions.push(kuaigonginternationalFac);
   }
 
-  //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
+  //Fulcrum Secret Technologies - If you've unlocked fulcrum secret technologies server and have a high rep with the company
   const fulcrumsecrettechonologiesFac = Factions[FactionNames.FulcrumSecretTechnologies];
   const fulcrumSecretServer = GetServer(SpecialServers.FulcrumSecretTechnologies);
   if (!(fulcrumSecretServer instanceof Server))

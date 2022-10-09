@@ -112,7 +112,7 @@ export class CreateProgramWork extends Work {
     return Generic_toJSON("CreateProgramWork", this);
   }
 
-  /** Initiatizes a CreateProgramWork object from a JSON save state. */
+  /** Initializes a CreateProgramWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): CreateProgramWork {
     return Generic_fromJSON(CreateProgramWork, value.data);
   }

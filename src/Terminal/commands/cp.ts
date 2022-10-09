@@ -60,7 +60,7 @@ export function cp(args: (string | number | boolean)[], server: BaseServer): voi
         return;
       }
       if (tRes.overwritten) {
-        Terminal.print(`WARNING: ${dst} already exists and will be overwriten`);
+        Terminal.print(`WARNING: ${dst} already exists and will be overwritten`);
         Terminal.print(`${dst} overwritten`);
         return;
       }
