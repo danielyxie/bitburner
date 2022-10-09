@@ -26,5 +26,5 @@ void
 
 RAM cost: 0 GB
 
-Deleta all data from the underlying queue.
+Delete all data from the underlying queue.
 

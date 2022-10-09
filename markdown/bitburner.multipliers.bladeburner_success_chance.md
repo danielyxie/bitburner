@@ -4,8 +4,10 @@
 
 ## Multipliers.bladeburner\_success\_chance property
 
+Multiplier to success chance in Bladeburner contracts/operations
+
 <b>Signature:</b>
 
 ```typescript
-bladeburner_success_chance: number;
+bladeburner_success_chance?: number;
 ```

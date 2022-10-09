@@ -4,8 +4,10 @@
 
 ## Multipliers.bladeburner\_stamina\_gain property
 
+Multiplier to Bladeburner stamina gain rate
+
 <b>Signature:</b>
 
 ```typescript
-bladeburner_stamina_gain: number;
+bladeburner_stamina_gain?: number;
 ```

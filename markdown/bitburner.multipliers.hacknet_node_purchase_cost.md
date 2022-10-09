@@ -4,8 +4,10 @@
 
 ## Multipliers.hacknet\_node\_purchase\_cost property
 
+Multiplier to cost of purchasing a Hacknet Node
+
 <b>Signature:</b>
 
 ```typescript
-hacknet_node_purchase_cost: number;
+hacknet_node_purchase_cost?: number;
 ```

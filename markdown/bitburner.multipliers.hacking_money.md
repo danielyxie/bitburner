@@ -4,8 +4,10 @@
 
 ## Multipliers.hacking\_money property
 
+Multiplier to amount of money the player gains from hacking
+
 <b>Signature:</b>
 
 ```typescript
-hacking_money: number;
+hacking_money?: number;
 ```

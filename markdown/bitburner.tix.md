@@ -25,7 +25,7 @@ export interface TIX
 |  [getMaxShares(sym)](./bitburner.tix.getmaxshares.md) | Returns the maximum number of shares of a stock. |
 |  [getOrders()](./bitburner.tix.getorders.md) | Returns your order book for the stock market. |
 |  [getPosition(sym)](./bitburner.tix.getposition.md) | Returns the player’s position in a stock. |
-|  [getPrice(sym)](./bitburner.tix.getprice.md) | Returns the price of a stock |
+|  [getPrice(sym)](./bitburner.tix.getprice.md) | Returns the price of a stock. |
 |  [getPurchaseCost(sym, shares, posType)](./bitburner.tix.getpurchasecost.md) | Calculates cost of buying stocks. |
 |  [getSaleGain(sym, shares, posType)](./bitburner.tix.getsalegain.md) | Calculate profit of selling stocks. |
 |  [getSymbols()](./bitburner.tix.getsymbols.md) | Returns an array of the symbols of the tradable stocks |

@@ -1,3 +1,4 @@
+/** @internal */
 export type ValuesFrom<T> = T[keyof T];
 
 /** @public */
@@ -6713,6 +6714,7 @@ export interface NS {
   enums: NSEnums;
 }
 
+/** @internal */
 declare const enums = {
   toast: {
     SUCCESS: "success",
@@ -6720,9 +6722,12 @@ declare const enums = {
     ERROR: "error",
     INFO: "info",
   },
-} as const;
+};
+
+/** @public */
 type ToastVariant = ValuesFrom<typeof enums.toast>;
 
+/** @public */
 export type NSEnums = typeof enums;
 /**
  * Corporation Office API

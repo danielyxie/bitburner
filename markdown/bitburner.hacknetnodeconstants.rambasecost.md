@@ -4,7 +4,7 @@
 
 ## HacknetNodeConstants.RamBaseCost property
 
-Base cost to incrase RAM
+Base cost to increase RAM
 
 <b>Signature:</b>
 

@@ -15,11 +15,11 @@ checkFactionInvitations(): string[];
 
 string\[\]
 
-Array with the name of all Factions you currently have oustanding invitations from.
+Array with the name of all Factions you currently have outstanding invitations from.
 
 ## Remarks
 
 RAM cost: 3 GB \* 16/4/1
 
-Returns an array with the name of all Factions you currently have oustanding invitations from.
+Returns an array with the name of all Factions you currently have outstanding invitations from.
 
