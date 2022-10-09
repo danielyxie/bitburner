@@ -1,5 +1,3 @@
-import { IMap } from "../types";
-
 import { Player as player } from "../Player";
 import { calculateServerGrowth } from "../Server/formulas/grow";
 import {
@@ -32,6 +30,8 @@ import {
   Formulas as IFormulas,
   HacknetNodeConstants as DefHacknetNodeConstants,
   HacknetServerConstants as DefHacknetServerConstants,
+  IndustryProductionMultipliers,
+  ProductRatings,
 } from "../ScriptEditor/NetscriptDefinitions";
 import {
   calculateRespectGain,
@@ -440,7 +440,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
     corp: {
       getProductionMultipliers:
         (ctx: NetscriptContext) =>
-        (_industryName: string): IMap<any> => {
+        (_industryName: string): IndustryProductionMultipliers => {
           checkAccess(ctx, 7);
           const industryName = helpers.string(ctx, "industryName", _industryName);
           if (!IndustryMaterialFactors.hasOwnProperty(industryName)) {
@@ -450,6 +450,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
           return {
             reFac: weights.reFac,
             sciFac: weights.sciFac,
+            hwFac: weights.hwFac,
             robFac: weights.robFac,
             aiFac: weights.aiFac,
             advFac: weights.advFac,
@@ -459,7 +460,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
         },
       getProductRatingWeights:
         (ctx: NetscriptContext) =>
-        (_industryName: string): IMap<any> => {
+        (_industryName: string): ProductRatings => {
           checkAccess(ctx, 7);
           const industryName = helpers.string(ctx, "industryName", _industryName);
           if (!ProductRatingWeights.hasOwnProperty(industryName)) {
@@ -467,12 +468,12 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
           }
           const weights = ProductRatingWeights[industryName];
           return {
-            quality: weights.hasOwnProperty("Quality") ? weights.Quality : 0,
-            performance: weights.hasOwnProperty("Performance") ? weights.Performance : 0,
-            durability: weights.hasOwnProperty("Durability") ? weights.Durability : 0,
-            reliability: weights.hasOwnProperty("Reliability") ? weights.Reliability : 0,
-            aesthetics: weights.hasOwnProperty("Aesthetics") ? weights.Aesthetics : 0,
-            features: weights.hasOwnProperty("Features") ? weights.Features : 0,
+            quality: Number(weights.hasOwnProperty("Quality") ? weights.Quality : 0),
+            performance: Number(weights.hasOwnProperty("Performance") ? weights.Performance : 0),
+            durability: Number(weights.hasOwnProperty("Durability") ? weights.Durability : 0),
+            reliability: Number(weights.hasOwnProperty("Reliability") ? weights.Reliability : 0),
+            aesthetics: Number(weights.hasOwnProperty("Aesthetics") ? weights.Aesthetics : 0),
+            features: Number(weights.hasOwnProperty("Features") ? weights.Features : 0),
           };
         },
       calculateProductionMultiplier:

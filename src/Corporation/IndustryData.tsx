@@ -3,7 +3,6 @@ import { ResearchTree } from "./ResearchTree";
 import { Corporation } from "./Corporation";
 import { getBaseResearchTreeCopy, getProductIndustryResearchTreeCopy } from "./data/BaseResearchTree";
 import { MoneyCost } from "./ui/MoneyCost";
-import { IMap } from "src/types";
 
 interface IIndustryMap<T> {
   [key: string]: T | undefined;

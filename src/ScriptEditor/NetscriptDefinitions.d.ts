@@ -1,12 +1,11 @@
-/** @public */
-import { IMap } from "../types";
-
 export interface HP {
   current: number;
   max: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface Skills {
   hacking: number;
   strength: number;
@@ -17,7 +16,9 @@ export interface Skills {
   intelligence: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface PossibleInfiltrationLocation {
   city: string;
   name: string;
@@ -29,16 +30,24 @@ export interface PossibleInfiltrationLocation {
  */
 type CodingContractData = any;
 
-/** @public */
+/**
+ * @public
+ */
 type PortData = string | number;
 
-/** @public */
+/**
+ * @public
+ */
 type ScriptArg = string | number | boolean;
 
-/** @public */
+/**
+ * @public
+ */
 type FilenameOrPID = number | string;
 
-/** @public */
+/**
+ * @public
+ */
 interface Player {
   hp: HP;
   skills: Skills;
@@ -60,7 +69,9 @@ interface Player {
   entropy: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface Multipliers {
   /** Multiplier to hacking skill */
   hacking?: number;
@@ -124,7 +135,9 @@ export interface Multipliers {
   bladeburner_success_chance?: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface RunningScript {
   /** Arguments the script was called with */
   args: (string | number | boolean)[];
@@ -157,7 +170,9 @@ export interface RunningScript {
   threads: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface RecentScript extends RunningScript {
   /** Timestamp of when the script was killed */
   timeOfDeath: Date;
@@ -215,8 +230,7 @@ export interface CrimeStats {
  * @public
  */
 export interface BasicHGWOptions {
-  /** Number of threads to use for this function.
-   * Must be less than or equal to the number of threads the script is running with. */
+  /** Number of threads to use for this function. Must be less than or equal to the number of threads the script is running with. */
   threads?: number;
   /** Set to true this action will affect the stock market. */
   stock?: boolean;
@@ -242,13 +256,17 @@ export interface AugmentPair {
   cost: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export enum PositionTypes {
   Long = "L",
   Short = "S",
 }
 
-/** @public */
+/**
+ * @public
+ */
 export enum OrderTypes {
   LimitBuy = "Limit Buy Order",
   LimitSell = "Limit Sell Order",
@@ -541,8 +559,7 @@ export interface BitNodeMultipliers {
   HackExpGain: number;
   /** Influences how quickly the player's hacking level (not experience) scales */
   HackingLevelMultiplier: number;
-  /** Influences how much money is produced by Hacknet Nodes
-   *  and the hash rate of Hacknet Servers (unlocked in BitNode-9) */
+  /** Influences how much money is produced by Hacknet Nodes and the hash rate of Hacknet Servers (unlocked in BitNode-9) */
   HacknetNodeMoney: number;
   /** Influences how much money it costs to upgrade your home computer's RAM */
   HomeComputerRamCost: number;
@@ -550,8 +567,7 @@ export interface BitNodeMultipliers {
   InfiltrationMoney: number;
   /** Influences how much rep the player can gain from factions when selling stolen documents and secrets */
   InfiltrationRep: number;
-  /** Influences how much money can be stolen from a server when the player
-   *  performs a hack against it through the Terminal. */
+  /** Influences how much money can be stolen from a server when the player performs a hack against it through the Terminal. */
   ManualHackMoney: number;
   /** Influence how much it costs to purchase a server */
   PurchasedServerCost: number;
@@ -614,7 +630,9 @@ export interface NodeStats {
   totalProduction: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface CharacterMult {
   /** Agility stat */
   agility: number;
@@ -652,7 +670,9 @@ export interface CharacterMult {
   workMoney: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface SleeveWorkGains {
   /** Hacking exp gained from work */
   workHackExpGain: number;
@@ -670,7 +690,9 @@ export interface SleeveWorkGains {
   workMoneyGain: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface SourceFileLvl {
   /** The number of the source file */
   n: number;
@@ -720,7 +742,9 @@ export interface GangGenInfo {
   wantedPenalty: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface GangOtherInfoObject {
   /** Gang power */
   power: number;
@@ -728,7 +752,9 @@ export interface GangOtherInfoObject {
   territory: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface GangOtherInfo {
   [key: string]: GangOtherInfoObject;
 }
@@ -789,7 +815,9 @@ export interface EquipmentStats {
   hack?: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface GangTerritory {
   /** Money gain impact on task scaling */
   money: number;
@@ -799,7 +827,9 @@ export interface GangTerritory {
   wanted: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface GangMemberInfo {
   /** Name of the gang member */
   name: string;
@@ -880,7 +910,9 @@ export interface GangMemberInfo {
   moneyGain: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface GangMemberAscension {
   /** Amount of respect lost from ascending */
   respect: number;
@@ -3823,7 +3855,9 @@ interface SkillsFormulas {
   calculateExp(skill: number, skillMult?: number): number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface WorkStats {
   money: number;
   reputation: number;
@@ -3847,20 +3881,46 @@ interface WorkFormulas {
 }
 
 /**
+ * @public
+ */
+export interface IndustryProductionMultipliers {
+  reFac: number;
+  sciFac: number;
+  hwFac: number;
+  robFac: number;
+  aiFac: number;
+  advFac: number;
+  reqMats: object;
+  prodMats: Array;
+}
+
+/**
+ * @public
+ */
+export interface ProductRatings {
+  quality: number;
+  performance: number;
+  durability: number;
+  reliability: number;
+  aesthetics: number;
+  features: number;
+}
+
+/**
  * Corporation formulas
  * @public
  */
-interface CorporationFormulas {
+export interface CorporationFormulas {
   /**
    * Get the material production bonus value for industry production
    * @param industryName
    */
-  getProductionMultipliers(industryName: string): IMap<any>;
+  getProductionMultipliers(industryName: string): IndustryProductionMultipliers;
   /**
    * Get the product quality rating weights for industry products
    * @param industryName
    */
-  getProductRatingWeights(industryName: string): IMap<any>;
+  getProductRatingWeights(industryName: string): ProductRatings;
 
   /**
    * Calculates the total production multiplier for a given quantity of materials
@@ -4169,7 +4229,9 @@ export interface Formulas {
   corp: CorporationFormulas;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface Fragment {
   id: number;
   shape: boolean[][];
@@ -4178,7 +4240,9 @@ export interface Fragment {
   limit: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface ActiveFragment {
   id: number;
   highestCharge: number;
@@ -4300,20 +4364,26 @@ interface Stanek {
   acceptGift(): boolean;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface InfiltrationReward {
   tradeRep: number;
   sellCash: number;
   SoARep: number;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface ILocation {
   city: string;
   name: string;
 }
 
-/** @public */
+/**
+ * @public
+ */
 export interface InfiltrationLocation {
   location: ILocation;
   reward: InfiltrationReward;
@@ -4465,55 +4535,54 @@ export interface NS {
    * @remarks RAM cost: 4 GB
    */
   readonly hacknet: Hacknet;
-
   /**
+   *
    * Namespace for bladeburner functions.
    * @remarks RAM cost: 0 GB
    */
   readonly bladeburner: Bladeburner;
-
   /**
+   *
    * Namespace for codingcontract functions.
    * @remarks RAM cost: 0 GB
    */
   readonly codingcontract: CodingContract;
-
   /**
+   *
    * Namespace for gang functions.
    * @remarks RAM cost: 0 GB
    */
   readonly gang: Gang;
-
   /**
+   *
    * Namespace for sleeve functions.
    * @remarks RAM cost: 0 GB
    */
   readonly sleeve: Sleeve;
-
   /**
+   *
    * Namespace for stock functions.
-   * @remarks RAM cost: 0 GB
+   * @remarks
+   * RAM cost: 0 GB
    */
   readonly stock: TIX;
-
   /**
+   *
    * Namespace for formulas functions.
-   * @remarks RAM cost: 0 GB
+   * @remarks
+   * RAM cost: 0 GB
    */
   readonly formulas: Formulas;
-
   /**
    * Namespace for stanek functions.
    * RAM cost: 0 GB
    */
   readonly stanek: Stanek;
-
   /**
    * Namespace for infiltration functions.
    * RAM cost: 0 GB
    */
   readonly infiltration: Infiltration;
-
   /**
    * Namespace for corporation functions.
    * RAM cost: 1022.4 GB
@@ -4534,7 +4603,8 @@ export interface NS {
 
   /**
    * Namespace for grafting functions.
-   * @remarks RAM cost: 0 GB
+   * @remarks
+   * RAM cost: 0 GB
    */
   readonly grafting: Grafting;
 
@@ -5358,10 +5428,10 @@ export interface NS {
    * @remarks
    * RAM cost: 1.3 GB
    *
-   * Run a script as a separate process on a specified server. This is similar to the function {@link NS.run | run}
+   * Run a script as a separate process on a specified server. This is similar to the run function
    * except that it can be used to run a script on any server, instead of just the current server.
    *
-   * If the script was successfully started, then this function returns the PID of that script.
+   * If the script was successfully started, then this functions returns the PID of that script.
    * Otherwise, it returns 0.
    *
    * PID stands for Process ID. The PID is a unique identifier for each script.
@@ -5372,40 +5442,30 @@ export interface NS {
    * @example
    * ```ts
    * // NS1:
-   * // The simplest way to use the exec command is to call it with just the script name
-   * // and the target server. The following example will try to run generic-hack.script
-   * // on the foodnstuff server.
+   * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
    * exec("generic-hack.script", "foodnstuff");
    *
-   * // The following example will try to run the script generic-hack.script on the
-   * // joesguns server with 10 threads.
+   * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
    * exec("generic-hack.script", "joesguns", 10);
    *
-   * // This last example will try to run the script foo.script on the foodnstuff server
-   * // with 5 threads. It will also pass the number 1 and the string “test” in as
-   * // arguments to the script.
+   * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
    * exec("foo.script", "foodnstuff", 5, 1, "test");
    * ```
-   * @example
+   * * @example
    * ```ts
    * // NS2:
-   * // The simplest way to use the exec command is to call it with just the script name
-   * // and the target server. The following example will try to run generic-hack.script
-   * // on the foodnstuff server.
+   * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
    * ns.exec("generic-hack.script", "foodnstuff");
    *
-   * // The following example will try to run the script generic-hack.script on the
-   * // joesguns server with 10 threads.
+   * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
    * ns.exec("generic-hack.script", "joesguns", 10);
    *
-   * // This last example will try to run the script foo.script on the foodnstuff server
-   * // with 5 threads. It will also pass the number 1 and the string “test” in as
-   * // arguments to the script.
+   * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
    * ns.exec("foo.script", "foodnstuff", 5, 1, "test");
    * ```
    * @param script - Filename of script to execute.
    * @param host - Hostname of the `target server` on which to execute the script.
-   * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded down to the nearest integer.
+   * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.
    * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.
    * @returns Returns the PID of a successfully started script, and 0 otherwise.
    */
@@ -6144,7 +6204,7 @@ export interface NS {
    * @param data - Data to write.
    * @returns True if the data is successfully written to the port, and false otherwise.
    */
-  tryWritePort(port: number, data: string | number): boolean;
+  tryWritePort(port: number, data: string | number): Promise<boolean>;
 
   /**
    * Read content of a file.
@@ -6510,7 +6570,7 @@ export interface NS {
    * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
    * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
    */
-  toast(msg: string, variant?: ToastVariant, duration?: number | null): void;
+  toast(msg: string, variant?: ToastVariantValues, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -6698,21 +6758,26 @@ export interface NS {
   enums: NSEnums;
 }
 
-declare const enums = {
-  toast: {
-    SUCCESS: "success",
-    WARNING: "warning",
-    ERROR: "error",
-    INFO: "info",
-  },
-} as const;
-type ToastVariant = ValuesFrom<typeof enums.toast>;
+/** @public */
+export enum ToastVariant {
+  SUCCESS = "success",
+  WARNING = "warning",
+  ERROR = "error",
+  INFO = "info",
+}
 
-export type NSEnums = typeof enums;
+/** @public */
+export type ToastVariantValues = `${ToastVariant}`;
+
+/** @public */
+export interface NSEnums {
+  toast: typeof ToastVariant;
+}
+
 /**
  * Corporation Office API
  * @remarks
- * requires the Office API upgrade from your corporation.
+ * Requires the Office API upgrade from your corporation.
  * @public
  */
 export interface OfficeAPI {

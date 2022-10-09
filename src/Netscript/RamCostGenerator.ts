@@ -390,6 +390,7 @@ const corporation = {
   getPurchaseWarehouseCost: 0,
   getUpgradeWarehouseCost: 0,
   hasWarehouse: 0,
+  getMaterialSize: 0,
   assignJob: 0,
   hireEmployee: 0,
   upgradeOfficeSize: 0,
@@ -405,10 +406,10 @@ const corporation = {
   hasResearched: 0,
   setAutoJobAssignment: 0,
   getOfficeSizeUpgradeCost: 0,
-  getChaUpgradeMultiplier:0,
-  getCreUpgradeMultiplier:0,
-  getIntUpgradeMultiplier:0,
-  getEffUpgradeMultiplier:0,
+  getChaUpgradeMultiplier: 0,
+  getCreUpgradeMultiplier: 0,
+  getIntUpgradeMultiplier: 0,
+  getEffUpgradeMultiplier: 0,
 } as const;
 
 /** RamCosts guaranteed to match ns structure 1:1 (aside from args and enums).
