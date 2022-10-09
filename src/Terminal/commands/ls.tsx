@@ -150,8 +150,12 @@ export function ls(args: (string | number | boolean)[], server: BaseServer): voi
         return Terminal.error(`File is not on this server, connect to ${hostname} and try again`);
       }
       if (filename.startsWith("/")) filename = filename.slice(1);
+      // Terminal.getFilepath needs leading slash to correctly work here
+      if (prefix === "") filename = `/${filename}`;
       const filepath = Terminal.getFilepath(`${prefix}${filename}`);
-      const code = toString(Terminal.getScript(filepath)?.code);
+      // Terminal.getScript also calls Terminal.getFilepath and therefore also
+      // needs the given parameter
+      const code = toString(Terminal.getScript(`${prefix}${filename}`)?.code);
       Router.toScriptEditor({ [filepath]: code });
     }
 
