@@ -5156,8 +5156,8 @@ export interface NS {
    * node way from the specified target server. The hostnames in the returned
    * array are strings.
    *
-   * @param host - Optional, Hostname of the server to scan, default to current server.
-   * @returns Returns an string of hostnames.
+   * @param host - Optional. Hostname of the server to scan, default to current server.
+   * @returns Returns an array of hostnames.
    */
   scan(host?: string): string[];
 
