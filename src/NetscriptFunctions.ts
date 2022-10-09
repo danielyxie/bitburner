@@ -1300,6 +1300,8 @@ const base: InternalAPI<NS> = {
           return true;
         }
       }
+      const contract = server.contracts.find((c) => c.fn.toLowerCase() === filename.toLowerCase());
+      if (contract) return true;
       const txtFile = getTextFile(filename, server);
       return txtFile != null;
     },
