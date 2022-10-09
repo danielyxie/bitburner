@@ -1,8 +1,6 @@
-import {IMap} from "../types";
-
-export type ValuesFrom<T> = T[keyof T];
-
 /** @public */
+import { IMap } from "../types";
+
 export interface HP {
   current: number;
   max: number;
@@ -3848,7 +3846,6 @@ interface WorkFormulas {
   factionGains(player: Player, workType: string, favor: number): WorkStats;
 }
 
-
 /**
  * Corporation formulas
  * @public
@@ -3858,12 +3855,12 @@ interface CorporationFormulas {
    * Get the material production bonus value for industry production
    * @param industryName
    */
-  getProductionMultipliers(industryName: string) : IMap<any>;
+  getProductionMultipliers(industryName: string): IMap<any>;
   /**
    * Get the product quality rating weights for industry products
    * @param industryName
    */
-  getProductRatingWeights(industryName: string) : IMap<any>;
+  getProductRatingWeights(industryName: string): IMap<any>;
 
   /**
    * Calculates the total production multiplier for a given quantity of materials
@@ -3874,7 +3871,13 @@ interface CorporationFormulas {
    * @param aiCores
    * @returns final multiplier
    */
-  calculateProductionMultiplier(industryName: string, realEstate: number, hardware: number, robots: number, aiCores: number) : number;
+  calculateProductionMultiplier(
+    industryName: string,
+    realEstate: number,
+    hardware: number,
+    robots: number,
+    aiCores: number,
+  ): number;
 }
 
 /**
@@ -7208,22 +7211,22 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * Get corporation's employee charisma multiplier
    * @returns Cha multiplier from upgrades.
    */
-  getChaUpgradeMultiplier():number;
+  getChaUpgradeMultiplier(): number;
   /**
    * Get corporation's employee creativity multiplier
    * @returns Cre multiplier from upgrades.
    */
-  getCreUpgradeMultiplier():number;
+  getCreUpgradeMultiplier(): number;
   /**
    * Get corporation's employee intelligence multiplier
    * @returns Int multiplier from upgrades.
    */
-  getIntUpgradeMultiplier():number;
+  getIntUpgradeMultiplier(): number;
   /**
    * Get corporation's employee efficiency multiplier
    * @returns Eff multiplier from upgrades.
    */
-  getEffUpgradeMultiplier():number;
+  getEffUpgradeMultiplier(): number;
 }
 
 /**
@@ -7458,37 +7461,37 @@ interface Division {
    * Get division's employee charisma multiplier
    * @returns Cha multiplier from research.
    */
-  getChaMultiplier():number;
+  getChaMultiplier(): number;
   /**
    * Get division's employee creativity multiplier
    * @returns Cre multiplier from research.
    */
-  getCreMultiplier():number;
+  getCreMultiplier(): number;
   /**
    * Get division's employee intelligence multiplier
    * @returns Int multiplier from research.
    */
-  getIntMultiplier():number;
+  getIntMultiplier(): number;
   /**
    * Get division's employee efficiency multiplier
    * @returns Eff multiplier from research.
    */
-  getEffMultiplier():number;
+  getEffMultiplier(): number;
   /**
    * Get division's employee science multiplier
    * @returns Sci multiplier from research.
    */
-  getSciMultiplier():number;
+  getSciMultiplier(): number;
   /**
    * Get division's researched production multiplier
    * @returns Prod multiplier from research.
    */
-  getProdMultiplier():number;
+  getProdMultiplier(): number;
   /**
    * Get division's researched warehouse storage multiplier
    * @returns Storage multiplier from research.
    */
-  getStoreMultiplier():number;
+  getStoreMultiplier(): number;
 }
 
 /**

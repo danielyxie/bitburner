@@ -1,4 +1,4 @@
-import {IMap} from "../types";
+import { IMap } from "../types";
 
 import { Player as player } from "../Player";
 import { calculateServerGrowth } from "../Server/formulas/grow";
@@ -443,7 +443,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
         (_industryName: string): IMap<any> => {
           checkAccess(ctx, 7);
           const industryName = helpers.string(ctx, "industryName", _industryName);
-          if(!IndustryMaterialFactors.hasOwnProperty(industryName)) {
+          if (!IndustryMaterialFactors.hasOwnProperty(industryName)) {
             throw new Error(`Invalid industry: '${industryName}'`);
           }
           const weights = IndustryMaterialFactors[industryName];
@@ -462,7 +462,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
         (_industryName: string): IMap<any> => {
           checkAccess(ctx, 7);
           const industryName = helpers.string(ctx, "industryName", _industryName);
-          if(!ProductRatingWeights.hasOwnProperty(industryName)) {
+          if (!ProductRatingWeights.hasOwnProperty(industryName)) {
             throw new Error(`Invalid industry: '${industryName}'`);
           }
           const weights = ProductRatingWeights[industryName];
@@ -484,7 +484,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
           const hardware = helpers.number(ctx, "hardware", _hardware);
           const robots = helpers.number(ctx, "robots", _robots);
           const aiCores = helpers.number(ctx, "aiCores", _aiCores);
-          if(!IndustryMaterialFactors.hasOwnProperty(industryName)) {
+          if (!IndustryMaterialFactors.hasOwnProperty(industryName)) {
             throw new Error(`Invalid industry: '${industryName}'`);
           }
           const factors = IndustryMaterialFactors[industryName];
@@ -496,7 +496,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
 
           return Math.max(Math.pow(cityMult, 0.73), 1);
         },
-    }
+    },
   };
 
   function checkAccess(ctx: NetscriptContext, api?: number): void {

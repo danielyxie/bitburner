@@ -67,7 +67,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 import { checkEnum } from "../utils/helpers/checkEnum";
-import {MaterialSizes} from "../Corporation/MaterialSizes";
+import { MaterialSizes } from "../Corporation/MaterialSizes";
 
 export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
@@ -289,14 +289,13 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       if (office === 0) continue;
       cities.push(office.loc);
     }
-    const int:number = division.getEmployeeIntMultiplier();
-    const cha:number = division.getEmployeeChaMultiplier();
-    const cre:number = division.getEmployeeCreMultiplier();
-    const eff:number = division.getEmployeeEffMultiplier();
-    const sci:number = division.getScientificResearchMultiplier();
-    const prod:number = division.getProductionMultiplier()
-    const store:number = division.getStorageMultiplier();
-
+    const int: number = division.getEmployeeIntMultiplier();
+    const cha: number = division.getEmployeeChaMultiplier();
+    const cre: number = division.getEmployeeCreMultiplier();
+    const eff: number = division.getEmployeeEffMultiplier();
+    const sci: number = division.getScientificResearchMultiplier();
+    const prod: number = division.getProductionMultiplier();
+    const store: number = division.getStorageMultiplier();
 
     return {
       name: division.name,
@@ -313,25 +312,25 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       cities: cities,
       products: division.products === undefined ? [] : Object.keys(division.products),
       makesProducts: division.makesProducts,
-      getChaMultiplier : (): number => {
+      getChaMultiplier: (): number => {
         return cha;
       },
-      getCreMultiplier : (): number => {
+      getCreMultiplier: (): number => {
         return cre;
       },
-      getIntMultiplier : (): number => {
+      getIntMultiplier: (): number => {
         return int;
       },
-      getEffMultiplier : (): number => {
+      getEffMultiplier: (): number => {
         return eff;
       },
-      getSciMultiplier : (): number => {
+      getSciMultiplier: (): number => {
         return sci;
       },
-      getProdMultiplier : (): number => {
+      getProdMultiplier: (): number => {
         return prod;
       },
-      getStoreMultiplier : (): number => {
+      getStoreMultiplier: (): number => {
         return store;
       },
     };
@@ -687,7 +686,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         checkAccess(ctx, 7);
         const materialName = helpers.string(ctx, "materialName", _materialName);
         return MaterialSizes[materialName];
-    }
+      },
   };
 
   const officeAPI: InternalAPI<OfficeAPI> = {
@@ -1105,19 +1104,19 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       checkAccess(ctx);
       return Math.round(getCorporation().storedCycles / 5) * 1000;
     },
-    getChaUpgradeMultiplier : (ctx: NetscriptContext) => (): number => {
+    getChaUpgradeMultiplier: (ctx: NetscriptContext) => (): number => {
       checkAccess(ctx);
       return getCorporation().getEmployeeChaMultiplier();
     },
-    getCreUpgradeMultiplier : (ctx: NetscriptContext) => (): number => {
+    getCreUpgradeMultiplier: (ctx: NetscriptContext) => (): number => {
       checkAccess(ctx);
       return getCorporation().getEmployeeCreMultiplier();
     },
-    getIntUpgradeMultiplier : (ctx: NetscriptContext) => (): number => {
+    getIntUpgradeMultiplier: (ctx: NetscriptContext) => (): number => {
       checkAccess(ctx);
       return getCorporation().getEmployeeIntMultiplier();
     },
-    getEffUpgradeMultiplier : (ctx: NetscriptContext) => (): number => {
+    getEffUpgradeMultiplier: (ctx: NetscriptContext) => (): number => {
       checkAccess(ctx);
       return getCorporation().getEmployeeEffMultiplier();
     },

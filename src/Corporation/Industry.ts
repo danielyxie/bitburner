@@ -1,6 +1,6 @@
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
-import {Industries, IndustryStartingCosts, IndustryResearchTrees, IndustryMaterialFactors} from "./IndustryData";
+import { Industries, IndustryStartingCosts, IndustryResearchTrees, IndustryMaterialFactors } from "./IndustryData";
 import { CorporationConstants } from "./data/Constants";
 import { EmployeePositions } from "./EmployeePositions";
 import { Material } from "./Material";
