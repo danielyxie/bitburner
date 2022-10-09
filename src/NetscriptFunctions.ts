@@ -2,6 +2,7 @@ import $ from "jquery";
 import { vsprintf, sprintf } from "sprintf-js";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
+import { getBitNodeMultipliers as specificBNMultipliers } from "./BitNode/BitNode";
 import { CONSTANTS } from "./Constants";
 import {
   calculateHackingChance,
@@ -1072,13 +1073,36 @@ const base: InternalAPI<NS> = {
       levelCost: Player.mults.hacknet_node_level_cost,
     };
   },
-  getBitNodeMultipliers: (ctx: NetscriptContext) => (): IBNMults => {
-    if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "Requires Source-File 5 to run.");
-    }
-    const copy = Object.assign({}, BitNodeMultipliers);
-    return copy;
-  },
+  getBitNodeMultipliers: 
+    (ctx: NetscriptContext) => 
+    (_bitNode: number, _lvl: number): IBNMults => {
+      let bitNode = _bitNode;
+      const lvl = _lvl;
+      if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5) {
+        throw helpers.makeRuntimeErrorMsg(ctx, "Requires Source-File 5 to run.");
+      }
+
+      if (bitNode == undefined) {
+        bitNode = Player.bitNodeN;
+      }
+
+      if (bitNode > 13 || bitNode < 1 ) {
+        throw helpers.makeRuntimeErrorMsg(ctx, "Invalid BitNode, can only be an integer 1-13");
+      }
+
+      if (lvl < 0 && lvl != undefined) {
+        throw helpers.makeRuntimeErrorMsg(ctx, "Invalid level, must be an integer above 0.");
+      }
+
+      if (bitNode != 12) {
+        const copy = Object.assign({}, specificBNMultipliers(bitNode, 0));
+        return copy;
+      } else if (bitNode == 12) {
+        const copy = Object.assign({}, specificBNMultipliers(bitNode, lvl));
+        return copy;
+      }
+      return Object.assign({}, BitNodeMultipliers);
+    },
   getServer:
     (ctx: NetscriptContext) =>
     (_hostname: unknown = ctx.workerScript.hostname): IServerDef => {
