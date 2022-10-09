@@ -7446,7 +7446,7 @@ interface Division {
   thisCycleRevenue: number;
   /** Expenses this cycle */
   thisCycleExpenses: number;
-  /** All research bought */
+  /** AdVerts purchased */
   upgrades: number[];
   /** Cities in which this division has expanded */
   cities: string[];

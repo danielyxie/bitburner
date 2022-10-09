@@ -496,6 +496,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
   };
 
   function checkAccess(ctx: NetscriptContext, api?: number): void {
+    checkFormulasAccess(ctx);
     if (player.corporation === null) throw helpers.makeRuntimeErrorMsg(ctx, "Must own a corporation.");
     if (!api) return;
 
