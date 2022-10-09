@@ -97,15 +97,15 @@ export function EarningsElement(props: IProps): React.ReactElement {
 
   let data: (string | JSX.Element)[][] = [];
   if (isSleeveCrimeWork(props.sleeve.currentWork)) {
-    const gains = props.sleeve.currentWork.getExp();
+    const gains = props.sleeve.currentWork.getExp(props.sleeve);
     data = [
       [`Money:`, <Money money={5 * gains.money} />],
-      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * gains.hackExp * BitNodeMultipliers.CrimeExpGain)}`],
-      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * gains.strExp * BitNodeMultipliers.CrimeExpGain)}`],
-      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * gains.defExp * BitNodeMultipliers.CrimeExpGain)}`],
-      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * gains.dexExp * BitNodeMultipliers.CrimeExpGain)}`],
-      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * gains.agiExp * BitNodeMultipliers.CrimeExpGain)}`],
-      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * gains.chaExp * BitNodeMultipliers.CrimeExpGain)}`],
+      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * gains.hackExp)}`],
+      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * gains.strExp)}`],
+      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * gains.defExp)}`],
+      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * gains.dexExp)}`],
+      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * gains.agiExp)}`],
+      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * gains.chaExp)}`],
     ];
   }
   if (isSleeveClassWork(props.sleeve.currentWork)) {
