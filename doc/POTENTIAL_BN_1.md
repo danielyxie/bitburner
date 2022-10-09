@@ -72,3 +72,7 @@ When unit dies it comes back to life and gains a bonus based on it's exp. This b
 ### Waves
 
 Every now and then the game will spawn waves of ennemies to attack the home base. If the players core is destroyed the player suffers heavy penalty. Those wave do get stronger over time but also nerfed in the event of a wipeout in order to prevent deadlock.
+
+### Non-starting cells
+
+The cells other than the starting one is where you can find better rewards but also stronger and stronger enemies. Those enemies only attack what's inside their cell and will not follow players back home. But their health is restored if none of your units are in that cell.
