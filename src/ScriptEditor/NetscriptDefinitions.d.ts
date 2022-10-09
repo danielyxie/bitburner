@@ -1105,7 +1105,7 @@ export interface TIX {
    * ```ts
    * // NS1
    * stock.getPrice("FSIG");
-   * 
+   *
    * // Choose the first stock symbol from the array of stock symbols.  Get the price
    * // of the corresponding stock.
    * var sym = stock.getSymbols()[0];
@@ -1116,7 +1116,7 @@ export interface TIX {
    * ```ts
    * // NS2
    * ns.stock.getPrice("FSIG");
-   * 
+   *
    * // Choose the first stock symbol from the array of stock symbols.  Get the price
    * // of the corresponding stock.
    * const sym = ns.stock.getSymbols()[0];
@@ -4873,7 +4873,7 @@ export interface NS {
    * print("WARNing! Here be dragons.");
    * print("INFO for your I's only (FYI).");
    * print("INFOrmation overload!");
-   * // Custom color coding. 
+   * // Custom color coding.
    * var cyan = "\u001b[36m";
    * var green = "\u001b[32m";
    * var red = "\u001b[31m";
@@ -4973,9 +4973,9 @@ export interface NS {
    * RAM cost: 0 GB
    *
    * - See {@link NS.print | print} for how to add color to your printed strings.
-   * 
+   *
    * - See {@link NS.printf | printf} for examples on formatted strings.
-   * 
+   *
    * - For more detail, see: https://github.com/alexei/sprintf.js
    *
    * @param format - Format of the message.
