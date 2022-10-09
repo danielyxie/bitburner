@@ -7,7 +7,6 @@ export function scan(args: (string | number | boolean)[], currServ: BaseServer):
     Terminal.error("Incorrect usage of scan command. Usage: scan");
     return;
   }
-
   // Displays available network connections using TCP
   const servers = currServ.serversOnNetwork.map((_, i) => {
     const server = getServerOnNetwork(currServ, i);

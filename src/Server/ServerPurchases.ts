@@ -2,7 +2,7 @@
  * Implements functions for purchasing servers or purchasing more RAM for
  * the home computer
  */
-import { AddToAllServers, createUniqueRandomIp } from "./AllServers";
+import { AddToAllServers, createUniqueRandomIp, GetServer, renameServer } from "./AllServers";
 import { safelyCreateUniqueServer } from "./ServerHelpers";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -11,6 +11,7 @@ import { Player } from "../Player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
+import { workerScripts } from "../Netscript/WorkerScripts";
 
 // Returns the cost of purchasing a server with the given RAM
 // Returns Infinity for invalid 'ram' arguments
@@ -37,6 +38,47 @@ export function getPurchaseServerCost(ram: number): number {
     Math.pow(BitNodeMultipliers.PurchasedServerSoftcap, upg)
   );
 }
+
+export const getPurchasedServerUpgradeCost = (hostname: string, ram: number): number => {
+  const server = GetServer(hostname);
+  if (!server) throw new Error(`Server '${hostname}' not found.`);
+  if (!Player.purchasedServers.includes(hostname)) throw new Error(`Server '${hostname}' not a purchased server.`);
+  if (isNaN(ram) || !isPowerOfTwo(ram) || !(Math.sign(ram) === 1))
+    throw new Error(`${ram} is not a positive power of 2`);
+  if (server.maxRam >= ram)
+    throw new Error(`'${hostname}' current ram (${server.maxRam}) is not bigger than new ram (${ram})`);
+  return getPurchaseServerCost(ram) - getPurchaseServerCost(server.maxRam);
+};
+
+export const upgradePurchasedServer = (hostname: string, ram: number): void => {
+  const server = GetServer(hostname);
+  if (!server) throw new Error(`Server '${hostname}' not found.`);
+  const cost = getPurchasedServerUpgradeCost(hostname, ram);
+  if (!Player.canAfford(cost)) throw new Error(`You don't have enough money to upgrade '${hostname}'.`);
+  Player.loseMoney(cost, "servers");
+  server.maxRam = ram;
+};
+
+export const renamePurchasedServer = (hostname: string, newName: string): void => {
+  const server = GetServer(hostname);
+  if (!server) throw new Error(`Server '${newName}' doesn't exists.`);
+  if (GetServer(newName)) throw new Error(`Server '${newName}' already exists.`);
+  if (!Player.purchasedServers.includes(hostname)) throw new Error(`Server '${hostname}' is not a player server.`);
+  const replace = (arr: string[], old: string, next: string): string[] => {
+    return arr.map((v) => (v === old ? next : v));
+  };
+  Player.purchasedServers = replace(Player.purchasedServers, hostname, newName);
+  const home = Player.getHomeComputer();
+  home.serversOnNetwork = replace(home.serversOnNetwork, hostname, newName);
+  server.serversOnNetwork = replace(server.serversOnNetwork, hostname, newName);
+  server.runningScripts.forEach((r) => (r.server = newName));
+  server.scripts.forEach((r) => (r.server = newName));
+  server.hostname = newName;
+  workerScripts.forEach((w) => {
+    if (w.hostname === hostname) w.hostname = newName;
+  });
+  renameServer(hostname, newName);
+};
 
 export function getPurchaseServerLimit(): number {
   return Math.round(CONSTANTS.PurchasedServerLimit * BitNodeMultipliers.PurchasedServerLimit);

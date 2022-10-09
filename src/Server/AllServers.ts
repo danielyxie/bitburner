@@ -106,6 +106,11 @@ export function AddToAllServers(server: Server | HacknetServer): void {
   AllServers[server.hostname] = server;
 }
 
+export const renameServer = (hostname: string, newName: string): void => {
+  AllServers[newName] = AllServers[hostname];
+  delete AllServers[hostname];
+};
+
 interface IServerParams {
   hackDifficulty?: number;
   hostname: string;

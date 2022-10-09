@@ -26,7 +26,14 @@ import {
   processSingleServerGrowth,
   safelyCreateUniqueServer,
 } from "./Server/ServerHelpers";
-import { getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam } from "./Server/ServerPurchases";
+import {
+  getPurchasedServerUpgradeCost,
+  getPurchaseServerCost,
+  getPurchaseServerLimit,
+  getPurchaseServerMaxRam,
+  renamePurchasedServer,
+  upgradePurchasedServer,
+} from "./Server/ServerPurchases";
 import { Server } from "./Server/Server";
 import { influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
@@ -1042,13 +1049,7 @@ const base: InternalAPI<NS> = {
       const server = helpers.getServer(ctx, hostname);
       return server.hasAdminRights;
     },
-  getHostname: (ctx: NetscriptContext) => (): string => {
-    const scriptServer = GetServer(ctx.workerScript.hostname);
-    if (scriptServer == null) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "Could not find server. This is a bug. Report to dev.");
-    }
-    return scriptServer.hostname;
-  },
+  getHostname: (ctx: NetscriptContext) => (): string => ctx.workerScript.hostname,
   getHackingLevel: (ctx: NetscriptContext) => (): number => {
     Player.updateSkillLevels();
     helpers.log(ctx, () => `returned ${Player.skills.hacking}`);
@@ -1385,6 +1386,47 @@ const base: InternalAPI<NS> = {
       );
       return newServ.hostname;
     },
+
+  getPurchasedServerUpgradeCost:
+    (ctx: NetscriptContext) =>
+    (_hostname: unknown, _ram: unknown): number => {
+      const hostname = helpers.string(ctx, "hostname", _hostname);
+      const ram = helpers.number(ctx, "ram", _ram);
+      try {
+        return getPurchasedServerUpgradeCost(hostname, ram);
+      } catch (err) {
+        helpers.log(ctx, () => String(err));
+        return -1;
+      }
+    },
+  upgradePurchasedServer:
+    (ctx: NetscriptContext) =>
+    (_hostname: unknown, _ram: unknown): boolean => {
+      const hostname = helpers.string(ctx, "hostname", _hostname);
+      const ram = helpers.number(ctx, "ram", _ram);
+      try {
+        upgradePurchasedServer(hostname, ram);
+        return true;
+      } catch (err) {
+        helpers.log(ctx, () => String(err));
+        return false;
+      }
+    },
+  renamePurchasedServer:
+    (ctx: NetscriptContext) =>
+    (_hostname: unknown, _newName: unknown): boolean => {
+      const hostname = helpers.string(ctx, "hostname", _hostname);
+      const newName = helpers.string(ctx, "newName", _newName);
+      try {
+        renamePurchasedServer(hostname, newName);
+        return true;
+      } catch (err) {
+        helpers.log(ctx, () => String(err));
+        return false;
+      }
+      return false;
+    },
+
   deleteServer:
     (ctx: NetscriptContext) =>
     (_name: unknown): boolean => {

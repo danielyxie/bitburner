@@ -6036,6 +6036,39 @@ export interface NS {
   purchaseServer(hostname: string, ram: number): string;
 
   /**
+   * Get cost of upgrading a purchased server to the given ram.
+   * @remarks
+   * RAM cost: 0.1 GB
+   *
+   * @param hostname - Hostname of the server to upgrade.
+   * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
+   * @returns The price to upgrade.
+   */
+  getPurchasedServerUpgradeCost(hostname: string, ram: number): number;
+
+  /**
+   * Upgrade a purchased servers ram.
+   * @remarks
+   * RAM cost: 0.25 GB
+   *
+   * @param hostname - Hostname of the server to upgrade.
+   * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
+   * @returns True if the upgrade succeeded.
+   */
+  upgradePurchasedServer(hostname: string, ram: number): boolean;
+
+  /**
+   * Rename a purchased server.
+   * @remarks
+   * RAM cost: 2.00 GB
+   *
+   * @param hostname - current server hostname
+   * @param newName - new server hostname
+   * @returns True if the upgrade succeeded.
+   */
+  renamePurchasedServer(hostname: string, newName: string): boolean;
+
+  /**
    * Delete a purchased server.
    * @remarks
    * 2.25 GB

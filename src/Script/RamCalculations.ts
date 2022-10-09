@@ -192,7 +192,7 @@ function parseOnlyRamCalculate(otherScripts: Script[], code: string): RamCalcula
         ram += fnRam;
         detailedCosts.push({ type: "fn", name: details?.refDetail ?? "", cost: fnRam });
       } catch (error) {
-        console.log(error);
+        console.error(error);
         continue;
       }
     }
