@@ -207,7 +207,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function bribe(factionName: string, amountCash: number): boolean {
     if (!player.factions.includes(factionName)) throw new Error("Invalid faction name");
     if (isNaN(amountCash) || amountCash < 0)
-      throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
+      throw new Error("Invalid value for amount field! Must be numeric, greater than 0.");
 
     const corporation = getCorporation();
     if (corporation.funds < amountCash) return false;
