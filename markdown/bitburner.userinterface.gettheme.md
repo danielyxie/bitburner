@@ -13,7 +13,7 @@ getTheme(): UserInterfaceTheme;
 ```
 <b>Returns:</b>
 
-UserInterfaceTheme
+[UserInterfaceTheme](./bitburner.userinterfacetheme.md)
 
 An object containing the theme's colors
 

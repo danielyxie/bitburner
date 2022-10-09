@@ -35,6 +35,7 @@
 |  [Export](./bitburner.export.md) | Export order for a material |
 |  [Formulas](./bitburner.formulas.md) | Formulas API |
 |  [Fragment](./bitburner.fragment.md) |  |
+|  [GameInfo](./bitburner.gameinfo.md) | Game Information |
 |  [Gang](./bitburner.gang.md) | Gang API |
 |  [GangFormulas](./bitburner.gangformulas.md) | Gang formulas |
 |  [GangGenInfo](./bitburner.ganggeninfo.md) | Gang general info. |
@@ -59,6 +60,7 @@
 |  [InfiltrationLocation](./bitburner.infiltrationlocation.md) |  |
 |  [InfiltrationReward](./bitburner.infiltrationreward.md) |  |
 |  [InvestmentOffer](./bitburner.investmentoffer.md) | Corporation investment offer |
+|  [IStyleSettings](./bitburner.istylesettings.md) | Interface Styles |
 |  [Material](./bitburner.material.md) | Material in a warehouse |
 |  [Multipliers](./bitburner.multipliers.md) |  |
 |  [NetscriptPort](./bitburner.netscriptport.md) | Object representing a port. A port is a serialized queue. |
@@ -87,10 +89,17 @@
 |  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
 |  [TIX](./bitburner.tix.md) | Stock market API |
 |  [UserInterface](./bitburner.userinterface.md) | User Interface API. |
+|  [UserInterfaceTheme](./bitburner.userinterfacetheme.md) | Interface Theme |
 |  [Warehouse](./bitburner.warehouse.md) | Warehouse for a division in a city |
 |  [WarehouseAPI](./bitburner.warehouseapi.md) | Corporation Warehouse API |
 |  [WorkFormulas](./bitburner.workformulas.md) | Work formulas |
 |  [WorkStats](./bitburner.workstats.md) |  |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [enums](./bitburner.enums.md) |  |
 
 ## Type Aliases
 
@@ -103,4 +112,5 @@
 |  [ScriptArg](./bitburner.scriptarg.md) |  |
 |  [SleeveTask](./bitburner.sleevetask.md) | Object representing a sleeve current task. |
 |  [ToastVariant](./bitburner.toastvariant.md) |  |
+|  [ValuesFrom](./bitburner.valuesfrom.md) |  |
 

@@ -1119,7 +1119,7 @@ export declare interface EmployeeJobs {
     Unassigned: number;
 }
 
-/** @internal */
+/** @public */
 export declare const enums = {
     toast: {
         SUCCESS: "success",
@@ -1200,7 +1200,7 @@ export declare interface Fragment {
 
 /**
  * Game Information
- * @internal
+ * @public
  */
 export declare interface GameInfo {
     version: string;
@@ -2470,7 +2470,7 @@ export declare interface InvestmentOffer {
 
 /**
  * Interface Styles
- * @internal
+ * @public
  */
 export declare interface IStyleSettings {
     fontFamily: string;
@@ -7236,7 +7236,7 @@ export declare interface UserInterface {
 
 /**
  * Interface Theme
- * @internal
+ * @public
  */
 export declare interface UserInterfaceTheme {
     [key: string]: string | undefined;
@@ -7275,7 +7275,7 @@ export declare interface UserInterfaceTheme {
     button: string;
 }
 
-/** @internal */
+/** @public */
 export declare type ValuesFrom<T> = T[keyof T];
 
 /**

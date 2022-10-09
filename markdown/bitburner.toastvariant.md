@@ -10,3 +10,5 @@
 ```typescript
 type ToastVariant = ValuesFrom<typeof enums.toast>;
 ```
+<b>References:</b> [ValuesFrom](./bitburner.valuesfrom.md)
+

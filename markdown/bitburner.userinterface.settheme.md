@@ -16,7 +16,7 @@ setTheme(newTheme: UserInterfaceTheme): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  newTheme | UserInterfaceTheme |  |
+|  newTheme | [UserInterfaceTheme](./bitburner.userinterfacetheme.md) |  |
 
 <b>Returns:</b>
 

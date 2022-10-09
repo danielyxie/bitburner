@@ -1,4 +1,4 @@
-/** @internal */
+/** @public */
 export type ValuesFrom<T> = T[keyof T];
 
 /** @public */
@@ -6714,7 +6714,7 @@ export interface NS {
   enums: NSEnums;
 }
 
-/** @internal */
+/** @public */
 declare const enums = {
   toast: {
     SUCCESS: "success",
@@ -7467,7 +7467,7 @@ interface InvestmentOffer {
 
 /**
  * Interface Theme
- * @internal
+ * @public
  */
 interface UserInterfaceTheme {
   [key: string]: string | undefined;
@@ -7508,7 +7508,7 @@ interface UserInterfaceTheme {
 
 /**
  * Interface Styles
- * @internal
+ * @public
  */
 interface IStyleSettings {
   fontFamily: string;
@@ -7517,7 +7517,7 @@ interface IStyleSettings {
 
 /**
  * Game Information
- * @internal
+ * @public
  */
 interface GameInfo {
   version: string;

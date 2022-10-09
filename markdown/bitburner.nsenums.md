@@ -10,3 +10,5 @@
 ```typescript
 export type NSEnums = typeof enums;
 ```
+<b>References:</b> [enums](./bitburner.enums.md)
+

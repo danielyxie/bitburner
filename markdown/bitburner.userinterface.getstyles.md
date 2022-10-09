@@ -13,7 +13,7 @@ getStyles(): IStyleSettings;
 ```
 <b>Returns:</b>
 
-IStyleSettings
+[IStyleSettings](./bitburner.istylesettings.md)
 
 An object containing the player's styles
 

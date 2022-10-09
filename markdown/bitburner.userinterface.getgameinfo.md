@@ -13,7 +13,7 @@ getGameInfo(): GameInfo;
 ```
 <b>Returns:</b>
 
-GameInfo
+[GameInfo](./bitburner.gameinfo.md)
 
 ## Remarks
 
