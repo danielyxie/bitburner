@@ -6603,11 +6603,11 @@ export interface NS {
    * print(ServerMaxMoney);
    * print(HackExpGain);
    * ```
-   * @param BitNode - BitNode you want the multipliers for.
-   * @param lvl - The level of the BitNode (for BN12)
+   * @param bitNode - BitNode you want the multipliers for. Optional.
+   * @param lvl - The level of the BitNode. Optional. For BN12.
    * @returns Object containing the current (or supplied) BitNode multipliers.
    */
-  getBitNodeMultipliers(BitNode, lvl): BitNodeMultipliers;
+  getBitNodeMultipliers(bitNode?: number, lvl?: number): BitNodeMultipliers;
 
   /**
    * Get information about the player.
