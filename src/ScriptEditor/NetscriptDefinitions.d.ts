@@ -3618,7 +3618,7 @@ export interface Sleeve {
    *
    * Returns false if an invalid action is specified.
    *
-   * @param sleeveNumber - Index of the sleeve to start committing crime.
+   * @param sleeveNumber - Index of the sleeve to start committing crime. Sleeves are numbered starting from 0.
    * @param name - Name of the crime. Must be an exact match.
    * @returns True if this action was set successfully, false otherwise.
    */
