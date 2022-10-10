@@ -1097,7 +1097,7 @@ const base: InternalAPI<NS> = {
         if (Player.bitNodeN == 12) {
           const copy = Object.assign({}, BitNodeMultipliers);
           return copy;
-        } 
+        }
         const copy = Object.assign({}, specificBNMultipliers(bitNode, lvl));
         return copy;
       }
