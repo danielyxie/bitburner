@@ -74,7 +74,7 @@ import {
   Server as IServerDef,
   RunningScript as IRunningScriptDef,
   MoneySource as IMoneySource,
-  MoneySources as IMoneySources
+  MoneySources as IMoneySources,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
@@ -1937,9 +1937,9 @@ const base: InternalAPI<NS> = {
       work: Player.moneySourceA.work,
       servers: Player.moneySourceA.servers,
       other: Player.moneySourceA.other,
-      augmentations: Player.moneySourceA.augmentations
-    };    
-    const sinceStart: IMoneySource= {
+      augmentations: Player.moneySourceA.augmentations,
+    };
+    const sinceStart: IMoneySource = {
       bladeburner: Player.moneySourceB.bladeburner,
       casino: Player.moneySourceB.casino,
       class: Player.moneySourceB.class,
@@ -1958,7 +1958,7 @@ const base: InternalAPI<NS> = {
       work: Player.moneySourceB.work,
       servers: Player.moneySourceB.servers,
       other: Player.moneySourceB.other,
-      augmentations: Player.moneySourceB.augmentations
+      augmentations: Player.moneySourceB.augmentations,
     };
     return { sinceInstall: sinceInstall, sinceStart: sinceStart };
   },

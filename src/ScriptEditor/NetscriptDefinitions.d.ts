@@ -6686,7 +6686,7 @@ export interface NS {
    */
   getPlayer(): Player;
 
-   /**
+  /**
    * Get information about the sources of income for this node.
    * @remarks
    * RAM cost: 1.0 GB
@@ -6697,7 +6697,7 @@ export interface NS {
    */
   getMoneySources(): MoneySources;
 
-   /**
+  /**
    * Add callback function when the script dies
    * @remarks
    * RAM cost: 0 GB
