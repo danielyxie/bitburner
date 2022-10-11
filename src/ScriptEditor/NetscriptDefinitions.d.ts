@@ -6687,7 +6687,7 @@ export interface NS {
   getPlayer(): Player;
 
   /**
-   * Get information about the sources of income for this node.
+   * Get information about the sources of income for this run.
    * @remarks
    * RAM cost: 1.0 GB
    *
