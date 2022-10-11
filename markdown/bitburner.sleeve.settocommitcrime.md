@@ -16,8 +16,8 @@ setToCommitCrime(sleeveNumber: number, name: string): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to start committing crime. |
-|  name | string | Name of the crime. Must be an exact match. |
+|  sleeveNumber | number | Index of the sleeve to start committing crime. Sleeves are numbered starting from 0. |
+|  name | string | Name of the crime. Must be an exact match. Refer to the list of crimes. |
 
 <b>Returns:</b>
 
@@ -32,4 +32,34 @@ RAM cost: 4 GB
 Return a boolean indicating whether or not this action was set successfully.
 
 Returns false if an invalid action is specified.
+
+You can set a sleeve to commit one of the following crimes. The crime names are not case sensitive. For example, you can pass in the crime name as `"Shoplift"`<!-- -->, `"shoplift"`<!-- -->, `"shopLift"`<!-- -->, or even `"SHOPLIFT"`<!-- -->.
+
+- Assassination - Bond forgery - Deal drugs - Grand theft auto - Heist - Homicide - Kidnap - Larceny - Mug - Rob store - Shoplift - Traffick arms
+
+## Example 1
+
+
+```ts
+// NS1
+// Assign the first 3 sleeves to commit various crimes.
+var crime = ["mug", "rob store", "shoplift"];
+for (var i = 0; i < crime.length; i++) {
+    tprintf("Sleeve %d commits crime: %s", i, crime[i]);
+    sleeve.setToCommitCrime(i, crime[i]);
+}
+```
+
+## Example 2
+
+
+```ts
+// NS2
+// Assign the first 3 sleeves to commit various crimes.
+const crime = ["mug", "rob store", "shoplift"];
+for (let i = 0; i < crime.length; i++) {
+    ns.tprintf("Sleeve %d commits crime: %s", i, crime[i]);
+    ns.sleeve.setToCommitCrime(i, crime[i]);
+}
+```
 
