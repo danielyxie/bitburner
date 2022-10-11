@@ -62,6 +62,35 @@ interface Player {
 }
 
 /** @public */
+interface MoneySource {
+  bladeburner: number;
+  casino: number;
+  class: number;
+  codingcontract: number;
+  corporation: number;
+  crime: number;
+  gang: number;
+  hacking: number;
+  hacknet: number;
+  hacknet_expenses: number;
+  hospitalization: number;
+  infiltration: number;
+  sleeves: number;
+  stock: number;
+  total: number;
+  work: number;
+  servers: number;
+  other: number;
+  augmentations: number;
+}
+
+/** @public */
+interface MoneySources {
+  sinceInstall: MoneySource;
+  sinceStart: MoneySource;
+}
+
+/** @public */
 export interface Multipliers {
   /** Multiplier to hacking skill */
   hacking?: number;
@@ -6619,7 +6648,18 @@ export interface NS {
    */
   getPlayer(): Player;
 
-  /**
+   /**
+   * Get information about the sources of income for this node.
+   * @remarks
+   * RAM cost: 0.5 GB
+   *
+   * Returns an object with information on the income sources for this run
+   *
+   * @returns Money sources
+   */
+  getMoneySources(): MoneySources;
+
+   /**
    * Add callback function when the script dies
    * @remarks
    * RAM cost: 0 GB
