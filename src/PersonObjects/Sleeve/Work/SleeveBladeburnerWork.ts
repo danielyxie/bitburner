@@ -61,8 +61,10 @@ export class SleeveBladeburnerWork extends Work {
         if (!exp) throw new Error(`Somehow there was no exp for action ${this.actionType} ${this.actionName}`);
         applySleeveGains(sleeve, exp, 1);
       }
-      Player.gainMoney(retValue.money, "sleeves");
-      Player.gainStats(retValue);
+
+      if (this.actionType === "Contracts") {
+        applySleeveGains(sleeve, retValue, 1);
+      }
       this.cyclesWorked -= this.cyclesNeeded(sleeve);
     }
     return 0;
