@@ -1938,8 +1938,7 @@ const base: InternalAPI<NS> = {
       servers: Player.moneySourceA.servers,
       other: Player.moneySourceA.other,
       augmentations: Player.moneySourceA.augmentations
-    };
-    
+    };    
     const sinceStart: IMoneySource= {
       bladeburner: Player.moneySourceB.bladeburner,
       casino: Player.moneySourceB.casino,
@@ -1961,13 +1960,7 @@ const base: InternalAPI<NS> = {
       other: Player.moneySourceB.other,
       augmentations: Player.moneySourceB.augmentations
     };
-
-    const data: IMoneySources = {
-      sinceInstall: sinceInstall,
-      sinceStart: sinceStart
-    };
-
-    return data;
+    return { sinceInstall: sinceInstall, sinceStart: sinceStart };
   },
   atExit:
     (ctx: NetscriptContext) =>

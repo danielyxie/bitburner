@@ -6689,7 +6689,7 @@ export interface NS {
    /**
    * Get information about the sources of income for this node.
    * @remarks
-   * RAM cost: 0.5 GB
+   * RAM cost: 1.0 GB
    *
    * Returns an object with information on the income sources for this run
    *
