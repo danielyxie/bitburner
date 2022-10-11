@@ -14,6 +14,7 @@ import { Reputation } from "../../ui/React/Reputation";
 import { FactionNames } from "../data/FactionNames";
 import { Faction } from "../Faction";
 import { getFactionAugmentationsFiltered, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
+import { CONSTANTS } from "../../Constants";
 
 type IProps = {
   faction: Faction;
@@ -130,11 +131,45 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
 
   const multiplierComponent =
     props.faction.name !== FactionNames.ShadowsOfAnarchy ? (
-      <Typography>
-        <b>Price multiplier:</b> x {numeralWrapper.formatReallyBigNumber(getGenericAugmentationPriceMultiplier())}
-      </Typography>
+      <Tooltip
+        title={
+          <Typography>
+            The price of every Augmentation increases for every queued Augmentation and it is reset when you install
+            them.
+          </Typography>
+        }
+      >
+        <Typography>
+          <b>Price multiplier:</b> x {numeralWrapper.formatReallyBigNumber(getGenericAugmentationPriceMultiplier())}
+        </Typography>
+      </Tooltip>
     ) : (
-      <></>
+      <Tooltip
+        title={
+          <Typography>
+            The prices of Shadows of Anarchy's Augmentations increases for every one already bought. These price are NOT
+            reset when installing augmentations.
+          </Typography>
+        }
+      >
+        <Typography>
+          <b>Price multiplier:</b> x{" "}
+          {numeralWrapper.formatReallyBigNumber(
+            Math.pow(
+              CONSTANTS.SoACostMult,
+              augs.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length,
+            ),
+          )}
+          <br />
+          <b>Reputation multiplier:</b> x{" "}
+          {numeralWrapper.formatReallyBigNumber(
+            Math.pow(
+              CONSTANTS.SoARepMult,
+              augs.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length,
+            ),
+          )}
+        </Typography>
+      </Tooltip>
     );
 
   return (
@@ -156,20 +191,10 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
               my: 1,
             }}
           >
-            <Tooltip
-              title={
-                <Typography>
-                  The price of every Augmentation increases for every queued Augmentation and it is reset when you
-                  install them.
-                </Typography>
-              }
-            >
-              {multiplierComponent}
-            </Tooltip>
+            <>{multiplierComponent}</>
             <Typography>
               <b>Reputation:</b> <Reputation reputation={props.faction.playerReputation} />
-            </Typography>
-            <Typography>
+              <br />
               <b>Favor:</b> <Favor favor={Math.floor(props.faction.favor)} />
             </Typography>
           </Box>
