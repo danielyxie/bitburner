@@ -147,8 +147,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       <Tooltip
         title={
           <Typography>
-            The prices of Shadows of Anarchy's Augmentations increases for every one already bought. These price are NOT
-            reset when installing augmentations.
+            {FactionNames.ShadowsOfAnarchy} augmentations prices increase for every one already bought. These prices are NOT reset when installing augmentations.
           </Typography>
         }
       >
