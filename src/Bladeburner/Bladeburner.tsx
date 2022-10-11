@@ -1010,7 +1010,7 @@ export class Bladeburner {
       chaExp: unweightedGain * action.weights.cha * skillMult,
       intExp: unweightedIntGain * action.weights.int * skillMult,
       money: 0,
-      reputation: 0
+      reputation: 0,
     };
   }
 
