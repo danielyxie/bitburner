@@ -2044,7 +2044,7 @@ export interface Singularity {
 
   /**
    * Get the price and reputation of an augmentation.
-   * @deprecated use getAugmentationPrice getAugmentationRepCost
+   * @deprecated use getAugmentationPrice getAugmentationRepReq
    * @remarks
    * RAM cost: 5 GB * 16/4/1
    *
