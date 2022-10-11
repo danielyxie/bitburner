@@ -1,9 +1,11 @@
-import { Player as player } from "../Player";
+import { Player } from "../Player";
 import { Exploit } from "../Exploits/Exploit";
 import * as bcrypt from "bcryptjs";
 import { Apr1Events as devMenu } from "../ui/Apr1";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
+import { ReactNode } from "react";
+import { Terminal } from "../Terminal";
 
 export interface INetscriptExtra {
   heart: {
@@ -14,39 +16,38 @@ export interface INetscriptExtra {
   bypass(doc: Document): void;
   alterReality(): void;
   rainbow(guess: string): void;
+  printRaw(node: ReactNode): void;
 }
 
 export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
   return {
     heart: {
       // Easter egg function
-      break: () => (): number => {
-        return player.karma;
+      break: () => () => {
+        return Player.karma;
       },
     },
-    openDevMenu: () => (): void => {
+    openDevMenu: () => () => {
       devMenu.emit();
     },
-    exploit: () => (): void => {
-      player.giveExploit(Exploit.UndocumentedFunctionCall);
+    exploit: () => () => {
+      Player.giveExploit(Exploit.UndocumentedFunctionCall);
     },
-    bypass:
-      (ctx: NetscriptContext) =>
-      (doc: unknown): void => {
-        // reset both fields first
-        type temporary = { completely_unused_field: unknown };
-        const d = doc as temporary;
-        d.completely_unused_field = undefined;
-        const real_document = document as unknown as temporary;
-        real_document.completely_unused_field = undefined;
-        // set one to true and check that it affected the other.
-        real_document.completely_unused_field = true;
-        if (d.completely_unused_field && ctx.workerScript.ramUsage === 1.6) {
-          player.giveExploit(Exploit.Bypass);
-        }
-        d.completely_unused_field = undefined;
-        real_document.completely_unused_field = undefined;
-      },
+    bypass: (ctx: NetscriptContext) => (doc: unknown) => {
+      // reset both fields first
+      type temporary = { completely_unused_field: unknown };
+      const d = doc as temporary;
+      d.completely_unused_field = undefined;
+      const real_document = document as unknown as temporary;
+      real_document.completely_unused_field = undefined;
+      // set one to true and check that it affected the other.
+      real_document.completely_unused_field = true;
+      if (d.completely_unused_field && ctx.workerScript.ramUsage === 1.6) {
+        Player.giveExploit(Exploit.Bypass);
+      }
+      d.completely_unused_field = undefined;
+      real_document.completely_unused_field = undefined;
+    },
     alterReality: () => (): void => {
       // We need to trick webpack into not optimizing a variable that is guaranteed to be false (and doesn't use prototypes)
       let x = false;
@@ -59,25 +60,27 @@ export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
       console.warn("I am sure that this variable is false.");
       if (x !== false) {
         console.warn("Reality has been altered!");
-        player.giveExploit(Exploit.RealityAlteration);
+        Player.giveExploit(Exploit.RealityAlteration);
       }
     },
-    rainbow:
-      (ctx: NetscriptContext) =>
-      (guess: unknown): boolean => {
-        function tryGuess(): boolean {
-          // eslint-disable-next-line no-sync
-          const verified = bcrypt.compareSync(
-            helpers.string(ctx, "guess", guess),
-            "$2a$10$aertxDEkgor8baVtQDZsLuMwwGYmkRM/ohcA6FjmmzIHQeTCsrCcO",
-          );
-          if (verified) {
-            player.giveExploit(Exploit.INeedARainbow);
-            return true;
-          }
-          return false;
+    rainbow: (ctx: NetscriptContext) => (guess: unknown) => {
+      function tryGuess(): boolean {
+        // eslint-disable-next-line no-sync
+        const verified = bcrypt.compareSync(
+          helpers.string(ctx, "guess", guess),
+          "$2a$10$aertxDEkgor8baVtQDZsLuMwwGYmkRM/ohcA6FjmmzIHQeTCsrCcO",
+        );
+        if (verified) {
+          Player.giveExploit(Exploit.INeedARainbow);
+          return true;
         }
-        return tryGuess();
-      },
+        return false;
+      }
+      return tryGuess();
+    },
+    printRaw: () => (node: unknown) => {
+      // Just wraps the internal function to allow player use - players can use at own risk
+      Terminal.printRaw(node as ReactNode);
+    },
   };
 }
