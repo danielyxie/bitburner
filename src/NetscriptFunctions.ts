@@ -1075,33 +1075,39 @@ const base: InternalAPI<NS> = {
   },
   getBitNodeMultipliers:
     (ctx: NetscriptContext) =>
-    (_bitNode: unknown = Player.bitNodeN, _lvl: unknown = 1): IBNMults => {
-      const bitNode = helpers.number(ctx, "bitNode", _bitNode);
-      const lvl = helpers.number(ctx, "lvl", _lvl);
-      if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5) {
+    (_bn: unknown, _lvl: unknown): IBNMults => {
+      if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5)
         throw helpers.makeRuntimeErrorMsg(ctx, "Requires Source-File 5 to run.");
+      //Return the current multipliers if this was called with no args.
+      if (_bn === undefined) return Object.assign({}, BitNodeMultipliers);
+
+      const bitNode = helpers.number(ctx, "bitNode", _bn);
+      // Current max BN is 13. Adjust as more BN are added.
+      if (bitNode > 13 || bitNode < 1 || bitNode !== Math.floor(bitNode)) {
+        throw helpers.makeRuntimeErrorMsg(
+          ctx,
+          `Provided bitNode (${bitNode}) invalid. Must be an integer between 1-13.`,
+        );
       }
 
-      if (bitNode > 13 || bitNode < 1) {
-        throw helpers.makeRuntimeErrorMsg(ctx, "Invalid BitNode, can only be an integer 1-13");
+      // BN12 cares about level, so it has separate logic. Any new BN that cares about level should be added to this block.
+      if (bitNode === 12) {
+        if (_lvl === undefined)
+          throw helpers.makeRuntimeErrorMsg(
+            ctx,
+            `Level was not specified. The requested BitNode (${bitNode}) requires a specified level.`,
+          );
+        const level = helpers.number(ctx, "level", _lvl);
+        if (level <= 0 || level !== Math.floor(level))
+          throw helpers.makeRuntimeErrorMsg(
+            ctx,
+            `Provided level (${level}) invalid. Must be an integer greater than 0.`,
+          );
+        return Object.assign({}, specificBNMultipliers(bitNode, level));
       }
 
-      if (lvl < 0 && lvl != undefined) {
-        throw helpers.makeRuntimeErrorMsg(ctx, "Invalid level, must be an integer above 0.");
-      }
-
-      if (bitNode != 12) {
-        const copy = Object.assign({}, specificBNMultipliers(bitNode, 0));
-        return copy;
-      } else if (bitNode == 12) {
-        if (Player.bitNodeN == 12) {
-          const copy = Object.assign({}, BitNodeMultipliers);
-          return copy;
-        }
-        const copy = Object.assign({}, specificBNMultipliers(bitNode, lvl));
-        return copy;
-      }
-      return Object.assign({}, BitNodeMultipliers);
+      // Just use level 1 for bitNodes that don't care about level.
+      return Object.assign({}, specificBNMultipliers(bitNode, 1));
     },
   getServer:
     (ctx: NetscriptContext) =>
