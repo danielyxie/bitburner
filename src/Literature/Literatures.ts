@@ -210,7 +210,7 @@ export const Literatures: Record<string, Literature> = {};
     "associated with life, heat, masculinity, and heaven.<br><br>" +
     "The company was founded " +
     "less than 5 years ago and is already the third highest valued company in all of Asia. In 2076 it generated a total revenue of " +
-    "over 10 trillion yuan. It's services are used daily by over a billion people worldwide.<br><br>" +
+    "over 10 trillion yuan. Its services are used daily by over a billion people worldwide.<br><br>" +
     "TaiYang Digital's meteoric rise is extremely surprising in modern society. This sort of growth is " +
     "something you'd commonly see in the first half of the century, especially for tech companies. However in " +
     "the last two decades the number of corporations has significantly declined as the largest entities " +
