@@ -4,8 +4,6 @@ import * as bcrypt from "bcryptjs";
 import { Apr1Events as devMenu } from "../ui/Apr1";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
-import { ReactNode } from "react";
-import { Terminal } from "../Terminal";
 
 export interface INetscriptExtra {
   heart: {
@@ -16,7 +14,6 @@ export interface INetscriptExtra {
   bypass(doc: Document): void;
   alterReality(): void;
   rainbow(guess: string): void;
-  printRaw(node: ReactNode): void;
 }
 
 export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
@@ -77,10 +74,6 @@ export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
         return false;
       }
       return tryGuess();
-    },
-    printRaw: () => (node: unknown) => {
-      // Just wraps the internal function to allow player use - players can use at own risk
-      Terminal.printRaw(node as ReactNode);
     },
   };
 }

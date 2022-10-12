@@ -546,7 +546,6 @@ export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
     // Easter egg function
     break: 0,
   },
-  printRaw: 0,
 
   formulas: {
     mockServer: 0,
