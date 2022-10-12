@@ -202,7 +202,7 @@ const base: InternalAPI<NS> = {
   },
   sleep:
     (ctx) =>
-    async (_time = 0) => {
+    (_time = 0) => {
       const time = helpers.number(ctx, "time", _time);
       if (time === undefined) {
         throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
@@ -212,15 +212,16 @@ const base: InternalAPI<NS> = {
         return Promise.resolve(true);
       });
     },
-  asleep: (ctx) =>
-    function (_time = 0) {
+  asleep:
+    (ctx) =>
+    (_time = 0) => {
       const time = helpers.number(ctx, "time", _time);
       helpers.log(ctx, () => `Sleeping for ${time} milliseconds`);
       return new Promise((resolve) => setTimeout(() => resolve(true), time));
     },
   grow:
     (ctx) =>
-    async (_hostname, opts = {}) => {
+    (_hostname, opts = {}) => {
       const hostname = helpers.string(ctx, "hostname", _hostname);
       const optsValidator: BasicHGWOptions = {};
       assertObjectType(ctx, "opts", opts, optsValidator);
@@ -384,7 +385,7 @@ const base: InternalAPI<NS> = {
       const coreBonus = 1 + (cores - 1) / 16;
       return CONSTANTS.ServerWeakenAmount * threads * coreBonus * BitNodeMultipliers.ServerWeakenRate;
     },
-  share: (ctx) => async (): Promise<void> => {
+  share: (ctx) => () => {
     helpers.log(ctx, () => "Sharing this computer.");
     const end = StartSharing(
       ctx.workerScript.scriptRef.threads * calculateIntelligenceBonus(Player.skills.intelligence, 2),
