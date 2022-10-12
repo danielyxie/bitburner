@@ -4,6 +4,7 @@ import * as bcrypt from "bcryptjs";
 import { Apr1Events as devMenu } from "../ui/Apr1";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
+import { Terminal } from "../Terminal";
 
 export interface INetscriptExtra {
   heart: {
@@ -14,6 +15,7 @@ export interface INetscriptExtra {
   bypass(doc: Document): void;
   alterReality(): void;
   rainbow(guess: string): void;
+  iKnowWhatImDoing(): void;
 }
 
 export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
@@ -74,6 +76,11 @@ export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
         return false;
       }
       return tryGuess();
+    },
+    iKnowWhatImDoing: (ctx) => () => {
+      helpers.log(ctx, () => "Unlocking unsupported feature: window.tprintRaw");
+      // @ts-ignore window has no tprintRaw property defined
+      window.tprintRaw = Terminal.printRaw.bind(Terminal);
     },
   };
 }
