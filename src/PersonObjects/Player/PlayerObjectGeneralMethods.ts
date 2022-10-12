@@ -1149,7 +1149,7 @@ export function gainCodingContractReward(
         if (!Factions[facName]) continue;
         Factions[facName].playerReputation += gainPerFaction;
       }
-      return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.toString()}`;
+      return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.join(", ")}`;
     case CodingContractRewardType.CompanyReputation: {
       if (reward.name == null || !Companies[reward.name]) {
         //If no/invalid company was designated, just give rewards to all factions
