@@ -2,7 +2,7 @@ import { Player } from "../Player";
 import { Exploit } from "../Exploits/Exploit";
 import * as bcrypt from "bcryptjs";
 import { Apr1Events as devMenu } from "../ui/Apr1";
-import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { InternalAPI } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 import { Terminal } from "../Terminal";
 
@@ -32,7 +32,7 @@ export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
     exploit: () => () => {
       Player.giveExploit(Exploit.UndocumentedFunctionCall);
     },
-    bypass: (ctx: NetscriptContext) => (doc: unknown) => {
+    bypass: (ctx) => (doc) => {
       // reset both fields first
       type temporary = { completely_unused_field: unknown };
       const d = doc as temporary;
@@ -47,7 +47,7 @@ export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
       d.completely_unused_field = undefined;
       real_document.completely_unused_field = undefined;
     },
-    alterReality: () => (): void => {
+    alterReality: () => () => {
       // We need to trick webpack into not optimizing a variable that is guaranteed to be false (and doesn't use prototypes)
       let x = false;
       const recur = function (depth: number): void {
@@ -62,7 +62,7 @@ export function NetscriptExtra(): InternalAPI<INetscriptExtra> {
         Player.giveExploit(Exploit.RealityAlteration);
       }
     },
-    rainbow: (ctx: NetscriptContext) => (guess: unknown) => {
+    rainbow: (ctx) => (guess) => {
       function tryGuess(): boolean {
         // eslint-disable-next-line no-sync
         const verified = bcrypt.compareSync(

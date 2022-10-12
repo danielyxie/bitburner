@@ -15,7 +15,6 @@ import {
   Multipliers,
   CrimeStats,
   Singularity as ISingularity,
-  SourceFileLvl,
 } from "../ScriptEditor/NetscriptDefinitions";
 
 import { findCrime } from "../Crime/CrimeHelpers";
@@ -79,7 +78,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
     return company;
   };
 
-  const runAfterReset = function (cbScript: string | null = null): void {
+  const runAfterReset = function (cbScript: string | null = null) {
     //Run a script after reset
     if (!cbScript) return;
     const home = Player.getHomeComputer();
@@ -98,11 +97,11 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
   };
 
   return {
-    getOwnedAugmentations: (ctx: NetscriptContext) =>
-      function (_purchased: unknown = false): string[] {
+    getOwnedAugmentations: (ctx) =>
+      function (_purchased = false) {
         helpers.checkSingularityAccess(ctx);
         const purchased = !!_purchased;
-        const res = [];
+        const res: string[] = [];
         for (let i = 0; i < Player.augmentations.length; ++i) {
           res.push(Player.augmentations[i].name);
         }
@@ -113,69 +112,64 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
         return res;
       },
-    getOwnedSourceFiles: () => (): SourceFileLvl[] => {
-      const res: SourceFileLvl[] = [];
-      for (let i = 0; i < Player.sourceFiles.length; ++i) {
-        res.push({
-          n: Player.sourceFiles[i].n,
-          lvl: Player.sourceFiles[i].lvl,
-        });
-      }
-      return res;
+    getOwnedSourceFiles: () => () => {
+      return Player.sourceFiles.map((sf) => {
+        return { n: sf.n, lvl: sf.lvl };
+      });
     },
-    getAugmentationsFromFaction: (ctx: NetscriptContext) =>
-      function (_facName: unknown): string[] {
+    getAugmentationsFromFaction: (ctx) =>
+      function (_facName) {
         helpers.checkSingularityAccess(ctx);
         const facName = helpers.string(ctx, "facName", _facName);
         const faction = getFaction(ctx, facName);
 
         return getFactionAugmentationsFiltered(faction);
       },
-    getAugmentationCost: (ctx: NetscriptContext) =>
-      function (_augName: unknown): [number, number] {
+    getAugmentationCost: (ctx) =>
+      function (_augName) {
         helpers.checkSingularityAccess(ctx);
         const augName = helpers.string(ctx, "augName", _augName);
         const aug = getAugmentation(ctx, augName);
         const costs = aug.getCost();
         return [costs.repCost, costs.moneyCost];
       },
-    getAugmentationPrereq: (ctx: NetscriptContext) =>
-      function (_augName: unknown): string[] {
+    getAugmentationPrereq: (ctx) =>
+      function (_augName) {
         helpers.checkSingularityAccess(ctx);
         const augName = helpers.string(ctx, "augName", _augName);
         const aug = getAugmentation(ctx, augName);
         return aug.prereqs.slice();
       },
-    getAugmentationBasePrice: (ctx: NetscriptContext) =>
-      function (_augName: unknown): number {
+    getAugmentationBasePrice: (ctx) =>
+      function (_augName) {
         helpers.checkSingularityAccess(ctx);
         const augName = helpers.string(ctx, "augName", _augName);
         const aug = getAugmentation(ctx, augName);
         return aug.baseCost * BitNodeMultipliers.AugmentationMoneyCost;
       },
-    getAugmentationPrice: (ctx: NetscriptContext) =>
-      function (_augName: unknown): number {
+    getAugmentationPrice: (ctx) =>
+      function (_augName) {
         helpers.checkSingularityAccess(ctx);
         const augName = helpers.string(ctx, "augName", _augName);
         const aug = getAugmentation(ctx, augName);
         return aug.getCost().moneyCost;
       },
-    getAugmentationRepReq: (ctx: NetscriptContext) =>
-      function (_augName: unknown): number {
+    getAugmentationRepReq: (ctx) =>
+      function (_augName) {
         helpers.checkSingularityAccess(ctx);
         const augName = helpers.string(ctx, "augName", _augName);
         const aug = getAugmentation(ctx, augName);
         return aug.getCost().repCost;
       },
-    getAugmentationStats: (ctx: NetscriptContext) =>
-      function (_augName: unknown): Multipliers {
+    getAugmentationStats: (ctx) =>
+      function (_augName): Multipliers {
         helpers.checkSingularityAccess(ctx);
         const augName = helpers.string(ctx, "augName", _augName);
         const aug = getAugmentation(ctx, augName);
         return Object.assign({}, aug.mults);
       },
-    purchaseAugmentation: (ctx: NetscriptContext) =>
-      function (_facName: unknown, _augName: unknown): boolean {
+    purchaseAugmentation: (ctx) =>
+      function (_facName, _augName) {
         helpers.checkSingularityAccess(ctx);
         const facName = helpers.string(ctx, "facName", _facName);
         const augName = helpers.string(ctx, "augName", _augName);
@@ -224,8 +218,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           return false;
         }
       },
-    softReset: (ctx: NetscriptContext) =>
-      function (_cbScript: unknown = ""): void {
+    softReset: (ctx) =>
+      function (_cbScript = "") {
         helpers.checkSingularityAccess(ctx);
         const cbScript = helpers.string(ctx, "cbScript", _cbScript);
 
@@ -237,8 +231,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
 
         killWorkerScript(ctx.workerScript);
       },
-    installAugmentations: (ctx: NetscriptContext) =>
-      function (_cbScript: unknown = ""): boolean {
+    installAugmentations: (ctx) =>
+      function (_cbScript = "") {
         helpers.checkSingularityAccess(ctx);
         const cbScript = helpers.string(ctx, "cbScript", _cbScript);
 
@@ -257,8 +251,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         return true;
       },
 
-    goToLocation: (ctx: NetscriptContext) =>
-      function (_locationName: unknown): boolean {
+    goToLocation: (ctx) =>
+      function (_locationName) {
         helpers.checkSingularityAccess(ctx);
         const locationName = helpers.string(ctx, "locationName", _locationName);
         const location = Object.values(Locations).find((l) => l.name === locationName);
@@ -280,8 +274,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
         return true;
       },
-    universityCourse: (ctx: NetscriptContext) =>
-      function (_universityName: unknown, _className: unknown, _focus: unknown = true): boolean {
+    universityCourse: (ctx) =>
+      function (_universityName, _className, _focus = true) {
         helpers.checkSingularityAccess(ctx);
         const universityName = helpers.string(ctx, "universityName", _universityName);
         const className = helpers.string(ctx, "className", _className);
@@ -366,8 +360,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         return true;
       },
 
-    gymWorkout: (ctx: NetscriptContext) =>
-      function (_gymName: unknown, _stat: unknown, _focus: unknown = true): boolean {
+    gymWorkout: (ctx) =>
+      function (_gymName, _stat, _focus = true) {
         helpers.checkSingularityAccess(ctx);
         const gymName = helpers.string(ctx, "gymName", _gymName);
         const stat = helpers.string(ctx, "stat", _stat);
@@ -475,8 +469,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         return true;
       },
 
-    travelToCity: (ctx: NetscriptContext) =>
-      function (_cityName: unknown): boolean {
+    travelToCity: (ctx) =>
+      function (_cityName) {
         helpers.checkSingularityAccess(ctx);
         const cityName = helpers.city(ctx, "cityName", _cityName);
 
@@ -501,8 +495,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
       },
 
-    purchaseTor: (ctx: NetscriptContext) =>
-      function (): boolean {
+    purchaseTor: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
 
         if (Player.hasTorRouter()) {
@@ -525,8 +519,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         helpers.log(ctx, () => "You have purchased a Tor router!");
         return true;
       },
-    purchaseProgram: (ctx: NetscriptContext) =>
-      function (_programName: unknown): boolean {
+    purchaseProgram: (ctx) =>
+      function (_programName) {
         helpers.checkSingularityAccess(ctx);
         const programName = helpers.string(ctx, "programName", _programName).toLowerCase();
 
@@ -568,13 +562,13 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 5000);
         return true;
       },
-    getCurrentServer: (ctx: NetscriptContext) =>
+    getCurrentServer: (ctx) =>
       function (): string {
         helpers.checkSingularityAccess(ctx);
         return Player.getCurrentServer().hostname;
       },
-    connect: (ctx: NetscriptContext) =>
-      function (_hostname: unknown): boolean {
+    connect: (ctx) =>
+      function (_hostname) {
         helpers.checkSingularityAccess(ctx);
         const hostname = helpers.string(ctx, "hostname", _hostname);
         if (!hostname) {
@@ -622,13 +616,13 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         //Failure case
         return false;
       },
-    manualHack: (ctx: NetscriptContext) =>
+    manualHack: (ctx) =>
       function (): Promise<number> {
         helpers.checkSingularityAccess(ctx);
         const server = Player.getCurrentServer();
         return helpers.hack(ctx, server.hostname, true);
       },
-    installBackdoor: (ctx: NetscriptContext) => async (): Promise<void> => {
+    installBackdoor: (ctx) => async (): Promise<void> => {
       helpers.checkSingularityAccess(ctx);
       const baseserver = Player.getCurrentServer();
       if (!(baseserver instanceof Server)) {
@@ -660,13 +654,13 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         return Promise.resolve();
       });
     },
-    isFocused: (ctx: NetscriptContext) =>
-      function (): boolean {
+    isFocused: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
         return Player.focus;
       },
-    setFocus: (ctx: NetscriptContext) =>
-      function (_focus: unknown): boolean {
+    setFocus: (ctx) =>
+      function (_focus) {
         helpers.checkSingularityAccess(ctx);
         const focus = !!_focus;
         if (Player.currentWork === null) {
@@ -684,8 +678,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
         return false;
       },
-    hospitalize: (ctx: NetscriptContext) =>
-      function (): void {
+    hospitalize: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
         if (Player.currentWork || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
           helpers.log(ctx, () => "Cannot go to the hospital because the player is busy.");
@@ -693,20 +687,20 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
         Player.hospitalize();
       },
-    isBusy: (ctx: NetscriptContext) =>
-      function (): boolean {
+    isBusy: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
         return Player.currentWork !== null || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
       },
-    stopAction: (ctx: NetscriptContext) =>
-      function (): boolean {
+    stopAction: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
         const wasWorking = Player.currentWork !== null;
         Player.finishWork(true);
         return wasWorking;
       },
-    upgradeHomeCores: (ctx: NetscriptContext) =>
-      function (): boolean {
+    upgradeHomeCores: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
 
         // Check if we're at max cores
@@ -732,14 +726,14 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         );
         return true;
       },
-    getUpgradeHomeCoresCost: (ctx: NetscriptContext) =>
-      function (): number {
+    getUpgradeHomeCoresCost: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
 
         return Player.getUpgradeHomeCoresCost();
       },
-    upgradeHomeRam: (ctx: NetscriptContext) =>
-      function (): boolean {
+    upgradeHomeRam: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
 
         // Check if we're at max RAM
@@ -768,14 +762,14 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         );
         return true;
       },
-    getUpgradeHomeRamCost: (ctx: NetscriptContext) =>
-      function (): number {
+    getUpgradeHomeRamCost: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
 
         return Player.getUpgradeHomeRamCost();
       },
-    workForCompany: (ctx: NetscriptContext) =>
-      function (_companyName: unknown, _focus: unknown = true): boolean {
+    workForCompany: (ctx) =>
+      function (_companyName, _focus = true) {
         helpers.checkSingularityAccess(ctx);
         const companyName = helpers.string(ctx, "companyName", _companyName);
         const focus = !!_focus;
@@ -818,8 +812,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         helpers.log(ctx, () => `Began working at '${companyName}' with position '${companyPositionName}'`);
         return true;
       },
-    applyToCompany: (ctx: NetscriptContext) =>
-      function (_companyName: unknown, _field: unknown): boolean {
+    applyToCompany: (ctx) =>
+      function (_companyName, _field) {
         helpers.checkSingularityAccess(ctx);
         const companyName = helpers.string(ctx, "companyName", _companyName);
         const field = helpers.string(ctx, "field", _field);
@@ -887,41 +881,41 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
         return res;
       },
-    quitJob: (ctx: NetscriptContext) =>
-      function (_companyName: unknown): void {
+    quitJob: (ctx) =>
+      function (_companyName) {
         helpers.checkSingularityAccess(ctx);
         const companyName = helpers.string(ctx, "companyName", _companyName);
         Player.quitJob(companyName);
       },
-    getCompanyRep: (ctx: NetscriptContext) =>
-      function (_companyName: unknown): number {
+    getCompanyRep: (ctx) =>
+      function (_companyName) {
         helpers.checkSingularityAccess(ctx);
         const companyName = helpers.string(ctx, "companyName", _companyName);
         const company = getCompany(ctx, companyName);
         return company.playerReputation;
       },
-    getCompanyFavor: (ctx: NetscriptContext) =>
-      function (_companyName: unknown): number {
+    getCompanyFavor: (ctx) =>
+      function (_companyName) {
         helpers.checkSingularityAccess(ctx);
         const companyName = helpers.string(ctx, "companyName", _companyName);
         const company = getCompany(ctx, companyName);
         return company.favor;
       },
-    getCompanyFavorGain: (ctx: NetscriptContext) =>
-      function (_companyName: unknown): number {
+    getCompanyFavorGain: (ctx) =>
+      function (_companyName) {
         helpers.checkSingularityAccess(ctx);
         const companyName = helpers.string(ctx, "companyName", _companyName);
         const company = getCompany(ctx, companyName);
         return company.getFavorGain();
       },
-    checkFactionInvitations: (ctx: NetscriptContext) =>
-      function (): string[] {
+    checkFactionInvitations: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
         // Make a copy of player.factionInvitations
         return Player.factionInvitations.slice();
       },
-    joinFaction: (ctx: NetscriptContext) =>
-      function (_facName: unknown): boolean {
+    joinFaction: (ctx) =>
+      function (_facName) {
         helpers.checkSingularityAccess(ctx);
         const facName = helpers.string(ctx, "facName", _facName);
         getFaction(ctx, facName);
@@ -944,8 +938,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         helpers.log(ctx, () => `Joined the '${facName}' faction.`);
         return true;
       },
-    workForFaction: (ctx: NetscriptContext) =>
-      function (_facName: unknown, _type: unknown, _focus: unknown = true): boolean {
+    workForFaction: (ctx) =>
+      function (_facName, _type, _focus = true) {
         helpers.checkSingularityAccess(ctx);
         const facName = helpers.string(ctx, "facName", _facName);
         const type = helpers.string(ctx, "type", _type);
@@ -1040,29 +1034,29 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             return false;
         }
       },
-    getFactionRep: (ctx: NetscriptContext) =>
-      function (_facName: unknown): number {
+    getFactionRep: (ctx) =>
+      function (_facName) {
         helpers.checkSingularityAccess(ctx);
         const facName = helpers.string(ctx, "facName", _facName);
         const faction = getFaction(ctx, facName);
         return faction.playerReputation;
       },
-    getFactionFavor: (ctx: NetscriptContext) =>
-      function (_facName: unknown): number {
+    getFactionFavor: (ctx) =>
+      function (_facName) {
         helpers.checkSingularityAccess(ctx);
         const facName = helpers.string(ctx, "facName", _facName);
         const faction = getFaction(ctx, facName);
         return faction.favor;
       },
-    getFactionFavorGain: (ctx: NetscriptContext) =>
-      function (_facName: unknown): number {
+    getFactionFavorGain: (ctx) =>
+      function (_facName) {
         helpers.checkSingularityAccess(ctx);
         const facName = helpers.string(ctx, "facName", _facName);
         const faction = getFaction(ctx, facName);
         return faction.getFavorGain();
       },
-    donateToFaction: (ctx: NetscriptContext) =>
-      function (_facName: unknown, _amt: unknown): boolean {
+    donateToFaction: (ctx) =>
+      function (_facName, _amt) {
         helpers.checkSingularityAccess(ctx);
         const facName = helpers.string(ctx, "facName", _facName);
         const amt = helpers.number(ctx, "amt", _amt);
@@ -1111,8 +1105,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         );
         return true;
       },
-    createProgram: (ctx: NetscriptContext) =>
-      function (_programName: unknown, _focus: unknown = true): boolean {
+    createProgram: (ctx) =>
+      function (_programName, _focus = true) {
         helpers.checkSingularityAccess(ctx);
         const programName = helpers.string(ctx, "programName", _programName).toLowerCase();
         const focus = !!_focus;
@@ -1158,8 +1152,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         helpers.log(ctx, () => `Began creating program: '${programName}'`);
         return true;
       },
-    commitCrime: (ctx: NetscriptContext) =>
-      function (_crimeRoughName: unknown, _focus: unknown = true): number {
+    commitCrime: (ctx) =>
+      function (_crimeRoughName, _focus = true) {
         helpers.checkSingularityAccess(ctx);
         const crimeRoughName = helpers.string(ctx, "crimeRoughName", _crimeRoughName);
         const focus = !!_focus;
@@ -1188,8 +1182,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
         return crimeTime;
       },
-    getCrimeChance: (ctx: NetscriptContext) =>
-      function (_crimeRoughName: unknown): number {
+    getCrimeChance: (ctx) =>
+      function (_crimeRoughName) {
         helpers.checkSingularityAccess(ctx);
         const crimeRoughName = helpers.string(ctx, "crimeRoughName", _crimeRoughName);
 
@@ -1200,8 +1194,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
 
         return crime.successRate(Player);
       },
-    getCrimeStats: (ctx: NetscriptContext) =>
-      function (_crimeRoughName: unknown): CrimeStats {
+    getCrimeStats: (ctx) =>
+      function (_crimeRoughName): CrimeStats {
         helpers.checkSingularityAccess(ctx);
         const crimeRoughName = helpers.string(ctx, "crimeRoughName", _crimeRoughName);
 
@@ -1224,8 +1218,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           intelligence_exp: crimeStatsWithMultipliers.intExp,
         });
       },
-    getDarkwebPrograms: (ctx: NetscriptContext) =>
-      function (): string[] {
+    getDarkwebPrograms: (ctx) =>
+      function () {
         helpers.checkSingularityAccess(ctx);
 
         // If we don't have Tor, log it and return [] (empty list)
@@ -1235,8 +1229,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         }
         return Object.values(DarkWebItems).map((p) => p.program);
       },
-    getDarkwebProgramCost: (ctx: NetscriptContext) =>
-      function (_programName: unknown): number {
+    getDarkwebProgramCost: (ctx) =>
+      function (_programName) {
         helpers.checkSingularityAccess(ctx);
         const programName = helpers.string(ctx, "programName", _programName).toLowerCase();
 
@@ -1258,7 +1252,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           throw helpers.makeRuntimeErrorMsg(
             ctx,
             `No such exploit ('${programName}') found on the darkweb! ` +
-              `\nThis function is not case-sensitive. Did you perhaps forget .exe at the end?`,
+            `\nThis function is not case-sensitive. Did you perhaps forget .exe at the end?`,
           );
         }
 
@@ -1269,61 +1263,61 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         return item.price;
       },
     b1tflum3:
-      (ctx: NetscriptContext) =>
-      (_nextBN: unknown, _callbackScript: unknown = ""): void => {
-        helpers.checkSingularityAccess(ctx);
-        const nextBN = helpers.number(ctx, "nextBN", _nextBN);
-        const callbackScript = helpers.string(ctx, "callbackScript", _callbackScript);
-        helpers.checkSingularityAccess(ctx);
-        enterBitNode(true, Player.bitNodeN, nextBN);
-        if (callbackScript)
-          setTimeout(() => {
-            runAfterReset(callbackScript);
-          }, 0);
-      },
+      (ctx) =>
+        (_nextBN, _callbackScript = "") => {
+          helpers.checkSingularityAccess(ctx);
+          const nextBN = helpers.number(ctx, "nextBN", _nextBN);
+          const callbackScript = helpers.string(ctx, "callbackScript", _callbackScript);
+          helpers.checkSingularityAccess(ctx);
+          enterBitNode(true, Player.bitNodeN, nextBN);
+          if (callbackScript)
+            setTimeout(() => {
+              runAfterReset(callbackScript);
+            }, 0);
+        },
     destroyW0r1dD43m0n:
-      (ctx: NetscriptContext) =>
-      (_nextBN: unknown, _callbackScript: unknown = ""): void => {
-        helpers.checkSingularityAccess(ctx);
-        const nextBN = helpers.number(ctx, "nextBN", _nextBN);
-        const callbackScript = helpers.string(ctx, "callbackScript", _callbackScript);
+      (ctx) =>
+        (_nextBN, _callbackScript = "") => {
+          helpers.checkSingularityAccess(ctx);
+          const nextBN = helpers.number(ctx, "nextBN", _nextBN);
+          const callbackScript = helpers.string(ctx, "callbackScript", _callbackScript);
 
-        const wd = GetServer(SpecialServers.WorldDaemon);
-        if (!(wd instanceof Server)) throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
-        const hackingRequirements = (): boolean => {
-          if (Player.skills.hacking < wd.requiredHackingSkill) return false;
-          if (!wd.hasAdminRights) return false;
-          return true;
-        };
-        const bladeburnerRequirements = (): boolean => {
-          if (!Player.inBladeburner()) return false;
-          if (!Player.bladeburner) return false;
-          return Player.bladeburner.blackops[BlackOperationNames.OperationDaedalus];
-        };
+          const wd = GetServer(SpecialServers.WorldDaemon);
+          if (!(wd instanceof Server)) throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
+          const hackingRequirements = () => {
+            if (Player.skills.hacking < wd.requiredHackingSkill) return false;
+            if (!wd.hasAdminRights) return false;
+            return true;
+          };
+          const bladeburnerRequirements = () => {
+            if (!Player.inBladeburner()) return false;
+            if (!Player.bladeburner) return false;
+            return Player.bladeburner.blackops[BlackOperationNames.OperationDaedalus];
+          };
 
-        if (!hackingRequirements() && !bladeburnerRequirements()) {
-          helpers.log(ctx, () => "Requirements not met to destroy the world daemon");
-          return;
-        }
+          if (!hackingRequirements() && !bladeburnerRequirements()) {
+            helpers.log(ctx, () => "Requirements not met to destroy the world daemon");
+            return;
+          }
 
-        wd.backdoorInstalled = true;
-        calculateAchievements();
-        enterBitNode(false, Player.bitNodeN, nextBN);
-        if (callbackScript)
-          setTimeout(() => {
-            runAfterReset(callbackScript);
-          }, 0);
-      },
-    getCurrentWork: () => (): any | null => {
+          wd.backdoorInstalled = true;
+          calculateAchievements();
+          enterBitNode(false, Player.bitNodeN, nextBN);
+          if (callbackScript)
+            setTimeout(() => {
+              runAfterReset(callbackScript);
+            }, 0);
+        },
+    getCurrentWork: () => () => {
       if (!Player.currentWork) return null;
       return Player.currentWork.APICopy();
     },
-    exportGame: (ctx: NetscriptContext) => (): void => {
+    exportGame: (ctx) => () => {
       helpers.checkSingularityAccess(ctx);
       onExport();
       return saveObject.exportGame();
     },
-    exportGameBonus: (ctx: NetscriptContext) => (): boolean => {
+    exportGameBonus: (ctx) => () => {
       helpers.checkSingularityAccess(ctx);
       return canGetBonus();
     },

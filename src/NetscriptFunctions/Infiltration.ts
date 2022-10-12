@@ -1,8 +1,4 @@
-import {
-  Infiltration as IInfiltration,
-  InfiltrationLocation,
-  PossibleInfiltrationLocation,
-} from "../ScriptEditor/NetscriptDefinitions";
+import { Infiltration as IInfiltration, InfiltrationLocation } from "../ScriptEditor/NetscriptDefinitions";
 import { Location } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
 import { calculateDifficulty, calculateReward } from "../Infiltration/formulas/game";
@@ -44,17 +40,15 @@ export function NetscriptInfiltration(): InternalAPI<IInfiltration> {
     };
   };
   return {
-    getPossibleLocations: () => (): PossibleInfiltrationLocation[] => {
+    getPossibleLocations: () => () => {
       return getLocationsWithInfiltrations.map((l) => ({
         city: l.city ?? "",
         name: String(l.name),
       }));
     },
-    getInfiltration:
-      (ctx: NetscriptContext) =>
-      (_location: unknown): InfiltrationLocation => {
-        const location = helpers.string(ctx, "location", _location);
-        return calculateInfiltrationData(ctx, location);
-      },
+    getInfiltration: (ctx) => (_location) => {
+      const location = helpers.string(ctx, "location", _location);
+      return calculateInfiltrationData(ctx, location);
+    },
   };
 }
