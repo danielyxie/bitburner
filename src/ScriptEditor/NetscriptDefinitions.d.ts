@@ -5194,8 +5194,43 @@ export interface NS {
    * node way from the specified target server. The hostnames in the returned
    * array are strings.
    *
-   * @param host - Optional, Hostname of the server to scan, default to current server.
-   * @returns Returns an string of hostnames.
+   * @example
+   * ```ts
+   * // NS1
+   * // All servers that are one hop from the current server.
+   * tprint("Neighbors of current server.");
+   * var neighbor = scan();
+   * for (var i = 0; i < neighbor.length; i++) {
+   *     tprint(neighbor[i]);
+   * }
+   * // All neighbors of n00dles.
+   * var target = "n00dles";
+   * neighbor = scan(target);
+   * tprintf("Neighbors of %s.", target);
+   * for (var i = 0; i < neighbor.length; i++) {
+   *     tprint(neighbor[i]);
+   * }
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * // All servers that are one hop from the current server.
+   * ns.tprint("Neighbors of current server.");
+   * let neighbor = ns.scan();
+   * for (let i = 0; i < neighbor.length; i++) {
+   *     ns.tprint(neighbor[i]);
+   * }
+   * // All neighbors of n00dles.
+   * const target = "n00dles";
+   * neighbor = ns.scan(target);
+   * ns.tprintf("Neighbors of %s.", target);
+   * for (let i = 0; i < neighbor.length; i++) {
+   *     ns.tprint(neighbor[i]);
+   * }
+   * ```
+   *
+   * @param host - Optional. Hostname of the server to scan, default to current server.
+   * @returns Returns an array of hostnames.
    */
   scan(host?: string): string[];
 
