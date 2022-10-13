@@ -221,12 +221,14 @@ export function PlayerMultipliers(): React.ReactElement {
       mult: "Company Reputation Gain",
       current: Player.mults.company_rep,
       augmented: Player.mults.company_rep * mults.company_rep,
+      color: Settings.theme.combat,
     },
     {
       mult: "Faction Reputation Gain",
       current: Player.mults.faction_rep,
       augmented: Player.mults.faction_rep * mults.faction_rep,
       bnMult: BitNodeMultipliers.FactionWorkRepGain,
+      color: Settings.theme.combat,
     },
     {
       mult: "Salary",
