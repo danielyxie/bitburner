@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { vsprintf, sprintf } from "sprintf-js";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
-import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
+import { BitNodeMultipliers, IBitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "./Constants";
 import {
   calculateHackingChance,
@@ -82,6 +82,7 @@ import { recentScripts } from "./Netscript/RecentScripts";
 import { InternalAPI, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
+import { getBitNodeMultipliers } from "./BitNode/BitNode";
 
 // "Enums" as object
 export const enums = {
@@ -1017,7 +1018,6 @@ const base: InternalAPI<NS> = {
     },
   hasRootAccess: (ctx) => (_hostname) => {
     const hostname = helpers.string(ctx, "hostname", _hostname);
-
     const server = helpers.getServer(ctx, hostname);
     return server.hasAdminRights;
   },
@@ -1044,13 +1044,18 @@ const base: InternalAPI<NS> = {
       levelCost: Player.mults.hacknet_node_level_cost,
     };
   },
-  getBitNodeMultipliers: (ctx) => () => {
-    if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "Requires Source-File 5 to run.");
-    }
-    const copy = Object.assign({}, BitNodeMultipliers);
-    return copy;
-  },
+  getBitNodeMultipliers:
+    (ctx) =>
+    (_n = Player.bitNodeN, _lvl = Player.sourceFileLvl(Player.bitNodeN) + 1): IBitNodeMultipliers => {
+      if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5)
+        throw helpers.makeRuntimeErrorMsg(ctx, "Requires Source-File 5 to run.");
+      const n = Math.round(helpers.number(ctx, "n", _n));
+      const lvl = Math.round(helpers.number(ctx, "lvl", _lvl));
+      if (n < 1 || n > 13) throw new Error("n must be between 1 and 13");
+      if (lvl < 1) throw new Error("lvl must be >= 1");
+
+      return Object.assign({}, getBitNodeMultipliers(n, lvl));
+    },
   getServer:
     (ctx) =>
     (_hostname = ctx.workerScript.hostname) => {

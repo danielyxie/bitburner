@@ -6682,7 +6682,7 @@ export interface NS {
    * @remarks
    * RAM cost: 4 GB
    *
-   * Returns an object containing the current BitNode multipliers.
+   * Returns an object containing the current (or supplied) BitNode multipliers.
    * This function requires you to be in Bitnode 5 or have Source-File 5 in order to run.
    * The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%).
    * The multipliers represent the difference between the current BitNode and
@@ -6708,7 +6708,7 @@ export interface NS {
    * ```
    * @returns Object containing the current BitNode multipliers.
    */
-  getBitNodeMultipliers(): BitNodeMultipliers;
+  getBitNodeMultipliers(n?: number, lvl?: number): BitNodeMultipliers;
 
   /**
    * Get information about the player.
