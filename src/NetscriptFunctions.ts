@@ -1840,51 +1840,10 @@ const base: InternalAPI<NS> = {
     Object.assign(data.jobs, Player.jobs);
     return data;
   },
-  getMoneySources: () => (): IMoneySources => {
-    const sinceInstall: IMoneySource = {
-      bladeburner: Player.moneySourceA.bladeburner,
-      casino: Player.moneySourceA.casino,
-      class: Player.moneySourceA.class,
-      codingcontract: Player.moneySourceA.codingcontract,
-      corporation: Player.moneySourceA.corporation,
-      crime: Player.moneySourceA.crime,
-      gang: Player.moneySourceA.gang,
-      hacking: Player.moneySourceA.hacking,
-      hacknet: Player.moneySourceA.hacknet,
-      hacknet_expenses: Player.moneySourceA.hacknet_expenses,
-      hospitalization: Player.moneySourceA.hospitalization,
-      infiltration: Player.moneySourceA.infiltration,
-      sleeves: Player.moneySourceA.sleeves,
-      stock: Player.moneySourceA.stock,
-      total: Player.moneySourceA.total,
-      work: Player.moneySourceA.work,
-      servers: Player.moneySourceA.servers,
-      other: Player.moneySourceA.other,
-      augmentations: Player.moneySourceA.augmentations,
-    };
-    const sinceStart: IMoneySource = {
-      bladeburner: Player.moneySourceB.bladeburner,
-      casino: Player.moneySourceB.casino,
-      class: Player.moneySourceB.class,
-      codingcontract: Player.moneySourceB.codingcontract,
-      corporation: Player.moneySourceB.corporation,
-      crime: Player.moneySourceB.crime,
-      gang: Player.moneySourceB.gang,
-      hacking: Player.moneySourceB.hacking,
-      hacknet: Player.moneySourceB.hacknet,
-      hacknet_expenses: Player.moneySourceB.hacknet_expenses,
-      hospitalization: Player.moneySourceB.hospitalization,
-      infiltration: Player.moneySourceB.infiltration,
-      sleeves: Player.moneySourceB.sleeves,
-      stock: Player.moneySourceB.stock,
-      total: Player.moneySourceB.total,
-      work: Player.moneySourceB.work,
-      servers: Player.moneySourceB.servers,
-      other: Player.moneySourceB.other,
-      augmentations: Player.moneySourceB.augmentations,
-    };
-    return { sinceInstall: sinceInstall, sinceStart: sinceStart };
-  },
+  getMoneySources: () => (): IMoneySources => ({
+    sinceInstall: Object.assign({}, Player.moneySourceA),
+    sinceStart: Object.assign({}, Player.moneySourceB),
+  }),
   atExit: (ctx) => (f) => {
     if (typeof f !== "function") {
       throw helpers.makeRuntimeErrorMsg(ctx, "argument should be function");
