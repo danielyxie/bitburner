@@ -65,6 +65,39 @@ export const helpers = {
   failOnHacknetServer,
 };
 
+export function assertObjectType<T extends object>(
+  ctx: NetscriptContext,
+  name: string,
+  obj: unknown,
+  desiredObject: T,
+): asserts obj is T {
+  if (typeof obj !== "object" || obj === null) {
+    throw makeRuntimeErrorMsg(
+      ctx,
+      `Type ${obj === null ? "null" : typeof obj} provided for ${name}. Must be an object.`,
+      "TYPE",
+    );
+  }
+  const objHas = Object.prototype.hasOwnProperty.bind(obj);
+  for (const [key, val] of Object.entries(desiredObject)) {
+    if (!objHas(key)) {
+      throw makeRuntimeErrorMsg(
+        ctx,
+        `Object provided for argument ${name} is missing required property ${key}.`,
+        "TYPE",
+      );
+    }
+    const objVal = (obj as Record<string, unknown>)[key];
+    if (typeof val !== typeof objVal) {
+      throw makeRuntimeErrorMsg(
+        ctx,
+        `Incorrect type ${typeof objVal} provided for property ${key} on ${name} argument. Should be type ${typeof val}.`,
+        "TYPE",
+      );
+    }
+  }
+}
+
 const userFriendlyString = (v: unknown): string => {
   const clip = (s: string): string => {
     if (s.length > 15) return s.slice(0, 12) + "...";
@@ -220,10 +253,7 @@ function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThread
   }
   const requestedThreadsAsInt = requestedThreads | 0;
   if (isNaN(requestedThreads) || requestedThreadsAsInt < 1) {
-    throw makeRuntimeErrorMsg(
-      ctx,
-      `Invalid thread count passed to ${ctx.function}: ${requestedThreads}. Threads must be a positive number.`,
-    );
+    throw makeRuntimeErrorMsg(ctx, `Invalid thread count: ${requestedThreads}. Threads must be a positive number.`);
   }
   if (requestedThreadsAsInt > threads) {
     throw makeRuntimeErrorMsg(

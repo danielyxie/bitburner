@@ -5,13 +5,15 @@ import { ScriptArg } from "./ScriptArg";
 import { NSEnums } from "src/ScriptEditor/NetscriptDefinitions";
 import { NSFull } from "src/NetscriptFunctions";
 
-type ExternalFunction = (...args: unknown[]) => unknown;
+type ExternalFunction = (...args: any[]) => void;
 
 export type ExternalAPILayer = {
   [key: string]: ExternalAPILayer | ExternalFunction | ScriptArg[];
 };
 
-type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: NetscriptContext) => F;
+type InternalFunction<F extends ExternalFunction> = (
+  ctx: NetscriptContext,
+) => ((...args: unknown[]) => ReturnType<F>) & F;
 
 export type InternalAPI<API> = {
   [Property in keyof API]: API[Property] extends ExternalFunction

@@ -21,39 +21,35 @@ export function NetscriptGrafting(): InternalAPI<IGrafting> {
   };
 
   return {
-    getAugmentationGraftPrice:
-      (ctx: NetscriptContext) =>
-      (_augName: unknown): number => {
-        const augName = helpers.string(ctx, "augName", _augName);
-        checkGraftingAPIAccess(ctx);
-        if (!getGraftingAvailableAugs().includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
-          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
-        }
-        const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
-        return graftableAug.cost;
-      },
+    getAugmentationGraftPrice: (ctx) => (_augName) => {
+      const augName = helpers.string(ctx, "augName", _augName);
+      checkGraftingAPIAccess(ctx);
+      if (!getGraftingAvailableAugs().includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
+        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
+      }
+      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
+      return graftableAug.cost;
+    },
 
-    getAugmentationGraftTime:
-      (ctx: NetscriptContext) =>
-      (_augName: string): number => {
-        const augName = helpers.string(ctx, "augName", _augName);
-        checkGraftingAPIAccess(ctx);
-        if (!getGraftingAvailableAugs().includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
-          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
-        }
-        const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
-        return calculateGraftingTimeWithBonus(graftableAug);
-      },
+    getAugmentationGraftTime: (ctx) => (_augName) => {
+      const augName = helpers.string(ctx, "augName", _augName);
+      checkGraftingAPIAccess(ctx);
+      if (!getGraftingAvailableAugs().includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
+        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
+      }
+      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
+      return calculateGraftingTimeWithBonus(graftableAug);
+    },
 
-    getGraftableAugmentations: (ctx: NetscriptContext) => (): string[] => {
+    getGraftableAugmentations: (ctx) => () => {
       checkGraftingAPIAccess(ctx);
       const graftableAugs = getGraftingAvailableAugs();
       return graftableAugs;
     },
 
     graftAugmentation:
-      (ctx: NetscriptContext) =>
-      (_augName: string, _focus: unknown = true): boolean => {
+      (ctx) =>
+      (_augName, _focus = true) => {
         const augName = helpers.string(ctx, "augName", _augName);
         const focus = !!_focus;
         checkGraftingAPIAccess(ctx);
