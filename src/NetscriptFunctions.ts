@@ -61,7 +61,14 @@ import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
 import { NetscriptGrafting } from "./NetscriptFunctions/Grafting";
-import { NS, RecentScript as IRecentScript, BasicHGWOptions, ProcessInfo } from "./ScriptEditor/NetscriptDefinitions";
+import {
+  NS,
+  RecentScript as IRecentScript,
+  BasicHGWOptions,
+  ProcessInfo,
+  MoneySource as IMoneySource,
+  MoneySources as IMoneySources,
+} from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
@@ -1827,6 +1834,51 @@ const base: InternalAPI<NS> = {
     };
     Object.assign(data.jobs, Player.jobs);
     return data;
+  },
+  getMoneySources: () => (): IMoneySources => {
+    const sinceInstall: IMoneySource = {
+      bladeburner: Player.moneySourceA.bladeburner,
+      casino: Player.moneySourceA.casino,
+      class: Player.moneySourceA.class,
+      codingcontract: Player.moneySourceA.codingcontract,
+      corporation: Player.moneySourceA.corporation,
+      crime: Player.moneySourceA.crime,
+      gang: Player.moneySourceA.gang,
+      hacking: Player.moneySourceA.hacking,
+      hacknet: Player.moneySourceA.hacknet,
+      hacknet_expenses: Player.moneySourceA.hacknet_expenses,
+      hospitalization: Player.moneySourceA.hospitalization,
+      infiltration: Player.moneySourceA.infiltration,
+      sleeves: Player.moneySourceA.sleeves,
+      stock: Player.moneySourceA.stock,
+      total: Player.moneySourceA.total,
+      work: Player.moneySourceA.work,
+      servers: Player.moneySourceA.servers,
+      other: Player.moneySourceA.other,
+      augmentations: Player.moneySourceA.augmentations,
+    };
+    const sinceStart: IMoneySource = {
+      bladeburner: Player.moneySourceB.bladeburner,
+      casino: Player.moneySourceB.casino,
+      class: Player.moneySourceB.class,
+      codingcontract: Player.moneySourceB.codingcontract,
+      corporation: Player.moneySourceB.corporation,
+      crime: Player.moneySourceB.crime,
+      gang: Player.moneySourceB.gang,
+      hacking: Player.moneySourceB.hacking,
+      hacknet: Player.moneySourceB.hacknet,
+      hacknet_expenses: Player.moneySourceB.hacknet_expenses,
+      hospitalization: Player.moneySourceB.hospitalization,
+      infiltration: Player.moneySourceB.infiltration,
+      sleeves: Player.moneySourceB.sleeves,
+      stock: Player.moneySourceB.stock,
+      total: Player.moneySourceB.total,
+      work: Player.moneySourceB.work,
+      servers: Player.moneySourceB.servers,
+      other: Player.moneySourceB.other,
+      augmentations: Player.moneySourceB.augmentations,
+    };
+    return { sinceInstall: sinceInstall, sinceStart: sinceStart };
   },
   atExit: (ctx) => (f) => {
     if (typeof f !== "function") {

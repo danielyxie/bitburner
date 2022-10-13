@@ -54,6 +54,7 @@ export const RamCostConstants: Record<string, number> = {
   ScriptCodingContractBaseRamCost: 10,
   ScriptSleeveBaseRamCost: 4,
   ScriptClearTerminalCost: 0.2,
+  ScriptGetMoneySourcesCost: 1.0,
 
   ScriptSingularityFn1RamCost: 2,
   ScriptSingularityFn2RamCost: 3,
@@ -528,6 +529,7 @@ export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
   wget: 0,
   getFavorToDonate: RamCostConstants.ScriptGetFavorToDonate,
   getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
+  getMoneySources: RamCostConstants.ScriptGetMoneySourcesCost,
   mv: 0,
   tail: 0,
   toast: 0,
