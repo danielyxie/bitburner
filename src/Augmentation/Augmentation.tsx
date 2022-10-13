@@ -548,13 +548,12 @@ export class Augmentation {
       }
     } else if (augmentationReference.factions.includes(FactionNames.ShadowsOfAnarchy)) {
       const soaAugmentationNames = initSoAAugmentations().map((augmentation) => augmentation.name);
-      const soaMultiplier = Math.pow(
-        CONSTANTS.SoACostMult,
-        soaAugmentationNames.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length,
-      );
-      moneyCost = augmentationReference.baseCost * soaMultiplier;
+      const soaAugCount = soaAugmentationNames.filter((augmentationName) =>
+        Player.hasAugmentation(augmentationName),
+      ).length;
+      moneyCost = augmentationReference.baseCost * Math.pow(CONSTANTS.SoACostMult, soaAugCount);
       if (soaAugmentationNames.find((augmentationName) => augmentationName === augmentationReference.name)) {
-        repCost = augmentationReference.baseRepRequirement * soaMultiplier;
+        repCost = augmentationReference.baseRepRequirement * Math.pow(CONSTANTS.SoARepMult, soaAugCount);
       }
     } else {
       moneyCost =
