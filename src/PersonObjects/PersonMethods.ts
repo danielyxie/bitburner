@@ -2,7 +2,7 @@ import { Person } from "./Person";
 import { calculateSkill } from "./formulas/skill";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Player } from "@player";
-import { ITaskTracker } from "./ITaskTracker";
+import { WorkStats } from "../ScriptEditor/NetscriptDefinitions";
 
 export function gainHackingExp(this: Person, exp: number): void {
   if (isNaN(exp)) {
@@ -113,14 +113,14 @@ export function gainIntelligenceExp(this: Person, exp: number): void {
     this.skills.intelligence = Math.floor(this.calculateSkill(this.exp.intelligence, 1));
   }
 }
-export function gainStats(this: Person, retValue: ITaskTracker): void {
-  this.gainHackingExp(retValue.hack * this.mults.hacking_exp);
-  this.gainStrengthExp(retValue.str * this.mults.strength_exp);
-  this.gainDefenseExp(retValue.def * this.mults.defense_exp);
-  this.gainDexterityExp(retValue.dex * this.mults.dexterity_exp);
-  this.gainAgilityExp(retValue.agi * this.mults.agility_exp);
-  this.gainCharismaExp(retValue.cha * this.mults.charisma_exp);
-  this.gainIntelligenceExp(retValue.int);
+export function gainStats(this: Person, retValue: WorkStats): void {
+  this.gainHackingExp(retValue.hackExp * this.mults.hacking_exp);
+  this.gainStrengthExp(retValue.strExp * this.mults.strength_exp);
+  this.gainDefenseExp(retValue.defExp * this.mults.defense_exp);
+  this.gainDexterityExp(retValue.dexExp * this.mults.dexterity_exp);
+  this.gainAgilityExp(retValue.agiExp * this.mults.agility_exp);
+  this.gainCharismaExp(retValue.chaExp * this.mults.charisma_exp);
+  this.gainIntelligenceExp(retValue.intExp);
 }
 
 //Given a string expression like "str" or "strength", returns the given stat

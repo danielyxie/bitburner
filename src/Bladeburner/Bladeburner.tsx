@@ -13,7 +13,6 @@ import { Skill } from "./Skill";
 import { City } from "./City";
 import { Action } from "./Action";
 import { Player } from "@player";
-import { createTaskTracker, ITaskTracker } from "../PersonObjects/ITaskTracker";
 import { Person } from "../PersonObjects/Person";
 import { Router } from "../ui/GameRoot";
 import { ConsoleHelpText } from "./data/Help";
@@ -35,6 +34,7 @@ import { FactionNames } from "../Faction/data/FactionNames";
 import { KEY } from "../utils/helpers/keyCodes";
 import { isSleeveInfiltrateWork } from "../PersonObjects/Sleeve/Work/SleeveInfiltrateWork";
 import { isSleeveSupportWork } from "../PersonObjects/Sleeve/Work/SleeveSupportWork";
+import { WorkStats, newWorkStats } from "../Work/WorkStats";
 
 export interface BlackOpsAttempt {
   error?: string;
@@ -983,7 +983,7 @@ export class Bladeburner {
    * @param action(Action obj) - Derived action class
    * @param success(bool) - Whether action was successful
    */
-  getActionStats(action: Action, person: Person, success: boolean): ITaskTracker {
+  getActionStats(action: Action, person: Person, success: boolean): WorkStats {
     const difficulty = action.getDifficulty();
 
     /**
@@ -1002,14 +1002,15 @@ export class Bladeburner {
     const skillMult = this.skillMultipliers.expGain;
 
     return {
-      hack: unweightedGain * action.weights.hack * skillMult,
-      str: unweightedGain * action.weights.str * skillMult,
-      def: unweightedGain * action.weights.def * skillMult,
-      dex: unweightedGain * action.weights.dex * skillMult,
-      agi: unweightedGain * action.weights.agi * skillMult,
-      cha: unweightedGain * action.weights.cha * skillMult,
-      int: unweightedIntGain * action.weights.int * skillMult,
+      hackExp: unweightedGain * action.weights.hack * skillMult,
+      strExp: unweightedGain * action.weights.str * skillMult,
+      defExp: unweightedGain * action.weights.def * skillMult,
+      dexExp: unweightedGain * action.weights.dex * skillMult,
+      agiExp: unweightedGain * action.weights.agi * skillMult,
+      chaExp: unweightedGain * action.weights.cha * skillMult,
+      intExp: unweightedIntGain * action.weights.int * skillMult,
       money: 0,
+      reputation: 0,
     };
   }
 
@@ -1245,8 +1246,8 @@ export class Bladeburner {
     }
   }
 
-  completeAction(person: Person, actionIdent: ActionIdentifier, isPlayer = true): ITaskTracker {
-    let retValue = createTaskTracker();
+  completeAction(person: Person, actionIdent: ActionIdentifier, isPlayer = true): WorkStats {
+    let retValue = newWorkStats();
     switch (actionIdent.type) {
       case ActionTypes["Contract"]:
       case ActionTypes["Operation"]: {
@@ -1446,10 +1447,10 @@ export class Bladeburner {
           dexExpGain = 30 * person.mults.dexterity_exp,
           agiExpGain = 30 * person.mults.agility_exp,
           staminaGain = 0.04 * this.skillMultipliers.stamina;
-        retValue.str = strExpGain;
-        retValue.def = defExpGain;
-        retValue.dex = dexExpGain;
-        retValue.agi = agiExpGain;
+        retValue.strExp = strExpGain;
+        retValue.defExp = defExpGain;
+        retValue.dexExp = dexExpGain;
+        retValue.agiExp = agiExpGain;
         this.staminaBonus += staminaGain;
         if (this.logging.general) {
           this.log(
@@ -1483,9 +1484,9 @@ export class Bladeburner {
         const hackingExpGain = 20 * person.mults.hacking_exp;
         const charismaExpGain = 20 * person.mults.charisma_exp;
         const rankGain = 0.1 * BitNodeMultipliers.BladeburnerRank;
-        retValue.hack = hackingExpGain;
-        retValue.cha = charismaExpGain;
-        retValue.int = BladeburnerConstants.BaseIntGain;
+        retValue.hackExp = hackingExpGain;
+        retValue.chaExp = charismaExpGain;
+        retValue.intExp = BladeburnerConstants.BaseIntGain;
         this.changeRank(person, rankGain);
         this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
         if (this.logging.general) {
@@ -1503,7 +1504,7 @@ export class Bladeburner {
         const recruitTime = this.getRecruitmentTime(person) * 1000;
         if (Math.random() < successChance) {
           const expGain = 2 * BladeburnerConstants.BaseStatGain * recruitTime;
-          retValue.cha = expGain;
+          retValue.chaExp = expGain;
           ++this.teamSize;
           if (this.logging.general) {
             this.log(
@@ -1515,7 +1516,7 @@ export class Bladeburner {
           }
         } else {
           const expGain = BladeburnerConstants.BaseStatGain * recruitTime;
-          retValue.cha = expGain;
+          retValue.chaExp = expGain;
           if (this.logging.general) {
             this.log(
               `${person.whoAmI()}: ` +
