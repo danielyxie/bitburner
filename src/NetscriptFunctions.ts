@@ -1840,7 +1840,7 @@ const base: InternalAPI<NS> = {
     Object.assign(data.jobs, Player.jobs);
     return data;
   },
-  getMoneySources: () => (): IMoneySources => ({
+  getMoneySources: () => () => ({
     sinceInstall: Object.assign({}, Player.moneySourceA),
     sinceStart: Object.assign({}, Player.moneySourceB),
   }),
