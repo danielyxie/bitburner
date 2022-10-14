@@ -65,9 +65,8 @@ export const helpers = {
   failOnHacknetServer,
 };
 
-
 /** Will probably remove the below function in favor of a different approach to object type assertion.
- *  This method cannot be used to handle optional properties. */ 
+ *  This method cannot be used to handle optional properties. */
 export function assertObjectType<T extends object>(
   ctx: NetscriptContext,
   name: string,
