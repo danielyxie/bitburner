@@ -6613,7 +6613,7 @@ export interface NS {
    */
   prompt(
     txt: string,
-    options?: { type?: "boolean" | "text" | "select" | undefined; choices?: string[] },
+    options?: { type?: "boolean" | "text" | "select"; choices?: string[] },
   ): Promise<boolean | string>;
 
   /**
