@@ -12,16 +12,20 @@ import { getHospitalizationCost } from "../../Hospital/Hospital";
 import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function HospitalLocation(): React.ReactElement {
   /** Stores button styling that sets them all to block display */
   const btnStyle = { display: "block" };
-
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 200);
+    return () => clearInterval(id);
+  }, []);
 
   function getHealed(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
