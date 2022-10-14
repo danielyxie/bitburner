@@ -6609,7 +6609,7 @@ export interface NS {
    *
    * @param txt - Text to appear in the prompt dialog box.
    * @param options - Options to modify the prompt the player is shown.
-   * @returns True if the player click “Yes”; false if the player clicks “No”; or the value entered by the player.
+   * @returns True if the player clicks “Yes”; false if the player clicks “No”; or the value entered by the player.
    */
   prompt(
     txt: string,
