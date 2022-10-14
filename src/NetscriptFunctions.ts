@@ -1758,11 +1758,11 @@ const base: InternalAPI<NS> = {
     _options ??= options;
     const txt = helpers.string(ctx, "txt", _txt);
     assert(_options, objectAssert, (type) =>
-      helpers.makeRuntimeErrorMsg(ctx, `Invalid type for options: ${type}, should be object.`, "TYPE"),
+      helpers.makeRuntimeErrorMsg(ctx, `Invalid type for options: ${type}. Should be object.`, "TYPE"),
     );
     if (_options.type !== undefined) {
       assert(_options.type, stringAssert, (type) =>
-        helpers.makeRuntimeErrorMsg(ctx, `Invalid type for options.type: ${type}, should be string.`, "TYPE"),
+        helpers.makeRuntimeErrorMsg(ctx, `Invalid type for options.type: ${type}. Should be string.`, "TYPE"),
       );
       options.type = _options.type;
       const validTypes = ["boolean", "text", "select"];

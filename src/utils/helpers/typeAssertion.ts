@@ -12,7 +12,7 @@ export function assert<T>(
   try {
     assertFn(v);
   } catch (type: unknown) {
-    if (type !== "string") type = "unknown";
+    if (typeof type !== "string") type = "unknown";
     throw msgFn(type as string);
   }
 }
