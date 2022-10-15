@@ -6600,12 +6600,29 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Prompts the player with a dialog box. If `options.type` is undefined or "boolean",
-   * the player is shown "Yes" and "No" prompts, which return true and false respectively.
-   * Passing a type of "text" will give the player a text field and a value of "select"
-   * will show a drop-down field. Choosing type "select" will require an array or object
-   * to be passed via the `options.choices` property.
-   * The script’s execution is halted until the player selects one of the options.
+   * Prompts the player with a dialog box. Here is an explanation of the various options.
+   *
+   * - `options.type` is not provided to the function. If `options.type` is left out and
+   *   only a string is passed to the function, then the default behavior is to create a
+   *   boolean dialog box.
+   *
+   * - `options.type` has value `undefined` or `"boolean"`. A boolean dialog box is
+   *   created. The player is shown "Yes" and "No" prompts, which return true and false
+   *   respectively. The script's execution is halted until the player presses either the
+   *   "Yes" or "No" button.
+   *
+   * - `options.type` has value `"text"`. The player is given a text field to enter
+   *   free-form text. The script's execution is halted until the player enters some text
+   *   and/or presses the "Confirm" button.
+   *
+   * - `options.type` has value `"select"`. The player is shown a drop-down field.
+   *   Choosing type `"select"` will require an array to be passed via the
+   *   `options.choices` property. The array can be an array of strings, an array of
+   *   numbers (not BigInt numbers), or a mixture of both numbers and strings. Any other
+   *   types of array elements will result in an error or an undefined/unexpected
+   *   behavior. The `options.choices` property will be ignored if `options.type` has a
+   *   value other than `"select"`. The script's execution is halted until the player
+   *   chooses one of the provided options and presses the "Confirm" button.
    *
    * @param txt - Text to appear in the prompt dialog box.
    * @param options - Options to modify the prompt the player is shown.
