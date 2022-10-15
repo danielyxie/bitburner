@@ -6624,6 +6624,57 @@ export interface NS {
    *   value other than `"select"`. The script's execution is halted until the player
    *   chooses one of the provided options and presses the "Confirm" button.
    *
+   * @example
+   * ```ts
+   * // NS1
+   * // A Yes/No question. The default is to create a boolean dialog box.
+   * var queryA = "Do you enjoy Bitburner?";
+   * var resultA = prompt(queryA);
+   * tprint(queryA + " " + resultA);
+   *
+   * // Another Yes/No question. Can also create a boolean dialog box by explicitly
+   * // passing the option {"type": "boolean"}.
+   * var queryB = "Is programming fun?";
+   * var resultB = prompt(queryB, { type: "boolean" });
+   * tprint(queryB + " " + resultB);
+   *
+   * // Free-form text box.
+   * var resultC = prompt("Please enter your name.", { type: "text" });
+   * tprint("Hello, " + resultC + ".");
+   *
+   * // A drop-down list.
+   * var resultD = prompt("Please select your favorite fruit.", {
+   *     type: "select",
+   *     choices: ["Apple", "Banana", "Orange", "Pear", "Strawberry"]
+   * });
+   * tprint("Your favorite fruit is " + resultD.toLowerCase() + ".");
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * // A Yes/No question. The default is to create a boolean dialog box.
+   * const queryA = "Do you enjoy Bitburner?";
+   * const resultA = await ns.prompt(queryA);
+   * ns.tprint(`${queryA} ${resultA}`);
+   *
+   * // Another Yes/No question. Can also create a boolean dialog box by explicitly
+   * // passing the option {"type": "boolean"}.
+   * const queryB = "Is programming fun?";
+   * const resultB = await ns.prompt(queryB, { type: "boolean" });
+   * ns.tprint(`${queryB} ${resultB}`);
+   *
+   * // Free-form text box.
+   * const resultC = await ns.prompt("Please enter your name.", { type: "text" });
+   * ns.tprint(`Hello, ${resultC}.`);
+   *
+   * // A drop-down list.
+   * const resultD = await ns.prompt("Please select your favorite fruit.", {
+   *     type: "select",
+   *     choices: ["Apple", "Banana", "Orange", "Pear", "Strawberry"]
+   * });
+   * ns.tprint(`Your favorite fruit is ${resultD.toLowerCase()}.`);
+   * ```
+   *
    * @param txt - Text to appear in the prompt dialog box.
    * @param options - Options to modify the prompt the player is shown.
    * @returns True if the player clicks “Yes”; false if the player clicks “No”; or the value entered by the player.
