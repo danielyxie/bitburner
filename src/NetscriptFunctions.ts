@@ -61,14 +61,7 @@ import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
 import { NetscriptGrafting } from "./NetscriptFunctions/Grafting";
-import {
-  NS,
-  RecentScript as IRecentScript,
-  BasicHGWOptions,
-  ProcessInfo,
-  MoneySource as IMoneySource,
-  MoneySources as IMoneySources,
-} from "./ScriptEditor/NetscriptDefinitions";
+import { NS, RecentScript as IRecentScript, BasicHGWOptions, ProcessInfo } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";

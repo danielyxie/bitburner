@@ -51,8 +51,10 @@ export function gainDefenseExp(this: Person, exp: number): void {
     this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
   );
   const ratio = this.hp.current / this.hp.max;
-  this.hp.max = Math.floor(10 + this.skills.defense / 10);
-  this.hp.current = Math.round(this.hp.max * ratio);
+  this.hp = {
+    max: Math.floor(10 + this.skills.defense / 10),
+    current: Math.round(this.hp.max * ratio),
+  };
 }
 
 export function gainDexterityExp(this: Person, exp: number): void {
@@ -194,8 +196,10 @@ export function updateSkillLevels(this: Person): void {
   );
 
   const ratio: number = this.hp.current / this.hp.max;
-  this.hp.max = Math.floor(10 + this.skills.defense / 10);
-  this.hp.current = Math.round(this.hp.max * ratio);
+  this.hp = {
+    max: Math.floor(10 + this.skills.defense / 10),
+    current: Math.round(this.hp.max * ratio),
+  };
 }
 
 export function hasAugmentation(this: Person, augName: string, ignoreQueued = false) {
