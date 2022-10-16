@@ -3376,7 +3376,7 @@ export interface Gang {
    * @remarks
    * RAM cost: 1 GB
    *
-   * Returns boolean indicating whether a member can currently be recruited
+   * Returns a boolean indicating whether a member can currently be recruited.
    *
    * @returns True if a member can currently be recruited, false otherwise.
    */
