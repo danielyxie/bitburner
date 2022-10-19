@@ -6255,7 +6255,7 @@ export interface NS {
    * @param data - Data to write.
    * @param mode - Defines the write mode.
    */
-  write(filename: string, data?: string[] | number | string, mode?: "w" | "a"): void;
+  write(filename: string, data?: string, mode?: "w" | "a"): void;
 
   /**
    * Attempt to write to a port.
