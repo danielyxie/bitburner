@@ -4663,13 +4663,13 @@ export interface NS {
    * ```ts
    * // NS1:
    * var currentMoney = getServerMoneyAvailable("foodnstuff");
-   * currentMoney = currentMoney * (1 + grow("foodnstuff"));
+   * currentMoney = currentMoney * grow("foodnstuff");
    * ```
    * @example
    * ```ts
    * // NS2:
    * let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
-   * currentMoney *= (1 + await ns.grow("foodnstuff"));
+   * currentMoney *= await ns.grow("foodnstuff");
    * ```
    * @param host - Hostname of the target server to grow.
    * @param opts - Optional parameters for configuring function behavior.
