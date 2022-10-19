@@ -76,6 +76,7 @@ import { InternalAPI, wrapAPI } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { getBitNodeMultipliers } from "./BitNode/BitNode";
+import { assert, arrayAssert, stringAssert, objectAssert } from "./utils/helpers/typeAssertion";
 
 // "Enums" as object
 export const enums = {
@@ -1752,60 +1753,81 @@ const base: InternalAPI<NS> = {
         throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
       SnackbarEvents.emit(message, variant as ToastVariant, duration);
     },
-  prompt:
-    (ctx) =>
-    (_txt, options = {}) => {
-      const txt = helpers.string(ctx, "txt", _txt);
-      const optionsValidator: { type?: string; options?: string[] } = {};
-      assertObjectType(ctx, "options", options, optionsValidator);
-
-      return new Promise(function (resolve) {
-        PromptEvent.emit({
-          txt: txt,
-          options,
-          resolve: resolve,
-        });
-      });
-    },
-  wget:
-    (ctx) =>
-    async (_url, _target, _hostname = ctx.workerScript.hostname) => {
-      const url = helpers.string(ctx, "url", _url);
-      const target = helpers.string(ctx, "target", _target);
-      const hostname = helpers.string(ctx, "hostname", _hostname);
-      if (!isScriptFilename(target) && !target.endsWith(".txt")) {
-        helpers.log(ctx, () => `Invalid target file: '${target}'. Must be a script or text file.`);
-        return Promise.resolve(false);
+  prompt: (ctx) => (_txt, _options) => {
+    const options: { type?: string; choices?: string[] } = {};
+    _options ??= options;
+    const txt = helpers.string(ctx, "txt", _txt);
+    assert(_options, objectAssert, (type) =>
+      helpers.makeRuntimeErrorMsg(ctx, `Invalid type for options: ${type}. Should be object.`, "TYPE"),
+    );
+    if (_options.type !== undefined) {
+      assert(_options.type, stringAssert, (type) =>
+        helpers.makeRuntimeErrorMsg(ctx, `Invalid type for options.type: ${type}. Should be string.`, "TYPE"),
+      );
+      options.type = _options.type;
+      const validTypes = ["boolean", "text", "select"];
+      if (!["boolean", "text", "select"].includes(options.type)) {
+        throw helpers.makeRuntimeErrorMsg(
+          ctx,
+          `Invalid value for options.type: ${options.type}. Must be one of ${validTypes.join(", ")}.`,
+        );
       }
-      const s = helpers.getServer(ctx, hostname);
-      return new Promise(function (resolve) {
-        $.get(
-          url,
-          function (data) {
-            let res;
-            if (isScriptFilename(target)) {
-              res = s.writeToScriptFile(target, data);
-            } else {
-              res = s.writeToTextFile(target, data);
-            }
-            if (!res.success) {
-              helpers.log(ctx, () => "Failed.");
-              return resolve(false);
-            }
-            if (res.overwritten) {
-              helpers.log(ctx, () => `Successfully retrieved content and overwrote '${target}' on '${hostname}'`);
-              return resolve(true);
-            }
-            helpers.log(ctx, () => `Successfully retrieved content to new file '${target}' on '${hostname}'`);
-            return resolve(true);
-          },
-          "text",
-        ).fail(function (e) {
-          helpers.log(ctx, () => JSON.stringify(e));
-          return resolve(false);
-        });
+      if (options.type === "select") {
+        assert(_options.choices, arrayAssert, (type) =>
+          helpers.makeRuntimeErrorMsg(
+            ctx,
+            `Invalid type for options.choices: ${type}. If options.type is "select", options.choices must be an array.`,
+            "TYPE",
+          ),
+        );
+        options.choices = _options.choices.map((choice, i) => helpers.string(ctx, `options.choices[${i}]`, choice));
+      }
+    }
+    return new Promise(function (resolve) {
+      PromptEvent.emit({
+        txt: txt,
+        options,
+        resolve: resolve,
       });
-    },
+    });
+  },
+  wget: (ctx) => async (_url, _target, _hostname) => {
+    const url = helpers.string(ctx, "url", _url);
+    const target = helpers.string(ctx, "target", _target);
+    const hostname = _hostname ? helpers.string(ctx, "hostname", _hostname) : ctx.workerScript.hostname;
+    if (!isScriptFilename(target) && !target.endsWith(".txt")) {
+      helpers.log(ctx, () => `Invalid target file: '${target}'. Must be a script or text file.`);
+      return Promise.resolve(false);
+    }
+    const s = helpers.getServer(ctx, hostname);
+    return new Promise(function (resolve) {
+      $.get(
+        url,
+        function (data) {
+          let res;
+          if (isScriptFilename(target)) {
+            res = s.writeToScriptFile(target, data);
+          } else {
+            res = s.writeToTextFile(target, data);
+          }
+          if (!res.success) {
+            helpers.log(ctx, () => "Failed.");
+            return resolve(false);
+          }
+          if (res.overwritten) {
+            helpers.log(ctx, () => `Successfully retrieved content and overwrote '${target}' on '${hostname}'`);
+            return resolve(true);
+          }
+          helpers.log(ctx, () => `Successfully retrieved content to new file '${target}' on '${hostname}'`);
+          return resolve(true);
+        },
+        "text",
+      ).fail(function (e) {
+        helpers.log(ctx, () => JSON.stringify(e));
+        return resolve(false);
+      });
+    });
+  },
   getFavorToDonate: () => () => {
     return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
   },
