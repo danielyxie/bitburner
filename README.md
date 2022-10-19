@@ -1,4 +1,8 @@
+# REPO MOVED TO github.com/bitburner-official/bitburner-src
+
 # Bitburner
+
+
 
 [![Join Discord](https://img.shields.io/discord/415207508303544321)](https://discord.gg/TFc3hKD)
 
