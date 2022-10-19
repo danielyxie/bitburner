@@ -477,7 +477,7 @@ export const HelpTexts: Record<string, string[]> = {
     "Note that it will not be possible to download data from many websites because they do not allow ",
     "cross-origin resource sharing (CORS). Example:",
     " ",
-    "    wget https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md game_readme.txt",
+    "    wget https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/README.md game_readme.txt",
     " ",
   ],
 };

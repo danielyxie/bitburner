@@ -13,25 +13,25 @@ heard:
   between all members of the community. Regular players, heavy scripters,
   Bitburner contributors, and everyone in between can be found on the
   server.
-- [Github Issues](https://github.com/danielyxie/bitburner/issues).
+- [Github Issues](https://github.com/bitburner-official/bitburner-src/issues).
   Although the term "issues" can have a negative connotation, they are a
   means of communicating with the community. A new Issue can be an
   interesting new feature that you feel would improve the game. It could be
   an unexpected behavior within the game. Or because the game is about
   scripting perhaps there is something that is conflicting with the
   browser's JavaScript interaction. So please do not be afraid to open a
-  [new Issue](https://github.com/danielyxie/bitburner/issues/new).
+  [new Issue](https://github.com/bitburner-official/bitburner-src/issues/new).
 
 ## Reporting Bugs
 
 The recommended method for reporting a bug is by opening a
-[Github Issue](https://github.com/danielyxie/bitburner/issues).
+[Github Issue](https://github.com/bitburner-official/bitburner-src/issues).
 
 Alternatively, you can post a bug by creating a post on the
 [game's subreddit](https://www.reddit.com/r/Bitburner/).
 
 Before submitting a bug report, please check to make sure the bug has not
-already been reported as an [Issue](https://github.com/danielyxie/bitburner/issues).
+already been reported as an [Issue](https://github.com/bitburner-official/bitburner-src/issues).
 
 #### How to Submit a Good Bug Report
 
@@ -50,8 +50,8 @@ already been reported as an [Issue](https://github.com/danielyxie/bitburner/issu
 ## As a Developer
 
 Anyone is welcome to contribute to Bitburner code. However, please read
-the [license](https://github.com/danielyxie/bitburner/blob/dev/license.txt)
-and the [readme](https://github.com/danielyxie/bitburner/blob/dev/README.md)
+the [license](https://github.com/bitburner-official/bitburner-src/blob/dev/license.txt)
+and the [readme](https://github.com/bitburner-official/bitburner-src/blob/dev/README.md)
 before doing so.
 
 To contribute to Bitburner code, you will need to have
@@ -95,12 +95,12 @@ Clone and fork the game's repository by using one of these methods: web browser,
 Desktop, or command line.
 
 - Web browser. Log in to your GitHub account, navigate to the
-  [game's repository](https://github.com/danielyxie/bitburner), and fork the
+  [game's repository](https://github.com/bitburner-official/bitburner-src), and fork the
   repository. Refer to
   [this page](https://docs.github.com/en/get-started/quickstart/fork-a-repo) for more
   detail.
 - GitHub Desktop. Click on `File`, then click `Clone repository`. Click on the `URL`
-  tab and type `danielyxie/bitburner` into the text box for repository URL. Choose
+  tab and type `bitburner-official/bitburner-src` into the text box for repository URL. Choose
   the path where you want to clone the repository and click the `Clone` button.
   Refer to [this page](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop)
   for more detail.
@@ -108,7 +108,7 @@ Desktop, or command line.
 
 ```sh
 # This clones the game's code repository. The output you get might vary.
-$ git clone https://github.com/danielyxie/bitburner.git
+$ git clone https://github.com/bitburner-official/bitburner-src.git
 Cloning into 'bitburner'...
 remote: Enumerating objects: 57072, done.
 remote: Counting objects: 100% (404/404), done.
@@ -206,7 +206,7 @@ the following rules:
 - Rebase your branch if necessary.
 - Run the game locally to test out your changes.
 - When submitting the pull request, make sure that the base fork is
-  _danielyxie/bitburner_ and the base is _dev_.
+  _bitburner-official/bitburner-src_ and the base is _dev_.
 - If your changes affect the game's UI, attach some screenshots or GIFs showing
   the changes to the UI.
 - If your changes affect Netscript, provide some
@@ -236,7 +236,7 @@ rules:
   repository](../../../tree/dev).
 - Rebase your branch if necessary.
 - When submitting the pull request, make sure that the base fork is
-  _danielyxie/bitburner_ and the base is _dev_.
+  _bitburner-official/bitburner-src_ and the base is _dev_.
 - Do not check in any generated files under `doc\`. The documentation is built
   automatically by ReadTheDocs.
 

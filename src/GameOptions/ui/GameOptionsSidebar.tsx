@@ -241,7 +241,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
         >
           <Button
             startIcon={<BugReport />}
-            href="https://github.com/danielyxie/bitburner/issues/new"
+            href="https://github.com/bitburner-official/bitburner-src/issues/new"
             target="_blank"
             sx={{ gridArea: "bug" }}
           >

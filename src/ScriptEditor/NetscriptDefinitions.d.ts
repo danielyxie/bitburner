@@ -6731,12 +6731,12 @@ export interface NS {
    * @example
    * ```ts
    * // NS1:
-   * wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
+   * wget("https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/README.md", "game_readme.txt");
    * ```
    * @example
    * ```ts
    * // NS2:
-   * await ns.wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
+   * await ns.wget("https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/README.md", "game_readme.txt");
    * ```
    * @param url - URL to pull data from.
    * @param target - Filename to write data to. Must be script or text file.

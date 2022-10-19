@@ -481,7 +481,7 @@ Path 1 (new):
    strong because hacking is typically one of the best ways of earning money.
 
 5. Do **BitNode-4: The Singularity**. Its Source-File does not directly make you
-   more powerful in any way, but it does unlock the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_ which
+   more powerful in any way, but it does unlock the `Singularity API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.singularity.md>`_ which
    let you automate significantly more aspects of the game. Consider repeating until Level 3, 
    since each level decreases the RAM cost of Singularity functions.
 
@@ -504,7 +504,7 @@ Path 2 (old):
    strong because hacking is typically one of the best ways of earning money.
 
 3. (Optional) Consider doing **BitNode-4: The Singularity**. Its Source-File does not directly make you
-   more powerful in any way, but it does unlock the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_ which
+   more powerful in any way, but it does unlock the `Singularity API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.singularity.md>`_ which
    let you automate significantly more aspects of the game.
 
 4. Do **BitNode-3: Corporatocracy** once to unlock the Corporation mechanic. This mechanic
@@ -541,12 +541,12 @@ them.
 
 For more scripting/hacking
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-**BitNode-4: The Singularity** unlocks the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_, which
+**BitNode-4: The Singularity** unlocks the `Singularity API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.singularity.md>`_, which
 can be used to automate many different aspects of the game, including working for factions/companies,
 purchasing & installing Augmentations, and creating programs
 
 **BitNode-6** and **BitNode-7** unlock Bladeburner and its corresponding
-`Netscript API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.bladeburner.md>`_. This allows you to automate an entire
+`Netscript API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.bladeburner.md>`_. This allows you to automate an entire
 new mechanic.
 
 **BitNode-2: Rise of the Underworld** also unlocks a new mechanic and Netscript API for automating

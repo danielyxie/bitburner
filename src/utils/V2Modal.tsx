@@ -20,12 +20,15 @@ export const V2Modal = (): React.ReactElement => {
       </Typography>{" "}
       <Typography>
         You should also take a look at{" "}
-        <a target="_" href="https://github.com/danielyxie/bitburner/blob/dev/doc/source/v2.0.0_migration.rst">
+        <a
+          target="_"
+          href="https://github.com/bitburner-official/bitburner-src/blob/dev/doc/source/v2.0.0_migration.rst"
+        >
           {" "}
           the migration guide
         </a>{" "}
         as well as{" "}
-        <a target="_" href="https://github.com/danielyxie/bitburner/blob/dev/doc/source/changelog.rst">
+        <a target="_" href="https://github.com/bitburner-official/bitburner-src/blob/dev/doc/source/changelog.rst">
           the changelog
         </a>
       </Typography>

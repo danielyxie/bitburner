@@ -123,7 +123,7 @@ export function TutorialRoot(props: IProps): React.ReactElement {
         <Link
           color="primary"
           target="_blank"
-          href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md"
+          href="https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md"
         >
           <Typography>Complete list of functions</Typography>
         </Link>

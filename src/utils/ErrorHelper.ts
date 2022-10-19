@@ -52,7 +52,7 @@ export interface IErrorData {
   issueUrl: string;
 }
 
-export const newIssueUrl = `https://github.com/danielyxie/bitburner/issues/new`;
+export const newIssueUrl = `https://github.com/bitburner-official/bitburner-src/issues/new`;
 
 function getErrorMetadata(error: Error, errorInfo?: React.ErrorInfo, page?: Page): IErrorMetadata {
   const isElectron = navigator.userAgent.toLowerCase().indexOf(" electron/") > -1;

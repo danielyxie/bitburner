@@ -7,7 +7,7 @@
     "name": "Daniel Xie & Olivier Gagnon"
   },
   "bugs": {
-    "url": "https://github.com/danielyxie/bitburner/issues"
+    "url": "https://github.com/bitburner-official/bitburner-src/issues"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",

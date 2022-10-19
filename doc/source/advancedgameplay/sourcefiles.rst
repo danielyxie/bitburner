@@ -38,11 +38,11 @@ List of all Source-Files
 ||                                    || * Increases all of the player's level and experience gain rate multipliers for                                                                                          |
 ||                                    || combat stats by 8%/12%/14%.                                                                                                                                             |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|| BitNode-7: Bladeburners 2079       || * Allows the player to access the `Bladeburner API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.bladeburner.md>`_ in other BitNodes.            |
+|| BitNode-7: Bladeburners 2079       || * Allows the player to access the `Bladeburner API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.bladeburner.md>`_ in other BitNodes.            |
 ||                                    || * Increases all of the player's Bladeburner multipliers by 8%/12%/14%.                                                                                                  |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-8: Ghost of Wall Street    || * Increases the player's hacking growth multiplier by 12%/18%/21%.                                                                                                      |
-||                                    || * Level 1 grants permanent access to :ref:`WSE <gameplay_stock_market>` and the `TIX API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.tix.md>`_ |
+||                                    || * Level 1 grants permanent access to :ref:`WSE <gameplay_stock_market>` and the `TIX API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.tix.md>`_ |
 ||                                    || * Level 2 grants permanent access to shorting stocks.                                                                                                                   |
 ||                                    || * Level 3 grants permanent access to use limit/stop orders.                                                                                                             |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -52,7 +52,7 @@ List of all Source-Files
 ||                                    || will be lost after installing augments).                                                                                                                                |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-10: Digital Carbon         || * Each level of this grants a Duplicate Sleeve.                                                                                                                         |
-||                                    || * Allows the player to access the `Sleeve API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.sleeve.md>`_ in other BitNodes.                      |
+||                                    || * Allows the player to access the `Sleeve API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.sleeve.md>`_ in other BitNodes.                      |
 ||                                    || * Grants the player access to the VitaLife secret laboratory in other BitNodes. Also grants access to the Grafting API.                                                 |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-11: The Big Crash          || * Company favor increases both the player's salary and reputation gain at that                                                                                          |

@@ -41,7 +41,7 @@ In NetscriptJS, you must preface any call to wget with the await keyword (like y
 
 ```ts
 // NS1:
-wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
+wget("https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/README.md", "game_readme.txt");
 ```
 
 ## Example 2
@@ -49,6 +49,6 @@ wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", 
 
 ```ts
 // NS2:
-await ns.wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
+await ns.wget("https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/README.md", "game_readme.txt");
 ```
 

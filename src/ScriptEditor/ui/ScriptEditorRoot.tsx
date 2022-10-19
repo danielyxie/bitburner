@@ -910,7 +910,10 @@ export function Root(props: IProps): React.ReactElement {
               Basic
             </Link>
             {" | "}
-            <Link target="_blank" href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md">
+            <Link
+              target="_blank"
+              href="https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md"
+            >
               Full
             </Link>
           </Typography>
