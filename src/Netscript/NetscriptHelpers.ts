@@ -751,8 +751,10 @@ export function handleUnknownError(e: unknown, ws: WorkerScript | ScriptDeath | 
     e = ws ? makeBasicErrorMsg(ws, msg) : `RUNTIME ERROR:\n\n${msg}`;
   }
   if (typeof e !== "string") {
-    console.error("Unexpected error type:", e);
-    e = "Unexpected type of error thrown. See console output.";
+    console.error("Unexpected error:", e);
+    const msg = `Unexpected type of error thrown. This error was likely thrown manually within a script.
+      Error has been logged to the console.\n\nType of error: ${typeof e}\nValue of error: ${e}`;
+    e = ws ? makeBasicErrorMsg(ws, msg, "UNKNOWN") : msg;
   }
   dialogBoxCreate(initialText + e);
 }
