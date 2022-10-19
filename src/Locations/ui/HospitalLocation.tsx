@@ -12,29 +12,22 @@ import { getHospitalizationCost } from "../../Hospital/Hospital";
 import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { useEffect, useState } from "react";
 
-type IState = {
-  currHp: number;
-};
-
-//Todo: Make this a functional component
-export class HospitalLocation extends React.Component<Record<string, never>, IState> {
+export function HospitalLocation(): React.ReactElement {
   /** Stores button styling that sets them all to block display */
-  btnStyle = { display: "block" };
-
-  constructor() {
-    super({});
-
-    this.state = {
-      currHp: Player.hp.current,
-    };
+  const btnStyle = { display: "block" };
+  const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
   }
 
-  getCost(): number {
-    return getHospitalizationCost();
-  }
+  useEffect(() => {
+    const id = setInterval(rerender, 200);
+    return () => clearInterval(id);
+  }, []);
 
-  getHealed(e: React.MouseEvent<HTMLElement>): void {
+  function getHealed(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
@@ -46,14 +39,12 @@ export class HospitalLocation extends React.Component<Record<string, never>, ISt
       return;
     }
 
-    const cost = this.getCost();
+    const cost = getHospitalizationCost();
     Player.loseMoney(cost, "hospitalization");
     Player.hp.current = Player.hp.max;
 
     // This just forces a re-render to update the cost
-    this.setState({
-      currHp: Player.hp.current,
-    });
+    rerender();
 
     dialogBoxCreate(
       <>
@@ -62,13 +53,9 @@ export class HospitalLocation extends React.Component<Record<string, never>, ISt
     );
   }
 
-  render(): React.ReactNode {
-    const cost = this.getCost();
-
-    return (
-      <Button onClick={this.getHealed} style={this.btnStyle}>
-        Get treatment for wounds - <Money money={cost} forPurchase={true} />
-      </Button>
-    );
-  }
+  return (
+    <Button onClick={getHealed} style={btnStyle}>
+      Get treatment for wounds - <Money money={getHospitalizationCost()} forPurchase={true} />
+    </Button>
+  );
 }
