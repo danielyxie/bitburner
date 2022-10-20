@@ -167,6 +167,7 @@ export function initStockMarket(): void {
   StockMarket.storedCycles = 0;
   StockMarket.lastUpdate = 0;
   StockMarket.ticksUntilCycle = TicksPerCycle;
+  initSymbolToStockMap();
 }
 
 export function initSymbolToStockMap(): void {
@@ -279,9 +280,4 @@ export function processStockPrices(numCycles = 1): void {
     // Shares required for price movement gradually approaches max over time
     stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 10, stock.shareTxForMovement);
   }
-}
-
-export function initStockMarketFn(): void {
-  initStockMarket();
-  initSymbolToStockMap();
 }

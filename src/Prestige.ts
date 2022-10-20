@@ -19,7 +19,7 @@ import { LiteratureNames } from "./Literature/data/LiteratureNames";
 import { GetServer, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
 import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { SpecialServers } from "./Server/data/SpecialServers";
-import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
+import { deleteStockMarket, initStockMarket } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
@@ -142,7 +142,6 @@ export function prestigeAugmentation(): void {
   // Reset Stock market
   if (Player.hasWseAccount) {
     initStockMarket();
-    initSymbolToStockMap();
   }
 
   // Red Pill
@@ -278,7 +277,6 @@ export function prestigeSourceFile(flume: boolean): void {
   // Reset Stock market, gang, and corporation
   if (Player.hasWseAccount) {
     initStockMarket();
-    initSymbolToStockMap();
   } else {
     deleteStockMarket();
   }

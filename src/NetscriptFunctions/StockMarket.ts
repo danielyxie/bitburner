@@ -1,6 +1,6 @@
 import { Player as player } from "../Player";
 import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
-import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder, initStockMarketFn } from "../StockMarket/StockMarket";
+import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder, initStockMarket } from "../StockMarket/StockMarket";
 import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/StockMarketHelpers";
 import { OrderTypes } from "../StockMarket/data/OrderTypes";
 import { PositionTypes } from "../StockMarket/data/PositionTypes";
@@ -382,7 +382,7 @@ export function NetscriptStockMarket(): InternalAPI<TIX> {
       }
 
       player.hasWseAccount = true;
-      initStockMarketFn();
+      initStockMarket();
       player.loseMoney(getStockMarketWseCost(), "stock");
       helpers.log(ctx, () => "Purchased WSE Account Access");
       return true;
