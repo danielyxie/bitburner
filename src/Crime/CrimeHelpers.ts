@@ -3,53 +3,46 @@ import { Crime } from "./Crime";
 import { Player } from "@player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { checkEnum } from "../utils/helpers/checkEnum";
+import { CrimeType } from "../utils/WorkType";
 
 //This is only used for the player
 export function determineCrimeSuccess(type: string): boolean {
-  let chance = 0;
-  let found = false;
-  for (const i of Object.keys(Crimes)) {
-    const crime = Crimes[i];
-    if (crime.type === type) {
-      chance = crime.successRate(Player);
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
+  if (!checkEnum(CrimeType, type)) {
     dialogBoxCreate(`ERR: Unrecognized crime type: ${type} This is probably a bug please contact the developer`);
     return false;
   }
+  const crime = Crimes[type];
+  const chance = crime.successRate(Player);
   return Math.random() <= chance;
 }
 
 export function findCrime(roughName: string): Crime | null {
   roughName = roughName.toLowerCase();
   if (roughName.includes("shoplift")) {
-    return Crimes.Shoplift;
+    return Crimes[CrimeType.SHOPLIFT];
   } else if (roughName.includes("rob") && roughName.includes("store")) {
-    return Crimes.RobStore;
+    return Crimes[CrimeType.ROB_STORE];
   } else if (roughName.includes("mug")) {
-    return Crimes.Mug;
+    return Crimes[CrimeType.MUG];
   } else if (roughName.includes("larceny")) {
-    return Crimes.Larceny;
+    return Crimes[CrimeType.LARCENY];
   } else if (roughName.includes("drugs")) {
-    return Crimes.DealDrugs;
+    return Crimes[CrimeType.DRUGS];
   } else if (roughName.includes("bond") && roughName.includes("forge")) {
-    return Crimes.BondForgery;
+    return Crimes[CrimeType.BOND_FORGERY];
   } else if ((roughName.includes("traffic") || roughName.includes("illegal")) && roughName.includes("arms")) {
-    return Crimes.TraffickArms;
+    return Crimes[CrimeType.TRAFFIC_ARMS];
   } else if (roughName.includes("homicide")) {
-    return Crimes.Homicide;
+    return Crimes[CrimeType.HOMICIDE];
   } else if (roughName.includes("grand") && roughName.includes("auto")) {
-    return Crimes.GrandTheftAuto;
+    return Crimes[CrimeType.GRAND_THEFT_AUTO];
   } else if (roughName.includes("kidnap")) {
-    return Crimes.Kidnap;
+    return Crimes[CrimeType.KIDNAP];
   } else if (roughName.includes("assassin")) {
-    return Crimes.Assassination;
+    return Crimes[CrimeType.ASSASSINATION];
   } else if (roughName.includes("heist")) {
-    return Crimes.Heist;
+    return Crimes[CrimeType.HEIST];
   }
 
   return null;

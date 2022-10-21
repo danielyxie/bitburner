@@ -1,7 +1,4 @@
 /** @public */
-export type ValuesFrom<T> = T[keyof T];
-
-/** @public */
 export interface HP {
   current: number;
   max: number;
@@ -1979,19 +1976,13 @@ export interface Singularity {
    *
    * This function returns the number of milliseconds it takes to attempt the
    * specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime,
-   * so running `commitCrime('rob store')` will return 60,000).
-   *
-   * Warning: I do not recommend using the time returned from this function to try
-   * and schedule your crime attempts. Instead, I would use the isBusy Singularity
-   * function to check whether you have finished attempting a crime. This is because
-   * although the game sets a certain crime to be X amount of seconds, there is no
-   * guarantee that your browser will follow that time limit.
+   * so running `commitCrime('ROBSTORE')` will return 60,000).
    *
    * @param crime - Name of crime to attempt.
    * @param focus - Acquire player focus on this crime. Optional. Defaults to true.
    * @returns The number of milliseconds it takes to attempt the specified crime.
    */
-  commitCrime(crime: string, focus?: boolean): number;
+  commitCrime(crime: CrimeType | CrimeNames, focus?: boolean): number;
 
   /**
    * Get chance to successfully commit a crime.
@@ -2004,7 +1995,7 @@ export interface Singularity {
    * @param crime - Name of crime.
    * @returns Chance of success at committing the specified crime.
    */
-  getCrimeChance(crime: string): number;
+  getCrimeChance(crime: CrimeType | CrimeNames): number;
 
   /**
    * Get stats related to a crime.
@@ -2014,10 +2005,10 @@ export interface Singularity {
    *
    * Returns the stats of the crime.
    *
-   * @param crime - Name of crime. Not case-sensitive
+   * @param crime - Name of crime.
    * @returns The stats of the crime.
    */
-  getCrimeStats(crime: string): CrimeStats;
+  getCrimeStats(crime: CrimeType | CrimeNames): CrimeStats;
 
   /**
    * Get a list of owned augmentation.
@@ -2036,6 +2027,7 @@ export interface Singularity {
    * Get a list of acquired Source-Files.
    * @remarks
    * RAM cost: 5 GB
+   *
    *
    * Returns an array of source files
    *
@@ -3651,32 +3643,13 @@ export interface Sleeve {
    * @remarks
    * RAM cost: 4 GB
    *
-   * Return a boolean indicating whether or not this action was set successfully.
-   *
-   * Returns false if an invalid action is specified.
-   *
-   * You can set a sleeve to commit one of the following crimes. The crime names are not
-   * case sensitive. For example, you can pass in the crime name as `"Shoplift"`,
-   * `"shoplift"`, `"shopLift"`, or even `"SHOPLIFT"`.
-   *
-   * - Assassination
-   * - Bond forgery
-   * - Deal drugs
-   * - Grand theft auto
-   * - Heist
-   * - Homicide
-   * - Kidnap
-   * - Larceny
-   * - Mug
-   * - Rob store
-   * - Shoplift
-   * - Traffick arms
+   * Return a boolean indicating whether or not this action was set successfully (false if an invalid action is specified).
    *
    * @example
    * ```ts
    * // NS1
    * // Assign the first 3 sleeves to commit various crimes.
-   * var crime = ["mug", "rob store", "shoplift"];
+   * var crime = ["MUG", "ROBSTORE", "SHOPLIFT"];
    * for (var i = 0; i < crime.length; i++) {
    *     tprintf("Sleeve %d commits crime: %s", i, crime[i]);
    *     sleeve.setToCommitCrime(i, crime[i]);
@@ -3686,7 +3659,7 @@ export interface Sleeve {
    * ```ts
    * // NS2
    * // Assign the first 3 sleeves to commit various crimes.
-   * const crime = ["mug", "rob store", "shoplift"];
+   * const crime = ["MUG", "ROBSTORE", "SHOPLIFT"];
    * for (let i = 0; i < crime.length; i++) {
    *     ns.tprintf("Sleeve %d commits crime: %s", i, crime[i]);
    *     ns.sleeve.setToCommitCrime(i, crime[i]);
@@ -3694,10 +3667,10 @@ export interface Sleeve {
    * ```
    *
    * @param sleeveNumber - Index of the sleeve to start committing crime. Sleeves are numbered starting from 0.
-   * @param name - Name of the crime. Must be an exact match. Refer to the list of crimes.
+   * @param name - Name of the crime.
    * @returns True if this action was set successfully, false otherwise.
    */
-  setToCommitCrime(sleeveNumber: number, name: string): boolean;
+  setToCommitCrime(sleeveNumber: number, crimeType: CrimeType | CrimeNames): boolean;
 
   /**
    * Set a sleeve to work for a faction.
@@ -3935,7 +3908,7 @@ export interface WorkStats {
  * @public
  */
 interface WorkFormulas {
-  crimeGains(crimeType: string): WorkStats;
+  crimeGains(crimeType: CrimeType | CrimeNames): WorkStats;
   classGains(player: Player, classType: string, locationName: string): WorkStats;
   factionGains(player: Player, workType: string, favor: number): WorkStats;
 }
@@ -6700,7 +6673,7 @@ export interface NS {
    * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
    * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
    */
-  toast(msg: string, variant?: ToastVariant, duration?: number | null): void;
+  toast(msg: string, variant?: ToastTypes | ToastVariant, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -6899,21 +6872,38 @@ export interface NS {
   enums: NSEnums;
 }
 
+declare enum ToastVariant {
+  SUCCESS = "success",
+  WARNING = "warning",
+  ERROR = "error",
+  INFO = "info",
+}
 /** @public */
-declare const enums = {
-  toast: {
-    SUCCESS: "success",
-    WARNING: "warning",
-    ERROR: "error",
-    INFO: "info",
-  },
+export type ToastTypes = `${ToastVariant}`;
+
+declare enum CrimeType {
+  SHOPLIFT = "SHOPLIFT",
+  ROB_STORE = "ROBSTORE",
+  MUG = "MUG",
+  LARCENY = "LARCENY",
+  DRUGS = "DRUGS",
+  BOND_FORGERY = "BONDFORGERY",
+  TRAFFIC_ARMS = "TRAFFICKARMS",
+  HOMICIDE = "HOMICIDE",
+  GRAND_THEFT_AUTO = "GRANDTHEFTAUTO",
+  KIDNAP = "KIDNAP",
+  ASSASSINATION = "ASSASSINATION",
+  HEIST = "HEIST",
+}
+/** @public */
+type CrimeNames = `${CrimeType}`;
+
+/** @public */
+export type NSEnums = {
+  toast: typeof ToastVariant;
+  crimes: typeof CrimeType;
 };
 
-/** @public */
-type ToastVariant = ValuesFrom<typeof enums.toast>;
-
-/** @public */
-export type NSEnums = typeof enums;
 /**
  * Corporation Office API
  * @remarks

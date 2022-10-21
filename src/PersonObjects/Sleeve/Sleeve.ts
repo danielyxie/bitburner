@@ -12,21 +12,18 @@ import { Person } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 
-import { Crime } from "../../Crime/Crime";
-import { Crimes } from "../../Crime/Crimes";
-
 import { Companies } from "../../Company/Companies";
 import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
-
 import { Contracts } from "../../Bladeburner/data/Contracts";
-
 import { CONSTANTS } from "../../Constants";
+import { checkEnum } from "../../utils/helpers/checkEnum";
+import { CrimeType } from "../../utils/WorkType";
+import { CityName } from "../../Locations/data/CityNames";
 
 import { Factions } from "../../Faction/Factions";
 
-import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../utils/JSONReviver";
@@ -97,13 +94,9 @@ export class Sleeve extends Person {
   }
 
   /** Commit crimes */
-  commitCrime(crimeKey: string): boolean {
-    const crime: Crime | null = Crimes[crimeKey] || Object.values(Crimes).find((crime) => crime.name === crimeKey);
-    if (!crime) {
-      return false;
-    }
-
-    this.startWork(new SleeveCrimeWork(crime.type));
+  commitCrime(type: string): boolean {
+    if (!checkEnum(CrimeType, type)) return false;
+    this.startWork(new SleeveCrimeWork(type));
     return true;
   }
 

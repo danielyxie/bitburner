@@ -74,7 +74,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
     const crime = w.getCrime();
     desc = (
       <>
-        This sleeve is currently attempting to {crime.type} (Success Rate:{" "}
+        This sleeve is currently attempting {crime.workName} (Success Rate:{" "}
         {numeralWrapper.formatPercentage(crime.successRate(props.sleeve))}).
       </>
     );

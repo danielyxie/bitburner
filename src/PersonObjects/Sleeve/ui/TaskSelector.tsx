@@ -19,6 +19,8 @@ import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
 import { ClassType } from "../../../Work/ClassWork";
 import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
 import { FactionWorkType } from "../../../Work/data/FactionWorkType";
+import { checkEnum } from "../../../utils/helpers/checkEnum";
+import { CrimeType } from "../../../utils/WorkType";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -314,11 +316,7 @@ function getABC(sleeve: Sleeve): [string, string, string] {
     }
   }
   if (isSleeveCrimeWork(w)) {
-    return [
-      "Commit Crime",
-      Object.values(Crimes).find((crime) => crime.type === w.crimeType)?.name ?? "Shoplift",
-      "------",
-    ];
+    return ["Commit Crime", checkEnum(CrimeType, w.crimeType) ? Crimes[w.crimeType].name : "Shoplift", "------"];
   }
   if (isSleeveSupportWork(w)) {
     return ["Perform Bladeburner Actions", "Support main sleeve", "------"];

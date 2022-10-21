@@ -48,6 +48,8 @@ import { calculateFactionExp, calculateFactionRep } from "../Work/formulas/Facti
 import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 import { defaultMultipliers } from "../PersonObjects/Multipliers";
+import { checkEnum } from "../utils/helpers/checkEnum";
+import { CrimeType } from "../utils/WorkType";
 
 export function NetscriptFormulas(): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
@@ -362,9 +364,8 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
     work: {
       crimeGains: (ctx) => (_crimeType) => {
         const crimeType = helpers.string(ctx, "crimeType", _crimeType);
-        const crime = Object.values(Crimes).find((c) => String(c.type) === crimeType);
-        if (!crime) throw new Error(`Invalid crime type: ${crimeType}`);
-        return calculateCrimeWorkStats(crime);
+        if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
+        return calculateCrimeWorkStats(Crimes[crimeType]);
       },
       classGains: (ctx) => (_person, _classType, _locationName) => {
         const person = helpers.player(ctx, _person);

@@ -11,6 +11,8 @@ import { isSleeveBladeburnerWork } from "../PersonObjects/Sleeve/Work/SleeveBlad
 import { isSleeveFactionWork } from "../PersonObjects/Sleeve/Work/SleeveFactionWork";
 import { isSleeveCompanyWork } from "../PersonObjects/Sleeve/Work/SleeveCompanyWork";
 import { helpers } from "../Netscript/NetscriptHelpers";
+import { Crimes } from "../Crime/Crimes";
+import { CrimeType } from "../utils/WorkType";
 
 export function NetscriptSleeve(): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext) {
@@ -62,15 +64,13 @@ export function NetscriptSleeve(): InternalAPI<ISleeve> {
       checkSleeveNumber(ctx, sleeveNumber);
       return Player.sleeves[sleeveNumber].synchronize();
     },
-    setToCommitCrime: (ctx) => (_sleeveNumber, _crimeRoughName) => {
+    setToCommitCrime: (ctx) => (_sleeveNumber, _crimeType) => {
       const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);
-      const crimeRoughName = helpers.string(ctx, "crimeName", _crimeRoughName);
+      const crimeType = helpers.string(ctx, "crimeType", _crimeType);
       checkSleeveAPIAccess(ctx);
       checkSleeveNumber(ctx, sleeveNumber);
-      const crime = findCrime(crimeRoughName);
-      if (crime === null) {
-        return false;
-      }
+      const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
+      if (crime == null) return false;
       return Player.sleeves[sleeveNumber].commitCrime(crime.name);
     },
     setToUniversityCourse: (ctx) => (_sleeveNumber, _universityName, _className) => {

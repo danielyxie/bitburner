@@ -8,6 +8,7 @@ import { Crime } from "../../../Crime/Crime";
 import { newWorkStats, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { CONSTANTS } from "../../../Constants";
 import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
+import { checkEnum } from "../../../utils/helpers/checkEnum";
 
 export const isSleeveCrimeWork = (w: Work | null): w is SleeveCrimeWork => w !== null && w.type === WorkType.CRIME;
 
@@ -20,9 +21,8 @@ export class SleeveCrimeWork extends Work {
   }
 
   getCrime(): Crime {
-    const crime = Object.values(Crimes).find((crime) => crime.type === this.crimeType);
-    if (!crime) throw new Error("crime should not be undefined");
-    return crime;
+    if (!checkEnum(CrimeType, this.crimeType)) throw new Error("crime should not be undefined");
+    return Crimes[this.crimeType];
   }
 
   getExp(sleeve: Sleeve): WorkStats {

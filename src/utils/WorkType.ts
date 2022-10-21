@@ -1,5 +1,4 @@
 export enum CrimeType {
-  None = "",
   SHOPLIFT = "SHOPLIFT", //"shoplift",
   ROB_STORE = "ROBSTORE", //"rob a store",
   MUG = "MUG", //"mug someone",

@@ -50,6 +50,9 @@ import { CompanyWork } from "../Work/CompanyWork";
 import { canGetBonus, onExport } from "../ExportBonus";
 import { saveObject } from "../SaveObject";
 import { calculateCrimeWorkStats } from "../Work/formulas/Crime";
+import { checkEnum } from "../utils/helpers/checkEnum";
+import { Crimes } from "../Crime/Crimes";
+import { CrimeType } from "../utils/WorkType";
 
 export function NetscriptSingularity(): InternalAPI<ISingularity> {
   const getAugmentation = function (ctx: NetscriptContext, name: string): Augmentation {
@@ -1115,56 +1118,47 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         helpers.log(ctx, () => `Began creating program: '${programName}'`);
         return true;
       },
-    commitCrime:
-      (ctx) =>
-      (_crimeRoughName, _focus = true) => {
-        helpers.checkSingularityAccess(ctx);
-        const crimeRoughName = helpers.string(ctx, "crimeRoughName", _crimeRoughName);
-        const focus = !!_focus;
-        const wasFocusing = Player.focus;
-
-        if (Player.currentWork !== null) {
-          Player.finishWork(true);
-        }
-
-        // Set Location to slums
-        Player.gotoLocation(LocationName.Slums);
-
-        const crime = findCrime(crimeRoughName.toLowerCase());
-        if (crime == null) {
-          // couldn't find crime
-          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeRoughName}'`);
-        }
-        helpers.log(ctx, () => `Attempting to commit ${crime.name}...`);
-        const crimeTime = crime.commit(1, ctx.workerScript);
-        if (focus) {
-          Player.startFocusing();
-          Router.toWork();
-        } else if (wasFocusing) {
-          Player.stopFocusing();
-          Router.toTerminal();
-        }
-        return crimeTime;
-      },
-    getCrimeChance: (ctx) => (_crimeRoughName) => {
+    commitCrime: (ctx) => (_crimeType, _focus) => {
       helpers.checkSingularityAccess(ctx);
-      const crimeRoughName = helpers.string(ctx, "crimeRoughName", _crimeRoughName);
+      const crimeType = helpers.string(ctx, "crimeType", _crimeType);
+      const focus = _focus === undefined ? true : !!_focus;
+      const wasFocusing = Player.focus;
 
-      const crime = findCrime(crimeRoughName.toLowerCase());
-      if (crime == null) {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: ${crimeRoughName}`);
+      if (Player.currentWork !== null) Player.finishWork(true);
+      Player.gotoLocation(LocationName.Slums);
+
+      // If input isn't a crimeType, use search using roughname.
+      const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
+      if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
+
+      helpers.log(ctx, () => `Attempting to commit ${crime.name}...`);
+      const crimeTime = crime.commit(1, ctx.workerScript);
+      if (focus) {
+        Player.startFocusing();
+        Router.toWork();
+      } else if (wasFocusing) {
+        Player.stopFocusing();
+        Router.toTerminal();
       }
+      return crimeTime;
+    },
+    getCrimeChance: (ctx) => (_crimeType) => {
+      helpers.checkSingularityAccess(ctx);
+      const crimeType = helpers.string(ctx, "crimeType", _crimeType);
+
+      // If input isn't a crimeType, use search using roughname.
+      const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
+      if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
 
       return crime.successRate(Player);
     },
-    getCrimeStats: (ctx) => (_crimeRoughName) => {
+    getCrimeStats: (ctx) => (_crimeType) => {
       helpers.checkSingularityAccess(ctx);
-      const crimeRoughName = helpers.string(ctx, "crimeRoughName", _crimeRoughName);
+      const crimeType = helpers.string(ctx, "crimeType", _crimeType);
 
-      const crime = findCrime(crimeRoughName.toLowerCase());
-      if (crime == null) {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: ${crimeRoughName}`);
-      }
+      // If input isn't a crimeType, use search using roughname.
+      const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
+      if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
 
       const crimeStatsWithMultipliers = calculateCrimeWorkStats(crime);
 

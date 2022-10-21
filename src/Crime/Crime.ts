@@ -25,22 +25,25 @@ interface IConstructorParams {
 
 export class Crime {
   // Number representing the difficulty of the crime. Used for success chance calculations
-  difficulty = 0;
+  difficulty: number;
 
   // Amount of karma lost for SUCCESSFULLY committing this crime
-  karma = 0;
+  karma: number;
 
   // How many people die as a result of this crime
-  kills = 0;
+  kills: number;
 
   // How much money is given by the
-  money = 0;
+  money: number;
 
   // Name of crime
-  name = "";
+  name: string;
 
   // Name of crime as it appears on work screen: "You are attempting..."
-  workName = "";
+  workName: string;
+
+  // Tooltip text in slums ui
+  tooltipText: string;
 
   // Milliseconds it takes to attempt the crime
   time = 0;
@@ -66,17 +69,19 @@ export class Crime {
   intelligence_exp = 0;
 
   constructor(
-    name = "",
-    workName = "",
+    name: string,
+    workName: string,
+    tooltipText: string,
     type: CrimeType,
-    time = 0,
-    money = 0,
-    difficulty = 0,
-    karma = 0,
-    params: IConstructorParams = {},
+    time: number,
+    money: number,
+    difficulty: number,
+    karma: number,
+    params: IConstructorParams,
   ) {
     this.name = name;
     this.workName = workName;
+    this.tooltipText = tooltipText;
     this.type = type;
     this.time = time;
     this.money = money;

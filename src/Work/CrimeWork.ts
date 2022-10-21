@@ -9,51 +9,7 @@ import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
 import { scaleWorkStats, WorkStats } from "./WorkStats";
 import { calculateCrimeWorkStats } from "./formulas/Crime";
-
-enum newCrimeType {
-  SHOPLIFT = "SHOPLIFT",
-  ROBSTORE = "ROBSTORE",
-  MUG = "MUG",
-  LARCENY = "LARCENY",
-  DRUGS = "DRUGS",
-  BONDFORGERY = "BONDFORGERY",
-  TRAFFICKARMS = "TRAFFICKARMS",
-  HOMICIDE = "HOMICIDE",
-  GRANDTHEFTAUTO = "GRANDTHEFTAUTO",
-  KIDNAP = "KIDNAP",
-  ASSASSINATION = "ASSASSINATION",
-  HEIST = "HEIST",
-}
-
-const convertCrimeType = (crimeType: CrimeType): newCrimeType => {
-  switch (crimeType) {
-    case CrimeType.SHOPLIFT:
-      return newCrimeType.SHOPLIFT;
-    case CrimeType.ROB_STORE:
-      return newCrimeType.ROBSTORE;
-    case CrimeType.MUG:
-      return newCrimeType.MUG;
-    case CrimeType.LARCENY:
-      return newCrimeType.LARCENY;
-    case CrimeType.DRUGS:
-      return newCrimeType.DRUGS;
-    case CrimeType.BOND_FORGERY:
-      return newCrimeType.BONDFORGERY;
-    case CrimeType.TRAFFIC_ARMS:
-      return newCrimeType.TRAFFICKARMS;
-    case CrimeType.HOMICIDE:
-      return newCrimeType.HOMICIDE;
-    case CrimeType.GRAND_THEFT_AUTO:
-      return newCrimeType.GRANDTHEFTAUTO;
-    case CrimeType.KIDNAP:
-      return newCrimeType.KIDNAP;
-    case CrimeType.ASSASSINATION:
-      return newCrimeType.ASSASSINATION;
-    case CrimeType.HEIST:
-      return newCrimeType.HEIST;
-  }
-  return newCrimeType.SHOPLIFT;
-};
+import { checkEnum } from "../utils/helpers/checkEnum";
 
 interface CrimeWorkParams {
   crimeType: CrimeType;
@@ -73,9 +29,10 @@ export class CrimeWork extends Work {
   }
 
   getCrime(): Crime {
-    const crime = Object.values(Crimes).find((c) => c.type === this.crimeType);
-    if (!crime) throw new Error("CrimeWork object constructed with invalid crime type");
-    return crime;
+    if (!checkEnum(CrimeType, this.crimeType)) {
+      throw new Error("CrimeWork object constructed with invalid crime type");
+    }
+    return Crimes[this.crimeType];
   }
 
   process(cycles = 1): boolean {
@@ -132,7 +89,7 @@ export class CrimeWork extends Work {
     return {
       type: this.type,
       cyclesWorked: this.cyclesWorked,
-      crimeType: convertCrimeType(this.crimeType),
+      crimeType: checkEnum(CrimeType, this.crimeType) ? this.crimeType : CrimeType.SHOPLIFT,
     };
   }
 
