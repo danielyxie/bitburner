@@ -44,10 +44,10 @@ jobs:
         with:
           name: app
           path: |
-            /dist/main.bundle.js
-            /dist/main.bundle.js.map
-            /dist/vendor.bundle.js
-            /dist/vendor.bundle.js.map
+            dist/main.bundle.js
+            dist/main.bundle.js.map
+            dist/vendor.bundle.js
+            dist/vendor.bundle.js.map
             index.html
           expire-on: never
         
@@ -58,5 +58,5 @@ jobs:
         if: ${{ github.event.inputs.buildDoc == 'true' }}
         with:
           name: markdown
-          path: /markdown/
+          path: markdown/
           expire-on: never
