@@ -9,7 +9,6 @@ Netburner.txt
 /test/*.map
 /test/*.bundle.*
 /test/*.css
-/markdown/
 /input/bitburner.api.json
 .cypress
 
