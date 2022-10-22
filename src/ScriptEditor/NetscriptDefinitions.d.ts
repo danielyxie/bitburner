@@ -6872,6 +6872,7 @@ export interface NS {
   enums: NSEnums;
 }
 
+/** @public */
 declare enum ToastVariant {
   SUCCESS = "success",
   WARNING = "warning",
