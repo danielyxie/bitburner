@@ -80,9 +80,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
-      - uses: actions/download-artifact@v3
-        with:
-          name: app
       - name: Deploy to GitHub Pages
-        id: deployment
+        id: app
         uses: actions/deploy-pages@v1
