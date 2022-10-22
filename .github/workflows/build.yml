@@ -80,17 +80,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
-      - uses: actions/upload-artifact@v3
-        if: ${{ github.event.inputs.buildApp == 'true' }}
+      - uses: actions/download-artifact@v3
         with:
           name: app
-          path: |
-            dist/main.bundle.js
-            dist/main.bundle.js.map
-            dist/vendor.bundle.js
-            dist/vendor.bundle.js.map
-            index.html
-          expire-on: never
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
