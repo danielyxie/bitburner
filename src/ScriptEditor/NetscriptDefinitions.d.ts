@@ -6881,6 +6881,7 @@ declare enum ToastVariant {
 /** @public */
 export type ToastTypes = `${ToastVariant}`;
 
+/** @public */
 declare enum CrimeType {
   SHOPLIFT = "SHOPLIFT",
   ROB_STORE = "ROBSTORE",
