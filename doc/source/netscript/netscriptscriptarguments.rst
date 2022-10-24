@@ -25,12 +25,15 @@ into a script using::
 **WARNING: Do not try to modify the args array. This will break the game.**
 
 
-example for accessing arguments in ns2 from terminal execution:
-terminal command:
-run name_of_script.js -t 10 --tail argument1 argument2
 
-ns2 script:
+Example for accessing arguments in ns2 format from terminal execution:
 
-const args_obj = arguments[0]
-const argument1 = (args_obj.server.args[0])
-const argument2 = (args_obj.server.args[1])
+Terminal command::
+
+    run name_of_script.js -t 10 --tail argument1 argument2
+
+NS2 script::
+
+    const args_obj = arguments[0] 
+    const argument1 = (args_obj.args[0]) 
+    const argument2 = (args_obj.args[1]) 
