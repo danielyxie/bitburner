@@ -302,13 +302,6 @@ export function BuyBackShares(corporation: Corporation, numShares: number): bool
   return true;
 }
 
-export function AssignJob(office: OfficeSpace, employeeName: string, job: string): void {
-  const employee = office.employees.find((e) => e.name === employeeName);
-  if (!employee) throw new Error(`Could not find employee '${name}'.`);
-  if (!checkEnum(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`);
-  office.assignSingleJob(employee, job);
-}
-
 export function AutoAssignJob(office: OfficeSpace, job: string, count: number): boolean {
   if (!checkEnum(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`);
   return office.autoAssignJob(job, count);
@@ -344,7 +337,7 @@ export function BuyCoffee(corp: Corporation, office: OfficeSpace): boolean {
 
 export function ThrowParty(corp: Corporation, office: OfficeSpace, costPerEmployee: number): number {
   const mult = 1 + costPerEmployee / 10e6;
-  const cost = costPerEmployee * office.employees.length;
+  const cost = costPerEmployee * office.totalEmployees;
   if (corp.funds < cost) {
     return 0;
   }

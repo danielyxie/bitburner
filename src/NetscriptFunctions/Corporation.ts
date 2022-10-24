@@ -1,7 +1,6 @@
 import { Player as player } from "../Player";
 
 import { OfficeSpace } from "../Corporation/OfficeSpace";
-import { Employee } from "../Corporation/Employee";
 import { Product } from "../Corporation/Product";
 import { Material } from "../Corporation/Material";
 import { Warehouse } from "../Corporation/Warehouse";
@@ -26,7 +25,6 @@ import {
   SellProduct,
   SetSmartSupply,
   BuyMaterial,
-  AssignJob,
   AutoAssignJob,
   UpgradeOfficeSize,
   PurchaseWarehouse,
@@ -259,13 +257,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     const product = division.products[productName];
     if (product === undefined) throw new Error(`Invalid product name: '${productName}'`);
     return product;
-  }
-
-  function getEmployee(divisionName: string, cityName: string, employeeName: string): Employee {
-    const office = getOffice(divisionName, cityName);
-    const employee = office.employees.find((e) => e.name === employeeName);
-    if (employee === undefined) throw new Error(`Invalid employee name: '${employeeName}'`);
-    return employee;
   }
 
   function checkAccess(ctx: NetscriptContext, api?: number): void {
@@ -626,18 +617,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       }
       return CorporationConstants.OfficeInitialCost * mult;
     },
-    assignJob: (ctx) => (_divisionName, _cityName, _employeeName, _job) => {
-      checkAccess(ctx, 8);
-      const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-      const cityName = helpers.city(ctx, "cityName", _cityName);
-      const employeeName = helpers.string(ctx, "employeeName", _employeeName);
-      const job = helpers.string(ctx, "job", _job);
-
-      if (!checkEnum(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`);
-      const office = getOffice(divisionName, cityName);
-
-      AssignJob(office, employeeName, job);
-    },
     setAutoJobAssignment: (ctx) => (_divisionName, _cityName, _job, _amount) => {
       checkAccess(ctx, 8);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
@@ -647,30 +626,18 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
 
       if (!checkEnum(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`);
       const office = getOffice(divisionName, cityName);
-
       return AutoAssignJob(office, job, amount);
     },
-    hireEmployee: (ctx) => (_divisionName, _cityName) => {
+    hireEmployee: (ctx) => (_divisionName, _cityName, _position?) => {
       checkAccess(ctx, 8);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       const cityName = helpers.city(ctx, "cityName", _cityName);
+      const position = _position ? helpers.string(ctx, "position", _position) : EmployeePositions.Unassigned;
+      if (!checkEnum(EmployeePositions, position)) {
+        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid position: ${position}`);
+      }
       const office = getOffice(divisionName, cityName);
-      const employee = office.hireRandomEmployee();
-      if (employee === undefined) return undefined;
-      return {
-        name: employee.name,
-        mor: employee.mor,
-        hap: employee.hap,
-        ene: employee.ene,
-        int: employee.int,
-        cha: employee.cha,
-        exp: employee.exp,
-        cre: employee.cre,
-        eff: employee.eff,
-        sal: employee.sal,
-        loc: employee.loc,
-        pos: employee.pos,
-      };
+      return office.hireRandomEmployee(position);
     },
     upgradeOfficeSize: (ctx) => (_divisionName, _cityName, _size) => {
       checkAccess(ctx, 8);
@@ -691,7 +658,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       if (costPerEmployee < 0) {
         throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
       }
-
       const corporation = getCorporation();
       const office = getOffice(divisionName, cityName);
 
@@ -704,7 +670,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
 
       const corporation = getCorporation();
       const office = getOffice(divisionName, cityName);
-
       return BuyCoffee(corporation, office);
     },
     hireAdVert: (ctx) => (_divisionName) => {
@@ -733,46 +698,12 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         maxHap: office.maxHap,
         minMor: office.minMor,
         maxMor: office.maxMor,
-        employees: office.employees.map((e) => e.name),
-        employeeProd: {
-          Operations: office.employeeProd[EmployeePositions.Operations],
-          Engineer: office.employeeProd[EmployeePositions.Engineer],
-          Business: office.employeeProd[EmployeePositions.Business],
-          Management: office.employeeProd[EmployeePositions.Management],
-          "Research & Development": office.employeeProd[EmployeePositions.RandD],
-          Training: office.employeeProd[EmployeePositions.Training],
-          Unassigned: 0,
-        },
-        employeeJobs: {
-          Operations: office.employeeJobs[EmployeePositions.Operations],
-          Engineer: office.employeeJobs[EmployeePositions.Engineer],
-          Business: office.employeeJobs[EmployeePositions.Business],
-          Management: office.employeeJobs[EmployeePositions.Management],
-          "Research & Development": office.employeeJobs[EmployeePositions.RandD],
-          Training: office.employeeJobs[EmployeePositions.Training],
-          Unassigned: office.employeeJobs[EmployeePositions.Unassigned],
-        },
-      };
-    },
-    getEmployee: (ctx) => (_divisionName, _cityName, _employeeName) => {
-      checkAccess(ctx, 8);
-      const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-      const cityName = helpers.city(ctx, "cityName", _cityName);
-      const employeeName = helpers.string(ctx, "employeeName", _employeeName);
-      const employee = getEmployee(divisionName, cityName, employeeName);
-      return {
-        name: employee.name,
-        mor: employee.mor,
-        hap: employee.hap,
-        ene: employee.ene,
-        int: employee.int,
-        cha: employee.cha,
-        exp: employee.exp,
-        cre: employee.cre,
-        eff: employee.eff,
-        sal: employee.sal,
-        loc: employee.loc,
-        pos: employee.pos,
+        employees: office.totalEmployees,
+        avgEne: office.avgEne,
+        avgHap: office.avgHap,
+        avgMor: office.avgMor,
+        employeeProd: Object.assign({}, office.employeeProd),
+        employeeJobs: Object.assign({}, office.employeeJobs),
       };
     },
   };

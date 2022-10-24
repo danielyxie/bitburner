@@ -78,20 +78,26 @@ import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { getBitNodeMultipliers } from "./BitNode/BitNode";
 import { assert, arrayAssert, stringAssert, objectAssert } from "./utils/helpers/typeAssertion";
 import { CrimeType } from "./utils/WorkType";
+import { EmployeePositions } from "./Corporation/EmployeePositions";
 
 export const enums = {
   toast: ToastVariant,
-  crimes: CrimeType,
+  CrimeType,
 };
+
 export type NSFull = Readonly<NS & INetscriptExtra>;
 
 export function NetscriptFunctions(workerScript: WorkerScript): NSFull {
-  return wrapAPI(workerScript, ns, workerScript.args.slice());
+  const api = wrapAPI(workerScript, ns, workerScript.args.slice());
+  // Example of conditionally adding optional spoilered content to enums
+  if (Player.sourceFileLvl(3) > 0 || Player.bitNodeN === 3) {
+    api.enums.corp = Object.assign({}, { EmployeePositions });
+  }
+  return api;
 }
 
 const base: InternalAPI<NS> = {
   args: [],
-  //The next line will error if enums does not match the definition in NetscriptDefinitions.d.ts
   enums,
   singularity: NetscriptSingularity(),
   gang: NetscriptGang(),

@@ -1,9 +1,6 @@
 import { EmployeePositions } from "./EmployeePositions";
 import { CorporationConstants } from "./data/Constants";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { generateRandomString } from "../utils/StringHelperFunctions";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
-import { Employee } from "./Employee";
 import { Industry } from "./Industry";
 import { Corporation } from "./Corporation";
 
@@ -24,6 +21,19 @@ export class OfficeSpace {
   maxHap = 100;
   maxMor = 100;
 
+  avgEne = 75;
+  avgHap = 75;
+  avgMor = 75;
+
+  avgInt = 75;
+  avgCha = 75;
+  totalExp = 0;
+  avgCre = 75;
+  avgEff = 75;
+
+  totalEmployees = 0;
+  totalSalary = 0;
+
   autoCoffee = false;
   autoParty = false;
   coffeeMult = 0;
@@ -31,16 +41,17 @@ export class OfficeSpace {
   coffeeEmployees = 0;
   partyEmployees = 0;
 
-  employees: Employee[] = [];
-  employeeProd: { [key: string]: number } = {
+  employeeProd: Record<EmployeePositions | "total", number> = {
     [EmployeePositions.Operations]: 0,
     [EmployeePositions.Engineer]: 0,
     [EmployeePositions.Business]: 0,
     [EmployeePositions.Management]: 0,
     [EmployeePositions.RandD]: 0,
+    [EmployeePositions.Training]: 0,
+    [EmployeePositions.Unassigned]: 0,
     total: 0,
   };
-  employeeJobs: { [key: string]: number } = {
+  employeeJobs: Record<EmployeePositions, number> = {
     [EmployeePositions.Operations]: 0,
     [EmployeePositions.Engineer]: 0,
     [EmployeePositions.Business]: 0,
@@ -49,7 +60,7 @@ export class OfficeSpace {
     [EmployeePositions.Training]: 0,
     [EmployeePositions.Unassigned]: 0,
   };
-  employeeNextJobs: { [key: string]: number } = {
+  employeeNextJobs: Record<EmployeePositions, number> = {
     [EmployeePositions.Operations]: 0,
     [EmployeePositions.Engineer]: 0,
     [EmployeePositions.Business]: 0,
@@ -65,24 +76,21 @@ export class OfficeSpace {
   }
 
   atCapacity(): boolean {
-    return this.employees.length >= this.size;
+    return this.totalEmployees >= this.size;
   }
 
   process(marketCycles = 1, corporation: Corporation, industry: Industry): number {
     // HRBuddy AutoRecruitment and training
     if (industry.hasResearch("HRBuddy-Recruitment") && !this.atCapacity()) {
-      const emp = this.hireRandomEmployee();
-      if (industry.hasResearch("HRBuddy-Training") && emp !== undefined) {
-        emp.pos = EmployeePositions.Training;
-      }
+      this.hireRandomEmployee(
+        industry.hasResearch("HRBuddy-Training") ? EmployeePositions.Training : EmployeePositions.Unassigned,
+      );
     }
 
     // Update employee jobs and job counts
-    for (const employee of this.employees) {
-      employee.pos = employee.nextPos;
+    for (const [pos, jobCount] of Object.entries(this.employeeNextJobs) as [EmployeePositions, number][]) {
+      this.employeeJobs[pos] = jobCount;
     }
-    this.calculateTotalEmployees();
-    this.calculateNextEmployees();
 
     // Process Office properties
     this.maxEne = 100;
@@ -105,162 +113,149 @@ export class OfficeSpace {
       this.autoParty = true;
     }
 
-    // Calculate changes in Morale/Happiness/Energy for Employees
-    let perfMult = 1; //Multiplier for employee morale/happiness/energy based on company performance
-    if (corporation.funds < 0 && industry.lastCycleRevenue < 0) {
-      perfMult = Math.pow(0.99, marketCycles);
-    } else if (corporation.funds > 0 && industry.lastCycleRevenue > 0) {
-      perfMult = Math.pow(1.01, marketCycles);
-    }
-
-    let totalSalary = 0;
-    for (const employee of this.employees) {
-      const salary = employee.process(marketCycles);
-      totalSalary += salary;
+    if (this.totalEmployees > 0) {
+      // Calculate changes in Morale/Happiness/Energy for Employees
+      let perfMult = 1; //Multiplier for employee morale/happiness/energy based on company performance
+      const reduction = 0.0015 * marketCycles; // Passive reduction every cycle
+      if (corporation.funds < 0 && industry.lastCycleRevenue < 0) {
+        perfMult = Math.pow(0.995, marketCycles);
+      } else if (corporation.funds > 0 && industry.lastCycleRevenue > 0) {
+        perfMult = Math.pow(1.005, marketCycles);
+      }
 
       if (this.autoCoffee) {
-        employee.ene = this.maxEne;
+        this.avgEne = this.maxEne;
       } else if (this.coffeeMult > 1) {
-        const mult = 1 + ((this.coffeeMult - 1) * this.employees.length) / this.coffeeEmployees;
-        employee.ene *= mult;
+        this.avgEne -= reduction;
+        this.avgEne *= (this.coffeeMult * this.coffeeEmployees) / this.totalEmployees;
       } else {
-        employee.ene *= perfMult;
+        this.avgEne -= reduction;
+        this.avgEne *= perfMult;
       }
 
       if (this.autoParty) {
-        employee.mor = this.maxMor;
-        employee.hap = this.maxHap;
+        this.avgMor = this.maxMor;
+        this.avgHap = this.maxHap;
       } else if (this.partyMult > 1) {
-        const mult = 1 + ((this.partyMult - 1) * this.employees.length) / this.partyEmployees;
-        employee.mor *= mult;
-        employee.hap *= mult;
+        this.avgHap -= reduction;
+        this.avgMor *= (this.partyMult * this.partyEmployees) / this.totalEmployees;
+        this.avgHap *= (this.partyMult * this.partyEmployees) / this.totalEmployees;
       } else {
-        employee.mor *= perfMult;
-        employee.hap *= perfMult;
+        this.avgHap -= reduction;
+        this.avgMor *= perfMult;
+        this.avgHap *= perfMult;
       }
 
-      employee.ene = Math.max(Math.min(employee.ene, this.maxEne), this.minEne);
-      employee.mor = Math.max(Math.min(employee.mor, this.maxMor), this.minMor);
-      employee.hap = Math.max(Math.min(employee.hap, this.maxHap), this.minHap);
+      this.avgEne = Math.max(Math.min(this.avgEne, this.maxEne), this.minEne);
+      this.avgMor = Math.max(Math.min(this.avgMor, this.maxMor), this.minMor);
+      this.avgHap = Math.max(Math.min(this.avgHap, this.maxHap), this.minHap);
+
+      this.coffeeMult = 0;
+      this.partyMult = 0;
+      this.coffeeEmployees = 0;
+      this.partyEmployees = 0;
     }
 
-    this.coffeeMult = 0;
-    this.partyMult = 0;
-    this.coffeeEmployees = 0;
-    this.partyEmployees = 0;
+    // Get experience increase; unassigned employees do not contribute, employees in training contribute 5x
+    this.totalExp +=
+      0.0015 *
+      marketCycles *
+      (this.totalEmployees -
+        this.employeeJobs[EmployeePositions.Unassigned] +
+        this.employeeJobs[EmployeePositions.Training] * 4);
 
     this.calculateEmployeeProductivity(corporation, industry);
-    return totalSalary;
-  }
-
-  calculateNextEmployees(): void {
-    //Reset
-    for (const name of Object.keys(this.employeeNextJobs)) {
-      this.employeeNextJobs[name] = 0;
+    if (this.totalEmployees === 0) {
+      this.totalSalary = 0;
+    } else {
+      this.totalSalary =
+        CorporationConstants.EmployeeSalaryMultiplier *
+        marketCycles *
+        this.totalEmployees *
+        (this.avgInt + this.avgCha + this.totalExp / this.totalEmployees + this.avgCre + this.avgEff);
     }
-
-    for (let i = 0; i < this.employees.length; ++i) {
-      const employee = this.employees[i];
-      this.employeeNextJobs[employee.nextPos]++;
-    }
-  }
-
-  calculateTotalEmployees(): void {
-    //Reset
-    for (const name of Object.keys(this.employeeJobs)) {
-      this.employeeJobs[name] = 0;
-    }
-
-    for (let i = 0; i < this.employees.length; ++i) {
-      const employee = this.employees[i];
-      this.employeeJobs[employee.pos]++;
-    }
+    return this.totalSalary;
   }
 
   calculateEmployeeProductivity(corporation: Corporation, industry: Industry): void {
-    //Reset
-    for (const name of Object.keys(this.employeeProd)) {
-      this.employeeProd[name] = 0;
-    }
+    const effCre = this.avgCre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
+      effCha = this.avgCha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
+      effInt = this.avgInt * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
+      effEff = this.avgEff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
+    const prodBase = this.avgMor * this.avgHap * this.avgEne * 1e-6;
 
     let total = 0;
-    for (let i = 0; i < this.employees.length; ++i) {
-      const employee = this.employees[i];
-      const prod = employee.calculateProductivity(corporation, industry);
-      this.employeeProd[employee.pos] += prod;
-      total += prod;
+    const exp = this.totalExp / this.totalEmployees || 0;
+    for (const name of Object.keys(this.employeeProd) as (EmployeePositions | "total")[]) {
+      let prodMult = 0;
+      switch (name) {
+        case EmployeePositions.Operations:
+          prodMult = 0.6 * effInt + 0.1 * effCha + exp + 0.5 * effCre + effEff;
+          break;
+        case EmployeePositions.Engineer:
+          prodMult = effInt + 0.1 * effCha + 1.5 * exp + effEff;
+          break;
+        case EmployeePositions.Business:
+          prodMult = 0.4 * effInt + effCha + 0.5 * exp;
+          break;
+        case EmployeePositions.Management:
+          prodMult = 2 * effCha + exp + 0.2 * effCre + 0.7 * effEff;
+          break;
+        case EmployeePositions.RandD:
+          prodMult = 1.5 * effInt + 0.8 * exp + effCre + 0.5 * effEff;
+          break;
+        case EmployeePositions.Unassigned:
+        case EmployeePositions.Training:
+        case "total":
+          continue;
+        default:
+          console.error(`Invalid employee position: ${name}`);
+          break;
+      }
+      this.employeeProd[name] = this.employeeJobs[name] * prodMult * prodBase;
+      total += this.employeeProd[name];
     }
+
     this.employeeProd.total = total;
   }
 
-  hireRandomEmployee(): Employee | undefined {
-    if (this.atCapacity()) return;
-    if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) return;
+  hireRandomEmployee(position: EmployeePositions): boolean {
+    if (this.atCapacity()) return false;
+    if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) return false;
 
-    //Generate three random employees (meh, decent, amazing)
-    const int = getRandomInt(50, 100),
-      cha = getRandomInt(50, 100),
-      exp = getRandomInt(50, 100),
-      cre = getRandomInt(50, 100),
-      eff = getRandomInt(50, 100),
-      sal = CorporationConstants.EmployeeSalaryMultiplier * (int + cha + exp + cre + eff);
+    ++this.totalEmployees;
+    ++this.employeeJobs[position];
+    ++this.employeeNextJobs[position];
 
-    const emp = new Employee({
-      intelligence: int,
-      charisma: cha,
-      experience: exp,
-      creativity: cre,
-      efficiency: eff,
-      salary: sal,
-    });
-
-    const name = generateRandomString(7);
-
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].name === name) {
-        return this.hireRandomEmployee();
-      }
-    }
-    emp.name = name;
-    this.employees.push(emp);
-
-    this.calculateTotalEmployees();
-    this.calculateNextEmployees();
-    return emp;
+    this.totalExp += 75;
+    this.avgMor = (this.avgMor * this.totalEmployees + 75) / (this.totalEmployees + 1);
+    this.avgHap = (this.avgHap * this.totalEmployees + 75) / (this.totalEmployees + 1);
+    this.avgEne = (this.avgEne * this.totalEmployees + 75) / (this.totalEmployees + 1);
+    return true;
   }
 
-  assignSingleJob(employee: Employee, job: string): void {
-    employee.nextPos = job;
-    this.calculateNextEmployees();
-  }
+  autoAssignJob(job: EmployeePositions, target: number): boolean {
+    const diff = target - this.employeeNextJobs[job];
 
-  autoAssignJob(job: string, target: number): boolean {
-    let count = this.employeeNextJobs[job];
-
-    for (const employee of this.employees) {
-      if (count === target) {
-        break;
-      } else if (employee.nextPos === EmployeePositions.Unassigned && count <= target) {
-        employee.nextPos = job;
-        count++;
-      } else if (employee.nextPos === job && count >= target) {
-        employee.nextPos = EmployeePositions.Unassigned;
-        count--;
-      }
+    if (diff === 0) {
+      return true;
+    } else if (diff <= this.employeeNextJobs[EmployeePositions.Unassigned]) {
+      // This covers both a negative diff (reducing the amount of employees in position) and a positive (increasing and using up unassigned employees)
+      this.employeeNextJobs[EmployeePositions.Unassigned] -= diff;
+      this.employeeNextJobs[job] = target;
+      return true;
     }
-
-    this.calculateNextEmployees();
-    return count === target;
+    return false;
   }
 
   getCoffeeCost(): number {
-    return 500e3 * this.employees.length;
+    return 500e3 * this.totalEmployees;
   }
 
   setCoffee(mult = 1.05): boolean {
-    if (mult > 1 && this.coffeeMult === 0 && !this.autoCoffee && this.employees.length > 0) {
+    if (mult > 1 && this.coffeeMult === 0 && !this.autoCoffee && this.totalEmployees > 0) {
       this.coffeeMult = mult;
-      this.coffeeEmployees = this.employees.length;
+      this.coffeeEmployees = this.totalEmployees;
       return true;
     }
 
@@ -268,9 +263,9 @@ export class OfficeSpace {
   }
 
   setParty(mult: number): boolean {
-    if (mult > 1 && this.partyMult === 0 && !this.autoParty && this.employees.length > 0) {
+    if (mult > 1 && this.partyMult === 0 && !this.autoParty && this.totalEmployees > 0) {
       this.partyMult = mult;
-      this.partyEmployees = this.employees.length;
+      this.partyEmployees = this.totalEmployees;
       return true;
     }
 
@@ -282,6 +277,18 @@ export class OfficeSpace {
   }
 
   static fromJSON(value: IReviverValue): OfficeSpace {
+    // Convert employees from the old version
+    if (value.data.hasOwnProperty("employees")) {
+      const empCopy: [{ data: { hap: number; mor: number; ene: number; exp: number } }] = value.data.employees;
+      delete value.data.employees;
+      const ret = Generic_fromJSON(OfficeSpace, value.data);
+      ret.totalEmployees = empCopy.length;
+      ret.avgHap = empCopy.reduce((a, b) => a + b.data.hap, 0) / ret.totalEmployees || 75;
+      ret.avgMor = empCopy.reduce((a, b) => a + b.data.mor, 0) / ret.totalEmployees || 75;
+      ret.avgEne = empCopy.reduce((a, b) => a + b.data.ene, 0) / ret.totalEmployees || 75;
+      ret.totalExp = empCopy.reduce((a, b) => a + b.data.exp, 0);
+      return ret;
+    }
     return Generic_fromJSON(OfficeSpace, value.data);
   }
 }
