@@ -457,7 +457,8 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       const cityName = helpers.city(ctx, "cityName", _cityName);
       const materialName = helpers.string(ctx, "materialName", _materialName);
       const amt = helpers.number(ctx, "amt", _amt);
-      if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
+      if (amt < 0 || !Number.isFinite(amt))
+        throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
     },
