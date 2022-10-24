@@ -33,6 +33,11 @@ function MakeProductButton(): React.ReactElement {
     return Object.keys(division.products).length === 0;
   }
 
+  function onButtonClick() {
+    if (hasMaxProducts) return;
+    setMakeOpen(true);
+  }
+
   let createProductButtonText = "";
   switch (division.type) {
     case Industries.Food:
@@ -78,7 +83,7 @@ function MakeProductButton(): React.ReactElement {
           )
         }
       >
-        <Button color={shouldFlash() ? "error" : "primary"} onClick={() => setMakeOpen(true)} disabled={corp.funds < 0}>
+        <Button color={shouldFlash() ? "error" : "primary"} onClick={onButtonClick} disabled={corp.funds < 0}>
           {createProductButtonText}
         </Button>
       </Tooltip>
