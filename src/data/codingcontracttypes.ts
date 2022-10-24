@@ -1320,7 +1320,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `'${n}' \n\n`,
         "Treat it as an extended Hamming code with 1 'possible' error at a random index.\n",
         "Find the 'possible' wrong bit, fix it and extract the decimal value, which is hidden inside the string.\n\n",
-        "Note: The length of the binary string is dynamic, but it's encoding/decoding follows Hamming's 'rule'\n",
+        "Note: The length of the binary string is dynamic, but its encoding/decoding follows Hamming's 'rule'\n",
         "Note 2: Index 0 is an 'overall' parity bit. Watch the Hamming code video from 3Blue1Brown for more information\n",
         "Note 3: There's a ~55% chance for an altered Bit. So... MAYBE there is an altered Bit 😉\n",
         "Note: The endianness of the encoded decimal value is reversed in relation to the endianness of the Hamming code. Where",
