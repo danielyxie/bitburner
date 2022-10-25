@@ -7,7 +7,8 @@ e.g.    10000 -> "10 seconds"
         120000 -> "2 minutes and 0 seconds"
 */
 function convertTimeMsToTimeElapsedString(time: number, showMilli = false): string {
-  time = Math.floor(time);
+  const negFlag = time < 0;
+  time = Math.abs(Math.floor(time));
   const millisecondsPerSecond = 1000;
   const secondPerMinute = 60;
   const minutesPerHours = 60;
@@ -47,7 +48,7 @@ function convertTimeMsToTimeElapsedString(time: number, showMilli = false): stri
   }
   res += `${seconds} second${!showMilli && secTruncMinutes === 1 ? "" : "s"}`;
 
-  return res;
+  return negFlag ? `-(${res})` : res;
 }
 
 // Finds the longest common starting substring in a set of strings

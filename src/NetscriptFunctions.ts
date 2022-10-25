@@ -1737,13 +1737,11 @@ const base: InternalAPI<NS> = {
 
     return numeralWrapper.format(n, format);
   },
-  tFormat:
-    (ctx) =>
-    (_milliseconds, _milliPrecision = false) => {
-      const milliseconds = helpers.number(ctx, "milliseconds", _milliseconds);
-      const milliPrecision = !!_milliPrecision;
-      return convertTimeMsToTimeElapsedString(milliseconds, milliPrecision);
-    },
+  tFormat: (ctx) => (_milliseconds, _milliPrecision) => {
+    const milliseconds = helpers.number(ctx, "milliseconds", _milliseconds);
+    const milliPrecision = !!_milliPrecision;
+    return convertTimeMsToTimeElapsedString(milliseconds, milliPrecision);
+  },
   getTimeSinceLastAug: () => () => {
     return Player.playtimeSinceLastAug;
   },
