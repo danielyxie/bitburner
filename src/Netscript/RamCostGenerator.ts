@@ -345,6 +345,7 @@ const grafting = {
 const corporation = {
   getMaterialNames: 0,
   getIndustryTypes: 0,
+  getEmployeePositions: 0,
   getUnlockables: 0,
   getUpgradeNames: 0,
   getResearchNames: 0,

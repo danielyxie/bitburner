@@ -2,7 +2,7 @@
 // (top-left panel in the Industry UI)
 import React, { useState } from "react";
 
-import { Industries } from "../IndustryData";
+import { IndustryType } from "../IndustryData";
 import { HireAdVert } from "../Actions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
@@ -40,29 +40,28 @@ function MakeProductButton(): React.ReactElement {
 
   let createProductButtonText = "";
   switch (division.type) {
-    case Industries.Food:
+    case IndustryType.Food:
       createProductButtonText = "Build Restaurant";
       break;
-    case Industries.Tobacco:
+    case IndustryType.Tobacco:
       createProductButtonText = "Create Product";
       break;
-    case Industries.Pharmaceutical:
+    case IndustryType.Pharmaceutical:
       createProductButtonText = "Create Drug";
       break;
-    case Industries.Computer:
-    case "Computer":
+    case IndustryType.Computers:
       createProductButtonText = "Create Product";
       break;
-    case Industries.Robotics:
+    case IndustryType.Robotics:
       createProductButtonText = "Design Robot";
       break;
-    case Industries.Software:
+    case IndustryType.Software:
       createProductButtonText = "Develop Software";
       break;
-    case Industries.Healthcare:
+    case IndustryType.Healthcare:
       createProductButtonText = "Build Hospital";
       break;
-    case Industries.RealEstate:
+    case IndustryType.RealEstate:
       createProductButtonText = "Develop Property";
       break;
     default:

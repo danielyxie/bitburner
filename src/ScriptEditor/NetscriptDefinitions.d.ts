@@ -6872,19 +6872,30 @@ export interface NS {
   enums: NSEnums;
 }
 
-/** @public */
-declare enum EmployeePositions {
-  Operations = "Operations",
-  Engineer = "Engineer",
-  Business = "Business",
-  Management = "Management",
-  RandD = "Research & Development",
-  Training = "Training",
-  Unassigned = "Unassigned",
-}
+type EmployeePosName =
+  | "Operations"
+  | "Engineer"
+  | "Business"
+  | "Management"
+  | "Research & Development"
+  | "Training"
+  | "Unassigned";
 
-/** @public */
-export type EmployeePosNames = `${EmployeePositions}`;
+type IndustryTypeName =
+  | "Energy"
+  | "Water Utilities"
+  | "Agriculture"
+  | "Fishing"
+  | "Mining"
+  | "Food"
+  | "Tobacco"
+  | "Chemical"
+  | "Pharmaceutical"
+  | "Computer Hardware"
+  | "Robotics"
+  | "Software"
+  | "Healthcare"
+  | "RealEstate";
 
 /** @public */
 declare enum ToastVariant {
@@ -6918,7 +6929,6 @@ type CrimeNames = `${CrimeType}`;
 export type NSEnums = {
   toast: typeof ToastVariant;
   CrimeType: typeof CrimeType;
-  corp?: { EmployeePositions: typeof EmployeePositions };
 };
 
 /**
@@ -6936,11 +6946,7 @@ export interface OfficeAPI {
    * @param employeePosition - Position to place into. Defaults to "Unassigned".
    * @returns True if an employee was hired, false otherwise
    */
-  hireEmployee(
-    divisionName: string,
-    cityName: string,
-    employeePosition?: EmployeePositions | EmployeePosNames,
-  ): boolean;
+  hireEmployee(divisionName: string, cityName: string, employeePosition?: EmployeePosName): boolean;
   /**
    * Upgrade office size.
    * @param divisionName - Name of the division
@@ -7308,7 +7314,12 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * Get list of industry types
    * @returns industry names
    */
-  getIndustryTypes(): string[];
+  getIndustryTypes(): IndustryTypeName[];
+  /**
+   * Get list of industry types
+   * @returns industry names
+   */
+  getEmployeePositions(): EmployeePosName[];
   /**
    * Get list of one-time unlockable upgrades
    * @returns unlockable upgrades names
@@ -7557,23 +7568,9 @@ export interface Office {
   /** Average morale of the employees */
   avgMor: number;
   /** Production of the employees */
-  employeeProd: EmployeeJobs;
+  employeeProd: Record<EmployeePosName, number>;
   /** Positions of the employees */
-  employeeJobs: EmployeeJobs;
-}
-
-/**
- * Object representing the number of employee in each job.
- * @public
- */
-interface EmployeeJobs {
-  Operations: number;
-  Engineer: number;
-  Business: number;
-  Management: number;
-  "Research & Development": number;
-  Training: number;
-  Unassigned: number;
+  employeeJobs: Record<EmployeePosName, number>;
 }
 
 /**

@@ -26,12 +26,13 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
+import { CityName } from "../../Locations/data/CityNames";
 
 interface IProps {
   corp: Corporation;
   division: Industry;
   warehouse: Warehouse | 0;
-  currentCity: string;
+  currentCity: CityName;
   rerender: () => void;
 }
 
@@ -223,7 +224,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
 }
 
 interface IEmptyProps {
-  city: string;
+  city: CityName;
   rerender: () => void;
 }
 

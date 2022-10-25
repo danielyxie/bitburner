@@ -1,4 +1,4 @@
-import { Industries } from "./IndustryData";
+import { IndustryType } from "./IndustryData";
 
 export interface IProductRatingWeight {
   Aesthetics?: number;
@@ -8,27 +8,27 @@ export interface IProductRatingWeight {
   Performance?: number;
   Reliability?: number;
 }
-
-export const ProductRatingWeights: Record<string, IProductRatingWeight> = {
-  [Industries.Food]: {
+//TODO: Move this to IndustryData
+export const ProductRatingWeights: Partial<Record<IndustryType, IProductRatingWeight>> = {
+  [IndustryType.Food]: {
     Quality: 0.7,
     Durability: 0.1,
     Aesthetics: 0.2,
   },
-  [Industries.Tobacco]: {
+  [IndustryType.Tobacco]: {
     Quality: 0.4,
     Durability: 0.2,
     Reliability: 0.2,
     Aesthetics: 0.2,
   },
-  [Industries.Pharmaceutical]: {
+  [IndustryType.Pharmaceutical]: {
     Quality: 0.2,
     Performance: 0.2,
     Durability: 0.1,
     Reliability: 0.3,
     Features: 0.2,
   },
-  [Industries.Computer]: {
+  [IndustryType.Computers]: {
     Quality: 0.15,
     Performance: 0.25,
     Durability: 0.25,
@@ -36,16 +36,7 @@ export const ProductRatingWeights: Record<string, IProductRatingWeight> = {
     Aesthetics: 0.05,
     Features: 0.1,
   },
-  Computer: {
-    //Repeat
-    Quality: 0.15,
-    Performance: 0.25,
-    Durability: 0.25,
-    Reliability: 0.2,
-    Aesthetics: 0.05,
-    Features: 0.1,
-  },
-  [Industries.Robotics]: {
+  [IndustryType.Robotics]: {
     Quality: 0.1,
     Performance: 0.2,
     Durability: 0.2,
@@ -53,21 +44,21 @@ export const ProductRatingWeights: Record<string, IProductRatingWeight> = {
     Aesthetics: 0.1,
     Features: 0.2,
   },
-  [Industries.Software]: {
+  [IndustryType.Software]: {
     Quality: 0.2,
     Performance: 0.2,
     Reliability: 0.2,
     Durability: 0.2,
     Features: 0.2,
   },
-  [Industries.Healthcare]: {
+  [IndustryType.Healthcare]: {
     Quality: 0.4,
     Performance: 0.1,
     Durability: 0.1,
     Reliability: 0.3,
     Features: 0.1,
   },
-  [Industries.RealEstate]: {
+  [IndustryType.RealEstate]: {
     Quality: 0.2,
     Durability: 0.25,
     Reliability: 0.1,

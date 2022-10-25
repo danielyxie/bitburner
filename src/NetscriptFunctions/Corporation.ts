@@ -51,14 +51,15 @@ import {
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
-import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/IndustryData";
+import { IndustriesData, IndustryResearchTrees, IndustryType } from "../Corporation/IndustryData";
 import { CorporationConstants } from "../Corporation/data/Constants";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
-import { helpers } from "../Netscript/NetscriptHelpers";
+import { assertEnumMember, helpers } from "../Netscript/NetscriptHelpers";
 import { checkEnum } from "../utils/helpers/checkEnum";
+import { CityName } from "../Locations/data/CityNames";
 
 export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
@@ -112,14 +113,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     const priceMult = upgrade.priceMult;
     const level = corporation.upgrades[upgN];
     return baseCost * Math.pow(priceMult, level);
-  }
-
-  function getExpandIndustryCost(industryName: string): number {
-    const cost = IndustryStartingCosts[industryName];
-    if (cost === undefined) {
-      throw new Error(`Invalid industry: '${industryName}'`);
-    }
-    return cost;
   }
 
   function getExpandCityCost(): number {
@@ -238,7 +231,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
 
   function getWarehouse(divisionName: string, cityName: string): Warehouse {
     const division = getDivision(divisionName);
-    if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
+    if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city name '${cityName}'`);
     const warehouse = division.warehouses[cityName];
     if (warehouse === 0) throw new Error(`${division.name} has not expanded to '${cityName}'`);
     return warehouse;
@@ -497,12 +490,12 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     },
     exportMaterial:
       (ctx) =>
-      (_sourceDivision, _sourceCity, _targetDivision, _targetCity, _materialName, _amt): void => {
+      (_sourceDivision, sourceCity, _targetDivision, targetCity, _materialName, _amt): void => {
         checkAccess(ctx, 7);
         const sourceDivision = helpers.string(ctx, "sourceDivision", _sourceDivision);
-        const sourceCity = helpers.string(ctx, "sourceCity", _sourceCity);
+        assertEnumMember(ctx, CityName, "City", "sourceCity", sourceCity);
         const targetDivision = helpers.string(ctx, "targetDivision", _targetDivision);
-        const targetCity = helpers.string(ctx, "targetCity", _targetCity);
+        assertEnumMember(ctx, CityName, "City", "targetCity", targetCity);
         const materialName = helpers.string(ctx, "materialName", _materialName);
         const amt = helpers.string(ctx, "amt", _amt);
         ExportMaterial(
@@ -515,12 +508,12 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       },
     cancelExportMaterial:
       (ctx) =>
-      (_sourceDivision, _sourceCity, _targetDivision, _targetCity, _materialName, _amt): void => {
+      (_sourceDivision, sourceCity, _targetDivision, targetCity, _materialName, _amt): void => {
         checkAccess(ctx, 7);
         const sourceDivision = helpers.string(ctx, "sourceDivision", _sourceDivision);
-        const sourceCity = helpers.string(ctx, "sourceCity", _sourceCity);
+        assertEnumMember(ctx, CityName, "City", "sourceCity", sourceCity);
         const targetDivision = helpers.string(ctx, "targetDivision", _targetDivision);
-        const targetCity = helpers.string(ctx, "targetCity", _targetCity);
+        assertEnumMember(ctx, CityName, "City", "targetCity", targetCity);
         const materialName = helpers.string(ctx, "materialName", _materialName);
         const amt = helpers.string(ctx, "amt", _amt);
         CancelExportMaterial(
@@ -712,13 +705,18 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   return {
     ...warehouseAPI,
     ...officeAPI,
+    // Todo: Just remove these functions and provide enums?
     getMaterialNames: (ctx) => () => {
       checkAccess(ctx);
       return [...CorporationConstants.AllMaterials];
     },
     getIndustryTypes: (ctx) => () => {
       checkAccess(ctx);
-      return [...CorporationConstants.AllIndustryTypes];
+      return Object.values(IndustryType);
+    },
+    getEmployeePositions: (ctx) => () => {
+      checkAccess(ctx);
+      return Object.values(EmployeePositions);
     },
     getUnlockables: (ctx) => () => {
       checkAccess(ctx);
@@ -735,6 +733,9 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     expandIndustry: (ctx) => (_industryName, _divisionName) => {
       checkAccess(ctx);
       const industryName = helpers.string(ctx, "industryName", _industryName);
+      if (!checkEnum(IndustryType, industryName)) {
+        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid industry: ${industryName}`);
+      }
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       const corporation = getCorporation();
       NewIndustry(corporation, industryName, divisionName);
@@ -834,7 +835,10 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     getExpandIndustryCost: (ctx) => (_industryName) => {
       checkAccess(ctx);
       const industryName = helpers.string(ctx, "industryName", _industryName);
-      return getExpandIndustryCost(industryName);
+      if (!checkEnum(IndustryType, industryName)) {
+        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid industry: '${industryName}'`);
+      }
+      return IndustriesData[industryName].startingCost;
     },
     getExpandCityCost: (ctx) => () => {
       checkAccess(ctx);

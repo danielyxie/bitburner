@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { CityName } from "../../../Locations/data/CityNames";
 
 interface IProps {
   open: boolean;
@@ -29,7 +30,7 @@ export function ExportModal(props: IProps): React.ReactElement {
   if (Object.keys(defaultDivision.warehouses).length === 0)
     throw new Error("Export popup created in a division with no warehouses.");
   const [industry, setIndustry] = useState<string>(defaultDivision.name);
-  const [city, setCity] = useState<string>(Object.keys(defaultDivision.warehouses)[0]);
+  const [city, setCity] = useState(Object.keys(defaultDivision.warehouses)[0] as CityName);
   const [amt, setAmt] = useState("");
   const setRerender = useState(false)[1];
 
@@ -38,13 +39,13 @@ export function ExportModal(props: IProps): React.ReactElement {
   }
 
   function onCityChange(event: SelectChangeEvent<string>): void {
-    setCity(event.target.value);
+    setCity(event.target.value as CityName);
   }
 
   function onIndustryChange(event: SelectChangeEvent<string>): void {
     const div = event.target.value;
     setIndustry(div);
-    setCity(Object.keys(corp.divisions[0].warehouses)[0]);
+    setCity(Object.keys(corp.divisions[0].warehouses)[0] as CityName);
   }
 
   function onAmtChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -73,7 +74,7 @@ export function ExportModal(props: IProps): React.ReactElement {
   const currentDivision = corp.divisions.find((division: Industry) => division.name === industry);
   if (currentDivision === undefined)
     throw new Error(`Export popup somehow ended up with undefined division '${currentDivision}'`);
-  const possibleCities = Object.keys(currentDivision.warehouses).filter(
+  const possibleCities = (Object.keys(currentDivision.warehouses) as CityName[]).filter(
     (city) => currentDivision.warehouses[city] !== 0,
   );
   if (possibleCities.length > 0 && !possibleCities.includes(city)) {
@@ -96,7 +97,7 @@ export function ExportModal(props: IProps): React.ReactElement {
           ))}
       </Select>
       <Select onChange={onCityChange} value={city}>
-        {possibleCities.map((cityName: string) => {
+        {possibleCities.map((cityName) => {
           if (currentDivision.warehouses[cityName] === 0) return;
           return (
             <MenuItem key={cityName} value={cityName}>

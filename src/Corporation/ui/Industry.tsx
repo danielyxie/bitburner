@@ -9,9 +9,10 @@ import { Warehouse } from "../Warehouse";
 import { OfficeSpace } from "../OfficeSpace";
 import { useCorporation, useDivision } from "./Context";
 import Box from "@mui/material/Box";
+import { CityName } from "../../Locations/data/CityNames";
 
 interface IProps {
-  city: string;
+  city: CityName;
   warehouse: Warehouse | 0;
   office: OfficeSpace;
   rerender: () => void;

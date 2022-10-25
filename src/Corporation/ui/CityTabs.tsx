@@ -7,9 +7,10 @@ import { ExpandNewCity } from "./ExpandNewCity";
 import { useDivision } from "./Context";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import { CityName } from "../../Locations/data/CityNames";
 
 interface IProps {
-  city: string;
+  city: CityName | "Expand";
   rerender: () => void;
 }
 
@@ -19,13 +20,13 @@ export function CityTabs(props: IProps): React.ReactElement {
 
   const office = division.offices[city];
   if (office === 0) {
-    setCity("Sector-12");
+    setCity(CityName.Sector12);
     return <></>;
   }
 
   const canExpand =
     Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] === 0).length > 0;
-  function handleChange(event: React.SyntheticEvent, tab: string): void {
+  function handleChange(event: React.SyntheticEvent, tab: CityName | "Expand"): void {
     setCity(tab);
   }
   return (

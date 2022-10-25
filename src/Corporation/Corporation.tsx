@@ -12,6 +12,7 @@ import { Player } from "@player";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { isString } from "../utils/helpers/isString";
+import { CityName } from "../Locations/data/CityNames";
 
 interface IParams {
   name?: string;
@@ -327,7 +328,7 @@ export class Corporation {
     if (upgN === 1) {
       for (let i = 0; i < this.divisions.length; ++i) {
         const industry = this.divisions[i];
-        for (const city of Object.keys(industry.warehouses)) {
+        for (const city of Object.keys(industry.warehouses) as CityName[]) {
           const warehouse = industry.warehouses[city];
           if (warehouse === 0) continue;
           if (industry.warehouses.hasOwnProperty(city) && warehouse) {

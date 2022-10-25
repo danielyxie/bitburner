@@ -4,236 +4,255 @@ import { Corporation } from "./Corporation";
 import { getBaseResearchTreeCopy, getProductIndustryResearchTreeCopy } from "./data/BaseResearchTree";
 import { MoneyCost } from "./ui/MoneyCost";
 
-interface IIndustryMap<T> {
-  [key: string]: T | undefined;
-  Energy: T;
-  Utilities: T;
-  Agriculture: T;
-  Fishing: T;
-  Mining: T;
-  Food: T;
-  Tobacco: T;
-  Chemical: T;
-  Pharmaceutical: T;
-  Computer: T;
-  Robotics: T;
-  Software: T;
-  Healthcare: T;
-  RealEstate: T;
+export enum IndustryType {
+  Energy = "Energy",
+  Utilities = "Water Utilities",
+  Agriculture = "Agriculture",
+  Fishing = "Fishing",
+  Mining = "Mining",
+  Food = "Food",
+  Tobacco = "Tobacco",
+  Chemical = "Chemical",
+  Pharmaceutical = "Pharmaceutical",
+  Computers = "Computer Hardware",
+  Robotics = "Robotics",
+  Software = "Software",
+  Healthcare = "Healthcare",
+  RealEstate = "RealEstate",
 }
 
-// Map of official names for each Industry
-export const Industries: IIndustryMap<string> = {
-  Energy: "Energy",
-  Utilities: "Water Utilities",
-  Agriculture: "Agriculture",
-  Fishing: "Fishing",
-  Mining: "Mining",
-  Food: "Food",
-  Tobacco: "Tobacco",
-  Chemical: "Chemical",
-  Pharmaceutical: "Pharmaceutical",
-  Computer: "Computer Hardware",
-  Robotics: "Robotics",
-  Software: "Software",
-  Healthcare: "Healthcare",
-  RealEstate: "RealEstate",
+type IndustryData = {
+  startingCost: number;
+  description: string;
+  /** Product name for industry. Empty string for industries with no products. */
+  product?: { name: string; verb: string; desc: string };
+  recommendStarting: boolean;
+  reqMats: Record<string, number>;
+  /** Real estate factor */
+  reFac?: number;
+  /** Scientific research factor (affects quality) */
+  sciFac?: number;
+  /** Hardware factor */
+  hwFac?: number;
+  /** Robots factor */
+  robFac?: number;
+  /** AI Cores factor */
+  aiFac?: number;
+  /** Advertising factor (affects sales) */
+  advFac?: number;
+  prodMats?: string[];
 };
 
-// Map of how much money it takes to start each industry
-export const IndustryStartingCosts: IIndustryMap<number> = {
-  Energy: 225e9,
-  Utilities: 150e9,
-  Agriculture: 40e9,
-  Fishing: 80e9,
-  Mining: 300e9,
-  Food: 10e9,
-  Tobacco: 20e9,
-  Chemical: 70e9,
-  Pharmaceutical: 200e9,
-  Computer: 500e9,
-  Robotics: 1e12,
-  Software: 25e9,
-  Healthcare: 750e9,
-  RealEstate: 600e9,
+export const IndustriesData: Record<IndustryType, IndustryData> = {
+  [IndustryType.Agriculture]: {
+    startingCost: 40e9,
+    description: "Cultivate crops and breed livestock to produce food.",
+    recommendStarting: true,
+    reFac: 0.72,
+    sciFac: 0.5,
+    hwFac: 0.2,
+    robFac: 0.3,
+    aiFac: 0.3,
+    advFac: 0.04,
+    reqMats: { Water: 0.5, Energy: 0.5 },
+    prodMats: ["Plants", "Food"],
+  },
+  [IndustryType.Chemical]: {
+    startingCost: 70e9,
+    description: "Produce industrial chemicals.",
+    recommendStarting: false,
+    reFac: 0.25,
+    sciFac: 0.75,
+    hwFac: 0.2,
+    robFac: 0.25,
+    aiFac: 0.2,
+    advFac: 0.07,
+    reqMats: { Plants: 1, Energy: 0.5, Water: 0.5 },
+    prodMats: ["Chemicals"],
+  },
+  [IndustryType.Computers]: {
+    startingCost: 500e9,
+    description: "Develop and manufacture new computer hardware and networking infrastructures.",
+    product: { name: "Product", verb: "Create", desc: "Design and manufacture a new computer hardware product!" },
+    recommendStarting: false,
+    reFac: 0.2,
+    sciFac: 0.62,
+    robFac: 0.36,
+    aiFac: 0.19,
+    advFac: 0.17,
+    reqMats: { Metal: 2, Energy: 1 },
+    prodMats: ["Hardware"],
+  },
+  [IndustryType.Energy]: {
+    startingCost: 225e9,
+    description: "Engage in the production and distribution of energy.",
+    recommendStarting: false,
+    reFac: 0.65,
+    sciFac: 0.7,
+    robFac: 0.05,
+    aiFac: 0.3,
+    advFac: 0.08,
+    reqMats: { Hardware: 0.1, Metal: 0.2 },
+    prodMats: ["Energy"],
+  },
+  [IndustryType.Fishing]: {
+    startingCost: 80e9,
+    description: "Produce food through the breeding and processing of fish and fish products.",
+    recommendStarting: false,
+    reFac: 0.15,
+    sciFac: 0.35,
+    hwFac: 0.35,
+    robFac: 0.5,
+    aiFac: 0.2,
+    advFac: 0.08,
+    reqMats: { Energy: 0.5 },
+    prodMats: ["Food"],
+  },
+  [IndustryType.Food]: {
+    startingCost: 10e9,
+    description: "Create your own restaurants all around the world.",
+    product: { name: "Restaurant", verb: "Build", desc: "Build and manage a new restaurant!" },
+    recommendStarting: true,
+    sciFac: 0.12,
+    hwFac: 0.15,
+    robFac: 0.3,
+    aiFac: 0.25,
+    advFac: 0.25,
+    reFac: 0.05,
+    reqMats: { Food: 0.5, Water: 0.5, Energy: 0.2 },
+  },
+  [IndustryType.Healthcare]: {
+    startingCost: 750e9,
+    description: "Create and manage hospitals.",
+    product: { name: "Hospital", verb: "Build", desc: "Build and manage a new hospital!" },
+    recommendStarting: false,
+    reFac: 0.1,
+    sciFac: 0.75,
+    advFac: 0.11,
+    hwFac: 0.1,
+    robFac: 0.1,
+    aiFac: 0.1,
+    reqMats: { Robots: 10, AICores: 5, Energy: 5, Water: 5 },
+  },
+  [IndustryType.Mining]: {
+    startingCost: 300e9,
+    description: "Extract and process metals from the earth.",
+    recommendStarting: false,
+    reFac: 0.3,
+    sciFac: 0.26,
+    hwFac: 0.4,
+    robFac: 0.45,
+    aiFac: 0.45,
+    advFac: 0.06,
+    reqMats: { Energy: 0.8 },
+    prodMats: ["Metal"],
+  },
+  [IndustryType.Pharmaceutical]: {
+    startingCost: 200e9,
+    description: "Discover, develop, and create new pharmaceutical drugs.",
+    product: { name: "Drug", verb: "Develop", desc: "Design and develop a new pharmaceutical drug!" },
+    recommendStarting: false,
+    reFac: 0.05,
+    sciFac: 0.8,
+    hwFac: 0.15,
+    robFac: 0.25,
+    aiFac: 0.2,
+    advFac: 0.16,
+    reqMats: { Chemicals: 2, Energy: 1, Water: 0.5 },
+    prodMats: ["Drugs"],
+  },
+  [IndustryType.RealEstate]: {
+    startingCost: 600e9,
+    description: "Develop and manage real estate properties.",
+    product: { name: "Property", verb: "Develop", desc: "Develop a new piece of real estate property!" },
+    recommendStarting: false,
+    robFac: 0.6,
+    aiFac: 0.6,
+    advFac: 0.25,
+    sciFac: 0.05,
+    hwFac: 0.05,
+    reqMats: { Metal: 5, Energy: 5, Water: 2, Hardware: 4 },
+    prodMats: ["RealEstate"],
+  },
+  [IndustryType.Robotics]: {
+    startingCost: 1e12,
+    description: "Develop and create robots.",
+    product: { name: "Robot", verb: "Design", desc: "Design and create a new robot or robotic system!" },
+    recommendStarting: false,
+    reFac: 0.32,
+    sciFac: 0.65,
+    aiFac: 0.36,
+    advFac: 0.18,
+    hwFac: 0.19,
+    reqMats: { Hardware: 5, Energy: 3 },
+    prodMats: ["Robots"],
+  },
+  [IndustryType.Software]: {
+    startingCost: 25e9,
+    description: "Develop computer software and create AI Cores.",
+    product: { name: "Software", verb: "Develop", desc: "Develop a new piece of software!" },
+    recommendStarting: true,
+    sciFac: 0.62,
+    advFac: 0.16,
+    hwFac: 0.25,
+    reFac: 0.15,
+    aiFac: 0.18,
+    robFac: 0.05,
+    reqMats: { Hardware: 0.5, Energy: 0.5 },
+    prodMats: ["AICores"],
+  },
+  [IndustryType.Tobacco]: {
+    startingCost: 20e9,
+    description: "Create and distribute tobacco and tobacco-related products.",
+    product: { name: "Product", verb: "Create", desc: "Create a new tobacco product!" },
+    recommendStarting: true,
+    reFac: 0.15,
+    sciFac: 0.75,
+    hwFac: 0.15,
+    robFac: 0.2,
+    aiFac: 0.15,
+    advFac: 0.2,
+    reqMats: { Plants: 1, Water: 0.2 },
+  },
+  [IndustryType.Utilities]: {
+    startingCost: 150e9,
+    description: "Distribute water and provide wastewater services.",
+    recommendStarting: false,
+    reFac: 0.5,
+    sciFac: 0.6,
+    robFac: 0.4,
+    aiFac: 0.4,
+    advFac: 0.08,
+    reqMats: { Hardware: 0.1, Metal: 0.1 },
+    prodMats: ["Water"],
+  },
 };
+
+export const IndustryStartingCosts = {};
 
 // Map of description for each industry
-export const IndustryDescriptions: IIndustryMap<(corp: Corporation) => React.ReactElement> = {
-  Energy: (corp: Corporation) => (
+export const IndustryDescriptions = (industry: IndustryType, corp: Corporation) => {
+  const data = IndustriesData[industry];
+  return (
     <>
-      Engage in the production and distribution of energy.
+      ${data.description}
       <br />
       <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Energy} corp={corp} />
+      Starting cost: <MoneyCost money={data.startingCost} corp={corp} />
       <br />
-      Recommended starting Industry: NO
+      Recommended starting Industry: {data.recommendStarting ? "YES" : "NO"}
     </>
-  ),
-  Utilities: (corp: Corporation) => (
-    <>
-      Distribute water and provide wastewater services.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Utilities} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
-  Agriculture: (corp: Corporation) => (
-    <>
-      Cultivate crops and breed livestock to produce food.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Agriculture} corp={corp} />
-      <br />
-      Recommended starting Industry: YES
-    </>
-  ),
-  Fishing: (corp: Corporation) => (
-    <>
-      Produce food through the breeding and processing of fish and fish products.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Fishing} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
-  Mining: (corp: Corporation) => (
-    <>
-      Extract and process metals from the earth.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Mining} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
-  Food: (corp: Corporation) => (
-    <>
-      Create your own restaurants all around the world.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Food} corp={corp} />
-      <br />
-      Recommended starting Industry: YES
-    </>
-  ),
-  Tobacco: (corp: Corporation) => (
-    <>
-      Create and distribute tobacco and tobacco-related products.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Tobacco} corp={corp} />
-      <br />
-      Recommended starting Industry: YES
-    </>
-  ),
-  Chemical: (corp: Corporation) => (
-    <>
-      Produce industrial chemicals.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Chemical} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
-  Pharmaceutical: (corp: Corporation) => (
-    <>
-      Discover, develop, and create new pharmaceutical drugs.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Pharmaceutical} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
-  Computer: (corp: Corporation) => (
-    <>
-      Develop and manufacture new computer hardware and networking infrastructures.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Computer} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
-  Robotics: (corp: Corporation) => (
-    <>
-      Develop and create robots.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Robotics} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
-  Software: (corp: Corporation) => (
-    <>
-      Develop computer software and create AI Cores.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Software} corp={corp} />
-      <br />
-      Recommended starting Industry: YES
-    </>
-  ),
-  Healthcare: (corp: Corporation) => (
-    <>
-      Create and manage hospitals.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.Healthcare} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
-  RealEstate: (corp: Corporation) => (
-    <>
-      Develop and manage real estate properties.
-      <br />
-      <br />
-      Starting cost: <MoneyCost money={IndustryStartingCosts.RealEstate} corp={corp} />
-      <br />
-      Recommended starting Industry: NO
-    </>
-  ),
+  );
 };
 
-// Map of available Research for each Industry. This data is held in a
-// ResearchTree object
-export const IndustryResearchTrees: IIndustryMap<ResearchTree> = {
-  Energy: getBaseResearchTreeCopy(),
-  Utilities: getBaseResearchTreeCopy(),
-  Agriculture: getBaseResearchTreeCopy(),
-  Fishing: getBaseResearchTreeCopy(),
-  Mining: getBaseResearchTreeCopy(),
-  Food: getProductIndustryResearchTreeCopy(),
-  Tobacco: getProductIndustryResearchTreeCopy(),
-  Chemical: getBaseResearchTreeCopy(),
-  Pharmaceutical: getProductIndustryResearchTreeCopy(),
-  Computer: getProductIndustryResearchTreeCopy(),
-  Robotics: getProductIndustryResearchTreeCopy(),
-  Software: getProductIndustryResearchTreeCopy(),
-  Healthcare: getProductIndustryResearchTreeCopy(),
-  RealEstate: getProductIndustryResearchTreeCopy(),
-};
+export const IndustryResearchTrees = {} as Record<IndustryType, ResearchTree>;
+resetIndustryResearchTrees();
 
-export function resetIndustryResearchTrees(): void {
-  IndustryResearchTrees.Energy = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Utilities = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Agriculture = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Fishing = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Mining = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Food = getProductIndustryResearchTreeCopy();
-  IndustryResearchTrees.Tobacco = getProductIndustryResearchTreeCopy();
-  IndustryResearchTrees.Chemical = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Pharmaceutical = getProductIndustryResearchTreeCopy();
-  IndustryResearchTrees.Computer = getProductIndustryResearchTreeCopy();
-  IndustryResearchTrees.Robotics = getProductIndustryResearchTreeCopy();
-  IndustryResearchTrees.Software = getProductIndustryResearchTreeCopy();
-  IndustryResearchTrees.Healthcare = getProductIndustryResearchTreeCopy();
-  IndustryResearchTrees.RealEstate = getProductIndustryResearchTreeCopy();
+export function resetIndustryResearchTrees() {
+  Object.values(IndustryType).forEach(
+    (ind) =>
+      (IndustryResearchTrees[ind] = IndustriesData[ind].product
+        ? getProductIndustryResearchTreeCopy()
+        : getBaseResearchTreeCopy()),
+  );
 }

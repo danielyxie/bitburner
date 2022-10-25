@@ -1,7 +1,7 @@
 import { EmployeePositions } from "./EmployeePositions";
 import { MaterialSizes } from "./MaterialSizes";
 import { Industry } from "./Industry";
-import { ProductRatingWeights, IProductRatingWeight } from "./ProductRatingWeights";
+import { ProductRatingWeights } from "./ProductRatingWeights";
 
 import { createCityMap } from "../Locations/createCityMap";
 
@@ -248,11 +248,8 @@ export class Product {
   }
 
   calculateRating(industry: Industry): void {
-    const weights: IProductRatingWeight = ProductRatingWeights[industry.type];
-    if (weights == null) {
-      console.error(`Could not find product rating weights for: ${industry}`);
-      return;
-    }
+    const weights = ProductRatingWeights[industry.type];
+    if (!weights) return console.error(`Could not find product rating weights for: ${industry}`);
     this.rat = 0;
     this.rat += weights.Quality ? this.qlt * weights.Quality : 0;
     this.rat += weights.Performance ? this.per * weights.Performance : 0;

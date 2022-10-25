@@ -1,7 +1,7 @@
 import { Player } from "@player";
 import { MaterialSizes } from "./MaterialSizes";
 import { Corporation } from "./Corporation";
-import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
+import { IndustryResearchTrees, IndustryType, IndustriesData } from "./IndustryData";
 import { Industry } from "./Industry";
 import { CorporationConstants } from "./data/Constants";
 import { OfficeSpace } from "./OfficeSpace";
@@ -15,8 +15,9 @@ import { EmployeePositions } from "./EmployeePositions";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
 import { checkEnum } from "../utils/helpers/checkEnum";
+import { CityName } from "src/Locations/data/CityNames";
 
-export function NewIndustry(corporation: Corporation, industry: string, name: string): void {
+export function NewIndustry(corporation: Corporation, industry: IndustryType, name: string): void {
   if (corporation.divisions.find(({ type }) => industry == type))
     throw new Error(`You have already expanded into the ${industry} industry!`);
 
@@ -26,10 +27,9 @@ export function NewIndustry(corporation: Corporation, industry: string, name: st
     }
   }
 
-  const cost = IndustryStartingCosts[industry];
-  if (cost === undefined) {
-    throw new Error(`Invalid industry: '${industry}'`);
-  }
+  const data = IndustriesData[industry];
+  if (!data) throw new Error(`Invalid industry: '${industry}'`);
+  const cost = data.startingCost;
   if (corporation.funds < cost) {
     throw new Error("Not enough money to create a new division in this industry");
   } else if (name === "") {
@@ -350,7 +350,7 @@ export function ThrowParty(corp: Corporation, office: OfficeSpace, costPerEmploy
   return mult;
 }
 
-export function PurchaseWarehouse(corp: Corporation, division: Industry, city: string): void {
+export function PurchaseWarehouse(corp: Corporation, division: Industry, city: CityName): void {
   if (corp.funds < CorporationConstants.WarehouseInitialCost) return;
   if (division.warehouses[city]) return;
   division.warehouses[city] = new Warehouse({
@@ -474,7 +474,7 @@ export function Research(division: Industry, researchName: string): void {
 
 export function ExportMaterial(
   divisionName: string,
-  cityName: string,
+  cityName: CityName,
   material: Material,
   amt: string,
   division?: Industry,

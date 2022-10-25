@@ -1,6 +1,6 @@
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
-import { Industries, IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
+import { IndustryType, IndustryResearchTrees, IndustriesData } from "./IndustryData";
 import { CorporationConstants } from "./data/Constants";
 import { EmployeePositions } from "./EmployeePositions";
 import { Material } from "./Material";
@@ -17,24 +17,24 @@ import { Corporation } from "./Corporation";
 interface IParams {
   name?: string;
   corp?: Corporation;
-  type?: string;
+  type?: IndustryType | "Computer" | "Utilities";
 }
 
 export class Industry {
-  name = "";
-  type = Industries.Agriculture;
+  name: string;
+  type: IndustryType;
   sciResearch = new Material({ name: "Scientific Research" });
   researched: { [key: string]: boolean | undefined } = {};
   reqMats: { [key: string]: number | undefined } = {};
 
   //An array of the name of materials being produced
-  prodMats: string[] = [];
+  prodMats: string[];
 
   products: { [key: string]: Product | undefined } = {};
-  makesProducts = false;
+  makesProducts: boolean;
 
   awareness = 0;
-  popularity = 0; //Should always be less than awareness
+  popularity = 0;
   startingCost = 0;
 
   /* The following are factors for how much production/other things are increased by
@@ -42,12 +42,12 @@ export class Industry {
        and they are all represented by exponentials of < 1 (e.g x ^ 0.5, x ^ 0.8)
        The number for these represent the exponential. A lower number means more
        diminishing returns */
-  reFac = 0; //Real estate Factor
-  sciFac = 0; //Scientific Research Factor, affects quality
-  hwFac = 0; //Hardware factor
-  robFac = 0; //Robotics Factor
-  aiFac = 0; //AI Cores factor;
-  advFac = 0; //Advertising factor, affects sales
+  reFac: number; //Real estate Factor
+  sciFac: number; //Scientific Research Factor, affects quality
+  hwFac: number; //Hardware factor
+  robFac: number; //Robotics Factor
+  aiFac: number; //AI Cores factor;
+  advFac: number; //Advertising factor, affects sales
 
   prodMult = 0; //Production multiplier
 
@@ -61,7 +61,7 @@ export class Industry {
   newInd = true;
 
   //Maps locations to warehouses. 0 if no warehouse at that location
-  warehouses: { [key: string]: Warehouse | 0 };
+  warehouses: Record<CityName, Warehouse | 0>;
 
   //Maps locations to offices. 0 if no office at that location
   offices: { [key: string]: OfficeSpace | 0 } = {
@@ -79,8 +79,10 @@ export class Industry {
   numAdVerts = 0;
 
   constructor(params: IParams = {}) {
+    if (params.type === "Utilities") params.type = IndustryType.Utilities;
+    if (params.type === "Computer") params.type = IndustryType.Computers;
+    this.type = params.type || IndustryType.Agriculture;
     this.name = params.name ? params.name : "";
-    this.type = params.type ? params.type : Industries.Agriculture;
 
     //Financials
     this.lastCycleRevenue = 0;
@@ -102,235 +104,18 @@ export class Industry {
       [CityName.Volhaven]: 0,
     };
 
-    this.init();
-  }
-
-  init(): void {
-    //Set the unique properties of an industry (how much its affected by real estate/scientific research, etc.)
-    const startingCost = IndustryStartingCosts[this.type];
-    if (startingCost === undefined) throw new Error(`Invalid industry: "${this.type}"`);
-    this.startingCost = startingCost;
-    switch (this.type) {
-      case Industries.Energy:
-        this.reFac = 0.65;
-        this.sciFac = 0.7;
-        this.robFac = 0.05;
-        this.aiFac = 0.3;
-        this.advFac = 0.08;
-        this.reqMats = {
-          Hardware: 0.1,
-          Metal: 0.2,
-        };
-        this.prodMats = ["Energy"];
-        break;
-      case Industries.Utilities:
-      case "Utilities":
-        this.reFac = 0.5;
-        this.sciFac = 0.6;
-        this.robFac = 0.4;
-        this.aiFac = 0.4;
-        this.advFac = 0.08;
-        this.reqMats = {
-          Hardware: 0.1,
-          Metal: 0.1,
-        };
-        this.prodMats = ["Water"];
-        break;
-      case Industries.Agriculture:
-        this.reFac = 0.72;
-        this.sciFac = 0.5;
-        this.hwFac = 0.2;
-        this.robFac = 0.3;
-        this.aiFac = 0.3;
-        this.advFac = 0.04;
-        this.reqMats = {
-          Water: 0.5,
-          Energy: 0.5,
-        };
-        this.prodMats = ["Plants", "Food"];
-        break;
-      case Industries.Fishing:
-        this.reFac = 0.15;
-        this.sciFac = 0.35;
-        this.hwFac = 0.35;
-        this.robFac = 0.5;
-        this.aiFac = 0.2;
-        this.advFac = 0.08;
-        this.reqMats = {
-          Energy: 0.5,
-        };
-        this.prodMats = ["Food"];
-        break;
-      case Industries.Mining:
-        this.reFac = 0.3;
-        this.sciFac = 0.26;
-        this.hwFac = 0.4;
-        this.robFac = 0.45;
-        this.aiFac = 0.45;
-        this.advFac = 0.06;
-        this.reqMats = {
-          Energy: 0.8,
-        };
-        this.prodMats = ["Metal"];
-        break;
-      case Industries.Food:
-        //reFac is unique for this bc it diminishes greatly per city. Handle this separately in code?
-        this.sciFac = 0.12;
-        this.hwFac = 0.15;
-        this.robFac = 0.3;
-        this.aiFac = 0.25;
-        this.advFac = 0.25;
-        this.reFac = 0.05;
-        this.reqMats = {
-          Food: 0.5,
-          Water: 0.5,
-          Energy: 0.2,
-        };
-        this.makesProducts = true;
-        break;
-      case Industries.Tobacco:
-        this.reFac = 0.15;
-        this.sciFac = 0.75;
-        this.hwFac = 0.15;
-        this.robFac = 0.2;
-        this.aiFac = 0.15;
-        this.advFac = 0.2;
-        this.reqMats = {
-          Plants: 1,
-          Water: 0.2,
-        };
-        this.makesProducts = true;
-        break;
-      case Industries.Chemical:
-        this.reFac = 0.25;
-        this.sciFac = 0.75;
-        this.hwFac = 0.2;
-        this.robFac = 0.25;
-        this.aiFac = 0.2;
-        this.advFac = 0.07;
-        this.reqMats = {
-          Plants: 1,
-          Energy: 0.5,
-          Water: 0.5,
-        };
-        this.prodMats = ["Chemicals"];
-        break;
-      case Industries.Pharmaceutical:
-        this.reFac = 0.05;
-        this.sciFac = 0.8;
-        this.hwFac = 0.15;
-        this.robFac = 0.25;
-        this.aiFac = 0.2;
-        this.advFac = 0.16;
-        this.reqMats = {
-          Chemicals: 2,
-          Energy: 1,
-          Water: 0.5,
-        };
-        this.prodMats = ["Drugs"];
-        this.makesProducts = true;
-        break;
-      case Industries.Computer:
-      case "Computer":
-        this.reFac = 0.2;
-        this.sciFac = 0.62;
-        this.robFac = 0.36;
-        this.aiFac = 0.19;
-        this.advFac = 0.17;
-        this.reqMats = {
-          Metal: 2,
-          Energy: 1,
-        };
-        this.prodMats = ["Hardware"];
-        this.makesProducts = true;
-        break;
-      case Industries.Robotics:
-        this.reFac = 0.32;
-        this.sciFac = 0.65;
-        this.aiFac = 0.36;
-        this.advFac = 0.18;
-        this.hwFac = 0.19;
-        this.reqMats = {
-          Hardware: 5,
-          Energy: 3,
-        };
-        this.prodMats = ["Robots"];
-        this.makesProducts = true;
-        break;
-      case Industries.Software:
-        this.sciFac = 0.62;
-        this.advFac = 0.16;
-        this.hwFac = 0.25;
-        this.reFac = 0.15;
-        this.aiFac = 0.18;
-        this.robFac = 0.05;
-        this.reqMats = {
-          Hardware: 0.5,
-          Energy: 0.5,
-        };
-        this.prodMats = ["AICores"];
-        this.makesProducts = true;
-        break;
-      case Industries.Healthcare:
-        this.reFac = 0.1;
-        this.sciFac = 0.75;
-        this.advFac = 0.11;
-        this.hwFac = 0.1;
-        this.robFac = 0.1;
-        this.aiFac = 0.1;
-        this.reqMats = {
-          Robots: 10,
-          AICores: 5,
-          Energy: 5,
-          Water: 5,
-        };
-        this.makesProducts = true;
-        break;
-      case Industries.RealEstate:
-        this.robFac = 0.6;
-        this.aiFac = 0.6;
-        this.advFac = 0.25;
-        this.sciFac = 0.05;
-        this.hwFac = 0.05;
-        this.reqMats = {
-          Metal: 5,
-          Energy: 5,
-          Water: 2,
-          Hardware: 4,
-        };
-        this.prodMats = ["RealEstate"];
-        this.makesProducts = true;
-        break;
-      default:
-        console.error(`Invalid Industry Type passed into Industry.init(): ${this.type}`);
-        return;
-    }
-  }
-
-  getProductDescriptionText(): string {
-    if (!this.makesProducts) return "";
-    switch (this.type) {
-      case Industries.Food:
-        return "create and manage restaurants";
-      case Industries.Tobacco:
-        return "create tobacco and tobacco-related products";
-      case Industries.Pharmaceutical:
-        return "develop new pharmaceutical drugs";
-      case Industries.Computer:
-      case "Computer":
-        return "create new computer hardware and networking infrastructures";
-      case Industries.Robotics:
-        return "build specialized robots and robot-related products";
-      case Industries.Software:
-        return "develop computer software";
-      case Industries.Healthcare:
-        return "build and manage hospitals";
-      case Industries.RealEstate:
-        return "develop and manage real estate properties";
-      default:
-        console.error("Invalid industry type in Industry.getProductDescriptionText");
-        return "";
-    }
+    const data = IndustriesData[this.type];
+    if (!data) throw new Error(`Invalid industry: "${this.type}"`);
+    this.startingCost = data.startingCost;
+    this.makesProducts = data.product ? true : false;
+    this.reFac = data.reFac ?? 0;
+    this.sciFac = data.sciFac ?? 0;
+    this.hwFac = data.hwFac ?? 0;
+    this.robFac = data.robFac ?? 0;
+    this.aiFac = data.aiFac ?? 0;
+    this.advFac = data.advFac ?? 0;
+    this.reqMats = data.reqMats;
+    this.prodMats = data.prodMats ?? [];
   }
 
   getMaximumNumberProducts(): number {
@@ -496,9 +281,9 @@ export class Industry {
         if (change === 0) continue;
 
         if (
-          this.type === Industries.Pharmaceutical ||
-          this.type === Industries.Software ||
-          this.type === Industries.Robotics
+          this.type === IndustryType.Pharmaceutical ||
+          this.type === IndustryType.Software ||
+          this.type === IndustryType.Robotics
         ) {
           change *= 3;
         }

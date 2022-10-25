@@ -34,6 +34,7 @@ import { arrayToString } from "../utils/helpers/arrayToString";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { checkEnum } from "../utils/helpers/checkEnum";
 
 export const helpers = {
   string,
@@ -64,6 +65,22 @@ export const helpers = {
   createPublicRunningScript,
   failOnHacknetServer,
 };
+
+export function assertEnumMember<T extends string>(
+  ctx: NetscriptContext,
+  obj: Record<string, T>,
+  enumName: string,
+  argName: string,
+  v: unknown,
+): asserts v is T {
+  assertString(ctx, argName, v);
+  if (!checkEnum(obj, v)) throw makeRuntimeErrorMsg(ctx, `${argName}: ${v} is not a valid ${enumName}.`, "TYPE");
+}
+
+export function assertString(ctx: NetscriptContext, argName: string, v: unknown): asserts v is string {
+  if (typeof v !== "string")
+    throw makeRuntimeErrorMsg(ctx, `${argName} expected to be a string. ${debugType(v)}`, "TYPE");
+}
 
 /** Will probably remove the below function in favor of a different approach to object type assertion.
  *  This method cannot be used to handle optional properties. */
@@ -124,9 +141,9 @@ const debugType = (v: unknown): string => {
 
 /** Convert a provided value v for argument argName to string. If it wasn't originally a string or number, throw. */
 function string(ctx: NetscriptContext, argName: string, v: unknown): string {
-  if (typeof v === "string") return v;
-  if (typeof v === "number") return v + ""; // cast to string;
-  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string. ${debugType(v)}`, "TYPE");
+  if (typeof v === "number") v = v + ""; // cast to string;
+  assertString(ctx, argName, v);
+  return v;
 }
 
 /** Convert provided value v for argument argName to number. Throw if could not convert to a non-NaN number. */
@@ -357,9 +374,8 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
 /** Validates the input v as being a CityName. Throws an error if it is not. */
 function city(ctx: NetscriptContext, argName: string, v: unknown): CityName {
   if (typeof v !== "string") throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
-  const s = v as CityName;
-  if (!Object.values(CityName).includes(s)) throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
-  return s;
+  if (!checkEnum(CityName, v)) throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
+  return v;
 }
 
 function scriptIdentifier(

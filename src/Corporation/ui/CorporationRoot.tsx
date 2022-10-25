@@ -2,9 +2,8 @@
 // These are the tabs at the top of the UI that let you switch to different
 // divisions, see an overview of your corporation, or create a new industry
 import React, { useState, useEffect } from "react";
-import { Industry } from "../Industry";
 import { MainPanel } from "./MainPanel";
-import { Industries } from "../IndustryData";
+import { IndustryType } from "../IndustryData";
 import { ExpandIndustryTab } from "./ExpandIndustryTab";
 import { Player } from "@player";
 import { Context } from "./Context";
@@ -30,9 +29,8 @@ export function CorporationRoot(): React.ReactElement {
   }, []);
 
   const canExpand =
-    Object.keys(Industries).filter(
-      (industryType: string) =>
-        corporation.divisions.find((division: Industry) => division.type === industryType) === undefined,
+    Object.values(IndustryType).filter(
+      (industryType) => corporation.divisions.find((division) => division.type === industryType) === undefined,
     ).length > 0;
 
   return (

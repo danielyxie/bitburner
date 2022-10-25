@@ -8,21 +8,22 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import { CityName } from "../../Locations/data/CityNames";
 
 interface IProps {
-  cityStateSetter: (city: string) => void;
+  cityStateSetter: (city: CityName | "Expand") => void;
 }
 
 export function ExpandNewCity(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const possibleCities = Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] === 0);
+  const possibleCities = Object.values(CityName).filter((cityName) => division.offices[cityName] === 0);
   const [city, setCity] = useState(possibleCities[0]);
 
   const disabled = corp.funds < CorporationConstants.OfficeInitialCost;
 
   function onCityChange(event: SelectChangeEvent<string>): void {
-    setCity(event.target.value);
+    setCity(event.target.value as CityName);
   }
 
   function expand(): void {

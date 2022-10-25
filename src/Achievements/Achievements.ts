@@ -3,7 +3,7 @@ import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { SkillNames } from "../Bladeburner/data/SkillNames";
 import { Skills } from "../Bladeburner/Skills";
 import { CONSTANTS } from "../Constants";
-import { Industries } from "../Corporation/IndustryData";
+import { IndustryType } from "../Corporation/IndustryData";
 import { Exploit } from "../Exploits/Exploit";
 import { Factions } from "../Faction/Factions";
 import { AllGangs } from "../Gang/AllGangs";
@@ -477,7 +477,7 @@ export const achievements: Record<string, Achievement> = {
     Description: "Expand to the Real Estate division.",
     Visible: () => hasAccessToSF(Player, 3),
     Condition: () =>
-      Player.corporation !== null && Player.corporation.divisions.some((d) => d.type === Industries.RealEstate),
+      Player.corporation !== null && Player.corporation.divisions.some((d) => d.type === IndustryType.RealEstate),
   },
   INTELLIGENCE_255: {
     ...achievementData["INTELLIGENCE_255"],
