@@ -31,7 +31,7 @@ export class MoneySourceTracker {
   // Record money earned
   record(amt: number, source: string): void {
     const sanitizedSource = source.toLowerCase();
-    if (typeof this[sanitizedSource] !== "number") {
+    if (typeof this[sanitizedSource] !== "number" && this[sanitizedSource] !== null) {
       console.warn(`MoneySourceTracker.record() called with invalid source: ${source}`);
       return;
     }
