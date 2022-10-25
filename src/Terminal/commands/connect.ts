@@ -2,7 +2,6 @@ import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 import { getServerOnNetwork } from "../../Server/ServerHelpers";
 import { GetServer } from "../../Server/AllServers";
-import { Server } from "../../Server/Server";
 
 export function connect(args: (string | number | boolean)[], server: BaseServer): void {
   // Disconnect from current server in Terminal and connect to new one
@@ -24,7 +23,7 @@ export function connect(args: (string | number | boolean)[], server: BaseServer)
 
   const other = GetServer(hostname);
   if (other !== null) {
-    if (other instanceof Server && other.backdoorInstalled) {
+    if (other.backdoorInstalled || other.purchasedByPlayer) {
       Terminal.connectToServer(hostname);
       return;
     }

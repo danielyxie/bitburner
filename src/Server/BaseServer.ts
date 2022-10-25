@@ -93,6 +93,9 @@ export abstract class BaseServer {
   // Flag indicating whether this is a purchased server
   purchasedByPlayer = false;
 
+  // Variables that exist only on some types of servers can just be optional.
+  backdoorInstalled?: boolean;
+
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     this.ip = params.ip ? params.ip : createRandomIp();
 
