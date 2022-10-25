@@ -4584,7 +4584,7 @@ export interface NS {
   readonly args: (string | number | boolean)[];
 
   /**
-   * Steal a servers money.
+   * Steal a server's money.
    * @remarks
    * RAM cost: 0.1 GB
    *
@@ -4616,7 +4616,7 @@ export interface NS {
   hack(host: string, opts?: BasicHGWOptions): Promise<number>;
 
   /**
-   * Spoof money in a servers bank account, increasing the amount available.
+   * Spoof money in a server's bank account, increasing the amount available.
    * @remarks
    * RAM cost: 0.15 GB
    *
@@ -4625,10 +4625,10 @@ export interface NS {
    * security level. When `grow` completes, the money available on a target server will
    * be increased by a certain, fixed percentage. This percentage is determined by the
    * target server’s growth rate (which varies between servers) and security level. Generally,
-   * higher-level servers have higher growth rates. The getServerGrowth() function can be used
+   * higher-level servers have higher growth rates. The {@link NS.getServerGrowth | getServerGrowth} function can be used
    * to obtain a server’s growth rate.
    *
-   * Like hack, `grow` can be called on any server, regardless of where the script is running.
+   * Like {@link NS.hack | hack}, `grow` can be called on any server, regardless of where the script is running.
    * The grow() command requires root access to the target server, but there is no required hacking
    * level to run the command. It also raises the security level of the target server by 0.004.
    *
@@ -4651,17 +4651,17 @@ export interface NS {
   grow(host: string, opts?: BasicHGWOptions): Promise<number>;
 
   /**
-   * Reduce a server security level.
+   * Reduce a server's security level.
    * @remarks
    * RAM cost: 0.15 GB
    *
    * Use your hacking skills to attack a server’s security, lowering the server’s security level.
-   * The runtime for this command depends on your hacking level and the target server’s security
+   * The runtime for this function depends on your hacking level and the target server’s security
    * level when this function is called. This function lowers the security level of the target server by 0.05.
    *
-   * Like hack and grow, `weaken` can be called on any server, regardless of
-   * where the script is running. This command requires root access to the target server, but
-   * there is no required hacking level to run the command.
+   * Like {@link NS.hack | hack} and {@link NS.grow| grow}, `weaken` can be called on any server, regardless of
+   * where the script is running. This function requires root access to the target server, but
+   * there is no required hacking level to run the function.
    *
    * @example
    * ```ts
@@ -4745,14 +4745,14 @@ export interface NS {
   hackAnalyze(host: string): number;
 
   /**
-   * Get the security increase for a number of thread.
+   * Get the security increase for a number of threads.
    * @remarks
    * RAM cost: 1 GB
    *
    * Returns the security increase that would occur if a hack with this many threads happened.
    *
    * @param threads - Amount of threads that will be used.
-   * @param hostname - Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
+   * @param hostname - Hostname of the target server. The number of threads is limited to the number needed to hack the server's maximum amount of money.
    * @returns The security increase.
    */
   hackAnalyzeSecurity(threads: number, hostname?: string): number;
@@ -4772,7 +4772,7 @@ export interface NS {
   hackAnalyzeChance(host: string): number;
 
   /**
-   * Calculate the number of grow thread needed to grow a server by a certain multiplier.
+   * Calculate the number of grow threads needed to grow a server by a certain multiplier.
    * @remarks
    * RAM cost: 1 GB
    *
@@ -4797,20 +4797,20 @@ export interface NS {
    * //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).
    * ```
    * @param host - Hostname of the target server.
-   * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..
-   * @returns The amount of grow calls needed to grow the specified server by the specified amount
+   * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form.
+   * @returns The amount of grow calls needed to grow the specified server by the specified amount.
    */
   growthAnalyze(host: string, growthAmount: number, cores?: number): number;
 
   /**
-   * Calculate the security increase for a number of thread.
+   * Calculate the security increase for a number of threads.
    * @remarks
    * RAM cost: 1 GB
    *
    * Returns the security increase that would occur if a grow with this many threads happened.
    *
    * @param threads - Amount of threads that will be used.
-   * @param hostname - Optional. Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
+   * @param hostname - Optional. Hostname of the target server. The number of threads is limited to the number needed to hack the server's maximum amount of money.
    * @param cores - Optional. The number of cores of the server that would run grow.
    * @returns The security increase.
    */
@@ -4856,7 +4856,7 @@ export interface NS {
   asleep(millis: number): Promise<true>;
 
   /**
-   * Prints one or move values or variables to the script’s logs.
+   * Prints one or more values or variables to the script’s logs.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -5039,7 +5039,7 @@ export interface NS {
    * RAM cost: 0 GB
    *
    * @param fn - Name of function to check.
-   * @returns Returns a boolean indicating whether or not logging is enabled for that function (or `ALL`)
+   * @returns Returns a boolean indicating whether or not logging is enabled for that function (or `ALL`).
    */
   isLogEnabled(fn: string): boolean;
 
@@ -5083,7 +5083,7 @@ export interface NS {
    * @param fn - Optional. Filename of script to get logs from.
    * @param host - Optional. Hostname of the server that the script is on.
    * @param args - Arguments to identify which scripts to get logs for.
-   * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
+   * @returns Returns a string array, where each line is an element in the array. The most recently logged line is at the end of the array.
    */
   getScriptLogs(fn?: string, host?: string, ...args: (string | number | boolean)[]): string[];
 
@@ -5151,11 +5151,11 @@ export interface NS {
   tail(fn?: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): void;
 
   /**
-   * Move a tail window
+   * Move a tail window.
    * @remarks
    * RAM cost: 0 GB
    *
-   * Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0)
+   * Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0).
    *
    * @param x - x coordinate.
    * @param y - y coordinate.
@@ -5164,14 +5164,14 @@ export interface NS {
   moveTail(x: number, y: number, pid?: number): void;
 
   /**
-   * Resize a tail window
+   * Resize a tail window.
    * @remarks
    * RAM cost: 0 GB
    *
-   * Resize a tail window. Size are in pixel
+   * Resize a tail window. Size are in pixel.
    *
-   * @param width - width of the window.
-   * @param height - height of the window.
+   * @param width - Width of the window.
+   * @param height - Height of the window.
    * @param pid - Optional. PID of the script having its tail resized. If omitted, the current script is used.
    */
   resizeTail(width: number, height: number, pid?: number): void;
@@ -5181,7 +5181,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Closes a script’s logs. This is functionally the same pressing the "Close" button on the tail window.
+   * Closes a script’s logs. This is functionally the same as pressing the "Close" button on the tail window.
    *
    * If the function is called with no arguments, it will close the current script’s logs.
    *
@@ -5245,7 +5245,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0.05 GB
    *
-   * Running NUKE.exe on a target server gives you root access which means you can executes scripts on said server. NUKE.exe must exist on your home computer.
+   * Running NUKE.exe on a target server gives you root access which means you can execute scripts on said server. NUKE.exe must exist on your home computer.
    *
    * @example
    * ```ts
@@ -5474,7 +5474,7 @@ export interface NS {
   exec(script: string, host: string, numThreads?: number, ...args: (string | number | boolean)[]): number;
 
   /**
-   * Terminate current script and start another in 10s.
+   * Terminate current script and start another in 10 seconds.
    * @remarks
    * RAM cost: 2 GB
    *
@@ -5511,9 +5511,9 @@ export interface NS {
    * RAM cost: 0.5 GB
    *
    * Kills the script on the target server specified by the script’s name and arguments.
-   * Remember that scripts are uniquely identified by both their name and arguments.
+   * Remember that scripts are uniquely identified by both their names and arguments.
    * For example, if `foo.script` is run with the argument 1, then this is not the same as
-   * `foo.script` run with the argument 2, even though they have the same code.
+   * `foo.script` run with the argument 2, even though they have the same name.
    *
    * @example
    * ```ts
@@ -5539,7 +5539,7 @@ export interface NS {
    * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
    * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
    * ```
-   * @param script - Filename or pid of the script to kill
+   * @param script - Filename or PID of the script to kill.
    * @param host - Hostname of the server on which to kill the script.
    * @param args - Arguments to identify which script to kill.
    * @returns True if the script is successfully killed, and false otherwise.
@@ -5634,8 +5634,8 @@ export interface NS {
    * ns.scp(files, server, "home");
    * ```
    * @param files - Filename or an array of filenames of script/literature files to copy.
-   * @param destination - Host of the destination server, which is the server to which the file will be copied.
-   * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
+   * @param destination - Hostname of the destination server, which is the server to which the file will be copied.
+   * @param source - Hostname of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
    * @returns True if the file is successfully copied over and false otherwise. If the files argument is an array then this function will return false if any of the operations failed.
    */
   scp(files: string | string[], destination: string, source?: string): boolean;
@@ -5648,7 +5648,7 @@ export interface NS {
    * Returns an array with the filenames of all files on the specified server
    * (as strings). The returned array is sorted in alphabetic order.
    *
-   * @param host - Host of the target server.
+   * @param host - Hostname of the target server.
    * @param grep - A substring to search for in the filename.
    * @returns Array with the filenames of all files on the specified server.
    */
@@ -5685,7 +5685,7 @@ export interface NS {
   ps(host?: string): ProcessInfo[];
 
   /**
-   * Check if your have root access on a server.
+   * Check if you have root access on a server.
    * @remarks
    * RAM cost: 0.05 GB
    *
@@ -5705,7 +5705,7 @@ export interface NS {
    *    ns.nuke("foodnstuff");
    * }
    * ```
-   * @param host - Host of the target server
+   * @param host - Hostname of the target server.
    * @returns True if player has root access to the specified target server, and false otherwise.
    */
   hasRootAccess(host: string): boolean;
@@ -5715,7 +5715,7 @@ export interface NS {
    *
    * @remarks
    * RAM cost: 0.05 GB
-   * @returns Hostname of the server that the script is on.
+   * @returns Hostname of the server that the script runs on.
    */
   getHostname(): string;
 
@@ -5816,19 +5816,19 @@ export interface NS {
    * ns.getServerMoneyAvailable("foodnstuff");
    * ns.getServerMoneyAvailable("home"); // Returns player's money
    * ```
-   * @param host - Host of target server
+   * @param host - Hostname of target server.
    * @returns Amount of money available on the server.
    */
   getServerMoneyAvailable(host: string): number;
 
   /**
-   * Get maximum money available on a server.
+   * Get the maximum money available on a server.
    * @remarks
    * RAM cost: 0.1 GB
    *
    * Returns the maximum amount of money that can be available on a server.
    *
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @returns Maximum amount of money available on the server.
    */
   getServerMaxMoney(host: string): number;
@@ -5845,7 +5845,7 @@ export interface NS {
    * grow function. A higher growth parameter will result in a
    * higher percentage increase from grow.
    *
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @returns Parameter that affects the percentage by which the server’s money is increased when using the grow function.
    */
   getServerGrowth(host: string): number;
@@ -5859,7 +5859,7 @@ export interface NS {
    * level is denoted by a number, typically between 1 and 100
    * (but it can go above 100).
    *
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @returns Security level of the target server.
    */
   getServerSecurityLevel(host: string): number;
@@ -5868,7 +5868,7 @@ export interface NS {
    * Returns the minimum security level of the target server.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @returns Minimum security level of the target server.
    */
   getServerMinSecurityLevel(host: string): number;
@@ -5918,12 +5918,12 @@ export interface NS {
   getServerRam(host: string): [number, number];
 
   /**
-   * Get the max RAM on a server.
+   * Get the maximum amount of RAM on a server.
    * @remarks
    * RAM cost: 0.05 GB
    *
    * @param host - Hostname of the target server.
-   * @returns max ram (GB)
+   * @returns The maximum amount of RAM (GB) a server can have.
    */
   getServerMaxRam(host: string): number;
   /**
@@ -5932,7 +5932,7 @@ export interface NS {
    * RAM cost: 0.05 GB
    *
    * @param host - Hostname of the target server.
-   * @returns used ram (GB)
+   * @returns The amount of used RAM (GB) on the specified server.
    */
   getServerUsedRam(host: string): number;
 
@@ -5940,7 +5940,7 @@ export interface NS {
    * Returns the required hacking level of the target server.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @returns The required hacking level of the target server.
    */
   getServerRequiredHackingLevel(host: string): number;
@@ -5949,7 +5949,7 @@ export interface NS {
    * Returns the number of open ports required to successfully run NUKE.exe on the specified server.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @returns The number of open ports required to successfully run NUKE.exe on the specified server.
    */
   getServerNumPortsRequired(host: string): number;
@@ -5958,8 +5958,8 @@ export interface NS {
    * Returns a boolean denoting whether or not the specified server exists.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host of target server.
-   * @returns True if specified server exists, and false otherwise.
+   * @param host - Hostname of target server.
+   * @returns True if the specified server exists, and false otherwise.
    */
   serverExists(host: string): boolean;
 
@@ -6034,9 +6034,9 @@ export interface NS {
    * ns.isRunning("foo.script", "joesguns", 1, 5, "test");
    * ```
    * @param script - Filename or PID of script to check. This is case-sensitive.
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @param args - Arguments to specify/identify which scripts to search for.
-   * @returns True if specified script is running on the target server, and false otherwise.
+   * @returns True if the specified script is running on the target server, and false otherwise.
    */
   isRunning(script: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): boolean;
 
@@ -6090,14 +6090,14 @@ export interface NS {
    * @remarks
    * 2.25 GB
    *
-   * Purchased a server with the specified hostname and amount of RAM.
+   * Purchase a server with the specified hostname and amount of RAM.
    *
    * The hostname argument can be any data type, but it will be converted to a string
    * and have whitespace removed. Anything that resolves to an empty string will cause
    * the function to fail. If there is already a server with the specified hostname,
    * then the function will automatically append a number at the end of the hostname
    * argument value until it finds a unique hostname. For example, if the script calls
-   * `purchaseServer(“foo”, 4)` but a server named “foo” already exists, the it will
+   * `purchaseServer(“foo”, 4)` but a server named “foo” already exists, then it will
    * automatically change the hostname to `foo-0`. If there is already a server with the
    * hostname `foo-0`, then it will change the hostname to `foo-1`, and so on.
    *
@@ -6127,7 +6127,7 @@ export interface NS {
    *    ns.purchaseServer(prefix + i, ram);
    * }
    * ```
-   * @param hostname - Host of the purchased server.
+   * @param hostname - Hostname of the purchased server.
    * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
    * @returns The hostname of the newly purchased server.
    */
@@ -6145,13 +6145,13 @@ export interface NS {
   getPurchasedServerUpgradeCost(hostname: string, ram: number): number;
 
   /**
-   * Upgrade a purchased servers ram.
+   * Upgrade a purchased server's RAM.
    * @remarks
    * RAM cost: 0.25 GB
    *
    * @param hostname - Hostname of the server to upgrade.
    * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
-   * @returns True if the upgrade succeeded.
+   * @returns True if the upgrade succeeded, and false otherwise.
    */
   upgradePurchasedServer(hostname: string, ram: number): boolean;
 
@@ -6160,9 +6160,9 @@ export interface NS {
    * @remarks
    * RAM cost: 2.00 GB
    *
-   * @param hostname - current server hostname
-   * @param newName - new server hostname
-   * @returns True if the upgrade succeeded.
+   * @param hostname - Current server hostname.
+   * @param newName - New server hostname.
+   * @returns True if the upgrade succeeded, and false otherwise.
    */
   renamePurchasedServer(hostname: string, newName: string): boolean;
 
@@ -6177,7 +6177,7 @@ export interface NS {
    * Whitespace is automatically removed from the string. This function will not delete a
    * server that still has scripts running on it.
    *
-   * @param host - Host of the server to delete.
+   * @param host - Hostname of the server to delete.
    * @returns True if successful, and false otherwise.
    */
   deleteServer(host: string): boolean;
@@ -6214,8 +6214,8 @@ export interface NS {
    * This function can be used to write data to a text file (.txt) or a script (.js or .script).
    *
    * This function will write data to that file. If the specified file does not exist,
-   * then it will be created. The third argument mode, defines how the data will be written to
-   * the file. If *mode is set to “w”, then the data is written in “write” mode which means
+   * then it will be created. The third argument mode defines how the data will be written to
+   * the file. If mode is set to “w”, then the data is written in “write” mode which means
    * that it will overwrite all existing data on the file. If mode is set to any other value
    * then the data will be written in “append” mode which means that the data will be added at the
    * end of the file.
@@ -6231,7 +6231,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Attempts to write data to the specified Netscript Port.
+   * Attempts to write data to the specified Netscript port.
    * If the port is full, the data will not be written.
    * Otherwise, the data will be written normally.
    *
@@ -6297,7 +6297,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Write data to that netscript port.
+   * Write data to the given Netscript port.
    * @returns The data popped off the queue if it was full.
    */
   writePort(port: number, data: string | number): Promise<PortData>;
@@ -6309,7 +6309,7 @@ export interface NS {
    * Read data from that port. A port is a serialized queue.
    * This function will remove the first element from that queue and return it.
    * If the queue is empty, then the string “NULL PORT DATA” will be returned.
-   * @returns the data read.
+   * @returns The data read.
    */
   readPort(port: number): PortData;
 
@@ -6336,7 +6336,7 @@ export interface NS {
    * type except message (.msg) files.
    *
    * @param name - Filename of file to remove. Must include the extension.
-   * @param host - Host Address of the server on which to delete the file. Optional. Defaults to current server.
+   * @param host - Hostname of the server on which to delete the file. Optional. Defaults to current server.
    * @returns True if it successfully deletes the file, and false otherwise.
    */
   rm(name: string, host?: string): boolean;
@@ -6349,7 +6349,7 @@ export interface NS {
    * Returns a boolean indicating whether any instance of the specified script is running
    * on the target server, regardless of its arguments.
    *
-   * This is different than the isRunning function because it does not try to
+   * This is different than the {@link NS.isRunning | isRunning} function because it does not try to
    * identify a specific instance of a running script by its arguments.
    *
    * @example
@@ -6371,7 +6371,7 @@ export interface NS {
    * ns.scriptRunning("foo.script", ns.getHostname());
    * ```
    * @param script - Filename of script to check. This is case-sensitive.
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @returns True if the specified script is running, and false otherwise.
    */
   scriptRunning(script: string, host: string): boolean;
@@ -6385,8 +6385,8 @@ export interface NS {
    * regardless of arguments.
    *
    * @param script - Filename of script to kill. This is case-sensitive.
-   * @param host - Host of target server.
-   * @returns true if one or more scripts were successfully killed, and false if none were.
+   * @param host - Hostname of target server.
+   * @returns True if one or more scripts were successfully killed, and false if none were.
    */
   scriptKill(script: string, host: string): boolean;
 
@@ -6407,7 +6407,7 @@ export interface NS {
    * Returns 0 if the script does not exist.
    *
    * @param script - Filename of script. This is case-sensitive.
-   * @param host - Host of target server the script is located on. This is optional, if it is not specified then the function will use the current server as the target server.
+   * @param host - Hostname of target server the script is located on. This is optional. If it is not specified then the function will use the current server as the target server.
    * @returns Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
    */
   getScriptRam(script: string, host?: string): number;
@@ -6418,11 +6418,11 @@ export interface NS {
    * RAM cost: 0.05 GB
    *
    * When `hack` completes an amount of money is stolen depending on the player's skills.
-   * Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server.
+   * Returns the amount of time in milliseconds it takes to execute the {@link NS.hack | hack} Netscript function on the target server.
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
-   * @param host - Host of target server.
-   * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function.
+   * @param host - Hostname of target server.
+   * @returns Returns the amount of time in milliseconds it takes to execute the {@link NS.hack | hack} Netscript function.
    */
   getHackTime(host: string): number;
 
@@ -6434,7 +6434,7 @@ export interface NS {
    * Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server.
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function.
    */
   getGrowTime(host: string): number;
@@ -6444,20 +6444,20 @@ export interface NS {
    * @remarks
    * RAM cost: 0.05 GB
    *
-   * Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server.
+   * Returns the amount of time in milliseconds it takes to execute the {@link NS.weaken | weaken} Netscript function on the target server.
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
-   * @param host - Host of target server.
-   * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function.
+   * @param host - Hostname of target server.
+   * @returns Returns the amount of time in milliseconds it takes to execute the {@link NS.weaken | weaken} Netscript function.
    */
   getWeakenTime(host: string): number;
 
   /**
-   * Get the income of all script.
+   * Get the income of all scripts.
    * @remarks
    * RAM cost: 0.1 GB
    *
-   * @returns an array of two values.
+   * @returns An array of two values.
    * The first value is the total income (dollar / second) of all of your active scripts
    * (scripts that are currently running on any server).
    * The second value is the total income (dollar / second) that you’ve earned from scripts
@@ -6485,11 +6485,11 @@ export interface NS {
   getScriptIncome(script: string, host: string, ...args: (string | number | boolean)[]): number;
 
   /**
-   * Get the exp gain of all script.
+   * Get the exp gain of all scripts.
    * @remarks
    * RAM cost: 0.1 GB
    *
-   * @returns total experience gain rate of all of your active scripts.
+   * @returns Total experience gain rate of all of your active scripts.
    */
   getTotalScriptExpGain(): number;
 
@@ -6546,7 +6546,7 @@ export interface NS {
   vsprintf(format: string, args: any[]): string;
 
   /**
-   * Format a number
+   * Format a number.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -6554,7 +6554,8 @@ export interface NS {
    * This uses the numeral.js library, so the formatters must be compatible with that.
    * This is the same function that the game itself uses to display numbers.
    *
-   * see: http://numeraljs.com/
+   * For more information, see: http://numeraljs.com/
+   *
    * @param n - Number to format.
    * @param format - Formatter.
    * @returns Formatted number.
@@ -6562,12 +6563,12 @@ export interface NS {
   nFormat(n: number, format: string): string;
 
   /**
-   * Format time to readable string
+   * Format time to a readable string.
    * @remarks
    * RAM cost: 0 GB
    *
    * @param milliseconds - Number of millisecond to format.
-   * @param milliPrecision - Format time with subsecond precision, defaults to false.
+   * @param milliPrecision - Format time with subsecond precision. Defaults to false.
    * @returns The formatted time.
    */
   tFormat(milliseconds: number, milliPrecision?: boolean): string;
@@ -6670,8 +6671,8 @@ export interface NS {
   /**
    * Queue a toast (bottom-right notification).
    * @param msg - Message in the toast.
-   * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
-   * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
+   * @param variant - Type of toast. Must be one of success, info, warning, error. Defaults to success.
+   * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000.
    */
   toast(msg: string, variant?: ToastTypes | ToastVariant, duration?: number | null): void;
 
@@ -6691,8 +6692,8 @@ export interface NS {
    * successfully retrieved from the URL. Because the function is async and returns a Promise,
    * it is recommended you use wget in NetscriptJS (Netscript 2.0).
    *
-   * In NetscriptJS, you must preface any call to wget with the await keyword (like you would hack or sleep).
-   * wget will still work in Netscript 1.0, but the functions execution will not be synchronous
+   * In NetscriptJS, you must preface any call to wget with the await keyword (like you would {@link NS.hack | hack} or {@link NS.sleep | sleep}).
+   * wget will still work in Netscript 1.0, but the function's execution will not be synchronous
    * (i.e. it may not execute when you expect/want it to).
    * Furthermore, since Promises are not supported in ES5,
    * you will not be able to process the returned value of wget in Netscript 1.0.
@@ -6793,7 +6794,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * NS2 exclusive
+   * NS2 exclusive.
    *
    * Move the source file to the specified destination on the target server.
    *
@@ -6802,7 +6803,7 @@ export interface NS {
    *
    * This function can also be used to rename files.
    *
-   * @param host - Host of target server.
+   * @param host - Hostname of target server.
    * @param source - Filename of the source file.
    * @param destination - Filename of the destination file.
    */
@@ -6813,7 +6814,7 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Allows unix like flag parsing.
+   * Allows Unix-like flag parsing.
    * @example
    * ```ts
    * // example.script
