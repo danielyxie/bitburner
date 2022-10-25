@@ -21,10 +21,11 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { LimitMaterialProductionModal } from "./modals/LimitMaterialProductionModal";
+import { CityName } from "../../Locations/data/CityNames";
 
 interface IMaterialProps {
   warehouse: Warehouse;
-  city: string;
+  city: CityName;
   mat: Material;
   rerender: () => void;
 }

@@ -18,17 +18,24 @@ export function CityTabs(props: IProps): React.ReactElement {
   const division = useDivision();
   const [city, setCity] = useState(props.city);
 
-  const office = division.offices[city];
-  if (office === 0) {
-    setCity(CityName.Sector12);
-    return <></>;
+  let mainContent: JSX.Element;
+  if (city === "Expand") {
+    mainContent = <ExpandNewCity cityStateSetter={setCity} />;
+  } else {
+    const office = division.offices[city];
+    if (office === 0) {
+      setCity(CityName.Sector12);
+      return <></>;
+    }
+    mainContent = (
+      <Industry rerender={props.rerender} city={city} warehouse={division.warehouses[city]} office={office} />
+    );
   }
-
-  const canExpand =
-    Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] === 0).length > 0;
+  const canExpand = Object.values(CityName).filter((cityName) => division.offices[cityName] === 0).length > 0;
   function handleChange(event: React.SyntheticEvent, tab: CityName | "Expand"): void {
     setCity(tab);
   }
+
   return (
     <>
       <Tabs variant="fullWidth" value={city} onChange={handleChange} sx={{ maxWidth: "65vw" }}>
@@ -37,18 +44,7 @@ export function CityTabs(props: IProps): React.ReactElement {
         )}
         {canExpand && <Tab label={"Expand"} value={"Expand"} />}
       </Tabs>
-
-      {city !== "Expand" ? (
-        <Industry
-          key={city}
-          rerender={props.rerender}
-          city={city}
-          warehouse={division.warehouses[city]}
-          office={office}
-        />
-      ) : (
-        <ExpandNewCity cityStateSetter={setCity} />
-      )}
+      {mainContent}
     </>
   );
 }

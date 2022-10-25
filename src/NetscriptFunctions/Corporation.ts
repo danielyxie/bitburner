@@ -223,7 +223,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
 
   function getOffice(divisionName: string, cityName: string): OfficeSpace {
     const division = getDivision(divisionName);
-    if (!(cityName in division.offices)) throw new Error(`Invalid city name '${cityName}'`);
+    if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city name '${cityName}'`);
     const office = division.offices[cityName];
     if (office === 0) throw new Error(`${division.name} has not expanded to '${cityName}'`);
     return office;

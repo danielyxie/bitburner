@@ -7,13 +7,14 @@ import { createCityMap } from "../Locations/createCityMap";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { CityName } from "../Locations/data/CityNames";
 
 interface IConstructorParams {
   name?: string;
   demand?: number;
   competition?: number;
   markup?: number;
-  createCity?: string;
+  createCity?: CityName;
   designCost?: number;
   advCost?: number;
   quality?: number;
@@ -50,7 +51,7 @@ export class Product {
   // Variables for handling the creation process of this Product
   fin = false; // Whether this Product has finished being created
   prog = 0; // Creation progress - A number between 0-100 representing percentage
-  createCity = ""; // City in which the product is/was being created
+  createCity = CityName.Sector12; // City in which the product is/was being created
   designCost = 0; // How much money was invested into designing this Product
   advCost = 0; // How much money was invested into advertising this Product
 
@@ -112,7 +113,7 @@ export class Product {
     this.dmd = params.demand ? params.demand : 0;
     this.cmp = params.competition ? params.competition : 0;
     this.mku = params.markup ? params.markup : 0;
-    this.createCity = params.createCity ? params.createCity : "";
+    this.createCity = params.createCity ? params.createCity : CityName.Sector12;
     this.designCost = params.designCost ? params.designCost : 0;
     this.advCost = params.advCost ? params.advCost : 0;
     this.qlt = params.quality ? params.quality : 0;

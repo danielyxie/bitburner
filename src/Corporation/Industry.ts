@@ -64,7 +64,7 @@ export class Industry {
   warehouses: Record<CityName, Warehouse | 0>;
 
   //Maps locations to offices. 0 if no office at that location
-  offices: { [key: string]: OfficeSpace | 0 } = {
+  offices: Record<CityName, OfficeSpace | 0> = {
     [CityName.Aevum]: 0,
     [CityName.Chongqing]: 0,
     [CityName.Sector12]: new OfficeSpace({
@@ -194,7 +194,7 @@ export class Industry {
 
       // Process offices (and the employees in them)
       let employeeSalary = 0;
-      for (const officeLoc of Object.keys(this.offices)) {
+      for (const officeLoc of Object.values(CityName)) {
         const office = this.offices[officeLoc];
         if (office) employeeSalary += office.process(marketCycles, corporation, this);
       }

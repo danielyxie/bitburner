@@ -15,7 +15,7 @@ import { EmployeePositions } from "./EmployeePositions";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
 import { checkEnum } from "../utils/helpers/checkEnum";
-import { CityName } from "src/Locations/data/CityNames";
+import { CityName } from "../Locations/data/CityNames";
 
 export function NewIndustry(corporation: Corporation, industry: IndustryType, name: string): void {
   if (corporation.divisions.find(({ type }) => industry == type))
@@ -46,7 +46,7 @@ export function NewIndustry(corporation: Corporation, industry: IndustryType, na
   }
 }
 
-export function NewCity(corporation: Corporation, division: Industry, city: string): void {
+export function NewCity(corporation: Corporation, division: Industry, city: CityName): void {
   if (corporation.funds < CorporationConstants.OfficeInitialCost) {
     throw new Error("You don't have enough company funds to open a new office!");
   }
@@ -389,7 +389,7 @@ export function HireAdVert(corp: Corporation, division: Industry): void {
 export function MakeProduct(
   corp: Corporation,
   division: Industry,
-  city: string,
+  city: CityName,
   productName: string,
   designInvest: number,
   marketingInvest: number,

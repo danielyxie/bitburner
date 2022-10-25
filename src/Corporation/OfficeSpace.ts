@@ -121,7 +121,7 @@ export class OfficeSpace {
       if (corporation.funds < 0 && industry.lastCycleRevenue < 0) {
         perfMult = Math.pow(0.995, marketCycles);
       } else if (corporation.funds > 0 && industry.lastCycleRevenue > 0) {
-        perfMult = Math.pow(1.005, marketCycles);
+        perfMult = Math.pow(0.999, marketCycles);
       }
 
       if (this.autoCoffee) {

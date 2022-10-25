@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { NumberInput } from "../../../ui/React/NumberInput";
+import { CityName } from "../../../Locations/data/CityNames";
 
 interface IProps {
   open: boolean;
@@ -32,8 +33,8 @@ function productPlaceholder(type: string): string {
 export function MakeProductModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const allCities = Object.keys(division.offices).filter((cityName) => division.offices[cityName] !== 0);
-  const [city, setCity] = useState(allCities.length > 0 ? allCities[0] : "");
+  const allCities = Object.values(CityName).filter((cityName) => division.offices[cityName] !== 0);
+  const [city, setCity] = useState(allCities.length > 0 ? allCities[0] : CityName.Sector12);
   const [name, setName] = useState("");
   const [design, setDesign] = useState<number>(NaN);
   const [marketing, setMarketing] = useState<number>(NaN);
@@ -51,7 +52,7 @@ export function MakeProductModal(props: IProps): React.ReactElement {
   }
 
   function onCityChange(event: SelectChangeEvent<string>): void {
-    setCity(event.target.value);
+    setCity(event.target.value as CityName);
   }
 
   function onProductNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
