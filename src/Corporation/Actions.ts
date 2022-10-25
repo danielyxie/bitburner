@@ -95,8 +95,9 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   if (amt === "") amt = "0";
   let cost = price.replace(/\s+/g, "");
   cost = cost.replace(/[^-()\d/*+.MPe]/g, ""); //Sanitize cost
-  let temp = cost.replace(/MP/g, mat.bCost + "");
+  let temp = cost.replace(/MP/, mat.bCost + "");
   try {
+    if (temp.includes("MP")) throw "Only one reference to MP is allowed in sell price.";
     temp = eval(temp);
   } catch (e) {
     throw new Error("Invalid value or expression for sell price field: " + e);
@@ -154,9 +155,10 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     //Dynamically evaluated quantity. First test to make sure its valid
     //Sanitize input, then replace dynamic variables with arbitrary numbers
     price = price.replace(/\s+/g, "");
-    price = price.replace(/[^-()\d/*+.MP]/g, "");
-    let temp = price.replace(/MP/g, "1");
+    price = price.replace(/[^-()\d/*+.MPe]/g, "");
+    let temp = price.replace(/MP/, product.pCost + "");
     try {
+      if (temp.includes("MP")) throw "Only one reference to MP is allowed in sell price.";
       temp = eval(temp);
     } catch (e) {
       throw new Error("Invalid value or expression for sell price field: " + e);
