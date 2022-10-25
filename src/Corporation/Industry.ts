@@ -900,7 +900,7 @@ export class Industry {
                 product.mku = 1;
               }
               sCost = sCostString.replace(/MP/g, product.pCost + product.rat / product.mku + "");
-              sCost = eval(sCost);
+              sCost = Math.max(product.pCost, eval(sCost));
             } else {
               sCost = product.sCost;
             }

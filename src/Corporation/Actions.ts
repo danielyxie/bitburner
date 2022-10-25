@@ -95,7 +95,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   if (amt === "") amt = "0";
   let cost = price.replace(/\s+/g, "");
   cost = cost.replace(/[^-()\d/*+.MPe]/g, ""); //Sanitize cost
-  let temp = cost.replace(/MP/, mat.bCost + "");
+  let temp = cost.replace(/MP/, "1.234e5");
   try {
     if (temp.includes("MP")) throw "Only one reference to MP is allowed in sell price.";
     temp = eval(temp);
@@ -103,7 +103,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
     throw new Error("Invalid value or expression for sell price field: " + e);
   }
 
-  if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
+  if (temp == null || isNaN(parseFloat(temp))) {
     throw new Error("Invalid value or expression for sell price field");
   }
 
@@ -156,14 +156,14 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     //Sanitize input, then replace dynamic variables with arbitrary numbers
     price = price.replace(/\s+/g, "");
     price = price.replace(/[^-()\d/*+.MPe]/g, "");
-    let temp = price.replace(/MP/, product.pCost + "");
+    let temp = price.replace(/MP/, "1.234e5");
     try {
       if (temp.includes("MP")) throw "Only one reference to MP is allowed in sell price.";
       temp = eval(temp);
     } catch (e) {
       throw new Error("Invalid value or expression for sell price field: " + e);
     }
-    if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
+    if (temp == null || isNaN(parseFloat(temp))) {
       throw new Error("Invalid value or expression for sell price field.");
     }
     product.sCost = price; //Use sanitized price
