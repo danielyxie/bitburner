@@ -6873,6 +6873,7 @@ export interface NS {
   enums: NSEnums;
 }
 
+/** @public */
 type EmployeePosName =
   | "Operations"
   | "Engineer"
@@ -6882,6 +6883,7 @@ type EmployeePosName =
   | "Training"
   | "Unassigned";
 
+/** @public */
 type IndustryTypeName =
   | "Energy"
   | "Water Utilities"
