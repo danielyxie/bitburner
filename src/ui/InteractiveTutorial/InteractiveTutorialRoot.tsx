@@ -448,7 +448,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
       content: (
         <>
           <Typography>
-            We have 4GB of free RAM on this machine, which is enough to run our script. Let's run our script using
+            We have 8GB of free RAM on this machine, which is enough to run our script. Let's run our script using
           </Typography>
           <Typography classes={{ root: classes.textfield }}>{`[home ~/]> run ${tutorialScriptName}`}</Typography>
         </>

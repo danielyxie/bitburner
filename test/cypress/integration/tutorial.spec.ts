@@ -60,7 +60,7 @@ describe("tutorial", () => {
     cy.findByText(/now we'll run the script/i);
     cy.findByRole("textbox").type("free{enter}");
 
-    cy.findByText(/We have 4GB of free RAM on this machine/i);
+    cy.findByText(/We have 8GB of free RAM on this machine/i);
     cy.findByRole("textbox").type("run n00dles.script{enter}");
 
     cy.findByText(/Your script is now running/i);
