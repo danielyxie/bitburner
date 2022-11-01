@@ -1366,7 +1366,8 @@ export interface TIX {
    *  ...
    * }
    * ```
-   * The “Order type” property can have one of the following four values: "Limit Buy Order", "Limit Sell Order", "Stop Buy Order", "Stop Sell Order".
+   * The “Order type” property can have one of the following four values: "Limit Buy Order", "Limit Sell Order",
+   * "Stop Buy Order", "Stop Sell Order".
    * Note that the order book will only contain information for stocks that you actually have orders in.
    *
    * @example
@@ -1417,7 +1418,8 @@ export interface TIX {
   getVolatility(sym: string): number;
 
   /**
-   * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
+   * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next
+   * tick.
    * @remarks
    * RAM cost: 2.5 GB
    * The probability is returned as a decimal value, NOT a percentage
@@ -1465,7 +1467,8 @@ export interface TIX {
 /**
  * Singularity API
  * @remarks
- * This API requires Source-File 4 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on Source-File 4 levels.
+ * This API requires Source-File 4 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on
+ * Source-File 4 levels.
  * @public
  */
 export interface Singularity {
@@ -1687,37 +1690,30 @@ export interface Singularity {
    * RAM cost: 3 GB * 16/4/1
    *
    *
-   * This function will automatically set you to start working at the company
-   * at which you are employed. If you are already in the middle of some “working”
-   * action (such as working for a faction, training at a gym, or creating a program),
-   * then running this function will automatically cancel that action and give you
-   * your earnings.
+   * This function will set you to start working at your current job at a specified company at which you are employed.
+   * If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or
+   * creating a program), then running this function will cancel that action.
    *
    * This function will return true if the player starts working, and false otherwise.
    *
-   * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.
-   *
    * @example
-   * ```ts
+   * ```js
    * // NS1:
-   * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
-   * while (getCompanyRep(COMPANY HERE) < VALUE) {
-   *    workForCompany();
-   *    sleep(60000);
-   * }
-   * //This way, your company reputation will be updated every minute.
+   * var COMPANY_NAME = "Noodle Bar";
+   *
+   * var success = singularity.workForCompany(COMPANY_NAME);
+   * if (!success) tprint("ERROR: Failed to start work at " + COMPANY_NAME + ".");
    * ```
    * @example
-   * ```ts
+   * ```js
    * // NS2:
-   * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
-   * while (ns.getCompanyRep(COMPANY HERE) < VALUE) {
-   *    ns.workForCompany();
-   *    await ns.sleep(60000);
-   * }
-   * //This way, your company reputation will be updated every minute.
+   * const COMPANY_NAME = "Noodle Bar";
+   *
+   * let success = ns.singularity.workForCompany(COMPANY_NAME);
+   * if (!success) ns.tprint(`ERROR: Failed to start work at ${COMPANY_NAME].`);
    * ```
-   * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked
+   * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this
+   *   argument defaults to the last job that you worked.
    * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.
    * @returns True if the player starts working, and false otherwise.
    */
@@ -1829,42 +1825,35 @@ export interface Singularity {
    * RAM cost: 3 GB * 16/4/1
    *
    *
-   * This function will automatically set you to start working for the specified faction.
-   * Obviously, you must be a member of the faction or else this function will fail. If
-   * you are already in the middle of some “working” action (such as working for a company,
-   * training at a gym, or creating a program), then running this function will automatically
-   * cancel that action and give you your earnings.
+   * This function will set you to start working for the specified faction. You must be a member of the faction and
+   * that faction must have the specified work type, or else this function will fail. If you are already in the
+   * middle of some “working” action (such as working for a company, training at a gym, or creating a program), then
+   * running this function will cancel that action.
    *
    * This function will return true if you successfully start working for the specified faction, and false otherwise.
    *
-   * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.
-   *
    * @example
-   * ```ts
-   * // NS1:
-   * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
-   * while (getFactionRep(FACTION NAME) < VALUE) {
-   *    workForFaction(FACNAME, WORKTYPE);
-   *    sleep(60000);
-   * }
-   * //This way, your faction reputation will be updated every minute.
+   * ```js
+   * // NS1
+   * var FACTION_NAME = "CyberSec", WORK_TYPE = "hacking";
+   *
+   * var success = singularity.workForFaction(FACTION_NAME, WORK_TYPE);
+   * if (!success) tprint("ERROR: Failed to start work for " + FACTION_NAME + " with work type " + WORK_TYPE);
    * ```
    * @example
-   * ```ts
-   * // NS2:
-   * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
-   * while (ns.getFactionRep(FACTION NAME) < VALUE) {
-   *    ns.workForFaction(FACNAME, WORKTYPE);
-   *    await ns.sleep(60000);
-   * }
-   * //This way, your faction reputation will be updated every minute.
+   * ```js
+   * // NS2
+   * const FACTION_NAME = "CyberSec", WORK_TYPE = "hacking";
+   *
+   * let success = ns.singularity.workForFaction(FACTION_NAME, WORK_TYPE);
+   * if (!success) ns.tprint(`ERROR: Failed to start work for ${FACTION_NAME} with work type ${WORK_TYPE}.`)
    * ```
    * @param faction - Name of faction to work for.
    * @param workType - Type of work to perform for the faction.
    * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.
    * @returns True if the player starts working, and false otherwise.
    */
-  workForFaction(faction: string, workType: string, focus?: boolean): boolean;
+  workForFaction(faction: string, workType: "hacking" | "field" | "security", focus?: boolean): boolean;
 
   /**
    * Get faction reputation.
@@ -1935,7 +1924,8 @@ export interface Singularity {
    *
    * This function returns true if you successfully start working on the specified program, and false otherwise.
    *
-   * Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are:
+   * Note that creating a program using this function has the same hacking level requirements as it normally would.
+   * These level requirements are:
    * * BruteSSH.exe: 50
    * * FTPCrack.exe: 100
    * * relaySMTP.exe: 250
@@ -2018,7 +2008,9 @@ export interface Singularity {
    *
    * This function returns an array containing the names (as strings) of all Augmentations you have.
    *
-   * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations.
+   * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not
+   *   yet installed. By default, this argument is false which means that the return value will NOT have the purchased
+   *   Augmentations.
    * @returns Array containing the names (as strings) of all Augmentations you have.
    */
   getOwnedAugmentations(purchased?: boolean): string[];
