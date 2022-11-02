@@ -130,7 +130,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
           <DeleteGameButton />
         </Box>
         <Tooltip title={<Typography>Export your game to a text file.</Typography>}>
-          <Button onClick={() => props.export()} startIcon={<Download />} sx={{ gridArea: "export" }}>
+          <Button onClick={() => props.export()} startIcon={<Upload />} sx={{ gridArea: "export" }}>
             Export Game
           </Button>
         </Tooltip>
@@ -143,7 +143,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
             </Typography>
           }
         >
-          <Button onClick={startImport} startIcon={<Upload />} sx={{ gridArea: "import" }}>
+          <Button onClick={startImport} startIcon={<Download />} sx={{ gridArea: "import" }}>
             Import Game
             <input ref={importInput} id="import-game-file-selector" type="file" hidden onChange={onImport} />
           </Button>
