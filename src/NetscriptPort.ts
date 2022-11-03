@@ -1,11 +1,13 @@
 import { Settings } from "./Settings/Settings";
 
 type PortData = string | number;
+type Resolver = () => void;
 export interface IPort {
   write: (value: unknown) => PortData | null;
   tryWrite: (value: unknown) => boolean;
   read: () => PortData;
   peek: () => PortData;
+  nextWrite: () => Promise<void>;
   full: () => boolean;
   empty: () => boolean;
   clear: () => void;
@@ -13,6 +15,7 @@ export interface IPort {
 
 export function NetscriptPort(): IPort {
   const data: PortData[] = [];
+  const resolvers: Resolver[] = [];
 
   return {
     write: (value) => {
@@ -22,6 +25,9 @@ export function NetscriptPort(): IPort {
         );
       }
       data.push(value);
+      while (resolvers.length > 0) {
+        (resolvers.pop() as Resolver)();
+      }
       if (data.length > Settings.MaxPortCapacity) {
         return data.shift() as PortData;
       }
@@ -38,6 +44,9 @@ export function NetscriptPort(): IPort {
         return false;
       }
       data.push(value);
+      while (resolvers.length > 0) {
+        (resolvers.pop() as Resolver)();
+      }
       return true;
     },
 
@@ -49,6 +58,10 @@ export function NetscriptPort(): IPort {
     peek: () => {
       if (data.length === 0) return "NULL PORT DATA";
       return data[0];
+    },
+
+    nextWrite: () => {
+      return new Promise((res) => resolvers.push(res));
     },
 
     full: () => {

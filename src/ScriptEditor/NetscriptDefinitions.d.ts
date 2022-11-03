@@ -999,6 +999,13 @@ export interface NetscriptPort {
   tryWrite(value: string | number): boolean;
 
   /**
+   * Sleeps until the port is written to.
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  nextWrite(): Promise<void>;
+
+  /**
    * Shift an element out of the port.
    * @remarks
    * RAM cost: 0 GB
