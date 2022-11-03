@@ -28,7 +28,10 @@ function showMessage(name: MessageFilenames): void {
       Message received from unknown sender:
       <br />
       <br />
-      <i>{msg.msg}</i>This message was saved as {msg.filename} onto your home computer.
+      <i>{msg.msg}</i>
+      <br />
+      <br />
+      This message was saved as {msg.filename} onto your home computer.
     </>,
   );
 }
