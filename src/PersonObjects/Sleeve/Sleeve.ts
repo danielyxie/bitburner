@@ -94,8 +94,7 @@ export class Sleeve extends Person {
   }
 
   /** Commit crimes */
-  commitCrime(type: string): boolean {
-    if (!checkEnum(CrimeType, type)) return false;
+  commitCrime(type: CrimeType): boolean {
     this.startWork(new SleeveCrimeWork(type));
     return true;
   }

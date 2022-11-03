@@ -71,7 +71,7 @@ export function NetscriptSleeve(): InternalAPI<ISleeve> {
       checkSleeveNumber(ctx, sleeveNumber);
       const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
       if (crime == null) return false;
-      return Player.sleeves[sleeveNumber].commitCrime(crime.name);
+      return Player.sleeves[sleeveNumber].commitCrime(crime.type);
     },
     setToUniversityCourse: (ctx) => (_sleeveNumber, _universityName, _className) => {
       const sleeveNumber = helpers.number(ctx, "sleeveNumber", _sleeveNumber);

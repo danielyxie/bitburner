@@ -20,6 +20,8 @@ import { isSleeveInfiltrateWork } from "../Work/SleeveInfiltrateWork";
 import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
 import { isSleeveBladeburnerWork } from "../Work/SleeveBladeburnerWork";
 import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
+import { findCrime } from "../../../Crime/CrimeHelpers";
+import { CrimeType } from "../../../utils/WorkType";
 
 interface IProps {
   sleeve: Sleeve;
@@ -44,7 +46,8 @@ export function SleeveElem(props: IProps): React.ReactElement {
         props.sleeve.workForFaction(abc[1], abc[2]);
         break;
       case "Commit Crime":
-        props.sleeve.commitCrime(abc[1]);
+        const crimeType = findCrime(abc[1])?.type ?? CrimeType.SHOPLIFT;
+        props.sleeve.commitCrime(crimeType);
         break;
       case "Take University Course":
         props.sleeve.takeUniversityCourse(abc[2], abc[1]);
