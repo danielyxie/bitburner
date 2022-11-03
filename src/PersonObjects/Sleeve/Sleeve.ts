@@ -18,7 +18,6 @@ import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import { Contracts } from "../../Bladeburner/data/Contracts";
 import { CONSTANTS } from "../../Constants";
-import { checkEnum } from "../../utils/helpers/checkEnum";
 import { CrimeType } from "../../utils/WorkType";
 import { CityName } from "../../Locations/data/CityNames";
 
