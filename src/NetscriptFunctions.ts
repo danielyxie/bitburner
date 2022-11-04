@@ -208,9 +208,6 @@ const base: InternalAPI<NS> = {
     (ctx) =>
     (_time = 0) => {
       const time = helpers.number(ctx, "time", _time);
-      if (time === undefined) {
-        throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
-      }
       helpers.log(ctx, () => `Sleeping for ${time} milliseconds`);
       return helpers.netscriptDelay(ctx, time).then(function () {
         return Promise.resolve(true);
@@ -595,9 +592,6 @@ const base: InternalAPI<NS> = {
   },
   ftpcrack: (ctx) => (_hostname) => {
     const hostname = helpers.string(ctx, "hostname", _hostname);
-    if (hostname === undefined) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
-    }
     const server = helpers.getServer(ctx, hostname);
     if (!(server instanceof Server)) {
       helpers.log(ctx, () => "Cannot be executed on this server.");
@@ -617,9 +611,6 @@ const base: InternalAPI<NS> = {
   },
   relaysmtp: (ctx) => (_hostname) => {
     const hostname = helpers.string(ctx, "hostname", _hostname);
-    if (hostname === undefined) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
-    }
     const server = helpers.getServer(ctx, hostname);
     if (!(server instanceof Server)) {
       helpers.log(ctx, () => "Cannot be executed on this server.");
@@ -639,9 +630,6 @@ const base: InternalAPI<NS> = {
   },
   httpworm: (ctx) => (_hostname) => {
     const hostname = helpers.string(ctx, "hostname", _hostname);
-    if (hostname === undefined) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument");
-    }
     const server = helpers.getServer(ctx, hostname);
     if (!(server instanceof Server)) {
       helpers.log(ctx, () => "Cannot be executed on this server.");
@@ -661,9 +649,6 @@ const base: InternalAPI<NS> = {
   },
   sqlinject: (ctx) => (_hostname) => {
     const hostname = helpers.string(ctx, "hostname", _hostname);
-    if (hostname === undefined) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
-    }
     const server = helpers.getServer(ctx, hostname);
     if (!(server instanceof Server)) {
       helpers.log(ctx, () => "Cannot be executed on this server.");
@@ -687,9 +672,6 @@ const base: InternalAPI<NS> = {
       const scriptname = helpers.string(ctx, "scriptname", _scriptname);
       const threads = helpers.number(ctx, "threads", _threads);
       const args = helpers.scriptArgs(ctx, _args);
-      if (scriptname === undefined) {
-        throw helpers.makeRuntimeErrorMsg(ctx, "Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
-      }
       if (isNaN(threads) || threads <= 0) {
         throw helpers.makeRuntimeErrorMsg(ctx, `Invalid thread count. Must be numeric and > 0, is ${threads}`);
       }
@@ -707,9 +689,6 @@ const base: InternalAPI<NS> = {
       const hostname = helpers.string(ctx, "hostname", _hostname);
       const threads = helpers.number(ctx, "threads", _threads);
       const args = helpers.scriptArgs(ctx, _args);
-      if (scriptname === undefined || hostname === undefined) {
-        throw helpers.makeRuntimeErrorMsg(ctx, "Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
-      }
       if (isNaN(threads) || threads <= 0) {
         throw helpers.makeRuntimeErrorMsg(ctx, `Invalid thread count. Must be numeric and > 0, is ${threads}`);
       }
@@ -794,9 +773,6 @@ const base: InternalAPI<NS> = {
     (_hostname = ctx.workerScript.hostname, _safetyguard = true) => {
       const hostname = helpers.string(ctx, "hostname", _hostname);
       const safetyguard = !!_safetyguard;
-      if (hostname === undefined) {
-        throw helpers.makeRuntimeErrorMsg(ctx, "Usage: killall(hostname, [safetyguard boolean])");
-      }
       const server = helpers.getServer(ctx, hostname);
 
       let scriptsKilled = 0;
@@ -1232,9 +1208,6 @@ const base: InternalAPI<NS> = {
     (_filename, _hostname = ctx.workerScript.hostname) => {
       const filename = helpers.string(ctx, "filename", _filename);
       const hostname = helpers.string(ctx, "hostname", _hostname);
-      if (filename === undefined) {
-        throw helpers.makeRuntimeErrorMsg(ctx, "Usage: fileExists(scriptname, [server])");
-      }
       const server = helpers.getServer(ctx, hostname);
       for (let i = 0; i < server.scripts.length; ++i) {
         if (filename == server.scripts[i].filename) {
