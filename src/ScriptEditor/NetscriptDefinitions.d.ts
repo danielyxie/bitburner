@@ -6291,9 +6291,9 @@ export interface NS {
    * RAM cost: 0 GB
    *
    * Write data to the given Netscript port.
-   * @returns The data popped off the queue if it was full.
+   * @returns The data popped off the queue if it was full, or null if it was not full.
    */
-  writePort(port: number, data: string | number): Promise<PortData>;
+  writePort(port: number, data: string | number): PortData | null;
   /**
    * Read data from a port.
    * @remarks

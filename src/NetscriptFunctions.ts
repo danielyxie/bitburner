@@ -1449,7 +1449,7 @@ const base: InternalAPI<NS> = {
   },
   writePort:
     (ctx) =>
-    (_port, data = ""): Promise<any> => {
+    (_port, data): string | number | null => {
       const port = helpers.number(ctx, "port", _port);
       if (typeof data !== "string" && typeof data !== "number") {
         throw helpers.makeRuntimeErrorMsg(
@@ -1458,7 +1458,7 @@ const base: InternalAPI<NS> = {
         );
       }
       const iport = helpers.getValidPort(ctx, port);
-      return Promise.resolve(iport.write(data));
+      return iport.write(data);
     },
   write:
     (ctx) =>
