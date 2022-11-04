@@ -574,6 +574,9 @@ const base: InternalAPI<NS> = {
   },
   brutessh: (ctx) => (_hostname) => {
     const hostname = helpers.string(ctx, "hostname", _hostname);
+    if (hostname === undefined) {
+      throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
+    }
     const server = helpers.getServer(ctx, hostname);
     if (!(server instanceof Server)) {
       helpers.log(ctx, () => "Cannot be executed on this server.");
@@ -638,7 +641,7 @@ const base: InternalAPI<NS> = {
   httpworm: (ctx) => (_hostname) => {
     const hostname = helpers.string(ctx, "hostname", _hostname);
     if (hostname === undefined) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument");
+      throw helpers.makeRuntimeErrorMsg(ctx, "Takes 1 argument.");
     }
     const server = helpers.getServer(ctx, hostname);
     if (!(server instanceof Server)) {
