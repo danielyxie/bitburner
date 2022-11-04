@@ -54,7 +54,7 @@ export class TextFile {
 
   /** Shows the content to the user via the game's dialog box. */
   show(): void {
-    dialogBoxCreate(`${this.fn}<br /><br />${this.text}`);
+    dialogBoxCreate(`${this.fn}\n\n${this.text}`);
   }
 
   /** Serialize the current file to a JSON save state. */

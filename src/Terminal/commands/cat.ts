@@ -49,7 +49,7 @@ export function cat(args: (string | number | boolean)[], server: BaseServer): vo
   } else if (filename.endsWith(".script") || filename.endsWith(".js")) {
     const script = Terminal.getScript(relative_filename);
     if (script != null) {
-      dialogBoxCreate(`${script.filename}<br /><br />${script.code}`);
+      dialogBoxCreate(`${script.filename}\n\n${script.code}`);
       return;
     }
   }
