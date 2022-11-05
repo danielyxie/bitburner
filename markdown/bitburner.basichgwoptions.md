@@ -19,3 +19,16 @@ export interface BasicHGWOptions
 |  [stock?](./bitburner.basichgwoptions.stock.md) | boolean | <i>(Optional)</i> Set to true this action will affect the stock market. |
 |  [threads?](./bitburner.basichgwoptions.threads.md) | number | <i>(Optional)</i> Number of threads to use for this function. Must be less than or equal to the number of threads the script is running with. |
 
+## Example 1
+
+```ts
+// NS2:
+grow("n00dles", { threads: 10 });
+```
+
+## Example 2
+
+```ts
+// NS2:
+grow("n00dles", { stock: false, threads: 10 });
+```
