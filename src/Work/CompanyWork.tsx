@@ -4,7 +4,7 @@ import { Player } from "@player";
 import { Work, WorkType } from "./Work";
 import { influenceStockThroughCompanyWork } from "../StockMarket/PlayerInfluencing";
 import { LocationName } from "../Locations/data/LocationNames";
-import { calculateCompanyWorkStats } from "./formulas/Company";
+import { calculateCompanyWorkStats } from "./Formulas";
 import { Companies } from "../Company/Companies";
 import { applyWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 import { Company } from "../Company/Company";
@@ -12,6 +12,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
+import { CompanyPositions } from "../Company/CompanyPositions";
 
 interface CompanyWorkParams {
   companyName: string;
@@ -38,7 +39,11 @@ export class CompanyWork extends Work {
     if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
       focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    return scaleWorkStats(calculateCompanyWorkStats(Player, this.getCompany()), focusBonus);
+    const company = this.getCompany();
+    return scaleWorkStats(
+      calculateCompanyWorkStats(Player, company, CompanyPositions[Player.jobs[company.name]], company.favor),
+      focusBonus,
+    );
   }
 
   process(cycles: number): boolean {

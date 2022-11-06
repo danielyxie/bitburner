@@ -8,7 +8,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { CrimeType } from "../utils/WorkType";
 import { Work, WorkType } from "./Work";
 import { scaleWorkStats, WorkStats } from "./WorkStats";
-import { calculateCrimeWorkStats } from "./formulas/Crime";
+import { calculateCrimeWorkStats } from "./Formulas";
 import { checkEnum } from "../utils/helpers/checkEnum";
 
 interface CrimeWorkParams {
@@ -47,7 +47,7 @@ export class CrimeWork extends Work {
   }
 
   earnings(): WorkStats {
-    return calculateCrimeWorkStats(this.getCrime());
+    return calculateCrimeWorkStats(Player, this.getCrime());
   }
 
   commit(): void {

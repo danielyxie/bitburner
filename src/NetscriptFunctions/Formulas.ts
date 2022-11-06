@@ -39,17 +39,20 @@ import { favorToRep as calculateFavorToRep, repToFavor as calculateRepToFavor } 
 import { repFromDonation } from "../Faction/formulas/donation";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
-import { calculateCrimeWorkStats } from "../Work/formulas/Crime";
+import { calculateCrimeWorkStats } from "../Work/Formulas";
 import { Crimes } from "../Crime/Crimes";
-import { calculateClassEarnings } from "../Work/formulas/Class";
+import { calculateCompanyWorkStats } from "../Work/Formulas";
+import { Companies } from "../Company/Companies";
+import { calculateClassEarnings } from "../Work/Formulas";
 import { ClassType } from "../Work/ClassWork";
 import { LocationName } from "../Locations/data/LocationNames";
-import { calculateFactionExp, calculateFactionRep } from "../Work/formulas/Faction";
+import { calculateFactionExp, calculateFactionRep } from "../Work/Formulas";
 import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 import { defaultMultipliers } from "../PersonObjects/Multipliers";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { CrimeType } from "../utils/WorkType";
+import { CompanyPositions } from "../Company/CompanyPositions";
 
 export function NetscriptFormulas(): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
@@ -362,10 +365,11 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       },
     },
     work: {
-      crimeGains: (ctx) => (_crimeType) => {
+      crimeGains: (ctx) => (_person, _crimeType) => {
+        const person = helpers.player(ctx, _person);
         const crimeType = helpers.string(ctx, "crimeType", _crimeType);
         if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
-        return calculateCrimeWorkStats(Crimes[crimeType]);
+        return calculateCrimeWorkStats(person, Crimes[crimeType]);
       },
       classGains: (ctx) => (_person, _classType, _locationName) => {
         const person = helpers.player(ctx, _person);
@@ -382,10 +386,22 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
         exp.reputation = rep;
         return exp;
       },
-      // companyGains: (ctx) => (_player) {
-      //     const player = helpers.player(ctx, _player);
 
-      // },
+      companyGains: (ctx) => (_player, _companyName, _positionName, _favor) => {
+        const player = helpers.player(ctx, _player);
+        CompanyPositions;
+        const positionName = helpers.string(ctx, "_positionName", _positionName);
+        const position = Object.values(CompanyPositions).find((c) => c.name === positionName);
+        if (!position) throw new Error(`Invalid position name: ${positionName}`);
+
+        const companyName = helpers.string(ctx, "_companyName", _companyName);
+        const company = Object.values(Companies).find((c) => c.name === companyName);
+        if (!company) throw new Error(`Invalid company name: ${companyName}`);
+
+        const favor = helpers.number(ctx, "favor", _favor);
+
+        return calculateCompanyWorkStats(player, company, position, favor);
+      },
     },
   };
 }

@@ -49,7 +49,7 @@ import { FactionWorkType } from "../Work/data/FactionWorkType";
 import { CompanyWork } from "../Work/CompanyWork";
 import { canGetBonus, onExport } from "../ExportBonus";
 import { saveObject } from "../SaveObject";
-import { calculateCrimeWorkStats } from "../Work/formulas/Crime";
+import { calculateCrimeWorkStats } from "../Work/Formulas";
 import { checkEnum } from "../utils/helpers/checkEnum";
 import { Crimes } from "../Crime/Crimes";
 import { CrimeType } from "../utils/WorkType";
@@ -1160,7 +1160,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
       if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
 
-      const crimeStatsWithMultipliers = calculateCrimeWorkStats(crime);
+      const crimeStatsWithMultipliers = calculateCrimeWorkStats(Player, crime);
 
       return Object.assign({}, crime, {
         money: crimeStatsWithMultipliers.money,

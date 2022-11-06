@@ -600,6 +600,7 @@ export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
       crimeGains: 0,
       classGains: 0,
       factionGains: 0,
+      companyGains: 0,
     },
   },
 } as const;

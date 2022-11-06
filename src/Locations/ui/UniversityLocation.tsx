@@ -15,7 +15,7 @@ import { Player } from "@player";
 import { Box } from "@mui/material";
 
 import { ClassWork, ClassType, Classes } from "../../Work/ClassWork";
-import { calculateCost } from "../../Work/formulas/Class";
+import { calculateCost } from "../../Work/Formulas";
 
 type IProps = {
   loc: Location;

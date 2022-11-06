@@ -14,7 +14,7 @@ import { Money } from "../../ui/React/Money";
 import { Router } from "../../ui/GameRoot";
 import { Box } from "@mui/material";
 import { ClassWork, ClassType, Classes } from "../../Work/ClassWork";
-import { calculateCost } from "../../Work/formulas/Class";
+import { calculateCost } from "../../Work/Formulas";
 
 type IProps = {
   loc: Location;

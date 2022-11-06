@@ -5,15 +5,9 @@ import { applySleeveGains, Work, WorkType } from "./Work";
 import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 import { FactionNames } from "../../../Faction/data/FactionNames";
 import { Factions } from "../../../Faction/Factions";
-import { calculateFactionExp } from "../../../Work/formulas/Faction";
+import { calculateFactionExp, calculateFactionRep } from "../../../Work/Formulas";
 import { Faction } from "../../../Faction/Faction";
-import {
-  getFactionFieldWorkRepGain,
-  getFactionSecurityWorkRepGain,
-  getHackingWorkRepGain,
-} from "../../../PersonObjects/formulas/reputation";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
-import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
 
 interface SleeveFactionWorkParams {
   factionWorkType: FactionWorkType;
@@ -38,17 +32,7 @@ export class SleeveFactionWork extends Work {
   }
 
   getReputationRate(sleeve: Sleeve): number {
-    const faction = this.getFaction();
-    const repFormulas = {
-      [FactionWorkType.HACKING]: getHackingWorkRepGain,
-      [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
-      [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
-    };
-    return (
-      repFormulas[this.factionWorkType](sleeve, faction.favor) *
-      sleeve.shockBonus() *
-      BitNodeMultipliers.FactionWorkRepGain
-    );
+    return calculateFactionRep(sleeve, this.factionWorkType, this.getFaction().favor) * sleeve.shockBonus();
   }
 
   getFaction(): Faction {

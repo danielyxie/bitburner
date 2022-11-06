@@ -5,10 +5,10 @@ import { applySleeveGains, Work, WorkType } from "./Work";
 import { CrimeType } from "../../../utils/WorkType";
 import { Crimes } from "../../../Crime/Crimes";
 import { Crime } from "../../../Crime/Crime";
-import { newWorkStats, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { CONSTANTS } from "../../../Constants";
-import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
 import { checkEnum } from "../../../utils/helpers/checkEnum";
+import { calculateCrimeWorkStats } from "../../../Work/Formulas";
 
 export const isSleeveCrimeWork = (w: Work | null): w is SleeveCrimeWork => w !== null && w.type === WorkType.CRIME;
 
@@ -26,17 +26,7 @@ export class SleeveCrimeWork extends Work {
   }
 
   getExp(sleeve: Sleeve): WorkStats {
-    const crime = this.getCrime();
-    return newWorkStats({
-      money: crime.money * BitNodeMultipliers.CrimeMoney * sleeve.mults.crime_money,
-      hackExp: crime.hacking_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.hacking_exp,
-      strExp: crime.strength_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.strength_exp,
-      defExp: crime.defense_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.defense_exp,
-      dexExp: crime.dexterity_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.dexterity_exp,
-      agiExp: crime.agility_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.agility_exp,
-      chaExp: crime.charisma_exp * BitNodeMultipliers.CrimeExpGain * sleeve.mults.charisma_exp,
-      intExp: crime.intelligence_exp * BitNodeMultipliers.CrimeExpGain,
-    });
+    return calculateCrimeWorkStats(sleeve, this.getCrime());
   }
 
   cyclesNeeded(): number {

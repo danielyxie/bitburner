@@ -37,7 +37,7 @@ type ScriptArg = string | number | boolean;
 type FilenameOrPID = number | string;
 
 /** @public */
-interface Player {
+interface Person {
   hp: HP;
   skills: Skills;
   exp: Skills;
@@ -642,62 +642,6 @@ export interface NodeStats {
 }
 
 /** @public */
-export interface CharacterMult {
-  /** Agility stat */
-  agility: number;
-  /** Agility exp */
-  agilityExp: number;
-  /** Charisma stat */
-  charisma: number;
-  /** Charisma exp */
-  charismaExp: number;
-  /** Company reputation */
-  companyRep: number;
-  /** Money earned from crimes */
-  crimeMoney: number;
-  /** Crime success chance */
-  crimeSuccess: number;
-  /** Defense stat */
-  defense: number;
-  /** Defense exp */
-  defenseExp: number;
-  /** Dexterity stat */
-  dexterity: number;
-  /** Dexterity exp */
-  dexterityExp: number;
-  /** Faction reputation */
-  factionRep: number;
-  /** Hacking stat */
-  hacking: number;
-  /** Hacking exp */
-  hackingExp: number;
-  /** Strength stat */
-  strength: number;
-  /** Strength exp */
-  strengthExp: number;
-  /** Money earned from jobs */
-  workMoney: number;
-}
-
-/** @public */
-export interface SleeveWorkGains {
-  /** Hacking exp gained from work */
-  workHackExpGain: number;
-  /** Strength exp gained from work */
-  workStrExpGain: number;
-  /** Defense exp gained from work, */
-  workDefExpGain: number;
-  /** Dexterity exp gained from work */
-  workDexExpGain: number;
-  /** Agility exp gained from work */
-  workAgiExpGain: number;
-  /** Charisma exp gained from work */
-  workChaExpGain: number;
-  /** Money gained from work */
-  workMoneyGain: number;
-}
-
-/** @public */
 export interface SourceFileLvl {
   /** The number of the source file */
   n: number;
@@ -966,7 +910,9 @@ export interface SleeveInformation {
   /** Does this sleeve have access to the tor router */
   tor: boolean;
   /** Sleeve multipliers */
-  mult: CharacterMult;
+  mult: Multipliers;
+  /** Sleeve skills */
+  skills: Skills;
 }
 
 /**
@@ -3907,9 +3853,10 @@ export interface WorkStats {
  * @public
  */
 interface WorkFormulas {
-  crimeGains(crimeType: CrimeType | CrimeNames): WorkStats;
-  classGains(player: Player, classType: string, locationName: string): WorkStats;
-  factionGains(player: Player, workType: string, favor: number): WorkStats;
+  crimeGains(person: Person, crimeType: CrimeType | CrimeNames): WorkStats;
+  classGains(person: Person, classType: string, locationName: string): WorkStats;
+  factionGains(person: Person, workType: string, favor: number): WorkStats;
+  companyGains(person: Person, companyName: string, workType: string, favor: number): WorkStats;
 }
 
 /**
@@ -3936,7 +3883,7 @@ interface ReputationFormulas {
    * @param amount - Amount of money donated
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    */
-  repFromDonation(amount: number, player: Player): number;
+  repFromDonation(amount: number, player: Person): number;
 }
 
 /**
@@ -3951,7 +3898,7 @@ interface HackingFormulas {
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack chance.
    */
-  hackChance(server: Server, player: Player): number;
+  hackChance(server: Server, player: Person): number;
   /**
    * Calculate hack exp for one thread.
    * @remarks
@@ -3960,7 +3907,7 @@ interface HackingFormulas {
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack exp.
    */
-  hackExp(server: Server, player: Player): number;
+  hackExp(server: Server, player: Person): number;
   /**
    * Calculate hack percent for one thread.
    * (Ex: 0.25 would steal 25% of the server's current value.)
@@ -3970,7 +3917,7 @@ interface HackingFormulas {
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack percent.
    */
-  hackPercent(server: Server, player: Player): number;
+  hackPercent(server: Server, player: Person): number;
   /**
    * Calculate the percent a server would grow to.
    * (Ex: 3.0 would would grow the server to 300% of its current value.)
@@ -3980,28 +3927,28 @@ interface HackingFormulas {
    * @param cores - Number of cores on the computer that will execute grow.
    * @returns The calculated grow percent.
    */
-  growPercent(server: Server, threads: number, player: Player, cores?: number): number;
+  growPercent(server: Server, threads: number, player: Person, cores?: number): number;
   /**
    * Calculate hack time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack time.
    */
-  hackTime(server: Server, player: Player): number;
+  hackTime(server: Server, player: Person): number;
   /**
    * Calculate grow time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated grow time.
    */
-  growTime(server: Server, player: Player): number;
+  growTime(server: Server, player: Person): number;
   /**
    * Calculate weaken time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated weaken time.
    */
-  weakenTime(server: Server, player: Player): number;
+  weakenTime(server: Server, player: Person): number;
 }
 
 /**
@@ -4182,7 +4129,7 @@ interface GangFormulas {
  */
 export interface Formulas {
   mockServer(): Server;
-  mockPlayer(): Player;
+  mockPlayer(): Person;
   /** Reputation formulas */
   reputation: ReputationFormulas;
   /** Skills formulas */
@@ -6758,7 +6705,7 @@ export interface NS {
    *
    * @returns Player info
    */
-  getPlayer(): Player;
+  getPlayer(): Person;
 
   /**
    * Get information about the sources of income for this run.

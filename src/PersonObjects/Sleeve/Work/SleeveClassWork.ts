@@ -2,7 +2,7 @@ import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../
 import { applySleeveGains, Work, WorkType } from "./Work";
 import { ClassType } from "../../../Work/ClassWork";
 import { LocationName } from "../../../Locations/data/LocationNames";
-import { calculateClassEarnings } from "../../../Work/formulas/Class";
+import { calculateClassEarnings } from "../../../Work/Formulas";
 import { Sleeve } from "../Sleeve";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 

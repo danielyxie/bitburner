@@ -13,6 +13,7 @@ import { isSleeveCompanyWork } from "../PersonObjects/Sleeve/Work/SleeveCompanyW
 import { helpers } from "../Netscript/NetscriptHelpers";
 import { Crimes } from "../Crime/Crimes";
 import { CrimeType } from "../utils/WorkType";
+import { cloneDeep } from "lodash";
 
 export function NetscriptSleeve(): InternalAPI<ISleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext) {
@@ -200,6 +201,7 @@ export function NetscriptSleeve(): InternalAPI<ISleeve> {
           strengthExp: sl.mults.strength_exp,
           workMoney: sl.mults.work_money,
         },
+        skills: cloneDeep(sl.skills),
       };
     },
     getSleeveAugmentations: (ctx) => (_sleeveNumber) => {

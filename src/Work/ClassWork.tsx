@@ -7,7 +7,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Money } from "../ui/React/Money";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Player } from "@player";
-import { calculateClassEarnings as calculateClassEarningsRate } from "./formulas/Class";
+import { calculateClassEarnings as calculateClassEarningsRate } from "./Formulas";
 import { Work, WorkType } from "./Work";
 import { applyWorkStats, newWorkStats, sumWorkStats, WorkStats } from "./WorkStats";
 

@@ -10,7 +10,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
 import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { calculateFactionExp, calculateFactionRep } from "./formulas/Faction";
+import { calculateFactionExp, calculateFactionRep } from "./Formulas";
 import { FactionWorkType } from "./data/FactionWorkType";
 
 interface FactionWorkParams {

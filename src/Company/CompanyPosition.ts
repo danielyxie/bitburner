@@ -1,3 +1,4 @@
+import { Person } from "../PersonObjects/Person";
 import { CONSTANTS } from "../Constants";
 import * as names from "./data/companypositionnames";
 
@@ -117,13 +118,13 @@ export class CompanyPosition {
     this.charismaExpGain = p.charismaExpGain != null ? p.charismaExpGain : 0;
   }
 
-  calculateJobPerformance(hack: number, str: number, def: number, dex: number, agi: number, cha: number): number {
-    const hackRatio: number = (this.hackingEffectiveness * hack) / CONSTANTS.MaxSkillLevel;
-    const strRatio: number = (this.strengthEffectiveness * str) / CONSTANTS.MaxSkillLevel;
-    const defRatio: number = (this.defenseEffectiveness * def) / CONSTANTS.MaxSkillLevel;
-    const dexRatio: number = (this.dexterityEffectiveness * dex) / CONSTANTS.MaxSkillLevel;
-    const agiRatio: number = (this.agilityEffectiveness * agi) / CONSTANTS.MaxSkillLevel;
-    const chaRatio: number = (this.charismaEffectiveness * cha) / CONSTANTS.MaxSkillLevel;
+  calculateJobPerformance(worker: Person): number {
+    const hackRatio: number = (this.hackingEffectiveness * worker.skills.hacking) / CONSTANTS.MaxSkillLevel;
+    const strRatio: number = (this.strengthEffectiveness * worker.skills.strength) / CONSTANTS.MaxSkillLevel;
+    const defRatio: number = (this.defenseEffectiveness * worker.skills.defense) / CONSTANTS.MaxSkillLevel;
+    const dexRatio: number = (this.dexterityEffectiveness * worker.skills.dexterity) / CONSTANTS.MaxSkillLevel;
+    const agiRatio: number = (this.agilityEffectiveness * worker.skills.agility) / CONSTANTS.MaxSkillLevel;
+    const chaRatio: number = (this.charismaEffectiveness * worker.skills.charisma) / CONSTANTS.MaxSkillLevel;
 
     let reputationGain: number =
       (this.repMultiplier * (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio)) / 100;
@@ -131,7 +132,7 @@ export class CompanyPosition {
       console.error("Company reputation gain calculated to be NaN");
       reputationGain = 0;
     }
-
+    reputationGain += worker.skills.intelligence / CONSTANTS.MaxSkillLevel;
     return reputationGain;
   }
 

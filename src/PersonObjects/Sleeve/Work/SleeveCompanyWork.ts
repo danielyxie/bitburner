@@ -4,9 +4,11 @@ import { applySleeveGains, Work, WorkType } from "./Work";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { Companies } from "../../../Company/Companies";
 import { Company } from "../../../Company/Company";
-import { calculateCompanyWorkStats } from "../../../Work/formulas/Company";
+import { calculateCompanyWorkStats } from "../../../Work/Formulas";
 import { WorkStats } from "../../../Work/WorkStats";
 import { influenceStockThroughCompanyWork } from "../../../StockMarket/PlayerInfluencing";
+import { Player } from "@player";
+import { CompanyPositions } from "../../../Company/CompanyPositions";
 
 interface SleeveCompanyWorkParams {
   companyName: string;
@@ -30,7 +32,8 @@ export class SleeveCompanyWork extends Work {
   }
 
   getGainRates(sleeve: Sleeve): WorkStats {
-    return calculateCompanyWorkStats(sleeve, this.getCompany());
+    const company = this.getCompany();
+    return calculateCompanyWorkStats(sleeve, company, CompanyPositions[Player.jobs[company.name]], company.favor);
   }
 
   process(sleeve: Sleeve, cycles: number): number {
