@@ -85,7 +85,7 @@ export class CreateProgramWork extends Work {
           `You've finished creating ${programName}!`,
           "The new program can be found on your home computer.",
         ];
-        dialogBoxCreate(lines.join("<br>"));
+        dialogBoxCreate(lines.join("\n"));
       }
 
       if (!Player.getHomeComputer().programs.includes(programName)) {
