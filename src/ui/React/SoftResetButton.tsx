@@ -28,7 +28,7 @@ export function SoftResetButton({
 
   return (
     <>
-      <Tooltip title="Perform a soft reset. Resets everything as if you had just purchased an Augmentation.">
+      <Tooltip title="Perform a soft reset. Resets everything as if you had just installed Augmentations without installing them.">
         <Button startIcon={<RestartAltIcon />} color={color} onClick={handleButtonClick}>
           Soft Reset
         </Button>
