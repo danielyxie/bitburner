@@ -325,15 +325,8 @@ export function UpgradeOfficeSize(corp: Corporation, office: OfficeSpace, size: 
 
 export function BuyCoffee(corp: Corporation, office: OfficeSpace): boolean {
   const cost = office.getCoffeeCost();
-  if (corp.funds < cost) {
-    return false;
-  }
-
-  if (!office.setCoffee()) {
-    return false;
-  }
+  if (corp.funds < cost || !office.setCoffee()) return false;
   corp.funds -= cost;
-
   return true;
 }
 

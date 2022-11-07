@@ -318,10 +318,10 @@ export function IndustryOffice(props: IProps): React.ReactElement {
               >
                 <span>
                   <Button
-                    disabled={corp.funds < props.office.getCoffeeCost() || props.office.coffeeMult > 0}
+                    disabled={corp.funds < props.office.getCoffeeCost() || props.office.coffeePending}
                     onClick={() => BuyCoffee(corp, props.office)}
                   >
-                    {props.office.coffeeMult > 0 ? (
+                    {props.office.coffeePending ? (
                       "Buying coffee..."
                     ) : (
                       <span>

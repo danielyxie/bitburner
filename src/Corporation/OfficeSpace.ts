@@ -37,10 +37,8 @@ export class OfficeSpace {
 
   autoCoffee = false;
   autoParty = false;
-  coffeeMult = 0;
+  coffeePending = false;
   partyMult = 0;
-  coffeeEmployees = 0;
-  partyEmployees = 0;
 
   employeeProd: Record<EmployeePositions | "total", number> = {
     [EmployeePositions.Operations]: 0,
@@ -115,46 +113,39 @@ export class OfficeSpace {
     }
 
     if (this.totalEmployees > 0) {
-      // Calculate changes in Morale/Happiness/Energy for Employees
-      let perfMult = 1; //Multiplier for employee morale/happiness/energy based on company performance
-      const reduction = 0.0015 * marketCycles; // Passive reduction every cycle
-      if (corporation.funds < 0 && industry.lastCycleRevenue < 0) {
-        perfMult = Math.pow(0.995, marketCycles);
-      } else if (corporation.funds > 0 && industry.lastCycleRevenue > 0) {
-        perfMult = Math.pow(0.999, marketCycles);
-      }
+      /** Multiplier for employee morale/happiness/energy based on company performance */
+      const perfMult = Math.pow(
+        0.999 - (corporation.funds < 0 ? 0.002 : 0) - (industry.lastCycleRevenue < 0 ? 0.002 : 0),
+        marketCycles,
+      );
+      /** Flat reduction per cycle */
+      const reduction = 0.001 * marketCycles;
 
       if (this.autoCoffee) {
         this.avgEne = this.maxEne;
-      } else if (this.coffeeMult > 1) {
-        this.avgEne -= reduction;
-        this.avgEne *= (this.coffeeMult * this.coffeeEmployees) / this.totalEmployees;
       } else {
-        this.avgEne -= reduction;
-        this.avgEne *= perfMult;
+        // Coffee gives a flat +3 to energy
+        this.avgEne = (this.avgEne - reduction) * perfMult + (this.coffeePending ? 3 : 0);
+        // Coffee also halves the difference between current and max energy
+        if (this.coffeePending) this.avgEne = this.maxEne - (this.maxEne - this.avgEne) / 2;
       }
 
       if (this.autoParty) {
         this.avgMor = this.maxMor;
         this.avgHap = this.maxHap;
-      } else if (this.partyMult > 1) {
-        this.avgHap -= reduction;
-        this.avgMor *= (this.partyMult * this.partyEmployees) / this.totalEmployees;
-        this.avgHap *= (this.partyMult * this.partyEmployees) / this.totalEmployees;
       } else {
-        this.avgHap -= reduction;
-        this.avgMor *= perfMult;
-        this.avgHap *= perfMult;
+        // Each 5% multiplier gives an extra flat +1 to morale and happiness to make recovering from low morale easier.
+        const increase = this.partyMult > 1 ? (1 - this.partyMult) * 20 : 0;
+        this.avgHap = ((this.avgHap - reduction) * perfMult + increase) * this.partyMult;
+        this.avgMor = (this.avgMor * perfMult + increase) * this.partyMult;
       }
 
       this.avgEne = Math.max(Math.min(this.avgEne, this.maxEne), this.minEne);
       this.avgMor = Math.max(Math.min(this.avgMor, this.maxMor), this.minMor);
       this.avgHap = Math.max(Math.min(this.avgHap, this.maxHap), this.minHap);
 
-      this.coffeeMult = 0;
+      this.coffeePending = false;
       this.partyMult = 0;
-      this.coffeeEmployees = 0;
-      this.partyEmployees = 0;
     }
 
     // Get experience increase; unassigned employees do not contribute, employees in training contribute 5x
@@ -259,23 +250,19 @@ export class OfficeSpace {
     return 500e3 * this.totalEmployees;
   }
 
-  setCoffee(mult = 1.05): boolean {
-    if (mult > 1 && this.coffeeMult === 0 && !this.autoCoffee && this.totalEmployees > 0) {
-      this.coffeeMult = mult;
-      this.coffeeEmployees = this.totalEmployees;
+  setCoffee(): boolean {
+    if (!this.coffeePending && !this.autoCoffee && this.totalEmployees > 0) {
+      this.coffeePending = true;
       return true;
     }
-
     return false;
   }
 
   setParty(mult: number): boolean {
     if (mult > 1 && this.partyMult === 0 && !this.autoParty && this.totalEmployees > 0) {
       this.partyMult = mult;
-      this.partyEmployees = this.totalEmployees;
       return true;
     }
-
     return false;
   }
 
