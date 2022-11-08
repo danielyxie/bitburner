@@ -5,7 +5,6 @@ import { Augmentation } from "../Augmentation/Augmentation";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { killWorkerScript } from "../Netscript/killWorkerScript";
 import { CONSTANTS } from "../Constants";
 import { isString } from "../utils/helpers/isString";
 import { RunningScript } from "../Script/RunningScript";
@@ -213,12 +212,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       const cbScript = _cbScript ? helpers.string(ctx, "cbScript", _cbScript) : "";
 
       helpers.log(ctx, () => "Soft resetting. This will cause this script to be killed");
-      setTimeout(() => {
-        installAugmentations(true);
-        runAfterReset(cbScript);
-      }, 0);
-
-      killWorkerScript(ctx.workerScript);
+      installAugmentations(true);
+      if (cbScript) setTimeout(() => runAfterReset(cbScript), 500);
     },
     installAugmentations: (ctx) => (_cbScript) => {
       helpers.checkSingularityAccess(ctx);
@@ -230,13 +225,8 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       }
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 10);
       helpers.log(ctx, () => "Installing Augmentations. This will cause this script to be killed");
-      setTimeout(() => {
-        installAugmentations();
-        runAfterReset(cbScript);
-      }, 0);
-
-      killWorkerScript(ctx.workerScript);
-      return true;
+      installAugmentations();
+      if (cbScript) setTimeout(() => runAfterReset(cbScript), 500);
     },
 
     goToLocation: (ctx) => (_locationName) => {

@@ -107,14 +107,8 @@ function removeWorkerScript(workerScript: WorkerScript): void {
   server.updateRamUsed(0);
   for (const rs of server.runningScripts) server.updateRamUsed(server.ramUsed + rs.ramUsage * rs.threads);
 
-  // Delete script from global pool (workerScripts)
-  workerScripts.delete(workerScript.pid);
-  // const res = workerScripts.delete(workerScript.pid);
-  // if (!res) {
-  //   console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
-  //   console.warn(workerScript);
-  // }
+  // Delete script from global pool (workerScripts) after verifying it's the right script (PIDs reset on aug install)
+  if (workerScripts.get(workerScript.pid) === workerScript) workerScripts.delete(workerScript.pid);
   AddRecentScript(workerScript);
-
   WorkerScriptStartStopEventEmitter.emit();
 }
