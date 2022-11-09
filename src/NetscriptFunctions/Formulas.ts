@@ -51,7 +51,7 @@ import { FactionWorkType } from "../Work/data/FactionWorkType";
 
 import { defaultMultipliers } from "../PersonObjects/Multipliers";
 import { checkEnum } from "../utils/helpers/checkEnum";
-import { CrimeType } from "../utils/WorkType";
+import { CompanyPosNames, CrimeType } from "../utils/WorkType";
 import { CompanyPositions } from "../Company/CompanyPositions";
 
 export function NetscriptFormulas(): InternalAPI<IFormulas> {
@@ -354,46 +354,50 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
     },
     work: {
       crimeSuccessChance: (ctx) => (_person, _crimeType) => {
+        checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
         const crimeType = helpers.string(ctx, "crimeType", _crimeType);
         if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
         return Crimes[crimeType].successRate(person);
       },
       crimeGains: (ctx) => (_person, _crimeType) => {
+        checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
         const crimeType = helpers.string(ctx, "crimeType", _crimeType);
         if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
         return calculateCrimeWorkStats(person, Crimes[crimeType]);
       },
       classGains: (ctx) => (_person, _classType, _locationName) => {
+        checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
         const classType = helpers.string(ctx, "classType", _classType);
+        if (!checkEnum(ClassType, classType)) throw new Error(`Invalid class type: ${classType}`);
         const locationName = helpers.string(ctx, "locationName", _locationName);
-        return calculateClassEarnings(person, classType as ClassType, locationName as LocationName);
+        if (!checkEnum(LocationName, locationName)) throw new Error(`Invalid location name: ${locationName}`);
+        return calculateClassEarnings(person, classType, locationName);
       },
       factionGains: (ctx) => (_player, _workType, _favor) => {
+        checkFormulasAccess(ctx);
         const player = helpers.person(ctx, _player);
-        const workType = helpers.string(ctx, "_workType", _workType) as FactionWorkType;
+        const workType = helpers.string(ctx, "_workType", _workType);
+        if (!checkEnum(FactionWorkType, workType)) throw new Error(`Invalid faction work type: ${workType}`);
         const favor = helpers.number(ctx, "favor", _favor);
         const exp = calculateFactionExp(player, workType);
         const rep = calculateFactionRep(player, workType, favor);
         exp.reputation = rep;
         return exp;
       },
-      companyGains: (ctx) => (_player, _companyName, _positionName, _favor) => {
-        const player = helpers.person(ctx, _player);
-        CompanyPositions;
+      companyGains: (ctx) => (_person, _companyName, _positionName, _favor) => {
+        checkFormulasAccess(ctx);
+        const person = helpers.person(ctx, _person);
         const positionName = helpers.string(ctx, "_positionName", _positionName);
-        const position = Object.values(CompanyPositions).find((c) => c.name === positionName);
-        if (!position) throw new Error(`Invalid position name: ${positionName}`);
-
+        if (!checkEnum(CompanyPosNames, positionName)) throw new Error(`Invalid company position: ${positionName}`);
+        const position = CompanyPositions[positionName];
         const companyName = helpers.string(ctx, "_companyName", _companyName);
         const company = Object.values(Companies).find((c) => c.name === companyName);
         if (!company) throw new Error(`Invalid company name: ${companyName}`);
-
         const favor = helpers.number(ctx, "favor", _favor);
-
-        return calculateCompanyWorkStats(player, company, position, favor);
+        return calculateCompanyWorkStats(person, company, position, favor);
       },
     },
   };

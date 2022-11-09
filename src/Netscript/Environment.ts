@@ -1,4 +1,5 @@
 import { NS } from "../ScriptEditor/NetscriptDefinitions";
+import { ExternalAPI } from "./APIWrapper";
 
 /**
  * The environment in which a script runs. The environment holds
@@ -13,5 +14,5 @@ export class Environment {
   runningFn = "";
 
   /** Environment variables (currently only Netscript functions) */
-  vars: NS | null = null;
+  vars: ExternalAPI<NS> | null = null;
 }

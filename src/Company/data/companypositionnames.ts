@@ -1,4 +1,4 @@
-// Defs for job titles, stored in arrays and categorized by job "type"
+// TODO: Convert all to CompanyPosNames[] and make everything that uses these expect a CompanyPosNames enum member.
 
 export const SoftwareCompanyPositions: string[] = [
   "Software Engineering Intern",

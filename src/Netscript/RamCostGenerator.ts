@@ -2,9 +2,12 @@ import { Player } from "@player";
 import { NSFull } from "../NetscriptFunctions";
 
 /** This type assumes any value that isn't an API layer or a function has been omitted (args and enum) */
-type RamCostTree<API> = {
-  [Property in keyof API]: API[Property] extends () => unknown ? number | (() => number) : RamCostTree<API[Property]>;
-};
+type RamCostTree<API> = Omit<
+  {
+    [Property in keyof API]: API[Property] extends () => unknown ? number | (() => number) : RamCostTree<API[Property]>;
+  },
+  "enums" | "args"
+>;
 
 /** Constants for assigning costs to ns functions */
 export const RamCostConstants: Record<string, number> = {
@@ -414,7 +417,7 @@ const corporation = {
  *  An error will be generated if there are missing OR additional ram costs defined.
  *  To avoid errors, define every function in NetscriptDefinition.d.ts and NetscriptFunctions,
  *  and have a ram cost associated here. */
-export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
+export const RamCosts: RamCostTree<NSFull> = {
   corporation,
   hacknet,
   stock,

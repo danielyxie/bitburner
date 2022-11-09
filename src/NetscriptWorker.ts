@@ -79,9 +79,8 @@ async function startNetscript1Script(workerScript: WorkerScript): Promise<void> 
     throw `Error processing Imports in ${workerScript.name}@${workerScript.hostname}:\n\n${e}`;
   }
 
-  interface BasicObject {
-    [key: string]: any;
-  }
+  //TODO: Make NS1 wrapping type safe instead of using BasicObject
+  type BasicObject = Record<string, any>;
   function wrapNS1Layer(int: Interpreter, intLayer: unknown, nsLayer = workerScript.env.vars as BasicObject) {
     for (const [name, entry] of Object.entries(nsLayer)) {
       if (typeof entry === "function") {

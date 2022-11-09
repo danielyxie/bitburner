@@ -1768,7 +1768,7 @@ export interface Singularity {
    * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.
    * @returns True if the player starts working, and false otherwise.
    */
-  workForFaction(faction: string, workType: "hacking" | "field" | "security", focus?: boolean): boolean;
+  workForFaction(faction: string, workType: FactionWorkType | `${FactionWorkType}`, focus?: boolean): boolean;
 
   /**
    * Get faction reputation.
@@ -1887,7 +1887,7 @@ export interface Singularity {
    * @param focus - Acquire player focus on this crime. Optional. Defaults to true.
    * @returns The number of milliseconds it takes to attempt the specified crime.
    */
-  commitCrime(crime: CrimeType | CrimeNames, focus?: boolean): number;
+  commitCrime(crime: CrimeType | `${CrimeType}`, focus?: boolean): number;
 
   /**
    * Get chance to successfully commit a crime.
@@ -1900,7 +1900,7 @@ export interface Singularity {
    * @param crime - Name of crime.
    * @returns Chance of success at committing the specified crime.
    */
-  getCrimeChance(crime: CrimeType | CrimeNames): number;
+  getCrimeChance(crime: CrimeType | `${CrimeType}`): number;
 
   /**
    * Get stats related to a crime.
@@ -1913,7 +1913,7 @@ export interface Singularity {
    * @param crime - Name of crime.
    * @returns The stats of the crime.
    */
-  getCrimeStats(crime: CrimeType | CrimeNames): CrimeStats;
+  getCrimeStats(crime: CrimeType | `${CrimeType}`): CrimeStats;
 
   /**
    * Get a list of owned augmentation.
@@ -3572,7 +3572,7 @@ export interface sleeve {
    * @param name - Name of the crime.
    * @returns True if this action was set successfully, false otherwise.
    */
-  setToCommitCrime(sleeveNumber: number, crimeType: CrimeType | CrimeNames): boolean;
+  setToCommitCrime(sleeveNumber: number, crimeType: CrimeType | `${CrimeType}`): boolean;
 
   /**
    * Set a sleeve to work for a faction.
@@ -3586,7 +3586,11 @@ export interface sleeve {
    * @param factionWorkType - Name of the action to perform for this faction.
    * @returns True if the sleeve started working on this faction, false otherwise, can also throw on errors
    */
-  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean | undefined;
+  setToFactionWork(
+    sleeveNumber: number,
+    factionName: string,
+    factionWorkType: FactionWorkType | `${FactionWorkType}`,
+  ): boolean | undefined;
 
   /**
    * Set a sleeve to work for a company.
@@ -3811,10 +3815,15 @@ export interface WorkStats {
  */
 interface WorkFormulas {
   crimeSuccessChance(person: Person, crimeType: CrimeType | CrimeNames): number;
-  crimeGains(person: Person, crimeType: CrimeType | CrimeNames): WorkStats;
-  classGains(person: Person, classType: string, locationName: string): WorkStats;
-  factionGains(person: Person, workType: string, favor: number): WorkStats;
-  companyGains(person: Person, companyName: string, workType: string, favor: number): WorkStats;
+  crimeGains(person: Person, crimeType: CrimeType | `${CrimeType}`): WorkStats;
+  classGains(person: Person, classType: ClassType | `${ClassType}`, locationName: string): WorkStats;
+  factionGains(person: Person, workType: FactionWorkType | `${FactionWorkType}`, favor: number): WorkStats;
+  companyGains(
+    person: Person,
+    companyName: string,
+    workType: CompanyPosNames | `${CompanyPosNames}`,
+    favor: number,
+  ): WorkStats;
 }
 
 /**
@@ -6592,7 +6601,7 @@ export interface NS {
    * @param variant - Type of toast. Must be one of success, info, warning, error. Defaults to success.
    * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000.
    */
-  toast(msg: string, variant?: ToastTypes | ToastVariant, duration?: number | null): void;
+  toast(msg: string, variant?: ToastVariant | `${ToastVariant}`, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -6791,33 +6800,7 @@ export interface NS {
   enums: NSEnums;
 }
 
-/** @public */
-type EmployeePosName =
-  | "Operations"
-  | "Engineer"
-  | "Business"
-  | "Management"
-  | "Research & Development"
-  | "Training"
-  | "Unassigned";
-
-/** @public */
-type IndustryTypeName =
-  | "Energy"
-  | "Water Utilities"
-  | "Agriculture"
-  | "Fishing"
-  | "Mining"
-  | "Food"
-  | "Tobacco"
-  | "Chemical"
-  | "Pharmaceutical"
-  | "Computer Hardware"
-  | "Robotics"
-  | "Software"
-  | "Healthcare"
-  | "RealEstate";
-
+// BASE ENUMS
 /** @public */
 declare enum ToastVariant {
   SUCCESS = "success",
@@ -6825,8 +6808,6 @@ declare enum ToastVariant {
   ERROR = "error",
   INFO = "info",
 }
-/** @public */
-export type ToastTypes = `${ToastVariant}`;
 
 /** @public */
 declare enum CrimeType {
@@ -6843,13 +6824,107 @@ declare enum CrimeType {
   ASSASSINATION = "ASSASSINATION",
   HEIST = "HEIST",
 }
+
 /** @public */
-type CrimeNames = `${CrimeType}`;
+declare enum FactionWorkType {
+  HACKING = "HACKING",
+  FIELD = "FIELD",
+  SECURITY = "SECURITY",
+}
+
+// TODO: split ClassType enum into separate enums for gym and uni so they can actually be used for player input.
+/** @public */
+declare enum ClassType {
+  StudyComputerScience = "STUDYCOMPUTERSCIENCE",
+  DataStructures = "DATASTRUCTURES",
+  Networks = "NETWORKS",
+  Algorithms = "ALGORITHMS",
+  Management = "MANAGEMENT",
+  Leadership = "LEADERSHIP",
+  GymStrength = "GYMSTRENGTH",
+  GymDefense = "GYMDEFENSE",
+  GymDexterity = "GYMDEXTERITY",
+  GymAgility = "GYMAGILITY",
+}
+
+declare enum CompanyPosNames {
+  sw0 = "Software Engineering Intern",
+  sw1 = "Junior Software Engineer",
+  sw2 = "Senior Software Engineer",
+  sw3 = "Lead Software Developer",
+  sw4 = "Head of Software",
+  sw5 = "Head of Engineering",
+  sw6 = "Vice President of Technology",
+  sw7 = "Chief Technology Officer",
+  IT0 = "IT Intern",
+  IT1 = "IT Analyst",
+  IT2 = "IT Manager",
+  IT3 = "Systems Administrator",
+  secEng = "Security Engineer",
+  netEng0 = "Network Engineer",
+  netEng1 = "Network Administrator",
+  bus0 = "Business Intern",
+  bus1 = "Business Analyst",
+  bus2 = "Business Manager",
+  bus3 = "Operations Manager",
+  bus4 = "Chief Financial Officer",
+  bus5 = "Chief Executive Officer",
+  sec0 = "Police Officer",
+  sec1 = "Police Chief",
+  sec2 = "Security Guard",
+  sec3 = "Security Officer",
+  sec4 = "Security Supervisor",
+  sec5 = "Head of Security",
+  agent0 = "Field Agent",
+  agent1 = "Secret Agent",
+  agent2 = "Special Operative",
+  waiter = "Waiter",
+  employee = "Employee",
+  softCons0 = "Software Consultant",
+  softCons1 = "Senior Software Consultant",
+  busCons0 = "Business Consultant",
+  busCons1 = "Senior Business Consultant",
+  waiterPT = "Part-time Waiter",
+  employeePT = "Part-time Employee",
+}
+
+// CORP ENUMS
+/** @public */
+declare enum EmployeePositions {
+  Operations = "Operations",
+  Engineer = "Engineer",
+  Business = "Business",
+  Management = "Management",
+  RandD = "Research & Development",
+  Training = "Training",
+  Unassigned = "Unassigned",
+}
+
+/** @public */
+declare enum IndustryType {
+  Energy = "Energy",
+  Utilities = "Water Utilities",
+  Agriculture = "Agriculture",
+  Fishing = "Fishing",
+  Mining = "Mining",
+  Food = "Food",
+  Tobacco = "Tobacco",
+  Chemical = "Chemical",
+  Pharmaceutical = "Pharmaceutical",
+  Computers = "Computer Hardware",
+  Robotics = "Robotics",
+  Software = "Software",
+  Healthcare = "Healthcare",
+  RealEstate = "RealEstate",
+}
 
 /** @public */
 export type NSEnums = {
   toast: typeof ToastVariant;
   CrimeType: typeof CrimeType;
+  FactionWorkType: typeof FactionWorkType;
+  ClassType: typeof ClassType;
+  CompanyPosNames: typeof CompanyPosNames;
 };
 
 /**
@@ -6867,7 +6942,11 @@ export interface OfficeAPI {
    * @param employeePosition - Position to place into. Defaults to "Unassigned".
    * @returns True if an employee was hired, false otherwise
    */
-  hireEmployee(divisionName: string, cityName: string, employeePosition?: EmployeePosName): boolean;
+  hireEmployee(
+    divisionName: string,
+    cityName: string,
+    employeePosition?: EmployeePositions | `${EmployeePositions}`,
+  ): boolean;
   /**
    * Upgrade office size.
    * @param divisionName - Name of the division
@@ -7179,164 +7258,131 @@ export interface WarehouseAPI {
  * @public
  */
 export interface Corporation extends WarehouseAPI, OfficeAPI {
+  /** Enums specific to the corporation game mechanic. */
+  enums: {
+    EmployeePositions: typeof EmployeePositions;
+    IndustryType: typeof IndustryType;
+  };
+
   /** Returns whether the player has a corporation. Does not require API access.
    * @returns whether the player has a corporation */
   hasCorporation(): boolean;
 
   /** Create a Corporation
-   * @param divisionName - Name of the division
+   * @param corporationName - Name of the corporation
    * @param selfFund - If you should self fund, defaults to true, false will only work on Bitnode 3
    * @returns true if created and false if not */
   createCorporation(corporationName: string, selfFund: boolean): boolean;
-  /**
-   * Check if you have a one time unlockable upgrade
+
+  /** Check if you have a one time unlockable upgrade
    * @param upgradeName - Name of the upgrade
-   * @returns true if unlocked and false if not
-   */
+   * @returns true if unlocked and false if not */
   hasUnlockUpgrade(upgradeName: string): boolean;
-  /**
-   * Gets the cost to unlock a one time unlockable upgrade
+
+  /** Gets the cost to unlock a one time unlockable upgrade
    * @param upgradeName - Name of the upgrade
-   * @returns cost of the upgrade
-   */
+   * @returns cost of the upgrade */
   getUnlockUpgradeCost(upgradeName: string): number;
-  /**
-   * Get the level of a levelable upgrade
+
+  /** Get the level of a levelable upgrade
    * @param upgradeName - Name of the upgrade
-   * @returns the level of the upgrade
-   */
+   * @returns the level of the upgrade */
   getUpgradeLevel(upgradeName: string): number;
-  /**
-   * Gets the cost to unlock the next level of a levelable upgrade
+
+  /** Gets the cost to unlock the next level of a levelable upgrade
    * @param upgradeName - Name of the upgrade
-   * @returns cost of the upgrade
-   */
+   * @returns cost of the upgrade */
   getUpgradeLevelCost(upgradeName: string): number;
-  /**
-   * Gets the cost to expand into a new industry
+
+  /** Gets the cost to expand into a new industry
    * @param industryName - Name of the industry
-   * @returns cost
-   */
-  getExpandIndustryCost(industryName: string): number;
-  /**
-   * Gets the cost to expand into a new city
-   * @returns cost
-   */
+   * @returns cost */
+  getExpandIndustryCost(industryName: IndustryType | `${IndustryType}`): number;
+
+  /** Gets the cost to expand into a new city
+   * @returns cost */
   getExpandCityCost(): number;
-  /**
-   * Get an offer for investment based on you companies current valuation
-   * @returns An offer of investment
-   */
+
+  /** Get an offer for investment based on you companies current valuation
+   * @returns An offer of investment */
   getInvestmentOffer(): InvestmentOffer;
-  /**
-   * Get list of materials
-   * @returns material names
-   */
+
+  /** Get list of materials
+   * @returns material names */
   getMaterialNames(): string[];
-  /**
-   * Get list of industry types
-   * @returns industry names
-   */
-  getIndustryTypes(): IndustryTypeName[];
-  /**
-   * Get list of industry types
-   * @returns industry names
-   */
-  getEmployeePositions(): EmployeePosName[];
-  /**
-   * Get list of one-time unlockable upgrades
-   * @returns unlockable upgrades names
-   */
+
+  /** Get list of one-time unlockable upgrades
+   * @returns unlockable upgrades names */
   getUnlockables(): string[];
-  /**
-   * Get list of upgrade names
-   * @returns upgrade names
-   */
+
+  /**  Get list of upgrade names
+   * @returns upgrade names */
   getUpgradeNames(): string[];
-  /**
-   * Get list of research names
-   * @returns research names
-   */
+
+  /** Get list of research names
+   * @returns research names */
   getResearchNames(): string[];
-  /**
-   * Accept investment based on you companies current valuation
+
+  /** Accept investment based on you companies current valuation
    * @remarks
    * Is based on current valuation and will not honer a specific Offer
-   * @returns An offer of investment
-   */
+   * @returns An offer of investment */
   acceptInvestmentOffer(): boolean;
-  /**
-   * Go public
+
+  /** Go public
    * @param numShares - number of shares you would like to issue for your IPO
-   * @returns true if you successfully go public, false if not
-   */
+   * @returns true if you successfully go public, false if not */
   goPublic(numShares: number): boolean;
-  /**
-   * Bribe a faction
+
+  /** Bribe a faction
    * @param factionName - Faction name
    * @param amountCash - Amount of money to bribe
-   * @returns True if successful, false if not
-   */
+   * @returns True if successful, false if not */
   bribe(factionName: string, amountCash: number): boolean;
-  /**
-   * Get corporation data
-   * @returns Corporation data
-   */
+
+  /** Get corporation data
+   * @returns Corporation data */
   getCorporation(): CorporationInfo;
-  /**
-   * Get division data
+
+  /**  Get division data
    * @param divisionName - Name of the division
-   * @returns Division data
-   */
+   * @returns Division data */
   getDivision(divisionName: string): Division;
-  /**
-   * Expand to a new industry
+
+  /** Expand to a new industry
    * @param industryType - Name of the industry
+   * @param divisionName - Name of the division */
+  expandIndustry(industryType: IndustryType | `${IndustryType}`, divisionName: string): void;
+
+  /** Expand to a new city
    * @param divisionName - Name of the division
-   */
-  expandIndustry(industryType: string, divisionName: string): void;
-  /**
-   * Expand to a new city
-   * @param divisionName - Name of the division
-   * @param cityName - Name of the city
-   */
+   * @param cityName - Name of the city */
   expandCity(divisionName: string, cityName: string): void;
-  /**
-   * Unlock an upgrade
-   * @param upgradeName - Name of the upgrade
-   */
+
+  /** Unlock an upgrade
+   * @param upgradeName - Name of the upgrade */
   unlockUpgrade(upgradeName: string): void;
-  /**
-   * Level an upgrade.
-   * @param upgradeName - Name of the upgrade
-   */
+
+  /** Level an upgrade.
+   * @param upgradeName - Name of the upgrade */
   levelUpgrade(upgradeName: string): void;
-  /**
-   * Issue dividends
-   * @param rate - Fraction of profit to issue as dividends.
-   */
+
+  /** Issue dividends
+   * @param rate - Fraction of profit to issue as dividends. */
   issueDividends(rate: number): void;
-  /**
-   * Buyback Shares
-   * @param amount - Amount of shares to buy back.
-   *
-   */
+
+  /** Buyback Shares
+   * @param amount - Amount of shares to buy back. */
   buyBackShares(amount: number): void;
-  /**
-   * Sell Shares
-   * @param amount -  Amount of shares to sell.
-   *
-   */
+
+  /** Sell Shares
+   * @param amount -  Amount of shares to sell. */
   sellShares(amount: number): void;
-  /**
-   * Get bonus time.
-   *
+
+  /** Get bonus time.
    * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
-   *
    * “Bonus time” makes the game progress faster.
-   *
-   * @returns Bonus time for the Corporation mechanic in milliseconds.
-   */
+   * @returns Bonus time for the Corporation mechanic in milliseconds. */
   getBonusTime(): number;
 }
 
@@ -7491,9 +7537,9 @@ export interface Office {
   /** Average morale of the employees */
   avgMor: number;
   /** Production of the employees */
-  employeeProd: Record<EmployeePosName, number>;
+  employeeProd: Record<`${EmployeePositions}`, number>;
   /** Positions of the employees */
-  employeeJobs: Record<EmployeePosName, number>;
+  employeeJobs: Record<`${EmployeePositions}`, number>;
 }
 
 /**

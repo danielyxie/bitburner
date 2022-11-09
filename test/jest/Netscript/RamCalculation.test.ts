@@ -120,6 +120,8 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
           const expectedRam = grabCost(ramLayer, newPath);
           it(`${fnName}()`, () => combinedRamCheck(val, newPath, expectedRam, extraLayerCost));
         }
+        //Skip enums layers
+        else if (key === "enums") return;
         //A layer should be the only other option.
         else testLayer(val, ramLayer[key] as RamLayer, newPath, 0);
       });
@@ -141,7 +143,12 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
       it(`SF4.${lvl} check for x${lvlToMult[lvl]} costs`, () => {
         sf4.lvl = lvl;
         singObjects.forEach((obj) =>
-          combinedRamCheck(obj.fn, ["singularity", obj.name], obj.baseRam * lvlToMult[lvl], 0),
+          combinedRamCheck(
+            obj.fn as PotentiallyAsyncFunction,
+            ["singularity", obj.name],
+            obj.baseRam * lvlToMult[lvl],
+            0,
+          ),
         );
       });
     }

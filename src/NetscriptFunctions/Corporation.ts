@@ -703,6 +703,10 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   };
 
   return {
+    enums: {
+      EmployeePositions,
+      IndustryType,
+    },
     ...warehouseAPI,
     ...officeAPI,
     hasCorporation: () => () => !!Player.corporation,
@@ -710,14 +714,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     getMaterialNames: (ctx) => () => {
       checkAccess(ctx);
       return [...CorporationConstants.AllMaterials];
-    },
-    getIndustryTypes: (ctx) => () => {
-      checkAccess(ctx);
-      return Object.values(IndustryType);
-    },
-    getEmployeePositions: (ctx) => () => {
-      checkAccess(ctx);
-      return Object.values(EmployeePositions);
     },
     getUnlockables: (ctx) => () => {
       checkAccess(ctx);
@@ -776,9 +772,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       if (!corporation.public) throw helpers.makeRuntimeErrorMsg(ctx, `Your company has not gone public!`);
       IssueDividends(corporation, rate);
     },
-
-    // If you modify these objects you will affect them for real, it's not
-    // copies.
     getDivision: (ctx) => (_divisionName) => {
       checkAccess(ctx);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
