@@ -1,6 +1,7 @@
 import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { GraftableAugmentation } from "./GraftableAugmentation";
 import { Player } from "@player";
+import { calculateIntelligenceBonus } from "../formulas/intelligence";
 
 export const getGraftingAvailableAugs = (): string[] => {
   const augs: string[] = [];
@@ -14,7 +15,7 @@ export const getGraftingAvailableAugs = (): string[] => {
 };
 
 export const graftingIntBonus = (): number => {
-  return 1 + (Player.getIntelligenceBonus(3) - 1) / 3;
+  return 1 + (calculateIntelligenceBonus(Player.skills.intelligence, 3) - 1) / 3;
 };
 
 export const calculateGraftingTimeWithBonus = (aug: GraftableAugmentation): number => {

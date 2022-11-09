@@ -47,6 +47,7 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
   };
 
   return {
+    inBladeburner: () => () => !!Player.bladeburner,
     getContractNames: (ctx) => () => {
       const bladeburner = getBladeburner(ctx);
       return bladeburner.getContractNamesNetscriptFn();

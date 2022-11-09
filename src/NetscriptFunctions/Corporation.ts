@@ -1,4 +1,4 @@
-import { Player as player } from "../Player";
+import { Player, Player as player } from "../Player";
 
 import { OfficeSpace } from "../Corporation/OfficeSpace";
 import { Product } from "../Corporation/Product";
@@ -63,7 +63,7 @@ import { CityName } from "../Locations/data/CityNames";
 
 export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
-    if (!player.canAccessCorporation() || player.hasCorporation()) return false;
+    if (!player.canAccessCorporation() || player.corporation) return false;
     if (!corporationName) return false;
     if (player.bitNodeN !== 3 && !selfFund) throw new Error("cannot use seed funds outside of BitNode 3");
     if (BitNodeMultipliers.CorporationSoftcap < 0.15)
@@ -705,6 +705,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   return {
     ...warehouseAPI,
     ...officeAPI,
+    hasCorporation: () => () => !!Player.corporation,
     // Todo: Just remove these functions and provide enums?
     getMaterialNames: (ctx) => () => {
       checkAccess(ctx);

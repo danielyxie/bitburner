@@ -9,10 +9,6 @@ export function canAccessCorporation(this: PlayerObject): boolean {
   return this.bitNodeN === 3 || this.sourceFileLvl(3) > 0;
 }
 
-export function hasCorporation(this: PlayerObject): boolean {
-  return Boolean(this.corporation);
-}
-
 export function startCorporation(this: PlayerObject, corpName: string, additionalShares = 0): void {
   this.corporation = new Corporation({
     name: corpName,

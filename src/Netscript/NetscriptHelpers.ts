@@ -21,7 +21,6 @@ import { CONSTANTS } from "../Constants";
 import { influenceStockThroughServerHack } from "../StockMarket/PlayerInfluencing";
 import { IPort, NetscriptPort } from "../NetscriptPort";
 import { NetscriptPorts } from "../NetscriptWorker";
-import { Person } from "../PersonObjects/Person";
 import { FormulaGang } from "../Gang/formulas/formulas";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
@@ -29,7 +28,7 @@ import { RunningScript } from "../Script/RunningScript";
 import { toNative } from "../NetscriptFunctions/toNative";
 import { ScriptIdentifier } from "./ScriptIdentifier";
 import { findRunningScript, findRunningScriptByPid } from "../Script/ScriptHelpers";
-import { RunningScript as IRunningScript } from "../ScriptEditor/NetscriptDefinitions";
+import { RunningScript as IRunningScript, Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
@@ -53,7 +52,7 @@ export const helpers = {
   scriptIdentifier,
   hack,
   getValidPort,
-  player,
+  person,
   server,
   gang,
   gangMember,
@@ -546,27 +545,15 @@ function getValidPort(ctx: NetscriptContext, port: number): IPort {
   return iport;
 }
 
-function player(ctx: NetscriptContext, p: unknown): Person {
-  const fakePlayer = {
+function person(ctx: NetscriptContext, p: unknown): IPerson {
+  const fakePerson = {
     hp: undefined,
+    exp: undefined,
     mults: undefined,
-    numPeopleKilled: undefined,
-    money: undefined,
     city: undefined,
-    location: undefined,
-    bitNodeN: undefined,
-    totalPlaytime: undefined,
-    playtimeSinceLastAug: undefined,
-    playtimeSinceLastBitnode: undefined,
-    jobs: undefined,
-    factions: undefined,
-    tor: undefined,
-    inBladeburner: undefined,
-    hasCorporation: undefined,
-    entropy: undefined,
   };
-  if (!roughlyIs(fakePlayer, p)) throw makeRuntimeErrorMsg(ctx, `player should be a Player.`, "TYPE");
-  return p as Person;
+  if (!roughlyIs(fakePerson, p)) throw makeRuntimeErrorMsg(ctx, `person should be a Person.`, "TYPE");
+  return p as IPerson;
 }
 
 function server(ctx: NetscriptContext, s: unknown): Server {

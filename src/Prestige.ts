@@ -281,10 +281,7 @@ export function prestigeSourceFile(flume: boolean): void {
     deleteStockMarket();
   }
 
-  Player.gang = null;
-  Player.corporation = null;
   resetIndustryResearchTrees();
-  Player.bladeburner = null;
 
   // Source-File 9 (level 3) effect
   if (Player.sourceFileLvl(9) >= 3) {

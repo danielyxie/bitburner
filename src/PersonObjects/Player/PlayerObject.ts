@@ -26,8 +26,9 @@ import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CONSTANTS } from "../../Constants";
 import { Work } from "src/Work/Work";
 import { Person } from "../Person";
+import { Player as IPlayer } from "../../ScriptEditor/NetscriptDefinitions";
 
-export class PlayerObject extends Person {
+export class PlayerObject extends Person implements IPlayer {
   // Player-specific properties
   bitNodeN = 1; //current bitnode
   corporation: Corporation | null = null;
@@ -102,11 +103,9 @@ export class PlayerObject extends Person {
   getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;
   getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
   gotoLocation = generalMethods.gotoLocation;
-  hasCorporation = corporationMethods.hasCorporation;
   hasGangWith = gangMethods.hasGangWith;
   hasTorRouter = serverMethods.hasTorRouter;
   hasProgram = generalMethods.hasProgram;
-  inBladeburner = bladeburnerMethods.inBladeburner;
   inGang = gangMethods.inGang;
   isAwareOfGang = gangMethods.isAwareOfGang;
   isQualified = generalMethods.isQualified;

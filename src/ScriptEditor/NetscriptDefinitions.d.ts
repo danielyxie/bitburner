@@ -42,20 +42,28 @@ interface Person {
   skills: Skills;
   exp: Skills;
   mults: Multipliers;
-  numPeopleKilled: number;
-  money: number;
   city: string;
-  location: string;
+}
+
+/** @public */
+interface Player extends Person {
+  money: number;
+  numPeopleKilled: number;
+  entropy: number;
+  jobs: Record<string, string>;
+  factions: string[];
   bitNodeN: number;
   totalPlaytime: number;
   playtimeSinceLastAug: number;
   playtimeSinceLastBitnode: number;
-  jobs: Record<string, string>;
-  factions: string[];
-  tor: boolean;
-  hasCorporation: boolean;
-  inBladeburner: boolean;
-  entropy: number;
+  location: string;
+}
+
+/** @public */
+interface Sleeve extends Person {
+  shock: number;
+  sync: number;
+  memory: number;
 }
 
 /** @public */
@@ -90,65 +98,65 @@ interface MoneySources {
 /** @public */
 export interface Multipliers {
   /** Multiplier to hacking skill */
-  hacking?: number;
+  hacking: number;
   /** Multiplier to strength skill */
-  strength?: number;
+  strength: number;
   /** Multiplier to defense skill */
-  defense?: number;
+  defense: number;
   /** Multiplier to dexterity skill */
-  dexterity?: number;
+  dexterity: number;
   /** Multiplier to agility skill */
-  agility?: number;
+  agility: number;
   /** Multiplier to charisma skill */
-  charisma?: number;
+  charisma: number;
   /** Multiplier to hacking experience gain rate */
-  hacking_exp?: number;
+  hacking_exp: number;
   /** Multiplier to strength experience gain rate */
-  strength_exp?: number;
+  strength_exp: number;
   /** Multiplier to defense experience gain rate */
-  defense_exp?: number;
+  defense_exp: number;
   /** Multiplier to dexterity experience gain rate */
-  dexterity_exp?: number;
+  dexterity_exp: number;
   /** Multiplier to agility experience gain rate */
-  agility_exp?: number;
+  agility_exp: number;
   /** Multiplier to charisma experience gain rate */
-  charisma_exp?: number;
+  charisma_exp: number;
   /** Multiplier to chance of successfully performing a hack */
-  hacking_chance?: number;
+  hacking_chance: number;
   /** Multiplier to hacking speed */
-  hacking_speed?: number;
+  hacking_speed: number;
   /** Multiplier to amount of money the player gains from hacking */
-  hacking_money?: number;
+  hacking_money: number;
   /** Multiplier to amount of money injected into servers using grow */
-  hacking_grow?: number;
+  hacking_grow: number;
   /** Multiplier to amount of reputation gained when working */
-  company_rep?: number;
+  company_rep: number;
   /** Multiplier to amount of reputation gained when working */
-  faction_rep?: number;
+  faction_rep: number;
   /** Multiplier to amount of money gained from crimes */
-  crime_money?: number;
+  crime_money: number;
   /** Multiplier to crime success rate */
-  crime_success?: number;
+  crime_success: number;
   /** Multiplier to amount of money gained from working */
-  work_money?: number;
+  work_money: number;
   /** Multiplier to amount of money produced by Hacknet Nodes */
-  hacknet_node_money?: number;
+  hacknet_node_money: number;
   /** Multiplier to cost of purchasing a Hacknet Node */
-  hacknet_node_purchase_cost?: number;
+  hacknet_node_purchase_cost: number;
   /** Multiplier to cost of ram for a Hacknet Node */
-  hacknet_node_ram_cost?: number;
+  hacknet_node_ram_cost: number;
   /** Multiplier to cost of core for a Hacknet Node */
-  hacknet_node_core_cost?: number;
+  hacknet_node_core_cost: number;
   /** Multiplier to cost of leveling up a Hacknet Node */
-  hacknet_node_level_cost?: number;
+  hacknet_node_level_cost: number;
   /** Multiplier to Bladeburner max stamina */
-  bladeburner_max_stamina?: number;
+  bladeburner_max_stamina: number;
   /** Multiplier to Bladeburner stamina gain rate */
-  bladeburner_stamina_gain?: number;
+  bladeburner_stamina_gain: number;
   /** Multiplier to effectiveness in Bladeburner Field Analysis */
-  bladeburner_analysis?: number;
+  bladeburner_analysis: number;
   /** Multiplier to success chance in Bladeburner contracts/operations */
-  bladeburner_success_chance?: number;
+  bladeburner_success_chance: number;
 }
 
 /** @public */
@@ -259,7 +267,7 @@ export interface CodingAttemptOptions {
 }
 
 /**
- * Return value of {@link Sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
+ * Return value of {@link sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
  * @public
  */
 export interface AugmentPair {
@@ -867,52 +875,6 @@ export interface GangMemberAscension {
   agi: number;
   /** Charisma multiplier gained from ascending */
   cha: number;
-}
-
-/**
- * Object representing a sleeve stats.
- * @public
- */
-export interface SleeveSkills {
-  /** Current shock of the sleeve [0-100] */
-  shock: number;
-  /** Current sync of the sleeve [0-100] */
-  sync: number;
-  /** Current memory of the sleeve [1-100] */
-  memory: number;
-  /** Current hacking skill of the sleeve */
-  hacking: number;
-  /** Current strength of the sleeve */
-  strength: number;
-  /** Current defense of the sleeve */
-  defense: number;
-  /** Current dexterity of the sleeve */
-  dexterity: number;
-  /** Current agility of the sleeve */
-  agility: number;
-  /** Current charisma of the sleeve */
-  charisma: number;
-}
-
-/**
- * Object representing sleeve information.
- * @public
- */
-export interface SleeveInformation {
-  /** Location of the sleeve */
-  city: string;
-  /** hp of the sleeve */
-  hp: HP;
-  /** Jobs available to the sleeve */
-  jobs: string[];
-  /** Job titles available to the sleeve */
-  jobTitle: string[];
-  /** Does this sleeve have access to the tor router */
-  tor: boolean;
-  /** Sleeve multipliers */
-  mult: Multipliers;
-  /** Sleeve skills */
-  skills: Skills;
 }
 
 /**
@@ -3137,6 +3099,13 @@ export interface Bladeburner {
    * @returns Amount of accumulated “bonus time” (milliseconds) for the Bladeburner mechanic.
    */
   getBonusTime(): number;
+
+  /** Returns whether player is a member of bladeburner division. Does not require API access.
+   * @remarks
+   * RAM cost: 1 GB
+   *
+   * @returns whether player is a member of bladeburner division. */
+  inBladeburner(): boolean;
 }
 
 /**
@@ -3511,7 +3480,7 @@ export interface Gang {
  * If you are not in BitNode-10, then you must have Source-File 10 in order to use this API.
  * @public
  */
-export interface Sleeve {
+export interface sleeve {
   /**
    * Get the number of sleeves you own.
    * @remarks
@@ -3524,28 +3493,16 @@ export interface Sleeve {
   getNumSleeves(): number;
 
   /**
-   * Get the stats of a sleeve.
-   * @remarks
-   * RAM cost: 4 GB
-   *
-   * Return a structure containing the stats of the sleeve.
-   *
-   * @param sleeveNumber - Index of the sleeve to get stats of.
-   * @returns Object containing the stats of the sleeve.
-   */
-  getSleeveStats(sleeveNumber: number): SleeveSkills;
-
-  /**
    * Get information about a sleeve.
    * @remarks
    * RAM cost: 4 GB
    *
-   * Return a struct containing tons of information about this sleeve
+   * Return a person object for this sleeve
    *
    * @param sleeveNumber - Index of the sleeve to retrieve information.
-   * @returns Object containing tons of information about this sleeve.
+   * @returns Object containing information about this sleeve.
    */
-  getInformation(sleeveNumber: number): SleeveInformation;
+  getSleeve(sleeveNumber: number): Sleeve;
 
   /**
    * Get task of a sleeve.
@@ -3853,6 +3810,7 @@ export interface WorkStats {
  * @public
  */
 interface WorkFormulas {
+  crimeSuccessChance(person: Person, crimeType: CrimeType | CrimeNames): number;
   crimeGains(person: Person, crimeType: CrimeType | CrimeNames): WorkStats;
   classGains(person: Person, classType: string, locationName: string): WorkStats;
   factionGains(person: Person, workType: string, favor: number): WorkStats;
@@ -4129,7 +4087,8 @@ interface GangFormulas {
  */
 export interface Formulas {
   mockServer(): Server;
-  mockPlayer(): Person;
+  mockPlayer(): Player;
+  mockPerson(): Person;
   /** Reputation formulas */
   reputation: ReputationFormulas;
   /** Skills formulas */
@@ -4465,7 +4424,7 @@ export interface NS {
    * Namespace for sleeve functions.
    * @remarks RAM cost: 0 GB
    */
-  readonly sleeve: Sleeve;
+  readonly sleeve: sleeve;
 
   /**
    * Namespace for stock functions.
@@ -5179,6 +5138,25 @@ export interface NS {
    * @returns Returns an array of hostnames.
    */
   scan(host?: string): string[];
+
+  /** Returns whether the player has access to the darkweb.
+   * @remarks
+   * RAM cost: 0.05GB
+   *
+   * @example
+   * ```js
+   * // NS1:
+   * if (hasTorRouter()) tprint("TOR router detected.");
+   * ```
+   *
+   * @example
+   * ```js
+   * // NS2:
+   * if (ns.hasTorRouter()) tprint("TOR router detected.");
+   * ```
+   *
+   * @returns Whether player has access to the dark web. */
+  hasTorRouter(): boolean;
 
   /**
    * Runs NUKE.exe on a server.
@@ -6705,7 +6683,7 @@ export interface NS {
    *
    * @returns Player info
    */
-  getPlayer(): Person;
+  getPlayer(): Player;
 
   /**
    * Get information about the sources of income for this run.
@@ -7201,12 +7179,14 @@ export interface WarehouseAPI {
  * @public
  */
 export interface Corporation extends WarehouseAPI, OfficeAPI {
-  /**
-   * Create a Corporation
+  /** Returns whether the player has a corporation. Does not require API access.
+   * @returns whether the player has a corporation */
+  hasCorporation(): boolean;
+
+  /** Create a Corporation
    * @param divisionName - Name of the division
    * @param selfFund - If you should self fund, defaults to true, false will only work on Bitnode 3
-   * @returns true if created and false if not
-   */
+   * @returns true if created and false if not */
   createCorporation(corporationName: string, selfFund: boolean): boolean;
   /**
    * Check if you have a one time unlockable upgrade

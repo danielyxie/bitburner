@@ -78,6 +78,7 @@ import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { getBitNodeMultipliers } from "./BitNode/BitNode";
 import { assert, arrayAssert, stringAssert, objectAssert } from "./utils/helpers/typeAssertion";
 import { CrimeType } from "./utils/WorkType";
+import { cloneDeep } from "lodash";
 
 export const enums = {
   toast: ToastVariant,
@@ -122,6 +123,7 @@ const base: InternalAPI<NS> = {
     helpers.log(ctx, () => `returned ${server.serversOnNetwork.length} connections for ${server.hostname}`);
     return out;
   },
+  hasTorRouter: () => () => Player.hasTorRouter(),
   hack:
     (ctx) =>
     (_hostname, opts = {}) => {
@@ -1806,10 +1808,10 @@ const base: InternalAPI<NS> = {
   },
   getPlayer: () => () => {
     const data = {
-      hp: JSON.parse(JSON.stringify(Player.hp)),
-      skills: JSON.parse(JSON.stringify(Player.skills)),
-      exp: JSON.parse(JSON.stringify(Player.exp)),
-      mults: JSON.parse(JSON.stringify(Player.mults)),
+      hp: cloneDeep(Player.hp),
+      skills: cloneDeep(Player.skills),
+      exp: cloneDeep(Player.exp),
+      mults: cloneDeep(Player.mults),
       numPeopleKilled: Player.numPeopleKilled,
       money: Player.money,
       city: Player.city,
@@ -1818,14 +1820,10 @@ const base: InternalAPI<NS> = {
       totalPlaytime: Player.totalPlaytime,
       playtimeSinceLastAug: Player.playtimeSinceLastAug,
       playtimeSinceLastBitnode: Player.playtimeSinceLastBitnode,
-      jobs: {},
+      jobs: cloneDeep(Player.jobs),
       factions: Player.factions.slice(),
-      tor: Player.hasTorRouter(),
-      inBladeburner: Player.inBladeburner(),
-      hasCorporation: Player.hasCorporation(),
       entropy: Player.entropy,
     };
-    Object.assign(data.jobs, Player.jobs);
     return data;
   },
   getMoneySources: () => () => ({

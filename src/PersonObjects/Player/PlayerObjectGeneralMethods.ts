@@ -138,9 +138,10 @@ export function prestigeSourceFile(this: PlayerObject): void {
     }
   }
 
-  // Gang
   this.gang = null;
   resetGangs();
+  this.corporation = null;
+  this.bladeburner = null;
 
   // Reset Stock market
   this.hasWseAccount = false;

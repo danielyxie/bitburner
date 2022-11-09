@@ -26,7 +26,7 @@ import {
   calculateWeakenTime,
 } from "../Hacking";
 import { Programs } from "../Programs/Programs";
-import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
+import { Formulas as IFormulas, Player as IPlayer, Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
 import {
   calculateRespectGain,
   calculateWantedLevelGain,
@@ -87,26 +87,10 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       requiredHackingSkill: 0,
       serverGrowth: 0,
     }),
-    mockPlayer: () => () => ({
+    mockPlayer: () => (): IPlayer => ({
       hp: { current: 0, max: 0 },
-      skills: {
-        hacking: 0,
-        strength: 0,
-        defense: 0,
-        dexterity: 0,
-        agility: 0,
-        charisma: 0,
-        intelligence: 0,
-      },
-      exp: {
-        hacking: 0,
-        strength: 0,
-        defense: 0,
-        dexterity: 0,
-        agility: 0,
-        charisma: 0,
-        intelligence: 0,
-      },
+      skills: { hacking: 0, strength: 0, defense: 0, dexterity: 0, agility: 0, charisma: 0, intelligence: 0 },
+      exp: { hacking: 0, strength: 0, defense: 0, dexterity: 0, agility: 0, charisma: 0, intelligence: 0 },
       mults: defaultMultipliers(),
       numPeopleKilled: 0,
       money: 0,
@@ -118,10 +102,14 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       playtimeSinceLastBitnode: 0,
       jobs: {},
       factions: [],
-      tor: false,
-      hasCorporation: false,
-      inBladeburner: false,
       entropy: 0,
+    }),
+    mockPerson: () => (): IPerson => ({
+      hp: { current: 0, max: 0 },
+      skills: { hacking: 0, strength: 0, defense: 0, dexterity: 0, agility: 0, charisma: 0, intelligence: 0 },
+      exp: { hacking: 0, strength: 0, defense: 0, dexterity: 0, agility: 0, charisma: 0, intelligence: 0 },
+      mults: defaultMultipliers(),
+      city: "",
     }),
     reputation: {
       calculateFavorToRep: (ctx) => (_favor) => {
@@ -136,9 +124,9 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       },
       repFromDonation: (ctx) => (_amount, _player) => {
         const amount = helpers.number(ctx, "amount", _amount);
-        const player = helpers.player(ctx, _player);
+        const person = helpers.person(ctx, _player);
         checkFormulasAccess(ctx);
-        return repFromDonation(amount, player);
+        return repFromDonation(amount, person);
       },
     },
     skills: {
@@ -162,49 +150,49 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
     hacking: {
       hackChance: (ctx) => (_server, _player) => {
         const server = helpers.server(ctx, _server);
-        const player = helpers.player(ctx, _player);
+        const person = helpers.person(ctx, _player);
         checkFormulasAccess(ctx);
-        return calculateHackingChance(server, player);
+        return calculateHackingChance(server, person);
       },
       hackExp: (ctx) => (_server, _player) => {
         const server = helpers.server(ctx, _server);
-        const player = helpers.player(ctx, _player);
+        const person = helpers.person(ctx, _player);
         checkFormulasAccess(ctx);
-        return calculateHackingExpGain(server, player);
+        return calculateHackingExpGain(server, person);
       },
       hackPercent: (ctx) => (_server, _player) => {
         const server = helpers.server(ctx, _server);
-        const player = helpers.player(ctx, _player);
+        const person = helpers.person(ctx, _player);
         checkFormulasAccess(ctx);
-        return calculatePercentMoneyHacked(server, player);
+        return calculatePercentMoneyHacked(server, person);
       },
       growPercent:
         (ctx) =>
         (_server, _threads, _player, _cores = 1) => {
           const server = helpers.server(ctx, _server);
-          const player = helpers.player(ctx, _player);
+          const person = helpers.person(ctx, _player);
           const threads = helpers.number(ctx, "threads", _threads);
           const cores = helpers.number(ctx, "cores", _cores);
           checkFormulasAccess(ctx);
-          return calculateServerGrowth(server, threads, player, cores);
+          return calculateServerGrowth(server, threads, person, cores);
         },
       hackTime: (ctx) => (_server, _player) => {
         const server = helpers.server(ctx, _server);
-        const player = helpers.player(ctx, _player);
+        const person = helpers.person(ctx, _player);
         checkFormulasAccess(ctx);
-        return calculateHackingTime(server, player) * 1000;
+        return calculateHackingTime(server, person) * 1000;
       },
       growTime: (ctx) => (_server, _player) => {
         const server = helpers.server(ctx, _server);
-        const player = helpers.player(ctx, _player);
+        const person = helpers.person(ctx, _player);
         checkFormulasAccess(ctx);
-        return calculateGrowTime(server, player) * 1000;
+        return calculateGrowTime(server, person) * 1000;
       },
       weakenTime: (ctx) => (_server, _player) => {
         const server = helpers.server(ctx, _server);
-        const player = helpers.player(ctx, _player);
+        const person = helpers.person(ctx, _player);
         checkFormulasAccess(ctx);
-        return calculateWeakenTime(server, player) * 1000;
+        return calculateWeakenTime(server, person) * 1000;
       },
     },
     hacknetNodes: {
@@ -365,20 +353,26 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       },
     },
     work: {
+      crimeSuccessChance: (ctx) => (_person, _crimeType) => {
+        const person = helpers.person(ctx, _person);
+        const crimeType = helpers.string(ctx, "crimeType", _crimeType);
+        if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
+        return Crimes[crimeType].successRate(person);
+      },
       crimeGains: (ctx) => (_person, _crimeType) => {
-        const person = helpers.player(ctx, _person);
+        const person = helpers.person(ctx, _person);
         const crimeType = helpers.string(ctx, "crimeType", _crimeType);
         if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
         return calculateCrimeWorkStats(person, Crimes[crimeType]);
       },
       classGains: (ctx) => (_person, _classType, _locationName) => {
-        const person = helpers.player(ctx, _person);
+        const person = helpers.person(ctx, _person);
         const classType = helpers.string(ctx, "classType", _classType);
         const locationName = helpers.string(ctx, "locationName", _locationName);
         return calculateClassEarnings(person, classType as ClassType, locationName as LocationName);
       },
       factionGains: (ctx) => (_player, _workType, _favor) => {
-        const player = helpers.player(ctx, _player);
+        const player = helpers.person(ctx, _player);
         const workType = helpers.string(ctx, "_workType", _workType) as FactionWorkType;
         const favor = helpers.number(ctx, "favor", _favor);
         const exp = calculateFactionExp(player, workType);
@@ -386,9 +380,8 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
         exp.reputation = rep;
         return exp;
       },
-
       companyGains: (ctx) => (_player, _companyName, _positionName, _favor) => {
-        const player = helpers.player(ctx, _player);
+        const player = helpers.person(ctx, _player);
         CompanyPositions;
         const positionName = helpers.string(ctx, "_positionName", _positionName);
         const position = Object.values(CompanyPositions).find((c) => c.name === positionName);

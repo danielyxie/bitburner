@@ -1,7 +1,7 @@
 import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Person } from "../../PersonObjects/Person";
+import { Person as IPerson } from "../../ScriptEditor/NetscriptDefinitions";
 
-export function repFromDonation(amt: number, person: Person): number {
+export function repFromDonation(amt: number, person: IPerson): number {
   return (amt / CONSTANTS.DonateMoneyToRepDivisor) * person.mults.faction_rep * BitNodeMultipliers.FactionWorkRepGain;
 }

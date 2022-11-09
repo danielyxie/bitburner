@@ -43,11 +43,10 @@ type IProps = {
 
 export function SpecialLocation(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
-  const inBladeburner = Player.inBladeburner();
 
   /** Click handler for Bladeburner button at Sector-12 NSA */
   function handleBladeburner(): void {
-    if (Player.inBladeburner()) {
+    if (Player.bladeburner) {
       // Enter Bladeburner division
       Router.toBladeburner();
     } else if (
@@ -80,7 +79,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (!Player.canAccessBladeburner() || BitNodeMultipliers.BladeburnerRank === 0) {
       return <></>;
     }
-    const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
+    const text = Player.bladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
     return (
       <>
         <br />
@@ -143,7 +142,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
     return (
       <>
-        <Button disabled={!Player.canAccessCorporation() || Player.hasCorporation()} onClick={() => setOpen(true)}>
+        <Button disabled={!Player.canAccessCorporation() || !!Player.corporation} onClick={() => setOpen(true)}>
           Create a Corporation
         </Button>
         <CreateCorporationModal open={open} onClose={() => setOpen(false)} />

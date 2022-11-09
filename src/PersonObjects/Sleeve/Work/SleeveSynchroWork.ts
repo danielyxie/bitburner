@@ -2,6 +2,7 @@ import { Player } from "@player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { Work, WorkType } from "./Work";
+import { calculateIntelligenceBonus } from "../../formulas/intelligence";
 
 export const isSleeveSynchroWork = (w: Work | null): w is SleeveSynchroWork =>
   w !== null && w.type === WorkType.SYNCHRO;
@@ -12,7 +13,10 @@ export class SleeveSynchroWork extends Work {
   }
 
   process(sleeve: Sleeve, cycles: number): number {
-    sleeve.sync = Math.min(100, sleeve.sync + Player.getIntelligenceBonus(0.5) * 0.0002 * cycles);
+    sleeve.sync = Math.min(
+      100,
+      sleeve.sync + calculateIntelligenceBonus(Player.skills.intelligence, 0.5) * 0.0002 * cycles,
+    );
     if (sleeve.sync >= 100) sleeve.stopWork();
     return 0;
   }

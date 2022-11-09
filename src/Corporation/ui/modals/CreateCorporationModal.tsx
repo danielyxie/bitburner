@@ -15,7 +15,7 @@ interface IProps {
 
 export function CreateCorporationModal(props: IProps): React.ReactElement {
   const canSelfFund = Player.canAfford(150e9);
-  if (!Player.canAccessCorporation() || Player.hasCorporation()) {
+  if (!Player.canAccessCorporation() || Player.corporation) {
     props.onClose();
     return <></>;
   }
@@ -26,13 +26,8 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
   }
 
   function selfFund(): void {
-    if (!canSelfFund) {
-      return;
-    }
-
-    if (name == "") {
-      return;
-    }
+    if (!canSelfFund) return;
+    if (name == "") return;
 
     Player.startCorporation(name);
     Player.loseMoney(150e9, "corporation");

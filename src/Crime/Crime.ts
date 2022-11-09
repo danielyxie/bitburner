@@ -1,9 +1,10 @@
 import { CONSTANTS } from "../Constants";
 import { Player } from "@player";
-import { Person } from "../PersonObjects/Person";
+import { Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { CrimeType } from "../utils/WorkType";
 import { CrimeWork } from "../Work/CrimeWork";
+import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 
 interface IConstructorParams {
   hacking_success_weight?: number;
@@ -120,7 +121,7 @@ export class Crime {
     return this.time;
   }
 
-  successRate(p: Person): number {
+  successRate(p: IPerson): number {
     let chance: number =
       this.hacking_success_weight * p.skills.hacking +
       this.strength_success_weight * p.skills.strength +
@@ -132,7 +133,7 @@ export class Crime {
     chance /= CONSTANTS.MaxSkillLevel;
     chance /= this.difficulty;
     chance *= p.mults.crime_success;
-    chance *= p.getIntelligenceBonus(1);
+    chance *= calculateIntelligenceBonus(p.skills.intelligence, 1);
 
     return Math.min(chance, 1);
   }

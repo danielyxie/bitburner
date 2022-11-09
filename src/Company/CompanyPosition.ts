@@ -1,4 +1,4 @@
-import { Person } from "../PersonObjects/Person";
+import { Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
 import { CONSTANTS } from "../Constants";
 import * as names from "./data/companypositionnames";
 
@@ -118,7 +118,7 @@ export class CompanyPosition {
     this.charismaExpGain = p.charismaExpGain != null ? p.charismaExpGain : 0;
   }
 
-  calculateJobPerformance(worker: Person): number {
+  calculateJobPerformance(worker: IPerson): number {
     const hackRatio: number = (this.hackingEffectiveness * worker.skills.hacking) / CONSTANTS.MaxSkillLevel;
     const strRatio: number = (this.strengthEffectiveness * worker.skills.strength) / CONSTANTS.MaxSkillLevel;
     const defRatio: number = (this.defenseEffectiveness * worker.skills.defense) / CONSTANTS.MaxSkillLevel;

@@ -1,7 +1,7 @@
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Crime } from "../Crime/Crime";
 import { newWorkStats, scaleWorkStats, WorkStats, multWorkStats } from "./WorkStats";
-import { Person } from "../PersonObjects/Person";
+import { Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
 import { CONSTANTS } from "../Constants";
 import { FactionWorkType } from "./data/FactionWorkType";
 import {
@@ -40,7 +40,7 @@ export const FactionWorkStats: Record<FactionWorkType, WorkStats> = {
   }),
 };
 
-export function calculateCrimeWorkStats(person: Person, crime: Crime): WorkStats {
+export function calculateCrimeWorkStats(person: IPerson, crime: Crime): WorkStats {
   const gains = scaleWorkStats(
     multWorkStats(
       //Todo: rework crime and workstats interfaces to use the same naming convention for exp values, then we can just make a workStats directly from a crime.
@@ -63,7 +63,7 @@ export function calculateCrimeWorkStats(person: Person, crime: Crime): WorkStats
   return gains;
 }
 
-export const calculateFactionRep = (person: Person, type: FactionWorkType, favor: number): number => {
+export const calculateFactionRep = (person: IPerson, type: FactionWorkType, favor: number): number => {
   const repFormulas = {
     [FactionWorkType.HACKING]: getHackingWorkRepGain,
     [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
@@ -72,7 +72,7 @@ export const calculateFactionRep = (person: Person, type: FactionWorkType, favor
   return repFormulas[type](person, favor);
 };
 
-export function calculateFactionExp(person: Person, type: FactionWorkType): WorkStats {
+export function calculateFactionExp(person: IPerson, type: FactionWorkType): WorkStats {
   return scaleWorkStats(
     multWorkStats(FactionWorkStats[type], person.mults),
     BitNodeMultipliers.FactionWorkExpGain / gameCPS,
@@ -87,7 +87,7 @@ export function calculateCost(classs: Class, location: Location): number {
   return classs.earnings.money * location.costMult * discount;
 }
 
-export function calculateClassEarnings(person: Person, type: ClassType, locationName: LocationName): WorkStats {
+export function calculateClassEarnings(person: IPerson, type: ClassType, locationName: LocationName): WorkStats {
   const hashManager = Player.hashManager;
   const classs = Classes[type];
   const location = Locations[locationName];
@@ -107,7 +107,7 @@ export function calculateClassEarnings(person: Person, type: ClassType, location
 }
 
 export const calculateCompanyWorkStats = (
-  worker: Person,
+  worker: IPerson,
   company: Company,
   companyPosition: CompanyPosition,
   favor: number,

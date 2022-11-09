@@ -6,6 +6,7 @@ import { Player } from "@player";
 import { Programs } from "../Programs/Programs";
 import { Work, WorkType } from "./Work";
 import { Program } from "../Programs/Program";
+import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 
 export const isCreateProgramWork = (w: Work | null): w is CreateProgramWork =>
   w !== null && w.type === WorkType.CREATE_PROGRAM;
@@ -61,7 +62,7 @@ export class CreateProgramWork extends Work {
     }
     //Higher hacking skill will allow you to create programs faster
     const reqLvl = this.getProgram().create?.level ?? 0;
-    let skillMult = (Player.skills.hacking / reqLvl) * Player.getIntelligenceBonus(3); //This should always be greater than 1;
+    let skillMult = (Player.skills.hacking / reqLvl) * calculateIntelligenceBonus(Player.skills.intelligence, 3); //This should always be greater than 1;
     skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
     skillMult *= focusBonus;
     //Skill multiplier directly applied to "time worked"

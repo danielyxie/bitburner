@@ -1,10 +1,10 @@
-import { Player } from "@player";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { addOffset } from "../utils/helpers/addOffset";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { BladeburnerConstants } from "./data/Constants";
 import { Bladeburner } from "./Bladeburner";
 import { Person } from "../PersonObjects/Person";
+import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 
 interface ISuccessChanceParams {
   est: boolean;
@@ -254,7 +254,7 @@ export class Action {
         competence += this.weights[stat] * Math.pow(effMultiplier * playerStatLvl, this.decays[stat]);
       }
     }
-    competence *= Player.getIntelligenceBonus(0.75);
+    competence *= calculateIntelligenceBonus(person.skills.intelligence, 0.75);
     competence *= inst.calculateStaminaPenalty();
 
     competence *= this.getTeamSuccessBonus(inst);
@@ -277,7 +277,7 @@ export class Action {
     }
 
     // Augmentation multiplier
-    competence *= Player.mults.bladeburner_success_chance;
+    competence *= person.mults.bladeburner_success_chance;
 
     if (isNaN(competence)) {
       throw new Error("Competence calculated as NaN in Action.getSuccessChance()");

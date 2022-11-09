@@ -1234,7 +1234,6 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           return true;
         };
         const bladeburnerRequirements = () => {
-          if (!Player.inBladeburner()) return false;
           if (!Player.bladeburner) return false;
           return Player.bladeburner.blackops[BlackOperationNames.OperationDaedalus];
         };

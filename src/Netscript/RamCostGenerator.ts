@@ -231,6 +231,7 @@ const gang = {
 
 // Bladeburner API
 const bladeburner = {
+  inBladeburner: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 4,
   getContractNames: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
   getOperationNames: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
   getBlackOpNames: RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
@@ -295,9 +296,8 @@ const sleeve = {
   setToCompanyWork: RamCostConstants.ScriptSleeveBaseRamCost,
   setToFactionWork: RamCostConstants.ScriptSleeveBaseRamCost,
   setToGymWorkout: RamCostConstants.ScriptSleeveBaseRamCost,
-  getSleeveStats: RamCostConstants.ScriptSleeveBaseRamCost,
   getTask: RamCostConstants.ScriptSleeveBaseRamCost,
-  getInformation: RamCostConstants.ScriptSleeveBaseRamCost,
+  getSleeve: RamCostConstants.ScriptSleeveBaseRamCost,
   getSleeveAugmentations: RamCostConstants.ScriptSleeveBaseRamCost,
   getSleevePurchasableAugs: RamCostConstants.ScriptSleeveBaseRamCost,
   purchaseSleeveAug: RamCostConstants.ScriptSleeveBaseRamCost,
@@ -343,6 +343,7 @@ const grafting = {
 } as const;
 
 const corporation = {
+  hasCorporation: 0,
   getMaterialNames: 0,
   getIndustryTypes: 0,
   getEmployeePositions: 0,
@@ -453,6 +454,7 @@ export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
   enableLog: 0,
   isLogEnabled: 0,
   getScriptLogs: 0,
+  hasTorRouter: 0.05,
   nuke: RamCostConstants.ScriptPortProgramRamCost,
   brutessh: RamCostConstants.ScriptPortProgramRamCost,
   ftpcrack: RamCostConstants.ScriptPortProgramRamCost,
@@ -543,15 +545,13 @@ export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
   bypass: 0,
   alterReality: 0,
   rainbow: 0,
-  heart: {
-    // Easter egg function
-    break: 0,
-  },
+  heart: { break: 0 },
   iKnowWhatImDoing: 0,
 
   formulas: {
     mockServer: 0,
     mockPlayer: 0,
+    mockPerson: 0,
     reputation: {
       calculateFavorToRep: 0,
       calculateRepToFavor: 0,
@@ -597,6 +597,7 @@ export const RamCosts: RamCostTree<Omit<NSFull, "args" | "enums">> = {
       ascensionMultiplier: 0,
     },
     work: {
+      crimeSuccessChance: 0,
       crimeGains: 0,
       classGains: 0,
       factionGains: 0,
