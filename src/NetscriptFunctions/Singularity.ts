@@ -49,9 +49,6 @@ import { CompanyWork } from "../Work/CompanyWork";
 import { canGetBonus, onExport } from "../ExportBonus";
 import { saveObject } from "../SaveObject";
 import { calculateCrimeWorkStats } from "../Work/Formulas";
-import { checkEnum } from "../utils/helpers/checkEnum";
-import { Crimes } from "../Crime/Crimes";
-import { CrimeType } from "../utils/WorkType";
 
 export function NetscriptSingularity(): InternalAPI<ISingularity> {
   const getAugmentation = function (ctx: NetscriptContext, name: string): Augmentation {
@@ -1118,7 +1115,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       Player.gotoLocation(LocationName.Slums);
 
       // If input isn't a crimeType, use search using roughname.
-      const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
+      const crime = findCrime(crimeType);
       if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
 
       helpers.log(ctx, () => `Attempting to commit ${crime.name}...`);
@@ -1137,7 +1134,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       const crimeType = helpers.string(ctx, "crimeType", _crimeType);
 
       // If input isn't a crimeType, use search using roughname.
-      const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
+      const crime = findCrime(crimeType);
       if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
 
       return crime.successRate(Player);
@@ -1147,7 +1144,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       const crimeType = helpers.string(ctx, "crimeType", _crimeType);
 
       // If input isn't a crimeType, use search using roughname.
-      const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
+      const crime = findCrime(crimeType);
       if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
 
       const crimeStatsWithMultipliers = calculateCrimeWorkStats(Player, crime);

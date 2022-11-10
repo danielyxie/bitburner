@@ -94,7 +94,7 @@ export class Sleeve extends Person implements ISleeve {
   }
 
   /** Commit crimes */
-  commitCrime(type: CrimeType): boolean {
+  commitCrime(type: CrimeType) {
     this.startWork(new SleeveCrimeWork(type));
     return true;
   }

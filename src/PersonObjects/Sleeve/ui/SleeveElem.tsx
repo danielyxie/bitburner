@@ -46,8 +46,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
         props.sleeve.workForFaction(abc[1], abc[2]);
         break;
       case "Commit Crime":
-        const crimeType = findCrime(abc[1])?.type ?? CrimeType.SHOPLIFT;
-        props.sleeve.commitCrime(crimeType);
+        props.sleeve.commitCrime(findCrime(abc[1])?.type ?? CrimeType.SHOPLIFT);
         break;
       case "Take University Course":
         props.sleeve.takeUniversityCourse(abc[2], abc[1]);

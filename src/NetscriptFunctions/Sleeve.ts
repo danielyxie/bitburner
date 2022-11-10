@@ -11,8 +11,6 @@ import { isSleeveBladeburnerWork } from "../PersonObjects/Sleeve/Work/SleeveBlad
 import { isSleeveFactionWork } from "../PersonObjects/Sleeve/Work/SleeveFactionWork";
 import { isSleeveCompanyWork } from "../PersonObjects/Sleeve/Work/SleeveCompanyWork";
 import { helpers } from "../Netscript/NetscriptHelpers";
-import { Crimes } from "../Crime/Crimes";
-import { CrimeType } from "../utils/WorkType";
 import { cloneDeep } from "lodash";
 
 export function NetscriptSleeve(): InternalAPI<sleeve> {
@@ -55,7 +53,7 @@ export function NetscriptSleeve(): InternalAPI<sleeve> {
       const crimeType = helpers.string(ctx, "crimeType", _crimeType);
       checkSleeveAPIAccess(ctx);
       checkSleeveNumber(ctx, sleeveNumber);
-      const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
+      const crime = findCrime(crimeType);
       if (crime == null) return false;
       return Player.sleeves[sleeveNumber].commitCrime(crime.type);
     },

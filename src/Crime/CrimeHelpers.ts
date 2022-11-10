@@ -18,6 +18,7 @@ export function determineCrimeSuccess(type: string): boolean {
 }
 
 export function findCrime(roughName: string): Crime | null {
+  if (checkEnum(CrimeType, roughName)) return Crimes[roughName];
   roughName = roughName.toLowerCase();
   if (roughName.includes("shoplift")) {
     return Crimes[CrimeType.SHOPLIFT];
