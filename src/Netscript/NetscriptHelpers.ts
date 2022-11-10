@@ -750,6 +750,8 @@ export function handleUnknownError(e: unknown, ws: WorkerScript | ScriptDeath | 
     const msg = `${e.message} (sorry we can't be more helpful)`;
     e = ws ? makeBasicErrorMsg(ws, msg, "SYNTAX") : `SYNTAX ERROR:\n\n${msg}`;
   } else if (e instanceof Error) {
+    // Ignore any cancellation errors from Monaco that get here
+    if (e.name === "Canceled" && e.message === "Canceled") return;
     const msg = `${e.message}${e.stack ? `\nstack:\n${e.stack.toString()}` : ""}`;
     e = ws ? makeBasicErrorMsg(ws, msg) : `RUNTIME ERROR:\n\n${msg}`;
   }
