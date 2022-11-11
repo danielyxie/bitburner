@@ -4,7 +4,7 @@ import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
 import { CONSTANTS } from "../../../Constants";
 import { GeneralActions } from "../../../Bladeburner/data/GeneralActions";
-import { WorkStats } from "../../../Work/WorkStats";
+import { scaleWorkStats } from "../../../Work/WorkStats";
 
 interface SleeveBladeburnerWorkParams {
   type: string;
@@ -31,7 +31,7 @@ export class SleeveBladeburnerWork extends Work {
     return ret / CONSTANTS._idleSpeed;
   }
 
-  process(sleeve: Sleeve, cycles: number): number {
+  process(sleeve: Sleeve, cycles: number) {
     if (!Player.bladeburner) throw new Error("sleeve doing blade work without being a member");
     this.cyclesWorked += cycles;
     const actionIdent = Player.bladeburner.getActionIdFromTypeAndName(this.actionType, this.actionName);
@@ -39,35 +39,27 @@ export class SleeveBladeburnerWork extends Work {
     if (this.actionType === "Contracts") {
       const action = Player.bladeburner.getActionObject(actionIdent);
       if (!action) throw new Error(`Error getting ${this.actionName} action object`);
-      if (action.count <= 0) {
-        sleeve.stopWork();
-        return 0;
-      }
+      if (action.count <= 0) return sleeve.stopWork();
     }
 
     while (this.cyclesWorked > this.cyclesNeeded(sleeve)) {
       if (this.actionType === "Contracts") {
         const action = Player.bladeburner.getActionObject(actionIdent);
         if (!action) throw new Error(`Error getting ${this.actionName} action object`);
-        if (action.count <= 0) {
-          sleeve.stopWork();
-          return 0;
-        }
+        if (action.count <= 0) return sleeve.stopWork();
       }
       const retValue = Player.bladeburner.completeAction(sleeve, actionIdent, false);
-      let exp: WorkStats | undefined;
       if (this.actionType === "General") {
-        exp = GeneralActions[this.actionName]?.exp;
+        const exp = GeneralActions[this.actionName]?.exp;
         if (!exp) throw new Error(`Somehow there was no exp for action ${this.actionType} ${this.actionName}`);
-        applySleeveGains(sleeve, exp, 1);
+        applySleeveGains(sleeve, scaleWorkStats(exp, sleeve.shockBonus(), false));
       }
 
       if (this.actionType === "Contracts") {
-        applySleeveGains(sleeve, retValue, 1);
+        applySleeveGains(sleeve, scaleWorkStats(retValue, sleeve.shockBonus(), false));
       }
       this.cyclesWorked -= this.cyclesNeeded(sleeve);
     }
-    return 0;
   }
 
   APICopy(): Record<string, unknown> {

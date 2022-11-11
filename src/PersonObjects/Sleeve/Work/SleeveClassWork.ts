@@ -33,11 +33,11 @@ export class SleeveClassWork extends Work {
     );
   }
 
-  process(sleeve: Sleeve, cycles: number): number {
+  process(sleeve: Sleeve, cycles: number) {
     const rate = this.calculateRates(sleeve);
     applySleeveGains(sleeve, rate, cycles);
-    return 0;
   }
+
   APICopy(): Record<string, unknown> {
     return {
       type: this.type,

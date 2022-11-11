@@ -5,7 +5,7 @@ import { LocationName } from "../../../Locations/data/LocationNames";
 import { Companies } from "../../../Company/Companies";
 import { Company } from "../../../Company/Company";
 import { calculateCompanyWorkStats } from "../../../Work/Formulas";
-import { WorkStats } from "../../../Work/WorkStats";
+import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { influenceStockThroughCompanyWork } from "../../../StockMarket/PlayerInfluencing";
 import { Player } from "@player";
 import { CompanyPositions } from "../../../Company/CompanyPositions";
@@ -33,16 +33,19 @@ export class SleeveCompanyWork extends Work {
 
   getGainRates(sleeve: Sleeve): WorkStats {
     const company = this.getCompany();
-    return calculateCompanyWorkStats(sleeve, company, CompanyPositions[Player.jobs[company.name]], company.favor);
+    return scaleWorkStats(
+      calculateCompanyWorkStats(sleeve, company, CompanyPositions[Player.jobs[company.name]], company.favor),
+      sleeve.shockBonus(),
+      false,
+    );
   }
 
-  process(sleeve: Sleeve, cycles: number): number {
+  process(sleeve: Sleeve, cycles: number) {
     const company = this.getCompany();
     const gains = this.getGainRates(sleeve);
     applySleeveGains(sleeve, gains, cycles);
     company.playerReputation += gains.reputation * cycles;
     influenceStockThroughCompanyWork(company, gains.reputation, cycles);
-    return 0;
   }
 
   APICopy(): Record<string, unknown> {

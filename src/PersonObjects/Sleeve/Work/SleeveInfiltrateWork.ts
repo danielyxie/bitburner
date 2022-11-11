@@ -20,14 +20,13 @@ export class SleeveInfiltrateWork extends Work {
     return infiltrateCycles;
   }
 
-  process(_sleeve: Sleeve, cycles: number): number {
+  process(_sleeve: Sleeve, cycles: number) {
     if (!Player.bladeburner) throw new Error("sleeve doing blade work without being a member");
     this.cyclesWorked += cycles;
     if (this.cyclesWorked > this.cyclesNeeded()) {
       this.cyclesWorked -= this.cyclesNeeded();
       Player.bladeburner.infiltrateSynthoidCommunities();
     }
-    return 0;
   }
 
   APICopy(): Record<string, unknown> {

@@ -12,13 +12,12 @@ export class SleeveSynchroWork extends Work {
     super(WorkType.SYNCHRO);
   }
 
-  process(sleeve: Sleeve, cycles: number): number {
+  process(sleeve: Sleeve, cycles: number) {
     sleeve.sync = Math.min(
       100,
       sleeve.sync + calculateIntelligenceBonus(Player.skills.intelligence, 0.5) * 0.0002 * cycles,
     );
     if (sleeve.sync >= 100) sleeve.stopWork();
-    return 0;
   }
 
   APICopy(): Record<string, unknown> {

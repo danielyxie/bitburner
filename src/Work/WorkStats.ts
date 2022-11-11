@@ -77,18 +77,10 @@ export const applyWorkStats = (target: Person, workStats: WorkStats, cycles: num
   return gains;
 };
 
-export const applyWorkStatsExp = (target: Person, workStats: WorkStats, cycles: number): WorkStats => {
-  const gains = {
-    money: 0,
-    reputation: 0,
-    hackExp: workStats.hackExp * cycles,
-    strExp: workStats.strExp * cycles,
-    defExp: workStats.defExp * cycles,
-    dexExp: workStats.dexExp * cycles,
-    agiExp: workStats.agiExp * cycles,
-    chaExp: workStats.chaExp * cycles,
-    intExp: workStats.intExp * cycles,
-  };
+export const applyWorkStatsExp = (target: Person, workStats: WorkStats, mult = 1): WorkStats => {
+  const gains = scaleWorkStats(workStats, mult, false);
+  gains.money = 0;
+  gains.reputation = 0;
   target.gainHackingExp(gains.hackExp);
   target.gainStrengthExp(gains.strExp);
   target.gainDefenseExp(gains.defExp);

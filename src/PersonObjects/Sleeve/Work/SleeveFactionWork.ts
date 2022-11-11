@@ -28,7 +28,7 @@ export class SleeveFactionWork extends Work {
   }
 
   getExpRates(sleeve: Sleeve): WorkStats {
-    return scaleWorkStats(calculateFactionExp(sleeve, this.factionWorkType), sleeve.shockBonus());
+    return scaleWorkStats(calculateFactionExp(sleeve, this.factionWorkType), sleeve.shockBonus(), false);
   }
 
   getReputationRate(sleeve: Sleeve): number {
@@ -41,17 +41,13 @@ export class SleeveFactionWork extends Work {
     return f;
   }
 
-  process(sleeve: Sleeve, cycles: number): number {
-    if (this.factionName === Player.gang?.facName) {
-      sleeve.stopWork();
-      return 0;
-    }
+  process(sleeve: Sleeve, cycles: number) {
+    if (this.factionName === Player.gang?.facName) return sleeve.stopWork();
 
     const exp = this.getExpRates(sleeve);
     applySleeveGains(sleeve, exp, cycles);
     const rep = this.getReputationRate(sleeve);
-    this.getFaction().playerReputation += rep;
-    return 0;
+    this.getFaction().playerReputation += rep * cycles;
   }
 
   APICopy(): Record<string, unknown> {

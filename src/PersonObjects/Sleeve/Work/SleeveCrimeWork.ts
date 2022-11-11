@@ -26,29 +26,24 @@ export class SleeveCrimeWork extends Work {
   }
 
   getExp(sleeve: Sleeve): WorkStats {
-    return calculateCrimeWorkStats(sleeve, this.getCrime());
+    return scaleWorkStats(calculateCrimeWorkStats(sleeve, this.getCrime()), sleeve.shockBonus(), false);
   }
 
   cyclesNeeded(): number {
     return this.getCrime().time / CONSTANTS._idleSpeed;
   }
 
-  process(sleeve: Sleeve, cycles: number): number {
+  process(sleeve: Sleeve, cycles: number) {
     this.cyclesWorked += cycles;
+    if (this.cyclesWorked < this.cyclesNeeded()) return;
 
     const crime = this.getCrime();
-    let gains = this.getExp(sleeve);
-    if (this.cyclesWorked >= this.cyclesNeeded()) {
-      if (Math.random() < crime.successRate(sleeve)) {
-        Player.karma -= crime.karma * sleeve.syncBonus();
-      } else {
-        gains.money = 0;
-        gains = scaleWorkStats(gains, 0.25);
-      }
-      applySleeveGains(sleeve, gains, cycles);
-      this.cyclesWorked -= this.cyclesNeeded();
-    }
-    return 0;
+    const gains = this.getExp(sleeve);
+    const success = Math.random() < crime.successRate(sleeve);
+    if (success) Player.karma -= crime.karma * sleeve.syncBonus();
+    else gains.money = 0;
+    applySleeveGains(sleeve, gains, success ? 1 : 0.25);
+    this.cyclesWorked -= this.cyclesNeeded();
   }
 
   APICopy(): Record<string, unknown> {

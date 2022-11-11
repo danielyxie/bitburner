@@ -11,8 +11,8 @@ export class SleeveSupportWork extends Work {
     Player.bladeburner?.sleeveSupport(true);
   }
 
-  process(): number {
-    return 0;
+  process() {
+    return;
   }
 
   finish(): void {

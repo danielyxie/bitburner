@@ -133,7 +133,7 @@ export function EarningsElement(props: IProps): React.ReactElement {
       [`Dexterity Exp:`, `${numeralWrapper.formatExp(CYCLES_PER_SEC * rates.dexExp)} / sec`],
       [`Agility Exp:`, `${numeralWrapper.formatExp(CYCLES_PER_SEC * rates.agiExp)} / sec`],
       [`Charisma Exp:`, `${numeralWrapper.formatExp(CYCLES_PER_SEC * rates.chaExp)} / sec`],
-      [`Reputation:`, <ReputationRate reputation={repGain} />],
+      [`Reputation:`, <ReputationRate reputation={CYCLES_PER_SEC * repGain} />],
     ];
   }
 

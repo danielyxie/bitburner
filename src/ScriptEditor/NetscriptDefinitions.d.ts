@@ -3814,10 +3814,14 @@ export interface WorkStats {
  * @public
  */
 interface WorkFormulas {
-  crimeSuccessChance(person: Person, crimeType: CrimeType | CrimeNames): number;
+  crimeSuccessChance(person: Person, crimeType: CrimeType | `${CrimeType}`): number;
+  /** @returns The WorkStats gained when completing one instance of the specified crime. */
   crimeGains(person: Person, crimeType: CrimeType | `${CrimeType}`): WorkStats;
+  /** @returns The WorkStats applied every game cycle (200ms) by taking the specified class. */
   classGains(person: Person, classType: ClassType | `${ClassType}`, locationName: string): WorkStats;
+  /** @returns The WorkStats applied every game cycle (200ms) by performing the specified faction work. */
   factionGains(person: Person, workType: FactionWorkType | `${FactionWorkType}`, favor: number): WorkStats;
+  /** @returns The WorkStats applied every game cycle (200ms) by performing the specified company work. */
   companyGains(
     person: Person,
     companyName: string,

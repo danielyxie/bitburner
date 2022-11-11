@@ -63,6 +63,7 @@ export function calculateCrimeWorkStats(person: IPerson, crime: Crime): WorkStat
   return gains;
 }
 
+/** @returns faction rep rate per cycle */
 export const calculateFactionRep = (person: IPerson, type: FactionWorkType, favor: number): number => {
   const repFormulas = {
     [FactionWorkType.HACKING]: getHackingWorkRepGain,
@@ -72,6 +73,7 @@ export const calculateFactionRep = (person: IPerson, type: FactionWorkType, favo
   return repFormulas[type](person, favor);
 };
 
+/** @returns per-cycle WorkStats */
 export function calculateFactionExp(person: IPerson, type: FactionWorkType): WorkStats {
   return scaleWorkStats(
     multWorkStats(FactionWorkStats[type], person.mults),
@@ -87,6 +89,7 @@ export function calculateCost(classs: Class, location: Location): number {
   return classs.earnings.money * location.costMult * discount;
 }
 
+/** @returns per-cycle WorkStats */
 export function calculateClassEarnings(person: IPerson, type: ClassType, locationName: LocationName): WorkStats {
   const hashManager = Player.hashManager;
   const classs = Classes[type];
@@ -106,6 +109,7 @@ export function calculateClassEarnings(person: IPerson, type: ClassType, locatio
   return earnings;
 }
 
+/** @returns per-cycle WorkStats */
 export const calculateCompanyWorkStats = (
   worker: IPerson,
   company: Company,
