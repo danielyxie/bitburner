@@ -1,4 +1,4 @@
-name: "Deploy to GH Pages"
+name: "Deploy new dev build"
 
 on:
   workflow_dispatch:
