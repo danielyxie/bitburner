@@ -13,6 +13,12 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 ```
 <b>Extends:</b> [WarehouseAPI](./bitburner.warehouseapi.md)<!-- -->, [OfficeAPI](./bitburner.officeapi.md)
 
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [enums](./bitburner.corporation.enums.md) | { EmployeePositions: typeof [EmployeePositions](./bitburner.employeepositions.md)<!-- -->; IndustryType: typeof [IndustryType](./bitburner.industrytype.md)<!-- -->; } | Enums specific to the corporation game mechanic. |
+
 ## Methods
 
 |  Method | Description |
@@ -23,12 +29,11 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  [createCorporation(corporationName, selfFund)](./bitburner.corporation.createcorporation.md) | Create a Corporation |
 |  [expandCity(divisionName, cityName)](./bitburner.corporation.expandcity.md) | Expand to a new city |
 |  [expandIndustry(industryType, divisionName)](./bitburner.corporation.expandindustry.md) | Expand to a new industry |
-|  [getBonusTime()](./bitburner.corporation.getbonustime.md) | Get bonus time.<!-- -->“Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.<!-- -->“Bonus time” makes the game progress faster. |
+|  [getBonusTime()](./bitburner.corporation.getbonustime.md) | Get bonus time. “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser. “Bonus time” makes the game progress faster. |
 |  [getCorporation()](./bitburner.corporation.getcorporation.md) | Get corporation data |
 |  [getDivision(divisionName)](./bitburner.corporation.getdivision.md) | Get division data |
 |  [getExpandCityCost()](./bitburner.corporation.getexpandcitycost.md) | Gets the cost to expand into a new city |
 |  [getExpandIndustryCost(industryName)](./bitburner.corporation.getexpandindustrycost.md) | Gets the cost to expand into a new industry |
-|  [getIndustryTypes()](./bitburner.corporation.getindustrytypes.md) | Get list of industry types |
 |  [getInvestmentOffer()](./bitburner.corporation.getinvestmentoffer.md) | Get an offer for investment based on you companies current valuation |
 |  [getMaterialNames()](./bitburner.corporation.getmaterialnames.md) | Get list of materials |
 |  [getResearchNames()](./bitburner.corporation.getresearchnames.md) | Get list of research names |
@@ -38,6 +43,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  [getUpgradeLevelCost(upgradeName)](./bitburner.corporation.getupgradelevelcost.md) | Gets the cost to unlock the next level of a levelable upgrade |
 |  [getUpgradeNames()](./bitburner.corporation.getupgradenames.md) | Get list of upgrade names |
 |  [goPublic(numShares)](./bitburner.corporation.gopublic.md) | Go public |
+|  [hasCorporation()](./bitburner.corporation.hascorporation.md) | Returns whether the player has a corporation. Does not require API access. |
 |  [hasUnlockUpgrade(upgradeName)](./bitburner.corporation.hasunlockupgrade.md) | Check if you have a one time unlockable upgrade |
 |  [issueDividends(rate)](./bitburner.corporation.issuedividends.md) | Issue dividends |
 |  [levelUpgrade(upgradeName)](./bitburner.corporation.levelupgrade.md) | Level an upgrade. |

@@ -6,7 +6,7 @@
 
 > Warning: This API is now obsolete.
 > 
-> use getAugmentationPrice getAugmentationRepCost
+> use getAugmentationPrice getAugmentationRepReq
 > 
 
 Get the price and reputation of an augmentation.

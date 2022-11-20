@@ -2,6 +2,7 @@ import { Player } from "@player";
 import { IReviverValue } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applyWorkStatsExp, WorkStats } from "../../../Work/WorkStats";
+import { SleeveTask } from "src/ScriptEditor/NetscriptDefinitions";
 
 export const applySleeveGains = (sleeve: Sleeve, shockedStats: WorkStats, mult = 1): void => {
   applyWorkStatsExp(sleeve, shockedStats, mult);
@@ -21,7 +22,7 @@ export abstract class Work {
   }
 
   abstract process(sleeve: Sleeve, cycles: number): void;
-  abstract APICopy(): Record<string, unknown>;
+  abstract APICopy(): SleeveTask;
   abstract toJSON(): IReviverValue;
   finish(): void {
     /* left for children to implement */

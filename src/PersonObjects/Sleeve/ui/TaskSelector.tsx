@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Sleeve } from "../Sleeve";
 import { Player } from "@player";
 import { Crimes } from "../../../Crime/Crimes";
-import { LocationName } from "../../../Locations/data/LocationNames";
+import { LocationName } from "../../../utils/enums";
 import { CityName } from "../../../Locations/data/CityNames";
 import { Factions } from "../../../Faction/Factions";
 import Select, { SelectChangeEvent } from "@mui/material/Select";

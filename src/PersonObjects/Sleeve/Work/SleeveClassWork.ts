@@ -1,7 +1,7 @@
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { applySleeveGains, Work, WorkType } from "./Work";
 import { ClassType } from "../../../Work/ClassWork";
-import { LocationName } from "../../../Locations/data/LocationNames";
+import { LocationName } from "../../../utils/enums";
 import { calculateClassEarnings } from "../../../Work/Formulas";
 import { Sleeve } from "../Sleeve";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
@@ -38,9 +38,9 @@ export class SleeveClassWork extends Work {
     applySleeveGains(sleeve, rate, cycles);
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.CLASS as "CLASS",
       classType: this.classType,
       location: this.location,
     };

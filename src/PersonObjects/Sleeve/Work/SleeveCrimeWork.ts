@@ -47,9 +47,9 @@ export class SleeveCrimeWork extends Work {
     this.cyclesWorked -= this.cyclesNeeded();
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.CRIME as "CRIME",
       crimeType: this.crimeType,
     };
   }

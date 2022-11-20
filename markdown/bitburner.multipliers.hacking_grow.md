@@ -9,5 +9,5 @@ Multiplier to amount of money injected into servers using grow
 <b>Signature:</b>
 
 ```typescript
-hacking_grow?: number;
+hacking_grow: number;
 ```

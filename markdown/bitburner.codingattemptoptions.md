@@ -9,7 +9,7 @@ Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md
 <b>Signature:</b>
 
 ```typescript
-export interface CodingAttemptOptions 
+interface CodingAttemptOptions 
 ```
 
 ## Properties

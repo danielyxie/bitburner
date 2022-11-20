@@ -8,7 +8,15 @@
 <b>Signature:</b>
 
 ```typescript
-export type NSEnums = typeof enums;
+export type NSEnums = {
+  toast: typeof ToastVariant;
+  CrimeType: typeof CrimeType;
+  FactionWorkType: typeof FactionWorkType;
+  GymType: typeof GymType;
+  UniversityClassType: typeof UniversityClassType;
+  CompanyPosName: typeof CompanyPosName;
+  LocationName: typeof LocationName;
+};
 ```
-<b>References:</b> [enums](./bitburner.enums.md)
+<b>References:</b> [ToastVariant](./bitburner.toastvariant.md)<!-- -->, [CrimeType](./bitburner.crimetype.md)<!-- -->, [FactionWorkType](./bitburner.factionworktype.md)<!-- -->, [GymType](./bitburner.gymtype.md)<!-- -->, [UniversityClassType](./bitburner.universityclasstype.md)<!-- -->, [CompanyPosName](./bitburner.companyposname.md)<!-- -->, [LocationName](./bitburner.locationname.md)
 

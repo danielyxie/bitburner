@@ -26,7 +26,7 @@ void
 
 RAM cost: 0 GB
 
-Closes a script’s logs. This is functionally the same pressing the "Close" button on the tail window.
+Closes a script’s logs. This is functionally the same as pressing the "Close" button on the tail window.
 
 If the function is called with no arguments, it will close the current script’s logs.
 

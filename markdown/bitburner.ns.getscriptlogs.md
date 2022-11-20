@@ -24,7 +24,7 @@ getScriptLogs(fn?: string, host?: string, ...args: (string | number | boolean)[]
 
 string\[\]
 
-Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
+Returns a string array, where each line is an element in the array. The most recently logged line is at the end of the array.
 
 ## Remarks
 

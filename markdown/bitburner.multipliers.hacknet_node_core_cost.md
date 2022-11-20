@@ -9,5 +9,5 @@ Multiplier to cost of core for a Hacknet Node
 <b>Signature:</b>
 
 ```typescript
-hacknet_node_core_cost?: number;
+hacknet_node_core_cost: number;
 ```

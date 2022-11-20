@@ -7,7 +7,7 @@ import * as React from "react";
 
 import { City } from "../City";
 import { Cities } from "../Cities";
-import { LocationName } from "../data/LocationNames";
+import { LocationName } from "../../utils/enums";
 import { Locations } from "../Locations";
 import { Location } from "../Location";
 import { Settings } from "../../Settings/Settings";

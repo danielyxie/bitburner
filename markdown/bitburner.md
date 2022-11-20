@@ -8,8 +8,17 @@
 
 |  Enumeration | Description |
 |  --- | --- |
+|  [CompanyPosName](./bitburner.companyposname.md) |  |
+|  [CrimeType](./bitburner.crimetype.md) |  |
+|  [EmployeePositions](./bitburner.employeepositions.md) |  |
+|  [FactionWorkType](./bitburner.factionworktype.md) |  |
+|  [GymType](./bitburner.gymtype.md) |  |
+|  [IndustryType](./bitburner.industrytype.md) |  |
+|  [LocationName](./bitburner.locationname.md) | Names of all locations |
 |  [OrderTypes](./bitburner.ordertypes.md) |  |
 |  [PositionTypes](./bitburner.positiontypes.md) |  |
+|  [ToastVariant](./bitburner.toastvariant.md) |  |
+|  [UniversityClassType](./bitburner.universityclasstype.md) |  |
 
 ## Interfaces
 
@@ -22,15 +31,12 @@
 |  [BitNodeMultipliers](./bitburner.bitnodemultipliers.md) | All multipliers affecting the difficulty of the current challenge. |
 |  [Bladeburner](./bitburner.bladeburner.md) | Bladeburner API |
 |  [BladeburnerCurAction](./bitburner.bladeburnercuraction.md) | Bladeburner current action. |
-|  [CharacterMult](./bitburner.charactermult.md) |  |
 |  [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md) attempt. |
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contract API |
 |  [Corporation](./bitburner.corporation.md) | Corporation API |
 |  [CorporationInfo](./bitburner.corporationinfo.md) | General info about a corporation |
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
 |  [Division](./bitburner.division.md) | Corporation division |
-|  [Employee](./bitburner.employee.md) | Employee in an office |
-|  [EmployeeJobs](./bitburner.employeejobs.md) | Object representing the number of employee in each job. |
 |  [EquipmentStats](./bitburner.equipmentstats.md) | Object representing data representing a gang member equipment. |
 |  [Export](./bitburner.export.md) | Export order for a material |
 |  [Formulas](./bitburner.formulas.md) | Formulas API |
@@ -62,14 +68,16 @@
 |  [InvestmentOffer](./bitburner.investmentoffer.md) | Corporation investment offer |
 |  [IStyleSettings](./bitburner.istylesettings.md) | Interface Styles |
 |  [Material](./bitburner.material.md) | Material in a warehouse |
+|  [MoneySource](./bitburner.moneysource.md) |  |
+|  [MoneySources](./bitburner.moneysources.md) |  |
 |  [Multipliers](./bitburner.multipliers.md) |  |
 |  [NetscriptPort](./bitburner.netscriptport.md) | Object representing a port. A port is a serialized queue. |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
 |  [Office](./bitburner.office.md) | Office for a division in a city. |
 |  [OfficeAPI](./bitburner.officeapi.md) | Corporation Office API |
+|  [Person](./bitburner.person.md) |  |
 |  [Player](./bitburner.player.md) |  |
-|  [PossibleInfiltrationLocation](./bitburner.possibleinfiltrationlocation.md) |  |
 |  [ProcessInfo](./bitburner.processinfo.md) | A single process on a server. |
 |  [Product](./bitburner.product.md) | Product in a warehouse |
 |  [RecentScript](./bitburner.recentscript.md) |  |
@@ -79,10 +87,8 @@
 |  [Singularity](./bitburner.singularity.md) | Singularity API |
 |  [Skills](./bitburner.skills.md) |  |
 |  [SkillsFormulas](./bitburner.skillsformulas.md) | Skills formulas |
-|  [Sleeve](./bitburner.sleeve.md) | Sleeve API |
-|  [SleeveInformation](./bitburner.sleeveinformation.md) | Object representing sleeve information. |
-|  [SleeveSkills](./bitburner.sleeveskills.md) | Object representing a sleeve stats. |
-|  [SleeveWorkGains](./bitburner.sleeveworkgains.md) |  |
+|  [sleeve](./bitburner.sleeve.md) | Sleeve API |
+|  [Sleeve](./bitburner.sleeve.md) |  |
 |  [SourceFileLvl](./bitburner.sourcefilelvl.md) |  |
 |  [Stanek](./bitburner.stanek.md) | Stanek's Gift API. |
 |  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md)<!-- -->Keys are stock symbols, properties are arrays of [StockOrderObject](./bitburner.stockorderobject.md) |
@@ -95,12 +101,6 @@
 |  [WorkFormulas](./bitburner.workformulas.md) | Work formulas |
 |  [WorkStats](./bitburner.workstats.md) |  |
 
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [enums](./bitburner.enums.md) |  |
-
 ## Type Aliases
 
 |  Type Alias | Description |
@@ -110,7 +110,14 @@
 |  [NSEnums](./bitburner.nsenums.md) |  |
 |  [PortData](./bitburner.portdata.md) |  |
 |  [ScriptArg](./bitburner.scriptarg.md) |  |
+|  [SleeveBladeburnerTask](./bitburner.sleevebladeburnertask.md) |  |
+|  [SleeveClassTask](./bitburner.sleeveclasstask.md) |  |
+|  [SleeveCompanyTask](./bitburner.sleevecompanytask.md) |  |
+|  [SleeveCrimeTask](./bitburner.sleevecrimetask.md) |  |
+|  [SleeveFactionTask](./bitburner.sleevefactiontask.md) |  |
+|  [SleeveInfiltrateTask](./bitburner.sleeveinfiltratetask.md) |  |
+|  [SleeveRecoveryTask](./bitburner.sleeverecoverytask.md) |  |
+|  [SleeveSupportTask](./bitburner.sleevesupporttask.md) |  |
+|  [SleeveSynchroTask](./bitburner.sleevesynchrotask.md) |  |
 |  [SleeveTask](./bitburner.sleevetask.md) | Object representing a sleeve current task. |
-|  [ToastVariant](./bitburner.toastvariant.md) |  |
-|  [ValuesFrom](./bitburner.valuesfrom.md) |  |
 

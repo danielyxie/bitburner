@@ -9,7 +9,7 @@ A single process on a server.
 <b>Signature:</b>
 
 ```typescript
-export interface ProcessInfo 
+interface ProcessInfo 
 ```
 
 ## Properties

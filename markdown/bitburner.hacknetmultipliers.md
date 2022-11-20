@@ -9,7 +9,7 @@ Hacknet related multipliers.
 <b>Signature:</b>
 
 ```typescript
-export interface HacknetMultipliers 
+interface HacknetMultipliers 
 ```
 
 ## Properties

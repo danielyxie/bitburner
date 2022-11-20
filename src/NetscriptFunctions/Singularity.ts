@@ -16,7 +16,7 @@ import { findCrime } from "../Crime/CrimeHelpers";
 import { CompanyPositions } from "../Company/CompanyPositions";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { CityName } from "../Locations/data/CityNames";
-import { LocationName } from "../Locations/data/LocationNames";
+import { LocationName } from "../utils/enums";
 import { Router } from "../ui/GameRoot";
 import { SpecialServers } from "../Server/data/SpecialServers";
 import { Page } from "../ui/Router";

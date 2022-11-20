@@ -7,7 +7,7 @@ import { GeneralActions } from "../../../Bladeburner/data/GeneralActions";
 import { scaleWorkStats } from "../../../Work/WorkStats";
 
 interface SleeveBladeburnerWorkParams {
-  type: string;
+  type: "General" | "Contracts";
   name: string;
 }
 
@@ -16,7 +16,7 @@ export const isSleeveBladeburnerWork = (w: Work | null): w is SleeveBladeburnerW
 
 export class SleeveBladeburnerWork extends Work {
   cyclesWorked = 0;
-  actionType: string;
+  actionType: "General" | "Contracts";
   actionName: string;
 
   constructor(params?: SleeveBladeburnerWorkParams) {
@@ -62,8 +62,9 @@ export class SleeveBladeburnerWork extends Work {
     }
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
+      type: WorkType.BLADEBURNER as "BLADEBURNER",
       actionType: this.actionType,
       actionName: this.actionName,
     };

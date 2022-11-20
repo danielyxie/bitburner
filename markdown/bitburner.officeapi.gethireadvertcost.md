@@ -4,7 +4,7 @@
 
 ## OfficeAPI.getHireAdVertCost() method
 
-Get the cost to Hire AdVert
+Get data about an employee
 
 <b>Signature:</b>
 
@@ -22,5 +22,5 @@ getHireAdVertCost(divisionName: string): number;
 
 number
 
-Cost
+Employee data
 

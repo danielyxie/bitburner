@@ -9,5 +9,5 @@ Multiplier to strength skill
 <b>Signature:</b>
 
 ```typescript
-strength?: number;
+strength: number;
 ```

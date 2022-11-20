@@ -9,7 +9,7 @@ export declare interface ActiveFragment {
 }
 
 /**
- * Return value of {@link Sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
+ * Return value of {@link sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
  * @public
  */
 export declare interface AugmentPair {
@@ -631,6 +631,13 @@ export declare interface Bladeburner {
      * @returns Amount of accumulated “bonus time” (milliseconds) for the Bladeburner mechanic.
      */
     getBonusTime(): number;
+
+    /** Returns whether player is a member of bladeburner division. Does not require API access.
+     * @remarks
+     * RAM cost: 1 GB
+     *
+     * @returns whether player is a member of bladeburner division. */
+    inBladeburner(): boolean;
 }
 
 /**
@@ -642,44 +649,6 @@ export declare interface BladeburnerCurAction {
     type: string;
     /** Name of Action */
     name: string;
-}
-
-/** @public */
-export declare interface CharacterMult {
-    /** Agility stat */
-    agility: number;
-    /** Agility exp */
-    agilityExp: number;
-    /** Charisma stat */
-    charisma: number;
-    /** Charisma exp */
-    charismaExp: number;
-    /** Company reputation */
-    companyRep: number;
-    /** Money earned from crimes */
-    crimeMoney: number;
-    /** Crime success chance */
-    crimeSuccess: number;
-    /** Defense stat */
-    defense: number;
-    /** Defense exp */
-    defenseExp: number;
-    /** Dexterity stat */
-    dexterity: number;
-    /** Dexterity exp */
-    dexterityExp: number;
-    /** Faction reputation */
-    factionRep: number;
-    /** Hacking stat */
-    hacking: number;
-    /** Hacking exp */
-    hackingExp: number;
-    /** Strength stat */
-    strength: number;
-    /** Strength exp */
-    strengthExp: number;
-    /** Money earned from jobs */
-    workMoney: number;
 }
 
 /**
@@ -796,162 +765,178 @@ export declare interface CodingContract {
  */
 export declare type CodingContractData = any;
 
+/** @public */
+export declare enum CompanyPosName {
+    sw0 = "Software Engineering Intern",
+    sw1 = "Junior Software Engineer",
+    sw2 = "Senior Software Engineer",
+    sw3 = "Lead Software Developer",
+    sw4 = "Head of Software",
+    sw5 = "Head of Engineering",
+    sw6 = "Vice President of Technology",
+    sw7 = "Chief Technology Officer",
+    IT0 = "IT Intern",
+    IT1 = "IT Analyst",
+    IT2 = "IT Manager",
+    IT3 = "Systems Administrator",
+    secEng = "Security Engineer",
+    netEng0 = "Network Engineer",
+    netEng1 = "Network Administrator",
+    bus0 = "Business Intern",
+    bus1 = "Business Analyst",
+    bus2 = "Business Manager",
+    bus3 = "Operations Manager",
+    bus4 = "Chief Financial Officer",
+    bus5 = "Chief Executive Officer",
+    sec0 = "Police Officer",
+    sec1 = "Police Chief",
+    sec2 = "Security Guard",
+    sec3 = "Security Officer",
+    sec4 = "Security Supervisor",
+    sec5 = "Head of Security",
+    agent0 = "Field Agent",
+    agent1 = "Secret Agent",
+    agent2 = "Special Operative",
+    waiter = "Waiter",
+    employee = "Employee",
+    softCons0 = "Software Consultant",
+    softCons1 = "Senior Software Consultant",
+    busCons0 = "Business Consultant",
+    busCons1 = "Senior Business Consultant",
+    waiterPT = "Part-time Waiter",
+    employeePT = "Part-time Employee",
+}
+
 /**
  * Corporation API
  * @public
  */
 export declare interface Corporation extends WarehouseAPI, OfficeAPI {
-    /**
-     * Create a Corporation
-     * @param divisionName - Name of the division
+    /** Enums specific to the corporation game mechanic. */
+    enums: {
+        EmployeePositions: typeof EmployeePositions;
+        IndustryType: typeof IndustryType;
+    };
+
+    /** Returns whether the player has a corporation. Does not require API access.
+     * @returns whether the player has a corporation */
+    hasCorporation(): boolean;
+
+    /** Create a Corporation
+     * @param corporationName - Name of the corporation
      * @param selfFund - If you should self fund, defaults to true, false will only work on Bitnode 3
-     * @returns true if created and false if not
-     */
+     * @returns true if created and false if not */
     createCorporation(corporationName: string, selfFund: boolean): boolean;
-    /**
-     * Check if you have a one time unlockable upgrade
+
+    /** Check if you have a one time unlockable upgrade
      * @param upgradeName - Name of the upgrade
-     * @returns true if unlocked and false if not
-     */
+     * @returns true if unlocked and false if not */
     hasUnlockUpgrade(upgradeName: string): boolean;
-    /**
-     * Gets the cost to unlock a one time unlockable upgrade
+
+    /** Gets the cost to unlock a one time unlockable upgrade
      * @param upgradeName - Name of the upgrade
-     * @returns cost of the upgrade
-     */
+     * @returns cost of the upgrade */
     getUnlockUpgradeCost(upgradeName: string): number;
-    /**
-     * Get the level of a levelable upgrade
+
+    /** Get the level of a levelable upgrade
      * @param upgradeName - Name of the upgrade
-     * @returns the level of the upgrade
-     */
+     * @returns the level of the upgrade */
     getUpgradeLevel(upgradeName: string): number;
-    /**
-     * Gets the cost to unlock the next level of a levelable upgrade
+
+    /** Gets the cost to unlock the next level of a levelable upgrade
      * @param upgradeName - Name of the upgrade
-     * @returns cost of the upgrade
-     */
+     * @returns cost of the upgrade */
     getUpgradeLevelCost(upgradeName: string): number;
-    /**
-     * Gets the cost to expand into a new industry
+
+    /** Gets the cost to expand into a new industry
      * @param industryName - Name of the industry
-     * @returns cost
-     */
-    getExpandIndustryCost(industryName: string): number;
-    /**
-     * Gets the cost to expand into a new city
-     * @returns cost
-     */
+     * @returns cost */
+    getExpandIndustryCost(industryName: IndustryType | `${IndustryType}`): number;
+
+    /** Gets the cost to expand into a new city
+     * @returns cost */
     getExpandCityCost(): number;
-    /**
-     * Get an offer for investment based on you companies current valuation
-     * @returns An offer of investment
-     */
+
+    /** Get an offer for investment based on you companies current valuation
+     * @returns An offer of investment */
     getInvestmentOffer(): InvestmentOffer;
-    /**
-     * Get list of materials
-     * @returns material names
-     */
+
+    /** Get list of materials
+     * @returns material names */
     getMaterialNames(): string[];
-    /**
-     * Get list of industry types
-     * @returns industry names
-     */
-    getIndustryTypes(): string[];
-    /**
-     * Get list of one-time unlockable upgrades
-     * @returns unlockable upgrades names
-     */
+
+    /** Get list of one-time unlockable upgrades
+     * @returns unlockable upgrades names */
     getUnlockables(): string[];
-    /**
-     * Get list of upgrade names
-     * @returns upgrade names
-     */
+
+    /**  Get list of upgrade names
+     * @returns upgrade names */
     getUpgradeNames(): string[];
-    /**
-     * Get list of research names
-     * @returns research names
-     */
+
+    /** Get list of research names
+     * @returns research names */
     getResearchNames(): string[];
-    /**
-     * Accept investment based on you companies current valuation
+
+    /** Accept investment based on you companies current valuation
      * @remarks
      * Is based on current valuation and will not honer a specific Offer
-     * @returns An offer of investment
-     */
+     * @returns An offer of investment */
     acceptInvestmentOffer(): boolean;
-    /**
-     * Go public
+
+    /** Go public
      * @param numShares - number of shares you would like to issue for your IPO
-     * @returns true if you successfully go public, false if not
-     */
+     * @returns true if you successfully go public, false if not */
     goPublic(numShares: number): boolean;
-    /**
-     * Bribe a faction
+
+    /** Bribe a faction
      * @param factionName - Faction name
      * @param amountCash - Amount of money to bribe
-     * @returns True if successful, false if not
-     */
+     * @returns True if successful, false if not */
     bribe(factionName: string, amountCash: number): boolean;
-    /**
-     * Get corporation data
-     * @returns Corporation data
-     */
+
+    /** Get corporation data
+     * @returns Corporation data */
     getCorporation(): CorporationInfo;
-    /**
-     * Get division data
+
+    /**  Get division data
      * @param divisionName - Name of the division
-     * @returns Division data
-     */
+     * @returns Division data */
     getDivision(divisionName: string): Division;
-    /**
-     * Expand to a new industry
+
+    /** Expand to a new industry
      * @param industryType - Name of the industry
+     * @param divisionName - Name of the division */
+    expandIndustry(industryType: IndustryType | `${IndustryType}`, divisionName: string): void;
+
+    /** Expand to a new city
      * @param divisionName - Name of the division
-     */
-    expandIndustry(industryType: string, divisionName: string): void;
-    /**
-     * Expand to a new city
-     * @param divisionName - Name of the division
-     * @param cityName - Name of the city
-     */
+     * @param cityName - Name of the city */
     expandCity(divisionName: string, cityName: string): void;
-    /**
-     * Unlock an upgrade
-     * @param upgradeName - Name of the upgrade
-     */
+
+    /** Unlock an upgrade
+     * @param upgradeName - Name of the upgrade */
     unlockUpgrade(upgradeName: string): void;
-    /**
-     * Level an upgrade.
-     * @param upgradeName - Name of the upgrade
-     */
+
+    /** Level an upgrade.
+     * @param upgradeName - Name of the upgrade */
     levelUpgrade(upgradeName: string): void;
-    /**
-     * Issue dividends
-     * @param rate - Fraction of profit to issue as dividends.
-     */
+
+    /** Issue dividends
+     * @param rate - Fraction of profit to issue as dividends. */
     issueDividends(rate: number): void;
-    /**
-     * Buyback Shares
-     * @param amount - Amount of shares to buy back.
-     *
-     */
+
+    /** Buyback Shares
+     * @param amount - Amount of shares to buy back. */
     buyBackShares(amount: number): void;
-    /**
-     * Sell Shares
-     * @param amount -  Amount of shares to sell.
-     *
-     */
+
+    /** Sell Shares
+     * @param amount -  Amount of shares to sell. */
     sellShares(amount: number): void;
-    /**
-     * Get bonus time.
-     *
+
+    /** Get bonus time.
      * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
-     *
      * “Bonus time” makes the game progress faster.
-     *
-     * @returns Bonus time for the Corporation mechanic in milliseconds.
-     */
+     * @returns Bonus time for the Corporation mechanic in milliseconds. */
     getBonusTime(): number;
 }
 
@@ -1005,8 +990,6 @@ export declare interface CrimeStats {
     kills: number;
     /** How much money is given */
     money: number;
-    /** Name of crime */
-    name: string;
     /** Milliseconds it takes to attempt the crime */
     time: number;
     /** Description of the crime activity */
@@ -1037,6 +1020,22 @@ export declare interface CrimeStats {
     charisma_exp: number;
     /** intelligence exp gained from crime */
     intelligence_exp: number;
+}
+
+/** @public */
+export declare enum CrimeType {
+    shoplift = "Shoplift",
+    robStore = "Rob Store",
+    mug = "Mug",
+    larceny = "Larceny",
+    dealDrugs = "Deal Drugs",
+    bondForgery = "Bond Forgery",
+    traffickArms = "Traffick Arms",
+    homicide = "Homicide",
+    grandTheftAuto = "Grand Theft Auto",
+    kidnap = "Kidnap",
+    assassination = "Assassination",
+    heist = "Heist",
 }
 
 /**
@@ -1074,60 +1073,16 @@ export declare interface Division {
     makesProducts: boolean;
 }
 
-/**
- * Employee in an office
- * @public
- */
-export declare interface Employee {
-    /** Name of the employee */
-    name: string;
-    /** Morale of the employee */
-    mor: number;
-    /** Happiness of the employee */
-    hap: number;
-    /** Energy of the employee */
-    ene: number;
-    /** Intelligence of the employee */
-    int: number;
-    /** Charisma of the employee */
-    cha: number;
-    /** Experience of the employee */
-    exp: number;
-    /** Creativity of the employee */
-    cre: number;
-    /** Efficiency of the employee */
-    eff: number;
-    /** Salary of the employee */
-    sal: number;
-    /** Current Location (city) */
-    loc: string;
-    /** Current job position */
-    pos: string;
-}
-
-/**
- * Object representing the number of employee in each job.
- * @public
- */
-export declare interface EmployeeJobs {
-    Operations: number;
-    Engineer: number;
-    Business: number;
-    Management: number;
-    "Research & Development": number;
-    Training: number;
-    Unassigned: number;
-}
-
 /** @public */
-export declare const enums = {
-    toast: {
-        SUCCESS: "success",
-        WARNING: "warning",
-        ERROR: "error",
-        INFO: "info",
-    },
-};
+export declare enum EmployeePositions {
+    Operations = "Operations",
+    Engineer = "Engineer",
+    Business = "Business",
+    Management = "Management",
+    RandD = "Research & Development",
+    Training = "Training",
+    Unassigned = "Unassigned",
+}
 
 /**
  * Object representing data representing a gang member equipment.
@@ -1162,6 +1117,13 @@ export declare interface Export {
 }
 
 /** @public */
+export declare enum FactionWorkType {
+    hacking = "hacking",
+    field = "field",
+    security = "security",
+}
+
+/** @public */
 export declare type FilenameOrPID = number | string;
 
 /**
@@ -1173,6 +1135,7 @@ export declare type FilenameOrPID = number | string;
 export declare interface Formulas {
     mockServer(): Server;
     mockPlayer(): Player;
+    mockPerson(): Person;
     /** Reputation formulas */
     reputation: ReputationFormulas;
     /** Skills formulas */
@@ -1283,7 +1246,15 @@ export declare interface Gang {
      * @remarks
      * RAM cost: 1 GB
      *
-     * Returns boolean indicating whether a member can currently be recruited
+     * Returns a boolean indicating whether a member can currently be recruited.
+     *
+     * Once you have successfully created a gang by using the function
+     * {@link Gang.createGang | createGang}, you can immediately recruit a small
+     * number of members to your gang. After you have recruited the founding
+     * members, to recruit another member you must increase your respect. The
+     * more members you want to recruit, the more respect you require. If your
+     * gang has the maximum number of members, then this function would return
+     * false.
      *
      * @returns True if a member can currently be recruited, false otherwise.
      */
@@ -1763,6 +1734,14 @@ export declare interface Grafting {
     graftAugmentation(augName: string, focus?: boolean): boolean;
 }
 
+/** @public */
+export declare enum GymType {
+    strength = "str",
+    defense = "def",
+    dexterity = "dex",
+    agility = "agi",
+}
+
 /**
  * Hacking formulas
  * @public
@@ -1775,7 +1754,7 @@ export declare interface HackingFormulas {
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      * @returns The calculated hack chance.
      */
-    hackChance(server: Server, player: Player): number;
+    hackChance(server: Server, player: Person): number;
     /**
      * Calculate hack exp for one thread.
      * @remarks
@@ -1784,7 +1763,7 @@ export declare interface HackingFormulas {
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      * @returns The calculated hack exp.
      */
-    hackExp(server: Server, player: Player): number;
+    hackExp(server: Server, player: Person): number;
     /**
      * Calculate hack percent for one thread.
      * (Ex: 0.25 would steal 25% of the server's current value.)
@@ -1794,7 +1773,7 @@ export declare interface HackingFormulas {
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      * @returns The calculated hack percent.
      */
-    hackPercent(server: Server, player: Player): number;
+    hackPercent(server: Server, player: Person): number;
     /**
      * Calculate the percent a server would grow to.
      * (Ex: 3.0 would would grow the server to 300% of its current value.)
@@ -1804,28 +1783,28 @@ export declare interface HackingFormulas {
      * @param cores - Number of cores on the computer that will execute grow.
      * @returns The calculated grow percent.
      */
-    growPercent(server: Server, threads: number, player: Player, cores?: number): number;
+    growPercent(server: Server, threads: number, player: Person, cores?: number): number;
     /**
      * Calculate hack time.
      * @param server - Server info from {@link NS.getServer | getServer}
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      * @returns The calculated hack time.
      */
-    hackTime(server: Server, player: Player): number;
+    hackTime(server: Server, player: Person): number;
     /**
      * Calculate grow time.
      * @param server - Server info from {@link NS.getServer | getServer}
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      * @returns The calculated grow time.
      */
-    growTime(server: Server, player: Player): number;
+    growTime(server: Server, player: Person): number;
     /**
      * Calculate weaken time.
      * @param server - Server info from {@link NS.getServer | getServer}
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      * @returns The calculated weaken time.
      */
-    weakenTime(server: Server, player: Player): number;
+    weakenTime(server: Server, player: Person): number;
 }
 
 /**
@@ -2418,6 +2397,24 @@ export declare interface ILocation {
     name: string;
 }
 
+/** @public */
+export declare enum IndustryType {
+    Energy = "Energy",
+    Utilities = "Water Utilities",
+    Agriculture = "Agriculture",
+    Fishing = "Fishing",
+    Mining = "Mining",
+    Food = "Food",
+    Tobacco = "Tobacco",
+    Chemical = "Chemical",
+    Pharmaceutical = "Pharmaceutical",
+    Computers = "Computer Hardware",
+    Robotics = "Robotics",
+    Software = "Software",
+    Healthcare = "Healthcare",
+    RealEstate = "RealEstate",
+}
+
 /**
  * Infiltration API.
  * @public
@@ -2430,7 +2427,7 @@ export declare interface Infiltration {
      *
      * @returns all locations that can be infiltrated.
      */
-    getPossibleLocations(): PossibleInfiltrationLocation[];
+    getPossibleLocations(): ILocation[];
     /**
      * Get all infiltrations with difficulty, location and rewards.
      * @remarks
@@ -2477,6 +2474,74 @@ export declare interface IStyleSettings {
     lineHeight: number;
 }
 
+/** Names of all locations
+ * @public */
+export declare enum LocationName {
+    AevumAeroCorp = "AeroCorp",
+    AevumBachmanAndAssociates = "Bachman & Associates",
+    AevumClarkeIncorporated = "Clarke Incorporated",
+    AevumCrushFitnessGym = "Crush Fitness Gym",
+    AevumECorp = "ECorp",
+    AevumFulcrumTechnologies = "Fulcrum Technologies",
+    AevumGalacticCybersystems = "Galactic Cybersystems",
+    AevumNetLinkTechnologies = "NetLink Technologies",
+    AevumPolice = "Aevum Police Headquarters",
+    AevumRhoConstruction = "Rho Construction",
+    AevumSnapFitnessGym = "Snap Fitness Gym",
+    AevumSummitUniversity = "Summit University",
+    AevumWatchdogSecurity = "Watchdog Security",
+    AevumCasino = "Iker Molina Casino",
+
+    ChongqingKuaiGongInternational = "KuaiGong International",
+    ChongqingSolarisSpaceSystems = "Solaris Space Systems",
+    ChongqingChurchOfTheMachineGod = "Church of the Machine God",
+
+    Sector12AlphaEnterprises = "Alpha Enterprises",
+    Sector12BladeIndustries = "Blade Industries",
+    Sector12CIA = "Central Intelligence Agency",
+    Sector12CarmichaelSecurity = "Carmichael Security",
+    Sector12CityHall = "Sector-12 City Hall",
+    Sector12DeltaOne = "DeltaOne",
+    Sector12FoodNStuff = "FoodNStuff",
+    Sector12FourSigma = "Four Sigma",
+    Sector12IcarusMicrosystems = "Icarus Microsystems",
+    Sector12IronGym = "Iron Gym",
+    Sector12JoesGuns = "Joe's Guns",
+    Sector12MegaCorp = "MegaCorp",
+    Sector12NSA = "National Security Agency",
+    Sector12PowerhouseGym = "Powerhouse Gym",
+    Sector12RothmanUniversity = "Rothman University",
+    Sector12UniversalEnergy = "Universal Energy",
+
+    NewTokyoDefComm = "DefComm",
+    NewTokyoGlobalPharmaceuticals = "Global Pharmaceuticals",
+    NewTokyoNoodleBar = "Noodle Bar",
+    NewTokyoVitaLife = "VitaLife",
+    NewTokyoArcade = "Arcade",
+
+    IshimaNovaMedical = "Nova Medical",
+    IshimaOmegaSoftware = "Omega Software",
+    IshimaStormTechnologies = "Storm Technologies",
+    IshimaGlitch = "0x6C1",
+
+    VolhavenCompuTek = "CompuTek",
+    VolhavenHeliosLabs = "Helios Labs",
+    VolhavenLexoCorp = "LexoCorp",
+    VolhavenMilleniumFitnessGym = "Millenium Fitness Gym",
+    VolhavenNWO = "NWO",
+    VolhavenOmniTekIncorporated = "OmniTek Incorporated",
+    VolhavenOmniaCybersystems = "Omnia Cybersystems",
+    VolhavenSysCoreSecurities = "SysCore Securities",
+    VolhavenZBInstituteOfTechnology = "ZB Institute of Technology",
+
+    Hospital = "Hospital",
+    Slums = "The Slums",
+    TravelAgency = "Travel Agency",
+    WorldStockExchange = "World Stock Exchange",
+
+    Void = "The Void",
+}
+
 /**
  * Material in a warehouse
  * @public
@@ -2505,67 +2570,96 @@ export declare interface Material {
 }
 
 /** @public */
+export declare interface MoneySource {
+    bladeburner: number;
+    casino: number;
+    class: number;
+    codingcontract: number;
+    corporation: number;
+    crime: number;
+    gang: number;
+    hacking: number;
+    hacknet: number;
+    hacknet_expenses: number;
+    hospitalization: number;
+    infiltration: number;
+    sleeves: number;
+    stock: number;
+    total: number;
+    work: number;
+    servers: number;
+    other: number;
+    augmentations: number;
+}
+
+/** @public */
+export declare interface MoneySources {
+    sinceInstall: MoneySource;
+    sinceStart: MoneySource;
+}
+
+/** @public */
 export declare interface Multipliers {
     /** Multiplier to hacking skill */
-    hacking?: number;
+    hacking: number;
     /** Multiplier to strength skill */
-    strength?: number;
+    strength: number;
     /** Multiplier to defense skill */
-    defense?: number;
+    defense: number;
     /** Multiplier to dexterity skill */
-    dexterity?: number;
+    dexterity: number;
     /** Multiplier to agility skill */
-    agility?: number;
+    agility: number;
     /** Multiplier to charisma skill */
-    charisma?: number;
+    charisma: number;
     /** Multiplier to hacking experience gain rate */
-    hacking_exp?: number;
+    hacking_exp: number;
     /** Multiplier to strength experience gain rate */
-    strength_exp?: number;
+    strength_exp: number;
     /** Multiplier to defense experience gain rate */
-    defense_exp?: number;
+    defense_exp: number;
     /** Multiplier to dexterity experience gain rate */
-    dexterity_exp?: number;
+    dexterity_exp: number;
     /** Multiplier to agility experience gain rate */
-    agility_exp?: number;
+    agility_exp: number;
     /** Multiplier to charisma experience gain rate */
-    charisma_exp?: number;
+    charisma_exp: number;
     /** Multiplier to chance of successfully performing a hack */
-    hacking_chance?: number;
+    hacking_chance: number;
     /** Multiplier to hacking speed */
-    hacking_speed?: number;
+    hacking_speed: number;
     /** Multiplier to amount of money the player gains from hacking */
-    hacking_money?: number;
+    hacking_money: number;
     /** Multiplier to amount of money injected into servers using grow */
-    hacking_grow?: number;
+    hacking_grow: number;
     /** Multiplier to amount of reputation gained when working */
-    company_rep?: number;
+    company_rep: number;
     /** Multiplier to amount of reputation gained when working */
-    faction_rep?: number;
+    faction_rep: number;
     /** Multiplier to amount of money gained from crimes */
-    crime_money?: number;
+    crime_money: number;
     /** Multiplier to crime success rate */
-    crime_success?: number;
+    crime_success: number;
     /** Multiplier to amount of money gained from working */
-    work_money?: number;
+    work_money: number;
     /** Multiplier to amount of money produced by Hacknet Nodes */
-    hacknet_node_money?: number;
+    hacknet_node_money: number;
     /** Multiplier to cost of purchasing a Hacknet Node */
-    hacknet_node_purchase_cost?: number;
+    hacknet_node_purchase_cost: number;
     /** Multiplier to cost of ram for a Hacknet Node */
-    hacknet_node_ram_cost?: number;
+    hacknet_node_ram_cost: number;
     /** Multiplier to cost of core for a Hacknet Node */
-    hacknet_node_core_cost?: number;
+    hacknet_node_core_cost: number;
     /** Multiplier to cost of leveling up a Hacknet Node */
-    hacknet_node_level_cost?: number;
+    hacknet_node_level_cost: number;
     /** Multiplier to Bladeburner max stamina */
-    bladeburner_max_stamina?: number;
+    bladeburner_max_stamina: number;
     /** Multiplier to Bladeburner stamina gain rate */
-    bladeburner_stamina_gain?: number;
+    bladeburner_stamina_gain: number;
     /** Multiplier to effectiveness in Bladeburner Field Analysis */
-    bladeburner_analysis?: number;
+    bladeburner_analysis: number;
     /** Multiplier to success chance in Bladeburner contracts/operations */
-    bladeburner_success_chance?: number;
+    bladeburner_success_chance: number;
 }
 
 /**
@@ -2580,7 +2674,7 @@ export declare interface NetscriptPort {
      *
      * @returns The data popped off the queue if it was full.
      */
-    write(value: string | number): null | string | number;
+    write(value: string | number): PortData | null;
 
     /**
      * Attempt to write data to the port.
@@ -2592,6 +2686,13 @@ export declare interface NetscriptPort {
     tryWrite(value: string | number): boolean;
 
     /**
+     * Sleeps until the port is written to.
+     * @remarks
+     * RAM cost: 0 GB
+     */
+    nextWrite(): Promise<void>;
+
+    /**
      * Shift an element out of the port.
      * @remarks
      * RAM cost: 0 GB
@@ -2600,7 +2701,7 @@ export declare interface NetscriptPort {
      * If the port is empty, then the string “NULL PORT DATA” will be returned.
      * @returns the data read.
      */
-    read(): string | number;
+    read(): PortData;
 
     /**
      * Retrieve the first element from the port without removing it.
@@ -2612,7 +2713,7 @@ export declare interface NetscriptPort {
      * the port is empty, the string “NULL PORT DATA” will be returned.
      * @returns the data read
      */
-    peek(): string | number;
+    peek(): PortData;
 
     /**
      * Check if the port is full.
@@ -2723,7 +2824,7 @@ export declare interface NS {
      * Namespace for sleeve functions.
      * @remarks RAM cost: 0 GB
      */
-    readonly sleeve: Sleeve;
+    readonly sleeve: sleeve;
 
     /**
      * Namespace for stock functions.
@@ -2788,7 +2889,7 @@ export declare interface NS {
     readonly args: (string | number | boolean)[];
 
     /**
-     * Steal a servers money.
+     * Steal a server's money.
      * @remarks
      * RAM cost: 0.1 GB
      *
@@ -2820,7 +2921,7 @@ export declare interface NS {
     hack(host: string, opts?: BasicHGWOptions): Promise<number>;
 
     /**
-     * Spoof money in a servers bank account, increasing the amount available.
+     * Spoof money in a server's bank account, increasing the amount available.
      * @remarks
      * RAM cost: 0.15 GB
      *
@@ -2829,10 +2930,10 @@ export declare interface NS {
      * security level. When `grow` completes, the money available on a target server will
      * be increased by a certain, fixed percentage. This percentage is determined by the
      * target server’s growth rate (which varies between servers) and security level. Generally,
-     * higher-level servers have higher growth rates. The getServerGrowth() function can be used
+     * higher-level servers have higher growth rates. The {@link NS.getServerGrowth | getServerGrowth} function can be used
      * to obtain a server’s growth rate.
      *
-     * Like hack, `grow` can be called on any server, regardless of where the script is running.
+     * Like {@link NS.hack | hack}, `grow` can be called on any server, regardless of where the script is running.
      * The grow() command requires root access to the target server, but there is no required hacking
      * level to run the command. It also raises the security level of the target server by 0.004.
      *
@@ -2840,13 +2941,13 @@ export declare interface NS {
      * ```ts
      * // NS1:
      * var currentMoney = getServerMoneyAvailable("foodnstuff");
-     * currentMoney = currentMoney * (1 + grow("foodnstuff"));
+     * currentMoney = currentMoney * grow("foodnstuff");
      * ```
      * @example
      * ```ts
      * // NS2:
      * let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
-     * currentMoney *= (1 + await ns.grow("foodnstuff"));
+     * currentMoney *= await ns.grow("foodnstuff");
      * ```
      * @param host - Hostname of the target server to grow.
      * @param opts - Optional parameters for configuring function behavior.
@@ -2855,17 +2956,17 @@ export declare interface NS {
     grow(host: string, opts?: BasicHGWOptions): Promise<number>;
 
     /**
-     * Reduce a server security level.
+     * Reduce a server's security level.
      * @remarks
      * RAM cost: 0.15 GB
      *
      * Use your hacking skills to attack a server’s security, lowering the server’s security level.
-     * The runtime for this command depends on your hacking level and the target server’s security
+     * The runtime for this function depends on your hacking level and the target server’s security
      * level when this function is called. This function lowers the security level of the target server by 0.05.
      *
-     * Like hack and grow, `weaken` can be called on any server, regardless of
-     * where the script is running. This command requires root access to the target server, but
-     * there is no required hacking level to run the command.
+     * Like {@link NS.hack | hack} and {@link NS.grow| grow}, `weaken` can be called on any server, regardless of
+     * where the script is running. This function requires root access to the target server, but
+     * there is no required hacking level to run the function.
      *
      * @example
      * ```ts
@@ -2949,14 +3050,14 @@ export declare interface NS {
     hackAnalyze(host: string): number;
 
     /**
-     * Get the security increase for a number of thread.
+     * Get the security increase for a number of threads.
      * @remarks
      * RAM cost: 1 GB
      *
      * Returns the security increase that would occur if a hack with this many threads happened.
      *
      * @param threads - Amount of threads that will be used.
-     * @param hostname - Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
+     * @param hostname - Hostname of the target server. The number of threads is limited to the number needed to hack the server's maximum amount of money.
      * @returns The security increase.
      */
     hackAnalyzeSecurity(threads: number, hostname?: string): number;
@@ -2976,7 +3077,7 @@ export declare interface NS {
     hackAnalyzeChance(host: string): number;
 
     /**
-     * Calculate the number of grow thread needed to grow a server by a certain multiplier.
+     * Calculate the number of grow threads needed to grow a server by a certain multiplier.
      * @remarks
      * RAM cost: 1 GB
      *
@@ -3001,20 +3102,20 @@ export declare interface NS {
      * //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).
      * ```
      * @param host - Hostname of the target server.
-     * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..
-     * @returns The amount of grow calls needed to grow the specified server by the specified amount
+     * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form.
+     * @returns The amount of grow calls needed to grow the specified server by the specified amount.
      */
     growthAnalyze(host: string, growthAmount: number, cores?: number): number;
 
     /**
-     * Calculate the security increase for a number of thread.
+     * Calculate the security increase for a number of threads.
      * @remarks
      * RAM cost: 1 GB
      *
      * Returns the security increase that would occur if a grow with this many threads happened.
      *
      * @param threads - Amount of threads that will be used.
-     * @param hostname - Optional. Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
+     * @param hostname - Optional. Hostname of the target server. The number of threads is limited to the number needed to hack the server's maximum amount of money.
      * @param cores - Optional. The number of cores of the server that would run grow.
      * @returns The security increase.
      */
@@ -3060,7 +3161,7 @@ export declare interface NS {
     asleep(millis: number): Promise<true>;
 
     /**
-     * Prints one or move values or variables to the script’s logs.
+     * Prints one or more values or variables to the script’s logs.
      * @remarks
      * RAM cost: 0 GB
      *
@@ -3102,12 +3203,9 @@ export declare interface NS {
      * var green = "\u001b[32m";
      * var red = "\u001b[31m";
      * var reset = "\u001b[0m";
-     * var msgError = red + "Ugh! What a mess." + reset;
-     * var msgSuccess = green + "Well done!" + reset;
-     * var msgMixed = cyan + "ERROR Should this be in red?" + reset;
-     * print(msgError);
-     * print(msgSuccess);
-     * print(msgMixed);
+     * print(red + "Ugh! What a mess." + reset);
+     * print(green + "Well done!" + reset);
+     * print(cyan + "ERROR Should this be in red?" + reset);
      * tail();
      * ```
      * @example
@@ -3126,12 +3224,9 @@ export declare interface NS {
      * const green = "\u001b[32m";
      * const red = "\u001b[31m";
      * const reset = "\u001b[0m";
-     * const msgError = "Ugh! What a mess.";
-     * const msgSuccess = "Well done!";
-     * const msgMixed = "ERROR Should this be in red?";
-     * ns.print(`${red + msgError + reset}`);
-     * ns.print(`${green + msgSuccess + reset}`);
-     * ns.print(`${cyan + msgMixed + reset}`);
+     * ns.print(`${red}Ugh! What a mess.${reset}`);
+     * ns.print(`${green}Well done!${reset}`);
+     * ns.print(`${cyan}ERROR Should this be in red?${reset}`);
      * ns.tail();
      * ```
      *
@@ -3221,10 +3316,6 @@ export declare interface NS {
      *
      * Logging can be disabled for all functions by passing `ALL` as the argument.
      *
-     * Note that this does not completely remove all logging functionality.
-     * This only stops a function from logging when the function is successful.
-     * If the function fails, it will still log the reason for failure.
-     *
      * @param fn - Name of function for which to disable logging.
      */
     disableLog(fn: string): void;
@@ -3247,7 +3338,7 @@ export declare interface NS {
      * RAM cost: 0 GB
      *
      * @param fn - Name of function to check.
-     * @returns Returns a boolean indicating whether or not logging is enabled for that function (or `ALL`)
+     * @returns Returns a boolean indicating whether or not logging is enabled for that function (or `ALL`).
      */
     isLogEnabled(fn: string): boolean;
 
@@ -3291,7 +3382,7 @@ export declare interface NS {
      * @param fn - Optional. Filename of script to get logs from.
      * @param host - Optional. Hostname of the server that the script is on.
      * @param args - Arguments to identify which scripts to get logs for.
-     * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
+     * @returns Returns a string array, where each line is an element in the array. The most recently logged line is at the end of the array.
      */
     getScriptLogs(fn?: string, host?: string, ...args: (string | number | boolean)[]): string[];
 
@@ -3359,11 +3450,11 @@ export declare interface NS {
     tail(fn?: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): void;
 
     /**
-     * Move a tail window
+     * Move a tail window.
      * @remarks
      * RAM cost: 0 GB
      *
-     * Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0)
+     * Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0).
      *
      * @param x - x coordinate.
      * @param y - y coordinate.
@@ -3372,14 +3463,14 @@ export declare interface NS {
     moveTail(x: number, y: number, pid?: number): void;
 
     /**
-     * Resize a tail window
+     * Resize a tail window.
      * @remarks
      * RAM cost: 0 GB
      *
-     * Resize a tail window. Size are in pixel
+     * Resize a tail window. Size are in pixel.
      *
-     * @param width - width of the window.
-     * @param height - height of the window.
+     * @param width - Width of the window.
+     * @param height - Height of the window.
      * @param pid - Optional. PID of the script having its tail resized. If omitted, the current script is used.
      */
     resizeTail(width: number, height: number, pid?: number): void;
@@ -3389,7 +3480,7 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
-     * Closes a script’s logs. This is functionally the same pressing the "Close" button on the tail window.
+     * Closes a script’s logs. This is functionally the same as pressing the "Close" button on the tail window.
      *
      * If the function is called with no arguments, it will close the current script’s logs.
      *
@@ -3408,17 +3499,71 @@ export declare interface NS {
      * node way from the specified target server. The hostnames in the returned
      * array are strings.
      *
-     * @param host - Optional, Hostname of the server to scan, default to current server.
-     * @returns Returns an string of hostnames.
+     * @example
+     * ```ts
+     * // NS1
+     * // All servers that are one hop from the current server.
+     * tprint("Neighbors of current server.");
+     * var neighbor = scan();
+     * for (var i = 0; i < neighbor.length; i++) {
+     *     tprint(neighbor[i]);
+     * }
+     * // All neighbors of n00dles.
+     * var target = "n00dles";
+     * neighbor = scan(target);
+     * tprintf("Neighbors of %s.", target);
+     * for (var i = 0; i < neighbor.length; i++) {
+     *     tprint(neighbor[i]);
+     * }
+     * ```
+     * @example
+     * ```ts
+     * // NS2
+     * // All servers that are one hop from the current server.
+     * ns.tprint("Neighbors of current server.");
+     * let neighbor = ns.scan();
+     * for (let i = 0; i < neighbor.length; i++) {
+     *     ns.tprint(neighbor[i]);
+     * }
+     * // All neighbors of n00dles.
+     * const target = "n00dles";
+     * neighbor = ns.scan(target);
+     * ns.tprintf("Neighbors of %s.", target);
+     * for (let i = 0; i < neighbor.length; i++) {
+     *     ns.tprint(neighbor[i]);
+     * }
+     * ```
+     *
+     * @param host - Optional. Hostname of the server to scan, default to current server.
+     * @returns Returns an array of hostnames.
      */
     scan(host?: string): string[];
+
+    /** Returns whether the player has access to the darkweb.
+     * @remarks
+     * RAM cost: 0.05GB
+     *
+     * @example
+     * ```js
+     * // NS1:
+     * if (hasTorRouter()) tprint("TOR router detected.");
+     * ```
+     *
+     * @example
+     * ```js
+     * // NS2:
+     * if (ns.hasTorRouter()) tprint("TOR router detected.");
+     * ```
+     *
+     * @returns Whether player has access to the dark web. */
+    hasTorRouter(): boolean;
 
     /**
      * Runs NUKE.exe on a server.
      * @remarks
      * RAM cost: 0.05 GB
      *
-     * Running NUKE.exe on a target server gives you root access which means you can executes scripts on said server. NUKE.exe must exist on your home computer.
+     * Running NUKE.exe on a target server gives you root access which means you can execute scripts on said server. NUKE.exe must exist on your home computer.
      *
      * @example
      * ```ts
@@ -3647,7 +3792,7 @@ export declare interface NS {
     exec(script: string, host: string, numThreads?: number, ...args: (string | number | boolean)[]): number;
 
     /**
-     * Terminate current script and start another in 10s.
+     * Terminate current script and start another in 10 seconds.
      * @remarks
      * RAM cost: 2 GB
      *
@@ -3684,9 +3829,9 @@ export declare interface NS {
      * RAM cost: 0.5 GB
      *
      * Kills the script on the target server specified by the script’s name and arguments.
-     * Remember that scripts are uniquely identified by both their name and arguments.
+     * Remember that scripts are uniquely identified by both their names and arguments.
      * For example, if `foo.script` is run with the argument 1, then this is not the same as
-     * `foo.script` run with the argument 2, even though they have the same code.
+     * `foo.script` run with the argument 2, even though they have the same name.
      *
      * @example
      * ```ts
@@ -3712,7 +3857,7 @@ export declare interface NS {
      * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
      * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
      * ```
-     * @param script - Filename or pid of the script to kill
+     * @param script - Filename or PID of the script to kill.
      * @param host - Hostname of the server on which to kill the script.
      * @param args - Arguments to identify which script to kill.
      * @returns True if the script is successfully killed, and false otherwise.
@@ -3807,8 +3952,8 @@ export declare interface NS {
      * ns.scp(files, server, "home");
      * ```
      * @param files - Filename or an array of filenames of script/literature files to copy.
-     * @param destination - Host of the destination server, which is the server to which the file will be copied.
-     * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
+     * @param destination - Hostname of the destination server, which is the server to which the file will be copied.
+     * @param source - Hostname of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
      * @returns True if the file is successfully copied over and false otherwise. If the files argument is an array then this function will return false if any of the operations failed.
      */
     scp(files: string | string[], destination: string, source?: string): boolean;
@@ -3821,7 +3966,7 @@ export declare interface NS {
      * Returns an array with the filenames of all files on the specified server
      * (as strings). The returned array is sorted in alphabetic order.
      *
-     * @param host - Host of the target server.
+     * @param host - Hostname of the target server.
      * @param grep - A substring to search for in the filename.
      * @returns Array with the filenames of all files on the specified server.
      */
@@ -3858,7 +4003,7 @@ export declare interface NS {
     ps(host?: string): ProcessInfo[];
 
     /**
-     * Check if your have root access on a server.
+     * Check if you have root access on a server.
      * @remarks
      * RAM cost: 0.05 GB
      *
@@ -3878,7 +4023,7 @@ export declare interface NS {
      *    ns.nuke("foodnstuff");
      * }
      * ```
-     * @param host - Host of the target server
+     * @param host - Hostname of the target server.
      * @returns True if player has root access to the specified target server, and false otherwise.
      */
     hasRootAccess(host: string): boolean;
@@ -3888,7 +4033,7 @@ export declare interface NS {
      *
      * @remarks
      * RAM cost: 0.05 GB
-     * @returns Hostname of the server that the script is on.
+     * @returns Hostname of the server that the script runs on.
      */
     getHostname(): string;
 
@@ -3989,19 +4134,19 @@ export declare interface NS {
      * ns.getServerMoneyAvailable("foodnstuff");
      * ns.getServerMoneyAvailable("home"); // Returns player's money
      * ```
-     * @param host - Host of target server
+     * @param host - Hostname of target server.
      * @returns Amount of money available on the server.
      */
     getServerMoneyAvailable(host: string): number;
 
     /**
-     * Get maximum money available on a server.
+     * Get the maximum money available on a server.
      * @remarks
      * RAM cost: 0.1 GB
      *
      * Returns the maximum amount of money that can be available on a server.
      *
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @returns Maximum amount of money available on the server.
      */
     getServerMaxMoney(host: string): number;
@@ -4018,7 +4163,7 @@ export declare interface NS {
      * grow function. A higher growth parameter will result in a
      * higher percentage increase from grow.
      *
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @returns Parameter that affects the percentage by which the server’s money is increased when using the grow function.
      */
     getServerGrowth(host: string): number;
@@ -4032,7 +4177,7 @@ export declare interface NS {
      * level is denoted by a number, typically between 1 and 100
      * (but it can go above 100).
      *
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @returns Security level of the target server.
      */
     getServerSecurityLevel(host: string): number;
@@ -4041,7 +4186,7 @@ export declare interface NS {
      * Returns the minimum security level of the target server.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @returns Minimum security level of the target server.
      */
     getServerMinSecurityLevel(host: string): number;
@@ -4091,12 +4236,12 @@ export declare interface NS {
     getServerRam(host: string): [number, number];
 
     /**
-     * Get the max RAM on a server.
+     * Get the maximum amount of RAM on a server.
      * @remarks
      * RAM cost: 0.05 GB
      *
      * @param host - Hostname of the target server.
-     * @returns max ram (GB)
+     * @returns The maximum amount of RAM (GB) a server can have.
      */
     getServerMaxRam(host: string): number;
     /**
@@ -4105,7 +4250,7 @@ export declare interface NS {
      * RAM cost: 0.05 GB
      *
      * @param host - Hostname of the target server.
-     * @returns used ram (GB)
+     * @returns The amount of used RAM (GB) on the specified server.
      */
     getServerUsedRam(host: string): number;
 
@@ -4113,7 +4258,7 @@ export declare interface NS {
      * Returns the required hacking level of the target server.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @returns The required hacking level of the target server.
      */
     getServerRequiredHackingLevel(host: string): number;
@@ -4122,7 +4267,7 @@ export declare interface NS {
      * Returns the number of open ports required to successfully run NUKE.exe on the specified server.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @returns The number of open ports required to successfully run NUKE.exe on the specified server.
      */
     getServerNumPortsRequired(host: string): number;
@@ -4131,8 +4276,8 @@ export declare interface NS {
      * Returns a boolean denoting whether or not the specified server exists.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host of target server.
-     * @returns True if specified server exists, and false otherwise.
+     * @param host - Hostname of target server.
+     * @returns True if the specified server exists, and false otherwise.
      */
     serverExists(host: string): boolean;
 
@@ -4207,9 +4352,9 @@ export declare interface NS {
      * ns.isRunning("foo.script", "joesguns", 1, 5, "test");
      * ```
      * @param script - Filename or PID of script to check. This is case-sensitive.
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @param args - Arguments to specify/identify which scripts to search for.
-     * @returns True if specified script is running on the target server, and false otherwise.
+     * @returns True if the specified script is running on the target server, and false otherwise.
      */
     isRunning(script: FilenameOrPID, host?: string, ...args: (string | number | boolean)[]): boolean;
 
@@ -4263,14 +4408,14 @@ export declare interface NS {
      * @remarks
      * 2.25 GB
      *
-     * Purchased a server with the specified hostname and amount of RAM.
+     * Purchase a server with the specified hostname and amount of RAM.
      *
      * The hostname argument can be any data type, but it will be converted to a string
      * and have whitespace removed. Anything that resolves to an empty string will cause
      * the function to fail. If there is already a server with the specified hostname,
      * then the function will automatically append a number at the end of the hostname
      * argument value until it finds a unique hostname. For example, if the script calls
-     * `purchaseServer(“foo”, 4)` but a server named “foo” already exists, the it will
+     * `purchaseServer(“foo”, 4)` but a server named “foo” already exists, then it will
      * automatically change the hostname to `foo-0`. If there is already a server with the
      * hostname `foo-0`, then it will change the hostname to `foo-1`, and so on.
      *
@@ -4300,7 +4445,7 @@ export declare interface NS {
      *    ns.purchaseServer(prefix + i, ram);
      * }
      * ```
-     * @param hostname - Host of the purchased server.
+     * @param hostname - Hostname of the purchased server.
      * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
      * @returns The hostname of the newly purchased server.
      */
@@ -4318,13 +4463,13 @@ export declare interface NS {
     getPurchasedServerUpgradeCost(hostname: string, ram: number): number;
 
     /**
-     * Upgrade a purchased servers ram.
+     * Upgrade a purchased server's RAM.
      * @remarks
      * RAM cost: 0.25 GB
      *
      * @param hostname - Hostname of the server to upgrade.
      * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
-     * @returns True if the upgrade succeeded.
+     * @returns True if the upgrade succeeded, and false otherwise.
      */
     upgradePurchasedServer(hostname: string, ram: number): boolean;
 
@@ -4333,9 +4478,9 @@ export declare interface NS {
      * @remarks
      * RAM cost: 2.00 GB
      *
-     * @param hostname - current server hostname
-     * @param newName - new server hostname
-     * @returns True if the upgrade succeeded.
+     * @param hostname - Current server hostname.
+     * @param newName - New server hostname.
+     * @returns True if the upgrade succeeded, and false otherwise.
      */
     renamePurchasedServer(hostname: string, newName: string): boolean;
 
@@ -4350,7 +4495,7 @@ export declare interface NS {
      * Whitespace is automatically removed from the string. This function will not delete a
      * server that still has scripts running on it.
      *
-     * @param host - Host of the server to delete.
+     * @param host - Hostname of the server to delete.
      * @returns True if successful, and false otherwise.
      */
     deleteServer(host: string): boolean;
@@ -4387,8 +4532,8 @@ export declare interface NS {
      * This function can be used to write data to a text file (.txt) or a script (.js or .script).
      *
      * This function will write data to that file. If the specified file does not exist,
-     * then it will be created. The third argument mode, defines how the data will be written to
-     * the file. If *mode is set to “w”, then the data is written in “write” mode which means
+     * then it will be created. The third argument mode defines how the data will be written to
+     * the file. If mode is set to “w”, then the data is written in “write” mode which means
      * that it will overwrite all existing data on the file. If mode is set to any other value
      * then the data will be written in “append” mode which means that the data will be added at the
      * end of the file.
@@ -4397,14 +4542,14 @@ export declare interface NS {
      * @param data - Data to write.
      * @param mode - Defines the write mode.
      */
-    write(filename: string, data?: string[] | number | string, mode?: "w" | "a"): void;
+    write(filename: string, data?: string, mode?: "w" | "a"): void;
 
     /**
      * Attempt to write to a port.
      * @remarks
      * RAM cost: 0 GB
      *
-     * Attempts to write data to the specified Netscript Port.
+     * Attempts to write data to the specified Netscript port.
      * If the port is full, the data will not be written.
      * Otherwise, the data will be written normally.
      *
@@ -4470,10 +4615,10 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
-     * Write data to that netscript port.
-     * @returns The data popped off the queue if it was full.
+     * Write data to the given Netscript port.
+     * @returns The data popped off the queue if it was full, or null if it was not full.
      */
-    writePort(port: number, data: string | number): Promise<PortData>;
+    writePort(port: number, data: string | number): PortData | null;
     /**
      * Read data from a port.
      * @remarks
@@ -4482,7 +4627,7 @@ export declare interface NS {
      * Read data from that port. A port is a serialized queue.
      * This function will remove the first element from that queue and return it.
      * If the queue is empty, then the string “NULL PORT DATA” will be returned.
-     * @returns the data read.
+     * @returns The data read.
      */
     readPort(port: number): PortData;
 
@@ -4509,7 +4654,7 @@ export declare interface NS {
      * type except message (.msg) files.
      *
      * @param name - Filename of file to remove. Must include the extension.
-     * @param host - Host Address of the server on which to delete the file. Optional. Defaults to current server.
+     * @param host - Hostname of the server on which to delete the file. Optional. Defaults to current server.
      * @returns True if it successfully deletes the file, and false otherwise.
      */
     rm(name: string, host?: string): boolean;
@@ -4522,7 +4667,7 @@ export declare interface NS {
      * Returns a boolean indicating whether any instance of the specified script is running
      * on the target server, regardless of its arguments.
      *
-     * This is different than the isRunning function because it does not try to
+     * This is different than the {@link NS.isRunning | isRunning} function because it does not try to
      * identify a specific instance of a running script by its arguments.
      *
      * @example
@@ -4544,7 +4689,7 @@ export declare interface NS {
      * ns.scriptRunning("foo.script", ns.getHostname());
      * ```
      * @param script - Filename of script to check. This is case-sensitive.
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @returns True if the specified script is running, and false otherwise.
      */
     scriptRunning(script: string, host: string): boolean;
@@ -4558,8 +4703,8 @@ export declare interface NS {
      * regardless of arguments.
      *
      * @param script - Filename of script to kill. This is case-sensitive.
-     * @param host - Host of target server.
-     * @returns true if one or more scripts were successfully killed, and false if none were.
+     * @param host - Hostname of target server.
+     * @returns True if one or more scripts were successfully killed, and false if none were.
      */
     scriptKill(script: string, host: string): boolean;
 
@@ -4580,7 +4725,7 @@ export declare interface NS {
      * Returns 0 if the script does not exist.
      *
      * @param script - Filename of script. This is case-sensitive.
-     * @param host - Host of target server the script is located on. This is optional, if it is not specified then the function will use the current server as the target server.
+     * @param host - Hostname of target server the script is located on. This is optional. If it is not specified then the function will use the current server as the target server.
      * @returns Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
      */
     getScriptRam(script: string, host?: string): number;
@@ -4591,11 +4736,11 @@ export declare interface NS {
      * RAM cost: 0.05 GB
      *
      * When `hack` completes an amount of money is stolen depending on the player's skills.
-     * Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server.
+     * Returns the amount of time in milliseconds it takes to execute the {@link NS.hack | hack} Netscript function on the target server.
      * The required time is increased by the security level of the target server and decreased by the player's hacking level.
      *
-     * @param host - Host of target server.
-     * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function.
+     * @param host - Hostname of target server.
+     * @returns Returns the amount of time in milliseconds it takes to execute the {@link NS.hack | hack} Netscript function.
      */
     getHackTime(host: string): number;
 
@@ -4607,7 +4752,7 @@ export declare interface NS {
      * Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server.
      * The required time is increased by the security level of the target server and decreased by the player's hacking level.
      *
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function.
      */
     getGrowTime(host: string): number;
@@ -4617,20 +4762,20 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0.05 GB
      *
-     * Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server.
+     * Returns the amount of time in milliseconds it takes to execute the {@link NS.weaken | weaken} Netscript function on the target server.
      * The required time is increased by the security level of the target server and decreased by the player's hacking level.
      *
-     * @param host - Host of target server.
-     * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function.
+     * @param host - Hostname of target server.
+     * @returns Returns the amount of time in milliseconds it takes to execute the {@link NS.weaken | weaken} Netscript function.
      */
     getWeakenTime(host: string): number;
 
     /**
-     * Get the income of all script.
+     * Get the income of all scripts.
      * @remarks
      * RAM cost: 0.1 GB
      *
-     * @returns an array of two values.
+     * @returns An array of two values.
      * The first value is the total income (dollar / second) of all of your active scripts
      * (scripts that are currently running on any server).
      * The second value is the total income (dollar / second) that you’ve earned from scripts
@@ -4658,11 +4803,11 @@ export declare interface NS {
     getScriptIncome(script: string, host: string, ...args: (string | number | boolean)[]): number;
 
     /**
-     * Get the exp gain of all script.
+     * Get the exp gain of all scripts.
      * @remarks
      * RAM cost: 0.1 GB
      *
-     * @returns total experience gain rate of all of your active scripts.
+     * @returns Total experience gain rate of all of your active scripts.
      */
     getTotalScriptExpGain(): number;
 
@@ -4719,7 +4864,7 @@ export declare interface NS {
     vsprintf(format: string, args: any[]): string;
 
     /**
-     * Format a number
+     * Format a number.
      * @remarks
      * RAM cost: 0 GB
      *
@@ -4727,7 +4872,8 @@ export declare interface NS {
      * This uses the numeral.js library, so the formatters must be compatible with that.
      * This is the same function that the game itself uses to display numbers.
      *
-     * see: http://numeraljs.com/
+     * For more information, see: http://numeraljs.com/
+     *
      * @param n - Number to format.
      * @param format - Formatter.
      * @returns Formatted number.
@@ -4735,12 +4881,12 @@ export declare interface NS {
     nFormat(n: number, format: string): string;
 
     /**
-     * Format time to readable string
+     * Format time to a readable string.
      * @remarks
      * RAM cost: 0 GB
      *
      * @param milliseconds - Number of millisecond to format.
-     * @param milliPrecision - Format time with subsecond precision, defaults to false.
+     * @param milliPrecision - Format time with subsecond precision. Defaults to false.
      * @returns The formatted time.
      */
     tFormat(milliseconds: number, milliPrecision?: boolean): string;
@@ -4750,20 +4896,88 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
-     * Prompts the player with a dialog box. If `options.type` is undefined or "boolean",
-     * the player is shown "Yes" and "No" prompts, which return true and false respectively.
-     * Passing a type of "text" will give the player a text field and a value of "select"
-     * will show a drop-down field. Choosing type "select" will require an array or object
-     * to be passed via the `options.choices` property.
-     * The script’s execution is halted until the player selects one of the options.
+     * Prompts the player with a dialog box. Here is an explanation of the various options.
+     *
+     * - `options.type` is not provided to the function. If `options.type` is left out and
+     *   only a string is passed to the function, then the default behavior is to create a
+     *   boolean dialog box.
+     *
+     * - `options.type` has value `undefined` or `"boolean"`. A boolean dialog box is
+     *   created. The player is shown "Yes" and "No" prompts, which return true and false
+     *   respectively. The script's execution is halted until the player presses either the
+     *   "Yes" or "No" button.
+     *
+     * - `options.type` has value `"text"`. The player is given a text field to enter
+     *   free-form text. The script's execution is halted until the player enters some text
+     *   and/or presses the "Confirm" button.
+     *
+     * - `options.type` has value `"select"`. The player is shown a drop-down field.
+     *   Choosing type `"select"` will require an array to be passed via the
+     *   `options.choices` property. The array can be an array of strings, an array of
+     *   numbers (not BigInt numbers), or a mixture of both numbers and strings. Any other
+     *   types of array elements will result in an error or an undefined/unexpected
+     *   behavior. The `options.choices` property will be ignored if `options.type` has a
+     *   value other than `"select"`. The script's execution is halted until the player
+     *   chooses one of the provided options and presses the "Confirm" button.
+     *
+     * @example
+     * ```ts
+     * // NS1
+     * // A Yes/No question. The default is to create a boolean dialog box.
+     * var queryA = "Do you enjoy Bitburner?";
+     * var resultA = prompt(queryA);
+     * tprint(queryA + " " + resultA);
+     *
+     * // Another Yes/No question. Can also create a boolean dialog box by explicitly
+     * // passing the option {"type": "boolean"}.
+     * var queryB = "Is programming fun?";
+     * var resultB = prompt(queryB, { type: "boolean" });
+     * tprint(queryB + " " + resultB);
+     *
+     * // Free-form text box.
+     * var resultC = prompt("Please enter your name.", { type: "text" });
+     * tprint("Hello, " + resultC + ".");
+     *
+     * // A drop-down list.
+     * var resultD = prompt("Please select your favorite fruit.", {
+     *     type: "select",
+     *     choices: ["Apple", "Banana", "Orange", "Pear", "Strawberry"]
+     * });
+     * tprint("Your favorite fruit is " + resultD.toLowerCase() + ".");
+     * ```
+     * @example
+     * ```ts
+     * // NS2
+     * // A Yes/No question. The default is to create a boolean dialog box.
+     * const queryA = "Do you enjoy Bitburner?";
+     * const resultA = await ns.prompt(queryA);
+     * ns.tprint(`${queryA} ${resultA}`);
+     *
+     * // Another Yes/No question. Can also create a boolean dialog box by explicitly
+     * // passing the option {"type": "boolean"}.
+     * const queryB = "Is programming fun?";
+     * const resultB = await ns.prompt(queryB, { type: "boolean" });
+     * ns.tprint(`${queryB} ${resultB}`);
+     *
+     * // Free-form text box.
+     * const resultC = await ns.prompt("Please enter your name.", { type: "text" });
+     * ns.tprint(`Hello, ${resultC}.`);
+     *
+     * // A drop-down list.
+     * const resultD = await ns.prompt("Please select your favorite fruit.", {
+     *     type: "select",
+     *     choices: ["Apple", "Banana", "Orange", "Pear", "Strawberry"]
+     * });
+     * ns.tprint(`Your favorite fruit is ${resultD.toLowerCase()}.`);
+     * ```
      *
      * @param txt - Text to appear in the prompt dialog box.
      * @param options - Options to modify the prompt the player is shown.
-     * @returns True if the player click “Yes”; false if the player clicks “No”; or the value entered by the player.
+     * @returns True if the player clicks “Yes”; false if the player clicks “No”; or the value entered by the player.
      */
     prompt(
     txt: string,
-    options?: { type?: "boolean" | "text" | "select" | undefined; choices?: string[] },
+    options?: { type?: "boolean" | "text" | "select"; choices?: string[] },
     ): Promise<boolean | string>;
 
     /**
@@ -4775,10 +4989,10 @@ export declare interface NS {
     /**
      * Queue a toast (bottom-right notification).
      * @param msg - Message in the toast.
-     * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
-     * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
+     * @param variant - Type of toast. Must be one of success, info, warning, error. Defaults to success.
+     * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000.
      */
-    toast(msg: string, variant?: ToastVariant, duration?: number | null): void;
+    toast(msg: string, variant?: ToastVariant | `${ToastVariant}`, duration?: number | null): void;
 
     /**
      * Download a file from the internet.
@@ -4796,8 +5010,8 @@ export declare interface NS {
      * successfully retrieved from the URL. Because the function is async and returns a Promise,
      * it is recommended you use wget in NetscriptJS (Netscript 2.0).
      *
-     * In NetscriptJS, you must preface any call to wget with the await keyword (like you would hack or sleep).
-     * wget will still work in Netscript 1.0, but the functions execution will not be synchronous
+     * In NetscriptJS, you must preface any call to wget with the await keyword (like you would {@link NS.hack | hack} or {@link NS.sleep | sleep}).
+     * wget will still work in Netscript 1.0, but the function's execution will not be synchronous
      * (i.e. it may not execute when you expect/want it to).
      * Furthermore, since Promises are not supported in ES5,
      * you will not be able to process the returned value of wget in Netscript 1.0.
@@ -4832,7 +5046,7 @@ export declare interface NS {
      * @remarks
      * RAM cost: 4 GB
      *
-     * Returns an object containing the current BitNode multipliers.
+     * Returns an object containing the current (or supplied) BitNode multipliers.
      * This function requires you to be in Bitnode 5 or have Source-File 5 in order to run.
      * The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%).
      * The multipliers represent the difference between the current BitNode and
@@ -4858,7 +5072,7 @@ export declare interface NS {
      * ```
      * @returns Object containing the current BitNode multipliers.
      */
-    getBitNodeMultipliers(): BitNodeMultipliers;
+    getBitNodeMultipliers(n?: number, lvl?: number): BitNodeMultipliers;
 
     /**
      * Get information about the player.
@@ -4870,6 +5084,17 @@ export declare interface NS {
      * @returns Player info
      */
     getPlayer(): Player;
+
+    /**
+     * Get information about the sources of income for this run.
+     * @remarks
+     * RAM cost: 1.0 GB
+     *
+     * Returns an object with information on the income sources for this run
+     *
+     * @returns Money sources
+     */
+    getMoneySources(): MoneySources;
 
     /**
      * Add callback function when the script dies
@@ -4887,7 +5112,7 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
-     * NS2 exclusive
+     * NS2 exclusive.
      *
      * Move the source file to the specified destination on the target server.
      *
@@ -4896,7 +5121,7 @@ export declare interface NS {
      *
      * This function can also be used to rename files.
      *
-     * @param host - Host of target server.
+     * @param host - Hostname of target server.
      * @param source - Filename of the source file.
      * @param destination - Filename of the destination file.
      */
@@ -4907,7 +5132,7 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
-     * Allows unix like flag parsing.
+     * Allows Unix-like flag parsing.
      * @example
      * ```ts
      * // example.script
@@ -4967,7 +5192,15 @@ export declare interface NS {
 }
 
 /** @public */
-export declare type NSEnums = typeof enums;
+export declare type NSEnums = {
+    toast: typeof ToastVariant;
+    CrimeType: typeof CrimeType;
+    FactionWorkType: typeof FactionWorkType;
+    GymType: typeof GymType;
+    UniversityClassType: typeof UniversityClassType;
+    CompanyPosName: typeof CompanyPosName;
+    LocationName: typeof LocationName;
+};
 
 /**
  * Office for a division in a city.
@@ -4990,12 +5223,18 @@ export declare interface Office {
     minMor: number;
     /** Maximum morale of the employees */
     maxMor: number;
-    /** Name of all the employees */
-    employees: string[];
+    /** Amount of employees */
+    employees: number;
+    /** Average energy of the employees */
+    avgEne: number;
+    /** Average happiness of the employees */
+    avgHap: number;
+    /** Average morale of the employees */
+    avgMor: number;
     /** Production of the employees */
-    employeeProd: EmployeeJobs;
+    employeeProd: Record<`${EmployeePositions}`, number>;
     /** Positions of the employees */
-    employeeJobs: EmployeeJobs;
+    employeeJobs: Record<`${EmployeePositions}`, number>;
 }
 
 /**
@@ -5004,22 +5243,20 @@ export declare interface Office {
  * requires the Office API upgrade from your corporation.
  * @public
  */
+
 export declare interface OfficeAPI {
-    /**
-     * Assign an employee to a job.
-     * @param divisionName - Name of the division
-     * @param cityName - Name of the city
-     * @param employeeName - name of the employee
-     * @param job - Name of the job.
-     */
-    assignJob(divisionName: string, cityName: string, employeeName: string, job: string): void;
     /**
      * Hire an employee.
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
-     * @returns The newly hired employee, if any
+     * @param employeePosition - Position to place into. Defaults to "Unassigned".
+     * @returns True if an employee was hired, false otherwise
      */
-    hireEmployee(divisionName: string, cityName: string): Employee | undefined;
+    hireEmployee(
+    divisionName: string,
+    cityName: string,
+    employeePosition?: EmployeePositions | `${EmployeePositions}`,
+    ): boolean;
     /**
      * Upgrade office size.
      * @param divisionName - Name of the division
@@ -5066,12 +5303,6 @@ export declare interface OfficeAPI {
      * @param cityName - Name of the city
      * @param employeeName - Name of the employee
      * @returns Employee data
-     */
-    getEmployee(divisionName: string, cityName: string, employeeName: string): Employee;
-    /**
-     * Get the cost to Hire AdVert
-     * @param divisionName - Name of the division
-     * @returns Cost
      */
     getHireAdVertCost(divisionName: string): number;
     /**
@@ -5122,25 +5353,26 @@ export declare enum OrderTypes {
 }
 
 /** @public */
-export declare interface Player {
+export declare interface Person {
     hp: HP;
     skills: Skills;
     exp: Skills;
     mults: Multipliers;
-    numPeopleKilled: number;
-    money: number;
     city: string;
-    location: string;
+}
+
+/** @public */
+export declare interface Player extends Person {
+    money: number;
+    numPeopleKilled: number;
+    entropy: number;
+    jobs: Record<string, string>;
+    factions: string[];
     bitNodeN: number;
     totalPlaytime: number;
     playtimeSinceLastAug: number;
     playtimeSinceLastBitnode: number;
-    jobs: Record<string, string>;
-    factions: string[];
-    tor: boolean;
-    hasCorporation: boolean;
-    inBladeburner: boolean;
-    entropy: number;
+    location: string;
 }
 
 /** @public */
@@ -5150,12 +5382,6 @@ export declare type PortData = string | number;
 export declare enum PositionTypes {
     Long = "L",
     Short = "S",
-}
-
-/** @public */
-export declare interface PossibleInfiltrationLocation {
-    city: string;
-    name: string;
 }
 
 /**
@@ -5230,7 +5456,7 @@ export declare interface ReputationFormulas {
      * @param amount - Amount of money donated
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      */
-    repFromDonation(amount: number, player: Player): number;
+    repFromDonation(amount: number, player: Person): number;
 }
 
 /** @public */
@@ -5362,7 +5588,8 @@ export declare interface Server {
 /**
  * Singularity API
  * @remarks
- * This API requires Source-File 4 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on Source-File 4 levels.
+ * This API requires Source-File 4 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on
+ * Source-File 4 levels.
  * @public
  */
 export declare interface Singularity {
@@ -5584,37 +5811,30 @@ export declare interface Singularity {
      * RAM cost: 3 GB * 16/4/1
      *
      *
-     * This function will automatically set you to start working at the company
-     * at which you are employed. If you are already in the middle of some “working”
-     * action (such as working for a faction, training at a gym, or creating a program),
-     * then running this function will automatically cancel that action and give you
-     * your earnings.
+     * This function will set you to start working at your current job at a specified company at which you are employed.
+     * If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or
+     * creating a program), then running this function will cancel that action.
      *
      * This function will return true if the player starts working, and false otherwise.
      *
-     * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.
-     *
      * @example
-     * ```ts
+     * ```js
      * // NS1:
-     * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
-     * while (getCompanyRep(COMPANY HERE) < VALUE) {
-     *    workForCompany();
-     *    sleep(60000);
-     * }
-     * //This way, your company reputation will be updated every minute.
+     * var COMPANY_NAME = "Noodle Bar";
+     *
+     * var success = singularity.workForCompany(COMPANY_NAME);
+     * if (!success) tprint("ERROR: Failed to start work at " + COMPANY_NAME + ".");
      * ```
      * @example
-     * ```ts
+     * ```js
      * // NS2:
-     * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
-     * while (ns.getCompanyRep(COMPANY HERE) < VALUE) {
-     *    ns.workForCompany();
-     *    await ns.sleep(60000);
-     * }
-     * //This way, your company reputation will be updated every minute.
+     * const COMPANY_NAME = "Noodle Bar";
+     *
+     * let success = ns.singularity.workForCompany(COMPANY_NAME);
+     * if (!success) ns.tprint(`ERROR: Failed to start work at ${COMPANY_NAME].`);
      * ```
-     * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked
+     * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this
+     *   argument defaults to the last job that you worked.
      * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.
      * @returns True if the player starts working, and false otherwise.
      */
@@ -5726,42 +5946,35 @@ export declare interface Singularity {
      * RAM cost: 3 GB * 16/4/1
      *
      *
-     * This function will automatically set you to start working for the specified faction.
-     * Obviously, you must be a member of the faction or else this function will fail. If
-     * you are already in the middle of some “working” action (such as working for a company,
-     * training at a gym, or creating a program), then running this function will automatically
-     * cancel that action and give you your earnings.
+     * This function will set you to start working for the specified faction. You must be a member of the faction and
+     * that faction must have the specified work type, or else this function will fail. If you are already in the
+     * middle of some “working” action (such as working for a company, training at a gym, or creating a program), then
+     * running this function will cancel that action.
      *
      * This function will return true if you successfully start working for the specified faction, and false otherwise.
      *
-     * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.
-     *
      * @example
-     * ```ts
-     * // NS1:
-     * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
-     * while (getFactionRep(FACTION NAME) < VALUE) {
-     *    workForFaction(FACNAME, WORKTYPE);
-     *    sleep(60000);
-     * }
-     * //This way, your faction reputation will be updated every minute.
+     * ```js
+     * // NS1
+     * var FACTION_NAME = "CyberSec", WORK_TYPE = "hacking";
+     *
+     * var success = singularity.workForFaction(FACTION_NAME, WORK_TYPE);
+     * if (!success) tprint("ERROR: Failed to start work for " + FACTION_NAME + " with work type " + WORK_TYPE);
      * ```
      * @example
-     * ```ts
-     * // NS2:
-     * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
-     * while (ns.getFactionRep(FACTION NAME) < VALUE) {
-     *    ns.workForFaction(FACNAME, WORKTYPE);
-     *    await ns.sleep(60000);
-     * }
-     * //This way, your faction reputation will be updated every minute.
+     * ```js
+     * // NS2
+     * const FACTION_NAME = "CyberSec", WORK_TYPE = "hacking";
+     *
+     * let success = ns.singularity.workForFaction(FACTION_NAME, WORK_TYPE);
+     * if (!success) ns.tprint(`ERROR: Failed to start work for ${FACTION_NAME} with work type ${WORK_TYPE}.`)
      * ```
      * @param faction - Name of faction to work for.
      * @param workType - Type of work to perform for the faction.
      * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.
      * @returns True if the player starts working, and false otherwise.
      */
-    workForFaction(faction: string, workType: string, focus?: boolean): boolean;
+    workForFaction(faction: string, workType: FactionWorkType | `${FactionWorkType}`, focus?: boolean): boolean;
 
     /**
      * Get faction reputation.
@@ -5832,7 +6045,8 @@ export declare interface Singularity {
      *
      * This function returns true if you successfully start working on the specified program, and false otherwise.
      *
-     * Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are:
+     * Note that creating a program using this function has the same hacking level requirements as it normally would.
+     * These level requirements are:
      * * BruteSSH.exe: 50
      * * FTPCrack.exe: 100
      * * relaySMTP.exe: 250
@@ -5873,19 +6087,13 @@ export declare interface Singularity {
      *
      * This function returns the number of milliseconds it takes to attempt the
      * specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime,
-     * so running `commitCrime('rob store')` will return 60,000).
-     *
-     * Warning: I do not recommend using the time returned from this function to try
-     * and schedule your crime attempts. Instead, I would use the isBusy Singularity
-     * function to check whether you have finished attempting a crime. This is because
-     * although the game sets a certain crime to be X amount of seconds, there is no
-     * guarantee that your browser will follow that time limit.
+     * so running `commitCrime('ROBSTORE')` will return 60,000).
      *
      * @param crime - Name of crime to attempt.
      * @param focus - Acquire player focus on this crime. Optional. Defaults to true.
      * @returns The number of milliseconds it takes to attempt the specified crime.
      */
-    commitCrime(crime: string, focus?: boolean): number;
+    commitCrime(crime: CrimeType | `${CrimeType}`, focus?: boolean): number;
 
     /**
      * Get chance to successfully commit a crime.
@@ -5898,7 +6106,7 @@ export declare interface Singularity {
      * @param crime - Name of crime.
      * @returns Chance of success at committing the specified crime.
      */
-    getCrimeChance(crime: string): number;
+    getCrimeChance(crime: CrimeType | `${CrimeType}`): number;
 
     /**
      * Get stats related to a crime.
@@ -5908,10 +6116,10 @@ export declare interface Singularity {
      *
      * Returns the stats of the crime.
      *
-     * @param crime - Name of crime. Not case-sensitive
+     * @param crime - Name of crime.
      * @returns The stats of the crime.
      */
-    getCrimeStats(crime: string): CrimeStats;
+    getCrimeStats(crime: CrimeType | `${CrimeType}`): CrimeStats;
 
     /**
      * Get a list of owned augmentation.
@@ -5921,7 +6129,9 @@ export declare interface Singularity {
      *
      * This function returns an array containing the names (as strings) of all Augmentations you have.
      *
-     * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations.
+     * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not
+     *   yet installed. By default, this argument is false which means that the return value will NOT have the purchased
+     *   Augmentations.
      * @returns Array containing the names (as strings) of all Augmentations you have.
      */
     getOwnedAugmentations(purchased?: boolean): string[];
@@ -5930,6 +6140,7 @@ export declare interface Singularity {
      * Get a list of acquired Source-Files.
      * @remarks
      * RAM cost: 5 GB
+     *
      *
      * Returns an array of source files
      *
@@ -5967,7 +6178,7 @@ export declare interface Singularity {
 
     /**
      * Get the price and reputation of an augmentation.
-     * @deprecated use getAugmentationPrice getAugmentationRepCost
+     * @deprecated use getAugmentationPrice getAugmentationRepReq
      * @remarks
      * RAM cost: 5 GB * 16/4/1
      *
@@ -6279,13 +6490,20 @@ export declare interface SkillsFormulas {
     calculateExp(skill: number, skillMult?: number): number;
 }
 
+/** @public */
+export declare interface Sleeve extends Person {
+    shock: number;
+    sync: number;
+    memory: number;
+}
+
 /**
  * Sleeve API
  * @remarks
  * If you are not in BitNode-10, then you must have Source-File 10 in order to use this API.
  * @public
  */
-export declare interface Sleeve {
+export declare interface sleeve {
     /**
      * Get the number of sleeves you own.
      * @remarks
@@ -6298,40 +6516,29 @@ export declare interface Sleeve {
     getNumSleeves(): number;
 
     /**
-     * Get the stats of a sleeve.
-     * @remarks
-     * RAM cost: 4 GB
-     *
-     * Return a structure containing the stats of the sleeve.
-     *
-     * @param sleeveNumber - Index of the sleeve to get stats of.
-     * @returns Object containing the stats of the sleeve.
-     */
-    getSleeveStats(sleeveNumber: number): SleeveSkills;
-
-    /**
      * Get information about a sleeve.
      * @remarks
      * RAM cost: 4 GB
      *
-     * Return a struct containing tons of information about this sleeve
+     * Return a person object for this sleeve
      *
      * @param sleeveNumber - Index of the sleeve to retrieve information.
-     * @returns Object containing tons of information about this sleeve.
+     * @returns Object containing information about this sleeve.
      */
-    getInformation(sleeveNumber: number): SleeveInformation;
+    getSleeve(sleeveNumber: number): Sleeve;
 
     /**
      * Get task of a sleeve.
      * @remarks
      * RAM cost: 4 GB
      *
-     * Return the current task that the sleeve is performing. type is set to “Idle” if the sleeve isn’t doing anything.
+     * Return the current task that the sleeve is performing, or null if the sleeve is idle. All tasks have a "type"
+     * property, and other available properties depend on the type of task.
      *
      * @param sleeveNumber - Index of the sleeve to retrieve task from.
-     * @returns Object containing information the current task that the sleeve is performing.
+     * @returns Object containing information for the current task that the sleeve is performing.
      */
-    getTask(sleeveNumber: number): SleeveTask;
+    getTask(sleeveNumber: number): SleeveTask | null;
 
     /**
      * Set a sleeve to shock recovery.
@@ -6362,32 +6569,13 @@ export declare interface Sleeve {
      * @remarks
      * RAM cost: 4 GB
      *
-     * Return a boolean indicating whether or not this action was set successfully.
-     *
-     * Returns false if an invalid action is specified.
-     *
-     * You can set a sleeve to commit one of the following crimes. The crime names are not
-     * case sensitive. For example, you can pass in the crime name as `"Shoplift"`,
-     * `"shoplift"`, `"shopLift"`, or even `"SHOPLIFT"`.
-     *
-     * - Assassination
-     * - Bond forgery
-     * - Deal drugs
-     * - Grand theft auto
-     * - Heist
-     * - Homicide
-     * - Kidnap
-     * - Larceny
-     * - Mug
-     * - Rob store
-     * - Shoplift
-     * - Traffick arms
+     * Return a boolean indicating whether or not this action was set successfully (false if an invalid action is specified).
      *
      * @example
      * ```ts
      * // NS1
      * // Assign the first 3 sleeves to commit various crimes.
-     * var crime = ["mug", "rob store", "shoplift"];
+     * var crime = ["MUG", "ROBSTORE", "SHOPLIFT"];
      * for (var i = 0; i < crime.length; i++) {
      *     tprintf("Sleeve %d commits crime: %s", i, crime[i]);
      *     sleeve.setToCommitCrime(i, crime[i]);
@@ -6397,7 +6585,7 @@ export declare interface Sleeve {
      * ```ts
      * // NS2
      * // Assign the first 3 sleeves to commit various crimes.
-     * const crime = ["mug", "rob store", "shoplift"];
+     * const crime = ["MUG", "ROBSTORE", "SHOPLIFT"];
      * for (let i = 0; i < crime.length; i++) {
      *     ns.tprintf("Sleeve %d commits crime: %s", i, crime[i]);
      *     ns.sleeve.setToCommitCrime(i, crime[i]);
@@ -6405,10 +6593,10 @@ export declare interface Sleeve {
      * ```
      *
      * @param sleeveNumber - Index of the sleeve to start committing crime. Sleeves are numbered starting from 0.
-     * @param name - Name of the crime. Must be an exact match. Refer to the list of crimes.
+     * @param name - Name of the crime.
      * @returns True if this action was set successfully, false otherwise.
      */
-    setToCommitCrime(sleeveNumber: number, name: string): boolean;
+    setToCommitCrime(sleeveNumber: number, crimeType: CrimeType | `${CrimeType}`): boolean;
 
     /**
      * Set a sleeve to work for a faction.
@@ -6422,7 +6610,11 @@ export declare interface Sleeve {
      * @param factionWorkType - Name of the action to perform for this faction.
      * @returns True if the sleeve started working on this faction, false otherwise, can also throw on errors
      */
-    setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean | undefined;
+    setToFactionWork(
+    sleeveNumber: number,
+    factionName: string,
+    factionWorkType: FactionWorkType | `${FactionWorkType}`,
+    ): boolean | undefined;
 
     /**
      * Set a sleeve to work for a company.
@@ -6552,73 +6744,57 @@ export declare interface Sleeve {
     setToBladeburnerAction(sleeveNumber: number, action: string, contract?: string): boolean;
 }
 
-/**
- * Object representing sleeve information.
- * @public
- */
-export declare interface SleeveInformation {
-    /** Location of the sleeve */
-    city: string;
-    /** hp of the sleeve */
-    hp: HP;
-    /** Jobs available to the sleeve */
-    jobs: string[];
-    /** Job titles available to the sleeve */
-    jobTitle: string[];
-    /** Does this sleeve have access to the tor router */
-    tor: boolean;
-    /** Sleeve multipliers */
-    mult: CharacterMult;
-}
-
-/**
- * Object representing a sleeve stats.
- * @public
- */
-export declare interface SleeveSkills {
-    /** Current shock of the sleeve [0-100] */
-    shock: number;
-    /** Current sync of the sleeve [0-100] */
-    sync: number;
-    /** Current memory of the sleeve [1-100] */
-    memory: number;
-    /** Current hacking skill of the sleeve */
-    hacking: number;
-    /** Current strength of the sleeve */
-    strength: number;
-    /** Current defense of the sleeve */
-    defense: number;
-    /** Current dexterity of the sleeve */
-    dexterity: number;
-    /** Current agility of the sleeve */
-    agility: number;
-    /** Current charisma of the sleeve */
-    charisma: number;
-}
-
-/**
- * Object representing a sleeve current task.
- * @public
- */
-export declare type SleeveTask = any;
+/** @public */
+export declare type SleeveBladeburnerTask = {
+    type: "BLADEBURNER";
+    actionType: "General" | "Contracts";
+    actionName: string;
+};
 
 /** @public */
-export declare interface SleeveWorkGains {
-    /** Hacking exp gained from work */
-    workHackExpGain: number;
-    /** Strength exp gained from work */
-    workStrExpGain: number;
-    /** Defense exp gained from work, */
-    workDefExpGain: number;
-    /** Dexterity exp gained from work */
-    workDexExpGain: number;
-    /** Agility exp gained from work */
-    workAgiExpGain: number;
-    /** Charisma exp gained from work */
-    workChaExpGain: number;
-    /** Money gained from work */
-    workMoneyGain: number;
-}
+export declare type SleeveClassTask = {
+    type: "CLASS";
+    classType: UniversityClassType | GymType | `${UniversityClassType}` | `${GymType}`;
+    location: LocationName | `${LocationName}`;
+};
+
+/** @public */
+export declare type SleeveCompanyTask = { type: "COMPANY"; companyName: string };
+
+/** @public */
+export declare type SleeveCrimeTask = { type: "CRIME"; crimeType: CrimeType | `${CrimeType}` };
+
+/** @public */
+export declare type SleeveFactionTask = {
+    type: "FACTION";
+    factionWorkType: FactionWorkType | `${FactionWorkType}`;
+    factionName: string;
+};
+
+/** @public */
+export declare type SleeveInfiltrateTask = { type: "INFILTRATE" };
+
+/** @public */
+export declare type SleeveRecoveryTask = { type: "RECOVERY" };
+
+/** @public */
+export declare type SleeveSupportTask = { type: "SUPPORT" };
+
+/** @public */
+export declare type SleeveSynchroTask = { type: "SYNCHRO" };
+
+/** Object representing a sleeve current task.
+ * @public */
+export declare type SleeveTask =
+| SleeveBladeburnerTask
+| SleeveClassTask
+| SleeveCompanyTask
+| SleeveCrimeTask
+| SleeveFactionTask
+| SleeveInfiltrateTask
+| SleeveRecoveryTask
+| SleeveSupportTask
+| SleeveSynchroTask;
 
 /** @public */
 export declare interface SourceFileLvl {
@@ -7084,7 +7260,8 @@ export declare interface TIX {
      *  ...
      * }
      * ```
-     * The “Order type” property can have one of the following four values: "Limit Buy Order", "Limit Sell Order", "Stop Buy Order", "Stop Sell Order".
+     * The “Order type” property can have one of the following four values: "Limit Buy Order", "Limit Sell Order",
+     * "Stop Buy Order", "Stop Sell Order".
      * Note that the order book will only contain information for stocks that you actually have orders in.
      *
      * @example
@@ -7135,7 +7312,8 @@ export declare interface TIX {
     getVolatility(sym: string): number;
 
     /**
-     * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
+     * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next
+     * tick.
      * @remarks
      * RAM cost: 2.5 GB
      * The probability is returned as a decimal value, NOT a percentage
@@ -7181,7 +7359,22 @@ export declare interface TIX {
 }
 
 /** @public */
-export declare type ToastVariant = ValuesFrom<typeof enums.toast>;
+export declare enum ToastVariant {
+    SUCCESS = "success",
+    WARNING = "warning",
+    ERROR = "error",
+    INFO = "info",
+}
+
+/** @public */
+export declare enum UniversityClassType {
+    computerScience = "Computer Science",
+    dataStructures = "Data Structures",
+    networks = "Networks",
+    algorithms = "Algorithms",
+    management = "Management",
+    leadership = "Leadership",
+}
 
 /**
  * User Interface API.
@@ -7312,9 +7505,6 @@ export declare interface UserInterfaceTheme {
     backgroundsecondary: string;
     button: string;
 }
-
-/** @public */
-export declare type ValuesFrom<T> = T[keyof T];
 
 /**
  * Warehouse for a division in a city
@@ -7557,9 +7747,26 @@ export declare interface WarehouseAPI {
  * @public
  */
 export declare interface WorkFormulas {
-    crimeGains(crimeType: string): WorkStats;
-    classGains(player: Player, classType: string, locationName: string): WorkStats;
-    factionGains(player: Player, workType: string, favor: number): WorkStats;
+    crimeSuccessChance(person: Person, crimeType: CrimeType | `${CrimeType}`): number;
+    /** @returns The WorkStats gained when completing one instance of the specified crime. */
+    crimeGains(person: Person, crimeType: CrimeType | `${CrimeType}`): WorkStats;
+    /** @returns The WorkStats applied every game cycle (200ms) by taking the specified gym class. */
+    gymGains(person: Person, gymType: GymType | `${GymType}`, locationName: string): WorkStats;
+    /** @returns The WorkStats applied every game cycle (200ms) by taking the specified university class. */
+    universityGains(
+    person: Person,
+    classType: UniversityClassType | `${UniversityClassType}`,
+    locationName: string,
+    ): WorkStats;
+    /** @returns The WorkStats applied every game cycle (200ms) by performing the specified faction work. */
+    factionGains(person: Person, workType: FactionWorkType | `${FactionWorkType}`, favor: number): WorkStats;
+    /** @returns The WorkStats applied every game cycle (200ms) by performing the specified company work. */
+    companyGains(
+    person: Person,
+    companyName: string,
+    workType: CompanyPosName | `${CompanyPosName}`,
+    favor: number,
+    ): WorkStats;
 }
 
 /** @public */

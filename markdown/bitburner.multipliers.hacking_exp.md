@@ -9,5 +9,5 @@ Multiplier to hacking experience gain rate
 <b>Signature:</b>
 
 ```typescript
-hacking_exp?: number;
+hacking_exp: number;
 ```

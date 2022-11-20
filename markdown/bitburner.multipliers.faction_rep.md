@@ -9,5 +9,5 @@ Multiplier to amount of reputation gained when working
 <b>Signature:</b>
 
 ```typescript
-faction_rep?: number;
+faction_rep: number;
 ```

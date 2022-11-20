@@ -20,7 +20,7 @@ import { resetGangs } from "../../Gang/AllGangs";
 import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
-import { LocationName } from "../../Locations/data/LocationNames";
+import { LocationName } from "../../utils/enums";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
 import { calculateSkillProgress as calculateSkillProgressF, ISkillProgress } from "../formulas/skill";

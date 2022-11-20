@@ -1,4 +1,4 @@
-import { LocationName } from "../../Locations/data/LocationNames";
+import { LocationName } from "../../utils/enums";
 
 //Enum-like object because some keys are created via code and have spaces. Membership can still be checked with checkEnum.
 export const StockSymbols = {

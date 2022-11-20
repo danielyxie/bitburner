@@ -4,7 +4,7 @@
 
 ## NS.getTotalScriptExpGain() method
 
-Get the exp gain of all script.
+Get the exp gain of all scripts.
 
 <b>Signature:</b>
 
@@ -15,7 +15,7 @@ getTotalScriptExpGain(): number;
 
 number
 
-total experience gain rate of all of your active scripts.
+Total experience gain rate of all of your active scripts.
 
 ## Remarks
 

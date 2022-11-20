@@ -22,7 +22,7 @@ readPort(port: number): PortData;
 
 [PortData](./bitburner.portdata.md)
 
-the data read.
+The data read.
 
 ## Remarks
 

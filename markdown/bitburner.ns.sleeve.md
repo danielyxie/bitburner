@@ -9,7 +9,7 @@ Namespace for sleeve functions.
 <b>Signature:</b>
 
 ```typescript
-readonly sleeve: Sleeve;
+readonly sleeve: sleeve;
 ```
 
 ## Remarks

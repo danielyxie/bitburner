@@ -50,9 +50,9 @@ export class SleeveFactionWork extends Work {
     this.getFaction().playerReputation += rep * cycles;
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.FACTION as "FACTION",
       factionWorkType: this.factionWorkType,
       factionName: this.factionName,
     };

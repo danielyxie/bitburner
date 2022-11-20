@@ -1,7 +1,7 @@
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
-import { LocationName } from "../../../Locations/data/LocationNames";
+import { LocationName } from "../../../utils/enums";
 import { Companies } from "../../../Company/Companies";
 import { Company } from "../../../Company/Company";
 import { calculateCompanyWorkStats } from "../../../Work/Formulas";
@@ -48,9 +48,9 @@ export class SleeveCompanyWork extends Work {
     influenceStockThroughCompanyWork(company, gains.reputation, cycles);
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.COMPANY as "COMPANY",
       companyName: this.companyName,
     };
   }

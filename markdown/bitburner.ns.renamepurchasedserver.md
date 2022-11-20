@@ -16,14 +16,14 @@ renamePurchasedServer(hostname: string, newName: string): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  hostname | string | current server hostname |
-|  newName | string | new server hostname |
+|  hostname | string | Current server hostname. |
+|  newName | string | New server hostname. |
 
 <b>Returns:</b>
 
 boolean
 
-True if the upgrade succeeded.
+True if the upgrade succeeded, and false otherwise.
 
 ## Remarks
 

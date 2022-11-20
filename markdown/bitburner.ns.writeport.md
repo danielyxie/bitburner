@@ -9,7 +9,7 @@ Write data to a port.
 <b>Signature:</b>
 
 ```typescript
-writePort(port: number, data: string | number): Promise<PortData>;
+writePort(port: number, data: string | number): PortData | null;
 ```
 
 ## Parameters
@@ -21,13 +21,13 @@ writePort(port: number, data: string | number): Promise<PortData>;
 
 <b>Returns:</b>
 
-Promise&lt;[PortData](./bitburner.portdata.md)<!-- -->&gt;
+[PortData](./bitburner.portdata.md) \| null
 
-The data popped off the queue if it was full.
+The data popped off the queue if it was full, or null if it was not full.
 
 ## Remarks
 
 RAM cost: 0 GB
 
-Write data to that netscript port.
+Write data to the given Netscript port.
 

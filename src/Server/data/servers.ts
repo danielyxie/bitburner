@@ -3,7 +3,7 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 
 // This could actually be a JSON file as it should be constant metadata to be imported...
 import { IMinMaxRange } from "../../types";
-import { LocationName } from "../../Locations/data/LocationNames";
+import { LocationName } from "../../utils/enums";
 import { LiteratureNames } from "../../Literature/data/LiteratureNames";
 import { SpecialServers } from "./SpecialServers";
 

@@ -23,7 +23,7 @@ import { CityName } from "../../Locations/data/CityNames";
 
 import { Factions } from "../../Faction/Factions";
 
-import { LocationName } from "../../Locations/data/LocationNames";
+import { LocationName } from "../../utils/enums";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../utils/JSONReviver";
 import { numeralWrapper } from "../../ui/numeralFormat";

@@ -15,9 +15,9 @@ export class SleeveRecoveryWork extends Work {
     if (sleeve.shock >= 100) sleeve.stopWork();
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.RECOVERY as "RECOVERY",
     };
   }
 

@@ -22,7 +22,7 @@ getServerUsedRam(host: string): number;
 
 number
 
-used ram (GB)
+The amount of used RAM (GB) on the specified server.
 
 ## Remarks
 

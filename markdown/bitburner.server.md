@@ -9,7 +9,7 @@ A single server.
 <b>Signature:</b>
 
 ```typescript
-export interface Server 
+interface Server 
 ```
 
 ## Properties

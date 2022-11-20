@@ -43,13 +43,12 @@ import { calculateCrimeWorkStats } from "../Work/Formulas";
 import { calculateCompanyWorkStats } from "../Work/Formulas";
 import { Companies } from "../Company/Companies";
 import { calculateClassEarnings } from "../Work/Formulas";
-import { LocationName } from "../Locations/data/LocationNames";
 import { calculateFactionExp, calculateFactionRep } from "../Work/Formulas";
-import { FactionWorkType, GymType, UniversityClassType } from "../utils/enums";
+import { FactionWorkType, GymType, UniversityClassType, LocationName } from "../utils/enums";
 
 import { defaultMultipliers } from "../PersonObjects/Multipliers";
 import { checkEnum, findEnumMember } from "../utils/helpers/enum";
-import { CompanyPosNames } from "../utils/enums";
+import { CompanyPosName } from "../utils/enums";
 import { CompanyPositions } from "../Company/CompanyPositions";
 import { findCrime } from "../Crime/CrimeHelpers";
 
@@ -398,7 +397,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       companyGains: (ctx) => (_person, _companyName, _positionName, _favor) => {
         checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
-        const positionName = findEnumMember(CompanyPosNames, helpers.string(ctx, "_positionName", _positionName));
+        const positionName = findEnumMember(CompanyPosName, helpers.string(ctx, "_positionName", _positionName));
         if (!positionName) throw new Error(`Invalid company position: ${_positionName}`);
         const position = CompanyPositions[positionName];
         const companyName = helpers.string(ctx, "_companyName", _companyName);

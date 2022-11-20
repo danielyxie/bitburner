@@ -4,7 +4,7 @@
 
 ## NS.upgradePurchasedServer() method
 
-Upgrade a purchased servers ram.
+Upgrade a purchased server's RAM.
 
 <b>Signature:</b>
 
@@ -23,7 +23,7 @@ upgradePurchasedServer(hostname: string, ram: number): boolean;
 
 boolean
 
-True if the upgrade succeeded.
+True if the upgrade succeeded, and false otherwise.
 
 ## Remarks
 

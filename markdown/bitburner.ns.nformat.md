@@ -4,7 +4,7 @@
 
 ## NS.nFormat() method
 
-Format a number
+Format a number.
 
 <b>Signature:</b>
 
@@ -31,5 +31,5 @@ RAM cost: 0 GB
 
 Converts a number into a string with the specified formatter. This uses the numeral.js library, so the formatters must be compatible with that. This is the same function that the game itself uses to display numbers.
 
-see: http://numeraljs.com/
+For more information, see: http://numeraljs.com/
 

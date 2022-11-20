@@ -4,7 +4,7 @@
 
 ## NS.print() method
 
-Prints one or move values or variables to the script’s logs.
+Prints one or more values or variables to the script’s logs.
 
 <b>Signature:</b>
 
@@ -56,12 +56,9 @@ var cyan = "\u001b[36m";
 var green = "\u001b[32m";
 var red = "\u001b[31m";
 var reset = "\u001b[0m";
-var msgError = red + "Ugh! What a mess." + reset;
-var msgSuccess = green + "Well done!" + reset;
-var msgMixed = cyan + "ERROR Should this be in red?" + reset;
-print(msgError);
-print(msgSuccess);
-print(msgMixed);
+print(red + "Ugh! What a mess." + reset);
+print(green + "Well done!" + reset);
+print(cyan + "ERROR Should this be in red?" + reset);
 tail();
 ```
 
@@ -83,12 +80,9 @@ const cyan = "\u001b[36m";
 const green = "\u001b[32m";
 const red = "\u001b[31m";
 const reset = "\u001b[0m";
-const msgError = "Ugh! What a mess.";
-const msgSuccess = "Well done!";
-const msgMixed = "ERROR Should this be in red?";
-ns.print(`${red + msgError + reset}`);
-ns.print(`${green + msgSuccess + reset}`);
-ns.print(`${cyan + msgMixed + reset}`);
+ns.print(`${red}Ugh! What a mess.${reset}`);
+ns.print(`${green}Well done!${reset}`);
+ns.print(`${cyan}ERROR Should this be in red?${reset}`);
 ns.tail();
 ```
 

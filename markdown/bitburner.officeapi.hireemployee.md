@@ -9,7 +9,11 @@ Hire an employee.
 <b>Signature:</b>
 
 ```typescript
-hireEmployee(divisionName: string, cityName: string): Employee | undefined;
+hireEmployee(
+    divisionName: string,
+    cityName: string,
+    employeePosition?: EmployeePositions | `${EmployeePositions}`,
+  ): boolean;
 ```
 
 ## Parameters
@@ -18,10 +22,11 @@ hireEmployee(divisionName: string, cityName: string): Employee | undefined;
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
 |  cityName | string | Name of the city |
+|  employeePosition | [EmployeePositions](./bitburner.employeepositions.md) \| \`${[EmployeePositions](./bitburner.employeepositions.md)<!-- -->}\` | Position to place into. Defaults to "Unassigned". |
 
 <b>Returns:</b>
 
-[Employee](./bitburner.employee.md) \| undefined
+boolean
 
-The newly hired employee, if any
+True if an employee was hired, false otherwise
 

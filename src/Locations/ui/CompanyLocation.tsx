@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import { ApplyToJobButton } from "./ApplyToJobButton";
 
 import { Locations } from "../Locations";
-import { LocationName } from "../data/LocationNames";
+import { LocationName } from "../../utils/enums";
 
 import { Companies } from "../../Company/Companies";
 import { CompanyPositions } from "../../Company/CompanyPositions";

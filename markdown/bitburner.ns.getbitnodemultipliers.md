@@ -9,8 +9,16 @@ Get the current Bitnode multipliers.
 <b>Signature:</b>
 
 ```typescript
-getBitNodeMultipliers(): BitNodeMultipliers;
+getBitNodeMultipliers(n?: number, lvl?: number): BitNodeMultipliers;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  n | number |  |
+|  lvl | number |  |
+
 <b>Returns:</b>
 
 [BitNodeMultipliers](./bitburner.bitnodemultipliers.md)
@@ -21,7 +29,7 @@ Object containing the current BitNode multipliers.
 
 RAM cost: 4 GB
 
-Returns an object containing the current BitNode multipliers. This function requires you to be in Bitnode 5 or have Source-File 5 in order to run. The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%). The multipliers represent the difference between the current BitNode and the original BitNode (BitNode-1).
+Returns an object containing the current (or supplied) BitNode multipliers. This function requires you to be in Bitnode 5 or have Source-File 5 in order to run. The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%). The multipliers represent the difference between the current BitNode and the original BitNode (BitNode-1).
 
 For example, if the CrimeMoney multiplier has a value of 0.1, then that means that committing crimes in the current BitNode will only give 10% of the money you would have received in BitNode-1.
 

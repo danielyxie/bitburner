@@ -9,7 +9,7 @@ Hacknet node related constants
 <b>Signature:</b>
 
 ```typescript
-export interface HacknetNodeConstants 
+interface HacknetNodeConstants 
 ```
 
 ## Properties

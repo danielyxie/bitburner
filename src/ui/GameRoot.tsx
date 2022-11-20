@@ -4,7 +4,7 @@ import { Player } from "@player";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";
-import { LocationName } from "../Locations/data/LocationNames";
+import { LocationName } from "../utils/enums";
 import { Location } from "../Locations/Location";
 import { ITutorial, iTutorialStart } from "../InteractiveTutorial";
 import { InteractiveTutorialRoot } from "./InteractiveTutorial/InteractiveTutorialRoot";

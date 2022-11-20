@@ -4,7 +4,7 @@
 
 ## NS.resizeTail() method
 
-Resize a tail window
+Resize a tail window.
 
 <b>Signature:</b>
 
@@ -16,8 +16,8 @@ resizeTail(width: number, height: number, pid?: number): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  width | number | width of the window. |
-|  height | number | height of the window. |
+|  width | number | Width of the window. |
+|  height | number | Height of the window. |
 |  pid | number | Optional. PID of the script having its tail resized. If omitted, the current script is used. |
 
 <b>Returns:</b>
@@ -28,5 +28,5 @@ void
 
 RAM cost: 0 GB
 
-Resize a tail window. Size are in pixel
+Resize a tail window. Size are in pixel.
 

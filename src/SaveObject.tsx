@@ -26,7 +26,7 @@ import { save } from "./db";
 import { AwardNFG, v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
-import { LocationName } from "./Locations/data/LocationNames";
+import { LocationName } from "./utils/enums";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { pushGameSaved } from "./Electron";
 import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";

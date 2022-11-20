@@ -16,7 +16,7 @@ import { Class, Classes, ClassType } from "./ClassWork";
 import { Server } from "../Server/Server";
 import { GetServer } from "../Server/AllServers";
 import { serverMetadata } from "../Server/data/servers";
-import { LocationName } from "../Locations/data/LocationNames";
+import { LocationName } from "../utils/enums";
 import { Company } from "../Company/Company";
 import { CompanyPosition } from "../Company/CompanyPosition";
 import { checkEnum } from "../utils/helpers/enum";

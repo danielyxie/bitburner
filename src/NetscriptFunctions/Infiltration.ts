@@ -11,7 +11,7 @@ import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { checkEnum } from "../utils/helpers/enum";
-import { LocationName } from "../Locations/data/LocationNames";
+import { LocationName } from "../utils/enums";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
 export function NetscriptInfiltration(): InternalAPI<IInfiltration> {

@@ -9,5 +9,5 @@ Multiplier to amount of money gained from working
 <b>Signature:</b>
 
 ```typescript
-work_money?: number;
+work_money: number;
 ```

@@ -9,5 +9,5 @@ Multiplier to cost of ram for a Hacknet Node
 <b>Signature:</b>
 
 ```typescript
-hacknet_node_ram_cost?: number;
+hacknet_node_ram_cost: number;
 ```

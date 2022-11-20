@@ -46,6 +46,7 @@ You have to be employed in the Bladeburner division and be in BitNode-7 or have 
 |  [getSkillUpgradeCost(name, count)](./bitburner.bladeburner.getskillupgradecost.md) | Get cost to upgrade skill. |
 |  [getStamina()](./bitburner.bladeburner.getstamina.md) | Get bladeburner stamina. |
 |  [getTeamSize(type, name)](./bitburner.bladeburner.getteamsize.md) | Get team size. |
+|  [inBladeburner()](./bitburner.bladeburner.inbladeburner.md) | Returns whether player is a member of bladeburner division. Does not require API access. |
 |  [joinBladeburnerDivision()](./bitburner.bladeburner.joinbladeburnerdivision.md) | Join the bladeburner division. |
 |  [joinBladeburnerFaction()](./bitburner.bladeburner.joinbladeburnerfaction.md) | Join the bladeburner faction. |
 |  [setActionAutolevel(type, name, autoLevel)](./bitburner.bladeburner.setactionautolevel.md) | Set an action autolevel. |

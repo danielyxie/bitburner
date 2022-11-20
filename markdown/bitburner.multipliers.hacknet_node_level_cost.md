@@ -9,5 +9,5 @@ Multiplier to cost of leveling up a Hacknet Node
 <b>Signature:</b>
 
 ```typescript
-hacknet_node_level_cost?: number;
+hacknet_node_level_cost: number;
 ```

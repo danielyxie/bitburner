@@ -19,9 +19,9 @@ export class SleeveSupportWork extends Work {
     Player.bladeburner?.sleeveSupport(false);
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.SUPPORT as "SUPPORT",
     };
   }
 

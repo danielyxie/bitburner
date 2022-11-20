@@ -3,7 +3,7 @@
  * in the game
  */
 import { CityName } from "./CityNames";
-import { LocationName } from "./LocationNames";
+import { LocationName } from "../../utils/enums";
 import { IConstructorParams } from "../Location";
 import { LocationType } from "../LocationTypeEnum";
 

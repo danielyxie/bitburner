@@ -1,7 +1,7 @@
 import React from "react";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { CONSTANTS } from "../Constants";
-import { LocationName } from "../Locations/data/LocationNames";
+import { LocationName } from "../utils/enums";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Money } from "../ui/React/Money";

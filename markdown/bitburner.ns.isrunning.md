@@ -17,14 +17,14 @@ isRunning(script: FilenameOrPID, host?: string, ...args: (string | number | bool
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | [FilenameOrPID](./bitburner.filenameorpid.md) | Filename or PID of script to check. This is case-sensitive. |
-|  host | string | Host of target server. |
+|  host | string | Hostname of target server. |
 |  args | (string \| number \| boolean)\[\] | Arguments to specify/identify which scripts to search for. |
 
 <b>Returns:</b>
 
 boolean
 
-True if specified script is running on the target server, and false otherwise.
+True if the specified script is running on the target server, and false otherwise.
 
 ## Remarks
 

@@ -9,5 +9,5 @@ Multiplier to amount of money produced by Hacknet Nodes
 <b>Signature:</b>
 
 ```typescript
-hacknet_node_money?: number;
+hacknet_node_money: number;
 ```

@@ -5,7 +5,7 @@ import { uniqueId } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Companies } from "../Company/Companies";
 import { CONSTANTS } from "../Constants";
-import { LocationName } from "../Locations/data/LocationNames";
+import { LocationName } from "../utils/enums";
 import { Locations } from "../Locations/Locations";
 import { Settings } from "../Settings/Settings";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";

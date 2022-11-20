@@ -4,7 +4,7 @@ import { Player } from "../../../src/Player";
 import { determineAllPossibilitiesForTabCompletion } from "../../../src/Terminal/determineAllPossibilitiesForTabCompletion";
 import { Server } from "../../../src/Server/Server";
 import { AddToAllServers, prestigeAllServers } from "../../../src/Server/AllServers";
-import { LocationName } from "../../../src/Locations/data/LocationNames";
+import { LocationName } from "../../../src/utils/enums";
 import { CodingContract } from "../../../src/CodingContracts";
 import { initDarkWebItems } from "../../../src/DarkWeb/DarkWebItems";
 

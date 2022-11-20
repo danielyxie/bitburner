@@ -15,7 +15,7 @@ getHostname(): string;
 
 string
 
-Hostname of the server that the script is on.
+Hostname of the server that the script runs on.
 
 ## Remarks
 

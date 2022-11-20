@@ -9,5 +9,5 @@ Multiplier to crime success rate
 <b>Signature:</b>
 
 ```typescript
-crime_success?: number;
+crime_success: number;
 ```

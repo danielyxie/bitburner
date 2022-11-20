@@ -9,14 +9,14 @@ Gets the cost to expand into a new industry
 <b>Signature:</b>
 
 ```typescript
-getExpandIndustryCost(industryName: string): number;
+getExpandIndustryCost(industryName: IndustryType | `${IndustryType}`): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  industryName | string | Name of the industry |
+|  industryName | [IndustryType](./bitburner.industrytype.md) \| \`${[IndustryType](./bitburner.industrytype.md)<!-- -->}\` | Name of the industry |
 
 <b>Returns:</b>
 

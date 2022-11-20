@@ -29,5 +29,5 @@ True if the data is successfully written to the port, and false otherwise.
 
 RAM cost: 0 GB
 
-Attempts to write data to the specified Netscript Port. If the port is full, the data will not be written. Otherwise, the data will be written normally.
+Attempts to write data to the specified Netscript port. If the port is full, the data will not be written. Otherwise, the data will be written normally.
 

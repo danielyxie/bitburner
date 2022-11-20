@@ -4,7 +4,7 @@
 
 ## NS.getTotalScriptIncome() method
 
-Get the income of all script.
+Get the income of all scripts.
 
 <b>Signature:</b>
 
@@ -15,7 +15,7 @@ getTotalScriptIncome(): [number, number];
 
 \[number, number\]
 
-an array of two values. The first value is the total income (dollar / second) of all of your active scripts (scripts that are currently running on any server). The second value is the total income (dollar / second) that you’ve earned from scripts since you last installed Augmentations.
+An array of two values. The first value is the total income (dollar / second) of all of your active scripts (scripts that are currently running on any server). The second value is the total income (dollar / second) that you’ve earned from scripts since you last installed Augmentations.
 
 ## Remarks
 

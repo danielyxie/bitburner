@@ -20,9 +20,9 @@ export class SleeveSynchroWork extends Work {
     if (sleeve.sync >= 100) sleeve.stopWork();
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.SYNCHRO as "SYNCHRO",
     };
   }
 

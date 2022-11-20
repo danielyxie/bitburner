@@ -9,5 +9,5 @@ Multiplier to hacking skill
 <b>Signature:</b>
 
 ```typescript
-hacking?: number;
+hacking: number;
 ```

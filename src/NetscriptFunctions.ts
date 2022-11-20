@@ -77,7 +77,7 @@ import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { getBitNodeMultipliers } from "./BitNode/BitNode";
 import { assert, arrayAssert, stringAssert, objectAssert } from "./utils/helpers/typeAssertion";
-import { CompanyPosNames, CrimeType, GymType, UniversityClassType } from "./utils/enums";
+import { CompanyPosName, CrimeType, GymType, LocationName, UniversityClassType } from "./utils/enums";
 import { cloneDeep } from "lodash";
 import { FactionWorkType } from "./utils/enums";
 
@@ -87,7 +87,8 @@ export const enums: NSEnums = {
   FactionWorkType,
   GymType,
   UniversityClassType,
-  CompanyPosNames,
+  CompanyPosName,
+  LocationName,
 };
 
 export type NSFull = Readonly<NS & INetscriptExtra>;

@@ -9,5 +9,5 @@ Multiplier to charisma skill
 <b>Signature:</b>
 
 ```typescript
-charisma?: number;
+charisma: number;
 ```

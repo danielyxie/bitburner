@@ -9,5 +9,5 @@ Multiplier to defense skill
 <b>Signature:</b>
 
 ```typescript
-defense?: number;
+defense: number;
 ```

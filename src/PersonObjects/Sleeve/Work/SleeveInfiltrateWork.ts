@@ -29,9 +29,9 @@ export class SleeveInfiltrateWork extends Work {
     }
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.INFILTRATE as "INFILTRATE",
     };
   }
 

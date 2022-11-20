@@ -9,5 +9,5 @@ Multiplier to hacking speed
 <b>Signature:</b>
 
 ```typescript
-hacking_speed?: number;
+hacking_speed: number;
 ```
