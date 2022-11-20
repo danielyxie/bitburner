@@ -66,7 +66,7 @@ import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
-import { checkEnum } from "./utils/helpers/checkEnum";
+import { checkEnum } from "./utils/helpers/enum";
 
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
@@ -77,16 +77,16 @@ import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { getBitNodeMultipliers } from "./BitNode/BitNode";
 import { assert, arrayAssert, stringAssert, objectAssert } from "./utils/helpers/typeAssertion";
-import { CompanyPosNames, CrimeType } from "./utils/WorkType";
+import { CompanyPosNames, CrimeType, GymType, UniversityClassType } from "./utils/enums";
 import { cloneDeep } from "lodash";
-import { FactionWorkType } from "./Work/data/FactionWorkType";
-import { ClassType } from "./Work/ClassWork";
+import { FactionWorkType } from "./utils/enums";
 
 export const enums: NSEnums = {
   toast: ToastVariant,
   CrimeType,
   FactionWorkType,
-  ClassType,
+  GymType,
+  UniversityClassType,
   CompanyPosNames,
 };
 

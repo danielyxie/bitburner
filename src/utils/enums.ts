@@ -1,18 +1,3 @@
-export enum CrimeType {
-  SHOPLIFT = "SHOPLIFT", //"shoplift",
-  ROB_STORE = "ROBSTORE", //"rob a store",
-  MUG = "MUG", //"mug someone",
-  LARCENY = "LARCENY", //"commit larceny",
-  DRUGS = "DRUGS", //"deal drugs",
-  BOND_FORGERY = "BONDFORGERY", //"forge corporate bonds",
-  TRAFFIC_ARMS = "TRAFFICKARMS", //"traffick illegal arms",
-  HOMICIDE = "HOMICIDE", //"commit homicide",
-  GRAND_THEFT_AUTO = "GRANDTHEFTAUTO", //"commit grand theft auto",
-  KIDNAP = "KIDNAP", //"kidnap someone for ransom",
-  ASSASSINATION = "ASSASSINATION", //"assassinate a high-profile target",
-  HEIST = "HEIST", //"pull off the ultimate heist",
-}
-
 export enum CompanyPosNames {
   sw0 = "Software Engineering Intern",
   sw1 = "Junior Software Engineer",
@@ -52,4 +37,42 @@ export enum CompanyPosNames {
   busCons1 = "Senior Business Consultant",
   waiterPT = "Part-time Waiter",
   employeePT = "Part-time Employee",
+}
+
+export enum CrimeType {
+  shoplift = "Shoplift",
+  robStore = "Rob Store",
+  mug = "Mug",
+  larceny = "Larceny",
+  dealDrugs = "Deal Drugs",
+  bondForgery = "Bond Forgery",
+  traffickArms = "Traffick Arms",
+  homicide = "Homicide",
+  grandTheftAuto = "Grand Theft Auto",
+  kidnap = "Kidnap",
+  assassination = "Assassination",
+  heist = "Heist",
+}
+
+export enum FactionWorkType {
+  hacking = "hacking",
+  field = "field",
+  security = "security",
+}
+
+export enum UniversityClassType {
+  computerScience = "Computer Science",
+  dataStructures = "Data Structures",
+  networks = "Networks",
+  algorithms = "Algorithms",
+  management = "Management",
+  leadership = "Leadership",
+}
+
+//Uses skill short codes to allow easier fuzzy matching with player input
+export enum GymType {
+  strength = "str",
+  defense = "def",
+  dexterity = "dex",
+  agility = "agi",
 }

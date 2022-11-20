@@ -5,7 +5,7 @@ import { findCrime } from "../Crime/CrimeHelpers";
 import { Augmentation } from "../Augmentation/Augmentation";
 
 import { sleeve } from "../ScriptEditor/NetscriptDefinitions";
-import { checkEnum } from "../utils/helpers/checkEnum";
+import { checkEnum } from "../utils/helpers/enum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { isSleeveBladeburnerWork } from "../PersonObjects/Sleeve/Work/SleeveBladeburnerWork";
 import { isSleeveFactionWork } from "../PersonObjects/Sleeve/Work/SleeveFactionWork";

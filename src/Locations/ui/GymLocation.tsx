@@ -13,15 +13,16 @@ import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 import { Router } from "../../ui/GameRoot";
 import { Box } from "@mui/material";
-import { ClassWork, ClassType, Classes } from "../../Work/ClassWork";
+import { ClassWork, Classes } from "../../Work/ClassWork";
 import { calculateCost } from "../../Work/Formulas";
+import { GymType } from "../../utils/enums";
 
 type IProps = {
   loc: Location;
 };
 
 export function GymLocation(props: IProps): React.ReactElement {
-  function train(stat: ClassType): void {
+  function train(stat: GymType): void {
     Player.startWork(
       new ClassWork({
         classType: stat,
@@ -33,20 +34,20 @@ export function GymLocation(props: IProps): React.ReactElement {
     Router.toWork();
   }
 
-  const cost = calculateCost(Classes[ClassType.GymStrength], props.loc);
+  const cost = calculateCost(Classes[GymType.strength], props.loc);
 
   return (
     <Box sx={{ display: "grid", width: "fit-content" }}>
-      <Button onClick={() => train(ClassType.GymStrength)}>
+      <Button onClick={() => train(GymType.strength)}>
         Train Strength (<Money money={cost} forPurchase={true} /> / sec)
       </Button>
-      <Button onClick={() => train(ClassType.GymDefense)}>
+      <Button onClick={() => train(GymType.defense)}>
         Train Defense (<Money money={cost} forPurchase={true} /> / sec)
       </Button>
-      <Button onClick={() => train(ClassType.GymDexterity)}>
+      <Button onClick={() => train(GymType.dexterity)}>
         Train Dexterity (<Money money={cost} forPurchase={true} /> / sec)
       </Button>
-      <Button onClick={() => train(ClassType.GymAgility)}>
+      <Button onClick={() => train(GymType.agility)}>
         Train Agility (<Money money={cost} forPurchase={true} /> / sec)
       </Button>
     </Box>

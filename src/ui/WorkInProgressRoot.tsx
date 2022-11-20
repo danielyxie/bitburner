@@ -24,7 +24,7 @@ import { WorkStats } from "../Work/WorkStats";
 import { isCreateProgramWork } from "../Work/CreateProgramWork";
 import { isGraftingWork } from "../Work/GraftingWork";
 import { isFactionWork } from "../Work/FactionWork";
-import { FactionWorkType } from "../Work/data/FactionWorkType";
+import { FactionWorkType } from "../utils/enums";
 import { isCompanyWork } from "../Work/CompanyWork";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
@@ -394,9 +394,9 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     const description = {
-      [FactionWorkType.HACKING]: "carrying out hacking contracts",
-      [FactionWorkType.FIELD]: "carrying out field missions",
-      [FactionWorkType.SECURITY]: "performing security detail",
+      [FactionWorkType.hacking]: "carrying out hacking contracts",
+      [FactionWorkType.field]: "carrying out field missions",
+      [FactionWorkType.security]: "performing security detail",
     };
 
     const exp = Player.currentWork.getExpRates();

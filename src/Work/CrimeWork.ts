@@ -5,11 +5,11 @@ import { determineCrimeSuccess } from "../Crime/CrimeHelpers";
 import { Crimes } from "../Crime/Crimes";
 import { Player } from "@player";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { CrimeType } from "../utils/WorkType";
+import { CrimeType } from "../utils/enums";
 import { Work, WorkType } from "./Work";
 import { scaleWorkStats, WorkStats } from "./WorkStats";
 import { calculateCrimeWorkStats } from "./Formulas";
-import { checkEnum } from "../utils/helpers/checkEnum";
+import { checkEnum } from "../utils/helpers/enum";
 
 interface CrimeWorkParams {
   crimeType: CrimeType;
@@ -24,7 +24,7 @@ export class CrimeWork extends Work {
 
   constructor(params?: CrimeWorkParams) {
     super(WorkType.CRIME, params?.singularity ?? true);
-    this.crimeType = params?.crimeType ?? CrimeType.SHOPLIFT;
+    this.crimeType = params?.crimeType ?? CrimeType.shoplift;
     this.unitCompleted = 0;
   }
 
@@ -89,7 +89,7 @@ export class CrimeWork extends Work {
     return {
       type: this.type,
       cyclesWorked: this.cyclesWorked,
-      crimeType: checkEnum(CrimeType, this.crimeType) ? this.crimeType : CrimeType.SHOPLIFT,
+      crimeType: checkEnum(CrimeType, this.crimeType) ? this.crimeType : CrimeType.shoplift,
     };
   }
 

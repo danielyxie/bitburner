@@ -40,19 +40,18 @@ import { repFromDonation } from "../Faction/formulas/donation";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 import { calculateCrimeWorkStats } from "../Work/Formulas";
-import { Crimes } from "../Crime/Crimes";
 import { calculateCompanyWorkStats } from "../Work/Formulas";
 import { Companies } from "../Company/Companies";
 import { calculateClassEarnings } from "../Work/Formulas";
-import { ClassType } from "../Work/ClassWork";
 import { LocationName } from "../Locations/data/LocationNames";
 import { calculateFactionExp, calculateFactionRep } from "../Work/Formulas";
-import { FactionWorkType } from "../Work/data/FactionWorkType";
+import { FactionWorkType, GymType, UniversityClassType } from "../utils/enums";
 
 import { defaultMultipliers } from "../PersonObjects/Multipliers";
-import { checkEnum } from "../utils/helpers/checkEnum";
-import { CompanyPosNames, CrimeType } from "../utils/WorkType";
+import { checkEnum, findEnumMember } from "../utils/helpers/enum";
+import { CompanyPosNames } from "../utils/enums";
 import { CompanyPositions } from "../Company/CompanyPositions";
+import { findCrime } from "../Crime/CrimeHelpers";
 
 export function NetscriptFormulas(): InternalAPI<IFormulas> {
   const checkFormulasAccess = function (ctx: NetscriptContext): void {
@@ -356,22 +355,31 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       crimeSuccessChance: (ctx) => (_person, _crimeType) => {
         checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
-        const crimeType = helpers.string(ctx, "crimeType", _crimeType);
-        if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
-        return Crimes[crimeType].successRate(person);
+        const crime = findCrime(helpers.string(ctx, "crimeType", _crimeType));
+        if (!crime) throw new Error(`Invalid crime type: ${_crimeType}`);
+        return crime.successRate(person);
       },
       crimeGains: (ctx) => (_person, _crimeType) => {
         checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
-        const crimeType = helpers.string(ctx, "crimeType", _crimeType);
-        if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
-        return calculateCrimeWorkStats(person, Crimes[crimeType]);
+        const crime = findCrime(helpers.string(ctx, "crimeType", _crimeType));
+        if (!crime) throw new Error(`Invalid crime type: ${_crimeType}`);
+        return calculateCrimeWorkStats(person, crime);
       },
-      classGains: (ctx) => (_person, _classType, _locationName) => {
+      gymGains: (ctx) => (_person, _classType, _locationName) => {
         checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
-        const classType = helpers.string(ctx, "classType", _classType);
-        if (!checkEnum(ClassType, classType)) throw new Error(`Invalid class type: ${classType}`);
+        const classType = findEnumMember(GymType, helpers.string(ctx, "classType", _classType));
+        if (!classType) throw new Error(`Invalid gym training type: ${_classType}`);
+        const locationName = helpers.string(ctx, "locationName", _locationName);
+        if (!checkEnum(LocationName, locationName)) throw new Error(`Invalid location name: ${locationName}`);
+        return calculateClassEarnings(person, classType, locationName);
+      },
+      universityGains: (ctx) => (_person, _classType, _locationName) => {
+        checkFormulasAccess(ctx);
+        const person = helpers.person(ctx, _person);
+        const classType = findEnumMember(UniversityClassType, helpers.string(ctx, "classType", _classType));
+        if (!classType) throw new Error(`Invalid university class type: ${_classType}`);
         const locationName = helpers.string(ctx, "locationName", _locationName);
         if (!checkEnum(LocationName, locationName)) throw new Error(`Invalid location name: ${locationName}`);
         return calculateClassEarnings(person, classType, locationName);
@@ -379,8 +387,8 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       factionGains: (ctx) => (_player, _workType, _favor) => {
         checkFormulasAccess(ctx);
         const player = helpers.person(ctx, _player);
-        const workType = helpers.string(ctx, "_workType", _workType);
-        if (!checkEnum(FactionWorkType, workType)) throw new Error(`Invalid faction work type: ${workType}`);
+        const workType = findEnumMember(FactionWorkType, helpers.string(ctx, "_workType", _workType));
+        if (!workType) throw new Error(`Invalid faction work type: ${_workType}`);
         const favor = helpers.number(ctx, "favor", _favor);
         const exp = calculateFactionExp(player, workType);
         const rep = calculateFactionRep(player, workType, favor);
@@ -390,8 +398,8 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       companyGains: (ctx) => (_person, _companyName, _positionName, _favor) => {
         checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
-        const positionName = helpers.string(ctx, "_positionName", _positionName);
-        if (!checkEnum(CompanyPosNames, positionName)) throw new Error(`Invalid company position: ${positionName}`);
+        const positionName = findEnumMember(CompanyPosNames, helpers.string(ctx, "_positionName", _positionName));
+        if (!positionName) throw new Error(`Invalid company position: ${_positionName}`);
         const position = CompanyPositions[positionName];
         const companyName = helpers.string(ctx, "_companyName", _companyName);
         const company = Object.values(Companies).find((c) => c.name === companyName);

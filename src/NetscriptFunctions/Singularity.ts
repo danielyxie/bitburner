@@ -41,14 +41,15 @@ import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { ClassWork, ClassType } from "../Work/ClassWork";
+import { ClassWork } from "../Work/ClassWork";
 import { CreateProgramWork, isCreateProgramWork } from "../Work/CreateProgramWork";
 import { FactionWork } from "../Work/FactionWork";
-import { FactionWorkType } from "../Work/data/FactionWorkType";
+import { FactionWorkType, GymType, UniversityClassType } from "../utils/enums";
 import { CompanyWork } from "../Work/CompanyWork";
 import { canGetBonus, onExport } from "../ExportBonus";
 import { saveObject } from "../SaveObject";
 import { calculateCrimeWorkStats } from "../Work/Formulas";
+import { findEnumMember } from "../utils/helpers/enum";
 
 export function NetscriptSingularity(): InternalAPI<ISingularity> {
   const getAugmentation = function (ctx: NetscriptContext, name: string): Augmentation {
@@ -253,7 +254,11 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       (_universityName, _className, _focus = true) => {
         helpers.checkSingularityAccess(ctx);
         const universityName = helpers.string(ctx, "universityName", _universityName);
-        const className = helpers.string(ctx, "className", _className);
+        const classType = findEnumMember(UniversityClassType, helpers.string(ctx, "className", _className));
+        if (!classType) {
+          helpers.log(ctx, () => `Invalid class name: ${_className}.`);
+          return false;
+        }
         const focus = !!_focus;
         const wasFocusing = Player.focus;
 
@@ -293,33 +298,9 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             return false;
         }
 
-        let task: ClassType;
-        switch (className.toLowerCase()) {
-          case "Study Computer Science".toLowerCase():
-            task = ClassType.StudyComputerScience;
-            break;
-          case "Data Structures".toLowerCase():
-            task = ClassType.DataStructures;
-            break;
-          case "Networks".toLowerCase():
-            task = ClassType.Networks;
-            break;
-          case "Algorithms".toLowerCase():
-            task = ClassType.Algorithms;
-            break;
-          case "Management".toLowerCase():
-            task = ClassType.Management;
-            break;
-          case "Leadership".toLowerCase():
-            task = ClassType.Leadership;
-            break;
-          default:
-            helpers.log(ctx, () => `Invalid class name: ${className}.`);
-            return false;
-        }
         Player.startWork(
           new ClassWork({
-            classType: task,
+            classType,
             location: Player.location,
             singularity: true,
           }),
@@ -331,7 +312,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           Player.stopFocusing();
           Router.toTerminal();
         }
-        helpers.log(ctx, () => `Started ${task} at ${universityName}`);
+        helpers.log(ctx, () => `Started ${classType} at ${universityName}`);
         return true;
       },
 
@@ -340,7 +321,11 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       (_gymName, _stat, _focus = true) => {
         helpers.checkSingularityAccess(ctx);
         const gymName = helpers.string(ctx, "gymName", _gymName);
-        const stat = helpers.string(ctx, "stat", _stat);
+        const classType = findEnumMember(GymType, helpers.string(ctx, "stat", _stat));
+        if (!classType) {
+          helpers.log(ctx, () => `Invalid stat: ${_stat}.`);
+          return false;
+        }
         const focus = !!_focus;
         const wasFocusing = Player.focus;
 
@@ -405,35 +390,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             return false;
         }
 
-        switch (stat.toLowerCase()) {
-          case "strength".toLowerCase():
-          case "str".toLowerCase():
-            Player.startWork(
-              new ClassWork({ classType: ClassType.GymStrength, location: Player.location, singularity: true }),
-            );
-            break;
-          case "defense".toLowerCase():
-          case "def".toLowerCase():
-            Player.startWork(
-              new ClassWork({ classType: ClassType.GymDefense, location: Player.location, singularity: true }),
-            );
-            break;
-          case "dexterity".toLowerCase():
-          case "dex".toLowerCase():
-            Player.startWork(
-              new ClassWork({ classType: ClassType.GymDexterity, location: Player.location, singularity: true }),
-            );
-            break;
-          case "agility".toLowerCase():
-          case "agi".toLowerCase():
-            Player.startWork(
-              new ClassWork({ classType: ClassType.GymAgility, location: Player.location, singularity: true }),
-            );
-            break;
-          default:
-            helpers.log(ctx, () => `Invalid stat: ${stat}.`);
-            return false;
-        }
+        Player.startWork(new ClassWork({ classType, location: Player.location, singularity: true }));
         if (focus) {
           Player.startFocusing();
           Router.toWork();
@@ -441,7 +398,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
           Player.stopFocusing();
           Router.toTerminal();
         }
-        helpers.log(ctx, () => `Started training ${stat} at ${gymName}`);
+        helpers.log(ctx, () => `Started training ${classType} at ${gymName}`);
         return true;
       },
 
@@ -926,7 +883,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             Player.startWork(
               new FactionWork({
                 singularity: true,
-                factionWorkType: FactionWorkType.HACKING,
+                factionWorkType: FactionWorkType.hacking,
                 faction: faction.name,
               }),
             );
@@ -949,7 +906,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             Player.startWork(
               new FactionWork({
                 singularity: true,
-                factionWorkType: FactionWorkType.FIELD,
+                factionWorkType: FactionWorkType.field,
                 faction: faction.name,
               }),
             );
@@ -972,7 +929,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             Player.startWork(
               new FactionWork({
                 singularity: true,
-                factionWorkType: FactionWorkType.SECURITY,
+                factionWorkType: FactionWorkType.security,
                 faction: faction.name,
               }),
             );
@@ -1118,7 +1075,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       const crime = findCrime(crimeType);
       if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
 
-      helpers.log(ctx, () => `Attempting to commit ${crime.name}...`);
+      helpers.log(ctx, () => `Attempting to commit ${crime.type}...`);
       const crimeTime = crime.commit(1, ctx.workerScript);
       if (focus) {
         Player.startFocusing();

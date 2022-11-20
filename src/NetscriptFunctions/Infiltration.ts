@@ -10,7 +10,7 @@ import {
 import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
-import { checkEnum } from "../utils/helpers/checkEnum";
+import { checkEnum } from "../utils/helpers/enum";
 import { LocationName } from "../Locations/data/LocationNames";
 import { helpers } from "../Netscript/NetscriptHelpers";
 

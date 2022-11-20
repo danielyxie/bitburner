@@ -58,7 +58,7 @@ import { Factions } from "../Faction/Factions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { assertEnumMember, helpers } from "../Netscript/NetscriptHelpers";
-import { checkEnum } from "../utils/helpers/checkEnum";
+import { checkEnum } from "../utils/helpers/enum";
 import { CityName } from "../Locations/data/CityNames";
 
 export function NetscriptCorporation(): InternalAPI<NSCorporation> {

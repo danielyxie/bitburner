@@ -33,7 +33,7 @@ import { arrayToString } from "../utils/helpers/arrayToString";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { checkEnum } from "../utils/helpers/checkEnum";
+import { checkEnum } from "../utils/helpers/enum";
 
 export const helpers = {
   string,

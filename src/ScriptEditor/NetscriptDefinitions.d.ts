@@ -211,8 +211,6 @@ export interface CrimeStats {
   kills: number;
   /** How much money is given */
   money: number;
-  /** Name of crime */
-  name: string;
   /** Milliseconds it takes to attempt the crime */
   time: number;
   /** Description of the crime activity */
@@ -3817,8 +3815,14 @@ interface WorkFormulas {
   crimeSuccessChance(person: Person, crimeType: CrimeType | `${CrimeType}`): number;
   /** @returns The WorkStats gained when completing one instance of the specified crime. */
   crimeGains(person: Person, crimeType: CrimeType | `${CrimeType}`): WorkStats;
-  /** @returns The WorkStats applied every game cycle (200ms) by taking the specified class. */
-  classGains(person: Person, classType: ClassType | `${ClassType}`, locationName: string): WorkStats;
+  /** @returns The WorkStats applied every game cycle (200ms) by taking the specified gym class. */
+  gymGains(person: Person, gymType: GymType | `${GymType}`, locationName: string): WorkStats;
+  /** @returns The WorkStats applied every game cycle (200ms) by taking the specified university class. */
+  universityGains(
+    person: Person,
+    classType: UniversityClassType | `${UniversityClassType}`,
+    locationName: string,
+  ): WorkStats;
   /** @returns The WorkStats applied every game cycle (200ms) by performing the specified faction work. */
   factionGains(person: Person, workType: FactionWorkType | `${FactionWorkType}`, favor: number): WorkStats;
   /** @returns The WorkStats applied every game cycle (200ms) by performing the specified company work. */
@@ -6815,42 +6819,46 @@ declare enum ToastVariant {
 
 /** @public */
 declare enum CrimeType {
-  SHOPLIFT = "SHOPLIFT",
-  ROB_STORE = "ROBSTORE",
-  MUG = "MUG",
-  LARCENY = "LARCENY",
-  DRUGS = "DRUGS",
-  BOND_FORGERY = "BONDFORGERY",
-  TRAFFIC_ARMS = "TRAFFICKARMS",
-  HOMICIDE = "HOMICIDE",
-  GRAND_THEFT_AUTO = "GRANDTHEFTAUTO",
-  KIDNAP = "KIDNAP",
-  ASSASSINATION = "ASSASSINATION",
-  HEIST = "HEIST",
+  shoplift = "Shoplift",
+  robStore = "Rob Store",
+  mug = "Mug",
+  larceny = "Larceny",
+  dealDrugs = "Deal Drugs",
+  bondForgery = "Bond Forgery",
+  traffickArms = "Traffick Arms",
+  homicide = "Homicide",
+  grandTheftAuto = "Grand Theft Auto",
+  kidnap = "Kidnap",
+  assassination = "Assassination",
+  heist = "Heist",
 }
 
 /** @public */
 declare enum FactionWorkType {
-  HACKING = "HACKING",
-  FIELD = "FIELD",
-  SECURITY = "SECURITY",
+  hacking = "hacking",
+  field = "field",
+  security = "security",
 }
 
-// TODO: split ClassType enum into separate enums for gym and uni so they can actually be used for player input.
 /** @public */
-declare enum ClassType {
-  StudyComputerScience = "STUDYCOMPUTERSCIENCE",
-  DataStructures = "DATASTRUCTURES",
-  Networks = "NETWORKS",
-  Algorithms = "ALGORITHMS",
-  Management = "MANAGEMENT",
-  Leadership = "LEADERSHIP",
-  GymStrength = "GYMSTRENGTH",
-  GymDefense = "GYMDEFENSE",
-  GymDexterity = "GYMDEXTERITY",
-  GymAgility = "GYMAGILITY",
+declare enum UniversityClassType {
+  computerScience = "Computer Science",
+  dataStructures = "Data Structures",
+  networks = "Networks",
+  algorithms = "Algorithms",
+  management = "Management",
+  leadership = "Leadership",
 }
 
+/** @public */
+declare enum GymType {
+  strength = "str",
+  defense = "def",
+  dexterity = "dex",
+  agility = "agi",
+}
+
+/** @public */
 declare enum CompanyPosNames {
   sw0 = "Software Engineering Intern",
   sw1 = "Junior Software Engineer",
@@ -6927,7 +6935,8 @@ export type NSEnums = {
   toast: typeof ToastVariant;
   CrimeType: typeof CrimeType;
   FactionWorkType: typeof FactionWorkType;
-  ClassType: typeof ClassType;
+  GymType: typeof GymType;
+  UniversityClassType: typeof UniversityClassType;
   CompanyPosNames: typeof CompanyPosNames;
 };
 

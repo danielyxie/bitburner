@@ -2,13 +2,14 @@ import { Player } from "@player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
-import { CrimeType } from "../../../utils/WorkType";
+import { CrimeType } from "../../../utils/enums";
 import { Crimes } from "../../../Crime/Crimes";
 import { Crime } from "../../../Crime/Crime";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { CONSTANTS } from "../../../Constants";
-import { checkEnum } from "../../../utils/helpers/checkEnum";
+import { checkEnum } from "../../../utils/helpers/enum";
 import { calculateCrimeWorkStats } from "../../../Work/Formulas";
+import { findCrime } from "../../../Crime/CrimeHelpers";
 
 export const isSleeveCrimeWork = (w: Work | null): w is SleeveCrimeWork => w !== null && w.type === WorkType.CRIME;
 
@@ -17,7 +18,7 @@ export class SleeveCrimeWork extends Work {
   cyclesWorked = 0;
   constructor(crimeType?: CrimeType) {
     super(WorkType.CRIME);
-    this.crimeType = crimeType ?? CrimeType.SHOPLIFT;
+    this.crimeType = crimeType ?? CrimeType.shoplift;
   }
 
   getCrime(): Crime {
@@ -60,7 +61,9 @@ export class SleeveCrimeWork extends Work {
 
   /** Initializes a RecoveryWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveCrimeWork {
-    return Generic_fromJSON(SleeveCrimeWork, value.data);
+    const crimeWork = Generic_fromJSON(SleeveCrimeWork, value.data);
+    crimeWork.crimeType = findCrime(crimeWork.crimeType)?.type ?? CrimeType.shoplift;
+    return crimeWork;
   }
 }
 

@@ -16,11 +16,9 @@ import { isSleeveSynchroWork } from "../Work/SleeveSynchroWork";
 import { isSleeveClassWork } from "../Work/SleeveClassWork";
 import { isSleeveInfiltrateWork } from "../Work/SleeveInfiltrateWork";
 import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
-import { ClassType } from "../../../Work/ClassWork";
 import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
-import { FactionWorkType } from "../../../Work/data/FactionWorkType";
-import { checkEnum } from "../../../utils/helpers/checkEnum";
-import { CrimeType } from "../../../utils/WorkType";
+import { CrimeType, FactionWorkType, GymType, UniversityClassType } from "../../../utils/enums";
+import { checkEnum } from "../../../utils/helpers/enum";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -167,7 +165,7 @@ const tasks: {
     };
   },
   "Commit Crime": (): ITaskDetails => {
-    return { first: Object.values(Crimes).map((crime) => crime.name), second: () => ["------"] };
+    return { first: Object.keys(Crimes), second: () => ["------"] };
   },
   "Take University Course": (sleeve: Sleeve): ITaskDetails => {
     let universities: string[] = [];
@@ -263,13 +261,13 @@ function getABC(sleeve: Sleeve): [string, string, string] {
   if (isSleeveFactionWork(w)) {
     let workType = "";
     switch (w.factionWorkType) {
-      case FactionWorkType.HACKING:
+      case FactionWorkType.hacking:
         workType = "Hacking Contracts";
         break;
-      case FactionWorkType.FIELD:
+      case FactionWorkType.field:
         workType = "Field Work";
         break;
-      case FactionWorkType.SECURITY:
+      case FactionWorkType.security:
         workType = "Security Work";
         break;
     }
@@ -293,30 +291,30 @@ function getABC(sleeve: Sleeve): [string, string, string] {
 
   if (isSleeveClassWork(w)) {
     switch (w.classType) {
-      case ClassType.StudyComputerScience:
+      case UniversityClassType.computerScience:
         return ["Take University Course", "Study Computer Science", w.location];
-      case ClassType.DataStructures:
+      case UniversityClassType.dataStructures:
         return ["Take University Course", "Data Structures", w.location];
-      case ClassType.Networks:
+      case UniversityClassType.networks:
         return ["Take University Course", "Networks", w.location];
-      case ClassType.Algorithms:
+      case UniversityClassType.algorithms:
         return ["Take University Course", "Algorithms", w.location];
-      case ClassType.Management:
+      case UniversityClassType.management:
         return ["Take University Course", "Management", w.location];
-      case ClassType.Leadership:
+      case UniversityClassType.leadership:
         return ["Take University Course", "Leadership", w.location];
-      case ClassType.GymStrength:
+      case GymType.strength:
         return ["Workout at Gym", "Train Strength", w.location];
-      case ClassType.GymDefense:
+      case GymType.defense:
         return ["Workout at Gym", "Train Defense", w.location];
-      case ClassType.GymDexterity:
+      case GymType.dexterity:
         return ["Workout at Gym", "Train Dexterity", w.location];
-      case ClassType.GymAgility:
+      case GymType.agility:
         return ["Workout at Gym", "Train Agility", w.location];
     }
   }
   if (isSleeveCrimeWork(w)) {
-    return ["Commit Crime", checkEnum(CrimeType, w.crimeType) ? Crimes[w.crimeType].name : "Shoplift", "------"];
+    return ["Commit Crime", checkEnum(CrimeType, w.crimeType) ? w.crimeType : "Shoplift", "------"];
   }
   if (isSleeveSupportWork(w)) {
     return ["Perform Bladeburner Actions", "Support main sleeve", "------"];

@@ -23,7 +23,7 @@ import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPur
 import { FactionNames } from "../data/FactionNames";
 import { GangButton } from "./GangButton";
 import { FactionWork } from "../../Work/FactionWork";
-import { FactionWorkType } from "../../Work/data/FactionWorkType";
+import { FactionWorkType } from "../../utils/enums";
 
 type IProps = {
   faction: Faction;
@@ -72,7 +72,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
       new FactionWork({
         singularity: false,
         faction: faction.name,
-        factionWorkType: FactionWorkType.FIELD,
+        factionWorkType: FactionWorkType.field,
       }),
     );
     startWork();
@@ -83,7 +83,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
       new FactionWork({
         singularity: false,
         faction: faction.name,
-        factionWorkType: FactionWorkType.HACKING,
+        factionWorkType: FactionWorkType.hacking,
       }),
     );
     startWork();
@@ -94,7 +94,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
       new FactionWork({
         singularity: false,
         faction: faction.name,
-        factionWorkType: FactionWorkType.SECURITY,
+        factionWorkType: FactionWorkType.security,
       }),
     );
     startWork();

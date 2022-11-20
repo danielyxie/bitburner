@@ -14,7 +14,7 @@ import { Cities } from "../Locations/Cities";
 import { EmployeePositions } from "./EmployeePositions";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
-import { checkEnum } from "../utils/helpers/checkEnum";
+import { checkEnum } from "../utils/helpers/enum";
 import { CityName } from "../Locations/data/CityNames";
 
 export function NewIndustry(corporation: Corporation, industry: IndustryType, name: string): void {

@@ -1,15 +1,12 @@
 import { Crime } from "./Crime";
-
 import { CONSTANTS } from "../Constants";
+import { CrimeType } from "../utils/enums";
 
-import { CrimeType } from "../utils/WorkType";
-// TODO: What is the point of CrimeType using totally different strings than
 export const Crimes: Record<CrimeType, Crime> = {
-  [CrimeType.SHOPLIFT]: new Crime(
-    "Shoplift",
+  [CrimeType.shoplift]: new Crime(
     "to shoplift",
     "Attempt to shoplift from a low-end retailer",
-    CrimeType.SHOPLIFT,
+    CrimeType.shoplift,
     2e3,
     15e3,
     1 / 20,
@@ -23,11 +20,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.ROB_STORE]: new Crime(
-    "Rob Store",
+  [CrimeType.robStore]: new Crime(
     "to rob a store",
     "Attempt to commit armed robbery on a high-end store",
-    CrimeType.ROB_STORE,
+    CrimeType.robStore,
     60e3,
     400e3,
     1 / 5,
@@ -45,11 +41,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.MUG]: new Crime(
-    "Mug",
+  [CrimeType.mug]: new Crime(
     "to mug",
     "Attempt to mug a random person on the street",
-    CrimeType.MUG,
+    CrimeType.mug,
     4e3,
     36e3,
     1 / 5,
@@ -67,11 +62,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.LARCENY]: new Crime(
-    "Larceny",
+  [CrimeType.larceny]: new Crime(
     "larceny",
     "Attempt to rob property from someone's house",
-    CrimeType.LARCENY,
+    CrimeType.larceny,
     90e3,
     800e3,
     1 / 3,
@@ -89,31 +83,20 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.DRUGS]: new Crime(
-    "Deal Drugs",
-    "to deal drugs",
-    "Attempt to deal drugs",
-    CrimeType.DRUGS,
-    10e3,
-    120e3,
-    1,
-    0.5,
-    {
-      dexterity_exp: 5,
-      agility_exp: 5,
-      charisma_exp: 10,
+  [CrimeType.dealDrugs]: new Crime("to deal drugs", "Attempt to deal drugs", CrimeType.dealDrugs, 10e3, 120e3, 1, 0.5, {
+    dexterity_exp: 5,
+    agility_exp: 5,
+    charisma_exp: 10,
 
-      charisma_success_weight: 3,
-      dexterity_success_weight: 2,
-      agility_success_weight: 1,
-    },
-  ),
+    charisma_success_weight: 3,
+    dexterity_success_weight: 2,
+    agility_success_weight: 1,
+  }),
 
-  [CrimeType.BOND_FORGERY]: new Crime(
-    "Bond Forgery",
+  [CrimeType.bondForgery]: new Crime(
     "to forge bonds",
     "Attempt to forge corporate bonds",
-    CrimeType.BOND_FORGERY,
+    CrimeType.bondForgery,
     300e3,
     4.5e6,
     1 / 2,
@@ -130,11 +113,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.TRAFFIC_ARMS]: new Crime(
-    "Traffick Arms",
+  [CrimeType.traffickArms]: new Crime(
     "to traffic arms",
     "Attempt to smuggle illegal arms into the city",
-    CrimeType.TRAFFIC_ARMS,
+    CrimeType.traffickArms,
     40e3,
     600e3,
     2,
@@ -154,11 +136,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.HOMICIDE]: new Crime(
-    "Homicide",
+  [CrimeType.homicide]: new Crime(
     "homicide",
     "Attempt to murder a random person on the street",
-    CrimeType.HOMICIDE,
+    CrimeType.homicide,
     3e3,
     45e3,
     1,
@@ -178,11 +159,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.GRAND_THEFT_AUTO]: new Crime(
-    "Grand Theft Auto",
+  [CrimeType.grandTheftAuto]: new Crime(
     "grand theft auto",
     "Attempt to commit grand theft auto",
-    CrimeType.GRAND_THEFT_AUTO,
+    CrimeType.grandTheftAuto,
     80e3,
     1.6e6,
     8,
@@ -204,11 +184,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.KIDNAP]: new Crime(
-    "Kidnap",
+  [CrimeType.kidnap]: new Crime(
     "to kidnap",
     "Attempt to kidnap and ransom a high-profile-target",
-    CrimeType.KIDNAP,
+    CrimeType.kidnap,
     120e3,
     3.6e6,
     5,
@@ -229,11 +208,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.ASSASSINATION]: new Crime(
-    "Assassination",
+  [CrimeType.assassination]: new Crime(
     "to assassinate",
     "Attempt to assassinate a high-profile target",
-    CrimeType.ASSASSINATION,
+    CrimeType.assassination,
     300e3,
     12e6,
     8,
@@ -254,11 +232,10 @@ export const Crimes: Record<CrimeType, Crime> = {
     },
   ),
 
-  [CrimeType.HEIST]: new Crime(
-    "Heist",
+  [CrimeType.heist]: new Crime(
     "a heist",
     "Attempt to pull off the ultimate heist",
-    CrimeType.HEIST,
+    CrimeType.heist,
     600e3,
     120e6,
     18,

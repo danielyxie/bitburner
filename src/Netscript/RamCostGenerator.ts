@@ -602,7 +602,8 @@ export const RamCosts: RamCostTree<NSFull> = {
     work: {
       crimeSuccessChance: 0,
       crimeGains: 0,
-      classGains: 0,
+      gymGains: 0,
+      universityGains: 0,
       factionGains: 0,
       companyGains: 0,
     },

@@ -2,7 +2,7 @@ import { CONSTANTS } from "../Constants";
 import { Player } from "@player";
 import { Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { CrimeType } from "../utils/WorkType";
+import { CrimeType } from "../utils/enums";
 import { CrimeWork } from "../Work/CrimeWork";
 import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 
@@ -25,6 +25,9 @@ interface IConstructorParams {
 }
 
 export class Crime {
+  // Corresponding type, also the name of the crime.
+  type: CrimeType;
+
   // Number representing the difficulty of the crime. Used for success chance calculations
   difficulty: number;
 
@@ -37,9 +40,6 @@ export class Crime {
   // How much money is given by the
   money: number;
 
-  // Name of crime
-  name: string;
-
   // Name of crime as it appears on work screen: "You are attempting..."
   workName: string;
 
@@ -48,9 +48,6 @@ export class Crime {
 
   // Milliseconds it takes to attempt the crime
   time = 0;
-
-  // Corresponding type in CONSTANTS. Contains a description for the crime activity
-  type: CrimeType;
 
   // Weighting factors that determine how stats affect the success rate of this crime
   hacking_success_weight = 0;
@@ -70,7 +67,6 @@ export class Crime {
   intelligence_exp = 0;
 
   constructor(
-    name: string,
     workName: string,
     tooltipText: string,
     type: CrimeType,
@@ -80,7 +76,6 @@ export class Crime {
     karma: number,
     params: IConstructorParams,
   ) {
-    this.name = name;
     this.workName = workName;
     this.tooltipText = tooltipText;
     this.type = type;

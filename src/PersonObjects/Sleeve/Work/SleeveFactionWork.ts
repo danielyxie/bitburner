@@ -2,7 +2,7 @@ import { Player } from "@player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
-import { FactionWorkType } from "../../../Work/data/FactionWorkType";
+import { FactionWorkType } from "../../../utils/enums";
 import { FactionNames } from "../../../Faction/data/FactionNames";
 import { Factions } from "../../../Faction/Factions";
 import { calculateFactionExp, calculateFactionRep } from "../../../Work/Formulas";
@@ -23,7 +23,7 @@ export class SleeveFactionWork extends Work {
 
   constructor(params?: SleeveFactionWorkParams) {
     super(WorkType.FACTION);
-    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.HACKING;
+    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.hacking;
     this.factionName = params?.factionName ?? FactionNames.Sector12;
   }
 

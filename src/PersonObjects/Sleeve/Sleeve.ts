@@ -18,7 +18,7 @@ import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import { Contracts } from "../../Bladeburner/data/Contracts";
 import { CONSTANTS } from "../../Constants";
-import { CrimeType } from "../../utils/WorkType";
+import { CrimeType, GymType, UniversityClassType } from "../../utils/enums";
 import { CityName } from "../../Locations/data/CityNames";
 
 import { Factions } from "../../Faction/Factions";
@@ -27,7 +27,7 @@ import { LocationName } from "../../Locations/data/LocationNames";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../utils/JSONReviver";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { FactionWorkType } from "../../Work/data/FactionWorkType";
+import { FactionWorkType } from "../../utils/enums";
 import { Work } from "./Work/Work";
 import { SleeveClassWork } from "./Work/SleeveClassWork";
 import { ClassType } from "../../Work/ClassWork";
@@ -221,22 +221,22 @@ export class Sleeve extends Person implements ISleeve {
     let classType: ClassType | undefined;
     switch (className.toLowerCase()) {
       case "study computer science":
-        classType = ClassType.StudyComputerScience;
+        classType = UniversityClassType.computerScience;
         break;
       case "data structures":
-        classType = ClassType.DataStructures;
+        classType = UniversityClassType.dataStructures;
         break;
       case "networks":
-        classType = ClassType.Networks;
+        classType = UniversityClassType.networks;
         break;
       case "algorithms":
-        classType = ClassType.Algorithms;
+        classType = UniversityClassType.algorithms;
         break;
       case "management":
-        classType = ClassType.Management;
+        classType = UniversityClassType.management;
         break;
       case "leadership":
-        classType = ClassType.Leadership;
+        classType = UniversityClassType.leadership;
         break;
     }
     if (!classType) return false;
@@ -311,13 +311,13 @@ export class Sleeve extends Person implements ISleeve {
     let factionWorkType: FactionWorkType;
     if (sanitizedWorkType.includes("hack")) {
       if (!factionInfo.offerHackingWork) return false;
-      factionWorkType = FactionWorkType.HACKING;
+      factionWorkType = FactionWorkType.hacking;
     } else if (sanitizedWorkType.includes("field")) {
       if (!factionInfo.offerFieldWork) return false;
-      factionWorkType = FactionWorkType.FIELD;
+      factionWorkType = FactionWorkType.field;
     } else if (sanitizedWorkType.includes("security")) {
       if (!factionInfo.offerSecurityWork) return false;
-      factionWorkType = FactionWorkType.SECURITY;
+      factionWorkType = FactionWorkType.security;
     } else {
       return false;
     }
@@ -372,16 +372,16 @@ export class Sleeve extends Person implements ISleeve {
     // set stat to a default value.
     let classType: ClassType | undefined;
     if (sanitizedStat.includes("str")) {
-      classType = ClassType.GymStrength;
+      classType = GymType.strength;
     }
     if (sanitizedStat.includes("def")) {
-      classType = ClassType.GymDefense;
+      classType = GymType.defense;
     }
     if (sanitizedStat.includes("dex")) {
-      classType = ClassType.GymDexterity;
+      classType = GymType.dexterity;
     }
     if (sanitizedStat.includes("agi")) {
-      classType = ClassType.GymAgility;
+      classType = GymType.agility;
     }
     // if stat is still equals its default value, then validation has failed.
     if (!classType) return false;

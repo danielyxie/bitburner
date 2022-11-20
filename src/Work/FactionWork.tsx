@@ -11,7 +11,7 @@ import { Reputation } from "../ui/React/Reputation";
 import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { calculateFactionExp, calculateFactionRep } from "./Formulas";
-import { FactionWorkType } from "./data/FactionWorkType";
+import { FactionWorkType } from "../utils/enums";
 
 interface FactionWorkParams {
   singularity: boolean;
@@ -27,7 +27,7 @@ export class FactionWork extends Work {
 
   constructor(params?: FactionWorkParams) {
     super(WorkType.FACTION, params?.singularity ?? true);
-    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.HACKING;
+    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.hacking;
     this.factionName = params?.faction ?? FactionNames.Sector12;
   }
 
@@ -92,7 +92,9 @@ export class FactionWork extends Work {
 
   /** Initializes a FactionWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): FactionWork {
-    return Generic_fromJSON(FactionWork, value.data);
+    const factionWork = Generic_fromJSON(FactionWork, value.data);
+    factionWork.factionWorkType = factionWork.factionWorkType.toLowerCase() as FactionWorkType;
+    return factionWork;
   }
 }
 

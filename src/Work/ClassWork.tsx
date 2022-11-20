@@ -10,110 +10,67 @@ import { Player } from "@player";
 import { calculateClassEarnings as calculateClassEarningsRate } from "./Formulas";
 import { Work, WorkType } from "./Work";
 import { applyWorkStats, newWorkStats, sumWorkStats, WorkStats } from "./WorkStats";
+import { GymType, UniversityClassType } from "../utils/enums";
+import { checkEnum, findEnumMember } from "../utils/helpers/enum";
 
-export enum ClassType {
-  StudyComputerScience = "STUDYCOMPUTERSCIENCE",
-  DataStructures = "DATASTRUCTURES",
-  Networks = "NETWORKS",
-  Algorithms = "ALGORITHMS",
-
-  Management = "MANAGEMENT",
-  Leadership = "LEADERSHIP",
-
-  GymStrength = "GYMSTRENGTH",
-  GymDefense = "GYMDEFENSE",
-  GymDexterity = "GYMDEXTERITY",
-  GymAgility = "GYMAGILITY",
-}
+export type ClassType = UniversityClassType | GymType;
 
 export interface Class {
-  youAreCurrently: string;
   type: ClassType;
+  youAreCurrently: string;
   earnings: WorkStats;
 }
 
 export const Classes: Record<ClassType, Class> = {
-  [ClassType.StudyComputerScience]: {
-    youAreCurrently: "studying Computer Science",
-    type: ClassType.StudyComputerScience,
+  [UniversityClassType.computerScience]: {
+    type: UniversityClassType.computerScience,
+    youAreCurrently: `studying Computer Science`,
     earnings: newWorkStats({ hackExp: 0.5, intExp: 0.01 }),
   },
-  [ClassType.DataStructures]: {
+  [UniversityClassType.dataStructures]: {
+    type: UniversityClassType.dataStructures,
     youAreCurrently: "taking a Data Structures course",
-    type: ClassType.DataStructures,
-    earnings: newWorkStats({
-      money: -40,
-      hackExp: 1,
-      intExp: 0.01,
-    }),
+    earnings: newWorkStats({ money: -40, hackExp: 1, intExp: 0.01 }),
   },
-  [ClassType.Networks]: {
+  [UniversityClassType.networks]: {
+    type: UniversityClassType.networks,
     youAreCurrently: "taking a Networks course",
-    type: ClassType.Networks,
-    earnings: newWorkStats({
-      money: -80,
-      hackExp: 2,
-      intExp: 0.01,
-    }),
+    earnings: newWorkStats({ money: -80, hackExp: 2, intExp: 0.01 }),
   },
-  [ClassType.Algorithms]: {
+  [UniversityClassType.algorithms]: {
+    type: UniversityClassType.algorithms,
     youAreCurrently: "taking an Algorithms course",
-    type: ClassType.Algorithms,
-    earnings: newWorkStats({
-      money: -320,
-      hackExp: 4,
-      intExp: 0.01,
-    }),
+    earnings: newWorkStats({ money: -320, hackExp: 4, intExp: 0.01 }),
   },
-  [ClassType.Management]: {
+  [UniversityClassType.management]: {
+    type: UniversityClassType.management,
     youAreCurrently: "taking a Management course",
-    type: ClassType.Management,
-    earnings: newWorkStats({
-      money: -160,
-      chaExp: 2,
-      intExp: 0.01,
-    }),
+    earnings: newWorkStats({ money: -160, chaExp: 2, intExp: 0.01 }),
   },
-  [ClassType.Leadership]: {
+  [UniversityClassType.leadership]: {
+    type: UniversityClassType.leadership,
     youAreCurrently: "taking a Leadership course",
-    type: ClassType.Leadership,
-    earnings: newWorkStats({
-      money: -320,
-      chaExp: 4,
-      intExp: 0.01,
-    }),
+    earnings: newWorkStats({ money: -320, chaExp: 4, intExp: 0.01 }),
   },
-  [ClassType.GymStrength]: {
+  [GymType.strength]: {
+    type: GymType.strength,
     youAreCurrently: "training your strength at a gym",
-    type: ClassType.GymStrength,
-    earnings: newWorkStats({
-      money: -120,
-      strExp: 1,
-    }),
+    earnings: newWorkStats({ money: -120, strExp: 1 }),
   },
-  [ClassType.GymDefense]: {
+  [GymType.defense]: {
+    type: GymType.defense,
     youAreCurrently: "training your defense at a gym",
-    type: ClassType.GymDefense,
-    earnings: newWorkStats({
-      money: -120,
-      defExp: 1,
-    }),
+    earnings: newWorkStats({ money: -120, defExp: 1 }),
   },
-  [ClassType.GymDexterity]: {
+  [GymType.dexterity]: {
+    type: GymType.dexterity,
     youAreCurrently: "training your dexterity at a gym",
-    type: ClassType.GymDexterity,
-    earnings: newWorkStats({
-      money: -120,
-      dexExp: 1,
-    }),
+    earnings: newWorkStats({ money: -120, dexExp: 1 }),
   },
-  [ClassType.GymAgility]: {
+  [GymType.agility]: {
+    type: GymType.agility,
     youAreCurrently: "training your agility at a gym",
-    type: ClassType.GymAgility,
-    earnings: newWorkStats({
-      money: -120,
-      agiExp: 1,
-    }),
+    earnings: newWorkStats({ money: -120, agiExp: 1 }),
   },
 };
 
@@ -132,14 +89,12 @@ export class ClassWork extends Work {
 
   constructor(params?: ClassWorkParams) {
     super(WorkType.CLASS, params?.singularity ?? true);
-    this.classType = params?.classType ?? ClassType.StudyComputerScience;
+    this.classType = params?.classType ?? UniversityClassType.computerScience;
     this.location = params?.location ?? LocationName.Sector12RothmanUniversity;
   }
 
   isGym(): boolean {
-    return [ClassType.GymAgility, ClassType.GymDefense, ClassType.GymDexterity, ClassType.GymStrength].includes(
-      this.classType,
-    );
+    return checkEnum(GymType, this.classType);
   }
 
   getClass(): Class {
@@ -195,7 +150,12 @@ export class ClassWork extends Work {
 
   /** Initializes a ClassWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): ClassWork {
-    return Generic_fromJSON(ClassWork, value.data);
+    const classWork = Generic_fromJSON(ClassWork, value.data);
+    classWork.classType =
+      findEnumMember(UniversityClassType, classWork.classType) ??
+      findEnumMember(GymType, classWork.classType) ??
+      UniversityClassType.computerScience;
+    return classWork;
   }
 }
 

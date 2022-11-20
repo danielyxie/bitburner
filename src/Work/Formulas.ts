@@ -3,7 +3,7 @@ import { Crime } from "../Crime/Crime";
 import { newWorkStats, scaleWorkStats, WorkStats, multWorkStats } from "./WorkStats";
 import { Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
 import { CONSTANTS } from "../Constants";
-import { FactionWorkType } from "./data/FactionWorkType";
+import { FactionWorkType, GymType } from "../utils/enums";
 import {
   getFactionFieldWorkRepGain,
   getFactionSecurityWorkRepGain,
@@ -19,11 +19,12 @@ import { serverMetadata } from "../Server/data/servers";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Company } from "../Company/Company";
 import { CompanyPosition } from "../Company/CompanyPosition";
+import { checkEnum } from "../utils/helpers/enum";
 
 const gameCPS = 1000 / CONSTANTS._idleSpeed; // 5 cycles per second
 export const FactionWorkStats: Record<FactionWorkType, WorkStats> = {
-  [FactionWorkType.HACKING]: newWorkStats({ hackExp: 15 }),
-  [FactionWorkType.FIELD]: newWorkStats({
+  [FactionWorkType.hacking]: newWorkStats({ hackExp: 15 }),
+  [FactionWorkType.field]: newWorkStats({
     hackExp: 10,
     strExp: 10,
     defExp: 10,
@@ -31,7 +32,7 @@ export const FactionWorkStats: Record<FactionWorkType, WorkStats> = {
     agiExp: 10,
     chaExp: 10,
   }),
-  [FactionWorkType.SECURITY]: newWorkStats({
+  [FactionWorkType.security]: newWorkStats({
     hackExp: 5,
     strExp: 15,
     defExp: 15,
@@ -66,9 +67,9 @@ export function calculateCrimeWorkStats(person: IPerson, crime: Crime): WorkStat
 /** @returns faction rep rate per cycle */
 export const calculateFactionRep = (person: IPerson, type: FactionWorkType, favor: number): number => {
   const repFormulas = {
-    [FactionWorkType.HACKING]: getHackingWorkRepGain,
-    [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
-    [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
+    [FactionWorkType.hacking]: getHackingWorkRepGain,
+    [FactionWorkType.field]: getFactionFieldWorkRepGain,
+    [FactionWorkType.security]: getFactionSecurityWorkRepGain,
   };
   return repFormulas[type](person, favor);
 };
@@ -95,11 +96,7 @@ export function calculateClassEarnings(person: IPerson, type: ClassType, locatio
   const classs = Classes[type];
   const location = Locations[locationName];
 
-  const hashMult = [ClassType.GymAgility, ClassType.GymDefense, ClassType.GymStrength, ClassType.GymDexterity].includes(
-    type,
-  )
-    ? hashManager.getTrainingMult()
-    : hashManager.getStudyMult();
+  const hashMult = checkEnum(GymType, type) ? hashManager.getTrainingMult() : hashManager.getStudyMult();
 
   const earnings = multWorkStats(
     scaleWorkStats(classs.earnings, (location.expMult / gameCPS) * hashMult, false),
