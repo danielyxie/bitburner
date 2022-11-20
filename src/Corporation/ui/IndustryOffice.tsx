@@ -341,10 +341,10 @@ export function IndustryOffice(props: IProps): React.ReactElement {
               >
                 <span>
                   <Button
-                    disabled={corp.funds < 0 || props.office.partyMult > 0}
+                    disabled={corp.funds < 0 || props.office.partyMult > 1}
                     onClick={() => setThrowPartyOpen(true)}
                   >
-                    {props.office.partyMult > 0 ? "Throwing Party..." : "Throw Party"}
+                    {props.office.partyMult > 1 ? "Throwing Party..." : "Throw Party"}
                   </Button>
                 </span>
               </Tooltip>

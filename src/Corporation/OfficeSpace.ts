@@ -38,7 +38,7 @@ export class OfficeSpace {
   autoCoffee = false;
   autoParty = false;
   coffeePending = false;
-  partyMult = 0;
+  partyMult = 1;
 
   employeeProd: Record<EmployeePositions | "total", number> = {
     [EmployeePositions.Operations]: 0,
@@ -145,7 +145,7 @@ export class OfficeSpace {
       this.avgHap = Math.max(Math.min(this.avgHap, this.maxHap), this.minHap);
 
       this.coffeePending = false;
-      this.partyMult = 0;
+      this.partyMult = 1;
     }
 
     // Get experience increase; unassigned employees do not contribute, employees in training contribute 5x
@@ -259,7 +259,7 @@ export class OfficeSpace {
   }
 
   setParty(mult: number): boolean {
-    if (mult > 1 && this.partyMult === 0 && !this.autoParty && this.totalEmployees > 0) {
+    if (mult > 1 && this.partyMult === 1 && !this.autoParty && this.totalEmployees > 0) {
       this.partyMult = mult;
       return true;
     }
