@@ -135,7 +135,7 @@ export class OfficeSpace {
         this.avgHap = this.maxHap;
       } else {
         // Each 5% multiplier gives an extra flat +1 to morale and happiness to make recovering from low morale easier.
-        const increase = this.partyMult > 1 ? (1 - this.partyMult) * 20 : 0;
+        const increase = this.partyMult > 1 ? (this.partyMult - 1) * 20 : 0;
         this.avgHap = ((this.avgHap - reduction) * perfMult + increase) * this.partyMult;
         this.avgMor = (this.avgMor * perfMult + increase) * this.partyMult;
       }
