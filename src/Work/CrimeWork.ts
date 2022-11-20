@@ -1,7 +1,7 @@
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { Crime } from "../Crime/Crime";
 import { CONSTANTS } from "../Constants";
-import { determineCrimeSuccess } from "../Crime/CrimeHelpers";
+import { determineCrimeSuccess, findCrime } from "../Crime/CrimeHelpers";
 import { Crimes } from "../Crime/Crimes";
 import { Player } from "@player";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
@@ -100,7 +100,9 @@ export class CrimeWork extends Work {
 
   /** Initializes a CrimeWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): CrimeWork {
-    return Generic_fromJSON(CrimeWork, value.data);
+    const crimeWork = Generic_fromJSON(CrimeWork, value.data);
+    crimeWork.crimeType = findCrime(crimeWork.crimeType)?.type ?? CrimeType.shoplift;
+    return crimeWork;
   }
 }
 

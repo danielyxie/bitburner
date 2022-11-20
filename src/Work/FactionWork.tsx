@@ -12,6 +12,7 @@ import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { calculateFactionExp, calculateFactionRep } from "./Formulas";
 import { FactionWorkType } from "../utils/enums";
+import { findEnumMember } from "../utils/helpers/enum";
 
 interface FactionWorkParams {
   singularity: boolean;
@@ -93,7 +94,8 @@ export class FactionWork extends Work {
   /** Initializes a FactionWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): FactionWork {
     const factionWork = Generic_fromJSON(FactionWork, value.data);
-    factionWork.factionWorkType = factionWork.factionWorkType.toLowerCase() as FactionWorkType;
+    factionWork.factionWorkType =
+      findEnumMember(FactionWorkType, factionWork.factionWorkType) ?? FactionWorkType.hacking;
     return factionWork;
   }
 }
