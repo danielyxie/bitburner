@@ -3,6 +3,7 @@ import React from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import { Theme } from "@mui/material/styles";
+import { Settings } from "../../Settings/Settings";
 
 // This particular eslint-disable is correct.
 // In this super specific weird case we in fact do want a regex on an ANSII character.
@@ -16,30 +17,35 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.colors.success,
+      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
     error: {
       whiteSpace: "pre-wrap",
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.palette.error.main,
+      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
     primary: {
       whiteSpace: "pre-wrap",
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.palette.primary.main,
+      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
     info: {
       whiteSpace: "pre-wrap",
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.palette.info.main,
+      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
     warning: {
       whiteSpace: "pre-wrap",
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.palette.warning.main,
+      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
   }),
 );
@@ -220,7 +226,7 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
   // If a background color is set, add slight padding to increase the background fill area.
   // This was previously display:inline-block, but that has display errors when line breaks are used.
   if (style.backgroundColor) {
-    style.padding = "0px 1px";
+    style.padding = "var(--padForFlushBg) 0px";
   }
   return style;
 }
