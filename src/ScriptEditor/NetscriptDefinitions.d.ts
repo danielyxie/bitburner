@@ -4535,11 +4535,36 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * Arguments passed into a script can be accessed using a normal
-   * array using the [] operator (args[0], args[1], etc…).
+   * Arguments passed into a script can be accessed as a normal array by using the `[]` operator
+   * (`args[0]`, `args[1]`, etc...).
+   * Arguments can be string, number, or boolean.
+   * Use `args.length` to get the number of arguments that were passed into a script.
    *
-   * It is also possible to get the number of arguments that was passed into a script using: 'args.length'
-   * WARNING: Do not try to modify the args array. This will break the game.
+   * @example
+   * `run example.script 7 text true`
+   *
+   * ```js
+   * // NS1 - example.script
+   * tprint(args.length) // 3
+   * tprint(args[0]); // 7 (number)
+   * tprint(args[1]); // "text" (string)
+   * tprint(args[2]); // true (boolean)
+   * tprint(args[3]); // undefined, because only 3 arguments were provided
+   * ```
+   *
+   * @example
+   * `run example.js 7 text true`
+   *
+   * ```js
+   * // NS2 - example.js
+   * export async function main(ns) {
+   *   ns.tprint(ns.args.length) // 3
+   *   ns.tprint(ns.args[0]); // 7 (number)
+   *   ns.tprint(ns.args[1]); // "text" (string)
+   *   ns.tprint(ns.args[2]); // true (boolean)
+   *   ns.tprint(ns.args[3]); // undefined, because only 3 arguments were provided
+   * }
+   * ```
    */
   readonly args: (string | number | boolean)[];
 
