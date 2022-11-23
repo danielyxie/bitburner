@@ -23,7 +23,7 @@ not migrated (require manual changes sometimes):
 * getCharacterInformation is deprecated in favor getPlayer
 * getServerRam deprecated in favor of getServerMaxRam and getServerUsedRam
 * getServerBaseSecurityLevel will be deprecated in favor of nothing, it's not really used.
-* sleep can no longer be called simultenaously, a new function called asleep will let you.
+* sleep can no longer be called simultaneously, a new function called asleep will let you.
 * write returns promise (needs to be await ed).
 * scp returns a promise (needs to be await ed).
 * free port, write, read
