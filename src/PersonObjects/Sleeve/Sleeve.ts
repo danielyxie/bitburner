@@ -40,9 +40,9 @@ import { SleeveSupportWork } from "./Work/SleeveSupportWork";
 import { SleeveBladeburnerWork } from "./Work/SleeveBladeburnerWork";
 import { SleeveCrimeWork } from "./Work/SleeveCrimeWork";
 import * as sleeveMethods from "./SleeveMethods";
-import { Sleeve as ISleeve } from "../../ScriptEditor/NetscriptDefinitions";
+import { SleevePerson } from "../../ScriptEditor/NetscriptDefinitions";
 
-export class Sleeve extends Person implements ISleeve {
+export class Sleeve extends Person implements SleevePerson {
   currentWork: Work | null = null;
 
   /** Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs */

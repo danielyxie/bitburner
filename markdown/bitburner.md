@@ -87,8 +87,8 @@
 |  [Singularity](./bitburner.singularity.md) | Singularity API |
 |  [Skills](./bitburner.skills.md) |  |
 |  [SkillsFormulas](./bitburner.skillsformulas.md) | Skills formulas |
-|  [sleeve](./bitburner.sleeve.md) | Sleeve API |
-|  [Sleeve](./bitburner.sleeve.md) |  |
+|  [Sleeve](./bitburner.sleeve.md) | Sleeve API |
+|  [SleevePerson](./bitburner.sleeveperson.md) |  |
 |  [SourceFileLvl](./bitburner.sourcefilelvl.md) |  |
 |  [Stanek](./bitburner.stanek.md) | Stanek's Gift API. |
 |  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md)<!-- -->Keys are stock symbols, properties are arrays of [StockOrderObject](./bitburner.stockorderobject.md) |

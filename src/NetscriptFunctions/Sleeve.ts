@@ -4,7 +4,7 @@ import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";
 import { Augmentation } from "../Augmentation/Augmentation";
 
-import { sleeve } from "../ScriptEditor/NetscriptDefinitions";
+import { Sleeve } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/enum";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { isSleeveBladeburnerWork } from "../PersonObjects/Sleeve/Work/SleeveBladeburnerWork";
@@ -13,7 +13,7 @@ import { isSleeveCompanyWork } from "../PersonObjects/Sleeve/Work/SleeveCompanyW
 import { helpers } from "../Netscript/NetscriptHelpers";
 import { cloneDeep } from "lodash";
 
-export function NetscriptSleeve(): InternalAPI<sleeve> {
+export function NetscriptSleeve(): InternalAPI<Sleeve> {
   const checkSleeveAPIAccess = function (ctx: NetscriptContext) {
     if (Player.bitNodeN !== 10 && !Player.sourceFileLvl(10)) {
       throw helpers.makeRuntimeErrorMsg(

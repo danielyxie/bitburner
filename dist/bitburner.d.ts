@@ -9,7 +9,7 @@ export declare interface ActiveFragment {
 }
 
 /**
- * Return value of {@link sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
+ * Return value of {@link Sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
  * @public
  */
 export declare interface AugmentPair {
@@ -2662,18 +2662,14 @@ export declare interface Multipliers {
     bladeburner_success_chance: number;
 }
 
-/**
- * Object representing a port. A port is a serialized queue.
- * @public
- */
+/** Object representing a port. A port is a serialized queue.
+ * @public */
 export declare interface NetscriptPort {
-    /**
-     * Write data to a port.
+    /** Write data to a port.
      * @remarks
      * RAM cost: 0 GB
      *
-     * @returns The data popped off the queue if it was full.
-     */
+     * @returns The data popped off the queue if it was full. */
     write(value: string | number): PortData | null;
 
     /**
@@ -2824,7 +2820,7 @@ export declare interface NS {
      * Namespace for sleeve functions.
      * @remarks RAM cost: 0 GB
      */
-    readonly sleeve: sleeve;
+    readonly sleeve: Sleeve;
 
     /**
      * Namespace for stock functions.
@@ -2880,11 +2876,36 @@ export declare interface NS {
      * @remarks
      * RAM cost: 0 GB
      *
-     * Arguments passed into a script can be accessed using a normal
-     * array using the [] operator (args[0], args[1], etc…).
+     * Arguments passed into a script can be accessed as a normal array by using the `[]` operator
+     * (`args[0]`, `args[1]`, etc...).
+     * Arguments can be string, number, or boolean.
+     * Use `args.length` to get the number of arguments that were passed into a script.
      *
-     * It is also possible to get the number of arguments that was passed into a script using: 'args.length'
-     * WARNING: Do not try to modify the args array. This will break the game.
+     * @example
+     * `run example.script 7 text true`
+     *
+     * ```js
+     * // NS1 - example.script
+     * tprint(args.length) // 3
+     * tprint(args[0]); // 7 (number)
+     * tprint(args[1]); // "text" (string)
+     * tprint(args[2]); // true (boolean)
+     * tprint(args[3]); // undefined, because only 3 arguments were provided
+     * ```
+     *
+     * @example
+     * `run example.js 7 text true`
+     *
+     * ```js
+     * // NS2 - example.js
+     * export async function main(ns) {
+     *   ns.tprint(ns.args.length) // 3
+     *   ns.tprint(ns.args[0]); // 7 (number)
+     *   ns.tprint(ns.args[1]); // "text" (string)
+     *   ns.tprint(ns.args[2]); // true (boolean)
+     *   ns.tprint(ns.args[3]); // undefined, because only 3 arguments were provided
+     * }
+     * ```
      */
     readonly args: (string | number | boolean)[];
 
@@ -6490,20 +6511,13 @@ export declare interface SkillsFormulas {
     calculateExp(skill: number, skillMult?: number): number;
 }
 
-/** @public */
-export declare interface Sleeve extends Person {
-    shock: number;
-    sync: number;
-    memory: number;
-}
-
 /**
  * Sleeve API
  * @remarks
  * If you are not in BitNode-10, then you must have Source-File 10 in order to use this API.
  * @public
  */
-export declare interface sleeve {
+export declare interface Sleeve {
     /**
      * Get the number of sleeves you own.
      * @remarks
@@ -6525,7 +6539,7 @@ export declare interface sleeve {
      * @param sleeveNumber - Index of the sleeve to retrieve information.
      * @returns Object containing information about this sleeve.
      */
-    getSleeve(sleeveNumber: number): Sleeve;
+    getSleeve(sleeveNumber: number): SleevePerson;
 
     /**
      * Get task of a sleeve.
@@ -6773,6 +6787,13 @@ export declare type SleeveFactionTask = {
 
 /** @public */
 export declare type SleeveInfiltrateTask = { type: "INFILTRATE" };
+
+/** @public */
+export declare interface SleevePerson extends Person {
+    shock: number;
+    sync: number;
+    memory: number;
+}
 
 /** @public */
 export declare type SleeveRecoveryTask = { type: "RECOVERY" };

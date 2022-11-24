@@ -55,7 +55,7 @@ interface Player extends Person {
 }
 
 /** @public */
-interface Sleeve extends Person {
+interface SleevePerson extends Person {
   shock: number;
   sync: number;
   memory: number;
@@ -260,7 +260,7 @@ interface CodingAttemptOptions {
 }
 
 /**
- * Return value of {@link sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
+ * Return value of {@link Sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
  * @public
  */
 interface AugmentPair {
@@ -3515,7 +3515,7 @@ export interface Gang {
  * If you are not in BitNode-10, then you must have Source-File 10 in order to use this API.
  * @public
  */
-export interface sleeve {
+export interface Sleeve {
   /**
    * Get the number of sleeves you own.
    * @remarks
@@ -3537,7 +3537,7 @@ export interface sleeve {
    * @param sleeveNumber - Index of the sleeve to retrieve information.
    * @returns Object containing information about this sleeve.
    */
-  getSleeve(sleeveNumber: number): Sleeve;
+  getSleeve(sleeveNumber: number): SleevePerson;
 
   /**
    * Get task of a sleeve.
@@ -4479,7 +4479,7 @@ export interface NS {
    * Namespace for sleeve functions.
    * @remarks RAM cost: 0 GB
    */
-  readonly sleeve: sleeve;
+  readonly sleeve: Sleeve;
 
   /**
    * Namespace for stock functions.
