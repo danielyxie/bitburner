@@ -104,7 +104,10 @@ const Engine: {
     staneksGift.process(numCycles);
 
     // Corporation
-    if (Player.corporation) Player.corporation.storeCycles(numCycles);
+    if (Player.corporation) {
+      Player.corporation.storeCycles(numCycles);
+      Player.corporation.process();
+    }
 
     // Bladeburner
     if (Player.bladeburner) Player.bladeburner.storeCycles(numCycles);
@@ -191,9 +194,6 @@ const Engine: {
       } else {
         Engine.Counters.messages = 150;
       }
-    }
-    if (Player.corporation) {
-      Player.corporation.process();
     }
     if (Engine.Counters.mechanicProcess <= 0) {
       if (Player.bladeburner) {

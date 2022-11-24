@@ -81,6 +81,7 @@ export class Gang {
   }
 
   process(numCycles = 1): void {
+    // Run every cycle
     const CyclesPerSecond = 1000 / CONSTANTS._idleSpeed;
 
     if (isNaN(numCycles)) {
@@ -89,6 +90,7 @@ export class Gang {
     this.storedCycles += numCycles;
 
     // Only process if there are at least 2 seconds, and at most 5 seconds
+    // works out as 5 * 5 for 25x per cycle during bonus time
     if (this.storedCycles < 2 * CyclesPerSecond) return;
     const cycles = Math.min(this.storedCycles, 5 * CyclesPerSecond);
 

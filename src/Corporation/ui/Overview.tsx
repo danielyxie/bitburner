@@ -296,10 +296,21 @@ function BonusTime(): React.ReactElement {
   const storedTime = corp.storedCycles * CONSTANTS.MilliPerCycle;
   if (storedTime <= 15000) return <></>;
   return (
-    <Typography>
-      Bonus time: {convertTimeMsToTimeElapsedString(storedTime)}
-      <br />
-      <br />
-    </Typography>
+    <Box display="flex">
+      <Tooltip
+        title={
+          <Typography>
+            You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the
+            browser). Bonus time makes the Corporation mechanic progress faster, up to 10x the normal speed.
+          </Typography>
+        }
+      >
+        <Typography>
+          Bonus time: {convertTimeMsToTimeElapsedString(storedTime)}
+          <br />
+          <br />
+        </Typography>
+      </Tooltip>
+    </Box>
   );
 }
