@@ -89,7 +89,9 @@ export function Victory(props: IProps): React.ReactElement {
               ))}
           </Select>
           <Button onClick={trade}>
-            Trade for <Reputation reputation={repGain} /> reputation
+            Trade for&nbsp;
+            <Reputation reputation={repGain} />
+            &nbsp;reputation
           </Button>
         </Box>
         <Button onClick={sell} sx={{ width: "100%" }}>
