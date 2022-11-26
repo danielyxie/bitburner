@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { KEYCODE } from "../../utils/helpers/keyCodes";
+import { KEY } from "../../utils/helpers/keyCodes";
 import clsx from "clsx";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
@@ -275,53 +275,53 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     function handleShortcuts(this: Document, event: KeyboardEvent): void {
       if (Settings.DisableHotkeys) return;
       if ((Player.currentWork && Player.focus) || Router.page() === Page.BitVerse) return;
-      if (event.code === KEYCODE.T && event.altKey) {
+      if (event.key === KEY.T && event.altKey) {
         event.preventDefault();
         clickTerminal();
-      } else if (event.code === KEYCODE.C && event.altKey) {
+      } else if (event.key === KEY.C && event.altKey) {
         event.preventDefault();
         clickStats();
-      } else if (event.code === KEYCODE.E && event.altKey) {
+      } else if (event.key === KEY.E && event.altKey) {
         event.preventDefault();
         clickScriptEditor();
-      } else if (event.code === KEYCODE.S && event.altKey) {
+      } else if (event.key === KEY.S && event.altKey) {
         event.preventDefault();
         clickActiveScripts();
-      } else if (event.code === KEYCODE.H && event.altKey) {
+      } else if (event.key === KEY.H && event.altKey) {
         event.preventDefault();
         clickHacknet();
-      } else if (event.code === KEYCODE.W && event.altKey) {
+      } else if (event.key === KEY.W && event.altKey) {
         event.preventDefault();
         clickCity();
-      } else if (event.code === KEYCODE.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
+      } else if (event.key === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
         // ctrl/cmd + alt + j is shortcut to open Chrome dev tools
         event.preventDefault();
         clickJob();
-      } else if (event.code === KEYCODE.R && event.altKey) {
+      } else if (event.key === KEY.R && event.altKey) {
         event.preventDefault();
         clickTravel();
-      } else if (event.code === KEYCODE.P && event.altKey) {
+      } else if (event.key === KEY.P && event.altKey) {
         event.preventDefault();
         clickCreateProgram();
-      } else if (event.code === KEYCODE.F && event.altKey) {
+      } else if (event.key === KEY.F && event.altKey) {
         if (props.page == Page.Terminal && Settings.EnableBashHotkeys) {
           return;
         }
         event.preventDefault();
         clickFactions();
-      } else if (event.code === KEYCODE.A && event.altKey) {
+      } else if (event.key === KEY.A && event.altKey) {
         event.preventDefault();
         clickAugmentations();
-      } else if (event.code === KEYCODE.U && event.altKey) {
+      } else if (event.key === KEY.U && event.altKey) {
         event.preventDefault();
         clickTutorial();
-      } else if (event.code === KEYCODE.O && event.altKey) {
+      } else if (event.key === KEY.O && event.altKey) {
         event.preventDefault();
         clickOptions();
-      } else if (event.code === KEYCODE.B && event.altKey && Player.bladeburner) {
+      } else if (event.key === KEY.B && event.altKey && Player.bladeburner) {
         event.preventDefault();
         clickBladeburner();
-      } else if (event.code === KEYCODE.G && event.altKey && Player.gang) {
+      } else if (event.key === KEY.G && event.altKey && Player.gang) {
         event.preventDefault();
         clickGang();
       }
