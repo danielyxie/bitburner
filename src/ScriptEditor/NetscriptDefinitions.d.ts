@@ -1062,6 +1062,46 @@ export interface TIX {
   getPrice(sym: string): number;
 
   /**
+   * Returns the organization associated with a stock symbol.
+   *
+   * @remarks
+   * RAM cost: 2 GB
+   *
+   * The organization associated with the corresponding stock symbol. This function
+   * requires that you have the following:
+   *
+   * 1. WSE Account
+   *
+   * 1. TIX API Access
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * stock.getOrganization("FSIG");
+   *
+   * // Choose the first stock symbol from the array of stock symbols. Get the
+   * // organization associated with the corresponding stock symbol
+   * var sym = stock.getSymbols()[0];
+   * tprint("Stock symbol: " + sym);
+   * tprint("Stock organization: " + stock.getOrganization(sym));
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * ns.stock.getOrganization("FSIG");
+   *
+   * // Choose the first stock symbol from the array of stock symbols. Get the
+   * // organization associated with the corresponding stock symbol.
+   * const sym = ns.stock.getSymbols()[0];
+   * ns.tprint("Stock symbol: " + sym);
+   * ns.tprint("Stock organization: " + ns.stock.getOrganization(sym));
+   * ```
+   * @param sym - Stock symbol.
+   * @returns The organization assicated with the stock symbol.
+   */
+  getOrganization(sym: string): string;
+
+  /**
    * Returns the ask price of that stock.
    * @remarks RAM cost: 2 GB
    *
