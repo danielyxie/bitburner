@@ -2,7 +2,6 @@ import { getRamCost } from "./RamCostGenerator";
 import type { WorkerScript } from "./WorkerScript";
 import { helpers } from "./NetscriptHelpers";
 import { ScriptArg } from "./ScriptArg";
-import { NSFull } from "src/NetscriptFunctions";
 import { cloneDeep } from "lodash";
 
 /** Generic type for an enums object */
@@ -37,42 +36,57 @@ export type InternalAPI<API> = {
 /** Any of the possible values on a internal API layer */
 type InternalValues = Enums | ScriptArg[] | InternalFn<APIFn> | InternalAPI<unknown>;
 
+export class StampedLayer {
+  #workerScript: WorkerScript;
+  constructor(ws: WorkerScript, obj: ExternalAPI<unknown>) {
+    this.#workerScript = ws;
+    Object.setPrototypeOf(this, obj);
+  }
+  static wrapFunction<API>(eLayer: ExternalAPI<API>, func: InternalFn<APIFn>, tree: string[], key: Key<API>) {
+    const arrayPath = [...tree, key];
+    const functionPath = arrayPath.join(".");
+    function wrappedFunction(this: StampedLayer, ...args: unknown[]): unknown {
+      const ctx = { workerScript: this.#workerScript, function: key, functionPath };
+      helpers.checkEnvFlags(ctx);
+      helpers.updateDynamicRam(ctx, getRamCost(...tree, key));
+      return func(ctx)(...args);
+    }
+    Object.defineProperty(eLayer, key, { value: wrappedFunction, enumerable: true, writable: false });
+  }
+}
+Object.defineProperty(StampedLayer.prototype, "constructor", {
+  value: Object,
+  enumerable: false,
+  writable: false,
+  configurable: false,
+});
+
 export type NetscriptContext = {
   workerScript: WorkerScript;
   function: string;
   functionPath: string;
 };
 
-export function wrapAPI(ws: WorkerScript, internalAPI: InternalAPI<NSFull>, args: ScriptArg[]): ExternalAPI<NSFull> {
-  function wrapAPILayer<API>(eLayer: ExternalAPI<API>, iLayer: InternalAPI<API>, tree: string[]): ExternalAPI<API> {
-    for (const [key, value] of Object.entries(iLayer) as [Key<API>, InternalValues][]) {
-      if (key === "enums") {
-        (eLayer[key] as Enums) = cloneDeep(value as Enums);
-      } else if (key === "args") continue;
-      // Args are added in wrapAPI function and should only exist at top level
-      else if (typeof value === "function") {
-        wrapFunction(eLayer, value as InternalFn<APIFn>, tree, key);
-      } else if (typeof value === "object") {
-        wrapAPILayer((eLayer[key] = {} as ExternalAPI<API>[Key<API>]), value, [...tree, key as string]);
-      } else {
-        console.warn(`Unexpected data while wrapping API.`, "tree:", tree, "key:", key, "value:", value);
-        throw new Error("Error while wrapping netscript API. See console.");
-      }
+export function wrapAPILayer<API>(
+  eLayer: ExternalAPI<API>,
+  iLayer: InternalAPI<API>,
+  tree: string[],
+): ExternalAPI<API> {
+  for (const [key, value] of Object.entries(iLayer) as [Key<API>, InternalValues][]) {
+    if (key === "enums") {
+      const enumObj = Object.freeze(cloneDeep(value as Enums));
+      for (const member of Object.values(enumObj)) Object.freeze(member);
+      (eLayer[key] as Enums) = enumObj;
+    } else if (key === "args") continue;
+    // Args only added on individual instances.
+    else if (typeof value === "function") {
+      StampedLayer.wrapFunction(eLayer, value as InternalFn<APIFn>, tree, key);
+    } else if (typeof value === "object") {
+      wrapAPILayer((eLayer[key] = {} as ExternalAPI<API>[Key<API>]), value, [...tree, key as string]);
+    } else {
+      console.warn(`Unexpected data while wrapping API.`, "tree:", tree, "key:", key, "value:", value);
+      throw new Error("Error while wrapping netscript API. See console.");
     }
-    return eLayer;
   }
-  function wrapFunction<API>(eLayer: ExternalAPI<API>, func: InternalFn<APIFn>, tree: string[], key: Key<API>) {
-    const arrayPath = [...tree, key];
-    const functionPath = arrayPath.join(".");
-    const ctx = { workerScript: ws, function: key, functionPath };
-    function wrappedFunction(...args: unknown[]): unknown {
-      helpers.checkEnvFlags(ctx);
-      helpers.updateDynamicRam(ctx, getRamCost(...tree, key));
-      return func(ctx)(...args);
-    }
-    (eLayer[key] as WrappedFn) = wrappedFunction;
-  }
-
-  const wrappedAPI = wrapAPILayer({ args } as ExternalAPI<NSFull>, internalAPI, []);
-  return wrappedAPI;
+  return eLayer;
 }

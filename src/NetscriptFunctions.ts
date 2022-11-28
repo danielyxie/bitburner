@@ -72,7 +72,7 @@ import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 import { recentScripts } from "./Netscript/RecentScripts";
-import { ExternalAPI, InternalAPI, wrapAPI } from "./Netscript/APIWrapper";
+import { ExternalAPI, InternalAPI, StampedLayer, wrapAPILayer } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { getBitNodeMultipliers } from "./BitNode/BitNode";
@@ -92,10 +92,6 @@ export const enums: NSEnums = {
 };
 
 export type NSFull = Readonly<NS & INetscriptExtra>;
-
-export function NetscriptFunctions(workerScript: WorkerScript): ExternalAPI<NSFull> {
-  return wrapAPI(workerScript, ns, workerScript.args.slice());
-}
 
 const base: InternalAPI<NS> = {
   args: [],
@@ -1912,6 +1908,34 @@ export const ns = {
   ...base,
   ...NetscriptExtra(),
 };
+
+export const wrappedNS = wrapAPILayer({} as ExternalAPI<NSFull>, ns, []);
+
+// Figure out once which layers of ns have functions on them and will need to be stamped with a private workerscript field for API access
+const layerLocations: string[][] = [];
+function populateLayers(nsLayer: ExternalAPI<unknown>, currentLayers: string[] = []) {
+  for (const [k, v] of Object.entries(nsLayer)) {
+    if (typeof v === "object" && k !== "enums") {
+      if (Object.values(v as object).some((member) => typeof member === "function"))
+        layerLocations.push([...currentLayers, k]);
+      populateLayers(v as ExternalAPI<unknown>, [...currentLayers, k]);
+    }
+  }
+}
+populateLayers(wrappedNS);
+
+export function NetscriptFunctions(ws: WorkerScript): ExternalAPI<NSFull> {
+  //todo: better typing instead of relying on an any
+  const instance = new StampedLayer(ws, wrappedNS) as any;
+  for (const layerLocation of layerLocations) {
+    const key = layerLocation.pop() as string;
+    const obj = layerLocation.reduce((prev, curr) => prev[curr], instance);
+    layerLocation.push(key);
+    obj[key] = new StampedLayer(ws, obj[key]);
+  }
+  instance.args = ws.args.slice();
+  return instance;
+}
 
 const possibleLogs = Object.fromEntries([...getFunctionNames(ns, "")].map((a) => [a, true]));
 /** Provides an array of all function names on a nested object */
