@@ -1,8 +1,8 @@
 import { Player as player } from "../Player";
 import { CodingContract } from "../CodingContracts";
-import { CodingAttemptOptions, CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
+import { CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
-import { helpers, assertObjectType } from "../Netscript/NetscriptHelpers";
+import { helpers } from "../Netscript/NetscriptHelpers";
 import { codingContractTypesMetadata } from "../data/codingcontracttypes";
 import { generateDummyContract } from "../CodingContractGenerator";
 
@@ -18,18 +18,16 @@ export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
   };
 
   return {
-    attempt: (ctx) => (answer, _filename, _hostname?, opts?) => {
+    attempt: (ctx) => (answer, _filename, _hostname?) => {
       const filename = helpers.string(ctx, "filename", _filename);
       const hostname = _hostname ? helpers.string(ctx, "hostname", _hostname) : ctx.workerScript.hostname;
       const contract = getCodingContract(ctx, hostname, filename);
 
-      const optsValidator: CodingAttemptOptions = { returnReward: true };
-      opts ??= optsValidator;
-      assertObjectType(ctx, "opts", opts, optsValidator);
       if (typeof answer !== "number" && typeof answer !== "string" && !Array.isArray(answer))
         throw new Error("The answer provided was not a number, string, or array");
 
       // Convert answer to string.
+      // Todo: better typing for contracts, don't do this weird string conversion of the player answer
       const answerStr = typeof answer === "string" ? answer : JSON.stringify(answer);
       const creward = contract.reward;
 
@@ -38,7 +36,7 @@ export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
         const reward = player.gainCodingContractReward(creward, contract.getDifficulty());
         helpers.log(ctx, () => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`);
         serv.removeContract(filename);
-        return opts.returnReward ? reward : true;
+        return reward;
       } else {
         ++contract.tries;
         if (contract.tries >= contract.getMaxNumTries()) {
@@ -54,7 +52,7 @@ export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
           );
         }
 
-        return opts.returnReward ? "" : false;
+        return "";
       }
     },
     getContractType: (ctx) => (_filename, _hostname?) => {

@@ -251,15 +251,6 @@ interface BasicHGWOptions {
 }
 
 /**
- * Options to affect the behavior of {@link CodingContract} attempt.
- * @public
- */
-interface CodingAttemptOptions {
-  /** If truthy, then the function will return a string that states the contract’s reward when it is successfully solved. */
-  returnReward: boolean;
-}
-
-/**
  * Return value of {@link Sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
  * @public
  */
@@ -3149,24 +3140,36 @@ export interface Bladeburner {
  */
 export interface CodingContract {
   /**
-   * Attempts a coding contract.
+   * Attempts a coding contract, returning a reward string on success or empty string on failure.
    * @remarks
    * RAM cost: 10 GB
    *
    * Attempts to solve the Coding Contract with the provided solution.
    *
-   * @param answer - Solution for the contract.
+   * @example
+   * ```js
+   * // NS1
+   * var reward = codingcontract.attempt(yourSolution, filename, hostname);
+   * if (reward) {
+   *   tprint("Contract solved successfully! Reward: " + reward)
+   * } else tprint("Failed to solve contract.")
+   * ```
+   * @example
+   * ```js
+   * // NS2
+   * const reward = codingcontract.attempt(yourSolution, filename, hostname);
+   * if (reward) {
+   *   ns.tprint(`Contract solved successfully! Reward: ${reward}`)
+   * } else ns.tprint("Failed to solve contract.")
+   * ```
+   *
+   * @param answer - Attempted solution for the contract.
    * @param filename - Filename of the contract.
-   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not provided.
-   * @param opts - Optional parameters for configuring function behavior.
-   * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
+   * @param host - Hostname of the server containing the contract. Optional. Defaults to current server if not
+   *   provided.
+   * @returns A reward description string on success, or an empty string on failure.
    */
-  attempt(
-    answer: string | number | any[],
-    filename: string,
-    host?: string,
-    opts?: CodingAttemptOptions,
-  ): boolean | string;
+  attempt(answer: string | number | any[], filename: string, host?: string): string;
 
   /**
    * Get the type of a coding contract.

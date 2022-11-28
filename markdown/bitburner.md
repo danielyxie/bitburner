@@ -31,7 +31,6 @@
 |  [BitNodeMultipliers](./bitburner.bitnodemultipliers.md) | All multipliers affecting the difficulty of the current challenge. |
 |  [Bladeburner](./bitburner.bladeburner.md) | Bladeburner API |
 |  [BladeburnerCurAction](./bitburner.bladeburnercuraction.md) | Bladeburner current action. |
-|  [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md) attempt. |
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contract API |
 |  [Corporation](./bitburner.corporation.md) | Corporation API |
 |  [CorporationInfo](./bitburner.corporationinfo.md) | General info about a corporation |
