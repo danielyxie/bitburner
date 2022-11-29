@@ -462,10 +462,9 @@ export const achievements: Record<string, Achievement> = {
     Condition: (): boolean => {
       if (Player.corporation === null) return false;
       for (const d of Player.corporation.divisions) {
-        for (const o of Object.values(d.offices)) {
-          if (o === 0) continue;
-          if (o.totalEmployees >= 3000) return true;
-        }
+        let totalEmployees = 0;
+        for (const o of Object.values(d.offices)) if (o && o.totalEmployees) totalEmployees += o.totalEmployees;
+        if (totalEmployees >= 3000) return true;
       }
       return false;
     },

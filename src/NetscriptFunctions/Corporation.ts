@@ -233,7 +233,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     const division = getDivision(divisionName);
     if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city name '${cityName}'`);
     const warehouse = division.warehouses[cityName];
-    if (warehouse === 0) throw new Error(`${division.name} has not expanded to '${cityName}'`);
+    if (warehouse === 0) throw new Error(`${division.name} does not have a warehouse in '${cityName}'`);
     return warehouse;
   }
 
@@ -848,6 +848,8 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     },
     goPublic: (ctx) => (_numShares) => {
       checkAccess(ctx);
+      const corporation = getCorporation();
+      if (corporation.public) throw helpers.makeRuntimeErrorMsg(ctx, "corporation is already public");
       const numShares = helpers.number(ctx, "numShares", _numShares);
       return goPublic(numShares);
     },
