@@ -105,7 +105,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
     this.sleeves.push(new Sleeve());
   }
 
-  this.sleeves.forEach((sleeve) => (sleeve.shock >= 100 ? sleeve.synchronize() : sleeve.shockRecovery()));
+  this.sleeves.forEach((sleeve) => (sleeve.shock <= 0 ? sleeve.synchronize() : sleeve.shockRecovery()));
 
   this.lastUpdate = new Date().getTime();
 

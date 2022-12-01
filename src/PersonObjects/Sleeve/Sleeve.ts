@@ -55,7 +55,7 @@ export class Sleeve extends Person implements SleevePerson {
    *
    * Reputation earned is also multiplied by shock%
    */
-  shock = 1;
+  shock = 100;
 
   /** Stored number of game "loop" cycles */
   storedCycles = 0;
@@ -76,7 +76,7 @@ export class Sleeve extends Person implements SleevePerson {
   findPurchasableAugs = sleeveMethods.findPurchasableAugs;
 
   shockBonus(): number {
-    return this.shock / 100;
+    return (100 - this.shock) / 100;
   }
 
   syncBonus(): number {
@@ -159,7 +159,7 @@ export class Sleeve extends Person implements SleevePerson {
     this.city = CityName.Sector12;
 
     // Reset sleeve-related stats
-    this.shock = 1;
+    this.shock = 100;
     this.storedCycles = 0;
     this.sync = Math.max(this.memory, 1);
   }
@@ -173,12 +173,9 @@ export class Sleeve extends Person implements SleevePerson {
     // Only process once every second (5 cycles)
     const CyclesPerSecond = 1000 / CONSTANTS.MilliPerCycle;
     this.storedCycles += numCycles;
-    if (this.storedCycles < CyclesPerSecond) return;
-
-    let cyclesUsed = this.storedCycles;
-    cyclesUsed = Math.min(cyclesUsed, 15);
-    this.shock = Math.min(100, this.shock + 0.0001 * cyclesUsed);
-    if (!this.currentWork) return;
+    if (this.storedCycles < CyclesPerSecond || !this.currentWork) return;
+    const cyclesUsed = Math.min(this.storedCycles, 15);
+    this.shock = Math.max(0, this.shock - 0.0001 * cyclesUsed);
     this.currentWork.process(this, cyclesUsed);
     this.storedCycles -= cyclesUsed;
   }
@@ -457,7 +454,7 @@ export class Sleeve extends Person implements SleevePerson {
 
     this.hp.current -= amt;
     if (this.hp.current <= 0) {
-      this.shock = Math.max(0, this.shock - 0.5);
+      this.shock = Math.min(100, this.shock + 0.5);
       this.hp.current = this.hp.max;
       return true;
     } else {

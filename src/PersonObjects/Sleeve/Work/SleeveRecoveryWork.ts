@@ -11,8 +11,8 @@ export class SleeveRecoveryWork extends Work {
   }
 
   process(sleeve: Sleeve, cycles: number) {
-    sleeve.shock = Math.min(100, sleeve.shock + 0.0002 * cycles);
-    if (sleeve.shock >= 100) sleeve.stopWork();
+    sleeve.shock = Math.max(0, sleeve.shock - 0.0002 * cycles);
+    if (sleeve.shock <= 0) sleeve.stopWork();
   }
 
   APICopy() {

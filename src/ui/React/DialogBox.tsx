@@ -10,7 +10,9 @@ export function dialogBoxCreate(txt: string | JSX.Element, html = false): void {
     ) : html ? (
       <div dangerouslySetInnerHTML={{ __html: txt }}></div>
     ) : (
-      <Typography component="span">{txt}</Typography>
+      <Typography component="span" style={{ whiteSpace: "pre-wrap" }}>
+        {txt}
+      </Typography>
     ),
   );
 }

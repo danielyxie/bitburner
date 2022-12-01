@@ -46,6 +46,14 @@ export class StampedLayer {
     const arrayPath = [...tree, key];
     const functionPath = arrayPath.join(".");
     function wrappedFunction(this: StampedLayer, ...args: unknown[]): unknown {
+      if (!this)
+        throw new Error(`
+ns.${functionPath} called with no this value.
+ns functions must be bound to ns if placed in a new
+variable. e.g.
+
+const ${key} = ns.${functionPath}.bind(ns);
+${key}(${JSON.stringify(args).replace(/^\[|\]$/g, "")});\n\n`);
       const ctx = { workerScript: this.#workerScript, function: key, functionPath };
       helpers.checkEnvFlags(ctx);
       helpers.updateDynamicRam(ctx, getRamCost(...tree, key));

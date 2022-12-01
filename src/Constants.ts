@@ -88,8 +88,8 @@ export const CONSTANTS: {
   Donations: number; // number of blood/plasma/palette donation the dev have verified., boosts NFG
   LatestUpdate: string;
 } = {
-  VersionString: "2.1.0",
-  VersionNumber: 26,
+  VersionString: "2.2.0",
+  VersionNumber: 27,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -232,186 +232,102 @@ export const CONSTANTS: {
   Donations: 30,
 
   LatestUpdate: `
-  v2.1.0 - 2022-09-23 Remote File API
-  -----------------------------------
-  
-    Dev notes
-    * The most important change about this update is the introduction of the remote file api.
-      With this we also deprecate the HTTP file api and the visual studio extension. Those things
-      were made during the rush of Steam and aren't well thought out. This new process works with
-      both the web and Steam version of the game and every text editor. Moving forward we also
-      won't be doing much, if any, upgrades to the in-game editor. We think it's good enough for
-      now and if you need more we recommend you hook up your favorite external editor.
-    * Added functions to resize, move, and close tail windows
-    * Added a new Augmentation, Z.O.Ë., which allows Sleeves to benefit from Stanek.
-  
-    API
-    *  Remove incorrectly placed 's' in ns.tFormat() (by @LJNeon)
-    *  More ports (previously max 20, now practically unlimited) (by @Hoekstraa)
-    *  Corp functions now return copy of constant arrays instead of the original (by @Mughur)
-    *  All the player sub-objects need to be copied for 'getPlayer'. (by @MageKing17)
-    *  add corp get<constant> functions, UI (by @Mughur)
-    *  FIX #3860 destroyW0r1dD43m0n now properly gives achievements and FIX #3890 favor now properly syncs across pages and the Donate achievement is now given correctly (by @Aerophia)
-  
-    CONTRIBUTIONS
-    *  Modify PR template (by @Hoekstraa)
-  
-    CCT
-    *  inconsistent probability for generation between online and offline (by @quacksouls)
-  
-    DOC
-    *  Some typo fixes in Netscript functions (by @quacksouls)
-    *  Fix #4033 Why use Coding Contract API  (by @quacksouls)
-    *  typo fix in description of Caesar cipher (by @quacksouls)
-    *  FIX DOCS TYPO IN terminal.rst (by @BugiDev)
-    *  Update bitburner.sleeve.settobladeburneraction.md (by @borisflagell)
-  
-    CORPORATION
-    *  FIX #3880, #3876, #3322 and #3138 Bunch of corporation fixes (by @Mughur)
-    *  Gave investors some economics classes (by @Mughur)
-    *  Limit shareholder priority on newly issued shares (by @Undeemiss)
-  
-    UI
-    *  FIX #2962 Add a setting to display middle time unit in Time Elapsed String (by @hydroflame)
-    *  FIX #4106 Fix incorrect experience display in Crime UI. (by @SilverNexus)
-    *  Bitnode stats now show if BB/Corporation are disabled (by @Kelenius)
-    *  Removed three empty lines from BB status screen (by @Kelenius)
-    *  Add missing space to BN7 description (by @hex7cd)
-    *  Improvements to crime work UI (by @Kelenius)
-    *  FIX #3975, #3882 Script Editor more responsive on resize, and fix dirty file indicator (by @Snarling)
-  
-    API FIX
-    *  getCrimeStats use bitnode multipliers in the output of crime stats (by @phyzical)
-  
-    SLEEVES
-    *  FIX #3819 Allow using the regeneration chamber with sleeves to heal them. (by @coderanger)
-    *  FIX #4063 fix crash when player tries to assign more than 3 sleeves to Bladeburner contracts (by @Snarling)
-    *  FIX #4051 Sleeves no longer crash when player quits company sleeve was working (by @Snarling)
-  
-    API BACKUP
-    *  add singularity function for exporting game save back (by @phyzical)
-  
-    CORPORATION API
-    *  FIX #3655 Expose exports from Material (by @Rasmoh)
-  
-    SCRIPTS
-    *  FIX #4081 Rerunning a script from tail window recalculates ram usage (by @Snarling)
-    *  FIX #3962 The correct script will be closed even if the player modifies args (v2.0) (by @Snarling)
-  
-    DOCUMENTATION
-    *  Fixed Argument order for scp() (by @njalooo)
-  
-    CORP API
-    *  Fix up param order for limitProductProduction to match docs (by @phyzical)
-  
-    NETSCRIPT
-    *  FIX #2376 ns.exit now exits immediately (by @Snarling)
-    *  FIX #4055 Fix dynamic ram check (by @Snarling)
-    *  FIX #4037 ns1 wraps deeper layers correctly. (by @Snarling)
-    *  FIX #3963 Prevent bladeburner.setActionLevel from setting invalid action levels (by @MPJ-K)
-    *  Typo fixes in CodingContract, Hacknet, Singularity APIs (by @quacksouls)
-    *  Fix a typo in doc of Singularity.travelToCity() (by @quacksouls)
-    *  Update netscript definition file for scp, write, read, and flags (by @Snarling)
-    *  Correct missing ! for boolean coercion in Corporation.createCorporation().  (by @Risenafis)
-    *  Normalized Stock API logging (by @Snarling)
-    *  fix #3992 allow null duration in toast ns function (by @RollerKnobster)
-    *  Correct missing '!' for boolean coercion in 'singularity.workForCompany()'. (by @MageKing17)
-    *  ns.scp and ns.write are now synchronous + fix exec race condition (by @Snarling)
-    *  FIX #2931 atExit now allows synchronous ns functions (by @Snarling)
-    *  Improve real life CPU and memory performance of scripts. (by @Snarling)
-  
-    INFILTRATION
-    *  Corrected ns formula for infiltration rewards (by @ezylot)
-  
-    RFA
-    *  NetscriptDefinitions retains export strings (by @Hoekstraa)
-    *  Fix type of RFAMessages with non-String results (by @Hoekstraa)
-    *  New Remote File API addition for transmitting files to the game (by @Hoekstraa)
-  
+  v2.2.0 - 2022-12-01
+
+  BREAKING CHANGES:
+  *  ns.codingcontract.attempt no longer returns a boolean, it returns empty string on failure or the reward string
+     on success, so comparing the result directly to true/false will no longer work. The result can still be used as
+     a condition directly.
+  *  (NS2 only) ns functions use the this value from ns: if you move the function to its own variable off of ns, it
+     needs to be bound to ns. e.g.:
+     const tprint = ns.tprint.bind(ns);
+  *  ns.formulas.work.classGains removed, replaced with ns.formulas.work.universityGains and ns.formulas.work.gymGains
+  *  ns.sleeve.getSleeveStats and ns.sleeve.getSleeveInformation removed, ns.sleeve.getSleeve added and the returned
+     sleeve can be used with formulas API the same way the getPlayer return can be.
+
+  DEVELOPMENT
+  *  Development repo moved to https://github.com/bitburner-official/bitburner-src
+  *  Dev version available on web at https://bitburner-official.github.io/bitburner-src/
+  *  Development is active again for non-bugfix.
+  *  A bunch of fixes and setup related to moving to a new repo (@hydroflame)
+
+  NETSCRIPT
+  *  Faster API wrapping on script launch. (by @d0sboots & @Snarling)
+  *  Expose more enums for player use under ns.enums (by @Snarling)
+  *  tFormat: Fix display for negative time (by @Snarling)
+    CODING CONTRACT
+    *  ns.codingcontract.attempt always returns a string (by @Snarling)
+    FORMULAS
+    *  ns.formulas.work.classGains removed, replaced with ns.formulas.work.universityGains and
+       ns.formulas.work.gymGains (@Snarling)
+    *  Add ns.formulas.work.companyGains function (by @AlexeyKozhemiakin)
+    PORTS
+    *  added portHandle.nextWrite() (by @LJNeon)
+    *  Make ns.writePort synchronous (by @Snarling)
     SLEEVE
-    *  FIX #4022, #4024, #4025, #3998 (by @Mughur)
-  
-    DOCS, UI
-    *  update docs a bit more, amending some BN and SF texts (by @Mughur)
-  
-    GANG
-    *  Added weight to GangMemberTask construction call (by @ezylot)
-  
-    Coding Contracts
-    *  Don't stringify answer if already a string (by @alainbryden)
-  
-    TERMINAL
-    *  Fix ansi display bugs (by @Snarling)
-  
-    SCRIPT EDITOR
-    *  Debounce updateRAM calls. (by @Snarling)
-  
-    WORK
-    *  Add singularity check for finishing company work (by @Snarling)
-  
-    DOCS
-    *  Correct documentation for 'run()' with 0 threads. (by @MageKing17)
-    *  Some doc updates (by @Mughur)
-  
-    FILES
-    *  FIX #3979 Allow characters & and ' in filenames (by @Snarling)
-  
-    CORP FIX
-    *  dont take research points for something already researched via api (by @phyzical)
-  
-    FIX
-    *  Prompt Add user friendly message to avoid throwing recovery screen for invalid choices (by @phyzical)
-  
-    TUTORIAL
-    *  Fix #3965 Corrected tutorial text (by @mihilt)
-  
-    CONTRACTS
-    *  FIX #3755 change input handling for contract attempts (by @Snarling)
-  
-    HOTFIX
-    *  Fix infil definitions.d.ts (by @phyzical)
-  
-    MISC
-    *  crime gains, sleeve gang augs and faq (by @Mughur)
-    *  FIX #3649 Preventing server starting security level from going above 100 (by @Shiiyu)
-    *  Adds Shadows of Anarchy (by @Lagicrus)
-    * Added intormation about hacking managers to hacking algorithms page (by @Kelenius)
-    * Fix Jest CI Error (by @geggleto)
-    *  multiple hasAugmentation checks didn't check if the augment was installed (by @Mughur)
-    * Fix for #2442 and #2795. (by @G4mingJon4s)
-    *  Adds info regarding augments and focus (by @Lagicrus)
-    * Removed console.log line (by @dhosborne)
-    * Update some doc (by @hydroflame)
-    *  Sleeve crime gain bitnode multiplier fix (by @Mughur)
-    * trying to fix int problems (by @hydroflame)
-    * Fix broken ns filesnames (by @hydroflame)
-    * new formula functions (by @hydroflame)
-    * v2.0.0 (by @hydroflame)
-    *  test fixes/md updates (by @phyzical)
-    * Remove "based" from positive adjectives in infil (by @faangbait)
-    * minor fix in instance calculation (by @hydroflame)
-    * fix dynamic ram miscalc not triggering (by @hydroflame)
-    * Refactor game options into separate components (by @hydroflame)
-    * fix documentation for remote api (by @hydroflame)
-    * fix settings unfocusing on every key stroke (by @hydroflame)
-    * fix some stuff with the timestamp settings (by @hydroflame)
-    * fix some stuff with the timestamp settings (by @hydroflame)
-    * Fix unique key problem with ascii elements (by @hydroflame)
-    * Improve wrong arg user message and add ui.windowSize (by @hydroflame)
-    * fix stack trace missing in some errors (by @hydroflame)
-    * Fix scp and write in ns1 (by @hydroflame)
-    * Did some changes of the remote api and added documentation (by @hydroflame)
-    * Add dummy function to generate a mock server or player for formulas stuff (by @hydroflame)
-    * fix compile error (by @hydroflame)
-    * regen doc (by @hydroflame)
-    * rm console log (by @hydroflame)
-    * regen doc (by @hydroflame)
-    * Added more info about blood program, change some aug descriptions (by @hydroflame)
-    * use triple equal (by @hydroflame)
-    * Minor improvements to Netscript Port loading and unloading (by @hydroflame)
-    * Fix hostname generation being weird about dash 0 added (by @hydroflame)
-    * upgrade version number. (by @hydroflame)
-    * Nerf Noodle bar 
-  
-`,
+    *  ns.sleeve.getSleeve added. getPlayer and getSleeve can both be used for formulas. (by @Snarling)
+    STOCK
+    *  ns.stock.getOrganization added for getting org from stock symbol (by @SamuraiNinjaGuy)
+
+  SCRIPTS
+  *  Fixed bug where zombie scripts could be created after a soft reset (by @Snarling)
+
+  SCRIPT LOGS
+  *  Add ctrl-a support for selecting all text in tail window (by @Snarling)
+
+  CORPORATION
+  *  Remove corp employees as objects (by @Kelenius)
+  *  Happiness/Energy/Morale trend down even for productive corps (by @Snarling)
+  *  Typo fixes in modals to sell materials and products (by @quacksouls)
+  *  Reworked MP formula validation to prevent possible save corruption on invalid entry (by @Snarling)
+  *  Internal reorganization of Industry data (by @Snarling)
+  *  Added check to material buy amount (by @G4mingJon4s)
+  *  Check there is room to make a new product before opening popup. (by @G4mingJon4s)
+  *  Fix typos in research descriptions (by @quacksouls)
+
+  SLEEVE
+  *  Fixed inconsistencies in how sleeve work rewards are handled. (by @Snarling)
+  *  Fix bug that prevented selecting some crimes from UI. (by @Snarling)
+  *  Internally shock starts at 100 and lowers to 0. Previously this was backwards.
+
+  STOCKMARKET
+  *  Fix broken initializer when manually buying WSE access (by @Snarling)
+
+  TERMINAL
+  *  Connect command will connect to player owned servers from anywhere. (by @Snarling)
+
+  UI
+  *  Fix keyboard shortcuts for other keyboard layouts (by @d0sboots)
+  *  Fixed spacing of text in Trade for reputation button after Infiltration (by @PyroGenesis)
+  *  Fix spacing on ANSI background escape codes (by @Snarling)
+  *  Fix several instances where newlines were not being displayed properly (by @quacksouls)
+  *  SoftResetButton.tsx Tooltip changed to make more sense (by @rai68)
+  *  GANG: Fix Gang UI to correctly report the bonus time multiplier as 25x (by @TheMas3212)
+
+  DOC
+  *  Fix incorrect examples for grow (by @quacksouls)
+  *  Updated limitMaterialProduction() and limitProductProduction() documentation to mention removing limits. (by @PyroGenesis)
+  *  Add ns documentation for possible sleeve tasks (by @Snarling)
+  *  Update documentation for workForFaction and workForCompany (by @quacksouls)
+  *  Improve CCT documentation for HammingCodes (by @quacksouls)
+  *  cleanup in doc of Netscript functions (by @quacksouls)
+  *  Various other doc fixes (by @quacksouls)
+  *  Update documentation for ns.args (by @Snarling)
+  *  De-uglify ns.print examples (by @LJNeon)
+
+  MISC
+  *  Some error handling streamlining (by @Snarling)
+  *  fix: check both ts and js source now (by @Tanimodori)
+  *  chore: sync version in package-lock.json (by @Tanimodori)
+  *  Better safety when loading game for multiple save corruption issues (by @Snarling)
+  *  Nerf Noodle bar
+
+  STATS
+  *  Fix logic for increasing HP based on defense skill levels (by @mattgarretson)
+
+  TUTORIAL
+  *  Fix Ram Text (by @jaculler)
+
+  INFILTRATION
+  *  Fix SlashGame scaling. (by @Snarling)`,
 };

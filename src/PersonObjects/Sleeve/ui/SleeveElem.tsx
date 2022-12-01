@@ -169,12 +169,12 @@ export function SleeveElem(props: IProps): React.ReactElement {
               </span>
             </Tooltip>
             <Tooltip
-              title={props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
+              title={props.sleeve.shock > 0 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
             >
               <span>
                 <Button
                   onClick={() => setAugmentationsOpen(true)}
-                  disabled={props.sleeve.shock < 100}
+                  disabled={props.sleeve.shock > 0}
                   sx={{ width: "100%", height: "100%" }}
                 >
                   Manage Augmentations

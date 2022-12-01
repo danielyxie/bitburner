@@ -78,7 +78,7 @@ export function StatsElement(props: IProps): React.ReactElement {
         <StatsRow
           name="Shock"
           color={Settings.theme.primary}
-          data={{ content: numeralWrapper.formatSleeveShock(100 - props.sleeve.shock) }}
+          data={{ content: numeralWrapper.formatSleeveShock(props.sleeve.shock) }}
         />
         <StatsRow
           name="Sync"

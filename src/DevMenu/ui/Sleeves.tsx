@@ -13,13 +13,13 @@ import { Adjuster } from "./Adjuster";
 export function Sleeves(): React.ReactElement {
   function sleeveMaxAllShock(): void {
     for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].shock = 0;
+      Player.sleeves[i].shock = 100;
     }
   }
 
   function sleeveClearAllShock(): void {
     for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].shock = 100;
+      Player.sleeves[i].shock = 0;
     }
   }
 
