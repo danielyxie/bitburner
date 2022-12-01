@@ -7176,19 +7176,17 @@ export interface OfficeAPI {
    */
   getOffice(divisionName: string, cityName: string): Office;
   /**
-   * Get data about an employee
-   * @param divisionName - Name of the division
-   * @param cityName - Name of the city
-   * @param employeeName - Name of the employee
-   * @returns Employee data
+   * Get the cost to hire AdVert.
+   * @param divisionName - Name of the division.
+   * @returns The cost to hire AdVert.
    */
   getHireAdVertCost(divisionName: string): number;
   /**
-   * Get the number of times you have Hired AdVert
-   * @param divisionName - Name of the division
-   * @returns Number of times you have Hired AdVert
+   * Get the number of times you have hired AdVert.
+   * @param divisionName - Name of the division.
+   * @returns Number of times you have hired AdVert.
    */
-  getHireAdVertCount(adivisionName: string): number;
+  getHireAdVertCount(divisionName: string): number;
   /**
    * Get the cost to unlock research
    * @param divisionName - Name of the division
