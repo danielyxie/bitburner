@@ -1,6 +1,7 @@
 import React from "react";
 import { FactionNames } from "./data/FactionNames";
 import { Router } from "../ui/GameRoot";
+import { Page } from "../ui/Router";
 import { Option } from "./ui/Option";
 import { Typography } from "@mui/material";
 
@@ -432,7 +433,7 @@ export const FactionInfos: Record<string, FactionInfo> = {
         <Option
           buttonText={"Open Bladeburner headquarters"}
           infoText={"You can gain reputation with bladeburner by completing contracts and operations."}
-          onClick={() => Router.toBladeburner()}
+          onClick={() => Router.toPage(Page.Bladeburner)}
         />
       );
     },
@@ -484,7 +485,7 @@ export const FactionInfos: Record<string, FactionInfo> = {
             "Stanek's Gift is a powerful augmentation that powers up the stat you chose to boost." +
             "Gaining reputation with the Church of the Machine God can only be done by charging the gift."
           }
-          onClick={() => Router.toStaneksGift()}
+          onClick={() => Router.toPage(Page.StaneksGift)}
         />
       );
     },

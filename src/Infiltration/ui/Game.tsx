@@ -2,6 +2,7 @@ import { Button, Container, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 import { BackwardGame } from "./BackwardGame";
 import { BracketGame } from "./BracketGame";
@@ -93,14 +94,14 @@ export function Game(props: IProps): React.ReactElement {
       ? Player.hp.current
       : props.StartingDifficulty * 3 * (Player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 0.5 : 1);
     if (Player.takeDamage(damage)) {
-      Router.toCity();
+      Router.toPage(Page.City);
       return;
     }
     setupNextGame();
   }
 
   function cancel(): void {
-    Router.toCity();
+    Router.toPage(Page.City);
     return;
   }
 

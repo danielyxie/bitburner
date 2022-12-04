@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Money } from "../../../ui/React/Money";
 import { Modal } from "../../../ui/React/Modal";
 import { Router } from "../../../ui/GameRoot";
+import { Page } from "../../../ui/Router";
 import { Player } from "@player";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -33,7 +34,7 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
     Player.loseMoney(150e9, "corporation");
 
     props.onClose();
-    Router.toCorporation();
+    Router.toPage(Page.Corporation);
   }
 
   function seed(): void {
@@ -44,7 +45,7 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
     Player.startCorporation(name, 500e6);
 
     props.onClose();
-    Router.toCorporation();
+    Router.toPage(Page.Corporation);
   }
 
   return (

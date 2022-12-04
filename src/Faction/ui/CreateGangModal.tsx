@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "../../ui/React/Modal";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -32,7 +33,7 @@ export function CreateGangModal(props: IProps): React.ReactElement {
   function createGang(): void {
     Player.startGang(props.facName, isHacking());
     props.onClose();
-    Router.toGang();
+    Router.toPage(Page.Gang);
   }
 
   function onKeyUp(event: React.KeyboardEvent): void {

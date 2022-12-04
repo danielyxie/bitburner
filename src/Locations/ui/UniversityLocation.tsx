@@ -11,6 +11,7 @@ import { Location } from "../Location";
 
 import { Money } from "../../ui/React/Money";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 import { Box } from "@mui/material";
 
@@ -32,7 +33,7 @@ export function UniversityLocation(props: IProps): React.ReactElement {
       }),
     );
     Player.startFocusing();
-    Router.toWork();
+    Router.toPage(Page.Work);
   }
 
   const dataStructuresCost = calculateCost(Classes[UniversityClassType.dataStructures], props.loc);

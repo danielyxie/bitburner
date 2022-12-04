@@ -22,6 +22,7 @@ import { DeleteGameButton } from "../../ui/React/DeleteGameButton";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { SoftResetButton } from "../../ui/React/SoftResetButton";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { GameOptionsTab } from "../GameOptionsTab";
 
@@ -216,7 +217,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
           </Button>
         </Tooltip>
         <Tooltip title="Head to the theme browser to see a collection of prebuilt themes.">
-          <Button startIcon={<Palette />} onClick={() => Router.toThemeBrowser()} sx={{ gridArea: "browse" }}>
+          <Button startIcon={<Palette />} onClick={() => Router.toPage(Page.ThemeBrowser)} sx={{ gridArea: "browse" }}>
             Theme Browser
           </Button>
         </Tooltip>

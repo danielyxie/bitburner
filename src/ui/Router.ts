@@ -3,43 +3,55 @@ import { Location } from "../Locations/Location";
 
 /**
  * The full-screen page the player is currently be on.
- * These pages are mutually exclusive.
+ * These are "simple" pages that don't require any extra parameters to
+ * transition to. You can use setPage() with these.
  */
-export enum Page {
-  ActiveScripts,
-  Augmentations,
-  BitVerse,
-  Bladeburner,
-  City,
-  Corporation,
-  CreateProgram,
-  ScriptEditor,
-  DevMenu,
-  Faction,
-  Factions,
-  Gang,
-  Hacknet,
-  Infiltration,
-  Job,
-  Milestones,
-  Options,
-  Grafting,
-  Sleeves,
-  Stats,
-  StockMarket,
-  Terminal,
-  Travel,
-  Tutorial,
-  Work,
-  BladeburnerCinematic,
-  Location,
-  Loading,
-  StaneksGift,
-  Recovery,
-  Achievements,
-  ThemeBrowser,
-  ImportSave,
+export enum SimplePage {
+  ActiveScripts = "Active Scripts",
+  Augmentations = "Augmentations",
+  Bladeburner = "Bladeburner",
+  City = "City",
+  Corporation = "Corporation",
+  CreateProgram = "Create Program",
+  DevMenu = "Dev",
+  Factions = "Factions",
+  Gang = "Gang",
+  Hacknet = "Hacknet",
+  Milestones = "Milestones",
+  Options = "Options",
+  Grafting = "Grafting",
+  Sleeves = "Sleeves",
+  Stats = "Stats",
+  StockMarket = "Stock Market",
+  Terminal = "Terminal",
+  Travel = "Travel",
+  Tutorial = "Tutorial",
+  Work = "Work",
+  BladeburnerCinematic = "Bladeburner Cinematic",
+  Loading = "Loading",
+  StaneksGift = "Staneks Gift",
+  Recovery = "Recovery",
+  Achievements = "Achievements",
+  ThemeBrowser = "Theme Browser",
 }
+
+/**
+ * "Complex" pages that need a custom transition function.
+ */
+export enum ComplexPage {
+  BitVerse = "BitVerse",
+  Faction = "Faction",
+  Infiltration = "Infiltration",
+  Job = "Job",
+  ScriptEditor = "Script Editor",
+  Location = "Location",
+  ImportSave = "Import Save",
+}
+
+// Using the same name as both type and object to mimic enum-like behavior.
+// See https://stackoverflow.com/a/71255520/202091
+export type Page = SimplePage | ComplexPage;
+export const Page = { ...SimplePage, ...ComplexPage };
 
 export interface ScriptEditorRouteOptions {
   vim: boolean;
@@ -47,43 +59,15 @@ export interface ScriptEditorRouteOptions {
 
 /** The router keeps track of player navigation/routing within the game. */
 export interface IRouter {
-  // toCinematicText(): void;
-  // toInfiltration(): void;
-  // toMission(): void;
-  // toRedPill(): void;
-  // toworkInProgress(): void;
   isInitialized: boolean;
   page(): Page;
   allowRouting(value: boolean): void;
-  toActiveScripts(): void;
-  toAugmentations(): void;
+  toPage(page: SimplePage): void;
   toBitVerse(flume: boolean, quick: boolean): void;
-  toBladeburner(): void;
-  toStats(): void;
-  toCity(): void; // travel ? city ?
-  toCorporation(): void;
-  toCreateProgram(): void;
-  toDevMenu(): void;
   toFaction(faction: Faction, augPage?: boolean): void; // faction name
-  toFactions(): void;
-  toGameOptions(): void;
-  toGang(): void;
-  toHacknetNodes(): void;
   toInfiltration(location: Location): void;
   toJob(location: Location): void;
-  toMilestones(): void;
-  toGrafting(): void;
   toScriptEditor(files?: Record<string, string>, options?: ScriptEditorRouteOptions): void;
-  toSleeves(): void;
-  toStockMarket(): void;
-  toTerminal(): void;
-  toTravel(): void;
-  toTutorial(): void;
-  toWork(): void;
-  toBladeburnerCinematic(): void;
   toLocation(location: Location): void;
-  toStaneksGift(): void;
-  toAchievements(): void;
-  toThemeBrowser(): void;
   toImportSave(base64Save: string, automatic?: boolean): void;
 }

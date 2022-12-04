@@ -22,6 +22,7 @@ import { Factions } from "../../Faction/Factions";
 import { joinFaction } from "../../Faction/FactionHelpers";
 
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
@@ -48,7 +49,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   function handleBladeburner(): void {
     if (Player.bladeburner) {
       // Enter Bladeburner division
-      Router.toBladeburner();
+      Router.toPage(Page.Bladeburner);
     } else if (
       Player.skills.strength >= 100 &&
       Player.skills.defense >= 100 &&
@@ -72,7 +73,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   /** Click handler for Resleeving button at New Tokyo VitaLife */
   function handleGrafting(): void {
-    Router.toGrafting();
+    Router.toPage(Page.Grafting);
   }
 
   function renderBladeburner(): React.ReactElement {
@@ -173,11 +174,11 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
     }
 
-    Router.toStaneksGift();
+    Router.toPage(Page.StaneksGift);
   }
 
   function renderCotMG(): React.ReactElement {
-    const toStanek = <Button onClick={() => Router.toStaneksGift()}>Open Stanek's Gift</Button>;
+    const toStanek = <Button onClick={() => Router.toPage(Page.StaneksGift)}>Open Stanek's Gift</Button>;
     // prettier-ignore
     const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
       {"                 ``          "}<br />

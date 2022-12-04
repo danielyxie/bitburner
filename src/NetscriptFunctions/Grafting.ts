@@ -7,6 +7,7 @@ import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../Per
 import { Player as player } from "../Player";
 import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../ui/GameRoot";
+import { Page } from "../ui/Router";
 import { GraftingWork } from "../Work/GraftingWork";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
@@ -83,10 +84,10 @@ export function NetscriptGrafting(): InternalAPI<IGrafting> {
 
         if (focus) {
           player.startFocusing();
-          Router.toWork();
+          Router.toPage(Page.Work);
         } else if (wasFocusing) {
           player.stopFocusing();
-          Router.toTerminal();
+          Router.toPage(Page.Terminal);
         }
 
         helpers.log(ctx, () => `Began grafting Augmentation ${augName}.`);

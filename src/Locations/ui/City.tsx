@@ -14,6 +14,7 @@ import { Settings } from "../../Settings/Settings";
 
 import { Player } from "@player";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { LocationType } from "../LocationTypeEnum";
@@ -39,9 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function toLocation(location: Location): void {
   if (location.name === LocationName.TravelAgency) {
-    Router.toTravel();
+    Router.toPage(Page.Travel);
   } else if (location.name === LocationName.WorldStockExchange) {
-    Router.toStockMarket();
+    Router.toPage(Page.StockMarket);
   } else {
     Router.toLocation(location);
   }

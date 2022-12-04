@@ -240,9 +240,9 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         return false;
       }
       if (location.name === LocationName.TravelAgency) {
-        Router.toTravel();
+        Router.toPage(Page.Travel);
       } else if (location.name === LocationName.WorldStockExchange) {
-        Router.toStockMarket();
+        Router.toPage(Page.StockMarket);
       } else {
         Router.toLocation(location);
       }
@@ -307,10 +307,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         );
         if (focus) {
           Player.startFocusing();
-          Router.toWork();
+          Router.toPage(Page.Work);
         } else if (wasFocusing) {
           Player.stopFocusing();
-          Router.toTerminal();
+          Router.toPage(Page.Terminal);
         }
         helpers.log(ctx, () => `Started ${classType} at ${universityName}`);
         return true;
@@ -393,10 +393,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         Player.startWork(new ClassWork({ classType, location: Player.location, singularity: true }));
         if (focus) {
           Player.startFocusing();
-          Router.toWork();
+          Router.toPage(Page.Work);
         } else if (wasFocusing) {
           Player.stopFocusing();
-          Router.toTerminal();
+          Router.toPage(Page.Terminal);
         }
         helpers.log(ctx, () => `Started training ${classType} at ${gymName}`);
         return true;
@@ -594,11 +594,11 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
 
       if (!Player.focus && focus) {
         Player.startFocusing();
-        Router.toWork();
+        Router.toPage(Page.Work);
         return true;
       } else if (Player.focus && !focus) {
         Player.stopFocusing();
-        Router.toTerminal();
+        Router.toPage(Page.Terminal);
         return true;
       }
       return false;
@@ -723,10 +723,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         );
         if (focus) {
           Player.startFocusing();
-          Router.toWork();
+          Router.toPage(Page.Work);
         } else if (wasFocused) {
           Player.stopFocusing();
-          Router.toTerminal();
+          Router.toPage(Page.Terminal);
         }
         helpers.log(ctx, () => `Began working at '${companyName}' with position '${companyPositionName}'`);
         return true;
@@ -889,10 +889,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             );
             if (focus) {
               Player.startFocusing();
-              Router.toWork();
+              Router.toPage(Page.Work);
             } else if (wasFocusing) {
               Player.stopFocusing();
-              Router.toTerminal();
+              Router.toPage(Page.Terminal);
             }
             helpers.log(ctx, () => `Started carrying out hacking contracts for '${faction.name}'`);
             return true;
@@ -912,10 +912,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             );
             if (focus) {
               Player.startFocusing();
-              Router.toWork();
+              Router.toPage(Page.Work);
             } else if (wasFocusing) {
               Player.stopFocusing();
-              Router.toTerminal();
+              Router.toPage(Page.Terminal);
             }
             helpers.log(ctx, () => `Started carrying out field missions for '${faction.name}'`);
             return true;
@@ -935,10 +935,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
             );
             if (focus) {
               Player.startFocusing();
-              Router.toWork();
+              Router.toPage(Page.Work);
             } else if (wasFocusing) {
               Player.stopFocusing();
-              Router.toTerminal();
+              Router.toPage(Page.Terminal);
             }
             helpers.log(ctx, () => `Started carrying out security work for '${faction.name}'`);
             return true;
@@ -1054,10 +1054,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
         );
         if (focus) {
           Player.startFocusing();
-          Router.toWork();
+          Router.toPage(Page.Work);
         } else if (wasFocusing) {
           Player.stopFocusing();
-          Router.toTerminal();
+          Router.toPage(Page.Terminal);
         }
         helpers.log(ctx, () => `Began creating program: '${programName}'`);
         return true;
@@ -1079,10 +1079,10 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       const crimeTime = crime.commit(1, ctx.workerScript);
       if (focus) {
         Player.startFocusing();
-        Router.toWork();
+        Router.toPage(Page.Work);
       } else if (wasFocusing) {
         Player.stopFocusing();
-        Router.toTerminal();
+        Router.toPage(Page.Terminal);
       }
       return crimeTime;
     },

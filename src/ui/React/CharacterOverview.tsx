@@ -21,6 +21,7 @@ import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 import { Settings } from "../../Settings/Settings";
 import { Router } from "../GameRoot";
+import { Page } from "../Router";
 import { Player } from "@player";
 import { StatsProgressOverviewCell } from "./StatsProgressBar";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
@@ -140,7 +141,7 @@ function WorkInProgressOverview({
 function Work(): React.ReactElement {
   const onClickFocus = (): void => {
     Player.startFocusing();
-    Router.toWork();
+    Router.toPage(Page.Work);
   };
   if (Player.currentWork === null || Player.focus) return <></>;
 

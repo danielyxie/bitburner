@@ -28,6 +28,7 @@ import { GetServer } from "../../Server/AllServers";
 
 import { CorruptableText } from "../../ui/React/CorruptableText";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { serverMetadata } from "../../Server/data/servers";
 import { Tooltip } from "@mui/material";
 
@@ -90,7 +91,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
 
   return (
     <>
-      <Button onClick={() => Router.toCity()}>Return to World</Button>
+      <Button onClick={() => Router.toPage(Page.City)}>Return to World</Button>
       <Typography variant="h4" sx={{ mt: 1 }}>
         {backdoorInstalled && !Settings.DisableTextEffects ? (
           <Tooltip title={`Backdoor installed on ${loc.name}.`}>

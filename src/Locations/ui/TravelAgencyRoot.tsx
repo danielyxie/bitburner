@@ -11,6 +11,7 @@ import { TravelConfirmationModal } from "./TravelConfirmationModal";
 import { CONSTANTS } from "../../Constants";
 import { Player } from "@player";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Settings } from "../../Settings/Settings";
 
 import { Money } from "../../ui/React/Money";
@@ -30,7 +31,7 @@ function travel(to: CityName): void {
   Player.loseMoney(cost, "other");
   Player.travel(to);
   dialogBoxCreate(`You are now in ${to}!`);
-  Router.toCity();
+  Router.toPage(Page.City);
 }
 
 export function TravelAgencyRoot(): React.ReactElement {

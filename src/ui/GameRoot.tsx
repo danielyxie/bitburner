@@ -23,7 +23,7 @@ import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { Page, IRouter, ScriptEditorRouteOptions } from "./Router";
+import { Page, SimplePage, IRouter, ScriptEditorRouteOptions } from "./Router";
 import { Overview } from "./React/Overview";
 import { SidebarRoot } from "../Sidebar/ui/SidebarRoot";
 import { AugmentationsRoot } from "../Augmentation/ui/AugmentationsRoot";
@@ -67,7 +67,6 @@ import { calculateAchievements } from "../Achievements/Achievements";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { Settings } from "../Settings/Settings";
 import { ThemeBrowser } from "../Themes/ui/ThemeBrowser";
 import { ImportSaveRoot } from "./React/ImportSaveRoot";
 import { BypassWrapper } from "./React/BypassWrapper";
@@ -105,36 +104,15 @@ export let Router: IRouter = {
     throw new Error("Router called before initialization");
   },
   allowRouting: uninitialized,
-  toActiveScripts: uninitialized,
-  toAugmentations: uninitialized,
+  toPage: () => {
+    throw new Error("Router called before initialization");
+  },
   toBitVerse: uninitialized,
-  toBladeburner: uninitialized,
-  toStats: uninitialized,
-  toCity: uninitialized,
-  toCorporation: uninitialized,
-  toCreateProgram: uninitialized,
-  toDevMenu: uninitialized,
   toFaction: uninitialized,
-  toFactions: uninitialized,
-  toGameOptions: uninitialized,
-  toGang: uninitialized,
-  toHacknetNodes: uninitialized,
   toInfiltration: uninitialized,
   toJob: uninitialized,
-  toMilestones: uninitialized,
-  toGrafting: uninitialized,
   toScriptEditor: uninitialized,
-  toSleeves: uninitialized,
-  toStockMarket: uninitialized,
-  toTerminal: uninitialized,
-  toTravel: uninitialized,
-  toTutorial: uninitialized,
-  toWork: uninitialized,
-  toBladeburnerCinematic: uninitialized,
   toLocation: uninitialized,
-  toStaneksGift: uninitialized,
-  toAchievements: uninitialized,
-  toThemeBrowser: uninitialized,
   toImportSave: uninitialized,
 };
 
@@ -164,7 +142,6 @@ export function GameRoot(): React.ReactElement {
 
   const [cinematicText, setCinematicText] = useState("");
   const [errorBoundaryKey, setErrorBoundaryKey] = useState<number>(0);
-  const [sidebarOpened, setSideBarOpened] = useState(Settings.IsSidebarOpened);
 
   const [importString, setImportString] = useState<string>(undefined as unknown as string);
   const [importAutomatic, setImportAutomatic] = useState<boolean>(false);
@@ -196,24 +173,23 @@ export function GameRoot(): React.ReactElement {
     isInitialized: true,
     page: () => page,
     allowRouting: (value: boolean) => setAllowRoutingCalls(value),
-    toActiveScripts: () => setPage(Page.ActiveScripts),
-    toAugmentations: () => setPage(Page.Augmentations),
-    toBladeburner: () => setPage(Page.Bladeburner),
-    toStats: () => setPage(Page.Stats),
-    toCorporation: () => setPage(Page.Corporation),
-    toCreateProgram: () => setPage(Page.CreateProgram),
-    toDevMenu: () => setPage(Page.DevMenu),
+    toPage: (page: SimplePage) => {
+      switch (page) {
+        case Page.Travel:
+          Player.gotoLocation(LocationName.TravelAgency);
+          break;
+        case Page.BladeburnerCinematic:
+          setPage(page);
+          setCinematicText(cinematicText);
+          return;
+      }
+      setPage(page);
+    },
     toFaction: (faction: Faction, augPage = false) => {
       setAugPage(augPage);
       setPage(Page.Faction);
       if (faction) setFaction(faction);
     },
-    toFactions: () => setPage(Page.Factions),
-    toGameOptions: () => setPage(Page.Options),
-    toGang: () => setPage(Page.Gang),
-    toHacknetNodes: () => setPage(Page.Hacknet),
-    toMilestones: () => setPage(Page.Milestones),
-    toGrafting: () => setPage(Page.Grafting),
     toScriptEditor: (files: Record<string, string>, options?: ScriptEditorRouteOptions) => {
       setEditorOptions({
         files,
@@ -221,20 +197,9 @@ export function GameRoot(): React.ReactElement {
       });
       setPage(Page.ScriptEditor);
     },
-    toSleeves: () => setPage(Page.Sleeves),
-    toStockMarket: () => setPage(Page.StockMarket),
-    toTerminal: () => setPage(Page.Terminal),
-    toTutorial: () => setPage(Page.Tutorial),
     toJob: (location: Location) => {
       setLocation(location);
       setPage(Page.Job);
-    },
-    toCity: () => {
-      setPage(Page.City);
-    },
-    toTravel: () => {
-      Player.gotoLocation(LocationName.TravelAgency);
-      setPage(Page.Travel);
     },
     toBitVerse: (flume: boolean, quick: boolean) => {
       setFlume(flume);
@@ -246,23 +211,9 @@ export function GameRoot(): React.ReactElement {
       setLocation(location);
       setPage(Page.Infiltration);
     },
-    toWork: () => setPage(Page.Work),
-    toBladeburnerCinematic: () => {
-      setPage(Page.BladeburnerCinematic);
-      setCinematicText(cinematicText);
-    },
     toLocation: (location: Location) => {
       setLocation(location);
       setPage(Page.Location);
-    },
-    toStaneksGift: () => {
-      setPage(Page.StaneksGift);
-    },
-    toAchievements: () => {
-      setPage(Page.Achievements);
-    },
-    toThemeBrowser: () => {
-      setPage(Page.ThemeBrowser);
     },
     toImportSave: (base64save: string, automatic = false) => {
       setImportString(base64save);
@@ -298,7 +249,7 @@ export function GameRoot(): React.ReactElement {
     dialogBoxCreate("Soft Reset!");
     installAugmentations(true);
     resetErrorBoundary();
-    Router.toTerminal();
+    Router.toPage(Page.Terminal);
   }
 
   let mainPage = <Typography>Cannot load</Typography>;
@@ -385,7 +336,7 @@ export function GameRoot(): React.ReactElement {
         <TutorialRoot
           reactivateTutorial={() => {
             prestigeAugmentation();
-            Router.toTerminal();
+            Router.toPage(Page.Terminal);
             iTutorialStart();
           }}
         />
@@ -489,14 +440,7 @@ export function GameRoot(): React.ReactElement {
             </Overview>
             {withSidebar ? (
               <Box display="flex" flexDirection="row" width="100%">
-                <SidebarRoot
-                  page={page}
-                  opened={sidebarOpened}
-                  onToggled={(isOpened) => {
-                    setSideBarOpened(isOpened);
-                    Settings.IsSidebarOpened = isOpened;
-                  }}
-                />
+                <SidebarRoot page={page} />
                 <Box className={classes.root}>{mainPage}</Box>
               </Box>
             ) : (

@@ -16,6 +16,7 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction";
 
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 
 import { Typography, Button } from "@mui/material";
@@ -64,7 +65,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   function startWork(): void {
     Player.startFocusing();
-    Router.toWork();
+    Router.toPage(Page.Work);
   }
 
   function startFieldWork(faction: Faction): void {
@@ -113,7 +114,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   return (
     <>
-      <Button onClick={() => Router.toFactions()}>Back</Button>
+      <Button onClick={() => Router.toPage(Page.Factions)}>Back</Button>
       <Typography variant="h4" color="primary">
         {faction.name}
       </Typography>
@@ -171,7 +172,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
         <Typography variant="h4" color="primary">
           You have not joined {faction.name} yet!
         </Typography>
-        <Button onClick={() => Router.toFactions()}>Back to Factions</Button>
+        <Button onClick={() => Router.toPage(Page.Factions)}>Back to Factions</Button>
       </>
     );
   }

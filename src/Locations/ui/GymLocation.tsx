@@ -12,6 +12,7 @@ import { Player } from "@player";
 
 import { Money } from "../../ui/React/Money";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Box } from "@mui/material";
 import { ClassWork, Classes } from "../../Work/ClassWork";
 import { calculateCost } from "../../Work/Formulas";
@@ -31,7 +32,7 @@ export function GymLocation(props: IProps): React.ReactElement {
       }),
     );
     Player.startFocusing();
-    Router.toWork();
+    Router.toPage(Page.Work);
   }
 
   const cost = calculateCost(Classes[GymType.strength], props.loc);

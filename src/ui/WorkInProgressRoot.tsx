@@ -11,6 +11,7 @@ import { Settings } from "../Settings/Settings";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Player } from "@player";
 import { Router } from "./GameRoot";
+import { Page } from "./Router";
 import { numeralWrapper } from "./numeralFormat";
 import { Money } from "./React/Money";
 import { MoneyRate } from "./React/MoneyRate";
@@ -211,7 +212,7 @@ export function WorkInProgressRoot(): React.ReactElement {
   };
 
   if (Player.currentWork === null) {
-    setTimeout(() => Router.toTerminal());
+    setTimeout(() => Router.toPage(Page.Terminal));
     return <></>;
   }
 
@@ -227,7 +228,7 @@ export function WorkInProgressRoot(): React.ReactElement {
           Player.finishWork(true);
         },
         unfocus: () => {
-          Router.toCity();
+          Router.toPage(Page.City);
           Player.stopFocusing();
         },
       },
@@ -256,11 +257,11 @@ export function WorkInProgressRoot(): React.ReactElement {
     const classWork = Player.currentWork;
     function cancel(): void {
       Player.finishWork(true);
-      Router.toCity();
+      Router.toPage(Page.City);
     }
 
     function unfocus(): void {
-      Router.toCity();
+      Router.toPage(Page.City);
       Player.stopFocusing();
     }
 
@@ -303,10 +304,10 @@ export function WorkInProgressRoot(): React.ReactElement {
     const create = Player.currentWork;
     function cancel(): void {
       Player.finishWork(true);
-      Router.toTerminal();
+      Router.toPage(Page.Terminal);
     }
     function unfocus(): void {
-      Router.toTerminal();
+      Router.toPage(Page.Terminal);
       Player.stopFocusing();
     }
 
@@ -337,10 +338,10 @@ export function WorkInProgressRoot(): React.ReactElement {
     const graft = Player.currentWork;
     function cancel(): void {
       Player.finishWork(true);
-      Router.toTerminal();
+      Router.toPage(Page.Terminal);
     }
     function unfocus(): void {
-      Router.toTerminal();
+      Router.toPage(Page.Terminal);
       Player.stopFocusing();
     }
 
@@ -374,7 +375,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     if (!faction) {
       workInfo = {
         buttons: {
-          cancel: () => Router.toFactions(),
+          cancel: () => Router.toPage(Page.Factions),
         },
         title:
           `You have not joined ${Player.currentWork.factionName || "(Faction not found)"} at this time,` +
@@ -432,7 +433,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     if (comp) {
       workInfo = {
         buttons: {
-          cancel: () => Router.toTerminal(),
+          cancel: () => Router.toPage(Page.Terminal),
         },
         title:
           `You cannot work for ${Player.currentWork.companyName || "(Company not found)"} at this time,` +

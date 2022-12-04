@@ -32,6 +32,7 @@ import { numeralWrapper } from "../numeralFormat";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { pushImportResult } from "../../Electron";
 import { Router } from "../GameRoot";
+import { Page } from "../Router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -136,7 +137,7 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (headback) Router.toTerminal();
+    if (headback) Router.toPage(Page.Terminal);
   }, [headback]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { KEYCODE } from "../../utils/helpers/keyCodes";
 import clsx from "clsx";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
@@ -46,7 +46,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
+import { Page, SimplePage } from "../../ui/Router";
 import { Player } from "@player";
 import { CONSTANTS } from "../../Constants";
 import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../../InteractiveTutorial";
@@ -105,8 +105,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   page: Page;
-  opened: boolean;
-  onToggled: (newValue: boolean) => void;
 }
 
 export function SidebarRoot(props: IProps): React.ReactElement {
@@ -125,19 +123,28 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const [worldOpen, setWorldOpen] = useState(true);
   const [helpOpen, setHelpOpen] = useState(true);
 
-  const flashTerminal =
-    ITutorial.currStep === iTutorialSteps.CharacterGoToTerminalPage ||
-    ITutorial.currStep === iTutorialSteps.ActiveScriptsPage;
-
-  const flashStats = ITutorial.currStep === iTutorialSteps.GoToCharacterPage;
-
-  const flashActiveScripts = ITutorial.currStep === iTutorialSteps.TerminalGoToActiveScriptsPage;
-
-  const flashHacknet = ITutorial.currStep === iTutorialSteps.GoToHacknetNodesPage;
-
-  const flashCity = ITutorial.currStep === iTutorialSteps.HacknetNodesGoToWorldPage;
-
-  const flashTutorial = ITutorial.currStep === iTutorialSteps.WorldDescription;
+  let flash: Page | null = null;
+  switch (ITutorial.currStep) {
+    case iTutorialSteps.CharacterGoToTerminalPage:
+    case iTutorialSteps.ActiveScriptsPage:
+      flash = Page.Terminal;
+      break;
+    case iTutorialSteps.GoToCharacterPage:
+      flash = Page.Stats;
+      break;
+    case iTutorialSteps.TerminalGoToActiveScriptsPage:
+      flash = Page.ActiveScripts;
+      break;
+    case iTutorialSteps.GoToHacknetNodesPage:
+      flash = Page.Hacknet;
+      break;
+    case iTutorialSteps.HacknetNodesGoToWorldPage:
+      flash = Page.City;
+      break;
+    case iTutorialSteps.WorldDescription:
+      flash = Page.Tutorial;
+      break;
+  }
 
   const augmentationCount = Player.queuedAugmentations.length;
   const invitationsCount = Player.factionInvitations.filter((f) => !InvitationsSeen.includes(f)).length;
@@ -162,99 +169,6 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const canBladeburner = !!Player.bladeburner;
   const canStaneksGift = Player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
 
-  function clickTerminal(): void {
-    Router.toTerminal();
-    if (flashTerminal) iTutorialNextStep();
-  }
-
-  function clickScriptEditor(): void {
-    Router.toScriptEditor();
-  }
-
-  function clickStats(): void {
-    Router.toStats();
-    if (flashStats) iTutorialNextStep();
-  }
-
-  function clickActiveScripts(): void {
-    Router.toActiveScripts();
-    if (flashActiveScripts) iTutorialNextStep();
-  }
-
-  function clickCreateProgram(): void {
-    Router.toCreateProgram();
-  }
-
-  function clickStaneksGift(): void {
-    Router.toStaneksGift();
-  }
-
-  function clickFactions(): void {
-    Router.toFactions();
-  }
-
-  function clickAugmentations(): void {
-    Router.toAugmentations();
-  }
-
-  function clickSleeves(): void {
-    Router.toSleeves();
-  }
-
-  function clickHacknet(): void {
-    Router.toHacknetNodes();
-    if (flashHacknet) iTutorialNextStep();
-  }
-
-  function clickCity(): void {
-    Router.toCity();
-    if (flashCity) iTutorialNextStep();
-  }
-
-  function clickTravel(): void {
-    Router.toTravel();
-  }
-
-  function clickJob(): void {
-    Router.toJob(Locations[Object.keys(Player.jobs)[0]]);
-  }
-
-  function clickStockMarket(): void {
-    Router.toStockMarket();
-  }
-
-  function clickBladeburner(): void {
-    Router.toBladeburner();
-  }
-
-  function clickCorp(): void {
-    Router.toCorporation();
-  }
-
-  function clickGang(): void {
-    Router.toGang();
-  }
-
-  function clickTutorial(): void {
-    Router.toTutorial();
-    if (flashTutorial) iTutorialNextStep();
-  }
-
-  function clickMilestones(): void {
-    Router.toMilestones();
-  }
-  function clickOptions(): void {
-    Router.toGameOptions();
-  }
-
-  function clickDev(): void {
-    Router.toDevMenu();
-  }
-
-  function clickAchievements(): void {
-    Router.toAchievements();
-  }
-
   useEffect(() => {
     // Shortcuts to navigate through the game
     //  Alt-t - Terminal
@@ -277,53 +191,53 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       if ((Player.currentWork && Player.focus) || Router.page() === Page.BitVerse) return;
       if (event.code === KEYCODE.T && event.altKey) {
         event.preventDefault();
-        clickTerminal();
+        clickPage(Page.Terminal);
       } else if (event.code === KEYCODE.C && event.altKey) {
         event.preventDefault();
-        clickStats();
+        clickPage(Page.Stats);
       } else if (event.code === KEYCODE.E && event.altKey) {
         event.preventDefault();
-        clickScriptEditor();
+        clickPage(Page.ScriptEditor);
       } else if (event.code === KEYCODE.S && event.altKey) {
         event.preventDefault();
-        clickActiveScripts();
+        clickPage(Page.ActiveScripts);
       } else if (event.code === KEYCODE.H && event.altKey) {
         event.preventDefault();
-        clickHacknet();
+        clickPage(Page.Hacknet);
       } else if (event.code === KEYCODE.W && event.altKey) {
         event.preventDefault();
-        clickCity();
+        clickPage(Page.City);
       } else if (event.code === KEYCODE.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
         // ctrl/cmd + alt + j is shortcut to open Chrome dev tools
         event.preventDefault();
-        clickJob();
+        clickPage(Page.Job);
       } else if (event.code === KEYCODE.R && event.altKey) {
         event.preventDefault();
-        clickTravel();
+        clickPage(Page.Travel);
       } else if (event.code === KEYCODE.P && event.altKey) {
         event.preventDefault();
-        clickCreateProgram();
+        clickPage(Page.CreateProgram);
       } else if (event.code === KEYCODE.F && event.altKey) {
         if (props.page == Page.Terminal && Settings.EnableBashHotkeys) {
           return;
         }
         event.preventDefault();
-        clickFactions();
+        clickPage(Page.Factions);
       } else if (event.code === KEYCODE.A && event.altKey) {
         event.preventDefault();
-        clickAugmentations();
+        clickPage(Page.Augmentations);
       } else if (event.code === KEYCODE.U && event.altKey) {
         event.preventDefault();
-        clickTutorial();
+        clickPage(Page.Tutorial);
       } else if (event.code === KEYCODE.O && event.altKey) {
         event.preventDefault();
-        clickOptions();
+        clickPage(Page.Options);
       } else if (event.code === KEYCODE.B && event.altKey && Player.bladeburner) {
         event.preventDefault();
-        clickBladeburner();
+        clickPage(Page.Bladeburner);
       } else if (event.code === KEYCODE.G && event.altKey && Player.gang) {
         event.preventDefault();
-        clickGang();
+        clickPage(Page.Gang);
       }
     }
 
@@ -331,13 +245,31 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     return () => document.removeEventListener("keydown", handleShortcuts);
   }, []);
 
-  const classes = useStyles();
-  const [open, setOpen] = useState(props.opened);
-  const toggleDrawer = (): void => setOpen((old) => !old);
+  const clickPage = useCallback(
+    (page: Page) => {
+      if (page === Page.Job) {
+        Router.toJob(Locations[Object.keys(Player.jobs)[0]]);
+      } else if (page == Page.ScriptEditor) {
+        Router.toScriptEditor();
+      } else if ((Object.values(SimplePage) as Page[]).includes(page)) {
+        Router.toPage(page as SimplePage);
+      } else {
+        throw new Error("Can't handle click on Page " + page);
+      }
+      if (flash === page) {
+        iTutorialNextStep();
+      }
+    },
+    [flash],
+  );
 
-  useEffect(() => {
-    props.onToggled(open);
-  }, [open]);
+  const classes = useStyles();
+  const [open, setOpen] = useState(Settings.IsSidebarOpened);
+  const toggleDrawer = (): void =>
+    setOpen((old) => {
+      Settings.IsSidebarOpened = !old;
+      return !old;
+    });
 
   return (
     <Drawer open={open} anchor="left" variant="permanent">
@@ -373,17 +305,19 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.Terminal,
               })}
-              onClick={clickTerminal}
+              onClick={() => clickPage(Page.Terminal)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Terminal" : ""}>
                   <LastPageIcon
-                    color={flashTerminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}
+                    color={flash === Page.Terminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}
                   />
                 </Tooltip>
               </ListItemIcon>
               <ListItemText>
-                <Typography color={flashTerminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}>
+                <Typography
+                  color={flash === Page.Terminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}
+                >
                   Terminal
                 </Typography>
               </ListItemText>
@@ -395,7 +329,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.ScriptEditor,
               })}
-              onClick={clickScriptEditor}
+              onClick={() => clickPage(Page.ScriptEditor)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Script Editor" : ""}>
@@ -415,18 +349,26 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.ActiveScripts,
               })}
-              onClick={clickActiveScripts}
+              onClick={() => clickPage(Page.ActiveScripts)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Active Scripts" : ""}>
                   <StorageIcon
-                    color={flashActiveScripts ? "error" : props.page !== Page.ActiveScripts ? "secondary" : "primary"}
+                    color={
+                      flash === Page.ActiveScripts
+                        ? "error"
+                        : props.page !== Page.ActiveScripts
+                        ? "secondary"
+                        : "primary"
+                    }
                   />
                 </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography
-                  color={flashActiveScripts ? "error" : props.page !== Page.ActiveScripts ? "secondary" : "primary"}
+                  color={
+                    flash === Page.ActiveScripts ? "error" : props.page !== Page.ActiveScripts ? "secondary" : "primary"
+                  }
                 >
                   Active Scripts
                 </Typography>
@@ -438,7 +380,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.CreateProgram,
               })}
-              onClick={clickCreateProgram}
+              onClick={() => clickPage(Page.CreateProgram)}
             >
               <ListItemIcon>
                 <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
@@ -460,7 +402,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 className={clsx({
                   [classes.active]: props.page === Page.StaneksGift,
                 })}
-                onClick={clickStaneksGift}
+                onClick={() => clickPage(Page.StaneksGift)}
               >
                 <ListItemIcon>
                   <Tooltip title={!open ? "Stanek's Gift" : ""}>
@@ -494,15 +436,17 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             className={clsx({
               [classes.active]: props.page === Page.Stats,
             })}
-            onClick={clickStats}
+            onClick={() => clickPage(Page.Stats)}
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Stats" : ""}>
-                <EqualizerIcon color={flashStats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"} />
+                <EqualizerIcon
+                  color={flash === Page.Stats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"}
+                />
               </Tooltip>
             </ListItemIcon>
             <ListItemText>
-              <Typography color={flashStats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"}>
+              <Typography color={flash === Page.Stats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"}>
                 Stats
               </Typography>
             </ListItemText>
@@ -515,7 +459,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: [Page.Factions, Page.Faction].includes(props.page),
               })}
-              onClick={clickFactions}
+              onClick={() => clickPage(Page.Factions)}
             >
               <ListItemIcon>
                 <Badge badgeContent={invitationsCount !== 0 ? invitationsCount : undefined} color="error">
@@ -541,7 +485,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.Augmentations,
               })}
-              onClick={clickAugmentations}
+              onClick={() => clickPage(Page.Augmentations)}
             >
               <ListItemIcon>
                 <Badge badgeContent={augmentationCount !== 0 ? augmentationCount : undefined} color="error">
@@ -566,17 +510,19 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             className={clsx({
               [classes.active]: props.page === Page.Hacknet,
             })}
-            onClick={clickHacknet}
+            onClick={() => clickPage(Page.Hacknet)}
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Hacknet" : ""}>
                 <AccountTreeIcon
-                  color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"}
+                  color={flash === Page.Hacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"}
                 />
               </Tooltip>
             </ListItemIcon>
             <ListItemText>
-              <Typography color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"}>
+              <Typography
+                color={flash === Page.Hacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"}
+              >
                 Hacknet
               </Typography>
             </ListItemText>
@@ -589,7 +535,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.Sleeves,
               })}
-              onClick={clickSleeves}
+              onClick={() => clickPage(Page.Sleeves)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Sleeves" : ""}>
@@ -621,15 +567,17 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               [classes.active]:
                 props.page === Page.City || props.page === Page.Grafting || props.page === Page.Location,
             })}
-            onClick={clickCity}
+            onClick={() => clickPage(Page.City)}
           >
             <ListItemIcon>
               <Tooltip title={!open ? "City" : ""}>
-                <LocationCityIcon color={flashCity ? "error" : props.page !== Page.City ? "secondary" : "primary"} />
+                <LocationCityIcon
+                  color={flash === Page.City ? "error" : props.page !== Page.City ? "secondary" : "primary"}
+                />
               </Tooltip>
             </ListItemIcon>
             <ListItemText>
-              <Typography color={flashCity ? "error" : props.page !== Page.City ? "secondary" : "primary"}>
+              <Typography color={flash === Page.City ? "error" : props.page !== Page.City ? "secondary" : "primary"}>
                 City
               </Typography>
             </ListItemText>
@@ -640,7 +588,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             className={clsx({
               [classes.active]: props.page === Page.Travel,
             })}
-            onClick={clickTravel}
+            onClick={() => clickPage(Page.Travel)}
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Travel" : ""}>
@@ -659,7 +607,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.Job,
               })}
-              onClick={clickJob}
+              onClick={() => clickPage(Page.Job)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Job" : ""}>
@@ -679,7 +627,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.StockMarket,
               })}
-              onClick={clickStockMarket}
+              onClick={() => clickPage(Page.StockMarket)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Stock Market" : ""}>
@@ -699,7 +647,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.Bladeburner,
               })}
-              onClick={clickBladeburner}
+              onClick={() => clickPage(Page.Bladeburner)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Bladeburner" : ""}>
@@ -719,7 +667,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.Corporation,
               })}
-              onClick={clickCorp}
+              onClick={() => clickPage(Page.Corporation)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Corp" : ""}>
@@ -739,7 +687,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.Gang,
               })}
-              onClick={clickGang}
+              onClick={() => clickPage(Page.Gang)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Gang" : ""}>
@@ -770,7 +718,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             className={clsx({
               [classes.active]: props.page === Page.Milestones,
             })}
-            onClick={clickMilestones}
+            onClick={() => clickPage(Page.Milestones)}
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Milestones" : ""}>
@@ -787,15 +735,19 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             className={clsx({
               [classes.active]: props.page === Page.Tutorial,
             })}
-            onClick={clickTutorial}
+            onClick={() => clickPage(Page.Tutorial)}
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Tutorial" : ""}>
-                <HelpIcon color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"} />
+                <HelpIcon
+                  color={flash === Page.Tutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"}
+                />
               </Tooltip>
             </ListItemIcon>
             <ListItemText>
-              <Typography color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"}>
+              <Typography
+                color={flash === Page.Tutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"}
+              >
                 Tutorial
               </Typography>
             </ListItemText>
@@ -806,7 +758,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             className={clsx({
               [classes.active]: props.page === Page.Achievements,
             })}
-            onClick={clickAchievements}
+            onClick={() => clickPage(Page.Achievements)}
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Achievements" : ""}>
@@ -823,7 +775,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             className={clsx({
               [classes.active]: props.page === Page.Options,
             })}
-            onClick={clickOptions}
+            onClick={() => clickPage(Page.Options)}
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Options" : ""}>
@@ -842,7 +794,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx({
                 [classes.active]: props.page === Page.DevMenu,
               })}
-              onClick={clickDev}
+              onClick={() => clickPage(Page.DevMenu)}
             >
               <ListItemIcon>
                 <Tooltip title={!open ? "Dev" : ""}>

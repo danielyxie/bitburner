@@ -7,6 +7,7 @@ import { SourceFiles } from "./SourceFile/SourceFiles";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { Router } from "./ui/GameRoot";
+import { Page } from "./ui/Router";
 
 function giveSourceFile(bitNodeNumber: number): void {
   const sourceFileKey = "SourceFile" + bitNodeNumber.toString();
@@ -68,9 +69,9 @@ export function enterBitNode(flume: boolean, destroyedBitNode: number, newBitNod
   Player.bitNodeN = newBitNode;
 
   if (newBitNode === 6) {
-    Router.toBladeburnerCinematic();
+    Router.toPage(Page.BladeburnerCinematic);
   } else {
-    Router.toTerminal();
+    Router.toPage(Page.Terminal);
   }
   prestigeSourceFile(flume);
 }

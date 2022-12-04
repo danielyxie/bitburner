@@ -5,6 +5,7 @@ import { Box, Typography, Button, Container, Paper } from "@mui/material";
 import { Check, Lock, Create } from "@mui/icons-material";
 
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 
@@ -99,7 +100,7 @@ export function ProgramsRoot(): React.ReactElement {
                       if (!event.isTrusted) return;
                       Player.startWork(new CreateProgramWork({ singularity: false, programName: program.name }));
                       Player.startFocusing();
-                      Router.toWork();
+                      Router.toPage(Page.Work);
                     }}
                   >
                     Create program

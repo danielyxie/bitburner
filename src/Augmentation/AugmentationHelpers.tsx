@@ -21,6 +21,7 @@ import {
   initUnstableCircadianModulator,
 } from "./data/AugmentationCreator";
 import { Router } from "../ui/GameRoot";
+import { Page } from "../ui/Router";
 import { mergeMultipliers } from "../PersonObjects/Multipliers";
 
 export function AddToStaticAugmentations(aug: Augmentation): void {
@@ -138,7 +139,7 @@ function installAugmentations(force?: boolean): boolean {
     );
   }
   prestigeAugmentation();
-  Router.toTerminal();
+  Router.toPage(Page.Terminal);
   return true;
 }
 

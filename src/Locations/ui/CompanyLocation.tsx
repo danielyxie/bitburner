@@ -21,6 +21,7 @@ import * as posNames from "../../Company/data/companypositionnames";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 import { QuitJobModal } from "../../Company/ui/QuitJobModal";
 import { CompanyWork } from "../../Work/CompanyWork";
@@ -177,7 +178,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
         }),
       );
       Player.startFocusing();
-      Router.toWork();
+      Router.toPage(Page.Work);
     }
   }
 

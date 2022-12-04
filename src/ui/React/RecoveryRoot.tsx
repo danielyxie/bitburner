@@ -4,6 +4,7 @@ import { Typography, Link, Button, ButtonGroup, Tooltip, Box, Paper, TextField }
 import { Settings } from "../../Settings/Settings";
 import { load } from "../../db";
 import { Router } from "../GameRoot";
+import { Page } from "../Router";
 import { download } from "../../SaveObject";
 import { IErrorData, newIssueUrl } from "../../utils/ErrorHelper";
 import { DeleteGameButton } from "./DeleteGameButton";
@@ -28,7 +29,7 @@ export function RecoveryRoot({ softReset, errorData, resetError }: IProps): Reac
   function recover(): void {
     if (resetError) resetError();
     RecoveryMode = false;
-    Router.toTerminal();
+    Router.toPage(Page.Terminal);
   }
   Settings.AutosaveInterval = 0;
 

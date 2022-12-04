@@ -16,6 +16,7 @@ import { Settings } from "../../Settings/Settings";
 import { defaultTheme } from "../Themes";
 import { UserInterfaceTheme } from "../../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { ThemeCollaborate } from "./ThemeCollaborate";
 
 interface IProps {
@@ -380,7 +381,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
               </Button>
             </Tooltip>
             <Tooltip title="Move over to the theme browser's page to use one of our predefined themes.">
-              <Button startIcon={<PaletteSharpIcon />} onClick={() => Router.toThemeBrowser()}>
+              <Button startIcon={<PaletteSharpIcon />} onClick={() => Router.toPage(Page.ThemeBrowser)}>
                 See more themes
               </Button>
             </Tooltip>

@@ -4,6 +4,7 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 import { inviteToFaction } from "../../Faction/FactionHelpers";
 import { Factions } from "../../Faction/Factions";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
@@ -26,7 +27,7 @@ export function Victory(props: IProps): React.ReactElement {
 
   function quitInfiltration(): void {
     handleInfiltrators();
-    Router.toCity();
+    Router.toPage(Page.City);
   }
 
   const soa = Factions[FactionNames.ShadowsOfAnarchy];

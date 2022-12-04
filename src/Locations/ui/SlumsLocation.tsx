@@ -11,6 +11,7 @@ import { Crimes } from "../../Crime/Crimes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 import { Box } from "@mui/material";
 import { Crime } from "../../Crime/Crime";
@@ -27,7 +28,7 @@ export function SlumsLocation(): React.ReactElement {
   function doCrime(e: React.MouseEvent<HTMLElement>, crime: Crime) {
     if (!e.isTrusted) return;
     crime.commit();
-    Router.toWork();
+    Router.toPage(Page.Work);
     Player.focus = true;
   }
 

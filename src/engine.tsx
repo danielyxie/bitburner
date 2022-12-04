@@ -411,7 +411,7 @@ function warnAutosaveDisabled(): void {
 
   // We don't want this warning to show up on certain pages.
   // When in recovery or importing we want to keep autosave disabled.
-  const ignoredPages = [Page.Recovery, Page.ImportSave];
+  const ignoredPages = [Page.Recovery as Page, Page.ImportSave];
   if (ignoredPages.includes(Router.page())) return;
 
   const warningToast = (

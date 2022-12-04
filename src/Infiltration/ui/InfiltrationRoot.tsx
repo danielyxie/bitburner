@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Location } from "../../Locations/Location";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { calculateDifficulty, calculateReward } from "../formulas/game";
 import { Game } from "./Game";
 import { Intro } from "./Intro";
@@ -17,7 +18,7 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
   const reward = calculateReward(startingSecurityLevel);
 
   function cancel(): void {
-    Router.toCity();
+    Router.toPage(Page.City);
   }
 
   return (

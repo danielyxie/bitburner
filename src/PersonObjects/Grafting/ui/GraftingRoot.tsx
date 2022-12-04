@@ -12,6 +12,7 @@ import { Locations } from "../../../Locations/Locations";
 import { PurchaseAugmentationsOrderSetting } from "../../../Settings/SettingEnums";
 import { Settings } from "../../../Settings/Settings";
 import { Router } from "../../../ui/GameRoot";
+import { Page } from "../../../ui/Router";
 import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
@@ -158,7 +159,7 @@ export const GraftingRoot = (): React.ReactElement => {
                     }),
                   );
                   Player.startFocusing();
-                  Router.toWork();
+                  Router.toPage(Page.Work);
                 }}
                 confirmationText={
                   <>

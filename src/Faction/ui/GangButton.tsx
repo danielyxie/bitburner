@@ -2,6 +2,7 @@ import { Button, Typography, Box, Paper, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { GangConstants } from "../../Gang/data/Constants";
 import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
 import { Player } from "@player";
 import { Faction } from "../Faction";
 import { CreateGangModal } from "./CreateGangModal";
@@ -51,7 +52,7 @@ export function GangButton({ faction }: IProps): React.ReactElement {
   const manageGang = (): void => {
     // If player already has a gang, just go to the gang UI
     if (Player.inGang()) {
-      return Router.toGang();
+      return Router.toPage(Page.Gang);
     }
 
     setGangOpen(true);
