@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import TextField from "@mui/material/TextField";
 
-import { KEY } from "../../utils/helpers/keyCodes";
+import { KEY, KEYCODE } from "../../utils/helpers/keyCodes";
 import { Terminal } from "../../Terminal";
 import { Player } from "@player";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
@@ -316,63 +316,63 @@ export function TerminalInput(): React.ReactElement {
 
     // Extra Bash Emulation Hotkeys, must be enabled through options
     if (Settings.EnableBashHotkeys) {
-      if (event.key === KEY.C && event.ctrlKey && ref && ref.selectionStart === ref.selectionEnd) {
+      if (event.code === KEYCODE.C && event.ctrlKey && ref && ref.selectionStart === ref.selectionEnd) {
         event.preventDefault();
         Terminal.print(`[${Player.getCurrentServer().hostname} ~${Terminal.cwd()}]> ${value}`);
         modifyInput("clearall");
       }
 
-      if (event.key === KEY.A && event.ctrlKey) {
+      if (event.code === KEYCODE.A && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("home");
       }
 
-      if (event.key === KEY.E && event.ctrlKey) {
+      if (event.code === KEYCODE.E && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("end");
       }
 
-      if (event.key === KEY.B && event.ctrlKey) {
+      if (event.code === KEYCODE.B && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("prevchar");
       }
 
-      if (event.key === KEY.B && event.altKey) {
+      if (event.code === KEYCODE.B && event.altKey) {
         event.preventDefault();
         moveTextCursor("prevword");
       }
 
-      if (event.key === KEY.F && event.ctrlKey) {
+      if (event.code === KEYCODE.F && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("nextchar");
       }
 
-      if (event.key === KEY.F && event.altKey) {
+      if (event.code === KEYCODE.F && event.altKey) {
         event.preventDefault();
         moveTextCursor("nextword");
       }
 
-      if ((event.key === KEY.H || event.key === KEY.D) && event.ctrlKey) {
+      if ((event.code === KEYCODE.H || event.code === KEYCODE.D) && event.ctrlKey) {
         modifyInput("backspace");
         event.preventDefault();
       }
 
-      if (event.key === KEY.W && event.ctrlKey) {
+      if (event.code === KEYCODE.W && event.ctrlKey) {
         event.preventDefault();
         modifyInput("deletewordbefore");
       }
 
-      if (event.key === KEY.D && event.altKey) {
+      if (event.code === KEYCODE.D && event.altKey) {
         event.preventDefault();
         modifyInput("deletewordafter");
       }
 
-      if (event.key === KEY.U && event.ctrlKey) {
+      if (event.code === KEYCODE.U && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearbefore");
       }
 
-      if (event.key === KEY.K && event.ctrlKey) {
+      if (event.code === KEYCODE.K && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearafter");
       }

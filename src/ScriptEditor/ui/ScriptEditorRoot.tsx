@@ -4,7 +4,6 @@ import * as monaco from "monaco-editor";
 
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 type ITextModel = monaco.editor.ITextModel;
-import { KEY } from "../../utils/helpers/keyCodes";
 import { OptionsModal } from "./OptionsModal";
 import { Options } from "./Options";
 import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
@@ -153,13 +152,13 @@ export function Root(props: IProps): React.ReactElement {
     function keydown(event: KeyboardEvent): void {
       if (Settings.DisableHotkeys) return;
       //Ctrl + b
-      if (event.key == KEY.B && (event.ctrlKey || event.metaKey)) {
+      if (event.code == "KeyB" && (event.ctrlKey || event.metaKey)) {
         event.preventDefault();
         Router.toTerminal();
       }
 
       // CTRL/CMD + S
-      if (event.key == KEY.S && (event.ctrlKey || event.metaKey)) {
+      if (event.code == "KeyS" && (event.ctrlKey || event.metaKey)) {
         event.preventDefault();
         event.stopPropagation();
         save();
