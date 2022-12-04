@@ -27,7 +27,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 
 import { ImportData, saveObject } from "../../SaveObject";
 import { Settings } from "../../Settings/Settings";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString, formatNumber } from "../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../numeralFormat";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { pushImportResult } from "../../Electron";
@@ -243,8 +243,8 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
 
             <TableRow>
               <TableCell>Hacking</TableCell>
-              <TableCell>{numeralWrapper.formatSkill(currentData.playerData?.hacking ?? 0)}</TableCell>
-              <TableCell>{numeralWrapper.formatSkill(importData.playerData?.hacking ?? 0)}</TableCell>
+              <TableCell>{formatNumber(currentData.playerData?.hacking ?? 0, 0)}</TableCell>
+              <TableCell>{formatNumber(importData.playerData?.hacking ?? 0, 0)}</TableCell>
               <TableCell>
                 {importData.playerData?.hacking !== currentData.playerData?.hacking && (
                   <ComparisonIcon

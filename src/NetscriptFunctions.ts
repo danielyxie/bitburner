@@ -44,7 +44,7 @@ import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { helpers, assertObjectType } from "./Netscript/NetscriptHelpers";
 import { numeralWrapper } from "./ui/numeralFormat";
-import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString, formatNumber } from "./utils/StringHelperFunctions";
 import { LogBoxEvents, LogBoxCloserEvents, LogBoxPositionEvents, LogBoxSizeEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
@@ -1134,10 +1134,7 @@ const base: InternalAPI<NS> = {
     if (helpers.failOnHacknetServer(ctx, server)) {
       return 1;
     }
-    helpers.log(
-      ctx,
-      () => `returned ${numeralWrapper.formatSkill(server.requiredHackingSkill)} for '${server.hostname}'`,
-    );
+    helpers.log(ctx, () => `returned ${formatNumber(server.requiredHackingSkill, 0)} for '${server.hostname}'`);
     return server.requiredHackingSkill;
   },
   getServerMaxMoney: (ctx) => (_hostname) => {
