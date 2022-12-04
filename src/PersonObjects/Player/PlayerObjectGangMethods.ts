@@ -3,6 +3,7 @@ import { Faction } from "../../Faction/Faction";
 import { Gang } from "../../Gang/Gang";
 import { PlayerObject } from "./PlayerObject";
 import { GangConstants } from "../../Gang/data/Constants";
+import { isFactionWork } from "../../Work/FactionWork";
 
 export function canAccessGang(this: PlayerObject): boolean {
   if (this.bitNodeN === 2) {
@@ -40,6 +41,9 @@ export function hasGangWith(this: PlayerObject, facName: string): boolean {
 }
 
 export function startGang(this: PlayerObject, factionName: string, hacking: boolean): void {
+  // isFactionWork handles null internally, finishWork might need to be run with true
+  if (isFactionWork(this.currentWork) && this.currentWork.factionName === factionName) this.finishWork(false);
+
   this.gang = new Gang(factionName, hacking);
 
   const fac = Factions[factionName];
