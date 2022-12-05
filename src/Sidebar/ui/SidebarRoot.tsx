@@ -55,38 +55,9 @@ import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 import { hash } from "../../hash/hash";
 import { Locations } from "../../Locations/Locations";
 
-// All icon instances need to be constant, so they have stable object identity.
-// Otherwise, the memoization of all the higher-level components doesn't work.
-const computerIcon = <ComputerIcon />;
-const lastPageIcon = <LastPageIcon />;
-const createIcon = <CreateIcon />;
-const storageIcon = <StorageIcon />;
-const bugReportIcon = <BugReportIcon />;
-const equalizerIcon = <EqualizerIcon />;
-const contactsIcon = <ContactsIcon />;
-const doubleArrowIcon = <DoubleArrowIcon style={{ transform: "rotate(-90deg)" }} />;
-const accountTreeIcon = <AccountTreeIcon />;
-const peopleAltIcon = <PeopleAltIcon />;
-const locationCityIcon = <LocationCityIcon />;
-const airplanemodeActiveIcon = <AirplanemodeActiveIcon />;
-const workIcon = <WorkIcon />;
-const trendingUpIcon = <TrendingUpIcon />;
-const formatBoldIcon = <FormatBoldIcon />;
-const businessIcon = <BusinessIcon />;
-const sportsMmaIcon = <SportsMmaIcon />;
-const checkIcon = <CheckIcon />;
-const helpIcon = <HelpIcon />;
-const settingsIcon = <SettingsIcon />;
-const developerBoardIcon = <DeveloperBoardIcon />;
-const emojiEventsIcon = <EmojiEventsIcon />;
-const accountBoxIcon = <AccountBoxIcon />;
-const publicIcon = <PublicIcon />;
-const liveHelpIcon = <LiveHelpIcon />;
-const chevronLeftIcon = <ChevronLeftIcon color="primary" />;
-const chevronRightIcon = <ChevronRightIcon color="primary" />;
-
-// Use constant Dividers just for performance
-const divider = <Divider />;
+const RotatedDoubleArrowIcon = (props: { color: "primary" | "secondary" | "error" }) => (
+  <DoubleArrowIcon color={props.color} style={{ transform: "rotate(-90deg)" }} />
+);
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -295,6 +266,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       return !old;
     });
   const li_classes = useMemo(() => ({ root: classes.listitem }), [classes.listitem]);
+  const ChevronOpenClose = open ? ChevronLeftIcon : ChevronRightIcon;
 
   // Explicitily useMemo() to save rerendering deep chunks of this tree.
   // memo() can't be (easily) used on components like <List>, because the
@@ -304,7 +276,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       {useMemo(
         () => (
           <ListItem classes={li_classes} button onClick={toggleDrawer}>
-            <ListItemIcon>{!open ? chevronRightIcon : chevronLeftIcon}</ListItemIcon>
+            <ListItemIcon>
+              <ChevronOpenClose color={"primary"} />
+            </ListItemIcon>
             <ListItemText
               primary={
                 <Tooltip title={hash()}>
@@ -316,88 +290,88 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         ),
         [li_classes, open],
       )}
-      {divider}
+      <Divider />
       <List>
         <SidebarAccordion
           key_="Hacking"
           page={props.page}
           clickPage={clickPage}
           flash={flash}
-          icon={computerIcon}
+          icon={ComputerIcon}
           sidebarOpen={open}
           classes={classes}
           items={[
-            { key_: Page.Terminal, icon: lastPageIcon },
-            { key_: Page.ScriptEditor, icon: createIcon },
-            { key_: Page.ActiveScripts, icon: storageIcon },
-            { key_: Page.CreateProgram, icon: bugReportIcon, count: programCount },
-            canStaneksGift && { key_: Page.StaneksGift, icon: developerBoardIcon },
+            { key_: Page.Terminal, icon: LastPageIcon },
+            { key_: Page.ScriptEditor, icon: CreateIcon },
+            { key_: Page.ActiveScripts, icon: StorageIcon },
+            { key_: Page.CreateProgram, icon: BugReportIcon, count: programCount },
+            canStaneksGift && { key_: Page.StaneksGift, icon: DeveloperBoardIcon },
           ]}
         />
-        {divider}
+        <Divider />
         <SidebarAccordion
           key_="Character"
           page={props.page}
           clickPage={clickPage}
           flash={flash}
-          icon={accountBoxIcon}
+          icon={AccountBoxIcon}
           sidebarOpen={open}
           classes={classes}
           items={[
-            { key_: Page.Stats, icon: equalizerIcon },
+            { key_: Page.Stats, icon: EqualizerIcon },
             canOpenFactions && {
               key_: Page.Factions,
-              icon: contactsIcon,
+              icon: ContactsIcon,
               active: [Page.Factions as Page, Page.Faction].includes(props.page),
               count: invitationsCount,
             },
             canOpenAugmentations && {
               key_: Page.Augmentations,
-              icon: doubleArrowIcon,
+              icon: RotatedDoubleArrowIcon,
               count: augmentationCount,
             },
-            { key_: Page.Hacknet, icon: accountTreeIcon },
-            canOpenSleeves && { key_: Page.Sleeves, icon: peopleAltIcon },
+            { key_: Page.Hacknet, icon: AccountTreeIcon },
+            canOpenSleeves && { key_: Page.Sleeves, icon: PeopleAltIcon },
           ]}
         />
-        {divider}
+        <Divider />
         <SidebarAccordion
           key_="World"
           page={props.page}
           clickPage={clickPage}
           flash={flash}
-          icon={publicIcon}
+          icon={PublicIcon}
           sidebarOpen={open}
           classes={classes}
           items={[
             {
               key_: Page.City,
-              icon: locationCityIcon,
+              icon: LocationCityIcon,
               active: [Page.City as Page, Page.Grafting, Page.Location].includes(props.page),
             },
-            { key_: Page.Travel, icon: airplanemodeActiveIcon },
-            canJob && { key_: Page.Job, icon: workIcon },
-            canStockMarket && { key_: Page.StockMarket, icon: trendingUpIcon },
-            canBladeburner && { key_: Page.Bladeburner, icon: formatBoldIcon },
-            canCorporation && { key_: Page.Corporation, icon: businessIcon },
-            canGang && { key_: Page.Gang, icon: sportsMmaIcon },
+            { key_: Page.Travel, icon: AirplanemodeActiveIcon },
+            canJob && { key_: Page.Job, icon: WorkIcon },
+            canStockMarket && { key_: Page.StockMarket, icon: TrendingUpIcon },
+            canBladeburner && { key_: Page.Bladeburner, icon: FormatBoldIcon },
+            canCorporation && { key_: Page.Corporation, icon: BusinessIcon },
+            canGang && { key_: Page.Gang, icon: SportsMmaIcon },
           ]}
         />
-        {divider}
+        <Divider />
         <SidebarAccordion
           key_="Help"
           page={props.page}
           clickPage={clickPage}
           flash={flash}
-          icon={liveHelpIcon}
+          icon={LiveHelpIcon}
           sidebarOpen={open}
           classes={classes}
           items={[
-            { key_: Page.Milestones, icon: checkIcon },
-            { key_: Page.Tutorial, icon: helpIcon },
-            { key_: Page.Achievements, icon: emojiEventsIcon },
-            { key_: Page.Options, icon: settingsIcon },
-            process.env.NODE_ENV === "development" && { key_: Page.DevMenu, icon: developerBoardIcon },
+            { key_: Page.Milestones, icon: CheckIcon },
+            { key_: Page.Tutorial, icon: HelpIcon },
+            { key_: Page.Achievements, icon: EmojiEventsIcon },
+            { key_: Page.Options, icon: SettingsIcon },
+            process.env.NODE_ENV === "development" && { key_: Page.DevMenu, icon: DeveloperBoardIcon },
           ]}
         />
       </List>

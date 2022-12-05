@@ -17,7 +17,7 @@ interface IProps {
   clickPage: (page: Page) => void;
   flash: Page | null;
   items: (IItemProps | boolean)[];
-  icon: React.ReactElement;
+  icon: React.ReactElement["type"];
   sidebarOpen: boolean;
   classes: any;
 }
@@ -44,10 +44,7 @@ function getClickFn(toWrap: (page: Page) => void, page: Page) {
 // This can't be usefully memoized, because props.items is a new array every time.
 export function SidebarAccordion(props: IProps): React.ReactElement {
   const [open, setOpen] = useState(true);
-  // Obnoxious, because we can't modify props at all.
   const li_classes = useMemo(() => ({ root: props.classes.listitem }), [props.classes.listitem]);
-  const icon = Object.assign({}, props.icon);
-  icon.props = Object.assign({ color: "primary" }, icon.props);
 
   // Explicitily useMemo() to save rerendering deep chunks of this tree.
   // memo() can't be (easily) used on components like <List>, because the
@@ -58,13 +55,15 @@ export function SidebarAccordion(props: IProps): React.ReactElement {
         () => (
           <ListItem classes={li_classes} button onClick={() => setOpen((open) => !open)}>
             <ListItemIcon>
-              <Tooltip title={!props.sidebarOpen ? props.key_ : ""} children={icon} />
+              <Tooltip title={!props.sidebarOpen ? props.key_ : ""}>
+                <props.icon color={"primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText primary={<Typography>{props.key_}</Typography>} />
             {open ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
           </ListItem>
         ),
-        [li_classes, props.sidebarOpen, props.key_, open, props.icon.type],
+        [li_classes, props.sidebarOpen, props.key_, open, props.icon],
       )}
       <Collapse in={open} timeout="auto" unmountOnExit>
         {props.items.map((x) => {

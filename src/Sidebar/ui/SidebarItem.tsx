@@ -10,7 +10,7 @@ import type { Page } from "../../ui/Router";
 
 export interface ICreateProps {
   key_: Page;
-  icon: React.ReactElement;
+  icon: React.ReactElement["type"];
   count?: number;
   active?: boolean;
 }
@@ -23,15 +23,7 @@ export interface IProps extends ICreateProps {
 }
 
 export const SidebarItem = memo(function (props: IProps): React.ReactElement {
-  // Use icon as a template. (We can't modify props)
-  const icon: React.ReactElement = {
-    type: props.icon.type,
-    key: props.icon.key,
-    props: {
-      color: props.flash ? "error" : !props.active ? "secondary" : "primary",
-      ...props.icon.props,
-    },
-  };
+  const color = props.flash ? "error" : props.active ? "primary" : "secondary";
   return (
     <ListItem
       classes={{ root: props.classes.listitem }}
@@ -42,11 +34,13 @@ export const SidebarItem = memo(function (props: IProps): React.ReactElement {
     >
       <ListItemIcon>
         <Badge badgeContent={(props.count ?? 0) > 0 ? props.count : undefined} color="error">
-          <Tooltip title={!props.sidebarOpen ? props.key_ : ""} children={icon} />
+          <Tooltip title={!props.sidebarOpen ? props.key_ : ""}>
+            <props.icon color={color} />
+          </Tooltip>
         </Badge>
       </ListItemIcon>
       <ListItemText>
-        <Typography color={props.flash ? "error" : !props.active ? "secondary" : "primary"} children={props.key_} />
+        <Typography color={color} children={props.key_} />
       </ListItemText>
     </ListItem>
   );
