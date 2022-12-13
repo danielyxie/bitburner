@@ -4611,6 +4611,9 @@ export interface NS {
    */
   readonly args: (string | number | boolean)[];
 
+  /** The current script's PID */
+  readonly pid: number;
+
   /**
    * Steal a server's money.
    * @remarks

@@ -13,10 +13,10 @@ import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
 import { GetServer } from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
-import { NS } from "../ScriptEditor/NetscriptDefinitions";
 import { ScriptDeath } from "./ScriptDeath";
 import { ScriptArg } from "./ScriptArg";
 import { ExternalAPI } from "./APIWrapper";
+import { NSFull } from "../NetscriptFunctions";
 
 export class WorkerScript {
   /** Script's arguments */
@@ -83,7 +83,7 @@ export class WorkerScript {
   /** Function called when the script ends. */
   atExit?: () => void;
 
-  constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => ExternalAPI<NS>) {
+  constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => ExternalAPI<NSFull>) {
     this.name = runningScriptObj.filename;
     this.hostname = runningScriptObj.server;
 

@@ -91,10 +91,9 @@ export const enums: NSEnums = {
   LocationName,
 };
 
-export type NSFull = Readonly<NS & INetscriptExtra>;
+export type NSFull = Readonly<Omit<NS & INetscriptExtra, "pid" | "args">>;
 
-const base: InternalAPI<NS> = {
-  args: [],
+export const ns: InternalAPI<NSFull> = {
   enums,
   singularity: NetscriptSingularity(),
   gang: NetscriptGang(),
@@ -1898,14 +1897,10 @@ const base: InternalAPI<NS> = {
     }
   },
   flags: Flags,
-};
-
-// add undocumented functions
-export const ns = {
-  ...base,
   ...NetscriptExtra(),
 };
 
+// add undocumented functions
 export const wrappedNS = wrapAPILayer({} as ExternalAPI<NSFull>, ns, []);
 
 // Figure out once which layers of ns have functions on them and will need to be stamped with a private workerscript field for API access
