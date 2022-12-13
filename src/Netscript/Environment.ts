@@ -1,4 +1,4 @@
-import { NS } from "../ScriptEditor/NetscriptDefinitions";
+import { NSFull } from "../NetscriptFunctions";
 import { ExternalAPI } from "./APIWrapper";
 
 /**
@@ -14,5 +14,5 @@ export class Environment {
   runningFn = "";
 
   /** Environment variables (currently only Netscript functions) */
-  vars: ExternalAPI<NS> | null = null;
+  vars: ExternalAPI<NSFull> | null = null;
 }

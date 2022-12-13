@@ -1,12 +1,12 @@
 import { Player } from "@player";
 import { NSFull } from "../NetscriptFunctions";
 
-/** This type assumes any value that isn't an API layer or a function has been omitted (args and enum) */
+/** This type assumes any value that isn't an API layer or a function has been omitted (enum) */
 type RamCostTree<API> = Omit<
   {
     [Property in keyof API]: API[Property] extends () => unknown ? number | (() => number) : RamCostTree<API[Property]>;
   },
-  "enums" | "args"
+  "enums"
 >;
 
 /** Constants for assigning costs to ns functions */
