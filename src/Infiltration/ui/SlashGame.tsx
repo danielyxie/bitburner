@@ -61,7 +61,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
     <>
       <GameTimer millis={5000} onExpire={props.onFailure} />
       <Paper sx={{ display: "grid", justifyItems: "center" }}>
-        <Typography variant="h4">Slash when his guard is down!</Typography>
+        <Typography variant="h4">Attack when his guard is down!</Typography>
 
         {hasAugment ? (
           <Box sx={{ my: 1 }}>
