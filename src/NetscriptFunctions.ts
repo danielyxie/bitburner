@@ -1931,6 +1931,7 @@ export function NetscriptFunctions(ws: WorkerScript): ExternalAPI<NSFull> {
     obj[key] = new StampedLayer(ws, obj[key]);
   }
   instance.args = ws.args.slice();
+  instance.pid = ws.pid;
   return instance;
 }
 

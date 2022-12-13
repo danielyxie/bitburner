@@ -119,7 +119,7 @@ Resolving deltas: 100% (43708/43708), done.
 Updating files: 100% (2561/2561), done.
 
 # Change to the directory that contains your local copy.
-$ cd bitburner
+$ cd bitburner-src
 
 # The upstream is the repository that contains the game's source code. The
 # upstream is also the place where proposed changes are merged into the game.
