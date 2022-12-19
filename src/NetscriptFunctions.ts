@@ -883,7 +883,7 @@ export const ns: InternalAPI<NSFull> = {
             continue;
           }
           destScript.code = sourceScript.code;
-          destScript.ramUsage = destScript.ramUsage;
+          destScript.ramUsage = sourceScript.ramUsage;
           destScript.markUpdated();
           helpers.log(ctx, () => `WARNING: File '${file}' overwritten on '${destServer?.hostname}'`);
           continue;
