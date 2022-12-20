@@ -7,6 +7,7 @@ v2.1.0 - 2022-09-23 Remote File API
 -----------------------------------
 
   Dev notes
+  
   * The most important change about this update is the introduction of the remote file api.
     With this we also deprecate the HTTP file api and the visual studio extension. Those things
     were made during the rush of Steam and aren't well thought out. This new process works with
@@ -17,6 +18,7 @@ v2.1.0 - 2022-09-23 Remote File API
   * Added a new Augmentation, Z.O.Ë., which allows Sleeves to benefit from Stanek.
 
   API
+  
   *  Remove incorrectly placed 's' in ns.tFormat() (by @LJNeon)
   *  More ports (previously max 20, now practically unlimited) (by @Hoekstraa)
   *  Corp functions now return copy of constant arrays instead of the original (by @Mughur)
@@ -25,12 +27,15 @@ v2.1.0 - 2022-09-23 Remote File API
   *  FIX #3860 destroyW0r1dD43m0n now properly gives achievements and FIX #3890 favor now properly syncs across pages and the Donate achievement is now given correctly (by @Aerophia)
 
   CONTRIBUTIONS
+  
   *  Modify PR template (by @Hoekstraa)
 
   CCT
+  
   *  inconsistent probability for generation between online and offline (by @quacksouls)
 
   DOC
+  
   *  Some typo fixes in Netscript functions (by @quacksouls)
   *  Fix #4033 Why use Coding Contract API  (by @quacksouls)
   *  typo fix in description of Caesar cipher (by @quacksouls)
@@ -38,11 +43,13 @@ v2.1.0 - 2022-09-23 Remote File API
   *  Update bitburner.sleeve.settobladeburneraction.md (by @borisflagell)
 
   CORPORATION
+  
   *  FIX #3880, #3876, #3322 and #3138 Bunch of corporation fixes (by @Mughur)
   *  Gave investors some economics classes (by @Mughur)
   *  Limit shareholder priority on newly issued shares (by @Undeemiss)
 
   UI
+  
   *  FIX #2962 Add a setting to display middle time unit in Time Elapsed String (by @hydroflame)
   *  FIX #4106 Fix incorrect experience display in Crime UI. (by @SilverNexus)
   *  Bitnode stats now show if BB/Corporation are disabled (by @Kelenius)
@@ -52,30 +59,38 @@ v2.1.0 - 2022-09-23 Remote File API
   *  FIX #3975, #3882 Script Editor more responsive on resize, and fix dirty file indicator (by @Snarling)
 
   API FIX
+  
   *  getCrimeStats use bitnode multipliers in the output of crime stats (by @phyzical)
 
   SLEEVES
+  
   *  FIX #3819 Allow using the regeneration chamber with sleeves to heal them. (by @coderanger)
   *  FIX #4063 fix crash when player tries to assign more than 3 sleeves to Bladeburner contracts (by @Snarling)
   *  FIX #4051 Sleeves no longer crash when player quits company sleeve was working (by @Snarling)
 
   API BACKUP
+  
   *  add singularity function for exporting game save back (by @phyzical)
 
   CORPORATION API
+  
   *  FIX #3655 Expose exports from Material (by @Rasmoh)
 
   SCRIPTS
+  
   *  FIX #4081 Rerunning a script from tail window recalculates ram usage (by @Snarling)
   *  FIX #3962 The correct script will be closed even if the player modifies args (v2.0) (by @Snarling)
 
   DOCUMENTATION
+  
   *  Fixed Argument order for scp() (by @njalooo)
 
   CORP API
+  
   *  Fix up param order for limitProductProduction to match docs (by @phyzical)
 
   NETSCRIPT
+  
   *  FIX #2376 ns.exit now exits immediately (by @Snarling)
   *  FIX #4055 Fix dynamic ram check (by @Snarling)
   *  FIX #4037 ns1 wraps deeper layers correctly. (by @Snarling)
@@ -92,57 +107,74 @@ v2.1.0 - 2022-09-23 Remote File API
   *  Improve real life CPU and memory performance of scripts. (by @Snarling)
 
   INFILTRATION
+  
   *  Corrected ns formula for infiltration rewards (by @ezylot)
 
   RFA
+  
   *  NetscriptDefinitions retains export strings (by @Hoekstraa)
   *  Fix type of RFAMessages with non-String results (by @Hoekstraa)
   *  New Remote File API addition for transmitting files to the game (by @Hoekstraa)
 
   SLEEVE
+  
   *  FIX #4022, #4024, #4025, #3998 (by @Mughur)
 
   DOCS, UI
+  
   *  update docs a bit more, amending some BN and SF texts (by @Mughur)
 
   GANG
+  
   *  Added weight to GangMemberTask construction call (by @ezylot)
 
   Coding Contracts
+  
   *  Don't stringify answer if already a string (by @alainbryden)
 
   TERMINAL
+  
   *  Fix ansi display bugs (by @Snarling)
 
   SCRIPT EDITOR
+  
   *  Debounce updateRAM calls. (by @Snarling)
 
   WORK
+  
   *  Add singularity check for finishing company work (by @Snarling)
 
   DOCS
+  
   *  Correct documentation for `run()` with 0 threads. (by @MageKing17)
   *  Some doc updates (by @Mughur)
 
   FILES
+  
   *  FIX #3979 Allow characters & and ' in filenames (by @Snarling)
 
   CORP FIX
+  
   *  dont take research points for something already researched via api (by @phyzical)
 
   FIX
+  
   *  Prompt Add user friendly message to avoid throwing recovery screen for invalid choices (by @phyzical)
 
   TUTORIAL
+  
   *  Fix #3965 Corrected tutorial text (by @mihilt)
 
   CONTRACTS
+  
   *  FIX #3755 change input handling for contract attempts (by @Snarling)
 
   HOTFIX
+  
   *  Fix infil definitions.d.ts (by @phyzical)
 
   MISC
+  
   *  crime gains, sleeve gang augs and faq (by @Mughur)
   *  FIX #3649 Preventing server starting security level from going above 100 (by @Shiiyu)
   *  Adds Shadows of Anarchy (by @Lagicrus)
