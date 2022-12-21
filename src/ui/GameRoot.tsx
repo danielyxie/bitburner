@@ -432,11 +432,17 @@ export function GameRoot(): React.ReactElement {
         <BypassWrapper content={bypassGame ? mainPage : null}>
           <SnackbarProvider>
             <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
-              {!ITutorial.isRunning ? (
-                <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
-              ) : (
-                <InteractiveTutorialRoot />
-              )}
+              {(parentOpen) =>
+                !ITutorial.isRunning ? (
+                  <CharacterOverview
+                    parentOpen={parentOpen}
+                    save={() => saveObject.saveGame()}
+                    killScripts={killAllScripts}
+                  />
+                ) : (
+                  <InteractiveTutorialRoot />
+                )
+              }
             </Overview>
             {withSidebar ? (
               <Box display="flex" flexDirection="row" width="100%">

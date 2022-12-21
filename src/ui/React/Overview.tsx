@@ -53,7 +53,7 @@ const useStyles = makeStyles({
 });
 
 interface IProps {
-  children: JSX.Element[] | JSX.Element | React.ReactElement[] | React.ReactElement;
+  children: (parentOpen: boolean) => JSX.Element[] | JSX.Element | React.ReactElement[] | React.ReactElement;
   mode: "tutorial" | "overview";
 }
 
@@ -141,7 +141,7 @@ export function Overview({ children, mode }: IProps): React.ReactElement {
           </Box>
         </Box>
         <Collapse in={open} className={classes.collapse}>
-          {children}
+          {children(open)}
         </Collapse>
       </Paper>
     </Draggable>

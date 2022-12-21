@@ -1,5 +1,5 @@
 // Root React Component for the Corporation UI
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 
 import { Theme, useTheme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -38,39 +38,9 @@ import { isCompanyWork } from "../../Work/CompanyWork";
 import { isCrimeWork } from "../../Work/CrimeWork";
 
 interface IProps {
+  parentOpen: boolean;
   save: () => void;
   killScripts: () => void;
-}
-
-function Intelligence(): React.ReactElement {
-  const theme = useTheme();
-  const classes = useStyles();
-  if (Player.skills.intelligence === 0) return <></>;
-  const progress = Player.calculateSkillProgress(Player.exp.intelligence);
-
-  return (
-    <>
-      <TableRow>
-        <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-          <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
-        </TableCell>
-        <TableCell align="right" classes={{ root: classes.cell }}>
-          <Typography classes={{ root: classes.int }}>{formatNumber(Player.skills.intelligence, 0)}</Typography>
-        </TableCell>
-        <TableCell align="right" classes={{ root: classes.cell }}>
-          <Typography id="overview-int-hook" classes={{ root: classes.int }}>
-            {/*Hook for player scripts*/}
-          </Typography>
-        </TableCell>
-      </TableRow>
-
-      <TableRow>
-        {!Settings.DisableOverviewProgressBars && (
-          <StatsProgressOverviewCell progress={progress} color={theme.colors.int} />
-        )}
-      </TableRow>
-    </>
-  );
 }
 
 function Bladeburner(): React.ReactElement {
@@ -81,18 +51,28 @@ function Bladeburner(): React.ReactElement {
   if (action.type === "Idle") return <></>;
   return (
     <>
-      <TableRow>
-        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Typography>Bladeburner:</Typography>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Typography>
-            {action.type}: {action.name}
-          </Typography>
-        </TableCell>
-      </TableRow>
+      {useMemo(
+        () => (
+          <TableRow>
+            <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+              <Typography>Bladeburner:</Typography>
+            </TableCell>
+          </TableRow>
+        ),
+        [classes.cellNone],
+      )}
+      {useMemo(
+        () => (
+          <TableRow>
+            <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+              <Typography>
+                {action.type}: {action.name}
+              </Typography>
+            </TableCell>
+          </TableRow>
+        ),
+        [classes.cellNone, action.type, action.name],
+      )}
     </>
   );
 }
@@ -101,15 +81,13 @@ interface WorkInProgressOverviewProps {
   tooltip: React.ReactNode;
   header: React.ReactNode;
   children: React.ReactNode;
-  onClickFocus: () => void;
 }
 
-function WorkInProgressOverview({
-  tooltip,
-  children,
-  onClickFocus,
-  header,
-}: WorkInProgressOverviewProps): React.ReactElement {
+const onClickFocusWork = (): void => {
+  Player.startFocusing();
+  Router.toPage(Page.Work);
+};
+function WorkInProgressOverview({ tooltip, children, header }: WorkInProgressOverviewProps): React.ReactElement {
   const classes = useStyles();
   return (
     <>
@@ -127,22 +105,23 @@ function WorkInProgressOverview({
           <Typography className={classes.workSubtitles}>{children}</Typography>
         </TableCell>
       </TableRow>
-      <TableRow>
-        <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Button sx={{ mt: 1 }} onClick={onClickFocus}>
-            Focus
-          </Button>
-        </TableCell>
-      </TableRow>
+      {useMemo(
+        () => (
+          <TableRow>
+            <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
+              <Button sx={{ mt: 1 }} onClick={onClickFocusWork}>
+                Focus
+              </Button>
+            </TableCell>
+          </TableRow>
+        ),
+        [classes.cellNone],
+      )}
     </>
   );
 }
 
 function Work(): React.ReactElement {
-  const onClickFocus = (): void => {
-    Player.startFocusing();
-    Router.toPage(Page.Work);
-  };
   if (Player.currentWork === null || Player.focus) return <></>;
 
   let details = <></>;
@@ -219,7 +198,7 @@ function Work(): React.ReactElement {
   }
 
   return (
-    <WorkInProgressOverview tooltip={details} header={header} onClickFocus={onClickFocus}>
+    <WorkInProgressOverview tooltip={details} header={header}>
       {innerText}
     </WorkInProgressOverview>
   );
@@ -275,13 +254,63 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export { useStyles as characterOverviewStyles };
 
-export function CharacterOverview({ save, killScripts }: IProps): React.ReactElement {
+function rowWithHook(name: string, value: string, className: string, cellNone: string): React.ReactElement {
+  return useMemo(
+    () => (
+      <TableRow>
+        <TableCell component="th" scope="row" classes={{ root: cellNone }}>
+          <Typography classes={{ root: className }}>{name}&nbsp;</Typography>
+        </TableCell>
+        <TableCell align="right" classes={{ root: cellNone }}>
+          <Typography classes={{ root: className }}>{value}</Typography>
+        </TableCell>
+        <TableCell align="right" classes={{ root: cellNone }}>
+          <Typography id={"overview-" + name.toLowerCase() + "-str-hook"} classes={{ root: className }}>
+            {/*Hook for player scripts*/}
+          </Typography>
+        </TableCell>
+      </TableRow>
+    ),
+    [name, value, className, cellNone],
+  );
+}
+
+function statItem(
+  name: string,
+  value: number,
+  className: string,
+  cellNone: string,
+  themeColor: React.CSSProperties["color"],
+  exp: number,
+  mult: number,
+  bitNodeMult: number,
+): React.ReactElement[] {
+  return [
+    rowWithHook(name, formatNumber(value, 0), className, cellNone),
+    useMemo(() => {
+      const progress = Player.calculateSkillProgress(exp, mult * bitNodeMult);
+      return (
+        <TableRow>
+          {!Settings.DisableOverviewProgressBars && (
+            <StatsProgressOverviewCell progress={progress} color={themeColor} />
+          )}
+        </TableRow>
+      );
+    }, [Settings.DisableOverviewProgressBars, themeColor, exp, mult, bitNodeMult]),
+  ];
+}
+
+export function CharacterOverview({ parentOpen, save, killScripts }: IProps): React.ReactElement {
   const [killOpen, setKillOpen] = useState(false);
   const setRerender = useState(false)[1];
+  // Don't rerender while the overview is closed.
   useEffect(() => {
-    const id = setInterval(() => setRerender((old) => !old), 600);
-    return () => clearInterval(id);
-  }, []);
+    if (parentOpen) {
+      const id = setInterval(() => setRerender((old) => !old), 600);
+      return () => clearInterval(id);
+    }
+    return () => null;
+  }, [parentOpen]);
   const classes = useStyles();
   const theme = useTheme();
 
@@ -289,219 +318,166 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
     Player.exp.hacking,
     Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
   );
-  const strengthProgress = Player.calculateSkillProgress(
-    Player.exp.strength,
-    Player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
-  );
-  const defenseProgress = Player.calculateSkillProgress(
-    Player.exp.defense,
-    Player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
-  );
-  const dexterityProgress = Player.calculateSkillProgress(
-    Player.exp.dexterity,
-    Player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
-  );
-  const agilityProgress = Player.calculateSkillProgress(
-    Player.exp.agility,
-    Player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
-  );
-  const charismaProgress = Player.calculateSkillProgress(
-    Player.exp.charisma,
-    Player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
-  );
-
   return (
     <>
       <Table sx={{ display: "block", m: 1 }}>
         <TableBody>
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.hp }}>HP&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.hp }}>
-                {numeralWrapper.formatHp(Player.hp.current)}&nbsp;/&nbsp;{numeralWrapper.formatHp(Player.hp.max)}
-              </Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-hp-hook" classes={{ root: classes.hp }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
+          {rowWithHook(
+            "HP",
+            numeralWrapper.formatHp(Player.hp.current) + "\u00a0/\u00a0" + numeralWrapper.formatHp(Player.hp.max),
+            classes.hp,
+            classes.cellNone,
+          )}
+          {rowWithHook("Money", numeralWrapper.formatMoney(Player.money), classes.money, classes.cellNone)}
 
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.money }}>{numeralWrapper.formatMoney(Player.money)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-money-hook" classes={{ root: classes.money }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
+          {useMemo(
+            // Hack is a special-case, because of its overview-hack-hook placement
+            () => (
+              <TableRow>
+                <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                  <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
+                </TableCell>
+                <TableCell align="right" classes={{ root: classes.cellNone }}>
+                  <Typography classes={{ root: classes.hack }}>{formatNumber(Player.skills.hacking, 0)}</Typography>
+                </TableCell>
+              </TableRow>
+            ),
+            [Player.skills.hacking, classes.hack, classes.cellNone],
+          )}
+          {useMemo(
+            () => (
+              <TableRow>
+                {!Settings.DisableOverviewProgressBars && (
+                  <StatsProgressOverviewCell progress={hackingProgress} color={theme.colors.hack} />
+                )}
+              </TableRow>
+            ),
+            [Settings.DisableOverviewProgressBars, Player.exp.hacking, Player.mults.hacking, theme.colors.hack],
+          )}
+          {useMemo(
+            () => (
+              <TableRow>
+                <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+                  <Typography classes={{ root: classes.hack }}></Typography>
+                </TableCell>
+                <TableCell align="right" classes={{ root: classes.cell }}>
+                  <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>
+                    {/*Hook for player scripts*/}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ),
+            [classes.cell, classes.hack],
+          )}
 
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.hack }}>{formatNumber(Player.skills.hacking, 0)}</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            {!Settings.DisableOverviewProgressBars && (
-              <StatsProgressOverviewCell progress={hackingProgress} color={theme.colors.hack} />
+          {statItem(
+            "Str",
+            Player.skills.strength,
+            classes.combat,
+            classes.cellNone,
+            theme.colors.combat,
+            Player.exp.strength,
+            Player.mults.strength,
+            BitNodeMultipliers.StrengthLevelMultiplier,
+          )}
+          {statItem(
+            "Def",
+            Player.skills.defense,
+            classes.combat,
+            classes.cellNone,
+            theme.colors.combat,
+            Player.exp.defense,
+            Player.mults.defense,
+            BitNodeMultipliers.DefenseLevelMultiplier,
+          )}
+          {statItem(
+            "Dex",
+            Player.skills.dexterity,
+            classes.combat,
+            classes.cellNone,
+            theme.colors.combat,
+            Player.exp.dexterity,
+            Player.mults.dexterity,
+            BitNodeMultipliers.DexterityLevelMultiplier,
+          )}
+          {statItem(
+            "Agi",
+            Player.skills.agility,
+            classes.combat,
+            classes.cellNone,
+            theme.colors.combat,
+            Player.exp.agility,
+            Player.mults.agility,
+            BitNodeMultipliers.AgilityLevelMultiplier,
+          )}
+          {statItem(
+            "Cha",
+            Player.skills.charisma,
+            classes.cha,
+            classes.cellNone,
+            theme.colors.cha,
+            Player.exp.charisma,
+            Player.mults.charisma,
+            BitNodeMultipliers.CharismaLevelMultiplier,
+          )}
+          {Player.skills.intelligence !== 0 &&
+            statItem(
+              "Int",
+              Player.skills.intelligence,
+              classes.int,
+              classes.cellNone,
+              theme.colors.int,
+              Player.exp.intelligence,
+              1,
+              1,
             )}
-          </TableRow>
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.hack }}></Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
-
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{formatNumber(Player.skills.strength, 0)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            {!Settings.DisableOverviewProgressBars && (
-              <StatsProgressOverviewCell progress={strengthProgress} color={theme.colors.combat} />
-            )}
-          </TableRow>
-
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{formatNumber(Player.skills.defense, 0)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            {!Settings.DisableOverviewProgressBars && (
-              <StatsProgressOverviewCell progress={defenseProgress} color={theme.colors.combat} />
-            )}
-          </TableRow>
-
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{formatNumber(Player.skills.dexterity, 0)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            {!Settings.DisableOverviewProgressBars && (
-              <StatsProgressOverviewCell progress={dexterityProgress} color={theme.colors.combat} />
-            )}
-          </TableRow>
-
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.combat }}>{formatNumber(Player.skills.agility, 0)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            {!Settings.DisableOverviewProgressBars && (
-              <StatsProgressOverviewCell progress={agilityProgress} color={theme.colors.combat} />
-            )}
-          </TableRow>
-
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.cha }}>{formatNumber(Player.skills.charisma, 0)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            {!Settings.DisableOverviewProgressBars && (
-              <StatsProgressOverviewCell progress={charismaProgress} color={theme.colors.cha} />
-            )}
-          </TableRow>
-
-          <Intelligence />
-
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-              <Typography id="overview-extra-hook-0" classes={{ root: classes.hack }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-            <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
-              <Typography id="overview-extra-hook-1" classes={{ root: classes.hack }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-            <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
-              <Typography id="overview-extra-hook-2" classes={{ root: classes.hack }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
+          {useMemo(
+            () => (
+              <TableRow>
+                <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+                  <Typography id="overview-extra-hook-0" classes={{ root: classes.hack }}>
+                    {/*Hook for player scripts*/}
+                  </Typography>
+                </TableCell>
+                <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
+                  <Typography id="overview-extra-hook-1" classes={{ root: classes.hack }}>
+                    {/*Hook for player scripts*/}
+                  </Typography>
+                </TableCell>
+                <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
+                  <Typography id="overview-extra-hook-2" classes={{ root: classes.hack }}>
+                    {/*Hook for player scripts*/}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ),
+            [classes.cell, classes.hack],
+          )}
           <Work />
           <Bladeburner />
         </TableBody>
       </Table>
-      <Box sx={{ display: "flex", borderTop: `1px solid ${Settings.theme.welllight}` }}>
-        <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
-          <IconButton aria-label="save game" onClick={save}>
-            <Tooltip title={Settings.AutosaveInterval !== 0 ? "Save game" : "Save game (auto-saves are disabled!)"}>
-              <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
-            </Tooltip>
-          </IconButton>
-        </Box>
-        <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
-          <IconButton aria-label="kill all scripts" onClick={() => setKillOpen(true)}>
-            <Tooltip title="Kill all running scripts">
-              <ClearAllIcon color="error" />
-            </Tooltip>
-          </IconButton>
-        </Box>
-      </Box>
+      {useMemo(
+        () => (
+          <Box sx={{ display: "flex", borderTop: `1px solid ${Settings.theme.welllight}` }}>
+            <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
+              <IconButton aria-label="save game" onClick={save}>
+                <Tooltip title={Settings.AutosaveInterval !== 0 ? "Save game" : "Save game (auto-saves are disabled!)"}>
+                  <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
+                </Tooltip>
+              </IconButton>
+            </Box>
+            <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
+              <IconButton aria-label="kill all scripts" onClick={() => setKillOpen(true)}>
+                <Tooltip title="Kill all running scripts">
+                  <ClearAllIcon color="error" />
+                </Tooltip>
+              </IconButton>
+            </Box>
+          </Box>
+        ),
+        [Settings.theme.welllight, save, Settings.AutosaveInterval],
+      )}
       <KillScriptsModal open={killOpen} onClose={() => setKillOpen(false)} killScripts={killScripts} />
     </>
   );
