@@ -181,7 +181,9 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
    * DOES IT CONVERGES? In the present case it does. The reason why doesn't help explaining the algorithm.
    * If you are interested then check out the wikipedia page.
    */
-  const bt = exponentialBase ** threadMultiplier;
+  let bt = exponentialBase ** threadMultiplier;
+  if (bt == Infinity) bt = 1e300;
+
   let corr = Infinity;
   // Two sided error because we do not want to get stuck if the error stays on the wrong side
   do {
