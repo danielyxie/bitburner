@@ -139,7 +139,7 @@ const Messages: Record<MessageFilenames, Message> = {
 
   [MessageFilenames.Jumper1]: new Message(
     MessageFilenames.Jumper1,
-    `Soon you will be contacted by a hacking group known as ${FactionNames.NiteSec}. ` +
+    `Soon you will be contacted by a hacking group known as ${FactionNames.CyberSec}. ` +
       "They can help you with your search. \n\n" +
       "You should join them, garner their favor, and " +
       "exploit them for their Augmentations. But do not trust them. " +
