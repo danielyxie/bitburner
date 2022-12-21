@@ -817,7 +817,7 @@ export const ns: InternalAPI<NSFull> = {
         if (!isValidFilePath(file)) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid filename: '${file}'`);
 
         // Invalid file type
-        if (!file.endsWith(".lit") && !isScriptFilename(file) && !file.endsWith("txt")) {
+        if (!file.endsWith(".lit") && !isScriptFilename(file) && !file.endsWith(".txt")) {
           throw helpers.makeRuntimeErrorMsg(ctx, "Only works for scripts, .lit and .txt files.");
         }
       }

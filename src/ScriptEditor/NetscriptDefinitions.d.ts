@@ -5677,7 +5677,7 @@ export interface NS {
    * const files = ["hack.js","weaken.js","grow.js"];
    * ns.scp(files, server, "home");
    * ```
-   * @param files - Filename or an array of filenames of script/literature files to copy.
+   * @param files - Filename or an array of filenames of script/literature files to copy. Note that if a file is located in a subdirectory, the filename must include the leading `/`.
    * @param destination - Hostname of the destination server, which is the server to which the file will be copied.
    * @param source - Hostname of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
    * @returns True if the file is successfully copied over and false otherwise. If the files argument is an array then this function will return false if any of the operations failed.
