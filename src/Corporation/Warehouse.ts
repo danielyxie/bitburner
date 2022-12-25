@@ -1,7 +1,7 @@
 import { Material } from "./Material";
 import { Corporation } from "./Corporation";
 import { Industry } from "./Industry";
-import { MaterialSizes } from "./MaterialSizes";
+import { MaterialInfo } from "./MaterialInfo";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 
@@ -86,8 +86,8 @@ export class Warehouse {
     this.sizeUsed = 0;
     for (const matName of Object.keys(this.materials)) {
       const mat = this.materials[matName];
-      if (MaterialSizes.hasOwnProperty(matName)) {
-        this.sizeUsed += mat.qty * MaterialSizes[matName];
+      if (MaterialInfo.hasOwnProperty(matName)) {
+        this.sizeUsed += mat.qty * MaterialInfo[matName][1];
       }
     }
     if (this.sizeUsed > this.size) {

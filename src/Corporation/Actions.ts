@@ -1,5 +1,5 @@
 import { Player } from "@player";
-import { MaterialSizes } from "./MaterialSizes";
+import { MaterialInfo } from "./MaterialInfo";
 import { Corporation } from "./Corporation";
 import { IndustryResearchTrees, IndustryType, IndustriesData } from "./IndustryData";
 import { Industry } from "./Industry";
@@ -254,7 +254,7 @@ export function BuyMaterial(material: Material, amt: number): void {
 }
 
 export function BulkPurchase(corp: Corporation, warehouse: Warehouse, material: Material, amt: number): void {
-  const matSize = MaterialSizes[material.name];
+  const matSize = MaterialInfo[material.name][1];
   const maxAmount = (warehouse.size - warehouse.sizeUsed) / matSize;
   if (isNaN(amt) || amt < 0) {
     throw new Error(`Invalid input amount`);

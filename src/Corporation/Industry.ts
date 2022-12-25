@@ -10,7 +10,7 @@ import { OfficeSpace } from "./OfficeSpace";
 import { Product } from "./Product";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { isString } from "../utils/helpers/isString";
-import { MaterialSizes } from "./MaterialSizes";
+import { MaterialInfo } from "./MaterialInfo";
 import { Warehouse } from "./Warehouse";
 import { Corporation } from "./Corporation";
 
@@ -324,7 +324,7 @@ export class Industry {
               }
               buyAmt = mat.buy * CorporationConstants.SecsPerMarketCycle * marketCycles;
 
-              maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
+              maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialInfo[matName][1]);
 
               buyAmt = Math.min(buyAmt, maxAmt);
               if (buyAmt > 0) {
@@ -346,7 +346,7 @@ export class Industry {
               if (reqMat === undefined) throw new Error(`reqMat "${matName}" is undefined`);
               mat.buy = reqMat * warehouse.smartSupplyStore;
               let buyAmt = mat.buy * CorporationConstants.SecsPerMarketCycle * marketCycles;
-              const maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
+              const maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialInfo[matName][1]);
               buyAmt = Math.min(buyAmt, maxAmt);
               if (buyAmt > 0) smartBuy[matName] = buyAmt;
             }
@@ -374,7 +374,7 @@ export class Industry {
             for (const matName of Object.keys(smartBuy)) {
               const buyAmt = smartBuy[matName];
               if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
-              totalSize += buyAmt * MaterialSizes[matName];
+              totalSize += buyAmt * MaterialInfo[matName][1];
             }
 
             // Shrink to the size of available space.
@@ -432,12 +432,12 @@ export class Industry {
               // Calculate net change in warehouse storage making the produced materials will cost
               let totalMatSize = 0;
               for (let tmp = 0; tmp < this.prodMats.length; ++tmp) {
-                totalMatSize += MaterialSizes[this.prodMats[tmp]];
+                totalMatSize += MaterialInfo[this.prodMats[tmp]][1];
               }
               for (const reqMatName of Object.keys(this.reqMats)) {
                 const normQty = this.reqMats[reqMatName];
                 if (normQty === undefined) continue;
-                totalMatSize -= MaterialSizes[reqMatName] * normQty;
+                totalMatSize -= MaterialInfo[reqMatName][1] * normQty;
               }
               // If not enough space in warehouse, limit the amount of produced materials
               if (totalMatSize > 0) {
@@ -684,7 +684,9 @@ export class Industry {
                         // affect revenue so just return 0's
                         return [0, 0];
                       } else {
-                        const maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / MaterialSizes[matName]);
+                        const maxAmt = Math.floor(
+                          (expWarehouse.size - expWarehouse.sizeUsed) / MaterialInfo[matName][1],
+                        );
                         amt = Math.min(maxAmt, amt);
                       }
                       expWarehouse.materials[matName].imp +=
@@ -797,7 +799,7 @@ export class Industry {
             for (const reqMatName of Object.keys(product.reqMats)) {
               if (product.reqMats.hasOwnProperty(reqMatName)) {
                 const normQty = product.reqMats[reqMatName];
-                netStorageSize -= MaterialSizes[reqMatName] * normQty;
+                netStorageSize -= MaterialInfo[reqMatName][1] * normQty;
               }
             }
 

@@ -415,6 +415,9 @@ export function runScriptFromScript(
     return 0;
   }
 
+  //prevent leading / from causing a bug
+  if (scriptname.startsWith("/")) scriptname = scriptname.slice(1);
+
   if (typeof scriptname !== "string" || !Array.isArray(args)) {
     workerScript.log(caller, () => `Invalid arguments: scriptname='${scriptname} args='${args}'`);
     console.error(`runScriptFromScript() failed due to invalid arguments`);

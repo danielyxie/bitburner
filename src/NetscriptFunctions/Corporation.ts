@@ -8,6 +8,9 @@ import { Industry } from "../Corporation/Industry";
 import { Corporation } from "../Corporation/Corporation";
 
 import {
+  productInfo as NSProduct,
+  materialInfo as NSMaterial,
+  divisionInfo as NSDivisionInfo,
   Corporation as NSCorporation,
   Division as NSDivision,
   WarehouseAPI,
@@ -60,6 +63,7 @@ import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { assertEnumMember, helpers } from "../Netscript/NetscriptHelpers";
 import { checkEnum } from "../utils/helpers/enum";
 import { CityName } from "../Locations/data/CityNames";
+import { MaterialInfo } from "../Corporation/MaterialInfo";
 
 export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function createCorporation(corporationName: string, selfFund = true): boolean {
@@ -113,10 +117,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     const priceMult = upgrade.priceMult;
     const level = corporation.upgrades[upgN];
     return baseCost * Math.pow(priceMult, level);
-  }
-
-  function getExpandCityCost(): number {
-    return CorporationConstants.OfficeInitialCost;
   }
 
   function getInvestmentOffer(): InvestmentOffer {
@@ -285,11 +285,59 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     };
   }
 
+  function getDivisionConstants(): Record<string, NSDivisionInfo> {
+    const divObject: Record<string, NSDivisionInfo> = {};
+    for (const [ind, type] of Object.entries(IndustryType)) {
+      divObject[ind] = {
+        type: type,
+        cost: IndustriesData[type].startingCost,
+        requiredMaterials: IndustriesData[type].reqMats,
+        makesMaterials: IndustriesData[type].prodMats ? true : false,
+        makesProducts: IndustriesData[type].product ? true : false,
+      };
+      if (divObject[ind].makesProducts) {
+        divObject[ind].productType = IndustriesData[type].product?.name;
+      }
+      if (divObject[ind].makesMaterials) {
+        divObject[ind].producedMaterials = IndustriesData[type].prodMats;
+      }
+    }
+    return divObject;
+  }
+
+  function getProductInfo(): Record<string, NSProduct> {
+    const prodsObject: Record<string, NSProduct> = {};
+    for (const [ind, type] of Object.entries(IndustryType)) {
+      if (typeof IndustriesData[type].product !== "undefined") {
+        prodsObject[ind] = {
+          requiredMaterials: Object.keys(IndustriesData[type].reqMats),
+          size: 0,
+          division: type,
+        };
+        prodsObject[ind].type = IndustriesData[type].product?.name;
+        let totSize = 0;
+        for (const mat of prodsObject[ind].requiredMaterials) {
+          totSize += MaterialInfo[mat][1];
+        }
+        prodsObject[ind].size = totSize;
+      }
+    }
+    return prodsObject;
+  }
+
+  function getMaterialInfo(): Record<string, NSMaterial> {
+    const matsObject: Record<string, NSMaterial> = {};
+    for (const [mat, info] of Object.entries(MaterialInfo)) {
+      matsObject[mat] = {
+        name: info[0],
+        size: info[1],
+        prodMult: info[2],
+      };
+    }
+    return matsObject;
+  }
+
   const warehouseAPI: InternalAPI<WarehouseAPI> = {
-    getPurchaseWarehouseCost: (ctx) => () => {
-      checkAccess(ctx, 7);
-      return CorporationConstants.WarehouseInitialCost;
-    },
     getUpgradeWarehouseCost:
       (ctx) =>
       (_divisionName, _cityName, _amt = 1) => {
@@ -710,22 +758,22 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     ...warehouseAPI,
     ...officeAPI,
     hasCorporation: () => () => !!Player.corporation,
-    // Todo: Just remove these functions and provide enums?
-    getMaterialNames: (ctx) => () => {
+    getConstants: (ctx) => () => {
       checkAccess(ctx);
-      return [...CorporationConstants.AllMaterials];
-    },
-    getUnlockables: (ctx) => () => {
-      checkAccess(ctx);
-      return [...CorporationConstants.AllUnlocks];
-    },
-    getUpgradeNames: (ctx) => () => {
-      checkAccess(ctx);
-      return [...CorporationConstants.AllUpgrades];
-    },
-    getResearchNames: (ctx) => () => {
-      checkAccess(ctx);
-      return [...CorporationConstants.AllResearch];
+      return {
+        coffeeCost: 5e8,
+        states: [...CorporationConstants.AllCorporationStates],
+        bribeToRepRatio: CorporationConstants.BribeToRepRatio,
+        cityExpandCost: CorporationConstants.OfficeInitialCost,
+        warehousePurchaseCost: CorporationConstants.WarehouseInitialCost,
+        baseMaxProducts: CorporationConstants.BaseMaxProducts,
+        products: getProductInfo(),
+        materials: getMaterialInfo(),
+        unlocks: [...CorporationConstants.AllUnlocks],
+        upgrades: [...CorporationConstants.AllUpgrades],
+        researches: { base: [...CorporationConstants.BaseResearch], product: [...CorporationConstants.ProdResearch] },
+        divisions: getDivisionConstants(),
+      };
     },
     expandIndustry: (ctx) => (_industryName, _divisionName) => {
       checkAccess(ctx);
@@ -825,18 +873,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       checkAccess(ctx);
       const upgradeName = helpers.string(ctx, "upgradeName", _upgradeName);
       return getUpgradeLevelCost(ctx, upgradeName);
-    },
-    getExpandIndustryCost: (ctx) => (_industryName) => {
-      checkAccess(ctx);
-      const industryName = helpers.string(ctx, "industryName", _industryName);
-      if (!checkEnum(IndustryType, industryName)) {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid industry: '${industryName}'`);
-      }
-      return IndustriesData[industryName].startingCost;
-    },
-    getExpandCityCost: (ctx) => () => {
-      checkAccess(ctx);
-      return getExpandCityCost();
     },
     getInvestmentOffer: (ctx) => () => {
       checkAccess(ctx);

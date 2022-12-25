@@ -77,7 +77,7 @@ export const CorporationConstants = {
     "ABC SalesBots",
     "Project Insight",
   ],
-  AllResearch: [
+  BaseResearch: [
     "Hi-Tech R&D Laboratory",
     "AutoBrew",
     "AutoPartyManager",
@@ -96,12 +96,8 @@ export const CorporationConstants = {
     "Overclock",
     "Self-Correcting Assemblers",
     "Sti.mu",
-    "sudo.Assist",
-    "uPgrade: Capacity.I",
-    "uPgrade: Capacity.II",
-    "uPgrade: Dashboard",
-    "uPgrade: Fulcrum",
   ],
+  ProdResearch: ["uPgrade: Capacity.I", "uPgrade: Capacity.II", "uPgrade: Dashboard", "uPgrade: Fulcrum"],
   FundingRoundShares: [0.1, 0.35, 0.25, 0.2],
   FundingRoundMultiplier: [4, 3, 3, 2.5],
 

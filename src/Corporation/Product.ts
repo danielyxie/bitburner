@@ -1,7 +1,7 @@
 import { EmployeePositions } from "./EmployeePositions";
-import { MaterialSizes } from "./MaterialSizes";
+import { MaterialInfo } from "./MaterialInfo";
 import { Industry } from "./Industry";
-import { ProductRatingWeights } from "./ProductRatingWeights";
+import { IndustriesData } from "./IndustryData";
 
 import { createCityMap } from "../Locations/createCityMap";
 
@@ -244,12 +244,12 @@ export class Product {
     for (const matName of Object.keys(industry.reqMats)) {
       const reqMat = industry.reqMats[matName];
       if (reqMat === undefined) continue;
-      this.siz += MaterialSizes[matName] * reqMat;
+      this.siz += MaterialInfo[matName][1] * reqMat;
     }
   }
 
   calculateRating(industry: Industry): void {
-    const weights = ProductRatingWeights[industry.type];
+    const weights = IndustriesData[industry.type].ProductRatingWeights;
     if (!weights) return console.error(`Could not find product rating weights for: ${industry}`);
     this.rat = 0;
     this.rat += weights.Quality ? this.qlt * weights.Quality : 0;

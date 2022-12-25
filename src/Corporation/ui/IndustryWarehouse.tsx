@@ -7,7 +7,7 @@ import { Warehouse } from "../Warehouse";
 import { SmartSupplyModal } from "./modals/SmartSupplyModal";
 import { ProductElem } from "./ProductElem";
 import { MaterialElem } from "./MaterialElem";
-import { MaterialSizes } from "../MaterialSizes";
+import { MaterialInfo } from "../MaterialInfo";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
@@ -122,11 +122,11 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   const breakdownItems: JSX.Element[] = [];
   for (const matName of Object.keys(props.warehouse.materials)) {
     const mat = props.warehouse.materials[matName];
-    if (!MaterialSizes.hasOwnProperty(matName)) continue;
+    if (!MaterialInfo.hasOwnProperty(matName)) continue;
     if (mat.qty === 0) continue;
     breakdownItems.push(
       <>
-        {matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}
+        {matName}: {numeralWrapper.format(mat.qty * MaterialInfo[matName][1], "0,0.0")}
       </>,
     );
   }

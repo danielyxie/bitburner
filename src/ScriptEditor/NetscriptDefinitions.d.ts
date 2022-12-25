@@ -7039,6 +7039,17 @@ declare enum IndustryType {
   RealEstate = "RealEstate",
 }
 
+/** Names of all cities
+ * @public */
+declare enum CityName {
+  Aevum = "Aevum",
+  Chongqing = "Chongqing",
+  Sector12 = "Sector-12",
+  NewTokyo = "New Tokyo",
+  Ishima = "Ishima",
+  Volhaven = "Volhaven",
+}
+
 /** Names of all locations
  * @public */
 declare enum LocationName {
@@ -7423,11 +7434,6 @@ export interface WarehouseAPI {
    */
   limitProductProduction(divisionName: string, cityName: string, productName: string, qty: number): void;
   /**
-   * Gets the cost to purchase a warehouse
-   * @returns cost
-   */
-  getPurchaseWarehouseCost(): number;
-  /**
    * Gets the cost to upgrade a warehouse to the next level
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
@@ -7483,34 +7489,13 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @returns cost of the upgrade */
   getUpgradeLevelCost(upgradeName: string): number;
 
-  /** Gets the cost to expand into a new industry
-   * @param industryName - Name of the industry
-   * @returns cost */
-  getExpandIndustryCost(industryName: IndustryType | `${IndustryType}`): number;
-
-  /** Gets the cost to expand into a new city
-   * @returns cost */
-  getExpandCityCost(): number;
-
   /** Get an offer for investment based on you companies current valuation
    * @returns An offer of investment */
   getInvestmentOffer(): InvestmentOffer;
 
-  /** Get list of materials
-   * @returns material names */
-  getMaterialNames(): string[];
-
-  /** Get list of one-time unlockable upgrades
-   * @returns unlockable upgrades names */
-  getUnlockables(): string[];
-
-  /**  Get list of upgrade names
-   * @returns upgrade names */
-  getUpgradeNames(): string[];
-
-  /** Get list of research names
-   * @returns research names */
-  getResearchNames(): string[];
+  /** Get corporation related constants
+   * @returns corporation related constants */
+  getConstants(): CorpConstants;
 
   /** Accept investment based on you companies current valuation
    * @remarks
@@ -7610,6 +7595,86 @@ interface CorporationInfo {
   state: string;
   /** Array of all divisions */
   divisions: Division[];
+}
+
+/**
+ * Corporation related constants
+ * @public
+ */
+interface CorpConstants {
+  /** Corporation cycle states */
+  states: string[];
+  /** Unlockable upgrades */
+  unlocks: string[];
+  /** Levelable upgrades */
+  upgrades: string[];
+  /** Researches, product researches are only available to product making divisions */
+  researches: Record<string, string[]>;
+  /** Amount of funds required to bribe for 1 reputation */
+  bribeToRepRatio: number;
+  /** Amount of products a division can have without researches */
+  baseMaxProducts: number;
+  /** Cost to expand to another city within a division */
+  cityExpandCost: number;
+  /** Cost to purchase a warehouse in a city */
+  warehousePurchaseCost: number;
+  /** Cost of coffee per employee in an office */
+  coffeeCost: number;
+  /** Array of all material types */
+  materials: Record<string, materialInfo>;
+  /** Array of all product types */
+  products: Record<string, productInfo>;
+  /** Array of all division types */
+  divisions: Record<string, divisionInfo>;
+}
+
+/**
+ * Corporation material information
+ * @public
+ */
+interface materialInfo {
+  /** Name of the material */
+  name: string;
+  /** Size of the material */
+  size: number;
+  /** Revenue per second this cycle */
+  prodMult: boolean;
+}
+
+/**
+ * Corporation product information
+ * @public
+ */
+interface productInfo {
+  /** Product type */
+  type?: string;
+  /** Size of the product */
+  size: number;
+  /** Materials required to make the product */
+  requiredMaterials: string[];
+  /** Division type which makes the product */
+  division: string;
+}
+
+/**
+ * Corporation division information
+ * @public
+ */
+interface divisionInfo {
+  /** Division type */
+  type: string;
+  /** Cost to expand to the division */
+  cost: number;
+  /** Materials required for production and their amounts */
+  requiredMaterials: Record<string, number>;
+  /** Materials produced */
+  producedMaterials?: string[];
+  /** Whether the division makes materials */
+  makesMaterials: boolean;
+  /** Whether the division makes products */
+  makesProducts: boolean;
+  /** Product type */
+  productType?: string;
 }
 
 /**

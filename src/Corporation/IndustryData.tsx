@@ -21,11 +21,21 @@ export enum IndustryType {
   RealEstate = "RealEstate",
 }
 
+export interface IProductRatingWeight {
+  Aesthetics?: number;
+  Durability?: number;
+  Features?: number;
+  Quality?: number;
+  Performance?: number;
+  Reliability?: number;
+}
+
 type IndustryData = {
   startingCost: number;
   description: string;
   /** Product name for industry. Empty string for industries with no products. */
   product?: { name: string; verb: string; desc: string };
+  ProductRatingWeights?: IProductRatingWeight;
   recommendStarting: boolean;
   reqMats: Record<string, number>;
   /** Real estate factor */
@@ -74,6 +84,14 @@ export const IndustriesData: Record<IndustryType, IndustryData> = {
     startingCost: 500e9,
     description: "Develop and manufacture new computer hardware and networking infrastructures.",
     product: { name: "Product", verb: "Create", desc: "Design and manufacture a new computer hardware product!" },
+    ProductRatingWeights: {
+      Quality: 0.15,
+      Performance: 0.25,
+      Durability: 0.25,
+      Reliability: 0.2,
+      Aesthetics: 0.05,
+      Features: 0.1,
+    },
     recommendStarting: false,
     reFac: 0.2,
     sciFac: 0.62,
@@ -112,6 +130,11 @@ export const IndustriesData: Record<IndustryType, IndustryData> = {
     startingCost: 10e9,
     description: "Create your own restaurants all around the world.",
     product: { name: "Restaurant", verb: "Build", desc: "Build and manage a new restaurant!" },
+    ProductRatingWeights: {
+      Quality: 0.7,
+      Durability: 0.1,
+      Aesthetics: 0.2,
+    },
     recommendStarting: true,
     sciFac: 0.12,
     hwFac: 0.15,
@@ -125,6 +148,13 @@ export const IndustriesData: Record<IndustryType, IndustryData> = {
     startingCost: 750e9,
     description: "Create and manage hospitals.",
     product: { name: "Hospital", verb: "Build", desc: "Build and manage a new hospital!" },
+    ProductRatingWeights: {
+      Quality: 0.4,
+      Performance: 0.1,
+      Durability: 0.1,
+      Reliability: 0.3,
+      Features: 0.1,
+    },
     recommendStarting: false,
     reFac: 0.1,
     sciFac: 0.75,
@@ -151,6 +181,13 @@ export const IndustriesData: Record<IndustryType, IndustryData> = {
     startingCost: 200e9,
     description: "Discover, develop, and create new pharmaceutical drugs.",
     product: { name: "Drug", verb: "Develop", desc: "Design and develop a new pharmaceutical drug!" },
+    ProductRatingWeights: {
+      Quality: 0.2,
+      Performance: 0.2,
+      Durability: 0.1,
+      Reliability: 0.3,
+      Features: 0.2,
+    },
     recommendStarting: false,
     reFac: 0.05,
     sciFac: 0.8,
@@ -165,6 +202,13 @@ export const IndustriesData: Record<IndustryType, IndustryData> = {
     startingCost: 600e9,
     description: "Develop and manage real estate properties.",
     product: { name: "Property", verb: "Develop", desc: "Develop a new piece of real estate property!" },
+    ProductRatingWeights: {
+      Quality: 0.2,
+      Durability: 0.25,
+      Reliability: 0.1,
+      Aesthetics: 0.35,
+      Features: 0.1,
+    },
     recommendStarting: false,
     robFac: 0.6,
     aiFac: 0.6,
@@ -172,12 +216,20 @@ export const IndustriesData: Record<IndustryType, IndustryData> = {
     sciFac: 0.05,
     hwFac: 0.05,
     reqMats: { Metal: 5, Energy: 5, Water: 2, Hardware: 4 },
-    prodMats: ["RealEstate"],
+    prodMats: ["Real Estate"],
   },
   [IndustryType.Robotics]: {
     startingCost: 1e12,
     description: "Develop and create robots.",
     product: { name: "Robot", verb: "Design", desc: "Design and create a new robot or robotic system!" },
+    ProductRatingWeights: {
+      Quality: 0.1,
+      Performance: 0.2,
+      Durability: 0.2,
+      Reliability: 0.2,
+      Aesthetics: 0.1,
+      Features: 0.2,
+    },
     recommendStarting: false,
     reFac: 0.32,
     sciFac: 0.65,
@@ -191,7 +243,14 @@ export const IndustriesData: Record<IndustryType, IndustryData> = {
     startingCost: 25e9,
     description: "Develop computer software and create AI Cores.",
     product: { name: "Software", verb: "Develop", desc: "Develop a new piece of software!" },
-    recommendStarting: true,
+    ProductRatingWeights: {
+      Quality: 0.2,
+      Performance: 0.2,
+      Reliability: 0.2,
+      Durability: 0.2,
+      Features: 0.2,
+    },
+    recommendStarting: false,
     sciFac: 0.62,
     advFac: 0.16,
     hwFac: 0.25,
@@ -199,12 +258,17 @@ export const IndustriesData: Record<IndustryType, IndustryData> = {
     aiFac: 0.18,
     robFac: 0.05,
     reqMats: { Hardware: 0.5, Energy: 0.5 },
-    prodMats: ["AICores"],
+    prodMats: ["AI Cores"],
   },
   [IndustryType.Tobacco]: {
     startingCost: 20e9,
     description: "Create and distribute tobacco and tobacco-related products.",
     product: { name: "Product", verb: "Create", desc: "Create a new tobacco product!" },
+    ProductRatingWeights: {
+      Quality: 0.7,
+      Durability: 0.1,
+      Aesthetics: 0.2,
+    },
     recommendStarting: true,
     reFac: 0.15,
     sciFac: 0.75,
