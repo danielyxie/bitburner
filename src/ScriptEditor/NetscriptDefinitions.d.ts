@@ -7545,6 +7545,11 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @param rate - Fraction of profit to issue as dividends. */
   issueDividends(rate: number): void;
 
+  /** Issue new shares
+   * @param amount - Number of new shares to issue, will be rounded to nearest 10m. Defaults to max amount.
+   * @returns Amount of funds generated for the corporation. */
+  issueNewShares(amount?: number): number;
+
   /** Buyback Shares
    * @param amount - Amount of shares to buy back. */
   buyBackShares(amount: number): void;

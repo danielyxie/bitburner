@@ -225,6 +225,12 @@ export class Corporation {
     this.sharePrice = this.getTargetSharePrice();
   }
 
+  calculateMaxNewShares(): number {
+    const maxNewSharesUnrounded = Math.round(this.totalShares * 0.2);
+    const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 10e6);
+    return maxNewShares;
+  }
+
   // Calculates how much money will be made and what the resulting stock price
   // will be when the player sells his/her shares
   // @return - [Player profit, final stock price, end shareSalesUntilPriceUpdate property]
