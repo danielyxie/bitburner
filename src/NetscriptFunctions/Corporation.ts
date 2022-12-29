@@ -860,7 +860,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         dividendTax: corporation.dividendTax,
         dividendEarnings: corporation.getCycleDividends() / CorporationConstants.SecsPerMarketCycle,
         state: corporation.state.getState(),
-        divisions: corporation.divisions.map((division): NSDivision => getSafeDivision(division)),
+        divisions: corporation.divisions.map((division): string => division.name),
       };
     },
     createCorporation:
