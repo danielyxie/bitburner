@@ -58,7 +58,7 @@ async function startNetscript2Script(workerScript: WorkerScript): Promise<void> 
   const ns = workerScript.env.vars;
 
   if (!loadedModule) throw `${script.filename} cannot be run because the script module won't load`;
-  // TODO: Better error for "unexpected reserved word" when using await in non-async function?
+  // TODO unplanned: Better error for "unexpected reserved word" when using await in non-async function?
   if (typeof loadedModule.main !== "function")
     throw `${script.filename} cannot be run because it does not have a main function.`;
   if (!ns) throw `${script.filename} cannot be run because the NS object hasn't been constructed properly.`;
@@ -79,7 +79,7 @@ async function startNetscript1Script(workerScript: WorkerScript): Promise<void> 
     throw `Error processing Imports in ${workerScript.name}@${workerScript.hostname}:\n\n${e}`;
   }
 
-  //TODO: Make NS1 wrapping type safe instead of using BasicObject
+  //TODO unplanned: Make NS1 wrapping type safe instead of using BasicObject.
   type BasicObject = Record<string, any>;
   function wrapNS1Layer(int: Interpreter, intLayer: unknown, nsLayer = wrappedNS as BasicObject) {
     for (const [name, entry] of Object.entries(nsLayer)) {

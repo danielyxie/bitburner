@@ -68,13 +68,8 @@ export interface IConstructorParams {
 }
 
 function generateStatsDescription(mults: Multipliers, programs?: string[], startingMoney?: number): JSX.Element {
-  const f = (x: number, decimals = 0): string => {
-    // look, I don't know how to make a "smart decimals"
-    // todo, make it smarter
-    if (x === 1.0777 - 1) return "7.77%";
-    if (x === 1.777 - 1) return "77.7%";
-    return numeralWrapper.formatPercentage(x, decimals);
-  };
+  // For a percentage that is <10, show x.xx%, otherwise show xx.x%
+  const f = (x: number) => numeralWrapper.formatPercentage(x, x - 1 < 0.1 ? 2 : 1);
   let desc = <>Effects:</>;
 
   if (

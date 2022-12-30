@@ -1,5 +1,5 @@
 import React from "react";
-import { CityName } from "../../Locations/data/CityNames";
+import { CityName } from "../../Enums";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { Theme } from "@mui/material/styles";

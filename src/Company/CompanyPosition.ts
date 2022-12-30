@@ -1,12 +1,13 @@
-import { Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
+import { Person as IPerson } from "@nsdefs";
 import { CONSTANTS } from "../Constants";
-import * as names from "./data/companypositionnames";
+import * as names from "./data/JobTracks";
+import { JobName } from "../Enums";
 
 /* tslint:disable:completed-docs */
 
 export interface IConstructorParams {
-  name: string;
-  nextPosition: string | null;
+  name: JobName;
+  nextPosition: JobName | null;
   baseSalary: number;
   repMultiplier: number;
 
@@ -35,10 +36,10 @@ export interface IConstructorParams {
 
 export class CompanyPosition {
   /** Position title */
-  name: string;
+  name: JobName;
 
   /** Title of next position to be promoted to */
-  nextPosition: string | null;
+  nextPosition: JobName | null;
 
   /**
    * Base salary for this position ($ per 200ms game cycle)

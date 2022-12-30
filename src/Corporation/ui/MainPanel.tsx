@@ -7,7 +7,7 @@ import { CityTabs } from "./CityTabs";
 import { Industry } from "../Industry";
 import { Context, useCorporation } from "./Context";
 
-import { CityName } from "../../Locations/data/CityNames";
+import { CityName } from "../../Enums";
 
 interface IProps {
   divisionName: string;

@@ -3,7 +3,7 @@ import { Sleeve } from "../Sleeve";
 import { CONSTANTS } from "../../../Constants";
 import { Money } from "../../../ui/React/Money";
 import { WorldMap } from "../../../ui/React/WorldMap";
-import { CityName } from "../../../Locations/data/CityNames";
+import { CityName } from "../../../Enums";
 import { Settings } from "../../../Settings/Settings";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Player } from "@player";

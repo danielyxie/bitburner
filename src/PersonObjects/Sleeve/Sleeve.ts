@@ -18,16 +18,13 @@ import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import { Contracts } from "../../Bladeburner/data/Contracts";
 import { CONSTANTS } from "../../Constants";
-import { CrimeType, GymType, UniversityClassType } from "../../utils/enums";
-import { CityName } from "../../Locations/data/CityNames";
+import { CityName, CrimeType, GymType, LocationName, UniversityClassType } from "../../Enums";
 
 import { Factions } from "../../Faction/Factions";
 
-import { LocationName } from "../../utils/enums";
-
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../utils/JSONReviver";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { FactionWorkType } from "../../utils/enums";
+import { FactionWorkType } from "../../Enums";
 import { Work } from "./Work/Work";
 import { SleeveClassWork } from "./Work/SleeveClassWork";
 import { ClassType } from "../../Work/ClassWork";
@@ -40,7 +37,7 @@ import { SleeveSupportWork } from "./Work/SleeveSupportWork";
 import { SleeveBladeburnerWork } from "./Work/SleeveBladeburnerWork";
 import { SleeveCrimeWork } from "./Work/SleeveCrimeWork";
 import * as sleeveMethods from "./SleeveMethods";
-import { SleevePerson } from "../../ScriptEditor/NetscriptDefinitions";
+import { SleevePerson } from "@nsdefs";
 
 export class Sleeve extends Person implements SleevePerson {
   currentWork: Work | null = null;

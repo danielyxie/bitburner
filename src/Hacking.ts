@@ -1,5 +1,5 @@
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-import { Person as IPerson } from "./ScriptEditor/NetscriptDefinitions";
+import { Person as IPerson } from "@nsdefs";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { Server } from "./Server/Server";
 

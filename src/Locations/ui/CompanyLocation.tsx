@@ -12,11 +12,11 @@ import Box from "@mui/material/Box";
 import { ApplyToJobButton } from "./ApplyToJobButton";
 
 import { Locations } from "../Locations";
-import { LocationName } from "../../utils/enums";
+import { LocationName } from "../../Enums";
 
 import { Companies } from "../../Company/Companies";
 import { CompanyPositions } from "../../Company/CompanyPositions";
-import * as posNames from "../../Company/data/companypositionnames";
+import * as posNames from "../../Company/data/JobTracks";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";

@@ -232,18 +232,22 @@ export const CONSTANTS: {
   Donations: 41,
 
   LatestUpdate: `
-  v2.2.0 - 2022-12-01
+  v2.2.0 - 2022-12-21
 
   BREAKING CHANGES:
-  *  ns.codingcontract.attempt no longer returns a boolean, it returns empty string on failure or the reward string
-     on success, so comparing the result directly to true/false will no longer work. The result can still be used as
-     a condition directly.
+  *  ns.getPlayer no longer provides properties tor, inBladeburner, or hasCorporation. This information can be looked
+     up using standlone functions: ns.hasTorRouter(), ns.bladeburner.inBladeburner(), ns.corporation.hasCorporation().
   *  (NS2 only) ns functions use the this value from ns: if you move the function to its own variable off of ns, it
      needs to be bound to ns. e.g.:
      const tprint = ns.tprint.bind(ns);
   *  ns.formulas.work.classGains removed, replaced with ns.formulas.work.universityGains and ns.formulas.work.gymGains
   *  ns.sleeve.getSleeveStats and ns.sleeve.getSleeveInformation removed, ns.sleeve.getSleeve added and the returned
      sleeve can be used with formulas API the same way the getPlayer return can be.
+  *  ns.corporation.getEmployee and ns.corporation.assignJob have been removed because employees are no longer
+     represented as individual objects internally.
+  *  ns.codingcontract.attempt no longer returns a boolean, it returns empty string on failure or the reward string
+     on success, so comparing the result directly to true/false will no longer work. The result can still be used as
+     a condition directly.
 
   DEVELOPMENT
   *  Development repo moved to https://github.com/bitburner-official/bitburner-src
@@ -251,29 +255,42 @@ export const CONSTANTS: {
   *  Development is active again for non-bugfix.
   *  A bunch of fixes and setup related to moving to a new repo (@hydroflame)
 
+  TUTORIAL
+  *  Removed NS1/NS2 selection. Tutorial now only references .js files (NS1 is essentially deprecated) (@Mughur)
+  *  Fix Ram Text (by @jaculler)
+
   NETSCRIPT
-  *  Faster API wrapping on script launch. (by @d0sboots & @Snarling)
-  *  Expose more enums for player use under ns.enums (by @Snarling)
-  *  tFormat: Fix display for negative time (by @Snarling)
-    CODING CONTRACT
-    *  ns.codingcontract.attempt always returns a string (by @Snarling)
-    FORMULAS
-    *  ns.formulas.work.classGains removed, replaced with ns.formulas.work.universityGains and
-       ns.formulas.work.gymGains (@Snarling)
-    *  Add ns.formulas.work.companyGains function (by @AlexeyKozhemiakin)
-    PORTS
-    *  added portHandle.nextWrite() (by @LJNeon)
-    *  Make ns.writePort synchronous (by @Snarling)
-    SLEEVE
-    *  ns.sleeve.getSleeve added. getPlayer and getSleeve can both be used for formulas. (by @Snarling)
-    STOCK
-    *  ns.stock.getOrganization added for getting org from stock symbol (by @SamuraiNinjaGuy)
+  *  Added ns.pid property to access a script's PID without a function call. (@jeek)
+  *  Much faster API wrapping on script launch. (@d0sboots) To support this, ns functions need to keep their "this"
+     value from their parent object.
+  *  Expose more enums for player use under ns.enums (@Snarling)
+  *  tFormat: Fix display for negative time
+  *  ns.getPlayer: removed tor, inBladeburner, and hasCorporation properties
+  *  Added ns.hasTorRouter() function.
+  -- CODING CONTRACT
+     *  ns.codingcontract.attempt always returns a string (@Snarling)
+  -- CORPORATION
+     *  Removed ns.corporation.getEmployee and ns.corporation.assignJob, due to employees no longer being objects.
+     *  Added ns.corporation.hasCorporation();
+     *  Reworked how ram costs are applied for corporation.
+  -- FORMULAS
+     *  ns.formulas.work.classGains removed, replaced with ns.formulas.work.universityGains and
+        ns.formulas.work.gymGains (@Snarling)
+     *  Add ns.formulas.work.companyGains function (@AlexeyKozhemiakin)
+  -- PORTS
+     *  added portHandle.nextWrite() (@LJNeon)
+     *  Make ns.writePort synchronous (@Snarling)
+  -- SLEEVE
+     *  ns.sleeve.getSleeve added. getPlayer and getSleeve can both be used for formulas. (@Snarling)
+  -- STOCK
+     *  ns.stock.getOrganization added for getting org from stock symbol (@SamuraiNinjaGuy)
 
   SCRIPTS
-  *  Fixed bug where zombie scripts could be created after a soft reset (by @Snarling)
+  *  Fixed bug where zombie scripts could be created after a soft reset (@Snarling)
+  *  Scripts now have a maximum ram cost of 1024GB per thread.
 
   SCRIPT LOGS
-  *  Add ctrl-a support for selecting all text in tail window (by @Snarling)
+  *  Add ctrl-a support for selecting all text in tail window (@Snarling)
 
   CORPORATION
   *  Remove corp employees as objects (by @Kelenius)
@@ -297,12 +314,13 @@ export const CONSTANTS: {
   *  Connect command will connect to player owned servers from anywhere. (by @Snarling)
 
   UI
-  *  Fix keyboard shortcuts for other keyboard layouts (by @d0sboots)
+  *  Improve UI performance of sidebar and character overview using memoization (@d0sboots)
   *  Fixed spacing of text in Trade for reputation button after Infiltration (by @PyroGenesis)
   *  Fix spacing on ANSI background escape codes (by @Snarling)
   *  Fix several instances where newlines were not being displayed properly (by @quacksouls)
   *  SoftResetButton.tsx Tooltip changed to make more sense (by @rai68)
   *  GANG: Fix Gang UI to correctly report the bonus time multiplier as 25x (by @TheMas3212)
+  *  Change formatting for skill levels to use localeStr (@G4mingJon4s)
 
   DOC
   *  Fix incorrect examples for grow (by @quacksouls)
@@ -315,19 +333,22 @@ export const CONSTANTS: {
   *  Update documentation for ns.args (by @Snarling)
   *  De-uglify ns.print examples (by @LJNeon)
 
+  STATS
+  *  Fix logic for increasing HP based on defense skill levels (by @mattgarretson)
+
+  INFILTRATION
+  *  Fix SlashGame scaling. (by @Snarling)
+  
+  GANG
+  * When starting a gang, any in progress work with that faction will end. (@G4mingJon4s) 
+
   MISC
+  *  Remove google analytics (@hydroflame)
   *  Some error handling streamlining (by @Snarling)
   *  fix: check both ts and js source now (by @Tanimodori)
   *  chore: sync version in package-lock.json (by @Tanimodori)
   *  Better safety when loading game for multiple save corruption issues (by @Snarling)
   *  Nerf Noodle bar
 
-  STATS
-  *  Fix logic for increasing HP based on defense skill levels (by @mattgarretson)
-
-  TUTORIAL
-  *  Fix Ram Text (by @jaculler)
-
-  INFILTRATION
-  *  Fix SlashGame scaling. (by @Snarling)`,
+  `,
 };

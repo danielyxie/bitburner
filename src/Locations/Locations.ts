@@ -2,10 +2,9 @@
  * Map of all Locations in the game
  * Key = Location name, value = Location object
  */
-import { City } from "./City";
 import { Cities } from "./Cities";
 import { Location, IConstructorParams } from "./Location";
-import { CityName } from "./data/CityNames";
+import { CityName } from "../Enums";
 import { LocationsMetadata } from "./data/LocationsMetadata";
 
 export const Locations: Record<string, Location> = {};
@@ -29,13 +28,6 @@ function constructLocation(p: IConstructorParams): Location {
 }
 
 // First construct all cities
-Cities[CityName.Aevum] = new City(CityName.Aevum);
-Cities[CityName.Chongqing] = new City(CityName.Chongqing);
-Cities[CityName.Ishima] = new City(CityName.Ishima);
-Cities[CityName.NewTokyo] = new City(CityName.NewTokyo);
-Cities[CityName.Sector12] = new City(CityName.Sector12);
-Cities[CityName.Volhaven] = new City(CityName.Volhaven);
-
 Cities[CityName.Aevum].asciiArt = `
    [aevum police headquarters]       26                                         
                                    o                                            
@@ -218,7 +210,7 @@ for (const metadata of LocationsMetadata) {
   const cityName = loc.city;
   if (cityName === null) {
     // Generic location, add to all cities
-    for (const city of Object.keys(Cities)) {
+    for (const city of Object.values(CityName)) {
       Cities[city].addLocation(loc.name);
     }
   } else {

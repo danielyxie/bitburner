@@ -45,7 +45,7 @@ export class WorkerScript {
   dynamicLoadedFns: Record<string, boolean> = {};
 
   /** Tracks dynamic RAM usage */
-  dynamicRamUsage: number = RamCostConstants.ScriptBaseRamCost;
+  dynamicRamUsage: number = RamCostConstants.Base;
 
   /** Netscript Environment for this script */
   env: Environment;

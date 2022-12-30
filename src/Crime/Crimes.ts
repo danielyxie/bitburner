@@ -1,6 +1,6 @@
 import { Crime } from "./Crime";
 import { CONSTANTS } from "../Constants";
-import { CrimeType } from "../utils/enums";
+import { CrimeType } from "../Enums";
 
 export const Crimes: Record<CrimeType, Crime> = {
   [CrimeType.shoplift]: new Crime(

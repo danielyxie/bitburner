@@ -9,7 +9,7 @@ import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-import { Gang as IGang, EquipmentStats, GangOtherInfoObject } from "../ScriptEditor/NetscriptDefinitions";
+import { Gang as IGang, EquipmentStats, GangOtherInfoObject } from "@nsdefs";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 
 export function NetscriptGang(): InternalAPI<IGang> {

@@ -1,11 +1,11 @@
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { applySleeveGains, Work, WorkType } from "./Work";
 import { ClassType } from "../../../Work/ClassWork";
-import { LocationName } from "../../../utils/enums";
+import { LocationName } from "../../../Enums";
 import { calculateClassEarnings } from "../../../Work/Formulas";
 import { Sleeve } from "../Sleeve";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
-import { GymType, UniversityClassType } from "../../../utils/enums";
+import { GymType, UniversityClassType } from "../../../Enums";
 import { checkEnum } from "../../../utils/helpers/enum";
 
 export const isSleeveClassWork = (w: Work | null): w is SleeveClassWork => w !== null && w.type === WorkType.CLASS;

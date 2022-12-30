@@ -3,7 +3,7 @@ import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../uti
 import { Player } from "@player";
 import { Work, WorkType } from "./Work";
 import { influenceStockThroughCompanyWork } from "../StockMarket/PlayerInfluencing";
-import { LocationName } from "../utils/enums";
+import { LocationName } from "../Enums";
 import { calculateCompanyWorkStats } from "./Formulas";
 import { Companies } from "../Company/Companies";
 import { applyWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";

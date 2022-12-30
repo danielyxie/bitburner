@@ -11,8 +11,8 @@ Hire an employee.
 ```typescript
 hireEmployee(
     divisionName: string,
-    cityName: string,
-    employeePosition?: EmployeePositions | `${EmployeePositions}`,
+    city: CityName | `${CityName}`,
+    employeePosition?: CorpEmployeePosition,
   ): boolean;
 ```
 
@@ -21,8 +21,8 @@ hireEmployee(
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  employeePosition | [EmployeePositions](./bitburner.employeepositions.md) \| \`${[EmployeePositions](./bitburner.employeepositions.md)<!-- -->}\` | Position to place into. Defaults to "Unassigned". |
+|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
+|  employeePosition | [CorpEmployeePosition](./bitburner.corpemployeeposition.md) | Position to place into. Defaults to "Unassigned". |
 
 <b>Returns:</b>
 

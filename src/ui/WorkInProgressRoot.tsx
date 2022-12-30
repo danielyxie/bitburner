@@ -5,7 +5,7 @@ import { uniqueId } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Companies } from "../Company/Companies";
 import { CONSTANTS } from "../Constants";
-import { LocationName } from "../utils/enums";
+import { LocationName } from "../Enums";
 import { Locations } from "../Locations/Locations";
 import { Settings } from "../Settings/Settings";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
@@ -25,7 +25,7 @@ import { WorkStats } from "../Work/WorkStats";
 import { isCreateProgramWork } from "../Work/CreateProgramWork";
 import { isGraftingWork } from "../Work/GraftingWork";
 import { isFactionWork } from "../Work/FactionWork";
-import { FactionWorkType } from "../utils/enums";
+import { FactionWorkType } from "../Enums";
 import { isCompanyWork } from "../Work/CompanyWork";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;

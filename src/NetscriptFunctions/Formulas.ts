@@ -26,7 +26,7 @@ import {
   calculateWeakenTime,
 } from "../Hacking";
 import { Programs } from "../Programs/Programs";
-import { Formulas as IFormulas, Player as IPlayer, Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
+import { Formulas as IFormulas, Player as IPlayer, Person as IPerson } from "@nsdefs";
 import {
   calculateRespectGain,
   calculateWantedLevelGain,
@@ -37,18 +37,18 @@ import {
 } from "../Gang/formulas/formulas";
 import { favorToRep as calculateFavorToRep, repToFavor as calculateRepToFavor } from "../Faction/formulas/favor";
 import { repFromDonation } from "../Faction/formulas/donation";
-import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import { InternalAPI, NetscriptContext, removedFunction } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 import { calculateCrimeWorkStats } from "../Work/Formulas";
 import { calculateCompanyWorkStats } from "../Work/Formulas";
 import { Companies } from "../Company/Companies";
 import { calculateClassEarnings } from "../Work/Formulas";
 import { calculateFactionExp, calculateFactionRep } from "../Work/Formulas";
-import { FactionWorkType, GymType, UniversityClassType, LocationName } from "../utils/enums";
+import { FactionWorkType, GymType, UniversityClassType, LocationName, CityName } from "../Enums";
 
 import { defaultMultipliers } from "../PersonObjects/Multipliers";
 import { checkEnum, findEnumMember } from "../utils/helpers/enum";
-import { CompanyPosName } from "../utils/enums";
+import { JobName } from "../Enums";
 import { CompanyPositions } from "../Company/CompanyPositions";
 import { findCrime } from "../Crime/CrimeHelpers";
 
@@ -58,7 +58,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       throw helpers.makeRuntimeErrorMsg(ctx, `Requires Formulas.exe to run.`);
     }
   };
-  return {
+  const formulasFunctions: InternalAPI<IFormulas> = {
     mockServer: () => () => ({
       cpuCores: 0,
       ftpPortOpen: false,
@@ -92,7 +92,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       mults: defaultMultipliers(),
       numPeopleKilled: 0,
       money: 0,
-      city: "",
+      city: CityName.Sector12,
       location: "",
       bitNodeN: 0,
       totalPlaytime: 0,
@@ -107,7 +107,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       skills: { hacking: 0, strength: 0, defense: 0, dexterity: 0, agility: 0, charisma: 0, intelligence: 0 },
       exp: { hacking: 0, strength: 0, defense: 0, dexterity: 0, agility: 0, charisma: 0, intelligence: 0 },
       mults: defaultMultipliers(),
-      city: "",
+      city: CityName.Sector12,
     }),
     reputation: {
       calculateFavorToRep: (ctx) => (_favor) => {
@@ -397,7 +397,7 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       companyGains: (ctx) => (_person, _companyName, _positionName, _favor) => {
         checkFormulasAccess(ctx);
         const person = helpers.person(ctx, _person);
-        const positionName = findEnumMember(CompanyPosName, helpers.string(ctx, "_positionName", _positionName));
+        const positionName = findEnumMember(JobName, helpers.string(ctx, "_positionName", _positionName));
         if (!positionName) throw new Error(`Invalid company position: ${_positionName}`);
         const position = CompanyPositions[positionName];
         const companyName = helpers.string(ctx, "_companyName", _companyName);
@@ -408,4 +408,10 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       },
     },
   };
+  // Removed undocumented functions added using Object.assign because typescript.
+  // TODO: Remove these at 3.0
+  Object.assign(formulasFunctions.work, {
+    classGains: removedFunction("2.2.0", "formulas.work.universityGains or formulas.work.gymGains"),
+  });
+  return formulasFunctions;
 }

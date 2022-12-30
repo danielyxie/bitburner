@@ -10,7 +10,7 @@ import { getNextCompanyPositionHelper } from "../../Company/GetNextCompanyPositi
 import { getJobRequirementText } from "../../Company/GetJobRequirementText";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import { CompanyPosition } from "../../Company/CompanyPosition";
-import * as posNames from "../../Company/data/companypositionnames";
+import * as posNames from "../../Company/data/JobTracks";
 import { CONSTANTS } from "../../Constants";
 import { Programs } from "../../Programs/Programs";
 import { Exploit } from "../../Exploits/Exploit";
@@ -19,8 +19,7 @@ import { Factions } from "../../Faction/Factions";
 import { resetGangs } from "../../Gang/AllGangs";
 import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";
-import { CityName } from "../../Locations/data/CityNames";
-import { LocationName } from "../../utils/enums";
+import { CityName, LocationName } from "../../Enums";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
 import { calculateSkillProgress as calculateSkillProgressF, ISkillProgress } from "../formulas/skill";

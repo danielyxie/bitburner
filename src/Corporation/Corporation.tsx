@@ -1,7 +1,7 @@
 import { CorporationState } from "./CorporationState";
 import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade, CorporationUpgrades } from "./data/CorporationUpgrades";
-import { CorporationConstants } from "./data/Constants";
+import * as corpConstants from "./data/Constants";
 import { Industry } from "./Industry";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -12,7 +12,8 @@ import { Player } from "@player";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { isString } from "../utils/helpers/isString";
-import { CityName } from "../Locations/data/CityNames";
+import { CityName } from "../Enums";
+import { CorpStateName } from "@nsdefs";
 
 interface IParams {
   name?: string;
@@ -30,9 +31,9 @@ export class Corporation {
   expenses = 0;
   fundingRound = 0;
   public = false; //Publicly traded
-  totalShares = CorporationConstants.INITIALSHARES; // Total existing shares
-  numShares = CorporationConstants.INITIALSHARES; // Total shares owned by player
-  shareSalesUntilPriceUpdate = CorporationConstants.SHARESPERPRICEUPDATE;
+  totalShares = corpConstants.initialShares; // Total existing shares
+  numShares = corpConstants.initialShares; // Total shares owned by player
+  shareSalesUntilPriceUpdate = corpConstants.sharesPerPriceUpdate;
   shareSaleCooldown = 0; // Game cycles until player can sell shares again
   issueNewSharesCooldown = 0; // Game cycles until player can issue shares again
   dividendRate = 0;
@@ -68,7 +69,7 @@ export class Corporation {
     this.funds = this.funds + amt;
   }
 
-  getState(): string {
+  getState(): CorpStateName {
     return this.state.getState();
   }
 
@@ -77,10 +78,10 @@ export class Corporation {
   }
 
   process(): void {
-    if (this.storedCycles >= CorporationConstants.CyclesPerIndustryStateCycle) {
+    if (this.storedCycles >= corpConstants.gameCyclesPerCorpStateCycle) {
       const state = this.getState();
       const marketCycles = 1;
-      const gameCycles = marketCycles * CorporationConstants.CyclesPerIndustryStateCycle;
+      const gameCycles = marketCycles * corpConstants.gameCyclesPerCorpStateCycle;
       this.storedCycles -= gameCycles;
 
       this.divisions.forEach((ind) => {
@@ -116,7 +117,7 @@ export class Corporation {
         const profit = this.revenue - this.expenses;
         this.cycleValuation = this.determineCycleValuation();
         this.determineValuation();
-        const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
+        const cycleProfit = profit * (marketCycles * corpConstants.secondsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
             "There was an error calculating your Corporations funds and they got reset to 0. " +
@@ -130,11 +131,7 @@ export class Corporation {
         this.updateDividendTax();
         if (this.dividendRate > 0 && cycleProfit > 0) {
           // Validate input again, just to be safe
-          if (
-            isNaN(this.dividendRate) ||
-            this.dividendRate < 0 ||
-            this.dividendRate > CorporationConstants.DividendMaxRate
-          ) {
+          if (isNaN(this.dividendRate) || this.dividendRate < 0 || this.dividendRate > corpConstants.dividendMaxRate) {
             console.error(`Invalid Corporation dividend rate: ${this.dividendRate}`);
           } else {
             const totalDividends = this.dividendRate * cycleProfit;
@@ -165,7 +162,7 @@ export class Corporation {
 
   getCycleDividends(): number {
     const profit = this.revenue - this.expenses;
-    const cycleProfit = profit * CorporationConstants.SecsPerMarketCycle;
+    const cycleProfit = profit * corpConstants.secondsPerMarketCycle;
     const totalDividends = this.dividendRate * cycleProfit;
     const dividendsPerShare = totalDividends / this.totalShares;
     const dividends = this.numShares * dividendsPerShare;
@@ -197,9 +194,9 @@ export class Corporation {
 
   determineValuation(): void {
     this.valuationsList.push(this.cycleValuation); //Add current valuation to the list
-    if (this.valuationsList.length > CorporationConstants.ValuationLength) this.valuationsList.shift();
+    if (this.valuationsList.length > corpConstants.valuationLength) this.valuationsList.shift();
     let val = this.valuationsList.reduce((a, b) => a + b); //Calculate valuations sum
-    val /= CorporationConstants.ValuationLength; //Calculate the average
+    val /= corpConstants.valuationLength; //Calculate the average
     this.valuation = val;
   }
 
@@ -242,7 +239,7 @@ export class Corporation {
     let profit = 0;
     let targetPrice = this.getTargetSharePrice();
 
-    const maxIterations = Math.ceil(numShares / CorporationConstants.SHARESPERPRICEUPDATE);
+    const maxIterations = Math.ceil(numShares / corpConstants.sharesPerPriceUpdate);
     if (isNaN(maxIterations) || maxIterations > 10e6) {
       console.error(
         `Something went wrong or unexpected when calculating share sale. Max iterations calculated to be ${maxIterations}`,
@@ -257,7 +254,7 @@ export class Corporation {
         break;
       } else {
         profit += sharePrice * sharesUntilUpdate;
-        sharesUntilUpdate = CorporationConstants.SHARESPERPRICEUPDATE;
+        sharesUntilUpdate = corpConstants.sharesPerPriceUpdate;
         sharesTracker -= sharesUntilUpdate;
         sharesSold += sharesUntilUpdate;
         targetPrice = this.valuation / (2 * (this.totalShares + sharesSold - this.numShares));

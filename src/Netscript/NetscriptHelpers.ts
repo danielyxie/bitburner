@@ -5,8 +5,8 @@ import { Player } from "@player";
 import { ScriptDeath } from "./ScriptDeath";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { ScriptArg } from "./ScriptArg";
-import { CityName } from "../Locations/data/CityNames";
-import { BasicHGWOptions } from "src/ScriptEditor/NetscriptDefinitions";
+import { CityName } from "../Enums";
+import { BasicHGWOptions, RunningScript as IRunningScript, Person as IPerson } from "@nsdefs";
 import { Server } from "../Server/Server";
 import {
   calculateHackingChance,
@@ -28,12 +28,12 @@ import { RunningScript } from "../Script/RunningScript";
 import { toNative } from "../NetscriptFunctions/toNative";
 import { ScriptIdentifier } from "./ScriptIdentifier";
 import { findRunningScript, findRunningScriptByPid } from "../Script/ScriptHelpers";
-import { RunningScript as IRunningScript, Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { checkEnum } from "../utils/helpers/enum";
+import { RamCostConstants } from "./RamCostGenerator";
 
 export const helpers = {
   string,
@@ -65,15 +65,15 @@ export const helpers = {
   failOnHacknetServer,
 };
 
-export function assertEnumMember<T extends string>(
+export function assertMember<T extends string>(
   ctx: NetscriptContext,
-  obj: Record<string, T>,
-  enumName: string,
+  obj: Record<string, T> | T[],
+  typeName: string,
   argName: string,
   v: unknown,
 ): asserts v is T {
   assertString(ctx, argName, v);
-  if (!checkEnum(obj, v)) throw makeRuntimeErrorMsg(ctx, `${argName}: ${v} is not a valid ${enumName}.`, "TYPE");
+  if (!checkEnum(obj, v)) throw makeRuntimeErrorMsg(ctx, `${argName}: ${v} is not a valid ${typeName}.`, "TYPE");
 }
 
 export function assertString(ctx: NetscriptContext, argName: string, v: unknown): asserts v is string {
@@ -344,7 +344,7 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
     console.warn(`WorkerScript detected NaN for thread count for ${ws.name} on ${ws.hostname}`);
     threads = 1;
   }
-  ws.dynamicRamUsage += ramCost;
+  ws.dynamicRamUsage = Math.min(ws.dynamicRamUsage + ramCost, RamCostConstants.Max);
   if (ws.dynamicRamUsage > 1.01 * ws.ramUsage) {
     log(ctx, () => "Insufficient static ram available.");
     ws.env.stopFlag = true;
@@ -372,8 +372,8 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
 
 /** Validates the input v as being a CityName. Throws an error if it is not. */
 function city(ctx: NetscriptContext, argName: string, v: unknown): CityName {
-  if (typeof v !== "string") throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
-  if (!checkEnum(CityName, v)) throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
+  if (typeof v !== "string" || !checkEnum(CityName, v))
+    throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
   return v;
 }
 

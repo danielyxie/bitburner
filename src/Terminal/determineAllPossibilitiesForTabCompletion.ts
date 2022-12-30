@@ -11,7 +11,7 @@ import { HelpTexts } from "./HelpText";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { compile } from "../NetscriptJSEvaluator";
 import { Flags } from "../NetscriptFunctions/Flags";
-import { AutocompleteData } from "../ScriptEditor/NetscriptDefinitions";
+import { AutocompleteData } from "@nsdefs";
 import * as libarg from "arg";
 
 // An array of all Terminal commands

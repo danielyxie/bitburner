@@ -183,7 +183,7 @@ interface ILogProps {
 function Logs({ entries }: ILogProps): React.ReactElement {
   const scrollHook = useRef<HTMLUListElement>(null);
 
-  // TODO: Text gets shifted up as new entries appear, if the user scrolled up it should attempt to keep the text focused
+  // TODO unplanned: Text gets shifted up as new entries appear, if the user scrolled up it should attempt to keep the text focused
   function scrollToBottom(): void {
     if (!scrollHook.current) return;
     scrollHook.current.scrollTop = scrollHook.current.scrollHeight;

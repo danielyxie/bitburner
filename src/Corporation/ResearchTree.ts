@@ -3,13 +3,15 @@
 // Each Node in the Research Trees only holds the name(s) of Research,
 // not an actual Research object. The name can be used to obtain a reference
 // to the corresponding Research object using the ResearchMap
+import { CorpResearchName } from "@nsdefs";
+import { researchNames } from "./data/Constants";
 import { Research } from "./Research";
 import { ResearchMap } from "./ResearchMap";
 
 interface IConstructorParams {
   children?: Node[];
   cost: number;
-  text: string;
+  text: CorpResearchName;
   parent?: Node | null;
 }
 
@@ -32,9 +34,9 @@ export class Node {
   parent: Node | null = null;
 
   // Name of the Research held in this Node
-  text = "";
+  text: CorpResearchName;
 
-  constructor(p: IConstructorParams = { cost: 0, text: "" }) {
+  constructor(p: IConstructorParams = { cost: 0, text: researchNames[0] }) {
     if (ResearchMap[p.text] == null) {
       throw new Error(`Invalid Research name used when constructing ResearchTree Node: ${p.text}`);
     }
@@ -90,8 +92,8 @@ export class ResearchTree {
   root: Node | null = null;
 
   // Gets an array with the 'text' values of ALL Nodes in the Research Tree
-  getAllNodes(): string[] {
-    const res: string[] = [];
+  getAllNodes(): CorpResearchName[] {
+    const res: CorpResearchName[] = [];
     const queue: Node[] = [];
 
     if (this.root == null) {
@@ -211,7 +213,7 @@ export class ResearchTree {
 
   // Search for a Node with the given name ('text' property on the Node)
   // Returns 'null' if it cannot be found
-  findNode(name: string): Node | null {
+  findNode(name: CorpResearchName): Node | null {
     if (this.root == null) {
       return null;
     }
@@ -219,7 +221,7 @@ export class ResearchTree {
   }
 
   // Marks a Node as researched
-  research(name: string): void {
+  research(name: CorpResearchName): void {
     if (this.root == null) {
       return;
     }

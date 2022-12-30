@@ -2,7 +2,7 @@
 // (top-left panel in the Industry UI)
 import React, { useState } from "react";
 
-import { IndustryType } from "../IndustryData";
+import { IndustryType } from "../data/Enums";
 import { HireAdVert } from "../Actions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
@@ -207,7 +207,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>Scientific Research: {numeralWrapper.formatReallyBigNumber(division.sciResearch.qty)}</Typography>
+          <Typography>Scientific Research: {numeralWrapper.formatReallyBigNumber(division.sciResearch)}</Typography>
         </Tooltip>
         <Button sx={{ mx: 1 }} onClick={() => setResearchOpen(true)}>
           Research

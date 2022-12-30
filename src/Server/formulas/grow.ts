@@ -1,7 +1,7 @@
 import { CONSTANTS } from "../../Constants";
 import { Server } from "../Server";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Person as IPerson } from "../../ScriptEditor/NetscriptDefinitions";
+import { Person as IPerson } from "@nsdefs";
 
 export function calculateServerGrowth(server: Server, threads: number, p: IPerson, cores = 1): number {
   const numServerGrowthCycles = Math.max(Math.floor(threads), 0);

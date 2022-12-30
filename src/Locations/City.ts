@@ -1,5 +1,4 @@
-import { CityName } from "./data/CityNames";
-import { LocationName } from "../utils/enums";
+import { LocationName, CityName } from "../Enums";
 
 /** Class representing a City in the game */
 export class City {

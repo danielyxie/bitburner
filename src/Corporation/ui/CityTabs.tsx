@@ -7,7 +7,7 @@ import { ExpandNewCity } from "./ExpandNewCity";
 import { useDivision } from "./Context";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { CityName } from "../../Locations/data/CityNames";
+import { CityName } from "../../Enums";
 
 interface IProps {
   city: CityName | "Expand";

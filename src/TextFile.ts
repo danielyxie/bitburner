@@ -11,7 +11,7 @@ export class TextFile {
   /** The content of the file. */
   text: string;
 
-  //TODO: Why are we using getter/setter for fn as filename?
+  //TODO 2.3: Why are we using getter/setter for fn as filename? Rename parameter as more-readable "filename"
   /** The full file name. */
   get filename(): string {
     return this.fn;

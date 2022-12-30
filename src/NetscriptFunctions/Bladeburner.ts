@@ -1,11 +1,13 @@
 import { Player } from "@player";
 import { Bladeburner } from "../Bladeburner/Bladeburner";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Bladeburner as INetscriptBladeburner } from "../ScriptEditor/NetscriptDefinitions";
+import { Bladeburner as INetscriptBladeburner } from "@nsdefs";
 import { Action } from "src/Bladeburner/Action";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperation } from "../Bladeburner/BlackOperation";
 import { helpers } from "../Netscript/NetscriptHelpers";
+import { checkEnum } from "../utils/helpers/enum";
+import { CityName } from "../Enums";
 
 export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
   const checkBladeburnerAccess = function (ctx: NetscriptContext): void {
@@ -21,14 +23,6 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
     if (!bladeburner)
       throw helpers.makeRuntimeErrorMsg(ctx, "You must be a member of the Bladeburner division to use this API.");
     return bladeburner;
-  };
-
-  const checkBladeburnerCity = function (ctx: NetscriptContext, city: string): void {
-    const bladeburner = Player.bladeburner;
-    if (bladeburner === null) throw new Error("Must have joined bladeburner");
-    if (!bladeburner.cities.hasOwnProperty(city)) {
-      throw helpers.makeRuntimeErrorMsg(ctx, `Invalid city: ${city}`);
-    }
   };
 
   const getBladeburnerActionObject = function (ctx: NetscriptContext, type: string, name: string): Action {
@@ -227,9 +221,9 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
     getSkillUpgradeCost:
       (ctx) =>
       (_skillName, _count = 1) => {
+        const bladeburner = getBladeburner(ctx);
         const skillName = helpers.string(ctx, "skillName", _skillName);
         const count = helpers.number(ctx, "count", _count);
-        const bladeburner = getBladeburner(ctx);
         try {
           return bladeburner.getSkillUpgradeCostNetscriptFn(skillName, count, ctx.workerScript);
         } catch (e: unknown) {
@@ -239,9 +233,9 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
     upgradeSkill:
       (ctx) =>
       (_skillName, _count = 1) => {
+        const bladeburner = getBladeburner(ctx);
         const skillName = helpers.string(ctx, "skillName", _skillName);
         const count = helpers.number(ctx, "count", _count);
-        const bladeburner = getBladeburner(ctx);
         try {
           return bladeburner.upgradeSkillNetscriptFn(skillName, count, ctx.workerScript);
         } catch (e: unknown) {
@@ -249,9 +243,9 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
         }
       },
     getTeamSize: (ctx) => (_type, _name) => {
+      const bladeburner = getBladeburner(ctx);
       const type = helpers.string(ctx, "type", _type);
       const name = helpers.string(ctx, "name", _name);
-      const bladeburner = getBladeburner(ctx);
       try {
         return bladeburner.getTeamSizeNetscriptFn(type, name, ctx.workerScript);
       } catch (e: unknown) {
@@ -259,10 +253,10 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
       }
     },
     setTeamSize: (ctx) => (_type, _name, _size) => {
+      const bladeburner = getBladeburner(ctx);
       const type = helpers.string(ctx, "type", _type);
       const name = helpers.string(ctx, "name", _name);
       const size = helpers.number(ctx, "size", _size);
-      const bladeburner = getBladeburner(ctx);
       try {
         return bladeburner.setTeamSizeNetscriptFn(type, name, size, ctx.workerScript);
       } catch (e: unknown) {
@@ -270,27 +264,21 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
       }
     },
     getCityEstimatedPopulation: (ctx) => (_cityName) => {
+      const bladeburner = getBladeburner(ctx);
       const cityName = helpers.string(ctx, "cityName", _cityName);
-      checkBladeburnerAccess(ctx);
-      checkBladeburnerCity(ctx, cityName);
-      const bladeburner = Player.bladeburner;
-      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+      if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city: ${cityName}`);
       return bladeburner.cities[cityName].popEst;
     },
     getCityCommunities: (ctx) => (_cityName) => {
+      const bladeburner = getBladeburner(ctx);
       const cityName = helpers.string(ctx, "cityName", _cityName);
-      checkBladeburnerAccess(ctx);
-      checkBladeburnerCity(ctx, cityName);
-      const bladeburner = Player.bladeburner;
-      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+      if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city: ${cityName}`);
       return bladeburner.cities[cityName].comms;
     },
     getCityChaos: (ctx) => (_cityName) => {
+      const bladeburner = getBladeburner(ctx);
       const cityName = helpers.string(ctx, "cityName", _cityName);
-      checkBladeburnerAccess(ctx);
-      checkBladeburnerCity(ctx, cityName);
-      const bladeburner = Player.bladeburner;
-      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+      if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city: ${cityName}`);
       return bladeburner.cities[cityName].chaos;
     },
     getCity: (ctx) => () => {
@@ -298,11 +286,9 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
       return bladeburner.city;
     },
     switchCity: (ctx) => (_cityName) => {
+      const bladeburner = getBladeburner(ctx);
       const cityName = helpers.string(ctx, "cityName", _cityName);
-      checkBladeburnerAccess(ctx);
-      checkBladeburnerCity(ctx, cityName);
-      const bladeburner = Player.bladeburner;
-      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+      if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city: ${cityName}`);
       bladeburner.city = cityName;
       return true;
     },

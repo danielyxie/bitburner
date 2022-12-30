@@ -15,7 +15,7 @@ interface IProps {
 }
 
 function randomColor(fragment: ActiveFragment): string {
-  // Can't set Math.random seed so copy casino. TODO refactor both RNG later.
+  // Can't set Math.random seed so copy casino. TODO unplanned refactor both RNG later.
   let s1 = Math.pow((fragment.x + 1) * (fragment.y + 1), 10);
   let s2 = s1;
   let s3 = s1;

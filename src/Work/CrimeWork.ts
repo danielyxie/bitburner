@@ -5,7 +5,7 @@ import { determineCrimeSuccess, findCrime } from "../Crime/CrimeHelpers";
 import { Crimes } from "../Crime/Crimes";
 import { Player } from "@player";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { CrimeType } from "../utils/enums";
+import { CrimeType } from "../Enums";
 import { Work, WorkType } from "./Work";
 import { scaleWorkStats, WorkStats } from "./WorkStats";
 import { calculateCrimeWorkStats } from "./Formulas";

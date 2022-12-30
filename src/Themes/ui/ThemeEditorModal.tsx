@@ -14,7 +14,7 @@ import { Color, ColorPicker } from "material-ui-color";
 import { ThemeEvents } from "./Theme";
 import { Settings } from "../../Settings/Settings";
 import { defaultTheme } from "../Themes";
-import { UserInterfaceTheme } from "../../ScriptEditor/NetscriptDefinitions";
+import { UserInterfaceTheme } from "@nsdefs";
 import { Router } from "../../ui/GameRoot";
 import { Page } from "../../ui/Router";
 import { ThemeCollaborate } from "./ThemeCollaborate";

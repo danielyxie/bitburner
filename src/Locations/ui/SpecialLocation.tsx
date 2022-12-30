@@ -16,7 +16,7 @@ import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
 import { CreateCorporationModal } from "../../Corporation/ui/modals/CreateCorporationModal";
-import { LocationName } from "../../utils/enums";
+import { LocationName } from "../../Enums";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Factions } from "../../Faction/Factions";
 import { joinFaction } from "../../Faction/FactionHelpers";

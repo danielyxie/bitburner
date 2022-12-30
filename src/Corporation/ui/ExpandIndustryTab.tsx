@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { IndustryType, IndustryDescriptions, IndustriesData } from "../IndustryData";
+import { IndustryDescriptions, IndustriesData } from "../IndustryData";
+import { IndustryType } from "../data/Enums";
 import { useCorporation } from "./Context";
 import { Industry } from "../Industry";
 import { NewIndustry } from "../Actions";

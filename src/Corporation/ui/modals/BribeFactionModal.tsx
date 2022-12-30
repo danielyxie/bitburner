@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Factions } from "../../../Faction/Factions";
-import { CorporationConstants } from "../../data/Constants";
+import * as corpConstants from "../../data/Constants";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
@@ -35,7 +35,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
   }
 
   function repGain(money: number): number {
-    return money / CorporationConstants.BribeToRepRatio;
+    return money / corpConstants.bribeAmountPerReputation;
   }
 
   function getRepText(money: number): string {

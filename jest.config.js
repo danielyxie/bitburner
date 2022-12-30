@@ -11,5 +11,6 @@ module.exports = {
     "\\.(css|less)$": "<rootDir>/test/__mocks__/styleMock.js",
     "\\!!raw-loader!.*$": "<rootDir>/test/__mocks__/rawLoader.js",
     "@player": "<rootDir>/src/Player",
+    "@nsdefs": "<rootDir>/src/ScriptEditor/NetscriptDefinitions",
   },
 };

@@ -13,3 +13,4 @@ markdown
 
 package.json
 package.lock.json
+tsdoc-metadata.json

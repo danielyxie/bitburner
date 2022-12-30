@@ -9,7 +9,7 @@ Set the auto job assignment for a job
 <b>Signature:</b>
 
 ```typescript
-setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): boolean;
+setAutoJobAssignment(divisionName: string, city: CityName | `${CityName}`, job: string, amount: number): boolean;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
+|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
 |  job | string | Name of the job |
 |  amount | number | Number of employees to assign to that job |
 

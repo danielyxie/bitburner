@@ -9,5 +9,5 @@ Positions of the employees
 <b>Signature:</b>
 
 ```typescript
-employeeJobs: Record<`${EmployeePositions}`, number>;
+employeeJobs: Record<CorpEmployeePosition, number>;
 ```

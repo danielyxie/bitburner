@@ -2,6 +2,7 @@ import { BladeburnerConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { addOffset } from "../utils/helpers/addOffset";
+import { CityName } from "../Enums";
 
 interface IChangePopulationByCountParams {
   /** How much the estimate should change by. */
@@ -17,7 +18,7 @@ interface IChangePopulationByPercentageParams {
 
 export class City {
   /** Name of the city. */
-  name = "";
+  name: CityName;
 
   /** Population of the city. */
   pop = 0;
@@ -31,7 +32,7 @@ export class City {
   /** Chaos level of the city. */
   chaos = 0;
 
-  constructor(name: string = BladeburnerConstants.CityNames[2]) {
+  constructor(name = CityName.Sector12) {
     this.name = name;
 
     // Synthoid population and estimate

@@ -1,7 +1,7 @@
-import * as posNames from "./companypositionnames";
+import * as posNames from "./JobTracks";
 import { IConstructorParams } from "../Company";
 
-import { LocationName } from "../../utils/enums";
+import { LocationName } from "../../Enums";
 
 // Create Objects containing Company Positions by category
 // Will help in metadata construction later

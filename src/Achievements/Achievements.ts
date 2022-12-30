@@ -3,7 +3,7 @@ import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { SkillNames } from "../Bladeburner/data/SkillNames";
 import { Skills } from "../Bladeburner/Skills";
 import { CONSTANTS } from "../Constants";
-import { IndustryType } from "../Corporation/IndustryData";
+import { IndustryType } from "../Corporation/data/Enums";
 import { Exploit } from "../Exploits/Exploit";
 import { Factions } from "../Faction/Factions";
 import { AllGangs } from "../Gang/AllGangs";
@@ -12,7 +12,7 @@ import { HacknetNodeConstants, HacknetServerConstants } from "../Hacknet/data/Co
 import { hasHacknetServers } from "../Hacknet/HacknetHelpers";
 import { HacknetNode } from "../Hacknet/HacknetNode";
 import { HacknetServer } from "../Hacknet/HacknetServer";
-import { CityName } from "../Locations/data/CityNames";
+import { CityName } from "../Enums";
 import { Player } from "@player";
 import { Programs } from "../Programs/Programs";
 import { GetAllServers, GetServer } from "../Server/AllServers";

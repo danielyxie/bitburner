@@ -50,6 +50,7 @@ export async function main(ns) {
 |  [grafting](./bitburner.ns.grafting.md) | [Grafting](./bitburner.grafting.md) | Namespace for grafting functions. |
 |  [hacknet](./bitburner.ns.hacknet.md) | [Hacknet](./bitburner.hacknet.md) | Namespace for hacknet functions. |
 |  [infiltration](./bitburner.ns.infiltration.md) | [Infiltration](./bitburner.infiltration.md) | Namespace for infiltration functions. RAM cost: 0 GB |
+|  [pid](./bitburner.ns.pid.md) | number | The current script's PID |
 |  [singularity](./bitburner.ns.singularity.md) | [Singularity](./bitburner.singularity.md) | Namespace for singularity functions. RAM cost: 0 GB |
 |  [sleeve](./bitburner.ns.sleeve.md) | [Sleeve](./bitburner.sleeve.md) | Namespace for sleeve functions. |
 |  [stanek](./bitburner.ns.stanek.md) | [Stanek](./bitburner.stanek.md) | Namespace for stanek functions. RAM cost: 0 GB |

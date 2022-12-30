@@ -11,7 +11,7 @@ import { FindInvestorsModal } from "./modals/FindInvestorsModal";
 import { GoPublicModal } from "./modals/GoPublicModal";
 import { Factions } from "../../Faction/Factions";
 
-import { CorporationConstants } from "../data/Constants";
+import * as corpConstants from "../data/Constants";
 import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "../data/CorporationUnlockUpgrades";
 import { CorporationUpgrade, CorporationUpgradeIndex, CorporationUpgrades } from "../data/CorporationUpgrades";
 
@@ -242,7 +242,7 @@ function BribeButton(): React.ReactElement {
   const corp = useCorporation();
   const [open, setOpen] = useState(false);
   const canBribe =
-    corp.valuation >= CorporationConstants.BribeThreshold &&
+    corp.valuation >= corpConstants.bribeThreshold &&
     Player.factions.filter((f) => Factions[f].getInfo().offersWork()).length > 0;
 
   function openBribe(): void {
@@ -277,7 +277,7 @@ function DividendsStats({ profit }: IDividendsStatsProps): React.ReactElement {
   const totalDividends = corp.dividendRate * profit;
   const retainedEarnings = profit - totalDividends;
   const dividendsPerShare = totalDividends / corp.totalShares;
-  const playerEarnings = corp.getCycleDividends() / CorporationConstants.SecsPerMarketCycle;
+  const playerEarnings = corp.getCycleDividends() / corpConstants.secondsPerMarketCycle;
   return (
     <StatsTable
       rows={[

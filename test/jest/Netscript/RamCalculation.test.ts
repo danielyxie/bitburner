@@ -20,12 +20,21 @@ function grabCost(ramLayer: RamLayer, fullPath: string[]) {
   if (typeof expectedRam !== "number") throw new Error(`There was no defined ram cost for ${fullPath.join(".")}().`);
   return expectedRam;
 }
+function isRemovedFunction(fn: Function) {
+  try {
+    fn();
+  } catch {
+    return true;
+  }
+  return false;
+}
 
 describe("Netscript RAM Calculation/Generation Tests", function () {
   Player.sourceFiles[0] = { n: 4, lvl: 3 };
-  const sf4 = Player.sourceFiles[0];
   // For simulating costs of singularity functions.
-  const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
+  const sf4 = Player.sourceFiles[0];
+  const baseCost = RamCostConstants.Base;
+  const maxCost = RamCostConstants.Max;
   const script = new Script();
   /** Creates a RunningScript object which calculates static ram usage */
   function createRunningScript(code: string) {
@@ -49,7 +58,7 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
     code: "",
     delay: null,
     dynamicLoadedFns: {},
-    dynamicRamUsage: RamCostConstants.ScriptBaseRamCost,
+    dynamicRamUsage: RamCostConstants.Base,
     env: new Environment(),
     ramUsage: scriptRef.ramUsage,
     scriptRef,
@@ -70,7 +79,7 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
 
     // Static ram check
     const staticCost = calculateRamUsage(code, []).cost;
-    expect(staticCost).toBeCloseTo(ScriptBaseCost + expectedRamCost + extraLayerCost);
+    expect(staticCost).toBeCloseTo(Math.min(baseCost + expectedRamCost + extraLayerCost, maxCost));
 
     // reset workerScript for dynamic check
     scriptRef = createRunningScript(code);
@@ -78,7 +87,7 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
       code,
       scriptRef,
       ramUsage: scriptRef.ramUsage,
-      dynamicRamUsage: ScriptBaseCost,
+      dynamicRamUsage: baseCost,
       env: new Environment(),
       dynamicLoadedFns: {},
     });
@@ -94,7 +103,7 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
     }
 
     expect(workerScript.dynamicLoadedFns).toHaveProperty(fnName);
-    expect(workerScript.dynamicRamUsage - ScriptBaseCost).toBeCloseTo(expectedRamCost, 5);
+    expect(workerScript.dynamicRamUsage).toBeCloseTo(Math.min(expectedRamCost + baseCost, maxCost), 5);
     expect(workerScript.dynamicRamUsage).toBeCloseTo(scriptRef.ramUsage - extraLayerCost, 5);
   }
 
@@ -102,11 +111,13 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
     Object.entries(wrappedNS as unknown as NSLayer).forEach(([key, val]) => {
       if (key === "args" || key === "enums") return;
       if (typeof val === "function") {
+        // Removed functions have no ram cost and should be skipped.
+        if (isRemovedFunction(val)) return;
         const expectedRam = grabCost(RamCosts, [key]);
         it(`${key}()`, () => combinedRamCheck(val.bind(ns), [key], expectedRam));
       }
       //The only other option should be an NSLayer
-      const extraLayerCost = { corporation: 1022.4, hacknet: 4 }[key] ?? 0;
+      const extraLayerCost = { hacknet: 4 }[key] ?? 0; // Currently only hacknet has a layer cost.
       testLayer(val as NSLayer, RamCosts[key as keyof typeof RamCosts] as RamLayer, [key], extraLayerCost);
     });
   });
@@ -118,6 +129,8 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
       Object.entries(nsLayer).forEach(([key, val]) => {
         const newPath = [...path, key];
         if (typeof val === "function") {
+          // Removed functions have no ram cost and should be skipped.
+          if (isRemovedFunction(val)) return;
           const fnName = newPath.join(".");
           const expectedRam = grabCost(ramLayer, newPath);
           it(`${fnName}()`, () => combinedRamCheck(val.bind(actualLayer), newPath, expectedRam, extraLayerCost));

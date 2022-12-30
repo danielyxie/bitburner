@@ -11,7 +11,7 @@ import { Reputation } from "../ui/React/Reputation";
 import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { calculateFactionExp, calculateFactionRep } from "./Formulas";
-import { FactionWorkType } from "../utils/enums";
+import { FactionWorkType } from "../Enums";
 import { findEnumMember } from "../utils/helpers/enum";
 
 interface FactionWorkParams {

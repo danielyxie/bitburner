@@ -1,5 +1,5 @@
 import { FactionNames } from "./Faction/data/FactionNames";
-import { CityName } from "./Locations/data/CityNames";
+import { CityName } from "./Enums";
 import { StaticAugmentations } from "./Augmentation/StaticAugmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";

@@ -21,7 +21,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { LimitMaterialProductionModal } from "./modals/LimitMaterialProductionModal";
-import { CityName } from "../../Locations/data/CityNames";
+import { CityName } from "../../Enums";
 
 interface IMaterialProps {
   warehouse: Warehouse;

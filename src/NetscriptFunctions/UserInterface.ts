@@ -1,4 +1,4 @@
-import { UserInterface as IUserInterface } from "../ScriptEditor/NetscriptDefinitions";
+import { UserInterface as IUserInterface } from "@nsdefs";
 import { Settings } from "../Settings/Settings";
 import { ThemeEvents } from "../Themes/ui/Theme";
 import { defaultTheme } from "../Themes/Themes";

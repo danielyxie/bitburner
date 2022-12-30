@@ -8,12 +8,11 @@
 
 |  Enumeration | Description |
 |  --- | --- |
-|  [CompanyPosName](./bitburner.companyposname.md) |  |
+|  [CityName](./bitburner.cityname.md) | Names of all cities |
 |  [CrimeType](./bitburner.crimetype.md) |  |
-|  [EmployeePositions](./bitburner.employeepositions.md) |  |
 |  [FactionWorkType](./bitburner.factionworktype.md) |  |
 |  [GymType](./bitburner.gymtype.md) |  |
-|  [IndustryType](./bitburner.industrytype.md) |  |
+|  [JobName](./bitburner.jobname.md) |  |
 |  [LocationName](./bitburner.locationname.md) | Names of all locations |
 |  [OrderTypes](./bitburner.ordertypes.md) |  |
 |  [PositionTypes](./bitburner.positiontypes.md) |  |
@@ -32,6 +31,9 @@
 |  [Bladeburner](./bitburner.bladeburner.md) | Bladeburner API |
 |  [BladeburnerCurAction](./bitburner.bladeburnercuraction.md) | Bladeburner current action. |
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contract API |
+|  [CorpConstants](./bitburner.corpconstants.md) | Corporation related constants |
+|  [CorpIndustryData](./bitburner.corpindustrydata.md) | Data for an individual industry |
+|  [CorpMaterialConstantData](./bitburner.corpmaterialconstantdata.md) | Corporation material information |
 |  [Corporation](./bitburner.corporation.md) | Corporation API |
 |  [CorporationInfo](./bitburner.corporationinfo.md) | General info about a corporation |
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
@@ -61,6 +63,7 @@
 |  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Server formulas |
 |  [HP](./bitburner.hp.md) |  |
 |  [ILocation](./bitburner.ilocation.md) |  |
+|  [IndustryData](./bitburner.industrydata.md) | Corporation industry information |
 |  [Infiltration](./bitburner.infiltration.md) | Infiltration API. |
 |  [InfiltrationLocation](./bitburner.infiltrationlocation.md) |  |
 |  [InfiltrationReward](./bitburner.infiltrationreward.md) |  |
@@ -105,6 +108,14 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [CodingContractData](./bitburner.codingcontractdata.md) | Coding contract data will differ depending on coding contract. |
+|  [CorpEmployeePosition](./bitburner.corpemployeeposition.md) |  |
+|  [CorpIndustryName](./bitburner.corpindustryname.md) |  |
+|  [CorpMaterialName](./bitburner.corpmaterialname.md) |  |
+|  [CorpProductData](./bitburner.corpproductdata.md) | Product rating information |
+|  [CorpResearchName](./bitburner.corpresearchname.md) |  |
+|  [CorpStateName](./bitburner.corpstatename.md) |  |
+|  [CorpUnlockName](./bitburner.corpunlockname.md) |  |
+|  [CorpUpgradeName](./bitburner.corpupgradename.md) |  |
 |  [FilenameOrPID](./bitburner.filenameorpid.md) |  |
 |  [NSEnums](./bitburner.nsenums.md) |  |
 |  [PortData](./bitburner.portdata.md) |  |

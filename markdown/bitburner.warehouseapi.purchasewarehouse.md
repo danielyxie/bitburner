@@ -9,7 +9,7 @@ Purchase warehouse for a new city
 <b>Signature:</b>
 
 ```typescript
-purchaseWarehouse(divisionName: string, cityName: string): void;
+purchaseWarehouse(divisionName: string, city: CityName | `${CityName}`): void;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ purchaseWarehouse(divisionName: string, cityName: string): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
+|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
 
 <b>Returns:</b>
 

@@ -1,6 +1,6 @@
-import { Player as player } from "../Player";
+import { Player } from "@player";
 import { CodingContract } from "../CodingContracts";
-import { CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
+import { CodingContract as ICodingContract } from "@nsdefs";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 import { codingContractTypesMetadata } from "../data/codingcontracttypes";
@@ -33,7 +33,7 @@ export function NetscriptCodingContract(): InternalAPI<ICodingContract> {
 
       const serv = helpers.getServer(ctx, hostname);
       if (contract.isSolution(answerStr)) {
-        const reward = player.gainCodingContractReward(creward, contract.getDifficulty());
+        const reward = Player.gainCodingContractReward(creward, contract.getDifficulty());
         helpers.log(ctx, () => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`);
         serv.removeContract(filename);
         return reward;

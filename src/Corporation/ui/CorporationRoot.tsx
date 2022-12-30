@@ -3,7 +3,7 @@
 // divisions, see an overview of your corporation, or create a new industry
 import React, { useState, useEffect } from "react";
 import { MainPanel } from "./MainPanel";
-import { IndustryType } from "../IndustryData";
+import { IndustryType } from "../data/Enums";
 import { ExpandIndustryTab } from "./ExpandIndustryTab";
 import { Player } from "@player";
 import { Context } from "./Context";

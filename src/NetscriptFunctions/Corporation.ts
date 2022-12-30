@@ -6,17 +6,17 @@ import { Material } from "../Corporation/Material";
 import { Warehouse } from "../Corporation/Warehouse";
 import { Industry } from "../Corporation/Industry";
 import { Corporation } from "../Corporation/Corporation";
+import { cloneDeep, omit } from "lodash";
 
 import {
-  productInfo as NSProduct,
-  materialInfo as NSMaterial,
-  divisionInfo as NSDivisionInfo,
   Corporation as NSCorporation,
   Division as NSDivision,
   WarehouseAPI,
   OfficeAPI,
   InvestmentOffer,
-} from "../ScriptEditor/NetscriptDefinitions";
+  CorpResearchName,
+  CorpMaterialName,
+} from "@nsdefs";
 
 import {
   NewIndustry,
@@ -54,16 +54,16 @@ import {
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
-import { EmployeePositions } from "../Corporation/EmployeePositions";
-import { IndustriesData, IndustryResearchTrees, IndustryType } from "../Corporation/IndustryData";
-import { CorporationConstants } from "../Corporation/data/Constants";
+import { EmployeePositions, IndustryType } from "../Corporation/data/Enums";
+import { IndustriesData, IndustryResearchTrees } from "../Corporation/IndustryData";
+import * as corpConstants from "../Corporation/data/Constants";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
-import { assertEnumMember, helpers } from "../Netscript/NetscriptHelpers";
+import { InternalAPI, NetscriptContext, removedFunction } from "../Netscript/APIWrapper";
+import { assertMember, helpers } from "../Netscript/NetscriptHelpers";
 import { checkEnum } from "../utils/helpers/enum";
-import { CityName } from "../Locations/data/CityNames";
+import { CityName } from "../Enums";
 import { MaterialInfo } from "../Corporation/MaterialInfo";
 
 export function NetscriptCorporation(): InternalAPI<NSCorporation> {
@@ -123,8 +123,8 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function getInvestmentOffer(): InvestmentOffer {
     const corporation = getCorporation();
     if (
-      corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
-      corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length ||
+      corporation.fundingRound >= corpConstants.fundingRoundShares.length ||
+      corporation.fundingRound >= corpConstants.fundingRoundMultiplier.length ||
       corporation.public
     )
       return {
@@ -133,10 +133,10 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         round: corporation.fundingRound + 1, // Make more readable
       }; // Don't throw an error here, no reason to have a second function to check if you can get investment.
     const val = corporation.valuation;
-    const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
-    const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
+    const percShares = corpConstants.fundingRoundShares[corporation.fundingRound];
+    const roundMultiplier = corpConstants.fundingRoundMultiplier[corporation.fundingRound];
     const funding = val * percShares * roundMultiplier;
-    const investShares = Math.floor(CorporationConstants.INITIALSHARES * percShares);
+    const investShares = Math.floor(corpConstants.initialShares * percShares);
     return {
       funds: funding,
       shares: investShares,
@@ -147,16 +147,16 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   function acceptInvestmentOffer(): boolean {
     const corporation = getCorporation();
     if (
-      corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
-      corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length ||
+      corporation.fundingRound >= corpConstants.fundingRoundShares.length ||
+      corporation.fundingRound >= corpConstants.fundingRoundMultiplier.length ||
       corporation.public
     )
       return false;
     const val = corporation.valuation;
-    const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
-    const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
+    const percShares = corpConstants.fundingRoundShares[corporation.fundingRound];
+    const roundMultiplier = corpConstants.fundingRoundMultiplier[corporation.fundingRound];
     const funding = val * percShares * roundMultiplier;
-    const investShares = Math.floor(CorporationConstants.INITIALSHARES * percShares);
+    const investShares = Math.floor(corpConstants.initialShares * percShares);
     corporation.fundingRound++;
     corporation.addFunds(funding);
     corporation.numShares -= investShares;
@@ -177,7 +177,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return true;
   }
 
-  function getResearchCost(division: Industry, researchName: string): number {
+  function getResearchCost(division: Industry, researchName: CorpResearchName): number {
     const researchTree = IndustryResearchTrees[division.type];
     if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
     const allResearch = researchTree.getAllNodes();
@@ -186,7 +186,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return research.cost;
   }
 
-  function hasResearched(division: Industry, researchName: string): boolean {
+  function hasResearched(division: Industry, researchName: CorpResearchName): boolean {
     return division.researched[researchName] === undefined ? false : (division.researched[researchName] as boolean);
   }
 
@@ -202,7 +202,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     if (!info.offersWork()) return false;
     if (player.hasGangWith(factionName)) return false;
 
-    const repGain = amountCash / CorporationConstants.BribeToRepRatio;
+    const repGain = amountCash / corpConstants.bribeAmountPerReputation;
     faction.playerReputation += repGain;
     corporation.funds = corporation.funds - amountCash;
 
@@ -238,11 +238,9 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     return warehouse;
   }
 
-  function getMaterial(divisionName: string, cityName: string, materialName: string): Material {
+  function getMaterial(divisionName: string, cityName: CityName, materialName: CorpMaterialName): Material {
     const warehouse = getWarehouse(divisionName, cityName);
-    const matName = materialName.replace(/ /g, "");
-    const material = warehouse.materials[matName];
-    if (material === undefined) throw new Error(`Invalid material name: '${materialName}'`);
+    const material = warehouse.materials[materialName];
     return material;
   }
 
@@ -262,9 +260,9 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
   }
 
   function getSafeDivision(division: Industry): NSDivision {
-    const cities: string[] = [];
+    const cities: CityName[] = [];
     for (const office of Object.values(division.offices)) {
-      if (office === 0) continue;
+      if (!office) continue;
       cities.push(office.loc);
     }
 
@@ -274,7 +272,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       awareness: division.awareness,
       popularity: division.popularity,
       prodMult: division.prodMult,
-      research: division.sciResearch.qty,
+      research: division.sciResearch,
       lastCycleRevenue: division.lastCycleRevenue,
       lastCycleExpenses: division.lastCycleExpenses,
       thisCycleRevenue: division.thisCycleRevenue,
@@ -284,58 +282,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       products: division.products === undefined ? [] : Object.keys(division.products),
       makesProducts: division.makesProducts,
     };
-  }
-
-  function getDivisionConstants(): Record<string, NSDivisionInfo> {
-    const divObject: Record<string, NSDivisionInfo> = {};
-    for (const [ind, type] of Object.entries(IndustryType)) {
-      divObject[ind] = {
-        type: type,
-        cost: IndustriesData[type].startingCost,
-        requiredMaterials: IndustriesData[type].reqMats,
-        makesMaterials: IndustriesData[type].prodMats ? true : false,
-        makesProducts: IndustriesData[type].product ? true : false,
-      };
-      if (divObject[ind].makesProducts) {
-        divObject[ind].productType = IndustriesData[type].product?.name;
-      }
-      if (divObject[ind].makesMaterials) {
-        divObject[ind].producedMaterials = IndustriesData[type].prodMats;
-      }
-    }
-    return divObject;
-  }
-
-  function getProductInfo(): Record<string, NSProduct> {
-    const prodsObject: Record<string, NSProduct> = {};
-    for (const [ind, type] of Object.entries(IndustryType)) {
-      if (typeof IndustriesData[type].product !== "undefined") {
-        prodsObject[ind] = {
-          requiredMaterials: Object.keys(IndustriesData[type].reqMats),
-          size: 0,
-          division: type,
-        };
-        prodsObject[ind].type = IndustriesData[type].product?.name;
-        let totSize = 0;
-        for (const mat of prodsObject[ind].requiredMaterials) {
-          totSize += MaterialInfo[mat][1];
-        }
-        prodsObject[ind].size = totSize;
-      }
-    }
-    return prodsObject;
-  }
-
-  function getMaterialInfo(): Record<string, NSMaterial> {
-    const matsObject: Record<string, NSMaterial> = {};
-    for (const [mat, info] of Object.entries(MaterialInfo)) {
-      matsObject[mat] = {
-        name: info[0],
-        size: info[1],
-        prodMult: info[2],
-      };
-    }
-    return matsObject;
   }
 
   const warehouseAPI: InternalAPI<WarehouseAPI> = {
@@ -357,7 +303,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       const cityName = helpers.city(ctx, "cityName", _cityName);
       const division = getDivision(divisionName);
-      if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
       const warehouse = division.warehouses[cityName];
       return warehouse !== 0;
     },
@@ -374,11 +319,11 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         smartSupplyEnabled: warehouse.smartSupplyEnabled,
       };
     },
-    getMaterial: (ctx) => (_divisionName, _cityName, _materialName) => {
+    getMaterial: (ctx) => (_divisionName, _cityName, materialName) => {
       checkAccess(ctx, 7);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       const cityName = helpers.city(ctx, "cityName", _cityName);
-      const materialName = helpers.string(ctx, "materialName", _materialName);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
       const material = getMaterial(divisionName, cityName, materialName);
       const corporation = getCorporation();
       const exports = material.exp.map((e) => {
@@ -442,11 +387,11 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         }
         UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName), amt);
       },
-    sellMaterial: (ctx) => (_divisionName, _cityName, _materialName, _amt, _price) => {
+    sellMaterial: (ctx) => (_divisionName, _cityName, materialName, _amt, _price) => {
       checkAccess(ctx, 7);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       const cityName = helpers.city(ctx, "cityName", _cityName);
-      const materialName = helpers.string(ctx, "materialName", _materialName);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
       const amt = helpers.string(ctx, "amt", _amt);
       const price = helpers.string(ctx, "price", _price);
       const material = getMaterial(divisionName, cityName, materialName);
@@ -481,11 +426,11 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         throw helpers.makeRuntimeErrorMsg(ctx, `You have not purchased the Smart Supply upgrade!`);
       SetSmartSupply(warehouse, enabled);
     },
-    setSmartSupplyUseLeftovers: (ctx) => (_divisionName, _cityName, _materialName, _enabled) => {
+    setSmartSupplyUseLeftovers: (ctx) => (_divisionName, _cityName, materialName, _enabled) => {
       checkAccess(ctx, 7);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       const cityName = helpers.city(ctx, "cityName", _cityName);
-      const materialName = helpers.string(ctx, "materialName", _materialName);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
       const enabled = !!_enabled;
       const warehouse = getWarehouse(divisionName, cityName);
       const material = getMaterial(divisionName, cityName, materialName);
@@ -493,25 +438,25 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         throw helpers.makeRuntimeErrorMsg(ctx, `You have not purchased the Smart Supply upgrade!`);
       SetSmartSupplyUseLeftovers(warehouse, material, enabled);
     },
-    buyMaterial: (ctx) => (_divisionName, _cityName, _materialName, _amt) => {
+    buyMaterial: (ctx) => (_divisionName, _cityName, materialName, _amt) => {
       checkAccess(ctx, 7);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       const cityName = helpers.city(ctx, "cityName", _cityName);
-      const materialName = helpers.string(ctx, "materialName", _materialName);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
       const amt = helpers.number(ctx, "amt", _amt);
       if (amt < 0 || !Number.isFinite(amt))
         throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
     },
-    bulkPurchase: (ctx) => (_divisionName, _cityName, _materialName, _amt) => {
+    bulkPurchase: (ctx) => (_divisionName, _cityName, materialName, _amt) => {
       checkAccess(ctx, 7);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       if (!hasResearched(getDivision(divisionName), "Bulk Purchasing"))
         throw new Error(`You have not researched Bulk Purchasing in ${divisionName}`);
       const corporation = getCorporation();
       const cityName = helpers.city(ctx, "cityName", _cityName);
-      const materialName = helpers.string(ctx, "materialName", _materialName);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
       const amt = helpers.number(ctx, "amt", _amt);
       const warehouse = getWarehouse(divisionName, cityName);
       const material = getMaterial(divisionName, cityName, materialName);
@@ -539,13 +484,13 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     },
     exportMaterial:
       (ctx) =>
-      (_sourceDivision, sourceCity, _targetDivision, targetCity, _materialName, _amt): void => {
+      (_sourceDivision, sourceCity, _targetDivision, targetCity, materialName, _amt): void => {
         checkAccess(ctx, 7);
         const sourceDivision = helpers.string(ctx, "sourceDivision", _sourceDivision);
-        assertEnumMember(ctx, CityName, "City", "sourceCity", sourceCity);
+        assertMember(ctx, CityName, "City", "sourceCity", sourceCity);
         const targetDivision = helpers.string(ctx, "targetDivision", _targetDivision);
-        assertEnumMember(ctx, CityName, "City", "targetCity", targetCity);
-        const materialName = helpers.string(ctx, "materialName", _materialName);
+        assertMember(ctx, CityName, "City", "targetCity", targetCity);
+        assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
         const amt = helpers.string(ctx, "amt", _amt);
         ExportMaterial(
           targetDivision,
@@ -557,44 +502,39 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       },
     cancelExportMaterial:
       (ctx) =>
-      (_sourceDivision, sourceCity, _targetDivision, targetCity, _materialName, _amt): void => {
+      (_sourceDivision, sourceCity, _targetDivision, targetCity, materialName, _amt): void => {
         checkAccess(ctx, 7);
         const sourceDivision = helpers.string(ctx, "sourceDivision", _sourceDivision);
-        assertEnumMember(ctx, CityName, "City", "sourceCity", sourceCity);
+        assertMember(ctx, CityName, "City Name", "sourceCity", sourceCity);
         const targetDivision = helpers.string(ctx, "targetDivision", _targetDivision);
-        assertEnumMember(ctx, CityName, "City", "targetCity", targetCity);
-        const materialName = helpers.string(ctx, "materialName", _materialName);
+        assertMember(ctx, CityName, "City Name", "targetCity", targetCity);
+        assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
         const amt = helpers.string(ctx, "amt", _amt);
-        CancelExportMaterial(
-          targetDivision,
-          targetCity,
-          getMaterial(sourceDivision, sourceCity, materialName),
-          amt + "",
-        );
+        CancelExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt);
       },
-    limitMaterialProduction: (ctx) => (_divisionName, _cityName, _materialName, _qty) => {
+    limitMaterialProduction: (ctx) => (_divisionName, cityName, materialName, _qty) => {
       checkAccess(ctx, 7);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-      const cityName = helpers.city(ctx, "cityName", _cityName);
-      const materialName = helpers.string(ctx, "materialName", _materialName);
+      assertMember(ctx, CityName, "City Name", "cityName", cityName);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
       const qty = helpers.number(ctx, "qty", _qty);
       LimitMaterialProduction(getMaterial(divisionName, cityName, materialName), qty);
     },
-    setMaterialMarketTA1: (ctx) => (_divisionName, _cityName, _materialName, _on) => {
+    setMaterialMarketTA1: (ctx) => (_divisionName, cityName, materialName, _on) => {
       checkAccess(ctx, 7);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-      const cityName = helpers.city(ctx, "cityName", _cityName);
-      const materialName = helpers.string(ctx, "materialName", _materialName);
+      assertMember(ctx, CityName, "City Name", "cityName", cityName);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
       const on = !!_on;
       if (!getDivision(divisionName).hasResearch("Market-TA.I"))
         throw helpers.makeRuntimeErrorMsg(ctx, `You have not researched MarketTA.I for division: ${divisionName}`);
       SetMaterialMarketTA1(getMaterial(divisionName, cityName, materialName), on);
     },
-    setMaterialMarketTA2: (ctx) => (_divisionName, _cityName, _materialName, _on) => {
+    setMaterialMarketTA2: (ctx) => (_divisionName, cityName, materialName, _on) => {
       checkAccess(ctx, 7);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-      const cityName = helpers.city(ctx, "cityName", _cityName);
-      const materialName = helpers.string(ctx, "materialName", _materialName);
+      assertMember(ctx, CityName, "City Name", "cityName", cityName);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
       const on = !!_on;
       if (!getDivision(divisionName).hasResearch("Market-TA.II"))
         throw helpers.makeRuntimeErrorMsg(ctx, `You have not researched MarketTA.II for division: ${divisionName}`);
@@ -633,16 +573,16 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       const division = getDivision(divisionName);
       return division.numAdVerts;
     },
-    getResearchCost: (ctx) => (_divisionName, _researchName) => {
+    getResearchCost: (ctx) => (_divisionName, researchName) => {
       checkAccess(ctx, 8);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-      const researchName = helpers.string(ctx, "researchName", _researchName);
+      assertMember(ctx, corpConstants.researchNames, "Research Name", "researchName", researchName);
       return getResearchCost(getDivision(divisionName), researchName);
     },
-    hasResearched: (ctx) => (_divisionName, _researchName) => {
+    hasResearched: (ctx) => (_divisionName, researchName) => {
       checkAccess(ctx, 8);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-      const researchName = helpers.string(ctx, "researchName", _researchName);
+      assertMember(ctx, corpConstants.researchNames, "Research Name", "researchName", researchName);
       return hasResearched(getDivision(divisionName), researchName);
     },
     getOfficeSizeUpgradeCost: (ctx) => (_divisionName, _cityName, _size) => {
@@ -652,13 +592,13 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       const size = helpers.number(ctx, "size", _size);
       if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
-      const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
+      const initialPriceMult = Math.round(office.size / corpConstants.officeInitialSize);
       const costMultiplier = 1.09;
       let mult = 0;
-      for (let i = 0; i < size / CorporationConstants.OfficeInitialSize; ++i) {
+      for (let i = 0; i < size / corpConstants.officeInitialSize; ++i) {
         mult += Math.pow(costMultiplier, initialPriceMult + i);
       }
-      return CorporationConstants.OfficeInitialCost * mult;
+      return corpConstants.officeInitialCost * mult;
     },
     setAutoJobAssignment: (ctx) => (_divisionName, _cityName, _job, _amount) => {
       checkAccess(ctx, 8);
@@ -721,10 +661,10 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       const corporation = getCorporation();
       HireAdVert(corporation, getDivision(divisionName));
     },
-    research: (ctx) => (_divisionName, _researchName) => {
+    research: (ctx) => (_divisionName, researchName) => {
       checkAccess(ctx, 8);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
-      const researchName = helpers.string(ctx, "researchName", _researchName);
+      assertMember(ctx, corpConstants.researchNames, "Research Name", "reseatchName", researchName);
       Research(getDivision(divisionName), researchName);
     },
     getOffice: (ctx) => (_divisionName, _cityName) => {
@@ -751,30 +691,31 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     },
   };
 
-  return {
-    enums: {
-      EmployeePositions,
-      IndustryType,
-    },
+  // TODO 2.2: Add removed function error dialogs for all the functions removed/replaced by getConstants.
+  const corpFunctions: InternalAPI<NSCorporation> = {
     ...warehouseAPI,
     ...officeAPI,
     hasCorporation: () => () => !!Player.corporation,
     getConstants: (ctx) => () => {
       checkAccess(ctx);
-      return {
-        coffeeCost: 5e8,
-        states: [...CorporationConstants.AllCorporationStates],
-        bribeToRepRatio: CorporationConstants.BribeToRepRatio,
-        cityExpandCost: CorporationConstants.OfficeInitialCost,
-        warehousePurchaseCost: CorporationConstants.WarehouseInitialCost,
-        baseMaxProducts: CorporationConstants.BaseMaxProducts,
-        products: getProductInfo(),
-        materials: getMaterialInfo(),
-        unlocks: [...CorporationConstants.AllUnlocks],
-        upgrades: [...CorporationConstants.AllUpgrades],
-        researches: { base: [...CorporationConstants.BaseResearch], product: [...CorporationConstants.ProdResearch] },
-        divisions: getDivisionConstants(),
-      };
+      /* TODO 2.2: possibly just rework the whole corp constants structure to be more readable, and just use cloneDeep
+       *           to provide it directly to player.
+       * TODO 2.2: Roll product information into industriesData, there's no reason to look up a product separately */
+      return cloneDeep(omit(corpConstants, "fundingRoundShares", "fundingRoundMultiplier", "valuationLength"));
+      // TODO: add functions for getting materialInfo and research info
+    },
+    getIndustryData: (ctx) => (_industryName) => {
+      checkAccess(ctx);
+      const industryName = helpers.string(ctx, "industryName", _industryName);
+      if (!checkEnum(IndustryType, industryName)) {
+        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid industry: ${industryName}`);
+      }
+      return cloneDeep(IndustriesData[industryName]);
+    },
+    getMaterialData: (ctx) => (materialName) => {
+      checkAccess(ctx);
+      assertMember(ctx, corpConstants.materialNames, "Material Name", "materialName", materialName);
+      return cloneDeep(MaterialInfo[materialName]);
     },
     expandIndustry: (ctx) => (_industryName, _divisionName) => {
       checkAccess(ctx);
@@ -790,7 +731,6 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       checkAccess(ctx);
       const divisionName = helpers.string(ctx, "divisionName", _divisionName);
       const cityName = helpers.city(ctx, "cityName", _cityName);
-      if (!CorporationConstants.Cities.includes(cityName)) throw new Error("Invalid city name");
       const corporation = getCorporation();
       const division = getDivision(divisionName);
       NewCity(corporation, division, cityName);
@@ -814,7 +754,7 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
     issueDividends: (ctx) => (_rate) => {
       checkAccess(ctx);
       const rate = helpers.number(ctx, "rate", _rate);
-      const max = CorporationConstants.DividendMaxRate;
+      const max = corpConstants.dividendMaxRate;
       if (rate < 0 || rate > max)
         throw new Error(`Invalid value for rate field! Must be numeric, greater than 0, and less than ${max}`);
       const corporation = getCorporation();
@@ -858,9 +798,9 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
         sharePrice: corporation.sharePrice,
         dividendRate: corporation.dividendRate,
         dividendTax: corporation.dividendTax,
-        dividendEarnings: corporation.getCycleDividends() / CorporationConstants.SecsPerMarketCycle,
+        dividendEarnings: corporation.getCycleDividends() / corpConstants.secondsPerMarketCycle,
         state: corporation.state.getState(),
-        divisions: corporation.divisions.map((division): string => division.name),
+        divisions: corporation.divisions.map((division) => division.name),
       };
     },
     createCorporation:
@@ -926,4 +866,19 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       return Math.round(getCorporation().storedCycles / 5) * 1000;
     },
   };
+  // TODO: More removedFunctions entries for old getter functions replaced by getConstants
+  Object.assign(corpFunctions, {
+    assignJob: removedFunction(
+      "v2.2.0",
+      "Corporation employees no longer exist as separate objects.\nUse corporation.setAutoJobAssignment instead to assign employees to jobs.",
+      true,
+    ),
+    getEmployee: removedFunction(
+      "v2.2.0",
+      "Corporation employees no longer exist as separate objects and this function no longer has a use.",
+      true,
+    ),
+    getDivisionConstants: removedFunction("v2.2.0", "ns.corporation.getIndustryData"),
+  });
+  return corpFunctions;
 }

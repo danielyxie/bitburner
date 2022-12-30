@@ -1,13 +1,4 @@
-import { CityName } from "./../../Locations/data/CityNames";
 export const BladeburnerConstants = {
-  CityNames: [
-    CityName.Aevum,
-    CityName.Chongqing,
-    CityName.Sector12,
-    CityName.NewTokyo,
-    CityName.Ishima,
-    CityName.Volhaven,
-  ],
   CyclesPerSecond: 5, // Game cycle is 200 ms
 
   StaminaGainPerSecond: 0.0085,

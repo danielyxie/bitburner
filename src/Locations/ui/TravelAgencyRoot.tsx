@@ -5,7 +5,7 @@
  */
 import React, { useState, useEffect } from "react";
 
-import { CityName } from "../data/CityNames";
+import { CityName } from "../../Enums";
 import { TravelConfirmationModal } from "./TravelConfirmationModal";
 
 import { CONSTANTS } from "../../Constants";

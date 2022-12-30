@@ -42,7 +42,7 @@ export class StampedLayer {
     this.#workerScript = ws;
     Object.setPrototypeOf(this, obj);
   }
-  static wrapFunction<API>(eLayer: ExternalAPI<API>, func: InternalFn<APIFn>, tree: string[], key: Key<API>) {
+  static wrapFunction<API>(eLayer: ExternalAPI<API>, internalFunc: InternalFn<APIFn>, tree: string[], key: Key<API>) {
     const arrayPath = [...tree, key];
     const functionPath = arrayPath.join(".");
     function wrappedFunction(this: StampedLayer, ...args: unknown[]): unknown {
@@ -55,9 +55,10 @@ variable. e.g.
 const ${key} = ns.${functionPath}.bind(ns);
 ${key}(${JSON.stringify(args).replace(/^\[|\]$/g, "")});\n\n`);
       const ctx = { workerScript: this.#workerScript, function: key, functionPath };
+      const func = internalFunc(ctx); //Allows throwing before ram chack
       helpers.checkEnvFlags(ctx);
       helpers.updateDynamicRam(ctx, getRamCost(...tree, key));
-      return func(ctx)(...args);
+      return func(...args);
     }
     Object.defineProperty(eLayer, key, { value: wrappedFunction, enumerable: true, writable: false });
   }
@@ -97,4 +98,14 @@ export function wrapAPILayer<API>(
     }
   }
   return eLayer;
+}
+
+/** Specify when a function was removed from the game, and its replacement function. */
+export function removedFunction(version: string, replacement: string, replaceMsg?: boolean) {
+  return (ctx: NetscriptContext) => {
+    throw helpers.makeRuntimeErrorMsg(
+      ctx,
+      `Function removed in ${version}. ` + replaceMsg ? replacement : `Please use ${replacement} instead.`,
+    );
+  };
 }

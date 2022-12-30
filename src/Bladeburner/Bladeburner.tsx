@@ -35,6 +35,8 @@ import { KEY } from "../utils/helpers/keyCodes";
 import { isSleeveInfiltrateWork } from "../PersonObjects/Sleeve/Work/SleeveInfiltrateWork";
 import { isSleeveSupportWork } from "../PersonObjects/Sleeve/Work/SleeveSupportWork";
 import { WorkStats, newWorkStats } from "../Work/WorkStats";
+import { CityName } from "../Enums";
+import { getRandomMember } from "../utils/helpers/enum";
 
 export interface BlackOpsAttempt {
   error?: string;
@@ -68,8 +70,9 @@ export class Bladeburner {
     type: ActionTypes["Idle"],
   });
 
-  cities: Record<string, City> = {};
-  city: string = BladeburnerConstants.CityNames[2];
+  cities: Record<CityName, City>;
+  city = CityName.Sector12;
+  // Todo: better types for all these Record<string, etc> types. Will need custom types or enums for the named string categories (e.g. skills).
   skills: Record<string, number> = {};
   skillMultipliers: Record<string, number> = {};
   staminaBonus = 0;
@@ -98,9 +101,9 @@ export class Bladeburner {
   consoleLogs: string[] = ["Bladeburner Console", "Type 'help' to see console commands"];
 
   constructor() {
-    for (let i = 0; i < BladeburnerConstants.CityNames.length; ++i) {
-      this.cities[BladeburnerConstants.CityNames[i]] = new City(BladeburnerConstants.CityNames[i]);
-    }
+    this.cities = {} as Record<CityName, City>;
+    // This for loop ensures the above type is met for this.cities.
+    for (const city of Object.values(CityName)) this.cities[city] = new City(city);
 
     this.updateSkillMultipliers(); // Calls resetSkillMultipliers()
 
@@ -111,9 +114,7 @@ export class Bladeburner {
   }
 
   getCurrentCity(): City {
-    const city = this.cities[this.city];
-    if (!city) throw new Error("Invalid city in Bladeburner.getCurrentCity()");
-    return city;
+    return this.cities[this.city];
   }
 
   calculateStaminaPenalty(): number {
@@ -157,7 +158,8 @@ export class Bladeburner {
     return { isAvailable: true, action };
   }
 
-  /** This function is only for the player. Sleeves use their own functions to perform blade work. */
+  /** This function is only for the player. Sleeves use their own functions to perform blade work.
+   *  Todo: partial unification of player and sleeve methods? */
   startAction(actionId: ActionIdentifier): void {
     if (actionId == null) return;
     this.action = actionId;
@@ -849,16 +851,13 @@ export class Bladeburner {
     }
   }
 
-  triggerMigration(sourceCityName: string): void {
-    let destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    while (destCityName === sourceCityName) {
-      destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    }
+  triggerMigration(sourceCityName: CityName): void {
+    let destCityName = getRandomMember(CityName);
+    while (destCityName === sourceCityName) destCityName = getRandomMember(CityName);
+
     const destCity = this.cities[destCityName];
     const sourceCity = this.cities[sourceCityName];
-    if (destCity == null || sourceCity == null) {
-      throw new Error("Failed to find City with name: " + destCityName);
-    }
+
     const rand = Math.random();
     let percentage = getRandomInt(3, 15) / 100;
 
@@ -873,7 +872,7 @@ export class Bladeburner {
     destCity.pop += count;
   }
 
-  triggerPotentialMigration(sourceCityName: string, chance: number): void {
+  triggerPotentialMigration(sourceCityName: CityName, chance: number): void {
     if (chance == null || isNaN(chance)) {
       console.error("Invalid 'chance' parameter passed into Bladeburner.triggerPotentialMigration()");
     }
@@ -889,17 +888,12 @@ export class Bladeburner {
     const chance = Math.random();
 
     // Choose random source/destination city for events
-    const sourceCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
+    const sourceCityName = getRandomMember(CityName);
     const sourceCity = this.cities[sourceCityName];
-    if (!sourceCity) throw new Error("Invalid sourceCity in Bladeburner.randomEvent()");
 
-    let destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    while (destCityName === sourceCityName) {
-      destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    }
+    let destCityName = getRandomMember(CityName);
+    while (destCityName === sourceCityName) destCityName = getRandomMember(CityName);
     const destCity = this.cities[destCityName];
-
-    if (!sourceCity || !destCity) throw new Error("Invalid sourceCity or destCity in Bladeburner.randomEvent()");
 
     if (chance <= 0.05) {
       // New Synthoid Community, 5%
@@ -1571,7 +1565,7 @@ export class Bladeburner {
         if (this.logging.general) {
           this.log(`${person.whoAmI()}: Incited violence in the synthoid communities.`);
         }
-        for (const cityName of Object.keys(this.cities)) {
+        for (const cityName of Object.values(CityName)) {
           const city = this.cities[cityName];
           city.chaos += 10;
           city.chaos += city.chaos / (Math.log(city.chaos) / Math.log(10));
@@ -2007,7 +2001,7 @@ export class Bladeburner {
       }
 
       // Chaos goes down very slowly
-      for (const cityName of BladeburnerConstants.CityNames) {
+      for (const cityName of Object.values(CityName)) {
         const city = this.cities[cityName];
         if (!city) throw new Error("Invalid city when processing passive chaos reduction in Bladeburner.process");
         city.chaos -= 0.0001 * seconds;

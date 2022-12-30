@@ -4,7 +4,7 @@ import { Player } from "@player";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { checkEnum } from "../utils/helpers/enum";
-import { CrimeType } from "../utils/enums";
+import { CrimeType } from "../Enums";
 
 //This is only used for the player
 export function determineCrimeSuccess(type: string): boolean {

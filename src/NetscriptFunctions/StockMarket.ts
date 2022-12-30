@@ -12,7 +12,7 @@ import {
   getStockMarketTixApiCost,
 } from "../StockMarket/StockMarketCosts";
 import { Stock } from "../StockMarket/Stock";
-import { StockOrder, TIX } from "../ScriptEditor/NetscriptDefinitions";
+import { StockOrder, TIX } from "@nsdefs";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 

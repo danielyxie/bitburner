@@ -1,4 +1,4 @@
-import { CityName } from "./../Locations/data/CityNames";
+import { CityName } from "./../Enums";
 import { Literature } from "./Literature";
 import { LiteratureNames } from "./data/LiteratureNames";
 import { FactionNames } from "../Faction/data/FactionNames";

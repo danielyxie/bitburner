@@ -36,5 +36,5 @@ If you are not in BitNode-10, then you must have Source-File 10 in order to use 
 |  [setToShockRecovery(sleeveNumber)](./bitburner.sleeve.settoshockrecovery.md) | Set a sleeve to shock recovery. |
 |  [setToSynchronize(sleeveNumber)](./bitburner.sleeve.settosynchronize.md) | Set a sleeve to synchronize. |
 |  [setToUniversityCourse(sleeveNumber, university, className)](./bitburner.sleeve.settouniversitycourse.md) | Set a sleeve to take a class at a university. |
-|  [travel(sleeveNumber, cityName)](./bitburner.sleeve.travel.md) | Make a sleeve travel to another city. |
+|  [travel(sleeveNumber, city)](./bitburner.sleeve.travel.md) | Make a sleeve travel to another city. |
 

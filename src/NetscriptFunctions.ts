@@ -61,7 +61,7 @@ import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
 import { NetscriptGrafting } from "./NetscriptFunctions/Grafting";
-import { NS, RecentScript, BasicHGWOptions, ProcessInfo, NSEnums } from "./ScriptEditor/NetscriptDefinitions";
+import { NS, RecentScript, BasicHGWOptions, ProcessInfo, NSEnums } from "@nsdefs";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
@@ -77,18 +77,19 @@ import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { getBitNodeMultipliers } from "./BitNode/BitNode";
 import { assert, arrayAssert, stringAssert, objectAssert } from "./utils/helpers/typeAssertion";
-import { CompanyPosName, CrimeType, GymType, LocationName, UniversityClassType } from "./utils/enums";
+import { CityName, JobName, CrimeType, GymType, LocationName, UniversityClassType } from "./Enums";
 import { cloneDeep } from "lodash";
-import { FactionWorkType } from "./utils/enums";
+import { FactionWorkType } from "./Enums";
 
 export const enums: NSEnums = {
-  toast: ToastVariant,
+  CityName,
   CrimeType,
   FactionWorkType,
   GymType,
-  UniversityClassType,
-  CompanyPosName,
   LocationName,
+  JobName,
+  ToastVariant,
+  UniversityClassType,
 };
 
 export type NSFull = Readonly<Omit<NS & INetscriptExtra, "pid" | "args">>;
@@ -129,7 +130,7 @@ export const ns: InternalAPI<NSFull> = {
     (ctx) =>
     (_hostname, opts = {}) => {
       const hostname = helpers.string(ctx, "hostname", _hostname);
-      // Todo: better type safety rework for functions using assertObjectType, then remove function.
+      // TODO 2.2: better type safety rework for functions using assertObjectType, then remove function.
       const optsValidator: BasicHGWOptions = {};
       assertObjectType(ctx, "opts", opts, optsValidator);
       return helpers.hack(ctx, hostname, false, { threads: opts.threads, stock: opts.stock });
@@ -1917,7 +1918,7 @@ function populateLayers(nsLayer: ExternalAPI<unknown>, currentLayers: string[] =
 populateLayers(wrappedNS);
 
 export function NetscriptFunctions(ws: WorkerScript): ExternalAPI<NSFull> {
-  //todo: better typing instead of relying on an any
+  //TODO unplanned: better typing instead of relying on an any
   const instance = new StampedLayer(ws, wrappedNS) as any;
   for (const layerLocation of layerLocations) {
     const key = layerLocation.pop() as string;

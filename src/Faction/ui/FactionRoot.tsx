@@ -24,7 +24,7 @@ import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPur
 import { FactionNames } from "../data/FactionNames";
 import { GangButton } from "./GangButton";
 import { FactionWork } from "../../Work/FactionWork";
-import { FactionWorkType } from "../../utils/enums";
+import { FactionWorkType } from "../../Enums";
 
 type IProps = {
   faction: Faction;

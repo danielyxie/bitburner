@@ -1,6 +1,6 @@
 import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { FactionWorkType } from "../../../utils/enums";
+import { FactionWorkType } from "../../../Enums";
 import { CONSTANTS } from "../../../Constants";
 import { Player } from "@player";
 import { numeralWrapper } from "../../../ui/numeralFormat";
@@ -21,7 +21,7 @@ import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
 import { isSleeveBladeburnerWork } from "../Work/SleeveBladeburnerWork";
 import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
 import { findCrime } from "../../../Crime/CrimeHelpers";
-import { CrimeType } from "../../../utils/enums";
+import { CrimeType } from "../../../Enums";
 
 interface IProps {
   sleeve: Sleeve;

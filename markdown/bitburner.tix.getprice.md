@@ -34,26 +34,11 @@ The stock’s price is the average of its bid and ask prices. This function requ
 
 1. TIX API Access
 
-## Example 1
+## Example
 
 
-```ts
-// NS1
-stock.getPrice("FSIG");
-
-// Choose the first stock symbol from the array of stock symbols.  Get the price
-// of the corresponding stock.
-var sym = stock.getSymbols()[0];
-tprint("Stock symbol: " + sym);
-tprint("Stock price: " + stock.getPrice(sym));
-```
-
-## Example 2
-
-
-```ts
-// NS2
-ns.stock.getPrice("FSIG");
+```js
+const fourSigmaStockPrice = ns.stock.getPrice("FSIG");
 
 // Choose the first stock symbol from the array of stock symbols.  Get the price
 // of the corresponding stock.

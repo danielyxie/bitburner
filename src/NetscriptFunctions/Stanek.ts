@@ -4,7 +4,7 @@ import { staneksGift } from "../CotMG/Helper";
 import { Fragments, FragmentById } from "../CotMG/Fragment";
 import { FragmentType } from "../CotMG/FragmentType";
 
-import { Stanek as IStanek } from "../ScriptEditor/NetscriptDefinitions";
+import { Stanek as IStanek } from "@nsdefs";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { NetscriptContext, InternalAPI } from "../Netscript/APIWrapper";
 import { applyAugmentation } from "../Augmentation/AugmentationHelpers";

@@ -2,7 +2,7 @@ import { Player } from "@player";
 import { IReviverValue } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applyWorkStatsExp, WorkStats } from "../../../Work/WorkStats";
-import { SleeveTask } from "src/ScriptEditor/NetscriptDefinitions";
+import { SleeveTask } from "@nsdefs";
 
 export const applySleeveGains = (sleeve: Sleeve, shockedStats: WorkStats, mult = 1): void => {
   applyWorkStatsExp(sleeve, shockedStats, mult);

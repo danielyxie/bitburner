@@ -1,18 +1,17 @@
-import { RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../../src/Script/RamCalculations";
 import { Script } from "../../../src/Script/Script";
 
-const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
+const BaseCost = 1.6;
 const HackCost = 0.1;
 const GrowCost = 0.15;
 const SleeveGetTaskCost = 4;
 const HacknetCost = 4;
-const CorpCost = 1024 - ScriptBaseCost;
+const MaxCost = 1024;
 
 describe("Parsing NetScript code to work out static RAM costs", function () {
   /** Tests numeric equality, allowing for floating point imprecision - and includes script base cost */
   function expectCost(val: number, expected: number) {
-    const expectedWithBase = expected + ScriptBaseCost;
+    const expectedWithBase = Math.min(expected + BaseCost, MaxCost);
     expect(val).toBeGreaterThanOrEqual(expectedWithBase - 100 * Number.EPSILON);
     expect(val).toBeLessThanOrEqual(expectedWithBase + 100 * Number.EPSILON);
   }
@@ -170,25 +169,25 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       expectCost(calculated, HacknetCost);
     });
 
-    it("Corporation NS function with a cost from namespace", async function () {
+    it("One corporation function reaching max ram cap", async function () {
       const code = `
         export async function main(ns) {
           ns.corporation.getCorporation();
         }
       `;
       const calculated = calculateRamUsage(code, []).cost;
-      expectCost(calculated, CorpCost);
+      expectCost(calculated, MaxCost);
     });
 
-    it("Both Corporation and Hacknet functions", async function () {
+    it("Two corporation functions at max ram cap", async function () {
       const code = `
         export async function main(ns) {
+          ns.corporation.createCorporation("Noodle Bar");
           ns.corporation.getCorporation();
-          ns.hacknet.purchaseNode(0);
         }
       `;
       const calculated = calculateRamUsage(code, []).cost;
-      expectCost(calculated, CorpCost + HacknetCost);
+      expectCost(calculated, MaxCost);
     });
 
     it("Sleeve functions with an individual cost", async function () {

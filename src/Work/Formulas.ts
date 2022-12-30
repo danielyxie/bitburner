@@ -1,9 +1,9 @@
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Crime } from "../Crime/Crime";
 import { newWorkStats, scaleWorkStats, WorkStats, multWorkStats } from "./WorkStats";
-import { Person as IPerson } from "../ScriptEditor/NetscriptDefinitions";
+import { Person as IPerson } from "@nsdefs";
 import { CONSTANTS } from "../Constants";
-import { FactionWorkType, GymType } from "../utils/enums";
+import { FactionWorkType, GymType } from "../Enums";
 import {
   getFactionFieldWorkRepGain,
   getFactionSecurityWorkRepGain,
@@ -16,7 +16,7 @@ import { Class, Classes, ClassType } from "./ClassWork";
 import { Server } from "../Server/Server";
 import { GetServer } from "../Server/AllServers";
 import { serverMetadata } from "../Server/data/servers";
-import { LocationName } from "../utils/enums";
+import { LocationName } from "../Enums";
 import { Company } from "../Company/Company";
 import { CompanyPosition } from "../Company/CompanyPosition";
 import { checkEnum } from "../utils/helpers/enum";

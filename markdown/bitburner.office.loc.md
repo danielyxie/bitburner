@@ -9,5 +9,5 @@ City of the office
 <b>Signature:</b>
 
 ```typescript
-loc: string;
+loc: CityName;
 ```

@@ -99,7 +99,7 @@ export class GangMember {
   }
 
   getTask(): GangMemberTask {
-    // TODO(hydroflame): transfer that to a save file migration function
+    // TODO unplanned: transfer that to a save file migration function
     // Backwards compatibility
     if ((this.task as any) instanceof GangMemberTask) {
       this.task = (this.task as any).name;

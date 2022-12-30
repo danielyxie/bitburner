@@ -33,7 +33,7 @@ function BulkPurchaseSection(props: IBPProps): React.ReactElement {
     const parsedAmt = parseFloat(props.amount);
     const cost = parsedAmt * props.mat.bCost;
 
-    const matSize = MaterialInfo[props.mat.name][1];
+    const matSize = MaterialInfo[props.mat.name].size;
     const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
 
     if (parsedAmt > maxAmount) {

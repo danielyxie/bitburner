@@ -1,4 +1,4 @@
-import { EmployeePositions } from "./EmployeePositions";
+import { EmployeePositions } from "./data/Enums";
 import { MaterialInfo } from "./MaterialInfo";
 import { Industry } from "./Industry";
 import { IndustriesData } from "./IndustryData";
@@ -7,7 +7,9 @@ import { createCityMap } from "../Locations/createCityMap";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { CityName } from "../Locations/data/CityNames";
+import { CityName } from "../Enums";
+import { materialNames } from "./data/Constants";
+import { CorpMaterialName } from "@nsdefs";
 
 interface IConstructorParams {
   name?: string;
@@ -25,7 +27,7 @@ interface IConstructorParams {
   features?: number;
   loc?: string;
   size?: number;
-  req?: Record<string, number>;
+  req?: Partial<Record<CorpMaterialName, number>>;
 }
 
 export class Product {
@@ -93,7 +95,7 @@ export class Product {
 
   // Material requirements. An object that maps the name of a material to how much it requires
   // to make 1 unit of the product.
-  reqMats: Record<string, number> = {};
+  reqMats: Partial<Record<CorpMaterialName, number>> = {};
 
   // Data to keep track of whether production/sale of this Product is
   // manually limited. These values are specific to a city
@@ -170,7 +172,7 @@ export class Product {
 
     const designMult = 1 + Math.pow(this.designCost, 0.1) / 100;
     const balanceMult = 1.2 * engrRatio + 0.9 * mgmtRatio + 1.3 * rndRatio + 1.5 * opsRatio + busRatio;
-    const sciMult = 1 + Math.pow(industry.sciResearch.qty, industry.sciFac) / 800;
+    const sciMult = 1 + Math.pow(industry.sciResearch, industry.sciFac) / 800;
     const totalMult = balanceMult * designMult * sciMult;
 
     this.qlt =
@@ -230,7 +232,7 @@ export class Product {
 
     //Calculate the product's required materials
     //For now, just set it to be the same as the requirements to make materials
-    for (const matName of Object.keys(industry.reqMats)) {
+    for (const matName of Object.keys(industry.reqMats) as CorpMaterialName[]) {
       if (industry.reqMats.hasOwnProperty(matName)) {
         const reqMat = industry.reqMats[matName];
         if (reqMat === undefined) continue;
@@ -241,23 +243,23 @@ export class Product {
     //Calculate the product's size
     //For now, just set it to be the same size as the requirements to make materials
     this.siz = 0;
-    for (const matName of Object.keys(industry.reqMats)) {
+    for (const matName of Object.values(materialNames)) {
       const reqMat = industry.reqMats[matName];
       if (reqMat === undefined) continue;
-      this.siz += MaterialInfo[matName][1] * reqMat;
+      this.siz += MaterialInfo[matName].size * reqMat;
     }
   }
 
   calculateRating(industry: Industry): void {
-    const weights = IndustriesData[industry.type].ProductRatingWeights;
+    const weights = IndustriesData[industry.type].product?.ratingWeights;
     if (!weights) return console.error(`Could not find product rating weights for: ${industry}`);
     this.rat = 0;
-    this.rat += weights.Quality ? this.qlt * weights.Quality : 0;
-    this.rat += weights.Performance ? this.per * weights.Performance : 0;
-    this.rat += weights.Durability ? this.dur * weights.Durability : 0;
-    this.rat += weights.Reliability ? this.rel * weights.Reliability : 0;
-    this.rat += weights.Aesthetics ? this.aes * weights.Aesthetics : 0;
-    this.rat += weights.Features ? this.fea * weights.Features : 0;
+    this.rat += weights.quality ? this.qlt * weights.quality : 0;
+    this.rat += weights.performance ? this.per * weights.performance : 0;
+    this.rat += weights.durability ? this.dur * weights.durability : 0;
+    this.rat += weights.reliability ? this.rel * weights.reliability : 0;
+    this.rat += weights.aesthetics ? this.aes * weights.aesthetics : 0;
+    this.rat += weights.features ? this.fea * weights.features : 0;
   }
 
   // Serialize the current object to a JSON save state.
@@ -267,6 +269,18 @@ export class Product {
 
   // Initializes a Product object from a JSON save state.
   static fromJSON(value: IReviverValue): Product {
+    // TODO: Remove all corp graceful loading measures during major corp rebalance / rework.
+    //       For that version, Player.corporation will just get reset to null when loading from older version.
+
+    // Gracefully load saves from when RealEstate and AICores didn't have spaces
+    if (value.data.reqMats?.RealEstate) {
+      value.data.reqMats["Real Estate"] = value.data.reqMats.RealEstate;
+      delete value.data.reqMats.RealEstate;
+    }
+    if (value.data.reqMats?.AICores) {
+      value.data.reqMats["AI Cores"] = value.data.reqMats.AICores;
+      delete value.data.reqMats.AICores;
+    }
     return Generic_fromJSON(Product, value.data);
   }
 }

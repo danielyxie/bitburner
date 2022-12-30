@@ -9,7 +9,12 @@ Limit Material Production.
 <b>Signature:</b>
 
 ```typescript
-limitMaterialProduction(divisionName: string, cityName: string, materialName: string, qty: number): void;
+limitMaterialProduction(
+    divisionName: string,
+    city: CityName | `${CityName}`,
+    materialName: string,
+    qty: number,
+  ): void;
 ```
 
 ## Parameters
@@ -17,7 +22,7 @@ limitMaterialProduction(divisionName: string, cityName: string, materialName: st
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division. |
-|  cityName | string | Name of the city. |
+|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city. |
 |  materialName | string | Name of the material. |
 |  qty | number | Amount to limit to. Pass a negative value to remove the limit instead. |
 

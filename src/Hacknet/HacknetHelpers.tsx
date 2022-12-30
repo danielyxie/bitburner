@@ -6,7 +6,7 @@
  *  - Updating Hash Manager capacity
  *  - Purchasing hash upgrades
  *
- * TODO Should probably split the different types of functions into their own modules
+ * TODO unplanned Should probably split the different types of functions into their own modules
  */
 import { HacknetNode } from "./HacknetNode";
 import { calculateNodeCost } from "./formulas/HacknetNodes";
@@ -531,7 +531,7 @@ export function purchaseHashUpgrade(upgName: string, upgTarget: string, count = 
           return false;
         }
         for (const division of corp.divisions) {
-          division.sciResearch.qty += upg.value * count;
+          division.sciResearch += upg.value * count;
         }
         break;
       }

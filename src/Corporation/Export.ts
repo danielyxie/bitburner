@@ -1,4 +1,4 @@
-import { CityName } from "../Locations/data/CityNames";
+import { CityName } from "../Enums";
 
 export interface Export {
   ind: string;

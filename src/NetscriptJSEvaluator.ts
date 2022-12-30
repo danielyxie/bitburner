@@ -78,10 +78,8 @@ function shouldCompile(script: Script, scripts: Script[]): boolean {
 // - scripts -- all the scripts available on this server
 // - seen -- The modules above this one -- to prevent mutual dependency.
 //
-// TODO We don't make any effort to cache a given module when it is imported at
-// different parts of the tree. That hasn't presented any problem with during
-// testing, but it might be an idea for the future. Would require a topo-sort
-// then url-izing from leaf-most to root-most.
+// TODO 2.3 consider: Possibly reusing modules when imported in different locations. Per previous notes, this may
+// require a topo-sort then url-izing from leaf-most to root-most.
 /**
  * @param {Script} script
  * @param {Script[]} scripts

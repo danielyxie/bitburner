@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Sleeve } from "../Sleeve";
 import { Player } from "@player";
 import { Crimes } from "../../../Crime/Crimes";
-import { LocationName } from "../../../utils/enums";
-import { CityName } from "../../../Locations/data/CityNames";
+import { CityName, LocationName } from "../../../Enums";
 import { Factions } from "../../../Faction/Factions";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,7 +16,7 @@ import { isSleeveClassWork } from "../Work/SleeveClassWork";
 import { isSleeveInfiltrateWork } from "../Work/SleeveInfiltrateWork";
 import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
 import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
-import { CrimeType, FactionWorkType, GymType, UniversityClassType } from "../../../utils/enums";
+import { CrimeType, FactionWorkType, GymType, UniversityClassType } from "../../../Enums";
 import { checkEnum } from "../../../utils/helpers/enum";
 
 const universitySelectorOptions: string[] = [

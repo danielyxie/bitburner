@@ -1,7 +1,7 @@
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
-import { LocationName } from "../../../utils/enums";
+import { LocationName } from "../../../Enums";
 import { Companies } from "../../../Company/Companies";
 import { Company } from "../../../Company/Company";
 import { calculateCompanyWorkStats } from "../../../Work/Formulas";

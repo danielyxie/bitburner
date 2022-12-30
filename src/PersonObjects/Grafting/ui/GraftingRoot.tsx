@@ -7,7 +7,7 @@ import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames"
 import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
 import { CONSTANTS } from "../../../Constants";
 import { hasAugmentationPrereqs } from "../../../Faction/FactionHelpers";
-import { LocationName } from "../../../utils/enums";
+import { LocationName } from "../../../Enums";
 import { Locations } from "../../../Locations/Locations";
 import { PurchaseAugmentationsOrderSetting } from "../../../Settings/SettingEnums";
 import { Settings } from "../../../Settings/Settings";

@@ -16,7 +16,7 @@ import { Page } from "../../ui/Router";
 import { Box } from "@mui/material";
 import { ClassWork, Classes } from "../../Work/ClassWork";
 import { calculateCost } from "../../Work/Formulas";
-import { GymType } from "../../utils/enums";
+import { GymType } from "../../Enums";
 
 type IProps = {
   loc: Location;

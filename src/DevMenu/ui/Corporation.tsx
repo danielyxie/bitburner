@@ -67,7 +67,7 @@ export function Corporation(): React.ReactElement {
   function addCorporationResearch(): void {
     if (!Player.corporation) return;
     Player.corporation.divisions.forEach((div) => {
-      div.sciResearch.qty += 1e10;
+      div.sciResearch += 1e10;
     });
   }
 

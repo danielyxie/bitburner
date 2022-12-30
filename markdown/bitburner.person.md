@@ -15,7 +15,7 @@ interface Person
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [city](./bitburner.person.city.md) | string |  |
+|  [city](./bitburner.person.city.md) | [CityName](./bitburner.cityname.md) |  |
 |  [exp](./bitburner.person.exp.md) | [Skills](./bitburner.skills.md) |  |
 |  [hp](./bitburner.person.hp.md) | [HP](./bitburner.hp.md) |  |
 |  [mults](./bitburner.person.mults.md) | [Multipliers](./bitburner.multipliers.md) |  |

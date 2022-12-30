@@ -9,14 +9,15 @@
 
 ```typescript
 export type NSEnums = {
-  toast: typeof ToastVariant;
+  CityName: typeof CityName;
   CrimeType: typeof CrimeType;
   FactionWorkType: typeof FactionWorkType;
   GymType: typeof GymType;
-  UniversityClassType: typeof UniversityClassType;
-  CompanyPosName: typeof CompanyPosName;
+  JobName: typeof JobName;
   LocationName: typeof LocationName;
+  ToastVariant: typeof ToastVariant;
+  UniversityClassType: typeof UniversityClassType;
 };
 ```
-<b>References:</b> [ToastVariant](./bitburner.toastvariant.md)<!-- -->, [CrimeType](./bitburner.crimetype.md)<!-- -->, [FactionWorkType](./bitburner.factionworktype.md)<!-- -->, [GymType](./bitburner.gymtype.md)<!-- -->, [UniversityClassType](./bitburner.universityclasstype.md)<!-- -->, [CompanyPosName](./bitburner.companyposname.md)<!-- -->, [LocationName](./bitburner.locationname.md)
+<b>References:</b> [CityName](./bitburner.cityname.md)<!-- -->, [CrimeType](./bitburner.crimetype.md)<!-- -->, [FactionWorkType](./bitburner.factionworktype.md)<!-- -->, [GymType](./bitburner.gymtype.md)<!-- -->, [JobName](./bitburner.jobname.md)<!-- -->, [LocationName](./bitburner.locationname.md)<!-- -->, [ToastVariant](./bitburner.toastvariant.md)<!-- -->, [UniversityClassType](./bitburner.universityclasstype.md)
 

@@ -31,29 +31,15 @@ RAM cost: 4 GB
 
 Return a boolean indicating whether or not this action was set successfully (false if an invalid action is specified).
 
-## Example 1
+## Example
 
 
 ```ts
-// NS1
-// Assign the first 3 sleeves to commit various crimes.
-var crime = ["MUG", "ROBSTORE", "SHOPLIFT"];
-for (var i = 0; i < crime.length; i++) {
-    tprintf("Sleeve %d commits crime: %s", i, crime[i]);
-    sleeve.setToCommitCrime(i, crime[i]);
-}
-```
+// Assigns the first sleeve to Homicide.
+ns.sleeve.setToCommitCrime(0, "Homicide");
 
-## Example 2
-
-
-```ts
-// NS2
-// Assign the first 3 sleeves to commit various crimes.
-const crime = ["MUG", "ROBSTORE", "SHOPLIFT"];
-for (let i = 0; i < crime.length; i++) {
-    ns.tprintf("Sleeve %d commits crime: %s", i, crime[i]);
-    ns.sleeve.setToCommitCrime(i, crime[i]);
-}
+// Assigns the second sleeve to Grand Theft Auto, using enum
+const crimes = ns.enums.CrimeType;
+ns.sleeve.setToCommitCrime(1, crimes.grandTheftAuto)
 ```
 
