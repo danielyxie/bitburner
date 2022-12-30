@@ -1,5 +1,5 @@
 // Root React Component for the Corporation UI
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, createContext, useContext } from "react";
 
 import { Theme, useTheme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -43,6 +43,7 @@ import { calculateSkillProgress } from "../../PersonObjects/formulas/skill";
 
 type SkillRowName = "Hack" | "Str" | "Def" | "Dex" | "Agi" | "Cha" | "Int";
 type RowName = SkillRowName | "HP" | "Money";
+const ShownContext = createContext(true); //Context for whether to update components
 
 // These values aren't displayed, they're just used for comparison to check if state has changed
 const valUpdaters: Record<RowName, () => any> = {
@@ -96,17 +97,17 @@ interface SkillBarProps {
   color?: string;
 }
 function SkillBar({ name, color }: SkillBarProps): React.ReactElement {
+  const shown = useContext(ShownContext);
   const [mult, setMult] = useState(skillMultUpdaters[name]?.());
   const [progress, setProgress] = useState(calculateSkillProgress(Player.exp[skillNameMap[name]], mult));
   useEffect(() => {
+    if (!shown) return;
     const interval = setInterval(() => {
       setMult(skillMultUpdaters[name]());
       setProgress(calculateSkillProgress(Player.exp[skillNameMap[name] as keyof Skills], mult));
     }, 600);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+    return () => clearInterval(interval);
+  }, [shown]);
   return (
     <TableRow>
       <StatsProgressOverviewCell progress={progress} color={color} />
@@ -121,10 +122,12 @@ interface ValProps {
 export function Val({ name, color }: ValProps): React.ReactElement {
   //val isn't actually used here, the update of val just forces a refresh of the formattedVal that gets shown
   const setVal = useState(valUpdaters[name]())[1];
+  const shown = useContext(ShownContext);
   useEffect(() => {
-    const interval = setInterval(() => setVal(valUpdaters[name]()));
+    if (!shown) return;
+    const interval = setInterval(() => setVal(valUpdaters[name]()), 600);
     return () => clearInterval(interval);
-  }, []);
+  }, [shown]);
   return <Typography color={color}>{formattedVals[name]()}</Typography>;
 }
 
@@ -178,8 +181,8 @@ export function CharacterOverview({ parentOpen, save, killScripts }: OverviewPro
   }, []);
   const classes = useStyles();
   const theme = useTheme();
-  return parentOpen ? (
-    <>
+  return (
+    <ShownContext.Provider value={parentOpen}>
       <Table sx={{ display: "block", m: 1 }}>
         <TableBody>
           <DataRow name="HP" showBar={false} color={theme.colors.hp} cellType={"cellNone"} />
@@ -233,9 +236,7 @@ export function CharacterOverview({ parentOpen, save, killScripts }: OverviewPro
         </Box>
       </Box>
       <KillScriptsModal open={killOpen} onClose={() => setKillOpen(false)} killScripts={killScripts} />
-    </>
-  ) : (
-    <></>
+    </ShownContext.Provider>
   );
 }
 
@@ -250,12 +251,14 @@ function ActionText(props: { action: ActionIdentifier }): React.ReactElement {
 }
 
 function BladeburnerText(): React.ReactElement {
+  const shown = useContext(ShownContext);
   const classes = useStyles();
   const setRerender = useState(false)[1];
   useEffect(() => {
+    if (!shown) return;
     const interval = setInterval(() => setRerender((old) => !old), 600);
     return () => clearInterval(interval);
-  }, []);
+  }, [shown]);
 
   const action = Player.bladeburner?.action;
   return useMemo(
@@ -327,11 +330,13 @@ function WorkInProgressOverview({ tooltip, children, header }: WorkInProgressOve
 }
 
 function Work(): React.ReactElement {
+  const shown = useContext(ShownContext);
   const setRerender = useState(false)[1];
   useEffect(() => {
+    if (!shown) return;
     const interval = setInterval(() => setRerender((old) => !old), 600);
     return () => clearInterval(interval);
-  }, []);
+  }, [shown]);
 
   if (Player.currentWork === null || Player.focus) return <></>;
 
