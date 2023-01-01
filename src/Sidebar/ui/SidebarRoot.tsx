@@ -55,9 +55,9 @@ import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 import { hash } from "../../hash/hash";
 import { Locations } from "../../Locations/Locations";
 
-const RotatedDoubleArrowIcon = (props: { color: "primary" | "secondary" | "error" }) => (
+const RotatedDoubleArrowIcon = React.forwardRef((props: { color: "primary" | "secondary" | "error" }, __ref) => (
   <DoubleArrowIcon color={props.color} style={{ transform: "rotate(-90deg)" }} />
-);
+));
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
