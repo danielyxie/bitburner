@@ -1,15 +1,14 @@
 import React from "react";
-import { Industry } from "../Industry";
+import { IIndustry } from "../IIndustry";
 import { MathJaxWrapper } from "../../MathJaxWrapper";
-import { CorpMaterialName } from "@nsdefs";
 
 interface IProps {
-  division: Industry;
+  division: IIndustry;
 }
 
 export function IndustryProductEquation(props: IProps): React.ReactElement {
   const reqs = [];
-  for (const reqMat of Object.keys(props.division.reqMats) as CorpMaterialName[]) {
+  for (const reqMat of Object.keys(props.division.reqMats)) {
     const reqAmt = props.division.reqMats[reqMat];
     if (reqAmt === undefined) continue;
     reqs.push(String.raw`${reqAmt}\text{ }${reqMat}`);

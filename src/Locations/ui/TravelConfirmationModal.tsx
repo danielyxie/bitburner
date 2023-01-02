@@ -2,6 +2,7 @@ import React from "react";
 import { CONSTANTS } from "../../Constants";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";
+import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 export function TravelConfirmationModal(props: IProps): React.ReactElement {
+  const player = use.Player();
   const cost = CONSTANTS.TravelCost;
   function travel(): void {
     props.travel();
@@ -22,7 +24,7 @@ export function TravelConfirmationModal(props: IProps): React.ReactElement {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
-        Would you like to travel to {props.city}? The trip will cost <Money money={cost} forPurchase={true} />.
+        Would you like to travel to {props.city}? The trip will cost <Money money={cost} player={player} />.
       </Typography>
       <br />
       <br />

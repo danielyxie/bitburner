@@ -9,7 +9,7 @@ Object representing data representing a gang member task.
 <b>Signature:</b>
 
 ```typescript
-interface GangTaskStats 
+export interface GangTaskStats 
 ```
 
 ## Properties

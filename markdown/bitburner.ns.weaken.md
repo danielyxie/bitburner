@@ -4,7 +4,7 @@
 
 ## NS.weaken() method
 
-Reduce a server's security level.
+Reduce a server security level.
 
 <b>Signature:</b>
 
@@ -29,9 +29,9 @@ The amount by which the target server’s security level was decreased. This is 
 
 RAM cost: 0.15 GB
 
-Use your hacking skills to attack a server’s security, lowering the server’s security level. The runtime for this function depends on your hacking level and the target server’s security level when this function is called. This function lowers the security level of the target server by 0.05.
+Use your hacking skills to attack a server’s security, lowering the server’s security level. The runtime for this command depends on your hacking level and the target server’s security level when this function is called. This function lowers the security level of the target server by 0.05.
 
-Like [hack](./bitburner.ns.hack.md) and [grow](./bitburner.ns.grow.md)<!-- -->, `weaken` can be called on any server, regardless of where the script is running. This function requires root access to the target server, but there is no required hacking level to run the function.
+Like hack and grow, `weaken` can be called on any server, regardless of where the script is running. This command requires root access to the target server, but there is no required hacking level to run the command.
 
 ## Example 1
 

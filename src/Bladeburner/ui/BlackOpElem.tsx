@@ -3,10 +3,10 @@ import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/Stri
 import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { TeamSizeButton } from "./TeamSizeButton";
-import { Bladeburner } from "../Bladeburner";
+import { IBladeburner } from "../IBladeburner";
 import { BlackOperation } from "../BlackOperation";
 import { BlackOperations } from "../data/BlackOperations";
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { SuccessChance } from "./SuccessChance";
 import { StartButton } from "./StartButton";
@@ -15,7 +15,8 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
 interface IProps {
-  bladeburner: Bladeburner;
+  bladeburner: IBladeburner;
+  player: IPlayer;
   action: BlackOperation;
 }
 
@@ -36,7 +37,7 @@ export function BlackOpElem(props: IProps): React.ReactElement {
   const isActive =
     props.bladeburner.action.type === ActionTypes["BlackOperation"] &&
     props.action.name === props.bladeburner.action.name;
-  const actionTime = props.action.getActionTime(props.bladeburner, Player);
+  const actionTime = props.action.getActionTime(props.bladeburner, props.player);
   const hasReqdRank = props.bladeburner.rank >= props.action.reqdRank;
   const computedActionTimeCurrent = Math.min(
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,

@@ -1,13 +1,21 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { TextFile } from "../../TextFile";
 import { Script } from "../../Script/Script";
 import { getDestinationFilepath, areFilesEqual } from "../DirectoryHelpers";
 
-export function mv(args: (string | number | boolean)[], server: BaseServer): void {
+export function mv(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   if (args.length !== 2) {
-    Terminal.error(`Incorrect number of arguments. Usage: mv [src] [dest]`);
+    terminal.error(`Incorrect number of arguments. Usage: mv [src] [dest]`);
     return;
   }
 
@@ -16,28 +24,28 @@ export function mv(args: (string | number | boolean)[], server: BaseServer): voi
     const t_dest = args[1] + "";
 
     if (!isScriptFilename(source) && !source.endsWith(".txt")) {
-      Terminal.error(`'mv' can only be used on scripts and text files (.txt)`);
+      terminal.error(`'mv' can only be used on scripts and text files (.txt)`);
       return;
     }
 
-    const srcFile = Terminal.getFile(source);
+    const srcFile = terminal.getFile(player, source);
     if (srcFile == null) {
-      Terminal.error(`Source file ${source} does not exist`);
+      terminal.error(`Source file ${source} does not exist`);
       return;
     }
 
-    const sourcePath = Terminal.getFilepath(source);
+    const sourcePath = terminal.getFilepath(source);
     // Get the destination based on the source file and the current directory
-    const dest = getDestinationFilepath(t_dest, source, Terminal.cwd());
+    const dest = getDestinationFilepath(t_dest, source, terminal.cwd());
     if (dest === null) {
-      Terminal.error("error parsing dst file");
+      terminal.error("error parsing dst file");
       return;
     }
 
-    const destFile = Terminal.getFile(dest);
-    const destPath = Terminal.getFilepath(dest);
+    const destFile = terminal.getFile(player, dest);
+    const destPath = terminal.getFilepath(dest);
     if (areFilesEqual(sourcePath, destPath)) {
-      Terminal.error(`Source and destination files are the same file`);
+      terminal.error(`Source and destination files are the same file`);
       return;
     }
 
@@ -46,31 +54,31 @@ export function mv(args: (string | number | boolean)[], server: BaseServer): voi
     if (isScriptFilename(source)) {
       const script = srcFile as Script;
       if (!isScriptFilename(destPath)) {
-        Terminal.error(`Source and destination files must have the same type`);
+        terminal.error(`Source and destination files must have the same type`);
         return;
       }
 
-      // Command doesn't work if script is running
+      // Command doesnt work if script is running
       if (server.isRunning(sourcePath)) {
-        Terminal.error(`Cannot use 'mv' on a script that is running`);
+        terminal.error(`Cannot use 'mv' on a script that is running`);
         return;
       }
 
       if (destFile != null) {
         // Already exists, will be overwritten, so we'll delete it
 
-        // Command doesn't work if script is running
+        // Command doesnt work if script is running
         if (server.isRunning(destPath)) {
-          Terminal.error(`Cannot use 'mv' on a script that is running`);
+          terminal.error(`Cannot use 'mv' on a script that is running`);
           return;
         }
 
         const status = server.removeFile(destPath);
         if (!status.res) {
-          Terminal.error(`Something went wrong...please contact game dev (probably a bug)`);
+          terminal.error(`Something went wrong...please contact game dev (probably a bug)`);
           return;
         } else {
-          Terminal.print("Warning: The destination file was overwritten");
+          terminal.print("Warning: The destination file was overwritten");
         }
       }
 
@@ -78,7 +86,7 @@ export function mv(args: (string | number | boolean)[], server: BaseServer): voi
     } else if (srcFile instanceof TextFile) {
       const textFile = srcFile;
       if (!dest.endsWith(".txt")) {
-        Terminal.error(`Source and destination files must have the same type`);
+        terminal.error(`Source and destination files must have the same type`);
         return;
       }
 
@@ -86,16 +94,16 @@ export function mv(args: (string | number | boolean)[], server: BaseServer): voi
         // Already exists, will be overwritten, so we'll delete it
         const status = server.removeFile(destPath);
         if (!status.res) {
-          Terminal.error(`Something went wrong...please contact game dev (probably a bug)`);
+          terminal.error(`Something went wrong...please contact game dev (probably a bug)`);
           return;
         } else {
-          Terminal.print("Warning: The destination file was overwritten");
+          terminal.print("Warning: The destination file was overwritten");
         }
       }
 
       textFile.fn = destPath;
     }
   } catch (e) {
-    Terminal.error(e + "");
+    terminal.error(e + "");
   }
 }

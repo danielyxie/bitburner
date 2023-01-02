@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface WorkStats 
+export interface WorkStats 
 ```
 
 ## Properties

@@ -1,5 +1,5 @@
 // Root React Component for the Corporation UI
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Theme, useTheme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -20,9 +20,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 import { Settings } from "../../Settings/Settings";
-import { Router } from "../GameRoot";
-import { Page } from "../Router";
-import { Player } from "@player";
+import { use } from "../Context";
 import { StatsProgressOverviewCell } from "./StatsProgressBar";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
@@ -36,248 +34,68 @@ import { isFactionWork } from "../../Work/FactionWork";
 import { ReputationRate } from "./ReputationRate";
 import { isCompanyWork } from "../../Work/CompanyWork";
 import { isCrimeWork } from "../../Work/CrimeWork";
-import { ActionIdentifier } from "../../Bladeburner/ActionIdentifier";
-import { Bladeburner } from "../../Bladeburner/Bladeburner";
-import { Skills } from "../../PersonObjects/Skills";
-import { calculateSkillProgress } from "../../PersonObjects/formulas/skill";
-import { EventEmitter } from "../../utils/EventEmitter";
 
-type SkillRowName = "Hack" | "Str" | "Def" | "Dex" | "Agi" | "Cha" | "Int";
-type RowName = SkillRowName | "HP" | "Money";
-const OverviewEventEmitter = new EventEmitter();
-
-// These values aren't displayed, they're just used for comparison to check if state has changed
-const valUpdaters: Record<RowName, () => any> = {
-  HP: () => Player.hp.current + "|" + Player.hp.max, // This isn't displayed, it's just compared for updates.
-  Money: () => Player.money,
-  Hack: () => Player.skills.hacking,
-  Str: () => Player.skills.strength,
-  Def: () => Player.skills.defense,
-  Dex: () => Player.skills.dexterity,
-  Agi: () => Player.skills.agility,
-  Cha: () => Player.skills.charisma,
-  Int: () => Player.skills.intelligence,
-};
-
-//These formattedVals functions don't take in a value because of the weirdness around HP.
-const formattedVals: Record<RowName, () => string> = {
-  HP: () => `${numeralWrapper.formatHp(Player.hp.current)} / ${numeralWrapper.formatHp(Player.hp.max)}`,
-  Money: () => numeralWrapper.formatMoney(Player.money),
-  Hack: () => numeralWrapper.formatSkill(Player.skills.hacking),
-  Str: () => numeralWrapper.formatSkill(Player.skills.strength),
-  Def: () => numeralWrapper.formatSkill(Player.skills.defense),
-  Dex: () => numeralWrapper.formatSkill(Player.skills.dexterity),
-  Agi: () => numeralWrapper.formatSkill(Player.skills.agility),
-  Cha: () => numeralWrapper.formatSkill(Player.skills.charisma),
-  Int: () => numeralWrapper.formatSkill(Player.skills.intelligence),
-};
-
-const skillMultUpdaters: Record<SkillRowName, () => number> = {
-  //Used by skill bars to calculate the mult
-  Hack: () => Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
-  Str: () => Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
-  Def: () => Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
-  Dex: () => Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
-  Agi: () => Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
-  Cha: () => Player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
-  Int: () => 1,
-};
-
-const skillNameMap: Record<SkillRowName, keyof Skills> = {
-  Hack: "hacking",
-  Str: "strength",
-  Def: "defense",
-  Dex: "dexterity",
-  Agi: "agility",
-  Cha: "charisma",
-  Int: "intelligence",
-};
-
-interface SkillBarProps {
-  name: SkillRowName;
-  color?: string;
-}
-function SkillBar({ name, color }: SkillBarProps): React.ReactElement {
-  const [mult, setMult] = useState(skillMultUpdaters[name]?.());
-  const [progress, setProgress] = useState(calculateSkillProgress(Player.exp[skillNameMap[name]], mult));
-  useEffect(() => {
-    const clearSubscription = OverviewEventEmitter.subscribe(() => {
-      setMult(skillMultUpdaters[name]());
-      setProgress(calculateSkillProgress(Player.exp[skillNameMap[name] as keyof Skills], mult));
-    });
-    return clearSubscription;
-  }, []);
-  return (
-    <TableRow>
-      <StatsProgressOverviewCell progress={progress} color={color} />
-    </TableRow>
-  );
-}
-
-interface ValProps {
-  name: RowName;
-  color?: string;
-}
-export function Val({ name, color }: ValProps): React.ReactElement {
-  //val isn't actually used here, the update of val just forces a refresh of the formattedVal that gets shown
-  const setVal = useState(valUpdaters[name]())[1];
-  useEffect(() => {
-    const clearSubscription = OverviewEventEmitter.subscribe(() => setVal(valUpdaters[name]()));
-    return clearSubscription;
-  }, []);
-  return <Typography color={color}>{formattedVals[name]()}</Typography>;
-}
-
-interface DataRowProps {
-  name: RowName; //name for UI display
-  showBar: boolean;
-  color?: string;
-  cellType: "cellNone" | "cell";
-}
-export function DataRow({ name, showBar, color, cellType }: DataRowProps): React.ReactElement {
-  const classes = useStyles();
-  const isSkill = name in skillNameMap;
-  const skillBar = showBar && isSkill ? <SkillBar name={name as SkillRowName} color={color} /> : <></>;
-  return (
-    <>
-      <TableRow>
-        <TableCell component="th" scope="row" classes={{ root: classes[cellType] }}>
-          <Typography color={color}>{name}&nbsp;</Typography>
-        </TableCell>
-        <TableCell align="right" classes={{ root: classes[cellType] }}>
-          <Val name={name} color={color} />
-        </TableCell>
-        <TableCell align="right" classes={{ root: classes[cellType] }}>
-          <Typography id={"overview-" + name + "-hook"} color={color}>
-            {}
-          </Typography>
-        </TableCell>
-      </TableRow>
-      {skillBar}
-    </>
-  );
-}
-
-interface OverviewProps {
-  parentOpen: boolean;
+interface IProps {
   save: () => void;
   killScripts: () => void;
 }
 
-export function CharacterOverview({ parentOpen, save, killScripts }: OverviewProps): React.ReactElement {
-  const [killOpen, setKillOpen] = useState(false);
-  const [hasIntelligence, setHasIntelligence] = useState(Player.skills.intelligence > 0);
-  const [showBars, setShowBars] = useState(!Settings.DisableOverviewProgressBars);
-  useEffect(() => {
-    if (!parentOpen) return; // No rerendering if overview is hidden, for performance
-    const interval = setInterval(() => {
-      setHasIntelligence(Player.skills.intelligence > 0);
-      setShowBars(!Settings.DisableOverviewProgressBars);
-      OverviewEventEmitter.emit(); // Tell every other updating component to update as well
-    }, 600);
-    return () => clearInterval(interval);
-  }, [parentOpen]);
-  const classes = useStyles();
+function Intelligence(): React.ReactElement {
   const theme = useTheme();
+  const player = use.Player();
+  const classes = useStyles();
+  if (player.skills.intelligence === 0) return <></>;
+  const progress = player.calculateSkillProgress(player.exp.intelligence);
+
   return (
     <>
-      <Table sx={{ display: "block", m: 1 }}>
-        <TableBody>
-          <DataRow name="HP" showBar={false} color={theme.colors.hp} cellType={"cellNone"} />
-          <DataRow name="Money" showBar={false} color={theme.colors.money} cellType={"cell"} />
-          <DataRow name="Hack" showBar={showBars} color={theme.colors.hack} cellType={"cell"} />
-          <DataRow name="Str" showBar={showBars} color={theme.colors.combat} cellType={"cellNone"} />
-          <DataRow name="Def" showBar={showBars} color={theme.colors.combat} cellType={"cellNone"} />
-          <DataRow name="Dex" showBar={showBars} color={theme.colors.combat} cellType={"cellNone"} />
-          <DataRow name="Agi" showBar={showBars} color={theme.colors.combat} cellType={"cell"} />
-          <DataRow name="Cha" showBar={showBars} color={theme.colors.cha} cellType={"cell"} />
-          {hasIntelligence ? (
-            <DataRow name="Int" showBar={showBars} color={theme.colors.int} cellType={"cell"} />
-          ) : (
-            <></>
-          )}
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-              <Typography id="overview-extra-hook-0" color={theme.colors.hack}>
-                {}
-              </Typography>
-            </TableCell>
-            <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
-              <Typography id="overview-extra-hook-1" color={theme.colors.hack}>
-                {}
-              </Typography>
-            </TableCell>
-            <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
-              <Typography id="overview-extra-hook-2" color={theme.colors.hack}>
-                {}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <Work />
-          <BladeburnerText />
-        </TableBody>
-      </Table>
-      <Box sx={{ display: "flex", borderTop: `1px solid ${Settings.theme.welllight}` }}>
-        <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
-          <IconButton aria-label="save game" onClick={save}>
-            <Tooltip title={Settings.AutosaveInterval !== 0 ? "Save game" : "Save game (auto-saves are disabled!)"}>
-              <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
-            </Tooltip>
-          </IconButton>
-        </Box>
-        <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
-          <IconButton aria-label="kill all scripts" onClick={() => setKillOpen(true)}>
-            <Tooltip title="Kill all running scripts">
-              <ClearAllIcon color="error" />
-            </Tooltip>
-          </IconButton>
-        </Box>
-      </Box>
-      <KillScriptsModal open={killOpen} onClose={() => setKillOpen(false)} killScripts={killScripts} />
+      <TableRow>
+        <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+          <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
+        </TableCell>
+        <TableCell align="right" classes={{ root: classes.cell }}>
+          <Typography classes={{ root: classes.int }}>
+            {numeralWrapper.formatSkill(player.skills.intelligence)}
+          </Typography>
+        </TableCell>
+        <TableCell align="right" classes={{ root: classes.cell }}>
+          <Typography id="overview-int-hook" classes={{ root: classes.int }}>
+            {/*Hook for player scripts*/}
+          </Typography>
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        {!Settings.DisableOverviewProgressBars && (
+          <StatsProgressOverviewCell progress={progress} color={theme.colors.int} />
+        )}
+      </TableRow>
     </>
   );
 }
 
-function ActionText(props: { action: ActionIdentifier }): React.ReactElement {
-  // This component should never be called if Bladeburner is null, due to conditional checks in BladeburnerText
-  const action = (Player.bladeburner as Bladeburner).getTypeAndNameFromActionId(props.action);
-  return (
-    <Typography>
-      {action.type}: {action.name}
-    </Typography>
-  );
-}
-
-function BladeburnerText(): React.ReactElement {
+function Bladeburner(): React.ReactElement {
+  const player = use.Player();
   const classes = useStyles();
-  const setRerender = useState(false)[1];
-  useEffect(() => {
-    const clearSubscription = OverviewEventEmitter.subscribe(() => setRerender((old) => !old));
-    return clearSubscription;
-  }, []);
-
-  const action = Player.bladeburner?.action;
-  return useMemo(
-    () =>
-      //Action type 1 is Idle, see ActionTypes.ts
-      //TODO 2.3: Revamp typing in bladeburner
-      !action || action.type === 1 ? (
-        <></>
-      ) : (
-        <>
-          <TableRow>
-            <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-              <Typography>Bladeburner:</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-              <ActionText action={action} />
-            </TableCell>
-          </TableRow>
-        </>
-      ),
-    [action?.type, action?.name, classes.cellNone],
+  const bladeburner = player.bladeburner;
+  if (bladeburner === null) return <></>;
+  const action = bladeburner.getTypeAndNameFromActionId(bladeburner.action);
+  if (action.type === "Idle") return <></>;
+  return (
+    <>
+      <TableRow>
+        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+          <Typography>Bladeburner:</Typography>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+          <Typography>
+            {action.type}: {action.name}
+          </Typography>
+        </TableCell>
+      </TableRow>
+    </>
   );
 }
 
@@ -285,13 +103,15 @@ interface WorkInProgressOverviewProps {
   tooltip: React.ReactNode;
   header: React.ReactNode;
   children: React.ReactNode;
+  onClickFocus: () => void;
 }
 
-const onClickFocusWork = (): void => {
-  Player.startFocusing();
-  Router.toPage(Page.Work);
-};
-function WorkInProgressOverview({ tooltip, children, header }: WorkInProgressOverviewProps): React.ReactElement {
+function WorkInProgressOverview({
+  tooltip,
+  children,
+  onClickFocus,
+  header,
+}: WorkInProgressOverviewProps): React.ReactElement {
   const classes = useStyles();
   return (
     <>
@@ -309,49 +129,44 @@ function WorkInProgressOverview({ tooltip, children, header }: WorkInProgressOve
           <Typography className={classes.workSubtitles}>{children}</Typography>
         </TableCell>
       </TableRow>
-      {useMemo(
-        () => (
-          <TableRow>
-            <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-              <Button sx={{ mt: 1 }} onClick={onClickFocusWork}>
-                Focus
-              </Button>
-            </TableCell>
-          </TableRow>
-        ),
-        [classes.cellNone],
-      )}
+      <TableRow>
+        <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
+          <Button sx={{ mt: 1 }} onClick={onClickFocus}>
+            Focus
+          </Button>
+        </TableCell>
+      </TableRow>
     </>
   );
 }
 
 function Work(): React.ReactElement {
-  const setRerender = useState(false)[1];
-  useEffect(() => {
-    const clearSubscription = OverviewEventEmitter.subscribe(() => setRerender((old) => !old));
-    return clearSubscription;
-  }, []);
-
-  if (Player.currentWork === null || Player.focus) return <></>;
+  const player = use.Player();
+  const router = use.Router();
+  const onClickFocus = (): void => {
+    player.startFocusing();
+    router.toWork();
+  };
+  if (player.currentWork === null || player.focus) return <></>;
 
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
-  if (isCrimeWork(Player.currentWork)) {
-    const crime = Player.currentWork.getCrime();
-    const perc = (Player.currentWork.unitCompleted / crime.time) * 100;
+  if (isCrimeWork(player.currentWork)) {
+    const crime = player.currentWork.getCrime();
+    const perc = (player.currentWork.unitCompleted / crime.time) * 100;
 
-    details = <>{Player.currentWork.crimeType}</>;
-    header = <>You are attempting to {Player.currentWork.crimeType}</>;
+    details = <>{player.currentWork.crimeType}</>;
+    header = <>You are attempting to {player.currentWork.crimeType}</>;
     innerText = <>{perc.toFixed(2)}%</>;
   }
-  if (isClassWork(Player.currentWork)) {
-    details = <>{Player.currentWork.getClass().youAreCurrently}</>;
-    header = <>You are {Player.currentWork.getClass().youAreCurrently}</>;
-    innerText = <>{convertTimeMsToTimeElapsedString(Player.currentWork.cyclesWorked * CONSTANTS._idleSpeed)}</>;
+  if (isClassWork(player.currentWork)) {
+    details = <>{player.currentWork.getClass().youAreCurrently}</>;
+    header = <>You are {player.currentWork.getClass().youAreCurrently}</>;
+    innerText = <>{convertTimeMsToTimeElapsedString(player.currentWork.cyclesWorked * CONSTANTS._idleSpeed)}</>;
   }
-  if (isCreateProgramWork(Player.currentWork)) {
-    const create = Player.currentWork;
+  if (isCreateProgramWork(player.currentWork)) {
+    const create = player.currentWork;
     details = <>Coding {create.programName}</>;
     header = <>Creating a program</>;
     innerText = (
@@ -360,8 +175,8 @@ function Work(): React.ReactElement {
       </>
     );
   }
-  if (isGraftingWork(Player.currentWork)) {
-    const graft = Player.currentWork;
+  if (isGraftingWork(player.currentWork)) {
+    const graft = player.currentWork;
     details = <>Grafting {graft.augmentation}</>;
     header = <>Grafting an Augmentation</>;
     innerText = (
@@ -371,8 +186,8 @@ function Work(): React.ReactElement {
     );
   }
 
-  if (isFactionWork(Player.currentWork)) {
-    const factionWork = Player.currentWork;
+  if (isFactionWork(player.currentWork)) {
+    const factionWork = player.currentWork;
     header = (
       <>
         Working for <strong>{factionWork.factionName}</strong>
@@ -382,15 +197,15 @@ function Work(): React.ReactElement {
       <>
         <Reputation reputation={factionWork.getFaction().playerReputation} /> rep
         <br />(
-        <ReputationRate reputation={factionWork.getReputationRate() * (1000 / CONSTANTS._idleSpeed)} />)
+        <ReputationRate reputation={factionWork.getReputationRate(player) * (1000 / CONSTANTS._idleSpeed)} />)
       </>
     );
   }
-  if (isCompanyWork(Player.currentWork)) {
-    const companyWork = Player.currentWork;
+  if (isCompanyWork(player.currentWork)) {
+    const companyWork = player.currentWork;
     details = (
       <>
-        {Player.jobs[companyWork.companyName]} at <strong>{companyWork.companyName}</strong>
+        {player.jobs[companyWork.companyName]} at <strong>{companyWork.companyName}</strong>
       </>
     );
     header = (
@@ -402,13 +217,13 @@ function Work(): React.ReactElement {
       <>
         <Reputation reputation={companyWork.getCompany().playerReputation} /> rep
         <br />(
-        <ReputationRate reputation={companyWork.getGainRates().reputation * (1000 / CONSTANTS._idleSpeed)} />)
+        <ReputationRate reputation={companyWork.getGainRates(player).reputation * (1000 / CONSTANTS._idleSpeed)} />)
       </>
     );
   }
 
   return (
-    <WorkInProgressOverview tooltip={details} header={header}>
+    <WorkInProgressOverview tooltip={details} header={header} onClickFocus={onClickFocus}>
       {innerText}
     </WorkInProgressOverview>
   );
@@ -463,3 +278,251 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export { useStyles as characterOverviewStyles };
+
+export function CharacterOverview({ save, killScripts }: IProps): React.ReactElement {
+  const [killOpen, setKillOpen] = useState(false);
+  const player = use.Player();
+
+  const setRerender = useState(false)[1];
+
+  useEffect(() => {
+    const id = setInterval(() => setRerender((old) => !old), 600);
+    return () => clearInterval(id);
+  }, []);
+
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const hackingProgress = player.calculateSkillProgress(
+    player.exp.hacking,
+    player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
+  );
+  const strengthProgress = player.calculateSkillProgress(
+    player.exp.strength,
+    player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
+  );
+  const defenseProgress = player.calculateSkillProgress(
+    player.exp.defense,
+    player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
+  );
+  const dexterityProgress = player.calculateSkillProgress(
+    player.exp.dexterity,
+    player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
+  );
+  const agilityProgress = player.calculateSkillProgress(
+    player.exp.agility,
+    player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
+  );
+  const charismaProgress = player.calculateSkillProgress(
+    player.exp.charisma,
+    player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
+  );
+
+  return (
+    <>
+      <Table sx={{ display: "block", m: 1 }}>
+        <TableBody>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.hp }}>HP&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.hp }}>
+                {numeralWrapper.formatHp(player.hp.current)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.hp.max)}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-hp-hook" classes={{ root: classes.hp }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.money }}>{numeralWrapper.formatMoney(player.money)}</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-money-hook" classes={{ root: classes.money }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.hack }}>
+                {numeralWrapper.formatSkill(player.skills.hacking)}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={hackingProgress} color={theme.colors.hack} />
+            )}
+          </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.hack }}></Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cell }}>
+              <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.strength)}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={strengthProgress} color={theme.colors.combat} />
+            )}
+          </TableRow>
+
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.defense)}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={defenseProgress} color={theme.colors.combat} />
+            )}
+          </TableRow>
+
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.dexterity)}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={dexterityProgress} color={theme.colors.combat} />
+            )}
+          </TableRow>
+
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.combat }}>
+                {numeralWrapper.formatSkill(player.skills.agility)}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cell }}>
+              <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={agilityProgress} color={theme.colors.combat} />
+            )}
+          </TableRow>
+
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.cha }}>
+                {numeralWrapper.formatSkill(player.skills.charisma)}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={charismaProgress} color={theme.colors.cha} />
+            )}
+          </TableRow>
+
+          <Intelligence />
+
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+              <Typography id="overview-extra-hook-0" classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+            <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
+              <Typography id="overview-extra-hook-1" classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+            <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
+              <Typography id="overview-extra-hook-2" classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <Work />
+          <Bladeburner />
+        </TableBody>
+      </Table>
+      <Box sx={{ display: "flex", borderTop: `1px solid ${Settings.theme.welllight}` }}>
+        <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
+          <IconButton aria-label="save game" onClick={save}>
+            <Tooltip title={Settings.AutosaveInterval !== 0 ? "Save game" : "Save game (auto-saves are disabled!)"}>
+              <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
+            </Tooltip>
+          </IconButton>
+        </Box>
+        <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
+          <IconButton aria-label="kill all scripts" onClick={() => setKillOpen(true)}>
+            <Tooltip title="Kill all running scripts">
+              <ClearAllIcon color="error" />
+            </Tooltip>
+          </IconButton>
+        </Box>
+      </Box>
+      <KillScriptsModal open={killOpen} onClose={() => setKillOpen(false)} killScripts={killScripts} />
+    </>
+  );
+}

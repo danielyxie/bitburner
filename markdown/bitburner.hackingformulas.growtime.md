@@ -9,7 +9,7 @@ Calculate grow time.
 <b>Signature:</b>
 
 ```typescript
-growTime(server: Server, player: Person): number;
+growTime(server: Server, player: Player): number;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ growTime(server: Server, player: Person): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
-|  player | [Person](./bitburner.person.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
+|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 

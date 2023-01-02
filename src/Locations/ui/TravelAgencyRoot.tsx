@@ -5,15 +5,15 @@
  */
 import React, { useState, useEffect } from "react";
 
-import { CityName } from "../../Enums";
+import { CityName } from "../data/CityNames";
 import { TravelConfirmationModal } from "./TravelConfirmationModal";
 
 import { CONSTANTS } from "../../Constants";
-import { Player } from "@player";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { IRouter } from "../../ui/Router";
 import { Settings } from "../../Settings/Settings";
 
+import { use } from "../../ui/Context";
 import { Money } from "../../ui/React/Money";
 import { WorldMap } from "../../ui/React/WorldMap";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
@@ -22,19 +22,26 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-function travel(to: CityName): void {
+type IProps = {
+  p: IPlayer;
+  router: IRouter;
+};
+
+function travel(p: IPlayer, router: IRouter, to: CityName): void {
   const cost = CONSTANTS.TravelCost;
-  if (!Player.canAfford(cost)) {
+  if (!p.canAfford(cost)) {
     return;
   }
 
-  Player.loseMoney(cost, "other");
-  Player.travel(to);
-  dialogBoxCreate(`You are now in ${to}!`);
-  Router.toPage(Page.City);
+  p.loseMoney(cost, "other");
+  p.travel(to);
+  dialogBoxCreate(<>You are now in {to}!</>);
+  router.toCity();
 }
 
-export function TravelAgencyRoot(): React.ReactElement {
+export function TravelAgencyRoot(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const setRerender = useState(false)[1];
   const [open, setOpen] = useState(false);
   const [destination, setDestination] = useState(CityName.Sector12);
@@ -49,11 +56,11 @@ export function TravelAgencyRoot(): React.ReactElement {
 
   function startTravel(city: CityName): void {
     const cost = CONSTANTS.TravelCost;
-    if (!Player.canAfford(cost)) {
+    if (!player.canAfford(cost)) {
       return;
     }
     if (Settings.SuppressTravelConfirmation) {
-      travel(city);
+      travel(player, router, city);
       return;
     }
     setOpen(true);
@@ -66,12 +73,12 @@ export function TravelAgencyRoot(): React.ReactElement {
       <Box mx={2}>
         <Typography>
           From here, you can travel to any other city! A ticket costs{" "}
-          <Money money={CONSTANTS.TravelCost} forPurchase={true} />.
+          <Money money={CONSTANTS.TravelCost} player={props.p} />.
         </Typography>
         {Settings.DisableASCIIArt ? (
           <>
             {Object.values(CityName)
-              .filter((city: string) => city != Player.city)
+              .filter((city: string) => city != props.p.city)
               .map((city: string) => {
                 const match = Object.entries(CityName).find((entry) => entry[1] === city);
                 if (match === undefined) throw new Error(`could not find key for city '${city}'`);
@@ -86,12 +93,12 @@ export function TravelAgencyRoot(): React.ReactElement {
               })}
           </>
         ) : (
-          <WorldMap currentCity={Player.city} onTravel={(city: CityName) => startTravel(city)} />
+          <WorldMap currentCity={props.p.city} onTravel={(city: CityName) => startTravel(city)} />
         )}
       </Box>
       <TravelConfirmationModal
         city={destination}
-        travel={() => travel(destination)}
+        travel={() => travel(player, router, destination)}
         open={open}
         onClose={() => setOpen(false)}
       />

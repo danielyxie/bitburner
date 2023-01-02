@@ -10,6 +10,8 @@ import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
 
 import { CONSTANTS } from "../Constants";
+import { IMap } from "../types";
+
 import { numeralWrapper } from "../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
@@ -23,7 +25,7 @@ export let StockMarket: IStockMarket = {
   storedCycles: 0,
   ticksUntilCycle: 0,
 } as IStockMarket; // Maps full stock name -> Stock object
-export const SymbolToStockMap: Record<string, Stock> = {}; // Maps symbol -> Stock object
+export const SymbolToStockMap: IMap<Stock> = {}; // Maps symbol -> Stock object
 
 export function placeOrder(
   stock: Stock,
@@ -167,17 +169,19 @@ export function initStockMarket(): void {
   StockMarket.storedCycles = 0;
   StockMarket.lastUpdate = 0;
   StockMarket.ticksUntilCycle = TicksPerCycle;
-  initSymbolToStockMap();
 }
 
 export function initSymbolToStockMap(): void {
-  for (const [name, symbol] of Object.entries(StockSymbols)) {
-    const stock = StockMarket[name];
-    if (stock == null) {
-      console.error(`Could not find Stock for ${name}`);
-      continue;
+  for (const name of Object.keys(StockSymbols)) {
+    if (StockSymbols.hasOwnProperty(name)) {
+      const stock = StockMarket[name];
+      if (stock == null) {
+        console.error(`Could not find Stock for ${name}`);
+        continue;
+      }
+      const symbol = StockSymbols[name];
+      SymbolToStockMap[symbol] = stock;
     }
-    SymbolToStockMap[symbol] = stock;
   }
 }
 
@@ -280,4 +284,9 @@ export function processStockPrices(numCycles = 1): void {
     // Shares required for price movement gradually approaches max over time
     stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 10, stock.shareTxForMovement);
   }
+}
+
+export function initStockMarketFn(): void {
+  initStockMarket();
+  initSymbolToStockMap();
 }

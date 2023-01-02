@@ -3,7 +3,6 @@ import React from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import { Theme } from "@mui/material/styles";
-import { Settings } from "../../Settings/Settings";
 
 // This particular eslint-disable is correct.
 // In this super specific weird case we in fact do want a regex on an ANSII character.
@@ -17,35 +16,30 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.colors.success,
-      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
     error: {
       whiteSpace: "pre-wrap",
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.palette.error.main,
-      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
     primary: {
       whiteSpace: "pre-wrap",
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.palette.primary.main,
-      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
     info: {
       whiteSpace: "pre-wrap",
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.palette.info.main,
-      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
     warning: {
       whiteSpace: "pre-wrap",
       overflowWrap: "anywhere",
       margin: theme.spacing(0),
       color: theme.palette.warning.main,
-      "--padForFlushBg": (Settings.styles.lineHeight - 1) / 2 + "em",
     },
   }),
 );
@@ -97,7 +91,7 @@ export const ANSIITypography = React.memo((props: IProps): React.ReactElement =>
     parts.push({ code: null, text: text });
   }
   return (
-    <Typography component={"div"} classes={{ root: lineClass(classes, props.color) }} paragraph={false}>
+    <Typography classes={{ root: lineClass(classes, props.color) }} paragraph={false}>
       {parts.map((part, i) => (
         <span key={i} style={ansiCodeStyle(part.code)}>
           {part.text}
@@ -202,7 +196,7 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
     } else if (codePart == 4) {
       style.textDecoration = "underline";
     }
-    // Foreground Color (x8)
+    // Forground Color (x8)
     else if (30 <= codePart && codePart < 38) {
       if (COLOR_MAP_BRIGHT[codePart % 10]) {
         style.color = COLOR_MAP_BRIGHT[codePart % 10];
@@ -214,7 +208,7 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
         style.backgroundColor = COLOR_MAP_DARK[codePart % 10];
       }
     }
-    // Foreground Color (x256)
+    // Forground Color (x256)
     else if (codePart == 38) {
       nextStyleKey = "color";
     }
@@ -226,7 +220,7 @@ function ansiCodeStyle(code: string | null): Record<string, any> {
   // If a background color is set, add slight padding to increase the background fill area.
   // This was previously display:inline-block, but that has display errors when line breaks are used.
   if (style.backgroundColor) {
-    style.padding = "var(--padForFlushBg) 0px";
+    style.padding = "0px 1px";
   }
   return style;
 }

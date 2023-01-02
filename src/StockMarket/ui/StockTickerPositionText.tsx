@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { Stock } from "../Stock";
 
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import Typography from "@mui/material/Typography";
@@ -14,13 +14,14 @@ import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 
 type IProps = {
+  p: IPlayer;
   stock: Stock;
 };
 
 function LongPosition(props: IProps): React.ReactElement {
   const stock = props.stock;
 
-  // Calculate total returns
+  // Caculate total returns
   const totalCost = stock.playerShares * stock.playerAvgPx;
   const gains = (stock.getBidPrice() - stock.playerAvgPx) * stock.playerShares;
   let percentageGains = gains / totalCost;
@@ -57,7 +58,7 @@ function LongPosition(props: IProps): React.ReactElement {
 function ShortPosition(props: IProps): React.ReactElement {
   const stock = props.stock;
 
-  // Calculate total returns
+  // Caculate total returns
   const totalCost = stock.playerShortShares * stock.playerAvgShortPx;
   const gains = (stock.playerAvgShortPx - stock.getAskPrice()) * stock.playerShortShares;
   let percentageGains = gains / totalCost;
@@ -65,7 +66,7 @@ function ShortPosition(props: IProps): React.ReactElement {
     percentageGains = 0;
   }
 
-  if (Player.bitNodeN === 8 || Player.sourceFileLvl(8) >= 2) {
+  if (props.p.bitNodeN === 8 || props.p.sourceFileLvl(8) >= 2) {
     return (
       <>
         <Box display="flex">

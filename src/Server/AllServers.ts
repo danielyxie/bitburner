@@ -4,7 +4,7 @@ import { serverMetadata } from "./data/servers";
 
 import { HacknetServer } from "../Hacknet/HacknetServer";
 
-import { IMinMaxRange } from "../types";
+import { IMap, IMinMaxRange } from "../types";
 import { createRandomIp } from "../utils/IPAddress";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Reviver } from "../utils/JSONReviver";
@@ -17,7 +17,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
  *  Key (string) = IP
  *  Value = Server object
  */
-let AllServers: Record<string, Server | HacknetServer> = {};
+let AllServers: IMap<Server | HacknetServer> = {};
 
 function GetServerByIP(ip: string): BaseServer | undefined {
   for (const key of Object.keys(AllServers)) {
@@ -95,7 +95,7 @@ export function createUniqueRandomIp(): string {
   return ip;
 }
 
-// Safely add a Server to the AllServers map
+// Saftely add a Server to the AllServers map
 export function AddToAllServers(server: Server | HacknetServer): void {
   if (GetServer(server.hostname)) {
     console.warn(`Hostname of the server thats being added: ${server.hostname}`);
@@ -105,11 +105,6 @@ export function AddToAllServers(server: Server | HacknetServer): void {
 
   AllServers[server.hostname] = server;
 }
-
-export const renameServer = (hostname: string, newName: string): void => {
-  AllServers[newName] = AllServers[hostname];
-  delete AllServers[hostname];
-};
 
 interface IServerParams {
   hackDifficulty?: number;

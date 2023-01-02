@@ -12,11 +12,11 @@ export class BlackOperation extends Operation {
     return 1.5;
   }
 
-  getChaosCompetencePenalty(/*inst: Bladeburner, params: ISuccessChanceParams*/): number {
+  getChaosCompetencePenalty(/*inst: IBladeburner, params: ISuccessChanceParams*/): number {
     return 1;
   }
 
-  getChaosDifficultyBonus(/*inst: Bladeburner, params: ISuccessChanceParams*/): number {
+  getChaosDifficultyBonus(/*inst: IBladeburner, params: ISuccessChanceParams*/): number {
     return 1;
   }
 

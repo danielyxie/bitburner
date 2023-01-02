@@ -4,7 +4,7 @@
 
 ## NS.moveTail() method
 
-Move a tail window.
+Move a tail window
 
 <b>Signature:</b>
 
@@ -28,5 +28,5 @@ void
 
 RAM cost: 0 GB
 
-Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0).
+Moves a tail window. Coordinates are in screenspace pixels (top left is 0,0)
 

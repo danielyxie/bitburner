@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Bladeburner } from "../Bladeburner";
+import { IBladeburner } from "../IBladeburner";
 import { KEY } from "../../utils/helpers/keyCodes";
 
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -48,7 +49,8 @@ function Line(props: ILineProps): React.ReactElement {
 }
 
 interface IProps {
-  bladeburner: Bladeburner;
+  bladeburner: IBladeburner;
+  player: IPlayer;
 }
 
 export function Console(props: IProps): React.ReactElement {
@@ -79,7 +81,7 @@ export function Console(props: IProps): React.ReactElement {
       event.preventDefault();
       if (command.length > 0) {
         props.bladeburner.postToConsole("> " + command);
-        props.bladeburner.executeConsoleCommands(command);
+        props.bladeburner.executeConsoleCommands(props.player, command);
         setConsoleHistoryIndex(props.bladeburner.consoleHistory.length);
         setCommand("");
       }
@@ -183,7 +185,7 @@ interface ILogProps {
 function Logs({ entries }: ILogProps): React.ReactElement {
   const scrollHook = useRef<HTMLUListElement>(null);
 
-  // TODO unplanned: Text gets shifted up as new entries appear, if the user scrolled up it should attempt to keep the text focused
+  // TODO: Text gets shifted up as new entries appear, if the user scrolled up it should attempt to keep the text focused
   function scrollToBottom(): void {
     if (!scrollHook.current) return;
     scrollHook.current.scrollTop = scrollHook.current.scrollHeight;

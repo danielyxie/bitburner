@@ -10,14 +10,16 @@ import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventE
 import { RunningScript } from "../Script/RunningScript";
 import { GetServer } from "../Server/AllServers";
 
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
+import { Player } from "../Player";
 import { ITutorial } from "../InteractiveTutorial";
 import { AlertEvents } from "../ui/React/AlertManager";
-import { handleUnknownError } from "./NetscriptHelpers";
 
 export type killScriptParams = WorkerScript | number | { runningScript: RunningScript; hostname: string };
 
 export function killWorkerScript(params: killScriptParams): boolean {
+  console.log(ITutorial.isRunning);
   if (ITutorial.isRunning) {
     AlertEvents.emit("Processes cannot be killed during the tutorial.");
     return false;
@@ -58,17 +60,18 @@ function killWorkerScriptByPid(pid: number): boolean {
 }
 
 function stopAndCleanUpWorkerScript(ws: WorkerScript): void {
-  //Clean up any ongoing netscriptDelay
-  if (ws.delay) clearTimeout(ws.delay);
-  ws.delayReject?.(new ScriptDeath(ws));
-  ws.env.runningFn = "";
-
+  killNetscriptDelay(ws);
   if (typeof ws.atExit === "function") {
     try {
       ws.env.stopFlag = false;
       ws.atExit();
     } catch (e: unknown) {
-      handleUnknownError(e, ws, "Error running atExit function.\n\n");
+      let message = e instanceof ScriptDeath ? e.errorMessage : String(e);
+      message = message.replace(/.*\|DELIMITER\|/, "");
+      dialogBoxCreate(
+        `Error trying to call atExit for script ${[ws.name, ...ws.args].join(" ")} on ${ws.hostname}\n ${message}`,
+      );
+      console.error(e);
     }
     ws.atExit = undefined;
   }
@@ -104,11 +107,33 @@ function removeWorkerScript(workerScript: WorkerScript): void {
 
   // Recalculate ram used on that server
 
-  server.updateRamUsed(0);
-  for (const rs of server.runningScripts) server.updateRamUsed(server.ramUsed + rs.ramUsage * rs.threads);
+  server.updateRamUsed(0, Player);
+  for (const rs of server.runningScripts) server.updateRamUsed(server.ramUsed + rs.ramUsage * rs.threads, Player);
 
-  // Delete script from global pool (workerScripts) after verifying it's the right script (PIDs reset on aug install)
-  if (workerScripts.get(workerScript.pid) === workerScript) workerScripts.delete(workerScript.pid);
+  // Delete script from global pool (workerScripts)
+  workerScripts.delete(workerScript.pid);
+  // const res = workerScripts.delete(workerScript.pid);
+  // if (!res) {
+  //   console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
+  //   console.warn(workerScript);
+  // }
   AddRecentScript(workerScript);
+
   WorkerScriptStartStopEventEmitter.emit();
+}
+
+/**
+ * Helper function that interrupts a script's delay if it is in the middle of a
+ * timed, blocked operation (like hack(), sleep(), etc.). This allows scripts to
+ * be killed immediately even if they're in the middle of one of those long operations
+ */
+function killNetscriptDelay(workerScript: WorkerScript): void {
+  if (workerScript instanceof WorkerScript) {
+    if (workerScript.delay) {
+      clearTimeout(workerScript.delay);
+      if (workerScript.delayReject) {
+        workerScript.delayReject(new ScriptDeath(workerScript));
+      }
+    }
+  }
 }

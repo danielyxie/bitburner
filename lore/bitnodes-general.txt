@@ -7,5 +7,5 @@ presence, as indicated by the Bladeburners' ability to destroy it via force.
 Also, hydroflame (irl) has stated that the glitch in Ishima is the physical
 location of the World Daemon in a node. When the player destroys a BitNode, it is
 currently unknown what becomes of it, or the people trapped within. However, based
-on the way jump3r and Daedalus help the player to destroy it, doing so is somehow
+on the way jump3r and Deadalus help the player to destroy it, doing so is somehow
 aligned with their goals.

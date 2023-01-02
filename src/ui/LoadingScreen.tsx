@@ -3,7 +3,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
+import { Terminal } from "../Terminal";
 import { load } from "../db";
+import { Player } from "../Player";
 import { Engine } from "../engine";
 import { GameRoot } from "./GameRoot";
 
@@ -55,7 +57,7 @@ export function LoadingScreen(): React.ReactElement {
   }, []);
 
   return loaded ? (
-    <GameRoot />
+    <GameRoot terminal={Terminal} engine={Engine} player={Player} />
   ) : (
     <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
       <Grid item>

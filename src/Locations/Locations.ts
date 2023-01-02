@@ -2,12 +2,15 @@
  * Map of all Locations in the game
  * Key = Location name, value = Location object
  */
+import { City } from "./City";
 import { Cities } from "./Cities";
 import { Location, IConstructorParams } from "./Location";
-import { CityName } from "../Enums";
+import { CityName } from "./data/CityNames";
 import { LocationsMetadata } from "./data/LocationsMetadata";
 
-export const Locations: Record<string, Location> = {};
+import { IMap } from "../types";
+
+export const Locations: IMap<Location> = {};
 
 /**
  * Here, we'll initialize both Locations and Cities data. These can both
@@ -18,7 +21,7 @@ function constructLocation(p: IConstructorParams): Location {
     throw new Error(`Invalid constructor parameters for Location. No 'name' property`);
   }
 
-  if (Locations[p.name]) {
+  if (Locations[p.name] instanceof Location) {
     console.warn(`Property with name ${p.name} already exists and is being overwritten`);
   }
 
@@ -28,6 +31,13 @@ function constructLocation(p: IConstructorParams): Location {
 }
 
 // First construct all cities
+Cities[CityName.Aevum] = new City(CityName.Aevum);
+Cities[CityName.Chongqing] = new City(CityName.Chongqing);
+Cities[CityName.Ishima] = new City(CityName.Ishima);
+Cities[CityName.NewTokyo] = new City(CityName.NewTokyo);
+Cities[CityName.Sector12] = new City(CityName.Sector12);
+Cities[CityName.Volhaven] = new City(CityName.Volhaven);
+
 Cities[CityName.Aevum].asciiArt = `
    [aevum police headquarters]       26                                         
                                    o                                            
@@ -210,7 +220,7 @@ for (const metadata of LocationsMetadata) {
   const cityName = loc.city;
   if (cityName === null) {
     // Generic location, add to all cities
-    for (const city of Object.values(CityName)) {
+    for (const city of Object.keys(Cities)) {
       Cities[city].addLocation(loc.name);
     }
   } else {

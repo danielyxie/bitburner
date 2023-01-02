@@ -1,10 +1,10 @@
 // Metadata used for constructing Company Positions
 import { IConstructorParams } from "../CompanyPosition";
-import * as posNames from "./JobTracks";
+import * as posNames from "./companypositionnames";
 
 export const companyPositionMetadata: IConstructorParams[] = [
   {
-    name: posNames.SoftwareCompanyPositions[0], // Software Engineering Intern
+    name: posNames.SoftwareCompanyPositions[0], // Software Enginering Intern
     nextPosition: posNames.SoftwareCompanyPositions[1], // Junior Software Engineer
     baseSalary: 33,
     charismaEffectiveness: 15,
@@ -168,7 +168,7 @@ export const companyPositionMetadata: IConstructorParams[] = [
   },
   {
     name: posNames.NetworkEngineerCompanyPositions[0], // Network Engineer
-    nextPosition: posNames.NetworkEngineerCompanyPositions[1], // Network Administrator
+    nextPosition: posNames.NetworkEngineerCompanyPositions[1], // Network Adminsitrator
     baseSalary: 121,
     charismaEffectiveness: 15,
     charismaExpGain: 0.05,

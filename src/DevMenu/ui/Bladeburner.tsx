@@ -7,17 +7,21 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { Adjuster } from "./Adjuster";
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 const bigNumber = 1e27;
 
-export function Bladeburner(): React.ReactElement {
-  const bladeburner = Player.bladeburner;
+interface IProps {
+  player: IPlayer;
+}
+
+export function Bladeburner(props: IProps): React.ReactElement {
+  const bladeburner = props.player.bladeburner;
   if (bladeburner === null) return <></>;
   function modifyBladeburnerRank(modify: number): (x: number) => void {
     return function (rank: number): void {
       if (!bladeburner) return;
-      bladeburner.changeRank(Player, rank * modify);
+      bladeburner.changeRank(props.player, rank * modify);
     };
   }
 
@@ -30,7 +34,7 @@ export function Bladeburner(): React.ReactElement {
   function addTonsBladeburnerRank(): void {
     if (!bladeburner) return;
 
-    bladeburner.changeRank(Player, bigNumber);
+    bladeburner.changeRank(props.player, bigNumber);
   }
 
   function modifyBladeburnerCycles(modify: number): (x: number) => void {

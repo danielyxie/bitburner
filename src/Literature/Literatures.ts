@@ -1,9 +1,10 @@
-import { CityName } from "./../Enums";
+import { CityName } from "./../Locations/data/CityNames";
 import { Literature } from "./Literature";
 import { LiteratureNames } from "./data/LiteratureNames";
+import { IMap } from "../types";
 import { FactionNames } from "../Faction/data/FactionNames";
 
-export const Literatures: Record<string, Literature> = {};
+export const Literatures: IMap<Literature> = {};
 
 (function () {
   let title, fn, txt;
@@ -94,11 +95,11 @@ export const Literatures: Record<string, Literature> = {};
     "productivity and bolstering the global economy. Stemming from humanity's desire for technological advancement, optimism " +
     "and excitement about the future had never been higher.<br><br>" +
     "All of that excitement and optimism quickly turned to fear, panic, and dread in 2070, when a terrorist group " +
-    `called Ascendis Totalis hacked into ${FactionNames.OmniTekIncorporated} and uploaded a rogue AI into several of their Synthoid manufacturing facilities. ` +
+    `called Ascendis Totalis hacked into ${FactionNames.OmniTekIncorporated} and uploaded a rogue AI into severeal of their Synthoid manufacturing facilities. ` +
     `This hack went undetected and for months ${FactionNames.OmniTekIncorporated} unknowingly churned out legions of Synthoids embedded with this ` +
     "rogue AI. Then, on December 24th, 2070, Omnica activated dormant protocols in the rogue AI, causing all of the " +
     "infected Synthoids to immediately launch a military campaign to seek and destroy all of humanity.<br><br>" +
-    "What ensued was the deadliest conflict in human history. This crisis, now commonly known as the Synthoid Uprising, " +
+    "What ensued was the deadlist conflict in human history. This crisis, now commonly known as the Synthoid Uprising, " +
     "resulted in almost ten billion deaths over the course of a year. Despite the nations of the world banding together " +
     "to combat the threat, the MK-VI Synthoids were simply stronger, faster, more intelligent, and more adaptable than humans, " +
     "outsmarting them at every turn.<br><br>" +
@@ -170,7 +171,7 @@ export const Literatures: Record<string, Literature> = {};
     "Proponents for this simulated reality theory often point to how advanced our technology has become, " +
     "as well as the incredibly fast pace at which it has advanced over the past decades. The amount of computing " +
     "power available to us has increased over 100-fold since 2060 due to the development of nanoprocessors and " +
-    "quantum computers. Artificial Intelligence has advanced to the point where our entire lives are controlled " +
+    "quantum computers. Artifical Intelligence has advanced to the point where our entire lives are controlled " +
     "by robots and machines that handle our day-to-day activities such as autonomous transportation and scheduling. " +
     "If we consider the pace at which this technology has advanced and assume that these developments continue, it's " +
     "reasonable to assume that at some point in the future our technology would be advanced enough that " +
@@ -210,7 +211,7 @@ export const Literatures: Record<string, Literature> = {};
     "associated with life, heat, masculinity, and heaven.<br><br>" +
     "The company was founded " +
     "less than 5 years ago and is already the third highest valued company in all of Asia. In 2076 it generated a total revenue of " +
-    "over 10 trillion yuan. Its services are used daily by over a billion people worldwide.<br><br>" +
+    "over 10 trillion yuan. It's services are used daily by over a billion people worldwide.<br><br>" +
     "TaiYang Digital's meteoric rise is extremely surprising in modern society. This sort of growth is " +
     "something you'd commonly see in the first half of the century, especially for tech companies. However in " +
     "the last two decades the number of corporations has significantly declined as the largest entities " +
@@ -246,7 +247,7 @@ export const Literatures: Record<string, Literature> = {};
     "CIA director David Glarow says it's too early to know " +
     "whether these figures indicate the beginning of a sustained increase in crime rates, or whether " +
     "the year was just an unfortunate outlier. He states that many intelligence and law enforcement " +
-    "agents have noticed an increase in organized crime activities, and believes that these figures may " +
+    "agents have noticed an increase in organized crime activites, and believes that these figures may " +
     `be the result of an uprising from criminal organizations such as ${FactionNames.TheSyndicate} or the ${FactionNames.SlumSnakes}.`;
   Literatures[fn] = new Literature(title, fn, txt);
 
@@ -260,7 +261,7 @@ export const Literatures: Record<string, Literature> = {};
     "that the Singularity would arrive by 2045. " +
     "And yet here we are, more than three decades later, where most would agree that we have not " +
     "yet reached a point where computers and machines are vastly more intelligent than we are. So what gives?<br><br>" +
-    "The answer is that we have reached the Singularity, just not in the way we expected. The artificial superintelligence " +
+    "The answer is that we have reached the Singularity, just not in the way we expected. The artifical superintelligence " +
     "that was predicted by Kurzweil and others exists in the world today - in the form of Augmentations. " +
     "Yes, those Augmentations that the rich and powerful keep to themselves enable humans " +
     "to become superintelligent beings. The Singularity did not lead to a world where " +
@@ -426,7 +427,7 @@ export const Literatures: Record<string, Literature> = {};
     "continent.<br><br>" +
     `Not much else is known about the ${FactionNames.Tetrads}, or about the efforts the Asian governments and corporations are making ` +
     `to take down this large new crime organization. Many believe that the ${FactionNames.Tetrads} have infiltrated the governments ` +
-    "and powerful corporations in Asia, which has helped facilitate their recent rapid rise.";
+    "and powerful corporations in Asia, which has helped faciliate their recent rapid rise.";
   Literatures[fn] = new Literature(title, fn, txt);
 
   title = "The Secret War";

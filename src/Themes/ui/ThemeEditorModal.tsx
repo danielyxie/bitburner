@@ -12,16 +12,16 @@ import PaletteSharpIcon from "@mui/icons-material/PaletteSharp";
 import HistoryIcon from "@mui/icons-material/History";
 import { Color, ColorPicker } from "material-ui-color";
 import { ThemeEvents } from "./Theme";
-import { Settings } from "../../Settings/Settings";
+import { Settings, defaultSettings } from "../../Settings/Settings";
 import { defaultTheme } from "../Themes";
-import { UserInterfaceTheme } from "@nsdefs";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
+import { UserInterfaceTheme } from "../../ScriptEditor/NetscriptDefinitions";
+import { IRouter } from "../../ui/Router";
 import { ThemeCollaborate } from "./ThemeCollaborate";
 
 interface IProps {
   open: boolean;
   onClose: () => void;
+  router: IRouter;
 }
 
 interface IColorEditorProps {
@@ -151,19 +151,19 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           name="primarylight"
           onColorChange={onColorChange}
           color={customTheme["primarylight"]}
-          defaultColor={defaultTheme["primarylight"]}
+          defaultColor={defaultSettings.theme["primarylight"]}
         />
         <ColorEditor
           name="primary"
           onColorChange={onColorChange}
           color={customTheme["primary"]}
-          defaultColor={defaultTheme["primary"]}
+          defaultColor={defaultSettings.theme["primary"]}
         />
         <ColorEditor
           name="primarydark"
           onColorChange={onColorChange}
           color={customTheme["primarydark"]}
-          defaultColor={defaultTheme["primarydark"]}
+          defaultColor={defaultSettings.theme["primarydark"]}
         />
 
         <br />
@@ -171,19 +171,19 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           name="successlight"
           onColorChange={onColorChange}
           color={customTheme["successlight"]}
-          defaultColor={defaultTheme["successlight"]}
+          defaultColor={defaultSettings.theme["successlight"]}
         />
         <ColorEditor
           name="success"
           onColorChange={onColorChange}
           color={customTheme["success"]}
-          defaultColor={defaultTheme["success"]}
+          defaultColor={defaultSettings.theme["success"]}
         />
         <ColorEditor
           name="successdark"
           onColorChange={onColorChange}
           color={customTheme["successdark"]}
-          defaultColor={defaultTheme["successdark"]}
+          defaultColor={defaultSettings.theme["successdark"]}
         />
 
         <br />
@@ -191,19 +191,19 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           name="errorlight"
           onColorChange={onColorChange}
           color={customTheme["errorlight"]}
-          defaultColor={defaultTheme["errorlight"]}
+          defaultColor={defaultSettings.theme["errorlight"]}
         />
         <ColorEditor
           name="error"
           onColorChange={onColorChange}
           color={customTheme["error"]}
-          defaultColor={defaultTheme["error"]}
+          defaultColor={defaultSettings.theme["error"]}
         />
         <ColorEditor
           name="errordark"
           onColorChange={onColorChange}
           color={customTheme["errordark"]}
-          defaultColor={defaultTheme["errordark"]}
+          defaultColor={defaultSettings.theme["errordark"]}
         />
 
         <br />
@@ -211,19 +211,19 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           name="secondarylight"
           onColorChange={onColorChange}
           color={customTheme["secondarylight"]}
-          defaultColor={defaultTheme["secondarylight"]}
+          defaultColor={defaultSettings.theme["secondarylight"]}
         />
         <ColorEditor
           name="secondary"
           onColorChange={onColorChange}
           color={customTheme["secondary"]}
-          defaultColor={defaultTheme["secondary"]}
+          defaultColor={defaultSettings.theme["secondary"]}
         />
         <ColorEditor
           name="secondarydark"
           onColorChange={onColorChange}
           color={customTheme["secondarydark"]}
-          defaultColor={defaultTheme["secondarydark"]}
+          defaultColor={defaultSettings.theme["secondarydark"]}
         />
 
         <br />
@@ -231,19 +231,19 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           name="warninglight"
           onColorChange={onColorChange}
           color={customTheme["warninglight"]}
-          defaultColor={defaultTheme["warninglight"]}
+          defaultColor={defaultSettings.theme["warninglight"]}
         />
         <ColorEditor
           name="warning"
           onColorChange={onColorChange}
           color={customTheme["warning"]}
-          defaultColor={defaultTheme["warning"]}
+          defaultColor={defaultSettings.theme["warning"]}
         />
         <ColorEditor
           name="warningdark"
           onColorChange={onColorChange}
           color={customTheme["warningdark"]}
-          defaultColor={defaultTheme["warningdark"]}
+          defaultColor={defaultSettings.theme["warningdark"]}
         />
 
         <br />
@@ -251,19 +251,19 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           name="infolight"
           onColorChange={onColorChange}
           color={customTheme["infolight"]}
-          defaultColor={defaultTheme["infolight"]}
+          defaultColor={defaultSettings.theme["infolight"]}
         />
         <ColorEditor
           name="info"
           onColorChange={onColorChange}
           color={customTheme["info"]}
-          defaultColor={defaultTheme["info"]}
+          defaultColor={defaultSettings.theme["info"]}
         />
         <ColorEditor
           name="infodark"
           onColorChange={onColorChange}
           color={customTheme["infodark"]}
-          defaultColor={defaultTheme["infodark"]}
+          defaultColor={defaultSettings.theme["infodark"]}
         />
 
         <br />
@@ -271,43 +271,43 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           name="welllight"
           onColorChange={onColorChange}
           color={customTheme["welllight"]}
-          defaultColor={defaultTheme["welllight"]}
+          defaultColor={defaultSettings.theme["welllight"]}
         />
         <ColorEditor
           name="well"
           onColorChange={onColorChange}
           color={customTheme["well"]}
-          defaultColor={defaultTheme["well"]}
+          defaultColor={defaultSettings.theme["well"]}
         />
         <ColorEditor
           name="white"
           onColorChange={onColorChange}
           color={customTheme["white"]}
-          defaultColor={defaultTheme["white"]}
+          defaultColor={defaultSettings.theme["white"]}
         />
         <ColorEditor
           name="black"
           onColorChange={onColorChange}
           color={customTheme["black"]}
-          defaultColor={defaultTheme["black"]}
+          defaultColor={defaultSettings.theme["black"]}
         />
         <ColorEditor
           name="backgroundprimary"
           onColorChange={onColorChange}
           color={customTheme["backgroundprimary"]}
-          defaultColor={defaultTheme["backgroundprimary"]}
+          defaultColor={defaultSettings.theme["backgroundprimary"]}
         />
         <ColorEditor
           name="backgroundsecondary"
           onColorChange={onColorChange}
           color={customTheme["backgroundsecondary"]}
-          defaultColor={defaultTheme["backgroundsecondary"]}
+          defaultColor={defaultSettings.theme["backgroundsecondary"]}
         />
         <ColorEditor
           name="button"
           onColorChange={onColorChange}
           color={customTheme["button"]}
-          defaultColor={defaultTheme["button"]}
+          defaultColor={defaultSettings.theme["button"]}
         />
 
         <br />
@@ -315,49 +315,49 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           name="hp"
           onColorChange={onColorChange}
           color={customTheme["hp"]}
-          defaultColor={defaultTheme["hp"]}
+          defaultColor={defaultSettings.theme["hp"]}
         />
         <ColorEditor
           name="money"
           onColorChange={onColorChange}
           color={customTheme["money"]}
-          defaultColor={defaultTheme["money"]}
+          defaultColor={defaultSettings.theme["money"]}
         />
         <ColorEditor
           name="hack"
           onColorChange={onColorChange}
           color={customTheme["hack"]}
-          defaultColor={defaultTheme["hack"]}
+          defaultColor={defaultSettings.theme["hack"]}
         />
         <ColorEditor
           name="combat"
           onColorChange={onColorChange}
           color={customTheme["combat"]}
-          defaultColor={defaultTheme["combat"]}
+          defaultColor={defaultSettings.theme["combat"]}
         />
         <ColorEditor
           name="cha"
           onColorChange={onColorChange}
           color={customTheme["cha"]}
-          defaultColor={defaultTheme["cha"]}
+          defaultColor={defaultSettings.theme["cha"]}
         />
         <ColorEditor
           name="int"
           onColorChange={onColorChange}
           color={customTheme["int"]}
-          defaultColor={defaultTheme["int"]}
+          defaultColor={defaultSettings.theme["int"]}
         />
         <ColorEditor
           name="rep"
           onColorChange={onColorChange}
           color={customTheme["rep"]}
-          defaultColor={defaultTheme["rep"]}
+          defaultColor={defaultSettings.theme["rep"]}
         />
         <ColorEditor
           name="disabled"
           onColorChange={onColorChange}
           color={customTheme["disabled"]}
-          defaultColor={defaultTheme["disabled"]}
+          defaultColor={defaultSettings.theme["disabled"]}
         />
       </Paper>
 
@@ -381,7 +381,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
               </Button>
             </Tooltip>
             <Tooltip title="Move over to the theme browser's page to use one of our predefined themes.">
-              <Button startIcon={<PaletteSharpIcon />} onClick={() => Router.toPage(Page.ThemeBrowser)}>
+              <Button startIcon={<PaletteSharpIcon />} onClick={() => props.router.toThemeBrowser()}>
                 See more themes
               </Button>
             </Tooltip>

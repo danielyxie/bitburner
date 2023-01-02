@@ -1,6 +1,6 @@
 import React from "react";
 import { Company } from "../Company";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -14,8 +14,9 @@ interface IProps {
 }
 
 export function QuitJobModal(props: IProps): React.ReactElement {
+  const player = use.Player();
   function quit(): void {
-    Player.quitJob(props.locName);
+    player.quitJob(props.locName);
     props.onQuit();
     props.onClose();
   }

@@ -18,7 +18,7 @@ export enum CorporationUnlockUpgradeIndex {
 }
 
 // Corporation Unlock Upgrades
-// Upgrades for entire corporation, unlocks features, either you have it or you don't.
+// Upgrades for entire corporation, unlocks features, either you have it or you dont
 export const CorporationUnlockUpgrades: Record<CorporationUnlockUpgradeIndex, CorporationUnlockUpgrade> = {
   //Lets you export goods
   [CorporationUnlockUpgradeIndex.Export]: {

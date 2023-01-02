@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
-import { Player } from "@player";
+import { use } from "../Context";
 
 import Typography from "@mui/material/Typography";
 
@@ -32,8 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 export function ScriptProduction(): React.ReactElement {
+  const player = use.Player();
   const classes = useStyles();
-  const prodRateSinceLastAug = Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug / 1000);
+  const prodRateSinceLastAug = player.scriptProdSinceLastAug / (player.playtimeSinceLastAug / 1000);
 
   return (
     <Table size="small" classes={{ root: classes.size }}>
@@ -44,7 +45,7 @@ export function ScriptProduction(): React.ReactElement {
           </TableCell>
           <TableCell align="left" classes={{ root: classes.cell }}>
             <Typography variant="body2">
-              <Money money={Player.scriptProdSinceLastAug} />
+              <Money money={player.scriptProdSinceLastAug} />
             </Typography>
           </TableCell>
           <TableCell align="left" classes={{ root: classes.cell }}>

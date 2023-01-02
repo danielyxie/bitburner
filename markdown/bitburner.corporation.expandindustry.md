@@ -9,14 +9,14 @@ Expand to a new industry
 <b>Signature:</b>
 
 ```typescript
-expandIndustry(industryType: CorpIndustryName, divisionName: string): void;
+expandIndustry(industryType: string, divisionName: string): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  industryType | [CorpIndustryName](./bitburner.corpindustryname.md) | Name of the industry |
+|  industryType | string | Name of the industry |
 |  divisionName | string | Name of the division |
 
 <b>Returns:</b>

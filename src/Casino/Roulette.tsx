@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { Money } from "../ui/React/Money";
 import { win, reachedLimit } from "./Game";
 import { WHRNG } from "./RNG";
@@ -7,6 +8,10 @@ import { trusted } from "./utils";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+
+type IProps = {
+  p: IPlayer;
+};
 
 const minPlay = 0;
 const maxPlay = 1e7;
@@ -106,7 +111,7 @@ function Single(s: number): Strategy {
   };
 }
 
-export function Roulette(): React.ReactElement {
+export function Roulette(props: IProps): React.ReactElement {
   const [rng] = useState(new WHRNG(new Date().getTime()));
   const [investment, setInvestment] = useState(1000);
   const [canPlay, setCanPlay] = useState(true);
@@ -146,7 +151,7 @@ export function Roulette(): React.ReactElement {
   }
 
   function play(strategy: Strategy): void {
-    if (reachedLimit()) return;
+    if (reachedLimit(props.p)) return;
 
     setCanPlay(false);
     setLock(false);
@@ -179,14 +184,14 @@ export function Roulette(): React.ReactElement {
           </>
         );
       }
-      win(gain);
+      win(props.p, gain);
 
       setCanPlay(true);
       setLock(true);
       setStatus(status);
       setN(n);
 
-      reachedLimit();
+      reachedLimit(props.p);
     }, 1600);
   }
 

@@ -1,12 +1,14 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 
-export function killall(_args: (string | number | boolean)[], server: BaseServer): void {
+export function killall(terminal: ITerminal, router: IRouter, player: IPlayer, server: BaseServer): void {
   for (let i = server.runningScripts.length - 1; i >= 0; --i) {
     killWorkerScript({ runningScript: server.runningScripts[i], hostname: server.hostname });
   }
   WorkerScriptStartStopEventEmitter.emit();
-  Terminal.print("Killing all running scripts");
+  terminal.print("Killing all running scripts");
 }

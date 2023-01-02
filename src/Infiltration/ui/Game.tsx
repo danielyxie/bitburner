@@ -1,9 +1,7 @@
 import { Button, Container, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import { BackwardGame } from "./BackwardGame";
 import { BracketGame } from "./BracketGame";
 import { BribeGame } from "./BribeGame";
@@ -41,6 +39,8 @@ const minigames = [
 ];
 
 export function Game(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const [level, setLevel] = useState(1);
   const [stage, setStage] = useState(Stage.Countdown);
   const [results, setResults] = useState("");
@@ -91,17 +91,17 @@ export function Game(props: IProps): React.ReactElement {
     // Kill the player immediately if they use automation, so
     // it's clear they're not meant to
     const damage = options?.automated
-      ? Player.hp.current
-      : props.StartingDifficulty * 3 * (Player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 0.5 : 1);
-    if (Player.takeDamage(damage)) {
-      Router.toPage(Page.City);
+      ? player.hp.current
+      : props.StartingDifficulty * 3 * (player.hasAugmentation(AugmentationNames.WKSharmonizer, true) ? 0.5 : 1);
+    if (player.takeDamage(damage)) {
+      router.toCity();
       return;
     }
     setupNextGame();
   }
 
   function cancel(): void {
-    Router.toPage(Page.City);
+    router.toCity();
     return;
   }
 

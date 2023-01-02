@@ -9,7 +9,7 @@ Upgrade office size.
 <b>Signature:</b>
 
 ```typescript
-upgradeOfficeSize(divisionName: string, city: CityName | `${CityName}`, size: number): void;
+upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ upgradeOfficeSize(divisionName: string, city: CityName | `${CityName}`, size: nu
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
+|  cityName | string | Name of the city |
 |  size | number | Amount of positions to open |
 
 <b>Returns:</b>

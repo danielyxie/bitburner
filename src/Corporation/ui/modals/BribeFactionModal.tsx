@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Factions } from "../../../Faction/Factions";
-import * as corpConstants from "../../data/Constants";
+import { CorporationConstants } from "../../data/Constants";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
-import { Player } from "@player";
+import { use } from "../../../ui/Context";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -19,10 +19,11 @@ interface IProps {
 }
 
 export function BribeFactionModal(props: IProps): React.ReactElement {
-  const factions = Player.factions.filter((name: string) => {
+  const player = use.Player();
+  const factions = player.factions.filter((name: string) => {
     const info = Factions[name].getInfo();
     if (!info.offersWork()) return false;
-    if (Player.hasGangWith(name)) return false;
+    if (player.hasGangWith(name)) return false;
     return true;
   });
   const corp = useCorporation();
@@ -35,7 +36,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
   }
 
   function repGain(money: number): number {
-    return money / corpConstants.bribeAmountPerReputation;
+    return money / CorporationConstants.BribeToRepRatio;
   }
 
   function getRepText(money: number): string {
@@ -59,7 +60,9 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
     const fac = Factions[selectedFaction];
     if (disabled) return;
     const rep = repGain(money);
-    dialogBoxCreate(`You gained ${numeralWrapper.formatReputation(rep)} reputation with ${fac.name} by bribing them.`);
+    dialogBoxCreate(
+      "You gained " + numeralWrapper.formatReputation(rep) + " reputation with " + fac.name + " by bribing them.",
+    );
     fac.playerReputation += rep;
     corp.funds = corp.funds - money;
     props.onClose();
@@ -76,7 +79,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
           {factions.map((name: string) => {
             const info = Factions[name].getInfo();
             if (!info.offersWork()) return;
-            if (Player.hasGangWith(name)) return;
+            if (player.hasGangWith(name)) return;
             return (
               <MenuItem key={name} value={name}>
                 {name}

@@ -2,12 +2,9 @@ import { BladeburnerConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { addOffset } from "../utils/helpers/addOffset";
-import { CityName } from "../Enums";
 
 interface IChangePopulationByCountParams {
-  /** How much the estimate should change by. */
   estChange: number;
-  /** Add offset to estimate (offset by percentage). */
   estOffset: number;
 }
 
@@ -17,22 +14,32 @@ interface IChangePopulationByPercentageParams {
 }
 
 export class City {
-  /** Name of the city. */
-  name: CityName;
+  /**
+   * Name of the city.
+   */
+  name = "";
 
-  /** Population of the city. */
+  /**
+   * Population of the city.
+   */
   pop = 0;
 
-  /** Population estimation of the city. */
+  /**
+   * Population estimation of the city.
+   */
   popEst = 0;
 
-  /** Number of communities in the city. */
+  /**
+   * Number of communities in the city.
+   */
   comms = 0;
 
-  /** Chaos level of the city. */
+  /**
+   * Chaos level of the city.
+   */
   chaos = 0;
 
-  constructor(name = CityName.Sector12) {
+  constructor(name: string = BladeburnerConstants.CityNames[2]) {
     this.name = name;
 
     // Synthoid population and estimate
@@ -44,7 +51,9 @@ export class City {
     this.chaos = 0;
   }
 
-  /** p is the percentage, not the multiplier (e.g. pass in p = 5 for 5%) */
+  /**
+   * p is the percentage, not the multiplier (e.g. pass in p = 5 for 5%)
+   */
   changeChaosByPercentage(p: number): void {
     if (isNaN(p)) {
       throw new Error("NaN passed into City.chaosChaosByPercentage()");
@@ -60,7 +69,7 @@ export class City {
 
   improvePopulationEstimateByCount(n: number): void {
     if (isNaN(n)) {
-      throw new Error("NaN passed into City.improvePopulationEstimateByCount()");
+      throw new Error("NaN passeed into City.improvePopulationEstimateByCount()");
     }
     if (this.popEst < this.pop) {
       this.popEst += n;
@@ -75,7 +84,9 @@ export class City {
     }
   }
 
-  /** p is the percentage, not the multiplier (e.g. pass in p = 5 for 5%) */
+  /**
+   * p is the percentage, not the multiplier (e.g. pass in p = 5 for 5%)
+   */
   improvePopulationEstimateByPercentage(p: number, skillMult = 1): void {
     p = p * skillMult;
     if (isNaN(p)) {
@@ -95,6 +106,11 @@ export class City {
     }
   }
 
+  /**
+   * @params options:
+   *  estChange(int): How much the estimate should change by
+   *  estOffset(int): Add offset to estimate (offset by percentage)
+   */
   changePopulationByCount(n: number, params: IChangePopulationByCountParams = { estChange: 0, estOffset: 0 }): void {
     if (isNaN(n)) {
       throw new Error("NaN passed into City.changePopulationByCount()");
@@ -158,12 +174,16 @@ export class City {
     }
   }
 
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("City", this);
   }
 
-  /** Initializes a City object from a JSON save state. */
+  /**
+   * Initiatizes a City object from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): City {
     return Generic_fromJSON(City, value.data);
   }

@@ -27,8 +27,7 @@ import { isBackdoorInstalled } from "../../Server/ServerHelpers";
 import { GetServer } from "../../Server/AllServers";
 
 import { CorruptableText } from "../../ui/React/CorruptableText";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
+import { use } from "../../ui/Context";
 import { serverMetadata } from "../../Server/data/servers";
 import { Tooltip } from "@mui/material";
 
@@ -37,6 +36,8 @@ type IProps = {
 };
 
 export function GenericLocation({ loc }: IProps): React.ReactElement {
+  const router = use.Router();
+  const player = use.Player();
   /**
    * Determine what needs to be rendered for this location based on the locations
    * type. Returns an array of React components that should be rendered
@@ -45,39 +46,39 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
     const content: React.ReactNode[] = [];
 
     if (loc.types.includes(LocationType.Company)) {
-      content.push(<CompanyLocation locName={loc.name} />);
+      content.push(<CompanyLocation key={"companylocation"} locName={loc.name} />);
     }
 
     if (loc.types.includes(LocationType.Gym)) {
-      content.push(<GymLocation loc={loc} />);
+      content.push(<GymLocation key={"gymlocation"} router={router} loc={loc} p={player} />);
     }
 
     if (loc.types.includes(LocationType.Hospital)) {
-      content.push(<HospitalLocation />);
+      content.push(<HospitalLocation key={"hospitallocation"} p={player} />);
     }
 
     if (loc.types.includes(LocationType.Slums)) {
-      content.push(<SlumsLocation />);
+      content.push(<SlumsLocation key={"slumslocation"} />);
     }
 
     if (loc.types.includes(LocationType.Special)) {
-      content.push(<SpecialLocation loc={loc} />);
+      content.push(<SpecialLocation key={"speciallocation"} loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.TechVendor)) {
-      content.push(<TechVendorLocation loc={loc} />);
+      content.push(<TechVendorLocation key={"techvendorlocation"} loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.TravelAgency)) {
-      content.push(<TravelAgencyRoot />);
+      content.push(<TravelAgencyRoot key={"travelagencylocation"} p={player} router={router} />);
     }
 
     if (loc.types.includes(LocationType.University)) {
-      content.push(<UniversityLocation loc={loc} />);
+      content.push(<UniversityLocation key={"universitylocation"} loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.Casino)) {
-      content.push(<CasinoLocation />);
+      content.push(<CasinoLocation key={"casinoLocation"} p={player} />);
     }
 
     return content;
@@ -91,7 +92,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
 
   return (
     <>
-      <Button onClick={() => Router.toPage(Page.City)}>Return to World</Button>
+      <Button onClick={() => router.toCity()}>Return to World</Button>
       <Typography variant="h4" sx={{ mt: 1 }}>
         {backdoorInstalled && !Settings.DisableTextEffects ? (
           <Tooltip title={`Backdoor installed on ${loc.name}.`}>

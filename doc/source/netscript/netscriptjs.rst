@@ -51,9 +51,11 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
     * grow
     * weaken
     * sleep
-    * asleep
     * prompt
     * wget
+    * scp
+    * write
+    * writePort
 
 * Any function that contains :code:`await` must be declared as :code:`async`
 
@@ -145,7 +147,9 @@ You may have noticed that every new ns2 file will contains the following comment
 
 .. code-block:: javascript
 
-    /** @param {NS} ns */
+    /**
+    * @param {NS} ns
+    **/
 
 This comment is used to help the text editor autocomplete functions in the Netscript API. You can enable it by pressing ctrl+space after `ns.`
 

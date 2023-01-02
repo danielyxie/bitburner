@@ -1,19 +1,27 @@
-import { Terminal } from "../../Terminal";
-import { Player } from "@player";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { BaseServer } from "../../Server/BaseServer";
 
-export function history(args: (string | number | boolean)[]): void {
+export function history(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   if (args.length === 0) {
-    Terminal.commandHistory.forEach((command, index) => {
-      Terminal.print(`${index.toString().padStart(2)} ${command}`);
+    terminal.commandHistory.forEach((command, index) => {
+      terminal.print(`${index.toString().padStart(2)} ${command}`);
     });
     return;
   }
   const arg = args[0] + "";
   if (arg === "-c" || arg === "--clear") {
-    Player.terminalCommandHistory = [];
-    Terminal.commandHistory = [];
-    Terminal.commandHistoryIndex = 1;
+    player.terminalCommandHistory = [];
+    terminal.commandHistory = [];
+    terminal.commandHistoryIndex = 1;
   } else {
-    Terminal.error("Incorrect usage of history command. usage: history [-c]");
+    terminal.error("Incorrect usage of history command. usage: history [-c]");
   }
 }

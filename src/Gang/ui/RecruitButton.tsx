@@ -1,3 +1,6 @@
+/**
+ * React Component for the recruitment button and text on the gang main page.
+ */
 import React, { useState } from "react";
 import { RecruitModal } from "./RecruitModal";
 import { GangConstants } from "../data/Constants";
@@ -11,7 +14,6 @@ interface IProps {
   onRecruit: () => void;
 }
 
-/** React Component for the recruitment button and text on the gang main page. */
 export function RecruitButton(props: IProps): React.ReactElement {
   const gang = useGang();
   const [open, setOpen] = useState(false);

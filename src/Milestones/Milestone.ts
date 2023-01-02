@@ -1,4 +1,6 @@
+import { IPlayer } from "../PersonObjects/IPlayer";
+
 export type Milestone = {
   title: string;
-  fulfilled: () => boolean;
+  fulfilled: (p: IPlayer) => boolean;
 };

@@ -1,13 +1,22 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { BaseServer } from "../../Server/BaseServer";
 import { removeAlias } from "../../Alias";
 
-export function unalias(args: (string | number | boolean)[]): void {
+export function unalias(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   if (args.length !== 1) {
-    Terminal.error("Incorrect usage of unalias name. Usage: unalias [alias]");
+    terminal.error("Incorrect usage of unalias name. Usage: unalias [alias]");
     return;
   } else if (removeAlias(args[0] + "")) {
-    Terminal.print(`Removed alias ${args[0]}`);
+    terminal.print(`Removed alias ${args[0]}`);
   } else {
-    Terminal.error(`No such alias exists: ${args[0]}`);
+    terminal.error(`No such alias exists: ${args[0]}`);
   }
 }

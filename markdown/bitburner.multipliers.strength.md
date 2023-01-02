@@ -4,8 +4,6 @@
 
 ## Multipliers.strength property
 
-Multiplier to strength skill
-
 <b>Signature:</b>
 
 ```typescript

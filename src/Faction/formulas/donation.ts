@@ -1,7 +1,6 @@
 import { CONSTANTS } from "../../Constants";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Person as IPerson } from "@nsdefs";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
-export function repFromDonation(amt: number, person: IPerson): number {
-  return (amt / CONSTANTS.DonateMoneyToRepDivisor) * person.mults.faction_rep * BitNodeMultipliers.FactionWorkRepGain;
+export function repFromDonation(amt: number, player: IPlayer): number {
+  return (amt / CONSTANTS.DonateMoneyToRepDivisor) * player.mults.faction_rep;
 }

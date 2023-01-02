@@ -1,3 +1,6 @@
+/**
+ * React Component for the list of gang members on the management subpage.
+ */
 import React, { useState } from "react";
 import { GangMemberCard } from "./GangMemberCard";
 import { RecruitButton } from "./RecruitButton";
@@ -9,7 +12,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { GangMember } from "../GangMember";
 import { OptionSwitch } from "../../ui/React/OptionSwitch";
 
-/** React Component for the list of gang members on the management subpage. */
 export function GangMemberList(): React.ReactElement {
   const gang = useGang();
   const setRerender = useState(false)[1];

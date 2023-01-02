@@ -47,8 +47,8 @@ export class Fragment {
     return this.shape[0].length;
   }
 
-  // List of direct neighbors of this fragment.
-  neighbors(rotation: number): number[][] {
+  // List of direct neighboors of this fragment.
+  neighboors(rotation: number): number[][] {
     const candidates: number[][] = [];
 
     const add = (x: number, y: number): void => {
@@ -58,7 +58,7 @@ export class Fragment {
     };
     for (let y = 0; y < this.height(rotation); y++) {
       for (let x = 0; x < this.width(rotation); x++) {
-        // This cell is full, add all it's neighbors.
+        // This cell is full, add all it's neighboors.
         if (!this.fullAt(x, y, rotation)) continue;
         add(x - 1, y);
         add(x + 1, y);

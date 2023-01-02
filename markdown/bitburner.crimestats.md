@@ -9,7 +9,7 @@ Data representing the internal values of a crime.
 <b>Signature:</b>
 
 ```typescript
-interface CrimeStats 
+export interface CrimeStats 
 ```
 
 ## Properties
@@ -31,6 +31,7 @@ interface CrimeStats
 |  [karma](./bitburner.crimestats.karma.md) | number | Amount of karma lost for successfully committing this crime |
 |  [kills](./bitburner.crimestats.kills.md) | number | How many people die as a result of this crime |
 |  [money](./bitburner.crimestats.money.md) | number | How much money is given |
+|  [name](./bitburner.crimestats.name.md) | string | Name of crime |
 |  [strength\_exp](./bitburner.crimestats.strength_exp.md) | number | strength exp gained from crime |
 |  [strength\_success\_weight](./bitburner.crimestats.strength_success_weight.md) | number | strength level impact on success change of the crime |
 |  [time](./bitburner.crimestats.time.md) | number | Milliseconds it takes to attempt the crime |

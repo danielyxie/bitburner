@@ -1,22 +1,22 @@
 import { Work } from "../../Work/Work";
-import { PlayerObject } from "./PlayerObject";
+import { IPlayer } from "../IPlayer";
 
-export function startWork(this: PlayerObject, w: Work): void {
+export function start(this: IPlayer, w: Work): void {
   if (this.currentWork !== null) {
-    this.currentWork.finish(true);
+    this.currentWork.finish(this, true);
   }
   this.currentWork = w;
 }
-export function processWork(this: PlayerObject, cycles = 1): void {
+export function process(this: IPlayer, cycles = 1): void {
   if (this.currentWork === null) return;
-  const finished = this.currentWork.process(cycles);
+  const finished = this.currentWork.process(this, cycles);
   if (finished) {
     this.finishWork(false);
   }
 }
-export function finishWork(this: PlayerObject, cancelled: boolean): void {
+export function finish(this: IPlayer, cancelled: boolean): void {
   if (this.currentWork === null) return;
-  this.currentWork.finish(cancelled);
+  this.currentWork.finish(this, cancelled);
   this.currentWork = null;
   this.focus = false;
 }

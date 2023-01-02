@@ -16,7 +16,7 @@ mv(host: string, source: string, destination: string): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Hostname of target server. |
+|  host | string | Host of target server. |
 |  source | string | Filename of the source file. |
 |  destination | string | Filename of the destination file. |
 
@@ -28,7 +28,7 @@ void
 
 RAM cost: 0 GB
 
-NS2 exclusive.
+NS2 exclusive
 
 Move the source file to the specified destination on the target server.
 

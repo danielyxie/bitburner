@@ -1,4 +1,4 @@
-import { Bladeburner } from "./Bladeburner";
+import { IBladeburner } from "./IBladeburner";
 import { Action, IActionParams } from "./Action";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
@@ -7,7 +7,7 @@ export class Contract extends Action {
     super(params);
   }
 
-  getActionTypeSkillSuccessBonus(inst: Bladeburner): number {
+  getActionTypeSkillSuccessBonus(inst: IBladeburner): number {
     return inst.skillMultipliers.successChanceContract;
   }
 

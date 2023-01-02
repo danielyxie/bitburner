@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as corpConstants from "../data/Constants";
+import { CorporationConstants } from "../data/Constants";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { NewCity } from "../Actions";
 import { MoneyCost } from "./MoneyCost";
@@ -8,22 +8,21 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { CityName } from "../../Enums";
 
 interface IProps {
-  cityStateSetter: (city: CityName | "Expand") => void;
+  cityStateSetter: (city: string) => void;
 }
 
 export function ExpandNewCity(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const possibleCities = Object.values(CityName).filter((cityName) => division.offices[cityName] === 0);
+  const possibleCities = Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] === 0);
   const [city, setCity] = useState(possibleCities[0]);
 
-  const disabled = corp.funds < corpConstants.officeInitialCost;
+  const disabled = corp.funds < CorporationConstants.OfficeInitialCost;
 
   function onCityChange(event: SelectChangeEvent<string>): void {
-    setCity(event.target.value as CityName);
+    setCity(event.target.value);
   }
 
   function expand(): void {
@@ -42,7 +41,7 @@ export function ExpandNewCity(props: IProps): React.ReactElement {
     <>
       <Typography>
         Would you like to expand into a new city by opening an office? This would cost{" "}
-        <MoneyCost money={corpConstants.officeInitialCost} corp={corp} />
+        <MoneyCost money={CorporationConstants.OfficeInitialCost} corp={corp} />
       </Typography>
       <Select
         endAdornment={

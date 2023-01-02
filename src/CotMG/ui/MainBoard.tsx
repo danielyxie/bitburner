@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Fragment, NoneFragment } from "../Fragment";
 import { FragmentType } from "../FragmentType";
-import { StaneksGift } from "../StaneksGift";
+import { IStaneksGift } from "../IStaneksGift";
 import { FragmentInspector } from "./FragmentInspector";
 import { FragmentSelector } from "./FragmentSelector";
 import Box from "@mui/material/Box";
@@ -14,7 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 interface IProps {
-  gift: StaneksGift;
+  gift: IStaneksGift;
 }
 
 export function MainBoard(props: IProps): React.ReactElement {

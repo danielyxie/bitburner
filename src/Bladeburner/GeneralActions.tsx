@@ -1,6 +1,7 @@
 import { Action } from "./Action";
+import { IMap } from "../types";
 
-export const GeneralActions: Record<string, Action> = {};
+export const GeneralActions: IMap<Action> = {};
 
 const actionNames: Array<string> = [
   "Training",

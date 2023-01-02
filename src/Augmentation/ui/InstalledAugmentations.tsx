@@ -12,13 +12,14 @@ import Tooltip from "@mui/material/Tooltip";
 import React, { useState } from "react";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import { StaticAugmentations } from "../StaticAugmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
 
 export function InstalledAugmentations(): React.ReactElement {
   const setRerender = useState(true)[1];
-  const sourceAugs = Player.augmentations.slice().filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor);
+  const player = use.Player();
+  const sourceAugs = player.augmentations.slice().filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor);
 
   const [selectedAug, setSelectedAug] = useState(sourceAugs[0]);
 

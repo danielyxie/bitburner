@@ -3,15 +3,17 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { toString } from "lodash";
 import React from "react";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
-import { Router } from "../../ui/GameRoot";
-import { Terminal } from "../../Terminal";
+import { IRouter } from "../../ui/Router";
+import { ITerminal } from "../ITerminal";
 import libarg from "arg";
 import { showLiterature } from "../../Literature/LiteratureHelpers";
 import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
+import { ScriptArg } from "../../Netscript/ScriptArg";
 
-export function ls(args: (string | number | boolean)[], server: BaseServer): void {
+export function ls(terminal: ITerminal, router: IRouter, player: IPlayer, server: BaseServer, args: ScriptArg[]): void {
   interface LSFlags {
     ["-l"]: boolean;
     ["--grep"]: string;
@@ -35,7 +37,7 @@ export function ls(args: (string | number | boolean)[], server: BaseServer): voi
 
   const numArgs = args.length;
   function incorrectUsage(): void {
-    Terminal.error("Incorrect usage of ls command. Usage: ls [dir] [-l] [-g, --grep pattern]");
+    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [-l] [-g, --grep pattern]");
   }
 
   if (numArgs > 4) {
@@ -43,14 +45,14 @@ export function ls(args: (string | number | boolean)[], server: BaseServer): voi
   }
 
   // Directory path
-  let prefix = Terminal.cwd();
+  let prefix = terminal.cwd();
   if (!prefix.endsWith("/")) {
     prefix += "/";
   }
 
   // If first arg doesn't contain a - it must be the file/folder
   const dir = args[0] && typeof args[0] == "string" && !args[0].startsWith("-") ? args[0] : "";
-  const newPath = evaluateDirectoryPath(dir + "", Terminal.cwd());
+  const newPath = evaluateDirectoryPath(dir + "", terminal.cwd());
   prefix = newPath || "";
   if (!prefix.endsWith("/")) {
     prefix += "/";
@@ -105,11 +107,12 @@ export function ls(args: (string | number | boolean)[], server: BaseServer): voi
   }
 
   // Get all of the programs and scripts on the machine into one temporary array
-  for (const program of server.programs) handleFn(program, allPrograms);
-  for (const script of server.scripts) handleFn(script.filename, allScripts);
-  for (const txt of server.textFiles) handleFn(txt.fn, allTextFiles);
-  for (const contract of server.contracts) handleFn(contract.fn, allContracts);
-  for (const msgOrLit of server.messages) handleFn(msgOrLit, allMessages);
+  const s = player.getCurrentServer();
+  for (const program of s.programs) handleFn(program, allPrograms);
+  for (const script of s.scripts) handleFn(script.filename, allScripts);
+  for (const txt of s.textFiles) handleFn(txt.fn, allTextFiles);
+  for (const contract of s.contracts) handleFn(contract.fn, allContracts);
+  for (const msgOrLit of s.messages) handleFn(msgOrLit, allMessages);
 
   // Sort the files/folders alphabetically then print each
   allPrograms.sort();
@@ -146,17 +149,13 @@ export function ls(args: (string | number | boolean)[], server: BaseServer): voi
     rowSplitArray = rowSplitArray.filter((x) => !!x[0]);
 
     function onScriptLinkClick(filename: string): void {
-      if (!server.isConnectedTo) {
-        return Terminal.error(`File is not on this server, connect to ${hostname} and try again`);
+      if (player.getCurrentServer().hostname !== hostname) {
+        return terminal.error(`File is not on this server, connect to ${hostname} and try again`);
       }
       if (filename.startsWith("/")) filename = filename.slice(1);
-      // Terminal.getFilepath needs leading slash to correctly work here
-      if (prefix === "") filename = `/${filename}`;
-      const filepath = Terminal.getFilepath(`${prefix}${filename}`);
-      // Terminal.getScript also calls Terminal.getFilepath and therefore also
-      // needs the given parameter
-      const code = toString(Terminal.getScript(`${prefix}${filename}`)?.code);
-      Router.toScriptEditor({ [filepath]: code });
+      const filepath = terminal.getFilepath(`${prefix}${filename}`);
+      const code = toString(terminal.getScript(player, filepath)?.code);
+      router.toScriptEditor({ [filepath]: code });
     }
 
     return (
@@ -194,11 +193,11 @@ export function ls(args: (string | number | boolean)[], server: BaseServer): voi
     rowSplitArray = rowSplitArray.filter((x) => !!x[0]);
 
     function onMessageLinkClick(filename: string): void {
-      if (!server.isConnectedTo) {
-        return Terminal.error(`File is not on this server, connect to ${hostname} and try again`);
+      if (player.getCurrentServer().hostname !== hostname) {
+        return terminal.error(`File is not on this server, connect to ${hostname} and try again`);
       }
       if (filename.startsWith("/")) filename = filename.slice(1);
-      const filepath = Terminal.getFilepath(`${prefix}${filename}`);
+      const filepath = terminal.getFilepath(`${prefix}${filename}`);
 
       if (filepath.endsWith(".lit")) {
         showLiterature(filepath);
@@ -255,16 +254,16 @@ export function ls(args: (string | number | boolean)[], server: BaseServer): voi
 
       switch (group.type) {
         case FileType.Folder:
-          Terminal.printRaw(<span style={{ color: "cyan" }}>{row}</span>);
+          terminal.printRaw(<span style={{ color: "cyan" }}>{row}</span>);
           break;
         case FileType.Script:
-          Terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
+          terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
           break;
         case FileType.Message:
-          Terminal.printRaw(<ClickableMessageRow row={row} prefix={prefix} hostname={server.hostname} />);
+          terminal.printRaw(<ClickableMessageRow row={row} prefix={prefix} hostname={server.hostname} />);
           break;
         default:
-          Terminal.print(row);
+          terminal.print(row);
       }
     }
   }

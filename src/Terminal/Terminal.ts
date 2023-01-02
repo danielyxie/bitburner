@@ -1,6 +1,6 @@
-import { Output, Link, RawOutput, TTimer } from "./OutputTypes";
-import { Router } from "../ui/GameRoot";
-import { Player } from "@player";
+import { ITerminal, Output, Link, RawOutput, TTimer } from "./ITerminal";
+import { IRouter } from "../ui/Router";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
 import { Server } from "../Server/Server";
@@ -33,7 +33,6 @@ import {
 import { numeralWrapper } from "../ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
-// TODO: Does every terminal function really need its own file...?
 import { alias } from "./commands/alias";
 import { analyze } from "./commands/analyze";
 import { backdoor } from "./commands/backdoor";
@@ -74,10 +73,9 @@ import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 import { hash } from "../hash/hash";
 import { apr1 } from "./commands/apr1";
-import { changelog } from "./commands/changelog";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
-export class Terminal {
+export class Terminal implements ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze
   action: TTimer | null = null;
 
@@ -95,10 +93,10 @@ export class Terminal {
   // Excludes the trailing forward slash
   currDir = "/";
 
-  process(cycles: number): void {
+  process(router: IRouter, player: IPlayer, cycles: number): void {
     if (this.action === null) return;
     this.action.timeLeft -= (CONSTANTS._idleSpeed * cycles) / 1000;
-    if (this.action.timeLeft < 0.01) this.finishAction(false);
+    if (this.action.timeLeft < 0.01) this.finishAction(router, player, false);
     TerminalEvents.emit();
   }
 
@@ -134,50 +132,50 @@ export class Terminal {
     this.append(new Output(s, "warn"));
   }
 
-  startHack(): void {
+  startHack(player: IPlayer): void {
     // Hacking through Terminal should be faster than hacking through a script
-    const server = Player.getCurrentServer();
+    const server = player.getCurrentServer();
     if (server instanceof HacknetServer) {
       this.error("Cannot hack this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    this.startAction(calculateHackingTime(server, Player) / 4, "h", server);
+    this.startAction(calculateHackingTime(server, player) / 4, "h", server);
   }
 
-  startGrow(): void {
-    const server = Player.getCurrentServer();
+  startGrow(player: IPlayer): void {
+    const server = player.getCurrentServer();
     if (server instanceof HacknetServer) {
       this.error("Cannot grow this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    this.startAction(calculateGrowTime(server, Player) / 16, "g", server);
+    this.startAction(calculateGrowTime(server, player) / 16, "g", server);
   }
-  startWeaken(): void {
-    const server = Player.getCurrentServer();
+  startWeaken(player: IPlayer): void {
+    const server = player.getCurrentServer();
     if (server instanceof HacknetServer) {
       this.error("Cannot weaken this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    this.startAction(calculateWeakenTime(server, Player) / 16, "w", server);
+    this.startAction(calculateWeakenTime(server, player) / 16, "w", server);
   }
 
-  startBackdoor(): void {
+  startBackdoor(player: IPlayer): void {
     // Backdoor should take the same amount of time as hack
-    const server = Player.getCurrentServer();
+    const server = player.getCurrentServer();
     if (server instanceof HacknetServer) {
       this.error("Cannot backdoor this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    this.startAction(calculateHackingTime(server, Player) / 4, "b", server);
+    this.startAction(calculateHackingTime(server, player) / 4, "b", server);
   }
 
-  startAnalyze(): void {
+  startAnalyze(player: IPlayer): void {
     this.print("Analyzing system...");
-    const server = Player.getCurrentServer();
+    const server = player.getCurrentServer();
     this.startAction(1, "a", server);
   }
 
@@ -186,7 +184,7 @@ export class Terminal {
   }
 
   // Complete the hack/analyze command
-  finishHack(server: BaseServer, cancelled = false): void {
+  finishHack(router: IRouter, player: IPlayer, server: BaseServer, cancelled = false): void {
     if (cancelled) return;
 
     if (server instanceof HacknetServer) {
@@ -196,18 +194,18 @@ export class Terminal {
     if (!(server instanceof Server)) throw new Error("server should be normal server");
 
     // Calculate whether hack was successful
-    const hackChance = calculateHackingChance(server, Player);
+    const hackChance = calculateHackingChance(server, player);
     const rand = Math.random();
-    const expGainedOnSuccess = calculateHackingExpGain(server, Player);
+    const expGainedOnSuccess = calculateHackingExpGain(server, player);
     const expGainedOnFailure = expGainedOnSuccess / 4;
     if (rand < hackChance) {
       // Success!
       server.backdoorInstalled = true;
       if (SpecialServers.WorldDaemon === server.hostname) {
-        Router.toBitVerse(false, false);
+        router.toBitVerse(false, false);
         return;
       }
-      let moneyGained = calculatePercentMoneyHacked(server, Player) * BitNodeMultipliers.ManualHackMoney;
+      let moneyGained = calculatePercentMoneyHacked(server, player) * BitNodeMultipliers.ManualHackMoney;
       moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
       if (moneyGained <= 0) {
@@ -215,9 +213,9 @@ export class Terminal {
       } // Safety check
 
       server.moneyAvailable -= moneyGained;
-      Player.gainMoney(moneyGained, "hacking");
-      Player.gainHackingExp(expGainedOnSuccess);
-      Player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
+      player.gainMoney(moneyGained, "hacking");
+      player.gainHackingExp(expGainedOnSuccess);
+      player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 
       const oldSec = server.hackDifficulty;
       server.fortify(CONSTANTS.ServerFortifyAmount);
@@ -235,14 +233,14 @@ export class Terminal {
       );
     } else {
       // Failure
-      Player.gainHackingExp(expGainedOnFailure);
+      player.gainHackingExp(expGainedOnFailure);
       this.print(
         `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`,
       );
     }
   }
 
-  finishGrow(server: BaseServer, cancelled = false): void {
+  finishGrow(player: IPlayer, server: BaseServer, cancelled = false): void {
     if (cancelled) return;
 
     if (server instanceof HacknetServer) {
@@ -250,12 +248,12 @@ export class Terminal {
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    const expGain = calculateHackingExpGain(server, Player);
+    const expGain = calculateHackingExpGain(server, player);
     const oldSec = server.hackDifficulty;
-    const growth = processSingleServerGrowth(server, 25, server.cpuCores) - 1;
+    const growth = processSingleServerGrowth(server, 25, player, server.cpuCores) - 1;
     const newSec = server.hackDifficulty;
 
-    Player.gainHackingExp(expGain);
+    player.gainHackingExp(expGain);
     this.print(
       `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(
         growth,
@@ -269,7 +267,7 @@ export class Terminal {
     );
   }
 
-  finishWeaken(server: BaseServer, cancelled = false): void {
+  finishWeaken(player: IPlayer, server: BaseServer, cancelled = false): void {
     if (cancelled) return;
 
     if (server instanceof HacknetServer) {
@@ -277,12 +275,12 @@ export class Terminal {
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    const expGain = calculateHackingExpGain(server, Player);
+    const expGain = calculateHackingExpGain(server, player);
     const oldSec = server.hackDifficulty;
     server.weaken(CONSTANTS.ServerWeakenAmount);
     const newSec = server.hackDifficulty;
 
-    Player.gainHackingExp(expGain);
+    player.gainHackingExp(expGain);
     this.print(
       `Security decreased on '${server.hostname}' from ${numeralWrapper.formatSecurity(
         oldSec,
@@ -291,7 +289,7 @@ export class Terminal {
     );
   }
 
-  finishBackdoor(server: BaseServer, cancelled = false): void {
+  finishBackdoor(router: IRouter, player: IPlayer, server: BaseServer, cancelled = false): void {
     if (!cancelled) {
       if (server instanceof HacknetServer) {
         this.error("Cannot hack this kind of server");
@@ -300,17 +298,17 @@ export class Terminal {
       if (!(server instanceof Server)) throw new Error("server should be normal server");
       server.backdoorInstalled = true;
       if (SpecialServers.WorldDaemon === server.hostname) {
-        if (Player.bitNodeN == null) {
-          Player.bitNodeN = 1;
+        if (player.bitNodeN == null) {
+          player.bitNodeN = 1;
         }
-        Router.toBitVerse(false, false);
+        router.toBitVerse(false, false);
         return;
       }
       this.print(`Backdoor on '${server.hostname}' successful!`);
     }
   }
 
-  finishAnalyze(currServ: BaseServer, cancelled = false): void {
+  finishAnalyze(player: IPlayer, currServ: BaseServer, cancelled = false): void {
     if (!cancelled) {
       const isHacknet = currServ instanceof HacknetServer;
       this.print(currServ.hostname + ": ");
@@ -327,9 +325,9 @@ export class Terminal {
         this.print("Required hacking skill for hack() and backdoor: " + (!isHacknet ? hackingSkill : "N/A"));
         const security = currServ.hackDifficulty;
         this.print("Server security level: " + (!isHacknet ? numeralWrapper.formatServerSecurity(security) : "N/A"));
-        const hackingChance = calculateHackingChance(currServ, Player);
+        const hackingChance = calculateHackingChance(currServ, player);
         this.print("Chance to hack: " + (!isHacknet ? numeralWrapper.formatPercentage(hackingChance) : "N/A"));
-        const hackingTime = calculateHackingTime(currServ, Player) * 1000;
+        const hackingTime = calculateHackingTime(currServ, player) * 1000;
         this.print("Time to hack: " + (!isHacknet ? convertTimeMsToTimeElapsedString(hackingTime, true) : "N/A"));
       }
       this.print(
@@ -349,7 +347,7 @@ export class Terminal {
     }
   }
 
-  finishAction(cancelled = false): void {
+  finishAction(router: IRouter, player: IPlayer, cancelled = false): void {
     if (this.action === null) {
       if (!cancelled) throw new Error("Finish action called when there was no action");
       return;
@@ -359,15 +357,15 @@ export class Terminal {
 
     this.print(this.getProgressText());
     if (this.action.action === "h") {
-      this.finishHack(this.action.server, cancelled);
+      this.finishHack(router, player, this.action.server, cancelled);
     } else if (this.action.action === "g") {
-      this.finishGrow(this.action.server, cancelled);
+      this.finishGrow(player, this.action.server, cancelled);
     } else if (this.action.action === "w") {
-      this.finishWeaken(this.action.server, cancelled);
+      this.finishWeaken(player, this.action.server, cancelled);
     } else if (this.action.action === "b") {
-      this.finishBackdoor(this.action.server, cancelled);
+      this.finishBackdoor(router, player, this.action.server, cancelled);
     } else if (this.action.action === "a") {
-      this.finishAnalyze(this.action.server, cancelled);
+      this.finishAnalyze(player, this.action.server, cancelled);
     }
 
     if (cancelled) {
@@ -377,17 +375,17 @@ export class Terminal {
     TerminalEvents.emit();
   }
 
-  getFile(filename: string): Script | TextFile | string | null {
+  getFile(player: IPlayer, filename: string): Script | TextFile | string | null {
     if (isScriptFilename(filename)) {
-      return this.getScript(filename);
+      return this.getScript(player, filename);
     }
 
     if (filename.endsWith(".lit")) {
-      return this.getLitFile(filename);
+      return this.getLitFile(player, filename);
     }
 
     if (filename.endsWith(".txt")) {
-      return this.getTextFile(filename);
+      return this.getTextFile(player, filename);
     }
 
     return null;
@@ -406,8 +404,8 @@ export class Terminal {
     return path;
   }
 
-  getScript(filename: string): Script | null {
-    const s = Player.getCurrentServer();
+  getScript(player: IPlayer, filename: string): Script | null {
+    const s = player.getCurrentServer();
     const filepath = this.getFilepath(filename);
     for (const script of s.scripts) {
       if (filepath === script.filename) {
@@ -418,8 +416,8 @@ export class Terminal {
     return null;
   }
 
-  getTextFile(filename: string): TextFile | null {
-    const s = Player.getCurrentServer();
+  getTextFile(player: IPlayer, filename: string): TextFile | null {
+    const s = player.getCurrentServer();
     const filepath = this.getFilepath(filename);
     for (const txt of s.textFiles) {
       if (filepath === txt.fn) {
@@ -430,8 +428,8 @@ export class Terminal {
     return null;
   }
 
-  getLitFile(filename: string): string | null {
-    const s = Player.getCurrentServer();
+  getLitFile(player: IPlayer, filename: string): string | null {
+    const s = player.getCurrentServer();
     const filepath = this.getFilepath(filename);
     for (const lit of s.messages) {
       if (typeof lit === "string" && filepath === lit) {
@@ -451,13 +449,13 @@ export class Terminal {
     TerminalEvents.emit();
   }
 
-  async runContract(contractName: string): Promise<void> {
+  async runContract(player: IPlayer, contractName: string): Promise<void> {
     // There's already an opened contract
     if (this.contractOpen) {
       return this.error("There's already a Coding Contract in Progress");
     }
 
-    const serv = Player.getCurrentServer();
+    const serv = player.getCurrentServer();
     const contract = serv.getContract(contractName);
     if (contract == null) {
       return this.error("No such contract");
@@ -466,7 +464,7 @@ export class Terminal {
     this.contractOpen = true;
     const res = await contract.prompt();
 
-    //Check if the contract still exists by the time the promise is fulfilled
+    //Check if the contract still exists by the time the promise is fullfilled
     if (serv.getContract(contractName) == null) {
       this.contractOpen = false;
       return this.error("Contract no longer exists (Was it solved by a script?)");
@@ -475,7 +473,7 @@ export class Terminal {
     switch (res) {
       case CodingContractResult.Success:
         if (contract.reward !== null) {
-          const reward = Player.gainCodingContractReward(contract.reward, contract.getDifficulty());
+          const reward = player.gainCodingContractReward(contract.reward, contract.getDifficulty());
           this.print(`Contract SUCCESS - ${reward}`);
         }
         serv.removeContract(contract);
@@ -497,7 +495,7 @@ export class Terminal {
     this.contractOpen = false;
   }
 
-  executeScanAnalyzeCommand(depth = 1, all = false): void {
+  executeScanAnalyzeCommand(player: IPlayer, depth = 1, all = false): void {
     // TODO Using array as stack for now, can make more efficient
     this.print("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
     this.print(" ");
@@ -512,7 +510,7 @@ export class Terminal {
 
     const stack: BaseServer[] = [];
     const depthQueue: number[] = [0];
-    const currServ = Player.getCurrentServer();
+    const currServ = player.getCurrentServer();
     stack.push(currServ);
     while (stack.length != 0) {
       const s = stack.pop();
@@ -539,7 +537,7 @@ export class Terminal {
         continue;
       } // Don't print current server
       const titleDashes = Array((d - 1) * 4 + 1).join("-");
-      if (Player.hasProgram(Programs.AutoLink.name)) {
+      if (player.hasProgram(Programs.AutoLink.name)) {
         this.append(new Link(titleDashes, s.hostname));
       } else {
         this.print(titleDashes + s.hostname);
@@ -564,23 +562,23 @@ export class Terminal {
     }
   }
 
-  connectToServer(server: string): void {
+  connectToServer(player: IPlayer, server: string): void {
     const serv = GetServer(server);
     if (serv == null) {
       this.error("Invalid server. Connection failed.");
       return;
     }
-    Player.getCurrentServer().isConnectedTo = false;
-    Player.currentServer = serv.hostname;
-    Player.getCurrentServer().isConnectedTo = true;
+    player.getCurrentServer().isConnectedTo = false;
+    player.currentServer = serv.hostname;
+    player.getCurrentServer().isConnectedTo = true;
     this.print("Connected to " + serv.hostname);
     this.setcwd("/");
-    if (Player.getCurrentServer().hostname == "darkweb") {
+    if (player.getCurrentServer().hostname == "darkweb") {
       checkIfConnectedToDarkweb(); // Posts a 'help' message if connecting to dark web
     }
   }
 
-  executeCommands(commands: string): void {
+  executeCommands(router: IRouter, player: IPlayer, commands: string): void {
     // Sanitize input
     commands = commands.trim();
     commands = commands.replace(/\s\s+/g, " "); // Replace all extra whitespace in command with a single space
@@ -591,13 +589,13 @@ export class Terminal {
       if (this.commandHistory.length > 50) {
         this.commandHistory.splice(0, 1);
       }
-      Player.terminalCommandHistory = this.commandHistory;
+      player.terminalCommandHistory = this.commandHistory;
     }
     this.commandHistoryIndex = this.commandHistory.length;
     const allCommands = ParseCommands(commands);
 
     for (let i = 0; i < allCommands.length; i++) {
-      this.executeCommand(allCommands[i]);
+      this.executeCommand(router, player, allCommands[i]);
     }
   }
 
@@ -612,7 +610,7 @@ export class Terminal {
     this.clear();
   }
 
-  executeCommand(command: string): void {
+  executeCommand(router: IRouter, player: IPlayer, command: string): void {
     if (this.action !== null) {
       this.error(`Cannot execute command (${command}) while an action is in progress`);
       return;
@@ -626,7 +624,7 @@ export class Terminal {
     if (commandArray.length == 0) {
       return;
     }
-    const s = Player.getCurrentServer();
+    const s = player.getCurrentServer();
     /****************** Interactive Tutorial Terminal Commands ******************/
     if (ITutorial.isRunning) {
       const n00dlesServ = GetServer("n00dles");
@@ -786,7 +784,13 @@ export class Terminal {
     }
 
     const commands: {
-      [key: string]: (args: (string | number | boolean)[], server: BaseServer) => void;
+      [key: string]: (
+        terminal: ITerminal,
+        router: IRouter,
+        player: IPlayer,
+        server: BaseServer,
+        args: (string | number | boolean)[],
+      ) => void;
     } = {
       "scan-analyze": scananalyze,
       alias: alias,
@@ -795,7 +799,6 @@ export class Terminal {
       buy: buy,
       cat: cat,
       cd: cd,
-      changelog: changelog,
       check: check,
       clear: () => this.clear(),
       cls: () => this.clear(),
@@ -838,7 +841,7 @@ export class Terminal {
       return;
     }
 
-    f(commandArray.slice(1), s);
+    f(this, router, player, s, commandArray.slice(1));
   }
 
   getProgressText(): string {

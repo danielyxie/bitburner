@@ -1,12 +1,15 @@
-import * as personMethods from "./PersonMethods";
-import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
-import { CityName } from "../Enums";
+import * as generalMethods from "./Player/PlayerObjectGeneralMethods";
+import { Augmentation } from "../Augmentation/Augmentation";
+import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { CityName } from "../Locations/data/CityNames";
+import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
-import { defaultMultipliers } from "./Multipliers";
+import { calculateIntelligenceBonus } from "./formulas/intelligence";
+import { IPerson } from "./IPerson";
+import { defaultMultipliers, mergeAugmentation } from "./Multipliers";
 import { Skills } from "./Skills";
 import { HP } from "./HP";
-import { Person as IPerson } from "@nsdefs";
-import { IReviverValue } from "../utils/JSONReviver";
 
 // Base class representing a person-like object
 export abstract class Person implements IPerson {
@@ -32,33 +35,136 @@ export abstract class Person implements IPerson {
 
   mults = defaultMultipliers();
 
-  /** Augmentations */
-  augmentations: PlayerOwnedAugmentation[] = [];
-  queuedAugmentations: PlayerOwnedAugmentation[] = [];
+  /**
+   * Augmentations
+   */
+  augmentations: IPlayerOwnedAugmentation[] = [];
 
-  /** City that the person is in */
+  /**
+   * City that the person is in
+   */
   city: CityName = CityName.Sector12;
 
-  gainHackingExp = personMethods.gainHackingExp;
-  gainStrengthExp = personMethods.gainStrengthExp;
-  gainDefenseExp = personMethods.gainDefenseExp;
-  gainDexterityExp = personMethods.gainDexterityExp;
-  gainAgilityExp = personMethods.gainAgilityExp;
-  gainCharismaExp = personMethods.gainCharismaExp;
-  gainIntelligenceExp = personMethods.gainIntelligenceExp;
-  gainStats = personMethods.gainStats;
-  regenerateHp = personMethods.regenerateHp;
-  queryStatFromString = personMethods.queryStatFromString;
-  updateSkillLevels = personMethods.updateSkillLevels;
-  hasAugmentation = personMethods.hasAugmentation;
-  calculateSkill = calculateSkill; //Class version is equal to imported version
+  gainHackingExp = generalMethods.gainHackingExp;
+  gainStrengthExp = generalMethods.gainStrengthExp;
+  gainDefenseExp = generalMethods.gainDefenseExp;
+  gainDexterityExp = generalMethods.gainDexterityExp;
+  gainAgilityExp = generalMethods.gainAgilityExp;
+  gainCharismaExp = generalMethods.gainCharismaExp;
+  gainIntelligenceExp = generalMethods.gainIntelligenceExp;
+  gainStats = generalMethods.gainStats;
+  calculateSkill = generalMethods.calculateSkill;
+  regenerateHp = generalMethods.regenerateHp;
+  queryStatFromString = generalMethods.queryStatFromString;
 
-  /** Reset all multipliers to 1 */
-  resetMultipliers() {
+  /**
+   * Updates this object's multipliers for the given augmentation
+   */
+  applyAugmentation(aug: Augmentation): void {
+    this.mults = mergeAugmentation(this.mults, aug.mults);
+  }
+
+  /**
+   * Given an experience amount and stat multiplier, calculates the
+   * stat level. Stat-agnostic (same formula for every stat)
+   */
+  calculateStat(exp: number, mult = 1): number {
+    return calculateSkill(exp, mult);
+  }
+
+  /**
+   * Calculate and return the amount of faction reputation earned per cycle
+   * when doing Field Work for a faction
+   */
+  getFactionFieldWorkRepGain(): number {
+    const t =
+      (0.9 *
+        (this.skills.hacking / CONSTANTS.MaxSkillLevel +
+          this.skills.strength / CONSTANTS.MaxSkillLevel +
+          this.skills.defense / CONSTANTS.MaxSkillLevel +
+          this.skills.dexterity / CONSTANTS.MaxSkillLevel +
+          this.skills.agility / CONSTANTS.MaxSkillLevel +
+          this.skills.charisma / CONSTANTS.MaxSkillLevel)) /
+      5.5;
+    return t * this.mults.faction_rep;
+  }
+
+  /**
+   * Calculate and return the amount of faction reputation earned per cycle
+   * when doing Hacking Work for a faction
+   */
+  getFactionHackingWorkRepGain(): number {
+    return (this.skills.hacking / CONSTANTS.MaxSkillLevel) * this.mults.faction_rep;
+  }
+
+  /**
+   * Calculate and return the amount of faction reputation earned per cycle
+   * when doing Security Work for a faction
+   */
+  getFactionSecurityWorkRepGain(): number {
+    const t =
+      (0.9 *
+        (this.skills.hacking / CONSTANTS.MaxSkillLevel +
+          this.skills.strength / CONSTANTS.MaxSkillLevel +
+          this.skills.defense / CONSTANTS.MaxSkillLevel +
+          this.skills.dexterity / CONSTANTS.MaxSkillLevel +
+          this.skills.agility / CONSTANTS.MaxSkillLevel)) /
+      4.5;
+    return t * this.mults.faction_rep;
+  }
+
+  /**
+   * Reset all multipliers to 1
+   */
+  resetMultipliers(): void {
     this.mults = defaultMultipliers();
   }
 
+  /**
+   * Update all stat levels
+   */
+  updateStatLevels(): void {
+    this.skills.hacking = Math.max(
+      1,
+      Math.floor(this.calculateStat(this.exp.hacking, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
+    );
+    this.skills.strength = Math.max(
+      1,
+      Math.floor(
+        this.calculateStat(this.exp.strength, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
+      ),
+    );
+    this.skills.defense = Math.max(
+      1,
+      Math.floor(this.calculateStat(this.exp.defense, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
+    );
+    this.skills.dexterity = Math.max(
+      1,
+      Math.floor(
+        this.calculateStat(this.exp.dexterity, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
+      ),
+    );
+    this.skills.agility = Math.max(
+      1,
+      Math.floor(this.calculateStat(this.exp.agility, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
+    );
+    this.skills.charisma = Math.max(
+      1,
+      Math.floor(
+        this.calculateStat(this.exp.charisma, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
+      ),
+    );
+
+    const ratio: number = this.hp.current / this.hp.max;
+    this.hp.max = Math.floor(10 + this.skills.defense / 10);
+    this.hp.current = Math.round(this.hp.max * ratio);
+  }
+
+  getIntelligenceBonus(weight: number): number {
+    return calculateIntelligenceBonus(this.skills.intelligence, weight);
+  }
+
   abstract takeDamage(amt: number): boolean;
+
   abstract whoAmI(): string;
-  abstract toJSON(): IReviverValue;
 }

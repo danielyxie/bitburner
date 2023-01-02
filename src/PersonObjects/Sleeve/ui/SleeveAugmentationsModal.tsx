@@ -1,9 +1,10 @@
 import { Container, Typography, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { PurchasableAugmentations } from "../../../Augmentation/ui/PurchasableAugmentations";
-import { Player } from "@player";
+import { use } from "../../../ui/Context";
 import { Modal } from "../../../ui/React/Modal";
 import { Sleeve } from "../Sleeve";
+import { findSleevePurchasableAugs } from "../SleeveHelpers";
 
 interface IProps {
   open: boolean;
@@ -12,6 +13,7 @@ interface IProps {
 }
 
 export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
+  const player = use.Player();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -28,7 +30,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
   // You can only purchase Augmentations that are actually available from
   // your factions. I.e. you must be in a faction that has the Augmentation
   // and you must also have enough rep in that faction in order to purchase it.
-  const availableAugs = props.sleeve.findPurchasableAugs();
+  const availableAugs = findSleevePurchasableAugs(props.sleeve, player);
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
@@ -48,11 +50,12 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
       <PurchasableAugmentations
         augNames={availableAugs.map((aug) => aug.name)}
         ownedAugNames={ownedAugNames}
-        canPurchase={(aug) => {
-          return Player.money > aug.baseCost;
+        player={player}
+        canPurchase={(player, aug) => {
+          return player.money > aug.baseCost;
         }}
-        purchaseAugmentation={(aug) => {
-          props.sleeve.tryBuyAugmentation(aug);
+        purchaseAugmentation={(player, aug) => {
+          props.sleeve.tryBuyAugmentation(player, aug);
           rerender();
         }}
         sleeveAugs

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
-import { IndustriesData } from "../../IndustryData";
-import { IndustryType } from "../../data/Enums";
+import { Industries } from "../../IndustryData";
 import { MakeProduct } from "../../Actions";
 import { useCorporation, useDivision } from "../Context";
 import Typography from "@mui/material/Typography";
@@ -12,19 +11,18 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { NumberInput } from "../../../ui/React/NumberInput";
-import { CityName } from "../../../Enums";
 
 interface IProps {
   open: boolean;
   onClose: () => void;
 }
 
-function productPlaceholder(type: string): string {
-  if (type === IndustryType.Food) {
+function productPlaceholder(tpe: string): string {
+  if (tpe === Industries.Food) {
     return "Restaurant Name";
-  } else if (type === IndustryType.Healthcare) {
+  } else if (tpe === Industries.Healthcare) {
     return "Hospital Name";
-  } else if (type === IndustryType.RealEstate) {
+  } else if (tpe === Industries.RealEstate) {
     return "Property Name";
   }
   return "Product Name";
@@ -34,13 +32,111 @@ function productPlaceholder(type: string): string {
 export function MakeProductModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const allCities = Object.values(CityName).filter((cityName) => division.offices[cityName] !== 0);
-  const [city, setCity] = useState(allCities.length > 0 ? allCities[0] : CityName.Sector12);
+  const allCities = Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] !== 0);
+  const [city, setCity] = useState(allCities.length > 0 ? allCities[0] : "");
   const [name, setName] = useState("");
   const [design, setDesign] = useState<number>(NaN);
   const [marketing, setMarketing] = useState<number>(NaN);
-  const data = IndustriesData[division.type];
-  if (division.hasMaximumNumberProducts() || !data.product) return <></>;
+  if (division.hasMaximumNumberProducts()) return <></>;
+
+  let createProductPopupText = <></>;
+  switch (division.type) {
+    case Industries.Food:
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Build and manage a new restaurant!
+        </>
+      );
+      break;
+    case Industries.Tobacco:
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Create a new tobacco product!
+        </>
+      );
+      break;
+    case Industries.Pharmaceutical:
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Design and develop a new pharmaceutical drug!
+        </>
+      );
+      break;
+    case Industries.Computer:
+    case "Computer":
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Design and manufacture a new computer hardware product!
+        </>
+      );
+      break;
+    case Industries.Robotics:
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Design and create a new robot or robotic system!
+        </>
+      );
+      break;
+    case Industries.Software:
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Develop a new piece of software!
+        </>
+      );
+      break;
+    case Industries.Healthcare:
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Build and manage a new hospital!
+        </>
+      );
+      break;
+    case Industries.RealEstate:
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Develop a new piece of real estate property!
+        </>
+      );
+      break;
+    default:
+      createProductPopupText = (
+        <>
+          {createProductPopupText}
+          <br />
+          Create a new product!
+        </>
+      );
+      return <></>;
+  }
+  createProductPopupText = (
+    <>
+      {createProductPopupText}
+      <br />
+      <br />
+      To begin developing a product, first choose the city in which it will be designed. The stats of your employees in
+      the selected city affect the properties of the finished product, such as its quality, performance, and durability.
+      <br />
+      <br />
+      You can also choose to invest money in the design and marketing of the product. Investing money in its design will
+      result in a superior product. Investing money in marketing the product will help the product's sales.
+    </>
+  );
 
   function makeProduct(): void {
     if (isNaN(design) || isNaN(marketing)) return;
@@ -53,7 +149,7 @@ export function MakeProductModal(props: IProps): React.ReactElement {
   }
 
   function onCityChange(event: SelectChangeEvent<string>): void {
-    setCity(event.target.value as CityName);
+    setCity(event.target.value);
   }
 
   function onProductNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -66,19 +162,7 @@ export function MakeProductModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <Typography>
-        <br />
-        {data.product.desc}
-        <br />
-        <br />
-        To begin developing a product, first choose the city in which it will be designed. The stats of your employees
-        in the selected city affect the properties of the finished product, such as its quality, performance, and
-        durability.
-        <br />
-        <br />
-        You can also choose to invest money in the design and marketing of the product. Investing money in its design
-        will result in a superior product. Investing money in marketing the product will help the product's sales.
-      </Typography>
+      <Typography>{createProductPopupText}</Typography>
       <Select style={{ margin: "5px" }} onChange={onCityChange} defaultValue={city}>
         {allCities.map((cityName: string) => (
           <MenuItem key={cityName} value={cityName}>

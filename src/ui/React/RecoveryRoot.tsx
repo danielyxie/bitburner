@@ -3,8 +3,7 @@ import React, { useEffect } from "react";
 import { Typography, Link, Button, ButtonGroup, Tooltip, Box, Paper, TextField } from "@mui/material";
 import { Settings } from "../../Settings/Settings";
 import { load } from "../../db";
-import { Router } from "../GameRoot";
-import { Page } from "../Router";
+import { IRouter } from "../Router";
 import { download } from "../../SaveObject";
 import { IErrorData, newIssueUrl } from "../../utils/ErrorHelper";
 import { DeleteGameButton } from "./DeleteGameButton";
@@ -20,16 +19,17 @@ export function ActivateRecoveryMode(): void {
 }
 
 interface IProps {
+  router: IRouter;
   softReset: () => void;
   errorData?: IErrorData;
   resetError?: () => void;
 }
 
-export function RecoveryRoot({ softReset, errorData, resetError }: IProps): React.ReactElement {
+export function RecoveryRoot({ router, softReset, errorData, resetError }: IProps): React.ReactElement {
   function recover(): void {
     if (resetError) resetError();
     RecoveryMode = false;
-    Router.toPage(Page.Terminal);
+    router.toTerminal();
   }
   Settings.AutosaveInterval = 0;
 

@@ -1,8 +1,17 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { BaseServer } from "../../Server/BaseServer";
 
-export function expr(args: (string | number | boolean)[]): void {
+export function expr(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   if (args.length === 0) {
-    Terminal.error("Incorrect usage of expr command. Usage: expr [math expression]");
+    terminal.error("Incorrect usage of expr command. Usage: expr [math expression]");
     return;
   }
   const expr = args.join("");
@@ -13,8 +22,8 @@ export function expr(args: (string | number | boolean)[]): void {
   try {
     result = eval(sanitizedExpr);
   } catch (e) {
-    Terminal.error(`Could not evaluate expression: ${sanitizedExpr}`);
+    terminal.error(`Could not evaluate expression: ${sanitizedExpr}`);
     return;
   }
-  Terminal.print(result);
+  terminal.print(result);
 }

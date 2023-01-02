@@ -4,23 +4,23 @@
 
 ## OfficeAPI.getHireAdVertCount() method
 
-Get the number of times you have hired AdVert.
+Get the number of times you have Hired AdVert
 
 <b>Signature:</b>
 
 ```typescript
-getHireAdVertCount(divisionName: string): number;
+getHireAdVertCount(adivisionName: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string | Name of the division. |
+|  adivisionName | string |  |
 
 <b>Returns:</b>
 
 number
 
-Number of times you have hired AdVert.
+Number of times you have Hired AdVert
 

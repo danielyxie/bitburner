@@ -4,8 +4,6 @@
 
 ## Multipliers.dexterity property
 
-Multiplier to dexterity skill
-
 <b>Signature:</b>
 
 ```typescript

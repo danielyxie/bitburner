@@ -9,7 +9,7 @@ All multipliers affecting the difficulty of the current challenge.
 <b>Signature:</b>
 
 ```typescript
-interface BitNodeMultipliers 
+export interface BitNodeMultipliers 
 ```
 
 ## Properties

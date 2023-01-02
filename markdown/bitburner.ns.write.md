@@ -9,7 +9,7 @@ Write data to a file.
 <b>Signature:</b>
 
 ```typescript
-write(filename: string, data?: string, mode?: "w" | "a"): void;
+write(filename: string, data?: string[] | number | string, mode?: "w" | "a"): void;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ write(filename: string, data?: string, mode?: "w" | "a"): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  filename | string | Name of the file to be written to. |
-|  data | string | Data to write. |
+|  data | string\[\] \| number \| string | Data to write. |
 |  mode | "w" \| "a" | Defines the write mode. |
 
 <b>Returns:</b>
@@ -30,5 +30,5 @@ RAM cost: 0 GB
 
 This function can be used to write data to a text file (.txt) or a script (.js or .script).
 
-This function will write data to that file. If the specified file does not exist, then it will be created. The third argument mode defines how the data will be written to the file. If mode is set to “w”, then the data is written in “write” mode which means that it will overwrite all existing data on the file. If mode is set to any other value then the data will be written in “append” mode which means that the data will be added at the end of the file.
+This function will write data to that file. If the specified file does not exist, then it will be created. The third argument mode, defines how the data will be written to the file. If \*mode is set to “w”, then the data is written in “write” mode which means that it will overwrite all existing data on the file. If mode is set to any other value then the data will be written in “append” mode which means that the data will be added at the end of the file.
 

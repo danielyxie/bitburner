@@ -1,16 +1,23 @@
-import { Terminal } from "../../Terminal";
-import { Player } from "@player";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { Server } from "../../Server/Server";
 
-export function hack(args: (string | number | boolean)[], server: BaseServer): void {
+export function hack(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   if (args.length !== 0) {
-    Terminal.error("Incorrect usage of hack command. Usage: hack");
+    terminal.error("Incorrect usage of hack command. Usage: hack");
     return;
   }
 
   if (!(server instanceof Server)) {
-    Terminal.error(
+    terminal.error(
       "Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers",
     );
   }
@@ -18,20 +25,20 @@ export function hack(args: (string | number | boolean)[], server: BaseServer): v
   // Hack the current PC (usually for money)
   // You can't hack your home pc or servers you purchased
   if (normalServer.purchasedByPlayer) {
-    Terminal.error(
+    terminal.error(
       "Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers",
     );
     return;
   }
   if (!normalServer.hasAdminRights) {
-    Terminal.error("You do not have admin rights for this machine! Cannot hack");
+    terminal.error("You do not have admin rights for this machine! Cannot hack");
     return;
   }
-  if (normalServer.requiredHackingSkill > Player.skills.hacking) {
-    Terminal.error(
+  if (normalServer.requiredHackingSkill > player.skills.hacking) {
+    terminal.error(
       "Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill",
     );
     return;
   }
-  Terminal.startHack();
+  terminal.startHack(player);
 }

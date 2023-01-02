@@ -1,8 +1,5 @@
-import { CorpResearchName } from "@nsdefs";
-import { researchNames } from "./data/Constants";
-
 export interface IConstructorParams {
-  name: CorpResearchName;
+  name: string;
   cost: number;
   desc: string;
   advertisingMult?: number;
@@ -19,7 +16,7 @@ export interface IConstructorParams {
 
 export class Research {
   // Name of research. This will be used to identify researches in the Research Tree
-  name: CorpResearchName;
+  name = "";
 
   // How much scientific research it costs to unlock this
   cost = 0;
@@ -39,7 +36,7 @@ export class Research {
   sciResearchMult = 1;
   storageMult = 1;
 
-  constructor(p: IConstructorParams = { name: researchNames[0], cost: 0, desc: "" }) {
+  constructor(p: IConstructorParams = { name: "", cost: 0, desc: "" }) {
     this.name = p.name;
     this.cost = p.cost;
     this.desc = p.desc;

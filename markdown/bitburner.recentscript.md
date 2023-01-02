@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface RecentScript extends RunningScript 
+export interface RecentScript extends RunningScript 
 ```
 <b>Extends:</b> [RunningScript](./bitburner.runningscript.md)
 

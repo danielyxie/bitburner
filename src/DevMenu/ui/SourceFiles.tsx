@@ -8,31 +8,35 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { PlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
 // Update as additional BitNodes get implemented
 const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
-export function SourceFiles(): React.ReactElement {
+interface IProps {
+  player: IPlayer;
+}
+
+export function SourceFiles(props: IProps): React.ReactElement {
   function setSF(sfN: number, sfLvl: number) {
     return function () {
       if (sfN === 9) {
-        Player.hacknetNodes = [];
+        props.player.hacknetNodes = [];
       }
       if (sfLvl === 0) {
-        Player.sourceFiles = Player.sourceFiles.filter((sf) => sf.n !== sfN);
+        props.player.sourceFiles = props.player.sourceFiles.filter((sf) => sf.n !== sfN);
         return;
       }
 
-      if (!Player.sourceFiles.some((sf) => sf.n === sfN)) {
-        Player.sourceFiles.push(new PlayerOwnedSourceFile(sfN, sfLvl));
+      if (!props.player.sourceFiles.some((sf) => sf.n === sfN)) {
+        props.player.sourceFiles.push(new PlayerOwnedSourceFile(sfN, sfLvl));
         return;
       }
 
-      for (let i = 0; i < Player.sourceFiles.length; i++) {
-        if (Player.sourceFiles[i].n === sfN) {
-          Player.sourceFiles[i].lvl = sfLvl;
+      for (let i = 0; i < props.player.sourceFiles.length; i++) {
+        if (props.player.sourceFiles[i].n === sfN) {
+          props.player.sourceFiles[i].lvl = sfLvl;
         }
       }
     };
@@ -47,7 +51,7 @@ export function SourceFiles(): React.ReactElement {
   }
 
   function clearExploits(): void {
-    Player.exploits = [];
+    props.player.exploits = [];
   }
 
   return (

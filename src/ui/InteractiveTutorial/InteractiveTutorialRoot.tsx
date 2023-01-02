@@ -9,6 +9,7 @@ import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import { ITutorialEvents } from "./ITutorialEvents";
 import { CopyableText } from "../React/CopyableText";
 
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import LastPageIcon from "@mui/icons-material/LastPage";
@@ -27,6 +28,7 @@ import {
   iTutorialSteps,
   iTutorialEnd,
 } from "../../InteractiveTutorial";
+import { NSSelection } from "./NSSelection";
 
 interface IContent {
   content: React.ReactElement;
@@ -45,10 +47,23 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+enum Language {
+  None,
+  NS1,
+  NS2,
+}
+
 export function InteractiveTutorialRoot(): React.ReactElement {
+  const [nsSelectionOpen, setNSSelectionOpen] = useState(false);
+  const [language, setLanguage] = useState(Language.None);
   const classes = useStyles();
 
-  const tutorialScriptName = `n00dles.js`;
+  const tutorialScriptExtension = {
+    [Language.None]: ".script",
+    [Language.NS1]: ".script",
+    [Language.NS2]: ".js",
+  }[language];
+  const tutorialScriptName = `n00dles${tutorialScriptExtension}`;
 
   const contents: { [number: string]: IContent | undefined } = {
     [iTutorialSteps.Start as number]: {
@@ -67,6 +82,47 @@ export function InteractiveTutorialRoot(): React.ReactElement {
         </>
       ),
       canNext: true,
+    },
+    [iTutorialSteps.NSSelection as number]: {
+      content: (
+        <>
+          <Typography>The tutorial will adjust to your programming ability.</Typography>
+          <Typography>Bitburner has 2 types of scripts:</Typography>
+          <List>
+            <ListItem>
+              <Typography>NS1: Javascript from 2009, very simple. Recommended for beginners to programming.</Typography>
+            </ListItem>
+            <ListItem>
+              <Typography>
+                NS2: Native, modern Javascript. Recommended if you know any programming language or are serious about
+                learning programming.
+              </Typography>
+            </ListItem>
+          </List>
+          <Typography>
+            Both are available at all time and interchangeably. This choice is only for the tutorial.
+          </Typography>
+          <Button
+            onClick={() => {
+              setLanguage(Language.NS1);
+              iTutorialNextStep();
+            }}
+          >
+            Use NS1
+          </Button>
+          <Button
+            onClick={() => {
+              setLanguage(Language.NS2);
+              iTutorialNextStep();
+            }}
+          >
+            Use NS2
+          </Button>
+          <Button onClick={() => setNSSelectionOpen(true)}>More info</Button>
+          <br />
+        </>
+      ),
+      canNext: false,
     },
     [iTutorialSteps.GoToCharacterPage as number]: {
       content: (
@@ -264,7 +320,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           <Typography></Typography>
         </>
       ),
-      canNext: false,
+      canNext: true,
     },
     [iTutorialSteps.TerminalManualHack as number]: {
       content: (
@@ -308,7 +364,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           <Typography>Let's head home before creating our first script!</Typography>
         </>
       ),
-      canNext: false,
+      canNext: true,
     },
     [iTutorialSteps.TerminalCreateScript as number]: {
       content: (
@@ -322,7 +378,9 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           </Typography>
           <Typography classes={{ root: classes.textfield }}>{"[home ~/]> nano"}</Typography>
 
-          <Typography>Scripts must end with the .js extension. Let's make a script now by entering </Typography>
+          <Typography>
+            Scripts must end with the {tutorialScriptExtension} extension. Let's make a script now by entering{" "}
+          </Typography>
           <Typography classes={{ root: classes.textfield }}>{`[home ~/]> nano ${tutorialScriptName}`}</Typography>
 
           <Typography>
@@ -336,12 +394,20 @@ export function InteractiveTutorialRoot(): React.ReactElement {
       content: (
         <>
           <Typography>
-            This is the script editor. You can use it to program your scripts. Copy and paste the following code into
-            the script editor: <br />
+            This is the script editor. You can use it to program your scripts.{" "}
+            {language !== Language.NS2 && <>Scripts are written in a simplified version of javascript.</>} Copy and
+            paste the following code into the script editor: <br />
           </Typography>
 
           <Typography classes={{ root: classes.code }}>
-            {
+            {language !== Language.NS2 && (
+              <CopyableText
+                value={`while(true) {
+  hack('n00dles');
+}`}
+              />
+            )}
+            {language === Language.NS2 && (
               <CopyableText
                 value={`export async function main(ns) {
 	while(true) {
@@ -349,7 +415,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
 	}
 }`}
               />
-            }
+            )}
           </Typography>
           <Typography>
             For anyone with basic programming experience, this code should be straightforward. This script will
@@ -382,7 +448,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
       content: (
         <>
           <Typography>
-            We have 8GB of free RAM on this machine, which is enough to run our script. Let's run our script using
+            We have 4GB of free RAM on this machine, which is enough to run our script. Let's run our script using
           </Typography>
           <Typography classes={{ root: classes.textfield }}>{`[home ~/]> run ${tutorialScriptName}`}</Typography>
         </>
@@ -523,17 +589,8 @@ export function InteractiveTutorialRoot(): React.ReactElement {
       content: (
         <Typography>
           This page contains a lot of different documentation about the game's content and mechanics. I know it's a lot,
-          but I highly suggest you read (or at least skim) through this before you start playing.
-          <br />
-          <br />
-          The{" "}
-          <a href="https://bitburner.readthedocs.io/en/latest/guidesandtips/gettingstartedguideforbeginnerprogrammers.html">
-            Getting Started
-          </a>{" "}
-          contains the guide for new players, navigating you through most of early game.
-          <br />
-          <br />
-          That's the end of the tutorial. Hope you enjoy the game!
+          but I highly suggest you read (or at least skim) through this before you start playing . That's the end of the
+          tutorial. Hope you enjoy the game!
         </Typography>
       ),
       canNext: true,
@@ -557,6 +614,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
   if (content === undefined) throw new Error("error in the tutorial");
   return (
     <>
+      <NSSelection open={nsSelectionOpen} onClose={() => setNSSelectionOpen(false)} />
       <Paper square sx={{ maxWidth: "70vw", p: 2 }}>
         {content.content}
         {step !== iTutorialSteps.TutorialPageInfo && (

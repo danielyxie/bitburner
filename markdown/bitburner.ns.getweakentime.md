@@ -16,17 +16,17 @@ getWeakenTime(host: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Hostname of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
 number
 
-Returns the amount of time in milliseconds it takes to execute the [weaken](./bitburner.ns.weaken.md) Netscript function.
+Returns the amount of time in milliseconds it takes to execute the weaken Netscript function.
 
 ## Remarks
 
 RAM cost: 0.05 GB
 
-Returns the amount of time in milliseconds it takes to execute the [weaken](./bitburner.ns.weaken.md) Netscript function on the target server. The required time is increased by the security level of the target server and decreased by the player's hacking level.
+Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server. The required time is increased by the security level of the target server and decreased by the player's hacking level.
 

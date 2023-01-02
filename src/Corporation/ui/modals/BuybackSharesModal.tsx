@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "../../../ui/React/Modal";
 import { numeralWrapper } from "../../../ui/numeralFormat";
-import { Player } from "@player";
+import { use } from "../../../ui/Context";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -19,6 +19,7 @@ interface IProps {
 // Create a popup that lets the player buyback shares
 // This is created when the player clicks the "Buyback Shares" button in the overview panel
 export function BuybackSharesModal(props: IProps): React.ReactElement {
+  const player = use.Player();
   const corp = useCorporation();
   const [shares, setShares] = useState<number>(NaN);
 
@@ -29,12 +30,12 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
     isNaN(shares) ||
     shares <= 0 ||
     shares > corp.issuedShares ||
-    shares * buybackPrice > Player.money;
+    shares * buybackPrice > player.money;
 
   function buy(): void {
     if (disabled) return;
     try {
-      BuyBackShares(corp, shares);
+      BuyBackShares(corp, player, shares);
     } catch (err) {
       dialogBoxCreate(err + "");
     }

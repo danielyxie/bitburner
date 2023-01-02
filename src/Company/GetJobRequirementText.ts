@@ -1,7 +1,10 @@
 import { Company } from "./Company";
 import { CompanyPosition } from "./CompanyPosition";
 
-/** Returns a string with the given CompanyPosition's stat requirements */
+/**
+ * Returns a string with the given CompanyPosition's stat requirements
+ */
+
 export function getJobRequirementText(company: Company, pos: CompanyPosition, tooltiptext = false): string {
   let reqText = "";
   const offset: number = company.jobStatReqOffset;

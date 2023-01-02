@@ -1,9 +1,9 @@
-import { Player } from "@player";
+import { Player } from "./Player";
 import { Router } from "./ui/GameRoot";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
-import { IReturnStatus } from "./types";
+import { IMap, IReturnStatus } from "./types";
 import { GetServer } from "./Server/AllServers";
 import { ImportPlayerData, SaveData, saveObject } from "./SaveObject";
 import { Settings } from "./Settings/Settings";
@@ -106,7 +106,7 @@ function initWebserver(): void {
         msg: "Home server does not exist.",
       };
     }
-    const { success, overwritten } = home.writeToScriptFile(filename, code);
+    const { success, overwritten } = home.writeToScriptFile(Player, filename, code);
     let script;
     if (success) {
       script = home.getScript(filename);
@@ -125,7 +125,7 @@ function initWebserver(): void {
 function initAppNotifier(): void {
   const funcs = {
     terminal: (message: string, type?: string) => {
-      const typesFn: Record<string, (s: string) => void> = {
+      const typesFn: IMap<(s: string) => void> = {
         info: Terminal.info,
         warn: Terminal.warn,
         error: Terminal.error,

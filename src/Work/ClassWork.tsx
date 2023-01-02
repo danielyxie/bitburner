@@ -1,76 +1,119 @@
 import React from "react";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { CONSTANTS } from "../Constants";
-import { LocationName } from "../Enums";
+import { LocationName } from "../Locations/data/LocationNames";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Money } from "../ui/React/Money";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { Player } from "@player";
-import { calculateClassEarnings as calculateClassEarningsRate } from "./Formulas";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { calculateClassEarnings as calculateClassEarningsRate } from "./formulas/Class";
 import { Work, WorkType } from "./Work";
 import { applyWorkStats, newWorkStats, sumWorkStats, WorkStats } from "./WorkStats";
-import { GymType, UniversityClassType } from "../Enums";
-import { checkEnum, findEnumMember } from "../utils/helpers/enum";
 
-export type ClassType = UniversityClassType | GymType;
+export enum ClassType {
+  StudyComputerScience = "STUDYCOMPUTERSCIENCE",
+  DataStructures = "DATASTRUCTURES",
+  Networks = "NETWORKS",
+  Algorithms = "ALGORITHMS",
+
+  Management = "MANAGEMENT",
+  Leadership = "LEADERSHIP",
+
+  GymStrength = "GYMSTRENGTH",
+  GymDefense = "GYMDEFENSE",
+  GymDexterity = "GYMDEXTERITY",
+  GymAgility = "GYMAGILITY",
+}
 
 export interface Class {
-  type: ClassType;
   youAreCurrently: string;
+  type: ClassType;
   earnings: WorkStats;
 }
 
 export const Classes: Record<ClassType, Class> = {
-  [UniversityClassType.computerScience]: {
-    type: UniversityClassType.computerScience,
-    youAreCurrently: `studying Computer Science`,
+  [ClassType.StudyComputerScience]: {
+    youAreCurrently: "studying Computer Science",
+    type: ClassType.StudyComputerScience,
     earnings: newWorkStats({ hackExp: 0.5, intExp: 0.01 }),
   },
-  [UniversityClassType.dataStructures]: {
-    type: UniversityClassType.dataStructures,
+  [ClassType.DataStructures]: {
     youAreCurrently: "taking a Data Structures course",
-    earnings: newWorkStats({ money: -40, hackExp: 1, intExp: 0.01 }),
+    type: ClassType.DataStructures,
+    earnings: newWorkStats({
+      money: -40,
+      hackExp: 1,
+      intExp: 0.01,
+    }),
   },
-  [UniversityClassType.networks]: {
-    type: UniversityClassType.networks,
+  [ClassType.Networks]: {
     youAreCurrently: "taking a Networks course",
-    earnings: newWorkStats({ money: -80, hackExp: 2, intExp: 0.01 }),
+    type: ClassType.Networks,
+    earnings: newWorkStats({
+      money: -80,
+      hackExp: 2,
+      intExp: 0.01,
+    }),
   },
-  [UniversityClassType.algorithms]: {
-    type: UniversityClassType.algorithms,
+  [ClassType.Algorithms]: {
     youAreCurrently: "taking an Algorithms course",
-    earnings: newWorkStats({ money: -320, hackExp: 4, intExp: 0.01 }),
+    type: ClassType.Algorithms,
+    earnings: newWorkStats({
+      money: -320,
+      hackExp: 4,
+      intExp: 0.01,
+    }),
   },
-  [UniversityClassType.management]: {
-    type: UniversityClassType.management,
+  [ClassType.Management]: {
     youAreCurrently: "taking a Management course",
-    earnings: newWorkStats({ money: -160, chaExp: 2, intExp: 0.01 }),
+    type: ClassType.Management,
+    earnings: newWorkStats({
+      money: -160,
+      chaExp: 2,
+      intExp: 0.01,
+    }),
   },
-  [UniversityClassType.leadership]: {
-    type: UniversityClassType.leadership,
+  [ClassType.Leadership]: {
     youAreCurrently: "taking a Leadership course",
-    earnings: newWorkStats({ money: -320, chaExp: 4, intExp: 0.01 }),
+    type: ClassType.Leadership,
+    earnings: newWorkStats({
+      money: -320,
+      chaExp: 4,
+      intExp: 0.01,
+    }),
   },
-  [GymType.strength]: {
-    type: GymType.strength,
+  [ClassType.GymStrength]: {
     youAreCurrently: "training your strength at a gym",
-    earnings: newWorkStats({ money: -120, strExp: 1 }),
+    type: ClassType.GymStrength,
+    earnings: newWorkStats({
+      money: -120,
+      strExp: 1,
+    }),
   },
-  [GymType.defense]: {
-    type: GymType.defense,
+  [ClassType.GymDefense]: {
     youAreCurrently: "training your defense at a gym",
-    earnings: newWorkStats({ money: -120, defExp: 1 }),
+    type: ClassType.GymDefense,
+    earnings: newWorkStats({
+      money: -120,
+      defExp: 1,
+    }),
   },
-  [GymType.dexterity]: {
-    type: GymType.dexterity,
+  [ClassType.GymDexterity]: {
     youAreCurrently: "training your dexterity at a gym",
-    earnings: newWorkStats({ money: -120, dexExp: 1 }),
+    type: ClassType.GymDexterity,
+    earnings: newWorkStats({
+      money: -120,
+      dexExp: 1,
+    }),
   },
-  [GymType.agility]: {
-    type: GymType.agility,
+  [ClassType.GymAgility]: {
     youAreCurrently: "training your agility at a gym",
-    earnings: newWorkStats({ money: -120, agiExp: 1 }),
+    type: ClassType.GymAgility,
+    earnings: newWorkStats({
+      money: -120,
+      agiExp: 1,
+    }),
   },
 };
 
@@ -89,26 +132,28 @@ export class ClassWork extends Work {
 
   constructor(params?: ClassWorkParams) {
     super(WorkType.CLASS, params?.singularity ?? true);
-    this.classType = params?.classType ?? UniversityClassType.computerScience;
+    this.classType = params?.classType ?? ClassType.StudyComputerScience;
     this.location = params?.location ?? LocationName.Sector12RothmanUniversity;
   }
 
   isGym(): boolean {
-    return checkEnum(GymType, this.classType);
+    return [ClassType.GymAgility, ClassType.GymDefense, ClassType.GymDexterity, ClassType.GymStrength].includes(
+      this.classType,
+    );
   }
 
   getClass(): Class {
     return Classes[this.classType];
   }
 
-  calculateRates(): WorkStats {
-    return calculateClassEarningsRate(Player, this.classType, this.location);
+  calculateRates(player: IPlayer): WorkStats {
+    return calculateClassEarningsRate(player, player, this.classType, this.location);
   }
 
-  process(cycles: number): boolean {
+  process(player: IPlayer, cycles: number): boolean {
     this.cyclesWorked += cycles;
-    const rate = this.calculateRates();
-    const earnings = applyWorkStats(Player, rate, cycles, "class");
+    const rate = this.calculateRates(player);
+    const earnings = applyWorkStats(player, player, rate, cycles, "class");
     this.earnings = sumWorkStats(this.earnings, earnings);
     return false;
   }
@@ -143,19 +188,18 @@ export class ClassWork extends Work {
     };
   }
 
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("ClassWork", this);
   }
 
-  /** Initializes a ClassWork object from a JSON save state. */
+  /**
+   * Initiatizes a ClassWork object from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): ClassWork {
-    const classWork = Generic_fromJSON(ClassWork, value.data);
-    classWork.classType =
-      findEnumMember(UniversityClassType, classWork.classType) ??
-      findEnumMember(GymType, classWork.classType) ??
-      UniversityClassType.computerScience;
-    return classWork;
+    return Generic_fromJSON(ClassWork, value.data);
   }
 }
 

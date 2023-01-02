@@ -1,5 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { IRouter } from "../../ui/Router";
 import { GameOptionsTab } from "../GameOptionsTab";
 import { GameOptionsSidebar } from "./GameOptionsSidebar";
 import { GameplayPage } from "./GameplayPage";
@@ -9,6 +11,8 @@ import { RemoteAPIPage } from "./RemoteAPIPage";
 import { SystemPage } from "./SystemPage";
 
 interface IProps {
+  player: IPlayer;
+  router: IRouter;
   save: () => void;
   export: () => void;
   forceKill: () => void;
@@ -25,6 +29,8 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         <GameOptionsSidebar
           tab={currentTab}
           setTab={setCurrentTab}
+          player={props.player}
+          router={props.router}
           save={props.save}
           export={props.export}
           forceKill={props.forceKill}

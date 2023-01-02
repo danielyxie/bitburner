@@ -1,19 +1,19 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "2.2.0",
+  "version": "2.1.0",
   "main": "electron-main.js",
   "author": {
-    "name": "Daniel Xie, Olivier Gagnon, et al."
+    "name": "Daniel Xie & Olivier Gagnon"
   },
   "bugs": {
-    "url": "https://github.com/bitburner-official/bitburner-src/issues"
+    "url": "https://github.com/danielyxie/bitburner/issues"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^4.12.3",
-    "@monaco-editor/react": "^4.4.6",
+    "@monaco-editor/react": "^4.2.2",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
     "@mui/styles": "^5.0.1",
@@ -33,7 +33,7 @@
     "jszip": "^3.7.0",
     "material-ui-color": "^1.2.0",
     "material-ui-popup-state": "^1.5.3",
-    "monaco-editor": "^0.34.1",
+    "monaco-editor": "^0.27.0",
     "notistack": "^2.0.2",
     "numeral": "2.0.6",
     "prop-types": "^15.8.0",
@@ -76,7 +76,7 @@
     "eslint": "^8.13.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.3.3",
-    "html-webpack-plugin": "^4.5.2",
+    "html-webpack-plugin": "^3.2.0",
     "http-server": "^13.0.1",
     "jest": "^27.1.0",
     "jsdom": "^16.5.0",

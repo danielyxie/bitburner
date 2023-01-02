@@ -1,3 +1,6 @@
+/**
+ * Hacknet Servers - Reworked Hacknet Node mechanic for BitNode-9
+ */
 import { CONSTANTS } from "../Constants";
 
 import { IHacknetNode } from "./IHacknetNode";
@@ -16,7 +19,7 @@ import {
 import { createRandomIp } from "../utils/IPAddress";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
-import { Player } from "@player";
+import { IPlayer } from "../PersonObjects/IPlayer";
 
 interface IConstructorParams {
   adminRights?: boolean;
@@ -27,7 +30,6 @@ interface IConstructorParams {
   organizationName?: string;
 }
 
-/** Hacknet Servers - Reworked Hacknet Node mechanic for BitNode-9 */
 export class HacknetServer extends BaseServer implements IHacknetNode {
   // Cache level. Affects hash Capacity
   cache = 1;
@@ -50,7 +52,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
   // Total number of hashes earned by this server
   totalHashesGenerated = 0;
 
-  // Flag indicating whether this is a purchased server
+  // Flag indicating wehther this is a purchased server
   purchasedByPlayer = true;
 
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
@@ -121,9 +123,9 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     }
   }
 
-  updateRamUsed(ram: number): void {
-    super.updateRamUsed(ram);
-    this.updateHashRate(Player.mults.hacknet_node_money);
+  updateRamUsed(ram: number, player: IPlayer): void {
+    super.updateRamUsed(ram, player);
+    this.updateHashRate(player.mults.hacknet_node_money);
   }
 
   updateHashCapacity(): void {

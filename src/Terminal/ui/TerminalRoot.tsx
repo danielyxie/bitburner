@@ -7,8 +7,9 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
-import { Output, Link, RawOutput } from "../OutputTypes";
-import { Terminal } from "../../Terminal";
+import { ITerminal, Output, Link, RawOutput } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
 import { TerminalEvents, TerminalClearEvents } from "../TerminalEvents";
 import { BitFlumeModal } from "../../BitNode/ui/BitFlumeModal";
@@ -17,10 +18,14 @@ import { CodingContractModal } from "../../ui/React/CodingContractModal";
 import _ from "lodash";
 import { ANSIITypography } from "../../ui/React/ANSIITypography";
 
-function ActionTimer(): React.ReactElement {
+interface IActionTimerProps {
+  terminal: ITerminal;
+}
+
+function ActionTimer({ terminal }: IActionTimerProps): React.ReactElement {
   return (
     <Typography color={"primary"} paragraph={false}>
-      {Terminal.getProgressText()}
+      {terminal.getProgressText()}
     </Typography>
   );
 }
@@ -42,7 +47,13 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export function TerminalRoot(): React.ReactElement {
+interface IProps {
+  terminal: ITerminal;
+  router: IRouter;
+  player: IPlayer;
+}
+
+export function TerminalRoot({ terminal, router, player }: IProps): React.ReactElement {
   const scrollHook = useRef<HTMLDivElement>(null);
   const setRerender = useState(0)[1];
   const [key, setKey] = useState(0);
@@ -97,7 +108,7 @@ export function TerminalRoot(): React.ReactElement {
     <>
       <Box width="100%" minHeight="100vh" display={"flex"} alignItems={"flex-end"}>
         <List key={key} id="terminal" classes={{ root: classes.list }}>
-          {Terminal.outputHistory.map((item, i) => (
+          {terminal.outputHistory.map((item, i) => (
             <ListItem key={i} classes={{ root: classes.nopadding }}>
               {item instanceof Output && <ANSIITypography text={item.text} color={item.color} />}
               {item instanceof RawOutput && (
@@ -112,7 +123,7 @@ export function TerminalRoot(): React.ReactElement {
                     classes={{ root: classes.preformatted }}
                     color={"secondary"}
                     paragraph={false}
-                    onClick={() => Terminal.connectToServer(item.hostname)}
+                    onClick={() => terminal.connectToServer(player, item.hostname)}
                   >
                     <Typography sx={{ textDecoration: "underline", "&:hover": { textDecoration: "none" } }}>
                       {item.hostname}
@@ -123,16 +134,16 @@ export function TerminalRoot(): React.ReactElement {
             </ListItem>
           ))}
 
-          {Terminal.action !== null && (
+          {terminal.action !== null && (
             <ListItem classes={{ root: classes.nopadding }}>
-              <ActionTimer />{" "}
+              <ActionTimer terminal={terminal} />{" "}
             </ListItem>
           )}
         </List>
         <div ref={scrollHook}></div>
       </Box>
       <Box position="sticky" bottom={0} width="100%" px={0}>
-        <TerminalInput />
+        <TerminalInput player={player} router={router} terminal={terminal} />
       </Box>
       <BitFlumeModal />
       <CodingContractModal />

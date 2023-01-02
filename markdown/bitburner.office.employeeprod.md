@@ -9,5 +9,5 @@ Production of the employees
 <b>Signature:</b>
 
 ```typescript
-employeeProd: Record<CorpEmployeePosition, number>;
+employeeProd: EmployeeJobs;
 ```

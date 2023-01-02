@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { IndustryDescriptions, IndustriesData } from "../IndustryData";
-import { IndustryType } from "../data/Enums";
+import { IndustryStartingCosts, Industries, IndustryDescriptions } from "../IndustryData";
 import { useCorporation } from "./Context";
-import { Industry } from "../Industry";
+import { IIndustry } from "../IIndustry";
 import { NewIndustry } from "../Actions";
 
 import Typography from "@mui/material/Typography";
@@ -20,21 +19,21 @@ interface IProps {
 
 export function ExpandIndustryTab(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  const allIndustries = Object.values(IndustryType).sort();
-  const possibleIndustries = allIndustries.filter(
-    (industryType: IndustryType) =>
-      corp.divisions.find((division: Industry) => division.type === industryType) === undefined,
-  );
-  const [industry, setIndustry] = useState(possibleIndustries[0]);
+  const allIndustries = Object.keys(Industries).sort();
+  const possibleIndustries = allIndustries
+    .filter(
+      (industryType: string) =>
+        corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
+    )
+    .sort();
+  const [industry, setIndustry] = useState(possibleIndustries.length > 0 ? possibleIndustries[0] : "");
   const [name, setName] = useState("");
 
-  //If there are no possible industries to expand into, nothing to render in this tab.
-  if (possibleIndustries.length === 0) return <></>;
-
-  const data = IndustriesData[industry];
-  if (!data) return <></>;
-
-  const disabled = corp.funds < data.startingCost;
+  const cost = IndustryStartingCosts[industry];
+  if (cost === undefined) {
+    throw new Error(`Invalid industry: '${industry}'`);
+  }
+  const disabled = corp.funds < cost || name === "";
 
   function newIndustry(): void {
     if (disabled) return;
@@ -59,23 +58,23 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
   }
 
   function onIndustryChange(event: SelectChangeEvent<string>): void {
-    setIndustry(event.target.value as IndustryType);
+    setIndustry(event.target.value);
   }
 
-  const desc = IndustryDescriptions(industry, corp);
+  const desc = IndustryDescriptions[industry];
   if (desc === undefined) throw new Error(`Trying to create an industry that doesn't exists: '${industry}'`);
 
   return (
     <>
       <Typography>Create a new division to expand into a new industry:</Typography>
       <Select value={industry} onChange={onIndustryChange}>
-        {possibleIndustries.map((industry) => (
+        {possibleIndustries.map((industry: string) => (
           <MenuItem key={industry} value={industry}>
             {industry}
           </MenuItem>
         ))}
       </Select>
-      <Typography>{desc}</Typography>
+      <Typography>{desc(corp)}</Typography>
       <br />
       <br />
 

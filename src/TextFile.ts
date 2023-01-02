@@ -3,21 +3,30 @@ import { BaseServer } from "./Server/BaseServer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "./utils/JSONReviver";
 import { removeLeadingSlash, isInRootDirectory } from "./Terminal/DirectoryHelpers";
 
-/** Represents a plain text file that is typically stored on a server. */
+/**
+ * Represents a plain text file that is typically stored on a server.
+ */
 export class TextFile {
-  /** The full file name. */
+  /**
+   * The full file name.
+   */
   fn: string;
 
-  /** The content of the file. */
+  /**
+   * The content of the file.
+   */
   text: string;
 
-  //TODO 2.3: Why are we using getter/setter for fn as filename? Rename parameter as more-readable "filename"
-  /** The full file name. */
+  /**
+   * The full file name.
+   */
   get filename(): string {
     return this.fn;
   }
 
-  /** The full file name. */
+  /**
+   * The full file name.
+   */
   set filename(value: string) {
     this.fn = value;
   }
@@ -27,12 +36,16 @@ export class TextFile {
     this.text = txt;
   }
 
-  /** Concatenates the raw values to the end of current content. */
+  /**
+   * Concatenates the raw values to the end of current content.
+   */
   append(txt: string): void {
     this.text += txt;
   }
 
-  /** Serves the file to the user as a downloadable resource through the browser. */
+  /**
+   * Serves the file to the user as a downloadable resource through the browser.
+   */
   download(): void {
     const file: Blob = new Blob([this.text], { type: "text/plain" });
     const a: HTMLAnchorElement = document.createElement("a");
@@ -47,27 +60,37 @@ export class TextFile {
     }, 0);
   }
 
-  /** Retrieve the content of the file. */
+  /**
+   * Retrieve the content of the file.
+   */
   read(): string {
     return this.text;
   }
 
-  /** Shows the content to the user via the game's dialog box. */
+  /**
+   * Shows the content to the user via the game's dialog box.
+   */
   show(): void {
-    dialogBoxCreate(`${this.fn}\n\n${this.text}`);
+    dialogBoxCreate(`${this.fn}<br /><br />${this.text}`);
   }
 
-  /** Serialize the current file to a JSON save state. */
+  /**
+   * Serialize the current file to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("TextFile", this);
   }
 
-  /** Replaces the current content with the text provided. */
+  /**
+   * Replaces the current content with the text provided.
+   */
   write(txt: string): void {
     this.text = txt;
   }
 
-  /** Initializes a TextFile from a JSON save state. */
+  /**
+   * Initiatizes a TextFile from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): TextFile {
     return Generic_fromJSON(TextFile, value.data);
   }

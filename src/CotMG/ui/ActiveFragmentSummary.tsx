@@ -1,6 +1,6 @@
 import React from "react";
 import { ActiveFragment } from "../ActiveFragment";
-import { StaneksGift } from "../StaneksGift";
+import { IStaneksGift } from "../IStaneksGift";
 import { FragmentType, Effect } from "../FragmentType";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
@@ -10,7 +10,7 @@ import Table from "@mui/material/Table";
 import { TableBody, TableCell, TableRow } from "@mui/material";
 
 type IProps = {
-  gift: StaneksGift;
+  gift: IStaneksGift;
 };
 
 function formatEffect(effect: number, type: FragmentType): string {

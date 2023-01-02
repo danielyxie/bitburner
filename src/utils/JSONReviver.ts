@@ -11,7 +11,7 @@ export interface IReviverValue {
 // Looks for object values with a `ctor` property and
 // a `data` property. If it finds them, and finds a matching
 // constructor that has a `fromJSON` property on it, it hands
-// off to that `fromJSON` function, passing in the value.
+// off to that `fromJSON` fuunction, passing in the value.
 export function Reviver(key: string, value: IReviverValue | null): any {
   if (value == null) {
     return null;

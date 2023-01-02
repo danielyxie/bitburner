@@ -1,13 +1,12 @@
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
 import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { hasAugmentationPrereqs } from "../Faction/FactionHelpers";
-import { CityName } from "../Enums";
+import { CityName } from "../Locations/data/CityNames";
 import { GraftableAugmentation } from "../PersonObjects/Grafting/GraftableAugmentation";
 import { getGraftingAvailableAugs, calculateGraftingTimeWithBonus } from "../PersonObjects/Grafting/GraftingHelpers";
 import { Player as player } from "../Player";
-import { Grafting as IGrafting } from "@nsdefs";
+import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../ui/GameRoot";
-import { Page } from "../ui/Router";
 import { GraftingWork } from "../Work/GraftingWork";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
@@ -22,42 +21,46 @@ export function NetscriptGrafting(): InternalAPI<IGrafting> {
   };
 
   return {
-    getAugmentationGraftPrice: (ctx) => (_augName) => {
-      const augName = helpers.string(ctx, "augName", _augName);
-      checkGraftingAPIAccess(ctx);
-      if (!getGraftingAvailableAugs().includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
-      }
-      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
-      return graftableAug.cost;
-    },
+    getAugmentationGraftPrice:
+      (ctx: NetscriptContext) =>
+      (_augName: unknown): number => {
+        const augName = helpers.string(ctx, "augName", _augName);
+        checkGraftingAPIAccess(ctx);
+        if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
+        }
+        const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
+        return graftableAug.cost;
+      },
 
-    getAugmentationGraftTime: (ctx) => (_augName) => {
-      const augName = helpers.string(ctx, "augName", _augName);
-      checkGraftingAPIAccess(ctx);
-      if (!getGraftingAvailableAugs().includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
-        throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
-      }
-      const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
-      return calculateGraftingTimeWithBonus(graftableAug);
-    },
+    getAugmentationGraftTime:
+      (ctx: NetscriptContext) =>
+      (_augName: string): number => {
+        const augName = helpers.string(ctx, "augName", _augName);
+        checkGraftingAPIAccess(ctx);
+        if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
+          throw helpers.makeRuntimeErrorMsg(ctx, `Invalid aug: ${augName}`);
+        }
+        const graftableAug = new GraftableAugmentation(StaticAugmentations[augName]);
+        return calculateGraftingTimeWithBonus(player, graftableAug);
+      },
 
-    getGraftableAugmentations: (ctx) => () => {
+    getGraftableAugmentations: (ctx: NetscriptContext) => (): string[] => {
       checkGraftingAPIAccess(ctx);
-      const graftableAugs = getGraftingAvailableAugs();
+      const graftableAugs = getGraftingAvailableAugs(player);
       return graftableAugs;
     },
 
     graftAugmentation:
-      (ctx) =>
-      (_augName, _focus = true) => {
+      (ctx: NetscriptContext) =>
+      (_augName: string, _focus: unknown = true): boolean => {
         const augName = helpers.string(ctx, "augName", _augName);
         const focus = !!_focus;
         checkGraftingAPIAccess(ctx);
         if (player.city !== CityName.NewTokyo) {
           throw helpers.makeRuntimeErrorMsg(ctx, "You must be in New Tokyo to begin grafting an Augmentation.");
         }
-        if (!getGraftingAvailableAugs().includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
+        if (!getGraftingAvailableAugs(player).includes(augName) || !StaticAugmentations.hasOwnProperty(augName)) {
           helpers.log(ctx, () => `Invalid aug: ${augName}`);
           return false;
         }
@@ -79,15 +82,16 @@ export function NetscriptGrafting(): InternalAPI<IGrafting> {
           new GraftingWork({
             singularity: true,
             augmentation: augName,
+            player: player,
           }),
         );
 
         if (focus) {
           player.startFocusing();
-          Router.toPage(Page.Work);
+          Router.toWork();
         } else if (wasFocusing) {
           player.stopFocusing();
-          Router.toPage(Page.Terminal);
+          Router.toTerminal();
         }
 
         helpers.log(ctx, () => `Began grafting Augmentation ${augName}.`);

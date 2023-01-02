@@ -9,16 +9,5 @@ Object representing a sleeve current task.
 <b>Signature:</b>
 
 ```typescript
-export type SleeveTask =
-  | SleeveBladeburnerTask
-  | SleeveClassTask
-  | SleeveCompanyTask
-  | SleeveCrimeTask
-  | SleeveFactionTask
-  | SleeveInfiltrateTask
-  | SleeveRecoveryTask
-  | SleeveSupportTask
-  | SleeveSynchroTask;
+export type SleeveTask = any;
 ```
-<b>References:</b> [SleeveBladeburnerTask](./bitburner.sleevebladeburnertask.md)<!-- -->, [SleeveClassTask](./bitburner.sleeveclasstask.md)<!-- -->, [SleeveCompanyTask](./bitburner.sleevecompanytask.md)<!-- -->, [SleeveCrimeTask](./bitburner.sleevecrimetask.md)<!-- -->, [SleeveFactionTask](./bitburner.sleevefactiontask.md)<!-- -->, [SleeveInfiltrateTask](./bitburner.sleeveinfiltratetask.md)<!-- -->, [SleeveRecoveryTask](./bitburner.sleeverecoverytask.md)<!-- -->, [SleeveSupportTask](./bitburner.sleevesupporttask.md)<!-- -->, [SleeveSynchroTask](./bitburner.sleevesynchrotask.md)
-

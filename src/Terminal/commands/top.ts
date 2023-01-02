@@ -1,11 +1,19 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { getRamUsageFromRunningScript } from "../../Script/RunningScriptHelpers";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-export function top(args: (string | number | boolean)[], server: BaseServer): void {
+export function top(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   if (args.length !== 0) {
-    Terminal.error("Incorrect usage of top command. Usage: top");
+    terminal.error("Incorrect usage of top command. Usage: top");
     return;
   }
 
@@ -25,7 +33,7 @@ export function top(args: (string | number | boolean)[], server: BaseServer): vo
 
   const headers = `${scriptTxt}${spacesAfterScriptTxt}${pidTxt}${spacesAfterPidTxt}${threadsTxt}${spacesAfterThreadsTxt}${ramTxt}`;
 
-  Terminal.print(headers);
+  terminal.print(headers);
 
   const currRunningScripts = server.runningScripts;
   // Iterate through scripts on current server
@@ -50,6 +58,6 @@ export function top(args: (string | number | boolean)[], server: BaseServer): vo
     const entry = [script.filename, spacesScript, script.pid, spacesPid, script.threads, spacesThread, ramUsage].join(
       "",
     );
-    Terminal.print(entry);
+    terminal.print(entry);
   }
 }

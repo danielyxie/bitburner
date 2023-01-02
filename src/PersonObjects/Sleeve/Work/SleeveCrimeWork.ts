@@ -1,15 +1,13 @@
-import { Player } from "@player";
+import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
-import { CrimeType } from "../../../Enums";
+import { CrimeType } from "../../../utils/WorkType";
 import { Crimes } from "../../../Crime/Crimes";
 import { Crime } from "../../../Crime/Crime";
-import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { newWorkStats, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
 import { CONSTANTS } from "../../../Constants";
-import { checkEnum } from "../../../utils/helpers/enum";
-import { calculateCrimeWorkStats } from "../../../Work/Formulas";
-import { findCrime } from "../../../Crime/CrimeHelpers";
+import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
 
 export const isSleeveCrimeWork = (w: Work | null): w is SleeveCrimeWork => w !== null && w.type === WorkType.CRIME;
 
@@ -18,52 +16,70 @@ export class SleeveCrimeWork extends Work {
   cyclesWorked = 0;
   constructor(crimeType?: CrimeType) {
     super(WorkType.CRIME);
-    this.crimeType = crimeType ?? CrimeType.shoplift;
+    this.crimeType = crimeType ?? CrimeType.SHOPLIFT;
   }
 
   getCrime(): Crime {
-    if (!checkEnum(CrimeType, this.crimeType)) throw new Error("crime should not be undefined");
-    return Crimes[this.crimeType];
+    const crime = Object.values(Crimes).find((crime) => crime.type === this.crimeType);
+    if (!crime) throw new Error("crime should not be undefined");
+    return crime;
   }
 
-  getExp(sleeve: Sleeve): WorkStats {
-    return scaleWorkStats(calculateCrimeWorkStats(sleeve, this.getCrime()), sleeve.shockBonus(), false);
+  getExp(): WorkStats {
+    const crime = this.getCrime();
+    return newWorkStats({
+      money: crime.money * BitNodeMultipliers.CrimeMoney,
+      hackExp: crime.hacking_exp * BitNodeMultipliers.CrimeExpGain,
+      strExp: crime.strength_exp * BitNodeMultipliers.CrimeExpGain,
+      defExp: crime.defense_exp * BitNodeMultipliers.CrimeExpGain,
+      dexExp: crime.dexterity_exp * BitNodeMultipliers.CrimeExpGain,
+      agiExp: crime.agility_exp * BitNodeMultipliers.CrimeExpGain,
+      chaExp: crime.charisma_exp * BitNodeMultipliers.CrimeExpGain,
+      intExp: crime.intelligence_exp * BitNodeMultipliers.CrimeExpGain,
+    });
   }
 
   cyclesNeeded(): number {
     return this.getCrime().time / CONSTANTS._idleSpeed;
   }
 
-  process(sleeve: Sleeve, cycles: number) {
+  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
     this.cyclesWorked += cycles;
-    if (this.cyclesWorked < this.cyclesNeeded()) return;
 
     const crime = this.getCrime();
-    const gains = this.getExp(sleeve);
-    const success = Math.random() < crime.successRate(sleeve);
-    if (success) Player.karma -= crime.karma * sleeve.syncBonus();
-    else gains.money = 0;
-    applySleeveGains(sleeve, gains, success ? 1 : 0.25);
-    this.cyclesWorked -= this.cyclesNeeded();
+    let gains = this.getExp();
+    if (this.cyclesWorked >= this.cyclesNeeded()) {
+      if (Math.random() < crime.successRate(sleeve)) {
+        player.karma -= crime.karma * sleeve.syncBonus();
+      } else {
+        gains.money = 0;
+        gains = scaleWorkStats(gains, 0.25);
+      }
+      applySleeveGains(player, sleeve, gains, cycles);
+      this.cyclesWorked -= this.cyclesNeeded();
+    }
+    return 0;
   }
 
-  APICopy() {
+  APICopy(): Record<string, unknown> {
     return {
-      type: WorkType.CRIME as "CRIME",
+      type: this.type,
       crimeType: this.crimeType,
     };
   }
 
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveCrimeWork", this);
   }
 
-  /** Initializes a RecoveryWork object from a JSON save state. */
+  /**
+   * Initiatizes a RecoveryWork object from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): SleeveCrimeWork {
-    const crimeWork = Generic_fromJSON(SleeveCrimeWork, value.data);
-    crimeWork.crimeType = findCrime(crimeWork.crimeType)?.type ?? CrimeType.shoplift;
-    return crimeWork;
+    return Generic_fromJSON(SleeveCrimeWork, value.data);
   }
 }
 

@@ -4,8 +4,6 @@
 
 ## Multipliers.bladeburner\_analysis property
 
-Multiplier to effectiveness in Bladeburner Field Analysis
-
 <b>Signature:</b>
 
 ```typescript

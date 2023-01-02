@@ -16,17 +16,17 @@ getHackTime(host: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Hostname of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
 number
 
-Returns the amount of time in milliseconds it takes to execute the [hack](./bitburner.ns.hack.md) Netscript function.
+Returns the amount of time in milliseconds it takes to execute the hack Netscript function.
 
 ## Remarks
 
 RAM cost: 0.05 GB
 
-When `hack` completes an amount of money is stolen depending on the player's skills. Returns the amount of time in milliseconds it takes to execute the [hack](./bitburner.ns.hack.md) Netscript function on the target server. The required time is increased by the security level of the target server and decreased by the player's hacking level.
+When `hack` completes an amount of money is stolen depending on the player's skills. Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server. The required time is increased by the security level of the target server and decreased by the player's hacking level.
 

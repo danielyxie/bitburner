@@ -10,7 +10,7 @@
  */
 import { StockSymbols } from "./StockSymbols";
 import { IConstructorParams } from "../Stock";
-import { LocationName } from "../../Enums";
+import { LocationName } from "../../Locations/data/LocationNames";
 
 export const InitStockMetadata: IConstructorParams[] = [
   {

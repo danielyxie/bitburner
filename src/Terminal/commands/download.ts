@@ -1,4 +1,6 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import FileSaver from "file-saver";
@@ -35,10 +37,16 @@ export function exportScripts(pattern: string, server: BaseServer): void {
   zip.generateAsync({ type: "blob" }).then((content: Blob) => FileSaver.saveAs(content, zipFn));
 }
 
-export function download(args: (string | number | boolean)[], server: BaseServer): void {
+export function download(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   try {
     if (args.length !== 1) {
-      Terminal.error("Incorrect usage of download command. Usage: download [script/text file]");
+      terminal.error("Incorrect usage of download command. Usage: download [script/text file]");
       return;
     }
     const fn = args[0] + "";
@@ -52,28 +60,28 @@ export function download(args: (string | number | boolean)[], server: BaseServer
         if (e !== null && typeof e == "object" && e.hasOwnProperty("message")) {
           msg = String((e as { message: unknown }).message);
         }
-        return Terminal.error(msg);
+        return terminal.error(msg);
       }
     } else if (isScriptFilename(fn)) {
       // Download a single script
-      const script = Terminal.getScript(fn);
+      const script = terminal.getScript(player, fn);
       if (script != null) {
         return script.download();
       }
     } else if (fn.endsWith(".txt")) {
       // Download a single text file
-      const txt = Terminal.getTextFile(fn);
+      const txt = terminal.getTextFile(player, fn);
       if (txt != null) {
         return txt.download();
       }
     } else {
-      Terminal.error(`Cannot download this filetype`);
+      terminal.error(`Cannot download this filetype`);
       return;
     }
-    Terminal.error(`${fn} does not exist`);
+    terminal.error(`${fn} does not exist`);
     return;
   } catch (e) {
-    Terminal.error(e + "");
+    terminal.error(e + "");
     return;
   }
 }

@@ -4,8 +4,6 @@
 
 ## Multipliers.hacknet\_node\_level\_cost property
 
-Multiplier to cost of leveling up a Hacknet Node
-
 <b>Signature:</b>
 
 ```typescript

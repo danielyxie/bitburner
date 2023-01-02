@@ -38,7 +38,7 @@ export function SaveFile(): React.ReactElement {
 
   function doRestore(): void {
     const save = JSON.parse(saveFile);
-    // TODO unplanned: "Continue here". Unknown what this todo is for.
+    // TODO: Continue here.
     console.error(save);
   }
 

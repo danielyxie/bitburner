@@ -1,28 +1,79 @@
-import {
-  CorpEmployeePosition,
-  CorpIndustryName,
-  CorpMaterialName,
-  CorpResearchName,
-  CorpStateName,
-  CorpUnlockName,
-  CorpUpgradeName,
-} from "@nsdefs";
-import { CONSTANTS } from "../../Constants";
-import { IndustryType, EmployeePositions } from "./Enums";
+import { CityName } from "./../../Locations/data/CityNames";
+const CyclesPerMarketCycle = 50;
+const AllCorporationStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
+export const CorporationConstants: {
+  INITIALSHARES: number;
+  SHARESPERPRICEUPDATE: number;
+  IssueNewSharesCooldown: number;
+  SellSharesCooldown: number;
+  CyclesPerMarketCycle: number;
+  CyclesPerIndustryStateCycle: number;
+  SecsPerMarketCycle: number;
+  Cities: string[];
+  WarehouseInitialCost: number;
+  WarehouseInitialSize: number;
+  WarehouseUpgradeBaseCost: number;
+  OfficeInitialCost: number;
+  OfficeInitialSize: number;
+  OfficeUpgradeBaseCost: number;
+  BribeThreshold: number;
+  BribeToRepRatio: number;
+  ProductProductionCostRatio: number;
+  DividendMaxRate: number;
+  EmployeeSalaryMultiplier: number;
+  CyclesPerEmployeeRaise: number;
+  EmployeeRaiseAmount: number;
+  BaseMaxProducts: number;
+  AllCorporationStates: string[];
+  AllMaterials: string[];
+  AllIndustryTypes: string[];
+  AllUnlocks: string[];
+  AllUpgrades: string[];
+  AllResearch: string[];
+  FundingRoundShares: number[];
+  FundingRoundMultiplier: number[];
+  ValuationLength: number;
+} = {
+  INITIALSHARES: 1e9, //Total number of shares you have at your company
+  SHARESPERPRICEUPDATE: 1e6, //When selling large number of shares, price is dynamically updated for every batch of this amount
+  IssueNewSharesCooldown: 216e3, // 12 Hour in terms of game cycles
+  SellSharesCooldown: 18e3, // 1 Hour in terms of game cycles
 
-// For typed strings, we need runtime objects to do API typechecking against.
+  CyclesPerMarketCycle: CyclesPerMarketCycle,
+  CyclesPerIndustryStateCycle: CyclesPerMarketCycle / AllCorporationStates.length,
+  SecsPerMarketCycle: CyclesPerMarketCycle / 5,
 
-// This structure + import * as corpConstants allows easier type definitions for individual properties.
+  Cities: [
+    CityName.Aevum,
+    CityName.Chongqing,
+    CityName.Sector12,
+    CityName.NewTokyo,
+    CityName.Ishima,
+    CityName.Volhaven,
+  ],
 
-/** Names of all corporation game states */
-export const stateNames: CorpStateName[] = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"],
-  // TODO: remove IndustryType and EmployeePositions enums and just use the typed strings.
-  /** Names of all corporation employee positions */
-  employeePositions: CorpEmployeePosition[] = Object.values(EmployeePositions),
-  /** Names of all industries. */
-  industryNames: CorpIndustryName[] = Object.values(IndustryType),
-  /** Names of all materials */
-  materialNames: CorpMaterialName[] = [
+  WarehouseInitialCost: 5e9, //Initial purchase cost of warehouse
+  WarehouseInitialSize: 100,
+  WarehouseUpgradeBaseCost: 1e9,
+
+  OfficeInitialCost: 4e9,
+  OfficeInitialSize: 3,
+  OfficeUpgradeBaseCost: 1e9,
+
+  BribeThreshold: 100e12, //Money needed to be able to bribe for faction rep
+  BribeToRepRatio: 1e9, //Bribe Value divided by this = rep gain
+
+  ProductProductionCostRatio: 5, //Ratio of material cost of a product to its production cost
+
+  DividendMaxRate: 1,
+
+  EmployeeSalaryMultiplier: 3, // Employee stats multiplied by this to determine initial salary
+  CyclesPerEmployeeRaise: 400, // All employees get a raise every X market cycles
+  EmployeeRaiseAmount: 50, // Employee salary increases by this (additive)
+
+  BaseMaxProducts: 3, // Initial value for maximum number of products allowed
+  AllCorporationStates: AllCorporationStates,
+  AllMaterials: [
     "Water",
     "Energy",
     "Food",
@@ -35,8 +86,23 @@ export const stateNames: CorpStateName[] = ["START", "PURCHASE", "PRODUCTION", "
     "AI Cores",
     "Real Estate",
   ],
-  /** Names of all one-time corporation-wide unlocks */
-  unlockNames: CorpUnlockName[] = [
+  AllIndustryTypes: [
+    "Energy",
+    "Utilities",
+    "Agriculture",
+    "Fishing",
+    "Mining",
+    "Food",
+    "Tobacco",
+    "Chemical",
+    "Pharmaceutical",
+    "Hardware",
+    "Robotics",
+    "Software",
+    "Healthcare",
+    "RealEstate",
+  ],
+  AllUnlocks: [
     "Export",
     "Smart Supply",
     "Market Research - Demand",
@@ -47,7 +113,7 @@ export const stateNames: CorpStateName[] = ["START", "PURCHASE", "PRODUCTION", "
     "Warehouse API",
     "Office API",
   ],
-  upgradeNames: CorpUpgradeName[] = [
+  AllUpgrades: [
     "Smart Factories",
     "Smart Storage",
     "DreamSense",
@@ -59,8 +125,7 @@ export const stateNames: CorpStateName[] = ["START", "PURCHASE", "PRODUCTION", "
     "ABC SalesBots",
     "Project Insight",
   ],
-  /** Names of all reasearches common to all industries */
-  researchNamesBase: CorpResearchName[] = [
+  AllResearch: [
     "Hi-Tech R&D Laboratory",
     "AutoBrew",
     "AutoPartyManager",
@@ -79,43 +144,14 @@ export const stateNames: CorpStateName[] = ["START", "PURCHASE", "PRODUCTION", "
     "Overclock",
     "Self-Correcting Assemblers",
     "Sti.mu",
-  ],
-  /** Names of all researches only available to product industries */
-  researchNamesProductOnly: CorpResearchName[] = [
+    "sudo.Assist",
     "uPgrade: Capacity.I",
     "uPgrade: Capacity.II",
     "uPgrade: Dashboard",
     "uPgrade: Fulcrum",
   ],
-  /** Names of all researches */
-  researchNames: CorpResearchName[] = [...researchNamesBase, ...researchNamesProductOnly],
-  initialShares = 1e9,
-  /** When selling large number of shares, price is dynamically updated for every batch of this amount */
-  sharesPerPriceUpdate = 1e6,
-  /** Cooldown for issue new shares cooldown in game cycles. 12 hours. */
-  issueNewSharesCooldown = 216e3,
-  /** Cooldown for selling shares in game cycles. 1 hour. */
-  sellSharesCooldown = 18e3,
-  coffeeCostPerEmployee = 500e3,
-  gameCyclesPerMarketCycle = 50,
-  gameCyclesPerCorpStateCycle = gameCyclesPerMarketCycle / stateNames.length,
-  secondsPerMarketCycle = (gameCyclesPerMarketCycle * CONSTANTS.MilliPerCycle) / 1000,
-  warehouseInitialCost = 5e9,
-  warehouseInitialSize = 100,
-  warehouseSizeUpgradeCostBase = 1e9,
-  officeInitialCost = 4e9,
-  officeInitialSize = 3,
-  officeSizeUpgradeCostBase = 1e9,
-  bribeThreshold = 100e12,
-  bribeAmountPerReputation = 1e9,
-  baseProductProfitMult = 5,
-  dividendMaxRate = 1,
-  /** Conversion factor for employee stats to initial salary */
-  employeeSalaryMultiplier = 3,
-  marketCyclesPerEmployeeRaise = 400,
-  employeeRaiseAmount = 50,
-  /** Max products for a division without upgrades */
-  maxProductsBase = 3,
-  fundingRoundShares = [0.1, 0.35, 0.25, 0.2],
-  fundingRoundMultiplier = [4, 3, 3, 2.5],
-  valuationLength = 5;
+  FundingRoundShares: [0.1, 0.35, 0.25, 0.2],
+  FundingRoundMultiplier: [4, 3, 3, 2.5],
+
+  ValuationLength: 5,
+};

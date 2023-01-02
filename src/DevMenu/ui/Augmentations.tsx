@@ -12,30 +12,34 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
-export function Augmentations(): React.ReactElement {
+interface IProps {
+  player: IPlayer;
+}
+
+export function Augmentations(props: IProps): React.ReactElement {
   const [augmentation, setAugmentation] = useState("Augmented Targeting I");
 
   function setAugmentationDropdown(event: SelectChangeEvent<string>): void {
     setAugmentation(event.target.value);
   }
   function queueAug(): void {
-    Player.queueAugmentation(augmentation);
+    props.player.queueAugmentation(augmentation);
   }
 
   function queueAllAugs(): void {
     for (const augName of Object.values(AugmentationNames)) {
-      Player.queueAugmentation(augName);
+      props.player.queueAugmentation(augName);
     }
   }
 
   function clearAugs(): void {
-    Player.augmentations = [];
+    props.player.augmentations = [];
   }
 
   function clearQueuedAugs(): void {
-    Player.queuedAugmentations = [];
+    props.player.queuedAugmentations = [];
   }
 
   return (

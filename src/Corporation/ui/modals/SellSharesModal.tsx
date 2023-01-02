@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
+import { use } from "../../../ui/Context";
 import { useCorporation } from "../Context";
-import { Corporation } from "../../Corporation";
+import { ICorporation } from "../../ICorporation";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Money } from "../../../ui/React/Money";
@@ -19,12 +20,13 @@ interface IProps {
 // Create a popup that lets the player sell Corporation shares
 // This is created when the player clicks the "Sell Shares" button in the overview panel
 export function SellSharesModal(props: IProps): React.ReactElement {
+  const player = use.Player();
   const corp = useCorporation();
   const [shares, setShares] = useState<number>(NaN);
 
   const disabled = isNaN(shares) || shares <= 0 || shares > corp.numShares;
 
-  function ProfitIndicator(props: { shares: number | null; corp: Corporation }): React.ReactElement {
+  function ProfitIndicator(props: { shares: number | null; corp: ICorporation }): React.ReactElement {
     if (props.shares === null) return <></>;
     let text = "";
     if (isNaN(props.shares) || props.shares <= 0) {
@@ -47,7 +49,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   function sell(): void {
     if (disabled) return;
     try {
-      const profit = SellShares(corp, shares);
+      const profit = SellShares(corp, player, shares);
       props.onClose();
       dialogBoxCreate(
         <>

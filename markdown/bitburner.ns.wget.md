@@ -34,14 +34,14 @@ Retrieves data from a URL and downloads it to a file on the specified server. Th
 
 IMPORTANT: This is an asynchronous function that returns a Promise. The Promise’s resolved value will be a boolean indicating whether or not the data was successfully retrieved from the URL. Because the function is async and returns a Promise, it is recommended you use wget in NetscriptJS (Netscript 2.0).
 
-In NetscriptJS, you must preface any call to wget with the await keyword (like you would [hack](./bitburner.ns.hack.md) or [sleep](./bitburner.ns.sleep.md)<!-- -->). wget will still work in Netscript 1.0, but the function's execution will not be synchronous (i.e. it may not execute when you expect/want it to). Furthermore, since Promises are not supported in ES5, you will not be able to process the returned value of wget in Netscript 1.0.
+In NetscriptJS, you must preface any call to wget with the await keyword (like you would hack or sleep). wget will still work in Netscript 1.0, but the functions execution will not be synchronous (i.e. it may not execute when you expect/want it to). Furthermore, since Promises are not supported in ES5, you will not be able to process the returned value of wget in Netscript 1.0.
 
 ## Example 1
 
 
 ```ts
 // NS1:
-wget("https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/README.md", "game_readme.txt");
+wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
 ```
 
 ## Example 2
@@ -49,6 +49,6 @@ wget("https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/
 
 ```ts
 // NS2:
-await ns.wget("https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/README.md", "game_readme.txt");
+await ns.wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
 ```
 

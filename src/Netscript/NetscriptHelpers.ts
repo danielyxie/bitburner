@@ -1,12 +1,13 @@
 import { NetscriptContext } from "./APIWrapper";
 import { WorkerScript } from "./WorkerScript";
 import { GetAllServers, GetServer } from "../Server/AllServers";
-import { Player } from "@player";
+import { Player } from "../Player";
 import { ScriptDeath } from "./ScriptDeath";
+import { isString } from "../utils/helpers/isString";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { ScriptArg } from "./ScriptArg";
-import { CityName } from "../Enums";
-import { BasicHGWOptions, RunningScript as IRunningScript, Person as IPerson } from "@nsdefs";
+import { CityName } from "../Locations/data/CityNames";
+import { BasicHGWOptions } from "src/ScriptEditor/NetscriptDefinitions";
 import { Server } from "../Server/Server";
 import {
   calculateHackingChance,
@@ -21,6 +22,7 @@ import { CONSTANTS } from "../Constants";
 import { influenceStockThroughServerHack } from "../StockMarket/PlayerInfluencing";
 import { IPort, NetscriptPort } from "../NetscriptPort";
 import { NetscriptPorts } from "../NetscriptWorker";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { FormulaGang } from "../Gang/formulas/formulas";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
@@ -28,19 +30,18 @@ import { RunningScript } from "../Script/RunningScript";
 import { toNative } from "../NetscriptFunctions/toNative";
 import { ScriptIdentifier } from "./ScriptIdentifier";
 import { findRunningScript, findRunningScriptByPid } from "../Script/ScriptHelpers";
+import { RunningScript as IRunningScript } from "../ScriptEditor/NetscriptDefinitions";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
-import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { checkEnum } from "../utils/helpers/enum";
-import { RamCostConstants } from "./RamCostGenerator";
 
 export const helpers = {
   string,
   number,
   scriptArgs,
   argsToString,
-  makeBasicErrorMsg,
+  isScriptErrorMessage,
+  makeRuntimeRejectMsg,
   makeRuntimeErrorMsg,
   resolveNetscriptRequestedThreads,
   checkEnvFlags,
@@ -52,69 +53,19 @@ export const helpers = {
   scriptIdentifier,
   hack,
   getValidPort,
-  person,
+  player,
   server,
   gang,
   gangMember,
   gangTask,
   log,
+  getFunctionNames,
   getRunningScript,
   getRunningScriptByArgs,
   getCannotFindRunningScriptErrorMessage,
   createPublicRunningScript,
   failOnHacknetServer,
 };
-
-export function assertMember<T extends string>(
-  ctx: NetscriptContext,
-  obj: Record<string, T> | T[],
-  typeName: string,
-  argName: string,
-  v: unknown,
-): asserts v is T {
-  assertString(ctx, argName, v);
-  if (!checkEnum(obj, v)) throw makeRuntimeErrorMsg(ctx, `${argName}: ${v} is not a valid ${typeName}.`, "TYPE");
-}
-
-export function assertString(ctx: NetscriptContext, argName: string, v: unknown): asserts v is string {
-  if (typeof v !== "string")
-    throw makeRuntimeErrorMsg(ctx, `${argName} expected to be a string. ${debugType(v)}`, "TYPE");
-}
-
-/** Will probably remove the below function in favor of a different approach to object type assertion.
- *  This method cannot be used to handle optional properties. */
-export function assertObjectType<T extends object>(
-  ctx: NetscriptContext,
-  name: string,
-  obj: unknown,
-  desiredObject: T,
-): asserts obj is T {
-  if (typeof obj !== "object" || obj === null) {
-    throw makeRuntimeErrorMsg(
-      ctx,
-      `Type ${obj === null ? "null" : typeof obj} provided for ${name}. Must be an object.`,
-      "TYPE",
-    );
-  }
-  const objHas = Object.prototype.hasOwnProperty.bind(obj);
-  for (const [key, val] of Object.entries(desiredObject)) {
-    if (!objHas(key)) {
-      throw makeRuntimeErrorMsg(
-        ctx,
-        `Object provided for argument ${name} is missing required property ${key}.`,
-        "TYPE",
-      );
-    }
-    const objVal = (obj as Record<string, unknown>)[key];
-    if (typeof val !== typeof objVal) {
-      throw makeRuntimeErrorMsg(
-        ctx,
-        `Incorrect type ${typeof objVal} provided for property ${key} on ${name} argument. Should be type ${typeof val}.`,
-        "TYPE",
-      );
-    }
-  }
-}
 
 const userFriendlyString = (v: unknown): string => {
   const clip = (s: string): string => {
@@ -140,9 +91,9 @@ const debugType = (v: unknown): string => {
 
 /** Convert a provided value v for argument argName to string. If it wasn't originally a string or number, throw. */
 function string(ctx: NetscriptContext, argName: string, v: unknown): string {
-  if (typeof v === "number") v = v + ""; // cast to string;
-  assertString(ctx, argName, v);
-  return v;
+  if (typeof v === "string") return v;
+  if (typeof v === "number") return v + ""; // cast to string;
+  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a string. ${debugType(v)}`);
 }
 
 /** Convert provided value v for argument argName to number. Throw if could not convert to a non-NaN number. */
@@ -154,13 +105,22 @@ function number(ctx: NetscriptContext, argName: string, v: unknown): number {
     if (isNaN(v)) throw makeRuntimeErrorMsg(ctx, `'${argName}' is NaN.`);
     return v;
   }
-  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number. ${debugType(v)}`, "TYPE");
+  throw makeRuntimeErrorMsg(ctx, `'${argName}' should be a number. ${debugType(v)}`);
 }
 
 /** Returns args back if it is a ScriptArg[]. Throws an error if it is not. */
 function scriptArgs(ctx: NetscriptContext, args: unknown) {
-  if (!isScriptArgs(args)) throw makeRuntimeErrorMsg(ctx, "'args' is not an array of script args", "TYPE");
+  if (!isScriptArgs(args)) throw makeRuntimeErrorMsg(ctx, "'args' is not an array of script args");
   return args;
+}
+
+/** Determines if the given msg string is an error created by makeRuntimeRejectMsg. */
+function isScriptErrorMessage(msg: string): boolean {
+  if (!isString(msg)) {
+    return false;
+  }
+  const splitMsg = msg.split("|DELIMITER|");
+  return splitMsg.length == 4;
 }
 
 /** Convert multiple arguments for tprint or print into a single string. */
@@ -183,23 +143,22 @@ function argsToString(args: unknown[]): string {
 }
 
 /** Creates an error message string containing hostname, scriptname, and the error message msg */
-function makeBasicErrorMsg(ws: WorkerScript | ScriptDeath, msg: string, type = "RUNTIME"): string {
-  if (ws instanceof WorkerScript) {
-    for (const scriptUrl of ws.scriptRef.dependencies) {
-      msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
-    }
+function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): string {
+  for (const scriptUrl of workerScript.scriptRef.dependencies) {
+    msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
   }
-  return `${type} ERROR\n${ws.name}@${ws.hostname} (PID - ${ws.pid})\n\n${msg}`;
+
+  return "|DELIMITER|" + workerScript.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
 }
 
 /** Creates an error message string with a stack trace. */
-function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string, type = "RUNTIME"): string {
+function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string): string {
   const errstack = new Error().stack;
   if (errstack === undefined) throw new Error("how did we not throw an error?");
   const stack = errstack.split("\n").slice(1);
-  const ws = ctx.workerScript;
-  const caller = ctx.functionPath;
-  const scripts = ws.getServer().scripts;
+  const workerScript = ctx.workerScript;
+  const caller = ctx.function;
+  const scripts = workerScript.getServer().scripts;
   const userstack = [];
   for (const stackline of stack) {
     let filename;
@@ -257,10 +216,10 @@ function makeRuntimeErrorMsg(ctx: NetscriptContext, msg: string, type = "RUNTIME
     userstack.push(`${filename}:L${call.line}@${call.func}`);
   }
 
-  log(ctx, () => msg);
+  workerScript.log(caller, () => msg);
   let rejectMsg = `${caller}: ${msg}`;
-  if (userstack.length !== 0) rejectMsg += `\n\nStack:\n${userstack.join("\n")}`;
-  return makeBasicErrorMsg(ws, rejectMsg, type);
+  if (userstack.length !== 0) rejectMsg += `<br><br>Stack:<br>${userstack.join("<br>")}`;
+  return makeRuntimeRejectMsg(workerScript, rejectMsg);
 }
 
 /** Validate requested number of threads for h/g/w options */
@@ -271,11 +230,14 @@ function resolveNetscriptRequestedThreads(ctx: NetscriptContext, requestedThread
   }
   const requestedThreadsAsInt = requestedThreads | 0;
   if (isNaN(requestedThreads) || requestedThreadsAsInt < 1) {
-    throw makeRuntimeErrorMsg(ctx, `Invalid thread count: ${requestedThreads}. Threads must be a positive number.`);
+    throw makeRuntimeRejectMsg(
+      ctx.workerScript,
+      `Invalid thread count passed to ${ctx.function}: ${requestedThreads}. Threads must be a positive number.`,
+    );
   }
   if (requestedThreadsAsInt > threads) {
-    throw makeRuntimeErrorMsg(
-      ctx,
+    throw makeRuntimeRejectMsg(
+      ctx.workerScript,
       `Too many threads requested by ${ctx.function}. Requested: ${requestedThreads}. Has: ${threads}.`,
     );
   }
@@ -289,7 +251,6 @@ function checkSingularityAccess(ctx: NetscriptContext): void {
       ctx,
       `This singularity function requires Source-File 4 to run. A power up you obtain later in the game.
       It will be very obvious when and how you can obtain it.`,
-      "API ACCESS",
     );
   }
 }
@@ -297,22 +258,17 @@ function checkSingularityAccess(ctx: NetscriptContext): void {
 /** Create an error if a script is dead or if concurrent ns function calls are made */
 function checkEnvFlags(ctx: NetscriptContext): void {
   const ws = ctx.workerScript;
-  if (ws.env.stopFlag) {
-    log(ctx, () => "Failed to run due to script being killed.");
-    throw new ScriptDeath(ws);
-  }
+  if (ws.env.stopFlag) throw new ScriptDeath(ws);
   if (ws.env.runningFn && ctx.function !== "asleep") {
-    ws.delayReject?.(new ScriptDeath(ws));
-    ws.env.stopFlag = true;
-    log(ctx, () => "Failed to run due to failed concurrency check.");
-    throw makeRuntimeErrorMsg(
-      ctx,
+    ws.errorMessage = makeRuntimeRejectMsg(
+      ws,
       `Concurrent calls to Netscript functions are not allowed!
       Did you forget to await hack(), grow(), or some other
       promise-returning function?
       Currently running: ${ws.env.runningFn} tried to run: ${ctx.function}`,
-      "CONCURRENCY",
     );
+    if (ws.delayReject) ws.delayReject(new ScriptDeath(ws));
+    throw new ScriptDeath(ws); //No idea if this is the right thing to throw
   }
 }
 
@@ -341,40 +297,39 @@ function updateDynamicRam(ctx: NetscriptContext, ramCost: number): void {
 
   let threads = ws.scriptRef.threads;
   if (typeof threads !== "number") {
-    console.warn(`WorkerScript detected NaN for thread count for ${ws.name} on ${ws.hostname}`);
+    console.warn(`WorkerScript detected NaN for threadcount for ${ws.name} on ${ws.hostname}`);
     threads = 1;
   }
-  ws.dynamicRamUsage = Math.min(ws.dynamicRamUsage + ramCost, RamCostConstants.Max);
+  ws.dynamicRamUsage += ramCost;
   if (ws.dynamicRamUsage > 1.01 * ws.ramUsage) {
-    log(ctx, () => "Insufficient static ram available.");
-    ws.env.stopFlag = true;
-    throw makeRuntimeErrorMsg(
-      ctx,
-      `Dynamic RAM usage calculated to be greater than initial RAM usage.
+    ws.errorMessage = makeRuntimeRejectMsg(
+      ws,
+      `Dynamic RAM usage calculated to be greater than initial RAM usage on fn: ${fnName}.
       This is probably because you somehow circumvented the static RAM calculation.
 
       Threads: ${threads}
-      Dynamic RAM Usage: ${numeralWrapper.formatRAM(ws.dynamicRamUsage)} per thread
-      Static RAM Usage: ${numeralWrapper.formatRAM(ws.ramUsage)} per thread
+      Dynamic RAM Usage: ${numeralWrapper.formatRAM(ws.dynamicRamUsage)}
+      Static RAM Usage: ${numeralWrapper.formatRAM(ws.ramUsage)}
 
       One of these could be the reason:
       * Using eval() to get a reference to a ns function
-      \u00a0\u00a0const myScan = eval('ns.scan');
+      &nbsp;&nbsp;const myScan = eval('ns.scan');
 
       * Using map access to do the same
-      \u00a0\u00a0const myScan = ns['scan'];
+      &nbsp;&nbsp;const myScan = ns['scan'];
 
       Sorry :(`,
-      "RAM USAGE",
     );
+    throw new ScriptDeath(ws);
   }
 }
 
 /** Validates the input v as being a CityName. Throws an error if it is not. */
 function city(ctx: NetscriptContext, argName: string, v: unknown): CityName {
-  if (typeof v !== "string" || !checkEnum(CityName, v))
-    throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
-  return v;
+  if (typeof v !== "string") throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
+  const s = v as CityName;
+  if (!Object.values(CityName).includes(s)) throw makeRuntimeErrorMsg(ctx, `${argName} should be a city name.`);
+  return s;
 }
 
 function scriptIdentifier(
@@ -396,7 +351,7 @@ function scriptIdentifier(
       args,
     };
   }
-  throw makeRuntimeErrorMsg(ctx, "An unknown type of input was provided as a script identifier.", "TYPE");
+  throw new Error("not implemented");
 }
 
 /**
@@ -420,7 +375,7 @@ function isScriptArgs(args: unknown): args is ScriptArg[] {
   return Array.isArray(args) && args.every(isScriptArg);
 }
 
-function hack(
+async function hack(
   ctx: NetscriptContext,
   hostname: string,
   manual: boolean,
@@ -437,7 +392,7 @@ function hack(
   const hackingTime = calculateHackingTime(server, Player); // This is in seconds
 
   // No root access or skill level too low
-  const canHack = netscriptCanHack(server);
+  const canHack = netscriptCanHack(server, Player);
   if (!canHack.res) {
     throw makeRuntimeErrorMsg(ctx, canHack.msg || "");
   }
@@ -506,7 +461,7 @@ function hack(
       if (manual) {
         server.backdoorInstalled = true;
       }
-      return moneyGained;
+      return Promise.resolve(moneyGained);
     } else {
       // Player only gains 25% exp for failure?
       Player.gainHackingExp(expGainedOnFailure);
@@ -518,7 +473,7 @@ function hack(
             expGainedOnFailure,
           )} exp (t=${numeralWrapper.formatThreads(threads)})`,
       );
-      return 0;
+      return Promise.resolve(0);
     }
   });
 }
@@ -545,15 +500,27 @@ function getValidPort(ctx: NetscriptContext, port: number): IPort {
   return iport;
 }
 
-function person(ctx: NetscriptContext, p: unknown): IPerson {
-  const fakePerson = {
+function player(ctx: NetscriptContext, p: unknown): IPlayer {
+  const fakePlayer = {
     hp: undefined,
-    exp: undefined,
     mults: undefined,
+    numPeopleKilled: undefined,
+    money: undefined,
     city: undefined,
+    location: undefined,
+    bitNodeN: undefined,
+    totalPlaytime: undefined,
+    playtimeSinceLastAug: undefined,
+    playtimeSinceLastBitnode: undefined,
+    jobs: undefined,
+    factions: undefined,
+    tor: undefined,
+    inBladeburner: undefined,
+    hasCorporation: undefined,
+    entropy: undefined,
   };
-  if (!roughlyIs(fakePerson, p)) throw makeRuntimeErrorMsg(ctx, `person should be a Person.`, "TYPE");
-  return p as IPerson;
+  if (!roughlyIs(fakePlayer, p)) throw makeRuntimeErrorMsg(ctx, `player should be a Player.`);
+  return p as IPlayer;
 }
 
 function server(ctx: NetscriptContext, s: unknown): Server {
@@ -583,7 +550,7 @@ function server(ctx: NetscriptContext, s: unknown): Server {
     requiredHackingSkill: undefined,
     serverGrowth: undefined,
   };
-  if (!roughlyIs(fakeServer, s)) throw makeRuntimeErrorMsg(ctx, `server should be a Server.`, "TYPE");
+  if (!roughlyIs(fakeServer, s)) throw makeRuntimeErrorMsg(ctx, `server should be a Server.`);
   return s as Server;
 }
 
@@ -601,18 +568,18 @@ function roughlyIs(expect: object, actual: unknown): boolean {
 
 function gang(ctx: NetscriptContext, g: unknown): FormulaGang {
   if (!roughlyIs({ respect: 0, territory: 0, wantedLevel: 0 }, g))
-    throw makeRuntimeErrorMsg(ctx, `gang should be a Gang.`, "TYPE");
+    throw makeRuntimeErrorMsg(ctx, `gang should be a Gang.`);
   return g as FormulaGang;
 }
 
 function gangMember(ctx: NetscriptContext, m: unknown): GangMember {
-  if (!roughlyIs(new GangMember(), m)) throw makeRuntimeErrorMsg(ctx, `member should be a GangMember.`, "TYPE");
+  if (!roughlyIs(new GangMember(), m)) throw makeRuntimeErrorMsg(ctx, `member should be a GangMember.`);
   return m as GangMember;
 }
 
 function gangTask(ctx: NetscriptContext, t: unknown): GangMemberTask {
   if (!roughlyIs(new GangMemberTask("", "", false, false, { hackWeight: 100 }), t))
-    throw makeRuntimeErrorMsg(ctx, `task should be a GangMemberTask.`, "TYPE");
+    throw makeRuntimeErrorMsg(ctx, `task should be a GangMemberTask.`);
   return t as GangMemberTask;
 }
 
@@ -638,10 +605,10 @@ function getRunningScriptByArgs(
   scriptArgs: ScriptArg[],
 ): RunningScript | null {
   if (!Array.isArray(scriptArgs)) {
-    throw helpers.makeRuntimeErrorMsg(
-      ctx,
-      "Invalid scriptArgs argument passed into getRunningScriptByArgs().\n" +
-        "This is probably a bug. Please report to game developer",
+    throw helpers.makeRuntimeRejectMsg(
+      ctx.workerScript,
+      `Invalid scriptArgs argument passed into getRunningScript() from ${ctx.function}(). ` +
+        `This is probably a bug. Please report to game developer`,
     );
   }
 
@@ -657,6 +624,21 @@ function getRunningScriptByArgs(
 
   // If no arguments are specified, return the current RunningScript
   return ctx.workerScript.scriptRef;
+}
+
+/** Provides an array of all function names on a nested object */
+function getFunctionNames(obj: object, prefix: string): string[] {
+  const functionNames: string[] = [];
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === "args") {
+      continue;
+    } else if (typeof value == "function") {
+      functionNames.push(prefix + key);
+    } else if (typeof value == "object") {
+      functionNames.push(...getFunctionNames(value, key + "."));
+    }
+  }
+  return functionNames;
 }
 
 function getRunningScriptByPid(pid: number): RunningScript | null {
@@ -724,42 +706,11 @@ function createPublicRunningScript(runningScript: RunningScript): IRunningScript
  * @param {string} callingFn - Name of calling function. For logging purposes
  * @returns {boolean} True if the server is a Hacknet Server, false otherwise
  */
-function failOnHacknetServer(ctx: NetscriptContext, server: BaseServer): boolean {
+function failOnHacknetServer(ctx: NetscriptContext, server: BaseServer, callingFn = ""): boolean {
   if (server instanceof HacknetServer) {
-    log(ctx, () => `Does not work on Hacknet Servers`);
+    ctx.workerScript.log(callingFn, () => `Does not work on Hacknet Servers`);
     return true;
   } else {
     return false;
   }
-}
-
-/** Generate an error dialog when workerscript is known */
-export function handleUnknownError(e: unknown, ws: WorkerScript | ScriptDeath | null = null, initialText = "") {
-  if (e instanceof ScriptDeath) {
-    //No dialog for an empty ScriptDeath
-    if (e.errorMessage === "") return;
-    if (!ws) {
-      ws = e;
-      e = ws.errorMessage;
-    }
-  }
-  if (ws && typeof e === "string") {
-    const headerText = makeBasicErrorMsg(ws, "", "");
-    if (!e.includes(headerText)) e = makeBasicErrorMsg(ws, e);
-  } else if (e instanceof SyntaxError) {
-    const msg = `${e.message} (sorry we can't be more helpful)`;
-    e = ws ? makeBasicErrorMsg(ws, msg, "SYNTAX") : `SYNTAX ERROR:\n\n${msg}`;
-  } else if (e instanceof Error) {
-    // Ignore any cancellation errors from Monaco that get here
-    if (e.name === "Canceled" && e.message === "Canceled") return;
-    const msg = `${e.message}${e.stack ? `\nstack:\n${e.stack.toString()}` : ""}`;
-    e = ws ? makeBasicErrorMsg(ws, msg) : `RUNTIME ERROR:\n\n${msg}`;
-  }
-  if (typeof e !== "string") {
-    console.error("Unexpected error:", e);
-    const msg = `Unexpected type of error thrown. This error was likely thrown manually within a script.
-      Error has been logged to the console.\n\nType of error: ${typeof e}\nValue of error: ${e}`;
-    e = ws ? makeBasicErrorMsg(ws, msg, "UNKNOWN") : msg;
-  }
-  dialogBoxCreate(initialText + e);
 }

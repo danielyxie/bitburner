@@ -1,12 +1,12 @@
 import React from "react";
-import { Action } from "../Action";
+import { IAction } from "../IAction";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 
 interface IProps {
-  action: Action;
+  action: IAction;
   rerender: () => void;
 }
 

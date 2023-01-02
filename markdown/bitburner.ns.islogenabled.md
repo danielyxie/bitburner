@@ -22,7 +22,7 @@ isLogEnabled(fn: string): boolean;
 
 boolean
 
-Returns a boolean indicating whether or not logging is enabled for that function (or `ALL`<!-- -->).
+Returns a boolean indicating whether or not logging is enabled for that function (or `ALL`<!-- -->)
 
 ## Remarks
 

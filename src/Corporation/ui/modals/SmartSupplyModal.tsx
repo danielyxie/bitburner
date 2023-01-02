@@ -2,26 +2,25 @@ import React, { useState } from "react";
 
 import { Warehouse } from "../../Warehouse";
 import { SetSmartSupply, SetSmartSupplyUseLeftovers } from "../../Actions";
+import { Material } from "../../Material";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
 import { useDivision } from "../Context";
 import Typography from "@mui/material/Typography";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { CorpMaterialName } from "@nsdefs";
-import { materialNames } from "../../data/Constants";
 
 interface ILeftoverProps {
-  matName: CorpMaterialName;
+  matName: string;
   warehouse: Warehouse;
 }
 
 function Leftover(props: ILeftoverProps): React.ReactElement {
-  const [checked, setChecked] = useState(!!props.warehouse.smartSupplyUseLeftovers[props.matName]);
+  const [checked, setChecked] = useState(!!props.warehouse.smartSupplyUseLeftovers[props.matName.replace(/ /g, "")]);
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     try {
-      const matName = props.matName;
+      const matName = props.matName.replace(/ /g, "");
       const material = props.warehouse.materials[matName];
       SetSmartSupplyUseLeftovers(props.warehouse, material, event.target.checked);
     } catch (err) {
@@ -34,7 +33,7 @@ function Leftover(props: ILeftoverProps): React.ReactElement {
     <>
       <FormControlLabel
         control={<Switch checked={checked} onChange={onChange} />}
-        label={<Typography>{props.warehouse.materials[props.matName].name}</Typography>}
+        label={<Typography>{props.warehouse.materials[props.matName.replace(/ /g, "")].name}</Typography>}
       />
       <br />
     </>
@@ -62,8 +61,8 @@ export function SmartSupplyModal(props: IProps): React.ReactElement {
 
   // Create React components for materials
   const mats = [];
-  for (const matName of Object.values(materialNames)) {
-    if (!props.warehouse.materials[matName]) continue;
+  for (const matName of Object.keys(props.warehouse.materials)) {
+    if (!(props.warehouse.materials[matName] instanceof Material)) continue;
     if (!Object.keys(division.reqMats).includes(matName)) continue;
     mats.push(<Leftover key={matName} warehouse={props.warehouse} matName={matName} />);
   }

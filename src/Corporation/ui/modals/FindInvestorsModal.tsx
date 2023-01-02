@@ -1,6 +1,6 @@
 import React from "react";
 import { numeralWrapper } from "../../../ui/numeralFormat";
-import * as corpConstants from "../../data/Constants";
+import { CorporationConstants } from "../../data/Constants";
 import { Modal } from "../../../ui/React/Modal";
 import { useCorporation } from "../Context";
 
@@ -18,14 +18,14 @@ export function FindInvestorsModal(props: IProps): React.ReactElement {
   const corporation = useCorporation();
   const val = corporation.valuation;
   if (
-    corporation.fundingRound >= corpConstants.fundingRoundShares.length ||
-    corporation.fundingRound >= corpConstants.fundingRoundMultiplier.length
+    corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
+    corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length
   )
     return <></>;
-  const percShares = corpConstants.fundingRoundShares[corporation.fundingRound];
-  const roundMultiplier = corpConstants.fundingRoundMultiplier[corporation.fundingRound];
+  const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
+  const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
   const funding = val * percShares * roundMultiplier;
-  const investShares = Math.floor(corpConstants.initialShares * percShares);
+  const investShares = Math.floor(CorporationConstants.INITIALSHARES * percShares);
 
   function findInvestors(): void {
     corporation.fundingRound++;

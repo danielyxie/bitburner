@@ -3,7 +3,7 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import { Aliases, GlobalAliases, substituteAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
-import { Player } from "@player";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetAllServers } from "../Server/AllServers";
 import { Server } from "../Server/Server";
 import { ParseCommand, ParseCommands } from "./Parser";
@@ -11,10 +11,9 @@ import { HelpTexts } from "./HelpText";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { compile } from "../NetscriptJSEvaluator";
 import { Flags } from "../NetscriptFunctions/Flags";
-import { AutocompleteData } from "@nsdefs";
+import { AutocompleteData } from "../ScriptEditor/NetscriptDefinitions";
 import * as libarg from "arg";
 
-// TODO: this shouldn't be hardcoded in two places with no typechecks to verify equivalence
 // An array of all Terminal commands
 const commands = [
   "alias",
@@ -22,7 +21,6 @@ const commands = [
   "backdoor",
   "cat",
   "cd",
-  "changelog",
   "check",
   "clear",
   "cls",
@@ -59,6 +57,7 @@ const commands = [
 ];
 
 export async function determineAllPossibilitiesForTabCompletion(
+  p: IPlayer,
   input: string,
   index: number,
   currPath = "",
@@ -66,8 +65,8 @@ export async function determineAllPossibilitiesForTabCompletion(
   input = substituteAliases(input);
   let allPos: string[] = [];
   allPos = allPos.concat(Object.keys(GlobalAliases));
-  const currServ = Player.getCurrentServer();
-  const homeComputer = Player.getHomeComputer();
+  const currServ = p.getCurrentServer();
+  const homeComputer = p.getHomeComputer();
 
   let parentDirPath = "";
   let evaledParentDirPath: string | null = null;
@@ -199,7 +198,7 @@ export async function determineAllPossibilitiesForTabCompletion(
   if (evaledParentDirPath === "/") {
     evaledParentDirPath = null;
   } else if (evaledParentDirPath == null) {
-    // do nothing for some reason tests don't like this?
+    // do nothing for some reason tests dont like this?
     // return allPos; // Invalid path
   } else {
     evaledParentDirPath += "/";
@@ -286,14 +285,8 @@ export async function determineAllPossibilitiesForTabCompletion(
       return processFilepath(script.filename) === fn || script.filename === "/" + fn;
     });
     if (!script) return; // Doesn't exist.
-    let loadedModule;
-    try {
-      //Will return the already compiled module if recompilation not needed.
-      loadedModule = await compile(script, currServ.scripts);
-    } catch (e) {
-      //fail silently if the script fails to compile (e.g. syntax error)
-      return;
-    }
+    //Will return the already compiled module if recompilation not needed.
+    const loadedModule = await compile(p, script, currServ.scripts);
     if (!loadedModule || !loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
 
     const runArgs = { "--tail": Boolean, "-t": Number };

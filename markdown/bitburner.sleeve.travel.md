@@ -9,7 +9,7 @@ Make a sleeve travel to another city.
 <b>Signature:</b>
 
 ```typescript
-travel(sleeveNumber: number, city: CityName | `${CityName}`): boolean;
+travel(sleeveNumber: number, cityName: string): boolean;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ travel(sleeveNumber: number, city: CityName | `${CityName}`): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  sleeveNumber | number | Index of the sleeve to travel. |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the destination city. |
+|  cityName | string | Name of the destination city. |
 
 <b>Returns:</b>
 

@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface InfiltrationReward 
+export interface InfiltrationReward 
 ```
 
 ## Properties

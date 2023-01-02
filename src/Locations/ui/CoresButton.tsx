@@ -3,28 +3,29 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 import { Money } from "../../ui/React/Money";
 import { MathJaxWrapper } from "../../MathJaxWrapper";
 
 type IProps = {
+  p: IPlayer;
   rerender: () => void;
 };
 
 export function CoresButton(props: IProps): React.ReactElement {
-  const homeComputer = Player.getHomeComputer();
+  const homeComputer = props.p.getHomeComputer();
   const maxCores = homeComputer.cpuCores >= 8;
   if (maxCores) {
     return <Button>Upgrade 'home' cores - MAX</Button>;
   }
 
-  const cost = Player.getUpgradeHomeCoresCost();
+  const cost = props.p.getUpgradeHomeCoresCost();
 
   function buy(): void {
     if (maxCores) return;
-    if (!Player.canAfford(cost)) return;
-    Player.loseMoney(cost, "servers");
+    if (!props.p.canAfford(cost)) return;
+    props.p.loseMoney(cost, "servers");
     homeComputer.cpuCores++;
     props.rerender();
   }
@@ -37,9 +38,9 @@ export function CoresButton(props: IProps): React.ReactElement {
           <i>"Cores increase the effectiveness of grow() and weaken() on 'home'"</i>
         </Typography>
         <br />
-        <Button disabled={!Player.canAfford(cost)} onClick={buy}>
+        <Button disabled={!props.p.canAfford(cost)} onClick={buy}>
           Upgrade 'home' cores ({homeComputer.cpuCores} -&gt; {homeComputer.cpuCores + 1}) -&nbsp;
-          <Money money={cost} forPurchase={true} />
+          <Money money={cost} player={props.p} />
         </Button>
       </span>
     </Tooltip>

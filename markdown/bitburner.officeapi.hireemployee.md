@@ -9,7 +9,7 @@ Hire an employee.
 <b>Signature:</b>
 
 ```typescript
-hireEmployee(divisionName: string, city: CityName | `${CityName}`, employeePosition?: CorpEmployeePosition): boolean;
+hireEmployee(divisionName: string, cityName: string): Employee | undefined;
 ```
 
 ## Parameters
@@ -17,12 +17,11 @@ hireEmployee(divisionName: string, city: CityName | `${CityName}`, employeePosit
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
-|  employeePosition | [CorpEmployeePosition](./bitburner.corpemployeeposition.md) | Position to place into. Defaults to "Unassigned". |
+|  cityName | string | Name of the city |
 
 <b>Returns:</b>
 
-boolean
+[Employee](./bitburner.employee.md) \| undefined
 
-True if an employee was hired, false otherwise
+The newly hired employee, if any
 

@@ -8,48 +8,48 @@ import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
 
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 import { Money } from "../../ui/React/Money";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
+import { IRouter } from "../../ui/Router";
 import { Box } from "@mui/material";
-import { ClassWork, Classes } from "../../Work/ClassWork";
-import { calculateCost } from "../../Work/Formulas";
-import { GymType } from "../../Enums";
+import { ClassWork, ClassType, Classes } from "../../Work/ClassWork";
+import { calculateCost } from "../../Work/formulas/Class";
 
 type IProps = {
   loc: Location;
+  p: IPlayer;
+  router: IRouter;
 };
 
 export function GymLocation(props: IProps): React.ReactElement {
-  function train(stat: GymType): void {
-    Player.startWork(
+  function train(stat: ClassType): void {
+    props.p.startWork(
       new ClassWork({
         classType: stat,
         location: props.loc.name,
         singularity: false,
       }),
     );
-    Player.startFocusing();
-    Router.toPage(Page.Work);
+    props.p.startFocusing();
+    props.router.toWork();
   }
 
-  const cost = calculateCost(Classes[GymType.strength], props.loc);
+  const cost = calculateCost(Classes[ClassType.GymStrength], props.loc);
 
   return (
     <Box sx={{ display: "grid", width: "fit-content" }}>
-      <Button onClick={() => train(GymType.strength)}>
-        Train Strength (<Money money={cost} forPurchase={true} /> / sec)
+      <Button onClick={() => train(ClassType.GymStrength)}>
+        Train Strength (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={() => train(GymType.defense)}>
-        Train Defense (<Money money={cost} forPurchase={true} /> / sec)
+      <Button onClick={() => train(ClassType.GymDefense)}>
+        Train Defense (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={() => train(GymType.dexterity)}>
-        Train Dexterity (<Money money={cost} forPurchase={true} /> / sec)
+      <Button onClick={() => train(ClassType.GymDexterity)}>
+        Train Dexterity (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={() => train(GymType.agility)}>
-        Train Agility (<Money money={cost} forPurchase={true} /> / sec)
+      <Button onClick={() => train(ClassType.GymAgility)}>
+        Train Agility (<Money money={cost} player={props.p} /> / sec)
       </Button>
     </Box>
   );

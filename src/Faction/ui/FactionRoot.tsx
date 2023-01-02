@@ -15,16 +15,14 @@ import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction";
 
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 
 import { Typography, Button } from "@mui/material";
 import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
 import { FactionNames } from "../data/FactionNames";
 import { GangButton } from "./GangButton";
 import { FactionWork } from "../../Work/FactionWork";
-import { FactionWorkType } from "../../Enums";
+import { FactionWorkType } from "../../Work/data/FactionWorkType";
 
 type IProps = {
   faction: Faction;
@@ -60,42 +58,44 @@ interface IMainProps {
 }
 
 function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const [sleevesOpen, setSleevesOpen] = useState(false);
   const factionInfo = faction.getInfo();
 
   function startWork(): void {
-    Player.startFocusing();
-    Router.toPage(Page.Work);
+    player.startFocusing();
+    router.toWork();
   }
 
   function startFieldWork(faction: Faction): void {
-    Player.startWork(
+    player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,
-        factionWorkType: FactionWorkType.field,
+        factionWorkType: FactionWorkType.FIELD,
       }),
     );
     startWork();
   }
 
   function startHackingContracts(faction: Faction): void {
-    Player.startWork(
+    player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,
-        factionWorkType: FactionWorkType.hacking,
+        factionWorkType: FactionWorkType.HACKING,
       }),
     );
     startWork();
   }
 
   function startSecurityWork(faction: Faction): void {
-    Player.startWork(
+    player.startWork(
       new FactionWork({
         singularity: false,
         faction: faction.name,
-        factionWorkType: FactionWorkType.security,
+        factionWorkType: FactionWorkType.SECURITY,
       }),
     );
     startWork();
@@ -103,18 +103,18 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   // We have a special flag for whether the player this faction is the player's
   // gang faction because if the player has a gang, they cannot do any other action
-  const isPlayersGang = Player.gang && Player.getGangName() === faction.name;
+  const isPlayersGang = player.inGang() && player.getGangName() === faction.name;
 
   // Flags for whether special options (gang, sleeve purchases, donate, etc.)
   // should be shown
   const favorToDonate = Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
   const canDonate = faction.favor >= favorToDonate;
 
-  const canPurchaseSleeves = faction.name === FactionNames.TheCovenant && Player.bitNodeN === 10;
+  const canPurchaseSleeves = faction.name === FactionNames.TheCovenant && player.bitNodeN === 10;
 
   return (
     <>
-      <Button onClick={() => Router.toPage(Page.Factions)}>Back</Button>
+      <Button onClick={() => router.toFactions()}>Back</Button>
       <Typography variant="h4" color="primary">
         {faction.name}
       </Typography>
@@ -134,7 +134,13 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
         <Option buttonText={"Security Work"} infoText={securityWorkInfo} onClick={() => startSecurityWork(faction)} />
       )}
       {!isPlayersGang && factionInfo.offersWork() && (
-        <DonateOption faction={faction} rerender={rerender} favorToDonate={favorToDonate} disabled={!canDonate} />
+        <DonateOption
+          faction={faction}
+          p={player}
+          rerender={rerender}
+          favorToDonate={favorToDonate}
+          disabled={!canDonate}
+        />
       )}
       <Option buttonText={"Purchase Augmentations"} infoText={augmentationsInfo} onClick={onAugmentations} />
       {canPurchaseSleeves && (
@@ -153,6 +159,8 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
 export function FactionRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
+  const player = use.Player();
+  const router = use.Router();
   const [purchasingAugs, setPurchasingAugs] = useState(props.augPage);
 
   function rerender(): void {
@@ -166,13 +174,13 @@ export function FactionRoot(props: IProps): React.ReactElement {
 
   const faction = props.faction;
 
-  if (!Player.factions.includes(faction.name)) {
+  if (player && !player.factions.includes(faction.name)) {
     return (
       <>
         <Typography variant="h4" color="primary">
           You have not joined {faction.name} yet!
         </Typography>
-        <Button onClick={() => Router.toPage(Page.Factions)}>Back to Factions</Button>
+        <Button onClick={() => router.toFactions()}>Back to Factions</Button>
       </>
     );
   }

@@ -4,7 +4,7 @@
 
 ## NS.spawn() method
 
-Terminate current script and start another in 10 seconds.
+Terminate current script and start another in 10s.
 
 <b>Signature:</b>
 

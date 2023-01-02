@@ -28,7 +28,7 @@ entire "quest-line".
 First Steps
 -----------
 I'm going to assume you followed the introductory tutorial when you first began the game.
-In this introductory tutorial you created a script called :code:`n00dles.js` and ran it
+In this introductory tutorial you created a script called :code:`n00dles.script` and ran it
 on the :code:`n00dles` server. Right now, we'll kill this script. There are two ways
 to do this:
 
@@ -37,7 +37,7 @@ to do this:
     $ kill n00dles.script
 
 2. You can go to the :code:`Active Scripts` page (|Keyboard shortcut| Alt + s) and
-   press the "Kill Script" button for :code:`n00dles.js`.
+   press the "Kill Script" button for :code:`n00dles.script`.
 
 If you skipped the introductory tutorial, then ignore the part above. Instead, go to the
 :code:`Hacknet Nodes` page (|Keyboard shortcut| Alt + h) and purchase a
@@ -67,11 +67,11 @@ the amount of money available on a server. The :js:func:`weaken` Netscript funct
 used to decrease a server's security level.
 
 Now let's move on to actually creating the script.
-Go to your home computer and then create a script called :code:`early-hack-template.js` by
+Go to your home computer and then create a script called :code:`early-hack-template.script` by
 going to Terminal and entering the following two commands::
 
     $ home
-    $ nano early-hack-template.js
+    $ nano early-hack-template.script
 
 This will take you to the script editor, which you can use to code and create
 :ref:`gameplay_scripts`. It will be helpful to consult the :ref:`netscript` documentation.
@@ -80,50 +80,49 @@ Specifically, you'll want to take a look at :ref:`netscriptfunctions`.
 Enter the following code in the script editor:
 
 .. code:: javascript
-    /** @param {NS} ns */
-    export async function main(ns) {
-        // Defines the "target server", which is the server
-        // that we're going to hack. In this case, it's "n00dles"
-        const target = "n00dles";
 
-        // Defines how much money a server should have before we hack it
-        // In this case, it is set to 75% of the server's max money
-        const moneyThresh = ns.getServerMaxMoney(target) * 0.75;
+    // Defines the "target server", which is the server
+    // that we're going to hack. In this case, it's "n00dles"
+    var target = "n00dles";
 
-        // Defines the maximum security level the target server can
-        // have. If the target's security level is higher than this,
-        // we'll weaken it before doing anything else
-        const securityThresh = ns.getServerMinSecurityLevel(target) + 5;
+    // Defines how much money a server should have before we hack it
+    // In this case, it is set to 75% of the server's max money
+    var moneyThresh = getServerMaxMoney(target) * 0.75;
 
-        // If we have the BruteSSH.exe program, use it to open the SSH Port
-        // on the target server
-        if (ns.fileExists("BruteSSH.exe", "home")) {
-            ns.brutessh(target);
-        }
+    // Defines the maximum security level the target server can
+    // have. If the target's security level is higher than this,
+    // we'll weaken it before doing anything else
+    var securityThresh = getServerMinSecurityLevel(target) + 5;
 
-        // Get root access to target server
-        ns.nuke(target);
+    // If we have the BruteSSH.exe program, use it to open the SSH Port
+    // on the target server
+    if (fileExists("BruteSSH.exe", "home")) {
+        brutessh(target);
+    }
 
-        // Infinite loop that continously hacks/grows/weakens the target server
-        while(true) {
-            if (ns.getServerSecurityLevel(target) > securityThresh) {
-                // If the server's security level is above our threshold, weaken it
-                await ns.weaken(target);
-            } else if (ns.getServerMoneyAvailable(target) < moneyThresh) {
-                // If the server's money is less than our threshold, grow it
-                await ns.grow(target);
-            } else {
-                // Otherwise, hack it
-                await ns.hack(target);
-            }
+    // Get root access to target server
+    nuke(target);
+
+    // Infinite loop that continously hacks/grows/weakens the target server
+    while(true) {
+        if (getServerSecurityLevel(target) > securityThresh) {
+            // If the server's security level is above our threshold, weaken it
+            weaken(target);
+        } else if (getServerMoneyAvailable(target) < moneyThresh) {
+            // If the server's money is less than our threshold, grow it
+            grow(target);
+        } else {
+            // Otherwise, hack it
+            hack(target);
         }
     }
+
 The script above contains comments that document what it does, but let's go through it
 step-by-step anyways.
 
 .. code:: javascript
 
-    const target = "n00dles";
+    var target = "n00dles";
 
 This first command defines a string which contains our target server. That's the server
 that we're going to hack. For now, it's set to `n00dles` because that's the only
@@ -133,7 +132,7 @@ variable to be the hostname of another server.
 
 .. code:: javascript
 
-    const moneyThresh = ns.getServerMaxMoney(target) * 0.75;
+    var moneyThresh = getServerMaxMoney(target) * 0.75;
 
 This second command defines a numerical value representing the minimum
 amount of money that must be available on the target server in order for our script
@@ -144,7 +143,7 @@ The :js:func:`getServerMaxMoney` Netscript function is used to find this value
 
 .. code:: javascript
 
-    const securityThresh = ns.getServerMinSecurityLevel(target) + 5;
+    var securityThresh = getServerMinSecurityLevel(target) + 5;
 
 This third command defines a numerical value representing the maximum security level
 the target server can have. If the target server's security level is higher than
@@ -152,11 +151,11 @@ this value, then our script will :js:func:`weaken` the script before doing anyth
 
 .. code:: javascript
 
-    if (ns.fileExists("BruteSSH.exe", "home")) {
-        ns.brutessh(target);
+    if (fileExists("BruteSSH.exe", "home")) {
+        brutessh(target);
     }
 
-    ns.nuke(target);
+    nuke(target);
 
 This section of code is used to gain root access on the target server. This is
 necessary for hacking. See :ref:`here for more details <gameplay_hacking>`.
@@ -164,27 +163,21 @@ necessary for hacking. See :ref:`here for more details <gameplay_hacking>`.
 .. code:: javascript
 
     while (true) {
-        if (ns.getServerSecurityLevel(target) > securityThresh) {
+        if (getServerSecurityLevel(target) > securityThresh) {
             // If the server's security level is above our threshold, weaken it
-            await ns.weaken(target);
-        } else if (ns.getServerMoneyAvailable(target) < moneyThresh) {
+            weaken(target);
+        } else if (getServerMoneyAvailable(target) < moneyThresh) {
             // Otherwise, if the server's money is less than our threshold, grow it
-            await ns.grow(target);
+            grow(target);
         } else {
             // Otherwise, hack it
-            await ns.hack(target);
+            hack(target);
         }
     }
 
 This is the main section that drives our script. It dictates the script's logic
 and carries out the hacking operations. The `while (true)` creates an infinite loop
 that will continuously run the hacking logic until the the script is killed.
-
-The await keyword is needed for `hack` / `grow` / `weaken` because these commands take 
-time to execute, unlike the others. If you forget to await these commands, you will get 
-an exception saying you tried to do multiple things at once, because your code will 
-immediately finish the function call without waiting for the operation to be done. Also 
-important is that await can only be used in functions marked async (which main() is).
 
 Running our Scripts
 -------------------
@@ -275,7 +268,7 @@ First, let's determine how many threads of our hacking script we can run.
 The script we wrote
 uses 2.6GB of RAM. You can check this using the following |Terminal| command::
 
-    $ mem early-hack-template.js
+    $ mem early-hack-template.script
 
 This means we can run 6 threads on a 16GB server. Now, to run our scripts on all of these
 servers, we have to do the following:
@@ -290,36 +283,36 @@ servers, we have to do the following:
 Here's the sequence of |Terminal| commands I used in order to achieve this::
 
     $ home
-    $ scp early-hack-template.js n00dles
-    $ scp early-hack-template.js sigma-cosmetics
-    $ scp early-hack-template.js joesguns
-    $ scp early-hack-template.js nectar-net
-    $ scp early-hack-template.js hong-fang-tea
-    $ scp early-hack-template.js harakiri-sushi
+    $ scp early-hack-template.script n00dles
+    $ scp early-hack-template.script sigma-cosmetics
+    $ scp early-hack-template.script joesguns
+    $ scp early-hack-template.script nectar-net
+    $ scp early-hack-template.script hong-fang-tea
+    $ scp early-hack-template.script harakiri-sushi
     $ connect n00dles
     $ run NUKE.exe
-    $ run early-hack-template.js -t 1
+    $ run early-hack-template.script -t 1
     $ home
     $ connect sigma-cosmetics
     $ run NUKE.exe
-    $ run early-hack-template.js -t 6
+    $ run early-hack-template.script -t 6
     $ home
     $ connect joesguns
     $ run NUKE.exe
-    $ run early-hack-template.js -t 6
+    $ run early-hack-template.script -t 6
     $ home
     $ connect hong-fang-tea
     $ run NUKE.exe
-    $ run early-hack-template.js -t 6
+    $ run early-hack-template.script -t 6
     $ home
     $ connect harakiri-sushi
     $ run NUKE.exe
-    $ run early-hack-template.js -t 6
+    $ run early-hack-template.script -t 6
     $ home
     $ connect hong-fang-tea
     $ connect nectar-net
     $ run NUKE.exe
-    $ run early-hack-template.js -t 6
+    $ run early-hack-template.script -t 6
 
 .. note::
 
@@ -329,7 +322,7 @@ Here's the sequence of |Terminal| commands I used in order to achieve this::
     This works for most commands in the game!
 
 The :ref:`home_terminal_command` |Terminal| command is used to connect to the home
-computer. When running our scripts with the :code:`run early-hack-template.js -t 6`
+computer. When running our scripts with the :code:`run early-hack-template.script -t 6`
 command, the :code:`-t 6` specifies that the script should be run with 6 threads.
 
 Note that the |nectar-net| server isn't in the home computer's immediate network.
@@ -378,13 +371,13 @@ script to target :code:`joesguns` instead of :code:`n00dles`.
 Go to |Terminal| and edit the hacking script by entering::
 
     $ home
-    $ nano early-hack-template.js
+    $ nano early-hack-template.script
 
 At the top of the script, change the `target` variable to be `joesguns`:
 
 .. code:: javascript
 
-    const target = "joesguns";
+    var target = "joesguns";
 
 Note that this will **NOT** affect any instances of the script that are already running.
 This will only affect instances of the script that are ran from this point forward.
@@ -408,38 +401,33 @@ Netscript functions:
 Create the script by going to |Terminal| and typing::
 
     $ home
-    $ nano purchase-server-8gb.js
+    $ nano purchase-server-8gb.script
 
 Paste the following code into the script editor:
 
 .. code:: javascript
-    /** @param {NS} ns */
-    export async function main(ns) {
-        // How much RAM each purchased server will have. In this case, it'll
-        // be 8GB.
-        const ram = 8;
 
-        // Iterator we'll use for our loop
-        let i = 0;
+    // How much RAM each purchased server will have. In this case, it'll
+    // be 8GB.
+    var ram = 8;
 
-        // Continuously try to purchase servers until we've reached the maximum
-        // amount of servers
-        while (i < ns.getPurchasedServerLimit()) {
-            // Check if we have enough money to purchase a server
-            if (ns.getServerMoneyAvailable("home") > ns.getPurchasedServerCost(ram)) {
-                // If we have enough money, then:
-                //  1. Purchase the server
-                //  2. Copy our hacking script onto the newly-purchased server
-                //  3. Run our hacking script on the newly-purchased server with 3 threads
-                //  4. Increment our iterator to indicate that we've bought a new server
-                let hostname = ns.purchaseServer("pserv-" + i, ram);
-                ns.scp("early-hack-template.script", hostname);
-                ns.exec("early-hack-template.script", hostname, 3);
-                ++i;
-            }
-            //Make the script wait for a second before looping again.
-            //Removing this line will cause an infinite loop and crash the game.
-            await ns.sleep(1000);
+    // Iterator we'll use for our loop
+    var i = 0;
+
+    // Continuously try to purchase servers until we've reached the maximum
+    // amount of servers
+    while (i < getPurchasedServerLimit()) {
+        // Check if we have enough money to purchase a server
+        if (getServerMoneyAvailable("home") > getPurchasedServerCost(ram)) {
+            // If we have enough money, then:
+            //  1. Purchase the server
+            //  2. Copy our hacking script onto the newly-purchased server
+            //  3. Run our hacking script on the newly-purchased server with 3 threads
+            //  4. Increment our iterator to indicate that we've bought a new server
+            var hostname = purchaseServer("pserv-" + i, ram);
+            scp("early-hack-template.script", hostname);
+            exec("early-hack-template.script", hostname, 3);
+            ++i;
         }
     }
 
@@ -455,7 +443,7 @@ execute it on that server.
 
 To run this script, go to |Terminal| and type::
 
-    $ run purchase-server-8gb.js
+    $ run purchase-server-8gb.script
 
 This purchase will continuously run until it has purchased the maximum number of servers.
 When this happens, it'll mean that you have a bunch of new servers that are all running
@@ -552,7 +540,7 @@ finish running. This will free up some RAM on your home computer. We don't want 
 to go to waste, so we'll make use of it. Go to |Terminal| and enter the following commands::
 
     $ home
-    $ run early-hack-template.js -t 3
+    $ run early-hack-template.script -t 3
 
 Reaching a Hacking Level of 50
 ------------------------------
@@ -692,10 +680,10 @@ All of these servers have 32GB of RAM. You can use the |Terminal| command
 go to |Terminal| and run::
 
     $ home
-    $ scp early-hack-template.js neo-net
-    $ scp early-hack-template.js zer0
-    $ scp early-hack-template.js max-hardware
-    $ scp early-hack-template.js iron-gym
+    $ scp early-hack-template.script neo-net
+    $ scp early-hack-template.script zer0
+    $ scp early-hack-template.script max-hardware
+    $ scp early-hack-template.script iron-gym
 
 Since each of these servers has 32GB of RAM, we can run our hacking script with 12 threads
 on each server. By now, you should know how to connect to servers. So find and connect to
@@ -703,7 +691,7 @@ each of the servers above using the :code:`scan-analyze 3` |Terminal| command. T
 following |Terminal| command to run our hacking
 script with 12 threads::
 
-    $ run early-hack-template.js -t 12
+    $ run early-hack-template.script -t 12
 
 Remember that if you have the |AutoLink| program, you can simply click on the hostname of a server
 after running :ref:`scan_analyze_terminal_command` to connect to it.
@@ -778,7 +766,7 @@ much more money, and then you can come back later on and get all these Augmentat
 
 Right now, I suggest purchasing at the very least the :code:`Neurotrainer I` Augmentation from
 |CyberSec|. If you have the money to spare, I would also suggest getting :code:`BitWire` and
-several levels of the :code:`NeuroFlux Governor` (:code:`NFG`) Augmentations. Note that each time
+several levels of the :code:`NeuroFlux Governor` Augmentations. Note that each time
 you purchase an Augmentation,
 :ref:`the price of purchasing another increases by 90% <gameplay_augmentations_purchasingmultiple>`,
 so make sure you buy the most expensive Augmentation first. Don't worry, once you choose to
@@ -815,51 +803,50 @@ so you should write a script to automate the process. Here's a simple example fo
 startup script. Feel free to adjust it to your liking.
 
 .. code:: javascript
-    /** @param {NS} ns */
-    export async function main(ns) {
-        // Array of all servers that don't need any ports opened
-        // to gain root access. These have 16 GB of RAM
-        const servers0Port = ["sigma-cosmetics",
-                            "joesguns",
-                            "nectar-net",
-                            "hong-fang-tea",
-                            "harakiri-sushi"];
 
-        // Array of all servers that only need 1 port opened
-        // to gain root access. These have 32 GB of RAM
-        const servers1Port = ["neo-net",
-                            "zer0",
-                            "max-hardware",
-                            "iron-gym"];
+    // Array of all servers that don't need any ports opened
+    // to gain root access. These have 16 GB of RAM
+    var servers0Port = ["sigma-cosmetics",
+                        "joesguns",
+                        "nectar-net",
+                        "hong-fang-tea",
+                        "harakiri-sushi"];
 
-        // Copy our scripts onto each server that requires 0 ports
-        // to gain root access. Then use nuke() to gain admin access and
-        // run the scripts.
-        for (let i = 0; i < servers0Port.length; ++i) {
-            const serv = servers0Port[i];
+    // Array of all servers that only need 1 port opened
+    // to gain root access. These have 32 GB of RAM
+    var servers1Port = ["neo-net",
+                        "zer0",
+                        "max-hardware",
+                        "iron-gym"];
 
-            ns.scp("early-hack-template.script", serv);
-            ns.nuke(serv);
-            ns.exec("early-hack-template.script", serv, 6);
-        }
+    // Copy our scripts onto each server that requires 0 ports
+    // to gain root access. Then use nuke() to gain admin access and
+    // run the scripts.
+    for (var i = 0; i < servers0Port.length; ++i) {
+        var serv = servers0Port[i];
 
-        // Wait until we acquire the "BruteSSH.exe" program
-        while (!ns.fileExists("BruteSSH.exe")) {
-            await ns.sleep(60000);
-        }
-
-        // Copy our scripts onto each server that requires 1 port
-        // to gain root access. Then use brutessh() and nuke()
-        // to gain admin access and run the scripts.
-        for (let i = 0; i < servers1Port.length; ++i) {
-            const serv = servers1Port[i];
-
-            ns.scp("early-hack-template.script", serv);
-            ns.brutessh(serv);
-            ns.nuke(serv);
-            ns.exec("early-hack-template.script", serv, 12);
-        }
+        scp("early-hack-template.script", serv);
+        nuke(serv);
+        exec("early-hack-template.script", serv, 6);
     }
+
+    // Wait until we acquire the "BruteSSH.exe" program
+    while (!fileExists("BruteSSH.exe")) {
+        sleep(60000);
+    }
+
+    // Copy our scripts onto each server that requires 1 port
+    // to gain root access. Then use brutessh() and nuke()
+    // to gain admin access and run the scripts.
+    for (var i = 0; i < servers1Port.length; ++i) {
+        var serv = servers1Port[i];
+
+        scp("early-hack-template.script", serv);
+        brutessh(serv);
+        nuke(serv);
+        exec("early-hack-template.script", serv, 12);
+    }
+
 Random Tips
 -----------
 * Early on in the game, it's better to spend your money on upgrading RAM and purchasing
@@ -874,7 +861,7 @@ Random Tips
   as useful as your hacking stat. Do not invest too much time or money into gaining combat
   stat exp.
 * As a rule of thumb, your hacking target should be the server with highest max money that's
-  required hacking level is under 1/2 of your hacking level. 
+  required hacking level is under 1/3 of your hacking level. 
 
 
 

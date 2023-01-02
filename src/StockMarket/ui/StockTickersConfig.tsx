@@ -1,7 +1,7 @@
 /**
  * React component for the tickers configuration section of the Stock Market UI.
  * This config lets you change the way stock tickers are displayed (watchlist,
- * all/portfolio mode, etc)
+ * all/portoflio mode, etc)
  */
 import * as React from "react";
 import Typography from "@mui/material/Typography";

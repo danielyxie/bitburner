@@ -4,7 +4,7 @@
 
 ## CorporationInfo.issuedShares property
 
-Amount of acquirable shares.
+Amount of aqcuirable shares.
 
 <b>Signature:</b>
 

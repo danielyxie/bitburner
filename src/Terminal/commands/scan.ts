@@ -1,13 +1,23 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { getServerOnNetwork } from "../../Server/ServerHelpers";
 
-export function scan(args: (string | number | boolean)[], currServ: BaseServer): void {
+export function scan(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   if (args.length !== 0) {
-    Terminal.error("Incorrect usage of scan command. Usage: scan");
+    terminal.error("Incorrect usage of scan command. Usage: scan");
     return;
   }
+
   // Displays available network connections using TCP
+  const currServ = player.getCurrentServer();
   const servers = currServ.serversOnNetwork.map((_, i) => {
     const server = getServerOnNetwork(currServ, i);
     if (server === null) throw new Error("Server should not be null");
@@ -31,6 +41,6 @@ export function scan(args: (string | number | boolean)[], currServ: BaseServer):
     entry += server.ip;
     entry += " ".repeat(maxIP - server.ip.length + 1);
     entry += server.hasRoot;
-    Terminal.print(entry);
+    terminal.print(entry);
   }
 }

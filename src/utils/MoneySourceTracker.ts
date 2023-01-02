@@ -31,7 +31,7 @@ export class MoneySourceTracker {
   // Record money earned
   record(amt: number, source: string): void {
     const sanitizedSource = source.toLowerCase();
-    if (typeof this[sanitizedSource] !== "number" && this[sanitizedSource] !== null) {
+    if (typeof this[sanitizedSource] !== "number") {
       console.warn(`MoneySourceTracker.record() called with invalid source: ${source}`);
       return;
     }
@@ -54,7 +54,7 @@ export class MoneySourceTracker {
     return Generic_toJSON("MoneySourceTracker", this);
   }
 
-  // Initializes a MoneySourceTracker object from a JSON save state.
+  // Initiatizes a MoneySourceTracker object from a JSON save state.
   static fromJSON(value: IReviverValue): MoneySourceTracker {
     return Generic_fromJSON(MoneySourceTracker, value.data);
   }

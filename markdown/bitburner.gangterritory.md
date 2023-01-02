@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface GangTerritory 
+export interface GangTerritory 
 ```
 
 ## Properties

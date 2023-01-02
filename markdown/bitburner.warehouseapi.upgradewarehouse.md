@@ -9,7 +9,7 @@ Upgrade warehouse
 <b>Signature:</b>
 
 ```typescript
-upgradeWarehouse(divisionName: string, city: CityName | `${CityName}`, amt?: number): void;
+upgradeWarehouse(divisionName: string, cityName: string, amt?: number): void;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ upgradeWarehouse(divisionName: string, city: CityName | `${CityName}`, amt?: num
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
+|  cityName | string | Name of the city |
 |  amt | number | amount of upgrades defaults to 1 |
 
 <b>Returns:</b>

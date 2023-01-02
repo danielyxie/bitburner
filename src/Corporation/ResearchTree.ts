@@ -3,15 +3,15 @@
 // Each Node in the Research Trees only holds the name(s) of Research,
 // not an actual Research object. The name can be used to obtain a reference
 // to the corresponding Research object using the ResearchMap
-import { CorpResearchName } from "@nsdefs";
-import { researchNames } from "./data/Constants";
 import { Research } from "./Research";
 import { ResearchMap } from "./ResearchMap";
+
+import { IMap } from "../types";
 
 interface IConstructorParams {
   children?: Node[];
   cost: number;
-  text: CorpResearchName;
+  text: string;
   parent?: Node | null;
 }
 
@@ -34,9 +34,9 @@ export class Node {
   parent: Node | null = null;
 
   // Name of the Research held in this Node
-  text: CorpResearchName;
+  text = "";
 
-  constructor(p: IConstructorParams = { cost: 0, text: researchNames[0] }) {
+  constructor(p: IConstructorParams = { cost: 0, text: "" }) {
     if (ResearchMap[p.text] == null) {
       throw new Error(`Invalid Research name used when constructing ResearchTree Node: ${p.text}`);
     }
@@ -65,7 +65,7 @@ export class Node {
       return this;
     }
 
-    // Recursively search children
+    // Recursively search chilren
     let res = null;
     for (let i = 0; i < this.children.length; ++i) {
       res = this.children[i].findNode(text);
@@ -86,14 +86,14 @@ export class Node {
 // The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"
 export class ResearchTree {
   // Object containing names of all acquired Research by name
-  researched: Record<string, boolean> = {};
+  researched: IMap<boolean> = {};
 
   // Root Node
   root: Node | null = null;
 
   // Gets an array with the 'text' values of ALL Nodes in the Research Tree
-  getAllNodes(): CorpResearchName[] {
-    const res: CorpResearchName[] = [];
+  getAllNodes(): string[] {
+    const res: string[] = [];
     const queue: Node[] = [];
 
     if (this.root == null) {
@@ -213,7 +213,7 @@ export class ResearchTree {
 
   // Search for a Node with the given name ('text' property on the Node)
   // Returns 'null' if it cannot be found
-  findNode(name: CorpResearchName): Node | null {
+  findNode(name: string): Node | null {
     if (this.root == null) {
       return null;
     }
@@ -221,7 +221,7 @@ export class ResearchTree {
   }
 
   // Marks a Node as researched
-  research(name: CorpResearchName): void {
+  research(name: string): void {
     if (this.root == null) {
       return;
     }

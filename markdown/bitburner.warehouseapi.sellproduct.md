@@ -11,7 +11,7 @@ Set product sell data.
 ```typescript
 sellProduct(
     divisionName: string,
-    city: CityName | `${CityName}`,
+    cityName: string,
     productName: string,
     amt: string,
     price: string,
@@ -24,7 +24,7 @@ sellProduct(
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
+|  cityName | string | Name of the city |
 |  productName | string | Name of the product |
 |  amt | string | Amount to sell, can be "MAX" |
 |  price | string | Price to sell, can be "MP" |

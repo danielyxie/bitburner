@@ -2,7 +2,7 @@ import React from "react";
 import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { GraftableAugmentations } from "../PersonObjects/Grafting/ui/GraftingRoot";
-import { Player } from "@player";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { Work, WorkType } from "./Work";
 import { graftingIntBonus } from "../PersonObjects/Grafting/GraftingHelpers";
 import { applyAugmentation } from "../Augmentation/AugmentationHelpers";
@@ -15,6 +15,7 @@ export const isGraftingWork = (w: Work | null): w is GraftingWork => w !== null 
 
 interface GraftingWorkParams {
   augmentation: string;
+  player: IPlayer;
   singularity: boolean;
 }
 
@@ -27,33 +28,33 @@ export class GraftingWork extends Work {
     this.unitCompleted = 0;
     this.augmentation = params?.augmentation ?? AugmentationNames.Targeting1;
     const gAugs = GraftableAugmentations();
-    if (params) Player.loseMoney(gAugs[this.augmentation].cost, "augmentations");
+    if (params?.player) params.player.loseMoney(gAugs[this.augmentation].cost, "augmentations");
   }
 
   unitNeeded(): number {
     return new GraftableAugmentation(StaticAugmentations[this.augmentation]).time;
   }
 
-  process(cycles: number): boolean {
+  process(player: IPlayer, cycles: number): boolean {
     let focusBonus = 1;
-    if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
-      focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
+      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
 
     this.cyclesWorked += cycles;
-    this.unitCompleted += CONSTANTS._idleSpeed * cycles * graftingIntBonus() * focusBonus;
+    this.unitCompleted += CONSTANTS._idleSpeed * cycles * graftingIntBonus(player) * focusBonus;
 
     return this.unitCompleted >= this.unitNeeded();
   }
 
-  finish(cancelled: boolean): void {
+  finish(player: IPlayer, cancelled: boolean): void {
     const augName = this.augmentation;
     if (!cancelled) {
       applyAugmentation({ name: augName, level: 1 });
 
-      if (!Player.hasAugmentation(AugmentationNames.CongruityImplant, true)) {
-        Player.entropy += 1;
-        Player.applyEntropy(Player.entropy);
+      if (!player.hasAugmentation(AugmentationNames.CongruityImplant, true)) {
+        player.entropy += 1;
+        player.applyEntropy(player.entropy);
       }
 
       if (!this.singularity) {
@@ -61,7 +62,7 @@ export class GraftingWork extends Work {
           <>
             You've finished grafting {augName}.<br />
             The augmentation has been applied to your body{" "}
-            {Player.hasAugmentation(AugmentationNames.CongruityImplant, true) ? "." : ", but you feel a bit off."}
+            {player.hasAugmentation(AugmentationNames.CongruityImplant, true) ? "." : ", but you feel a bit off."}
           </>,
         );
       }
@@ -77,7 +78,7 @@ export class GraftingWork extends Work {
 
     // Intelligence gain
     if (!cancelled) {
-      Player.gainIntelligenceExp(
+      player.gainIntelligenceExp(
         (CONSTANTS.IntelligenceGraftBaseExpGain * this.cyclesWorked * CONSTANTS._idleSpeed) / 10000,
       );
     }
@@ -91,12 +92,16 @@ export class GraftingWork extends Work {
     };
   }
 
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("GraftingWork", this);
   }
 
-  /** Initializes a GraftingWork object from a JSON save state. */
+  /**
+   * Initiatizes a GraftingWork object from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): GraftingWork {
     return Generic_fromJSON(GraftingWork, value.data);
   }

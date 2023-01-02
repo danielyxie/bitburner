@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
-import * as corpConstants from "../../data/Constants";
+import { CorporationConstants } from "../../data/Constants";
 import { IssueDividends } from "../../Actions";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
@@ -19,7 +19,7 @@ export function IssueDividendsModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const [percent, setPercent] = useState(0);
 
-  const canIssue = !isNaN(percent) && percent >= 0 && percent <= corpConstants.dividendMaxRate * 100;
+  const canIssue = !isNaN(percent) && percent >= 0 && percent <= CorporationConstants.DividendMaxRate * 100;
   function issueDividends(): void {
     if (!canIssue) return;
     if (percent === null) return;

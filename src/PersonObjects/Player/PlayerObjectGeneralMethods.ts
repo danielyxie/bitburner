@@ -1,3 +1,4 @@
+import { IPlayer } from "../IPlayer";
 import { PlayerObject } from "./PlayerObject";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
@@ -10,7 +11,7 @@ import { getNextCompanyPositionHelper } from "../../Company/GetNextCompanyPositi
 import { getJobRequirementText } from "../../Company/GetJobRequirementText";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import { CompanyPosition } from "../../Company/CompanyPosition";
-import * as posNames from "../../Company/data/JobTracks";
+import * as posNames from "../../Company/data/companypositionnames";
 import { CONSTANTS } from "../../Constants";
 import { Programs } from "../../Programs/Programs";
 import { Exploit } from "../../Exploits/Exploit";
@@ -19,13 +20,19 @@ import { Factions } from "../../Faction/Factions";
 import { resetGangs } from "../../Gang/AllGangs";
 import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";
-import { CityName, LocationName } from "../../Enums";
+import { CityName } from "../../Locations/data/CityNames";
+import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { isSleeveCompanyWork } from "../Sleeve/Work/SleeveCompanyWork";
-import { calculateSkillProgress as calculateSkillProgressF, ISkillProgress } from "../formulas/skill";
+import {
+  calculateSkill as calculateSkillF,
+  calculateSkillProgress as calculateSkillProgressF,
+  ISkillProgress,
+} from "../formulas/skill";
+import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
-import { safelyCreateUniqueServer } from "../../Server/ServerHelpers";
+import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
 
 import { SpecialServers } from "../../Server/data/SpecialServers";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
@@ -41,13 +48,17 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { ITaskTracker } from "../ITaskTracker";
+import { IPerson } from "../IPerson";
+import { Player } from "../../Player";
 
 import { isCompanyWork } from "../../Work/CompanyWork";
+import { defaultMultipliers } from "../Multipliers";
 import { serverMetadata } from "../../Server/data/servers";
 
-export function init(this: PlayerObject): void {
+export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
-  const t_homeComp = safelyCreateUniqueServer({
+  const t_homeComp = safetlyCreateUniqueServer({
     adminRights: true,
     hostname: "home",
     ip: createUniqueRandomIp(),
@@ -101,10 +112,18 @@ export function prestigeAugmentation(this: PlayerObject): void {
   const numSleeves = Math.min(3, this.sourceFileLvl(10) + (this.bitNodeN === 10 ? 1 : 0)) + this.sleevesFromCovenant;
   if (this.sleeves.length > numSleeves) this.sleeves.length = numSleeves;
   for (let i = this.sleeves.length; i < numSleeves; i++) {
-    this.sleeves.push(new Sleeve());
+    this.sleeves.push(new Sleeve(this));
   }
 
-  this.sleeves.forEach((sleeve) => (sleeve.shock <= 0 ? sleeve.synchronize() : sleeve.shockRecovery()));
+  for (let i = 0; i < this.sleeves.length; ++i) {
+    if (this.sleeves[i] instanceof Sleeve) {
+      if (this.sleeves[i].shock >= 100) {
+        this.sleeves[i].synchronize(this);
+      } else {
+        this.sleeves[i].shockRecovery(this);
+      }
+    }
+  }
 
   this.lastUpdate = new Date().getTime();
 
@@ -123,12 +142,18 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.finishWork(true);
 }
 
-export function prestigeSourceFile(this: PlayerObject): void {
+export function prestigeSourceFile(this: IPlayer): void {
   this.entropy = 0;
   this.prestigeAugmentation();
   this.karma = 0;
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
-  this.sleeves.forEach((sleeve) => sleeve.prestige());
+  for (let i = 0; i < this.sleeves.length; ++i) {
+    if (this.sleeves[i] instanceof Sleeve) {
+      this.sleeves[i].prestige(this);
+    } else {
+      this.sleeves[i] = new Sleeve(this);
+    }
+  }
 
   if (this.bitNodeN === 10) {
     for (let i = 0; i < this.sleeves.length; i++) {
@@ -137,10 +162,9 @@ export function prestigeSourceFile(this: PlayerObject): void {
     }
   }
 
+  // Gang
   this.gang = null;
   resetGangs();
-  this.corporation = null;
-  this.bladeburner = null;
 
   // Reset Stock market
   this.hasWseAccount = false;
@@ -156,19 +180,71 @@ export function prestigeSourceFile(this: PlayerObject): void {
   this.augmentations = [];
 }
 
-export function receiveInvite(this: PlayerObject, factionName: string): void {
+export function receiveInvite(this: IPlayer, factionName: string): void {
   if (this.factionInvitations.includes(factionName) || this.factions.includes(factionName)) {
     return;
   }
   this.factionInvitations.push(factionName);
 }
 
+//Calculates skill level based on experience. The same formula will be used for every skill
+export function calculateSkill(this: IPerson, exp: number, mult = 1): number {
+  return calculateSkillF(exp, mult);
+}
+
 //Calculates skill level progress based on experience. The same formula will be used for every skill
-export function calculateSkillProgress(this: PlayerObject, exp: number, mult = 1): ISkillProgress {
+export function calculateSkillProgress(this: IPlayer, exp: number, mult = 1): ISkillProgress {
   return calculateSkillProgressF(exp, mult);
 }
 
-export function hasProgram(this: PlayerObject, programName: string): boolean {
+export function updateSkillLevels(this: IPlayer): void {
+  this.skills.hacking = Math.max(
+    1,
+    Math.floor(this.calculateSkill(this.exp.hacking, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
+  );
+  this.skills.strength = Math.max(
+    1,
+    Math.floor(
+      this.calculateSkill(this.exp.strength, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
+    ),
+  );
+  this.skills.defense = Math.max(
+    1,
+    Math.floor(this.calculateSkill(this.exp.defense, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
+  );
+  this.skills.dexterity = Math.max(
+    1,
+    Math.floor(
+      this.calculateSkill(this.exp.dexterity, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
+    ),
+  );
+  this.skills.agility = Math.max(
+    1,
+    Math.floor(this.calculateSkill(this.exp.agility, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
+  );
+  this.skills.charisma = Math.max(
+    1,
+    Math.floor(
+      this.calculateSkill(this.exp.charisma, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
+    ),
+  );
+
+  if (this.skills.intelligence > 0) {
+    this.skills.intelligence = Math.floor(this.calculateSkill(this.exp.intelligence));
+  } else {
+    this.skills.intelligence = 0;
+  }
+
+  const ratio = this.hp.current / this.hp.max;
+  this.hp.max = Math.floor(10 + this.skills.defense / 10);
+  this.hp.current = Math.round(this.hp.max * ratio);
+}
+
+export function resetMultipliers(this: IPlayer): void {
+  this.mults = defaultMultipliers();
+}
+
+export function hasProgram(this: IPlayer, programName: string): boolean {
   const home = this.getHomeComputer();
   if (home == null) {
     return false;
@@ -210,7 +286,7 @@ export function loseMoney(this: PlayerObject, money: number, source: string): vo
   this.recordMoneySource(-1 * money, source);
 }
 
-export function canAfford(this: PlayerObject, cost: number): boolean {
+export function canAfford(this: IPlayer, cost: number): boolean {
   if (isNaN(cost)) {
     console.error(`NaN passed into Player.canAfford()`);
     return false;
@@ -231,16 +307,163 @@ export function recordMoneySource(this: PlayerObject, amt: number, source: strin
   this.moneySourceB.record(amt, source);
 }
 
-export function startFocusing(this: PlayerObject): void {
+export function gainHackingExp(this: IPerson, exp: number): void {
+  if (isNaN(exp)) {
+    console.error("ERR: NaN passed into Player.gainHackingExp()");
+    return;
+  }
+  this.exp.hacking += exp;
+  if (this.exp.hacking < 0) {
+    this.exp.hacking = 0;
+  }
+
+  this.skills.hacking = calculateSkillF(
+    this.exp.hacking,
+    this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
+  );
+}
+
+export function gainStrengthExp(this: IPerson, exp: number): void {
+  if (isNaN(exp)) {
+    console.error("ERR: NaN passed into Player.gainStrengthExp()");
+    return;
+  }
+  this.exp.strength += exp;
+  if (this.exp.strength < 0) {
+    this.exp.strength = 0;
+  }
+
+  this.skills.strength = calculateSkillF(
+    this.exp.strength,
+    this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
+  );
+}
+
+export function gainDefenseExp(this: IPerson, exp: number): void {
+  if (isNaN(exp)) {
+    console.error("ERR: NaN passed into player.gainDefenseExp()");
+    return;
+  }
+  this.exp.defense += exp;
+  if (this.exp.defense < 0) {
+    this.exp.defense = 0;
+  }
+
+  this.skills.defense = calculateSkillF(
+    this.exp.defense,
+    this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
+  );
+  const ratio = this.hp.current / this.hp.max;
+  this.hp.max = Math.floor(10 + this.skills.defense / 10);
+  this.hp.current = Math.round(this.hp.max * ratio);
+}
+
+export function gainDexterityExp(this: IPerson, exp: number): void {
+  if (isNaN(exp)) {
+    console.error("ERR: NaN passed into Player.gainDexterityExp()");
+    return;
+  }
+  this.exp.dexterity += exp;
+  if (this.exp.dexterity < 0) {
+    this.exp.dexterity = 0;
+  }
+
+  this.skills.dexterity = calculateSkillF(
+    this.exp.dexterity,
+    this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
+  );
+}
+
+export function gainAgilityExp(this: IPerson, exp: number): void {
+  if (isNaN(exp)) {
+    console.error("ERR: NaN passed into Player.gainAgilityExp()");
+    return;
+  }
+  this.exp.agility += exp;
+  if (this.exp.agility < 0) {
+    this.exp.agility = 0;
+  }
+
+  this.skills.agility = calculateSkillF(
+    this.exp.agility,
+    this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
+  );
+}
+
+export function gainCharismaExp(this: IPerson, exp: number): void {
+  if (isNaN(exp)) {
+    console.error("ERR: NaN passed into Player.gainCharismaExp()");
+    return;
+  }
+  this.exp.charisma += exp;
+  if (this.exp.charisma < 0) {
+    this.exp.charisma = 0;
+  }
+
+  this.skills.charisma = calculateSkillF(
+    this.exp.charisma,
+    this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
+  );
+}
+
+export function gainIntelligenceExp(this: IPerson, exp: number): void {
+  if (isNaN(exp)) {
+    console.error("ERROR: NaN passed into Player.gainIntelligenceExp()");
+    return;
+  }
+  if (Player.sourceFileLvl(5) > 0 || this.skills.intelligence > 0 || Player.bitNodeN === 5) {
+    this.exp.intelligence += exp;
+    this.skills.intelligence = Math.floor(this.calculateSkill(this.exp.intelligence, 1));
+  }
+}
+
+export function gainStats(this: IPerson, retValue: ITaskTracker): void {
+  this.gainHackingExp(retValue.hack * this.mults.hacking_exp);
+  this.gainStrengthExp(retValue.str * this.mults.strength_exp);
+  this.gainDefenseExp(retValue.def * this.mults.defense_exp);
+  this.gainDexterityExp(retValue.dex * this.mults.dexterity_exp);
+  this.gainAgilityExp(retValue.agi * this.mults.agility_exp);
+  this.gainCharismaExp(retValue.cha * this.mults.charisma_exp);
+  this.gainIntelligenceExp(retValue.int);
+}
+
+//Given a string expression like "str" or "strength", returns the given stat
+export function queryStatFromString(this: IPlayer, str: string): number {
+  const tempStr = str.toLowerCase();
+  if (tempStr.includes("hack")) {
+    return this.skills.hacking;
+  }
+  if (tempStr.includes("str")) {
+    return this.skills.strength;
+  }
+  if (tempStr.includes("def")) {
+    return this.skills.defense;
+  }
+  if (tempStr.includes("dex")) {
+    return this.skills.dexterity;
+  }
+  if (tempStr.includes("agi")) {
+    return this.skills.agility;
+  }
+  if (tempStr.includes("cha")) {
+    return this.skills.charisma;
+  }
+  if (tempStr.includes("int")) {
+    return this.skills.intelligence;
+  }
+  return 0;
+}
+
+export function startFocusing(this: IPlayer): void {
   this.focus = true;
 }
 
-export function stopFocusing(this: PlayerObject): void {
+export function stopFocusing(this: IPlayer): void {
   this.focus = false;
 }
 
 // Returns true if hospitalized, false otherwise
-export function takeDamage(this: PlayerObject, amt: number): boolean {
+export function takeDamage(this: IPlayer, amt: number): boolean {
   if (typeof amt !== "number") {
     console.warn(`Player.takeDamage() called without a numeric argument: ${amt}`);
     return false;
@@ -255,9 +478,20 @@ export function takeDamage(this: PlayerObject, amt: number): boolean {
   }
 }
 
-export function hospitalize(this: PlayerObject): number {
-  const cost = getHospitalizationCost();
-  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.SUCCESS, 2000);
+export function regenerateHp(this: IPerson, amt: number): void {
+  if (typeof amt !== "number") {
+    console.warn(`Player.regenerateHp() called without a numeric argument: ${amt}`);
+    return;
+  }
+  this.hp.current += amt;
+  if (this.hp.current > this.hp.max) {
+    this.hp.current = this.hp.max;
+  }
+}
+
+export function hospitalize(this: IPlayer): number {
+  const cost = getHospitalizationCost(this);
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.WARNING, 2000);
 
   this.loseMoney(cost, "hospitalization");
   this.hp.current = this.hp.max;
@@ -268,9 +502,9 @@ export function hospitalize(this: PlayerObject): number {
 //Determines the job that the Player should get (if any) at the current company
 //The 'sing' argument designates whether or not this is being called from
 //the applyToCompany() Netscript Singularity function
-export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, sing = false): boolean {
+export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (!company) {
+  if (!(company instanceof Company)) {
     console.error(`Could not find company that matches the location: ${this.location}. Player.applyToCompany() failed`);
     return false;
   }
@@ -279,7 +513,7 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
 
   if (!this.isQualified(company, pos)) {
     if (!sing) {
-      dialogBoxCreate("Unfortunately, you do not qualify for this position\n" + getJobRequirementText(company, pos));
+      dialogBoxCreate("Unfortunately, you do not qualify for this position<br>" + getJobRequirementText(company, pos));
     }
     return false;
   }
@@ -305,7 +539,7 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
         dialogBoxCreate("You are already at the highest position for your field! No promotion available");
       } else {
         const reqText = getJobRequirementText(company, nextPos);
-        dialogBoxCreate("Unfortunately, you do not qualify for a promotion\n" + reqText);
+        dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
       }
     }
     return false;
@@ -314,14 +548,14 @@ export function applyForJob(this: PlayerObject, entryPosType: CompanyPosition, s
   this.jobs[company.name] = pos.name;
 
   if (!sing) {
-    dialogBoxCreate(`Congratulations! You were offered a new job at ${company.name} for position ${pos.name}!`);
+    dialogBoxCreate("Congratulations! You were offered a new job at " + company.name + " as a " + pos.name + "!");
   }
   return true;
 }
 
 //Returns your next position at a company given the field (software, business, etc.)
 export function getNextCompanyPosition(
-  this: PlayerObject,
+  this: IPlayer,
   company: Company,
   entryPosType: CompanyPosition,
 ): CompanyPosition | null {
@@ -356,13 +590,13 @@ export function getNextCompanyPosition(
   return entryPosType;
 }
 
-export function quitJob(this: PlayerObject, company: string): void {
+export function quitJob(this: IPlayer, company: string): void {
   if (isCompanyWork(this.currentWork) && this.currentWork.companyName === company) {
     this.finishWork(true);
   }
   for (const sleeve of this.sleeves) {
     if (isSleeveCompanyWork(sleeve.currentWork) && sleeve.currentWork.companyName === company) {
-      sleeve.stopWork();
+      sleeve.stopWork(this);
       dialogBoxCreate(`You quit ${company} while one of your sleeves was working there. The sleeve is now idle.`);
     }
   }
@@ -374,23 +608,23 @@ export function quitJob(this: PlayerObject, company: string): void {
  * @param this The player instance
  * @returns Whether the user has at least one job
  */
-export function hasJob(this: PlayerObject): boolean {
+export function hasJob(this: IPlayer): boolean {
   return Boolean(Object.keys(this.jobs).length);
 }
 
-export function applyForSoftwareJob(this: PlayerObject, sing = false): boolean {
+export function applyForSoftwareJob(this: IPlayer, sing = false): boolean {
   return this.applyForJob(CompanyPositions[posNames.SoftwareCompanyPositions[0]], sing);
 }
 
-export function applyForSoftwareConsultantJob(this: PlayerObject, sing = false): boolean {
+export function applyForSoftwareConsultantJob(this: IPlayer, sing = false): boolean {
   return this.applyForJob(CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]], sing);
 }
 
-export function applyForItJob(this: PlayerObject, sing = false): boolean {
+export function applyForItJob(this: IPlayer, sing = false): boolean {
   return this.applyForJob(CompanyPositions[posNames.ITCompanyPositions[0]], sing);
 }
 
-export function applyForSecurityEngineerJob(this: PlayerObject, sing = false): boolean {
+export function applyForSecurityEngineerJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]])) {
     return this.applyForJob(CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]], sing);
@@ -402,7 +636,7 @@ export function applyForSecurityEngineerJob(this: PlayerObject, sing = false): b
   }
 }
 
-export function applyForNetworkEngineerJob(this: PlayerObject, sing = false): boolean {
+export function applyForNetworkEngineerJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]])) {
     const pos = CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]];
@@ -415,21 +649,21 @@ export function applyForNetworkEngineerJob(this: PlayerObject, sing = false): bo
   }
 }
 
-export function applyForBusinessJob(this: PlayerObject, sing = false): boolean {
+export function applyForBusinessJob(this: IPlayer, sing = false): boolean {
   return this.applyForJob(CompanyPositions[posNames.BusinessCompanyPositions[0]], sing);
 }
 
-export function applyForBusinessConsultantJob(this: PlayerObject, sing = false): boolean {
+export function applyForBusinessConsultantJob(this: IPlayer, sing = false): boolean {
   return this.applyForJob(CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]], sing);
 }
 
-export function applyForSecurityJob(this: PlayerObject, sing = false): boolean {
+export function applyForSecurityJob(this: IPlayer, sing = false): boolean {
   // TODO Police Jobs
   // Indexing starts at 2 because 0 is for police officer
   return this.applyForJob(CompanyPositions[posNames.SecurityCompanyPositions[2]], sing);
 }
 
-export function applyForAgentJob(this: PlayerObject, sing = false): boolean {
+export function applyForAgentJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.AgentCompanyPositions[0]])) {
     const pos = CompanyPositions[posNames.AgentCompanyPositions[0]];
@@ -442,7 +676,7 @@ export function applyForAgentJob(this: PlayerObject, sing = false): boolean {
   }
 }
 
-export function applyForEmployeeJob(this: PlayerObject, sing = false): boolean {
+export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
   const position = posNames.MiscCompanyPositions[1];
   // Check if this company has the position
@@ -466,7 +700,7 @@ export function applyForEmployeeJob(this: PlayerObject, sing = false): boolean {
   }
 }
 
-export function applyForPartTimeEmployeeJob(this: PlayerObject, sing = false): boolean {
+export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
   const position = posNames.PartTimeCompanyPositions[1];
   // Check if this company has the position
@@ -489,7 +723,7 @@ export function applyForPartTimeEmployeeJob(this: PlayerObject, sing = false): b
   }
 }
 
-export function applyForWaiterJob(this: PlayerObject, sing = false): boolean {
+export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
   const position = posNames.MiscCompanyPositions[0];
   // Check if this company has the position
@@ -510,7 +744,7 @@ export function applyForWaiterJob(this: PlayerObject, sing = false): boolean {
   }
 }
 
-export function applyForPartTimeWaiterJob(this: PlayerObject, sing = false): boolean {
+export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
   const position = posNames.PartTimeCompanyPositions[0];
   // Check if this company has the position
@@ -532,7 +766,7 @@ export function applyForPartTimeWaiterJob(this: PlayerObject, sing = false): boo
 }
 
 //Checks if the Player is qualified for a certain position
-export function isQualified(this: PlayerObject, company: Company, position: CompanyPosition): boolean {
+export function isQualified(this: IPlayer, company: Company, position: CompanyPosition): boolean {
   const offset = company.jobStatReqOffset;
   const reqHacking = position.requiredHacking > 0 ? position.requiredHacking + offset : 0;
   const reqStrength = position.requiredStrength > 0 ? position.requiredStrength + offset : 0;
@@ -553,7 +787,7 @@ export function isQualified(this: PlayerObject, company: Company, position: Comp
 }
 
 /********** Reapplying Augmentations and Source File ***********/
-export function reapplyAllAugmentations(this: PlayerObject, resetMultipliers = true): void {
+export function reapplyAllAugmentations(this: IPlayer, resetMultipliers = true): void {
   if (resetMultipliers) {
     this.resetMultipliers();
   }
@@ -579,7 +813,7 @@ export function reapplyAllAugmentations(this: PlayerObject, resetMultipliers = t
   this.updateSkillLevels();
 }
 
-export function reapplyAllSourceFiles(this: PlayerObject): void {
+export function reapplyAllSourceFiles(this: IPlayer): void {
   //Will always be called after reapplyAllAugmentations() so multipliers do not have to be reset
   //this.resetMultipliers();
 
@@ -600,7 +834,7 @@ export function reapplyAllSourceFiles(this: PlayerObject): void {
 //This function sets the requirements to join a Faction. It checks whether the Player meets
 //those requirements and will return an array of all factions that the Player should
 //receive an invitation to
-export function checkForFactionInvitations(this: PlayerObject): Faction[] {
+export function checkForFactionInvitations(this: IPlayer): Faction[] {
   const invitedFactions: Faction[] = []; //Array which will hold all Factions the player should be invited to
 
   const numAugmentations = this.augmentations.length;
@@ -781,7 +1015,7 @@ export function checkForFactionInvitations(this: PlayerObject): Faction[] {
     invitedFactions.push(kuaigonginternationalFac);
   }
 
-  //Fulcrum Secret Technologies - If you've unlocked fulcrum secret technologies server and have a high rep with the company
+  //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
   const fulcrumsecrettechonologiesFac = Factions[FactionNames.FulcrumSecretTechnologies];
   const fulcrumSecretServer = GetServer(SpecialServers.FulcrumSecretTechnologies);
   if (!(fulcrumSecretServer instanceof Server))
@@ -1086,11 +1320,11 @@ export function checkForFactionInvitations(this: PlayerObject): Faction[] {
 }
 
 /************* BitNodes **************/
-export function setBitNodeNumber(this: PlayerObject, n: number): void {
+export function setBitNodeNumber(this: IPlayer, n: number): void {
   this.bitNodeN = n;
 }
 
-export function queueAugmentation(this: PlayerObject, name: string): void {
+export function queueAugmentation(this: IPlayer, name: string): void {
   for (const aug of this.queuedAugmentations) {
     if (aug.name == name) {
       console.warn(`tried to queue ${name} twice, this may be a bug`);
@@ -1109,11 +1343,7 @@ export function queueAugmentation(this: PlayerObject, name: string): void {
 }
 
 /************* Coding Contracts **************/
-export function gainCodingContractReward(
-  this: PlayerObject,
-  reward: ICodingContractReward | null,
-  difficulty = 1,
-): string {
+export function gainCodingContractReward(this: IPlayer, reward: ICodingContractReward, difficulty = 1): string {
   if (reward == null || reward.type == null) {
     return `No reward for this contract`;
   }
@@ -1121,7 +1351,7 @@ export function gainCodingContractReward(
   /* eslint-disable no-case-declarations */
   switch (reward.type) {
     case CodingContractRewardType.FactionReputation:
-      if (reward.name == null || !Factions[reward.name]) {
+      if (reward.name == null || !(Factions[reward.name] instanceof Faction)) {
         // If no/invalid faction was designated, just give rewards to all factions
         reward.type = CodingContractRewardType.FactionReputationAll;
         return this.gainCodingContractReward(reward);
@@ -1146,12 +1376,14 @@ export function gainCodingContractReward(
 
       const gainPerFaction = Math.floor(totalGain / factions.length);
       for (const facName of factions) {
-        if (!Factions[facName]) continue;
+        if (!(Factions[facName] instanceof Faction)) {
+          continue;
+        }
         Factions[facName].playerReputation += gainPerFaction;
       }
-      return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.join(", ")}`;
+      return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.toString()}`;
     case CodingContractRewardType.CompanyReputation: {
-      if (reward.name == null || !Companies[reward.name]) {
+      if (reward.name == null || !(Companies[reward.name] instanceof Company)) {
         //If no/invalid company was designated, just give rewards to all factions
         reward.type = CodingContractRewardType.FactionReputationAll;
         return this.gainCodingContractReward(reward);
@@ -1170,7 +1402,7 @@ export function gainCodingContractReward(
   /* eslint-enable no-case-declarations */
 }
 
-export function travel(this: PlayerObject, to: CityName): boolean {
+export function travel(this: IPlayer, to: CityName): boolean {
   if (Cities[to] == null) {
     console.warn(`Player.travel() called with invalid city: ${to}`);
     return false;
@@ -1180,7 +1412,7 @@ export function travel(this: PlayerObject, to: CityName): boolean {
   return true;
 }
 
-export function gotoLocation(this: PlayerObject, to: LocationName): boolean {
+export function gotoLocation(this: IPlayer, to: LocationName): boolean {
   if (Locations[to] == null) {
     console.warn(`Player.gotoLocation() called with invalid location: ${to}`);
     return false;
@@ -1190,18 +1422,18 @@ export function gotoLocation(this: PlayerObject, to: LocationName): boolean {
   return true;
 }
 
-export function canAccessGrafting(this: PlayerObject): boolean {
+export function canAccessGrafting(this: IPlayer): boolean {
   return this.bitNodeN === 10 || this.sourceFileLvl(10) > 0;
 }
 
-export function giveExploit(this: PlayerObject, exploit: Exploit): void {
+export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
     SnackbarEvents.emit("SF -1 acquired!", ToastVariant.SUCCESS, 2000);
   }
 }
 
-export function giveAchievement(this: PlayerObject, achievementId: string): void {
+export function giveAchievement(this: IPlayer, achievementId: string): void {
   const achievement = achievements[achievementId];
   if (!achievement) return;
   if (!this.achievements.map((a) => a.ID).includes(achievementId)) {
@@ -1210,21 +1442,25 @@ export function giveAchievement(this: PlayerObject, achievementId: string): void
   }
 }
 
-export function getCasinoWinnings(this: PlayerObject): number {
+export function getIntelligenceBonus(this: IPlayer, weight: number): number {
+  return calculateIntelligenceBonus(this.skills.intelligence, weight);
+}
+
+export function getCasinoWinnings(this: IPlayer): number {
   return this.moneySourceA.casino;
 }
 
-export function canAccessCotMG(this: PlayerObject): boolean {
+export function canAccessCotMG(this: IPlayer): boolean {
   return this.bitNodeN === 13 || this.sourceFileLvl(13) > 0;
 }
 
-export function sourceFileLvl(this: PlayerObject, n: number): number {
+export function sourceFileLvl(this: IPlayer, n: number): number {
   const sf = this.sourceFiles.find((sf) => sf.n === n);
   if (!sf) return 0;
   return sf.lvl;
 }
 
-export function focusPenalty(this: PlayerObject): number {
+export function focusPenalty(this: IPlayer): number {
   let focus = 1;
   if (!this.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
     focus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;

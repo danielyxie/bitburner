@@ -9,5 +9,5 @@ City the material is being exported to
 <b>Signature:</b>
 
 ```typescript
-loc: CityName;
+loc: string;
 ```

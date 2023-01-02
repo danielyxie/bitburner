@@ -2,7 +2,8 @@ import { FactionNames } from "../Faction/data/FactionNames";
 import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";
-import { BaseGift } from "./BaseGift";
+import { IStaneksGift } from "./IStaneksGift";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { Factions } from "../Faction/Factions";
 import { CalculateEffect } from "./formulas/effect";
 import { StaneksGiftEvents } from "./StaneksGiftEvents";
@@ -10,16 +11,13 @@ import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../uti
 import { CONSTANTS } from "../Constants";
 import { StanekConstants } from "./data/Constants";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Player } from "@player";
+import { Player } from "../Player";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { defaultMultipliers, mergeMultipliers, Multipliers, scaleMultipliers } from "../PersonObjects/Multipliers";
-import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 
-export class StaneksGift extends BaseGift {
+export class StaneksGift implements IStaneksGift {
   storedCycles = 0;
-  constructor() {
-    super();
-  }
+  fragments: ActiveFragment[] = [];
 
   baseSize(): number {
     return StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13);
@@ -32,7 +30,7 @@ export class StaneksGift extends BaseGift {
     return Math.max(3, Math.min(Math.floor(this.baseSize() / 2 + 0.6), StanekConstants.MaxSize));
   }
 
-  charge(af: ActiveFragment, threads: number): void {
+  charge(player: IPlayer, af: ActiveFragment, threads: number): void {
     if (threads > af.highestCharge) {
       af.numCharge = (af.highestCharge * af.numCharge) / threads + 1;
       af.highestCharge = threads;
@@ -41,36 +39,36 @@ export class StaneksGift extends BaseGift {
     }
 
     const cotmg = Factions[FactionNames.ChurchOfTheMachineGod];
-    cotmg.playerReputation += (Player.mults.faction_rep * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
+    cotmg.playerReputation += (player.mults.faction_rep * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 
   inBonus(): boolean {
     return (this.storedCycles * CONSTANTS._idleSpeed) / 1000 > 1;
   }
 
-  process(numCycles = 1): void {
-    if (!Player.hasAugmentation(AugmentationNames.StaneksGift1)) return;
+  process(p: IPlayer, numCycles = 1): void {
+    if (!p.hasAugmentation(AugmentationNames.StaneksGift1)) return;
     this.storedCycles += numCycles;
     this.storedCycles -= 10;
     this.storedCycles = Math.max(0, this.storedCycles);
-    this.updateMults();
+    this.updateMults(p);
     StaneksGiftEvents.emit();
   }
 
   effect(fragment: ActiveFragment): number {
-    // Find all the neighboring cells
-    const cells = fragment.neighbors();
-    // find the neighboring active fragments.
+    // Find all the neighbooring cells
+    const cells = fragment.neighboors();
+    // find the neighbooring active fragments.
     const maybeFragments = cells.map((n) => this.fragmentAt(n[0], n[1]));
 
     // Filter out undefined with typescript "Type guard". Whatever
-    let neighbors = maybeFragments.filter((v: ActiveFragment | undefined): v is ActiveFragment => !!v);
+    let neighboors = maybeFragments.filter((v: ActiveFragment | undefined): v is ActiveFragment => !!v);
 
-    neighbors = neighbors.filter((fragment) => fragment.fragment().type === FragmentType.Booster);
+    neighboors = neighboors.filter((fragment) => fragment.fragment().type === FragmentType.Booster);
     let boost = 1;
 
-    neighbors = neighbors.filter((v, i, s) => s.indexOf(v) === i);
-    for (const neighboor of neighbors) {
+    neighboors = neighboors.filter((v, i, s) => s.indexOf(v) === i);
+    for (const neighboor of neighboors) {
       boost *= neighboor.fragment().power;
     }
     return CalculateEffect(fragment.highestCharge, fragment.numCharge, fragment.fragment().power, boost);
@@ -96,6 +94,16 @@ export class StaneksGift extends BaseGift {
 
   findFragment(rootX: number, rootY: number): ActiveFragment | undefined {
     return this.fragments.find((f) => f.x === rootX && f.y === rootY);
+  }
+
+  fragmentAt(worldX: number, worldY: number): ActiveFragment | undefined {
+    for (const aFrag of this.fragments) {
+      if (aFrag.fullAt(worldX, worldY)) {
+        return aFrag;
+      }
+    }
+
+    return undefined;
   }
 
   count(fragment: Fragment): number {
@@ -202,29 +210,23 @@ export class StaneksGift extends BaseGift {
     return mults;
   }
 
-  updateMults(): void {
+  updateMults(p: IPlayer): void {
     // applyEntropy also reapplies all augmentations and source files
     // This wraps up the reset nicely
-    Player.applyEntropy(Player.entropy);
+    p.applyEntropy(p.entropy);
     const mults = this.calculateMults();
-    Player.mults = mergeMultipliers(Player.mults, mults);
-    Player.updateSkillLevels();
-    const zoeAmt = Player.sleeves.reduce((n, sleeve) => n + (sleeve.hasAugmentation(AugmentationNames.ZOE) ? 1 : 0), 0);
+    p.mults = mergeMultipliers(p.mults, mults);
+    p.updateSkillLevels();
+    const zoeAmt = p.sleeves.reduce((n, sleeve) => n + (sleeve.hasAugmentation(AugmentationNames.ZOE) ? 1 : 0), 0);
     if (zoeAmt === 0) return;
     // Less powerful for each copy.
     const scaling = 3 / (zoeAmt + 2);
     const sleeveMults = scaleMultipliers(mults, scaling);
-    for (const sleeve of Player.sleeves) {
+    for (const sleeve of p.sleeves) {
       if (!sleeve.hasAugmentation(AugmentationNames.ZOE)) continue;
       sleeve.resetMultipliers();
-      //reapplying augmentation's multiplier
-      for (let i = 0; i < sleeve.augmentations.length; ++i) {
-        const aug = StaticAugmentations[sleeve.augmentations[i].name];
-        sleeve.applyAugmentation(aug);
-      }
-      //applying stanek multiplier
       sleeve.mults = mergeMultipliers(sleeve.mults, sleeveMults);
-      sleeve.updateSkillLevels();
+      sleeve.updateStatLevels();
     }
   }
 
@@ -237,12 +239,16 @@ export class StaneksGift extends BaseGift {
     this.storedCycles = 0;
   }
 
-  /** Serialize Staneks Gift to a JSON save state. */
+  /**
+   * Serialize Staneks Gift to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("StaneksGift", this);
   }
 
-  /** Initializes Staneks Gift from a JSON save state */
+  /**
+   * Initializes Staneks Gift from a JSON save state
+   */
   static fromJSON(value: IReviverValue): StaneksGift {
     return Generic_fromJSON(StaneksGift, value.data);
   }

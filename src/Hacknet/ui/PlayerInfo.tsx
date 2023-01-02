@@ -7,7 +7,7 @@
 import React from "react";
 
 import { hasHacknetServers } from "../HacknetHelpers";
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { HashRate } from "../../ui/React/HashRate";
@@ -16,10 +16,11 @@ import Typography from "@mui/material/Typography";
 
 interface IProps {
   totalProduction: number;
+  player: IPlayer;
 }
 
 export function PlayerInfo(props: IProps): React.ReactElement {
-  const hasServers = hasHacknetServers();
+  const hasServers = hasHacknetServers(props.player);
 
   let prod;
   if (hasServers) {
@@ -32,13 +33,14 @@ export function PlayerInfo(props: IProps): React.ReactElement {
     <>
       <Typography>
         Money:
-        <Money money={Player.money} />
+        <Money money={props.player.money} />
       </Typography>
 
       {hasServers && (
         <>
           <Typography>
-            Hashes: <Hashes hashes={Player.hashManager.hashes} /> / <Hashes hashes={Player.hashManager.capacity} />
+            Hashes: <Hashes hashes={props.player.hashManager.hashes} /> /{" "}
+            <Hashes hashes={props.player.hashManager.capacity} />
           </Typography>
         </>
       )}

@@ -4,7 +4,7 @@
 
 ## NS.grow() method
 
-Spoof money in a server's bank account, increasing the amount available.
+Spoof money in a servers bank account, increasing the amount available.
 
 <b>Signature:</b>
 
@@ -29,9 +29,9 @@ The number by which the money on the server was multiplied for the growth.
 
 RAM cost: 0.15 GB
 
-Use your hacking skills to increase the amount of money available on a server. The runtime for this command depends on your hacking level and the target server’s security level. When `grow` completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage is determined by the target server’s growth rate (which varies between servers) and security level. Generally, higher-level servers have higher growth rates. The [getServerGrowth](./bitburner.ns.getservergrowth.md) function can be used to obtain a server’s growth rate.
+Use your hacking skills to increase the amount of money available on a server. The runtime for this command depends on your hacking level and the target server’s security level. When `grow` completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage is determined by the target server’s growth rate (which varies between servers) and security level. Generally, higher-level servers have higher growth rates. The getServerGrowth() function can be used to obtain a server’s growth rate.
 
-Like [hack](./bitburner.ns.hack.md)<!-- -->, `grow` can be called on any server, regardless of where the script is running. The grow() command requires root access to the target server, but there is no required hacking level to run the command. It also raises the security level of the target server by 0.004.
+Like hack, `grow` can be called on any server, regardless of where the script is running. The grow() command requires root access to the target server, but there is no required hacking level to run the command. It also raises the security level of the target server by 0.004.
 
 ## Example 1
 
@@ -39,7 +39,7 @@ Like [hack](./bitburner.ns.hack.md)<!-- -->, `grow` can be called on any server,
 ```ts
 // NS1:
 var currentMoney = getServerMoneyAvailable("foodnstuff");
-currentMoney = currentMoney * grow("foodnstuff");
+currentMoney = currentMoney * (1 + grow("foodnstuff"));
 ```
 
 ## Example 2
@@ -48,6 +48,6 @@ currentMoney = currentMoney * grow("foodnstuff");
 ```ts
 // NS2:
 let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
-currentMoney *= await ns.grow("foodnstuff");
+currentMoney *= (1 + await ns.grow("foodnstuff"));
 ```
 

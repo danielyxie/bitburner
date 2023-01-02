@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface RunningScript 
+export interface RunningScript 
 ```
 
 ## Properties

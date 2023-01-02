@@ -6,3 +6,8 @@ export class PlayerOwnedAugmentation {
     this.name = name;
   }
 }
+
+export interface IPlayerOwnedAugmentation {
+  level: number;
+  name: string;
+}

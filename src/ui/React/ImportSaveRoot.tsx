@@ -27,12 +27,11 @@ import WarningIcon from "@mui/icons-material/Warning";
 
 import { ImportData, saveObject } from "../../SaveObject";
 import { Settings } from "../../Settings/Settings";
-import { convertTimeMsToTimeElapsedString, formatNumber } from "../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../numeralFormat";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { pushImportResult } from "../../Electron";
-import { Router } from "../GameRoot";
-import { Page } from "../Router";
+import { IRouter } from "../Router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -106,6 +105,7 @@ function ComparisonIcon({ isBetter }: { isBetter: boolean }): JSX.Element {
 export interface IProps {
   importString: string;
   automatic: boolean;
+  router: IRouter;
 }
 
 let initialAutosave = 0;
@@ -120,7 +120,7 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
   function handleGoBack(): void {
     Settings.AutosaveInterval = initialAutosave;
     pushImportResult(false);
-    Router.allowRouting(true);
+    props.router.allowRouting(true);
     setHeadback(true);
   }
 
@@ -133,11 +133,11 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
     // We want to disable autosave while we're in this mode
     initialAutosave = Settings.AutosaveInterval;
     Settings.AutosaveInterval = 0;
-    Router.allowRouting(false);
+    props.router.allowRouting(false);
   }, []);
 
   useEffect(() => {
-    if (headback) Router.toPage(Page.Terminal);
+    if (headback) props.router.toTerminal();
   }, [headback]);
 
   useEffect(() => {
@@ -244,8 +244,8 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
 
             <TableRow>
               <TableCell>Hacking</TableCell>
-              <TableCell>{formatNumber(currentData.playerData?.hacking ?? 0, 0)}</TableCell>
-              <TableCell>{formatNumber(importData.playerData?.hacking ?? 0, 0)}</TableCell>
+              <TableCell>{numeralWrapper.formatSkill(currentData.playerData?.hacking ?? 0)}</TableCell>
+              <TableCell>{numeralWrapper.formatSkill(importData.playerData?.hacking ?? 0)}</TableCell>
               <TableCell>
                 {importData.playerData?.hacking !== currentData.playerData?.hacking && (
                   <ComparisonIcon

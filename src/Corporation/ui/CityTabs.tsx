@@ -7,10 +7,9 @@ import { ExpandNewCity } from "./ExpandNewCity";
 import { useDivision } from "./Context";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { CityName } from "../../Enums";
 
 interface IProps {
-  city: CityName | "Expand";
+  city: string;
   rerender: () => void;
 }
 
@@ -18,24 +17,17 @@ export function CityTabs(props: IProps): React.ReactElement {
   const division = useDivision();
   const [city, setCity] = useState(props.city);
 
-  let mainContent: JSX.Element;
-  if (city === "Expand") {
-    mainContent = <ExpandNewCity cityStateSetter={setCity} />;
-  } else {
-    const office = division.offices[city];
-    if (office === 0) {
-      setCity(CityName.Sector12);
-      return <></>;
-    }
-    mainContent = (
-      <Industry rerender={props.rerender} city={city} warehouse={division.warehouses[city]} office={office} />
-    );
-  }
-  const canExpand = Object.values(CityName).filter((cityName) => division.offices[cityName] === 0).length > 0;
-  function handleChange(event: React.SyntheticEvent, tab: CityName | "Expand"): void {
-    setCity(tab);
+  const office = division.offices[city];
+  if (office === 0) {
+    setCity("Sector-12");
+    return <></>;
   }
 
+  const canExpand =
+    Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] === 0).length > 0;
+  function handleChange(event: React.SyntheticEvent, tab: string): void {
+    setCity(tab);
+  }
   return (
     <>
       <Tabs variant="fullWidth" value={city} onChange={handleChange} sx={{ maxWidth: "65vw" }}>
@@ -44,7 +36,18 @@ export function CityTabs(props: IProps): React.ReactElement {
         )}
         {canExpand && <Tab label={"Expand"} value={"Expand"} />}
       </Tabs>
-      {mainContent}
+
+      {city !== "Expand" ? (
+        <Industry
+          key={city}
+          rerender={props.rerender}
+          city={city}
+          warehouse={division.warehouses[city]}
+          office={office}
+        />
+      ) : (
+        <ExpandNewCity cityStateSetter={setCity} />
+      )}
     </>
   );
 }

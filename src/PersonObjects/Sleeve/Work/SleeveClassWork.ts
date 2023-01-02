@@ -1,12 +1,11 @@
+import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { applySleeveGains, Work, WorkType } from "./Work";
 import { ClassType } from "../../../Work/ClassWork";
-import { LocationName } from "../../../Enums";
-import { calculateClassEarnings } from "../../../Work/Formulas";
+import { LocationName } from "../../../Locations/data/LocationNames";
+import { calculateClassEarnings } from "../../../Work/formulas/Class";
 import { Sleeve } from "../Sleeve";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
-import { GymType, UniversityClassType } from "../../../Enums";
-import { checkEnum } from "../../../utils/helpers/enum";
 
 export const isSleeveClassWork = (w: Work | null): w is SleeveClassWork => w !== null && w.type === WorkType.CLASS;
 
@@ -21,36 +20,46 @@ export class SleeveClassWork extends Work {
 
   constructor(params?: ClassWorkParams) {
     super(WorkType.CLASS);
-    this.classType = params?.classType ?? UniversityClassType.computerScience;
+    this.classType = params?.classType ?? ClassType.StudyComputerScience;
     this.location = params?.location ?? LocationName.Sector12RothmanUniversity;
   }
 
-  calculateRates(sleeve: Sleeve): WorkStats {
-    return scaleWorkStats(calculateClassEarnings(sleeve, this.classType, this.location), sleeve.shockBonus(), false);
+  calculateRates(player: IPlayer, sleeve: Sleeve): WorkStats {
+    return scaleWorkStats(
+      calculateClassEarnings(player, sleeve, this.classType, this.location),
+      sleeve.shockBonus(),
+      false,
+    );
   }
 
   isGym(): boolean {
-    return checkEnum(GymType, this.classType);
+    return [ClassType.GymAgility, ClassType.GymDefense, ClassType.GymDexterity, ClassType.GymStrength].includes(
+      this.classType,
+    );
   }
 
-  process(sleeve: Sleeve, cycles: number) {
-    const rate = this.calculateRates(sleeve);
-    applySleeveGains(sleeve, rate, cycles);
+  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
+    const rate = this.calculateRates(player, sleeve);
+    applySleeveGains(player, sleeve, rate, cycles);
+    return 0;
   }
-
-  APICopy() {
+  APICopy(): Record<string, unknown> {
     return {
-      type: WorkType.CLASS as "CLASS",
+      type: this.type,
       classType: this.classType,
       location: this.location,
     };
   }
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveClassWork", this);
   }
 
-  /** Initializes a ClassWork object from a JSON save state. */
+  /**
+   * Initiatizes a ClassWork object from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): SleeveClassWork {
     return Generic_fromJSON(SleeveClassWork, value.data);
   }

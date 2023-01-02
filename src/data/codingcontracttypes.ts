@@ -490,8 +490,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "Note that an octet cannot begin with a '0' unless the number",
         "itself is actually 0. For example, '192.168.010.1' is not a valid IP.\n\n",
         "Examples:\n\n",
-        '25525511135 -> ["255.255.11.135", "255.255.111.35"]\n',
-        '1938718066 -> ["193.87.180.66"]',
+        "25525511135 -> [255.255.11.135, 255.255.111.35]\n",
+        "1938718066 -> [193.87.180.66]",
       ].join(" ");
     },
     difficulty: 3,
@@ -532,7 +532,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
 
       const sanitizedAns: string = removeBracketsFromArrayString(ans).replace(/\s/g, "");
-      const ansArr: string[] = sanitizedAns.split(",").map((ip) => ip.replace(/^"|"$/g, ""));
+      const ansArr: string[] = sanitizedAns.split(",");
       if (ansArr.length !== ret.length) {
         return false;
       }
@@ -1291,8 +1291,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `${n} \n`,
         "Convert it to a binary representation and encode it as an 'extended Hamming code'. Eg:\n ",
         "Value 8 is expressed in binary as '1000', which will be encoded",
-        "with the pattern 'pppdpddd', where p is a parity bit and d a data bit. The encoding of\n",
-        "8 is 11110000. As another example, '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n",
+        "with the pattern 'pppdpddd', where p is a parity bit and d a data bit,\n",
+        "or '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n",
         "The answer should be given as a string containing only 1s and 0s.\n",
         "NOTE: the endianness of the data bits is reversed in relation to the endianness of the parity bits.\n",
         "NOTE: The bit at index zero is the overall parity bit, this should be set last.\n",
@@ -1320,7 +1320,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `'${n}' \n\n`,
         "Treat it as an extended Hamming code with 1 'possible' error at a random index.\n",
         "Find the 'possible' wrong bit, fix it and extract the decimal value, which is hidden inside the string.\n\n",
-        "Note: The length of the binary string is dynamic, but its encoding/decoding follows Hamming's 'rule'\n",
+        "Note: The length of the binary string is dynamic, but it's encoding/decoding follows Hamming's 'rule'\n",
         "Note 2: Index 0 is an 'overall' parity bit. Watch the Hamming code video from 3Blue1Brown for more information\n",
         "Note 3: There's a ~55% chance for an altered Bit. So... MAYBE there is an altered Bit 😉\n",
         "Note: The endianness of the encoded decimal value is reversed in relation to the endianness of the Hamming code. Where",
@@ -1444,7 +1444,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
           coloring[initialVertex] = 0;
           const frontier: number[] = [initialVertex];
 
-          //Propagate the coloring throughout the component containing v greedily
+          //Propogate the coloring throughout the component containing v greedily
           while (frontier.length > 0) {
             const v: number = frontier.pop() || 0;
             const neighbors: number[] = neighbourhood(v);
@@ -1728,7 +1728,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return [
         "Vigenère cipher is a type of polyalphabetic substitution. It uses ",
         "the Vigenère square to encrypt and decrypt plaintext with a keyword.\n\n",
-        "&nbsp;&nbsp;Vigenère square:\n",
+        "&nbsp;&nbsp;Vignenère square:\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n",
         "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----------------------------------------------------\n",
         "&nbsp;&nbsp;&nbsp;&nbsp; A | A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n",

@@ -1,16 +1,16 @@
 import { Milestone } from "./Milestone";
-import { Player } from "@player";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
 import { GetServer } from "../Server/AllServers";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { Server } from "../Server/Server";
 
-function allFactionAugs(f: Faction): boolean {
+function allFactionAugs(p: IPlayer, f: Faction): boolean {
   const factionAugs = f.augmentations.slice().filter((aug) => aug !== "NeuroFlux Governor");
   for (const factionAug of factionAugs) {
     if (
-      !Player.augmentations.some((aug) => {
+      !p.augmentations.some((aug) => {
         return aug.name == factionAug;
       })
     )
@@ -38,63 +38,63 @@ export const Milestones: Milestone[] = [
   },
   {
     title: "Join the faction hinted at in csec-test.msg",
-    fulfilled: (): boolean => {
-      return Player.factions.includes(FactionNames.CyberSec);
+    fulfilled: (p: IPlayer): boolean => {
+      return p.factions.includes(FactionNames.CyberSec);
     },
   },
   {
     title: `Install all the Augmentations from ${FactionNames.CyberSec}`,
-    fulfilled: (): boolean => {
-      return allFactionAugs(Factions[FactionNames.CyberSec]);
+    fulfilled: (p: IPlayer): boolean => {
+      return allFactionAugs(p, Factions[FactionNames.CyberSec]);
     },
   },
   {
     title: "Join the faction hinted at in nitesec-test.msg",
-    fulfilled: (): boolean => {
-      return Player.factions.includes(FactionNames.NiteSec);
+    fulfilled: (p: IPlayer): boolean => {
+      return p.factions.includes(FactionNames.NiteSec);
     },
   },
   {
     title: `Install all the Augmentations from ${FactionNames.NiteSec}`,
-    fulfilled: (): boolean => {
-      return allFactionAugs(Factions[FactionNames.NiteSec]);
+    fulfilled: (p: IPlayer): boolean => {
+      return allFactionAugs(p, Factions[FactionNames.NiteSec]);
     },
   },
   {
     title: "Join the faction hinted at in j3.msg",
-    fulfilled: (): boolean => {
-      return Player.factions.includes(FactionNames.TheBlackHand);
+    fulfilled: (p: IPlayer): boolean => {
+      return p.factions.includes(FactionNames.TheBlackHand);
     },
   },
   {
     title: `Install all the Augmentations from ${FactionNames.TheBlackHand}`,
-    fulfilled: (): boolean => {
-      return allFactionAugs(Factions[FactionNames.TheBlackHand]);
+    fulfilled: (p: IPlayer): boolean => {
+      return allFactionAugs(p, Factions[FactionNames.TheBlackHand]);
     },
   },
   {
     title: "Join the faction hinted at in 19dfj3l1nd.msg",
-    fulfilled: (): boolean => {
-      return Player.factions.includes(FactionNames.BitRunners);
+    fulfilled: (p: IPlayer): boolean => {
+      return p.factions.includes(FactionNames.BitRunners);
     },
   },
   {
     title: `Install all the Augmentations from ${FactionNames.BitRunners}`,
-    fulfilled: (): boolean => {
-      return allFactionAugs(Factions[FactionNames.BitRunners]);
+    fulfilled: (p: IPlayer): boolean => {
+      return allFactionAugs(p, Factions[FactionNames.BitRunners]);
     },
   },
   {
     title: "Complete fl1ght.exe",
-    fulfilled: (): boolean => {
+    fulfilled: (p: IPlayer): boolean => {
       // technically wrong but whatever
-      return Player.factions.includes(FactionNames.Daedalus);
+      return p.factions.includes(FactionNames.Daedalus);
     },
   },
   {
     title: `Install the special Augmentation from ${FactionNames.Daedalus}`,
-    fulfilled: (): boolean => {
-      return Player.augmentations.some((aug) => aug.name == "The Red Pill");
+    fulfilled: (p: IPlayer): boolean => {
+      return p.augmentations.some((aug) => aug.name == "The Red Pill");
     },
   },
   {

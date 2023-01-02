@@ -4,10 +4,10 @@
 import React from "react";
 
 import { CityTabs } from "./CityTabs";
-import { Industry } from "../Industry";
+import { IIndustry } from "../IIndustry";
 import { Context, useCorporation } from "./Context";
 
-import { CityName } from "../../Enums";
+import { CityName } from "../../Locations/data/CityNames";
 
 interface IProps {
   divisionName: string;
@@ -18,7 +18,7 @@ export function MainPanel(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division =
     props.divisionName !== "Overview"
-      ? corp.divisions.find((division: Industry) => division.name === props.divisionName)
+      ? corp.divisions.find((division: IIndustry) => division.name === props.divisionName)
       : undefined; // use undefined because find returns undefined
 
   if (division === undefined) throw new Error("Cannot find division");

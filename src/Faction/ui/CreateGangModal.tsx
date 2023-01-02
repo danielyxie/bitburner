@@ -1,8 +1,9 @@
+/**
+ * React Component for the popup used to create a new gang.
+ */
 import React from "react";
 import { Modal } from "../../ui/React/Modal";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { KEY } from "../../utils/helpers/keyCodes";
@@ -14,8 +15,9 @@ interface IProps {
   facName: string;
 }
 
-/** React Component for the popup used to create a new gang. */
 export function CreateGangModal(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const combatGangText =
     "This is a COMBAT gang. Members in this gang will have different tasks than HACKING gangs. " +
     "Compared to hacking gangs, progression with combat gangs can be more difficult as territory management " +
@@ -31,9 +33,9 @@ export function CreateGangModal(props: IProps): React.ReactElement {
   }
 
   function createGang(): void {
-    Player.startGang(props.facName, isHacking());
+    player.startGang(props.facName, isHacking());
     props.onClose();
-    Router.toPage(Page.Gang);
+    router.toGang();
   }
 
   function onKeyUp(event: React.KeyboardEvent): void {

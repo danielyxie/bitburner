@@ -8,56 +8,61 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
-import { Player } from "@player";
-import { Router } from "../../ui/GameRoot";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { IRouter } from "../../ui/Router";
 import { MenuItem, SelectChangeEvent, TextField, Select } from "@mui/material";
 import { Bladeburner } from "../../Bladeburner/Bladeburner";
 import { GangConstants } from "../../Gang/data/Constants";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { checkForMessagesToSend } from "../../Message/MessageHelpers";
 
-export function General(): React.ReactElement {
+interface IProps {
+  player: IPlayer;
+  router: IRouter;
+}
+
+export function General(props: IProps): React.ReactElement {
   const [error, setError] = useState(false);
   const [corporationName, setCorporationName] = useState("");
   const [gangFaction, setGangFaction] = useState("");
 
   function addMoney(n: number) {
     return function () {
-      Player.gainMoney(n, "other");
+      props.player.gainMoney(n, "other");
     };
   }
 
   function upgradeRam(): void {
-    Player.getHomeComputer().maxRam *= 2;
+    props.player.getHomeComputer().maxRam *= 2;
   }
 
   function quickB1tFlum3(): void {
-    Router.toBitVerse(true, true);
+    props.router.toBitVerse(true, true);
   }
 
   function b1tflum3(): void {
-    Router.toBitVerse(true, false);
+    props.router.toBitVerse(true, false);
   }
 
   function quickHackW0r1dD43m0n(): void {
-    Router.toBitVerse(false, true);
+    props.router.toBitVerse(false, true);
   }
 
   function hackW0r1dD43m0n(): void {
-    Router.toBitVerse(false, false);
+    props.router.toBitVerse(false, false);
   }
 
   function createCorporation(): void {
-    Player.startCorporation(corporationName);
+    props.player.startCorporation(corporationName);
   }
 
   function joinBladeburner(): void {
-    Player.bladeburner = new Bladeburner();
+    props.player.bladeburner = new Bladeburner(props.player);
   }
 
   function startGang(): void {
     const isHacking = gangFaction === FactionNames.NiteSec || gangFaction === FactionNames.TheBlackHand;
-    Player.startGang(gangFaction, isHacking);
+    props.player.startGang(gangFaction, isHacking);
   }
 
   function setGangFactionDropdown(event: SelectChangeEvent<string>): void {
