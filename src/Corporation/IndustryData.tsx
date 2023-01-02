@@ -284,7 +284,14 @@ export const IndustryDescriptions = (industry: IndustryType, corp: Corporation) 
   const data = IndustriesData[industry];
   return (
     <>
-      ${data.description}
+      {data.description}
+      <br />
+      <br />
+      Required Materials: {Object.keys(data.requiredMaterials).toString().replace(/,/gi, ", ")}
+      <br />
+      Produces Materials: {data.producedMaterials ? data.producedMaterials.toString().replace(/,/gi, ", ") : "NONE"}
+      <br />
+      Produces products: {data.product ? "YES" : "NO"}
       <br />
       <br />
       Starting cost: <MoneyCost money={data.startingCost} corp={corp} />
