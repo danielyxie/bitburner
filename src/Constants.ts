@@ -89,7 +89,7 @@ export const CONSTANTS: {
   LatestUpdate: string;
 } = {
   VersionString: "2.2.0",
-  VersionNumber: 27,
+  VersionNumber: 28,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -232,22 +232,46 @@ export const CONSTANTS: {
   Donations: 41,
 
   LatestUpdate: `
-  v2.2.0 - 2022-12-21
+  v2.2.0 - Jan 2 2023 Development Reboot
 
-  BREAKING CHANGES:
+  Dev notes
+  * The previous main developer, hydroflame, is stepping back from this project for the foreseeable future.
+    To facilitate this, we've moved the repo to a new location at https://github.com/bitburner-official/bitburner-src
+  * Sorry for the large number of API breaks in this version. To ease the pain here, attempting to use any of the
+    removed functions will provide an error guiding you to the new replacement function to use instead.
+
+  BREAKING API CHANGES:
+  *  (ns2 only) ns functions use the 'this' value from ns: if you move the function to its own variable off of ns, it
+     needs to be bound to ns. e.g.:
+       const tprint1 = ns.tprint; // This doesn't work and will error out when calling tprint1();
+       const tprint = ns.tprint.bind(ns); // This works because the 'this' value is preserved.
+     The internal changes that make this necessary led to very large performance gains for running many scripts at once.
   *  ns.getPlayer no longer provides properties tor, inBladeburner, or hasCorporation. This information can be looked
      up using standlone functions: ns.hasTorRouter(), ns.bladeburner.inBladeburner(), ns.corporation.hasCorporation().
-  *  (NS2 only) ns functions use the this value from ns: if you move the function to its own variable off of ns, it
-     needs to be bound to ns. e.g.:
-     const tprint = ns.tprint.bind(ns);
-  *  ns.formulas.work.classGains removed, replaced with ns.formulas.work.universityGains and ns.formulas.work.gymGains
-  *  ns.sleeve.getSleeveStats and ns.sleeve.getSleeveInformation removed, ns.sleeve.getSleeve added and the returned
-     sleeve can be used with formulas API the same way the getPlayer return can be.
-  *  ns.corporation.getEmployee and ns.corporation.assignJob have been removed because employees are no longer
-     represented as individual objects internally.
-  *  ns.codingcontract.attempt no longer returns a boolean, it returns empty string on failure or the reward string
-     on success, so comparing the result directly to true/false will no longer work. The result can still be used as
-     a condition directly.
+  *  Removed many functions, with replacement ways to get the same info.
+     getServerRam: use getServerMaxRam and getServerUsedRam instead.
+     corporation.assignJob: use setAutoJobAssignment instead.
+     corporation.getEmployee: No longer available (employees are not individual objects).
+     corporation.getExpandCityCost: use ns.corporation.getConstants().officeInitialCost
+     corporation.getExpandIndustryCost: use getIndustryData instead.
+     corporation.getIndustryTypes: use ns.corporation.getConstants().industryNames
+     corporation.getMaterialNames: use ns.corporation.getConstants().materialNames
+     corporation.getPurchaseWarehouseCost: use ns.corporation.getConstants().warehouseInitialCost
+     corporation.getResearchNames: use ns.corporation.getConstants().researchNames
+     corporation.getUnlockables: use ns.corporation.getConstants().unlockNames
+     corporation.getUpgradeNames: use ns.corporation.getConstants().upgradeNames
+     formulas.work.classGains: split into universityGains and gymGains
+     singularity.getAugmentationCost: use getAugmentationPrice and getAugmentationRepReq instead
+     sleeve.getSleeveStats: use getSleeve instead
+     sleeve.getInformation: use getSleeve instead
+  *  An error dialog will inform the player of the above API changes if the player tries to use one of the
+     removed functions above.
+  *  enums.toast was renamed ToastVariant to provide consistency with internal code.
+  *  codingcontract.attempt always returns a string (empty string for a failed attempt). This may break player code
+     if a direct boolean comparison (e.g. 'attemptResult === true') was being made. The string can be used directly as
+     the conditional, because empty string evaluates to false as a boolean.
+  *  corporation.getCorporation().divisions now returns an array of division names, instead of division objects. Use
+     corporation.getDivision(name) to get the division info object.
 
   DEVELOPMENT
   *  Development repo moved to https://github.com/bitburner-official/bitburner-src
@@ -268,7 +292,7 @@ export const CONSTANTS: {
   *  ns.getPlayer: removed tor, inBladeburner, and hasCorporation properties
   *  Added ns.hasTorRouter() function.
   -- CODING CONTRACT
-     *  ns.codingcontract.attempt always returns a string (@Snarling)
+     *  ns.codingcontract.attempt always returns a string. (@Snarling)
   -- CORPORATION
      *  Removed ns.corporation.getEmployee and ns.corporation.assignJob, due to employees no longer being objects.
      *  Added ns.corporation.hasCorporation();
@@ -282,6 +306,7 @@ export const CONSTANTS: {
      *  Make ns.writePort synchronous (@Snarling)
   -- SLEEVE
      *  ns.sleeve.getSleeve added. getPlayer and getSleeve can both be used for formulas. (@Snarling)
+     *  getSleeve also includes storedCycles (i.e. bonusTime) (@zerbosh)
   -- STOCK
      *  ns.stock.getOrganization added for getting org from stock symbol (@SamuraiNinjaGuy)
 
@@ -294,6 +319,7 @@ export const CONSTANTS: {
 
   CORPORATION
   *  Remove corp employees as objects (by @Kelenius)
+  *  API access is provided automatically if the player is in BN3. (@zerbosh)
   *  Happiness/Energy/Morale trend down even for productive corps (by @Snarling)
   *  Typo fixes in modals to sell materials and products (by @quacksouls)
   *  Reworked MP formula validation to prevent possible save corruption on invalid entry (by @Snarling)
@@ -311,10 +337,12 @@ export const CONSTANTS: {
   *  Fix broken initializer when manually buying WSE access (by @Snarling)
 
   TERMINAL
+  *  Added changelog command to re-display the changelog dialog.
   *  Connect command will connect to player owned servers from anywhere. (by @Snarling)
 
   UI
   *  Improve UI performance of sidebar and character overview using memoization (@d0sboots)
+  *  Other UI additions / improvements (@Mughur, @d0sboots, probably others)
   *  Fixed spacing of text in Trade for reputation button after Infiltration (by @PyroGenesis)
   *  Fix spacing on ANSI background escape codes (by @Snarling)
   *  Fix several instances where newlines were not being displayed properly (by @quacksouls)
@@ -335,6 +363,7 @@ export const CONSTANTS: {
 
   STATS
   *  Fix logic for increasing HP based on defense skill levels (by @mattgarretson)
+  *  Fix a bug where HP could be something other than max after a bitnode reset.
 
   INFILTRATION
   *  Fix SlashGame scaling. (by @Snarling)

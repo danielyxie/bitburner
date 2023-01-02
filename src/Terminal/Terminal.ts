@@ -33,6 +33,7 @@ import {
 import { numeralWrapper } from "../ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
+// TODO: Does every terminal function really need its own file...?
 import { alias } from "./commands/alias";
 import { analyze } from "./commands/analyze";
 import { backdoor } from "./commands/backdoor";
@@ -73,6 +74,7 @@ import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 import { hash } from "../hash/hash";
 import { apr1 } from "./commands/apr1";
+import { changelog } from "./commands/changelog";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 export class Terminal {
@@ -793,6 +795,7 @@ export class Terminal {
       buy: buy,
       cat: cat,
       cd: cd,
+      changelog: changelog,
       check: check,
       clear: () => this.clear(),
       cls: () => this.clear(),

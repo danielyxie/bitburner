@@ -4,6 +4,8 @@
 
 ## SleevePerson.shock property
 
+Number 0-100 Experience earned and shared is multiplied with shock% before sync%
+
 <b>Signature:</b>
 
 ```typescript

@@ -4430,33 +4430,6 @@ export declare interface NS {
     getServerBaseSecurityLevel(host: string): number;
 
     /**
-     * @deprecated use getServerMaxRam / getServerUsedRam
-     * @remarks
-     * RAM cost: 0.1 GB
-     *
-     * Returns an array with two elements that gives information about a server’s memory (RAM).
-     * The first element in the array is the amount of RAM that the server has total (in GB).
-     * The second element in the array is the amount of RAM that is currently being used on
-     * the server (in GB).
-     *
-     * @example
-     * ```ts
-     * // NS1:
-     * var serverRam = getServerRam("helios");
-     * var totalRam = serverRam[0];
-     * var ramUsed = serverRam[1];
-     * ```
-     * @example
-     * ```ts
-     * // NS2:
-     * const [totalRam, ramUsed] = ns.getServerRam("helios");
-     * ```
-     * @param host - Host of target server.
-     * @returns Array with total and used memory on the specified server, in GB.
-     */
-    getServerRam(host: string): [number, number];
-
-    /**
      * Get the maximum amount of RAM on a server.
      * @remarks
      * RAM cost: 0.05 GB
@@ -5474,11 +5447,7 @@ export declare interface OfficeAPI {
      * @param employeePosition - Position to place into. Defaults to "Unassigned".
      * @returns True if an employee was hired, false otherwise
      */
-    hireEmployee(
-    divisionName: string,
-    city: CityName | `${CityName}`,
-    employeePosition?: CorpEmployeePosition,
-    ): boolean;
+    hireEmployee(divisionName: string, city: CityName | `${CityName}`, employeePosition?: CorpEmployeePosition): boolean;
     /**
      * Upgrade office size.
      * @param divisionName - Name of the division
@@ -6397,26 +6366,6 @@ export declare interface Singularity {
     getAugmentationPrereq(augName: string): string[];
 
     /**
-     * Get the price and reputation of an augmentation.
-     * @deprecated use getAugmentationPrice getAugmentationRepReq
-     * @remarks
-     * RAM cost: 5 GB * 16/4/1
-     *
-     *
-     * This function returns an array with two elements that gives the cost for
-     * the specified Augmentation. The first element in the returned array is the
-     * reputation requirement of the Augmentation, and the second element is the
-     * money cost.
-     *
-     * If an invalid Augmentation name is passed in for the augName argument, this
-     * function will return the array [-1, -1].
-     *
-     * @param augName - Name of Augmentation.
-     * @returns Array with first element as a reputation requirement and second element as the money cost.
-     */
-    getAugmentationCost(augName: string): [number, number];
-
-    /**
      * Get price of an augmentation.
      * @remarks
      * RAM cost: 2.5 GB * 16/4/1
@@ -6735,6 +6684,8 @@ export declare interface Sleeve {
      *
      * Return a person object for this sleeve
      *
+     * storedCycles is the amount of Bonus Time in cycles, each translates to 200ms
+     *
      * @param sleeveNumber - Index of the sleeve to retrieve information.
      * @returns Object containing information about this sleeve.
      */
@@ -6978,9 +6929,14 @@ export declare type SleeveInfiltrateTask = { type: "INFILTRATE" };
 
 /** @public */
 export declare interface SleevePerson extends Person {
+    /** Number 0-100 Experience earned and shared is multiplied with shock% before sync% */
     shock: number;
+    /** Number 1-100 Experience earned by this sleeve and shared with the player is multiplied with sync% after shock% */
     sync: number;
+    /** Number 1-100 initial Value of sync on BN start */
     memory: number;
+    /** Number of 200ms cycles which are stored as bonus time */
+    storedCycles: number;
 }
 
 /** @public */

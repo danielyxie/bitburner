@@ -866,19 +866,23 @@ export function NetscriptCorporation(): InternalAPI<NSCorporation> {
       return Math.round(getCorporation().storedCycles / 5) * 1000;
     },
   };
-  // TODO: More removedFunctions entries for old getter functions replaced by getConstants
+
+  // TODO 3.0: Remove these removedFunctions warnings.
   Object.assign(corpFunctions, {
     assignJob: removedFunction(
       "v2.2.0",
-      "Corporation employees no longer exist as separate objects.\nUse corporation.setAutoJobAssignment instead to assign employees to jobs.",
+      "Removed due to employees no longer being objects. Use ns.corporation.setAutoJobAssignment instead.",
       true,
     ),
-    getEmployee: removedFunction(
-      "v2.2.0",
-      "Corporation employees no longer exist as separate objects and this function no longer has a use.",
-      true,
-    ),
-    getDivisionConstants: removedFunction("v2.2.0", "ns.corporation.getIndustryData"),
+    getEmployee: removedFunction("v2.2.0", "Removed due to employees no longer being individual objects.", true),
+    getExpandCityCost: removedFunction("v2.2.0", "corporation.getConstants().officeInitialCost"),
+    getExpandIndustryCost: removedFunction("v2.2.0", "corporation.getIndustryData"),
+    getIndustryTypes: removedFunction("v2.2.0", "corporation.getConstants().industryNames"),
+    getMaterialNames: removedFunction("v2.2.0", "corporation.getConstants().materialNames"),
+    getPurchaseWarehouseCost: removedFunction("v2.2.0", "corporation.getConstants().warehouseInitialCost"),
+    getResearchNames: removedFunction("v2.2.0", "corporation.getConstants().researchNames"),
+    getUnlockables: removedFunction("v2.2.0", "corporation.getConstants().unlockNames"),
+    getUpgradeNames: removedFunction("v2.2.0", "corporation.getConstants().upgradeNames"),
   });
   return corpFunctions;
 }

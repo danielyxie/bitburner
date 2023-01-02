@@ -108,7 +108,6 @@ export async function main(ns) {
 |  [getServerMinSecurityLevel(host)](./bitburner.ns.getserverminsecuritylevel.md) | Returns the minimum security level of the target server. |
 |  [getServerMoneyAvailable(host)](./bitburner.ns.getservermoneyavailable.md) | Get money available on a server. |
 |  [getServerNumPortsRequired(host)](./bitburner.ns.getservernumportsrequired.md) | Returns the number of open ports required to successfully run NUKE.exe on the specified server. |
-|  [getServerRam(host)](./bitburner.ns.getserverram.md) |  |
 |  [getServerRequiredHackingLevel(host)](./bitburner.ns.getserverrequiredhackinglevel.md) | Returns the required hacking level of the target server. |
 |  [getServerSecurityLevel(host)](./bitburner.ns.getserversecuritylevel.md) | Get server security level. |
 |  [getServerUsedRam(host)](./bitburner.ns.getserverusedram.md) | Get the used RAM on a server. |

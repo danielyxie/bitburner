@@ -105,7 +105,8 @@ export function removedFunction(version: string, replacement: string, replaceMsg
   return (ctx: NetscriptContext) => {
     throw helpers.makeRuntimeErrorMsg(
       ctx,
-      `Function removed in ${version}. ` + replaceMsg ? replacement : `Please use ${replacement} instead.`,
+      `Function removed in ${version}. ${replaceMsg ? replacement : `Please use ${replacement} instead.`}`,
+      "REMOVED FUNCTION",
     );
   };
 }

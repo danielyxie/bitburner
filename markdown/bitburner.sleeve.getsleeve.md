@@ -30,3 +30,5 @@ RAM cost: 4 GB
 
 Return a person object for this sleeve
 
+storedCycles is the amount of Bonus Time in cycles, each translates to 200ms
+

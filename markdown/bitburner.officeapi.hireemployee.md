@@ -9,11 +9,7 @@ Hire an employee.
 <b>Signature:</b>
 
 ```typescript
-hireEmployee(
-    divisionName: string,
-    city: CityName | `${CityName}`,
-    employeePosition?: CorpEmployeePosition,
-  ): boolean;
+hireEmployee(divisionName: string, city: CityName | `${CityName}`, employeePosition?: CorpEmployeePosition): boolean;
 ```
 
 ## Parameters

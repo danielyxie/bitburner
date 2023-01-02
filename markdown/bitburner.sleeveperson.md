@@ -16,7 +16,8 @@ interface SleevePerson extends Person
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [memory](./bitburner.sleeveperson.memory.md) | number |  |
-|  [shock](./bitburner.sleeveperson.shock.md) | number |  |
-|  [sync](./bitburner.sleeveperson.sync.md) | number |  |
+|  [memory](./bitburner.sleeveperson.memory.md) | number | Number 1-100 initial Value of sync on BN start |
+|  [shock](./bitburner.sleeveperson.shock.md) | number | Number 0-100 Experience earned and shared is multiplied with shock% before sync% |
+|  [storedCycles](./bitburner.sleeveperson.storedcycles.md) | number | Number of 200ms cycles which are stored as bonus time |
+|  [sync](./bitburner.sleeveperson.sync.md) | number | Number 1-100 Experience earned by this sleeve and shared with the player is multiplied with sync% after shock% |
 

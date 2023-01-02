@@ -36,7 +36,7 @@ import { calculateHackingTime } from "../Hacking";
 import { Server } from "../Server/Server";
 import { netscriptCanHack } from "../Hacking/netscriptCanHack";
 import { FactionInfos } from "../Faction/FactionInfo";
-import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { InternalAPI, NetscriptContext, removedFunction } from "../Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
 import { FactionNames } from "../Faction/data/FactionNames";
@@ -91,7 +91,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
     }
   };
 
-  return {
+  const singularityAPI: InternalAPI<ISingularity> = {
     getOwnedAugmentations: (ctx) => (_purchased) => {
       helpers.checkSingularityAccess(ctx);
       const purchased = !!_purchased;
@@ -117,13 +117,6 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       const faction = getFaction(ctx, facName);
 
       return getFactionAugmentationsFiltered(faction);
-    },
-    getAugmentationCost: (ctx) => (_augName) => {
-      helpers.checkSingularityAccess(ctx);
-      const augName = helpers.string(ctx, "augName", _augName);
-      const aug = getAugmentation(ctx, augName);
-      const costs = aug.getCost();
-      return [costs.repCost, costs.moneyCost];
     },
     getAugmentationPrereq: (ctx) => (_augName) => {
       helpers.checkSingularityAccess(ctx);
@@ -1221,4 +1214,11 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       return canGetBonus();
     },
   };
+  Object.assign(singularityAPI, {
+    getAugmentationCost: removedFunction(
+      "v2.2.0",
+      "singularity.getAugmentationPrice and singularity.getAugmentationRepReq",
+    ),
+  });
+  return singularityAPI;
 }

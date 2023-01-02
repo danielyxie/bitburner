@@ -72,7 +72,7 @@ import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 import { recentScripts } from "./Netscript/RecentScripts";
-import { ExternalAPI, InternalAPI, StampedLayer, wrapAPILayer } from "./Netscript/APIWrapper";
+import { ExternalAPI, InternalAPI, removedFunction, StampedLayer, wrapAPILayer } from "./Netscript/APIWrapper";
 import { INetscriptExtra } from "./NetscriptFunctions/Extra";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { getBitNodeMultipliers } from "./BitNode/BitNode";
@@ -1176,18 +1176,6 @@ export const ns: InternalAPI<NSFull> = {
     helpers.log(ctx, () => `returned ${server.numOpenPortsRequired} for '${server.hostname}'`);
     return server.numOpenPortsRequired;
   },
-  getServerRam:
-    (ctx) =>
-    (_hostname): [number, number] => {
-      const hostname = helpers.string(ctx, "hostname", _hostname);
-      helpers.log(ctx, () => `getServerRam is deprecated in favor of getServerMaxRam / getServerUsedRam`);
-      const server = helpers.getServer(ctx, hostname);
-      helpers.log(
-        ctx,
-        () => `returned [${numeralWrapper.formatRAM(server.maxRam)}, ${numeralWrapper.formatRAM(server.ramUsed)}]`,
-      );
-      return [server.maxRam, server.ramUsed];
-    },
   getServerMaxRam: (ctx) => (_hostname) => {
     const hostname = helpers.string(ctx, "hostname", _hostname);
     const server = helpers.getServer(ctx, hostname);
@@ -1900,6 +1888,10 @@ export const ns: InternalAPI<NSFull> = {
   flags: Flags,
   ...NetscriptExtra(),
 };
+// Object.assign to bypass ts for removedFunctions which have no documentation or ramcost
+Object.assign(ns, {
+  getServerRam: removedFunction("v2.2.0", "getServerMaxRam and getServerUsedRam"),
+});
 
 // add undocumented functions
 export const wrappedNS = wrapAPILayer({} as ExternalAPI<NSFull>, ns, []);

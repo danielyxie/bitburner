@@ -14,6 +14,7 @@ import { Flags } from "../NetscriptFunctions/Flags";
 import { AutocompleteData } from "@nsdefs";
 import * as libarg from "arg";
 
+// TODO: this shouldn't be hardcoded in two places with no typechecks to verify equivalence
 // An array of all Terminal commands
 const commands = [
   "alias",
@@ -21,6 +22,7 @@ const commands = [
   "backdoor",
   "cat",
   "cd",
+  "changelog",
   "check",
   "clear",
   "cls",

@@ -1959,7 +1959,7 @@ export class Bladeburner {
       if (this.action.type !== ActionTypes["Idle"]) {
         let msg = "Your Bladeburner action was cancelled because you started doing something else.";
         if (this.automateEnabled) {
-          msg += `<br /><br />Your automation was disabled as well. You will have to re-enable it through the Bladeburner console`;
+          msg += `\n\nYour automation was disabled as well. You will have to re-enable it through the Bladeburner console`;
           this.automateEnabled = false;
         }
         if (!Settings.SuppressBladeburnerPopup) {

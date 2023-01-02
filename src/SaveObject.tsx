@@ -756,7 +756,7 @@ function createScamUpdateText(): void {
   }
 }
 
-function createNewUpdateText(): void {
+function createNewUpdateText() {
   setTimeout(
     () =>
       dialogBoxCreate(
@@ -769,7 +769,7 @@ function createNewUpdateText(): void {
   );
 }
 
-function createBetaUpdateText(): void {
+function createBetaUpdateText() {
   setTimeout(
     () =>
       dialogBoxCreate(
