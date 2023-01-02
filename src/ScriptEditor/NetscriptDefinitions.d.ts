@@ -59,9 +59,14 @@ interface Player extends Person {
 
 /** @public */
 interface SleevePerson extends Person {
+  /** Number 0-100 Experience earned and shared is multiplied with shock% before sync% */
   shock: number;
+  /** Number 1-100 Experience earned by this sleeve and shared with the player is multiplied with sync% after shock% */
   sync: number;
+  /** Number 1-100 initial Value of sync on BN start */
   memory: number;
+  /** Number of 200ms cycles which are stored as bonus time */
+  storedCycles: number;
 }
 
 /** @public */
@@ -3567,6 +3572,8 @@ export interface Sleeve {
    * RAM cost: 4 GB
    *
    * Return a person object for this sleeve
+   *
+   * storedCycles is the amount of Bonus Time in cycles, each translates to 200ms
    *
    * @param sleeveNumber - Index of the sleeve to retrieve information.
    * @returns Object containing information about this sleeve.

@@ -162,6 +162,7 @@ export function NetscriptSleeve(): InternalAPI<Sleeve> {
         shock: sl.shock,
         sync: sl.sync,
         memory: sl.memory,
+        storedCycles: sl.storedCycles,
       };
 
       return data;
