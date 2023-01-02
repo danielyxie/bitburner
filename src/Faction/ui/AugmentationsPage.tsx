@@ -1,3 +1,6 @@
+/**
+ * Root React Component for displaying a faction's "Purchase Augmentations" page
+ */
 import { Box, Button, Tooltip, Typography, Paper, Container } from "@mui/material";
 import React, { useState } from "react";
 
@@ -7,22 +10,22 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { PurchasableAugmentations } from "../../Augmentation/ui/PurchasableAugmentations";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Favor } from "../../ui/React/Favor";
 import { Reputation } from "../../ui/React/Reputation";
 import { FactionNames } from "../data/FactionNames";
 import { Faction } from "../Faction";
 import { getFactionAugmentationsFiltered, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
-import { CONSTANTS } from "../../Constants";
 
 type IProps = {
   faction: Faction;
   routeToMainPage: () => void;
 };
 
-/** Root React Component for displaying a faction's "Purchase Augmentations" page */
 export function AugmentationsPage(props: IProps): React.ReactElement {
+  const player = use.Player();
+
   const setRerender = useState(false)[1];
 
   function rerender(): void {
@@ -30,7 +33,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   }
 
   function getAugs(): string[] {
-    return getFactionAugmentationsFiltered(props.faction);
+    return getFactionAugmentationsFiltered(player, props.faction);
   }
 
   function getAugsSorted(): string[] {
@@ -58,7 +61,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         throw new Error("Invalid Augmentation Names");
       }
 
-      return aug1.getCost().moneyCost - aug2.getCost().moneyCost;
+      return aug1.getCost(player).moneyCost - aug2.getCost(player).moneyCost;
     });
 
     return augs;
@@ -68,11 +71,11 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     const augs = getAugs();
     function canBuy(augName: string): boolean {
       const aug = StaticAugmentations[augName];
-      const augCosts = aug.getCost();
+      const augCosts = aug.getCost(player);
       const repCost = augCosts.repCost;
       const hasReq = props.faction.playerReputation >= repCost;
       const hasRep = hasAugmentationPrereqs(aug);
-      const hasCost = augCosts.moneyCost !== 0 && Player.money > augCosts.moneyCost;
+      const hasCost = augCosts.moneyCost !== 0 && player.money > augCosts.moneyCost;
       return hasCost && hasReq && hasRep;
     }
     const buy = augs.filter(canBuy).sort((augName1, augName2) => {
@@ -82,7 +85,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         throw new Error("Invalid Augmentation Names");
       }
 
-      return aug1.getCost().moneyCost - aug2.getCost().moneyCost;
+      return aug1.getCost(player).moneyCost - aug2.getCost(player).moneyCost;
     });
     const cantBuy = augs
       .filter((aug) => !canBuy(aug))
@@ -92,7 +95,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         if (aug1 == null || aug2 == null) {
           throw new Error("Invalid Augmentation Names");
         }
-        return aug1.getCost().repCost - aug2.getCost().repCost;
+        return aug1.getCost(player).repCost - aug2.getCost(player).repCost;
       });
 
     return buy.concat(cantBuy);
@@ -106,7 +109,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       if (aug1 == null || aug2 == null) {
         throw new Error("Invalid Augmentation Names");
       }
-      return aug1.getCost().repCost - aug2.getCost().repCost;
+      return aug1.getCost(player).repCost - aug2.getCost(player).repCost;
     });
 
     return augs;
@@ -125,51 +128,17 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   const purchasable = augs.filter(
     (aug: string) =>
       aug === AugmentationNames.NeuroFluxGovernor ||
-      (!Player.augmentations.some((a) => a.name === aug) && !Player.queuedAugmentations.some((a) => a.name === aug)),
+      (!player.augmentations.some((a) => a.name === aug) && !player.queuedAugmentations.some((a) => a.name === aug)),
   );
   const owned = augs.filter((aug: string) => !purchasable.includes(aug));
 
   const multiplierComponent =
     props.faction.name !== FactionNames.ShadowsOfAnarchy ? (
-      <Tooltip
-        title={
-          <Typography>
-            The price of every Augmentation increases for every queued Augmentation and it is reset when you install
-            them.
-          </Typography>
-        }
-      >
-        <Typography>
-          <b>Price multiplier:</b> x {numeralWrapper.formatReallyBigNumber(getGenericAugmentationPriceMultiplier())}
-        </Typography>
-      </Tooltip>
+      <Typography>
+        <b>Price multiplier:</b> x {numeralWrapper.formatReallyBigNumber(getGenericAugmentationPriceMultiplier())}
+      </Typography>
     ) : (
-      <Tooltip
-        title={
-          <Typography>
-            This price multiplier increases for each {FactionNames.ShadowsOfAnarchy} augmentation already purchased. The
-            multiplier is NOT reset when installing augmentations.
-          </Typography>
-        }
-      >
-        <Typography>
-          <b>Price multiplier:</b> x{" "}
-          {numeralWrapper.formatReallyBigNumber(
-            Math.pow(
-              CONSTANTS.SoACostMult,
-              augs.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length,
-            ),
-          )}
-          <br />
-          <b>Reputation multiplier:</b> x{" "}
-          {numeralWrapper.formatReallyBigNumber(
-            Math.pow(
-              CONSTANTS.SoARepMult,
-              augs.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length,
-            ),
-          )}
-        </Typography>
-      </Tooltip>
+      <></>
     );
 
   return (
@@ -191,10 +160,20 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
               my: 1,
             }}
           >
-            <>{multiplierComponent}</>
+            <Tooltip
+              title={
+                <Typography>
+                  The price of every Augmentation increases for every queued Augmentation and it is reset when you
+                  install them.
+                </Typography>
+              }
+            >
+              {multiplierComponent}
+            </Tooltip>
             <Typography>
               <b>Reputation:</b> <Reputation reputation={props.faction.playerReputation} />
-              <br />
+            </Typography>
+            <Typography>
               <b>Favor:</b> <Favor favor={Math.floor(props.faction.favor)} />
             </Typography>
           </Box>
@@ -216,15 +195,16 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       <PurchasableAugmentations
         augNames={purchasable}
         ownedAugNames={owned}
-        canPurchase={(aug) => {
-          const costs = aug.getCost();
+        player={player}
+        canPurchase={(player, aug) => {
+          const costs = aug.getCost(player);
           return (
             hasAugmentationPrereqs(aug) &&
             props.faction.playerReputation >= costs.repCost &&
-            (costs.moneyCost === 0 || Player.money > costs.moneyCost)
+            (costs.moneyCost === 0 || player.money > costs.moneyCost)
           );
         }}
-        purchaseAugmentation={(aug, showModal) => {
+        purchaseAugmentation={(player, aug, showModal) => {
           if (!Settings.SuppressBuyAugmentationConfirmation) {
             showModal(true);
           } else {

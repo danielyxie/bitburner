@@ -8,13 +8,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface ILocation 
+export interface ILocation 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [city](./bitburner.ilocation.city.md) | [CityName](./bitburner.cityname.md) |  |
-|  [name](./bitburner.ilocation.name.md) | [LocationName](./bitburner.locationname.md) |  |
+|  [city](./bitburner.ilocation.city.md) | string |  |
+|  [name](./bitburner.ilocation.name.md) | string |  |
 

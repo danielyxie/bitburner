@@ -16,19 +16,16 @@ export const V2Modal = (): React.ReactElement => {
       <Typography>While this version does not change the game a lot, it does have quite a few API breaks.</Typography>{" "}
       <Typography>
         A file was added to your home computer called V2_0_0_API_BREAK.txt and it is highly recommended you take a look
-        at this file. It explains where most of the API break have occurred.
+        at this file. It explains where most of the API break have occured.
       </Typography>{" "}
       <Typography>
         You should also take a look at{" "}
-        <a
-          target="_"
-          href="https://github.com/bitburner-official/bitburner-src/blob/dev/doc/source/v2.0.0_migration.rst"
-        >
+        <a target="_" href="https://github.com/danielyxie/bitburner/blob/dev/doc/source/v2.0.0_migration.rst">
           {" "}
           the migration guide
         </a>{" "}
         as well as{" "}
-        <a target="_" href="https://github.com/bitburner-official/bitburner-src/blob/dev/doc/source/changelog.rst">
+        <a target="_" href="https://github.com/danielyxie/bitburner/blob/dev/doc/source/changelog.rst">
           the changelog
         </a>
       </Typography>

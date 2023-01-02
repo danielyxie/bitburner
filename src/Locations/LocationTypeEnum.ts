@@ -1,4 +1,6 @@
-/** Enum defining the different types of possible locations */
+/**
+ * Enum defining the different types of possible locations
+ */
 export enum LocationType {
   Company,
   Gym,

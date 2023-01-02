@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
+import { getRandomInt } from "../../../utils/helpers/getRandomInt";
+import { CorporationConstants } from "../../data/Constants";
 import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import { NumberInput } from "../../../ui/React/NumberInput";
 import Button from "@mui/material/Button";
 import { KEY } from "../../../utils/helpers/keyCodes";
-import { IssueNewShares } from "../../Actions";
 
 interface IEffectTextProps {
   shares: number | null;
@@ -17,7 +18,8 @@ function EffectText(props: IEffectTextProps): React.ReactElement {
   const corp = useCorporation();
   if (props.shares === null) return <></>;
   const newSharePrice = Math.round(corp.sharePrice * 0.9);
-  const maxNewShares = corp.calculateMaxNewShares();
+  const maxNewSharesUnrounded = Math.round(corp.totalShares * 0.2);
+  const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 1e6);
   let newShares = props.shares;
   if (isNaN(newShares)) {
     return <Typography>Invalid input</Typography>;
@@ -53,7 +55,8 @@ interface IProps {
 export function IssueNewSharesModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const [shares, setShares] = useState<number>(NaN);
-  const maxNewShares = corp.calculateMaxNewShares();
+  const maxNewSharesUnrounded = Math.round(corp.totalShares * 0.2);
+  const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 1e6);
 
   const newShares = Math.round((shares || 0) / 10e6) * 10e6;
   const disabled = isNaN(shares) || isNaN(newShares) || newShares < 10e6 || newShares > maxNewShares;
@@ -61,17 +64,39 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
   function issueNewShares(): void {
     if (isNaN(shares)) return;
     if (disabled) return;
-    const [profit, newShares, privateShares] = IssueNewShares(corp, shares);
 
+    const newSharePrice = Math.round(corp.sharePrice * 0.9);
+    let newShares = shares;
+
+    // Round to nearest ten-millionth
+    newShares = Math.round(newShares / 10e6) * 10e6;
+
+    const profit = newShares * newSharePrice;
+    corp.issueNewSharesCooldown = CorporationConstants.IssueNewSharesCooldown;
+
+    // Determine how many are bought by private investors
+    // If private investors own n% of the company, private investors get up to 0.5n% at most
+    // Round # of private shares to the nearest million
+    const privateOwnedRatio = 1 - (corp.numShares + corp.issuedShares) / corp.totalShares;
+    const maxPrivateShares = Math.round((newShares / 2) * privateOwnedRatio);
+    const privateShares = Math.round(getRandomInt(0, maxPrivateShares) / 1e6) * 1e6;
+
+    corp.issuedShares += newShares - privateShares;
+    corp.totalShares += newShares;
+    corp.funds = corp.funds + profit;
+    corp.immediatelyUpdateSharePrice();
     props.onClose();
 
     let dialogContents =
       `Issued ${numeralWrapper.format(newShares, "0.000a")} new shares` +
-      ` and raised ${numeralWrapper.formatMoney(profit)}.` +
-      (privateShares > 0)
-        ? "\n" + numeralWrapper.format(privateShares, "0.000a") + "of these shares were bought by private investors."
-        : "";
-    dialogContents += `\n\nStock price decreased to ${numeralWrapper.formatMoney(corp.sharePrice)}`;
+      ` and raised ${numeralWrapper.formatMoney(profit)}.`;
+    if (privateShares > 0) {
+      dialogContents += `<br>${numeralWrapper.format(
+        privateShares,
+        "0.000a",
+      )} of these shares were bought by private investors.`;
+    }
+    dialogContents += `<br><br>Stock price decreased to ${numeralWrapper.formatMoney(corp.sharePrice)}`;
     dialogBoxCreate(dialogContents);
   }
 

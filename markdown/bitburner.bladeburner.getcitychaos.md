@@ -9,14 +9,14 @@ Get chaos of a city.
 <b>Signature:</b>
 
 ```typescript
-getCityChaos(city: CityName | `${CityName}`): number;
+getCityChaos(name: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of city. Case-sensitive |
+|  name | string |  |
 
 <b>Returns:</b>
 

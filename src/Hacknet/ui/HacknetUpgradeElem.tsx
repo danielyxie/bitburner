@@ -4,6 +4,8 @@ import { purchaseHashUpgrade } from "../HacknetHelpers";
 import { HashManager } from "../HashManager";
 import { HashUpgrade } from "../HashUpgrade";
 
+import { IPlayer } from "../../PersonObjects/IPlayer";
+
 import { ServerDropdown, ServerType } from "../../ui/React/ServerDropdown";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
@@ -17,6 +19,7 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import { FactionNames } from "../../Faction/data/FactionNames";
 
 interface IProps {
+  player: IPlayer;
   hashManager: HashManager;
   upg: HashUpgrade;
   rerender: () => void;
@@ -36,7 +39,7 @@ export function HacknetUpgradeElem(props: IProps): React.ReactElement {
   function purchase(): void {
     const canPurchase = props.hashManager.hashes >= props.hashManager.getUpgradeCost(props.upg.name);
     if (canPurchase) {
-      const res = purchaseHashUpgrade(props.upg.name, selectedServer);
+      const res = purchaseHashUpgrade(props.player, props.upg.name, selectedServer);
       if (!res) {
         dialogBoxCreate(
           "Failed to purchase upgrade. This may be because you do not have enough hashes, " +

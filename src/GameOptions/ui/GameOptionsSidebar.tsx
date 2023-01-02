@@ -13,6 +13,7 @@ import {
 import { Box, Button, List, ListItemButton, Paper, Tooltip, Typography } from "@mui/material";
 import { default as React, useRef, useState } from "react";
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { ImportData, saveObject } from "../../SaveObject";
 import { Settings } from "../../Settings/Settings";
 import { StyleEditorButton } from "../../Themes/ui/StyleEditorButton";
@@ -21,14 +22,15 @@ import { ConfirmationModal } from "../../ui/React/ConfirmationModal";
 import { DeleteGameButton } from "../../ui/React/DeleteGameButton";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { SoftResetButton } from "../../ui/React/SoftResetButton";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
+import { IRouter } from "../../ui/Router";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { GameOptionsTab } from "../GameOptionsTab";
 
 interface IProps {
   tab: GameOptionsTab;
   setTab: (tab: GameOptionsTab) => void;
+  player: IPlayer;
+  router: IRouter;
   save: () => void;
   export: () => void;
   forceKill: () => void;
@@ -92,7 +94,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
 
   function compareSaveGame(): void {
     if (!importData) return;
-    Router.toImportSave(importData.base64);
+    props.router.toImportSave(importData.base64);
     setImportSaveOpen(false);
     setImportData(null);
   }
@@ -217,12 +219,12 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
           </Button>
         </Tooltip>
         <Tooltip title="Head to the theme browser to see a collection of prebuilt themes.">
-          <Button startIcon={<Palette />} onClick={() => Router.toPage(Page.ThemeBrowser)} sx={{ gridArea: "browse" }}>
+          <Button startIcon={<Palette />} onClick={() => props.router.toThemeBrowser()} sx={{ gridArea: "browse" }}>
             Theme Browser
           </Button>
         </Tooltip>
         <Box sx={{ gridArea: "theme", "& .MuiButton-root": { height: "100%", width: "100%" } }}>
-          <ThemeEditorButton />
+          <ThemeEditorButton router={props.router} />
         </Box>
         <Box sx={{ gridArea: "style", "& .MuiButton-root": { height: "100%", width: "100%" } }}>
           <StyleEditorButton />
@@ -242,7 +244,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
         >
           <Button
             startIcon={<BugReport />}
-            href="https://github.com/bitburner-official/bitburner-src/issues/new"
+            href="https://github.com/danielyxie/bitburner/issues/new"
             target="_blank"
             sx={{ gridArea: "bug" }}
           >

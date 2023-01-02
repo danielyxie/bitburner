@@ -9,11 +9,11 @@ Retrieve the first element from the port without removing it.
 <b>Signature:</b>
 
 ```typescript
-peek(): PortData;
+peek(): string | number;
 ```
 <b>Returns:</b>
 
-[PortData](./bitburner.portdata.md)
+string \| number
 
 the data read
 

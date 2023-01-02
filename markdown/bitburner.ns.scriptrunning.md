@@ -17,7 +17,7 @@ scriptRunning(script: string, host: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script to check. This is case-sensitive. |
-|  host | string | Hostname of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -31,7 +31,7 @@ RAM cost: 1 GB
 
 Returns a boolean indicating whether any instance of the specified script is running on the target server, regardless of its arguments.
 
-This is different than the [isRunning](./bitburner.ns.isrunning.md) function because it does not try to identify a specific instance of a running script by its arguments.
+This is different than the isRunning function because it does not try to identify a specific instance of a running script by its arguments.
 
 ## Example 1
 

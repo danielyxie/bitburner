@@ -1,5 +1,7 @@
-// Server and HacknetServer-related methods for the Player class (PlayerObject)
-import { PlayerObject } from "./PlayerObject";
+/**
+ * Server and HacknetServer-related methods for the Player class (PlayerObject)
+ */
+import { IPlayer } from "../IPlayer";
 
 import { CONSTANTS } from "../../Constants";
 
@@ -10,23 +12,23 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { SpecialServers } from "../../Server/data/SpecialServers";
 
-export function hasTorRouter(this: PlayerObject): boolean {
+export function hasTorRouter(this: IPlayer): boolean {
   return this.getHomeComputer().serversOnNetwork.includes(SpecialServers.DarkWeb);
 }
 
-export function getCurrentServer(this: PlayerObject): BaseServer {
+export function getCurrentServer(this: IPlayer): BaseServer {
   const server = GetServer(this.currentServer);
   if (server === null) throw new Error(`somehow connected to a server that does not exist. ${this.currentServer}`);
   return server;
 }
 
-export function getHomeComputer(this: PlayerObject): Server {
+export function getHomeComputer(this: IPlayer): Server {
   const home = GetServer("home");
   if (home instanceof Server) return home;
   throw new Error("home computer was not a normal server");
 }
 
-export function getUpgradeHomeRamCost(this: PlayerObject): number {
+export function getUpgradeHomeRamCost(this: IPlayer): number {
   //Calculate how many times ram has been upgraded (doubled)
   const currentRam = this.getHomeComputer().maxRam;
   const numUpgrades = Math.log2(currentRam);
@@ -38,11 +40,11 @@ export function getUpgradeHomeRamCost(this: PlayerObject): number {
   return cost;
 }
 
-export function getUpgradeHomeCoresCost(this: PlayerObject): number {
+export function getUpgradeHomeCoresCost(this: IPlayer): number {
   return 1e9 * Math.pow(7.5, this.getHomeComputer().cpuCores);
 }
 
-export function createHacknetServer(this: PlayerObject): HacknetServer {
+export function createHacknetServer(this: IPlayer): HacknetServer {
   const numOwned = this.hacknetNodes.length;
   const name = `hacknet-node-${numOwned}`;
   const server = new HacknetServer({

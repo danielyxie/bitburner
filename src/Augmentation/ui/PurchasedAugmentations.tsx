@@ -4,7 +4,7 @@
  */
 import { List, ListItemText, Paper, Tooltip, Typography } from "@mui/material";
 import * as React from "react";
-import { Player } from "@player";
+import { Player } from "../../Player";
 import { StaticAugmentations } from "../StaticAugmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
 

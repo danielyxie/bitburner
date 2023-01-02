@@ -1,9 +1,12 @@
+/**
+ * React Component for the popup used to purchase a new server.
+ */
 import React, { useState } from "react";
 import { purchaseServer } from "../../Server/ServerPurchases";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -17,12 +20,12 @@ interface IProps {
   rerender: () => void;
 }
 
-/** React Component for the popup used to purchase a new server. */
 export function PurchaseServerModal(props: IProps): React.ReactElement {
+  const player = use.Player();
   const [hostname, setHostname] = useState("");
 
   function tryToPurchaseServer(): void {
-    purchaseServer(hostname, props.ram, props.cost);
+    purchaseServer(hostname, props.ram, props.cost, player);
     props.onClose();
   }
 
@@ -38,7 +41,7 @@ export function PurchaseServerModal(props: IProps): React.ReactElement {
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
         Would you like to purchase a new server with {numeralWrapper.formatRAM(props.ram)} of RAM for{" "}
-        <Money money={props.cost} forPurchase={true} />?
+        <Money money={props.cost} player={player} />?
       </Typography>
       <br />
       <br />
@@ -53,7 +56,7 @@ export function PurchaseServerModal(props: IProps): React.ReactElement {
         placeholder="Unique Hostname"
         InputProps={{
           endAdornment: (
-            <Button onClick={tryToPurchaseServer} disabled={!Player.canAfford(props.cost) || hostname === ""}>
+            <Button onClick={tryToPurchaseServer} disabled={!player.canAfford(props.cost) || hostname === ""}>
               Buy
             </Button>
           ),

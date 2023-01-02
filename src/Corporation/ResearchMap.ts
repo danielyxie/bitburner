@@ -2,8 +2,9 @@
 // as values. They are identified by their names
 import { Research, IConstructorParams } from "./Research";
 import { researchMetadata } from "./data/ResearchMetadata";
+import { IMap } from "../types";
 
-export const ResearchMap: Record<string, Research> = {};
+export const ResearchMap: IMap<Research> = {};
 
 function addResearch(p: IConstructorParams): void {
   if (ResearchMap[p.name] != null) {

@@ -9,14 +9,14 @@ Travel to another city in bladeburner.
 <b>Signature:</b>
 
 ```typescript
-switchCity(city: CityName | `${CityName}`): boolean;
+switchCity(name: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of city. Case-sensitive |
+|  name | string |  |
 
 <b>Returns:</b>
 

@@ -1,3 +1,6 @@
+/**
+ * Abstract Base Class for any Server object
+ */
 import { CodingContract } from "../CodingContracts";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
@@ -9,6 +12,7 @@ import { isScriptFilename } from "../Script/isScriptFilename";
 
 import { createRandomIp } from "../utils/IPAddress";
 import { compareArrays } from "../utils/helpers/compareArrays";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { ScriptArg } from "../Netscript/ScriptArg";
 
 interface IConstructorParams {
@@ -25,8 +29,7 @@ interface writeResult {
   overwritten: boolean;
 }
 
-/** Abstract Base Class for any Server object */
-export abstract class BaseServer {
+export class BaseServer {
   // Coding Contract files on this server
   contracts: CodingContract[] = [];
 
@@ -49,7 +52,7 @@ export abstract class BaseServer {
   // IP Address. Must be unique
   ip = "";
 
-  // Flag indicating whether player is currently connected to this server
+  // Flag indicating whether player is curently connected to this server
   isConnectedTo = false;
 
   // RAM (GB) available on this server
@@ -90,11 +93,8 @@ export abstract class BaseServer {
   // Text files on this server
   textFiles: TextFile[] = [];
 
-  // Flag indicating whether this is a purchased server
+  // Flag indicating wehther this is a purchased server
   purchasedByPlayer = false;
-
-  // Variables that exist only on some types of servers can just be optional.
-  backdoorInstalled?: boolean;
 
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     this.ip = params.ip ? params.ip : createRandomIp();
@@ -151,7 +151,9 @@ export abstract class BaseServer {
     return null;
   }
 
-  /** Returns boolean indicating whether the given script is running on this server */
+  /**
+   * Returns boolean indicating whether the given script is running on this server
+   */
   isRunning(fn: string): boolean {
     for (const runningScriptObj of this.runningScripts) {
       if (runningScriptObj.filename === fn) {
@@ -163,8 +165,15 @@ export abstract class BaseServer {
   }
 
   removeContract(contract: CodingContract | string): void {
-    const index = this.contracts.findIndex((c) => c.fn === (typeof contract === "string" ? contract : contract.fn));
-    if (index > -1) this.contracts.splice(index, 1);
+    if (contract instanceof CodingContract) {
+      this.contracts = this.contracts.filter((c) => {
+        return c.fn !== contract.fn;
+      });
+    } else {
+      this.contracts = this.contracts.filter((c) => {
+        return c.fn !== contract;
+      });
+    }
   }
 
   /**
@@ -235,7 +244,8 @@ export abstract class BaseServer {
     this.maxRam = ram;
   }
 
-  updateRamUsed(ram: number): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateRamUsed(ram: number, player: IPlayer): void {
     this.ramUsed = ram;
   }
 
@@ -254,9 +264,9 @@ export abstract class BaseServer {
 
   /**
    * Write to a script file
-   * Overwrites existing files. Creates new files if the script does not exist.
+   * Overwrites existing files. Creates new files if the script does not eixst
    */
-  writeToScriptFile(fn: string, code: string): writeResult {
+  writeToScriptFile(player: IPlayer, fn: string, code: string): writeResult {
     const ret = { success: false, overwritten: false };
     if (!isValidFilePath(fn) || !isScriptFilename(fn)) {
       return ret;
@@ -267,7 +277,7 @@ export abstract class BaseServer {
       if (fn === this.scripts[i].filename) {
         const script = this.scripts[i];
         script.code = code;
-        script.updateRamUsage(this.scripts);
+        script.updateRamUsage(player, this.scripts);
         script.markUpdated();
         ret.overwritten = true;
         ret.success = true;
@@ -276,7 +286,7 @@ export abstract class BaseServer {
     }
 
     // Otherwise, create a new script
-    const newScript = new Script(fn, code, this.hostname, this.scripts);
+    const newScript = new Script(player, fn, code, this.hostname, this.scripts);
     this.scripts.push(newScript);
     ret.success = true;
     return ret;

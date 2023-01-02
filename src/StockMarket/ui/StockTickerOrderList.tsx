@@ -9,8 +9,11 @@ import { StockTickerOrder } from "./StockTickerOrder";
 import { Order } from "../Order";
 import { Stock } from "../Stock";
 
+import { IPlayer } from "../../PersonObjects/IPlayer";
+
 type IProps = {
   orders: Order[];
+  p: IPlayer;
   stock: Stock;
 };
 

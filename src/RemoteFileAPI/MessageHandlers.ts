@@ -1,3 +1,4 @@
+import { Player } from "../Player";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { GetServer } from "../Server/AllServers";
 import { isValidFilePath } from "../Terminal/DirectoryHelpers";
@@ -28,7 +29,7 @@ export const RFARequestHandler: Record<string, (message: RFAMessage) => void | R
     const server = GetServer(fileData.server);
     if (!server) return error("Server hostname invalid", msg);
 
-    if (isScriptFilename(fileData.filename)) server.writeToScriptFile(fileData.filename, fileData.content);
+    if (isScriptFilename(fileData.filename)) server.writeToScriptFile(Player, fileData.filename, fileData.content);
     // Assume it's a text file
     else server.writeToTextFile(fileData.filename, fileData.content);
 

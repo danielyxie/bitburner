@@ -4,8 +4,6 @@
 
 ## Multipliers.hacknet\_node\_ram\_cost property
 
-Multiplier to cost of ram for a Hacknet Node
-
 <b>Signature:</b>
 
 ```typescript

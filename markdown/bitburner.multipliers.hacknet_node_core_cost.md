@@ -4,8 +4,6 @@
 
 ## Multipliers.hacknet\_node\_core\_cost property
 
-Multiplier to cost of core for a Hacknet Node
-
 <b>Signature:</b>
 
 ```typescript

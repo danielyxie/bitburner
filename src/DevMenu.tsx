@@ -1,4 +1,7 @@
-import { Player } from "@player";
+import { IPlayer } from "./PersonObjects/IPlayer";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
+import { IEngine } from "./IEngine";
+import { IRouter } from "./ui/Router";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 
 import React, { useEffect } from "react";
@@ -25,38 +28,44 @@ import { Entropy } from "./DevMenu/ui/Entropy";
 import Typography from "@mui/material/Typography";
 import { Exploit } from "./Exploits/Exploit";
 
-export function DevMenuRoot(): React.ReactElement {
+interface IProps {
+  player: IPlayer;
+  engine: IEngine;
+  router: IRouter;
+}
+
+export function DevMenuRoot(props: IProps): React.ReactElement {
   useEffect(() => {
-    Player.giveExploit(Exploit.YoureNotMeantToAccessThis);
+    props.player.giveExploit(Exploit.YoureNotMeantToAccessThis);
   }, []);
   return (
     <>
       <Typography>Development Menu - Only meant to be used for testing/debugging</Typography>
-      <General />
-      <Stats />
-      <Factions />
-      <Augmentations />
-      <SourceFiles />
-      <Programs />
+      <General player={props.player} router={props.router} />
+      <Stats player={props.player} />
+      <Factions player={props.player} />
+      <Augmentations player={props.player} />
+      <SourceFiles player={props.player} />
+      <Programs player={props.player} />
       <Servers />
       <Companies />
 
-      {Player.bladeburner && <BladeburnerElem />}
+      {props.player.bladeburner instanceof Bladeburner && <BladeburnerElem player={props.player} />}
 
-      {Player.gang && <Gang />}
+      {props.player.inGang() && <Gang player={props.player} />}
 
-      {Player.corporation && <Corporation />}
+      {props.player.hasCorporation() && <Corporation player={props.player} />}
 
       <CodingContracts />
 
-      {Player.hasWseAccount && <StockMarket />}
+      {props.player.hasWseAccount && <StockMarket />}
 
-      {Player.sleeves.length > 0 && <Sleeves />}
-      {Player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1) && <Stanek />}
+      {props.player.sleeves.length > 0 && <Sleeves player={props.player} />}
+      {props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1) && <Stanek />}
 
-      <TimeSkip />
-      <Achievements />
-      <Entropy />
+      <TimeSkip player={props.player} engine={props.engine} />
+      <Achievements player={props.player} engine={props.engine} />
+      <Entropy player={props.player} engine={props.engine} />
       <SaveFile />
     </>
   );

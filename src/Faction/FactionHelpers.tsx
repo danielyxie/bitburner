@@ -6,7 +6,8 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 import { Faction } from "./Faction";
 import { Factions } from "./Factions";
-import { Player } from "@player";
+import { Player } from "../Player";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { Settings } from "../Settings/Settings";
 import {
   getHackingWorkRepGain,
@@ -38,7 +39,9 @@ export function joinFaction(faction: Faction): void {
 
   //Determine what factions you are banned from now that you have joined this faction
   for (const enemy of factionInfo.enemies) {
-    if (Factions[enemy]) Factions[enemy].isBanned = true;
+    if (Factions[enemy] instanceof Faction) {
+      Factions[enemy].isBanned = true;
+    }
   }
   for (let i = 0; i < Player.factionInvitations.length; ++i) {
     if (Player.factionInvitations[i] == faction.name || Factions[Player.factionInvitations[i]].isBanned) {
@@ -56,7 +59,7 @@ export function hasAugmentationPrereqs(aug: Augmentation): boolean {
 
 export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = false): string {
   const hasPrereqs = hasAugmentationPrereqs(aug);
-  const augCosts = aug.getCost();
+  const augCosts = aug.getCost(Player);
   if (!hasPrereqs) {
     const txt = `You must first purchase or install ${aug.prereqs
       .filter((req) => !Player.hasAugmentation(req))
@@ -81,7 +84,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
   } else if (augCosts.moneyCost === 0 || Player.money >= augCosts.moneyCost) {
     const queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-      queuedAugmentation.level = aug.getLevel();
+      queuedAugmentation.level = aug.getLevel(Player);
     }
     Player.queuedAugmentations.push(queuedAugmentation);
 
@@ -91,9 +94,12 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       return "You purchased " + aug.name;
     } else if (!Settings.SuppressBuyAugmentationConfirmation) {
       dialogBoxCreate(
-        `You purchased ${aug.name}. Its enhancements will not take effect until they are installed.` +
-          "To install your augmentations, go to the 'Augmentations' tab on the left-hand navigation menu." +
-          "Purchasing additional augmentations will now be more expensive.",
+        "You purchased " +
+          aug.name +
+          ". Its enhancements will not take " +
+          "effect until they are installed. To install your augmentations, go to the " +
+          "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
+          "augmentations will now be more expensive.",
       );
     }
   } else {
@@ -107,7 +113,6 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 }
 
 export function processPassiveFactionRepGain(numCycles: number): void {
-  if (Player.bitNodeN === 2) return;
   for (const name of Object.keys(Factions)) {
     if (isFactionWork(Player.currentWork) && name === Player.currentWork.factionName) continue;
     if (!Factions.hasOwnProperty(name)) continue;
@@ -132,20 +137,20 @@ export function processPassiveFactionRepGain(numCycles: number): void {
   }
 }
 
-export const getFactionAugmentationsFiltered = (faction: Faction): string[] => {
+export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Faction): string[] => {
   // If player has a gang with this faction, return (almost) all augmentations
-  if (Player.hasGangWith(faction.name)) {
+  if (player.hasGangWith(faction.name)) {
     let augs = Object.values(StaticAugmentations);
 
     // Remove special augs
     augs = augs.filter((a) => !a.isSpecial && a.name !== AugmentationNames.CongruityImplant);
 
-    if (Player.bitNodeN === 2) {
+    if (player.bitNodeN === 2) {
       // TRP is not available outside of BN2 for Gangs
       augs.push(StaticAugmentations[AugmentationNames.TheRedPill]);
     }
 
-    const rng = SFC32RNG(`BN${Player.bitNodeN}.${Player.sourceFileLvl(Player.bitNodeN)}`);
+    const rng = SFC32RNG(`BN${player.bitNodeN}.${player.sourceFileLvl(player.bitNodeN)}`);
     // Remove faction-unique augs that don't belong to this faction
     const uniqueFilter = (a: Augmentation): boolean => {
       // Keep all the non-unique one

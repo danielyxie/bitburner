@@ -9,7 +9,7 @@ Hack related multipliers.
 <b>Signature:</b>
 
 ```typescript
-interface HackingMultipliers 
+export interface HackingMultipliers 
 ```
 
 ## Properties

@@ -9,5 +9,5 @@ Type of division, like Agriculture
 <b>Signature:</b>
 
 ```typescript
-type: CorpIndustryName;
+type: string;
 ```

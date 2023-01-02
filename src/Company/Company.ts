@@ -1,13 +1,15 @@
 import { CompanyPosition } from "./CompanyPosition";
-import * as posNames from "./data/JobTracks";
+import * as posNames from "./data/companypositionnames";
 import { favorToRep, repToFavor } from "../Faction/formulas/favor";
+
+import { IMap } from "../types";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export interface IConstructorParams {
   name: string;
   info: string;
-  companyPositions: Record<string, boolean>;
+  companyPositions: IMap<boolean>;
   expMultiplier: number;
   salaryMultiplier: number;
   jobStatReqOffset: number;
@@ -24,13 +26,19 @@ const DefaultConstructorParams: IConstructorParams = {
 };
 
 export class Company {
-  /** Company name */
+  /**
+   * Company name
+   */
   name: string;
 
-  /** Description and general information about company */
+  /**
+   * Description and general information about company
+   */
   info: string;
 
-  /** Has faction associated. */
+  /**
+   * Has faction associated.
+   */
   isMegacorp: boolean;
 
   /**
@@ -40,9 +48,11 @@ export class Company {
    *
    * Must match names of Company Positions, defined in data/companypositionnames.ts
    */
-  companyPositions: Record<string, boolean>;
+  companyPositions: IMap<boolean>;
 
-  /** Company-specific multiplier for earnings */
+  /**
+   * Company-specific multiplier for earnings
+   */
   expMultiplier: number;
   salaryMultiplier: number;
 
@@ -55,7 +65,9 @@ export class Company {
    */
   jobStatReqOffset: number;
 
-  /** Properties to track the player's progress in this company */
+  /**
+   * Properties to track the player's progress in this company
+   */
   isPlayerEmployed: boolean;
   playerReputation: number;
   favor: number;
@@ -76,7 +88,11 @@ export class Company {
   }
 
   hasPosition(pos: CompanyPosition | string): boolean {
-    return this.companyPositions[typeof pos === "string" ? pos : pos.name] != null;
+    if (pos instanceof CompanyPosition) {
+      return this.companyPositions[pos.name] != null;
+    } else {
+      return this.companyPositions[pos] != null;
+    }
   }
 
   hasAgentPositions(): boolean {
@@ -132,12 +148,16 @@ export class Company {
     return newFavor - this.favor;
   }
 
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("Company", this);
   }
 
-  /** Initializes a Company from a JSON save state. */
+  /**
+   * Initiatizes a Company from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): Company {
     return Generic_fromJSON(Company, value.data);
   }

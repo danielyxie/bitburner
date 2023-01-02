@@ -1,4 +1,4 @@
-import { IStyleSettings } from "@nsdefs";
+import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
 
 export const defaultStyles: IStyleSettings = {
   lineHeight: 1.5,

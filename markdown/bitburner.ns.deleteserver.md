@@ -16,7 +16,7 @@ deleteServer(host: string): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Hostname of the server to delete. |
+|  host | string | Host of the server to delete. |
 
 <b>Returns:</b>
 

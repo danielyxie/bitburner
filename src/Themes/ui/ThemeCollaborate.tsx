@@ -7,7 +7,7 @@ export function ThemeCollaborate(): React.ReactElement {
     <>
       <Typography sx={{ my: 1 }}>
         If you've created a theme that you believe should be added in game's theme browser, feel free to{" "}
-        <Link href="https://github.com/bitburner-official/bitburner-src/tree/dev/src/Themes/README.md" target="_blank">
+        <Link href="https://github.com/danielyxie/bitburner/tree/dev/src/Themes/README.md" target="_blank">
           create a pull request
         </Link>
         .

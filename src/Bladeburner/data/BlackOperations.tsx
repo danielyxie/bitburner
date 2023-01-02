@@ -1,6 +1,6 @@
 import React from "react";
 import { FactionNames } from "../../Faction/data/FactionNames";
-import { CityName } from "../../Enums";
+import { CityName } from "../../Locations/data/CityNames";
 import { BlackOperationNames } from "./BlackOperationNames";
 
 interface IBlackOp {
@@ -57,7 +57,7 @@ export const BlackOperations: {
       <>
         Several months ago Titan Laboratories' Bioengineering department was infiltrated by Synthoids. As far as we
         know, Titan Laboratories' management has no knowledge about this. We don't know what the Synthoids are up to,
-        but the research that they could be conducting using Titan Laboratories' vast resources is potentially very
+        but the research that they could be conducting using Titan Laboraties' vast resources is potentially very
         dangerous.
         <br />
         <br />
@@ -215,7 +215,7 @@ export const BlackOperations: {
     desc: (
       <>
         DreamSense Technologies is an advertising company that uses special technology to transmit their ads into the
-        people's dreams and subconscious. They do this using broadcast transmitter towers. Based on information from our
+        people's dreams and subconcious. They do this using broadcast transmitter towers. Based on information from our
         agents and informants in {CityName.Chongqing}, we have reason to believe that one of the broadcast towers there
         has been compromised by Synthoids and is being used to spread pro-Synthoid propaganda.
         <br />

@@ -20,7 +20,7 @@ secrets that you've been searching for.
    :maxdepth: 5
    :caption: Contents:
 
-    Full documentation <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md>
+    Full documentation <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md>
     Basic documentation <netscript>
     Basic Gameplay <basicgameplay>
     Advanced Gameplay <advancedgameplay>

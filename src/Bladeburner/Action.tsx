@@ -1,14 +1,11 @@
+import { Player } from "../Player";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { addOffset } from "../utils/helpers/addOffset";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { BladeburnerConstants } from "./data/Constants";
-import { Bladeburner } from "./Bladeburner";
-import { Person } from "../PersonObjects/Person";
-import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
-
-interface ISuccessChanceParams {
-  est: boolean;
-}
+import { IBladeburner } from "./IBladeburner";
+import { IAction, ISuccessChanceParams } from "./IAction";
+import { IPerson } from "../PersonObjects/IPerson";
 
 class StatsMultiplier {
   [key: string]: number;
@@ -44,7 +41,7 @@ export interface IActionParams {
   teamCount?: number;
 }
 
-export class Action {
+export class Action implements IAction {
   name = "";
 
   // Difficulty scales with level. See getDifficulty() method
@@ -156,7 +153,7 @@ export class Action {
    * Tests for success. Should be called when an action has completed
    * @param inst {Bladeburner} - Bladeburner instance
    */
-  attempt(inst: Bladeburner, person: Person): boolean {
+  attempt(inst: IBladeburner, person: IPerson): boolean {
     return Math.random() < this.getSuccessChance(inst, person);
   }
 
@@ -165,7 +162,7 @@ export class Action {
     return 1;
   }
 
-  getActionTime(inst: Bladeburner, person: Person): number {
+  getActionTime(inst: IBladeburner, person: IPerson): number {
     const difficulty = this.getDifficulty();
     let baseTime = difficulty / BladeburnerConstants.DifficultyToTimeFactor;
     const skillFac = inst.skillMultipliers.actionTime; // Always < 1
@@ -186,16 +183,16 @@ export class Action {
 
   // For actions that have teams. To be implemented by subtypes.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getTeamSuccessBonus(inst: Bladeburner): number {
+  getTeamSuccessBonus(inst: IBladeburner): number {
     return 1;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getActionTypeSkillSuccessBonus(inst: Bladeburner): number {
+  getActionTypeSkillSuccessBonus(inst: IBladeburner): number {
     return 1;
   }
 
-  getChaosCompetencePenalty(inst: Bladeburner, params: ISuccessChanceParams): number {
+  getChaosCompetencePenalty(inst: IBladeburner, params: ISuccessChanceParams): number {
     const city = inst.getCurrentCity();
     if (params.est) {
       return Math.pow(city.popEst / BladeburnerConstants.PopulationThreshold, BladeburnerConstants.PopulationExponent);
@@ -204,7 +201,7 @@ export class Action {
     }
   }
 
-  getChaosDifficultyBonus(inst: Bladeburner /*, params: ISuccessChanceParams*/): number {
+  getChaosDifficultyBonus(inst: IBladeburner /*, params: ISuccessChanceParams*/): number {
     const city = inst.getCurrentCity();
     if (city.chaos > BladeburnerConstants.ChaosThreshold) {
       const diff = 1 + (city.chaos - BladeburnerConstants.ChaosThreshold);
@@ -215,7 +212,7 @@ export class Action {
     return 1;
   }
 
-  getEstSuccessChance(inst: Bladeburner, person: Person): [number, number] {
+  getEstSuccessChance(inst: IBladeburner, person: IPerson): [number, number] {
     function clamp(x: number): number {
       return Math.max(0, Math.min(x, 1));
     }
@@ -236,7 +233,7 @@ export class Action {
    * @params - options:
    *  est (bool): Get success chance estimate instead of real success chance
    */
-  getSuccessChance(inst: Bladeburner, person: Person, params: ISuccessChanceParams = { est: false }): number {
+  getSuccessChance(inst: IBladeburner, person: IPerson, params: ISuccessChanceParams = { est: false }): number {
     if (inst == null) {
       throw new Error("Invalid Bladeburner instance passed into Action.getSuccessChance");
     }
@@ -254,7 +251,7 @@ export class Action {
         competence += this.weights[stat] * Math.pow(effMultiplier * playerStatLvl, this.decays[stat]);
       }
     }
-    competence *= calculateIntelligenceBonus(person.skills.intelligence, 0.75);
+    competence *= Player.getIntelligenceBonus(0.75);
     competence *= inst.calculateStaminaPenalty();
 
     competence *= this.getTeamSuccessBonus(inst);
@@ -277,7 +274,7 @@ export class Action {
     }
 
     // Augmentation multiplier
-    competence *= person.mults.bladeburner_success_chance;
+    competence *= Player.mults.bladeburner_success_chance;
 
     if (isNaN(competence)) {
       throw new Error("Competence calculated as NaN in Action.getSuccessChance()");

@@ -1,11 +1,11 @@
 import { Augmentation } from "./Augmentation";
 import { StaticAugmentations } from "./StaticAugmentations";
-import { PlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
+import { PlayerOwnedAugmentation, IPlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
 import { AugmentationNames } from "./data/AugmentationNames";
 
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
-import { Player } from "@player";
+import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
@@ -21,8 +21,7 @@ import {
   initUnstableCircadianModulator,
 } from "./data/AugmentationCreator";
 import { Router } from "../ui/GameRoot";
-import { Page } from "../ui/Router";
-import { mergeMultipliers } from "../PersonObjects/Multipliers";
+import { mergeAugmentation } from "../PersonObjects/Multipliers";
 
 export function AddToStaticAugmentations(aug: Augmentation): void {
   const name = aug.name;
@@ -62,7 +61,7 @@ export function getGenericAugmentationPriceMultiplier(): number {
   return Math.pow(getBaseAugmentationPriceMultiplier(), Player.queuedAugmentations.length);
 }
 
-//Resets an Augmentation during (re-initialization)
+//Resets an Augmentation during (re-initizliation)
 function resetAugmentation(aug: Augmentation): void {
   aug.addToFactions(aug.factions);
   const name = aug.name;
@@ -72,11 +71,11 @@ function resetAugmentation(aug: Augmentation): void {
   AddToStaticAugmentations(aug);
 }
 
-function applyAugmentation(aug: PlayerOwnedAugmentation, reapply = false): void {
+function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void {
   const staticAugmentation = StaticAugmentations[aug.name];
 
   // Apply multipliers
-  Player.mults = mergeMultipliers(Player.mults, staticAugmentation.mults);
+  Player.mults = mergeAugmentation(Player.mults, staticAugmentation.mults);
 
   // Special logic for Congruity Implant
   if (aug.name === AugmentationNames.CongruityImplant && !reapply) {
@@ -127,19 +126,19 @@ function installAugmentations(force?: boolean): boolean {
     if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
       level = ` - ${ownedAug.level}`;
     }
-    augmentationList += aug.name + level + "\n";
+    augmentationList += aug.name + level + "<br>";
   }
   Player.queuedAugmentations = [];
   if (!force) {
     dialogBoxCreate(
       "You slowly drift to sleep as scientists put you under in order " +
-        "to install the following Augmentations:\n" +
+        "to install the following Augmentations:<br>" +
         augmentationList +
-        "\nYou wake up in your home...you feel different...",
+        "<br>You wake up in your home...you feel different...",
     );
   }
   prestigeAugmentation();
-  Router.toPage(Page.Terminal);
+  Router.toTerminal();
   return true;
 }
 
@@ -147,8 +146,8 @@ function augmentationExists(name: string): boolean {
   return StaticAugmentations.hasOwnProperty(name);
 }
 
-export function isRepeatableAug(aug: Augmentation | string): boolean {
-  const augName = typeof aug === "string" ? aug : aug.name;
+export function isRepeatableAug(aug: Augmentation): boolean {
+  const augName = aug instanceof Augmentation ? aug.name : aug;
   return augName === AugmentationNames.NeuroFluxGovernor;
 }
 

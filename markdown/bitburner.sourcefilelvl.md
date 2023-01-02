@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface SourceFileLvl 
+export interface SourceFileLvl 
 ```
 
 ## Properties

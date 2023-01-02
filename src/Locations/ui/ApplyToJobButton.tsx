@@ -1,10 +1,13 @@
+/**
+ * React Component for a button that's used to apply for a job
+ */
 import * as React from "react";
 
 import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { getJobRequirementText } from "../../Company/GetJobRequirementText";
 
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -15,10 +18,11 @@ type IProps = {
   text: string;
 };
 
-/** React Component for a button that's used to apply for a job */
 export function ApplyToJobButton(props: IProps): React.ReactElement {
+  const player = use.Player();
+
   function getJobRequirementTooltip(): string {
-    const pos = Player.getNextCompanyPosition(props.company, props.entryPosType);
+    const pos = player.getNextCompanyPosition(props.company, props.entryPosType);
     if (pos == null) {
       return "";
     }

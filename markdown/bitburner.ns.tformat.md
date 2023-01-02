@@ -4,7 +4,7 @@
 
 ## NS.tFormat() method
 
-Format time to a readable string.
+Format time to readable string
 
 <b>Signature:</b>
 
@@ -17,7 +17,7 @@ tFormat(milliseconds: number, milliPrecision?: boolean): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  milliseconds | number | Number of millisecond to format. |
-|  milliPrecision | boolean | Format time with subsecond precision. Defaults to false. |
+|  milliPrecision | boolean | Format time with subsecond precision, defaults to false. |
 
 <b>Returns:</b>
 

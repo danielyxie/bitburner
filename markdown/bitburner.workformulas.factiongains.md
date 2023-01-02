@@ -7,20 +7,18 @@
 <b>Signature:</b>
 
 ```typescript
-factionGains(person: Person, workType: FactionWorkType | `${FactionWorkType}`, favor: number): WorkStats;
+factionGains(player: Player, workType: string, favor: number): WorkStats;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  person | [Person](./bitburner.person.md) |  |
-|  workType | [FactionWorkType](./bitburner.factionworktype.md) \| \`${[FactionWorkType](./bitburner.factionworktype.md)<!-- -->}\` |  |
+|  player | [Player](./bitburner.player.md) |  |
+|  workType | string |  |
 |  favor | number |  |
 
 <b>Returns:</b>
 
 [WorkStats](./bitburner.workstats.md)
-
-The WorkStats applied every game cycle (200ms) by performing the specified faction work.
 

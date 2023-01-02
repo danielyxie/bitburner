@@ -6,16 +6,24 @@ import { ITaskParams } from "../ITaskParams";
  * (defined in Gang.js)
  */
 interface IGangMemberTaskMetadata {
-  /** Description of the task */
+  /**
+   * Description of the task
+   */
   desc: string;
 
-  /** Whether or not this task is meant for Combat-type gangs */
+  /**
+   * Whether or not this task is meant for Combat-type gangs
+   */
   isCombat: boolean;
 
-  /** Whether or not this task is for Hacking-type gangs */
+  /**
+   * Whether or not this task is for Hacking-type gangs
+   */
   isHacking: boolean;
 
-  /** Name of the task */
+  /**
+   * Name of the task
+   */
   name: string;
 
   /**
@@ -274,7 +282,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     },
   },
   {
-    desc: "Assign this gang member to threaten and blackmail high-profile targets<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
+    desc: "Assign this gang member to threaten and black mail high-profile targets<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
     isCombat: true,
     isHacking: false,
     name: "Threaten & Blackmail",

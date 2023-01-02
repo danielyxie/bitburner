@@ -8,7 +8,7 @@ import { Money } from "../ui/React/Money";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { Player } from "@player";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { AugmentationNames } from "./data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
 import { StaticAugmentations } from "./StaticAugmentations";
@@ -68,8 +68,13 @@ export interface IConstructorParams {
 }
 
 function generateStatsDescription(mults: Multipliers, programs?: string[], startingMoney?: number): JSX.Element {
-  // For a percentage that is <10, show x.xx%, otherwise show xx.x%
-  const f = (x: number) => numeralWrapper.formatPercentage(x, x - 1 < 0.1 ? 2 : 1);
+  const f = (x: number, decimals = 0): string => {
+    // look, I don't know how to make a "smart decimals"
+    // todo, make it smarter
+    if (x === 1.0777 - 1) return "7.77%";
+    if (x === 1.777 - 1) return "77.7%";
+    return numeralWrapper.formatPercentage(x, decimals);
+  };
   let desc = <>Effects:</>;
 
   if (
@@ -526,29 +531,30 @@ export class Augmentation {
     }
   }
 
-  getCost(): AugmentationCosts {
+  getCost(player: IPlayer): AugmentationCosts {
     const augmentationReference = StaticAugmentations[this.name];
     let moneyCost = augmentationReference.baseCost;
     let repCost = augmentationReference.baseRepRequirement;
 
     if (augmentationReference.name === AugmentationNames.NeuroFluxGovernor) {
-      let nextLevel = this.getLevel();
+      let nextLevel = this.getLevel(player);
       --nextLevel;
       const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
       repCost = augmentationReference.baseRepRequirement * multiplier * BitNodeMultipliers.AugmentationRepCost;
       moneyCost = augmentationReference.baseCost * multiplier * BitNodeMultipliers.AugmentationMoneyCost;
 
-      for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
+      for (let i = 0; i < player.queuedAugmentations.length; ++i) {
         moneyCost *= getBaseAugmentationPriceMultiplier();
       }
     } else if (augmentationReference.factions.includes(FactionNames.ShadowsOfAnarchy)) {
       const soaAugmentationNames = initSoAAugmentations().map((augmentation) => augmentation.name);
-      const soaAugCount = soaAugmentationNames.filter((augmentationName) =>
-        Player.hasAugmentation(augmentationName),
-      ).length;
-      moneyCost = augmentationReference.baseCost * Math.pow(CONSTANTS.SoACostMult, soaAugCount);
+      const soaMultiplier = Math.pow(
+        CONSTANTS.SoACostMult,
+        soaAugmentationNames.filter((augmentationName) => player.hasAugmentation(augmentationName)).length,
+      );
+      moneyCost = augmentationReference.baseCost * soaMultiplier;
       if (soaAugmentationNames.find((augmentationName) => augmentationName === augmentationReference.name)) {
-        repCost = augmentationReference.baseRepRequirement * Math.pow(CONSTANTS.SoARepMult, soaAugCount);
+        repCost = augmentationReference.baseRepRequirement * soaMultiplier;
       }
     } else {
       moneyCost =
@@ -560,19 +566,19 @@ export class Augmentation {
     return { moneyCost, repCost };
   }
 
-  getLevel(): number {
+  getLevel(player: IPlayer): number {
     // Get current Neuroflux level based on Player's augmentations
     if (this.name === AugmentationNames.NeuroFluxGovernor) {
       let currLevel = 0;
-      for (let i = 0; i < Player.augmentations.length; ++i) {
-        if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-          currLevel = Player.augmentations[i].level;
+      for (let i = 0; i < player.augmentations.length; ++i) {
+        if (player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+          currLevel = player.augmentations[i].level;
         }
       }
 
       // Account for purchased but uninstalled Augmentations
-      for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-        if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+      for (let i = 0; i < player.queuedAugmentations.length; ++i) {
+        if (player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
           ++currLevel;
         }
       }
@@ -601,7 +607,7 @@ export class Augmentation {
     return Generic_toJSON("Augmentation", this);
   }
 
-  // Initializes a Augmentation object from a JSON save state.
+  // Initiatizes a Augmentation object from a JSON save state.
   static fromJSON(value: IReviverValue): Augmentation {
     return Generic_fromJSON(Augmentation, value.data);
   }

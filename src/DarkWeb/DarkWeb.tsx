@@ -1,7 +1,7 @@
 import React from "react";
 import { DarkWebItems } from "./DarkWebItems";
 
-import { Player } from "@player";
+import { Player } from "../Player";
 import { Terminal } from "../Terminal";
 import { SpecialServers } from "../Server/data/SpecialServers";
 import { numeralWrapper } from "../ui/numeralFormat";

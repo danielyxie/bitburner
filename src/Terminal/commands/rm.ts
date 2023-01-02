@@ -1,10 +1,18 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { IReturnStatus } from "../../types";
 
-export function rm(args: (string | number | boolean)[], server: BaseServer): void {
+export function rm(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
   if (args.length !== 1) {
-    Terminal.error("Incorrect number of arguments. Usage: rm [program/script]");
+    terminal.error("Incorrect number of arguments. Usage: rm [program/script]");
     return;
   }
 
@@ -15,7 +23,7 @@ export function rm(args: (string | number | boolean)[], server: BaseServer): voi
     msg: "",
   };
   try {
-    delTarget = Terminal.getFilepath(args[0] + "");
+    delTarget = terminal.getFilepath(args[0] + "");
     status = server.removeFile(delTarget);
   } catch (err) {
     status = {
@@ -25,6 +33,6 @@ export function rm(args: (string | number | boolean)[], server: BaseServer): voi
   }
 
   if (!status.res && status.msg) {
-    Terminal.error(status.msg);
+    terminal.error(status.msg);
   }
 }

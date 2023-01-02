@@ -12,7 +12,7 @@ import {
 import { PositionTypes } from "./data/PositionTypes";
 
 import { CONSTANTS } from "../Constants";
-import { Player } from "@player";
+import { Player } from "../Player";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
@@ -23,7 +23,9 @@ import * as React from "react";
 import { NetscriptContext } from "../Netscript/APIWrapper";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
-/** Each function takes an optional config object as its last argument */
+/**
+ * Each function takes an optional config object as its last argument
+ */
 interface IOptions {
   rerenderFn?: () => void;
   suppressDialog?: boolean;

@@ -1,6 +1,6 @@
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
-import { Player } from "@player";
+import { Player } from "../Player";
 import { Script } from "../Script/Script";
 import { GetAllServers } from "../Server/AllServers";
 
@@ -22,7 +22,7 @@ const detect: [string, string][] = [
   ["basic.weakenTime", "renamed 'hacking.weakenTime'"],
   ["write", "needs to be awaited"],
   ["scp", "needs to be awaited"],
-  ["sleep", "Can no longer be called simultaneously."],
+  ["sleep", "Can no longer be called simultenaously."],
   ["hacking_skill", "renamed 'hacking'"],
   ["tryWrite", "renamed 'tryWritePort'"],
 ];
@@ -126,7 +126,7 @@ export function v1APIBreak(): void {
     for (const script of server.scripts) {
       if (!hasChanges(script.code)) continue;
       const prefix = script.filename.includes("/") ? "/BACKUP_" : "BACKUP_";
-      backups.push(new Script(prefix + script.filename, script.code, script.server));
+      backups.push(new Script(Player, prefix + script.filename, script.code, script.server));
       script.code = convert(script.code);
     }
     server.scripts = server.scripts.concat(backups);

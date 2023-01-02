@@ -1,32 +1,44 @@
-import { Player } from "@player";
+import { Player as player } from "../Player";
 import { Bladeburner } from "../Bladeburner/Bladeburner";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Bladeburner as INetscriptBladeburner } from "@nsdefs";
-import { Action } from "src/Bladeburner/Action";
+import { Bladeburner as INetscriptBladeburner, BladeburnerCurAction } from "../ScriptEditor/NetscriptDefinitions";
+import { IAction } from "src/Bladeburner/IAction";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperation } from "../Bladeburner/BlackOperation";
 import { helpers } from "../Netscript/NetscriptHelpers";
-import { checkEnum } from "../utils/helpers/enum";
-import { CityName } from "../Enums";
 
 export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
-  const checkBladeburnerAccess = function (ctx: NetscriptContext): void {
-    getBladeburner(ctx);
-    return;
-  };
-  const getBladeburner = function (ctx: NetscriptContext): Bladeburner {
-    const apiAccess = Player.bitNodeN === 7 || Player.sourceFiles.some((a) => a.n === 7);
+  const checkBladeburnerAccess = function (ctx: NetscriptContext, skipjoined = false): void {
+    const bladeburner = player.bladeburner;
+    if (bladeburner === null) throw new Error("Must have joined bladeburner");
+    const apiAccess =
+      player.bitNodeN === 7 ||
+      player.sourceFiles.some((a) => {
+        return a.n === 7;
+      });
     if (!apiAccess) {
-      throw helpers.makeRuntimeErrorMsg(ctx, "You have not unlocked the bladeburner API.", "API ACCESS");
+      const apiDenied = `You do not currently have access to the Bladeburner API. You must either be in BitNode-7 or have Source-File 7.`;
+      throw helpers.makeRuntimeErrorMsg(ctx, apiDenied);
     }
-    const bladeburner = Player.bladeburner;
-    if (!bladeburner)
-      throw helpers.makeRuntimeErrorMsg(ctx, "You must be a member of the Bladeburner division to use this API.");
-    return bladeburner;
+    if (!skipjoined) {
+      const bladeburnerAccess = bladeburner instanceof Bladeburner;
+      if (!bladeburnerAccess) {
+        const bladeburnerDenied = `You must be a member of the Bladeburner division to use this API.`;
+        throw helpers.makeRuntimeErrorMsg(ctx, bladeburnerDenied);
+      }
+    }
   };
 
-  const getBladeburnerActionObject = function (ctx: NetscriptContext, type: string, name: string): Action {
-    const bladeburner = Player.bladeburner;
+  const checkBladeburnerCity = function (ctx: NetscriptContext, city: string): void {
+    const bladeburner = player.bladeburner;
+    if (bladeburner === null) throw new Error("Must have joined bladeburner");
+    if (!bladeburner.cities.hasOwnProperty(city)) {
+      throw helpers.makeRuntimeErrorMsg(ctx, `Invalid city: ${city}`);
+    }
+  };
+
+  const getBladeburnerActionObject = function (ctx: NetscriptContext, type: string, name: string): IAction {
+    const bladeburner = player.bladeburner;
     if (bladeburner === null) throw new Error("Must have joined bladeburner");
     const actionId = bladeburner.getActionIdFromTypeAndName(type, name);
     if (!actionId) {
@@ -41,71 +53,96 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
   };
 
   return {
-    inBladeburner: () => () => !!Player.bladeburner,
-    getContractNames: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getContractNames: (ctx: NetscriptContext) => (): string[] => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getContractNamesNetscriptFn();
     },
-    getOperationNames: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getOperationNames: (ctx: NetscriptContext) => (): string[] => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getOperationNamesNetscriptFn();
     },
-    getBlackOpNames: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getBlackOpNames: (ctx: NetscriptContext) => (): string[] => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getBlackOpNamesNetscriptFn();
     },
-    getBlackOpRank: (ctx) => (_blackOpName) => {
-      const blackOpName = helpers.string(ctx, "blackOpName", _blackOpName);
+    getBlackOpRank:
+      (ctx: NetscriptContext) =>
+      (_blackOpName: unknown): number => {
+        const blackOpName = helpers.string(ctx, "blackOpName", _blackOpName);
+        checkBladeburnerAccess(ctx);
+        const action = getBladeburnerActionObject(ctx, "blackops", blackOpName);
+        if (!(action instanceof BlackOperation)) throw new Error("action was not a black operation");
+        return action.reqdRank;
+      },
+    getGeneralActionNames: (ctx: NetscriptContext) => (): string[] => {
       checkBladeburnerAccess(ctx);
-      const action = getBladeburnerActionObject(ctx, "blackops", blackOpName);
-      if (!(action instanceof BlackOperation)) throw new Error("action was not a black operation");
-      return action.reqdRank;
-    },
-    getGeneralActionNames: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getGeneralActionNamesNetscriptFn();
     },
-    getSkillNames: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getSkillNames: (ctx: NetscriptContext) => (): string[] => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getSkillNamesNetscriptFn();
     },
-    startAction: (ctx) => (_type, _name) => {
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      const bladeburner = getBladeburner(ctx);
-      try {
-        return bladeburner.startActionNetscriptFn(type, name, ctx.workerScript);
-      } catch (e: unknown) {
-        throw helpers.makeRuntimeErrorMsg(ctx, String(e));
-      }
-    },
-    stopBladeburnerAction: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    startAction:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown): boolean => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        try {
+          return bladeburner.startActionNetscriptFn(player, type, name, ctx.workerScript);
+        } catch (e: unknown) {
+          throw helpers.makeRuntimeErrorMsg(ctx, String(e));
+        }
+      },
+    stopBladeburnerAction: (ctx: NetscriptContext) => (): void => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.resetAction();
     },
-    getCurrentAction: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getCurrentAction: (ctx: NetscriptContext) => (): BladeburnerCurAction => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getTypeAndNameFromActionId(bladeburner.action);
     },
-    getActionTime: (ctx) => (_type, _name) => {
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      const bladeburner = getBladeburner(ctx);
-      try {
-        const time = bladeburner.getActionTimeNetscriptFn(Player, type, name);
-        if (typeof time === "string") {
-          const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-          helpers.log(ctx, () => errorLogText);
-          return -1;
-        } else {
-          return time;
+    getActionTime:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown): number => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        try {
+          const time = bladeburner.getActionTimeNetscriptFn(player, type, name);
+          if (typeof time === "string") {
+            const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+            helpers.log(ctx, () => errorLogText);
+            return -1;
+          } else {
+            return time;
+          }
+        } catch (e: unknown) {
+          throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
-      } catch (e: unknown) {
-        throw helpers.makeRuntimeErrorMsg(ctx, String(e));
-      }
-    },
-    getActionCurrentTime: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+      },
+    getActionCurrentTime: (ctx: NetscriptContext) => (): number => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       try {
         const timecomputed =
           Math.min(bladeburner.actionTimeCurrent + bladeburner.actionTimeOverflow, bladeburner.actionTimeToComplete) *
@@ -115,66 +152,88 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
         throw helpers.makeRuntimeErrorMsg(ctx, String(e));
       }
     },
-    getActionEstimatedSuccessChance: (ctx) => (_type, _name) => {
-      const bladeburner = getBladeburner(ctx);
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      try {
-        const chance = bladeburner.getActionEstimatedSuccessChanceNetscriptFn(Player, type, name);
-        if (typeof chance === "string") {
-          const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-          helpers.log(ctx, () => errorLogText);
-          return [-1, -1];
-        } else {
-          return chance;
+    getActionEstimatedSuccessChance:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown): [number, number] => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        try {
+          const chance = bladeburner.getActionEstimatedSuccessChanceNetscriptFn(player, type, name);
+          if (typeof chance === "string") {
+            const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+            helpers.log(ctx, () => errorLogText);
+            return [-1, -1];
+          } else {
+            return chance;
+          }
+        } catch (e: unknown) {
+          throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
-      } catch (e: unknown) {
-        throw helpers.makeRuntimeErrorMsg(ctx, String(e));
-      }
-    },
-    getActionRepGain: (ctx) => (_type, _name, _level) => {
-      checkBladeburnerAccess(ctx);
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      const action = getBladeburnerActionObject(ctx, type, name);
-      const level = _level === undefined ? action.level : helpers.number(ctx, "level", _level);
-      const rewardMultiplier = Math.pow(action.rewardFac, level - 1);
-      return action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank;
-    },
-    getActionCountRemaining: (ctx) => (_type, _name) => {
-      const bladeburner = getBladeburner(ctx);
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      try {
-        return bladeburner.getActionCountRemainingNetscriptFn(type, name, ctx.workerScript);
-      } catch (e: unknown) {
-        throw helpers.makeRuntimeErrorMsg(ctx, String(e));
-      }
-    },
-    getActionMaxLevel: (ctx) => (_type, _name) => {
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      checkBladeburnerAccess(ctx);
-      const action = getBladeburnerActionObject(ctx, type, name);
-      return action.maxLevel;
-    },
-    getActionCurrentLevel: (ctx) => (_type, _name) => {
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      checkBladeburnerAccess(ctx);
-      const action = getBladeburnerActionObject(ctx, type, name);
-      return action.level;
-    },
-    getActionAutolevel: (ctx) => (_type, _name) => {
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      checkBladeburnerAccess(ctx);
-      const action = getBladeburnerActionObject(ctx, type, name);
-      return action.autoLevel;
-    },
+      },
+    getActionRepGain:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown, _level: unknown): number => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        const level = helpers.number(ctx, "level", _level);
+        checkBladeburnerAccess(ctx);
+        const action = getBladeburnerActionObject(ctx, type, name);
+        let rewardMultiplier;
+        if (level == null || isNaN(level)) {
+          rewardMultiplier = Math.pow(action.rewardFac, action.level - 1);
+        } else {
+          rewardMultiplier = Math.pow(action.rewardFac, level - 1);
+        }
+
+        return action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank;
+      },
+    getActionCountRemaining:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown): number => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        try {
+          return bladeburner.getActionCountRemainingNetscriptFn(type, name, ctx.workerScript);
+        } catch (e: unknown) {
+          throw helpers.makeRuntimeErrorMsg(ctx, String(e));
+        }
+      },
+    getActionMaxLevel:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown): number => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        checkBladeburnerAccess(ctx);
+        const action = getBladeburnerActionObject(ctx, type, name);
+        return action.maxLevel;
+      },
+    getActionCurrentLevel:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown): number => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        checkBladeburnerAccess(ctx);
+        const action = getBladeburnerActionObject(ctx, type, name);
+        return action.level;
+      },
+    getActionAutolevel:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown): boolean => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        checkBladeburnerAccess(ctx);
+        const action = getBladeburnerActionObject(ctx, type, name);
+        return action.autoLevel;
+      },
     setActionAutolevel:
-      (ctx) =>
-      (_type, _name, _autoLevel = true) => {
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown, _autoLevel: unknown = true): void => {
         const type = helpers.string(ctx, "type", _type);
         const name = helpers.string(ctx, "name", _name);
         const autoLevel = !!_autoLevel;
@@ -183,8 +242,8 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
         action.autoLevel = autoLevel;
       },
     setActionLevel:
-      (ctx) =>
-      (_type, _name, _level = 1) => {
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown, _level: unknown = 1): void => {
         const type = helpers.string(ctx, "type", _type);
         const name = helpers.string(ctx, "name", _name);
         const level = helpers.number(ctx, "level", _level);
@@ -195,29 +254,39 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
         }
         action.level = level;
       },
-    getRank: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getRank: (ctx: NetscriptContext) => (): number => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.rank;
     },
-    getSkillPoints: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getSkillPoints: (ctx: NetscriptContext) => (): number => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.skillPoints;
     },
-    getSkillLevel: (ctx) => (_skillName) => {
-      const skillName = helpers.string(ctx, "skillName", _skillName);
-      const bladeburner = getBladeburner(ctx);
-      try {
-        return bladeburner.getSkillLevelNetscriptFn(skillName, ctx.workerScript);
-      } catch (e: unknown) {
-        throw helpers.makeRuntimeErrorMsg(ctx, String(e));
-      }
-    },
+    getSkillLevel:
+      (ctx: NetscriptContext) =>
+      (_skillName: unknown): number => {
+        const skillName = helpers.string(ctx, "skillName", _skillName);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        try {
+          return bladeburner.getSkillLevelNetscriptFn(skillName, ctx.workerScript);
+        } catch (e: unknown) {
+          throw helpers.makeRuntimeErrorMsg(ctx, String(e));
+        }
+      },
     getSkillUpgradeCost:
-      (ctx) =>
-      (_skillName, _count = 1) => {
-        const bladeburner = getBladeburner(ctx);
+      (ctx: NetscriptContext) =>
+      (_skillName: unknown, _count: unknown = 1): number => {
         const skillName = helpers.string(ctx, "skillName", _skillName);
         const count = helpers.number(ctx, "count", _count);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getSkillUpgradeCostNetscriptFn(skillName, count, ctx.workerScript);
         } catch (e: unknown) {
@@ -225,89 +294,121 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
         }
       },
     upgradeSkill:
-      (ctx) =>
-      (_skillName, _count = 1) => {
-        const bladeburner = getBladeburner(ctx);
+      (ctx: NetscriptContext) =>
+      (_skillName: unknown, _count: unknown = 1): boolean => {
         const skillName = helpers.string(ctx, "skillName", _skillName);
         const count = helpers.number(ctx, "count", _count);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.upgradeSkillNetscriptFn(skillName, count, ctx.workerScript);
         } catch (e: unknown) {
           throw helpers.makeRuntimeErrorMsg(ctx, String(e));
         }
       },
-    getTeamSize: (ctx) => (_type, _name) => {
-      const bladeburner = getBladeburner(ctx);
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      try {
-        return bladeburner.getTeamSizeNetscriptFn(type, name, ctx.workerScript);
-      } catch (e: unknown) {
-        throw helpers.makeRuntimeErrorMsg(ctx, String(e));
-      }
-    },
-    setTeamSize: (ctx) => (_type, _name, _size) => {
-      const bladeburner = getBladeburner(ctx);
-      const type = helpers.string(ctx, "type", _type);
-      const name = helpers.string(ctx, "name", _name);
-      const size = helpers.number(ctx, "size", _size);
-      try {
-        return bladeburner.setTeamSizeNetscriptFn(type, name, size, ctx.workerScript);
-      } catch (e: unknown) {
-        throw helpers.makeRuntimeErrorMsg(ctx, String(e));
-      }
-    },
-    getCityEstimatedPopulation: (ctx) => (_cityName) => {
-      const bladeburner = getBladeburner(ctx);
-      const cityName = helpers.string(ctx, "cityName", _cityName);
-      if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city: ${cityName}`);
-      return bladeburner.cities[cityName].popEst;
-    },
-    getCityCommunities: (ctx) => (_cityName) => {
-      const bladeburner = getBladeburner(ctx);
-      const cityName = helpers.string(ctx, "cityName", _cityName);
-      if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city: ${cityName}`);
-      return bladeburner.cities[cityName].comms;
-    },
-    getCityChaos: (ctx) => (_cityName) => {
-      const bladeburner = getBladeburner(ctx);
-      const cityName = helpers.string(ctx, "cityName", _cityName);
-      if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city: ${cityName}`);
-      return bladeburner.cities[cityName].chaos;
-    },
-    getCity: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getTeamSize:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown): number => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        try {
+          return bladeburner.getTeamSizeNetscriptFn(type, name, ctx.workerScript);
+        } catch (e: unknown) {
+          throw helpers.makeRuntimeErrorMsg(ctx, String(e));
+        }
+      },
+    setTeamSize:
+      (ctx: NetscriptContext) =>
+      (_type: unknown, _name: unknown, _size: unknown): number => {
+        const type = helpers.string(ctx, "type", _type);
+        const name = helpers.string(ctx, "name", _name);
+        const size = helpers.number(ctx, "size", _size);
+        checkBladeburnerAccess(ctx);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        try {
+          return bladeburner.setTeamSizeNetscriptFn(type, name, size, ctx.workerScript);
+        } catch (e: unknown) {
+          throw helpers.makeRuntimeErrorMsg(ctx, String(e));
+        }
+      },
+    getCityEstimatedPopulation:
+      (ctx: NetscriptContext) =>
+      (_cityName: unknown): number => {
+        const cityName = helpers.string(ctx, "cityName", _cityName);
+        checkBladeburnerAccess(ctx);
+        checkBladeburnerCity(ctx, cityName);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        return bladeburner.cities[cityName].popEst;
+      },
+    getCityCommunities:
+      (ctx: NetscriptContext) =>
+      (_cityName: unknown): number => {
+        const cityName = helpers.string(ctx, "cityName", _cityName);
+        checkBladeburnerAccess(ctx);
+        checkBladeburnerCity(ctx, cityName);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        return bladeburner.cities[cityName].comms;
+      },
+    getCityChaos:
+      (ctx: NetscriptContext) =>
+      (_cityName: unknown): number => {
+        const cityName = helpers.string(ctx, "cityName", _cityName);
+        checkBladeburnerAccess(ctx);
+        checkBladeburnerCity(ctx, cityName);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        return bladeburner.cities[cityName].chaos;
+      },
+    getCity: (ctx: NetscriptContext) => (): string => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.city;
     },
-    switchCity: (ctx) => (_cityName) => {
-      const bladeburner = getBladeburner(ctx);
-      const cityName = helpers.string(ctx, "cityName", _cityName);
-      if (!checkEnum(CityName, cityName)) throw new Error(`Invalid city: ${cityName}`);
-      bladeburner.city = cityName;
-      return true;
-    },
-    getStamina: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    switchCity:
+      (ctx: NetscriptContext) =>
+      (_cityName: unknown): boolean => {
+        const cityName = helpers.string(ctx, "cityName", _cityName);
+        checkBladeburnerAccess(ctx);
+        checkBladeburnerCity(ctx, cityName);
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
+        bladeburner.city = cityName;
+        return true;
+      },
+    getStamina: (ctx: NetscriptContext) => (): [number, number] => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return [bladeburner.stamina, bladeburner.maxStamina];
     },
-    joinBladeburnerFaction: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    joinBladeburnerFaction: (ctx: NetscriptContext) => (): boolean => {
+      checkBladeburnerAccess(ctx, true);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.joinBladeburnerFactionNetscriptFn(ctx.workerScript);
     },
-    joinBladeburnerDivision: (ctx) => () => {
-      if (Player.bitNodeN === 7 || Player.sourceFileLvl(7) > 0) {
+    joinBladeburnerDivision: (ctx: NetscriptContext) => (): boolean => {
+      if (player.bitNodeN === 7 || player.sourceFileLvl(7) > 0) {
         if (BitNodeMultipliers.BladeburnerRank === 0) {
           return false; // Disabled in this bitnode
         }
-        if (Player.bladeburner) {
+        if (player.bladeburner instanceof Bladeburner) {
           return true; // Already member
         } else if (
-          Player.skills.strength >= 100 &&
-          Player.skills.defense >= 100 &&
-          Player.skills.dexterity >= 100 &&
-          Player.skills.agility >= 100
+          player.skills.strength >= 100 &&
+          player.skills.defense >= 100 &&
+          player.skills.dexterity >= 100 &&
+          player.skills.agility >= 100
         ) {
-          Player.bladeburner = new Bladeburner();
+          player.bladeburner = new Bladeburner(player);
           helpers.log(ctx, () => "You have been accepted into the Bladeburner division");
 
           return true;
@@ -318,8 +419,10 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
       }
       return false;
     },
-    getBonusTime: (ctx) => () => {
-      const bladeburner = getBladeburner(ctx);
+    getBonusTime: (ctx: NetscriptContext) => (): number => {
+      checkBladeburnerAccess(ctx);
+      const bladeburner = player.bladeburner;
+      if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return Math.round(bladeburner.storedCycles / 5) * 1000;
     },
   };

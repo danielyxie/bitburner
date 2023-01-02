@@ -5,6 +5,7 @@
  */
 import React, { useState } from "react";
 
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { BadRNG } from "./RNG";
 import { win, reachedLimit } from "./Game";
 import { trusted } from "./utils";
@@ -14,10 +15,14 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
+type IProps = {
+  p: IPlayer;
+};
+
 const minPlay = 0;
 const maxPlay = 10e3;
 
-export function CoinFlip(): React.ReactElement {
+export function CoinFlip(props: IProps): React.ReactElement {
   const [investment, setInvestment] = useState(1000);
   const [result, setResult] = useState(<span> </span>);
   const [status, setStatus] = useState("");
@@ -38,7 +43,7 @@ export function CoinFlip(): React.ReactElement {
   }
 
   function play(guess: string): void {
-    if (reachedLimit()) return;
+    if (reachedLimit(props.p)) return;
     const v = BadRNG.random();
     let letter: string;
     if (v < 0.5) {
@@ -60,11 +65,11 @@ export function CoinFlip(): React.ReactElement {
 
     setTimeout(() => setPlayLock(false), 250);
     if (correct) {
-      win(investment);
+      win(props.p, investment);
     } else {
-      win(-investment);
+      win(props.p, -investment);
     }
-    if (reachedLimit()) return;
+    if (reachedLimit(props.p)) return;
   }
 
   return (

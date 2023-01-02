@@ -16,7 +16,7 @@ setStyles(newStyles: IStyleSettings): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  newStyles | [IStyleSettings](./bitburner.istylesettings.md) |  |
+|  newStyles | IStyleSettings |  |
 
 <b>Returns:</b>
 

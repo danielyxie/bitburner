@@ -38,9 +38,9 @@ class NumeralFormatter {
     return true;
   }
 
-  format(n: number | string, format?: string): string {
-    // numeral.js doesn't properly format numbers that are too big or too small
-    if (Math.abs(n as number) < 1e-6) {
+  format(n: number, format: string): string {
+    // numeraljs doesnt properly format numbers that are too big or too small
+    if (Math.abs(n) < 1e-6) {
       n = 0;
     }
     const answer = numeral(n).format(format);
@@ -50,19 +50,19 @@ class NumeralFormatter {
     return answer;
   }
 
-  formatBigNumber(n: number | string): string {
+  formatBigNumber(n: number): string {
     return this.format(n, "0.000a");
   }
 
   // TODO: leverage numeral.js to do it. This function also implies you can
   // use this format in some text field but you can't. ( "1t" will parse but
   // "1s" will not)
-  formatReallyBigNumber(n: number | string, decimalPlaces = 3): string {
-    const nAbs = Math.abs(n as number);
+  formatReallyBigNumber(n: number, decimalPlaces = 3): string {
+    const nAbs = Math.abs(n);
     if (n === Infinity) return "∞";
     for (let i = 0; i < extraFormats.length; i++) {
       if (extraFormats[i] < nAbs && nAbs <= extraFormats[i] * 1000) {
-        return this.format((n as number) / extraFormats[i], "0." + "0".repeat(decimalPlaces)) + extraNotations[i];
+        return this.format(n / extraFormats[i], "0." + "0".repeat(decimalPlaces)) + extraNotations[i];
       }
     }
     if (nAbs < 1000) {
@@ -118,7 +118,7 @@ class NumeralFormatter {
     return this.format(n * gigaMultiplier.standard, "0.00b");
   }
 
-  formatPercentage(n: number | string, decimalPlaces = 2): string {
+  formatPercentage(n: number, decimalPlaces = 2): string {
     const formatter: string = "0." + "0".repeat(decimalPlaces) + "%";
     return this.format(n, formatter);
   }

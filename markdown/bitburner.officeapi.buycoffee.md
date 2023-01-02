@@ -9,7 +9,7 @@ Buy coffee for your employees
 <b>Signature:</b>
 
 ```typescript
-buyCoffee(divisionName: string, city: CityName | `${CityName}`): boolean;
+buyCoffee(divisionName: string, cityName: string): boolean;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ buyCoffee(divisionName: string, city: CityName | `${CityName}`): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
+|  cityName | string | Name of the city |
 
 <b>Returns:</b>
 

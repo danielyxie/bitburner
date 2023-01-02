@@ -10,6 +10,8 @@ import { PurchasedAugmentations } from "./PurchasedAugmentations";
 import { SourceFilesElement } from "./SourceFiles";
 
 import { canGetBonus } from "../../ExportBonus";
+import { use } from "../../ui/Context";
+
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -18,7 +20,7 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import { Settings } from "../../Settings/Settings";
 import { ConfirmationModal } from "../../ui/React/ConfirmationModal";
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { AugmentationNames } from "../data/AugmentationNames";
 import { StaticAugmentations } from "../StaticAugmentations";
 import { CONSTANTS } from "../../Constants";
@@ -27,8 +29,12 @@ import { Info } from "@mui/icons-material";
 import { Link } from "@mui/material";
 import { AlertEvents } from "../../ui/React/AlertManager";
 
-const NeuroFluxDisplay = (): React.ReactElement => {
-  const level = Player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0;
+interface NFGDisplayProps {
+  player: IPlayer;
+}
+
+const NeuroFluxDisplay = ({ player }: NFGDisplayProps): React.ReactElement => {
+  const level = player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0;
 
   const openBloodDonation = () => {
     AlertEvents.emit(
@@ -36,7 +42,7 @@ const NeuroFluxDisplay = (): React.ReactElement => {
         <Typography variant="h5">Bitburner blood donation community program</Typography>
         <Typography>
           The blood donation program is a continuous real life event started on 2022-04-01. To participate simply go
-          donate blood, plasma, or platelets to your local organization and take a picture as proof (hide your personal
+          donate blood, plasma, or platelets to your local organisation and take a picture as proof (hide your personal
           information). Then send the proof to hydroflame on reddit or discord.
         </Typography>
         <Typography>Currently accumulated {CONSTANTS.Donations} donations.</Typography>
@@ -61,14 +67,18 @@ const NeuroFluxDisplay = (): React.ReactElement => {
   );
 };
 
-const EntropyDisplay = (): React.ReactElement => {
-  return Player.entropy > 0 ? (
+interface EntropyDisplayProps {
+  player: IPlayer;
+}
+
+const EntropyDisplay = ({ player }: EntropyDisplayProps): React.ReactElement => {
+  return player.entropy > 0 ? (
     <Paper sx={{ p: 1 }}>
       <Typography variant="h5" color={Settings.theme.error}>
-        Entropy Virus - Level {Player.entropy}
+        Entropy Virus - Level {player.entropy}
       </Typography>
       <Typography color={Settings.theme.error}>
-        <b>All multipliers decreased by:</b> {formatNumber((1 - CONSTANTS.EntropyEffect ** Player.entropy) * 100, 3)}%
+        <b>All multipliers decreased by:</b> {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropy) * 100, 3)}%
         (multiplicative)
       </Typography>
     </Paper>
@@ -84,6 +94,7 @@ interface IProps {
 
 export function AugmentationsRoot(props: IProps): React.ReactElement {
   const [installOpen, setInstallOpen] = useState(false);
+  const player = use.Player();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((o) => !o);
@@ -176,7 +187,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
           <Box sx={{ display: "grid", width: "100%", gridTemplateColumns: "1fr 1fr" }}>
             <Tooltip title={<Typography>'I never asked for this'</Typography>}>
               <span>
-                <Button sx={{ width: "100%" }} disabled={Player.queuedAugmentations.length === 0} onClick={doInstall}>
+                <Button sx={{ width: "100%" }} disabled={player.queuedAugmentations.length === 0} onClick={doInstall}>
                   Install Augmentations
                 </Button>
               </span>
@@ -188,7 +199,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
             </Tooltip>
           </Box>
         </Paper>
-        {Player.queuedAugmentations.length > 0 ? (
+        {player.queuedAugmentations.length > 0 ? (
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <PurchasedAugmentations />
             <PlayerMultipliers />
@@ -205,14 +216,14 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
           my: 1,
           display: "grid",
           gridTemplateColumns: `repeat(${
-            +!!((Player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0) > 0) +
-            +!!(Player.entropy > 0)
+            +!!((player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0) > 0) +
+            +!!(player.entropy > 0)
           }, 1fr)`,
           gap: 1,
         }}
       >
-        <NeuroFluxDisplay />
-        <EntropyDisplay />
+        <NeuroFluxDisplay player={player} />
+        <EntropyDisplay player={player} />
       </Box>
 
       <Box>

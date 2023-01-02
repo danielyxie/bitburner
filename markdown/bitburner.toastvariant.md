@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-declare enum ToastVariant 
+export enum ToastVariant 
 ```
 
 ## Enumeration Members

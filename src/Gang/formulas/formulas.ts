@@ -9,7 +9,7 @@ export interface FormulaGang {
 }
 
 export function calculateWantedPenalty(gang: FormulaGang): number {
-  return Math.max(gang.respect + 0.0001) / (gang.respect + gang.wantedLevel);
+  return gang.respect / (gang.respect + gang.wantedLevel);
 }
 
 export function calculateRespectGain(gang: FormulaGang, member: GangMember, task: GangMemberTask): number {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Material } from "../../Material";
 import { Export } from "../../Export";
-import { Industry } from "../../Industry";
+import { IIndustry } from "../../IIndustry";
 import { ExportMaterial } from "../../Actions";
 import { Modal } from "../../../ui/React/Modal";
 import { useCorporation } from "../Context";
@@ -13,7 +13,6 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { CityName } from "../../../Enums";
 
 interface IProps {
   open: boolean;
@@ -24,13 +23,15 @@ interface IProps {
 // Create a popup that lets the player manage exports
 export function ExportModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  const possibleDivisions = corp.divisions.filter((division: Industry) => isRelevantMaterial(props.mat.name, division));
+  const possibleDivisions = corp.divisions.filter((division: IIndustry) =>
+    isRelevantMaterial(props.mat.name, division),
+  );
   if (possibleDivisions.length === 0) throw new Error("Export popup created with no divisions.");
   const defaultDivision = possibleDivisions[0];
   if (Object.keys(defaultDivision.warehouses).length === 0)
     throw new Error("Export popup created in a division with no warehouses.");
   const [industry, setIndustry] = useState<string>(defaultDivision.name);
-  const [city, setCity] = useState(Object.keys(defaultDivision.warehouses)[0] as CityName);
+  const [city, setCity] = useState<string>(Object.keys(defaultDivision.warehouses)[0]);
   const [amt, setAmt] = useState("");
   const setRerender = useState(false)[1];
 
@@ -39,13 +40,13 @@ export function ExportModal(props: IProps): React.ReactElement {
   }
 
   function onCityChange(event: SelectChangeEvent<string>): void {
-    setCity(event.target.value as CityName);
+    setCity(event.target.value);
   }
 
   function onIndustryChange(event: SelectChangeEvent<string>): void {
     const div = event.target.value;
     setIndustry(div);
-    setCity(Object.keys(corp.divisions[0].warehouses)[0] as CityName);
+    setCity(Object.keys(corp.divisions[0].warehouses)[0]);
   }
 
   function onAmtChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -71,10 +72,10 @@ export function ExportModal(props: IProps): React.ReactElement {
     rerender();
   }
 
-  const currentDivision = corp.divisions.find((division: Industry) => division.name === industry);
+  const currentDivision = corp.divisions.find((division: IIndustry) => division.name === industry);
   if (currentDivision === undefined)
     throw new Error(`Export popup somehow ended up with undefined division '${currentDivision}'`);
-  const possibleCities = (Object.keys(currentDivision.warehouses) as CityName[]).filter(
+  const possibleCities = Object.keys(currentDivision.warehouses).filter(
     (city) => currentDivision.warehouses[city] !== 0,
   );
   if (possibleCities.length > 0 && !possibleCities.includes(city)) {
@@ -89,15 +90,15 @@ export function ExportModal(props: IProps): React.ReactElement {
       </Typography>
       <Select onChange={onIndustryChange} value={industry}>
         {corp.divisions
-          .filter((division: Industry) => isRelevantMaterial(props.mat.name, division))
-          .map((division: Industry) => (
+          .filter((division: IIndustry) => isRelevantMaterial(props.mat.name, division))
+          .map((division: IIndustry) => (
             <MenuItem key={division.name} value={division.name}>
               {division.name}
             </MenuItem>
           ))}
       </Select>
       <Select onChange={onCityChange} value={city}>
-        {possibleCities.map((cityName) => {
+        {possibleCities.map((cityName: string) => {
           if (currentDivision.warehouses[cityName] === 0) return;
           return (
             <MenuItem key={cityName} value={cityName}>

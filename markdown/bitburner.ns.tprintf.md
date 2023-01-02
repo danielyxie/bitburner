@@ -16,8 +16,8 @@ tprintf(format: string, ...values: any[]): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  format | string | Format of the message. |
-|  values | any\[\] | Value(s) to be printed. |
+|  format | string | format of the message |
+|  values | any\[\] |  |
 
 <b>Returns:</b>
 
@@ -27,9 +27,5 @@ void
 
 RAM cost: 0 GB
 
-- See [print](./bitburner.ns.print.md) for how to add color to your printed strings.
-
-- See [printf](./bitburner.ns.printf.md) for examples on formatted strings.
-
-- For more detail, see: https://github.com/alexei/sprintf.js
+see: https://github.com/alexei/sprintf.js
 

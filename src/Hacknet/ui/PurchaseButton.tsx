@@ -1,7 +1,10 @@
+/**
+ * React Component for the button that is used to purchase new Hacknet Nodes
+ */
 import React from "react";
 
 import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers";
-import { Player } from "@player";
+import { Player } from "../../Player";
 import { Money } from "../../ui/React/Money";
 
 import Button from "@mui/material/Button";
@@ -12,18 +15,17 @@ interface IProps {
   cost: number;
 }
 
-/** React Component for the button that is used to purchase new Hacknet Nodes */
 export function PurchaseButton(props: IProps): React.ReactElement {
   const cost = props.cost;
   let text;
-  if (hasHacknetServers()) {
-    if (hasMaxNumberHacknetServers()) {
+  if (hasHacknetServers(Player)) {
+    if (hasMaxNumberHacknetServers(Player)) {
       text = <>Hacknet Server limit reached</>;
     } else {
       text = (
         <>
           Purchase Hacknet Server -&nbsp;
-          <Money money={cost} forPurchase={true} />
+          <Money money={cost} player={Player} />
         </>
       );
     }
@@ -31,7 +33,7 @@ export function PurchaseButton(props: IProps): React.ReactElement {
     text = (
       <>
         Purchase Hacknet Node -&nbsp;
-        <Money money={cost} forPurchase={true} />
+        <Money money={cost} player={Player} />
       </>
     );
   }

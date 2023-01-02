@@ -11,9 +11,9 @@ Set material export data
 ```typescript
 exportMaterial(
     sourceDivision: string,
-    sourceCity: CityName | `${CityName}`,
+    sourceCity: string,
     targetDivision: string,
-    targetCity: CityName | `${CityName}`,
+    targetCity: string,
     materialName: string,
     amt: number,
   ): void;
@@ -24,9 +24,9 @@ exportMaterial(
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  sourceDivision | string | Source division |
-|  sourceCity | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Source city |
+|  sourceCity | string | Source city |
 |  targetDivision | string | Target division |
-|  targetCity | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Target city |
+|  targetCity | string | Target city |
 |  materialName | string | Name of the material |
 |  amt | number | Amount of material to export. |
 

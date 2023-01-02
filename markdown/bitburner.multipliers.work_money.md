@@ -4,8 +4,6 @@
 
 ## Multipliers.work\_money property
 
-Multiplier to amount of money gained from working
-
 <b>Signature:</b>
 
 ```typescript

@@ -1,3 +1,6 @@
+/**
+ * React component for displaying a single order in a stock's order book
+ */
 import * as React from "react";
 
 import { Order } from "../Order";
@@ -14,7 +17,6 @@ type IProps = {
   order: Order;
 };
 
-/** React component for displaying a single order in a stock's order book */
 export function StockTickerOrder(props: IProps): React.ReactElement {
   function handleCancelOrderClick(): void {
     cancelOrder({ order: props.order });

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Modal } from "../../ui/React/Modal";
 import { Action } from "../Action";
-import { Bladeburner } from "../Bladeburner";
+import { IBladeburner } from "../IBladeburner";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
 interface IProps {
-  bladeburner: Bladeburner;
+  bladeburner: IBladeburner;
   action: Action;
   open: boolean;
   onClose: () => void;

@@ -1,12 +1,21 @@
-import { Terminal } from "../../Terminal";
+import { ITerminal } from "../ITerminal";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { getServerOnNetwork } from "../../Server/ServerHelpers";
 import { GetServer } from "../../Server/AllServers";
+import { Server } from "../../Server/Server";
 
-export function connect(args: (string | number | boolean)[], server: BaseServer): void {
-  // Disconnect from current server in Terminal and connect to new one
+export function connect(
+  terminal: ITerminal,
+  router: IRouter,
+  player: IPlayer,
+  server: BaseServer,
+  args: (string | number | boolean)[],
+): void {
+  // Disconnect from current server in terminal and connect to new one
   if (args.length !== 1) {
-    Terminal.error("Incorrect usage of connect command. Usage: connect [hostname]");
+    terminal.error("Incorrect usage of connect command. Usage: connect [hostname]");
     return;
   }
 
@@ -16,21 +25,21 @@ export function connect(args: (string | number | boolean)[], server: BaseServer)
     const other = getServerOnNetwork(server, i);
     if (other === null) throw new Error(`Server on network should not be null`);
     if (other.hostname == hostname) {
-      Terminal.connectToServer(hostname);
+      terminal.connectToServer(player, hostname);
       return;
     }
   }
 
   const other = GetServer(hostname);
   if (other !== null) {
-    if (other.backdoorInstalled || other.purchasedByPlayer) {
-      Terminal.connectToServer(hostname);
+    if (other instanceof Server && other.backdoorInstalled) {
+      terminal.connectToServer(player, hostname);
       return;
     }
-    Terminal.error(
+    terminal.error(
       `Cannot directly connect to ${hostname}. Make sure the server is backdoored or adjacent to your current Server`,
     );
   } else {
-    Terminal.error("Host not found");
+    terminal.error("Host not found");
   }
 }

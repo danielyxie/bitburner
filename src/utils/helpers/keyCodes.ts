@@ -1,4 +1,6 @@
-/** Keyboard key codes as returned by event.key */
+/**
+ * Keyboard key codes as returned by event.key
+ */
 export enum KEY {
   //SHIFT: 16, // Check by `&& event.shiftKey`
   //CTRL: 17, // Check by `&& event.ctrlKey`
@@ -70,7 +72,9 @@ export enum KEY {
   Z = "z",
 }
 
-/** Keyboard key codes as returned by event.code */
+/**
+ * Keyboard key codes as returned by event.code
+ */
 export enum KEYCODE {
   //SHIFT: 16, // Check by `&& event.shiftKey`
   //CTRL: 17, // Check by `&& event.ctrlKey`

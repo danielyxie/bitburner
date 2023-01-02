@@ -4,7 +4,7 @@
 
 ## NS.hasRootAccess() method
 
-Check if you have root access on a server.
+Check if your have root access on a server.
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ hasRootAccess(host: string): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Hostname of the target server. |
+|  host | string | Host of the target server |
 
 <b>Returns:</b>
 

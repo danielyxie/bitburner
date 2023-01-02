@@ -1,3 +1,6 @@
+/**
+ * Generic Event Emitter class following a subscribe/publish paradigm.
+ */
 function uuidv4(): string {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0,
@@ -6,7 +9,6 @@ function uuidv4(): string {
   });
 }
 
-/** Generic Event Emitter class following a subscribe/publish paradigm. */
 export class EventEmitter<T extends any[]> {
   subscribers: { [key: string]: (...args: [...T]) => void | undefined } = {};
 

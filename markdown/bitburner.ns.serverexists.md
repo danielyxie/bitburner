@@ -16,13 +16,13 @@ serverExists(host: string): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Hostname of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
 boolean
 
-True if the specified server exists, and false otherwise.
+True if specified server exists, and false otherwise.
 
 ## Remarks
 

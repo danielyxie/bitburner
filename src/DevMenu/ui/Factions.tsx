@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Adjuster } from "./Adjuster";
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Factions as AllFaction } from "../../Faction/Factions";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,7 +21,11 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 
 const bigNumber = 1e12;
 
-export function Factions(): React.ReactElement {
+interface IProps {
+  player: IPlayer;
+}
+
+export function Factions(props: IProps): React.ReactElement {
   const [faction, setFaction] = useState(FactionNames.Illuminati as string);
 
   function setFactionDropdown(event: SelectChangeEvent<string>): void {
@@ -29,11 +33,11 @@ export function Factions(): React.ReactElement {
   }
 
   function receiveInvite(): void {
-    Player.receiveInvite(faction);
+    props.player.receiveInvite(faction);
   }
 
   function receiveAllInvites(): void {
-    Object.values(FactionNames).forEach((faction) => Player.receiveInvite(faction));
+    Object.values(FactionNames).forEach((faction) => props.player.receiveInvite(faction));
   }
 
   function modifyFactionRep(modifier: number): (x: number) => void {

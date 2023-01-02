@@ -1,10 +1,9 @@
 import { CONSTANTS } from "../Constants";
-import { Player } from "@player";
-import { Person as IPerson } from "@nsdefs";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { IPerson } from "../PersonObjects/IPerson";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { CrimeType } from "../Enums";
+import { CrimeType } from "../utils/WorkType";
 import { CrimeWork } from "../Work/CrimeWork";
-import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 
 interface IConstructorParams {
   hacking_success_weight?: number;
@@ -25,29 +24,29 @@ interface IConstructorParams {
 }
 
 export class Crime {
-  // Corresponding type, also the name of the crime.
-  type: CrimeType;
-
   // Number representing the difficulty of the crime. Used for success chance calculations
-  difficulty: number;
+  difficulty = 0;
 
   // Amount of karma lost for SUCCESSFULLY committing this crime
-  karma: number;
+  karma = 0;
 
   // How many people die as a result of this crime
-  kills: number;
+  kills = 0;
 
   // How much money is given by the
-  money: number;
+  money = 0;
+
+  // Name of crime
+  name = "";
 
   // Name of crime as it appears on work screen: "You are attempting..."
-  workName: string;
-
-  // Tooltip text in slums ui
-  tooltipText: string;
+  workName = "";
 
   // Milliseconds it takes to attempt the crime
   time = 0;
+
+  // Corresponding type in CONSTANTS. Contains a description for the crime activity
+  type: CrimeType;
 
   // Weighting factors that determine how stats affect the success rate of this crime
   hacking_success_weight = 0;
@@ -67,17 +66,17 @@ export class Crime {
   intelligence_exp = 0;
 
   constructor(
-    workName: string,
-    tooltipText: string,
+    name = "",
+    workName = "",
     type: CrimeType,
-    time: number,
-    money: number,
-    difficulty: number,
-    karma: number,
-    params: IConstructorParams,
+    time = 0,
+    money = 0,
+    difficulty = 0,
+    karma = 0,
+    params: IConstructorParams = {},
   ) {
+    this.name = name;
     this.workName = workName;
-    this.tooltipText = tooltipText;
     this.type = type;
     this.time = time;
     this.money = money;
@@ -102,11 +101,11 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(div = 1, workerScript: WorkerScript | null = null): number {
+  commit(p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
     if (div <= 0) {
       div = 1;
     }
-    Player.startWork(
+    p.startWork(
       new CrimeWork({
         crimeType: this.type,
         singularity: workerScript !== null,
@@ -128,7 +127,7 @@ export class Crime {
     chance /= CONSTANTS.MaxSkillLevel;
     chance /= this.difficulty;
     chance *= p.mults.crime_success;
-    chance *= calculateIntelligenceBonus(p.skills.intelligence, 1);
+    chance *= p.getIntelligenceBonus(1);
 
     return Math.min(chance, 1);
   }

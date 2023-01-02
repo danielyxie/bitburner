@@ -16,57 +16,17 @@ scan(host?: string): string[];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Optional. Hostname of the server to scan, default to current server. |
+|  host | string | Optional, Hostname of the server to scan, default to current server. |
 
 <b>Returns:</b>
 
 string\[\]
 
-Returns an array of hostnames.
+Returns an string of hostnames.
 
 ## Remarks
 
 RAM cost: 0.2 GB
 
 Returns an array containing the hostnames of all servers that are one node way from the specified target server. The hostnames in the returned array are strings.
-
-## Example 1
-
-
-```ts
-// NS1
-// All servers that are one hop from the current server.
-tprint("Neighbors of current server.");
-var neighbor = scan();
-for (var i = 0; i < neighbor.length; i++) {
-    tprint(neighbor[i]);
-}
-// All neighbors of n00dles.
-var target = "n00dles";
-neighbor = scan(target);
-tprintf("Neighbors of %s.", target);
-for (var i = 0; i < neighbor.length; i++) {
-    tprint(neighbor[i]);
-}
-```
-
-## Example 2
-
-
-```ts
-// NS2
-// All servers that are one hop from the current server.
-ns.tprint("Neighbors of current server.");
-let neighbor = ns.scan();
-for (let i = 0; i < neighbor.length; i++) {
-    ns.tprint(neighbor[i]);
-}
-// All neighbors of n00dles.
-const target = "n00dles";
-neighbor = ns.scan(target);
-ns.tprintf("Neighbors of %s.", target);
-for (let i = 0; i < neighbor.length; i++) {
-    ns.tprint(neighbor[i]);
-}
-```
 

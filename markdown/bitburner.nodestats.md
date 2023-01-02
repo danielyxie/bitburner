@@ -9,7 +9,7 @@ Object representing all the values related to a hacknet node.
 <b>Signature:</b>
 
 ```typescript
-interface NodeStats 
+export interface NodeStats 
 ```
 
 ## Properties

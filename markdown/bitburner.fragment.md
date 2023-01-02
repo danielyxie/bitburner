@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface Fragment 
+export interface Fragment 
 ```
 
 ## Properties

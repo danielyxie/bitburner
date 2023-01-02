@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Player } from "@player";
+import { Player } from "../../Player";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { interpolate } from "./Difficulty";
 import { GameTimer } from "./GameTimer";
@@ -33,25 +33,25 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (event.key !== KEY.SPACE) return;
-    if (phase !== 1) {
+    if (phase !== 2) {
       props.onFailure();
     } else {
       props.onSuccess();
     }
   }
   const hasAugment = Player.hasAugmentation(AugmentationNames.MightOfAres, true);
-  const guardingTime = Math.random() * 3250 + 1500 - (250 + difficulty.window);
-  const preparingTime = difficulty.window;
-  const attackingTime = 250;
+  const phaseZeroTime = Math.random() * 3250 + 1500 - (250 + difficulty.window);
+  const phaseOneTime = 250;
+  const timeUntilAttacking = phaseZeroTime + phaseOneTime;
 
   useEffect(() => {
     let id = window.setTimeout(() => {
       setPhase(1);
       id = window.setTimeout(() => {
         setPhase(2);
-        id = window.setTimeout(() => props.onFailure(), attackingTime);
-      }, preparingTime);
-    }, guardingTime);
+        id = window.setTimeout(() => setPhase(0), difficulty.window);
+      }, phaseOneTime);
+    }, phaseZeroTime);
     return () => {
       clearInterval(id);
     };
@@ -61,12 +61,12 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
     <>
       <GameTimer millis={5000} onExpire={props.onFailure} />
       <Paper sx={{ display: "grid", justifyItems: "center" }}>
-        <Typography variant="h4">Attack when his guard is down!</Typography>
+        <Typography variant="h4">Slash when his guard is down!</Typography>
 
         {hasAugment ? (
           <Box sx={{ my: 1 }}>
             <Typography variant="h5">Guard will drop in...</Typography>
-            <GameTimer millis={guardingTime} onExpire={() => null} ignoreAugment_WKSharmonizer noPaper />
+            <GameTimer millis={timeUntilAttacking} onExpire={() => null} noPaper />
           </Box>
         ) : (
           <></>

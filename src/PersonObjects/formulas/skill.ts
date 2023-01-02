@@ -1,7 +1,3 @@
-/**
- * Given an experience amount and stat multiplier, calculates the
- * stat level. Stat-agnostic (same formula for every stat)
- */
 export function calculateSkill(exp: number, mult = 1): number {
   return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
 }

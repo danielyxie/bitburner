@@ -1,8 +1,8 @@
 import React from "react";
 import { numeralWrapper } from "../../../ui/numeralFormat";
-import * as corpConstants from "../../data/Constants";
+import { CorporationConstants } from "../../data/Constants";
 import { OfficeSpace } from "../../OfficeSpace";
-import { Corporation } from "../../Corporation";
+import { ICorporation } from "../../ICorporation";
 import { UpgradeOfficeSize } from "../../Actions";
 import { Modal } from "../../../ui/React/Modal";
 import { useCorporation } from "../Context";
@@ -14,7 +14,7 @@ import Box from "@mui/material/Box";
 interface IUpgradeButton {
   cost: number;
   size: number;
-  corp: Corporation;
+  corp: ICorporation;
   office: OfficeSpace;
   onClose: () => void;
   rerender: () => void;
@@ -51,19 +51,19 @@ interface IProps {
 
 export function UpgradeOfficeSizeModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  const initialPriceMult = Math.round(props.office.size / corpConstants.officeInitialSize);
+  const initialPriceMult = Math.round(props.office.size / CorporationConstants.OfficeInitialSize);
   const costMultiplier = 1.09;
-  const upgradeCost = corpConstants.officeInitialCost * Math.pow(costMultiplier, initialPriceMult);
+  const upgradeCost = CorporationConstants.OfficeInitialCost * Math.pow(costMultiplier, initialPriceMult);
 
   // Calculate cost to upgrade size by 15 employees
   let mult = 0;
   for (let i = 0; i < 5; ++i) {
     mult += Math.pow(costMultiplier, initialPriceMult + i);
   }
-  const upgradeCost15 = corpConstants.officeInitialCost * mult;
+  const upgradeCost15 = CorporationConstants.OfficeInitialCost * mult;
 
   //Calculate max upgrade size and cost
-  const maxMult = corp.funds / corpConstants.officeInitialCost;
+  const maxMult = corp.funds / CorporationConstants.OfficeInitialCost;
   let maxNum = 1;
   mult = Math.pow(costMultiplier, initialPriceMult);
   while (maxNum < 50) {
@@ -77,7 +77,7 @@ export function UpgradeOfficeSizeModal(props: IProps): React.ReactElement {
     }
     ++maxNum;
   }
-  const upgradeCostMax = corpConstants.officeInitialCost * mult;
+  const upgradeCostMax = CorporationConstants.OfficeInitialCost * mult;
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
@@ -90,7 +90,7 @@ export function UpgradeOfficeSizeModal(props: IProps): React.ReactElement {
           office={props.office}
           corp={corp}
           cost={upgradeCost}
-          size={corpConstants.officeInitialSize}
+          size={CorporationConstants.OfficeInitialSize}
         />
         <UpgradeSizeButton
           onClose={props.onClose}
@@ -98,7 +98,7 @@ export function UpgradeOfficeSizeModal(props: IProps): React.ReactElement {
           office={props.office}
           corp={corp}
           cost={upgradeCost15}
-          size={corpConstants.officeInitialSize * 5}
+          size={CorporationConstants.OfficeInitialSize * 5}
         />
         {maxNum !== 1 && maxNum !== 5 && (
           <UpgradeSizeButton
@@ -107,7 +107,7 @@ export function UpgradeOfficeSizeModal(props: IProps): React.ReactElement {
             office={props.office}
             corp={corp}
             cost={upgradeCostMax}
-            size={maxNum * corpConstants.officeInitialSize}
+            size={maxNum * CorporationConstants.OfficeInitialSize}
           />
         )}
       </Box>

@@ -4,10 +4,10 @@
 
 ## Office.employees property
 
-Amount of employees
+Name of all the employees
 
 <b>Signature:</b>
 
 ```typescript
-employees: number;
+employees: string[];
 ```

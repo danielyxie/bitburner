@@ -1,12 +1,24 @@
-import { handleUnknownError } from "./Netscript/NetscriptHelpers";
+import { ScriptDeath } from "./Netscript/ScriptDeath";
+import { helpers } from "./Netscript/NetscriptHelpers";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
 
 export function setupUncaughtPromiseHandler(): void {
-  window.addEventListener("unhandledrejection", (e) => {
-    e.preventDefault();
-    handleUnknownError(
-      e.reason,
-      null,
-      "UNCAUGHT PROMISE ERROR\nYou forgot to await a promise\nmaybe hack / grow / weaken ?\n\n",
-    );
+  window.addEventListener("unhandledrejection", function (e) {
+    if (helpers.isScriptErrorMessage(e.reason)) {
+      const errorTextArray = e.reason.split("|DELIMITER|");
+      const hostname = errorTextArray[1];
+      const scriptName = errorTextArray[2];
+      const errorMsg = errorTextArray[3];
+
+      let msg = `UNCAUGHT PROMISE ERROR<br>You forgot to await a promise<br>${scriptName}@${hostname}<br>`;
+      msg += "<br>";
+      msg += errorMsg;
+      dialogBoxCreate(msg);
+    } else if (e.reason instanceof ScriptDeath) {
+      const msg =
+        `UNCAUGHT PROMISE ERROR<br>You forgot to await a promise<br>${e.reason.name}@${e.reason.hostname} (PID - ${e.reason.pid})<br>` +
+        `Maybe hack / grow / weaken ?`;
+      dialogBoxCreate(msg);
+    }
   });
 }

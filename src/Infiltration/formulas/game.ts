@@ -1,30 +1,30 @@
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { calculateSkill } from "../../PersonObjects/formulas/skill";
 
-function calculateRawDiff(stats: number, startingDifficulty: number): number {
-  const difficulty = startingDifficulty - Math.pow(stats, 0.9) / 250 - Player.skills.intelligence / 1600;
+function calculateRawDiff(player: IPlayer, stats: number, startingDifficulty: number): number {
+  const difficulty = startingDifficulty - Math.pow(stats, 0.9) / 250 - player.skills.intelligence / 1600;
   if (difficulty < 0) return 0;
   if (difficulty > 3) return 3;
   return difficulty;
 }
 
-export function calculateDifficulty(startingSecurityLevel: number): number {
+export function calculateDifficulty(player: IPlayer, startingSecurityLevel: number): number {
   const totalStats =
-    Player.skills.strength +
-    Player.skills.defense +
-    Player.skills.dexterity +
-    Player.skills.agility +
-    Player.skills.charisma;
-  return calculateRawDiff(totalStats, startingSecurityLevel);
+    player.skills.strength +
+    player.skills.defense +
+    player.skills.dexterity +
+    player.skills.agility +
+    player.skills.charisma;
+  return calculateRawDiff(player, totalStats, startingSecurityLevel);
 }
 
-export function calculateReward(startingSecurityLevel: number): number {
+export function calculateReward(player: IPlayer, startingSecurityLevel: number): number {
   const xpMult = 10 * 60 * 15;
   const total =
-    calculateSkill(Player.mults.strength_exp * xpMult, Player.mults.strength) +
-    calculateSkill(Player.mults.defense_exp * xpMult, Player.mults.defense) +
-    calculateSkill(Player.mults.agility_exp * xpMult, Player.mults.agility) +
-    calculateSkill(Player.mults.dexterity_exp * xpMult, Player.mults.dexterity) +
-    calculateSkill(Player.mults.charisma_exp * xpMult, Player.mults.charisma);
-  return calculateRawDiff(total, startingSecurityLevel);
+    calculateSkill(player.mults.strength_exp * xpMult, player.mults.strength) +
+    calculateSkill(player.mults.defense_exp * xpMult, player.mults.defense) +
+    calculateSkill(player.mults.agility_exp * xpMult, player.mults.agility) +
+    calculateSkill(player.mults.dexterity_exp * xpMult, player.mults.dexterity) +
+    calculateSkill(player.mults.charisma_exp * xpMult, player.mults.charisma);
+  return calculateRawDiff(player, total, startingSecurityLevel);
 }

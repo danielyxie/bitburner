@@ -1,3 +1,6 @@
+/**
+ * Root React component for the Stock Market UI
+ */
 import React, { useState, useEffect } from "react";
 
 import { InfoAndPurchases } from "./InfoAndPurchases";
@@ -5,13 +8,13 @@ import { StockTickers } from "./StockTickers";
 
 import { IStockMarket } from "../IStockMarket";
 
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 type IProps = {
+  p: IPlayer;
   stockMarket: IStockMarket;
 };
 
-/** Root React component for the Stock Market UI */
 export function StockMarketRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -24,8 +27,8 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
   }, []);
   return (
     <>
-      <InfoAndPurchases rerender={rerender} />
-      {Player.hasWseAccount && <StockTickers stockMarket={props.stockMarket} />}
+      <InfoAndPurchases p={props.p} rerender={rerender} />
+      {props.p.hasWseAccount && <StockTickers p={props.p} stockMarket={props.stockMarket} />}
     </>
   );
 }

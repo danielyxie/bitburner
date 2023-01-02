@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { Box, Typography, Button, Container } from "@mui/material";
 
-import { Player } from "@player";
+import { use } from "../../../ui/Context";
 
 import { SleeveElem } from "./SleeveElem";
 import { FAQModal } from "./FAQModal";
 
 export function SleeveRoot(): React.ReactElement {
+  const player = use.Player();
   const [FAQOpen, setFAQOpen] = useState(false);
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -42,7 +43,7 @@ export function SleeveRoot(): React.ReactElement {
         Wiki Documentation
       </Button>
       <Box display="grid" sx={{ gridTemplateColumns: "repeat(2, 1fr)", mt: 1 }}>
-        {Player.sleeves.map((sleeve, i) => (
+        {player.sleeves.map((sleeve, i) => (
           <SleeveElem key={i} rerender={rerender} sleeve={sleeve} />
         ))}
       </Box>

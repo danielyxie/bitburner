@@ -12,17 +12,16 @@ import Box from "@mui/material/Box";
 import { ApplyToJobButton } from "./ApplyToJobButton";
 
 import { Locations } from "../Locations";
-import { LocationName } from "../../Enums";
+import { LocationName } from "../data/LocationNames";
 
 import { Companies } from "../../Company/Companies";
+import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
-import * as posNames from "../../Company/data/JobTracks";
+import * as posNames from "../../Company/data/companypositionnames";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import { QuitJobModal } from "../../Company/ui/QuitJobModal";
 import { CompanyWork } from "../../Work/CompanyWork";
 
@@ -31,6 +30,8 @@ type IProps = {
 };
 
 export function CompanyLocation(props: IProps): React.ReactElement {
+  const p = use.Player();
+  const router = use.Router();
   const [quitOpen, setQuitOpen] = useState(false);
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -48,14 +49,18 @@ export function CompanyLocation(props: IProps): React.ReactElement {
   const company = Companies[props.locName];
   if (company == null) throw new Error(`CompanyLocation component constructed with invalid company: ${props.locName}`);
 
-  /** Reference to the Location that this component is being rendered for */
+  /**
+   * Reference to the Location that this component is being rendered for
+   */
   const location = Locations[props.locName];
   if (location == null) {
     throw new Error(`CompanyLocation component constructed with invalid location: ${props.locName}`);
   }
 
-  /** Name of company position that player holds, if applicable */
-  const jobTitle = Player.jobs[props.locName] ? Player.jobs[props.locName] : null;
+  /**
+   * Name of company position that player holds, if applicable
+   */
+  const jobTitle = p.jobs[props.locName] ? p.jobs[props.locName] : null;
 
   /**
    * CompanyPosition object for the job that the player holds at this company
@@ -63,13 +68,13 @@ export function CompanyLocation(props: IProps): React.ReactElement {
    */
   const companyPosition = jobTitle ? CompanyPositions[jobTitle] : null;
 
-  Player.location = props.locName;
+  p.location = props.locName;
 
   function applyForAgentJob(e: React.MouseEvent<HTMLElement>): void {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForAgentJob();
+    p.applyForAgentJob();
     rerender();
   }
 
@@ -77,7 +82,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForBusinessConsultantJob();
+    p.applyForBusinessConsultantJob();
     rerender();
   }
 
@@ -85,7 +90,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForBusinessJob();
+    p.applyForBusinessJob();
     rerender();
   }
 
@@ -93,7 +98,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForEmployeeJob();
+    p.applyForEmployeeJob();
     rerender();
   }
 
@@ -101,7 +106,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForItJob();
+    p.applyForItJob();
     rerender();
   }
 
@@ -109,7 +114,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForPartTimeEmployeeJob();
+    p.applyForPartTimeEmployeeJob();
     rerender();
   }
 
@@ -117,7 +122,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForPartTimeWaiterJob();
+    p.applyForPartTimeWaiterJob();
     rerender();
   }
 
@@ -125,7 +130,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForSecurityJob();
+    p.applyForSecurityJob();
     rerender();
   }
 
@@ -133,7 +138,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForSoftwareConsultantJob();
+    p.applyForSoftwareConsultantJob();
     rerender();
   }
 
@@ -141,7 +146,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForSoftwareJob();
+    p.applyForSoftwareJob();
     rerender();
   }
 
@@ -149,7 +154,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!e.isTrusted) {
       return;
     }
-    Player.applyForWaiterJob();
+    p.applyForWaiterJob();
     rerender();
   }
 
@@ -161,7 +166,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!loc.infiltrationData)
       throw new Error(`trying to start infiltration at ${props.locName} but the infiltrationData is null`);
 
-    Router.toInfiltration(loc);
+    router.toInfiltration(loc);
   }
 
   function work(e: React.MouseEvent<HTMLElement>): void {
@@ -170,15 +175,15 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     }
 
     const pos = companyPosition;
-    if (pos) {
-      Player.startWork(
+    if (pos instanceof CompanyPosition) {
+      p.startWork(
         new CompanyWork({
           singularity: false,
           companyName: props.locName,
         }),
       );
-      Player.startFocusing();
-      Router.toPage(Page.Work);
+      p.startFocusing();
+      router.toWork();
     }
   }
 

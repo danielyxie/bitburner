@@ -4,9 +4,7 @@ import { find } from "lodash";
 import { Box, Typography, Button, Container, Paper } from "@mui/material";
 import { Check, Lock, Create } from "@mui/icons-material";
 
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import { Settings } from "../../Settings/Settings";
 
 import { Programs } from "../Programs";
@@ -15,6 +13,8 @@ import { CreateProgramWork } from "../../Work/CreateProgramWork";
 export const ProgramsSeen: string[] = [];
 
 export function ProgramsRoot(): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -25,13 +25,13 @@ export function ProgramsRoot(): React.ReactElement {
       const create = prog.create;
       if (create === null) return false;
       if (prog.name === "b1t_flum3.exe") {
-        return create.req();
+        return create.req(player);
       }
       return true;
     })
     .sort((a, b) => {
-      if (Player.hasProgram(a.name)) return 1;
-      if (Player.hasProgram(b.name)) return -1;
+      if (player.hasProgram(a.name)) return 1;
+      if (player.hasProgram(b.name)) return -1;
       return (a.create?.level ?? 0) - (b.create?.level ?? 0);
     });
 
@@ -48,11 +48,11 @@ export function ProgramsRoot(): React.ReactElement {
   }, []);
 
   const getHackingLevelRemaining = (lvl: number): number => {
-    return Math.ceil(Math.max(lvl - (Player.skills.hacking + Player.skills.intelligence / 2), 0));
+    return Math.ceil(Math.max(lvl - (player.skills.hacking + player.skills.intelligence / 2), 0));
   };
 
   const getProgCompletion = (name: string): number => {
-    const programFile = find(Player.getHomeComputer().programs, (p) => {
+    const programFile = find(player.getHomeComputer().programs, (p) => {
       return p.startsWith(name) && p.endsWith("%-INC");
     });
     if (!programFile) return -1;
@@ -84,29 +84,31 @@ export function ProgramsRoot(): React.ReactElement {
           return (
             <Box
               component={Paper}
-              sx={{ p: 1, opacity: Player.hasProgram(program.name) ? 0.75 : 1 }}
+              sx={{ p: 1, opacity: player.hasProgram(program.name) ? 0.75 : 1 }}
               key={program.name}
             >
               <>
                 <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                  {(Player.hasProgram(program.name) && <Check sx={{ mr: 1 }} />) ||
-                    (create.req() && <Create sx={{ mr: 1 }} />) || <Lock sx={{ mr: 1 }} />}
+                  {(player.hasProgram(program.name) && <Check sx={{ mr: 1 }} />) ||
+                    (create.req(player) && <Create sx={{ mr: 1 }} />) || <Lock sx={{ mr: 1 }} />}
                   {program.name}
                 </Typography>
-                {!Player.hasProgram(program.name) && create.req() && (
+                {!player.hasProgram(program.name) && create.req(player) && (
                   <Button
                     sx={{ my: 1, width: "100%" }}
                     onClick={(event) => {
                       if (!event.isTrusted) return;
-                      Player.startWork(new CreateProgramWork({ singularity: false, programName: program.name }));
-                      Player.startFocusing();
-                      Router.toPage(Page.Work);
+                      player.startWork(
+                        new CreateProgramWork({ player: player, singularity: false, programName: program.name }),
+                      );
+                      player.startFocusing();
+                      router.toWork();
                     }}
                   >
                     Create program
                   </Button>
                 )}
-                {Player.hasProgram(program.name) || getHackingLevelRemaining(create.level) === 0 || (
+                {player.hasProgram(program.name) || getHackingLevelRemaining(create.level) === 0 || (
                   <Typography color={Settings.theme.hack}>
                     <b>Unlocks in:</b> {getHackingLevelRemaining(create.level)} hacking levels
                   </Typography>

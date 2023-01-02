@@ -1,4 +1,5 @@
 import { Settings } from "../Settings/Settings";
+import { EqualityFunc } from "../types";
 import { isString } from "./helpers/isString";
 
 /*
@@ -7,8 +8,7 @@ e.g.    10000 -> "10 seconds"
         120000 -> "2 minutes and 0 seconds"
 */
 function convertTimeMsToTimeElapsedString(time: number, showMilli = false): string {
-  const negFlag = time < 0;
-  time = Math.abs(Math.floor(time));
+  time = Math.floor(time);
   const millisecondsPerSecond = 1000;
   const secondPerMinute = 60;
   const minutesPerHours = 60;
@@ -48,7 +48,7 @@ function convertTimeMsToTimeElapsedString(time: number, showMilli = false): stri
   }
   res += `${seconds} second${!showMilli && secTruncMinutes === 1 ? "" : "s"}`;
 
-  return negFlag ? `-(${res})` : res;
+  return res;
 }
 
 // Finds the longest common starting substring in a set of strings
@@ -65,7 +65,7 @@ function longestCommonStart(strings: string[]): string {
   const a2: string = A[A.length - 1];
   const L: number = a1.length;
   let i = 0;
-  const areEqualCaseInsensitive = (a: string, b: string) => a.toUpperCase() === b.toUpperCase();
+  const areEqualCaseInsensitive: EqualityFunc<string> = (a: string, b: string) => a.toUpperCase() === b.toUpperCase();
   while (i < L && areEqualCaseInsensitive(a1.charAt(i), a2.charAt(i))) {
     i++;
   }

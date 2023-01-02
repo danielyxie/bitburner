@@ -9,14 +9,14 @@ Travel to another city.
 <b>Signature:</b>
 
 ```typescript
-travelToCity(city: CityName | `${CityName}`): boolean;
+travelToCity(city: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | City to travel to. |
+|  city | string | City to travel to. |
 
 <b>Returns:</b>
 

@@ -7,16 +7,15 @@ import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames"
 import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
 import { CONSTANTS } from "../../../Constants";
 import { hasAugmentationPrereqs } from "../../../Faction/FactionHelpers";
-import { LocationName } from "../../../Enums";
+import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
 import { PurchaseAugmentationsOrderSetting } from "../../../Settings/SettingEnums";
 import { Settings } from "../../../Settings/Settings";
-import { Router } from "../../../ui/GameRoot";
-import { Page } from "../../../ui/Router";
+import { use } from "../../../ui/Context";
 import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
-import { Player } from "@player";
+import { IPlayer } from "../../IPlayer";
 import { GraftableAugmentation } from "../GraftableAugmentation";
 import { calculateGraftingTimeWithBonus, getGraftingAvailableAugs } from "../GraftingHelpers";
 
@@ -30,19 +29,21 @@ export const GraftableAugmentations = (): Record<string, GraftableAugmentation> 
   return gAugs;
 };
 
-const canGraft = (aug: GraftableAugmentation): boolean => {
-  if (Player.money < aug.cost) {
+const canGraft = (player: IPlayer, aug: GraftableAugmentation): boolean => {
+  if (player.money < aug.cost) {
     return false;
   }
   return hasAugmentationPrereqs(aug.augmentation);
 };
 
 interface IProps {
+  player: IPlayer;
   aug: Augmentation;
 }
 
 const AugPreReqsChecklist = (props: IProps): React.ReactElement => {
-  const aug = props.aug;
+  const aug = props.aug,
+    player = props.player;
 
   return (
     <Typography color={Settings.theme.money}>
@@ -50,7 +51,7 @@ const AugPreReqsChecklist = (props: IProps): React.ReactElement => {
       <br />
       {aug.prereqs.map((preAug) => (
         <span style={{ display: "flex", alignItems: "center" }}>
-          {Player.hasAugmentation(preAug) ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
+          {player.hasAugmentation(preAug) ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
           {preAug}
         </span>
       ))}
@@ -59,9 +60,12 @@ const AugPreReqsChecklist = (props: IProps): React.ReactElement => {
 };
 
 export const GraftingRoot = (): React.ReactElement => {
+  const player = use.Player();
+  const router = use.Router();
+
   const graftableAugmentations = useState(GraftableAugmentations())[0];
 
-  const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs()[0]);
+  const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs(player)[0]);
   const [graftOpen, setGraftOpen] = useState(false);
   const selectedAugmentation = StaticAugmentations[selectedAug];
 
@@ -71,7 +75,7 @@ export const GraftingRoot = (): React.ReactElement => {
   }
 
   const getAugsSorted = (): string[] => {
-    const augs = getGraftingAvailableAugs();
+    const augs = getGraftingAvailableAugs(player);
     switch (Settings.PurchaseAugmentationsOrder) {
       case PurchaseAugmentationsOrderSetting.Cost:
         return augs.sort((a, b) => graftableAugmentations[a].cost - graftableAugmentations[b].cost);
@@ -92,7 +96,7 @@ export const GraftingRoot = (): React.ReactElement => {
 
   return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
-      <Button onClick={() => Router.toLocation(Locations[LocationName.NewTokyoVitaLife])}>Back</Button>
+      <Button onClick={() => router.toLocation(Locations[LocationName.NewTokyoVitaLife])}>Back</Button>
       <Typography variant="h4">Grafting Laboratory</Typography>
       <Typography>
         You find yourself in a secret laboratory, owned by a mysterious researcher.
@@ -118,14 +122,16 @@ export const GraftingRoot = (): React.ReactElement => {
             </Button>
           </Box>
         </Paper>
-        {getGraftingAvailableAugs().length > 0 ? (
+        {getGraftingAvailableAugs(player).length > 0 ? (
           <Paper sx={{ mb: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
               {getAugsSorted().map((k, i) => (
                 <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
                   <Typography
                     sx={{
-                      color: canGraft(graftableAugmentations[k]) ? Settings.theme.primary : Settings.theme.disabled,
+                      color: canGraft(player, graftableAugmentations[k])
+                        ? Settings.theme.primary
+                        : Settings.theme.disabled,
                     }}
                   >
                     {k}
@@ -140,11 +146,11 @@ export const GraftingRoot = (): React.ReactElement => {
               <Button
                 onClick={() => setGraftOpen(true)}
                 sx={{ width: "100%" }}
-                disabled={!canGraft(graftableAugmentations[selectedAug])}
+                disabled={!canGraft(player, graftableAugmentations[selectedAug])}
               >
                 Graft Augmentation (
                 <Typography>
-                  <Money money={graftableAugmentations[selectedAug].cost} forPurchase={true} />
+                  <Money money={graftableAugmentations[selectedAug].cost} player={player} />
                 </Typography>
                 )
               </Button>
@@ -152,20 +158,21 @@ export const GraftingRoot = (): React.ReactElement => {
                 open={graftOpen}
                 onClose={() => setGraftOpen(false)}
                 onConfirm={() => {
-                  Player.startWork(
+                  player.startWork(
                     new GraftingWork({
                       augmentation: selectedAug,
                       singularity: false,
+                      player: player,
                     }),
                   );
-                  Player.startFocusing();
-                  Router.toPage(Page.Work);
+                  player.startFocusing();
+                  router.toWork();
                 }}
                 confirmationText={
                   <>
                     Cancelling grafting will <b>not</b> save grafting progress, and the money you spend will <b>not</b>{" "}
                     be returned.
-                    {!Player.hasAugmentation(AugmentationNames.CongruityImplant) && (
+                    {!player.hasAugmentation(AugmentationNames.CongruityImplant) && (
                       <>
                         <br />
                         <br />
@@ -179,12 +186,14 @@ export const GraftingRoot = (): React.ReactElement => {
                 <Typography color={Settings.theme.info}>
                   <b>Time to Graft:</b>{" "}
                   {convertTimeMsToTimeElapsedString(
-                    calculateGraftingTimeWithBonus(graftableAugmentations[selectedAug]),
+                    calculateGraftingTimeWithBonus(player, graftableAugmentations[selectedAug]),
                   )}
                   {/* Use formula so the displayed creation time is accurate to player bonus */}
                 </Typography>
 
-                {selectedAugmentation.prereqs.length > 0 && <AugPreReqsChecklist aug={selectedAugmentation} />}
+                {selectedAugmentation.prereqs.length > 0 && (
+                  <AugPreReqsChecklist player={player} aug={selectedAugmentation} />
+                )}
 
                 <br />
 
@@ -220,10 +229,10 @@ export const GraftingRoot = (): React.ReactElement => {
 
         <Paper sx={{ my: 1, p: 1, width: "fit-content" }}>
           <Typography>
-            <b>Entropy strength:</b> {Player.entropy}
+            <b>Entropy strength:</b> {player.entropy}
             <br />
             <b>All multipliers decreased by:</b>{" "}
-            {formatNumber((1 - CONSTANTS.EntropyEffect ** Player.entropy) * 100, 3)}% (multiplicative)
+            {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropy) * 100, 3)}% (multiplicative)
           </Typography>
         </Paper>
 

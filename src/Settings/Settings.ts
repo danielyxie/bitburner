@@ -1,98 +1,303 @@
+import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
-import { defaultTheme } from "../Themes/Themes";
+import { defaultTheme, ITheme } from "../Themes/Themes";
 import { defaultStyles } from "../Themes/Styles";
 import { WordWrapOptions } from "../ScriptEditor/ui/Options";
-import { defaultMonacoTheme } from "../ScriptEditor/ui/themes";
+import { OverviewSettings } from "../ui/React/Overview";
+import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
+import { defaultMonacoTheme, IScriptEditorTheme } from "../ScriptEditor/ui/themes";
 
-/** The current options the player has customized to their play style. */
-export const Settings = {
-  /** How many servers per page */
+/**
+ * Represents the default settings the player could customize.
+ */
+interface IDefaultSettings {
+  /**
+   * How many servers per page
+   */
+  ActiveScriptsServerPageSize: number;
+  /**
+   * How many scripts per page
+   */
+  ActiveScriptsScriptPageSize: number;
+  /**
+   * How often the game should autosave the player's progress, in seconds.
+   */
+  AutosaveInterval: number;
+
+  /**
+   * How many milliseconds between execution points for Netscript 1 statements.
+   */
+  CodeInstructionRunTime: number;
+
+  /**
+   * Render city as list of buttons.
+   */
+  DisableASCIIArt: boolean;
+
+  /**
+   * Whether global keyboard shortcuts should be recognized throughout the game.
+   */
+  DisableHotkeys: boolean;
+
+  /**
+   * Whether text effects such as corruption should be visible.
+   */
+  DisableTextEffects: boolean;
+
+  /**
+   * Whether overview progress bars should be visible.
+   */
+  DisableOverviewProgressBars: boolean;
+
+  /**
+   * Enable bash hotkeys
+   */
+  EnableBashHotkeys: boolean;
+
+  /**
+   * Timestamps format
+   */
+  TimestampsFormat: string;
+
+  /**
+   * Locale used for display numbers
+   */
+  Locale: string;
+
+  /**
+   * Limit the number of recently killed script entries being tracked.
+   */
+  MaxRecentScriptsCapacity: number;
+
+  /**
+   * Limit the number of log entries for each script being executed on each server.
+   */
+  MaxLogCapacity: number;
+
+  /**
+   * Limit how many entries can be written to a Netscript Port before entries start to get pushed out.
+   */
+  MaxPortCapacity: number;
+
+  /**
+   * Limit the number of entries in the terminal.
+   */
+  MaxTerminalCapacity: number;
+
+  /**
+   * Port the Remote File API client will try to connect to.
+   */
+  RemoteFileApiPort: number;
+
+  /**
+   * Save the game when you save any file.
+   */
+  SaveGameOnFileSave: boolean;
+
+  /**
+   * Whether the player should be asked to confirm purchasing each and every augmentation.
+   */
+  SuppressBuyAugmentationConfirmation: boolean;
+
+  /**
+   * Whether the user should be prompted to join each faction via a dialog box.
+   */
+  SuppressFactionInvites: boolean;
+
+  /**
+   * Whether the user should be shown a dialog box whenever they receive a new message file.
+   */
+  SuppressMessages: boolean;
+
+  /**
+   * Whether the user should be asked to confirm travelling between cities.
+   */
+  SuppressTravelConfirmation: boolean;
+
+  /**
+   * Whether the user should be displayed a popup message when his Bladeburner actions are cancelled.
+   */
+  SuppressBladeburnerPopup: boolean;
+
+  /**
+   * Whether the user should be displayed a popup message on stock market actions.
+   */
+  SuppressTIXPopup: boolean;
+
+  /**
+   * Whether the user should be displayed a toast alert when the game is saved.
+   */
+  SuppressSavedGameToast: boolean;
+
+  /**
+   * Whether the user should be displayed a toast warning when the autosave is disabled.
+   */
+  SuppressAutosaveDisabledWarnings: boolean;
+
+  /*
+   * Whether the game should skip saving the running scripts for late game
+   */
+  ExcludeRunningScriptsFromSave: boolean;
+
+  /*
+   * Theme colors
+   */
+  theme: ITheme;
+
+  /*
+   * Interface styles
+   */
+  styles: IStyleSettings;
+
+  /*
+   * Use GiB instead of GB
+   */
+  UseIEC60027_2: boolean;
+
+  /*
+   * Display intermediary time unit when their value is null
+   */
+  ShowMiddleNullTimeUnit: boolean;
+
+  /*
+   * Character overview settings
+   */
+  overview: OverviewSettings;
+
+  /**
+   *  If the game's sidebar is opened
+   */
+  IsSidebarOpened: boolean;
+
+  /**
+   *  Script editor theme data
+   */
+  EditorTheme: IScriptEditorTheme;
+}
+
+/**
+ * Represents all possible settings the player wants to customize to their play style.
+ */
+interface ISettings extends IDefaultSettings {
+  /**
+   * What order the player's owned Augmentations/Source Files should be displayed in
+   */
+  OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting;
+
+  /**
+   * What order the Augmentations should be displayed in when purchasing from a Faction
+   */
+  PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting;
+
+  MonacoTheme: string;
+
+  MonacoInsertSpaces: boolean;
+
+  MonacoFontSize: number;
+
+  MonacoVim: boolean;
+
+  MonacoWordWrap: WordWrapOptions;
+}
+
+export const defaultSettings: IDefaultSettings = {
   ActiveScriptsServerPageSize: 10,
-  /** How many scripts per page */
   ActiveScriptsScriptPageSize: 10,
-  /** How often the game should autosave the player's progress, in seconds. */
   AutosaveInterval: 60,
-  /** How many milliseconds between execution points for Netscript 1 statements. */
-  CodeInstructionRunTime: 25,
-  /** Whether to render city as list of buttons. */
+  CodeInstructionRunTime: 50,
   DisableASCIIArt: false,
-  /** Whether global keyboard shortcuts should be disabled throughout the game. */
   DisableHotkeys: false,
-  /** Whether text effects such as corruption should be disabled. */
   DisableTextEffects: false,
-  /** Whether overview progress bars should be visible. */
   DisableOverviewProgressBars: false,
-  /** Whether to enable bash hotkeys */
   EnableBashHotkeys: false,
-  /** Timestamps format string */
   TimestampsFormat: "",
-  /** Locale used for display numbers. */
   Locale: "en",
-  /** Limit the number of recently killed script entries being tracked. */
   MaxRecentScriptsCapacity: 50,
-  /** Limit the number of log entries for each script being executed on each server. */
   MaxLogCapacity: 50,
-  /** Limit how many entries can be written to a Netscript Port before entries start to get pushed out. */
   MaxPortCapacity: 50,
-  /** Limit the number of entries in the terminal. */
   MaxTerminalCapacity: 500,
-  /** Port the Remote File API client will try to connect to. 0 to disable. */
   RemoteFileApiPort: 0,
-  /** Whether to save the game when the player saves any file. */
   SaveGameOnFileSave: true,
-  /** Whether to hide the confirmation dialog for augmentation purchases. */
   SuppressBuyAugmentationConfirmation: false,
-  /** Whether to hide the dialog showing new faction invites. */
   SuppressFactionInvites: false,
-  /** Whether to hide the dialog when the player receives a new message file. */
   SuppressMessages: false,
-  /** Whether to hide the confirmation dialog when the player attempts to travel between cities. */
   SuppressTravelConfirmation: false,
-  /** Whether to hide the dialog when the player's Bladeburner actions are cancelled. */
   SuppressBladeburnerPopup: false,
-  /** Whether to hide dialogs for stock market actions. */
   SuppressTIXPopup: false,
-  /** Whether to hide the toast alert when the game is saved. */
   SuppressSavedGameToast: false,
-  /** Whether to hide the toast warning when the autosave is disabled. */
   SuppressAutosaveDisabledWarnings: false,
-  /** Whether to GiB instead of GB. */
   UseIEC60027_2: false,
-  /** Whether to display intermediary time unit when their value is null */
   ShowMiddleNullTimeUnit: false,
-  /** Whether the game should skip saving the running scripts to the save file. */
   ExcludeRunningScriptsFromSave: false,
-  /**  Whether the game's sidebar is opened. */
   IsSidebarOpened: true,
-  /** Theme colors. */
-  theme: { ...defaultTheme },
-  /** Interface styles. */
-  styles: { ...defaultStyles },
-  /** Character overview settings. */
+
+  theme: defaultTheme,
+  styles: defaultStyles,
   overview: { x: 0, y: 0, opened: true },
-  /**  Script editor theme data. */
-  EditorTheme: { ...defaultMonacoTheme },
-  /** Order to display the player's owned Augmentations/Source Files. */
+
+  EditorTheme: defaultMonacoTheme,
+};
+
+/**
+ * The current options the player has customized to their play style.
+ */
+// tslint:disable-next-line:variable-name
+export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
+  ActiveScriptsServerPageSize: defaultSettings.ActiveScriptsServerPageSize,
+  ActiveScriptsScriptPageSize: defaultSettings.ActiveScriptsScriptPageSize,
+  AutosaveInterval: defaultSettings.AutosaveInterval,
+  CodeInstructionRunTime: 25,
+  DisableASCIIArt: defaultSettings.DisableASCIIArt,
+  DisableHotkeys: defaultSettings.DisableHotkeys,
+  DisableTextEffects: defaultSettings.DisableTextEffects,
+  DisableOverviewProgressBars: defaultSettings.DisableOverviewProgressBars,
+  EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
+  TimestampsFormat: defaultSettings.TimestampsFormat,
+  Locale: "en",
+  MaxRecentScriptsCapacity: defaultSettings.MaxRecentScriptsCapacity,
+  MaxLogCapacity: defaultSettings.MaxLogCapacity,
+  MaxPortCapacity: defaultSettings.MaxPortCapacity,
+  MaxTerminalCapacity: defaultSettings.MaxTerminalCapacity,
   OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting.AcquirementTime,
-  /** What order the Augmentations should be displayed in when purchasing from a Faction. */
   PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting.Default,
-  /** Script editor theme. */
+  RemoteFileApiPort: defaultSettings.RemoteFileApiPort,
+  SaveGameOnFileSave: defaultSettings.SaveGameOnFileSave,
+  SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
+  SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
+  SuppressMessages: defaultSettings.SuppressMessages,
+  SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
+  SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
+  SuppressTIXPopup: defaultSettings.SuppressTIXPopup,
+  SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
+  SuppressAutosaveDisabledWarnings: defaultSettings.SuppressAutosaveDisabledWarnings,
+  UseIEC60027_2: defaultSettings.UseIEC60027_2,
+  ShowMiddleNullTimeUnit: defaultSettings.ShowMiddleNullTimeUnit,
+  ExcludeRunningScriptsFromSave: defaultSettings.ExcludeRunningScriptsFromSave,
+  IsSidebarOpened: defaultSettings.IsSidebarOpened,
+
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
-  /** Text size for script editor. */
   MonacoFontSize: 20,
-  /** Whether to use Vim mod by default in the script editor */
   MonacoVim: false,
-  /** Word wrap setting for Script Editor. */
-  MonacoWordWrap: "off" as WordWrapOptions,
+  MonacoWordWrap: "off",
 
+  theme: { ...defaultTheme },
+  styles: { ...defaultStyles },
+  overview: defaultSettings.overview,
+  EditorTheme: { ...defaultMonacoTheme },
+  init() {
+    Object.assign(Settings, defaultSettings);
+  },
   load(saveString: string) {
     const save = JSON.parse(saveString);
-    save.theme && Object.assign(Settings.theme, save.theme);
-    save.styles && Object.assign(Settings.styles, save.styles);
-    save.overview && Object.assign(Settings.overview, save.overview);
-    save.EditorTheme && Object.assign(Settings.EditorTheme, save.EditorTheme);
-    delete save.theme, save.styles, save.overview, save.EditorTheme;
+    Object.assign(Settings.theme, save.theme);
+    delete save.theme;
+    Object.assign(Settings.styles, save.styles);
+    delete save.styles;
+    Object.assign(Settings.overview, save.overview);
+    delete save.overview;
+    Object.assign(Settings.EditorTheme, save.EditorTheme);
+    delete save.EditorTheme;
     Object.assign(Settings, save);
   },
 };

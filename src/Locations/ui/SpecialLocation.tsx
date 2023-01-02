@@ -16,14 +16,12 @@ import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
 import { CreateCorporationModal } from "../../Corporation/ui/modals/CreateCorporationModal";
-import { LocationName } from "../../Enums";
+import { LocationName } from "../data/LocationNames";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Factions } from "../../Faction/Factions";
 import { joinFaction } from "../../Faction/FactionHelpers";
 
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
@@ -43,21 +41,27 @@ type IProps = {
 };
 
 export function SpecialLocation(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const setRerender = useState(false)[1];
+  const inBladeburner = player.inBladeburner();
 
-  /** Click handler for Bladeburner button at Sector-12 NSA */
+  /**
+   * Click handler for Bladeburner button at Sector-12 NSA
+   */
   function handleBladeburner(): void {
-    if (Player.bladeburner) {
+    const p = player;
+    if (p.inBladeburner()) {
       // Enter Bladeburner division
-      Router.toPage(Page.Bladeburner);
+      router.toBladeburner();
     } else if (
-      Player.skills.strength >= 100 &&
-      Player.skills.defense >= 100 &&
-      Player.skills.dexterity >= 100 &&
-      Player.skills.agility >= 100
+      p.skills.strength >= 100 &&
+      p.skills.defense >= 100 &&
+      p.skills.dexterity >= 100 &&
+      p.skills.agility >= 100
     ) {
       // Apply for Bladeburner division
-      Player.startBladeburner();
+      p.startBladeburner();
       dialogBoxCreate("You have been accepted into the Bladeburner division!");
       setRerender((old) => !old);
 
@@ -71,16 +75,18 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
   }
 
-  /** Click handler for Resleeving button at New Tokyo VitaLife */
+  /**
+   * Click handler for Resleeving button at New Tokyo VitaLife
+   */
   function handleGrafting(): void {
-    Router.toPage(Page.Grafting);
+    router.toGrafting();
   }
 
   function renderBladeburner(): React.ReactElement {
-    if (!Player.canAccessBladeburner() || BitNodeMultipliers.BladeburnerRank === 0) {
+    if (!player.canAccessBladeburner() || BitNodeMultipliers.BladeburnerRank === 0) {
       return <></>;
     }
-    const text = Player.bladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
+    const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
     return (
       <>
         <br />
@@ -93,32 +99,32 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     function EatNoodles(): void {
       SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", ToastVariant.SUCCESS, 2000);
       N00dles(); // This is the true power of the noodles.
-      if (Player.sourceFiles.length > 0) Player.giveExploit(Exploit.N00dles);
-      if (Player.sourceFileLvl(5) > 0 || Player.bitNodeN === 5) {
-        Player.exp.intelligence *= 1.0000000000000002;
+      if (player.sourceFiles.length > 0) player.giveExploit(Exploit.N00dles);
+      if (player.sourceFileLvl(5) > 0 || player.bitNodeN === 5) {
+        player.exp.intelligence *= 1.0000000000000002;
       }
-      Player.exp.hacking *= 1.0000000000000002;
-      Player.exp.strength *= 1.0000000000000002;
-      Player.exp.defense *= 1.0000000000000002;
-      Player.exp.agility *= 1.0000000000000002;
-      Player.exp.dexterity *= 1.0000000000000002;
-      Player.exp.charisma *= 1.0000000000000002;
-      for (const node of Player.hacknetNodes) {
+      player.exp.hacking *= 1.0000000000000002;
+      player.exp.strength *= 1.0000000000000002;
+      player.exp.defense *= 1.0000000000000002;
+      player.exp.agility *= 1.0000000000000002;
+      player.exp.dexterity *= 1.0000000000000002;
+      player.exp.charisma *= 1.0000000000000002;
+      for (const node of player.hacknetNodes) {
         if (node instanceof HacknetNode) {
-          Player.gainMoney(node.moneyGainRatePerSecond * 0.001, "other");
+          player.gainMoney(node.moneyGainRatePerSecond * 0.001, "other");
         } else {
           const server = GetServer(node);
           if (!(server instanceof HacknetServer)) throw new Error(`Server ${node} is not a hacknet server.`);
-          Player.hashManager.storeHashes(server.hashRate * 0.001);
+          player.hashManager.storeHashes(server.hashRate * 0.001);
         }
       }
 
-      if (Player.bladeburner) {
-        Player.bladeburner.rank += 0.00001;
+      if (player.bladeburner) {
+        player.bladeburner.rank += 0.00001;
       }
 
-      if (Player.corporation) {
-        Player.corporation.funds += Player.corporation.revenue * 0.01;
+      if (player.corporation) {
+        player.corporation.funds += player.corporation.revenue * 0.01;
       }
     }
 
@@ -132,7 +138,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function CreateCorporation(): React.ReactElement {
     const [open, setOpen] = useState(false);
-    if (!Player.canAccessCorporation()) {
+    if (!player.canAccessCorporation()) {
       return (
         <>
           <Typography>
@@ -143,7 +149,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
     return (
       <>
-        <Button disabled={!Player.canAccessCorporation() || !!Player.corporation} onClick={() => setOpen(true)}>
+        <Button disabled={!player.canAccessCorporation() || player.hasCorporation()} onClick={() => setOpen(true)}>
           Create a Corporation
         </Button>
         <CreateCorporationModal open={open} onClose={() => setOpen(false)} />
@@ -152,7 +158,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   }
 
   function renderGrafting(): React.ReactElement {
-    if (!Player.canAccessGrafting()) {
+    if (!player.canAccessGrafting()) {
       return <></>;
     }
     return (
@@ -164,21 +170,21 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function handleCotMG(): void {
     const faction = Factions[FactionNames.ChurchOfTheMachineGod];
-    if (!Player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
+    if (!player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       joinFaction(faction);
     }
     if (
-      !Player.augmentations.some((a) => a.name === AugmentationNames.StaneksGift1) &&
-      !Player.queuedAugmentations.some((a) => a.name === AugmentationNames.StaneksGift1)
+      !player.augmentations.some((a) => a.name === AugmentationNames.StaneksGift1) &&
+      !player.queuedAugmentations.some((a) => a.name === AugmentationNames.StaneksGift1)
     ) {
       applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
     }
 
-    Router.toPage(Page.StaneksGift);
+    router.toStaneksGift();
   }
 
   function renderCotMG(): React.ReactElement {
-    const toStanek = <Button onClick={() => Router.toPage(Page.StaneksGift)}>Open Stanek's Gift</Button>;
+    const toStanek = <Button onClick={() => router.toStaneksGift()}>Open Stanek's Gift</Button>;
     // prettier-ignore
     const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
       {"                 ``          "}<br />
@@ -209,13 +215,13 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       {"    sNNo-.`.-omNy`           "}<br />
       {"     -smNNNNmdo-             "}<br />
       {"        `..`                 "}</Typography>
-    if (Player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
+    if (player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
       return (
         <>
           <Typography>
             <i>
               Allison "Mother" Stanek: ..can ...you hear them too ...? Come now, don't be shy and let me get a closer
-              look at you. Yes wonderful, I see my creation has taken root without consequence or much ill effect it
+              look at you. Yes wonderful, I see my creation has taken root without consquence or much ill effect it
               seems. Curious, Just how much of a machine's soul do you house in that body?
             </i>
           </Typography>
@@ -226,7 +232,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         </>
       );
     }
-    if (Player.hasAugmentation(AugmentationNames.StaneksGift2, true)) {
+    if (player.hasAugmentation(AugmentationNames.StaneksGift2, true)) {
       return (
         <>
           <Typography>
@@ -243,7 +249,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         </>
       );
     }
-    if (Player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
+    if (player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       return (
         <>
           <Typography>
@@ -257,7 +263,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       );
     }
 
-    if (!Player.canAccessCotMG()) {
+    if (!player.canAccessCotMG()) {
       return (
         <>
           <Typography>
@@ -272,8 +278,8 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
 
     if (
-      Player.augmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0 ||
-      Player.queuedAugmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0
+      player.augmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0 ||
+      player.queuedAugmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0
     ) {
       return (
         <>

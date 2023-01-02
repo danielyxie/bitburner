@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-city: CityName;
+city: string;
 ```

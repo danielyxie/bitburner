@@ -15,7 +15,7 @@ import { CoresButton } from "./CoresButton";
 import { getPurchaseServerCost } from "../../Server/ServerPurchases";
 
 import { Money } from "../../ui/React/Money";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import { PurchaseServerModal } from "./PurchaseServerModal";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Box } from "@mui/material";
@@ -27,12 +27,13 @@ interface IServerProps {
 
 function ServerButton(props: IServerProps): React.ReactElement {
   const [open, setOpen] = useState(false);
+  const player = use.Player();
   const cost = getPurchaseServerCost(props.ram);
   return (
     <>
-      <Button onClick={() => setOpen(true)} disabled={!Player.canAfford(cost)}>
+      <Button onClick={() => setOpen(true)} disabled={!player.canAfford(cost)}>
         Purchase {numeralWrapper.formatRAM(props.ram)} Server&nbsp;-&nbsp;
-        <Money money={cost} forPurchase={true} />
+        <Money money={cost} player={player} />
       </Button>
       <PurchaseServerModal
         open={open}
@@ -50,6 +51,7 @@ type IProps = {
 };
 
 export function TechVendorLocation(props: IProps): React.ReactElement {
+  const player = use.Player();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -74,11 +76,11 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
         <i>"You can order bigger servers via scripts. We don't take custom orders in person."</i>
       </Typography>
       <br />
-      <TorButton rerender={rerender} />
+      <TorButton p={player} rerender={rerender} />
       <br />
-      <RamButton rerender={rerender} />
+      <RamButton p={player} rerender={rerender} />
       <br />
-      <CoresButton rerender={rerender} />
+      <CoresButton p={player} rerender={rerender} />
     </>
   );
 }

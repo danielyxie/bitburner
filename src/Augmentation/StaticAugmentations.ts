@@ -1,3 +1,4 @@
 import { Augmentation } from "./Augmentation";
+import { IMap } from "../types";
 
-export const StaticAugmentations: Record<string, Augmentation> = {};
+export const StaticAugmentations: IMap<Augmentation> = {};

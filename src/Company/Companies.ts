@@ -1,9 +1,10 @@
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
 import { companiesMetadata } from "./data/CompaniesMetadata";
 import { Company, IConstructorParams } from "./Company";
+import { IMap } from "../types";
 import { Reviver } from "../utils/JSONReviver";
 
-export let Companies: Record<string, Company> = {};
+export let Companies: IMap<Company> = {};
 
 function addCompany(params: IConstructorParams): void {
   if (Companies[params.name] != null) {
@@ -28,7 +29,7 @@ export function initCompanies(): void {
   for (const companyName of Object.keys(Companies)) {
     const company = Companies[companyName];
     const oldCompany = oldCompanies[companyName];
-    if (!oldCompany) {
+    if (!(oldCompany instanceof Company)) {
       // New game, so no OldCompanies data
       company.favor = 0;
     } else {

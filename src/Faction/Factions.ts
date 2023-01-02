@@ -5,9 +5,11 @@
 import { Faction } from "./Faction";
 import { FactionInfos } from "./FactionInfo";
 
+import { IMap } from "../types";
+
 import { Reviver } from "../utils/JSONReviver";
 
-export let Factions: Record<string, Faction> = {};
+export let Factions: IMap<Faction> = {};
 
 export function loadFactions(saveString: string): void {
   Factions = JSON.parse(saveString, Reviver);
@@ -41,6 +43,9 @@ export function initFactions(): void {
 //Faction object and deletes the old Faction Object from "Factions". Then
 //reinserts the new Faction object
 function resetFaction(newFactionObject: Faction): void {
+  if (!(newFactionObject instanceof Faction)) {
+    throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");
+  }
   const factionName: string = newFactionObject.name;
   if (factionExists(factionName)) {
     newFactionObject.favor = Factions[factionName].favor;

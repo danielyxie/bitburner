@@ -4,8 +4,6 @@
 
 ## Multipliers.hacking\_speed property
 
-Multiplier to hacking speed
-
 <b>Signature:</b>
 
 ```typescript

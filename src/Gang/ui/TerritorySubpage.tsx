@@ -1,3 +1,6 @@
+/**
+ * React Component for the territory subpage.
+ */
 import React, { useState } from "react";
 
 import { Container, Button, Paper, Box, Tooltip, Switch, FormControlLabel, Typography } from "@mui/material";
@@ -11,7 +14,6 @@ import { AllGangs } from "../AllGangs";
 import { useGang } from "./Context";
 import { TerritoryInfoModal } from "./TerritoryInfoModal";
 
-/** React Component for the territory subpage. */
 export function TerritorySubpage(): React.ReactElement {
   const gang = useGang();
   const gangNames = Object.keys(AllGangs).filter((g) => g != gang.facName);

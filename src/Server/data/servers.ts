@@ -3,7 +3,7 @@ import { FactionNames } from "../../Faction/data/FactionNames";
 
 // This could actually be a JSON file as it should be constant metadata to be imported...
 import { IMinMaxRange } from "../../types";
-import { LocationName } from "../../Enums";
+import { LocationName } from "../../Locations/data/LocationNames";
 import { LiteratureNames } from "../../Literature/data/LiteratureNames";
 import { SpecialServers } from "./SpecialServers";
 
@@ -12,13 +12,19 @@ import { SpecialServers } from "./SpecialServers";
  * These values will be adjusted based on Bitnode multipliers when the Server objects are built out.
  */
 interface IServerMetadata {
-  /** When populated, the base security level of the server. */
+  /**
+   * When populated, the base security level of the server.
+   */
   hackDifficulty?: number | IMinMaxRange;
 
-  /** The DNS name of the server. */
+  /**
+   * The DNS name of the server.
+   */
   hostname: string;
 
-  /** When populated, the files will be added to the server when created. */
+  /**
+   * When populated, the files will be added to the server when created.
+   */
   literature?: string[];
 
   /**
@@ -27,7 +33,9 @@ interface IServerMetadata {
    */
   maxRamExponent?: number | IMinMaxRange;
 
-  /** How much money the server starts out with. */
+  /**
+   * How much money the server starts out with.
+   */
   moneyAvailable: number | IMinMaxRange;
 
   /**
@@ -37,23 +45,35 @@ interface IServerMetadata {
    */
   networkLayer?: number | IMinMaxRange;
 
-  /** The number of ports that must be opened before the player can execute NUKE. */
+  /**
+   * The number of ports that must be opened before the player can execute NUKE.
+   */
   numOpenPortsRequired: number;
 
-  /** The organization that the server belongs to. */
+  /**
+   * The organization that the server belongs to.
+   */
   organizationName: string;
 
-  /** The minimum hacking level before the player can run NUKE. */
+  /**
+   * The minimum hacking level before the player can run NUKE.
+   */
   requiredHackingSkill: number | IMinMaxRange;
 
-  /** The growth factor for the server. */
+  /**
+   * The growth factor for the server.
+   */
   serverGrowth?: number | IMinMaxRange;
 
-  /** A "unique" server that has special implications when the player manually hacks it. */
+  /**
+   * A "unique" server that has special implications when the player manually hacks it.
+   */
   specialName?: string;
 }
 
-/** The metadata for building up the servers on the network. */
+/**
+ * The metadata for building up the servers on the network.
+ */
 export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 99,

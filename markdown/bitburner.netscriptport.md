@@ -9,7 +9,7 @@ Object representing a port. A port is a serialized queue.
 <b>Signature:</b>
 
 ```typescript
-interface NetscriptPort 
+export interface NetscriptPort 
 ```
 
 ## Methods
@@ -19,7 +19,6 @@ interface NetscriptPort
 |  [clear()](./bitburner.netscriptport.clear.md) | Empties all data from the port. |
 |  [empty()](./bitburner.netscriptport.empty.md) | Check if the port is empty. |
 |  [full()](./bitburner.netscriptport.full.md) | Check if the port is full. |
-|  [nextWrite()](./bitburner.netscriptport.nextwrite.md) | Sleeps until the port is written to. |
 |  [peek()](./bitburner.netscriptport.peek.md) | Retrieve the first element from the port without removing it. |
 |  [read()](./bitburner.netscriptport.read.md) | Shift an element out of the port. |
 |  [tryWrite(value)](./bitburner.netscriptport.trywrite.md) | Attempt to write data to the port. |

@@ -4,8 +4,6 @@
 
 ## Multipliers.hacking\_exp property
 
-Multiplier to hacking experience gain rate
-
 <b>Signature:</b>
 
 ```typescript

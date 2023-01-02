@@ -1,14 +1,19 @@
-import { Player } from "@player";
+import { IPlayer } from "../../IPlayer";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
-import { FactionWorkType } from "../../../Enums";
+import { FactionWorkType } from "../../../Work/data/FactionWorkType";
 import { FactionNames } from "../../../Faction/data/FactionNames";
 import { Factions } from "../../../Faction/Factions";
-import { calculateFactionExp, calculateFactionRep } from "../../../Work/Formulas";
+import { calculateFactionExp } from "../../../Work/formulas/Faction";
 import { Faction } from "../../../Faction/Faction";
+import {
+  getFactionFieldWorkRepGain,
+  getFactionSecurityWorkRepGain,
+  getHackingWorkRepGain,
+} from "../../../PersonObjects/formulas/reputation";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
-import { findEnumMember } from "../../../utils/helpers/enum";
+import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
 
 interface SleeveFactionWorkParams {
   factionWorkType: FactionWorkType;
@@ -24,16 +29,26 @@ export class SleeveFactionWork extends Work {
 
   constructor(params?: SleeveFactionWorkParams) {
     super(WorkType.FACTION);
-    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.hacking;
+    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.HACKING;
     this.factionName = params?.factionName ?? FactionNames.Sector12;
   }
 
   getExpRates(sleeve: Sleeve): WorkStats {
-    return scaleWorkStats(calculateFactionExp(sleeve, this.factionWorkType), sleeve.shockBonus(), false);
+    return scaleWorkStats(calculateFactionExp(sleeve, this.factionWorkType), sleeve.shockBonus());
   }
 
   getReputationRate(sleeve: Sleeve): number {
-    return calculateFactionRep(sleeve, this.factionWorkType, this.getFaction().favor) * sleeve.shockBonus();
+    const faction = this.getFaction();
+    const repFormulas = {
+      [FactionWorkType.HACKING]: getHackingWorkRepGain,
+      [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
+      [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
+    };
+    return (
+      repFormulas[this.factionWorkType](sleeve, faction.favor) *
+      sleeve.shockBonus() *
+      BitNodeMultipliers.FactionWorkRepGain
+    );
   }
 
   getFaction(): Faction {
@@ -42,34 +57,41 @@ export class SleeveFactionWork extends Work {
     return f;
   }
 
-  process(sleeve: Sleeve, cycles: number) {
-    if (this.factionName === Player.gang?.facName) return sleeve.stopWork();
+  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
+    if (player.gang) {
+      if (this.factionName === player.gang.facName) {
+        sleeve.stopWork(player);
+        return 0;
+      }
+    }
 
     const exp = this.getExpRates(sleeve);
-    applySleeveGains(sleeve, exp, cycles);
+    applySleeveGains(player, sleeve, exp, cycles);
     const rep = this.getReputationRate(sleeve);
-    this.getFaction().playerReputation += rep * cycles;
+    this.getFaction().playerReputation += rep;
+    return 0;
   }
 
-  APICopy() {
+  APICopy(): Record<string, unknown> {
     return {
-      type: WorkType.FACTION as "FACTION",
+      type: this.type,
       factionWorkType: this.factionWorkType,
       factionName: this.factionName,
     };
   }
 
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveFactionWork", this);
   }
 
-  /** Initializes a FactionWork object from a JSON save state. */
+  /**
+   * Initiatizes a FactionWork object from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): SleeveFactionWork {
-    const factionWork = Generic_fromJSON(SleeveFactionWork, value.data);
-    factionWork.factionWorkType =
-      findEnumMember(FactionWorkType, factionWork.factionWorkType) ?? FactionWorkType.hacking;
-    return factionWork;
+    return Generic_fromJSON(SleeveFactionWork, value.data);
   }
 }
 

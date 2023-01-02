@@ -19,10 +19,10 @@ interface CorporationInfo
 |  [dividendEarnings](./bitburner.corporationinfo.dividendearnings.md) | number | Your earnings as a shareholder per second this cycle |
 |  [dividendRate](./bitburner.corporationinfo.dividendrate.md) | number | Fraction of profits issued as dividends |
 |  [dividendTax](./bitburner.corporationinfo.dividendtax.md) | number | Tax applied on your earnings as a shareholder |
-|  [divisions](./bitburner.corporationinfo.divisions.md) | string\[\] | Array of all division names |
+|  [divisions](./bitburner.corporationinfo.divisions.md) | [Division](./bitburner.division.md)<!-- -->\[\] | Array of all divisions |
 |  [expenses](./bitburner.corporationinfo.expenses.md) | number | Expenses per second this cycle |
 |  [funds](./bitburner.corporationinfo.funds.md) | number | Funds available |
-|  [issuedShares](./bitburner.corporationinfo.issuedshares.md) | number | Amount of acquirable shares. |
+|  [issuedShares](./bitburner.corporationinfo.issuedshares.md) | number | Amount of aqcuirable shares. |
 |  [name](./bitburner.corporationinfo.name.md) | string | Name of the corporation |
 |  [numShares](./bitburner.corporationinfo.numshares.md) | number | Amount of share owned |
 |  [public](./bitburner.corporationinfo.public.md) | boolean | Indicating if the company is public |

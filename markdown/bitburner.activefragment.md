@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface ActiveFragment 
+export interface ActiveFragment 
 ```
 
 ## Properties

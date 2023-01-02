@@ -3,18 +3,25 @@ import {
   CorporationUnlockUpgradeIndex,
   CorporationUnlockUpgrades,
 } from "../../Corporation/data/CorporationUnlockUpgrades";
-import { PlayerObject } from "./PlayerObject";
+import { IPlayer } from "../IPlayer";
 
-export function canAccessCorporation(this: PlayerObject): boolean {
+export function canAccessCorporation(this: IPlayer): boolean {
   return this.bitNodeN === 3 || this.sourceFileLvl(3) > 0;
 }
 
-export function startCorporation(this: PlayerObject, corpName: string, additionalShares = 0): void {
+export function hasCorporation(this: IPlayer): boolean {
+  if (this.corporation == null) {
+    return false;
+  }
+  return this.corporation instanceof Corporation;
+}
+
+export function startCorporation(this: IPlayer, corpName: string, additionalShares = 0): void {
   this.corporation = new Corporation({
     name: corpName,
   });
 
-  if (this.bitNodeN === 3 || this.sourceFileLvl(3) === 3) {
+  if (this.sourceFileLvl(3) === 3) {
     const warehouseApi = CorporationUnlockUpgrades[CorporationUnlockUpgradeIndex.WarehouseAPI].index;
     const OfficeApi = CorporationUnlockUpgrades[CorporationUnlockUpgradeIndex.OfficeAPI].index;
 

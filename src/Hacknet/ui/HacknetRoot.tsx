@@ -1,3 +1,6 @@
+/**
+ * Root React Component for the Hacknet Node UI
+ */
 import React, { useState, useEffect } from "react";
 
 import { GeneralInfo } from "./GeneralInfo";
@@ -18,7 +21,7 @@ import {
   purchaseHacknet,
 } from "../HacknetHelpers";
 
-import { Player } from "@player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { GetServer } from "../../Server/AllServers";
 
 import Typography from "@mui/material/Typography";
@@ -26,8 +29,11 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 
-/** Root React Component for the Hacknet Node UI */
-export function HacknetRoot(): React.ReactElement {
+interface IProps {
+  player: IPlayer;
+}
+
+export function HacknetRoot(props: IProps): React.ReactElement {
   const [open, setOpen] = useState(false);
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -41,9 +47,9 @@ export function HacknetRoot(): React.ReactElement {
   }, []);
 
   let totalProduction = 0;
-  for (let i = 0; i < Player.hacknetNodes.length; ++i) {
-    const node = Player.hacknetNodes[i];
-    if (hasHacknetServers()) {
+  for (let i = 0; i < props.player.hacknetNodes.length; ++i) {
+    const node = props.player.hacknetNodes[i];
+    if (hasHacknetServers(props.player)) {
       if (node instanceof HacknetNode) throw new Error("node was hacknet node"); // should never happen
       const hserver = GetServer(node);
       if (!(hserver instanceof HacknetServer)) throw new Error("node was not hacknet server"); // should never happen
@@ -59,16 +65,16 @@ export function HacknetRoot(): React.ReactElement {
   }
 
   function handlePurchaseButtonClick(): void {
-    purchaseHacknet();
+    purchaseHacknet(props.player);
     rerender();
   }
 
   // Cost to purchase a new Hacknet Node
   let purchaseCost;
-  if (hasHacknetServers()) {
-    purchaseCost = getCostOfNextHacknetServer();
+  if (hasHacknetServers(props.player)) {
+    purchaseCost = getCostOfNextHacknetServer(props.player);
   } else {
-    purchaseCost = getCostOfNextHacknetNode();
+    purchaseCost = getCostOfNextHacknetNode(props.player);
   }
 
   // onClick event handlers for purchase multiplier buttons
@@ -80,8 +86,8 @@ export function HacknetRoot(): React.ReactElement {
   ];
 
   // HacknetNode components
-  const nodes = Player.hacknetNodes.map((node: string | HacknetNode) => {
-    if (hasHacknetServers()) {
+  const nodes = props.player.hacknetNodes.map((node: string | HacknetNode) => {
+    if (hasHacknetServers(props.player)) {
       if (node instanceof HacknetNode) throw new Error("node was hacknet node"); // should never happen
       const hserver = GetServer(node);
       if (hserver == null) {
@@ -90,6 +96,7 @@ export function HacknetRoot(): React.ReactElement {
       if (!(hserver instanceof HacknetServer)) throw new Error("node was not hacknet server"); // should never happen
       return (
         <HacknetServerElem
+          player={props.player}
           key={hserver.hostname}
           node={hserver}
           purchaseMultiplier={purchaseMultiplier}
@@ -99,15 +106,21 @@ export function HacknetRoot(): React.ReactElement {
     } else {
       if (typeof node === "string") throw new Error("node was ip string"); // should never happen
       return (
-        <HacknetNodeElem key={node.name} node={node} purchaseMultiplier={purchaseMultiplier} rerender={rerender} />
+        <HacknetNodeElem
+          player={props.player}
+          key={node.name}
+          node={node}
+          purchaseMultiplier={purchaseMultiplier}
+          rerender={rerender}
+        />
       );
     }
   });
 
   return (
     <>
-      <Typography variant="h4">Hacknet {hasHacknetServers() ? "Servers" : "Nodes"}</Typography>
-      <GeneralInfo hasHacknetServers={hasHacknetServers()} />
+      <Typography variant="h4">Hacknet {hasHacknetServers(props.player) ? "Servers" : "Nodes"}</Typography>
+      <GeneralInfo hasHacknetServers={hasHacknetServers(props.player)} />
 
       <PurchaseButton cost={purchaseCost} multiplier={purchaseMultiplier} onClick={handlePurchaseButtonClick} />
 
@@ -115,14 +128,14 @@ export function HacknetRoot(): React.ReactElement {
 
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <PlayerInfo totalProduction={totalProduction} />
+          <PlayerInfo totalProduction={totalProduction} player={props.player} />
         </Grid>
         <Grid item xs={6}>
           <MultiplierButtons onClicks={purchaseMultiplierOnClicks} purchaseMultiplier={purchaseMultiplier} />
         </Grid>
       </Grid>
 
-      {hasHacknetServers() && <Button onClick={() => setOpen(true)}>Spend Hashes on Upgrades</Button>}
+      {hasHacknetServers(props.player) && <Button onClick={() => setOpen(true)}>Spend Hashes on Upgrades</Button>}
 
       <Box sx={{ display: "grid", width: "fit-content", gridTemplateColumns: "repeat(3, 1fr)" }}>{nodes}</Box>
       <HashUpgradeModal open={open} onClose={() => setOpen(false)} />

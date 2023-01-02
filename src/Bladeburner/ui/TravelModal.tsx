@@ -1,20 +1,20 @@
 import React from "react";
-import { Bladeburner } from "../Bladeburner";
+import { IBladeburner } from "../IBladeburner";
 import { WorldMap } from "../../ui/React/WorldMap";
 import { Modal } from "../../ui/React/Modal";
-import { CityName } from "../../Enums";
+import { CityName } from "../../Locations/data/CityNames";
 import { Settings } from "../../Settings/Settings";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 interface IProps {
-  bladeburner: Bladeburner;
+  bladeburner: IBladeburner;
   open: boolean;
   onClose: () => void;
 }
 
 export function TravelModal(props: IProps): React.ReactElement {
-  function travel(city: CityName): void {
+  function travel(city: string): void {
     props.bladeburner.city = city;
     props.onClose();
   }
@@ -27,13 +27,13 @@ export function TravelModal(props: IProps): React.ReactElement {
           for your Bladeburner duties does not affect your location in the game otherwise.
         </Typography>
         {Settings.DisableASCIIArt ? (
-          Object.values(CityName).map((city) => (
+          Object.values(CityName).map((city: CityName) => (
             <Button key={city} onClick={() => travel(city)}>
               {city}
             </Button>
           ))
         ) : (
-          <WorldMap currentCity={props.bladeburner.city as CityName} onTravel={travel} />
+          <WorldMap currentCity={props.bladeburner.city as CityName} onTravel={(city: CityName) => travel(city)} />
         )}
       </>
     </Modal>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { Corporation } from "../Corporation";
+import { ICorporation } from "../ICorporation";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   money: number;
-  corp: Corporation;
+  corp: ICorporation;
 }
 
 export function MoneyCost(props: IProps): React.ReactElement {

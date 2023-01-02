@@ -9,7 +9,7 @@ Bladeburner current action.
 <b>Signature:</b>
 
 ```typescript
-interface BladeburnerCurAction 
+export interface BladeburnerCurAction 
 ```
 
 ## Properties

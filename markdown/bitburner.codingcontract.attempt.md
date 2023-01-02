@@ -4,53 +4,37 @@
 
 ## CodingContract.attempt() method
 
-Attempts a coding contract, returning a reward string on success or empty string on failure.
+Attempts a coding contract.
 
 <b>Signature:</b>
 
 ```typescript
-attempt(answer: string | number | any[], filename: string, host?: string): string;
+attempt(
+    answer: string | number | any[],
+    filename: string,
+    host?: string,
+    opts?: CodingAttemptOptions,
+  ): boolean | string;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  answer | string \| number \| any\[\] | Attempted solution for the contract. |
+|  answer | string \| number \| any\[\] | Solution for the contract. |
 |  filename | string | Filename of the contract. |
 |  host | string | Hostname of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  opts | [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Optional parameters for configuring function behavior. |
 
 <b>Returns:</b>
 
-string
+boolean \| string
 
-A reward description string on success, or an empty string on failure.
+True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
 
 ## Remarks
 
 RAM cost: 10 GB
 
 Attempts to solve the Coding Contract with the provided solution.
-
-## Example 1
-
-
-```js
-// NS1
-var reward = codingcontract.attempt(yourSolution, filename, hostname);
-if (reward) {
-  tprint("Contract solved successfully! Reward: " + reward)
-} else tprint("Failed to solve contract.")
-```
-
-## Example 2
-
-
-```js
-// NS2
-const reward = codingcontract.attempt(yourSolution, filename, hostname);
-if (reward) {
-  ns.tprint(`Contract solved successfully! Reward: ${reward}`)
-} else ns.tprint("Failed to solve contract.")
-```
 

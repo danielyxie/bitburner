@@ -4,8 +4,6 @@
 
 ## Multipliers.defense property
 
-Multiplier to defense skill
-
 <b>Signature:</b>
 
 ```typescript

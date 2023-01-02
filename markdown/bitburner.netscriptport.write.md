@@ -9,7 +9,7 @@ Write data to a port.
 <b>Signature:</b>
 
 ```typescript
-write(value: string | number): PortData | null;
+write(value: string | number): null | string | number;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ write(value: string | number): PortData | null;
 
 <b>Returns:</b>
 
-[PortData](./bitburner.portdata.md) \| null
+null \| string \| number
 
 The data popped off the queue if it was full.
 

@@ -1,8 +1,6 @@
-import { NSFull } from "../NetscriptFunctions";
-import { ExternalAPI } from "../Netscript/APIWrapper";
-import { AutocompleteData } from "@nsdefs";
+import { AutocompleteData, NS } from "../ScriptEditor/NetscriptDefinitions";
 
 export interface ScriptModule {
-  main?: (ns: ExternalAPI<NSFull>) => unknown;
+  main?: (ns: NS) => Promise<void>;
   autocomplete?: (data: AutocompleteData, flags: string[]) => unknown;
 }

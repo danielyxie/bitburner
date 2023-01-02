@@ -1,7 +1,7 @@
 import React from "react";
+import { IMap } from "../types";
 import { FactionNames } from "./data/FactionNames";
-import { Router } from "../ui/GameRoot";
-import { Page } from "../ui/Router";
+import { use } from "../ui/Context";
 import { Option } from "./ui/Option";
 import { Typography } from "@mui/material";
 
@@ -16,30 +16,48 @@ interface FactionInfoParams {
   assignment?: () => React.ReactElement;
 }
 
-/** Contains the "information" property for all the Factions, which is just a description of each faction */
+/**
+ * Contains the "information" property for all the Factions, which is just a description of each faction
+ */
 export class FactionInfo {
-  /** The names of all other factions considered to be enemies to this faction. */
+  /**
+   * The names of all other factions considered to be enemies to this faction.
+   */
   enemies: string[];
 
-  /** The descriptive text to show on the faction's page. */
+  /**
+   * The descriptive text to show on the faction's page.
+   */
   infoText: JSX.Element;
 
-  /** A flag indicating if the faction supports field work to earn reputation. */
+  /**
+   * A flag indicating if the faction supports field work to earn reputation.
+   */
   offerFieldWork: boolean;
 
-  /** A flag indicating if the faction supports hacking work to earn reputation. */
+  /**
+   * A flag indicating if the faction supports hacking work to earn reputation.
+   */
   offerHackingWork: boolean;
 
-  /** A flag indicating if the faction supports security work to earn reputation. */
+  /**
+   * A flag indicating if the faction supports security work to earn reputation.
+   */
   offerSecurityWork: boolean;
 
-  /** Keep faction on install. */
+  /**
+   * Keep faction on install.
+   */
   keep: boolean;
 
-  /** Special faction */
+  /**
+   * Special faction
+   */
   special: boolean;
 
-  /** The data to display on the faction screen. */
+  /**
+   * The data to display on the faction screen.
+   */
   assignment?: () => React.ReactElement;
 
   constructor(params: FactionInfoParams) {
@@ -59,9 +77,11 @@ export class FactionInfo {
   }
 }
 
-/** A map of all factions and associated info to them. */
+/**
+ * A map of all factions and associated info to them.
+ */
 // tslint:disable-next-line:variable-name
-export const FactionInfos: Record<string, FactionInfo> = {
+export const FactionInfos: IMap<FactionInfo> = {
   // Endgame
   [FactionNames.Illuminati]: new FactionInfo({
     infoText: (
@@ -391,7 +411,7 @@ export const FactionInfos: Record<string, FactionInfo> = {
     offerSecurityWork: true,
   }),
 
-  // Early game factions - factions the player will prestige with early on that don't belong in other categories.
+  // Earlygame factions - factions the player will prestige with early on that don't belong in other categories.
   [FactionNames.Netburners]: new FactionInfo({
     infoText: <>{"~~//*>H4CK||3T 8URN3R5**>?>\\~~"}</>,
     offerHackingWork: true,
@@ -429,11 +449,12 @@ export const FactionInfos: Record<string, FactionInfo> = {
 
     special: true,
     assignment: (): React.ReactElement => {
+      const router = use.Router();
       return (
         <Option
           buttonText={"Open Bladeburner headquarters"}
           infoText={"You can gain reputation with bladeburner by completing contracts and operations."}
-          onClick={() => Router.toPage(Page.Bladeburner)}
+          onClick={() => router.toBladeburner()}
         />
       );
     },
@@ -478,6 +499,7 @@ export const FactionInfos: Record<string, FactionInfo> = {
     special: true,
     keepOnInstall: true,
     assignment: (): React.ReactElement => {
+      const router = use.Router();
       return (
         <Option
           buttonText={"Open Staneks Gift"}
@@ -485,7 +507,7 @@ export const FactionInfos: Record<string, FactionInfo> = {
             "Stanek's Gift is a powerful augmentation that powers up the stat you chose to boost." +
             "Gaining reputation with the Church of the Machine God can only be done by charging the gift."
           }
-          onClick={() => Router.toPage(Page.StaneksGift)}
+          onClick={() => router.toStaneksGift()}
         />
       );
     },

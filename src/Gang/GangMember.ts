@@ -3,8 +3,8 @@ import { GangMemberTasks } from "./GangMemberTasks";
 import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMemberUpgrades } from "./GangMemberUpgrades";
 import { IAscensionResult } from "./IAscensionResult";
-import { Player } from "@player";
-import { Gang } from "./Gang";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { IGang } from "./IGang";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 import {
   calculateRespectGain,
@@ -99,7 +99,7 @@ export class GangMember {
   }
 
   getTask(): GangMemberTask {
-    // TODO unplanned: transfer that to a save file migration function
+    // TODO(hydroflame): transfer that to a save file migration function
     // Backwards compatibility
     if ((this.task as any) instanceof GangMemberTask) {
       this.task = (this.task as any).name;
@@ -111,7 +111,7 @@ export class GangMember {
     return GangMemberTasks["Unassigned"];
   }
 
-  calculateRespectGain(gang: Gang): number {
+  calculateRespectGain(gang: IGang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -121,7 +121,7 @@ export class GangMember {
     return calculateRespectGain(g, this, task);
   }
 
-  calculateWantedLevelGain(gang: Gang): number {
+  calculateWantedLevelGain(gang: IGang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -131,7 +131,7 @@ export class GangMember {
     return calculateWantedLevelGain(g, this, task);
   }
 
-  calculateMoneyGain(gang: Gang): number {
+  calculateMoneyGain(gang: IGang): number {
     const task = this.getTask();
     const g = {
       respect: gang.respect,
@@ -191,7 +191,7 @@ export class GangMember {
       this.calculateAscensionMult(this.cha_asc_points);
   }
 
-  recordEarnedRespect(numCycles = 1, gang: Gang): void {
+  recordEarnedRespect(numCycles = 1, gang: IGang): void {
     this.earnedRespect += this.calculateRespectGain(gang) * numCycles;
   }
 
@@ -302,14 +302,12 @@ export class GangMember {
     if (upg.mults.hack != null) this.hack_mult *= upg.mults.hack;
   }
 
-  buyUpgrade(upg: GangMemberUpgrade): boolean {
-    if (!Player.gang) throw new Error("Tried to buy a gang member upgrade when no gang was present");
-
+  buyUpgrade(upg: GangMemberUpgrade, player: IPlayer, gang: IGang): boolean {
     // Prevent purchasing of already-owned upgrades
     if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) return false;
 
-    if (Player.money < Player.gang.getUpgradeCost(upg)) return false;
-    Player.loseMoney(Player.gang.getUpgradeCost(upg), "gang");
+    if (player.money < gang.getUpgradeCost(upg)) return false;
+    player.loseMoney(gang.getUpgradeCost(upg), "gang");
     if (upg.type === "g") {
       this.augmentations.push(upg.name);
     } else {
@@ -319,12 +317,16 @@ export class GangMember {
     return true;
   }
 
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("GangMember", this);
   }
 
-  /** Initializes a GangMember object from a JSON save state. */
+  /**
+   * Initiatizes a GangMember object from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): GangMember {
     return Generic_fromJSON(GangMember, value.data);
   }

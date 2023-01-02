@@ -6,7 +6,7 @@ import { purchaseAugmentation } from "../../Faction/FactionHelpers";
 import { isRepeatableAug } from "../AugmentationHelpers";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";
-import { Player } from "@player";
+import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
@@ -18,12 +18,14 @@ interface IProps {
 }
 
 export function PurchaseAugmentationModal(props: IProps): React.ReactElement {
-  if (!props.aug || !props.faction) {
+  if (typeof props.aug === "undefined" || typeof props.faction === "undefined") {
     return <></>;
   }
 
+  const player = use.Player();
+
   function buy(): void {
-    if (!props.aug || (!isRepeatableAug(props.aug) && Player.hasAugmentation(props.aug.name))) {
+    if (!isRepeatableAug(props.aug as Augmentation) && player.hasAugmentation(props.aug as Augmentation)) {
       return;
     }
 
@@ -42,7 +44,7 @@ export function PurchaseAugmentationModal(props: IProps): React.ReactElement {
         <br />
         <br />
         Would you like to purchase the {props.aug.name} Augmentation for&nbsp;
-        <Money money={props.aug.getCost().moneyCost} />?
+        <Money money={props.aug.getCost(player).moneyCost} />?
         <br />
         <br />
       </Typography>

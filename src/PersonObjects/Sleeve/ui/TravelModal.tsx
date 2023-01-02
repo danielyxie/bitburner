@@ -3,10 +3,10 @@ import { Sleeve } from "../Sleeve";
 import { CONSTANTS } from "../../../Constants";
 import { Money } from "../../../ui/React/Money";
 import { WorldMap } from "../../../ui/React/WorldMap";
-import { CityName } from "../../../Enums";
+import { CityName } from "../../../Locations/data/CityNames";
 import { Settings } from "../../../Settings/Settings";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import { Player } from "@player";
+import { use } from "../../../ui/Context";
 import { Modal } from "../../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -19,13 +19,14 @@ interface IProps {
 }
 
 export function TravelModal(props: IProps): React.ReactElement {
+  const player = use.Player();
   function travel(city: string): void {
-    if (!Player.canAfford(CONSTANTS.TravelCost)) {
+    if (!player.canAfford(CONSTANTS.TravelCost)) {
       dialogBoxCreate("You cannot afford to have this sleeve travel to another city");
     }
     props.sleeve.city = city as CityName;
-    Player.loseMoney(CONSTANTS.TravelCost, "sleeve");
-    props.sleeve.stopWork();
+    player.loseMoney(CONSTANTS.TravelCost, "sleeve");
+    props.sleeve.stopWork(player);
     props.rerender();
     props.onClose();
   }
@@ -35,7 +36,7 @@ export function TravelModal(props: IProps): React.ReactElement {
       <>
         <Typography>
           Have this sleeve travel to a different city. This affects the gyms and universities at which this sleeve can
-          study. Traveling to a different city costs <Money money={CONSTANTS.TravelCost} forPurchase={true} />. It will
+          study. Traveling to a different city costs <Money money={CONSTANTS.TravelCost} player={player} />. It will
           also set your current sleeve task to idle.
         </Typography>
         {Settings.DisableASCIIArt ? (

@@ -1,10 +1,17 @@
 import { Bladeburner } from "../../Bladeburner/Bladeburner";
-import { PlayerObject } from "./PlayerObject";
+import { IPlayer } from "../IPlayer";
 
-export function canAccessBladeburner(this: PlayerObject): boolean {
+export function canAccessBladeburner(this: IPlayer): boolean {
   return this.bitNodeN === 6 || this.bitNodeN === 7 || this.sourceFileLvl(6) > 0 || this.sourceFileLvl(7) > 0;
 }
 
-export function startBladeburner(this: PlayerObject): void {
-  this.bladeburner = new Bladeburner();
+export function inBladeburner(this: IPlayer): boolean {
+  if (this.bladeburner == null) {
+    return false;
+  }
+  return this.bladeburner instanceof Bladeburner;
+}
+
+export function startBladeburner(this: IPlayer): void {
+  this.bladeburner = new Bladeburner(this);
 }

@@ -7,5 +7,5 @@ export function showLiterature(fn: string): void {
     return;
   }
   const txt = `<i>${litObj.title}</i><br><br>${litObj.txt}`;
-  dialogBoxCreate(txt, true);
+  dialogBoxCreate(txt);
 }

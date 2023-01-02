@@ -26,7 +26,7 @@ export const MiscPage = (): React.ReactElement => {
           <>
             Improved Bash emulation mode. Setting this to 1 enables several new Terminal shortcuts and features that
             more closely resemble a real Bash-style shell. Note that when this mode is enabled, the default browser
-            shortcuts are overridden by the new Bash shortcuts.
+            shortcuts are overriden by the new Bash shortcuts.
           </>
         }
       />

@@ -26,7 +26,7 @@ flags(schema: [string, string | number | boolean | string[]][]): { [key: string]
 
 RAM cost: 0 GB
 
-Allows Unix-like flag parsing.
+Allows unix like flag parsing.
 
 ## Example
 

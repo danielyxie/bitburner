@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-interface GangOtherInfo 
+export interface GangOtherInfo 
 ```

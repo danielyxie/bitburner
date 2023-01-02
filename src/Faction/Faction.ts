@@ -9,22 +9,34 @@ export class Faction {
    */
   alreadyInvited = false;
 
-  /** Holds names of all augmentations that this Faction offers */
+  /**
+   * Holds names of all augmentations that this Faction offers
+   */
   augmentations: string[] = [];
 
-  /** Amount of favor the player has with this faction. */
+  /**
+   * Amount of favor the player has with this faction.
+   */
   favor = 0;
 
-  /** Flag signalling whether player has been banned from this faction */
+  /**
+   * Flag signalling whether player has been banned from this faction
+   */
   isBanned = false;
 
-  /** Flag signalling whether player is a member of this faction */
+  /**
+   * Flag signalling whether player is a member of this faction
+   */
   isMember = false;
 
-  /** Name of faction */
+  /**
+   * Name of faction
+   */
   name = "";
 
-  /** Amount of reputation player has with this faction */
+  /**
+   * Amount of reputation player has with this faction
+   */
   playerReputation = 0;
 
   constructor(name = "") {
@@ -60,12 +72,16 @@ export class Faction {
     return newFavor - this.favor;
   }
 
-  /** Serialize the current object to a JSON save state. */
+  /**
+   * Serialize the current object to a JSON save state.
+   */
   toJSON(): IReviverValue {
     return Generic_toJSON("Faction", this);
   }
 
-  /** Initializes a Faction object from a JSON save state. */
+  /**
+   * Initiatizes a Faction object from a JSON save state.
+   */
   static fromJSON(value: IReviverValue): Faction {
     return Generic_fromJSON(Faction, value.data);
   }

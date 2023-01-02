@@ -7,14 +7,13 @@ import * as React from "react";
 
 import { City } from "../City";
 import { Cities } from "../Cities";
-import { LocationName } from "../../Enums";
+import { LocationName } from "../data/LocationNames";
 import { Locations } from "../Locations";
 import { Location } from "../Location";
 import { Settings } from "../../Settings/Settings";
 
-import { Player } from "@player";
-import { Router } from "../../ui/GameRoot";
-import { Page } from "../../ui/Router";
+import { use } from "../../ui/Context";
+import { IRouter } from "../../ui/Router";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { LocationType } from "../LocationTypeEnum";
@@ -38,17 +37,20 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function toLocation(location: Location): void {
+function toLocation(router: IRouter, location: Location): void {
   if (location.name === LocationName.TravelAgency) {
-    Router.toPage(Page.Travel);
+    router.toTravel();
   } else if (location.name === LocationName.WorldStockExchange) {
-    Router.toPage(Page.StockMarket);
+    router.toStockMarket();
   } else {
-    Router.toLocation(location);
+    router.toLocation(location);
   }
 }
 
-function LocationLetter(location: Location, className: string): React.ReactElement {
+function LocationLetter(location: Location): React.ReactElement {
+  location.types;
+  const router = use.Router();
+  const classes = useStyles();
   let L = "X";
   if (location.types.includes(LocationType.Company)) L = "C";
   if (location.types.includes(LocationType.Gym)) L = "G";
@@ -62,7 +64,12 @@ function LocationLetter(location: Location, className: string): React.ReactEleme
   if (location.types.includes(LocationType.Special)) L = "?";
   if (!location) return <span>*</span>;
   return (
-    <span aria-label={location.name} key={location.name} className={className} onClick={() => toLocation(location)}>
+    <span
+      aria-label={location.name}
+      key={location.name}
+      className={classes.location}
+      onClick={() => toLocation(router, location)}
+    >
       <b>{L}</b>
     </span>
   );
@@ -100,7 +107,6 @@ function ASCIICity(props: IProps): React.ReactElement {
     Y: 24,
     Z: 25,
   };
-  const classes = useStyles();
 
   const lineElems = (s: string): (string | React.ReactElement)[] => {
     const elems: (string | React.ReactElement)[] = [];
@@ -119,7 +125,7 @@ function ASCIICity(props: IProps): React.ReactElement {
       const endI = matches[i].index;
       elems.push(s.slice(startI, endI));
       const locationI = letterMap[s[matches[i].index]];
-      elems.push(LocationLetter(Locations[props.city.locations[locationI]], classes.location));
+      elems.push(LocationLetter(Locations[props.city.locations[locationI]]));
     }
     elems.push(s.slice(matches[matches.length - 1].index + 1));
     return elems;
@@ -141,10 +147,11 @@ function ASCIICity(props: IProps): React.ReactElement {
 }
 
 function ListCity(props: IProps): React.ReactElement {
+  const router = use.Router();
   const locationButtons = props.city.locations.map((locName) => {
     return (
       <React.Fragment key={locName}>
-        <Button onClick={() => toLocation(Locations[locName])}>{locName}</Button>
+        <Button onClick={() => toLocation(router, Locations[locName])}>{locName}</Button>
         <br />
       </React.Fragment>
     );
@@ -154,7 +161,8 @@ function ListCity(props: IProps): React.ReactElement {
 }
 
 export function LocationCity(): React.ReactElement {
-  const city = Cities[Player.city];
+  const player = use.Player();
+  const city = Cities[player.city];
   return (
     <>
       <Typography>{city.name}</Typography>

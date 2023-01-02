@@ -9,7 +9,7 @@ Value in map of [StockOrder](./bitburner.stockorder.md)
 <b>Signature:</b>
 
 ```typescript
-interface StockOrderObject 
+export interface StockOrderObject 
 ```
 
 ## Properties

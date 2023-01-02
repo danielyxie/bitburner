@@ -16,7 +16,7 @@ workForCompany(companyName: string, focus?: boolean): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  companyName | string | Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked. |
+|  companyName | string | Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked |
 |  focus | boolean | Acquire player focus on this work operation. Optional. Defaults to true. |
 
 <b>Returns:</b>
@@ -29,29 +29,35 @@ True if the player starts working, and false otherwise.
 
 RAM cost: 3 GB \* 16/4/1
 
-This function will set you to start working at your current job at a specified company at which you are employed. If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or creating a program), then running this function will cancel that action.
+This function will automatically set you to start working at the company at which you are employed. If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.
 
 This function will return true if the player starts working, and false otherwise.
+
+Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.
 
 ## Example 1
 
 
-```js
+```ts
 // NS1:
-var COMPANY_NAME = "Noodle Bar";
-
-var success = singularity.workForCompany(COMPANY_NAME);
-if (!success) tprint("ERROR: Failed to start work at " + COMPANY_NAME + ".");
+//If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
+while (getCompanyRep(COMPANY HERE) < VALUE) {
+   workForCompany();
+   sleep(60000);
+}
+//This way, your company reputation will be updated every minute.
 ```
 
 ## Example 2
 
 
-```js
+```ts
 // NS2:
-const COMPANY_NAME = "Noodle Bar";
-
-let success = ns.singularity.workForCompany(COMPANY_NAME);
-if (!success) ns.tprint(`ERROR: Failed to start work at ${COMPANY_NAME].`);
+//If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
+while (ns.getCompanyRep(COMPANY HERE) < VALUE) {
+   ns.workForCompany();
+   await ns.sleep(60000);
+}
+//This way, your company reputation will be updated every minute.
 ```
 

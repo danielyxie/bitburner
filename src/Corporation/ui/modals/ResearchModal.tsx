@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Modal } from "../../../ui/React/Modal";
 import { IndustryResearchTrees } from "../../IndustryData";
-import * as corpConstants from "../../data/Constants";
-import { Industry } from "../../Industry";
+import { CorporationConstants } from "../../data/Constants";
+import { IIndustry } from "../../IIndustry";
 import { Research } from "../../Actions";
 import { Node } from "../../ResearchTree";
 import { ResearchMap } from "../../ResearchMap";
@@ -20,13 +20,13 @@ import CheckIcon from "@mui/icons-material/Check";
 
 interface INodeProps {
   n: Node | null;
-  division: Industry;
+  division: IIndustry;
 }
 function Upgrade({ n, division }: INodeProps): React.ReactElement {
   const [open, setOpen] = useState(false);
   if (n === null) return <></>;
   const r = ResearchMap[n.text];
-  let disabled = division.sciResearch < r.cost || n.researched;
+  let disabled = division.sciResearch.qty < r.cost || n.researched;
   const parent = n.parent;
   if (parent !== null) {
     disabled = disabled || !parent.researched;
@@ -42,7 +42,9 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
     }
 
     dialogBoxCreate(
-      `Researched ${n.text}. It may take a market cycle (~${corpConstants.secondsPerMarketCycle} seconds) before the effects of the Research apply.`,
+      `Researched ${n.text}. It may take a market cycle ` +
+        `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
+        `the Research apply.`,
     );
   }
 
@@ -129,7 +131,7 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
 interface IProps {
   open: boolean;
   onClose: () => void;
-  industry: Industry;
+  industry: IIndustry;
 }
 
 // Create the Research Tree UI for this Industry
@@ -141,7 +143,7 @@ export function ResearchModal(props: IProps): React.ReactElement {
     <Modal open={props.open} onClose={props.onClose}>
       <Upgrade division={props.industry} n={researchTree.root} />
       <Typography sx={{ mt: 1 }}>
-        Research points: {props.industry.sciResearch.toFixed(3)}
+        Research points: {props.industry.sciResearch.qty.toFixed(3)}
         <br />
         Multipliers from research:
         <br />* Advertising Multiplier: x{researchTree.getAdvertisingMultiplier()}

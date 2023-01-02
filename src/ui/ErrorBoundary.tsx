@@ -2,10 +2,10 @@ import React, { ErrorInfo } from "react";
 
 import { IErrorData, getErrorForDisplay } from "../utils/ErrorHelper";
 import { RecoveryRoot } from "./React/RecoveryRoot";
-import { Page } from "./Router";
-import { Router } from "./GameRoot";
+import { IRouter, Page } from "./Router";
 
 interface IProps {
+  router: IRouter;
   softReset: () => void;
 }
 
@@ -31,7 +31,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     this.setState({
       errorInfo,
-      page: Router.page(),
+      page: this.props.router.page(),
     });
     console.error(error, errorInfo);
   }
@@ -47,7 +47,14 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
         }
       }
 
-      return <RecoveryRoot softReset={this.props.softReset} errorData={errorData} resetError={() => this.reset()} />;
+      return (
+        <RecoveryRoot
+          router={this.props.router}
+          softReset={this.props.softReset}
+          errorData={errorData}
+          resetError={() => this.reset()}
+        />
+      );
     }
     return this.props.children;
   }

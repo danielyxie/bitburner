@@ -1,13 +1,21 @@
-/** Represents the possible configuration values that can be provided when creating the progress bar text. */
+/**
+ * Represents the possible configuration values that can be provided when creating the progress bar text.
+ */
 interface IProgressBarConfiguration {
-  /** Current progress, taken as a decimal (i.e. '0.6' to represent '60%') */
+  /**
+   * Current progress, taken as a decimal (i.e. '0.6' to represent '60%')
+   */
   progress?: number;
 
-  /** Total number of ticks in progress bar. Preferably a factor of 100. */
+  /**
+   * Total number of ticks in progress bar. Preferably a factor of 100.
+   */
   totalTicks?: number;
 }
 
-/** Represents concrete configuration values when creating the progress bar text. */
+/**
+ * Represents concrete configuration values when creating the progress bar text.
+ */
 interface IProgressBarConfigurationMaterialized extends IProgressBarConfiguration {
   progress: number;
   totalTicks: number;
@@ -34,6 +42,6 @@ export function createProgressBarText(params: IProgressBarConfiguration): string
   const bars: number = Math.max(Math.floor(derived.progress / (1 / derived.totalTicks)), 1);
   const dashes: number = Math.max(derived.totalTicks - bars, 0);
 
-  // String.prototype.repeat isn't completely supported, but good enough for our purposes
+  // String.prototype.repeat isn't completley supported, but good enough for our purposes
   return `[${"|".repeat(bars)}${"-".repeat(dashes)}]`;
 }

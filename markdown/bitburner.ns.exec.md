@@ -18,7 +18,7 @@ exec(script: string, host: string, numThreads?: number, ...args: (string | numbe
 |  --- | --- | --- |
 |  script | string | Filename of script to execute. |
 |  host | string | Hostname of the <code>target server</code> on which to execute the script. |
-|  numThreads | number | Optional thread count for new script. Set to 1 by default. Will be rounded down to the nearest integer. |
+|  numThreads | number | Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer. |
 |  args | (string \| number \| boolean)\[\] | Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value. |
 
 <b>Returns:</b>
@@ -31,9 +31,9 @@ Returns the PID of a successfully started script, and 0 otherwise.
 
 RAM cost: 1.3 GB
 
-Run a script as a separate process on a specified server. This is similar to the function [run](./bitburner.ns.run.md) except that it can be used to run a script on any server, instead of just the current server.
+Run a script as a separate process on a specified server. This is similar to the run function except that it can be used to run a script on any server, instead of just the current server.
 
-If the script was successfully started, then this function returns the PID of that script. Otherwise, it returns 0.
+If the script was successfully started, then this functions returns the PID of that script. Otherwise, it returns 0.
 
 PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.
 
@@ -44,38 +44,29 @@ Running this function with a numThreads argument of 0 or less will cause a runti
 
 ```ts
 // NS1:
-// The simplest way to use the exec command is to call it with just the script name
-// and the target server. The following example will try to run generic-hack.script
-// on the foodnstuff server.
+//The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
 exec("generic-hack.script", "foodnstuff");
 
-// The following example will try to run the script generic-hack.script on the
-// joesguns server with 10 threads.
+//The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
 exec("generic-hack.script", "joesguns", 10);
 
-// This last example will try to run the script foo.script on the foodnstuff server
-// with 5 threads. It will also pass the number 1 and the string “test” in as
-// arguments to the script.
+//This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
 exec("foo.script", "foodnstuff", 5, 1, "test");
 ```
+\*
 
 ## Example 2
 
 
 ```ts
 // NS2:
-// The simplest way to use the exec command is to call it with just the script name
-// and the target server. The following example will try to run generic-hack.script
-// on the foodnstuff server.
+//The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
 ns.exec("generic-hack.script", "foodnstuff");
 
-// The following example will try to run the script generic-hack.script on the
-// joesguns server with 10 threads.
+//The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
 ns.exec("generic-hack.script", "joesguns", 10);
 
-// This last example will try to run the script foo.script on the foodnstuff server
-// with 5 threads. It will also pass the number 1 and the string “test” in as
-// arguments to the script.
+//This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
 ns.exec("foo.script", "foodnstuff", 5, 1, "test");
 ```
 
