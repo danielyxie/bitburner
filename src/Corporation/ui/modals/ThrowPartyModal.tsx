@@ -38,11 +38,15 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
       dialogBoxCreate("You don't have enough company funds to throw a party!");
     } else {
       const mult = ThrowParty(corp, props.office, cost);
+      // Each 5% multiplier gives an extra flat +1 to morale and happiness to make recovering from low morale easier.
+      const increase = mult > 1 ? (mult - 1) * 0.2 : 0;
 
       if (mult > 0) {
         dialogBoxCreate(
           "You threw a party for the office! The morale and happiness of each employee increased by " +
-            numeralWrapper.formatPercentage(mult - 1),
+            numeralWrapper.formatPercentage(increase) +
+            " and was multiplied by " +
+            numeralWrapper.formatMultiplier(mult),
         );
       }
 
