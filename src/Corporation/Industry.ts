@@ -1145,11 +1145,24 @@ export class Industry {
 
   /** Initializes a Industry object from a JSON save state. */
   static fromJSON(value: IReviverValue): Industry {
-    //Gracefully load saves which have old names for industries
-    if (value.data.type === "RealEstate") value.data.type = IndustryType.RealEstate;
-    if (value.data.type === "Utilities") value.data.type = IndustryType.Utilities;
-    if (value.data.type === "Computers") value.data.type = IndustryType.Computers;
-    if (value.data.type === "Computer") value.data.type = IndustryType.Computers;
+    const matNameMap = { AICores: "AI Cores", RealEstate: "Real Estate" };
+    const indNameMap = {
+      RealEstate: IndustryType.RealEstate,
+      Utilities: IndustryType.Utilities,
+      Computers: IndustryType.Computers,
+      Computer: IndustryType.Computers,
+    };
+    for (const [key, val] of Object.entries(indNameMap)) if (value.data.type === key) value.data.type = val;
+    value.data.prodMats = value.data.prodMats.map((matName: string) => {
+      if (matName in matNameMap) return matNameMap[matName as keyof typeof matNameMap];
+      return matName;
+    });
+    for (const matName of Object.keys(value.data.reqMats)) {
+      if (matName in matNameMap) {
+        value.data.reqMats[matNameMap[matName as keyof typeof matNameMap]] = value.data.reqMats[matName];
+        delete value.data.reqMats[matName];
+      }
+    }
     return Generic_fromJSON(Industry, value.data);
   }
 }
