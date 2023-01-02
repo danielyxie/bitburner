@@ -107,6 +107,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 }
 
 export function processPassiveFactionRepGain(numCycles: number): void {
+  if (Player.bitNodeN === 2) return;
   for (const name of Object.keys(Factions)) {
     if (isFactionWork(Player.currentWork) && name === Player.currentWork.factionName) continue;
     if (!Factions.hasOwnProperty(name)) continue;

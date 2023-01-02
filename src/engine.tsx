@@ -275,7 +275,7 @@ const Engine: {
       if (Player.currentWork !== null) {
         Player.focus = true;
         Player.processWork(numCyclesOffline);
-      } else {
+      } else if (Player.bitNodeN !== 2) {
         for (let i = 0; i < Player.factions.length; i++) {
           const facName = Player.factions[i];
           if (!Factions.hasOwnProperty(facName)) continue;

@@ -183,14 +183,15 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
    */
   let bt = exponentialBase ** threadMultiplier;
   if (bt == Infinity) bt = 1e300;
-
   let corr = Infinity;
   // Two sided error because we do not want to get stuck if the error stays on the wrong side
   do {
     // c should be above 0 so Halley's method can't be used, we have to stick to Newton-Raphson
-    const bct = bt ** cycles;
+    let bct = bt ** cycles;
+    if (bct == Infinity) bct = 1e300;
     const opc = startMoney + cycles;
-    const diff = opc * bct - targetMoney;
+    let diff = opc * bct - targetMoney;
+    if (diff == Infinity) diff = 1e300;
     corr = diff / (opc * x + 1.0) / bct;
     cycles -= corr;
   } while (Math.abs(corr) >= 1);

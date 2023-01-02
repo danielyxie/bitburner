@@ -466,11 +466,12 @@ Path 1 (new):
    is extremely powerful, as it raises all multipliers by a significant amount. This also a let's you 
    get used to augments and other features resetting.
 
-2. Do **BitNode-3: Corporatocracy** once to unlock the Corporation mechanic. This mechanic
-   has highest profit potential in the game.
+2. Do **BitNode-3: Corporatocracy** at least once to unlock the Corporation mechanic, finishing all
+   3 levels unlocks the full API for free allowing fully scripted corp. This mechanic has highest 
+   profit potential in the game.
 
 3. Do **BitNode-10: Digital Carbon** once to unlock sleeves and grafting. Sleeves are useful in all nodes
-   and grafting can be useful in future BitNodes (especially 8). It's recommended to buy all sleeves and 
+   and grafting can be useful in future BitNodes (especially 8). It's recommended to buy all purchasable sleeves and 
    their memory during the first run.
 
     The ordering of the next three is dependant on playing style and wants/needs.
