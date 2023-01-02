@@ -136,9 +136,9 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
       checkBladeburnerAccess(ctx);
       const type = helpers.string(ctx, "type", _type);
       const name = helpers.string(ctx, "name", _name);
-      const action = getBladeburnerActionObject(ctx, type, name); 
-      const level = _level === undefined ? action.level : helpers.number(ctx, "level", _level); 
-      const rewardMultiplier = Math.pow(action.rewardFac, level - 1); 
+      const action = getBladeburnerActionObject(ctx, type, name);
+      const level = _level === undefined ? action.level : helpers.number(ctx, "level", _level);
+      const rewardMultiplier = Math.pow(action.rewardFac, level - 1);
       return action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank;
     },
     getActionCountRemaining: (ctx) => (_type, _name) => {
