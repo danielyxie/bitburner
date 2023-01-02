@@ -116,9 +116,9 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
       }
     },
     getActionEstimatedSuccessChance: (ctx) => (_type, _name) => {
+      const bladeburner = getBladeburner(ctx);
       const type = helpers.string(ctx, "type", _type);
       const name = helpers.string(ctx, "name", _name);
-      const bladeburner = getBladeburner(ctx);
       try {
         const chance = bladeburner.getActionEstimatedSuccessChanceNetscriptFn(Player, type, name);
         if (typeof chance === "string") {
@@ -133,24 +133,18 @@ export function NetscriptBladeburner(): InternalAPI<INetscriptBladeburner> {
       }
     },
     getActionRepGain: (ctx) => (_type, _name, _level) => {
+      checkBladeburnerAccess(ctx);
       const type = helpers.string(ctx, "type", _type);
       const name = helpers.string(ctx, "name", _name);
-      const level = helpers.number(ctx, "level", _level);
-      checkBladeburnerAccess(ctx);
-      const action = getBladeburnerActionObject(ctx, type, name);
-      let rewardMultiplier;
-      if (level == null || isNaN(level)) {
-        rewardMultiplier = Math.pow(action.rewardFac, action.level - 1);
-      } else {
-        rewardMultiplier = Math.pow(action.rewardFac, level - 1);
-      }
-
+      const action = getBladeburnerActionObject(ctx, type, name); 
+      const level = _level === undefined ? action.level : helpers.number(ctx, "level", _level); 
+      const rewardMultiplier = Math.pow(action.rewardFac, level - 1); 
       return action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank;
     },
     getActionCountRemaining: (ctx) => (_type, _name) => {
+      const bladeburner = getBladeburner(ctx);
       const type = helpers.string(ctx, "type", _type);
       const name = helpers.string(ctx, "name", _name);
-      const bladeburner = getBladeburner(ctx);
       try {
         return bladeburner.getActionCountRemainingNetscriptFn(type, name, ctx.workerScript);
       } catch (e: unknown) {
