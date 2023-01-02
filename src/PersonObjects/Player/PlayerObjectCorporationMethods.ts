@@ -14,7 +14,7 @@ export function startCorporation(this: PlayerObject, corpName: string, additiona
     name: corpName,
   });
 
-  if (this.sourceFileLvl(3) === 3) {
+  if (this.bitNodeN === 3 || this.sourceFileLvl(3) === 3) {
     const warehouseApi = CorporationUnlockUpgrades[CorporationUnlockUpgradeIndex.WarehouseAPI].index;
     const OfficeApi = CorporationUnlockUpgrades[CorporationUnlockUpgradeIndex.OfficeAPI].index;
 
