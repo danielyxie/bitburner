@@ -146,13 +146,15 @@ describe("Netscript RAM Calculation/Generation Tests", function () {
   describe("Singularity multiplier checks", () => {
     sf4.lvl = 3;
     const singFunctions = Object.entries(wrappedNS.singularity).filter(([__, val]) => typeof val === "function");
-    const singObjects = singFunctions.map(([key, val]) => {
-      return {
-        name: key,
-        fn: val.bind(ns.singularity),
-        baseRam: grabCost(RamCosts.singularity, ["singularity", key]),
-      };
-    });
+    const singObjects = singFunctions
+      .filter((fn) => !isRemovedFunction(fn))
+      .map(([key, val]) => {
+        return {
+          name: key,
+          fn: val.bind(ns.singularity),
+          baseRam: grabCost(RamCosts.singularity, ["singularity", key]),
+        };
+      });
     const lvlToMult: Record<number, number> = { 0: 16, 1: 16, 2: 4 };
     for (const lvl of [0, 1, 2]) {
       it(`SF4.${lvl} check for x${lvlToMult[lvl]} costs`, () => {
