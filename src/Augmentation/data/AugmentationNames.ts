@@ -94,7 +94,7 @@ export enum AugmentationNames {
   HydroflameLeftArm = "Hydroflame Left Arm",
   BigDsBigBrain = "BigD's Big ... Brain",
   ZOE = "Z.O.Ë.",
-  UnnamedAug2 = "UnnamedAug2",
+  // UnnamedAug2 = "UnnamedAug2",
 
   // Bladeburner augs
   EsperEyewear = "EsperTech Bladeburner Eyewear",

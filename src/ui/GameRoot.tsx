@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IEngine } from "../IEngine";
-import { ITerminal } from "../Terminal/ITerminal";
+import { Player } from "@player";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";
-import { LocationName } from "../Locations/data/LocationNames";
+import { LocationName } from "../Enums";
 import { Location } from "../Locations/Location";
 import { ITutorial, iTutorialStart } from "../InteractiveTutorial";
 import { InteractiveTutorialRoot } from "./InteractiveTutorial/InteractiveTutorialRoot";
@@ -25,7 +23,7 @@ import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { Page, IRouter, ScriptEditorRouteOptions } from "./Router";
+import { Page, SimplePage, IRouter, ScriptEditorRouteOptions } from "./Router";
 import { Overview } from "./React/Overview";
 import { SidebarRoot } from "../Sidebar/ui/SidebarRoot";
 import { AugmentationsRoot } from "../Augmentation/ui/AugmentationsRoot";
@@ -66,12 +64,9 @@ import { PromptManager } from "./React/PromptManager";
 import { InvitationModal } from "../Faction/ui/InvitationModal";
 import { calculateAchievements } from "../Achievements/Achievements";
 
-import { enterBitNode } from "../RedPill";
-import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { Settings } from "../Settings/Settings";
 import { ThemeBrowser } from "../Themes/ui/ThemeBrowser";
 import { ImportSaveRoot } from "./React/ImportSaveRoot";
 import { BypassWrapper } from "./React/BypassWrapper";
@@ -83,12 +78,6 @@ import { isFactionWork } from "../Work/FactionWork";
 import { V2Modal } from "../utils/V2Modal";
 
 const htmlLocation = location;
-
-interface IProps {
-  terminal: ITerminal;
-  player: IPlayer;
-  engine: IEngine;
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -115,53 +104,32 @@ export let Router: IRouter = {
     throw new Error("Router called before initialization");
   },
   allowRouting: uninitialized,
-  toActiveScripts: uninitialized,
-  toAugmentations: uninitialized,
+  toPage: () => {
+    throw new Error("Router called before initialization");
+  },
   toBitVerse: uninitialized,
-  toBladeburner: uninitialized,
-  toStats: uninitialized,
-  toCity: uninitialized,
-  toCorporation: uninitialized,
-  toCreateProgram: uninitialized,
-  toDevMenu: uninitialized,
   toFaction: uninitialized,
-  toFactions: uninitialized,
-  toGameOptions: uninitialized,
-  toGang: uninitialized,
-  toHacknetNodes: uninitialized,
   toInfiltration: uninitialized,
   toJob: uninitialized,
-  toMilestones: uninitialized,
-  toGrafting: uninitialized,
   toScriptEditor: uninitialized,
-  toSleeves: uninitialized,
-  toStockMarket: uninitialized,
-  toTerminal: uninitialized,
-  toTravel: uninitialized,
-  toTutorial: uninitialized,
-  toWork: uninitialized,
-  toBladeburnerCinematic: uninitialized,
   toLocation: uninitialized,
-  toStaneksGift: uninitialized,
-  toAchievements: uninitialized,
-  toThemeBrowser: uninitialized,
   toImportSave: uninitialized,
 };
 
-function determineStartPage(player: IPlayer): Page {
+function determineStartPage(): Page {
   if (RecoveryMode) return Page.Recovery;
-  if (player.currentWork !== null) return Page.Work;
+  if (Player.currentWork !== null) return Page.Work;
   return Page.Terminal;
 }
 
-export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
+export function GameRoot(): React.ReactElement {
   const classes = useStyles();
   const [{ files, vim }, setEditorOptions] = useState({ files: {}, vim: false });
-  const [page, setPage] = useState(determineStartPage(player));
+  const [page, setPage] = useState(determineStartPage());
   const setRerender = useState(0)[1];
   const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
-    isFactionWork(player.currentWork) ? Factions[player.currentWork.factionName] : (undefined as unknown as Faction),
+    isFactionWork(Player.currentWork) ? Factions[Player.currentWork.factionName] : (undefined as unknown as Faction),
   );
   if (faction === undefined && page === Page.Faction)
     throw new Error("Trying to go to a page without the proper setup");
@@ -174,7 +142,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   const [cinematicText, setCinematicText] = useState("");
   const [errorBoundaryKey, setErrorBoundaryKey] = useState<number>(0);
-  const [sidebarOpened, setSideBarOpened] = useState(Settings.IsSidebarOpened);
 
   const [importString, setImportString] = useState<string>(undefined as unknown as string);
   const [importAutomatic, setImportAutomatic] = useState<boolean>(false);
@@ -206,24 +173,23 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     isInitialized: true,
     page: () => page,
     allowRouting: (value: boolean) => setAllowRoutingCalls(value),
-    toActiveScripts: () => setPage(Page.ActiveScripts),
-    toAugmentations: () => setPage(Page.Augmentations),
-    toBladeburner: () => setPage(Page.Bladeburner),
-    toStats: () => setPage(Page.Stats),
-    toCorporation: () => setPage(Page.Corporation),
-    toCreateProgram: () => setPage(Page.CreateProgram),
-    toDevMenu: () => setPage(Page.DevMenu),
+    toPage: (page: SimplePage) => {
+      switch (page) {
+        case Page.Travel:
+          Player.gotoLocation(LocationName.TravelAgency);
+          break;
+        case Page.BladeburnerCinematic:
+          setPage(page);
+          setCinematicText(cinematicText);
+          return;
+      }
+      setPage(page);
+    },
     toFaction: (faction: Faction, augPage = false) => {
       setAugPage(augPage);
       setPage(Page.Faction);
       if (faction) setFaction(faction);
     },
-    toFactions: () => setPage(Page.Factions),
-    toGameOptions: () => setPage(Page.Options),
-    toGang: () => setPage(Page.Gang),
-    toHacknetNodes: () => setPage(Page.Hacknet),
-    toMilestones: () => setPage(Page.Milestones),
-    toGrafting: () => setPage(Page.Grafting),
     toScriptEditor: (files: Record<string, string>, options?: ScriptEditorRouteOptions) => {
       setEditorOptions({
         files,
@@ -231,20 +197,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       });
       setPage(Page.ScriptEditor);
     },
-    toSleeves: () => setPage(Page.Sleeves),
-    toStockMarket: () => setPage(Page.StockMarket),
-    toTerminal: () => setPage(Page.Terminal),
-    toTutorial: () => setPage(Page.Tutorial),
     toJob: (location: Location) => {
       setLocation(location);
       setPage(Page.Job);
-    },
-    toCity: () => {
-      setPage(Page.City);
-    },
-    toTravel: () => {
-      player.gotoLocation(LocationName.TravelAgency);
-      setPage(Page.Travel);
     },
     toBitVerse: (flume: boolean, quick: boolean) => {
       setFlume(flume);
@@ -256,23 +211,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setLocation(location);
       setPage(Page.Infiltration);
     },
-    toWork: () => setPage(Page.Work),
-    toBladeburnerCinematic: () => {
-      setPage(Page.BladeburnerCinematic);
-      setCinematicText(cinematicText);
-    },
     toLocation: (location: Location) => {
       setLocation(location);
       setPage(Page.Location);
-    },
-    toStaneksGift: () => {
-      setPage(Page.StaneksGift);
-    },
-    toAchievements: () => {
-      setPage(Page.Achievements);
-    },
-    toThemeBrowser: () => {
-      setPage(Page.ThemeBrowser);
     },
     toImportSave: (base64save: string, automatic = false) => {
       setImportString(base64save);
@@ -308,7 +249,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     dialogBoxCreate("Soft Reset!");
     installAugmentations(true);
     resetErrorBoundary();
-    Router.toTerminal();
+    Router.toPage(Page.Terminal);
   }
 
   let mainPage = <Typography>Cannot load</Typography>;
@@ -317,14 +258,14 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   let bypassGame = false;
   switch (page) {
     case Page.Recovery: {
-      mainPage = <RecoveryRoot router={Router} softReset={softReset} />;
+      mainPage = <RecoveryRoot softReset={softReset} />;
       withSidebar = false;
       withPopups = false;
       bypassGame = true;
       break;
     }
     case Page.BitVerse: {
-      mainPage = <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />;
+      mainPage = <BitverseRoot flume={flume} quick={quick} />;
       withSidebar = false;
       withPopups = false;
       break;
@@ -347,7 +288,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Terminal: {
-      mainPage = <TerminalRoot terminal={terminal} router={Router} player={player} />;
+      mainPage = <TerminalRoot />;
       break;
     }
     case Page.Sleeves: {
@@ -363,15 +304,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.ScriptEditor: {
-      mainPage = (
-        <ScriptEditorRoot
-          files={files}
-          hostname={player.getCurrentServer().hostname}
-          player={player}
-          router={Router}
-          vim={vim}
-        />
-      );
+      mainPage = <ScriptEditorRoot files={files} hostname={Player.getCurrentServer().hostname} vim={vim} />;
       break;
     }
     case Page.ActiveScripts: {
@@ -379,7 +312,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Hacknet: {
-      mainPage = <HacknetRoot player={player} />;
+      mainPage = <HacknetRoot />;
       break;
     }
     case Page.CreateProgram: {
@@ -387,7 +320,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Factions: {
-      mainPage = <FactionsRoot player={player} router={Router} />;
+      mainPage = <FactionsRoot />;
       break;
     }
     case Page.Faction: {
@@ -395,7 +328,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Milestones: {
-      mainPage = <MilestonesRoot player={player} />;
+      mainPage = <MilestonesRoot />;
       break;
     }
     case Page.Tutorial: {
@@ -403,7 +336,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         <TutorialRoot
           reactivateTutorial={() => {
             prestigeAugmentation();
-            Router.toTerminal();
+            Router.toPage(Page.Terminal);
             iTutorialStart();
           }}
         />
@@ -411,7 +344,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.DevMenu: {
-      mainPage = <DevMenuRoot player={player} engine={engine} router={Router} />;
+      mainPage = <DevMenuRoot />;
       break;
     }
     case Page.Gang: {
@@ -431,11 +364,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Travel: {
-      mainPage = <TravelAgencyRoot p={player} router={Router} />;
+      mainPage = <TravelAgencyRoot />;
       break;
     }
     case Page.StockMarket: {
-      mainPage = <StockMarketRoot p={player} stockMarket={StockMarket} />;
+      mainPage = <StockMarketRoot stockMarket={StockMarket} />;
       break;
     }
     case Page.City: {
@@ -450,12 +383,10 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     case Page.Options: {
       mainPage = (
         <GameOptionsRoot
-          player={player}
-          router={Router}
           save={() => saveObject.saveGame()}
           export={() => {
             // Apply the export bonus before saving the game
-            onExport(player);
+            onExport();
             saveObject.exportGame();
           }}
           forceKill={killAllScripts}
@@ -469,7 +400,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         <AugmentationsRoot
           exportGameFn={() => {
             // Apply the export bonus before saving the game
-            onExport(player);
+            onExport();
             saveObject.exportGame();
           }}
           installAugmentationsFn={() => {
@@ -484,11 +415,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.ThemeBrowser: {
-      mainPage = <ThemeBrowser router={Router} />;
+      mainPage = <ThemeBrowser />;
       break;
     }
     case Page.ImportSave: {
-      mainPage = <ImportSaveRoot importString={importString} automatic={importAutomatic} router={Router} />;
+      mainPage = <ImportSaveRoot importString={importString} automatic={importAutomatic} />;
       withSidebar = false;
       withPopups = false;
       bypassGame = true;
@@ -496,51 +427,46 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   }
 
   return (
-    <Context.Player.Provider value={player}>
-      <Context.Router.Provider value={Router}>
-        <ErrorBoundary key={errorBoundaryKey} router={Router} softReset={softReset}>
-          <BypassWrapper content={bypassGame ? mainPage : null}>
-            <SnackbarProvider>
-              <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
-                {!ITutorial.isRunning ? (
-                  <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+    <>
+      <ErrorBoundary key={errorBoundaryKey} softReset={softReset}>
+        <BypassWrapper content={bypassGame ? mainPage : null}>
+          <SnackbarProvider>
+            <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
+              {(parentOpen) =>
+                !ITutorial.isRunning ? (
+                  <CharacterOverview
+                    parentOpen={parentOpen}
+                    save={() => saveObject.saveGame()}
+                    killScripts={killAllScripts}
+                  />
                 ) : (
                   <InteractiveTutorialRoot />
-                )}
-              </Overview>
-              {withSidebar ? (
-                <Box display="flex" flexDirection="row" width="100%">
-                  <SidebarRoot
-                    player={player}
-                    router={Router}
-                    page={page}
-                    opened={sidebarOpened}
-                    onToggled={(isOpened) => {
-                      setSideBarOpened(isOpened);
-                      Settings.IsSidebarOpened = isOpened;
-                    }}
-                  />
-                  <Box className={classes.root}>{mainPage}</Box>
-                </Box>
-              ) : (
+                )
+              }
+            </Overview>
+            {withSidebar ? (
+              <Box display="flex" flexDirection="row" width="100%">
+                <SidebarRoot page={page} />
                 <Box className={classes.root}>{mainPage}</Box>
-              )}
-              <Unclickable />
-              {withPopups && (
-                <>
-                  <LogBoxManager />
-                  <AlertManager />
-                  <PromptManager />
-                  <InvitationModal />
-                  <Snackbar />
-                </>
-              )}
-              <Apr1 />
-            </SnackbarProvider>
-          </BypassWrapper>
-        </ErrorBoundary>
-        <V2Modal />
-      </Context.Router.Provider>
-    </Context.Player.Provider>
+              </Box>
+            ) : (
+              <Box className={classes.root}>{mainPage}</Box>
+            )}
+            <Unclickable />
+            {withPopups && (
+              <>
+                <LogBoxManager />
+                <AlertManager />
+                <PromptManager />
+                <InvitationModal />
+                <Snackbar />
+              </>
+            )}
+            <Apr1 />
+          </SnackbarProvider>
+        </BypassWrapper>
+      </ErrorBoundary>
+      <V2Modal />
+    </>
   );
 }

@@ -4,7 +4,7 @@
 
 ## NS.getServerMaxMoney() method
 
-Get maximum money available on a server.
+Get the maximum money available on a server.
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ getServerMaxMoney(host: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host of target server. |
+|  host | string | Hostname of target server. |
 
 <b>Returns:</b>
 

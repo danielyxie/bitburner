@@ -9,7 +9,7 @@ Calculate hack percent for one thread. (Ex: 0.25 would steal 25% of the server's
 <b>Signature:</b>
 
 ```typescript
-hackPercent(server: Server, player: Player): number;
+hackPercent(server: Server, player: Person): number;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ hackPercent(server: Server, player: Player): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
-|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
+|  player | [Person](./bitburner.person.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 

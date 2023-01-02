@@ -1,14 +1,10 @@
-/**
- * Game engine. Handles the main game loop.
- */
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
-import { initBitNodeMultipliers } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
+import { initSourceFiles } from "./SourceFile/SourceFiles";
+import { initDarkWebItems } from "./DarkWeb/DarkWebItems";
 import { generateRandomContract } from "./CodingContractGenerator";
 import { initCompanies } from "./Company/Companies";
-import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
 import { Factions, initFactions } from "./Faction/Factions";
 import { staneksGift } from "./CotMG/Helper";
@@ -26,7 +22,7 @@ import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelp
 import { iTutorialStart } from "./InteractiveTutorial";
 import { checkForMessagesToSend } from "./Message/MessageHelpers";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
-import { Player } from "./Player";
+import { Player } from "@player";
 import { saveObject, loadGame } from "./SaveObject";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
@@ -49,6 +45,7 @@ import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
 import { Button, Typography } from "@mui/material";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
+/** Game engine. Handles the main game loop. */
 const Engine: {
   _lastUpdate: number;
   updateGame: (numCycles?: number) => void;
@@ -91,7 +88,7 @@ const Engine: {
     Player.playtimeSinceLastAug += time;
     Player.playtimeSinceLastBitnode += time;
 
-    Terminal.process(Router, Player, numCycles);
+    Terminal.process(numCycles);
 
     Player.processWork(numCycles);
 
@@ -100,28 +97,23 @@ const Engine: {
       processStockPrices(numCycles);
     }
 
-    // Gang, if applicable
-    if (Player.inGang() && Player.gang !== null) {
-      Player.gang.process(numCycles, Player);
-    }
+    // Gang
+    if (Player.gang) Player.gang.process(numCycles);
 
     // Staneks gift
-    staneksGift.process(Player, numCycles);
+    staneksGift.process(numCycles);
 
     // Corporation
-    if (Player.corporation instanceof Corporation) {
-      // Stores cycles in a "buffer". Processed separately using Engine Counters
+    if (Player.corporation) {
       Player.corporation.storeCycles(numCycles);
+      Player.corporation.process();
     }
 
-    if (Player.bladeburner instanceof Bladeburner) {
-      Player.bladeburner.storeCycles(numCycles);
-    }
+    // Bladeburner
+    if (Player.bladeburner) Player.bladeburner.storeCycles(numCycles);
 
     // Sleeves
-    for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].process(Player, numCycles);
-    }
+    Player.sleeves.forEach((sleeve) => sleeve.process(numCycles));
 
     // Counters
     Engine.decrementAllCounters(numCycles);
@@ -131,7 +123,7 @@ const Engine: {
     updateOnlineScriptTimes(numCycles);
 
     // Hacknet Nodes
-    processHacknetEarnings(Player, numCycles);
+    processHacknetEarnings(numCycles);
   },
 
   /**
@@ -156,8 +148,7 @@ const Engine: {
   },
 
   decrementAllCounters: function (numCycles = 1) {
-    for (const counterName of Object.keys(Engine.Counters)) {
-      const counter = Engine.Counters[counterName];
+    for (const [counterName, counter] of Object.entries(Engine.Counters)) {
       if (counter === undefined) throw new Error("counter should not be undefined");
       Engine.Counters[counterName] = counter - numCycles;
     }
@@ -204,13 +195,10 @@ const Engine: {
         Engine.Counters.messages = 150;
       }
     }
-    if (Player.corporation instanceof Corporation) {
-      Player.corporation.process(Player);
-    }
     if (Engine.Counters.mechanicProcess <= 0) {
-      if (Player.bladeburner instanceof Bladeburner) {
+      if (Player.bladeburner) {
         try {
-          Player.bladeburner.process(Router, Player);
+          Player.bladeburner.process();
         } catch (e) {
           exceptionAlert("Exception caught in Bladeburner.process(): " + e);
         }
@@ -239,8 +227,8 @@ const Engine: {
 
     if (loadGame(saveString)) {
       ThemeEvents.emit();
-
-      initBitNodeMultipliers(Player);
+      initSourceFiles();
+      initDarkWebItems();
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
       if (Player.hasWseAccount) {
@@ -256,17 +244,21 @@ const Engine: {
       const timeOffline = Engine._lastUpdate - lastUpdate;
       const numCyclesOffline = Math.floor(timeOffline / CONSTANTS._idleSpeed);
 
+      // Calculate the number of chances for a contract the player had whilst offline
+      const contractChancesWhileOffline = Math.floor(timeOffline / (1000 * 60 * 10));
+
       // Generate coding contracts
       if (Player.sourceFiles.length > 0) {
         let numContracts = 0;
-        if (numCyclesOffline < 3000 * 100) {
-          // if we have less than 100 rolls, just roll them exactly.
-          for (let i = 0; i < numCyclesOffline / 3000; i++) {
-            if (Math.random() <= 0.25) numContracts++;
+        if (contractChancesWhileOffline > 100) {
+          numContracts += Math.floor(contractChancesWhileOffline * 0.25);
+        }
+        if (contractChancesWhileOffline > 0 && contractChancesWhileOffline <= 100) {
+          for (let i = 0; i < contractChancesWhileOffline; ++i) {
+            if (Math.random() <= 0.25) {
+              numContracts++;
+            }
           }
-        } else {
-          // just average it.
-          numContracts = (numCyclesOffline / 3000) * 0.25;
         }
         for (let i = 0; i < numContracts; i++) {
           generateRandomContract();
@@ -283,7 +275,7 @@ const Engine: {
       if (Player.currentWork !== null) {
         Player.focus = true;
         Player.processWork(numCyclesOffline);
-      } else {
+      } else if (Player.bitNodeN !== 2) {
         for (let i = 0; i < Player.factions.length; i++) {
           const facName = Player.factions[i];
           if (!Factions.hasOwnProperty(facName)) continue;
@@ -308,8 +300,8 @@ const Engine: {
       }
 
       // Hacknet Nodes offline progress
-      const offlineProductionFromHacknetNodes = processHacknetEarnings(Player, numCyclesOffline);
-      const hacknetProdInfo = hasHacknetServers(Player) ? (
+      const offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
+      const hacknetProdInfo = hasHacknetServers() ? (
         <>
           <Hashes hashes={offlineProductionFromHacknetNodes} /> hashes
         </>
@@ -326,39 +318,25 @@ const Engine: {
       }
 
       // Gang progress for BitNode 2
-      const gang = Player.gang;
-      if (Player.inGang() && gang !== null) {
-        gang.process(numCyclesOffline, Player);
-      }
+      if (Player.gang) Player.gang.process(numCyclesOffline);
 
       // Corporation offline progress
-      if (Player.corporation instanceof Corporation) {
-        Player.corporation.storeCycles(numCyclesOffline);
-      }
+      if (Player.corporation) Player.corporation.storeCycles(numCyclesOffline);
 
       // Bladeburner offline progress
-      if (Player.bladeburner instanceof Bladeburner) {
-        Player.bladeburner.storeCycles(numCyclesOffline);
-      }
+      if (Player.bladeburner) Player.bladeburner.storeCycles(numCyclesOffline);
 
-      staneksGift.process(Player, numCyclesOffline);
+      staneksGift.process(numCyclesOffline);
 
       // Sleeves offline progress
-      for (let i = 0; i < Player.sleeves.length; ++i) {
-        Player.sleeves[i].process(Player, numCyclesOffline);
-      }
+      Player.sleeves.forEach((sleeve) => sleeve.process(numCyclesOffline));
 
       // Update total playtime
       const time = numCyclesOffline * CONSTANTS._idleSpeed;
-      if (Player.totalPlaytime == null) {
-        Player.totalPlaytime = 0;
-      }
-      if (Player.playtimeSinceLastAug == null) {
-        Player.playtimeSinceLastAug = 0;
-      }
-      if (Player.playtimeSinceLastBitnode == null) {
-        Player.playtimeSinceLastBitnode = 0;
-      }
+      Player.totalPlaytime ??= 0;
+      Player.playtimeSinceLastAug ??= 0;
+      Player.playtimeSinceLastBitnode ??= 0;
+
       Player.totalPlaytime += time;
       Player.playtimeSinceLastAug += time;
       Player.playtimeSinceLastBitnode += time;
@@ -392,7 +370,8 @@ const Engine: {
       );
     } else {
       // No save found, start new game
-      initBitNodeMultipliers(Player);
+      initSourceFiles();
+      initDarkWebItems();
       Engine.start(); // Run main game loop and Scripts loop
       Player.init();
       initForeignServers(Player.getHomeComputer());
@@ -425,16 +404,14 @@ const Engine: {
   },
 };
 
-/**
- * Shows a toast warning that lets the player know that auto-saves are disabled, with an button to re-enable them.
- */
+/** Shows a toast warning that lets the player know that auto-saves are disabled, with an button to re-enable them. */
 function warnAutosaveDisabled(): void {
   // If the player has suppressed those warnings let's just exit right away.
   if (Settings.SuppressAutosaveDisabledWarnings) return;
 
   // We don't want this warning to show up on certain pages.
   // When in recovery or importing we want to keep autosave disabled.
-  const ignoredPages = [Page.Recovery, Page.ImportSave];
+  const ignoredPages = [Page.Recovery as Page, Page.ImportSave];
   if (ignoredPages.includes(Router.page())) return;
 
   const warningToast = (

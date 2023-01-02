@@ -11,10 +11,7 @@ import { StockTickersConfig, TickerDisplayMode } from "./StockTickersConfig";
 import { IStockMarket } from "../IStockMarket";
 import { Stock } from "../Stock";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
 type IProps = {
-  p: IPlayer;
   stockMarket: IStockMarket;
 };
 
@@ -50,7 +47,7 @@ export function StockTickers(props: IProps): React.ReactElement {
   for (const stockMarketProp of Object.keys(props.stockMarket)) {
     const val = props.stockMarket[stockMarketProp];
     if (val instanceof Stock) {
-      // Skip if there's a filter and the stock isnt in that filter
+      // Skip if there's a filter and the stock isn't in that filter
       if (watchlistSymbols.length > 0 && !watchlistSymbols.includes(val.symbol)) {
         continue;
       }
@@ -60,16 +57,14 @@ export function StockTickers(props: IProps): React.ReactElement {
         orders = [];
       }
 
-      // Skip if we're in portfolio mode and the player doesnt own this or have any active orders
+      // Skip if we're in portfolio mode and the player doesn't own this or have any active orders
       if (tickerDisplayMode === TickerDisplayMode.Portfolio) {
         if (val.playerShares === 0 && val.playerShortShares === 0 && orders.length === 0) {
           continue;
         }
       }
 
-      tickers.push(
-        <StockTicker key={val.symbol} orders={orders} p={props.p} rerenderAllTickers={rerender} stock={val} />,
-      );
+      tickers.push(<StockTicker key={val.symbol} orders={orders} rerenderAllTickers={rerender} stock={val} />);
     }
   }
 

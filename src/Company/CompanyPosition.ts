@@ -1,11 +1,13 @@
+import { Person as IPerson } from "@nsdefs";
 import { CONSTANTS } from "../Constants";
-import * as names from "./data/companypositionnames";
+import * as names from "./data/JobTracks";
+import { JobName } from "../Enums";
 
 /* tslint:disable:completed-docs */
 
 export interface IConstructorParams {
-  name: string;
-  nextPosition: string | null;
+  name: JobName;
+  nextPosition: JobName | null;
   baseSalary: number;
   repMultiplier: number;
 
@@ -33,15 +35,11 @@ export interface IConstructorParams {
 }
 
 export class CompanyPosition {
-  /**
-   * Position title
-   */
-  name: string;
+  /** Position title */
+  name: JobName;
 
-  /**
-   * Title of next position to be promoted to
-   */
-  nextPosition: string | null;
+  /** Title of next position to be promoted to */
+  nextPosition: JobName | null;
 
   /**
    * Base salary for this position ($ per 200ms game cycle)
@@ -49,14 +47,10 @@ export class CompanyPosition {
    */
   baseSalary: number;
 
-  /**
-   * Reputation multiplier
-   */
+  /** Reputation multiplier */
   repMultiplier: number;
 
-  /**
-   * Required stats to earn this position
-   */
+  /** Required stats to earn this position */
   requiredAgility: number;
   requiredCharisma: number;
   requiredDefense: number;
@@ -64,14 +58,10 @@ export class CompanyPosition {
   requiredHacking: number;
   requiredStrength: number;
 
-  /**
-   * Required company reputation to earn this position
-   */
+  /** Required company reputation to earn this position */
   requiredReputation: number;
 
-  /**
-   * Effectiveness of each stat time for job performance
-   */
+  /** Effectiveness of each stat time for job performance */
   hackingEffectiveness: number;
   strengthEffectiveness: number;
   defenseEffectiveness: number;
@@ -79,9 +69,7 @@ export class CompanyPosition {
   agilityEffectiveness: number;
   charismaEffectiveness: number;
 
-  /**
-   * Experience gain for performing job (per 200ms game cycle)
-   */
+  /** Experience gain for performing job (per 200ms game cycle) */
   hackingExpGain: number;
   strengthExpGain: number;
   defenseExpGain: number;
@@ -131,13 +119,13 @@ export class CompanyPosition {
     this.charismaExpGain = p.charismaExpGain != null ? p.charismaExpGain : 0;
   }
 
-  calculateJobPerformance(hack: number, str: number, def: number, dex: number, agi: number, cha: number): number {
-    const hackRatio: number = (this.hackingEffectiveness * hack) / CONSTANTS.MaxSkillLevel;
-    const strRatio: number = (this.strengthEffectiveness * str) / CONSTANTS.MaxSkillLevel;
-    const defRatio: number = (this.defenseEffectiveness * def) / CONSTANTS.MaxSkillLevel;
-    const dexRatio: number = (this.dexterityEffectiveness * dex) / CONSTANTS.MaxSkillLevel;
-    const agiRatio: number = (this.agilityEffectiveness * agi) / CONSTANTS.MaxSkillLevel;
-    const chaRatio: number = (this.charismaEffectiveness * cha) / CONSTANTS.MaxSkillLevel;
+  calculateJobPerformance(worker: IPerson): number {
+    const hackRatio: number = (this.hackingEffectiveness * worker.skills.hacking) / CONSTANTS.MaxSkillLevel;
+    const strRatio: number = (this.strengthEffectiveness * worker.skills.strength) / CONSTANTS.MaxSkillLevel;
+    const defRatio: number = (this.defenseEffectiveness * worker.skills.defense) / CONSTANTS.MaxSkillLevel;
+    const dexRatio: number = (this.dexterityEffectiveness * worker.skills.dexterity) / CONSTANTS.MaxSkillLevel;
+    const agiRatio: number = (this.agilityEffectiveness * worker.skills.agility) / CONSTANTS.MaxSkillLevel;
+    const chaRatio: number = (this.charismaEffectiveness * worker.skills.charisma) / CONSTANTS.MaxSkillLevel;
 
     let reputationGain: number =
       (this.repMultiplier * (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio)) / 100;
@@ -145,7 +133,7 @@ export class CompanyPosition {
       console.error("Company reputation gain calculated to be NaN");
       reputationGain = 0;
     }
-
+    reputationGain += worker.skills.intelligence / CONSTANTS.MaxSkillLevel;
     return reputationGain;
   }
 

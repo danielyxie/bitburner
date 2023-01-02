@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface GangMemberAscension 
+interface GangMemberAscension 
 ```
 
 ## Properties

@@ -4,6 +4,8 @@
 
 ## Multipliers.defense\_exp property
 
+Multiplier to defense experience gain rate
+
 <b>Signature:</b>
 
 ```typescript

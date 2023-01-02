@@ -5,7 +5,6 @@
 import { Script } from "./Script";
 import { ScriptUrl } from "./ScriptUrl";
 import { Settings } from "../Settings/Settings";
-import { IMap } from "../types";
 import { Terminal } from "../Terminal";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
@@ -18,7 +17,7 @@ export class RunningScript {
 
   // Map of [key: hostname] -> Hacking data. Used for offline progress calculations.
   // Hacking data format: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-  dataMap: IMap<number[]> = {};
+  dataMap: Record<string, number[]> = {};
 
   // Script filename
   filename = "";

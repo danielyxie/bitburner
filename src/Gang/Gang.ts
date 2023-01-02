@@ -1,10 +1,9 @@
 /**
- * TODO
+ * TODO unplanned
  * Add police clashes
  * balance point to keep them from running out of control
  */
 
-import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
@@ -23,11 +22,10 @@ import { AllGangs } from "./AllGangs";
 import { GangMember } from "./GangMember";
 
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { PowerMultiplier } from "./data/power";
-import { IGang } from "./IGang";
 
-export class Gang implements IGang {
+export class Gang {
   facName: string;
   members: GangMember[];
   wanted: number;
@@ -64,7 +62,7 @@ export class Gang implements IGang {
     // limit is reached, and then calculates and applies the gains only at that limit
     this.storedCycles = 0;
 
-    // Separate variable to keep track of cycles for Territry + Power gang, which
+    // Separate variable to keep track of cycles for Territory + Power gang, which
     // happens on a slower "clock" than normal processing
     this.storedTerritoryAndPowerCycles = 0;
 
@@ -82,7 +80,8 @@ export class Gang implements IGang {
     return AllGangs[this.facName].territory;
   }
 
-  process(numCycles = 1, player: IPlayer): void {
+  process(numCycles = 1): void {
+    // Run every cycle
     const CyclesPerSecond = 1000 / CONSTANTS._idleSpeed;
 
     if (isNaN(numCycles)) {
@@ -91,11 +90,12 @@ export class Gang implements IGang {
     this.storedCycles += numCycles;
 
     // Only process if there are at least 2 seconds, and at most 5 seconds
+    // works out as 5 * 5 for 25x per cycle during bonus time
     if (this.storedCycles < 2 * CyclesPerSecond) return;
     const cycles = Math.min(this.storedCycles, 5 * CyclesPerSecond);
 
     try {
-      this.processGains(cycles, player);
+      this.processGains(cycles);
       this.processExperienceGains(cycles);
       this.processTerritoryAndPowerGains(cycles);
       this.storedCycles -= cycles;
@@ -104,7 +104,7 @@ export class Gang implements IGang {
     }
   }
 
-  processGains(numCycles = 1, player: IPlayer): void {
+  processGains(numCycles = 1): void {
     // Get gains per cycle
     let moneyGains = 0;
     let respectGains = 0;
@@ -124,7 +124,7 @@ export class Gang implements IGang {
     this.respect += gain;
     // Faction reputation gains is respect gain divided by some constant
     const fac = Factions[this.facName];
-    if (!(fac instanceof Faction)) {
+    if (!fac) {
       dialogBoxCreate(
         "ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev",
       );
@@ -132,7 +132,7 @@ export class Gang implements IGang {
     }
     const favorMult = 1 + fac.favor / 100;
 
-    fac.playerReputation += (player.mults.faction_rep * gain * favorMult) / GangConstants.GangRespectToReputationRatio;
+    fac.playerReputation += (Player.mults.faction_rep * gain * favorMult) / GangConstants.GangRespectToReputationRatio;
 
     // Keep track of respect gained per member
     for (let i = 0; i < this.members.length; ++i) {
@@ -148,7 +148,7 @@ export class Gang implements IGang {
       this.wanted = newWanted;
       if (this.wanted < 1) this.wanted = 1;
     }
-    player.gainMoney(moneyGains * numCycles, "gang");
+    Player.gainMoney(moneyGains * numCycles, "gang");
   }
 
   processTerritoryAndPowerGains(numCycles = 1): void {
@@ -378,7 +378,7 @@ export class Gang implements IGang {
     return Math.max(1, discount);
   }
 
-  // Returns only valid tasks for this gang. Excludes 'Unassigned'
+  /** Returns only valid tasks for this gang. Excludes 'Unassigned' */
   getAllTaskNames(): string[] {
     return Object.keys(GangMemberTasks).filter((taskName: string) => {
       const task = GangMemberTasks[taskName];
@@ -396,16 +396,12 @@ export class Gang implements IGang {
     return upg.cost / this.getDiscount();
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("Gang", this);
   }
 
-  /**
-   * Initiatizes a Gang object from a JSON save state.
-   */
+  /** Initializes a Gang object from a JSON save state. */
   static fromJSON(value: IReviverValue): Gang {
     return Generic_fromJSON(Gang, value.data);
   }

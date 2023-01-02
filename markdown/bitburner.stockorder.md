@@ -11,5 +11,5 @@ Keys are stock symbols, properties are arrays of [StockOrderObject](./bitburner.
 <b>Signature:</b>
 
 ```typescript
-export interface StockOrder 
+interface StockOrder 
 ```

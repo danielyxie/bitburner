@@ -1,10 +1,4 @@
-import { Player as player } from "../Player";
-
-import {
-  Infiltration as IInfiltration,
-  InfiltrationLocation,
-  PossibleInfiltrationLocation,
-} from "../ScriptEditor/NetscriptDefinitions";
+import { Infiltration as IInfiltration, InfiltrationLocation } from "@nsdefs";
 import { Location } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
 import { calculateDifficulty, calculateReward } from "../Infiltration/formulas/game";
@@ -16,8 +10,8 @@ import {
 import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
-import { checkEnum } from "../utils/helpers/checkEnum";
-import { LocationName } from "../Locations/data/LocationNames";
+import { checkEnum } from "../utils/helpers/enum";
+import { CityName, LocationName } from "../Enums";
 import { helpers } from "../Netscript/NetscriptHelpers";
 
 export function NetscriptInfiltration(): InternalAPI<IInfiltration> {
@@ -32,31 +26,31 @@ export function NetscriptInfiltration(): InternalAPI<IInfiltration> {
     if (location.infiltrationData === undefined)
       throw helpers.makeRuntimeErrorMsg(ctx, `Location '${location}' does not provide infiltrations.`);
     const startingSecurityLevel = location.infiltrationData.startingSecurityLevel;
-    const difficulty = calculateDifficulty(player, startingSecurityLevel);
-    const reward = calculateReward(player, startingSecurityLevel);
+    const difficulty = calculateDifficulty(startingSecurityLevel);
+    const reward = calculateReward(startingSecurityLevel);
     const maxLevel = location.infiltrationData.maxClearanceLevel;
     return {
       location: JSON.parse(JSON.stringify(location)),
       reward: {
-        tradeRep: calculateTradeInformationRepReward(player, reward, maxLevel, startingSecurityLevel),
-        sellCash: calculateSellInformationCashReward(player, reward, maxLevel, startingSecurityLevel),
-        SoARep: calculateInfiltratorsRepReward(player, Factions[FactionNames.ShadowsOfAnarchy], startingSecurityLevel),
+        tradeRep: calculateTradeInformationRepReward(reward, maxLevel, startingSecurityLevel),
+        sellCash: calculateSellInformationCashReward(reward, maxLevel, startingSecurityLevel),
+        SoARep: calculateInfiltratorsRepReward(Factions[FactionNames.ShadowsOfAnarchy], startingSecurityLevel),
       },
       difficulty: difficulty,
     };
   };
   return {
-    getPossibleLocations: () => (): PossibleInfiltrationLocation[] => {
-      return getLocationsWithInfiltrations.map((l) => ({
-        city: l.city ?? "",
-        name: String(l.name),
-      }));
+    getPossibleLocations: () => () => {
+      return getLocationsWithInfiltrations
+        .filter((l) => l.city) //Guarantees no locations with a "null" entry, which should not be infiltratable anyway.
+        .map((l) => ({
+          city: l.city as CityName,
+          name: l.name,
+        }));
     },
-    getInfiltration:
-      (ctx: NetscriptContext) =>
-      (_location: unknown): InfiltrationLocation => {
-        const location = helpers.string(ctx, "location", _location);
-        return calculateInfiltrationData(ctx, location);
-      },
+    getInfiltration: (ctx) => (_location) => {
+      const location = helpers.string(ctx, "location", _location);
+      return calculateInfiltrationData(ctx, location);
+    },
   };
 }

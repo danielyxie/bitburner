@@ -4,6 +4,8 @@
 
 ## Multipliers.bladeburner\_max\_stamina property
 
+Multiplier to Bladeburner max stamina
+
 <b>Signature:</b>
 
 ```typescript

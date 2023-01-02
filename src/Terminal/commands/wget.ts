@@ -1,47 +1,39 @@
 import $ from "jquery";
 
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 
-export function wget(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  args: (string | number | boolean)[],
-): void {
+export function wget(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length !== 2) {
-    terminal.error("Incorrect usage of wget command. Usage: wget [url] [target file]");
+    Terminal.error("Incorrect usage of wget command. Usage: wget [url] [target file]");
     return;
   }
 
   const url = args[0] + "";
-  const target = terminal.getFilepath(args[1] + "");
+  const target = Terminal.getFilepath(args[1] + "");
   if (!isScriptFilename(target) && !target.endsWith(".txt")) {
-    return terminal.error(`wget failed: Invalid target file. Target file must be script or text file`);
+    return Terminal.error(`wget failed: Invalid target file. Target file must be script or text file`);
   }
   $.get(
     url,
     function (data: unknown) {
       let res;
       if (isScriptFilename(target)) {
-        res = server.writeToScriptFile(player, target, String(data));
+        res = server.writeToScriptFile(target, String(data));
       } else {
         res = server.writeToTextFile(target, String(data));
       }
       if (!res.success) {
-        return terminal.error("wget failed");
+        return Terminal.error("wget failed");
       }
       if (res.overwritten) {
-        return terminal.print(`wget successfully retrieved content and overwrote ${target}`);
+        return Terminal.print(`wget successfully retrieved content and overwrote ${target}`);
       }
-      return terminal.print(`wget successfully retrieved content to new file ${target}`);
+      return Terminal.print(`wget successfully retrieved content to new file ${target}`);
     },
     "text",
   ).fail(function (e) {
-    return terminal.error("wget failed: " + JSON.stringify(e));
+    return Terminal.error("wget failed: " + JSON.stringify(e));
   });
 }

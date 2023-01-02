@@ -59,7 +59,7 @@ export const CorporationUpgrades: Record<CorporationUpgradeIndex, CorporationUpg
       "to consumers through their dreams. Each level of this upgrade provides a passive " +
       "increase in awareness of all of your companies (divisions) by 0.004 / market cycle," +
       "and in popularity by 0.001 / market cycle. A market cycle is approximately " +
-      "15 seconds.",
+      "10 seconds.",
   },
 
   //Makes advertising more effective

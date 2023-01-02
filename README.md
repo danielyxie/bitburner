@@ -2,13 +2,13 @@
 
 [![Join Discord](https://img.shields.io/discord/415207508303544321)](https://discord.gg/TFc3hKD)
 
-[![Build Status](https://github.com/danielyxie/bitburner/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/danielyxie/bitburner/actions/workflows/ci.yml)
+[![Build Status](https://github.com/bitburner-official/bitburner-src/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/bitburner-official/bitburner-src/actions/workflows/ci.yml)
 
 Bitburner is a programming-based [incremental game](https://en.wikipedia.org/wiki/Incremental_game)
 that revolves around hacking and cyberpunk themes.
 The game can be played at https://danielyxie.github.io/bitburner or installed through [Steam](https://store.steampowered.com/app/1812820/Bitburner/).
 
-See the [frequently asked questions](./doc/FAQ.md) for more information . To discuss the game or get help, join the [official discord server](https://discord.gg/TFc3hKD)
+See the [frequently asked questions](./doc/FAQ.md) for more information . To discuss the game or get help, join the [official Discord server](https://discord.gg/TFc3hKD).
 
 # Documentation
 
@@ -19,7 +19,7 @@ The [in-game documentation](./markdown/bitburner.md) is generated from the [Type
 
 Anyone is welcome to contribute to the documentation by editing the [source
 files](/doc/source) and then making a pull request with your contributions.
-For further guidance, please refer to the "As A Documentor" section of
+For further guidance, please refer to the "As A Documenter" section of
 [CONTRIBUTING](./doc/CONTRIBUTING.md).
 
 # Contribution

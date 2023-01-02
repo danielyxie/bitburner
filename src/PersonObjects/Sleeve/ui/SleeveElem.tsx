@@ -1,8 +1,8 @@
 import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { FactionWorkType } from "../../../Work/data/FactionWorkType";
+import { FactionWorkType } from "../../../Enums";
 import { CONSTANTS } from "../../../Constants";
-import { use } from "../../../ui/Context";
+import { Player } from "@player";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { ProgressBar } from "../../../ui/React/Progress";
 import { Sleeve } from "../Sleeve";
@@ -20,6 +20,8 @@ import { isSleeveInfiltrateWork } from "../Work/SleeveInfiltrateWork";
 import { isSleeveSupportWork } from "../Work/SleeveSupportWork";
 import { isSleeveBladeburnerWork } from "../Work/SleeveBladeburnerWork";
 import { isSleeveCrimeWork } from "../Work/SleeveCrimeWork";
+import { findCrime } from "../../../Crime/CrimeHelpers";
+import { CrimeType } from "../../../Enums";
 
 interface IProps {
   sleeve: Sleeve;
@@ -27,7 +29,6 @@ interface IProps {
 }
 
 export function SleeveElem(props: IProps): React.ReactElement {
-  const player = use.Player();
   const [statsOpen, setStatsOpen] = useState(false);
   const [travelOpen, setTravelOpen] = useState(false);
   const [augmentationsOpen, setAugmentationsOpen] = useState(false);
@@ -39,28 +40,28 @@ export function SleeveElem(props: IProps): React.ReactElement {
       case "------":
         break;
       case "Work for Company":
-        props.sleeve.workForCompany(player, abc[1]);
+        props.sleeve.workForCompany(abc[1]);
         break;
       case "Work for Faction":
-        props.sleeve.workForFaction(player, abc[1], abc[2]);
+        props.sleeve.workForFaction(abc[1], abc[2]);
         break;
       case "Commit Crime":
-        props.sleeve.commitCrime(player, abc[1]);
+        props.sleeve.commitCrime(findCrime(abc[1])?.type ?? CrimeType.shoplift);
         break;
       case "Take University Course":
-        props.sleeve.takeUniversityCourse(player, abc[2], abc[1]);
+        props.sleeve.takeUniversityCourse(abc[2], abc[1]);
         break;
       case "Workout at Gym":
-        props.sleeve.workoutAtGym(player, abc[2], abc[1]);
+        props.sleeve.workoutAtGym(abc[2], abc[1]);
         break;
       case "Perform Bladeburner Actions":
-        props.sleeve.bladeburner(player, abc[1], abc[2]);
+        props.sleeve.bladeburner(abc[1], abc[2]);
         break;
       case "Shock Recovery":
-        props.sleeve.shockRecovery(player);
+        props.sleeve.shockRecovery();
         break;
       case "Synchronize":
-        props.sleeve.synchronize(player);
+        props.sleeve.synchronize();
         break;
       default:
         console.error(`Invalid/Unrecognized taskValue in setSleeveTask(): ${abc[0]}`);
@@ -75,7 +76,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
     const crime = w.getCrime();
     desc = (
       <>
-        This sleeve is currently attempting to {crime.type} (Success Rate:{" "}
+        This sleeve is currently attempting {crime.workName} (Success Rate:{" "}
         {numeralWrapper.formatPercentage(crime.successRate(props.sleeve))}).
       </>
     );
@@ -105,13 +106,13 @@ export function SleeveElem(props: IProps): React.ReactElement {
   if (isSleeveFactionWork(props.sleeve.currentWork)) {
     let doing = "nothing";
     switch (props.sleeve.currentWork.factionWorkType) {
-      case FactionWorkType.FIELD:
+      case FactionWorkType.field:
         doing = "Field work";
         break;
-      case FactionWorkType.HACKING:
+      case FactionWorkType.hacking:
         doing = "Hacking contracts";
         break;
-      case FactionWorkType.SECURITY:
+      case FactionWorkType.security:
         doing = "Security work";
         break;
     }
@@ -130,7 +131,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
     desc = (
       <>
         This sleeve is currently attempting to perform {w.actionName}. (
-        {((100 * w.cyclesWorked) / w.cyclesNeeded(player, props.sleeve)).toFixed(2)}%)
+        {((100 * w.cyclesWorked) / w.cyclesNeeded(props.sleeve)).toFixed(2)}%)
       </>
     );
   }
@@ -156,11 +157,11 @@ export function SleeveElem(props: IProps): React.ReactElement {
           <StatsElement sleeve={props.sleeve} />
           <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%" }}>
             <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
-            <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
+            <Tooltip title={Player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
               <span>
                 <Button
                   onClick={() => setTravelOpen(true)}
-                  disabled={player.money < CONSTANTS.TravelCost}
+                  disabled={Player.money < CONSTANTS.TravelCost}
                   sx={{ width: "100%", height: "100%" }}
                 >
                   Travel
@@ -168,12 +169,12 @@ export function SleeveElem(props: IProps): React.ReactElement {
               </span>
             </Tooltip>
             <Tooltip
-              title={props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
+              title={props.sleeve.shock > 0 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
             >
               <span>
                 <Button
                   onClick={() => setAugmentationsOpen(true)}
-                  disabled={props.sleeve.shock < 100}
+                  disabled={props.sleeve.shock > 0}
                   sx={{ width: "100%", height: "100%" }}
                 >
                   Manage Augmentations
@@ -184,7 +185,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
         </span>
         <span>
           <EarningsElement sleeve={props.sleeve} />
-          <TaskSelector player={player} sleeve={props.sleeve} setABC={setABC} />
+          <TaskSelector sleeve={props.sleeve} setABC={setABC} />
           <Button onClick={setTask} sx={{ width: "100%" }}>
             Set Task
           </Button>
@@ -201,9 +202,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
               <ProgressBar
                 variant="determinate"
                 value={
-                  (props.sleeve.currentWork.cyclesWorked /
-                    props.sleeve.currentWork.cyclesNeeded(player, props.sleeve)) *
-                  100
+                  (props.sleeve.currentWork.cyclesWorked / props.sleeve.currentWork.cyclesNeeded(props.sleeve)) * 100
                 }
                 color="primary"
               />

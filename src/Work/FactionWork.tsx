@@ -1,7 +1,7 @@
 import React from "react";
 import { Work, WorkType } from "./Work";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
@@ -10,8 +10,9 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
 import { CONSTANTS } from "../Constants";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { calculateFactionExp, calculateFactionRep } from "./formulas/Faction";
-import { FactionWorkType } from "./data/FactionWorkType";
+import { calculateFactionExp, calculateFactionRep } from "./Formulas";
+import { FactionWorkType } from "../Enums";
+import { findEnumMember } from "../utils/helpers/enum";
 
 interface FactionWorkParams {
   singularity: boolean;
@@ -27,7 +28,7 @@ export class FactionWork extends Work {
 
   constructor(params?: FactionWorkParams) {
     super(WorkType.FACTION, params?.singularity ?? true);
-    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.HACKING;
+    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.hacking;
     this.factionName = params?.faction ?? FactionNames.Sector12;
   }
 
@@ -37,29 +38,29 @@ export class FactionWork extends Work {
     return f;
   }
 
-  getReputationRate(player: IPlayer): number {
+  getReputationRate(): number {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
-      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
+      focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    return calculateFactionRep(player, this.factionWorkType, this.getFaction().favor) * focusBonus;
+    return calculateFactionRep(Player, this.factionWorkType, this.getFaction().favor) * focusBonus;
   }
 
-  getExpRates(player: IPlayer): WorkStats {
+  getExpRates(): WorkStats {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
-      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
+      focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    const rate = calculateFactionExp(player, this.factionWorkType);
+    const rate = calculateFactionExp(Player, this.factionWorkType);
     return scaleWorkStats(rate, focusBonus, false);
   }
 
-  process(player: IPlayer, cycles: number): boolean {
+  process(cycles: number): boolean {
     this.cyclesWorked += cycles;
-    this.getFaction().playerReputation += this.getReputationRate(player) * cycles;
+    this.getFaction().playerReputation += this.getReputationRate() * cycles;
 
-    const rate = this.getExpRates(player);
-    applyWorkStats(player, player, rate, cycles, "class");
+    const rate = this.getExpRates();
+    applyWorkStats(Player, rate, cycles, "class");
 
     return false;
   }
@@ -85,18 +86,17 @@ export class FactionWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("FactionWork", this);
   }
 
-  /**
-   * Initiatizes a FactionWork object from a JSON save state.
-   */
+  /** Initializes a FactionWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): FactionWork {
-    return Generic_fromJSON(FactionWork, value.data);
+    const factionWork = Generic_fromJSON(FactionWork, value.data);
+    factionWork.factionWorkType =
+      findEnumMember(FactionWorkType, factionWork.factionWorkType) ?? FactionWorkType.hacking;
+    return factionWork;
   }
 }
 

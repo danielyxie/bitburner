@@ -1,6 +1,3 @@
-/**
- * React Component for displaying the bonus time remaining.
- */
 import * as React from "react";
 import { Gang } from "../Gang";
 import { CONSTANTS } from "../../Constants";
@@ -13,6 +10,7 @@ interface IProps {
   gang: Gang;
 }
 
+/** React Component for displaying the bonus time remaining. */
 export function BonusTime(props: IProps): React.ReactElement {
   const CyclerPerSecond = 1000 / CONSTANTS._idleSpeed;
   if ((props.gang.storedCycles / CyclerPerSecond) * 1000 <= 5000) return <></>;
@@ -23,7 +21,7 @@ export function BonusTime(props: IProps): React.ReactElement {
         title={
           <Typography>
             You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the
-            browser). Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed.
+            browser). Bonus time makes the Gang mechanic progress faster, up to 25x the normal speed.
           </Typography>
         }
       >

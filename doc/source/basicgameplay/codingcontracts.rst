@@ -7,7 +7,7 @@ exchange for solving programming problems.
 
 Coding Contracts are files with the ".cct" extensions. They can
 be accessed through the :ref:`terminal`  or through scripts using
-the `Coding Contract API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.codingcontract.md>`_
+the `Coding Contract API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.codingcontract.md>`_
 
 Each contract has a limited number of attempts. If you
 provide the wrong answer too many times and exceed the
@@ -31,7 +31,7 @@ an area to provide an answer.
 
 Interacting through Scripts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-See the `Coding Contract API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.codingcontract.md>`_.
+See the `Coding Contract API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.codingcontract.md>`_.
 Interacting with Coding Contracts via the Terminal can be tedious the more
 contracts you solve. Consider using the API to automate various aspects of
 your solution. For example, some contracts have long solutions while others
@@ -272,8 +272,9 @@ The list contains the name of (i.e. the value returned by
 | HammingCodes: Integer to Encoded Binary | | You are given a decimal value.                                                         |
 |                                         | | Convert it into a binary string and encode it as a 'Hamming-Code'. eg:                 |
 |                                         | | Value 8 will result into binary '1000', which will be encoded                          |
-|                                         | | with the pattern 'pppdpddd', where p is a paritybit and d a databit,                   |
-|                                         | | or '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.                      |
+|                                         | | with the pattern 'pppdpddd', where p is a paritybit and d a databit. The encoding of   |
+|                                         | | 8 is 11110000. As another example, '10101' (Value 21) will result into (pppdpdddpd)    |
+|                                         | | '1001101011'.                                                                          |
 |                                         | | NOTE: You need an parity Bit on Index 0 as an 'overall'-paritybit.                     |
 |                                         | | NOTE 2: You should watch the HammingCode-video from 3Blue1Brown, which                 |
 |                                         | | explains the 'rule' of encoding,                                                       |
@@ -286,7 +287,7 @@ The list contains the name of (i.e. the value returned by
 |                                         | | Treat it as a Hammingcode with 1 'possible' error on an random Index.                  |
 |                                         | | Find the 'possible' wrong bit, fix it and extract the decimal value, which is          |
 |                                         | | hidden inside the string.\n\n",                                                        |
-|                                         | | Note: The length of the binary string is dynamic, but it's encoding/decoding is        |
+|                                         | | Note: The length of the binary string is dynamic, but its encoding/decoding is         |
 |                                         | | following Hammings 'rule'\n",                                                          |
 |                                         | | Note 2: Index 0 is an 'overall' parity bit. Watch the Hammingcode-video from           |
 |                                         | | 3Blue1Brown for more information\n",                                                   |

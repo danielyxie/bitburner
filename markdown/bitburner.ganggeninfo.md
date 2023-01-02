@@ -9,7 +9,7 @@ Gang general info.
 <b>Signature:</b>
 
 ```typescript
-export interface GangGenInfo 
+interface GangGenInfo 
 ```
 
 ## Properties

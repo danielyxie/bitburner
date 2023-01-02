@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { Money } from "../ui/React/Money";
 import { WHRNG } from "./RNG";
 import { win, reachedLimit } from "./Game";
@@ -8,10 +8,6 @@ import { trusted } from "./utils";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
-type IProps = {
-  p: IPlayer;
-};
 
 // statically shuffled array of symbols.
 const symbols = [
@@ -141,8 +137,8 @@ const payLines = [
 const minPlay = 0;
 const maxPlay = 1e6;
 
-export function SlotMachine(props: IProps): React.ReactElement {
-  const [rng] = useState(new WHRNG(props.p.totalPlaytime));
+export function SlotMachine(): React.ReactElement {
+  const [rng] = useState(new WHRNG(Player.totalPlaytime));
   const [index, setIndex] = useState<number[]>([0, 0, 0, 0, 0]);
   const [locks, setLocks] = useState<number[]>([0, 0, 0, 0, 0]);
   const [investment, setInvestment] = useState(1000);
@@ -191,9 +187,9 @@ export function SlotMachine(props: IProps): React.ReactElement {
   }
 
   function play(): void {
-    if (reachedLimit(props.p)) return;
+    if (reachedLimit()) return;
     setStatus("playing");
-    win(props.p, -investment);
+    win(-investment);
     if (!canPlay) return;
     unlock();
     setTimeout(lock, rng.random() * 2000 + 1000);
@@ -235,7 +231,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
       if (count < 3) continue;
       const payout = getPayout(data[0], count - 3);
       gains += investment * payout;
-      win(props.p, investment * payout);
+      win(investment * payout);
     }
 
     setStatus(
@@ -244,7 +240,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
       </>,
     );
     setCanPlay(true);
-    if (reachedLimit(props.p)) return;
+    if (reachedLimit()) return;
   }
 
   function unlock(): void {

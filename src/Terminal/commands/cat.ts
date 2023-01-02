@@ -1,25 +1,17 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
 import { showLiterature } from "../../Literature/LiteratureHelpers";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { checkEnum } from "../../utils/helpers/checkEnum";
+import { checkEnum } from "../../utils/helpers/enum";
 
-export function cat(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  args: (string | number | boolean)[],
-): void {
+export function cat(args: (string | number | boolean)[], server: BaseServer): void {
   if (args.length !== 1) {
-    terminal.error("Incorrect usage of cat command. Usage: cat [file]");
+    Terminal.error("Incorrect usage of cat command. Usage: cat [file]");
     return;
   }
   const relative_filename = args[0] + "";
-  const filename = terminal.getFilepath(relative_filename);
+  const filename = Terminal.getFilepath(relative_filename);
   if (
     !filename.endsWith(".msg") &&
     !filename.endsWith(".lit") &&
@@ -27,7 +19,7 @@ export function cat(
     !filename.endsWith(".script") &&
     !filename.endsWith(".js")
   ) {
-    terminal.error(
+    Terminal.error(
       "Only .msg, .txt, .lit, .script and .js files are viewable with cat (filename must end with .msg, .txt, .lit, .script or .js)",
     );
     return;
@@ -49,18 +41,18 @@ export function cat(
       }
     }
   } else if (filename.endsWith(".txt")) {
-    const txt = terminal.getTextFile(player, relative_filename);
+    const txt = Terminal.getTextFile(relative_filename);
     if (txt != null) {
       txt.show();
       return;
     }
   } else if (filename.endsWith(".script") || filename.endsWith(".js")) {
-    const script = terminal.getScript(player, relative_filename);
+    const script = Terminal.getScript(relative_filename);
     if (script != null) {
-      dialogBoxCreate(`${script.filename}<br /><br />${script.code}`);
+      dialogBoxCreate(`${script.filename}\n\n${script.code}`);
       return;
     }
   }
 
-  terminal.error(`No such file ${filename}`);
+  Terminal.error(`No such file ${filename}`);
 }

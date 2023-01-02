@@ -13,7 +13,6 @@ import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { Script } from "./Script";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { Node } from "../NetscriptJSEvaluator";
 
 export interface RamUsageEntry {
@@ -40,11 +39,8 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * Parses code into an AST and walks through it recursively to calculate
  * RAM usage. Also accounts for imported modules.
  * @param {Script[]} otherScripts - All other scripts on the server. Used to account for imported scripts
- * @param {string} codeCopy - The code being parsed
- * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
- *                                      keep track of what functions have/havent been accounted for
- */
-function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: string): RamCalculation {
+ * @param {string} code - The code being parsed */
+function parseOnlyRamCalculate(otherScripts: Script[], code: string): RamCalculation {
   try {
     /**
      * Maps dependent identifiers to their dependencies.
@@ -108,10 +104,8 @@ function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: st
 
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
     // are those that start with __SPECIAL_INITIAL_MODULE__.
-    let ram = RamCostConstants.ScriptBaseRamCost;
-    const detailedCosts: RamUsageEntry[] = [
-      { type: "misc", name: "baseCost", cost: RamCostConstants.ScriptBaseRamCost },
-    ];
+    let ram = RamCostConstants.Base;
+    const detailedCosts: RamUsageEntry[] = [{ type: "misc", name: "baseCost", cost: RamCostConstants.Base }];
     const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule));
     const resolvedRefs = new Set();
     const loadedFns: Record<string, boolean> = {};
@@ -121,20 +115,16 @@ function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: st
 
       // Check if this is one of the special keys, and add the appropriate ram cost if so.
       if (ref === "hacknet" && !resolvedRefs.has("hacknet")) {
-        ram += RamCostConstants.ScriptHacknetNodesRamCost;
-        detailedCosts.push({ type: "ns", name: "hacknet", cost: RamCostConstants.ScriptHacknetNodesRamCost });
+        ram += RamCostConstants.HacknetNodes;
+        detailedCosts.push({ type: "ns", name: "hacknet", cost: RamCostConstants.HacknetNodes });
       }
       if (ref === "document" && !resolvedRefs.has("document")) {
-        ram += RamCostConstants.ScriptDomRamCost;
-        detailedCosts.push({ type: "dom", name: "document", cost: RamCostConstants.ScriptDomRamCost });
+        ram += RamCostConstants.Dom;
+        detailedCosts.push({ type: "dom", name: "document", cost: RamCostConstants.Dom });
       }
       if (ref === "window" && !resolvedRefs.has("window")) {
-        ram += RamCostConstants.ScriptDomRamCost;
-        detailedCosts.push({ type: "dom", name: "window", cost: RamCostConstants.ScriptDomRamCost });
-      }
-      if (ref === "corporation" && !resolvedRefs.has("corporation")) {
-        ram += RamCostConstants.ScriptCorporationRamCost;
-        detailedCosts.push({ type: "ns", name: "corporation", cost: RamCostConstants.ScriptCorporationRamCost });
+        ram += RamCostConstants.Dom;
+        detailedCosts.push({ type: "dom", name: "window", cost: RamCostConstants.Dom });
       }
 
       resolvedRefs.add(ref);
@@ -157,11 +147,11 @@ function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: st
       // Check if this identifier is a function in the workerScript environment.
       // If it is, then we need to get its RAM cost.
       try {
-        function applyFuncRam(cost: number | ((p: IPlayer) => number)): number {
+        function applyFuncRam(cost: number | (() => number)): number {
           if (typeof cost === "number") {
             return cost;
           } else if (typeof cost === "function") {
-            return cost(player);
+            return cost();
           } else {
             return 0;
           }
@@ -178,7 +168,7 @@ function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: st
           prefix: string,
           obj: object,
           ref: string,
-        ): { func: (p: IPlayer) => number | number; refDetail: string } | undefined => {
+        ): { func: () => number | number; refDetail: string } | undefined => {
           if (!obj) return;
           const elem = Object.entries(obj).find(([key]) => key === ref);
           if (elem !== undefined && (typeof elem[1] === "function" || typeof elem[1] === "number")) {
@@ -196,9 +186,13 @@ function parseOnlyRamCalculate(player: IPlayer, otherScripts: Script[], code: st
         ram += fnRam;
         detailedCosts.push({ type: "fn", name: details?.refDetail ?? "", cost: fnRam });
       } catch (error) {
-        console.log(error);
+        console.error(error);
         continue;
       }
+    }
+    if (ram > RamCostConstants.Max) {
+      ram = RamCostConstants.Max;
+      detailedCosts.push({ type: "misc", name: "Max Ram Cap", cost: RamCostConstants.Max });
     }
     return { cost: ram, entries: detailedCosts.filter((e) => e.cost > 0) };
   } catch (error) {
@@ -381,9 +375,9 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): ParseDepsR
  * @param {Script[]} otherScripts - All other scripts on the server.
  *                                  Used to account for imported scripts
  */
-export function calculateRamUsage(player: IPlayer, codeCopy: string, otherScripts: Script[]): RamCalculation {
+export function calculateRamUsage(codeCopy: string, otherScripts: Script[]): RamCalculation {
   try {
-    return parseOnlyRamCalculate(player, otherScripts, codeCopy);
+    return parseOnlyRamCalculate(otherScripts, codeCopy);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);

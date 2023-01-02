@@ -2,9 +2,7 @@ import { workerScripts } from "./WorkerScripts";
 
 let pidCounter = 1;
 
-/**
- * Find and return the next availble PID for a script
- */
+/** Find and return the next available PID for a script */
 export function generateNextPid(): number {
   let tempCounter = pidCounter;
 

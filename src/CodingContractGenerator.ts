@@ -5,7 +5,7 @@ import {
   ICodingContractReward,
 } from "./CodingContracts";
 import { Factions } from "./Faction/Factions";
-import { Player } from "./Player";
+import { Player } from "@player";
 import { GetServer, GetAllServers } from "./Server/AllServers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { Server } from "./Server/Server";
@@ -45,6 +45,15 @@ export function generateRandomContractOnHome(): void {
   serv.addContract(contract);
 }
 
+export const generateDummyContract = (problemType: string): void => {
+  if (!CodingContractTypes[problemType]) throw new Error(`Invalid problem type: '${problemType}'`);
+  const serv = Player.getHomeComputer();
+
+  const contractFn = getRandomFilename(serv);
+  const contract = new CodingContract(contractFn, problemType, null);
+  serv.addContract(contract);
+};
+
 interface IGenerateContractParams {
   problemType?: string;
   server?: string;
@@ -55,7 +64,7 @@ export function generateContract(params: IGenerateContractParams): void {
   // Problem Type
   let problemType;
   const problemTypes = Object.keys(CodingContractTypes);
-  if (params.problemType != null && problemTypes.includes(params.problemType)) {
+  if (params.problemType && problemTypes.includes(params.problemType)) {
     problemType = params.problemType;
   } else {
     problemType = getRandomProblemType();
@@ -176,7 +185,7 @@ function getRandomServer(): BaseServer {
   return randServer;
 }
 
-function getRandomFilename(server: BaseServer, reward: ICodingContractReward): string {
+function getRandomFilename(server: BaseServer, reward: ICodingContractReward = { name: "", type: 0 }): string {
   let contractFn = `contract-${getRandomInt(0, 1e6)}`;
 
   for (let i = 0; i < 1000; ++i) {
@@ -191,7 +200,8 @@ function getRandomFilename(server: BaseServer, reward: ICodingContractReward): s
   }
 
   if (reward.name) {
-    contractFn += `-${reward.name.replace(/\s/g, "")}`;
+    // Only alphanumeric characters in the reward name.
+    contractFn += `-${reward.name.replace(/[^a-zA-Z0-9]/g, "")}`;
   }
 
   return contractFn;

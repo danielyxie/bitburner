@@ -9,7 +9,12 @@ Set whether smart supply uses leftovers before buying
 <b>Signature:</b>
 
 ```typescript
-setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName: string, enabled: boolean): void;
+setSmartSupplyUseLeftovers(
+    divisionName: string,
+    city: CityName | `${CityName}`,
+    materialName: string,
+    enabled: boolean,
+  ): void;
 ```
 
 ## Parameters
@@ -17,7 +22,7 @@ setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName:
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
+|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
 |  materialName | string | Name of the material |
 |  enabled | boolean | smart supply use leftovers enabled |
 

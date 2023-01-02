@@ -1,60 +1,78 @@
 import { Settings } from "./Settings/Settings";
 
+type PortData = string | number;
+type Resolver = () => void;
 export interface IPort {
-  write: (value: unknown) => unknown;
+  write: (value: unknown) => PortData | null;
   tryWrite: (value: unknown) => boolean;
-  read: () => unknown;
-  peek: () => unknown;
+  read: () => PortData;
+  peek: () => PortData;
+  nextWrite: () => Promise<void>;
   full: () => boolean;
   empty: () => boolean;
   clear: () => void;
 }
 
 export function NetscriptPort(): IPort {
-  const data: unknown[] = [];
+  const data: PortData[] = [];
+  const resolvers: Resolver[] = [];
 
   return {
-    write: (value: unknown): unknown => {
+    write: (value) => {
+      if (typeof value !== "number" && typeof value !== "string") {
+        throw new Error(
+          `port.write: Tried to write type ${typeof value}. Only string and number types may be written to ports.`,
+        );
+      }
       data.push(value);
+      while (resolvers.length > 0) {
+        (resolvers.pop() as Resolver)();
+      }
       if (data.length > Settings.MaxPortCapacity) {
-        return data.shift();
+        return data.shift() as PortData;
       }
       return null;
     },
 
-    tryWrite: (value: unknown): boolean => {
+    tryWrite: (value) => {
+      if (typeof value != "number" && typeof value != "string") {
+        throw new Error(
+          `port.write: Tried to write type ${typeof value}. Only string and number types may be written to ports.`,
+        );
+      }
       if (data.length >= Settings.MaxPortCapacity) {
         return false;
       }
       data.push(value);
+      while (resolvers.length > 0) {
+        (resolvers.pop() as Resolver)();
+      }
       return true;
     },
 
-    read: (): unknown => {
-      if (data.length === 0) {
-        return "NULL PORT DATA";
-      }
-      return data.shift();
+    read: () => {
+      if (data.length === 0) return "NULL PORT DATA";
+      return data.shift() as PortData;
     },
 
-    peek: (): unknown => {
-      if (data.length === 0) {
-        return "NULL PORT DATA";
-      } else {
-        const foo = data.slice();
-        return foo[0];
-      }
+    peek: () => {
+      if (data.length === 0) return "NULL PORT DATA";
+      return data[0];
     },
 
-    full: (): boolean => {
+    nextWrite: () => {
+      return new Promise((res) => resolvers.push(res));
+    },
+
+    full: () => {
       return data.length == Settings.MaxPortCapacity;
     },
 
-    empty: (): boolean => {
+    empty: () => {
       return data.length === 0;
     },
 
-    clear: (): void => {
+    clear: () => {
       data.length = 0;
     },
   };

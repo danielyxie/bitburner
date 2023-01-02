@@ -1,4 +1,4 @@
-import { Player } from "./Player";
+import { Player } from "@player";
 
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
@@ -7,7 +7,6 @@ import { ITutorialEvents } from "./ui/InteractiveTutorial/ITutorialEvents";
 // Ordered array of keys to Interactive Tutorial Steps
 enum iTutorialSteps {
   Start,
-  NSSelection,
   GoToCharacterPage, // Click on 'Stats' page
   CharacterPage, // Introduction to 'Stats' page
   CharacterGoToTerminalPage, // Go back to Terminal
@@ -39,50 +38,13 @@ enum iTutorialSteps {
   End,
 }
 
-const ITutorial: {
-  currStep: iTutorialSteps;
-  isRunning: boolean;
-  stepIsDone: {
-    [iTutorialSteps.Start]: boolean;
-    [iTutorialSteps.NSSelection]: boolean;
-    [iTutorialSteps.GoToCharacterPage]: boolean;
-    [iTutorialSteps.CharacterPage]: boolean;
-    [iTutorialSteps.CharacterGoToTerminalPage]: boolean;
-    [iTutorialSteps.TerminalIntro]: boolean;
-    [iTutorialSteps.TerminalHelp]: boolean;
-    [iTutorialSteps.TerminalLs]: boolean;
-    [iTutorialSteps.TerminalScan]: boolean;
-    [iTutorialSteps.TerminalScanAnalyze1]: boolean;
-    [iTutorialSteps.TerminalScanAnalyze2]: boolean;
-    [iTutorialSteps.TerminalConnect]: boolean;
-    [iTutorialSteps.TerminalAnalyze]: boolean;
-    [iTutorialSteps.TerminalNuke]: boolean;
-    [iTutorialSteps.TerminalManualHack]: boolean;
-    [iTutorialSteps.TerminalHackingMechanics]: boolean;
-    [iTutorialSteps.TerminalGoHome]: boolean;
-    [iTutorialSteps.TerminalCreateScript]: boolean;
-    [iTutorialSteps.TerminalTypeScript]: boolean;
-    [iTutorialSteps.TerminalFree]: boolean;
-    [iTutorialSteps.TerminalRunScript]: boolean;
-    [iTutorialSteps.TerminalGoToActiveScriptsPage]: boolean;
-    [iTutorialSteps.ActiveScriptsPage]: boolean;
-    [iTutorialSteps.ActiveScriptsToTerminal]: boolean;
-    [iTutorialSteps.TerminalTailScript]: boolean;
-    [iTutorialSteps.GoToHacknetNodesPage]: boolean;
-    [iTutorialSteps.HacknetNodesIntroduction]: boolean;
-    [iTutorialSteps.HacknetNodesGoToWorldPage]: boolean;
-    [iTutorialSteps.WorldDescription]: boolean;
-    [iTutorialSteps.TutorialPageInfo]: boolean;
-    [iTutorialSteps.End]: boolean;
-  };
-} = {
+const ITutorial = {
   currStep: iTutorialSteps.Start,
   isRunning: false,
 
   // Keeps track of whether each step has been done
   stepIsDone: {
     [iTutorialSteps.Start]: false,
-    [iTutorialSteps.NSSelection]: false,
     [iTutorialSteps.GoToCharacterPage]: false,
     [iTutorialSteps.CharacterPage]: false,
     [iTutorialSteps.CharacterGoToTerminalPage]: false,
@@ -141,7 +103,9 @@ function iTutorialPrevStep(): void {
 function iTutorialEnd(): void {
   ITutorial.isRunning = false;
   ITutorial.currStep = iTutorialSteps.Start;
-  Player.getHomeComputer().messages.push(LiteratureNames.HackersStartingHandbook);
+  const messages = Player.getHomeComputer().messages;
+  const handbook = LiteratureNames.HackersStartingHandbook;
+  if (!messages.includes(handbook)) messages.push(handbook);
   ITutorialEvents.emit();
 }
 

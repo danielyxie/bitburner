@@ -9,11 +9,11 @@ Shift an element out of the port.
 <b>Signature:</b>
 
 ```typescript
-read(): string | number;
+read(): PortData;
 ```
 <b>Returns:</b>
 
-string \| number
+[PortData](./bitburner.portdata.md)
 
 the data read.
 

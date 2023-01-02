@@ -4,6 +4,8 @@
 
 ## Multipliers.hacknet\_node\_money property
 
+Multiplier to amount of money produced by Hacknet Nodes
+
 <b>Signature:</b>
 
 ```typescript

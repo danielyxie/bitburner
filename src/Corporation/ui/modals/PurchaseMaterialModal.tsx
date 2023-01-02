@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import { MaterialSizes } from "../../MaterialSizes";
+import { MaterialInfo } from "../../MaterialInfo";
 import { Warehouse } from "../../Warehouse";
 import { Material } from "../../Material";
 import { numeralWrapper } from "../../../ui/numeralFormat";
@@ -33,7 +33,7 @@ function BulkPurchaseSection(props: IBPProps): React.ReactElement {
     const parsedAmt = parseFloat(props.amount);
     const cost = parsedAmt * props.mat.bCost;
 
-    const matSize = MaterialSizes[props.mat.name];
+    const matSize = MaterialInfo[props.mat.name].size;
     const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
 
     if (parsedAmt > maxAmount) {

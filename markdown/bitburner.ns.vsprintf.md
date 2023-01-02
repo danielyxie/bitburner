@@ -17,13 +17,13 @@ vsprintf(format: string, args: any[]): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  format | string | String to format. |
-|  args | any\[\] | Formating arguments. |
+|  args | any\[\] | Formatting arguments. |
 
 <b>Returns:</b>
 
 string
 
-Formated text.
+Formatted text.
 
 ## Remarks
 

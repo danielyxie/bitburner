@@ -24,7 +24,7 @@ export const researchMetadata: IConstructorParams[] = [
     name: "Automatic Drug Administration",
     cost: 10e3,
     desc:
-      "Research how to automatically administer performance-enhacing drugs to all of " +
+      "Research how to automatically administer performance-enhancing drugs to all of " +
       "your employees. This unlocks Drug-related Research.",
   },
   {
@@ -81,8 +81,8 @@ export const researchMetadata: IConstructorParams[] = [
     name: "Hi-Tech R&D Laboratory",
     cost: 5e3,
     desc:
-      "Construct a cutting edge facility dedicated to advanced research and " +
-      "and development. This allows you to spend Scientific Research " +
+      "Construct a cutting-edge facility dedicated to advanced research and " +
+      "development. This allows you to spend Scientific Research " +
       "on powerful upgrades. It also globally increases Scientific Research " +
       "production by 10%.",
     sciResearchMult: 1.1,
@@ -125,7 +125,7 @@ export const researchMetadata: IConstructorParams[] = [
       "Develop double-advanced AI software that uses technical analysis to " +
       "help you understand and exploit the market. This research " +
       "allows you to know how many sales of a Material/Product you lose or gain " +
-      "from having too high or too low or a sale price. It also lets you automatically " +
+      "from having too high or too low of a sale price. It also lets you automatically " +
       "set the sale price of your Materials/Products at the optimal price such that " +
       "the amount sold matches the amount produced.",
   },
@@ -146,7 +146,7 @@ export const researchMetadata: IConstructorParams[] = [
     desc:
       "Create assemblers that can be used for universal production. " +
       "These assemblers use deep learning to improve their efficiency " +
-      "at their tasks. This research increases all production by 10%",
+      "at their tasks. This research increases all production by 10%.",
     productionMult: 1.1,
   },
   {
@@ -154,7 +154,7 @@ export const researchMetadata: IConstructorParams[] = [
     cost: 30e3,
     desc:
       "Upgrade the tDCS headset to stimulate regions of the brain that " +
-      "control confidence and enthusiasm. This research increases the max " +
+      "control confidence and enthusiasm. This research increases the maximum " +
       "morale of all employees by 10.",
   },
   {
@@ -191,7 +191,7 @@ export const researchMetadata: IConstructorParams[] = [
     cost: 10e3,
     desc:
       "Streamline the manufacturing of this industry's various products. " +
-      "This research increases the production of your products by 5%",
+      "This research increases the production of your products by 5%.",
     productProductionMult: 1.05,
   },
 ];

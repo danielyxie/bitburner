@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { Money } from "../ui/React/Money";
-import { Game, reachedLimit } from "./Game";
+import { win, reachedLimit } from "./Game";
 import { Deck } from "./CardDeck/Deck";
 import { Hand } from "./CardDeck/Hand";
 import { InputAdornment } from "@mui/material";
@@ -24,10 +24,6 @@ enum Result {
   Tie = "Push! (Tie)",
 }
 
-type Props = {
-  p: IPlayer;
-};
-
 type State = {
   playerHand: Hand;
   dealerHand: Hand;
@@ -40,11 +36,11 @@ type State = {
   wagerInvalidHelperText: string;
 };
 
-export class Blackjack extends Game<Props, State> {
+export class Blackjack extends React.Component<Record<string, never>, State> {
   deck: Deck;
 
-  constructor(props: Props) {
-    super(props);
+  constructor() {
+    super({});
 
     this.deck = new Deck(DECK_COUNT);
 
@@ -64,20 +60,17 @@ export class Blackjack extends Game<Props, State> {
   }
 
   canStartGame = (): boolean => {
-    const { p } = this.props;
     const { bet } = this.state;
 
-    return p.canAfford(bet);
+    return Player.canAfford(bet);
   };
 
   startGame = (): void => {
-    if (!this.canStartGame() || reachedLimit(this.props.p)) {
+    if (!this.canStartGame() || reachedLimit()) {
       return;
     }
 
-    // Take money from player right away so that player's dont just "leave" to avoid the loss (I mean they could
-    // always reload without saving but w.e) TODO: Save/Restore the RNG state to limit the value of save-scumming.
-    this.props.p.loseMoney(this.state.bet, "casino");
+    win(-this.state.bet);
 
     const playerHand = new Hand([this.deck.safeDrawCard(), this.deck.safeDrawCard()]);
     const dealerHand = new Hand([this.deck.safeDrawCard(), this.deck.safeDrawCard()]);
@@ -133,7 +126,7 @@ export class Blackjack extends Game<Props, State> {
       valuesUnder21.sort((a, b) => a - b);
       return valuesUnder21[valuesUnder21.length - 1];
     } else {
-      // Just return the first value. It doesnt really matter anyways since hand is buted
+      // Just return the first value. It doesn't really matter anyways since hand is busted.
       return handValues[0];
     }
   };
@@ -230,7 +223,7 @@ export class Blackjack extends Game<Props, State> {
         : (() => {
             throw new Error(`Unexpected result: ${result}`);
           })(); // This can't happen, right?
-    this.win(this.props.p, gains);
+    win(gains);
     this.setState({
       gameInProgress: false,
       result,
@@ -239,7 +232,6 @@ export class Blackjack extends Game<Props, State> {
   };
 
   wagerOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { p } = this.props;
     const betInput = event.target.value;
     const wager = Math.round(parseFloat(betInput));
     if (isNaN(wager)) {
@@ -254,7 +246,7 @@ export class Blackjack extends Game<Props, State> {
         bet: 0,
         betInput,
         wagerInvalid: true,
-        wagerInvalidHelperText: "Must bet a postive amount",
+        wagerInvalidHelperText: "Must bet a positive amount",
       });
     } else if (wager > MAX_BET) {
       this.setState({
@@ -263,7 +255,7 @@ export class Blackjack extends Game<Props, State> {
         wagerInvalid: true,
         wagerInvalidHelperText: "Exceeds max bet",
       });
-    } else if (!p.canAfford(wager)) {
+    } else if (!Player.canAfford(wager)) {
       this.setState({
         bet: 0,
         betInput,

@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMarketCosts";
 
 import { CONSTANTS } from "../../Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 import { initStockMarket } from "../StockMarket";
 
@@ -23,24 +23,23 @@ import { StaticModal } from "../../ui/React/StaticModal";
 import { FactionNames } from "../../Faction/data/FactionNames";
 
 type IProps = {
-  p: IPlayer;
   rerender: () => void;
 };
 
 function Purchase4SMarketDataTixApiAccessButton(props: IProps): React.ReactElement {
   function purchase4SMarketDataTixApiAccess(): void {
-    if (props.p.has4SDataTixApi) {
+    if (Player.has4SDataTixApi) {
       return;
     }
-    if (!props.p.canAfford(getStockMarket4STixApiCost())) {
+    if (!Player.canAfford(getStockMarket4STixApiCost())) {
       return;
     }
-    props.p.has4SDataTixApi = true;
-    props.p.loseMoney(getStockMarket4STixApiCost(), "stock");
+    Player.has4SDataTixApi = true;
+    Player.loseMoney(getStockMarket4STixApiCost(), "stock");
     props.rerender();
   }
 
-  if (props.p.has4SDataTixApi) {
+  if (Player.has4SDataTixApi) {
     return (
       <Typography>
         Market Data TIX API Access <CheckIcon />
@@ -51,7 +50,7 @@ function Purchase4SMarketDataTixApiAccessButton(props: IProps): React.ReactEleme
     return (
       <Tooltip
         title={
-          !props.p.hasTixApiAccess ? (
+          !Player.hasTixApiAccess ? (
             <Typography>Requires TIX API Access</Typography>
           ) : (
             <Typography>Let you access 4S Market Data through Netscript</Typography>
@@ -60,11 +59,11 @@ function Purchase4SMarketDataTixApiAccessButton(props: IProps): React.ReactEleme
       >
         <span>
           <Button
-            disabled={!props.p.hasTixApiAccess || !props.p.canAfford(cost)}
+            disabled={!Player.hasTixApiAccess || !Player.canAfford(cost)}
             onClick={purchase4SMarketDataTixApiAccess}
           >
             Buy 4S Market Data TIX API Access -&nbsp;
-            <Money money={cost} player={props.p} />
+            <Money money={cost} forPurchase={true} />
           </Button>
         </span>
       </Tooltip>
@@ -73,7 +72,7 @@ function Purchase4SMarketDataTixApiAccessButton(props: IProps): React.ReactEleme
 }
 
 function PurchaseWseAccountButton(props: IProps): React.ReactElement {
-  if (props.p.hasWseAccount) {
+  if (Player.hasWseAccount) {
     return (
       <Typography>
         WSE Account <CheckIcon />
@@ -81,15 +80,15 @@ function PurchaseWseAccountButton(props: IProps): React.ReactElement {
     );
   }
   function purchaseWseAccount(): void {
-    if (props.p.hasWseAccount) {
+    if (Player.hasWseAccount) {
       return;
     }
-    if (!props.p.canAfford(CONSTANTS.WSEAccountCost)) {
+    if (!Player.canAfford(CONSTANTS.WSEAccountCost)) {
       return;
     }
-    props.p.hasWseAccount = true;
+    Player.hasWseAccount = true;
     initStockMarket();
-    props.p.loseMoney(CONSTANTS.WSEAccountCost, "stock");
+    Player.loseMoney(CONSTANTS.WSEAccountCost, "stock");
     props.rerender();
   }
 
@@ -97,9 +96,9 @@ function PurchaseWseAccountButton(props: IProps): React.ReactElement {
   return (
     <>
       <Typography>To begin trading, you must first purchase an account:</Typography>
-      <Button disabled={!props.p.canAfford(cost)} onClick={purchaseWseAccount}>
+      <Button disabled={!Player.canAfford(cost)} onClick={purchaseWseAccount}>
         Buy WSE Account -&nbsp;
-        <Money money={cost} player={props.p} />
+        <Money money={cost} forPurchase={true} />
       </Button>
     </>
   );
@@ -107,18 +106,18 @@ function PurchaseWseAccountButton(props: IProps): React.ReactElement {
 
 function PurchaseTixApiAccessButton(props: IProps): React.ReactElement {
   function purchaseTixApiAccess(): void {
-    if (props.p.hasTixApiAccess) {
+    if (Player.hasTixApiAccess) {
       return;
     }
-    if (!props.p.canAfford(CONSTANTS.TIXAPICost)) {
+    if (!Player.canAfford(CONSTANTS.TIXAPICost)) {
       return;
     }
-    props.p.hasTixApiAccess = true;
-    props.p.loseMoney(CONSTANTS.TIXAPICost, "stock");
+    Player.hasTixApiAccess = true;
+    Player.loseMoney(CONSTANTS.TIXAPICost, "stock");
     props.rerender();
   }
 
-  if (props.p.hasTixApiAccess) {
+  if (Player.hasTixApiAccess) {
     return (
       <Typography>
         TIX API Access <CheckIcon />
@@ -127,9 +126,9 @@ function PurchaseTixApiAccessButton(props: IProps): React.ReactElement {
   } else {
     const cost = CONSTANTS.TIXAPICost;
     return (
-      <Button disabled={!props.p.canAfford(cost) || !props.p.hasWseAccount} onClick={purchaseTixApiAccess}>
+      <Button disabled={!Player.canAfford(cost) || !Player.hasWseAccount} onClick={purchaseTixApiAccess}>
         Buy Trade Information eXchange (TIX) API Access -&nbsp;
-        <Money money={cost} player={props.p} />
+        <Money money={cost} forPurchase={true} />
       </Button>
     );
   }
@@ -137,17 +136,17 @@ function PurchaseTixApiAccessButton(props: IProps): React.ReactElement {
 
 function Purchase4SMarketDataButton(props: IProps): React.ReactElement {
   function purchase4SMarketData(): void {
-    if (props.p.has4SData) {
+    if (Player.has4SData) {
       return;
     }
-    if (!props.p.canAfford(getStockMarket4SDataCost())) {
+    if (!Player.canAfford(getStockMarket4SDataCost())) {
       return;
     }
-    props.p.has4SData = true;
-    props.p.loseMoney(getStockMarket4SDataCost(), "stock");
+    Player.has4SData = true;
+    Player.loseMoney(getStockMarket4SDataCost(), "stock");
     props.rerender();
   }
-  if (props.p.has4SData) {
+  if (Player.has4SData) {
     return (
       <Typography>
         4S Market Data Access <CheckIcon />
@@ -160,9 +159,9 @@ function Purchase4SMarketDataButton(props: IProps): React.ReactElement {
         title={<Typography>Lets you view additional pricing and volatility information about stocks</Typography>}
       >
         <span>
-          <Button disabled={!props.p.canAfford(cost) || !props.p.hasWseAccount} onClick={purchase4SMarketData}>
+          <Button disabled={!Player.canAfford(cost) || !Player.hasWseAccount} onClick={purchase4SMarketData}>
             Buy 4S Market Data Access -&nbsp;
-            <Money money={cost} player={props.p} />
+            <Money money={cost} forPurchase={true} />
           </Button>
         </span>
       </Tooltip>
@@ -204,7 +203,7 @@ export function InfoAndPurchases(props: IProps): React.ReactElement {
       <Purchase4SMarketDataButton {...props} />
       <Typography>
         Commission Fees: Every transaction you make has a{" "}
-        <Money money={CONSTANTS.StockMarketCommission} player={props.p} /> commission fee.
+        <Money money={CONSTANTS.StockMarketCommission} forPurchase={true} /> commission fee.
       </Typography>
       <br />
       <Typography>

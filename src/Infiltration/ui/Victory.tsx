@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { inviteToFaction } from "../../Faction/FactionHelpers";
 import { Factions } from "../../Faction/Factions";
-import { use } from "../../ui/Context";
+import { Router } from "../../ui/GameRoot";
+import { Page } from "../../ui/Router";
+import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { formatNumber } from "../../utils/StringHelperFunctions";
@@ -21,31 +23,27 @@ interface IProps {
 }
 
 export function Victory(props: IProps): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
   const [faction, setFaction] = useState("none");
 
   function quitInfiltration(): void {
     handleInfiltrators();
-    router.toCity();
+    Router.toPage(Page.City);
   }
 
   const soa = Factions[FactionNames.ShadowsOfAnarchy];
-  const repGain = calculateTradeInformationRepReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
-  const moneyGain = calculateSellInformationCashReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
-  const infiltrationRepGain = calculateInfiltratorsRepReward(player, soa, props.StartingDifficulty);
+  const repGain = calculateTradeInformationRepReward(props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const moneyGain = calculateSellInformationCashReward(props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const infiltrationRepGain = calculateInfiltratorsRepReward(soa, props.StartingDifficulty);
 
-  const isMemberOfInfiltrators = player.factions.includes(FactionNames.ShadowsOfAnarchy);
+  const isMemberOfInfiltrators = Player.factions.includes(FactionNames.ShadowsOfAnarchy);
 
   function sell(): void {
-    handleInfiltrators();
-    player.gainMoney(moneyGain, "infiltration");
+    Player.gainMoney(moneyGain, "infiltration");
     quitInfiltration();
   }
 
   function trade(): void {
     if (faction === "none") return;
-    handleInfiltrators();
     Factions[faction].playerReputation += repGain;
     quitInfiltration();
   }
@@ -81,7 +79,7 @@ export function Victory(props: IProps): React.ReactElement {
             <MenuItem key={"none"} value={"none"}>
               {"none"}
             </MenuItem>
-            {player.factions
+            {Player.factions
               .filter((f) => Factions[f].getInfo().offersWork())
               .map((f) => (
                 <MenuItem key={f} value={f}>
@@ -90,7 +88,9 @@ export function Victory(props: IProps): React.ReactElement {
               ))}
           </Select>
           <Button onClick={trade}>
-            Trade for <Reputation reputation={repGain} /> reputation
+            Trade for&nbsp;
+            <Reputation reputation={repGain} />
+            &nbsp;reputation
           </Button>
         </Box>
         <Button onClick={sell} sx={{ width: "100%" }}>

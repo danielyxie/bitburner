@@ -1,13 +1,16 @@
+import { CorpMaterialName } from "@nsdefs";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
+import { materialNames } from "./data/Constants";
 import { Export } from "./Export";
+import { MaterialInfo } from "./MaterialInfo";
 
 interface IConstructorParams {
-  name?: string;
+  name: CorpMaterialName;
 }
 
 export class Material {
   // Name of material
-  name = "InitName";
+  name: CorpMaterialName;
 
   // Amount of material owned
   qty = 0;
@@ -65,125 +68,19 @@ export class Material {
   // Determines the maximum amount of this material that can be sold in one market cycle
   maxsll = 0;
 
-  constructor(params: IConstructorParams = {}) {
-    if (params.name) {
-      this.name = params.name;
-    }
-    this.init();
+  constructor(params?: IConstructorParams) {
+    this.name = params?.name ?? materialNames[0];
+    this.dmd = MaterialInfo[this.name].demandBase;
+    this.dmdR = MaterialInfo[this.name].demandRange;
+    this.cmp = MaterialInfo[this.name].competitionBase;
+    this.cmpR = MaterialInfo[this.name].competitionRange;
+    this.bCost = MaterialInfo[this.name].baseCost;
+    this.mv = MaterialInfo[this.name].maxVolatility;
+    this.mku = MaterialInfo[this.name].baseMarkup;
   }
 
   getMarkupLimit(): number {
     return this.qlt / this.mku;
-  }
-
-  init(): void {
-    switch (this.name) {
-      case "Water":
-        this.dmd = 75;
-        this.dmdR = [65, 85];
-        this.cmp = 50;
-        this.cmpR = [40, 60];
-        this.bCost = 1500;
-        this.mv = 0.2;
-        this.mku = 6;
-        break;
-      case "Energy":
-        this.dmd = 90;
-        this.dmdR = [80, 99];
-        this.cmp = 80;
-        this.cmpR = [65, 95];
-        this.bCost = 2000;
-        this.mv = 0.2;
-        this.mku = 6;
-        break;
-      case "Food":
-        this.dmd = 80;
-        this.dmdR = [70, 90];
-        this.cmp = 60;
-        this.cmpR = [35, 85];
-        this.bCost = 5000;
-        this.mv = 1;
-        this.mku = 3;
-        break;
-      case "Plants":
-        this.dmd = 70;
-        this.dmdR = [20, 90];
-        this.cmp = 50;
-        this.cmpR = [30, 70];
-        this.bCost = 3000;
-        this.mv = 0.6;
-        this.mku = 3.75;
-        break;
-      case "Metal":
-        this.dmd = 80;
-        this.dmdR = [75, 85];
-        this.cmp = 70;
-        this.cmpR = [60, 80];
-        this.bCost = 2650;
-        this.mv = 1;
-        this.mku = 6;
-        break;
-      case "Hardware":
-        this.dmd = 85;
-        this.dmdR = [80, 90];
-        this.cmp = 80;
-        this.cmpR = [65, 95];
-        this.bCost = 8e3;
-        this.mv = 0.5; //Less mv bc its processed twice
-        this.mku = 1;
-        break;
-      case "Chemicals":
-        this.dmd = 55;
-        this.dmdR = [40, 70];
-        this.cmp = 60;
-        this.cmpR = [40, 80];
-        this.bCost = 9e3;
-        this.mv = 1.2;
-        this.mku = 2;
-        break;
-      case "Real Estate":
-        this.dmd = 50;
-        this.dmdR = [5, 99];
-        this.cmp = 50;
-        this.cmpR = [25, 75];
-        this.bCost = 80e3;
-        this.mv = 1.5; //Less mv bc its processed twice
-        this.mku = 1.5;
-        break;
-      case "Drugs":
-        this.dmd = 60;
-        this.dmdR = [45, 75];
-        this.cmp = 70;
-        this.cmpR = [40, 99];
-        this.bCost = 40e3;
-        this.mv = 1.6;
-        this.mku = 1;
-        break;
-      case "Robots":
-        this.dmd = 90;
-        this.dmdR = [80, 99];
-        this.cmp = 90;
-        this.cmpR = [80, 99];
-        this.bCost = 75e3;
-        this.mv = 0.5; //Less mv bc its processed twice
-        this.mku = 1;
-        break;
-      case "AI Cores":
-        this.dmd = 90;
-        this.dmdR = [80, 99];
-        this.cmp = 90;
-        this.cmpR = [80, 99];
-        this.bCost = 15e3;
-        this.mv = 0.8; //Less mv bc its processed twice
-        this.mku = 0.5;
-        break;
-      case "Scientific Research":
-      case "InitName":
-        break;
-      default:
-        console.error(`Invalid material type in init(): ${this.name}`);
-        break;
-    }
   }
 
   // Process change in demand, competition, and buy cost of this material
@@ -233,8 +130,12 @@ export class Material {
     return Generic_toJSON("Material", this);
   }
 
-  // Initiatizes a Material object from a JSON save state.
+  // Initializes a Material object from a JSON save state.
   static fromJSON(value: IReviverValue): Material {
+    // Gracefully load save files from when Scientific Research was considered a Material (pre 2.2).
+    if (value.data.name === "Scientific Research") return value.data.qty;
+    if (value.data.name === "RealEstate") value.data.name = "Real Estate";
+    if (value.data.name === "AICores") value.data.name = "AI Cores";
     return Generic_fromJSON(Material, value.data);
   }
 }

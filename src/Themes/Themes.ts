@@ -1,4 +1,3 @@
-import { IMap } from "../types";
 import * as predefined from "./data";
 
 export interface ITheme {
@@ -51,6 +50,6 @@ export const defaultTheme: ITheme = {
   ...predefined.Default.colors,
 };
 
-export const getPredefinedThemes = (): IMap<IPredefinedTheme> => ({
+export const getPredefinedThemes = (): Record<string, IPredefinedTheme> => ({
   ...predefined,
 });

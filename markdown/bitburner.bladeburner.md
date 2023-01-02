@@ -32,9 +32,9 @@ You have to be employed in the Bladeburner division and be in BitNode-7 or have 
 |  [getBlackOpRank(name)](./bitburner.bladeburner.getblackoprank.md) | Get black op required rank. |
 |  [getBonusTime()](./bitburner.bladeburner.getbonustime.md) | Get bladeburner bonus time. |
 |  [getCity()](./bitburner.bladeburner.getcity.md) | Get current city. |
-|  [getCityChaos(name)](./bitburner.bladeburner.getcitychaos.md) | Get chaos of a city. |
-|  [getCityCommunities(name)](./bitburner.bladeburner.getcitycommunities.md) | Get number of communities in a city. |
-|  [getCityEstimatedPopulation(name)](./bitburner.bladeburner.getcityestimatedpopulation.md) | Get estimated population in city. |
+|  [getCityChaos(city)](./bitburner.bladeburner.getcitychaos.md) | Get chaos of a city. |
+|  [getCityCommunities(city)](./bitburner.bladeburner.getcitycommunities.md) | Get number of communities in a city. |
+|  [getCityEstimatedPopulation(city)](./bitburner.bladeburner.getcityestimatedpopulation.md) | Get estimated population in city. |
 |  [getContractNames()](./bitburner.bladeburner.getcontractnames.md) | List all contracts. |
 |  [getCurrentAction()](./bitburner.bladeburner.getcurrentaction.md) | Get current action. |
 |  [getGeneralActionNames()](./bitburner.bladeburner.getgeneralactionnames.md) | List all general actions. |
@@ -46,6 +46,7 @@ You have to be employed in the Bladeburner division and be in BitNode-7 or have 
 |  [getSkillUpgradeCost(name, count)](./bitburner.bladeburner.getskillupgradecost.md) | Get cost to upgrade skill. |
 |  [getStamina()](./bitburner.bladeburner.getstamina.md) | Get bladeburner stamina. |
 |  [getTeamSize(type, name)](./bitburner.bladeburner.getteamsize.md) | Get team size. |
+|  [inBladeburner()](./bitburner.bladeburner.inbladeburner.md) | Returns whether player is a member of bladeburner division. Does not require API access. |
 |  [joinBladeburnerDivision()](./bitburner.bladeburner.joinbladeburnerdivision.md) | Join the bladeburner division. |
 |  [joinBladeburnerFaction()](./bitburner.bladeburner.joinbladeburnerfaction.md) | Join the bladeburner faction. |
 |  [setActionAutolevel(type, name, autoLevel)](./bitburner.bladeburner.setactionautolevel.md) | Set an action autolevel. |
@@ -53,6 +54,6 @@ You have to be employed in the Bladeburner division and be in BitNode-7 or have 
 |  [setTeamSize(type, name, size)](./bitburner.bladeburner.setteamsize.md) | Set team size. |
 |  [startAction(type, name)](./bitburner.bladeburner.startaction.md) | Start an action. |
 |  [stopBladeburnerAction()](./bitburner.bladeburner.stopbladeburneraction.md) | Stop current action. |
-|  [switchCity(name)](./bitburner.bladeburner.switchcity.md) | Travel to another city in bladeburner. |
+|  [switchCity(city)](./bitburner.bladeburner.switchcity.md) | Travel to another city in bladeburner. |
 |  [upgradeSkill(name, count)](./bitburner.bladeburner.upgradeskill.md) | Upgrade skill. |
 

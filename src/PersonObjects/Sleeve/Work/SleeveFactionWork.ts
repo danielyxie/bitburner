@@ -1,19 +1,14 @@
-import { IPlayer } from "../../IPlayer";
+import { Player } from "@player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { applySleeveGains, Work, WorkType } from "./Work";
-import { FactionWorkType } from "../../../Work/data/FactionWorkType";
+import { FactionWorkType } from "../../../Enums";
 import { FactionNames } from "../../../Faction/data/FactionNames";
 import { Factions } from "../../../Faction/Factions";
-import { calculateFactionExp } from "../../../Work/formulas/Faction";
+import { calculateFactionExp, calculateFactionRep } from "../../../Work/Formulas";
 import { Faction } from "../../../Faction/Faction";
-import {
-  getFactionFieldWorkRepGain,
-  getFactionSecurityWorkRepGain,
-  getHackingWorkRepGain,
-} from "../../../PersonObjects/formulas/reputation";
 import { scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
-import { BitNodeMultipliers } from "../../../BitNode/BitNodeMultipliers";
+import { findEnumMember } from "../../../utils/helpers/enum";
 
 interface SleeveFactionWorkParams {
   factionWorkType: FactionWorkType;
@@ -29,26 +24,16 @@ export class SleeveFactionWork extends Work {
 
   constructor(params?: SleeveFactionWorkParams) {
     super(WorkType.FACTION);
-    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.HACKING;
+    this.factionWorkType = params?.factionWorkType ?? FactionWorkType.hacking;
     this.factionName = params?.factionName ?? FactionNames.Sector12;
   }
 
   getExpRates(sleeve: Sleeve): WorkStats {
-    return scaleWorkStats(calculateFactionExp(sleeve, this.factionWorkType), sleeve.shockBonus());
+    return scaleWorkStats(calculateFactionExp(sleeve, this.factionWorkType), sleeve.shockBonus(), false);
   }
 
   getReputationRate(sleeve: Sleeve): number {
-    const faction = this.getFaction();
-    const repFormulas = {
-      [FactionWorkType.HACKING]: getHackingWorkRepGain,
-      [FactionWorkType.FIELD]: getFactionFieldWorkRepGain,
-      [FactionWorkType.SECURITY]: getFactionSecurityWorkRepGain,
-    };
-    return (
-      repFormulas[this.factionWorkType](sleeve, faction.favor) *
-      sleeve.shockBonus() *
-      BitNodeMultipliers.FactionWorkRepGain
-    );
+    return calculateFactionRep(sleeve, this.factionWorkType, this.getFaction().favor) * sleeve.shockBonus();
   }
 
   getFaction(): Faction {
@@ -57,41 +42,34 @@ export class SleeveFactionWork extends Work {
     return f;
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
-    if (player.gang) {
-      if (this.factionName === player.gang.facName) {
-        sleeve.stopWork(player);
-        return 0;
-      }
-    }
+  process(sleeve: Sleeve, cycles: number) {
+    if (this.factionName === Player.gang?.facName) return sleeve.stopWork();
 
     const exp = this.getExpRates(sleeve);
-    applySleeveGains(player, sleeve, exp, cycles);
+    applySleeveGains(sleeve, exp, cycles);
     const rep = this.getReputationRate(sleeve);
-    this.getFaction().playerReputation += rep;
-    return 0;
+    this.getFaction().playerReputation += rep * cycles;
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.FACTION as "FACTION",
       factionWorkType: this.factionWorkType,
       factionName: this.factionName,
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveFactionWork", this);
   }
 
-  /**
-   * Initiatizes a FactionWork object from a JSON save state.
-   */
+  /** Initializes a FactionWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveFactionWork {
-    return Generic_fromJSON(SleeveFactionWork, value.data);
+    const factionWork = Generic_fromJSON(SleeveFactionWork, value.data);
+    factionWork.factionWorkType =
+      findEnumMember(FactionWorkType, factionWork.factionWorkType) ?? FactionWorkType.hacking;
+    return factionWork;
   }
 }
 

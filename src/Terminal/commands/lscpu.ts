@@ -1,7 +1,6 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
+import { BaseServer } from "../../Server/BaseServer";
 
-export function lscpu(terminal: ITerminal, router: IRouter, player: IPlayer): void {
-  terminal.print(player.getCurrentServer().cpuCores + " Core(s)");
+export function lscpu(_args: (string | number | boolean)[], server: BaseServer): void {
+  Terminal.print(server.cpuCores + " Core(s)");
 }

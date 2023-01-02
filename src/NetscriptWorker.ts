@@ -11,8 +11,8 @@ import { generateNextPid } from "./Netscript/Pid";
 
 import { CONSTANTS } from "./Constants";
 import { Interpreter } from "./ThirdParty/JSInterpreter";
-import { NetscriptFunctions } from "./NetscriptFunctions";
-import { executeJSScript, Node } from "./NetscriptJSEvaluator";
+import { NetscriptFunctions, wrappedNS } from "./NetscriptFunctions";
+import { compile, Node } from "./NetscriptJSEvaluator";
 import { IPort } from "./NetscriptPort";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
@@ -27,15 +27,13 @@ import { generate } from "escodegen";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { roundToTwo } from "./utils/helpers/roundToTwo";
-import { isString } from "./utils/helpers/isString";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
 import { areFilesEqual } from "./Terminal/DirectoryHelpers";
-import { Player } from "./Player";
 import { Terminal } from "./Terminal";
 import { ScriptArg } from "./Netscript/ScriptArg";
-import { helpers } from "./Netscript/NetscriptHelpers";
+import { handleUnknownError } from "./Netscript/NetscriptHelpers";
 
 export const NetscriptPorts: Map<number, IPort> = new Map();
 
@@ -51,45 +49,25 @@ export function prestigeWorkerScripts(): void {
   workerScripts.clear();
 }
 
-// JS script promises need a little massaging to have the same guarantees as netscript
-// promises. This does said massaging and kicks the script off. It returns a promise
-// that resolves or rejects when the corresponding worker script is done.
-function startNetscript2Script(workerScript: WorkerScript): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    executeJSScript(Player, workerScript.getServer().scripts, workerScript)
-      .then(() => {
-        resolve();
-      })
-      .catch((e) => reject(e));
-  }).catch((e) => {
-    if (e instanceof Error) {
-      if (e instanceof SyntaxError) {
-        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
-          workerScript,
-          e.message + " (sorry we can't be more helpful)",
-        );
-      } else {
-        workerScript.errorMessage = helpers.makeRuntimeRejectMsg(
-          workerScript,
-          e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
-        );
-      }
-      throw new ScriptDeath(workerScript);
-    } else if (helpers.isScriptErrorMessage(e)) {
-      workerScript.errorMessage = e;
-      throw new ScriptDeath(workerScript);
-    } else if (e instanceof ScriptDeath) {
-      throw e;
-    }
+async function startNetscript2Script(workerScript: WorkerScript): Promise<void> {
+  const scripts = workerScript.getServer().scripts;
+  const script = workerScript.getScript();
+  if (script === null) throw "workerScript had no associated script. This is a bug.";
+  const loadedModule = await compile(script, scripts);
+  workerScript.ramUsage = script.ramUsage;
+  const ns = workerScript.env.vars;
 
-    // Don't know what to do with it, let's try making an error message out of it
-    workerScript.errorMessage = helpers.makeRuntimeRejectMsg(workerScript, "" + e);
-    throw new ScriptDeath(workerScript);
-  });
+  if (!loadedModule) throw `${script.filename} cannot be run because the script module won't load`;
+  // TODO unplanned: Better error for "unexpected reserved word" when using await in non-async function?
+  if (typeof loadedModule.main !== "function")
+    throw `${script.filename} cannot be run because it does not have a main function.`;
+  if (!ns) throw `${script.filename} cannot be run because the NS object hasn't been constructed properly.`;
+  await loadedModule.main(ns);
 }
 
-function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
+async function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   const code = workerScript.code;
+  let errorToThrow: unknown;
 
   //Process imports
   let codeWithImports, codeLineOffset;
@@ -98,44 +76,22 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
     codeWithImports = importProcessingRes.code;
     codeLineOffset = importProcessingRes.lineOffset;
   } catch (e: unknown) {
-    dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + String(e));
-    workerScript.env.stopFlag = true;
-    killWorkerScript(workerScript);
-    return Promise.resolve();
+    throw `Error processing Imports in ${workerScript.name}@${workerScript.hostname}:\n\n${e}`;
   }
 
-  function wrapNS1Layer(int: Interpreter, intLayer: unknown, path: string[] = []) {
-    //TODO: Better typing layers of interpreter scope and ns
-    interface BasicObject {
-      [key: string]: any;
-    }
-    const nsLayer = path.reduce((prev, newPath) => prev[newPath], workerScript.env.vars as BasicObject);
+  //TODO unplanned: Make NS1 wrapping type safe instead of using BasicObject.
+  type BasicObject = Record<string, any>;
+  function wrapNS1Layer(int: Interpreter, intLayer: unknown, nsLayer = wrappedNS as BasicObject) {
     for (const [name, entry] of Object.entries(nsLayer)) {
       if (typeof entry === "function") {
-        // Async functions need to be wrapped. See JS-Interpreter documentation
         const wrapper = async (...args: unknown[]) => {
-          // This async wrapper is sent a resolver function as an extra arg.
-          // See JSInterpreter.js:3209
           try {
+            // Sent a resolver function as an extra arg. See createAsyncFunction JSInterpreter.js:3209
             const callback = args.pop() as (value: unknown) => void;
-            const result = await entry(...args.map((arg) => int.pseudoToNative(arg)));
+            const result = await entry.bind(workerScript.env.vars)(...args.map((arg) => int.pseudoToNative(arg)));
             return callback(int.nativeToPseudo(result));
           } catch (e: unknown) {
-            // TODO: Unify error handling, this was stolen from previous async handler
-            if (typeof e === "string") {
-              console.error(e);
-              const errorTextArray = e.split("|DELIMITER|");
-              const hostname = errorTextArray[1];
-              const scriptName = errorTextArray[2];
-              const errorMsg = errorTextArray[3];
-              let msg = `${scriptName}@${hostname}<br>`;
-              msg += "<br>";
-              msg += errorMsg;
-              dialogBoxCreate(msg);
-              workerScript.env.stopFlag = true;
-              killWorkerScript(workerScript);
-              return;
-            }
+            errorToThrow = e;
           }
         };
         int.setProperty(intLayer, name, int.createAsyncFunction(wrapper));
@@ -145,7 +101,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
       } else {
         // new object layer, e.g. bladeburner
         int.setProperty(intLayer, name, int.nativeToPseudo({}));
-        wrapNS1Layer(int, (intLayer as BasicObject).properties[name], [...path, name]);
+        wrapNS1Layer(int, (intLayer as BasicObject).properties[name], nsLayer[name]);
       }
     }
   }
@@ -154,59 +110,20 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   try {
     interpreter = new Interpreter(codeWithImports, wrapNS1Layer, codeLineOffset);
   } catch (e: unknown) {
-    dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + String(e));
-    workerScript.env.stopFlag = true;
-    killWorkerScript(workerScript);
-    return Promise.resolve();
+    throw `Syntax ERROR in ${workerScript.name}@${workerScript.hostname}:\n\n${String(e)}`;
   }
 
-  return new Promise(function (resolve, reject) {
-    function runInterpreter(): void {
-      try {
-        if (workerScript.env.stopFlag) {
-          return reject(new ScriptDeath(workerScript));
-        }
-
-        let more = true;
-        let i = 0;
-        while (i < 3 && more) {
-          more = more && interpreter.step();
-          i++;
-        }
-
-        if (more) {
-          setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
-        } else {
-          resolve();
-        }
-      } catch (_e: unknown) {
-        let e = String(_e);
-        if (!helpers.isScriptErrorMessage(e)) {
-          e = helpers.makeRuntimeRejectMsg(workerScript, e);
-        }
-        workerScript.errorMessage = e;
-        return reject(new ScriptDeath(workerScript));
-      }
-    }
-
-    try {
-      runInterpreter();
-    } catch (e: unknown) {
-      if (isString(e)) {
-        workerScript.errorMessage = e;
-        return reject(new ScriptDeath(workerScript));
-      } else if (e instanceof ScriptDeath) {
-        return reject(e);
-      } else {
-        console.error(e);
-        return reject(new ScriptDeath(workerScript));
-      }
-    }
-  });
+  let more = true;
+  while (more) {
+    if (errorToThrow) throw errorToThrow;
+    if (workerScript.env.stopFlag) return;
+    for (let i = 0; more && i < 3; i++) more = interpreter.step();
+    if (more) await new Promise((r) => setTimeout(r, Settings.CodeInstructionRunTime));
+  }
 }
 
 /*  Since the JS Interpreter used for Netscript 1.0 only supports ES5, the keyword
-    'import' throws an error. However, since we want to support import funtionality
+    'import' throws an error. However, since we want to support import functionality
     we'll implement it ourselves by parsing the Nodes in the AST out.
 
     @param code - The script's code
@@ -395,7 +312,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
     return false;
   }
 
-  server.updateRamUsed(roundToTwo(server.ramUsed + ramUsage), Player);
+  server.updateRamUsed(roundToTwo(server.ramUsed + ramUsage));
 
   // Get the pid
   const pid = generateNextPid();
@@ -415,82 +332,28 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   workerScripts.set(pid, workerScript);
   WorkerScriptStartStopEventEmitter.emit();
 
-  // Start the script's execution
-  let scriptExecution: Promise<void> | null = null; // Script's resulting promise
-  if (workerScript.name.endsWith(".js")) {
-    scriptExecution = startNetscript2Script(workerScript);
-  } else {
-    scriptExecution = startNetscript1Script(workerScript);
-    if (!(scriptExecution instanceof Promise)) {
-      return false;
-    }
-  }
-
-  // Once the code finishes (either resolved or rejected, doesnt matter), set its
-  // running status to false
-  scriptExecution
+  // Start the script's execution using the correct function for file type
+  (workerScript.name.endsWith(".js") ? startNetscript2Script : startNetscript1Script)(workerScript)
+    // Once the code finishes (either resolved or rejected, doesnt matter), set its
+    // running status to false
     .then(function () {
-      workerScript.env.stopFlag = true;
-      // On natural death, the earnings are transfered to the parent if it still exists.
-      if (parent !== undefined && !parent.env.stopFlag) {
+      // On natural death, the earnings are transferred to the parent if it still exists.
+      if (parent && !parent.env.stopFlag) {
         parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
         parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
       }
-
       killWorkerScript(workerScript);
       workerScript.log("", () => "Script finished running");
     })
     .catch(function (e) {
-      if (e instanceof Error) {
-        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-        console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
-        return;
-      } else if (e instanceof ScriptDeath) {
-        if (helpers.isScriptErrorMessage(workerScript.errorMessage)) {
-          const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
-          if (errorTextArray.length != 4) {
-            console.error("ERROR: Something wrong with Error text in evaluator...");
-            console.error("Error text: " + workerScript.errorMessage);
-            return;
-          }
-          const hostname = errorTextArray[1];
-          const scriptName = errorTextArray[2];
-          const errorMsg = errorTextArray[3];
-
-          let msg = `RUNTIME ERROR<br>${scriptName}@${hostname} (PID - ${workerScript.pid})<br>`;
-          if (workerScript.args.length > 0) {
-            msg += `Args: ${arrayToString(workerScript.args)}<br>`;
-          }
-          msg += "<br>";
-          msg += errorMsg;
-
-          dialogBoxCreate(msg);
-          workerScript.log("", () => "Script crashed with runtime error");
-        } else {
-          workerScript.log("", () => "Script killed");
-          return; // Already killed, so stop here
-        }
-      } else if (helpers.isScriptErrorMessage(e)) {
-        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-        console.error(
-          "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
-            e.toString(),
-        );
-        return;
-      } else {
-        dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-        console.error(e);
-      }
-
+      handleUnknownError(e, workerScript);
+      workerScript.log("", () => (e instanceof ScriptDeath ? "Script killed." : "Script crashed due to an error."));
       killWorkerScript(workerScript);
     });
-
   return true;
 }
 
-/**
- * Updates the online running time stat of all running scripts
- */
+/** Updates the online running time stat of all running scripts */
 export function updateOnlineScriptTimes(numCycles = 1): void {
   const time = (numCycles * CONSTANTS._idleSpeed) / 1000; //seconds
   for (const ws of workerScripts.values()) {
@@ -538,9 +401,7 @@ export function loadAllRunningScripts(): void {
   }
 }
 
-/**
- * Run a script from inside another script (run(), exec(), spawn(), etc.)
- */
+/** Run a script from inside another script (run(), exec(), spawn(), etc.) */
 export function runScriptFromScript(
   caller: string,
   server: BaseServer,
@@ -553,6 +414,9 @@ export function runScriptFromScript(
   if (!(workerScript instanceof WorkerScript)) {
     return 0;
   }
+
+  //prevent leading / from causing a bug
+  if (scriptname.startsWith("/")) scriptname = scriptname.slice(1);
 
   if (typeof scriptname !== "string" || !Array.isArray(args)) {
     workerScript.log(caller, () => `Invalid arguments: scriptname='${scriptname} args='${args}'`);
@@ -586,7 +450,7 @@ export function runScriptFromScript(
   // Check if the script exists and if it does run it
   for (let i = 0; i < server.scripts.length; ++i) {
     if (!areFilesEqual(server.scripts[i].filename, scriptname)) continue;
-    // Check for admin rights and that there is enough RAM availble to run
+    // Check for admin rights and that there is enough RAM available to run
     const script = server.scripts[i];
     let ramUsage = script.ramUsage;
     threads = Math.floor(Number(threads));

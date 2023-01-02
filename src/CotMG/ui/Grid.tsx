@@ -2,20 +2,20 @@ import { TableBody, TableRow } from "@mui/material";
 import * as React from "react";
 import { ActiveFragment } from "../ActiveFragment";
 import { calculateGrid } from "../Helper";
-import { IStaneksGift } from "../IStaneksGift";
+import { BaseGift } from "../BaseGift";
 import { Cell } from "./Cell";
 
 interface IProps {
   width: number;
   height: number;
   ghostGrid: number[][];
-  gift: IStaneksGift;
+  gift: BaseGift;
   enter(i: number, j: number): void;
   click(i: number, j: number): void;
 }
 
 function randomColor(fragment: ActiveFragment): string {
-  // Can't set Math.random seed so copy casino. TODO refactor both RNG later.
+  // Can't set Math.random seed so copy casino. TODO unplanned refactor both RNG later.
   let s1 = Math.pow((fragment.x + 1) * (fragment.y + 1), 10);
   let s2 = s1;
   let s3 = s1;

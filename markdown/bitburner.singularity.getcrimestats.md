@@ -9,14 +9,14 @@ Get stats related to a crime.
 <b>Signature:</b>
 
 ```typescript
-getCrimeStats(crime: string): CrimeStats;
+getCrimeStats(crime: CrimeType | `${CrimeType}`): CrimeStats;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  crime | string | Name of crime. Not case-sensitive |
+|  crime | [CrimeType](./bitburner.crimetype.md) \| \`${[CrimeType](./bitburner.crimetype.md)<!-- -->}\` | Name of crime. |
 
 <b>Returns:</b>
 

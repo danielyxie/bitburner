@@ -4,6 +4,8 @@
 
 ## Multipliers.agility\_exp property
 
+Multiplier to agility experience gain rate
+
 <b>Signature:</b>
 
 ```typescript

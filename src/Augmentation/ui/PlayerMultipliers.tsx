@@ -1,12 +1,9 @@
-/**
- * React component for displaying the player's multipliers on the Augmentation UI page
- */
 import { DoubleArrow } from "@mui/icons-material";
 import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import * as React from "react";
-import { Multipliers, defaultMultipliers, mergeAugmentation } from "../../PersonObjects/Multipliers";
+import { Multipliers, defaultMultipliers, mergeMultipliers } from "../../PersonObjects/Multipliers";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StaticAugmentations } from "../StaticAugmentations";
@@ -15,7 +12,7 @@ function calculateAugmentedStats(): Multipliers {
   let augP: Multipliers = defaultMultipliers();
   for (const aug of Player.queuedAugmentations) {
     const augObj = StaticAugmentations[aug.name];
-    augP = mergeAugmentation(augP, augObj.mults);
+    augP = mergeMultipliers(augP, augObj.mults);
   }
   return augP;
 }
@@ -85,6 +82,7 @@ function MultiplierList(props: IMultiplierListProps): React.ReactElement {
   return listItems.length > 0 ? <List disablePadding>{listItems}</List> : <></>;
 }
 
+/** React component for displaying the player's multipliers on the Augmentation UI page */
 export function PlayerMultipliers(): React.ReactElement {
   const mults = calculateAugmentedStats();
 
@@ -223,12 +221,14 @@ export function PlayerMultipliers(): React.ReactElement {
       mult: "Company Reputation Gain",
       current: Player.mults.company_rep,
       augmented: Player.mults.company_rep * mults.company_rep,
+      color: Settings.theme.combat,
     },
     {
       mult: "Faction Reputation Gain",
       current: Player.mults.faction_rep,
       augmented: Player.mults.faction_rep * mults.faction_rep,
       bnMult: BitNodeMultipliers.FactionWorkRepGain,
+      color: Settings.theme.combat,
     },
     {
       mult: "Salary",

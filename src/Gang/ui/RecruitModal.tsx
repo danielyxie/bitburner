@@ -1,6 +1,3 @@
-/**
- * React Component for the popup used to recruit new gang members.
- */
 import React, { useState } from "react";
 import { Modal } from "../../ui/React/Modal";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
@@ -16,6 +13,7 @@ interface IRecruitPopupProps {
   onRecruit: () => void;
 }
 
+/** React Component for the popup used to recruit new gang members. */
 export function RecruitModal(props: IRecruitPopupProps): React.ReactElement {
   const gang = useGang();
   const [name, setName] = useState("");

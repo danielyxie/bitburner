@@ -1,6 +1,3 @@
-/**
- * React Component for a single stock ticker in the Stock Market UI
- */
 import React, { useState } from "react";
 
 import { StockTickerHeaderText } from "./StockTickerHeaderText";
@@ -17,7 +14,7 @@ import { PositionTypes } from "../data/PositionTypes";
 import { placeOrder } from "../StockMarket";
 import { buyStock, shortStock, sellStock, sellShort } from "../BuyingAndSelling";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 
@@ -42,11 +39,11 @@ enum SelectorOrderType {
 
 type IProps = {
   orders: Order[];
-  p: IPlayer;
   rerenderAllTickers: () => void;
   stock: Stock;
 };
 
+/** React Component for a single stock ticker in the Stock Market UI */
 export function StockTicker(props: IProps): React.ReactElement {
   const [orderType, setOrderType] = useState(SelectorOrderType.Market);
   const [position, setPosition] = useState(PositionTypes.Long);
@@ -157,7 +154,7 @@ export function StockTicker(props: IProps): React.ReactElement {
   }
 
   function handleBuyMaxButtonClick(): void {
-    const playerMoney: number = props.p.money;
+    const playerMoney: number = Player.money;
 
     const stock = props.stock;
     let maxShares = calculateBuyMaxAmount(stock, position, playerMoney);
@@ -183,7 +180,7 @@ export function StockTicker(props: IProps): React.ReactElement {
   function handleOrderTypeChange(e: SelectChangeEvent<string>): void {
     const val = e.target.value;
 
-    // The select value returns a string. Afaik TypeScript doesnt make it easy
+    // The select value returns a string. Afaik TypeScript doesn't make it easy
     // to convert that string back to an enum type so we'll just do this for now
     switch (val) {
       case SelectorOrderType.Limit:
@@ -274,18 +271,18 @@ export function StockTicker(props: IProps): React.ReactElement {
 
   // Whether the player has access to orders besides market orders (limit/stop)
   function hasOrderAccess(): boolean {
-    return props.p.bitNodeN === 8 || props.p.sourceFileLvl(8) >= 3;
+    return Player.bitNodeN === 8 || Player.sourceFileLvl(8) >= 3;
   }
 
   // Whether the player has access to shorting stocks
   function hasShortAccess(): boolean {
-    return props.p.bitNodeN === 8 || props.p.sourceFileLvl(8) >= 2;
+    return Player.bitNodeN === 8 || Player.sourceFileLvl(8) >= 2;
   }
 
   return (
     <Box component={Paper}>
       <ListItemButton onClick={() => setTicketOpen((old) => !old)}>
-        <ListItemText primary={<StockTickerHeaderText p={props.p} stock={props.stock} />} />
+        <ListItemText primary={<StockTickerHeaderText stock={props.stock} />} />
         {tickerOpen ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
       </ListItemButton>
       <Collapse in={tickerOpen} unmountOnExit>
@@ -311,8 +308,8 @@ export function StockTicker(props: IProps): React.ReactElement {
             <StockTickerTxButton onClick={handleBuyMaxButtonClick} text={"Buy MAX"} />
             <StockTickerTxButton onClick={handleSellAllButtonClick} text={"Sell ALL"} />
           </Box>
-          <StockTickerPositionText p={props.p} stock={props.stock} />
-          <StockTickerOrderList orders={props.orders} p={props.p} stock={props.stock} />
+          <StockTickerPositionText stock={props.stock} />
+          <StockTickerOrderList orders={props.orders} stock={props.stock} />
 
           <PlaceOrderModal
             text={modalProps.text}

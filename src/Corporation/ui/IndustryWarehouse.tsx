@@ -2,20 +2,17 @@
 // (right-side panel in the Industry UI)
 import React, { useState } from "react";
 
-import { CorporationConstants } from "../data/Constants";
-import { Material } from "../Material";
-import { Product } from "../Product";
+import * as corpConstants from "../data/Constants";
 import { Warehouse } from "../Warehouse";
 import { SmartSupplyModal } from "./modals/SmartSupplyModal";
 import { ProductElem } from "./ProductElem";
 import { MaterialElem } from "./MaterialElem";
-import { MaterialSizes } from "../MaterialSizes";
+import { MaterialInfo } from "../MaterialInfo";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-import { ICorporation } from "../ICorporation";
-import { IIndustry } from "../IIndustry";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Corporation } from "../Corporation";
+import { Industry } from "../Industry";
 import { MoneyCost } from "./MoneyCost";
 import { isRelevantMaterial } from "./Helpers";
 import { IndustryProductEquation } from "./IndustryProductEquation";
@@ -29,13 +26,13 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
+import { CityName } from "../../Enums";
 
 interface IProps {
-  corp: ICorporation;
-  division: IIndustry;
+  corp: Corporation;
+  division: Industry;
   warehouse: Warehouse | 0;
-  currentCity: string;
-  player: IPlayer;
+  currentCity: CityName;
   rerender: () => void;
 }
 
@@ -54,7 +51,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   if (props.warehouse === 0) return <></>;
 
   // Upgrade Warehouse size button
-  const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, props.warehouse.level + 1);
+  const sizeUpgradeCost = corpConstants.warehouseSizeUpgradeCostBase * Math.pow(1.07, props.warehouse.level + 1);
   const canAffordUpgrade = corp.funds > sizeUpgradeCost;
   function upgradeWarehouseOnClick(): void {
     if (division === null) return;
@@ -93,8 +90,8 @@ function WarehouseRoot(props: IProps): React.ReactElement {
 
   // Create React components for materials
   const mats = [];
-  for (const matName of Object.keys(props.warehouse.materials)) {
-    if (!(props.warehouse.materials[matName] instanceof Material)) continue;
+  for (const matName of Object.values(corpConstants.materialNames)) {
+    if (!props.warehouse.materials[matName]) continue;
     // Only create UI for materials that are relevant for the industry or in stock
     const isInStock = props.warehouse.materials[matName].qty > 0;
     const isRelevant = isRelevantMaterial(matName, division);
@@ -115,7 +112,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   if (division.makesProducts && Object.keys(division.products).length > 0) {
     for (const productName of Object.keys(division.products)) {
       const product = division.products[productName];
-      if (!(product instanceof Product)) continue;
+      if (!product) continue;
       products.push(
         <ProductElem rerender={props.rerender} city={props.currentCity} key={productName} product={product} />,
       );
@@ -123,13 +120,13 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   }
 
   const breakdownItems: JSX.Element[] = [];
-  for (const matName of Object.keys(props.warehouse.materials)) {
+  for (const matName of Object.values(corpConstants.materialNames)) {
     const mat = props.warehouse.materials[matName];
-    if (!MaterialSizes.hasOwnProperty(matName)) continue;
+    if (!MaterialInfo.hasOwnProperty(matName)) continue;
     if (mat.qty === 0) continue;
     breakdownItems.push(
       <>
-        {matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}
+        {matName}: {numeralWrapper.format(mat.qty * MaterialInfo[matName].size, "0,0.0")}
       </>,
     );
   }
@@ -219,7 +216,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
 }
 
 export function IndustryWarehouse(props: IProps): React.ReactElement {
-  if (props.warehouse instanceof Warehouse) {
+  if (props.warehouse) {
     return <WarehouseRoot {...props} />;
   } else {
     return <EmptyWarehouse rerender={props.rerender} city={props.currentCity} />;
@@ -227,14 +224,14 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
 }
 
 interface IEmptyProps {
-  city: string;
+  city: CityName;
   rerender: () => void;
 }
 
 function EmptyWarehouse(props: IEmptyProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const disabled = corp.funds < CorporationConstants.WarehouseInitialCost;
+  const disabled = corp.funds < corpConstants.warehouseInitialCost;
   function purchaseWarehouse(): void {
     if (disabled) return;
     PurchaseWarehouse(corp, division, props.city);
@@ -244,7 +241,7 @@ function EmptyWarehouse(props: IEmptyProps): React.ReactElement {
     <Paper>
       <Button onClick={purchaseWarehouse} disabled={disabled}>
         Purchase Warehouse (
-        <MoneyCost money={CorporationConstants.WarehouseInitialCost} corp={corp} />)
+        <MoneyCost money={corpConstants.warehouseInitialCost} corp={corp} />)
       </Button>
     </Paper>
   );

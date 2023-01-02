@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { BladeburnerConstants } from "../data/Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { Money } from "../../ui/React/Money";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Factions } from "../../Faction/Factions";
-import { IRouter } from "../../ui/Router";
+import { Router } from "../../ui/GameRoot";
 import { joinFaction } from "../../Faction/FactionHelpers";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 
 import { TravelModal } from "./TravelModal";
 import Typography from "@mui/material/Typography";
@@ -18,9 +18,7 @@ import Paper from "@mui/material/Paper";
 import { FactionNames } from "../../Faction/data/FactionNames";
 
 interface IProps {
-  bladeburner: IBladeburner;
-  router: IRouter;
-  player: IPlayer;
+  bladeburner: Bladeburner;
 }
 
 export function Stats(props: IProps): React.ReactElement {
@@ -40,7 +38,7 @@ export function Stats(props: IProps): React.ReactElement {
       joinFaction(faction);
     }
 
-    props.router.toFaction(faction);
+    Router.toFaction(faction);
   }
 
   return (
@@ -81,7 +79,7 @@ export function Stats(props: IProps): React.ReactElement {
                 <br />
                 Once your stamina falls below 50% of its max value, it begins to negatively affect the success rate of
                 your contracts/operations. This penalty is shown in the overview panel. If the penalty is 15%, then this
-                means your success rate would be multipled by 85% (100 - 15).
+                means your success rate would be multiplied by 85% (100 - 15).
                 <br />
                 <br />
                 Your max stamina and stamina gain rate can also be increased by training, or through skills and
@@ -125,7 +123,8 @@ export function Stats(props: IProps): React.ReactElement {
           <Tooltip
             title={
               <Typography>
-                This is your Bladeburner divison's estimate of how many Synthoid communities exist in your current city.
+                This is your Bladeburner division's estimate of how many Synthoid communities exist in your current
+                city.
               </Typography>
             }
           >
@@ -170,13 +169,13 @@ export function Stats(props: IProps): React.ReactElement {
         <Typography>Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}</Typography>
         <br />
         <Typography>
-          Aug. Success Chance mult: {formatNumber(props.player.mults.bladeburner_success_chance * 100, 1)}%
+          Aug. Success Chance mult: {formatNumber(Player.mults.bladeburner_success_chance * 100, 1)}%
           <br />
-          Aug. Max Stamina mult: {formatNumber(props.player.mults.bladeburner_max_stamina * 100, 1)}%
+          Aug. Max Stamina mult: {formatNumber(Player.mults.bladeburner_max_stamina * 100, 1)}%
           <br />
-          Aug. Stamina Gain mult: {formatNumber(props.player.mults.bladeburner_stamina_gain * 100, 1)}%
+          Aug. Stamina Gain mult: {formatNumber(Player.mults.bladeburner_stamina_gain * 100, 1)}%
           <br />
-          Aug. Field Analysis mult: {formatNumber(props.player.mults.bladeburner_analysis * 100, 1)}%
+          Aug. Field Analysis mult: {formatNumber(Player.mults.bladeburner_analysis * 100, 1)}%
         </Typography>
       </Box>
     </Paper>

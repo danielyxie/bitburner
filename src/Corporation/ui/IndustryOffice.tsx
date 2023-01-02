@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 
 import { OfficeSpace } from "../OfficeSpace";
-import { Employee } from "../Employee";
-import { EmployeePositions } from "../EmployeePositions";
+import { EmployeePositions } from "../data/Enums";
 import { BuyCoffee } from "../Actions";
 
 import { MoneyCost } from "./MoneyCost";
@@ -23,8 +22,6 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
@@ -36,139 +33,9 @@ interface IProps {
   rerender: () => void;
 }
 
-interface ISwitchProps {
-  manualMode: boolean;
-  switchMode: (f: (b: boolean) => boolean) => void;
-}
-
-function SwitchButton(props: ISwitchProps): React.ReactElement {
-  if (props.manualMode) {
-    return (
-      <Tooltip
-        title={
-          <Typography>
-            Switch to Automatic Assignment Mode, which will automatically assign employees to your selected jobs. You
-            simply have to select the number of assignments for each job
-          </Typography>
-        }
-      >
-        <Button onClick={() => props.switchMode((old) => !old)}>Switch to Auto Mode</Button>
-      </Tooltip>
-    );
-  } else {
-    return (
-      <Tooltip
-        title={
-          <Typography>
-            Switch to Manual Assignment Mode, which allows you to specify which employees should get which jobs
-          </Typography>
-        }
-      >
-        <Button onClick={() => props.switchMode((old) => !old)}>Switch to Manual Mode</Button>
-      </Tooltip>
-    );
-  }
-}
-
-function ManualManagement(props: IProps): React.ReactElement {
-  const corp = useCorporation();
-  const division = useDivision();
-  const [employee, setEmployee] = useState<Employee | null>(
-    props.office.employees.length > 0 ? props.office.employees[0] : null,
-  );
-
-  // Employee Selector
-  const employees = [];
-  for (let i = 0; i < props.office.employees.length; ++i) {
-    employees.push(
-      <MenuItem key={props.office.employees[i].name} value={props.office.employees[i].name}>
-        {props.office.employees[i].name}
-      </MenuItem>,
-    );
-  }
-
-  function employeeSelectorOnChange(e: SelectChangeEvent<string>): void {
-    const name = e.target.value;
-    for (let i = 0; i < props.office.employees.length; ++i) {
-      if (name === props.office.employees[i].name) {
-        setEmployee(props.office.employees[i]);
-        break;
-      }
-    }
-
-    props.rerender();
-  }
-
-  // Employee Positions Selector
-  const emp = employee;
-  let employeePositionSelectorInitialValue = "";
-  const employeePositions = [];
-  const positionNames = Object.values(EmployeePositions);
-  for (let i = 0; i < positionNames.length; ++i) {
-    employeePositions.push(
-      <MenuItem key={positionNames[i]} value={positionNames[i]}>
-        {positionNames[i]}
-      </MenuItem>,
-    );
-    if (emp != null && emp.nextPos === positionNames[i]) {
-      employeePositionSelectorInitialValue = emp.nextPos;
-    }
-  }
-
-  function employeePositionSelectorOnChange(e: SelectChangeEvent<string>): void {
-    if (employee === null) return;
-    props.office.assignSingleJob(employee, e.target.value);
-    props.rerender();
-  }
-
-  // Numeraljs formatter
-  const nf = "0.000";
-
-  // Employee stats (after applying multipliers)
-  const effCre = emp ? emp.cre * corp.getEmployeeCreMultiplier() * division.getEmployeeCreMultiplier() : 0;
-  const effCha = emp ? emp.cha * corp.getEmployeeChaMultiplier() * division.getEmployeeChaMultiplier() : 0;
-  const effInt = emp ? emp.int * corp.getEmployeeIntMultiplier() * division.getEmployeeIntMultiplier() : 0;
-  const effEff = emp ? emp.eff * corp.getEmployeeEffMultiplier() * division.getEmployeeEffMultiplier() : 0;
-
-  return (
-    <>
-      <br />
-      <Select value={employee !== null ? employee.name : ""} onChange={employeeSelectorOnChange}>
-        {employees}
-      </Select>
-      {employee != null && (
-        <Typography>
-          Morale: {numeralWrapper.format(employee.mor, nf)}
-          <br />
-          Happiness: {numeralWrapper.format(employee.hap, nf)}
-          <br />
-          Energy: {numeralWrapper.format(employee.ene, nf)}
-          <br />
-          Intelligence: {numeralWrapper.format(effInt, nf)}
-          <br />
-          Charisma: {numeralWrapper.format(effCha, nf)}
-          <br />
-          Experience: {numeralWrapper.format(employee.exp, nf)}
-          <br />
-          Creativity: {numeralWrapper.format(effCre, nf)}
-          <br />
-          Efficiency: {numeralWrapper.format(effEff, nf)}
-          <br />
-          Salary: <Money money={employee.sal} />
-        </Typography>
-      )}
-      {employee != null && (
-        <Select onChange={employeePositionSelectorOnChange} value={employeePositionSelectorInitialValue}>
-          {employeePositions}
-        </Select>
-      )}
-    </>
-  );
-}
-
 interface IAutoAssignProps {
   office: OfficeSpace;
-  job: string;
+  job: EmployeePositions;
   desc: string;
   rerender: () => void;
 }
@@ -232,27 +99,6 @@ function AutoManagement(props: IProps): React.ReactElement {
   const division = useDivision();
   const vechain = corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
 
-  // Calculate average morale, happiness,  energy, and salary.
-  let totalMorale = 0,
-    totalHappiness = 0,
-    totalEnergy = 0,
-    totalSalary = 0;
-  for (let i = 0; i < props.office.employees.length; ++i) {
-    totalMorale += props.office.employees[i].mor;
-    totalHappiness += props.office.employees[i].hap;
-    totalEnergy += props.office.employees[i].ene;
-    totalSalary += props.office.employees[i].sal;
-  }
-
-  let avgMorale = 0,
-    avgHappiness = 0,
-    avgEnergy = 0;
-  if (props.office.employees.length > 0) {
-    avgMorale = totalMorale / props.office.employees.length;
-    avgHappiness = totalHappiness / props.office.employees.length;
-    avgEnergy = totalEnergy / props.office.employees.length;
-  }
-
   const currUna = props.office.employeeJobs[EmployeePositions.Unassigned];
   const nextUna = props.office.employeeNextJobs[EmployeePositions.Unassigned];
 
@@ -272,7 +118,7 @@ function AutoManagement(props: IProps): React.ReactElement {
             <Typography>Avg Employee Morale:</Typography>
           </TableCell>
           <TableCell align="right">
-            <Typography>{numeralWrapper.format(avgMorale, "0.000")}</Typography>
+            <Typography>{numeralWrapper.format(props.office.avgMor, "0.000")}</Typography>
           </TableCell>
         </TableRow>
         <TableRow>
@@ -280,7 +126,7 @@ function AutoManagement(props: IProps): React.ReactElement {
             <Typography>Avg Employee Happiness:</Typography>
           </TableCell>
           <TableCell align="right">
-            <Typography>{numeralWrapper.format(avgHappiness, "0.000")}</Typography>
+            <Typography>{numeralWrapper.format(props.office.avgHap, "0.000")}</Typography>
           </TableCell>
         </TableRow>
         <TableRow>
@@ -288,7 +134,17 @@ function AutoManagement(props: IProps): React.ReactElement {
             <Typography>Avg Employee Energy:</Typography>
           </TableCell>
           <TableCell align="right">
-            <Typography>{numeralWrapper.format(avgEnergy, "0.000")}</Typography>
+            <Typography>{numeralWrapper.format(props.office.avgEne, "0.000")}</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Typography>Avg Employee Experience:</Typography>
+          </TableCell>
+          <TableCell align="right">
+            <Typography>
+              {numeralWrapper.format(props.office.totalExp / props.office.totalEmployees || 0, "0.000")}
+            </Typography>
           </TableCell>
         </TableRow>
         <TableRow>
@@ -297,7 +153,7 @@ function AutoManagement(props: IProps): React.ReactElement {
           </TableCell>
           <TableCell>
             <Typography align="right">
-              <Money money={totalSalary} />
+              <Money money={props.office.totalSalary} />
             </Typography>
           </TableCell>
         </TableRow>
@@ -419,11 +275,10 @@ export function IndustryOffice(props: IProps): React.ReactElement {
   const division = useDivision();
   const [upgradeOfficeSizeOpen, setUpgradeOfficeSizeOpen] = useState(false);
   const [throwPartyOpen, setThrowPartyOpen] = useState(false);
-  const [employeeManualAssignMode, setEmployeeManualAssignMode] = useState(false);
 
   function autohireEmployeeButtonOnClick(): void {
     if (props.office.atCapacity()) return;
-    props.office.hireRandomEmployee();
+    props.office.hireRandomEmployee(EmployeePositions.Unassigned);
     props.rerender();
   }
 
@@ -431,11 +286,11 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     <Paper>
       <Typography>Office Space</Typography>
       <Typography>
-        Size: {props.office.employees.length} / {props.office.size} employees
+        Size: {props.office.totalEmployees} / {props.office.size} employees
       </Typography>
       <Box sx={{ display: "grid", gridTemplateColumns: "1fr", width: "fit-content" }}>
         <Box sx={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-          <Tooltip title={<Typography>Automatically hires an employee and gives him/her a random name</Typography>}>
+          <Tooltip title={<Typography>Hires an employee</Typography>}>
             <span>
               <Button disabled={props.office.atCapacity()} onClick={autohireEmployeeButtonOnClick}>
                 Hire Employee
@@ -459,14 +314,19 @@ export function IndustryOffice(props: IProps): React.ReactElement {
           {!division.hasResearch("AutoBrew") && (
             <>
               <Tooltip
-                title={<Typography>Provide your employees with coffee, increasing their energy by 5%</Typography>}
+                title={
+                  <Typography>
+                    Provide your employees with coffee, increasing their energy by half the difference to 100%, plus
+                    1.5%
+                  </Typography>
+                }
               >
                 <span>
                   <Button
-                    disabled={corp.funds < props.office.getCoffeeCost() || props.office.coffeeMult > 0}
+                    disabled={corp.funds < props.office.getCoffeeCost() || props.office.coffeePending}
                     onClick={() => BuyCoffee(corp, props.office)}
                   >
-                    {props.office.coffeeMult > 0 ? (
+                    {props.office.coffeePending ? (
                       "Buying coffee..."
                     ) : (
                       <span>
@@ -486,10 +346,10 @@ export function IndustryOffice(props: IProps): React.ReactElement {
               >
                 <span>
                   <Button
-                    disabled={corp.funds < 0 || props.office.partyMult > 0}
+                    disabled={corp.funds < 0 || props.office.partyMult > 1}
                     onClick={() => setThrowPartyOpen(true)}
                   >
-                    {props.office.partyMult > 0 ? "Throwing Party..." : "Throw Party"}
+                    {props.office.partyMult > 1 ? "Throwing Party..." : "Throw Party"}
                   </Button>
                 </span>
               </Tooltip>
@@ -502,13 +362,8 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             </>
           )}
         </Box>
-        <SwitchButton manualMode={employeeManualAssignMode} switchMode={setEmployeeManualAssignMode} />
       </Box>
-      {employeeManualAssignMode ? (
-        <ManualManagement rerender={props.rerender} office={props.office} />
-      ) : (
-        <AutoManagement rerender={props.rerender} office={props.office} />
-      )}
+      <AutoManagement rerender={props.rerender} office={props.office} />
     </Paper>
   );
 }

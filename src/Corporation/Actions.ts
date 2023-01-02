@@ -1,12 +1,9 @@
-import { Player } from "../Player";
-import { IPlayer } from "src/PersonObjects/IPlayer";
-import { MaterialSizes } from "./MaterialSizes";
-import { ICorporation } from "./ICorporation";
+import { Player } from "@player";
+import { MaterialInfo } from "./MaterialInfo";
 import { Corporation } from "./Corporation";
-import { IIndustry } from "./IIndustry";
-import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
+import { IndustryResearchTrees, IndustriesData } from "./IndustryData";
 import { Industry } from "./Industry";
-import { CorporationConstants } from "./data/Constants";
+import * as corpConstants from "./data/Constants";
 import { OfficeSpace } from "./OfficeSpace";
 import { Material } from "./Material";
 import { Product } from "./Product";
@@ -14,11 +11,15 @@ import { Warehouse } from "./Warehouse";
 import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { Cities } from "../Locations/Cities";
-import { EmployeePositions } from "./EmployeePositions";
+import { EmployeePositions, IndustryType } from "./data/Enums";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
+import { checkEnum } from "../utils/helpers/enum";
+import { CityName } from "../Enums";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { CorpResearchName } from "@nsdefs";
 
-export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
+export function NewIndustry(corporation: Corporation, industry: IndustryType, name: string): void {
   if (corporation.divisions.find(({ type }) => industry == type))
     throw new Error(`You have already expanded into the ${industry} industry!`);
 
@@ -28,10 +29,9 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
     }
   }
 
-  const cost = IndustryStartingCosts[industry];
-  if (cost === undefined) {
-    throw new Error(`Invalid industry: '${industry}'`);
-  }
+  const data = IndustriesData[industry];
+  if (!data) throw new Error(`Invalid industry: '${industry}'`);
+  const cost = data.startingCost;
   if (corporation.funds < cost) {
     throw new Error("Not enough money to create a new division in this industry");
   } else if (name === "") {
@@ -48,21 +48,21 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
   }
 }
 
-export function NewCity(corporation: ICorporation, division: IIndustry, city: string): void {
-  if (corporation.funds < CorporationConstants.OfficeInitialCost) {
+export function NewCity(corporation: Corporation, division: Industry, city: CityName): void {
+  if (corporation.funds < corpConstants.officeInitialCost) {
     throw new Error("You don't have enough company funds to open a new office!");
   }
   if (division.offices[city]) {
     throw new Error(`You have already expanded into ${city} for ${division.name}`);
   }
-  corporation.funds = corporation.funds - CorporationConstants.OfficeInitialCost;
+  corporation.funds = corporation.funds - corpConstants.officeInitialCost;
   division.offices[city] = new OfficeSpace({
     loc: city,
-    size: CorporationConstants.OfficeInitialSize,
+    size: corpConstants.officeInitialSize,
   });
 }
 
-export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnlockUpgrade): void {
+export function UnlockUpgrade(corporation: Corporation, upgrade: CorporationUnlockUpgrade): void {
   if (corporation.funds < upgrade.price) {
     throw new Error("Insufficient funds");
   }
@@ -72,7 +72,7 @@ export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnl
   corporation.unlock(upgrade);
 }
 
-export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgrade): void {
+export function LevelUpgrade(corporation: Corporation, upgrade: CorporationUpgrade): void {
   const baseCost = upgrade.basePrice;
   const priceMult = upgrade.priceMult;
   const level = corporation.upgrades[upgrade.index];
@@ -84,12 +84,39 @@ export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgr
   }
 }
 
-export function IssueDividends(corporation: ICorporation, rate: number): void {
-  if (isNaN(rate) || rate < 0 || rate > CorporationConstants.DividendMaxRate) {
-    throw new Error(`Invalid value. Must be an number between 0 and ${CorporationConstants.DividendMaxRate}`);
+export function IssueDividends(corporation: Corporation, rate: number): void {
+  if (isNaN(rate) || rate < 0 || rate > corpConstants.dividendMaxRate) {
+    throw new Error(`Invalid value. Must be an number between 0 and ${corpConstants.dividendMaxRate}`);
   }
 
   corporation.dividendRate = rate;
+}
+
+export function IssueNewShares(corporation: Corporation, amount: number): [number, number, number] {
+  const max = corporation.calculateMaxNewShares();
+
+  // Round to nearest ten-millionth
+  amount = Math.round(amount / 10e6) * 10e6;
+
+  if (isNaN(amount) || amount < 10e6 || amount > max) {
+    throw new Error(`Invalid value. Must be an number between 10m and ${max} (20% of total shares)`);
+  }
+
+  const newSharePrice = Math.round(corporation.sharePrice * 0.9);
+
+  const profit = amount * newSharePrice;
+  corporation.issueNewSharesCooldown = corpConstants.issueNewSharesCooldown;
+
+  const privateOwnedRatio = 1 - (corporation.numShares + corporation.issuedShares) / corporation.totalShares;
+  const maxPrivateShares = Math.round((amount / 2) * privateOwnedRatio);
+  const privateShares = Math.round(getRandomInt(0, maxPrivateShares) / 10e6) * 10e6;
+
+  corporation.issuedShares += amount - privateShares;
+  corporation.totalShares += amount;
+  corporation.funds = corporation.funds + profit;
+  corporation.immediatelyUpdateSharePrice();
+
+  return [profit, amount, privateShares];
 }
 
 export function SellMaterial(mat: Material, amt: string, price: string): void {
@@ -97,14 +124,15 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   if (amt === "") amt = "0";
   let cost = price.replace(/\s+/g, "");
   cost = cost.replace(/[^-()\d/*+.MPe]/g, ""); //Sanitize cost
-  let temp = cost.replace(/MP/g, mat.bCost + "");
+  let temp = cost.replace(/MP/, "1.234e5");
   try {
+    if (temp.includes("MP")) throw "Only one reference to MP is allowed in sell price.";
     temp = eval(temp);
   } catch (e) {
     throw new Error("Invalid value or expression for sell price field: " + e);
   }
 
-  if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
+  if (temp == null || isNaN(parseFloat(temp))) {
     throw new Error("Invalid value or expression for sell price field");
   }
 
@@ -156,14 +184,15 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     //Dynamically evaluated quantity. First test to make sure its valid
     //Sanitize input, then replace dynamic variables with arbitrary numbers
     price = price.replace(/\s+/g, "");
-    price = price.replace(/[^-()\d/*+.MP]/g, "");
-    let temp = price.replace(/MP/g, "1");
+    price = price.replace(/[^-()\d/*+.MPe]/g, "");
+    let temp = price.replace(/MP/, "1.234e5");
     try {
+      if (temp.includes("MP")) throw "Only one reference to MP is allowed in sell price.";
       temp = eval(temp);
     } catch (e) {
       throw new Error("Invalid value or expression for sell price field: " + e);
     }
-    if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
+    if (temp == null || isNaN(parseFloat(temp))) {
       throw new Error("Invalid value or expression for sell price field.");
     }
     product.sCost = price; //Use sanitized price
@@ -241,9 +270,7 @@ export function SetSmartSupply(warehouse: Warehouse, smartSupply: boolean): void
 }
 
 export function SetSmartSupplyUseLeftovers(warehouse: Warehouse, material: Material, useLeftover: boolean): void {
-  if (!Object.keys(warehouse.smartSupplyUseLeftovers).includes(material.name.replace(/ /g, "")))
-    throw new Error(`Invalid material '${material.name}'`);
-  warehouse.smartSupplyUseLeftovers[material.name.replace(/ /g, "")] = useLeftover;
+  warehouse.smartSupplyUseLeftovers[material.name] = useLeftover;
 }
 
 export function BuyMaterial(material: Material, amt: number): void {
@@ -253,8 +280,8 @@ export function BuyMaterial(material: Material, amt: number): void {
   material.buy = amt;
 }
 
-export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material: Material, amt: number): void {
-  const matSize = MaterialSizes[material.name];
+export function BulkPurchase(corp: Corporation, warehouse: Warehouse, material: Material, amt: number): void {
+  const matSize = MaterialInfo[material.name].size;
   const maxAmount = (warehouse.size - warehouse.sizeUsed) / matSize;
   if (isNaN(amt) || amt < 0) {
     throw new Error(`Invalid input amount`);
@@ -271,7 +298,7 @@ export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material:
   }
 }
 
-export function SellShares(corporation: ICorporation, player: IPlayer, numShares: number): number {
+export function SellShares(corporation: Corporation, numShares: number): number {
   if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
   if (numShares < 0) throw new Error("Invalid value for number of shares");
   if (numShares > corporation.numShares) throw new Error("You don't have that many shares to sell!");
@@ -286,70 +313,53 @@ export function SellShares(corporation: ICorporation, player: IPlayer, numShares
   corporation.issuedShares += numShares;
   corporation.sharePrice = newSharePrice;
   corporation.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
-  corporation.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
-  player.gainMoney(profit, "corporation");
+  corporation.shareSaleCooldown = corpConstants.sellSharesCooldown;
+  Player.gainMoney(profit, "corporation");
   return profit;
 }
 
-export function BuyBackShares(corporation: ICorporation, player: IPlayer, numShares: number): boolean {
+export function BuyBackShares(corporation: Corporation, numShares: number): boolean {
   if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
   if (numShares < 0) throw new Error("Invalid value for number of shares");
   if (numShares > corporation.issuedShares) throw new Error("You don't have that many shares to buy!");
   if (!corporation.public) throw new Error("You haven't gone public!");
   const buybackPrice = corporation.sharePrice * 1.1;
-  if (player.money < numShares * buybackPrice) throw new Error("You cant afford that many shares!");
+  if (Player.money < numShares * buybackPrice) throw new Error("You cant afford that many shares!");
   corporation.numShares += numShares;
   corporation.issuedShares -= numShares;
-  player.loseMoney(numShares * buybackPrice, "corporation");
+  Player.loseMoney(numShares * buybackPrice, "corporation");
   return true;
 }
 
-export function AssignJob(office: OfficeSpace, employeeName: string, job: string): void {
-  const employee = office.employees.find((e) => e.name === employeeName);
-
-  if (!employee) throw new Error(`Could not find employee '${name}'.`);
-  if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-
-  office.assignSingleJob(employee, job);
-}
-
 export function AutoAssignJob(office: OfficeSpace, job: string, count: number): boolean {
-  if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
-
+  if (!checkEnum(EmployeePositions, job)) throw new Error(`'${job}' is not a valid job.`);
   return office.autoAssignJob(job, count);
 }
 
-export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size: number): void {
-  const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
+export function UpgradeOfficeSize(corp: Corporation, office: OfficeSpace, size: number): void {
+  const initialPriceMult = Math.round(office.size / corpConstants.officeInitialSize);
   const costMultiplier = 1.09;
   // Calculate cost to upgrade size by 15 employees
   let mult = 0;
-  for (let i = 0; i < size / CorporationConstants.OfficeInitialSize; ++i) {
+  for (let i = 0; i < size / corpConstants.officeInitialSize; ++i) {
     mult += Math.pow(costMultiplier, initialPriceMult + i);
   }
-  const cost = CorporationConstants.OfficeInitialCost * mult;
+  const cost = corpConstants.officeInitialCost * mult;
   if (corp.funds < cost) return;
   office.size += size;
   corp.funds = corp.funds - cost;
 }
 
-export function BuyCoffee(corp: ICorporation, office: OfficeSpace): boolean {
+export function BuyCoffee(corp: Corporation, office: OfficeSpace): boolean {
   const cost = office.getCoffeeCost();
-  if (corp.funds < cost) {
-    return false;
-  }
-
-  if (!office.setCoffee()) {
-    return false;
-  }
+  if (corp.funds < cost || !office.setCoffee()) return false;
   corp.funds -= cost;
-
   return true;
 }
 
-export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
+export function ThrowParty(corp: Corporation, office: OfficeSpace, costPerEmployee: number): number {
   const mult = 1 + costPerEmployee / 10e6;
-  const cost = costPerEmployee * office.employees.length;
+  const cost = costPerEmployee * office.totalEmployees;
   if (corp.funds < cost) {
     return 0;
   }
@@ -362,26 +372,26 @@ export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmplo
   return mult;
 }
 
-export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city: string): void {
-  if (corp.funds < CorporationConstants.WarehouseInitialCost) return;
-  if (division.warehouses[city] instanceof Warehouse) return;
+export function PurchaseWarehouse(corp: Corporation, division: Industry, city: CityName): void {
+  if (corp.funds < corpConstants.warehouseInitialCost) return;
+  if (division.warehouses[city]) return;
   division.warehouses[city] = new Warehouse({
     corp: corp,
     industry: division,
     loc: city,
-    size: CorporationConstants.WarehouseInitialSize,
+    size: corpConstants.warehouseInitialSize,
   });
-  corp.funds = corp.funds - CorporationConstants.WarehouseInitialCost;
+  corp.funds = corp.funds - corpConstants.warehouseInitialCost;
 }
 
 export function UpgradeWarehouseCost(warehouse: Warehouse, amt: number): number {
   return Array.from(Array(amt).keys()).reduce(
-    (acc, index) => acc + CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1 + index),
+    (acc, index) => acc + corpConstants.warehouseSizeUpgradeCostBase * Math.pow(1.07, warehouse.level + 1 + index),
     0,
   );
 }
 
-export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse, amt = 1): void {
+export function UpgradeWarehouse(corp: Corporation, division: Industry, warehouse: Warehouse, amt = 1): void {
   const sizeUpgradeCost = UpgradeWarehouseCost(warehouse, amt);
   if (corp.funds < sizeUpgradeCost) return;
   warehouse.level += amt;
@@ -389,7 +399,7 @@ export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, wareho
   corp.funds = corp.funds - sizeUpgradeCost;
 }
 
-export function HireAdVert(corp: ICorporation, division: IIndustry): void {
+export function HireAdVert(corp: Corporation, division: Industry): void {
   const cost = division.getAdVertCost();
   if (corp.funds < cost) return;
   corp.funds = corp.funds - cost;
@@ -397,9 +407,9 @@ export function HireAdVert(corp: ICorporation, division: IIndustry): void {
 }
 
 export function MakeProduct(
-  corp: ICorporation,
-  division: IIndustry,
-  city: string,
+  corp: Corporation,
+  division: Industry,
+  city: CityName,
   productName: string,
   designInvest: number,
   marketingInvest: number,
@@ -442,7 +452,7 @@ export function MakeProduct(
     designCost: designInvest,
     advCost: marketingInvest,
   });
-  if (products[product.name] instanceof Product) {
+  if (products[product.name]) {
     throw new Error(`You already have a product with this name!`);
   }
 
@@ -450,7 +460,7 @@ export function MakeProduct(
   products[product.name] = product;
 }
 
-export function Research(division: IIndustry, researchName: string): void {
+export function Research(division: Industry, researchName: CorpResearchName): void {
   const researchTree = IndustryResearchTrees[division.type];
   if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
   const allResearch = researchTree.getAllNodes();
@@ -458,9 +468,9 @@ export function Research(division: IIndustry, researchName: string): void {
   const research = ResearchMap[researchName];
 
   if (division.researched[researchName]) return;
-  if (division.sciResearch.qty < research.cost)
+  if (division.sciResearch < research.cost)
     throw new Error(`You do not have enough Scientific Research for ${research.name}`);
-  division.sciResearch.qty -= research.cost;
+  division.sciResearch -= research.cost;
 
   // Get the Node from the Research Tree and set its 'researched' property
   researchTree.research(researchName);
@@ -470,13 +480,11 @@ export function Research(division: IIndustry, researchName: string): void {
   // whether research is done by script or UI. All other stats gets calculated in every cycle
   // Warehouse size gets updated only when something increases it.
   if (researchName == "Drones - Transport") {
-    for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
-      const city = CorporationConstants.Cities[i];
+    for (const city of Object.values(CityName)) {
       const warehouse = division.warehouses[city];
-      if (!(warehouse instanceof Warehouse)) {
-        continue;
-      }
-      if (Player.corporation instanceof Corporation) {
+      if (!warehouse) continue;
+
+      if (Player.corporation) {
         // Stores cycles in a "buffer". Processed separately using Engine Counters
         warehouse.updateSize(Player.corporation, division);
       }
@@ -486,7 +494,7 @@ export function Research(division: IIndustry, researchName: string): void {
 
 export function ExportMaterial(
   divisionName: string,
-  cityName: string,
+  cityName: CityName,
   material: Material,
   amt: string,
   division?: Industry,

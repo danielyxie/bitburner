@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { CorporationConstants } from "../data/Constants";
+import * as corpConstants from "../data/Constants";
 import { Product } from "../Product";
 import { DiscontinueProductModal } from "./modals/DiscontinueProductModal";
 import { LimitProductProductionModal } from "./modals/LimitProductProductionModal";
@@ -38,7 +38,7 @@ export function ProductElem(props: IProductProps): React.ReactElement {
   const city = props.city;
   const product = props.product;
 
-  // Numeraljs formatters
+  // Numeral.js formatters
   const nf = "0.000";
   const nfB = "0.000a"; // For numbers that might be big
 
@@ -163,8 +163,7 @@ export function ProductElem(props: IProductProps): React.ReactElement {
           <Box display="flex">
             <Tooltip title={<Typography>An estimate of the material cost it takes to create this Product.</Typography>}>
               <Typography>
-                Est. Production Cost:{" "}
-                {numeralWrapper.formatMoney(product.pCost / CorporationConstants.ProductProductionCostRatio)}
+                Est. Production Cost: {numeralWrapper.formatMoney(product.pCost / corpConstants.baseProductProfitMult)}
               </Typography>
             </Tooltip>
           </Box>

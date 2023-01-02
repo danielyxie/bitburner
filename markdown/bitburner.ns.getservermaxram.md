@@ -4,7 +4,7 @@
 
 ## NS.getServerMaxRam() method
 
-Get the max RAM on a server.
+Get the maximum amount of RAM on a server.
 
 <b>Signature:</b>
 
@@ -22,7 +22,7 @@ getServerMaxRam(host: string): number;
 
 number
 
-max ram (GB)
+The maximum amount of RAM (GB) a server can have.
 
 ## Remarks
 

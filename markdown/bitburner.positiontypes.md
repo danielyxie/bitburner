@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export enum PositionTypes 
+declare enum PositionTypes 
 ```
 
 ## Enumeration Members

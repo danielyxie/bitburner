@@ -6,7 +6,7 @@ import { CheckBox, CheckBoxOutlineBlank, CheckCircle, NewReleases, Report } from
 import { Box, Button, Container, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Faction } from "../../Faction/Faction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentation } from "../Augmentation";
@@ -15,12 +15,11 @@ import { StaticAugmentations } from "../StaticAugmentations";
 import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 interface IPreReqsProps {
-  player: IPlayer;
   aug: Augmentation;
 }
 
 const PreReqs = (props: IPreReqsProps): React.ReactElement => {
-  const ownedPreReqs = props.aug.prereqs.filter((aug) => props.player.hasAugmentation(aug));
+  const ownedPreReqs = props.aug.prereqs.filter((aug) => Player.hasAugmentation(aug));
   const hasPreReqs = props.aug.prereqs.length > 0 && ownedPreReqs.length === props.aug.prereqs.length;
 
   return (
@@ -32,7 +31,7 @@ const PreReqs = (props: IPreReqsProps): React.ReactElement => {
           </Typography>
           {props.aug.prereqs.map((preAug) => (
             <Requirement
-              fulfilled={props.player.hasAugmentation(preAug)}
+              fulfilled={Player.hasAugmentation(preAug)}
               value={preAug}
               color={Settings.theme.money}
               key={preAug}
@@ -68,7 +67,6 @@ const PreReqs = (props: IPreReqsProps): React.ReactElement => {
 };
 
 interface IExclusiveProps {
-  player: IPlayer;
   aug: Augmentation;
 }
 
@@ -85,18 +83,16 @@ const Exclusive = (props: IExclusiveProps): React.ReactElement => {
               <li>
                 <b>{props.aug.factions[0]}</b> faction
               </li>
-              {props.player.isAwareOfGang() && !props.aug.isSpecial && (
+              {Player.isAwareOfGang() && !props.aug.isSpecial && (
                 <li>
                   Certain <b>gangs</b>
                 </li>
               )}
-              {props.player.canAccessGrafting() &&
-                !props.aug.isSpecial &&
-                props.aug.name !== AugmentationNames.TheRedPill && (
-                  <li>
-                    <b>Grafting</b>
-                  </li>
-                )}
+              {Player.canAccessGrafting() && !props.aug.isSpecial && props.aug.name !== AugmentationNames.TheRedPill && (
+                <li>
+                  <b>Grafting</b>
+                </li>
+              )}
             </Typography>
           </ul>
         </>
@@ -130,10 +126,9 @@ const Requirement = (props: IReqProps): React.ReactElement => {
 interface IPurchasableAugsProps {
   augNames: string[];
   ownedAugNames: string[];
-  player: IPlayer;
 
-  canPurchase: (player: IPlayer, aug: Augmentation) => boolean;
-  purchaseAugmentation: (player: IPlayer, aug: Augmentation, showModal: (open: boolean) => void) => void;
+  canPurchase: (aug: Augmentation) => boolean;
+  purchaseAugmentation: (aug: Augmentation, showModal: (open: boolean) => void) => void;
 
   rep?: number;
   sleeveAugs?: boolean;
@@ -167,7 +162,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
   const [open, setOpen] = useState(false);
 
   const aug = StaticAugmentations[props.augName];
-  const augCosts = aug.getCost(props.parent.player);
+  const augCosts = aug.getCost();
   const cost = props.parent.sleeveAugs ? aug.baseCost : augCosts.moneyCost;
   const repCost = augCosts.repCost;
   const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
@@ -195,11 +190,11 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Button
             onClick={() =>
-              props.parent.purchaseAugmentation(props.parent.player, aug, (open): void => {
+              props.parent.purchaseAugmentation(aug, (open): void => {
                 setOpen(open);
               })
             }
-            disabled={!props.parent.canPurchase(props.parent.player, aug) || props.owned}
+            disabled={!props.parent.canPurchase(aug) || props.owned}
             sx={{ width: "48px", height: "36px", float: "left", clear: "none", mr: 1 }}
           >
             {props.owned ? "Owned" : "Buy"}
@@ -212,8 +207,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                   <>
                     <Typography variant="h5">
                       {props.augName}
-                      {props.augName === AugmentationNames.NeuroFluxGovernor &&
-                        ` - Level ${aug.getLevel(props.parent.player)}`}
+                      {props.augName === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel()}`}
                     </Typography>
                     <Typography>{description}</Typography>
                   </>
@@ -226,20 +220,16 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     color:
-                      props.owned || !props.parent.canPurchase(props.parent.player, aug)
-                        ? Settings.theme.disabled
-                        : Settings.theme.primary,
+                      props.owned || !props.parent.canPurchase(aug) ? Settings.theme.disabled : Settings.theme.primary,
                   }}
                 >
                   {aug.name}
-                  {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel(props.parent.player)}`}
+                  {aug.name === AugmentationNames.NeuroFluxGovernor && ` - Level ${aug.getLevel()}`}
                 </Typography>
               </Tooltip>
 
-              {aug.factions.length === 1 && !props.parent.sleeveAugs && (
-                <Exclusive player={props.parent.player} aug={aug} />
-              )}
-              {aug.prereqs.length > 0 && !props.parent.sleeveAugs && <PreReqs player={props.parent.player} aug={aug} />}
+              {aug.factions.length === 1 && !props.parent.sleeveAugs && <Exclusive aug={aug} />}
+              {aug.prereqs.length > 0 && !props.parent.sleeveAugs && <PreReqs aug={aug} />}
             </Box>
           </Box>
         </Box>
@@ -247,7 +237,7 @@ export function PurchasableAugmentation(props: IPurchasableAugProps): React.Reac
         {props.owned || (
           <Box sx={{ display: "grid", alignItems: "center", gridTemplateColumns: "1fr 1fr" }}>
             <Requirement
-              fulfilled={cost === 0 || props.parent.player.money > cost}
+              fulfilled={cost === 0 || Player.money > cost}
               value={numeralWrapper.formatMoney(cost)}
               color={Settings.theme.money}
             />

@@ -18,5 +18,5 @@ interface Export
 |  --- | --- | --- |
 |  [amt](./bitburner.export.amt.md) | string | Amount of material exported |
 |  [div](./bitburner.export.div.md) | string | Division the material is being exported to |
-|  [loc](./bitburner.export.loc.md) | string | City the material is being exported to |
+|  [loc](./bitburner.export.loc.md) | [CityName](./bitburner.cityname.md) | City the material is being exported to |
 

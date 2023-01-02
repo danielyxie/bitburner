@@ -1,50 +1,42 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { getDestinationFilepath, areFilesEqual } from "../DirectoryHelpers";
 
-export function cp(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  args: (string | number | boolean)[],
-): void {
+export function cp(args: (string | number | boolean)[], server: BaseServer): void {
   try {
     if (args.length !== 2) {
-      terminal.error("Incorrect usage of cp command. Usage: cp [src] [dst]");
+      Terminal.error("Incorrect usage of cp command. Usage: cp [src] [dst]");
       return;
     }
     // Convert a relative path source file to the absolute path.
-    const src = terminal.getFilepath(args[0] + "");
+    const src = Terminal.getFilepath(args[0] + "");
     if (src === null) {
-      terminal.error("src cannot be a directory");
+      Terminal.error("src cannot be a directory");
       return;
     }
 
     // Get the destination based on the source file and the current directory
-    const t_dst = getDestinationFilepath(args[1] + "", src, terminal.cwd());
+    const t_dst = getDestinationFilepath(args[1] + "", src, Terminal.cwd());
     if (t_dst === null) {
-      terminal.error("error parsing dst file");
+      Terminal.error("error parsing dst file");
       return;
     }
 
     // Convert a relative path destination file to the absolute path.
-    const dst = terminal.getFilepath(t_dst);
+    const dst = Terminal.getFilepath(t_dst);
     if (areFilesEqual(src, dst)) {
-      terminal.error("src and dst cannot be the same");
+      Terminal.error("src and dst cannot be the same");
       return;
     }
     const srcExt = src.slice(src.lastIndexOf("."));
     const dstExt = dst.slice(dst.lastIndexOf("."));
     if (srcExt !== dstExt) {
-      terminal.error("src and dst must have the same extension.");
+      Terminal.error("src and dst must have the same extension.");
       return;
     }
     if (!isScriptFilename(src) && !src.endsWith(".txt")) {
-      terminal.error("cp only works for scripts and .txt files");
+      Terminal.error("cp only works for scripts and .txt files");
       return;
     }
 
@@ -59,20 +51,20 @@ export function cp(
       }
 
       if (txtFile === null) {
-        return terminal.error("No such file exists!");
+        return Terminal.error("No such file exists!");
       }
 
       const tRes = server.writeToTextFile(dst, txtFile.text);
       if (!tRes.success) {
-        terminal.error("cp failed");
+        Terminal.error("cp failed");
         return;
       }
       if (tRes.overwritten) {
-        terminal.print(`WARNING: ${dst} already exists and will be overwriten`);
-        terminal.print(`${dst} overwritten`);
+        Terminal.print(`WARNING: ${dst} already exists and will be overwritten`);
+        Terminal.print(`${dst} overwritten`);
         return;
       }
-      terminal.print(`${dst} copied`);
+      Terminal.print(`${dst} copied`);
       return;
     }
 
@@ -85,22 +77,22 @@ export function cp(
       }
     }
     if (sourceScript == null) {
-      terminal.error("cp failed. No such script exists");
+      Terminal.error("cp failed. No such script exists");
       return;
     }
 
-    const sRes = server.writeToScriptFile(player, dst, sourceScript.code);
+    const sRes = server.writeToScriptFile(dst, sourceScript.code);
     if (!sRes.success) {
-      terminal.error(`cp failed`);
+      Terminal.error(`cp failed`);
       return;
     }
     if (sRes.overwritten) {
-      terminal.print(`WARNING: ${dst} already exists and will be overwritten`);
-      terminal.print(`${dst} overwritten`);
+      Terminal.print(`WARNING: ${dst} already exists and will be overwritten`);
+      Terminal.print(`${dst} overwritten`);
       return;
     }
-    terminal.print(`${dst} copied`);
+    Terminal.print(`${dst} copied`);
   } catch (e) {
-    terminal.error(e + "");
+    Terminal.error(e + "");
   }
 }

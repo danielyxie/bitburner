@@ -1,4 +1,4 @@
-import { IPlayer } from "../../../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Work, WorkType } from "./Work";
 
@@ -6,35 +6,31 @@ export const isSleeveSupportWork = (w: Work | null): w is SleeveSupportWork =>
   w !== null && w.type === WorkType.SUPPORT;
 
 export class SleeveSupportWork extends Work {
-  constructor(player?: IPlayer) {
+  constructor() {
     super(WorkType.SUPPORT);
-    if (player) player.bladeburner?.sleeveSupport(true);
+    Player.bladeburner?.sleeveSupport(true);
   }
 
-  process(): number {
-    return 0;
+  process() {
+    return;
   }
 
-  finish(player: IPlayer): void {
-    player.bladeburner?.sleeveSupport(false);
+  finish(): void {
+    Player.bladeburner?.sleeveSupport(false);
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.SUPPORT as "SUPPORT",
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveSupportWork", this);
   }
 
-  /**
-   * Initiatizes a BladeburnerWork object from a JSON save state.
-   */
+  /** Initializes a BladeburnerWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveSupportWork {
     return Generic_fromJSON(SleeveSupportWork, value.data);
   }

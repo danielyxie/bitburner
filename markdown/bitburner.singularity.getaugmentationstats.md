@@ -9,7 +9,7 @@ Get the stats of an augmentation.
 <b>Signature:</b>
 
 ```typescript
-getAugmentationStats(name: string): AugmentationStats;
+getAugmentationStats(name: string): Multipliers;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ getAugmentationStats(name: string): AugmentationStats;
 
 <b>Returns:</b>
 
-[AugmentationStats](./bitburner.augmentationstats.md)
+[Multipliers](./bitburner.multipliers.md)
 
 Augmentation stats.
 

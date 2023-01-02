@@ -1,10 +1,10 @@
 import React from "react";
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
-import { IPlayer } from "src/PersonObjects/IPlayer";
+import { Player } from "@player";
 import { Work, WorkType } from "./Work";
 import { influenceStockThroughCompanyWork } from "../StockMarket/PlayerInfluencing";
-import { LocationName } from "../Locations/data/LocationNames";
-import { calculateCompanyWorkStats } from "./formulas/Company";
+import { LocationName } from "../Enums";
+import { calculateCompanyWorkStats } from "./Formulas";
 import { Companies } from "../Company/Companies";
 import { applyWorkStats, scaleWorkStats, WorkStats } from "./WorkStats";
 import { Company } from "../Company/Company";
@@ -12,6 +12,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
+import { CompanyPositions } from "../Company/CompanyPositions";
 
 interface CompanyWorkParams {
   companyName: string;
@@ -33,19 +34,23 @@ export class CompanyWork extends Work {
     return c;
   }
 
-  getGainRates(player: IPlayer): WorkStats {
+  getGainRates(): WorkStats {
     let focusBonus = 1;
-    if (!player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
-      focusBonus = player.focus ? 1 : CONSTANTS.BaseFocusBonus;
+    if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
+      focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    return scaleWorkStats(calculateCompanyWorkStats(player, player, this.getCompany()), focusBonus);
+    const company = this.getCompany();
+    return scaleWorkStats(
+      calculateCompanyWorkStats(Player, company, CompanyPositions[Player.jobs[company.name]], company.favor),
+      focusBonus,
+    );
   }
 
-  process(player: IPlayer, cycles: number): boolean {
+  process(cycles: number): boolean {
     this.cyclesWorked += cycles;
     const company = this.getCompany();
-    const gains = this.getGainRates(player);
-    applyWorkStats(player, player, gains, cycles, "work");
+    const gains = this.getGainRates();
+    applyWorkStats(Player, gains, cycles, "work");
     company.playerReputation += gains.reputation * cycles;
     influenceStockThroughCompanyWork(company, gains.reputation, cycles);
     return false;
@@ -70,16 +75,12 @@ export class CompanyWork extends Work {
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("CompanyWork", this);
   }
 
-  /**
-   * Initiatizes a CompanyWork object from a JSON save state.
-   */
+  /** Initializes a CompanyWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): CompanyWork {
     return Generic_fromJSON(CompanyWork, value.data);
   }

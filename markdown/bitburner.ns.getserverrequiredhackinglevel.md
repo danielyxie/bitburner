@@ -16,7 +16,7 @@ getServerRequiredHackingLevel(host: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host of target server. |
+|  host | string | Hostname of target server. |
 
 <b>Returns:</b>
 

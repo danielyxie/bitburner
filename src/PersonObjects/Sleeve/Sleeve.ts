@@ -7,32 +7,24 @@
  * Sleeves are unlocked in BitNode-10.
  */
 
-import { IPlayer } from "../IPlayer";
+import { Player } from "@player";
 import { Person } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
-
-import { Crime } from "../../Crime/Crime";
-import { Crimes } from "../../Crime/Crimes";
 
 import { Companies } from "../../Company/Companies";
 import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
-
 import { Contracts } from "../../Bladeburner/data/Contracts";
-
 import { CONSTANTS } from "../../Constants";
+import { CityName, CrimeType, GymType, LocationName, UniversityClassType } from "../../Enums";
 
-import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
-
-import { CityName } from "../../Locations/data/CityNames";
-import { LocationName } from "../../Locations/data/LocationNames";
 
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../utils/JSONReviver";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { FactionWorkType } from "../../Work/data/FactionWorkType";
+import { FactionWorkType } from "../../Enums";
 import { Work } from "./Work/Work";
 import { SleeveClassWork } from "./Work/SleeveClassWork";
 import { ClassType } from "../../Work/ClassWork";
@@ -44,27 +36,25 @@ import { SleeveInfiltrateWork } from "./Work/SleeveInfiltrateWork";
 import { SleeveSupportWork } from "./Work/SleeveSupportWork";
 import { SleeveBladeburnerWork } from "./Work/SleeveBladeburnerWork";
 import { SleeveCrimeWork } from "./Work/SleeveCrimeWork";
+import * as sleeveMethods from "./SleeveMethods";
+import { SleevePerson } from "@nsdefs";
 
-export class Sleeve extends Person {
+export class Sleeve extends Person implements SleevePerson {
   currentWork: Work | null = null;
 
-  /**
-   * Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs
-   */
+  /** Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs */
   memory = 1;
 
   /**
    * Sleeve shock. Number between 0 and 100
    * Trauma/shock that comes with being in a sleeve. Experience earned
-   * is multipled by shock%. This gets applied before synchronization
+   * is multiplied by shock%. This gets applied before synchronization
    *
    * Reputation earned is also multiplied by shock%
    */
-  shock = 1;
+  shock = 100;
 
-  /**
-   * Stored number of game "loop" cycles
-   */
+  /** Stored number of game "loop" cycles */
   storedCycles = 0;
 
   /**
@@ -74,47 +64,39 @@ export class Sleeve extends Person {
    */
   sync = 1;
 
-  constructor(p: IPlayer | null = null) {
+  constructor() {
     super();
-    if (p != null) {
-      this.shockRecovery(p);
-    }
+    this.shockRecovery();
   }
 
+  applyAugmentation = sleeveMethods.applyAugmentation;
+  findPurchasableAugs = sleeveMethods.findPurchasableAugs;
+
   shockBonus(): number {
-    return this.shock / 100;
+    return (100 - this.shock) / 100;
   }
 
   syncBonus(): number {
     return this.sync / 100;
   }
 
-  startWork(player: IPlayer, w: Work): void {
-    if (this.currentWork) this.currentWork.finish(player);
+  startWork(w: Work): void {
+    if (this.currentWork) this.currentWork.finish();
     this.currentWork = w;
   }
 
-  stopWork(player: IPlayer): void {
-    if (this.currentWork) this.currentWork.finish(player);
+  stopWork(): void {
+    if (this.currentWork) this.currentWork.finish();
     this.currentWork = null;
   }
 
-  /**
-   * Commit crimes
-   */
-  commitCrime(p: IPlayer, crimeKey: string): boolean {
-    const crime: Crime | null = Crimes[crimeKey] || Object.values(Crimes).find((crime) => crime.name === crimeKey);
-    if (!crime) {
-      return false;
-    }
-
-    this.startWork(p, new SleeveCrimeWork(crime.type));
+  /** Commit crimes */
+  commitCrime(type: CrimeType) {
+    this.startWork(new SleeveCrimeWork(type));
     return true;
   }
 
-  /**
-   * Returns the cost of upgrading this sleeve's memory by a certain amount
-   */
+  /** Returns the cost of upgrading this sleeve's memory by a certain amount */
   getMemoryUpgradeCost(n: number): number {
     const amt = Math.round(n);
     if (amt < 0) {
@@ -146,13 +128,11 @@ export class Sleeve extends Person {
     this.exp.charisma = 0;
     this.applyAugmentation(aug);
     this.augmentations.push({ name: aug.name, level: 1 });
-    this.updateStatLevels();
+    this.updateSkillLevels();
   }
 
-  /**
-   * Called on every sleeve for a Source File Prestige
-   */
-  prestige(p: IPlayer): void {
+  /** Called on every sleeve for a Source File Prestige */
+  prestige(): void {
     // Reset exp
     this.exp.hacking = 0;
     this.exp.strength = 0;
@@ -160,12 +140,12 @@ export class Sleeve extends Person {
     this.exp.dexterity = 0;
     this.exp.agility = 0;
     this.exp.charisma = 0;
-    this.updateStatLevels();
+    this.updateSkillLevels();
     this.hp.current = this.hp.max;
 
     // Reset task-related stuff
-    this.stopWork(p);
-    this.shockRecovery(p);
+    this.stopWork();
+    this.shockRecovery();
 
     // Reset augs and multipliers
     this.augmentations = [];
@@ -176,7 +156,7 @@ export class Sleeve extends Person {
     this.city = CityName.Sector12;
 
     // Reset sleeve-related stats
-    this.shock = 1;
+    this.shock = 100;
     this.storedCycles = 0;
     this.sync = Math.max(this.memory, 1);
   }
@@ -186,34 +166,29 @@ export class Sleeve extends Person {
    * Returns an object containing the amount of experience that should be
    * transferred to all other sleeves
    */
-  process(p: IPlayer, numCycles = 1): void {
+  process(numCycles = 1): void {
     // Only process once every second (5 cycles)
     const CyclesPerSecond = 1000 / CONSTANTS.MilliPerCycle;
     this.storedCycles += numCycles;
-    if (this.storedCycles < CyclesPerSecond) return;
-
-    let cyclesUsed = this.storedCycles;
-    cyclesUsed = Math.min(cyclesUsed, 15);
-    this.shock = Math.min(100, this.shock + 0.0001 * cyclesUsed);
-    if (!this.currentWork) return;
-    this.currentWork.process(p, this, cyclesUsed);
+    if (this.storedCycles < CyclesPerSecond || !this.currentWork) return;
+    const cyclesUsed = Math.min(this.storedCycles, 15);
+    this.shock = Math.max(0, this.shock - 0.0001 * cyclesUsed);
+    this.currentWork.process(this, cyclesUsed);
     this.storedCycles -= cyclesUsed;
   }
 
-  shockRecovery(p: IPlayer): boolean {
-    this.startWork(p, new SleeveRecoveryWork());
+  shockRecovery(): boolean {
+    this.startWork(new SleeveRecoveryWork());
     return true;
   }
 
-  synchronize(p: IPlayer): boolean {
-    this.startWork(p, new SleeveSynchroWork());
+  synchronize(): boolean {
+    this.startWork(new SleeveSynchroWork());
     return true;
   }
 
-  /**
-   * Take a course at a university
-   */
-  takeUniversityCourse(p: IPlayer, universityName: string, className: string): boolean {
+  /** Take a course at a university */
+  takeUniversityCourse(universityName: string, className: string): boolean {
     // Set exp/money multipliers based on which university.
     // Also check that the sleeve is in the right city
     let loc: LocationName | undefined;
@@ -240,28 +215,27 @@ export class Sleeve extends Person {
     let classType: ClassType | undefined;
     switch (className.toLowerCase()) {
       case "study computer science":
-        classType = ClassType.StudyComputerScience;
+        classType = UniversityClassType.computerScience;
         break;
       case "data structures":
-        classType = ClassType.DataStructures;
+        classType = UniversityClassType.dataStructures;
         break;
       case "networks":
-        classType = ClassType.Networks;
+        classType = UniversityClassType.networks;
         break;
       case "algorithms":
-        classType = ClassType.Algorithms;
+        classType = UniversityClassType.algorithms;
         break;
       case "management":
-        classType = ClassType.Management;
+        classType = UniversityClassType.management;
         break;
       case "leadership":
-        classType = ClassType.Leadership;
+        classType = UniversityClassType.leadership;
         break;
     }
     if (!classType) return false;
 
     this.startWork(
-      p,
       new SleeveClassWork({
         classType: classType,
         location: loc,
@@ -270,27 +244,23 @@ export class Sleeve extends Person {
     return true;
   }
 
-  /**
-   * Travel to another City. Costs money from player
-   */
-  travel(p: IPlayer, newCity: CityName): boolean {
-    p.loseMoney(CONSTANTS.TravelCost, "sleeves");
+  /** Travel to another City. Costs money from player */
+  travel(newCity: CityName): boolean {
+    Player.loseMoney(CONSTANTS.TravelCost, "sleeves");
     this.city = newCity;
 
     return true;
   }
 
-  hasAugmentation(aug: string): boolean {
-    return this.augmentations.some((a) => a.name === aug);
-  }
-
-  tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
-    if (!p.canAfford(aug.baseCost)) return false;
+  tryBuyAugmentation(aug: Augmentation): boolean {
+    if (!Player.canAfford(aug.baseCost)) {
+      return false;
+    }
 
     // Verify that this sleeve does not already have that augmentation.
     if (this.hasAugmentation(aug.name)) return false;
 
-    p.loseMoney(aug.baseCost, "sleeves");
+    Player.loseMoney(aug.baseCost, "sleeves");
     this.installAugmentation(aug);
     return true;
   }
@@ -303,17 +273,17 @@ export class Sleeve extends Person {
    * Start work for one of the player's companies
    * Returns boolean indicating success
    */
-  workForCompany(p: IPlayer, companyName: string): boolean {
-    if (!(Companies[companyName] instanceof Company) || p.jobs[companyName] == null) {
+  workForCompany(companyName: string): boolean {
+    if (!Companies[companyName] || Player.jobs[companyName] == null) {
       return false;
     }
 
     const company: Company | null = Companies[companyName];
-    const companyPosition: CompanyPosition | null = CompanyPositions[p.jobs[companyName]];
+    const companyPosition: CompanyPosition | null = CompanyPositions[Player.jobs[companyName]];
     if (company == null) return false;
     if (companyPosition == null) return false;
 
-    this.startWork(p, new SleeveCompanyWork({ companyName: companyName }));
+    this.startWork(new SleeveCompanyWork({ companyName: companyName }));
 
     return true;
   }
@@ -322,9 +292,9 @@ export class Sleeve extends Person {
    * Start work for one of the player's factions
    * Returns boolean indicating success
    */
-  workForFaction(p: IPlayer, factionName: string, workType: string): boolean {
+  workForFaction(factionName: string, workType: string): boolean {
     const faction = Factions[factionName];
-    if (factionName === "" || !faction || !(faction instanceof Faction) || !p.factions.includes(factionName)) {
+    if (factionName === "" || !faction || !Player.factions.includes(factionName)) {
       return false;
     }
 
@@ -335,19 +305,18 @@ export class Sleeve extends Person {
     let factionWorkType: FactionWorkType;
     if (sanitizedWorkType.includes("hack")) {
       if (!factionInfo.offerHackingWork) return false;
-      factionWorkType = FactionWorkType.HACKING;
+      factionWorkType = FactionWorkType.hacking;
     } else if (sanitizedWorkType.includes("field")) {
       if (!factionInfo.offerFieldWork) return false;
-      factionWorkType = FactionWorkType.FIELD;
+      factionWorkType = FactionWorkType.field;
     } else if (sanitizedWorkType.includes("security")) {
       if (!factionInfo.offerSecurityWork) return false;
-      factionWorkType = FactionWorkType.SECURITY;
+      factionWorkType = FactionWorkType.security;
     } else {
       return false;
     }
 
     this.startWork(
-      p,
       new SleeveFactionWork({
         factionWorkType: factionWorkType,
         factionName: faction.name,
@@ -357,10 +326,8 @@ export class Sleeve extends Person {
     return true;
   }
 
-  /**
-   * Begin a gym workout task
-   */
-  workoutAtGym(p: IPlayer, gymName: string, stat: string): boolean {
+  /** Begin a gym workout task */
+  workoutAtGym(gymName: string, stat: string): boolean {
     // Set exp/money multipliers based on which university.
     // Also check that the sleeve is in the right city
     let loc: LocationName | undefined;
@@ -399,22 +366,21 @@ export class Sleeve extends Person {
     // set stat to a default value.
     let classType: ClassType | undefined;
     if (sanitizedStat.includes("str")) {
-      classType = ClassType.GymStrength;
+      classType = GymType.strength;
     }
     if (sanitizedStat.includes("def")) {
-      classType = ClassType.GymDefense;
+      classType = GymType.defense;
     }
     if (sanitizedStat.includes("dex")) {
-      classType = ClassType.GymDexterity;
+      classType = GymType.dexterity;
     }
     if (sanitizedStat.includes("agi")) {
-      classType = ClassType.GymAgility;
+      classType = GymType.agility;
     }
     // if stat is still equals its default value, then validation has failed.
     if (!classType) return false;
 
     this.startWork(
-      p,
       new SleeveClassWork({
         classType: classType,
         location: loc,
@@ -424,44 +390,42 @@ export class Sleeve extends Person {
     return true;
   }
 
-  /**
-   * Begin a bladeburner task
-   */
-  bladeburner(p: IPlayer, action: string, contract: string): boolean {
+  /** Begin a bladeburner task */
+  bladeburner(action: string, contract: string): boolean {
+    if (!Player.bladeburner) return false;
     switch (action) {
       case "Field analysis":
-        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Field Analysis" }));
+        this.startWork(new SleeveBladeburnerWork({ type: "General", name: "Field Analysis" }));
         return true;
       case "Recruitment":
-        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Recruitment" }));
+        this.startWork(new SleeveBladeburnerWork({ type: "General", name: "Recruitment" }));
         return true;
       case "Diplomacy":
-        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Diplomacy" }));
+        this.startWork(new SleeveBladeburnerWork({ type: "General", name: "Diplomacy" }));
         return true;
       case "Hyperbolic Regeneration Chamber":
-        this.startWork(p, new SleeveBladeburnerWork({ type: "General", name: "Hyperbolic Regeneration Chamber" }));
+        this.startWork(new SleeveBladeburnerWork({ type: "General", name: "Hyperbolic Regeneration Chamber" }));
         return true;
       case "Infiltrate synthoids":
-        this.startWork(p, new SleeveInfiltrateWork());
+        this.startWork(new SleeveInfiltrateWork());
         return true;
       case "Support main sleeve":
-        this.startWork(p, new SleeveSupportWork(p));
+        this.startWork(new SleeveSupportWork());
         return true;
       case "Take on contracts":
         if (!Contracts[contract]) return false;
-        this.startWork(p, new SleeveBladeburnerWork({ type: "Contracts", name: contract }));
+        this.startWork(new SleeveBladeburnerWork({ type: "Contracts", name: contract }));
         return true;
     }
-
     return false;
   }
 
-  recruitmentSuccessChance(p: IPlayer): number {
-    return Math.max(0, Math.min(1, p.bladeburner?.getRecruitmentSuccessChance(this) ?? 0));
+  recruitmentSuccessChance(): number {
+    return Math.max(0, Math.min(1, Player.bladeburner?.getRecruitmentSuccessChance(this) ?? 0));
   }
 
-  contractSuccessChance(p: IPlayer, type: string, name: string): string {
-    const bb = p.bladeburner;
+  contractSuccessChance(type: string, name: string): string {
+    const bb = Player.bladeburner;
     if (bb === null) {
       const errorLogText = `bladeburner is null`;
       console.error(`Function: sleeves.contractSuccessChance; Message: '${errorLogText}'`);
@@ -487,7 +451,7 @@ export class Sleeve extends Person {
 
     this.hp.current -= amt;
     if (this.hp.current <= 0) {
-      this.shock = Math.max(0, this.shock - 0.5);
+      this.shock = Math.min(100, this.shock + 0.5);
       this.hp.current = this.hp.max;
       return true;
     } else {
@@ -499,16 +463,12 @@ export class Sleeve extends Person {
     return "Sleeve";
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("Sleeve", this);
   }
 
-  /**
-   * Initiatizes a Sleeve object from a JSON save state.
-   */
+  /** Initializes a Sleeve object from a JSON save state. */
   static fromJSON(value: IReviverValue): Sleeve {
     return Generic_fromJSON(Sleeve, value.data);
   }

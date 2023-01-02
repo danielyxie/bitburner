@@ -2,7 +2,7 @@
 // (top-left panel in the Industry UI)
 import React, { useState } from "react";
 
-import { Industries } from "../IndustryData";
+import { IndustryType } from "../data/Enums";
 import { HireAdVert } from "../Actions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
@@ -33,31 +33,35 @@ function MakeProductButton(): React.ReactElement {
     return Object.keys(division.products).length === 0;
   }
 
+  function onButtonClick() {
+    if (hasMaxProducts) return;
+    setMakeOpen(true);
+  }
+
   let createProductButtonText = "";
   switch (division.type) {
-    case Industries.Food:
+    case IndustryType.Food:
       createProductButtonText = "Build Restaurant";
       break;
-    case Industries.Tobacco:
+    case IndustryType.Tobacco:
       createProductButtonText = "Create Product";
       break;
-    case Industries.Pharmaceutical:
+    case IndustryType.Pharmaceutical:
       createProductButtonText = "Create Drug";
       break;
-    case Industries.Computer:
-    case "Computer":
+    case IndustryType.Computers:
       createProductButtonText = "Create Product";
       break;
-    case Industries.Robotics:
+    case IndustryType.Robotics:
       createProductButtonText = "Design Robot";
       break;
-    case Industries.Software:
+    case IndustryType.Software:
       createProductButtonText = "Develop Software";
       break;
-    case Industries.Healthcare:
+    case IndustryType.Healthcare:
       createProductButtonText = "Build Hospital";
       break;
-    case Industries.RealEstate:
+    case IndustryType.RealEstate:
       createProductButtonText = "Develop Property";
       break;
     default:
@@ -78,7 +82,7 @@ function MakeProductButton(): React.ReactElement {
           )
         }
       >
-        <Button color={shouldFlash() ? "error" : "primary"} onClick={() => setMakeOpen(true)} disabled={corp.funds < 0}>
+        <Button color={shouldFlash() ? "error" : "primary"} onClick={onButtonClick} disabled={corp.funds < 0}>
           {createProductButtonText}
         </Button>
       </Tooltip>
@@ -132,7 +136,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         <Tooltip
           title={
             <>
-              <Typography>Total multiplier for this industrys sales due to its awareness and popularity</Typography>
+              <Typography>Total multiplier for this industry's sales due to its awareness and popularity</Typography>
               <StatsTable
                 rows={[
                   ["Awareness Bonus:", "x" + numeralWrapper.formatReallyBigNumber(Math.pow(awarenessFac, 0.85))],
@@ -203,7 +207,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>Scientific Research: {numeralWrapper.formatReallyBigNumber(division.sciResearch.qty)}</Typography>
+          <Typography>Scientific Research: {numeralWrapper.formatReallyBigNumber(division.sciResearch)}</Typography>
         </Tooltip>
         <Button sx={{ mx: 1 }} onClick={() => setResearchOpen(true)}>
           Research

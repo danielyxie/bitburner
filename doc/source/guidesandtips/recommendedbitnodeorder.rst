@@ -466,11 +466,12 @@ Path 1 (new):
    is extremely powerful, as it raises all multipliers by a significant amount. This also a let's you 
    get used to augments and other features resetting.
 
-2. Do **BitNode-3: Corporatocracy** once to unlock the Corporation mechanic. This mechanic
-   has highest profit potential in the game.
+2. Do **BitNode-3: Corporatocracy** at least once to unlock the Corporation mechanic, finishing all
+   3 levels unlocks the full API for free allowing fully scripted corp. This mechanic has highest 
+   profit potential in the game.
 
 3. Do **BitNode-10: Digital Carbon** once to unlock sleeves and grafting. Sleeves are useful in all nodes
-   and grafting can be useful in future BitNodes (especially 8). It's recommended to buy all sleeves and 
+   and grafting can be useful in future BitNodes (especially 8). It's recommended to buy all purchasable sleeves and 
    their memory during the first run.
 
     The ordering of the next three is dependant on playing style and wants/needs.
@@ -481,7 +482,7 @@ Path 1 (new):
    strong because hacking is typically one of the best ways of earning money.
 
 5. Do **BitNode-4: The Singularity**. Its Source-File does not directly make you
-   more powerful in any way, but it does unlock the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_ which
+   more powerful in any way, but it does unlock the `Singularity API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.singularity.md>`_ which
    let you automate significantly more aspects of the game. Consider repeating until Level 3, 
    since each level decreases the RAM cost of Singularity functions.
 
@@ -504,7 +505,7 @@ Path 2 (old):
    strong because hacking is typically one of the best ways of earning money.
 
 3. (Optional) Consider doing **BitNode-4: The Singularity**. Its Source-File does not directly make you
-   more powerful in any way, but it does unlock the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_ which
+   more powerful in any way, but it does unlock the `Singularity API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.singularity.md>`_ which
    let you automate significantly more aspects of the game.
 
 4. Do **BitNode-3: Corporatocracy** once to unlock the Corporation mechanic. This mechanic
@@ -541,12 +542,12 @@ them.
 
 For more scripting/hacking
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-**BitNode-4: The Singularity** unlocks the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_, which
+**BitNode-4: The Singularity** unlocks the `Singularity API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.singularity.md>`_, which
 can be used to automate many different aspects of the game, including working for factions/companies,
 purchasing & installing Augmentations, and creating programs
 
 **BitNode-6** and **BitNode-7** unlock Bladeburner and its corresponding
-`Netscript API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.bladeburner.md>`_. This allows you to automate an entire
+`Netscript API <https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.bladeburner.md>`_. This allows you to automate an entire
 new mechanic.
 
 **BitNode-2: Rise of the Underworld** also unlocks a new mechanic and Netscript API for automating

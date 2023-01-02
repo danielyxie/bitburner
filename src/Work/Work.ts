@@ -1,4 +1,3 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { IReviverValue } from "../utils/JSONReviver";
 
 export abstract class Work {
@@ -12,8 +11,8 @@ export abstract class Work {
     this.cyclesWorked = 0;
   }
 
-  abstract process(player: IPlayer, cycles: number): boolean;
-  abstract finish(player: IPlayer, cancelled: boolean): void;
+  abstract process(cycles: number): boolean;
+  abstract finish(cancelled: boolean): void;
   abstract APICopy(): Record<string, unknown>;
   abstract toJSON(): IReviverValue;
 }

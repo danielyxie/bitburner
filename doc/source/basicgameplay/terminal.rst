@@ -573,7 +573,7 @@ Note that will not be possible to download data from many websites because they
 do not allow cross-origin resource sharing (CORS). This includes websites such
 as gist and pastebin. One notable site it will work on is rawgithub. Example::
 
-    $ wget https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md game_readme.txt
+    $ wget https://raw.githubusercontent.com/bitburner-official/bitburner-src/master/README.md game_readme.txt
 
 Argument Parsing
 ----------------

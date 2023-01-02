@@ -1,20 +1,20 @@
 import React from "react";
 
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import { BlackOperation } from "../BlackOperation";
-import { use } from "../../ui/Context";
+import { Player } from "@player";
 import Button from "@mui/material/Button";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { ActionIdentifier } from "../ActionIdentifier";
 
 interface IProps {
-  bladeburner: IBladeburner;
+  bladeburner: Bladeburner;
   type: number;
   name: string;
   rerender: () => void;
 }
 export function StartButton(props: IProps): React.ReactElement {
-  const player = use.Player();
-  const action = props.bladeburner.getActionObject({ name: props.name, type: props.type });
+  const action = props.bladeburner.getActionObject(new ActionIdentifier({ name: props.name, type: props.type }));
   if (action == null) {
     throw new Error("Failed to get Operation Object for: " + props.name);
   }
@@ -33,8 +33,8 @@ export function StartButton(props: IProps): React.ReactElement {
     if (disabled) return;
     props.bladeburner.action.type = props.type;
     props.bladeburner.action.name = props.name;
-    if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true)) player.finishWork(true);
-    props.bladeburner.startAction(player, props.bladeburner.action);
+    if (!Player.hasAugmentation(AugmentationNames.BladesSimulacrum, true)) Player.finishWork(true);
+    props.bladeburner.startAction(props.bladeburner.action);
     props.rerender();
   }
 

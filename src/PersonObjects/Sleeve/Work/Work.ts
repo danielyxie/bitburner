@@ -1,14 +1,17 @@
-import { IPlayer } from "../../IPlayer";
+import { Player } from "@player";
 import { IReviverValue } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
-import { applyWorkStats, applyWorkStatsExp, scaleWorkStats, WorkStats } from "../../../Work/WorkStats";
+import { applyWorkStatsExp, WorkStats } from "../../../Work/WorkStats";
+import { SleeveTask } from "@nsdefs";
 
-export const applySleeveGains = (player: IPlayer, sleeve: Sleeve, rawStats: WorkStats, cycles = 1): void => {
-  const shockedStats = scaleWorkStats(rawStats, sleeve.shockBonus(), rawStats.money > 0);
-  applyWorkStatsExp(sleeve, shockedStats, cycles);
-  const syncStats = scaleWorkStats(shockedStats, sleeve.syncBonus(), rawStats.money > 0);
-  applyWorkStats(player, player, syncStats, cycles, "sleeves");
-  player.sleeves.filter((s) => s != sleeve).forEach((s) => applyWorkStatsExp(s, syncStats, cycles));
+export const applySleeveGains = (sleeve: Sleeve, shockedStats: WorkStats, mult = 1): void => {
+  applyWorkStatsExp(sleeve, shockedStats, mult);
+  Player.gainMoney(shockedStats.money * mult, "sleeves");
+  const sync = sleeve.syncBonus();
+  // The receiving sleeves and the player do not apply their xp multipliers from augs (avoid double dipping xp mults)
+  applyWorkStatsExp(Player, shockedStats, mult * sync);
+  // Sleeves apply their own shock bonus to the XP they receive, even though it is also shocked by the working sleeve
+  Player.sleeves.forEach((s) => s !== sleeve && applyWorkStatsExp(s, shockedStats, mult * sync * s.shockBonus()));
 };
 
 export abstract class Work {
@@ -18,10 +21,10 @@ export abstract class Work {
     this.type = type;
   }
 
-  abstract process(player: IPlayer, sleeve: Sleeve, cycles: number): number;
-  abstract APICopy(): Record<string, unknown>;
+  abstract process(sleeve: Sleeve, cycles: number): void;
+  abstract APICopy(): SleeveTask;
   abstract toJSON(): IReviverValue;
-  finish(__player: IPlayer): void {
+  finish(): void {
     /* left for children to implement */
   }
 }

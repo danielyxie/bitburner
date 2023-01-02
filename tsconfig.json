@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "paths": {
+      "@player": ["src/Player"],
+      "@nsdefs": ["src/ScriptEditor/NetscriptDefinitions"]
+    },
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react",

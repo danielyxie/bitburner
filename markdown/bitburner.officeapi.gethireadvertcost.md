@@ -4,7 +4,7 @@
 
 ## OfficeAPI.getHireAdVertCost() method
 
-Get the cost to Hire AdVert
+Get the cost to hire AdVert.
 
 <b>Signature:</b>
 
@@ -16,11 +16,11 @@ getHireAdVertCost(divisionName: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string | Name of the division |
+|  divisionName | string | Name of the division. |
 
 <b>Returns:</b>
 
 number
 
-Cost
+The cost to hire AdVert.
 

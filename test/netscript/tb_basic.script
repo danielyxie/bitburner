@@ -3,7 +3,7 @@ function test(name, val) {
         tprint("Test " + name + ": OK");
     } else {
         tprint("Test " + name + ": FAILED");
-        //A failed test prints failure to results text file 
+        //A failed test prints failure to results text file
         write("tb_results.txt", "FAIL");
     }
 }
@@ -34,11 +34,11 @@ test("logic11", !(0 != 0));
 
 //Assignment
 i = 5;
-test("asgn1", i == 5);
+test("assign1", i == 5);
 i = 0;
-test("asgn2", i === 0);
-test("asgn3", 10 === (i = 10));
-test("asgn4", i === 10);
+test("assign2", i === 0);
+test("assign3", 10 === (i = 10));
+test("assign4", i === 10);
 
 
 //Basic array functionality
@@ -106,7 +106,7 @@ res = false && tprint('4');
 res = 1 < 0 && tprint('5');
 test("shortcircuit7", results.length === 5);
 
-//Conditional Statements 
+//Conditional Statements
 results = [];
 i = 1;
 if (i == 0) {

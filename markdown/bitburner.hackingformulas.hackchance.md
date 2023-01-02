@@ -9,7 +9,7 @@ Calculate hack chance. (Ex: 0.25 would indicate a 25% chance of success.)
 <b>Signature:</b>
 
 ```typescript
-hackChance(server: Server, player: Player): number;
+hackChance(server: Server, player: Person): number;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ hackChance(server: Server, player: Player): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
-|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
+|  player | [Person](./bitburner.person.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 

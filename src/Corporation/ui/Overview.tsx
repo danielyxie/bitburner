@@ -11,7 +11,7 @@ import { FindInvestorsModal } from "./modals/FindInvestorsModal";
 import { GoPublicModal } from "./modals/GoPublicModal";
 import { Factions } from "../../Faction/Factions";
 
-import { CorporationConstants } from "../data/Constants";
+import * as corpConstants from "../data/Constants";
 import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "../data/CorporationUnlockUpgrades";
 import { CorporationUpgrade, CorporationUpgradeIndex, CorporationUpgrades } from "../data/CorporationUpgrades";
 
@@ -21,7 +21,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { StatsTable } from "../../ui/React/StatsTable";
-import { use } from "../../ui/Context";
+import { Player } from "@player";
 import { useCorporation } from "./Context";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
@@ -34,7 +34,6 @@ interface IProps {
   rerender: () => void;
 }
 export function Overview({ rerender }: IProps): React.ReactElement {
-  const player = use.Player();
   const corp = useCorporation();
   const profit: number = corp.revenue - corp.expenses;
 
@@ -100,7 +99,7 @@ export function Overview({ rerender }: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Button onClick={() => corp.getStarterGuide(player)}>Getting Started Guide</Button>
+          <Button onClick={() => corp.getStarterGuide()}>Getting Started Guide</Button>
         </Tooltip>
         {corp.public ? <PublicButtons rerender={rerender} /> : <PrivateButtons rerender={rerender} />}
         <BribeButton />
@@ -240,12 +239,11 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
 }
 
 function BribeButton(): React.ReactElement {
-  const player = use.Player();
   const corp = useCorporation();
   const [open, setOpen] = useState(false);
   const canBribe =
-    corp.valuation >= CorporationConstants.BribeThreshold &&
-    player.factions.filter((f) => Factions[f].getInfo().offersWork()).length > 0;
+    corp.valuation >= corpConstants.bribeThreshold &&
+    Player.factions.filter((f) => Factions[f].getInfo().offersWork()).length > 0;
 
   function openBribe(): void {
     if (!canBribe) return;
@@ -279,7 +277,7 @@ function DividendsStats({ profit }: IDividendsStatsProps): React.ReactElement {
   const totalDividends = corp.dividendRate * profit;
   const retainedEarnings = profit - totalDividends;
   const dividendsPerShare = totalDividends / corp.totalShares;
-  const playerEarnings = corp.getCycleDividends() / CorporationConstants.SecsPerMarketCycle;
+  const playerEarnings = corp.getCycleDividends() / corpConstants.secondsPerMarketCycle;
   return (
     <StatsTable
       rows={[
@@ -298,10 +296,21 @@ function BonusTime(): React.ReactElement {
   const storedTime = corp.storedCycles * CONSTANTS.MilliPerCycle;
   if (storedTime <= 15000) return <></>;
   return (
-    <Typography>
-      Bonus time: {convertTimeMsToTimeElapsedString(storedTime)}
-      <br />
-      <br />
-    </Typography>
+    <Box display="flex">
+      <Tooltip
+        title={
+          <Typography>
+            You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the
+            browser). Bonus time makes the Corporation mechanic progress faster, up to 10x the normal speed.
+          </Typography>
+        }
+      >
+        <Typography>
+          Bonus time: {convertTimeMsToTimeElapsedString(storedTime)}
+          <br />
+          <br />
+        </Typography>
+      </Tooltip>
+    </Box>
   );
 }

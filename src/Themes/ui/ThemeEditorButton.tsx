@@ -2,14 +2,9 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import { ThemeEditorModal } from "./ThemeEditorModal";
-import { IRouter } from "../../ui/Router";
 import ColorizeIcon from "@mui/icons-material/Colorize";
 
-interface IProps {
-  router: IRouter;
-}
-
-export function ThemeEditorButton({ router }: IProps): React.ReactElement {
+export function ThemeEditorButton(): React.ReactElement {
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
   return (
     <>
@@ -18,7 +13,7 @@ export function ThemeEditorButton({ router }: IProps): React.ReactElement {
           Theme Editor
         </Button>
       </Tooltip>
-      <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} router={router} />
+      <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
     </>
   );
 }

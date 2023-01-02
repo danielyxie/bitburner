@@ -13,7 +13,7 @@ import { ThemeEvents } from "./Theme";
 import { Settings } from "../../Settings/Settings";
 import { defaultStyles } from "../Styles";
 import { Tooltip } from "@mui/material";
-import { IStyleSettings } from "../../ScriptEditor/NetscriptDefinitions";
+import { IStyleSettings } from "@nsdefs";
 
 interface IProps {
   open: boolean;

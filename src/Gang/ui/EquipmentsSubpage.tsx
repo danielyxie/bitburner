@@ -1,6 +1,3 @@
-/**
- * React Component for the popup that manages gang members upgrades
- */
 import React, { useState } from "react";
 import { useGang } from "./Context";
 
@@ -19,7 +16,7 @@ import { GangMemberUpgrade } from "../GangMemberUpgrade";
 import { Money } from "../../ui/React/Money";
 import { GangMember } from "../GangMember";
 import { UpgradeType } from "../data/upgrades";
-import { use } from "../../ui/Context";
+import { Player } from "@player";
 import { Settings } from "../../Settings/Settings";
 import { StatsRow } from "../../ui/React/StatsRow";
 
@@ -30,11 +27,10 @@ interface INextRevealProps {
 
 function NextReveal(props: INextRevealProps): React.ReactElement {
   const gang = useGang();
-  const player = use.Player();
   const upgrades = Object.keys(GangMemberUpgrades)
     .filter((upgName: string) => {
       const upg = GangMemberUpgrades[upgName];
-      if (player.money > gang.getUpgradeCost(upg)) return false;
+      if (Player.money > gang.getUpgradeCost(upg)) return false;
       if (upg.type !== props.type) return false;
       if (props.upgrades.includes(upgName)) return false;
       return true;
@@ -68,9 +64,8 @@ interface IUpgradeButtonProps {
 
 function UpgradeButton(props: IUpgradeButtonProps): React.ReactElement {
   const gang = useGang();
-  const player = use.Player();
   function onClick(): void {
-    props.member.buyUpgrade(props.upg, player, gang);
+    props.member.buyUpgrade(props.upg);
     props.rerender();
   }
   return (
@@ -91,7 +86,6 @@ interface IPanelProps {
 
 function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
   const gang = useGang();
-  const player = use.Player();
   const setRerender = useState(false)[1];
   const [currentCategory, setCurrentCategory] = useState("Weapons");
 
@@ -103,7 +97,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
     return Object.keys(GangMemberUpgrades)
       .filter((upgName: string) => {
         const upg = GangMemberUpgrades[upgName];
-        if (player.money < gang.getUpgradeCost(upg)) return false;
+        if (Player.money < gang.getUpgradeCost(upg)) return false;
         if (upg.type !== type) return false;
         if (list.includes(upgName)) return false;
         return true;
@@ -247,6 +241,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
   );
 }
 
+/** React Component for the popup that manages gang members upgrades */
 export function EquipmentsSubpage(): React.ReactElement {
   const gang = useGang();
   const [filter, setFilter] = useState("");

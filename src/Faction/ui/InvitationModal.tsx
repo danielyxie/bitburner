@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { joinFaction } from "../FactionHelpers";
 import { Faction } from "../Faction";
 import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
+import { Player } from "@player";
 import { EventEmitter } from "../../utils/EventEmitter";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -11,11 +11,10 @@ export const InvitationEvent = new EventEmitter<[Faction]>();
 
 export function InvitationModal(): React.ReactElement {
   const [faction, setFaction] = useState<Faction | null>(null);
-  const player = use.Player();
   function join(): void {
     if (faction === null) return;
     //Remove from invited factions
-    const i = player.factionInvitations.findIndex((facName) => facName === faction.name);
+    const i = Player.factionInvitations.findIndex((facName) => facName === faction.name);
     if (i === -1) {
       console.error("Could not find faction in Player.factionInvitations");
     }

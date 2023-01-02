@@ -2,18 +2,22 @@
 
 [Home](./index.md) &gt; [bitburner](./bitburner.md) &gt; [NSEnums](./bitburner.nsenums.md)
 
-## NSEnums interface
+## NSEnums type
 
 
 <b>Signature:</b>
 
 ```typescript
-export interface NSEnums 
+export type NSEnums = {
+  CityName: typeof CityName;
+  CrimeType: typeof CrimeType;
+  FactionWorkType: typeof FactionWorkType;
+  GymType: typeof GymType;
+  JobName: typeof JobName;
+  LocationName: typeof LocationName;
+  ToastVariant: typeof ToastVariant;
+  UniversityClassType: typeof UniversityClassType;
+};
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [toast](./bitburner.nsenums.toast.md) | typeof [ToastVariant](./bitburner.toastvariant.md) |  |
+<b>References:</b> [CityName](./bitburner.cityname.md)<!-- -->, [CrimeType](./bitburner.crimetype.md)<!-- -->, [FactionWorkType](./bitburner.factionworktype.md)<!-- -->, [GymType](./bitburner.gymtype.md)<!-- -->, [JobName](./bitburner.jobname.md)<!-- -->, [LocationName](./bitburner.locationname.md)<!-- -->, [ToastVariant](./bitburner.toastvariant.md)<!-- -->, [UniversityClassType](./bitburner.universityclasstype.md)
 

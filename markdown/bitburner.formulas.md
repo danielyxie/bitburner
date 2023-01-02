@@ -32,6 +32,7 @@ You need Formulas.exe on your home computer to use this API.
 
 |  Method | Description |
 |  --- | --- |
+|  [mockPerson()](./bitburner.formulas.mockperson.md) |  |
 |  [mockPlayer()](./bitburner.formulas.mockplayer.md) |  |
 |  [mockServer()](./bitburner.formulas.mockserver.md) |  |
 

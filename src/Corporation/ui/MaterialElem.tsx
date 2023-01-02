@@ -2,7 +2,6 @@
 // (right-side panel in the Industry UI)
 import React, { useState } from "react";
 
-import { OfficeSpace } from "../OfficeSpace";
 import { Material } from "../Material";
 import { Warehouse } from "../Warehouse";
 import { ExportModal } from "./modals/ExportModal";
@@ -22,10 +21,11 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { LimitMaterialProductionModal } from "./modals/LimitMaterialProductionModal";
+import { CityName } from "../../Enums";
 
 interface IMaterialProps {
   warehouse: Warehouse;
-  city: string;
+  city: CityName;
   mat: Material;
   rerender: () => void;
 }
@@ -45,13 +45,13 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
   const mat = props.mat;
   const markupLimit = mat.getMarkupLimit();
   const office = division.offices[city];
-  if (!(office instanceof OfficeSpace)) {
+  if (!office) {
     throw new Error(`Could not get OfficeSpace object for this city (${city})`);
   }
 
-  // Numeraljs formatter
+  // Numeral.js formatter
   const nf = "0.000";
-  const nfB = "0.000a"; // For numbers that might be biger
+  const nfB = "0.000a"; // For numbers that might be bigger
 
   // Total gain or loss of this material (per second)
   const totalGain = mat.buy + mat.prd + mat.imp - mat.sll - mat.totalExp;
@@ -62,7 +62,9 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
     division.newInd && Object.keys(division.reqMats).includes(mat.name) && mat.buy === 0 && mat.imp === 0;
 
   // Purchase material button
-  const purchaseButtonText = `Buy (${numeralWrapper.format(mat.buy, nfB)})`;
+  const purchaseButtonText = `Buy (${
+    mat.buy >= 1e33 ? mat.buy.toExponential(3) : numeralWrapper.format(mat.buy, nfB)
+  })`;
 
   // Sell material button
   let sellButtonText: JSX.Element;
@@ -126,7 +128,7 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
           <Tooltip
             title={
               <Typography>
-                Buy: {numeralWrapper.format(mat.buy, nfB)} <br />
+                Buy: {mat.buy >= 1e33 ? mat.buy.toExponential(3) : numeralWrapper.format(mat.buy, nfB)} <br />
                 Prod: {numeralWrapper.format(mat.prd, nfB)} <br />
                 Sell: {numeralWrapper.format(mat.sll, nfB)} <br />
                 Export: {numeralWrapper.format(mat.totalExp, nfB)} <br />
@@ -139,7 +141,8 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
             }
           >
             <Typography>
-              {mat.name}: {numeralWrapper.format(mat.qty, nfB)} ({numeralWrapper.format(totalGain, nfB)}/s)
+              {mat.name}: {numeralWrapper.format(mat.qty, nfB)} (
+              {totalGain >= 1e33 ? totalGain.toExponential(3) : numeralWrapper.format(totalGain, nfB)}/s)
             </Typography>
           </Tooltip>
           <Tooltip

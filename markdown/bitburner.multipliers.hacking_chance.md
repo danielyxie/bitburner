@@ -4,6 +4,8 @@
 
 ## Multipliers.hacking\_chance property
 
+Multiplier to chance of successfully performing a hack
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## Multipliers.charisma property
 
+Multiplier to charisma skill
+
 <b>Signature:</b>
 
 ```typescript

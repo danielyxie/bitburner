@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export enum OrderTypes 
+declare enum OrderTypes 
 ```
 
 ## Enumeration Members

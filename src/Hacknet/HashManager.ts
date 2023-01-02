@@ -9,7 +9,6 @@
 import { HashUpgrades } from "./HashUpgrades";
 import { HashUpgrade } from "./HashUpgrade";
 
-import { IMap } from "../types";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../utils/JSONReviver";
 
 export class HashManager {
@@ -21,7 +20,7 @@ export class HashManager {
   hashes = 0;
 
   // Map of Hash Upgrade Name -> levels in that upgrade
-  upgrades: IMap<number> = {};
+  upgrades: Record<string, number> = {};
 
   constructor() {
     for (const name of Object.keys(HashUpgrades)) {
@@ -29,9 +28,7 @@ export class HashManager {
     }
   }
 
-  /**
-   * Generic helper function for getting a multiplier from a HashUpgrade
-   */
+  /** Generic helper function for getting a multiplier from a HashUpgrade */
   getMult(upgName: string): number {
     const upg = HashUpgrades[upgName];
     const currLevel = this.upgrades[upgName];
@@ -43,18 +40,14 @@ export class HashManager {
     return 1 + (upg.value * currLevel) / 100;
   }
 
-  /**
-   * One of the Hash upgrades improves studying. This returns that multiplier
-   */
+  /** One of the Hash upgrades improves studying. This returns that multiplier */
   getStudyMult(): number {
     const upgName = "Improve Studying";
 
     return this.getMult(upgName);
   }
 
-  /**
-   * One of the Hash upgrades improves gym training. This returns that multiplier
-   */
+  /** One of the Hash upgrades improves gym training. This returns that multiplier */
   getTrainingMult(): number {
     const upgName = "Improve Gym Training";
 
@@ -70,9 +63,7 @@ export class HashManager {
     return upg;
   }
 
-  /**
-   * Get the cost (in hashes) of an upgrade
-   */
+  /** Get the cost (in hashes) of an upgrade */
   getUpgradeCost(upgName: string, count = 1): number {
     const upg = this.getUpgrade(upgName);
     const currLevel = this.upgrades[upgName];
@@ -94,9 +85,7 @@ export class HashManager {
     this.updateCapacity(0);
   }
 
-  /**
-   * Reverts an upgrade and refunds the hashes used to buy it
-   */
+  /** Reverts an upgrade and refunds the hashes used to buy it */
   refundUpgrade(upgName: string, count = 1): void {
     const upg = HashUpgrades[upgName];
 
@@ -161,7 +150,7 @@ export class HashManager {
     return Generic_toJSON("HashManager", this);
   }
 
-  // Initiatizes a HashManager object from a JSON save state.
+  // Initializes a HashManager object from a JSON save state.
   static fromJSON(value: IReviverValue): HashManager {
     return Generic_fromJSON(HashManager, value.data);
   }

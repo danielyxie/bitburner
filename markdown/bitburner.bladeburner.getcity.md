@@ -9,11 +9,11 @@ Get current city.
 <b>Signature:</b>
 
 ```typescript
-getCity(): string;
+getCity(): CityName;
 ```
 <b>Returns:</b>
 
-string
+[CityName](./bitburner.cityname.md)
 
 City that the player is currently in (for Bladeburner).
 

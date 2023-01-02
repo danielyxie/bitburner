@@ -4,7 +4,7 @@
 
 ## NS.growthAnalyze() method
 
-Calculate the number of grow thread needed to grow a server by a certain multiplier.
+Calculate the number of grow threads needed to grow a server by a certain multiplier.
 
 <b>Signature:</b>
 
@@ -17,14 +17,14 @@ growthAnalyze(host: string, growthAmount: number, cores?: number): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  host | string | Hostname of the target server. |
-|  growthAmount | number | Multiplicative factor by which the server is grown. Decimal form.. |
+|  growthAmount | number | Multiplicative factor by which the server is grown. Decimal form. |
 |  cores | number |  |
 
 <b>Returns:</b>
 
 number
 
-The amount of grow calls needed to grow the specified server by the specified amount
+The amount of grow calls needed to grow the specified server by the specified amount.
 
 ## Remarks
 

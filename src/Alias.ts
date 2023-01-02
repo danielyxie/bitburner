@@ -1,8 +1,7 @@
-import { IMap } from "./types";
 import { Terminal } from "./Terminal";
 
-export let Aliases: IMap<string> = {};
-export let GlobalAliases: IMap<string> = {};
+export let Aliases: Record<string, string> = {};
+export let GlobalAliases: Record<string, string> = {};
 
 export function loadAliases(saveString: string): void {
   if (saveString === "") {
@@ -36,10 +35,8 @@ export function printAliases(): void {
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global = false): boolean {
-  console.log(dec);
   const re = /^([\w|!%,@-]+)=(.+)$/;
   const matches = dec.match(re);
-  console.log(matches);
   if (matches == null || matches.length != 3) {
     return false;
   }
@@ -102,7 +99,7 @@ export function removeAlias(name: string): boolean {
 export function substituteAliases(origCommand: string): string {
   const commandArray = origCommand.split(" ");
   if (commandArray.length > 0) {
-    // For the alias and unalias commands, dont substite
+    // For the alias and unalias commands, don't substitute
     if (commandArray[0] === "unalias" || commandArray[0] === "alias") {
       return commandArray.join(" ");
     }

@@ -52,7 +52,7 @@ export interface IErrorData {
   issueUrl: string;
 }
 
-export const newIssueUrl = `https://github.com/danielyxie/bitburner/issues/new`;
+export const newIssueUrl = `https://github.com/bitburner-official/bitburner-src/issues/new`;
 
 function getErrorMetadata(error: Error, errorInfo?: React.ErrorInfo, page?: Page): IErrorMetadata {
   const isElectron = navigator.userAgent.toLowerCase().indexOf(" electron/") > -1;
@@ -89,7 +89,7 @@ export function getErrorForDisplay(error: Error, errorInfo?: React.ErrorInfo, pa
     `lang=${metadata.features.language} cookiesEnabled=${metadata.features.cookiesEnabled.toString()}` +
     ` doNotTrack=${metadata.features.doNotTrack ?? "null"} indexedDb=${metadata.features.indexedDb.toString()}`;
 
-  const title = `${metadata.error.name}: ${metadata.error.message}${metadata.page && ` (at "${Page[metadata.page]}")`}`;
+  const title = `${metadata.error.name}: ${metadata.error.message} (at "${metadata.page}")`;
   const body = `
 ## ${title}
 
@@ -104,7 +104,7 @@ Please fill this information with details if relevant.
 ### Environment
 
 * Error: ${metadata.error?.toString() ?? "n/a"}
-* Page: ${metadata.page ? Page[metadata.page] : "n/a"}
+* Page: ${metadata.page ?? "n/a"}
 * Version: ${metadata.version.toDisplay()}
 * Environment: ${GameEnv[metadata.environment]}
 * Platform: ${Platform[metadata.platform]}

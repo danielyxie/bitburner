@@ -16,7 +16,10 @@ interface WorkFormulas
 
 |  Method | Description |
 |  --- | --- |
-|  [classGains(player, classType, locationName)](./bitburner.workformulas.classgains.md) |  |
-|  [crimeGains(crimeType)](./bitburner.workformulas.crimegains.md) |  |
-|  [factionGains(player, workType, favor)](./bitburner.workformulas.factiongains.md) |  |
+|  [companyGains(person, companyName, workType, favor)](./bitburner.workformulas.companygains.md) |  |
+|  [crimeGains(person, crimeType)](./bitburner.workformulas.crimegains.md) |  |
+|  [crimeSuccessChance(person, crimeType)](./bitburner.workformulas.crimesuccesschance.md) |  |
+|  [factionGains(person, workType, favor)](./bitburner.workformulas.factiongains.md) |  |
+|  [gymGains(person, gymType, locationName)](./bitburner.workformulas.gymgains.md) |  |
+|  [universityGains(person, classType, locationName)](./bitburner.workformulas.universitygains.md) |  |
 

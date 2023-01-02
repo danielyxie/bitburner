@@ -7,18 +7,17 @@ import { ActionLevel } from "./ActionLevel";
 import { Autolevel } from "./Autolevel";
 import { StartButton } from "./StartButton";
 import { TeamSizeButton } from "./TeamSizeButton";
-import { IBladeburner } from "../IBladeburner";
+import { Bladeburner } from "../Bladeburner";
 import { Operation } from "../Operation";
 import { Operations } from "../data/Operations";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { CopyableText } from "../../ui/React/CopyableText";
 
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
 interface IProps {
-  bladeburner: IBladeburner;
-  player: IPlayer;
+  bladeburner: Bladeburner;
   action: Operation;
 }
 
@@ -33,7 +32,7 @@ export function OperationElem(props: IProps): React.ReactElement {
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,
     props.bladeburner.actionTimeToComplete,
   );
-  const actionTime = props.action.getActionTime(props.bladeburner, props.player);
+  const actionTime = props.action.getActionTime(props.bladeburner, Player);
 
   const actionData = Operations[props.action.name];
   if (actionData === undefined) {

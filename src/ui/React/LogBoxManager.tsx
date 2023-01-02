@@ -139,12 +139,26 @@ function LogWindow(props: IProps): React.ReactElement {
   const [script, setScript] = useState(props.script);
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
+  const textArea = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
   const [size, setSize] = useState<[number, number]>([500, 500]);
   const [minimized, setMinimized] = useState(false);
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  const textAreaKeyDown = (e: React.KeyboardEvent) => {
+    if (e.ctrlKey && e.key === "a") {
+      if (!textArea.current) return; //Should never happen
+      const r = new Range();
+      r.setStartBefore(textArea.current);
+      r.setEndAfter(textArea.current);
+      document.getSelection()?.removeAllRanges();
+      document.getSelection()?.addRange(r);
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
 
   const onResize = (e: React.SyntheticEvent, { size }: ResizeCallbackData) => {
     setSize([size.width, size.height]);
@@ -156,10 +170,10 @@ function LogWindow(props: IProps): React.ReactElement {
   //       setTimeout(() => {
   //         const server = GetServer(script.server);
   //         if (server === null) return;
-  //         const exisitingScript = findRunningScript(script.filename, script.args, server);
-  //         if (exisitingScript) {
-  //           exisitingScript.logs = script.logs.concat(exisitingScript.logs)
-  //           setScript(exisitingScript)
+  //         const existingScript = findRunningScript(script.filename, script.args, server);
+  //         if (existingScript) {
+  //           existingScript.logs = script.logs.concat(existingScript.logs)
+  //           setScript(existingScript)
   //         }
   //         rerender();
   //       }, 100)
@@ -364,15 +378,18 @@ function LogWindow(props: IProps): React.ReactElement {
 
             <Paper
               className={classes.logs}
-              sx={{ height: `calc(100% - ${minConstraints[1]}px)`, display: minimized ? "none" : "flex" }}
+              style={{ height: `calc(100% - ${minConstraints[1]}px)`, display: minimized ? "none" : "flex" }}
+              tabIndex={-1}
+              ref={textArea}
+              onKeyDown={textAreaKeyDown}
             >
-              <span style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 {script.logs.map(
                   (line: string, i: number): JSX.Element => (
                     <ANSIITypography key={i} text={line} color={lineColor(line)} />
                   ),
                 )}
-              </span>
+              </div>
             </Paper>
           </>
         </ResizableBox>

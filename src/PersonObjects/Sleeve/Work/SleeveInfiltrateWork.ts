@@ -1,4 +1,4 @@
-import { IPlayer } from "../../IPlayer";
+import { Player } from "@player";
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
 import { Work, WorkType } from "./Work";
@@ -20,32 +20,27 @@ export class SleeveInfiltrateWork extends Work {
     return infiltrateCycles;
   }
 
-  process(player: IPlayer, sleeve: Sleeve, cycles: number): number {
-    if (!player.bladeburner) throw new Error("sleeve doing blade work without being a member");
+  process(_sleeve: Sleeve, cycles: number) {
+    if (!Player.bladeburner) throw new Error("sleeve doing blade work without being a member");
     this.cyclesWorked += cycles;
     if (this.cyclesWorked > this.cyclesNeeded()) {
       this.cyclesWorked -= this.cyclesNeeded();
-      player.bladeburner.infiltrateSynthoidCommunities(player);
+      Player.bladeburner.infiltrateSynthoidCommunities();
     }
-    return 0;
   }
 
-  APICopy(): Record<string, unknown> {
+  APICopy() {
     return {
-      type: this.type,
+      type: WorkType.INFILTRATE as "INFILTRATE",
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("SleeveInfiltrateWork", this);
   }
 
-  /**
-   * Initiatizes a BladeburnerWork object from a JSON save state.
-   */
+  /** Initializes a BladeburnerWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): SleeveInfiltrateWork {
     return Generic_fromJSON(SleeveInfiltrateWork, value.data);
   }

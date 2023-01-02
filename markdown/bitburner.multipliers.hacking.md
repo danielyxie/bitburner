@@ -4,6 +4,8 @@
 
 ## Multipliers.hacking property
 
+Multiplier to hacking skill
+
 <b>Signature:</b>
 
 ```typescript

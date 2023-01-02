@@ -1,59 +1,15 @@
 import { Reviver, Generic_toJSON, Generic_fromJSON, IReviverValue } from "../utils/JSONReviver";
 import { Crime } from "../Crime/Crime";
 import { CONSTANTS } from "../Constants";
-import { determineCrimeSuccess } from "../Crime/CrimeHelpers";
+import { determineCrimeSuccess, findCrime } from "../Crime/CrimeHelpers";
 import { Crimes } from "../Crime/Crimes";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { CrimeType } from "../utils/WorkType";
+import { CrimeType } from "../Enums";
 import { Work, WorkType } from "./Work";
 import { scaleWorkStats, WorkStats } from "./WorkStats";
-import { calculateCrimeWorkStats } from "./formulas/Crime";
-
-enum newCrimeType {
-  SHOPLIFT = "SHOPLIFT",
-  ROBSTORE = "ROBSTORE",
-  MUG = "MUG",
-  LARCENY = "LARCENY",
-  DRUGS = "DRUGS",
-  BONDFORGERY = "BONDFORGERY",
-  TRAFFICKARMS = "TRAFFICKARMS",
-  HOMICIDE = "HOMICIDE",
-  GRANDTHEFTAUTO = "GRANDTHEFTAUTO",
-  KIDNAP = "KIDNAP",
-  ASSASSINATION = "ASSASSINATION",
-  HEIST = "HEIST",
-}
-
-const convertCrimeType = (crimeType: CrimeType): newCrimeType => {
-  switch (crimeType) {
-    case CrimeType.SHOPLIFT:
-      return newCrimeType.SHOPLIFT;
-    case CrimeType.ROB_STORE:
-      return newCrimeType.ROBSTORE;
-    case CrimeType.MUG:
-      return newCrimeType.MUG;
-    case CrimeType.LARCENY:
-      return newCrimeType.LARCENY;
-    case CrimeType.DRUGS:
-      return newCrimeType.DRUGS;
-    case CrimeType.BOND_FORGERY:
-      return newCrimeType.BONDFORGERY;
-    case CrimeType.TRAFFIC_ARMS:
-      return newCrimeType.TRAFFICKARMS;
-    case CrimeType.HOMICIDE:
-      return newCrimeType.HOMICIDE;
-    case CrimeType.GRAND_THEFT_AUTO:
-      return newCrimeType.GRANDTHEFTAUTO;
-    case CrimeType.KIDNAP:
-      return newCrimeType.KIDNAP;
-    case CrimeType.ASSASSINATION:
-      return newCrimeType.ASSASSINATION;
-    case CrimeType.HEIST:
-      return newCrimeType.HEIST;
-  }
-  return newCrimeType.SHOPLIFT;
-};
+import { calculateCrimeWorkStats } from "./Formulas";
+import { checkEnum } from "../utils/helpers/enum";
 
 interface CrimeWorkParams {
   crimeType: CrimeType;
@@ -68,32 +24,33 @@ export class CrimeWork extends Work {
 
   constructor(params?: CrimeWorkParams) {
     super(WorkType.CRIME, params?.singularity ?? true);
-    this.crimeType = params?.crimeType ?? CrimeType.SHOPLIFT;
+    this.crimeType = params?.crimeType ?? CrimeType.shoplift;
     this.unitCompleted = 0;
   }
 
   getCrime(): Crime {
-    const crime = Object.values(Crimes).find((c) => c.type === this.crimeType);
-    if (!crime) throw new Error("CrimeWork object constructed with invalid crime type");
-    return crime;
+    if (!checkEnum(CrimeType, this.crimeType)) {
+      throw new Error("CrimeWork object constructed with invalid crime type");
+    }
+    return Crimes[this.crimeType];
   }
 
-  process(player: IPlayer, cycles = 1): boolean {
+  process(cycles = 1): boolean {
     this.cyclesWorked += cycles;
     const time = Object.values(Crimes).find((c) => c.type === this.crimeType)?.time ?? 0;
     this.unitCompleted += CONSTANTS._idleSpeed * cycles;
     while (this.unitCompleted >= time) {
-      this.commit(player);
+      this.commit();
       this.unitCompleted -= time;
     }
     return false;
   }
 
   earnings(): WorkStats {
-    return calculateCrimeWorkStats(this.getCrime());
+    return calculateCrimeWorkStats(Player, this.getCrime());
   }
 
-  commit(player: IPlayer): void {
+  commit(): void {
     const crime = this.getCrime();
     if (crime == null) {
       dialogBoxCreate(
@@ -101,27 +58,27 @@ export class CrimeWork extends Work {
       );
       return;
     }
-    const focusPenalty = player.focusPenalty();
+    const focusPenalty = Player.focusPenalty();
     // exp times 2 because were trying to maintain the same numbers as before the conversion
     // Technically the definition of Crimes should have the success numbers and failure should divide by 4
     let gains = scaleWorkStats(this.earnings(), focusPenalty, false);
     let karma = crime.karma;
-    const success = determineCrimeSuccess(player, crime.type);
+    const success = determineCrimeSuccess(crime.type);
     if (success) {
-      player.gainMoney(gains.money, "crime");
-      player.numPeopleKilled += crime.kills;
-      player.gainIntelligenceExp(gains.intExp);
+      Player.gainMoney(gains.money, "crime");
+      Player.numPeopleKilled += crime.kills;
+      Player.gainIntelligenceExp(gains.intExp);
     } else {
       gains = scaleWorkStats(gains, 0.25);
       karma /= 4;
     }
-    player.gainHackingExp(gains.hackExp);
-    player.gainStrengthExp(gains.strExp);
-    player.gainDefenseExp(gains.defExp);
-    player.gainDexterityExp(gains.dexExp);
-    player.gainAgilityExp(gains.agiExp);
-    player.gainCharismaExp(gains.chaExp);
-    player.karma -= karma * focusPenalty;
+    Player.gainHackingExp(gains.hackExp);
+    Player.gainStrengthExp(gains.strExp);
+    Player.gainDefenseExp(gains.defExp);
+    Player.gainDexterityExp(gains.dexExp);
+    Player.gainAgilityExp(gains.agiExp);
+    Player.gainCharismaExp(gains.chaExp);
+    Player.karma -= karma * focusPenalty;
   }
 
   finish(): void {
@@ -132,22 +89,20 @@ export class CrimeWork extends Work {
     return {
       type: this.type,
       cyclesWorked: this.cyclesWorked,
-      crimeType: convertCrimeType(this.crimeType),
+      crimeType: checkEnum(CrimeType, this.crimeType) ? this.crimeType : CrimeType.shoplift,
     };
   }
 
-  /**
-   * Serialize the current object to a JSON save state.
-   */
+  /** Serialize the current object to a JSON save state. */
   toJSON(): IReviverValue {
     return Generic_toJSON("CrimeWork", this);
   }
 
-  /**
-   * Initiatizes a CrimeWork object from a JSON save state.
-   */
+  /** Initializes a CrimeWork object from a JSON save state. */
   static fromJSON(value: IReviverValue): CrimeWork {
-    return Generic_fromJSON(CrimeWork, value.data);
+    const crimeWork = Generic_fromJSON(CrimeWork, value.data);
+    crimeWork.crimeType = findCrime(crimeWork.crimeType)?.type ?? CrimeType.shoplift;
+    return crimeWork;
   }
 }
 

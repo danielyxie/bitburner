@@ -9,7 +9,7 @@ Hacknet node related constants
 <b>Signature:</b>
 
 ```typescript
-export interface HacknetNodeConstants 
+interface HacknetNodeConstants 
 ```
 
 ## Properties
@@ -24,7 +24,7 @@ export interface HacknetNodeConstants
 |  [MaxRam](./bitburner.hacknetnodeconstants.maxram.md) | number | Max amount of RAM in GB |
 |  [MoneyGainPerLevel](./bitburner.hacknetnodeconstants.moneygainperlevel.md) | number | Amount of money gained per level |
 |  [PurchaseNextMult](./bitburner.hacknetnodeconstants.purchasenextmult.md) | number | Multiplier to purchase new node |
-|  [RamBaseCost](./bitburner.hacknetnodeconstants.rambasecost.md) | number | Base cost to incrase RAM |
+|  [RamBaseCost](./bitburner.hacknetnodeconstants.rambasecost.md) | number | Base cost to increase RAM |
 |  [UpgradeCoreMult](./bitburner.hacknetnodeconstants.upgradecoremult.md) | number | Multiplier to increase cores |
 |  [UpgradeLevelMult](./bitburner.hacknetnodeconstants.upgradelevelmult.md) | number | Multiplier to increase node level |
 |  [UpgradeRamMult](./bitburner.hacknetnodeconstants.upgraderammult.md) | number | Multiplier to increase RAM |

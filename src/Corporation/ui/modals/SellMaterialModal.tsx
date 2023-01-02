@@ -54,11 +54,11 @@ export function SellMaterialModal(props: IProps): React.ReactElement {
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
         Enter the maximum amount of {props.mat.name} you would like to sell per second, as well as the price at which
-        you would like to sell at.
+        you would like to sell.
         <br />
         <br />
-        If the sell amount is set to 0, then the material will not be sold. If the sell price if set to 0, then the
-        material will be discarded
+        If the sell amount is set to 0, then the material will not be sold. If the sell price is set to 0, then the
+        material will be discarded.
         <br />
         <br />
         Setting the sell amount to 'MAX' will result in you always selling the maximum possible amount of the material.

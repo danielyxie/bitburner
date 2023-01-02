@@ -4,7 +4,7 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { Exploit, ExploitName } from "../../Exploits/Exploit";
-import { Player } from "../../Player";
+import { Player } from "@player";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
 import { SourceFile } from "../../SourceFile/SourceFile";

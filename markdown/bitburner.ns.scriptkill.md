@@ -17,13 +17,13 @@ scriptKill(script: string, host: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script to kill. This is case-sensitive. |
-|  host | string | Host of target server. |
+|  host | string | Hostname of target server. |
 
 <b>Returns:</b>
 
 boolean
 
-true if one or more scripts were successfully killed, and false if none were.
+True if one or more scripts were successfully killed, and false if none were.
 
 ## Remarks
 

@@ -9,7 +9,7 @@ Options to affect the behavior of [hack](./bitburner.ns.hack.md)<!-- -->, [grow]
 <b>Signature:</b>
 
 ```typescript
-export interface BasicHGWOptions 
+interface BasicHGWOptions 
 ```
 
 ## Properties

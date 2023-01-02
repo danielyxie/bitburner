@@ -4,10 +4,10 @@
 
 ## CorporationInfo.divisions property
 
-Array of all divisions
+Array of all division names
 
 <b>Signature:</b>
 
 ```typescript
-divisions: Division[];
+divisions: string[];
 ```

@@ -1,5 +1,5 @@
 import { Factions } from "./Faction/Factions";
-import { IPlayer } from "./PersonObjects/IPlayer";
+import { Player } from "@player";
 
 export let LastExportBonus = 0;
 
@@ -9,9 +9,9 @@ export function canGetBonus(): boolean {
   return now - LastExportBonus > bonusTimer;
 }
 
-export function onExport(p: IPlayer): void {
+export function onExport(): void {
   if (!canGetBonus()) return;
-  for (const facName of p.factions) {
+  for (const facName of Player.factions) {
     Factions[facName].favor++;
   }
   LastExportBonus = new Date().getTime();

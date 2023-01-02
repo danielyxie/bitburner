@@ -1,6 +1,3 @@
-/**
- * Abstract Base Class for any Server object
- */
 import { CodingContract } from "../CodingContracts";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
@@ -12,7 +9,6 @@ import { isScriptFilename } from "../Script/isScriptFilename";
 
 import { createRandomIp } from "../utils/IPAddress";
 import { compareArrays } from "../utils/helpers/compareArrays";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { ScriptArg } from "../Netscript/ScriptArg";
 
 interface IConstructorParams {
@@ -29,7 +25,8 @@ interface writeResult {
   overwritten: boolean;
 }
 
-export class BaseServer {
+/** Abstract Base Class for any Server object */
+export abstract class BaseServer {
   // Coding Contract files on this server
   contracts: CodingContract[] = [];
 
@@ -52,7 +49,7 @@ export class BaseServer {
   // IP Address. Must be unique
   ip = "";
 
-  // Flag indicating whether player is curently connected to this server
+  // Flag indicating whether player is currently connected to this server
   isConnectedTo = false;
 
   // RAM (GB) available on this server
@@ -93,8 +90,11 @@ export class BaseServer {
   // Text files on this server
   textFiles: TextFile[] = [];
 
-  // Flag indicating wehther this is a purchased server
+  // Flag indicating whether this is a purchased server
   purchasedByPlayer = false;
+
+  // Variables that exist only on some types of servers can just be optional.
+  backdoorInstalled?: boolean;
 
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     this.ip = params.ip ? params.ip : createRandomIp();
@@ -151,9 +151,7 @@ export class BaseServer {
     return null;
   }
 
-  /**
-   * Returns boolean indicating whether the given script is running on this server
-   */
+  /** Returns boolean indicating whether the given script is running on this server */
   isRunning(fn: string): boolean {
     for (const runningScriptObj of this.runningScripts) {
       if (runningScriptObj.filename === fn) {
@@ -165,15 +163,8 @@ export class BaseServer {
   }
 
   removeContract(contract: CodingContract | string): void {
-    if (contract instanceof CodingContract) {
-      this.contracts = this.contracts.filter((c) => {
-        return c.fn !== contract.fn;
-      });
-    } else {
-      this.contracts = this.contracts.filter((c) => {
-        return c.fn !== contract;
-      });
-    }
+    const index = this.contracts.findIndex((c) => c.fn === (typeof contract === "string" ? contract : contract.fn));
+    if (index > -1) this.contracts.splice(index, 1);
   }
 
   /**
@@ -244,8 +235,7 @@ export class BaseServer {
     this.maxRam = ram;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateRamUsed(ram: number, player: IPlayer): void {
+  updateRamUsed(ram: number): void {
     this.ramUsed = ram;
   }
 
@@ -264,9 +254,9 @@ export class BaseServer {
 
   /**
    * Write to a script file
-   * Overwrites existing files. Creates new files if the script does not eixst
+   * Overwrites existing files. Creates new files if the script does not exist.
    */
-  writeToScriptFile(player: IPlayer, fn: string, code: string): writeResult {
+  writeToScriptFile(fn: string, code: string): writeResult {
     const ret = { success: false, overwritten: false };
     if (!isValidFilePath(fn) || !isScriptFilename(fn)) {
       return ret;
@@ -277,7 +267,7 @@ export class BaseServer {
       if (fn === this.scripts[i].filename) {
         const script = this.scripts[i];
         script.code = code;
-        script.updateRamUsage(player, this.scripts);
+        script.updateRamUsage(this.scripts);
         script.markUpdated();
         ret.overwritten = true;
         ret.success = true;
@@ -286,7 +276,7 @@ export class BaseServer {
     }
 
     // Otherwise, create a new script
-    const newScript = new Script(player, fn, code, this.hostname, this.scripts);
+    const newScript = new Script(fn, code, this.hostname, this.scripts);
     this.scripts.push(newScript);
     ret.success = true;
     return ret;

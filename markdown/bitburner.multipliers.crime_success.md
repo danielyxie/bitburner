@@ -4,6 +4,8 @@
 
 ## Multipliers.crime\_success property
 
+Multiplier to crime success rate
+
 <b>Signature:</b>
 
 ```typescript

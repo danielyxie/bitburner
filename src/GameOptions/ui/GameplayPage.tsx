@@ -2,10 +2,9 @@ import React from "react";
 import { OptionSwitch } from "../../ui/React/OptionSwitch";
 import { Settings } from "../../Settings/Settings";
 import { GameOptionsPage } from "./GameOptionsPage";
-import { use } from "../../ui/Context";
+import { Player } from "@player";
 
 export const GameplayPage = (): React.ReactElement => {
-  const player = use.Player();
   return (
     <GameOptionsPage title="Gameplay">
       <OptionSwitch
@@ -53,7 +52,7 @@ export const GameplayPage = (): React.ReactElement => {
         text="Suppress TIX messages"
         tooltip={<>If this is set, the stock market will never create any popup.</>}
       />
-      {player.bladeburner && (
+      {Player.bladeburner && (
         <OptionSwitch
           checked={Settings.SuppressBladeburnerPopup}
           onChange={(newValue) => (Settings.SuppressBladeburnerPopup = newValue)}

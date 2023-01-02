@@ -9,14 +9,14 @@ Commit a crime.
 <b>Signature:</b>
 
 ```typescript
-commitCrime(crime: string, focus?: boolean): number;
+commitCrime(crime: CrimeType | `${CrimeType}`, focus?: boolean): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  crime | string | Name of crime to attempt. |
+|  crime | [CrimeType](./bitburner.crimetype.md) \| \`${[CrimeType](./bitburner.crimetype.md)<!-- -->}\` | Name of crime to attempt. |
 |  focus | boolean | Acquire player focus on this crime. Optional. Defaults to true. |
 
 <b>Returns:</b>
@@ -31,7 +31,5 @@ RAM cost: 5 GB \* 16/4/1
 
 This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.
 
-This function returns the number of milliseconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('rob store')` will return 60,000).
-
-Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy Singularity function to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your browser will follow that time limit.
+This function returns the number of milliseconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('Rob Store')` will return 60,000).
 

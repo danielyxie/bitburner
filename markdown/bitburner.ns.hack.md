@@ -4,7 +4,7 @@
 
 ## NS.hack() method
 
-Steal a servers money.
+Steal a server's money.
 
 <b>Signature:</b>
 

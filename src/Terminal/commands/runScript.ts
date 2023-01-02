@@ -1,6 +1,4 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Terminal } from "../../Terminal";
 import { BaseServer } from "../../Server/BaseServer";
 import { LogBoxEvents } from "../../ui/React/LogBoxManager";
 import { startWorkerScript } from "../../NetscriptWorker";
@@ -9,21 +7,15 @@ import { findRunningScript } from "../../Script/ScriptHelpers";
 import * as libarg from "arg";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-export function runScript(
-  terminal: ITerminal,
-  router: IRouter,
-  player: IPlayer,
-  server: BaseServer,
-  commandArgs: (string | number | boolean)[],
-): void {
+export function runScript(commandArgs: (string | number | boolean)[], server: BaseServer): void {
   if (commandArgs.length < 1) {
-    terminal.error(
+    Terminal.error(
       `Bug encountered with Terminal.runScript(). Command array has a length of less than 1: ${commandArgs}`,
     );
     return;
   }
 
-  const scriptName = terminal.getFilepath(commandArgs[0] + "");
+  const scriptName = Terminal.getFilepath(commandArgs[0] + "");
 
   const runArgs = { "--tail": Boolean, "-t": Number };
   const flags = libarg(runArgs, {
@@ -33,7 +25,7 @@ export function runScript(
   const threadFlag = Math.round(parseFloat(flags["-t"]));
   const tailFlag = flags["--tail"] === true;
   if (flags["-t"] !== undefined && (threadFlag < 0 || isNaN(threadFlag))) {
-    terminal.error("Invalid number of threads specified. Number of threads must be greater than 0");
+    Terminal.error("Invalid number of threads specified. Number of threads must be greater than 0");
     return;
   }
   const numThreads = !isNaN(threadFlag) && threadFlag > 0 ? threadFlag : 1;
@@ -41,7 +33,7 @@ export function runScript(
 
   // Check if this script is already running
   if (findRunningScript(scriptName, args, server) != null) {
-    terminal.error(
+    Terminal.error(
       "This script is already running with the same args. Cannot run multiple instances with the same args",
     );
     return;
@@ -52,19 +44,19 @@ export function runScript(
     if (server.scripts[i].filename !== scriptName) {
       continue;
     }
-    // Check for admin rights and that there is enough RAM availble to run
+    // Check for admin rights and that there is enough RAM available to run
     const script = server.scripts[i];
-    script.server = player.getCurrentServer().hostname;
+    script.server = server.hostname;
     const ramUsage = script.ramUsage * numThreads;
     const ramAvailable = server.maxRam - server.ramUsed;
 
     if (!server.hasAdminRights) {
-      terminal.error("Need root access to run script");
+      Terminal.error("Need root access to run script");
       return;
     }
 
     if (ramUsage > ramAvailable + 0.001) {
-      terminal.error(
+      Terminal.error(
         "This machine does not have enough RAM to run this script" +
           (numThreads === 1 ? "" : ` with ${numThreads} threads`) +
           `. Script requires ${numeralWrapper.formatRAM(ramUsage)} of RAM`,
@@ -78,11 +70,11 @@ export function runScript(
 
     const success = startWorkerScript(runningScript, server);
     if (!success) {
-      terminal.error(`Failed to start script`);
+      Terminal.error(`Failed to start script`);
       return;
     }
 
-    terminal.print(
+    Terminal.print(
       `Running script with ${numThreads} thread(s), pid ${runningScript.pid} and args: ${JSON.stringify(args)}.`,
     );
     if (tailFlag) {
@@ -91,5 +83,5 @@ export function runScript(
     return;
   }
 
-  terminal.error("No such script");
+  Terminal.error("No such script");
 }

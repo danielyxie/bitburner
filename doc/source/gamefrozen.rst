@@ -70,4 +70,4 @@ Bug
 ---
 
 Otherwise, the game is probably frozen/stuck due to a bug. To report a bug, follow
-the guidelines `here <https://github.com/danielyxie/bitburner/blob/master/doc/CONTRIBUTING.md#reporting-bugs>`_.
+the guidelines `here <https://github.com/bitburner-official/bitburner-src/blob/master/doc/CONTRIBUTING.md#reporting-bugs>`_.

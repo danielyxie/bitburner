@@ -26,3 +26,5 @@ void
 
 RAM cost: 0 GB
 
+See [print](./bitburner.ns.print.md) for how to add color to your printed strings.
+

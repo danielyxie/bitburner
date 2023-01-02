@@ -1,5 +1,6 @@
-import { IPerson } from "src/PersonObjects/IPerson";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Person } from "src/PersonObjects/Person";
+import { Player } from "@player";
+import { Multipliers } from "../PersonObjects/Multipliers";
 
 export interface WorkStats {
   money: number;
@@ -13,19 +14,7 @@ export interface WorkStats {
   intExp: number;
 }
 
-interface newWorkStatsParams {
-  money?: number;
-  reputation?: number;
-  hackExp?: number;
-  strExp?: number;
-  defExp?: number;
-  dexExp?: number;
-  agiExp?: number;
-  chaExp?: number;
-  intExp?: number;
-}
-
-export const newWorkStats = (params?: newWorkStatsParams): WorkStats => {
+export const newWorkStats = (params?: Partial<WorkStats>): WorkStats => {
   return {
     money: params?.money ?? 0,
     reputation: params?.reputation ?? 0,
@@ -39,6 +28,7 @@ export const newWorkStats = (params?: newWorkStatsParams): WorkStats => {
   };
 };
 
+/** Add two workStats objects */
 export const sumWorkStats = (w0: WorkStats, w1: WorkStats): WorkStats => {
   return {
     money: w0.money + w1.money,
@@ -53,6 +43,7 @@ export const sumWorkStats = (w0: WorkStats, w1: WorkStats): WorkStats => {
   };
 };
 
+/** Scale all stats on a WorkStats object by a number. Money scaling optional but defaults to true. */
 export const scaleWorkStats = (w: WorkStats, n: number, scaleMoney = true): WorkStats => {
   const m = scaleMoney ? n : 1;
   return {
@@ -68,13 +59,7 @@ export const scaleWorkStats = (w: WorkStats, n: number, scaleMoney = true): Work
   };
 };
 
-export const applyWorkStats = (
-  player: IPlayer,
-  target: IPerson,
-  workStats: WorkStats,
-  cycles: number,
-  source: string,
-): WorkStats => {
+export const applyWorkStats = (target: Person, workStats: WorkStats, cycles: number, source: string): WorkStats => {
   const expStats = applyWorkStatsExp(target, workStats, cycles);
   const gains = {
     money: workStats.money * cycles,
@@ -87,23 +72,15 @@ export const applyWorkStats = (
     chaExp: expStats.chaExp,
     intExp: expStats.intExp,
   };
-  player.gainMoney(gains.money, source);
+  Player.gainMoney(gains.money, source);
 
   return gains;
 };
 
-export const applyWorkStatsExp = (target: IPerson, workStats: WorkStats, cycles: number): WorkStats => {
-  const gains = {
-    money: 0,
-    reputation: 0,
-    hackExp: workStats.hackExp * cycles,
-    strExp: workStats.strExp * cycles,
-    defExp: workStats.defExp * cycles,
-    dexExp: workStats.dexExp * cycles,
-    agiExp: workStats.agiExp * cycles,
-    chaExp: workStats.chaExp * cycles,
-    intExp: workStats.intExp * cycles,
-  };
+export const applyWorkStatsExp = (target: Person, workStats: WorkStats, mult = 1): WorkStats => {
+  const gains = scaleWorkStats(workStats, mult, false);
+  gains.money = 0;
+  gains.reputation = 0;
   target.gainHackingExp(gains.hackExp);
   target.gainStrengthExp(gains.strExp);
   target.gainDefenseExp(gains.defExp);
@@ -113,3 +90,18 @@ export const applyWorkStatsExp = (target: IPerson, workStats: WorkStats, cycles:
   target.gainIntelligenceExp(gains.intExp);
   return gains;
 };
+
+/** Calculate the application of a person's multipliers to a WorkStats object */
+export function multWorkStats(workStats: Partial<WorkStats>, mults: Multipliers, moneyMult = 1, repMult = 1) {
+  return {
+    money: (workStats.money ?? 0) * moneyMult,
+    reputation: (workStats.reputation ?? 0) * repMult,
+    hackExp: (workStats.hackExp ?? 0) * mults.hacking_exp,
+    strExp: (workStats.strExp ?? 0) * mults.strength_exp,
+    defExp: (workStats.defExp ?? 0) * mults.defense_exp,
+    dexExp: (workStats.dexExp ?? 0) * mults.dexterity_exp,
+    agiExp: (workStats.agiExp ?? 0) * mults.agility_exp,
+    chaExp: (workStats.chaExp ?? 0) * mults.charisma_exp,
+    intExp: workStats.intExp ?? 0,
+  };
+}

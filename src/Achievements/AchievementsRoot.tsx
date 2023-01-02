@@ -7,7 +7,7 @@ import { Theme } from "@mui/material/styles";
 import { AchievementList } from "./AchievementList";
 import { achievements } from "./Achievements";
 import { Typography } from "@mui/material";
-import { Player } from "../Player";
+import { Player } from "@player";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -1,6 +1,5 @@
 import { CONSTANTS } from "../../src/Constants";
 import { Player } from "../../src/Player";
-import { IMap } from "../../src/types";
 
 import { Company } from "../../src/Company/Company";
 import { Server } from "../../src/Server/Server";
@@ -457,7 +456,7 @@ describe("Stock Market Tests", function () {
 
       it("should trigger a price update when it has enough cycles", function () {
         // Get the initial prices
-        const initialValues: IMap<any> = {};
+        const initialValues: Record<string, any> = {};
         for (const stockName in StockMarket) {
           const stock = StockMarket[stockName];
           if (!(stock instanceof Stock)) {

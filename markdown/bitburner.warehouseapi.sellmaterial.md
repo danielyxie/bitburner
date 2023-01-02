@@ -9,7 +9,13 @@ Set material sell data.
 <b>Signature:</b>
 
 ```typescript
-sellMaterial(divisionName: string, cityName: string, materialName: string, amt: string, price: string): void;
+sellMaterial(
+    divisionName: string,
+    city: CityName | `${CityName}`,
+    materialName: string,
+    amt: string,
+    price: string,
+  ): void;
 ```
 
 ## Parameters
@@ -17,7 +23,7 @@ sellMaterial(divisionName: string, cityName: string, materialName: string, amt: 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
+|  city | [CityName](./bitburner.cityname.md) \| \`${[CityName](./bitburner.cityname.md)<!-- -->}\` | Name of the city |
 |  materialName | string | Name of the material |
 |  amt | string | Amount to sell, can be "MAX" |
 |  price | string | Price to sell, can be "MP" |

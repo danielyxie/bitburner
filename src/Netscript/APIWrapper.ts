@@ -1,30 +1,74 @@
 import { getRamCost } from "./RamCostGenerator";
 import type { WorkerScript } from "./WorkerScript";
-import { Player } from "../Player";
 import { helpers } from "./NetscriptHelpers";
 import { ScriptArg } from "./ScriptArg";
-import { NSEnums } from "src/ScriptEditor/NetscriptDefinitions";
-import { NSFull } from "src/NetscriptFunctions";
+import { cloneDeep } from "lodash";
 
-type ExternalFunction = (...args: unknown[]) => unknown;
+/** Generic type for an enums object */
+type Enums = Record<string, Record<string, string>>;
+/** Permissive type for the documented API functions */
+type APIFn = (...args: any[]) => void;
+/** Type for the actual wrapped function given to the player */
+type WrappedFn = (...args: unknown[]) => unknown;
+/** Type for internal, unwrapped ctx function that produces an APIFunction */
+type InternalFn<F extends APIFn> = (ctx: NetscriptContext) => ((...args: unknown[]) => ReturnType<F>) & F;
+type Key<API> = keyof API & string;
 
-export type ExternalAPILayer = {
-  [key: string]: ExternalAPILayer | ExternalFunction | ScriptArg[];
+export type ExternalAPI<API> = {
+  [key in keyof API]: API[key] extends Enums
+    ? Enums
+    : key extends "args"
+    ? ScriptArg[] // "args" required to be ScriptArg[]
+    : API[key] extends APIFn
+    ? WrappedFn
+    : ExternalAPI<API[key]>;
 };
-
-type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: NetscriptContext) => F;
 
 export type InternalAPI<API> = {
-  [Property in keyof API]: API[Property] extends ExternalFunction
-    ? InternalFunction<API[Property]>
-    : API[Property] extends NSEnums
-    ? NSEnums
-    : API[Property] extends ScriptArg[]
+  [key in keyof API]: API[key] extends Enums
+    ? API[key] & Enums
+    : key extends "args"
     ? ScriptArg[]
-    : API[Property] extends object
-    ? InternalAPI<API[Property]>
-    : never;
+    : API[key] extends APIFn
+    ? InternalFn<API[key]>
+    : InternalAPI<API[key]>;
 };
+/** Any of the possible values on a internal API layer */
+type InternalValues = Enums | ScriptArg[] | InternalFn<APIFn> | InternalAPI<unknown>;
+
+export class StampedLayer {
+  #workerScript: WorkerScript;
+  constructor(ws: WorkerScript, obj: ExternalAPI<unknown>) {
+    this.#workerScript = ws;
+    Object.setPrototypeOf(this, obj);
+  }
+  static wrapFunction<API>(eLayer: ExternalAPI<API>, internalFunc: InternalFn<APIFn>, tree: string[], key: Key<API>) {
+    const arrayPath = [...tree, key];
+    const functionPath = arrayPath.join(".");
+    function wrappedFunction(this: StampedLayer, ...args: unknown[]): unknown {
+      if (!this)
+        throw new Error(`
+ns.${functionPath} called with no this value.
+ns functions must be bound to ns if placed in a new
+variable. e.g.
+
+const ${key} = ns.${functionPath}.bind(ns);
+${key}(${JSON.stringify(args).replace(/^\[|\]$/g, "")});\n\n`);
+      const ctx = { workerScript: this.#workerScript, function: key, functionPath };
+      const func = internalFunc(ctx); //Allows throwing before ram chack
+      helpers.checkEnvFlags(ctx);
+      helpers.updateDynamicRam(ctx, getRamCost(...tree, key));
+      return func(...args);
+    }
+    Object.defineProperty(eLayer, key, { value: wrappedFunction, enumerable: true, writable: false });
+  }
+}
+Object.defineProperty(StampedLayer.prototype, "constructor", {
+  value: Object,
+  enumerable: false,
+  writable: false,
+  configurable: false,
+});
 
 export type NetscriptContext = {
   workerScript: WorkerScript;
@@ -32,77 +76,37 @@ export type NetscriptContext = {
   functionPath: string;
 };
 
-function wrapFunction(
-  wrappedAPI: ExternalAPILayer,
-  workerScript: WorkerScript,
-  func: (_ctx: NetscriptContext) => (...args: unknown[]) => unknown,
-  ...tree: string[]
-): void {
-  const functionPath = tree.join(".");
-  const functionName = tree.pop();
-  if (typeof functionName !== "string") {
-    throw helpers.makeRuntimeRejectMsg(workerScript, "Failure occured while wrapping netscript api");
-  }
-  const ctx = {
-    workerScript,
-    function: functionName,
-    functionPath,
-  };
-  function wrappedFunction(...args: unknown[]): unknown {
-    helpers.checkEnvFlags(ctx);
-    helpers.updateDynamicRam(ctx, getRamCost(Player, ...tree, ctx.function));
-    return func(ctx)(...args);
-  }
-  const parent = getNestedProperty(wrappedAPI, tree);
-  Object.defineProperty(parent, functionName, {
-    value: wrappedFunction,
-    writable: true,
-    enumerable: true,
-  });
-}
-
-export function wrapAPI(workerScript: WorkerScript, namespace: object, args: ScriptArg[]): NSFull {
-  const wrappedAPI = wrapAPILayer({}, workerScript, namespace);
-  wrappedAPI.args = args;
-  return wrappedAPI as unknown as NSFull;
-}
-
-export function wrapAPILayer(
-  wrappedAPI: ExternalAPILayer,
-  workerScript: WorkerScript,
-  namespace: object,
-  ...tree: string[]
-) {
-  for (const [key, value] of Object.entries(namespace)) {
-    if (typeof value === "function") {
-      wrapFunction(wrappedAPI, workerScript, value, ...tree, key);
-    } else if (Array.isArray(value)) {
-      setNestedProperty(wrappedAPI, value.slice(), key);
+export function wrapAPILayer<API>(
+  eLayer: ExternalAPI<API>,
+  iLayer: InternalAPI<API>,
+  tree: string[],
+): ExternalAPI<API> {
+  for (const [key, value] of Object.entries(iLayer) as [Key<API>, InternalValues][]) {
+    if (key === "enums") {
+      const enumObj = Object.freeze(cloneDeep(value as Enums));
+      for (const member of Object.values(enumObj)) Object.freeze(member);
+      (eLayer[key] as Enums) = enumObj;
+    } else if (key === "args") continue;
+    // Args only added on individual instances.
+    else if (typeof value === "function") {
+      StampedLayer.wrapFunction(eLayer, value as InternalFn<APIFn>, tree, key);
     } else if (typeof value === "object") {
-      wrapAPILayer(wrappedAPI, workerScript, value, ...tree, key);
+      wrapAPILayer((eLayer[key] = {} as ExternalAPI<API>[Key<API>]), value, [...tree, key as string]);
     } else {
-      setNestedProperty(wrappedAPI, value, ...tree, key);
+      console.warn(`Unexpected data while wrapping API.`, "tree:", tree, "key:", key, "value:", value);
+      throw new Error("Error while wrapping netscript API. See console.");
     }
   }
-  return wrappedAPI;
+  return eLayer;
 }
 
-function setNestedProperty(root: any, value: unknown, ...tree: string[]): void {
-  let target = root;
-  const key = tree.pop();
-  if (!key) throw new Error("Failure occured while wrapping netscript api (setNestedProperty)");
-  for (const branch of tree) {
-    target[branch] ??= {};
-    target = target[branch];
-  }
-  target[key] = value;
-}
-
-function getNestedProperty(root: any, tree: string[]): unknown {
-  let target = root;
-  for (const branch of tree) {
-    target[branch] ??= {};
-    target = target[branch];
-  }
-  return target;
+/** Specify when a function was removed from the game, and its replacement function. */
+export function removedFunction(version: string, replacement: string, replaceMsg?: boolean) {
+  return (ctx: NetscriptContext) => {
+    throw helpers.makeRuntimeErrorMsg(
+      ctx,
+      `Function removed in ${version}. ${replaceMsg ? replacement : `Please use ${replacement} instead.`}`,
+      "REMOVED FUNCTION",
+    );
+  };
 }

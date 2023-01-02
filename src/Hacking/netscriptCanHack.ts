@@ -6,7 +6,7 @@
  */
 import { IReturnStatus } from "../types";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "@player";
 import { Server } from "../Server/Server";
 
 function baseCheck(server: Server, fnName: string): IReturnStatus {
@@ -29,14 +29,14 @@ function baseCheck(server: Server, fnName: string): IReturnStatus {
   return { res: true };
 }
 
-export function netscriptCanHack(server: Server, p: IPlayer): IReturnStatus {
+export function netscriptCanHack(server: Server): IReturnStatus {
   const initialCheck = baseCheck(server, "hack");
   if (!initialCheck.res) {
     return initialCheck;
   }
 
   const s = server;
-  if (s.requiredHackingSkill > p.skills.hacking) {
+  if (s.requiredHackingSkill > Player.skills.hacking) {
     return {
       res: false,
       msg: `Cannot hack ${server.hostname} server because your hacking skill is not high enough`,

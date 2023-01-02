@@ -1,14 +1,13 @@
-/**
- * Implementation for what happens when you destroy a BitNode
- */
+/** Implementation for what happens when you destroy a BitNode */
 import React from "react";
-import { Player } from "./Player";
+import { Player } from "@player";
 import { prestigeSourceFile } from "./Prestige";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { SourceFiles } from "./SourceFile/SourceFiles";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { IRouter } from "./ui/Router";
+import { Router } from "./ui/GameRoot";
+import { Page } from "./ui/Router";
 
 function giveSourceFile(bitNodeNumber: number): void {
   const sourceFileKey = "SourceFile" + bitNodeNumber.toString();
@@ -19,17 +18,9 @@ function giveSourceFile(bitNodeNumber: number): void {
   }
 
   // Check if player already has this source file
-  let alreadyOwned = false;
-  let ownedSourceFile = null;
-  for (let i = 0; i < Player.sourceFiles.length; ++i) {
-    if (Player.sourceFiles[i].n === bitNodeNumber) {
-      alreadyOwned = true;
-      ownedSourceFile = Player.sourceFiles[i];
-      break;
-    }
-  }
+  const ownedSourceFile = Player.sourceFiles.find((sourceFile) => sourceFile.n === bitNodeNumber);
 
-  if (alreadyOwned && ownedSourceFile) {
+  if (ownedSourceFile) {
     if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
       dialogBoxCreate(
         `The Source-File for the BitNode you just destroyed, ${sourceFile.name}, is already at max level!`,
@@ -45,10 +36,9 @@ function giveSourceFile(bitNodeNumber: number): void {
       );
     }
   } else {
-    const playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
-    Player.sourceFiles.push(playerSrcFile);
+    const newSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
+    Player.sourceFiles.push(newSrcFile);
     if (bitNodeNumber === 5 && Player.skills.intelligence === 0) {
-      // Artificial Intelligence
       Player.skills.intelligence = 1;
     }
     dialogBoxCreate(
@@ -65,7 +55,7 @@ function giveSourceFile(bitNodeNumber: number): void {
   }
 }
 
-export function enterBitNode(router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number): void {
+export function enterBitNode(flume: boolean, destroyedBitNode: number, newBitNode: number): void {
   if (!flume) {
     giveSourceFile(destroyedBitNode);
   } else if (Player.sourceFileLvl(5) === 0 && newBitNode !== 5) {
@@ -79,9 +69,9 @@ export function enterBitNode(router: IRouter, flume: boolean, destroyedBitNode: 
   Player.bitNodeN = newBitNode;
 
   if (newBitNode === 6) {
-    router.toBladeburnerCinematic();
+    Router.toPage(Page.BladeburnerCinematic);
   } else {
-    router.toTerminal();
+    Router.toPage(Page.Terminal);
   }
   prestigeSourceFile(flume);
 }

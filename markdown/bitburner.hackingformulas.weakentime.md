@@ -9,7 +9,7 @@ Calculate weaken time.
 <b>Signature:</b>
 
 ```typescript
-weakenTime(server: Server, player: Player): number;
+weakenTime(server: Server, player: Person): number;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ weakenTime(server: Server, player: Player): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
-|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
+|  player | [Person](./bitburner.person.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 

@@ -1,7 +1,7 @@
-import { ITerminal } from "../../ITerminal";
+import { Terminal } from "../../../Terminal";
 import { removeLeadingSlash, removeTrailingSlash } from "../../DirectoryHelpers";
-import { IRouter, ScriptEditorRouteOptions } from "../../../ui/Router";
-import { IPlayer } from "../../../PersonObjects/IPlayer";
+import { ScriptEditorRouteOptions } from "../../../ui/Router";
+import { Router } from "../../../ui/GameRoot";
 import { BaseServer } from "../../../Server/BaseServer";
 import { isScriptFilename } from "../../../Script/isScriptFilename";
 import { CursorPositions } from "../../../ScriptEditor/CursorPositions";
@@ -9,11 +9,8 @@ import { Script } from "../../../Script/Script";
 import { isEmpty } from "lodash";
 
 interface EditorParameters {
-  terminal: ITerminal;
-  router: IRouter;
-  player: IPlayer;
-  server: BaseServer;
   args: (string | number | boolean)[];
+  server: BaseServer;
 }
 
 function isNs2(filename: string): boolean {
@@ -38,21 +35,17 @@ function containsSimpleGlob(filename: string): boolean {
   return filename.includes("*");
 }
 
-function detectSimpleScriptGlob(
-  args: EditorParameters["args"],
-  player: IPlayer,
-  terminal: ITerminal,
-): ISimpleScriptGlob | null {
+function detectSimpleScriptGlob({ args, server }: EditorParameters): ISimpleScriptGlob | null {
   if (args.length == 1 && containsSimpleGlob(`${args[0]}`)) {
     const filename = `${args[0]}`;
-    const scripts = player.getCurrentServer().scripts;
-    const parsedGlob = parseSimpleScriptGlob(filename, scripts, terminal);
+    const scripts = server.scripts;
+    const parsedGlob = parseSimpleScriptGlob(filename, scripts);
     return parsedGlob;
   }
   return null;
 }
 
-function parseSimpleScriptGlob(globString: string, globDatabase: Script[], terminal: ITerminal): ISimpleScriptGlob {
+function parseSimpleScriptGlob(globString: string, globDatabase: Script[]): ISimpleScriptGlob {
   const parsedGlob: ISimpleScriptGlob = {
     glob: globString,
     preGlob: "",
@@ -76,7 +69,7 @@ function parseSimpleScriptGlob(globString: string, globDatabase: Script[], termi
   parsedGlob.preGlob = removeLeadingSlash(parsedGlob.preGlob);
 
   // Add CWD to preGlob path
-  const cwd = removeTrailingSlash(terminal.cwd());
+  const cwd = removeTrailingSlash(Terminal.cwd());
   parsedGlob.preGlob = `${cwd}/${parsedGlob.preGlob}`;
 
   // For every script on the current server, filter matched scripts per glob values & persist
@@ -95,17 +88,17 @@ function parseSimpleScriptGlob(globString: string, globDatabase: Script[], termi
 
 export function commonEditor(
   command: string,
-  { terminal, router, player, args }: EditorParameters,
+  { args, server }: EditorParameters,
   scriptEditorRouteOptions?: ScriptEditorRouteOptions,
 ): void {
   if (args.length < 1) {
-    terminal.error(`Incorrect usage of ${command} command. Usage: ${command} [scriptname]`);
+    Terminal.error(`Incorrect usage of ${command} command. Usage: ${command} [scriptname]`);
     return;
   }
 
   let filesToLoadOrCreate = args;
   try {
-    const globSearch = detectSimpleScriptGlob(args, player, terminal);
+    const globSearch = detectSimpleScriptGlob({ args, server });
     if (globSearch) {
       if (isEmpty(globSearch.globError) === false) throw new Error(globSearch.globError);
       filesToLoadOrCreate = globSearch.globMatches;
@@ -115,8 +108,8 @@ export function commonEditor(
       const filename = `${arg}`;
 
       if (isScriptFilename(filename)) {
-        const filepath = terminal.getFilepath(filename);
-        const script = terminal.getScript(player, filename);
+        const filepath = Terminal.getFilepath(filename);
+        const script = Terminal.getScript(filename);
         const fileIsNs2 = isNs2(filename);
         const code = script !== null ? script.code : fileIsNs2 ? newNs2Template : "";
 
@@ -131,8 +124,8 @@ export function commonEditor(
       }
 
       if (filename.endsWith(".txt")) {
-        const filepath = terminal.getFilepath(filename);
-        const txt = terminal.getTextFile(player, filename);
+        const filepath = Terminal.getFilepath(filename);
+        const txt = Terminal.getTextFile(filename);
         return [filepath, txt === null ? "" : txt.text];
       }
 
@@ -145,8 +138,8 @@ export function commonEditor(
       throw new Error(`Could not find any valid files to open with ${command} using glob: \`${globSearch.glob}\``);
     }
 
-    router.toScriptEditor(Object.fromEntries(files), scriptEditorRouteOptions);
+    Router.toScriptEditor(Object.fromEntries(files), scriptEditorRouteOptions);
   } catch (e) {
-    terminal.error(`${e}`);
+    Terminal.error(`${e}`);
   }
 }

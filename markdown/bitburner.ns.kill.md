@@ -16,7 +16,7 @@ kill(script: number): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | number | Filename or pid of the script to kill |
+|  script | number | Filename or PID of the script to kill. |
 
 <b>Returns:</b>
 
@@ -28,7 +28,7 @@ True if the script is successfully killed, and false otherwise.
 
 RAM cost: 0.5 GB
 
-Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same code.
+Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their names and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same name.
 
 ## Example 1
 
