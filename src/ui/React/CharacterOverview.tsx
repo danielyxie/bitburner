@@ -281,7 +281,7 @@ function BladeburnerText(): React.ReactElement {
           </TableRow>
         </>
       ),
-    [action, classes.cellNone],
+    [action?.type, action?.name, classes.cellNone],
   );
 }
 
