@@ -99,6 +99,7 @@ export function prestigeAugmentation(): void {
   Player.factionInvitations = Player.factionInvitations.concat(maintainMembership);
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
+  Player.hp.current = Player.hp.max;
   initCompanies();
 
   // Apply entropy from grafting
