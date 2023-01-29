@@ -1,8 +1,3 @@
-# DELETE THIS AFTER READING
+# DO NOT SUBMIT ISSUES AT THIS REPO
 
-# include (where relevant)
-
-- [ ] Save file
-- [ ] Minimal scripts to reproduce the issue
-- [ ] Steps to reproduce
-- [ ] Version of the game, e.g. Bitburner v1.3.0 (216bf616)
+Please submit issues instead to the new development repo: https://github.com/bitburner-official/bitburner-src

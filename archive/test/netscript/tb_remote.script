@@ -1,0 +1,17 @@
+import {test} from "tb_basic.script";
+
+test("run", args.length === 1 && args[0] === "OK");
+
+svr = "foodnstuff";
+test("getHostname", getHostname() === svr);
+//ls
+res = ls(svr);
+test("ls1", res.includes("sector-12-crime.lit"));
+test("ls2", res.includes("tb_remote.script"));
+test("ls3", res.includes("tb_basic.script"));
+test("ls4", res.length === 3);
+res = ls(svr, ".lit");
+test("ls5", res.length === 1);
+test("ls6", res.includes("sector-12-crime.lit"));
+
+write("tb_results.txt", "tb_remote");

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="460"
+   height="215"
+   viewBox="0 0 121.70833 56.885418"
+   version="1.1"
+   id="svg845"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   sodipodi:docname="Header_Capsule.svg"
+   inkscape:export-filename="/Users/hydroflame/bitburner/assets/Steam/Store/Header_Capsule.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview847"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     units="px"
+     inkscape:zoom="2"
+     inkscape:cx="74.5"
+     inkscape:cy="147"
+     inkscape:window-width="2713"
+     inkscape:window-height="1264"
+     inkscape:window-x="411"
+     inkscape:window-y="75"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer3">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1265" />
+  </sodipodi:namedview>
+  <defs
+     id="defs842">
+    <rect
+       x="180"
+       y="70"
+       width="250"
+       height="90"
+       id="rect4063" />
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="background"
+     style="display:inline">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       id="rect1128"
+       width="121.70833"
+       height="56.885414"
+       x="0"
+       y="0" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text4061"
+       style="font-weight:bold;font-size:74.6667px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';white-space:pre;shape-inside:url(#rect4063);fill:#003d00;fill-opacity:1"><tspan
+         x="180"
+         y="228.1207"
+         id="tspan10130"><tspan
+           dx="0 52.208359 25.520844 33.979187 52.208359 53.229187 37.187515 53.229202 49.583344"
+           id="tspan10128">bitburner</tspan></tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="bin">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.85919px;line-height:1.25;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#202020;fill-opacity:1;stroke-width:0.078471"
+       x="-1.7902181"
+       y="2.4310479"
+       id="text17320"
+       transform="scale(0.80030898,1.2495174)"><tspan
+         sodipodi:role="line"
+         id="tspan17318"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#202020;fill-opacity:1;stroke-width:0.078471"
+         x="-1.7902181"
+         y="2.4310479">01001000 01100001 01110010 01110110 01100101</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#202020;fill-opacity:1;stroke-width:0.078471"
+         x="-1.7902181"
+         y="9.8454628"
+         id="tspan26146">01110011 01110100 00100000 01110100 01101000</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#202020;fill-opacity:1;stroke-width:0.078471"
+         x="-1.7902181"
+         y="17.259878"
+         id="tspan26532">01100101 00100000 01110000 01101111 01110111</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#202020;fill-opacity:1;stroke-width:0.078471"
+         x="-1.7902181"
+         y="24.674294"
+         id="tspan26870">01100101 01110010 00100000 01101111 01100110</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#202020;fill-opacity:1;stroke-width:0.078471"
+         x="-1.7902181"
+         y="32.088707"
+         id="tspan27256">00100000 01110100 01101000 01100101 00100000</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#202020;fill-opacity:1;stroke-width:0.078471"
+         x="-1.7902181"
+         y="39.503124"
+         id="tspan27606">01101110 01101111 01101111 01100100 01101100</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#202020;fill-opacity:1;stroke-width:0.078471"
+         x="-1.7902181"
+         y="46.917538"
+         id="tspan28160">01100101 01110011 00101110 00101110 00101110</tspan></text>
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 23.572694,11.666445 v 18.489861 l -2.465312,3.697972 v 3.697972 l 2.465312,2.465316 v 1.232656"
+       id="path1456"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 23.572694,30.156306 2.465316,3.697972 v 3.697972 l -2.465316,2.465316"
+       id="path1524"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 17.40941,41.250222 v -8.6286 l 2.465311,-3.697972 v -4.930628 l 3.697973,-6.163289"
+       id="path3458"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 29.735982,41.250222 v -8.6286 L 27.270666,28.92365 v -4.930628 l -3.697972,-6.163289"
+       id="path3460"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 12.478778,37.55225 v -8.6286 l 1.232661,-1.232656 1.232654,-1.232661 2.465317,-2.465311 h 2.465311"
+       id="path3619"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 34.66661,37.55225 v -8.6286 l -1.232655,-1.232656 -1.232656,-1.232661 -2.465317,-2.465311 h -2.465316"
+       id="path3621"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.00646;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 17.40941,32.621622 H 12.478778"
+       id="path3623"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.00646;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 29.119652,32.005292 h 4.930633"
+       id="path3625" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 26.03801,21.527705 1.232656,-1.232656 v -7.395944"
+       id="path3670"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 21.107382,21.527705 19.874721,20.295049 V 12.899105"
+       id="path3672"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 32.201299,41.250222 2.465311,-2.465311 v -2.465317 l 3.697973,-3.697972 V 16.597077"
+       id="path4789"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 14.944093,41.250222 12.478778,38.784911 V 36.319594 L 8.7808056,32.621622 V 16.597077"
+       id="path5224"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:1.30743;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 16.176749,25.225677 V 14.131761"
+       id="path20342"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:1.30743;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 30.968638,25.225677 V 14.131761"
+       id="path20410"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 8.7808056,26.458333 12.478778,22.760361 V 15.364417"
+       id="path20544"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 38.364583,26.458333 34.66661,22.760361 v -7.395944"
+       id="path20546"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.47px;line-height:1.25;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';fill:#00ff00;fill-opacity:1;stroke-width:0.180402"
+       x="44.335251"
+       y="33.835377"
+       id="text12822"><tspan
+         sodipodi:role="line"
+         id="tspan12820"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';fill:#00ff00;fill-opacity:1;stroke-width:0.180402"
+         x="44.335251"
+         y="33.835377">bitburner</tspan></text>
+  </g>
+</svg>

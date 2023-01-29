@@ -1,0 +1,4 @@
+Sphinx==1.8.5
+sphinx-rtd-theme==0.4.3
+sphinxcontrib-newsfeed==0.1.4
+docutils==0.17.1

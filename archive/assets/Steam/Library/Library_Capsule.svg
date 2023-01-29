@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="600"
+   height="900"
+   viewBox="0 0 158.75 238.12501"
+   version="1.1"
+   id="svg2976"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   sodipodi:docname="Library_Capsule.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2978"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     units="px"
+     inkscape:zoom="0.79118979"
+     inkscape:cx="254.67973"
+     inkscape:cy="454.37897"
+     inkscape:window-width="2088"
+     inkscape:window-height="1267"
+     inkscape:window-x="360"
+     inkscape:window-y="102"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer5">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3037" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2973">
+    <rect
+       x="180"
+       y="70"
+       width="250"
+       height="90"
+       id="rect4063" />
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="background">
+    <rect
+       style="fill:#000000;stroke-width:0.141;fill-opacity:1"
+       id="rect4362"
+       width="158.75"
+       height="238.125"
+       x="0"
+       y="0" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:18.9804px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#002000;fill-opacity:1;stroke-width:0.254201"
+       x="9.5800972"
+       y="138.17438"
+       id="text7802"><tspan
+         sodipodi:role="line"
+         id="tspan7800"
+         style="fill:#002000;fill-opacity:1;stroke-width:0.254201"
+         x="9.5800972"
+         y="138.17438">while(true) {</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#002000;fill-opacity:1;stroke-width:0.254201"
+         x="9.5800972"
+         y="161.89987"
+         id="tspan8504">    hack();</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#002000;fill-opacity:1;stroke-width:0.254201"
+         x="9.5800972"
+         y="185.62538"
+         id="tspan8506">}</tspan></text>
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g3107"
+       transform="matrix(2.0753566,0,0,2.0753566,20.050652,10.368115)">
+      <g
+         id="layer4"
+         inkscape:label="background" />
+      <g
+         inkscape:label="Layer 1"
+         id="layer1-5"
+         style="display:inline">
+        <g
+           id="g898"
+           transform="matrix(1.3592638,0,0,1.3592638,-3.4563747,-7.7397592)">
+          <g
+             id="layer2"
+             inkscape:label="background"
+             style="display:inline">
+            <text
+               xml:space="preserve"
+               transform="scale(0.26458333)"
+               id="text4061"
+               style="font-weight:bold;font-size:74.6667px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';white-space:pre;shape-inside:url(#rect4063);fill:#003d00;fill-opacity:1"><tspan
+                 x="180"
+                 y="228.1207"
+                 id="tspan8996"><tspan
+                   dx="0 52.208359 25.520844 33.979187 52.208359 53.229187 37.187515 53.229202 49.583344"
+                   id="tspan8994">bitburner</tspan></tspan></text>
+          </g>
+          <g
+             id="layer3"
+             inkscape:label="bin" />
+          <g
+             inkscape:label="Layer 1"
+             id="layer1-3">
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 23.572694,11.666445 v 18.489861 l -2.465312,3.697972 v 3.697972 l 2.465312,2.465316 v 1.232656"
+               id="path1456"
+               sodipodi:nodetypes="cccccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 23.572694,30.156306 2.465316,3.697972 v 3.697972 l -2.465316,2.465316"
+               id="path1524"
+               sodipodi:nodetypes="cccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 17.40941,41.250222 v -8.6286 l 2.465311,-3.697972 v -4.930628 l 3.697973,-6.163289"
+               id="path3458"
+               sodipodi:nodetypes="ccccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 29.735982,41.250222 v -8.6286 L 27.270666,28.92365 v -4.930628 l -3.697972,-6.163289"
+               id="path3460"
+               sodipodi:nodetypes="ccccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 12.478778,37.55225 v -8.6286 l 1.232661,-1.232656 1.232654,-1.232661 2.465317,-2.465311 h 2.465311"
+               id="path3619"
+               sodipodi:nodetypes="cccccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 34.66661,37.55225 v -8.6286 l -1.232655,-1.232656 -1.232656,-1.232661 -2.465317,-2.465311 h -2.465316"
+               id="path3621"
+               sodipodi:nodetypes="cccccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.00646;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 17.40941,32.621622 H 12.478778"
+               id="path3623"
+               sodipodi:nodetypes="cc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.00646;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 29.119652,32.005292 h 4.930633"
+               id="path3625" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 26.03801,21.527705 1.232656,-1.232656 v -7.395944"
+               id="path3670"
+               sodipodi:nodetypes="ccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 21.107382,21.527705 19.874721,20.295049 V 12.899105"
+               id="path3672"
+               sodipodi:nodetypes="ccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 32.201299,41.250222 2.465311,-2.465311 v -2.465317 l 3.697973,-3.697972 V 16.597077"
+               id="path4789"
+               sodipodi:nodetypes="ccccc" />
+            <path
+               style="display:inline;fill:none;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 14.944093,41.250222 12.478778,38.784911 V 36.319594 L 8.7808056,32.621622 V 16.597077"
+               id="path5224"
+               sodipodi:nodetypes="ccccc" />
+            <path
+               style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:1.30743;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 16.176749,25.225677 V 14.131761"
+               id="path20342"
+               sodipodi:nodetypes="cc" />
+            <path
+               style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:1.30743;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 30.968638,25.225677 V 14.131761"
+               id="path20410"
+               sodipodi:nodetypes="cc" />
+            <path
+               style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 8.7808056,26.458333 12.478778,22.760361 V 15.364417"
+               id="path20544"
+               sodipodi:nodetypes="ccc" />
+            <path
+               style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:1.23266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 38.364583,26.458333 34.66661,22.760361 v -7.395944"
+               id="path20546"
+               sodipodi:nodetypes="ccc" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24.8803px;line-height:1.25;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#00ff00;fill-opacity:1;stroke-width:0.333217"
+       x="13.494555"
+       y="227.75381"
+       id="text5034"><tspan
+         sodipodi:role="line"
+         id="tspan5032"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console Bold';fill:#00ff00;fill-opacity:1;stroke-width:0.333217"
+         x="13.494555"
+         y="227.75381">bitburner</tspan></text>
+  </g>
+</svg>

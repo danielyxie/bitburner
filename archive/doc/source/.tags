@@ -1,0 +1,43 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+author	.\conf.py	/^author = 'Bitburner'$/;"	v
+copyright	.\conf-guzzle.py	/^copyright = u'2017, Daniel Xie'$/;"	v
+copyright	.\conf.py	/^copyright = '2017, Bitburner'$/;"	v
+exclude_patterns	.\conf-guzzle.py	/^exclude_patterns = ['_build']$/;"	v
+exclude_patterns	.\conf.py	/^exclude_patterns = []$/;"	v
+extensions	.\conf-guzzle.py	/^extensions = []$/;"	v
+extensions	.\conf.py	/^extensions = ['sphinx.ext.autodoc',$/;"	v
+guzzle_sphinx_theme	.\conf-guzzle.py	/^import guzzle_sphinx_theme$/;"	i
+html_show_sourcelink	.\conf-guzzle.py	/^html_show_sourcelink = False$/;"	v
+html_static_path	.\conf.py	/^html_static_path = ['ystatic']$/;"	v
+html_theme	.\conf-guzzle.py	/^html_theme = 'guzzle_sphinx_theme'$/;"	v
+html_theme	.\conf.py	/^html_theme = 'agogo'$/;"	v
+html_theme_options	.\conf-guzzle.py	/^html_theme_options = {$/;"	v
+html_theme_path	.\conf-guzzle.py	/^html_theme_path = guzzle_sphinx_theme.html_theme_path()$/;"	v
+htmlhelp_basename	.\conf.py	/^htmlhelp_basename = 'Bitburnerdoc'$/;"	v
+intersphinx_mapping	.\conf.py	/^intersphinx_mapping = {'https:\/\/docs.python.org\/': None}$/;"	v
+language	.\conf.py	/^language = 'English'$/;"	v
+latex_documents	.\conf.py	/^latex_documents = [$/;"	v
+latex_elements	.\conf.py	/^latex_elements = {$/;"	v
+man_pages	.\conf.py	/^man_pages = [$/;"	v
+master_doc	.\conf-guzzle.py	/^master_doc = 'index'$/;"	v
+master_doc	.\conf.py	/^master_doc = 'index'$/;"	v
+os	.\conf-guzzle.py	/^import sys, os, subprocess$/;"	i
+project	.\conf-guzzle.py	/^project = u'Bitburner'$/;"	v
+project	.\conf.py	/^project = 'Bitburner'$/;"	v
+pygments_style	.\conf.py	/^pygments_style = 'sphinx'$/;"	v
+release	.\conf.py	/^release = '1.0'$/;"	v
+source_suffix	.\conf-guzzle.py	/^source_suffix = '.rst'$/;"	v
+source_suffix	.\conf.py	/^source_suffix = '.rst'$/;"	v
+subprocess	.\conf-guzzle.py	/^import sys, os, subprocess$/;"	i
+sys	.\conf-guzzle.py	/^import sys, os, subprocess$/;"	i
+templates_path	.\conf-guzzle.py	/^templates_path = ['_templates']$/;"	v
+templates_path	.\conf.py	/^templates_path = ['ytemplates']$/;"	v
+texinfo_documents	.\conf.py	/^texinfo_documents = [$/;"	v
+todo_include_todos	.\conf.py	/^todo_include_todos = True$/;"	v
+version	.\conf-guzzle.py	/^version = '1.0.0'$/;"	v
+version	.\conf.py	/^version = '1.0'$/;"	v

@@ -1,0 +1,14 @@
+{
+  "baseUrl": "http://localhost:8000",
+  "trashAssetsBeforeRuns": true,
+  "videoUploadOnPasses": false,
+  "viewportWidth": 1980,
+  "viewportHeight": 1080,
+  "fixturesFolder": "test/cypress/fixtures",
+  "integrationFolder": "test/cypress/integration",
+  "pluginsFile": "test/cypress/plugins/index.js",
+  "supportFile": "test/cypress/support/index.js",
+  "screenshotsFolder": ".cypress/screenshots",
+  "videosFolder": ".cypress/videos",
+  "downloadsFolder": ".cypress/downloads"
+}
