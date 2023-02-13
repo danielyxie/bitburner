@@ -49,7 +49,7 @@ For example, if a normal single-threaded script
 is able to hack $10,000, then running the same script with 5 threads would
 yield $50,000.
 
-(This is the **only** affect of running a script with multiple threads.
+(This is the **only** effect of running a script with multiple threads.
 Scripts will not actually become multithreaded in the real-world
 sense.)
 
