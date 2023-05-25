@@ -28,6 +28,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
  */
 
 /*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*!
  * jQuery JavaScript Library v3.6.3
  * https://jquery.com/
  *
@@ -41,6 +48,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
  * Date: 2022-12-20T21:28Z
  */
 
+/*! @license DOMPurify 2.3.1 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.3.1/LICENSE */
+
 /*! @preserve
  * numeral.js
  * version : 2.0.6
@@ -48,6 +57,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
+
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/*!-----------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Version: 0.35.0(71ac097e6155a405f6be52b0b368a04508c31e31)
+ * Released under the MIT license
+ * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
+ *-----------------------------------------------------------------------------*/
+
+/*!---------------------------------------------------------------------------------------------
+ *  Copyright (C) David Owens II, owensd.io. All rights reserved.
+ *--------------------------------------------------------------------------------------------*/
 
 /**
  * @license

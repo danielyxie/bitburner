@@ -16,5 +16,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-//!shouldCompile ensures that script.module is non-null, hence the "as".
