@@ -17,6 +17,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 */
 
 /*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*!
  * Sizzle CSS Selector Engine v2.3.9
  * https://sizzlejs.com/
  *
